@@ -301,16 +301,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 InfoDialog::~InfoDialog()
 {
     removeEventFilter(this);
-    auto menuIt (mSyncsMenus.constKeyValueBegin());
-//    while (menuIt != mSyncsMenus.constKeyValueEnd())
-//    {
-//        auto menu (menuIt.base().value());
-//        if (menu)
-//        {
-//            menu->deleteLater();
-//        }
-//        ++menuIt;
-//    }
     delete ui;
     delete gWidget;
     delete animation;

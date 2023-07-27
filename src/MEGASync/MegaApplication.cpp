@@ -2249,6 +2249,8 @@ void MegaApplication::cleanAll()
     delete notificationsDelegate;
     notificationsDelegate = nullptr;
 
+    if (infoDialog) infoDialog->deleteLater();
+
     // Delete menus and menu items
     deleteMenu(initialTrayMenu);
     deleteMenu(infoDialogMenu);
@@ -2256,8 +2258,8 @@ void MegaApplication::cleanAll()
 #ifdef _WIN32
     deleteMenu(windowsMenu);
 #endif
-    delete mSyncs2waysMenu;
-    delete mBackupsMenu;
+    if (mSyncs2waysMenu) mSyncs2waysMenu->deleteLater();
+    if (mBackupsMenu) mBackupsMenu->deleteLater();
 
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after

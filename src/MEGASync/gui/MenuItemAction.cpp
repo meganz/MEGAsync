@@ -31,6 +31,11 @@ MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, int tree
 {
 }
 
+MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, int treeDepth, QObject *parent)
+    : MenuItemAction (title, QString(), icon, treeDepth, QSize(24, 24), parent)
+{
+}
+
 MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, QObject *parent)
     : MenuItemAction (title, QString(), icon, 0, QSize(24, 24), parent)
 {

@@ -15,6 +15,7 @@ public:
                    const QSize& iconSize = QSize(24, 24), QObject *parent = nullptr);
     MenuItemAction(const QString& title, const QIcon& icon, int treeDepth = 0,
                    const QSize& iconSize = QSize(24, 24), QObject* parent = nullptr);
+    MenuItemAction(const QString& title, const QIcon& icon, int treeDepth, QObject* parent);
     MenuItemAction(const QString& title, const QIcon& icon, QObject *parent);
 
     void setLabelText(const QString& title);

@@ -18,7 +18,7 @@ class DeviceName;
 class MyBackupsHandle;
 }
 
-class SyncsMenu : public QObject
+class SyncsMenu : public QWidget
 {
     Q_OBJECT
 
@@ -38,7 +38,7 @@ protected:
                        const QIcon& iconMenu,
                        const QString& addActionText,
                        const QString& menuActionText,
-                       QObject* parent);
+                       QWidget* parent);
     bool eventFilter(QObject* obj, QEvent* e) override;
     virtual void refresh() = 0;
     virtual QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const;
@@ -64,7 +64,7 @@ class TwoWaySyncsMenu : public SyncsMenu
     Q_OBJECT
 
 public:
-    explicit TwoWaySyncsMenu(QObject* parent);
+    explicit TwoWaySyncsMenu(QWidget* parent);
     ~TwoWaySyncsMenu() {}
 
 private:
@@ -77,7 +77,7 @@ class BackupSyncsMenu : public SyncsMenu
     Q_OBJECT
 
 public:
-    explicit BackupSyncsMenu(QObject* parent);
+    explicit BackupSyncsMenu(QWidget* parent);
     ~BackupSyncsMenu() {}
 
 private:

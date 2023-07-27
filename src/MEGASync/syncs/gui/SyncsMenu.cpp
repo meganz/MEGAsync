@@ -22,11 +22,11 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
                      const QIcon& iconMenu,
                      const QString& addActionText,
                      const QString& menuActionText,
-                     QObject *parent) :
-    QObject(parent),
-    mMenu (new QMenu()),
-    mAddAction (new MenuItemAction(QString(), QIcon())),
-    mMenuAction (new MenuItemAction(QString(), QIcon())),
+                     QWidget *parent) :
+    QWidget(parent),
+    mMenu (new QMenu(this)),
+    mAddAction (new MenuItemAction(QString(), QIcon(), this)),
+    mMenuAction (new MenuItemAction(QString(), QIcon(), this)),
     mLastHovered (nullptr),
     mType (type),
     mMenuIcon(iconMenu),
@@ -34,13 +34,11 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
     mMenuActionText(menuActionText)
 {
     mAddAction->setLabelText(tr(mAddActionText.toUtf8().constData()));
-    mAddAction->setParent(this);
     connect(mAddAction, &MenuItemAction::triggered,
             this, &SyncsMenu::onAddSync);
 
     mMenuAction->setLabelText(tr(mMenuActionText.toUtf8().constData()));
     mMenuAction->setIcon(mMenuIcon);
-    mMenuAction->setParent(this);
 
     Platform::getInstance()->initMenu(mMenu,
                                       QString::fromLatin1("SyncsMenu - ").append(mMenuActionText).toUtf8().constData());
@@ -121,7 +119,7 @@ QString SyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& sy
 }
 
 // TwoWaySyncsMenu ----
-TwoWaySyncsMenu::TwoWaySyncsMenu(QObject* parent) :
+TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent) :
     SyncsMenu(mega::MegaSync::TYPE_TWOWAY,
               QIcon(QLatin1String("://images/icons/ico_sync.png")),
               QLatin1String("Add Sync"),
@@ -171,7 +169,8 @@ void TwoWaySyncsMenu::refresh()
             activeFolders++;
             MenuItemAction* action =
                 new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
-                                   QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
+                                   QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
+                                   this);
             action->setToolTip(createSyncTooltipText(backupSetting));
             connect(action, &MenuItemAction::triggered,
                     this, [backupSetting](){
@@ -213,7 +212,7 @@ QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSetting
 }
 
 // BackupSyncsMenu ----
-BackupSyncsMenu::BackupSyncsMenu(QObject* parent) :
+BackupSyncsMenu::BackupSyncsMenu(QWidget* parent) :
     SyncsMenu(mega::MegaSync::TYPE_BACKUP,
                 QIcon(QLatin1String("://images/icons/ico_backup.png")),
                 QLatin1String("Add Backup"),
@@ -264,7 +263,8 @@ void BackupSyncsMenu::refresh()
             MenuItemAction* action =
                 new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
                                    QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
-                                   true);
+                                   1,
+                                   this);
             action->setToolTip(createSyncTooltipText(backupSetting));
             connect(action, &MenuItemAction::triggered,
                     this, [backupSetting](){
@@ -299,8 +299,7 @@ void BackupSyncsMenu::refresh()
         if (!mDevNameAction)
         {
             // Display device name before folders
-            mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON));
-            mDevNameAction->setParent(this);
+            mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON), this);
             // Insert the action in the menu to make sure it is here when the
             // set device name slot is called.
             mMenu->insertAction(firstBackup, mDevNameAction);
