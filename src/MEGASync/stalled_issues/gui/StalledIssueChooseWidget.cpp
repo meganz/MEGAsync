@@ -17,7 +17,8 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     ui->setupUi(this);
 
     ui->name->removeBackgroundColor();
-    connect(ui->name, &StalledIssueActionTitle::rawInfoCheckToggled, this, &StalledIssueChooseWidget::onRawInfoToggled);
+
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::showRawInfoChanged, this, &StalledIssueChooseWidget::onRawInfoToggled);
 
     ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
     ui->path->hideLocalOrRemoteTitle();
@@ -169,7 +170,7 @@ void LocalStalledIssueChooseWidget::updateExtraInfo(LocalStalledIssueDataPtr loc
         ui->name->updateSize(size);
     });
 
-    if(ui->name->isRawInfoVisible())
+    if(MegaSyncApp->getStalledIssuesModel()->isRawInfoVisible())
     {
         localData->getFileFolderAttributes()->requestFingerprint(this, [this](const QString& fp)
         {
@@ -218,7 +219,7 @@ void CloudStalledIssueChooseWidget::updateExtraInfo(CloudStalledIssueDataPtr clo
             ui->name->updateSize(size);
         });
 
-        if(ui->name->isRawInfoVisible())
+        if(MegaSyncApp->getStalledIssuesModel()->isRawInfoVisible())
         {
             cloudData->getFileFolderAttributes()->requestFingerprint(this, [this](const QString& fp)
             {

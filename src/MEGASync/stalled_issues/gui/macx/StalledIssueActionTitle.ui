@@ -287,34 +287,6 @@ QPushButton[main=true]
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="checkContainer" native="true">
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>36</number>
-            </property>
-            <property name="topMargin">
-             <number>3</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>3</number>
-            </property>
-            <item>
-             <widget class="QCheckBox" name="rawInfoCheck">
-              <property name="text">
-               <string>Show raw info</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
           <widget class="QWidget" name="extraInfoContainer" native="true">
            <layout class="QVBoxLayout" name="extraInfoLayout">
             <property name="spacing">

@@ -94,7 +94,8 @@ const int EVENT_REQUEST_DELAY = 600000; /*10 minutes*/
 StalledIssuesModel::StalledIssuesModel(QObject *parent)
     : QAbstractItemModel(parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
-    mUpdateWhenGlobalStateChanges(false)
+    mUpdateWhenGlobalStateChanges(false),
+    mRawInfoVisible(false)
 {
     mStalledIssuesThread = new QThread();
     mStalledIssuedReceiver = new StalledIssuesReceiver();
@@ -444,6 +445,17 @@ StalledIssuesVariantList StalledIssuesModel::getIssues(std::function<bool (const
     }
 
     return list;
+}
+
+void StalledIssuesModel::showRawInfo(bool state)
+{
+    mRawInfoVisible = state;
+    emit showRawInfoChanged();
+}
+
+bool StalledIssuesModel::isRawInfoVisible() const
+{
+    return mRawInfoVisible;
 }
 
 void StalledIssuesModel::reset()

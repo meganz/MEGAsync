@@ -59,6 +59,8 @@ NameConflict::NameConflict(QWidget *parent) :
     ui(new Ui::NameConflict)
 {
     ui->setupUi(this);
+
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::showRawInfoChanged, this, &NameConflict::onRawInfoChecked);
 }
 
 NameConflict::~NameConflict()
@@ -120,7 +122,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         {
             title = new StalledIssueActionTitle(parent);
             initTitle(title, index, conflictedName);
-            connect(title, &StalledIssueActionTitle::rawInfoCheckToggled, this, &NameConflict::onRawInfoChecked);
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
             titleLayout->addWidget(title);
             mTitlesByIndex.insert(index, title);
@@ -197,34 +198,21 @@ void NameConflict::initTitle(StalledIssueActionTitle* title, int index, const QS
 
 void NameConflict::onRawInfoChecked()
 {
-    auto title = dynamic_cast<StalledIssueActionTitle*>(sender());
-    if(title)
+    foreach(auto title, mTitlesByIndex)
     {
         //Fill conflict names
         auto conflictedNames = getConflictedNames(mIssue);
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(title->property(TITLE_INDEX).toInt()));
         updateTitleExtraInfo(title, info);
-
-        //To let the view know that the size may change
-        mDelegateWidget->updateSizeHint();
     }
+
+    //To let the view know that the size may change
+    mDelegateWidget->updateSizeHint();
 }
 
 void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info)
 {
     auto index = title->property(TITLE_INDEX).toInt();
-
-    if(title->isRawInfoVisible())
-    {
-        info->mItemAttributes->requestFingerprint(title, [this, index](const QString& fp)
-        {
-            mTitlesByIndex.value(index)->updateFingerprint(fp);
-        });
-    }
-    else
-    {
-        title->updateFingerprint(QString());
-    }
 
     info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time)
     {
@@ -253,6 +241,18 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
         mTitlesByIndex.value(index)->updateSize(size);
     });
 
+    if(MegaSyncApp->getStalledIssuesModel()->isRawInfoVisible())
+    {
+        info->mItemAttributes->requestFingerprint(title, [this, index](const QString& fp)
+        {
+            mTitlesByIndex.value(index)->updateFingerprint(fp);
+        });
+    }
+    else
+    {
+        title->updateFingerprint(QString());
+    }
+
     //These items go in order
     //Modified time -- created time -- size
     //User
@@ -270,6 +270,8 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
             mTitlesByIndex.value(index)->updateUser(user, showAttribute);
         });
     }
+
+    title->updateExtraInfoLayout();
 }
 
 

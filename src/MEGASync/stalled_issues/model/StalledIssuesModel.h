@@ -83,6 +83,10 @@ public:
     StalledIssuesVariantList getIssuesByReason(QList<mega::MegaSyncStall::SyncStallReason> reasons);
     StalledIssuesVariantList getIssues(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker);
 
+    //SHOW RAW INFO
+    void showRawInfo(bool state);
+    bool isRawInfoVisible() const;
+
     //SOLVE PROBLEMS
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
@@ -100,6 +104,7 @@ public:
     //IgnoreConflicts
     void ignoreItems(const QModelIndexList& list);
 
+
 signals:
     void stalledIssuesChanged();
     void stalledIssuesCountChanged();
@@ -108,6 +113,8 @@ signals:
     void uiUnblocked();
 
     void setIsEventRequest();
+
+    void showRawInfoChanged();
 
 protected slots:
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
@@ -147,6 +154,7 @@ private:
     QHash<int, int> mCountByFilterCriterion;
 
     QTimer mEventTimer;
+    bool mRawInfoVisible;
 };
 
 #endif // STALLEDISSUESMODEL_H

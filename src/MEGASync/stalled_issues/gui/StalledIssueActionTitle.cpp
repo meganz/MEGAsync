@@ -4,6 +4,7 @@
 #include <Utilities.h>
 #include <MegaApplication.h>
 #include <StalledIssuesUtilities.h>
+#include <StalledIssuesModel.h>
 
 #include <QPushButton>
 #include <QPainter>
@@ -39,12 +40,6 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
 
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
     setSolved(false);
-
-    ui->checkContainer->hide();
-    connect(ui->rawInfoCheck, &QCheckBox::toggled, this, [this](bool state){
-        emit rawInfoCheckToggled(state);
-        updateExtraInfoLayout();
-    });
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
@@ -170,7 +165,6 @@ void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& 
 QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QString &info, int level)
 {
     ui->extraInfoContainer->show();
-    ui->checkContainer->show();
 
     auto titleLabel = new QLabel(title, this);
     auto infoLabel = new QLabel(info, this);
@@ -524,5 +518,5 @@ void StalledIssueActionTitle::setInfo(const QString &newPath, mega::MegaHandle h
 
 bool StalledIssueActionTitle::isRawInfoVisible() const
 {
-    return ui->rawInfoCheck->isChecked();
+    return MegaSyncApp->getStalledIssuesModel()->isRawInfoVisible();
 }

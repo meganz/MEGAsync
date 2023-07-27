@@ -15,6 +15,7 @@ public:
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // STALLEDISSUESVIEW_H

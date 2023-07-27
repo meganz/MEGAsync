@@ -43,8 +43,6 @@ public:
     void setInfo(const QString &newPath, mega::MegaHandle handle);
     void setHandle(mega::MegaHandle handle);
 
-    bool isRawInfoVisible() const;
-
     void updateLastTimeModified(const QDateTime &time);
     void updateCreatedTime(const QDateTime &time);
     void updateUser(const QString& user, bool show);
@@ -63,9 +61,10 @@ public:
     };
     void hideAttribute(AttributeType type);
 
+    void updateExtraInfoLayout();
+
 signals:
     void actionClicked(int id);
-    void rawInfoCheckToggled(bool state);
 
 protected:
     Ui::StalledIssueActionTitle *ui;
@@ -76,9 +75,9 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
+    bool isRawInfoVisible() const;
     void showAttribute(AttributeType type);
     void updateLabel(QLabel* label, const QString& text);
-    void updateExtraInfoLayout();
 
     QMap<AttributeType, QPointer<QLabel>> mUpdateLabels;
 };

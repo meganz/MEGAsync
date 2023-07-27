@@ -1,7 +1,11 @@
 #include "StalledIssuesView.h"
 
+#include <MegaApplication.h>
+#include <StalledIssuesModel.h>
+
 #include <QHeaderView>
 #include <QScrollBar>
+#include <QApplication>
 
 StalledIssuesView::StalledIssuesView(QWidget *parent)
     :  LoadingSceneView<StalledIssueLoadingItem, QTreeView>(parent)
@@ -22,5 +26,29 @@ void StalledIssuesView::mousePressEvent(QMouseEvent *event)
     {
         QItemSelectionModel::SelectionFlags command = selectionCommand(index.parent(), event);
         selectionModel()->select(index.parent(), command);
+    }
+
+    LoadingSceneView<StalledIssueLoadingItem, QTreeView>::mousePressEvent(event);
+}
+
+void StalledIssuesView::keyPressEvent(QKeyEvent *event)
+{
+    Qt::KeyboardModifiers modifiers = QApplication::queryKeyboardModifiers();
+    if (modifiers.testFlag(Qt::ControlModifier) && modifiers.testFlag(Qt::ShiftModifier))
+    {
+        if(event->key() == Qt::Key_Minus)
+        {
+            emit MegaSyncApp->getStalledIssuesModel()->showRawInfo(false);
+        }
+        else if(event->key() == Qt::Key_Plus)
+        {
+            emit MegaSyncApp->getStalledIssuesModel()->showRawInfo(true);
+        }
+
+        viewport()->update();
+    }
+    else
+    {
+        LoadingSceneView<StalledIssueLoadingItem, QTreeView>::keyPressEvent(event);
     }
 }
