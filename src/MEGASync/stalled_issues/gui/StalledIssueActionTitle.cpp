@@ -35,7 +35,6 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
     ui->actionContainer->hide();
     ui->extraInfoContainer->hide();
     ui->generalContainer->installEventFilter(this);
-
     ui->titleLabel->installEventFilter(this);
 
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
@@ -143,9 +142,9 @@ void StalledIssueActionTitle::showIcon()
 
 void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& pixmap)
 {
-    QWidget* labelContainer= new QWidget(this);
+    QWidget* labelContainer = new QWidget(this);
     labelContainer->installEventFilter(this);
-    labelContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    labelContainer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     QHBoxLayout* labelContainerLayout = new QHBoxLayout();
     labelContainerLayout->setObjectName(QString::fromLatin1("messageLayout"));
     labelContainerLayout->setContentsMargins(0,0,10,0);
@@ -159,7 +158,7 @@ void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& 
         labelContainerLayout->addWidget(iconLabel);
     }
 
-    auto messageLabel = new QLabel(message,this);
+    auto messageLabel = new QLabel(message, this);
     messageLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     messageLabel->setProperty(MESSAGE_TEXT, message);
     labelContainerLayout->addWidget(messageLabel);
@@ -247,10 +246,17 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
             auto contentWidget = dynamic_cast<QWidget*>(watched);
             if(contentWidget)
             {
+                auto width = contentWidget->width();
+
+                if(width > (ui->contents->width()/3))
+                {
+                    width = ui->contents->width()/3;
+                }
+
                 auto childLabels = contentWidget->findChildren<QLabel*>();
                 foreach(auto label, childLabels)
                 {
-                    auto elidedText = label->fontMetrics().elidedText(label->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, contentWidget->width() - 50);
+                    auto elidedText = label->fontMetrics().elidedText(label->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, width);
                     label->setText(elidedText);
                 }
             }

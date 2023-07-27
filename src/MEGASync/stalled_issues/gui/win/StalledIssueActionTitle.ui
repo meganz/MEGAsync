@@ -148,7 +148,7 @@ QPushButton[main=true]
          </property>
          <item>
           <widget class="QFrame" name="contents">
-           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,1">
+           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,0">
             <property name="spacing">
              <number>8</number>
             </property>

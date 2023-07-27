@@ -11,7 +11,6 @@ public:
     void setText(const QString &text);
 
 protected:
-    QSize sizeHint() const;
     void resizeEvent(QResizeEvent *e) override;
 
 private:

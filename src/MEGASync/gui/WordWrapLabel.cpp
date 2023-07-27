@@ -4,6 +4,9 @@
 #include <QEvent>
 #include <QApplication>
 
+const int MINIMUM_DOC_HEIGHT = 3;
+const int MINMUM_HEIGHT = 13;
+
 WordWrapLabel::WordWrapLabel(QWidget* parent)
     : QTextEdit(parent)
 {
@@ -16,6 +19,7 @@ WordWrapLabel::WordWrapLabel(QWidget* parent)
     setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
     document()->setDocumentMargin(0);
+    setMaximumHeight(MINMUM_HEIGHT);
 }
 
 void WordWrapLabel::setText(const QString &text)
@@ -24,18 +28,10 @@ void WordWrapLabel::setText(const QString &text)
     adaptHeight();
 }
 
-QSize WordWrapLabel::sizeHint() const
-{
-    QSize size = document()->size().toSize();
-    size.setHeight(size.height() + 3);
-
-    return size;
-}
-
 void WordWrapLabel::adaptHeight()
 {
     QSize docSize = document()->size().toSize();
-    if(docSize.isValid())
+    if(docSize.isValid() && docSize.height() > MINIMUM_DOC_HEIGHT)
     {
         if((docSize.height() + 3) != (height()))
         {
