@@ -1172,11 +1172,11 @@ void MegaApplication::start()
             createTrayIcon();
         }
 
+        openOnboardingDialog();
 
         if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(AppStatsEvents::EVENT_1ST_START, "MEGAsync first start", false, nullptr);
-            openInfoWizard();
         }
         else if (!QSystemTrayIcon::isSystemTrayAvailable() && !getenv("START_MEGASYNC_IN_BACKGROUND"))
         {
@@ -1184,7 +1184,6 @@ void MegaApplication::start()
         }
 
         onGlobalSyncStateChanged(megaApi);
-        return;
     }
     else //Otherwise, login in the account
     {
@@ -2379,7 +2378,9 @@ void MegaApplication::raiseInfoDialog()
 {
     if(preferences && !preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
+        openGuestDialog();
+        return;
     }
 
     if (infoDialog)
@@ -2460,7 +2461,6 @@ void MegaApplication::showInfoDialog()
             }
 
             repositionInfoDialog();
-
             raiseInfoDialog();
         }
         else
@@ -2570,6 +2570,7 @@ void MegaApplication::createInfoDialog()
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
     scanStageController.updateReference(infoDialog);
+    repositionInfoDialog();
 }
 
 QuotaState MegaApplication::getTransferQuotaState() const
@@ -4330,7 +4331,7 @@ void MegaApplication::importLinks()
         {
             if (!preferences->logged())
             {
-                openInfoWizard();
+                openOnboardingDialog();
                 return;
             }
 
@@ -4716,7 +4717,7 @@ void MegaApplication::processUploads()
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -4794,7 +4795,7 @@ void MegaApplication::processDownloads()
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -4976,7 +4977,7 @@ void MegaApplication::externalLinkDownload(QString megaLink, QString auth)
     }
     else
     {
-        openInfoWizard();
+        openOnboardingDialog();
     }
 }
 
@@ -4989,7 +4990,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5035,7 +5036,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5077,7 +5078,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5096,7 +5097,7 @@ void MegaApplication::externalAddBackup()
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5115,7 +5116,7 @@ void MegaApplication::externalOpenTransferManager(int tab)
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5434,7 +5435,25 @@ void MegaApplication::onMessageClicked()
     }
 }
 
-void MegaApplication::openInfoWizard()
+void MegaApplication::openGuestDialog()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestController>>())
+    {
+        DialogOpener::showDialog(dialog->getDialog());
+        dialog->getDialog()->raise();
+        return;
+    }
+
+    QPointer<QmlDialogWrapper<GuestController>> guest = new QmlDialogWrapper<GuestController>();
+    DialogOpener::showDialog(guest);
+}
+
+void MegaApplication::openOnboardingDialog()
 {
     if (appfinished)
     {
@@ -5450,16 +5469,6 @@ void MegaApplication::openInfoWizard()
 
     QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
     DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
-
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestController>>())
-    {
-        DialogOpener::showDialog(dialog->getDialog());
-        dialog->getDialog()->raise();
-        return;
-    }
-
-    QPointer<QmlDialogWrapper<GuestController>> guest = new QmlDialogWrapper<GuestController>();
-    DialogOpener::showDialog(guest);
 }
 
 void MegaApplication::openSettings(int tab)

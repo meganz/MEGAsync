@@ -176,10 +176,14 @@ Rectangle {
 
             onGoToLoginPage: {
                 registerFlow.state = registerFlow.login;
+                onboardingWindow.show();
+                onboardingWindow.raise();
             }
 
             onGoToSignupPage: {
                 registerFlow.state = registerFlow.register;
+                onboardingWindow.show();
+                onboardingWindow.raise();
             }
         }
     }
