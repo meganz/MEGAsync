@@ -34,8 +34,14 @@ void StalledIssuesView::mousePressEvent(QMouseEvent *event)
 void StalledIssuesView::keyPressEvent(QKeyEvent *event)
 {
     Qt::KeyboardModifiers modifiers = QApplication::queryKeyboardModifiers();
-    if (modifiers.testFlag(Qt::ControlModifier) && modifiers.testFlag(Qt::ShiftModifier))
+
+#ifdef Q_OS_MACOS
+    if (modifiers.testFlag(Qt::MetaModifier))
     {
+#else
+    if (modifiers.testFlag(Qt::ControlModifier))
+    {
+#endif
         if(event->key() == Qt::Key_Minus)
         {
             emit MegaSyncApp->getStalledIssuesModel()->showRawInfo(false);
