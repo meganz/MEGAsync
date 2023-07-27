@@ -23,7 +23,7 @@ public:
 
     virtual QUrl getQmlUrl() = 0;
     virtual QString contextName(){return QString();}
-    virtual QVariant contextVariant(){return QVariant();}
+    virtual QVector<QQmlContext::PropertyPair> contextProperties() {return QVector<QQmlContext::PropertyPair>();};
 
     QQmlEngine* getEngine();
 };
@@ -110,6 +110,11 @@ public:
             if(!mWrapper->contextName().isEmpty())
             {
                 context->setContextProperty(mWrapper->contextName(), mWrapper);
+            }
+            auto propertyList = mWrapper->contextProperties();
+            if(!propertyList.isEmpty())
+            {
+                context->setContextProperties(propertyList);
             }
             context->setContextProperty(QString::fromUtf8("Wrapper"), this);
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));

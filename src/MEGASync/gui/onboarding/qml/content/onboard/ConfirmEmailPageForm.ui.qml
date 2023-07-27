@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.12
 // QML common
 import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
+import Components.Buttons 1.0 as MegaButtons
 import Common 1.0
 
 // Local
@@ -19,6 +20,7 @@ StackViewPage {
 
     property alias email: email.text
     property alias changeEmailLinkText: changeEmailLinkText
+    property alias cancelAccount: cancelAccount
 
     ColumnLayout {
         id: layout
@@ -75,5 +77,13 @@ StackViewPage {
             color: Styles.textPrimary
             manageMouse: true
         }
+    }
+    MegaButtons.OutlineButton {
+        id: cancelAccount
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+        }
+        text: OnboardingStrings.cancelAccount
     }
 }

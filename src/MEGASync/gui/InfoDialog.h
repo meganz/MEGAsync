@@ -6,10 +6,9 @@
 #include <QProcess>
 #include <QDateTime>
 #include <QPainter>
-#include "GuestWidget.h"
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 #include "syncs/control/SyncInfo.h"
 #include <QGraphicsOpacityEffect>
 #include "TransferScanCancelUi.h"
@@ -137,7 +136,6 @@ private slots:
     void on_bAddSync_clicked();
     void on_bAddBackup_clicked();
     void on_bUpload_clicked();
-    void onUserAction(int action);
     void resetLoggedInMode();
 
     void on_tTransfers_clicked();
@@ -204,7 +202,6 @@ private:
     bool mWaiting;
     bool mSyncing; //if any sync is in syncing state
     bool mTransferring; // if there are ongoing regular transfers
-    GuestWidget *gWidget;
     StatusInfo::TRANSFERS_STATES mState;
     bool overQuotaState;
     bool transferOverquotaAlertEnabled;

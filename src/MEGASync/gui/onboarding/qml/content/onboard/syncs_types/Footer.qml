@@ -24,7 +24,7 @@ RowLayout {
 
         text: OnboardingStrings.notNow
         onClicked: {
-            Onboarding.exitLoggedIn();
+            onboardingWindow.close();
         }
     }
 

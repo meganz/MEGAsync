@@ -44,9 +44,17 @@ StackView {
     Component {
         id: syncsComponent
 
-        SyncsFlow {
+        MainFlow {
             width: onboardingFlow.width
             height: onboardingFlow.height
+        }
+    }
+
+    Connections{
+        target: Onboarding
+        onLogout:
+        {
+            onboarding.state = onboarding.register;
         }
     }
 }

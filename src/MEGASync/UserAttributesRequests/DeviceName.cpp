@@ -73,7 +73,7 @@ AttributeRequest::RequestInfo DeviceName::fillRequestInfo()
                                                       << mega::MegaError::API_EEXIST)); // Case where the name is already taken
     ParamInfoMap paramInfoMap({{mega::MegaApi::USER_ATTR_DEVICE_NAMES, paramInfo}});
     RequestInfo ret(paramInfoMap, QMap<int64_t, int>({{mega::MegaUser::CHANGE_TYPE_DEVICE_NAMES,
-                                                       mega::MegaApi::USER_ATTR_DEVICE_NAMES}}));
+                                                mega::MegaApi::USER_ATTR_DEVICE_NAMES}}));
     return ret;
 }
 

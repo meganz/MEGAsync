@@ -1,5 +1,6 @@
 #include "FolderBinder.h"
 #include "ui_FolderBinder.h"
+#include "node_selector/gui/NodeSelectorSpecializations.h"
 
 #include "MegaApplication.h"
 #include "control/Utilities.h"

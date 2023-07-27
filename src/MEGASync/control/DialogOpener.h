@@ -256,7 +256,7 @@ public:
     }
 
     template <class DialogType>
-    static void showDialog(QPointer<DialogType> dialog, std::function<void()> func)
+    static std::shared_ptr<DialogInfo<DialogType>> showDialog(QPointer<DialogType> dialog, std::function<void()> func)
     {
         if(dialog)
         {
@@ -267,12 +267,12 @@ public:
                     func();
                 }
             });
-            showDialogImpl(dialog);
+            return showDialogImpl(dialog);
         }
     }
 
     template <class DialogType, class ParentType, class CallbackClass>
-    static void showDialog(QPointer<DialogType> dialog, bool whenParentIsActivated, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
+    static std::shared_ptr<DialogInfo<DialogType>> showDialog(QPointer<DialogType> dialog, bool whenParentIsActivated, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
     {
         if(dialog)
         {
@@ -286,12 +286,12 @@ public:
                 }
             });
 
-            showDialogImpl(dialog);
+            return showDialogImpl(dialog);
         }
     }
 
     template <class DialogType, class CallbackClass>
-    static void showDialog(QPointer<DialogType> dialog, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
+    static std::shared_ptr<DialogInfo<DialogType>> showDialog(QPointer<DialogType> dialog, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
     {
         if(dialog)
         {
@@ -303,18 +303,18 @@ public:
                 removeDialog(dialog);
             });
 
-            showDialogImpl(dialog);
+            return showDialogImpl(dialog);
         }
     }
 
     template <class DialogType>
-    static void showNonModalDialog(QPointer<DialogType> dialog)
+    static std::shared_ptr<DialogInfo<DialogType>> showNonModalDialog(QPointer<DialogType> dialog)
     {
         if(dialog)
         {
             removeWhenClose(dialog);
             dialog->setModal(false);
-            showDialogImpl(dialog, false);
+            return showDialogImpl(dialog, false);
         }
     }
 
@@ -331,13 +331,15 @@ public:
     }
 
     template <class DialogType>
-    static void showDialog(QPointer<DialogType> dialog)
+    static std::shared_ptr<DialogInfo<DialogType>> showDialog(QPointer<DialogType> dialog)
     {
+        std::shared_ptr<DialogInfo<DialogType>> ret = nullptr;
         if(dialog)
         {
             removeWhenClose(dialog);
-            showDialogImpl(dialog);
+            ret = showDialogImpl(dialog);
         }
+        return ret;
     }
 
     template <class DialogType>

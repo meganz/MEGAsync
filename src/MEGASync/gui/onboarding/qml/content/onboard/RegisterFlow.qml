@@ -8,7 +8,7 @@ import QtQuick.Layouts 1.12
 import Common 1.0
 
 // C++
-import Onboarding 1.0
+import LoginController 1.0
 
 Rectangle {
     id: registerFlow
@@ -19,6 +19,7 @@ Rectangle {
     readonly property string confirmEmail: "confirmEmail"
     readonly property string changeConfirmEmail: "changeConfirmEmail"
 
+    color: Styles.surface1
     state: login
     states: [
         State {
@@ -53,7 +54,21 @@ Rectangle {
         }
     ]
 
-    color: Styles.surface1
+    CancelLogin {
+        id: cancelLogin
+
+        visible: false
+        onAccepted: {
+            loginController.cancelLogin();
+        }
+    }
+
+    Connections {
+        target: onboardingWindow
+        onClosingButLoggingIn: {
+            cancelLogin.visible = true;
+        }
+    }
 
     Image {
         id: leftImage
@@ -149,6 +164,10 @@ Rectangle {
             id: changeConfirmEmailPage
 
             ChangeEmailPage {}
+        }
+
+        LoginController {
+            id: loginController
         }
     }
 }

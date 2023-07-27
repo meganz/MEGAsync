@@ -39,6 +39,16 @@ StackViewPage {
             text: OnboardingStrings.loginTitle
         }
 
+        MegaTexts.RichText {
+            id: confirmText
+
+            visible: loginController.emailConfirmed
+            anchors.left: parent.left
+            anchors.right: parent.right
+            font.pixelSize: MegaTexts.Text.Size.Medium
+            text: qsTr("Confirm account by login")
+        }
+
         MegaTextFields.EmailTextField {
             id: email
 
@@ -46,6 +56,7 @@ StackViewPage {
             anchors.left: parent.left
             anchors.leftMargin: -email.sizes.focusBorderWidth
             title: OnboardingStrings.email
+            text: loginController.email
         }
 
         MegaTextFields.PasswordTextField {

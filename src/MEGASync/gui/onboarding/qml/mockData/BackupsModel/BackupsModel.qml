@@ -54,6 +54,7 @@ ListModel {
         mDone: false
         mError: 1
     }
+
     ListElement {
         mName: "Documents12345678910111213141516171819202122232425262728293031323334353637383940"
         mFolder: "C:\\Users\\mega\\Documents12345678910111213141516171819202122232425262728293031323334353637383940"
@@ -63,6 +64,7 @@ ListModel {
         mDone: false
         mError: 1
     }
+
     ListElement {
         mName: "Music"
         mFolder: "C:\\Users\\mega\\Music"
@@ -72,6 +74,7 @@ ListModel {
         mDone: false
         mError: 0
     }
+
     ListElement {
         mName: "Images"
         mFolder: "C:\\Users\\mega\\Images"

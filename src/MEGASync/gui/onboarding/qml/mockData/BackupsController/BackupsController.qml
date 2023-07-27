@@ -3,11 +3,11 @@ import QtQuick 2.0
 
 Item {
 
+    signal backupsCreationFinished()
+
     function createBackups() {
-        console.log("mockup BackupsController::createBackups()");
+        console.debug("mockup BackupsController::createBackups()");
         backupsCreationFinished();
     }
-
-    signal backupsCreationFinished()
 
 }

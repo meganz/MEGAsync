@@ -20,9 +20,7 @@ Rectangle {
 
     readonly property string computerName: "computerName"
     readonly property string syncType: "syncType"
-    readonly property string syncs: "syncs"
-    readonly property string selectiveSync: "selectiveSync"
-    readonly property string fullSync: "fullSync"
+    readonly property string syncsFlow: "syncs"
     readonly property string backupsFlow: "backups"
     readonly property string finalState: "finalState"
 
@@ -57,45 +55,18 @@ Rectangle {
             }
         },
         State {
-            name: syncs
+            name: syncsFlow
             StateChangeScript {
-                script: rightPanel.replace(syncPage);
+                script: {
+                    typeSelected = SyncsType.Types.Sync;
+                    rightPanel.replace(syncsFlowPage);
+                }
             }
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
                 step3Text: OnboardingStrings.syncChooseType;
                 step4Text: OnboardingStrings.confirm;
-            }
-        },
-        State {
-            name: selectiveSync
-            StateChangeScript {
-                script: {
-                    typeSelected = SyncsType.Types.SelectiveSync;
-                    rightPanel.replace(selectiveSyncPage);
-                }
-            }
-            PropertyChanges {
-                target: stepPanel;
-                state: stepPanel.step4;
-                step3Text: OnboardingStrings.syncChooseType;
-                step4Text: OnboardingStrings.selectiveSync;
-            }
-        },
-        State {
-            name: fullSync
-            StateChangeScript {
-                script: {
-                    typeSelected = SyncsType.Types.FullSync;
-                    rightPanel.replace(fullSyncPage);
-                }
-            }
-            PropertyChanges {
-                target: stepPanel;
-                state: stepPanel.step4;
-                step3Text: OnboardingStrings.syncChooseType;
-                step4Text: OnboardingStrings.fullSync;
             }
         },
         State {
@@ -185,28 +156,17 @@ Rectangle {
         }
 
         Component {
-            id: syncPage
+            id: syncsFlowPage
 
-            SyncTypePage {}
+            SyncsFlow {}
         }
 
         Component {
-            id: fullSyncPage
-
-            FullSyncPage {}
-        }
-
-        Component {
-            id: selectiveSyncPage
-
-            SelectiveSyncPage {}
-        }
-
-        Component{
             id: backupsFlowPage
 
             BackupsFlow {}
         }
+
 
         Component {
             id: finalPage

@@ -10,12 +10,22 @@ ConfirmEmailPageForm {
         registerFlow.state = changeConfirmEmail;
     }
 
-    email: Onboarding.email
+    cancelAccount.onClicked: {
+        loginController.cancelCreateAccount();
+    }
+
+    email: loginController.email
 
     Connections {
-        target: Onboarding
+        target: loginController
 
-        onAccountConfirmed: {
+        onEmailConfirmed: {
+            registerFlow.state = login;
+            onboardingWindow.requestActivate();
+            onboardingWindow.raise();
+        }
+
+        onAccountCreateCancelled: {
             registerFlow.state = login;
         }
     }

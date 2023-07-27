@@ -1,7 +1,7 @@
 #include "SyncsMenu.h"
 #include "Utilities.h"
 #include "InfoDialog.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "syncs/control/SyncInfo.h"
 #include "Platform.h"
 #include "UserAttributesRequests/DeviceName.h"

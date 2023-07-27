@@ -108,5 +108,10 @@ QtObject {
     readonly property var statusFetchNodes: qsTr("Fetching file list...")
     readonly property var statusSignUp: qsTr("Creating account...")
     readonly property var status2FA: qsTr("Validating 2FA code...")
-
+    readonly property var myComputer: qsTr("My Computer")
+    readonly property var cancelLoginTitle: qsTr("Closing the login window")
+    readonly property var cancelLoginBodyText: qsTr("Closing this window will stop you logging in.")
+    readonly property var cancelLoginPrimaryButton: qsTr("Stop Loggin in")
+    readonly property var cancelLoginSecondaryButton: qsTr("Don’t stop")
+    readonly property var cancelAccount: qsTr("Cancel account")
 }

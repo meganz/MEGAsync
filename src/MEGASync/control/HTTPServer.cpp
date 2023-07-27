@@ -1,5 +1,5 @@
 #include "HTTPServer.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "AppStatsEvents.h"
 #include "Utilities.h"
 #include "MegaApplication.h"

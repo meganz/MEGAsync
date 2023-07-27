@@ -58,7 +58,7 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
     QString syncCleanName = syncName;
     syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
-                     syncCleanName.isEmpty() ? getSyncNameFromPath(localFolder).toUtf8().constData() : syncCleanName.toUtf8().constData(),
+                     syncCleanName.isEmpty() ? nullptr : syncCleanName.toUtf8().constData(),
                      remoteHandle, nullptr,
                      new OnFinishOneShot(mApi, [=](const mega::MegaRequest& request, const MegaError& e){
         auto errorCode = e.getErrorCode();

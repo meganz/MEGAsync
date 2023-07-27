@@ -1,7 +1,7 @@
 #include "QAlertsModel.h"
 #include "QFilterAlertsModel.h"
 #include <QDateTime>
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include <assert.h>
 
 using namespace mega;
