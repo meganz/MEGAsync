@@ -516,7 +516,7 @@
     <message>
         <source>More folders</source>
         <translatorcomment>Button text that opens a window where you can choose a folder to backup</translatorcomment>
-        <translation>Больше папок</translation>
+        <translation>Другие папки</translation>
     </message>
     <message>
         <source>All folders have been synced or backed up.</source>
@@ -2939,7 +2939,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Ошибка расшифровки</translation>
+        <translation>Ошибка дешифрования</translation>
     </message>
     <message>
         <source>Bad session ID</source>
