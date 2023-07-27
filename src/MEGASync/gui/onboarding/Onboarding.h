@@ -25,10 +25,6 @@ signals:
     void accountBlocked();
     void logout();
 
-    void showGuestWindow();
-
-    void hideGuestWindow();
-
 };
 
 #endif // ONBOARDING_H

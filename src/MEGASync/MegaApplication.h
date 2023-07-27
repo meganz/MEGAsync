@@ -246,7 +246,8 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
-    void openInfoWizard();
+    void openGuestDialog();
+    void openOnboardingDialog();
     void importLinks();
     void officialWeb();
     void goToMyCloud();

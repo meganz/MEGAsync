@@ -79,13 +79,3 @@ void Onboarding::openPreferences(bool sync) const
     }
     MegaSyncApp->openSettings(tab);
 }
-
-void Onboarding::showGuestInfoDialog()
-{
-    emit showGuestWindow();
-}
-
-void Onboarding::hideGuestInfoDialog()
-{
-    emit hideGuestWindow();
-}

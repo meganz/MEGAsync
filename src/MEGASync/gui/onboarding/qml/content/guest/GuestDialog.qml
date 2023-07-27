@@ -17,21 +17,8 @@ GuestWindow {
         id: guestContent
     }
 
-    /*
-    Connections {
-        target: Onboarding
-
-        onShowGuestWindow: {
-            guestWindow.visible = true;
-        }
-
-        onHideGuestWindow: {
-            guestWindow.visible = false;
-        }
-    }
-    */
-
     Component.onCompleted: {
         guestWindow.realocate();
+        console.debug("GuestWindow created");
     }
 }

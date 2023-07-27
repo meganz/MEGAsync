@@ -3,7 +3,6 @@
 #include "mega/types.h"
 
 #include <QEvent>
-#include <QScreen>
 
 QmlDialog::QmlDialog(QWindow *parent)
     : QQuickWindow(parent)

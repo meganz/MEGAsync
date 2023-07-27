@@ -86,12 +86,12 @@ LoginPageForm {
         target: loginController
 
         onFetchingNodesProgress: {
-            console.error("LOGIN PAGE progress: " + progress);
+            //console.debug("LOGIN PAGE progress: " + progress);
             loginButton.progress.value = progress;
         }
 
         onFetchingNodesFinished: (firstTime) => {
-            console.error("LOGIN PAGE finish: " + firstTime);
+            //console.debug("LOGIN PAGE finish: " + firstTime);
             onboardingWindow.loggingIn = false;
             if(firstTime) {
                 loginButton.icons.busyIndicatorVisible = false;

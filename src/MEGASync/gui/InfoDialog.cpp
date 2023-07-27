@@ -261,7 +261,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         setAvatar();
         setUsage();
     }
-    regenerate();
     highDpiResize.init(this);
 
 #ifdef _WIN32
@@ -293,6 +292,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mResetTransferSummaryWidget.setInterval(2000);
     mResetTransferSummaryWidget.setSingleShot(true);
     connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
+
+    regenerate();
 }
 
 InfoDialog::~InfoDialog()
@@ -316,18 +317,15 @@ PSA_info *InfoDialog::getPSAdata()
 
 void InfoDialog::showEvent(QShowEvent *event)
 {
-    if(mPreferences->logged())
+    emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
+    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
     {
-        emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
-        if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
-        {
-            ui->bTransferManager->showAnimated();
-        }
-
-        isShown = true;
-        QDialog::showEvent(event);
-        mTransferScanCancelUi->update();
+        ui->bTransferManager->showAnimated();
     }
+
+    isShown = true;
+    QDialog::showEvent(event);
+    mTransferScanCancelUi->update();
 }
 
 void InfoDialog::moveEvent(QMoveEvent*)
@@ -363,37 +361,35 @@ void InfoDialog::enableTransferAlmostOverquotaAlert()
 
 void InfoDialog::hideEvent(QHideEvent *event)
 {
-    if(mPreferences->logged())
-    {
 
 #ifdef __APPLE__
     arrow->hide();
 #endif
 
-        if (filterMenu && filterMenu->isVisible())
+    if (filterMenu && filterMenu->isVisible())
+    {
+        filterMenu->hide();
+    }
+
+    QTimer::singleShot(1000, this, [this] () {
+        if (!isShown)
         {
-            filterMenu->hide();
+            emit ui->sTabs->currentChanged(-1);
         }
-
-        QTimer::singleShot(1000, this, [this] () {
-            if (!isShown)
-            {
-                emit ui->sTabs->currentChanged(-1);
-            }
-        });
+    });
 
 
-        isShown = false;
-        if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
-        {
-            ui->bTransferManager->shrink(true);
-        }
-        QDialog::hideEvent(event);
+    isShown = false;
+    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
+    {
+        ui->bTransferManager->shrink(true);
+    }
+    QDialog::hideEvent(event);
 
 #ifdef _WIN32
     lastWindowHideTime = std::chrono::steady_clock::now();
 #endif
-    }
+
 }
 
 void InfoDialog::setAvatar()
@@ -1400,8 +1396,8 @@ void InfoDialog::regenerate(int blockState)
             break;
         }
     }
-    app->repositionInfoDialog();
 
+    app->repositionInfoDialog();
     app->onGlobalSyncStateChanged(NULL);
 }
 
