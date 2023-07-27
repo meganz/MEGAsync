@@ -8,12 +8,12 @@ import QtQuick.Layouts 1.12
 import Common 1.0
 
 // Local
-import Guest 1.0
+
 
 // C++
 import LoginController 1.0
 import Onboarding 1.0
-import GuestWindow 1.0
+
 
 Rectangle {
     id: registerFlow
@@ -173,36 +173,15 @@ Rectangle {
 
         LoginController {
             id: loginController
+
+            onGoToLoginPage: {
+                registerFlow.state = registerFlow.login;
+            }
+
+            onGoToSignupPage: {
+                registerFlow.state = registerFlow.register;
+            }
         }
     }
 
-    GuestWindow {
-        id: guestWindow
-
-        width: guestContent.width
-        height: guestContent.height
-        modality: Qt.NonModal
-        flags: Qt.FramelessWindowHint
-        color: "transparent"
-
-        GuestContent {
-            id: guestContent
-        }
-
-        Connections {
-            target: Onboarding
-
-            onShowGuestWindow: {
-                guestWindow.visible = true;
-            }
-
-            onHideGuestWindow: {
-                guestWindow.visible = false;
-            }
-        }
-
-        Component.onCompleted: {
-            guestWindow.realocate();
-        }
-    }
 }

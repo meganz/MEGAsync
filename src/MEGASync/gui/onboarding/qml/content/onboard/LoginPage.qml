@@ -23,12 +23,6 @@ LoginPageForm {
         onboardingWindow.loggingIn = false;
     }
 
-    function startProgressInInfoDialog(indeterminate, text) {
-        guestContent.indeterminateProgress = indeterminate;
-        guestContent.state = guestContent.stateInProgress;
-        guestContent.infoText = text;
-    }
-
     Keys.onEnterPressed: {
         loginButton.forceActiveFocus();
         loginButton.clicked();
@@ -67,7 +61,6 @@ LoginPageForm {
         loginController.login(email.text, password.text);
         onboardingWindow.loggingIn = true;
         loginAttempt = true;
-        startProgressInInfoDialog(true, OnboardingStrings.statusLogin);
     }
 
     signUpButton.onClicked: {
@@ -151,7 +144,6 @@ LoginPageForm {
                     break;
                 case ApiEnums.API_OK: //mega::MegaError::API_OK:
                     state = fetchNodesStatus;
-                    startProgressInInfoDialog(false, OnboardingStrings.statusFetchNodes);
                     break;
                 default:
                     break;

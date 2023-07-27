@@ -31,6 +31,8 @@ public:
     Q_INVOKABLE bool getIsEmailConfirmed() const;
     Q_INVOKABLE void cancelLogin() const;
     Q_INVOKABLE void cancelCreateAccount() const;
+    Q_INVOKABLE void guestWindowLoginClicked();
+    Q_INVOKABLE void guestWindowSignupClicked();
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request) override;
@@ -41,6 +43,7 @@ public:
     void emailConfirmation(const QString& email);
 
 signals:
+    void loginStarted();
     void loginFinished(int errorCode, const QString& errorMsg);
     void registerFinished(bool success);
     void emailChanged();
@@ -51,6 +54,8 @@ signals:
     void accountCreationResumed();
     void logout();
     void accountCreateCancelled();
+    void goToLoginPage();
+    void goToSignupPage();
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);

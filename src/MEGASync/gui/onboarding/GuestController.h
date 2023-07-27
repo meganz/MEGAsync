@@ -1,15 +1,19 @@
 #ifndef GUESTCONTROLLER_H
 #define GUESTCONTROLLER_H
 
-#include <QObject>
+#include "qml/QmlDialogWrapper.h"
 
-class GuestController : public QObject
+class GuestController : public QMLComponent
 {
     Q_OBJECT
 
 public:
 
     explicit GuestController(QObject *parent = 0);
+
+    QUrl getQmlUrl() override;
+
+    QString contextName() override;
 
     Q_INVOKABLE void onAboutMEGAClicked();
     Q_INVOKABLE void onPreferencesClicked();

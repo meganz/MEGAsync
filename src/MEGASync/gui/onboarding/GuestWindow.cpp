@@ -3,7 +3,7 @@
 #include "Platform.h"
 
 GuestWindow::GuestWindow(QWindow *parent)
-    : QQuickWindow(parent)
+    : QmlDialog(parent)
 {
 }
 

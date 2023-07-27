@@ -8,6 +8,8 @@
 #include "onboarding/Onboarding.h"
 #include "mega/types.h"
 
+#include <QQmlContext>
+
 LoginController::LoginController(QObject *parent)
     : QObject{parent}
       , mMegaApi(MegaSyncApp->getMegaApi())
@@ -29,6 +31,8 @@ LoginController::LoginController(QObject *parent)
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
     }
+
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), this);
 }
 
 LoginController::~LoginController()
@@ -88,6 +92,16 @@ void LoginController::cancelLogin() const
 void LoginController::cancelCreateAccount() const
 {
     mMegaApi->cancelCreateAccount();
+}
+
+void LoginController::guestWindowLoginClicked()
+{
+    emit goToLoginPage();
+}
+
+void LoginController::guestWindowSignupClicked()
+{
+    emit goToSignupPage();
 }
 
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -176,6 +190,7 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
     {
         mConnectivityTimer->start();
+        emit loginStarted();
     }
     if (request->getType() == mega::MegaRequest::TYPE_FETCH_NODES)
     {

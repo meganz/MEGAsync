@@ -1,9 +1,6 @@
 #include "Preferences/Preferences.h"
 #include "Onboarding.h"
 #include "MegaApplication.h"
-#include "QMegaMessageBox.h"
-#include "GuestWindow.h"
-#include "GuestController.h"
 
 #include <QQmlEngine>
 #include "Syncs.h"
@@ -13,6 +10,8 @@
 #include "ComputerName.h"
 #include "LoginController.h"
 
+#include "OnboardingQmlDialog.h"
+
 using namespace mega;
 
 Onboarding::Onboarding(QObject *parent)
@@ -20,6 +19,7 @@ Onboarding::Onboarding(QObject *parent)
 {
     qmlRegisterModule("Onboard", 1, 0);
     qmlRegisterModule("Onboarding", 1, 0);
+    qmlRegisterType<OnboardingQmlDialog>("com.qmldialog", 1, 0, "OnboardingQmlDialog");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingDialog.qml")), "Onboard", 1, 0, "OnboardingDialog");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingStrings.qml")), "Onboard", 1, 0, "OnboardingStrings");
 
@@ -27,7 +27,6 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
     qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker", 1, 0, "PasswordStrengthChecker");
     qmlRegisterType<ComputerName>("ComputerName", 1, 0, "ComputerName");
-
 
     qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
@@ -58,12 +57,6 @@ Onboarding::Onboarding(QObject *parent)
 
     qmlRegisterModule("BackupsModel", 1, 0);
     qmlRegisterModule("BackupsController", 1, 0);
-
-    qmlRegisterModule("Guest", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestContent.qml")), "Guest", 1, 0, "GuestContent");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestStrings.qml")), "Guest", 1, 0, "GuestStrings");
-    qmlRegisterType<GuestWindow>("GuestWindow", 1, 0, "GuestWindow");
-    qmlRegisterType<GuestController>("GuestController", 1, 0, "GuestController");
 }
 
 

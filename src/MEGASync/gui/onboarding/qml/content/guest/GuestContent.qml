@@ -4,29 +4,20 @@ import QtQuick 2.12
 // QML common
 import Common 1.0
 
+// Local
+import Onboard 1.0
+
 // C++
 import GuestController 1.0
 
 GuestContentForm {
 
-    GuestController {
-        id: controller
-    }
-
     loginButton.onClicked: {
-        if(registerFlow.state === register) {
-            registerFlow.state = login;
-        }
-        onboardingWindow.visible = true;
-        guestWindow.visible = false;
+        LoginControllerAccess.guestWindowLoginClicked();
     }
 
     signUpButton.onClicked: {
-        if(registerFlow.state === login || registerFlow.state === twoFA) {
-            registerFlow.state = register;
-        }
-        onboardingWindow.visible = true;
-        guestWindow.visible = false;
+        LoginControllerAccess.guestWindowSignupClicked();
     }
 
     menuButton.onClicked: {
@@ -39,21 +30,30 @@ GuestContentForm {
     }
 
     aboutMenuItem.onTriggered: {
-        controller.onAboutMEGAClicked();
+        GuestController.onAboutMEGAClicked();
     }
 
     preferencesItem.onTriggered: {
-        controller.onPreferencesClicked();
+        GuestController.onPreferencesClicked();
     }
 
     exitItem.onTriggered: {
-        controller.onExitClicked();
+        GuestController.onExitClicked();
     }
 
     Connections {
-        target: loginController
+        target: LoginControllerAccess
+
+        onLoginStarted: {
+            guestContent.indeterminateProgress = true;
+            guestContent.state = guestContent.stateInProgress;
+            guestContent.infoText = OnboardingStrings.statusLogin;
+        }
 
         onFetchingNodesProgress: {
+            guestContent.indeterminateProgress = false;
+            guestContent.state = guestContent.stateInProgress;
+            guestContent.infoText = OnboardingStrings.statusFetchNodes;
             progressBar.value = progress;
         }
 

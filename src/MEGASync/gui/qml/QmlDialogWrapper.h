@@ -116,7 +116,8 @@ public:
             {
                 context->setContextProperties(propertyList);
             }
-            context->setContextProperty(QString::fromUtf8("Wrapper"), this);
+            // TODO: Think on removing this line
+            //context->setContextProperty(QString::fromUtf8("Wrapper"), this);
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
             connect(mWindow, &QmlDialog::finished, this, [this](){
