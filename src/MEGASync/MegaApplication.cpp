@@ -485,7 +485,7 @@ void MegaApplication::initialize()
     // version not using the mustDeleteSdkCacheAtStartup flag, did not restart
     // from the settings dialog to activate the new exclusions, and the app got (auto) updated.
     if (preferences->mustDeleteSdkCacheAtStartup()
-        || (prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
+        || (updated && prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
             && preferences->isCrashed()))
     {
         preferences->setDeleteSdkCacheAtStartup(false);
@@ -3281,6 +3281,11 @@ void MegaApplication::logBatchStatus(const char* tag)
 
 void MegaApplication::enableTransferActions(bool enable)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
 #ifdef _WIN32
     if(updateAvailable && windowsUpdateAction)
     {
@@ -3297,6 +3302,7 @@ void MegaApplication::enableTransferActions(bool enable)
     {
         updateAction->setEnabled(enable);
     }
+
     guestSettingsAction->setEnabled(enable);
     importLinksAction->setEnabled(enable);
     uploadAction->setEnabled(enable);
@@ -3477,11 +3483,12 @@ void MegaApplication::processUpgradeSecurityEvent()
     msgInfo.title = tr("Security upgrade");
     msgInfo.text = message;
     msgInfo.buttons = QMessageBox::Ok|QMessageBox::Cancel;
+    msgInfo.textFormat = Qt::RichText;
     msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
         {
         if (msg->result() == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaRequest&, const MegaError& e){
                 if (e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMessage = tr("Failed to ugrade security. Error: %1")
@@ -6189,7 +6196,7 @@ void MegaApplication::createInfoDialogMenus()
 
     if (updateAvailable)
     {
-        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         updateAction->setEnabled(previousEnabledState);
         connect(updateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked, Qt::QueuedConnection);
 
@@ -6197,7 +6204,7 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        aboutAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
 
         infoDialogMenu->addAction(aboutAction);

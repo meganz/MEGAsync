@@ -99,7 +99,7 @@ void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     }
 }
 
-void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error)
+void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaError* error)
 {
     if(mHadGlobalPause)
     {
@@ -117,7 +117,17 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error
     mTransferError = error->getErrorCode();
     mTransferFinished = true;
 
-    if (!warningShown)
+    if(transfer->getState() == mega::MegaTransfer::STATE_CANCELLED)
+    {
+        preparing = false;
+        warningShown = false;
+
+        if(mSendProgress)
+        {
+            mSendProgress->close();
+        }
+    }
+    else if (!warningShown)
     {
         postUpload();
     }
@@ -145,7 +155,7 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
             if (e->getErrorCode() == MegaError::API_OK)
             {
                 QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.parent = this;
+                msgInfo.parent = this->parentWidget();
                 msgInfo.title = tr("Bug report");
                 msgInfo.text = tr("Bug report success!");
                 msgInfo.informativeText = tr("Your bug report has been submitted, a confirmation email will sent to you accordingly.");
@@ -153,13 +163,8 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
                 msgInfo.buttons = QMessageBox::Ok;
                 msgInfo.iconPixmap = QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/bug_report_success.png")
                                                                             : QString::fromUtf8(":/images/bug_report_success@2x.png"));
-                msgInfo.finishFunc = [this](QPointer<QMessageBox>)
-                {
-                    QTimer::singleShot(0, this, [this](){
-                        accept();
-                    });
-                };
 
+                accept();
                 QMegaMessageBox::information(msgInfo);
             }
             else
@@ -194,7 +199,6 @@ void BugReportDialog::showErrorMessage()
         preparing = false;
         errorShown = false;
     };
-
 
     if (mTransferFinished && mTransferError == MegaError::API_EEXIST)
     {

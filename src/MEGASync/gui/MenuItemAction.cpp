@@ -8,13 +8,10 @@ const QString MenuItemAction::Colors::Accent = QLatin1String("#F46265");
 static constexpr int ENTRY_MAX_WIDTH_PX = 240;
 
 MenuItemAction::MenuItemAction(const QString& title, const QString& value,
-                               const QIcon& icon, const QIcon& hoverIcon, bool manageHoverStates,
-                               int treeDepth, const QSize& iconSize, QObject* parent)
+                               const QIcon& icon, int treeDepth, const QSize& iconSize, QObject* parent)
     : QWidgetAction (parent),
       mAccent(false),
       mContainer (new QWidget()),
-      mIcon (icon),
-      mHoverIcon (hoverIcon),
       mTitle (new QLabel(mContainer)),
       mValue (value.isNull() ? nullptr : new QLabel(value, mContainer)),
       mTreeDepth (treeDepth),
@@ -24,43 +21,24 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& value,
     mContainer->setObjectName(QLatin1String("wContainer"));
     mContainer->installEventFilter(this);
 
-    if (manageHoverStates)
-    {
-        mContainer->setAttribute(Qt::WA_TransparentForMouseEvents);
-    }
-
-    setupActionWidget(iconSize);
+    setupActionWidget(icon, iconSize);
     setDefaultWidget(mContainer);
 }
 
-MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon,
-                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject *parent)
-    : MenuItemAction (title, QString(), icon, QIcon(), manageHoverStates, treeDepth, iconSize, parent)
+MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, int treeDepth,
+                               const QSize& iconSize, QObject *parent)
+    : MenuItemAction (title, QString(), icon, treeDepth, iconSize, parent)
 {
 }
 
-MenuItemAction::MenuItemAction(const QString& title, const QString& value, const QIcon& icon,
-                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject *parent)
-    : MenuItemAction (title, value, icon,  QIcon(), manageHoverStates, treeDepth, iconSize, parent)
+MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, QObject *parent)
+    : MenuItemAction (title, QString(), icon, 0, QSize(24, 24), parent)
 {
-}
-
-MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon,
-               QObject *parent)
-    : MenuItemAction (title, QString(), icon,  QIcon(), false, 0, QSize(24, 24), parent)
-{
-
 }
 
 void MenuItemAction::setIcon(const QIcon& icon)
 {
-    mIcon = icon;
-    mIconButton->setIcon(mIcon);
-}
-
-void MenuItemAction::setHoverIcon(const QIcon& icon)
-{
-    mHoverIcon = icon;
+    mIconButton->setIcon(icon);
 }
 
 void MenuItemAction::setHighlight(bool highlight)
@@ -77,14 +55,7 @@ void MenuItemAction::setHighlight(bool highlight)
 
 MenuItemAction::~MenuItemAction()
 {
-    QLayout* layout (mContainer->layout());
-    QLayoutItem* child;
-    while ((child = layout->takeAt(0)) != 0)
-    {
-        delete child->widget();
-        delete child;
-    }
-    mContainer->deleteLater();
+    mContainer->deleteLater(); // This deletes mTitle, mValue and mIconButton, because they are all children of mContainer
 }
 
 void MenuItemAction::setLabelText(const QString& title)
@@ -101,7 +72,7 @@ void MenuItemAction::setLabelText(const QString& title)
     }
 }
 
-void MenuItemAction::setupActionWidget(const QSize& iconSize)
+void MenuItemAction::setupActionWidget(const QIcon& icon, const QSize& iconSize)
 {
     mContainer->setMinimumHeight(32);
     mContainer->setMaximumHeight(32);
@@ -114,7 +85,7 @@ void MenuItemAction::setupActionWidget(const QSize& iconSize)
     mIconButton->setMinimumSize(iconSize);
     mIconButton->setMaximumSize(iconSize);
     mIconButton->setIconSize(iconSize);
-    mIconButton->setIcon(mIcon);
+    mIconButton->setIcon(icon);
 
     mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
 
