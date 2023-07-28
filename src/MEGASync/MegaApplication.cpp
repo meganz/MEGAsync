@@ -2378,7 +2378,6 @@ void MegaApplication::raiseInfoDialog()
 {
     if(preferences && !preferences->logged())
     {
-        openOnboardingDialog();
         openGuestDialog();
         return;
     }

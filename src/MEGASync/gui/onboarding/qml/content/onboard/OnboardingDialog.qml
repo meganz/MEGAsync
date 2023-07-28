@@ -11,10 +11,10 @@ import Onboard.Syncs_types 1.0
 import Onboard.Syncs_types.Syncs 1.0
 
 // C++
-import com.qmldialog 1.0 as Cpp
+import OnboardingQmlDialog 1.0
 import Onboarding 1.0
 
-Cpp.OnboardingQmlDialog {
+OnboardingQmlDialog {
     id: onboardingWindow
 
     title: OnboardingStrings.setUpMEGA

@@ -1,6 +1,6 @@
 #include "GuestController.h"
 #include "MegaApplication.h"
-#include "GuestWindow.h"
+#include "GuestQmlDialog.h"
 
 #include <QQmlEngine>
 
@@ -11,7 +11,7 @@ GuestController::GuestController(QObject *parent)
     qmlRegisterModule("GuestController", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestContent.qml")), "Guest", 1, 0, "GuestContent");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestStrings.qml")), "Guest", 1, 0, "GuestStrings");
-    qmlRegisterType<GuestWindow>("GuestWindow", 1, 0, "GuestWindow");
+    qmlRegisterType<GuestQmlDialog>("GuestQmlDialog", 1, 0, "GuestQmlDialog");
 }
 
 void GuestController::onAboutMEGAClicked()

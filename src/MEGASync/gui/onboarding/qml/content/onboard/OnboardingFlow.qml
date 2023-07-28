@@ -52,8 +52,8 @@ StackView {
 
     Connections{
         target: Onboarding
-        onLogout:
-        {
+
+        onLogout: {
             onboarding.state = onboarding.register;
         }
     }

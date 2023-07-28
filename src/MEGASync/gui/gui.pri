@@ -89,7 +89,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/ComputerName.cpp \
     $$PWD/onboarding/PasswordStrengthChecker.cpp \
     $$PWD/onboarding/BackupsController.cpp \
-    $$PWD/onboarding/GuestWindow.cpp \
+    $$PWD/onboarding/GuestQmlDialog.cpp \
     $$PWD/onboarding/OnboardingQmlDialog.cpp \
     $$PWD/onboarding/GuestController.cpp
 
@@ -180,7 +180,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/ComputerName.h \
     $$PWD/onboarding/PasswordStrengthChecker.h \
     $$PWD/onboarding/BackupsController.h \
-    $$PWD/onboarding/GuestWindow.h \
+    $$PWD/onboarding/GuestQmlDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \
     $$PWD/onboarding/GuestController.h
 
