@@ -29,13 +29,14 @@ Rectangle {
 
     readonly property string stateNormal: "NORMAL"
     readonly property string stateInProgress: "IN_PROGRESS"
+    readonly property string stateBlocked: "BLOCKED"
 
     width: 400
     height: 560
     radius: 10
     color: Styles.surface1
 
-    state: content.stateNormal
+    state: content.stateBlocked
     states: [
         State {
             name: content.stateNormal
@@ -47,6 +48,12 @@ Rectangle {
             name: content.stateInProgress
             StateChangeScript {
                 script: stack.replace(progressPage);
+            }
+        },
+        State {
+            name: content.stateBlocked
+            StateChangeScript {
+                script: stack.replace(blockedPage);
             }
         }
     ]
@@ -187,6 +194,29 @@ Rectangle {
                 }
                 indeterminate: content.indeterminate
                 progressValue: content.progressValue
+            }
+        }
+
+        Component {
+            id: blockedPage
+
+            BasePage {
+                image.source: Images.warningGuest
+                imageTopMargin: 110
+                title: GuestStrings.accountTempLocked
+                description: GuestStrings.accountTempLockedSMS
+                leftButton {
+                    text: GuestStrings.logOut
+                    onClicked: {
+                        LoginControllerAccess.guestWindowSignupClicked();
+                    }
+                }
+                rightButton {
+                    text: GuestStrings.verifyNow
+                    onClicked: {
+                        LoginControllerAccess.guestWindowLoginClicked();
+                    }
+                }
             }
         }
     }
