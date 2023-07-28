@@ -1135,6 +1135,7 @@ void MegaApplication::start()
     }
 #endif
 
+    //Start the initial setup wizard if needed
     if (!preferences->logged() && preferences->getSession().isEmpty())
     {
         if (!preferences->installationTime())
@@ -1156,7 +1157,6 @@ void MegaApplication::start()
 
         checkOperatingSystem();
 
-        //Start the initial setup wizard if needed
         if (!infoDialog)
         {
             createInfoDialog();
