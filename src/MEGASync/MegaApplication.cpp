@@ -1135,14 +1135,6 @@ void MegaApplication::start()
     }
 #endif
 
-    //Start the initial setup wizard if needed
-    if (!infoDialog)
-    {
-        createInfoDialog();
-        checkSystemTray();
-        createTrayIcon();
-    }
-
     if (!preferences->logged() && preferences->getSession().isEmpty())
     {
         if (!preferences->installationTime())
@@ -1164,6 +1156,13 @@ void MegaApplication::start()
 
         checkOperatingSystem();
 
+        //Start the initial setup wizard if needed
+        if (!infoDialog)
+        {
+            createInfoDialog();
+            checkSystemTray();
+            createTrayIcon();
+        }
 
         if (!preferences->isFirstStartDone())
         {
@@ -2713,6 +2712,10 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
+    if (blockState)
+    {
+        infoDialog->regenerateLayout(blockState);
+    }
     connect(infoDialog.data(), &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
     connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
     connect(infoDialog.data(), &InfoDialog::almostTransferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
@@ -5793,7 +5796,9 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             {
                 if (blockState)
                 {
-                    showInfoMessage(tr("Locked account"));
+                    createInfoDialog();
+                    checkSystemTray();
+                    showInfoDialog();
                 }
                 else if (!megaApi->isLoggedIn())
                 {
