@@ -18,6 +18,7 @@ Item {
     signal showSignUpPage
     signal hideGuestWindow
     signal showGuestWindow
+    signal logout
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");

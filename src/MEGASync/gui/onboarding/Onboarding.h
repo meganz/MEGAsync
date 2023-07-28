@@ -15,10 +15,6 @@ public:
 
     QString contextName() override;
 
-    void showGuestInfoDialog();
-
-    void hideGuestInfoDialog();
-
     Q_INVOKABLE void openPreferences(bool sync) const;
 
 signals:
