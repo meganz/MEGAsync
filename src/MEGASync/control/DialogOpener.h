@@ -161,6 +161,7 @@ public:
             if(msg->parent())
             {
                 blocker = new DialogBlocker(msg->parentWidget());
+                qApp->setActiveWindow(msg);
             }
 #endif
 
