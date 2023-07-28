@@ -410,8 +410,8 @@ protected:
     MenuItemAction *updateAction;
     MenuItemAction *aboutAction;
     QAction *showStatusAction;
-    QPointer<SyncsMenu> mSyncs2waysMenu;
-    QPointer<SyncsMenu> mBackupsMenu;
+    QPointer<TwoWaySyncsMenu> mSyncs2waysMenu;
+    QPointer<BackupSyncsMenu> mBackupsMenu;
 
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
