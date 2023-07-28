@@ -558,7 +558,7 @@ void MegaApplication::initialize()
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
 
-    delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
+    delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi, mFolderTransferListener);
     downloader = new MegaDownloader(megaApi, mFolderTransferListener);
@@ -1136,6 +1136,13 @@ void MegaApplication::start()
 #endif
 
     //Start the initial setup wizard if needed
+    if (!infoDialog)
+    {
+        createInfoDialog();
+        checkSystemTray();
+        createTrayIcon();
+    }
+
     if (!preferences->logged() && preferences->getSession().isEmpty())
     {
         if (!preferences->installationTime())
@@ -1156,13 +1163,6 @@ void MegaApplication::start()
         updated = false;
 
         checkOperatingSystem();
-
-        if (!infoDialog)
-        {
-            createInfoDialog();
-            checkSystemTray();
-            createTrayIcon();
-        }
 
 
         if (!preferences->isFirstStartDone())
@@ -2460,7 +2460,10 @@ void MegaApplication::showInfoDialog()
         }
     }
 
-    updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    if(!getBlockState())
+    {
+      updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    }
 }
 
 void MegaApplication::showInfoDialogNotifications()
@@ -4696,6 +4699,10 @@ void MegaApplication::showVerifyAccountInfo(std::function<void()> func)
     connect(verifyEmail.data(), SIGNAL(logout()), this, SLOT(unlink()));
 
     DialogOpener::showDialog(verifyEmail, func);
+    if(auto dialog = DialogOpener::findDialog<VerifyLockMessage>())
+    {
+        dialog->setIgnoreCloseAllAction(true);
+    }
 }
 
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
@@ -6472,6 +6479,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
+                if(blockState == eventNumber)
+                {
+                    break;
+                }
                 blockState = eventNumber;
                 emit blocked();
                 blockStateSet = true;
@@ -6479,8 +6490,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 {
                     preferences->setBlockedState(blockState);
                 }
-
-                showVerifyAccountInfo([this]()
+                if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
                 {
                     if (infoDialog)
                     {
@@ -6490,13 +6500,12 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                             DialogOpener::closeAllDialogs();
                         }
                     }
-                    else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
-                    {
-                        showVerifyAccountInfo();
-                    }
+
+                    showVerifyAccountInfo();
 
                     whyamiblockedPeriodicPetition = false;
-                });
+
+                }
                 break;
             }
             case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
@@ -8139,26 +8148,4 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
     model->removeSyncedFolderByBackupId(sync->getBackupId());
 
     onGlobalSyncStateChanged(api);
-}
-
-MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent, MegaApplication *app)
-    : QTMegaListener(megaApi, parent)
-{
-    this->app = app;
-}
-
-void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
-{
-    QTMegaListener::onRequestFinish(api, request, e);
-
-    if (request->getType() != MegaRequest::TYPE_FETCH_NODES
-            || e->getErrorCode() != MegaError::API_OK)
-    {
-        return;
-    }
-}
-
-void MEGASyncDelegateListener::onEvent(MegaApi *api, MegaEvent *e)
-{
-    QTMegaListener::onEvent(api, e);
 }

@@ -234,7 +234,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 loggingStarted = false;
 
-                if (error->getErrorCode() != MegaError::API_EBLOCKED)
+                if (error->getErrorCode() != MegaError::API_EINTERNAL)
                 {
                     page_login();
                 }

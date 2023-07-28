@@ -675,15 +675,4 @@ public:
     }
 };
 
-class MEGASyncDelegateListener: public mega::QTMegaListener
-{
-public:
-    MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent = NULL, MegaApplication *app = NULL);
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onEvent(mega::MegaApi *api, mega::MegaEvent *e) override;
-
-protected:
-    MegaApplication *app;
-};
-
 #endif // MEGAAPPLICATION_H
