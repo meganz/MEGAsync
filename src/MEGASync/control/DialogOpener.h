@@ -120,7 +120,7 @@ public:
     template <class DialogType>
     static std::shared_ptr<DialogInfo<DialogType>> findDialog()
     {
-        auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+        auto classType = className<DialogType>();
 
         auto finder = [classType](const std::shared_ptr<DialogInfoBase>& dialogInfo) {
             return (dialogInfo->getDialogClass() == classType);
@@ -325,7 +325,7 @@ public:
         {
             removeWhenClose(dialog);
             showDialogImpl(dialog, false);
-            auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+            auto classType = className<DialogType>();
             mSavedGeometries.insert(classType, GeometryInfo());
         }
     }
@@ -347,7 +347,7 @@ public:
     {
         if(dialog)
         {
-            auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+            auto classType = className<DialogType>();
             if(mSavedGeometries.contains(classType))
             {
                 GeometryInfo info;
@@ -405,7 +405,7 @@ private:
     {
         if(dialog)
         {
-            auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+            QString classType = className<DialogType>();
             auto info = findSiblingDialogInfo<DialogType>(classType);
 
             if(info)
@@ -536,6 +536,12 @@ private:
         }
 
         return nullptr;
+    }
+
+    template <class DialogType>
+    static QString className()
+    {
+        return QString::fromUtf8(typeid(DialogType).name());
     }
 };
 
