@@ -277,8 +277,8 @@ background-color: #f6f6f6;
              <item>
               <widget class="QLabel" name="SmartDescription">
                <property name="text">
-                <string>Let Mega solve stalls
-automatically</string>
+                <string>Let Mega solve
+Sync Issues automatically</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
