@@ -47,6 +47,8 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
     if(!header)
     {
         header = new StalledIssueHeader(parent);
+        header->updateGeometry();
+        header->layout()->activate();
         header->setDelegate(mDelegate);
         header->hide();
     }
@@ -77,6 +79,8 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
         }
 
         item = createBodyWidget(index, parent, issue);
+        item->updateGeometry();
+        item->layout()->activate();
         item->setDelegate(mDelegate);
         item->setAttribute(Qt::WA_WState_ExplicitShowHide, false);
         item->setAttribute(Qt::WA_WState_Hidden , true);

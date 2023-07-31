@@ -369,11 +369,6 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
 
             header->showMultipleAction(tr("Solve options"), actions);
         }
-        else
-        {
-            header->showSolvedMessage();
-            header->hideMultipleAction();
-        }
     }
 }
 

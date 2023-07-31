@@ -7,9 +7,21 @@
 #include <QScrollBar>
 #include <QApplication>
 
+const int SCROLL_STOP_THRESHOLD = 30;
+
 StalledIssuesView::StalledIssuesView(QWidget *parent)
     :  LoadingSceneView<StalledIssueLoadingItem, QTreeView>(parent)
 {
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &StalledIssuesView::onScrollMoved);
+    mScrollStop.setSingleShot(true);
+    connect(&mScrollStop, &QTimer::timeout, [this](){
+        emit scrollStopped();
+    });
+}
+
+void StalledIssuesView::onScrollMoved()
+{
+    mScrollStop.start(SCROLL_STOP_THRESHOLD);
 }
 
 void StalledIssuesView::mousePressEvent(QMouseEvent *event)

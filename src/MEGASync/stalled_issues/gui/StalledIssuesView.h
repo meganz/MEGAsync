@@ -6,6 +6,7 @@
 
 #include <QTreeView>
 #include <QMouseEvent>
+#include <QTimer>
 
 class StalledIssuesView : public LoadingSceneView<StalledIssueLoadingItem, QTreeView>
 {
@@ -13,9 +14,18 @@ class StalledIssuesView : public LoadingSceneView<StalledIssueLoadingItem, QTree
 public:
     StalledIssuesView(QWidget* parent);
 
+signals:
+    void scrollStopped();
+
+protected slots:
+    void onScrollMoved();
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+
+private:
+    QTimer mScrollStop;
 };
 
 #endif // STALLEDISSUESVIEW_H

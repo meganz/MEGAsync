@@ -5,6 +5,7 @@
 #include "StalledIssueHeader.h"
 #include "StalledIssuesView.h"
 #include "MegaDelegateHoverManager.h"
+#include "StalledIssue.h"
 
 #include <QPainter>
 #include <QMouseEvent>
@@ -20,6 +21,7 @@ const float BOTTON_MARGIN = 6.0;
 const float TOP_MARGIN = 2.0;
 const float CORNER_RADIUS = 10.0;
 const int PEN_WIDTH = 2;
+const int UPDATE_SIZE_TIMER = 30;
 
 StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView *view)
     :QStyledItemDelegate(view),
@@ -32,15 +34,63 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
                       mProxyModel->sourceModel());
 
     mCacheManager.setProxyModel(mProxyModel);
+
+    mUpdateSizeHintTimer.setSingleShot(true);
+    connect(&mUpdateSizeHintTimer, &QTimer::timeout, [this](){
+        emit sizeHintChanged(QModelIndex());
+    });
+
+    connect(mView, &StalledIssuesView::scrollStopped, this, [this](){
+        updateVisibleIndexesSizeHint(UPDATE_SIZE_TIMER);
+    });
+
+    mView->installEventFilter(this);
+}
+
+void StalledIssueDelegate::updateVisibleIndexesSizeHint(int updateDelay)
+{
+    auto firstIndex = mView->indexAt(QPoint(0,0));
+    auto firstRow = firstIndex.parent().isValid() ? firstIndex.parent().row() : firstIndex.row();
+
+    for(int row = firstRow - 15; row <= (firstRow + 15); ++row)
+    {
+        if(!mVisibleIndexesRange.contains(row))
+        {
+            auto index = mProxyModel->index(row, 0);
+            if(index.isValid())
+            {
+                if(mVisibleIndexesRange.size() == 30)
+                {
+                    mVisibleIndexesRange.removeFirst();
+                }
+
+                mVisibleIndexesRange.append(row);
+
+                StalledIssueVariant stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
+                stalledIssueItem.removeDelegateSize(StalledIssue::Header);
+            }
+
+            mUpdateSizeHintTimer.start(updateDelay);
+        }
+    }
 }
 
 QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
-    StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
-    if(w)
+    StalledIssueVariant stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
     {
-        return w->sizeHint();
+        StalledIssue::SizeType sizeType = index.parent().isValid() ? StalledIssue::Body : StalledIssue::Header;
+        auto size = stalledIssueItem.getDelegateSize(sizeType);
+        if(size.isValid())
+        {
+            return size;
+        }
+
+        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
+        if(w)
+        {
+            return w->sizeHint();
+        }
     }
 
     return QStyledItemDelegate::sizeHint(option, index);
@@ -50,6 +100,11 @@ void StalledIssueDelegate::resetCache()
 {
     mCacheManager.reset();
     mMouseHoverOrSelectedLastState.clear();
+}
+
+void StalledIssueDelegate::updateSizeHint()
+{
+    mUpdateSizeHintTimer.start(UPDATE_SIZE_TIMER);
 }
 
 void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -291,7 +346,15 @@ bool StalledIssueDelegate::event(QEvent *event)
 
 bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
 {
-    if(event->type() == QEvent::MouseButtonRelease)
+    if(object == mView && (event->type() == QEvent::Resize
+                           || event->type() == QEvent::Show))
+    {
+        mVisibleIndexesRange.clear();
+        //Update it as soon as possible
+        updateVisibleIndexesSizeHint(0);
+
+    }
+    else if(event->type() == QEvent::MouseButtonRelease)
     {
         if(auto mouseButtonEvent = dynamic_cast<QMouseEvent*>(event))
         {

@@ -25,6 +25,7 @@ WordWrapLabel::WordWrapLabel(QWidget* parent)
 void WordWrapLabel::setText(const QString &text)
 {
     QTextEdit::setText(text);
+    setLineWrapColumnOrWidth(lineWrapColumnOrWidth());
     adaptHeight();
 }
 

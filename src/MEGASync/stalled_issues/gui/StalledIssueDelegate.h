@@ -23,6 +23,8 @@ public:
     QSize sizeHint(const QStyleOptionViewItem&option, const QModelIndex&index) const;
     void resetCache();
 
+    void updateSizeHint();
+
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
     bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
@@ -36,6 +38,7 @@ protected:
 protected slots:
     void onHoverEnter(const QModelIndex& index);
     void onHoverLeave(const QModelIndex&);
+    void updateVisibleIndexesSizeHint(int updateDelay = 50);
 
 private:
     QColor getRowColor(const QModelIndex& index) const;
@@ -51,6 +54,9 @@ private:
     mutable QMap<QModelIndex, bool> mMouseHoverOrSelectedLastState;
 
     mutable QPointer<StalledIssueBaseDelegateWidget> mEditor;
+
+    QTimer mUpdateSizeHintTimer;
+    QList<int> mVisibleIndexesRange;
 };
 
 #endif // STALLEDISSUEDELEGATE_H

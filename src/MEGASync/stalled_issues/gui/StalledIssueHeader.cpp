@@ -30,11 +30,6 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->actionButton->hide();
-    ui->multipleActionButton->hide();
-    ui->actionMessageContainer->hide();
-    ui->ignoreFileButton->hide();
-
     connect(ui->multipleActionButton, &QPushButton::clicked, this, &StalledIssueHeader::onMultipleActionClicked);
 }
 
@@ -292,10 +287,19 @@ void StalledIssueHeader::refreshUi()
         ui->ignoreFileButton->hide();
     }
 
+   resetSolvingWidgets();
+
     if(mHeaderCase)
     {
         mHeaderCase->refreshCaseUi(this);
     }
 
     update();
+}
+
+void StalledIssueHeader::resetSolvingWidgets()
+{
+    ui->actionButton->hide();
+    ui->multipleActionButton->hide();
+    ui->actionMessageContainer->hide();
 }

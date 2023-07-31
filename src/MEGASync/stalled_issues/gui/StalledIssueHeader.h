@@ -77,6 +77,7 @@ private:
     void propagateButtonClick();
 
     void refreshUi() override;
+    void resetSolvingWidgets();
 
     Ui::StalledIssueHeader *ui;
     QPointer<StalledIssueHeaderCase> mHeaderCase;

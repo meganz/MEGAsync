@@ -52,9 +52,6 @@ private slots:
 
 private:
     virtual void refreshUi() = 0;
-    QTimer mSizeHintTimer;
-    uint8_t mSizeHintChanged = 0;
-    int mLastSizeHint = 0;
 
     mutable StalledIssueVariant mData;
     QPersistentModelIndex mCurrentIndex;
