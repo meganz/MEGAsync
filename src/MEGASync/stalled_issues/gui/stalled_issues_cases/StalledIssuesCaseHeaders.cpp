@@ -360,9 +360,16 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
         {
             QList<StalledIssueHeader::ActionInfo> actions;
 
-            if(nameConflict->hasDuplicatedNodes())
+            if(header->getData().consultData()->hasFiles() > 0)
+            {
+                if(nameConflict->areAllDuplicatedNodes())
+                {
+                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates"), SolveOptions::RemoveDuplicateAndRename);
+                }
+                else if(nameConflict->hasDuplicatedNodes())
             {
                 actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates and rename the rest"), SolveOptions::RemoveDuplicateAndRename);
+            }
             }
 
             actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), SolveOptions::RenameAll);
@@ -412,8 +419,23 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
 
         msgInfo.buttonsText = textsByButton;
         msgInfo.text = tr("Are you sure you want to solve the issue?");
-        msgInfo.informativeText = index == SolveOptions::RemoveDuplicateAndRename ? tr("This action will delete the duplicate files and rename the rest of names.")
-                                             : tr("This action will rename the conflicted items.");
+
+        QString renameAction(tr("This action will rename the conflicted items (adding a suffix like (1))."));
+        QString removeAction;
+
+        if(header->getData().consultData()->hasFiles() > 0)
+        {
+            if(nameConflict->areAllDuplicatedNodes())
+            {
+               removeAction = tr("This action will delete the duplicate files.");
+            }
+            else if(nameConflict->hasDuplicatedNodes())
+            {
+                removeAction = tr("This action will delete the duplicate files and rename the rest of names (adding a suffix like (1)).");
+            }
+        }
+        msgInfo.informativeText = index == SolveOptions::RemoveDuplicateAndRename ? removeAction
+                                             : renameAction;
 
         msgInfo.finishFunc = [this, index, selection, header, nameConflict](QMessageBox* msgBox)
         {

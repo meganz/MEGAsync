@@ -107,13 +107,26 @@ bool NameConflictedStalledIssue::hasDuplicatedNodes() const
 {
     for(int index = 0; index < mCloudConflictedNames.size(); ++index)
     {
-        if(mCloudConflictedNames.hasDuplicatedNodes())
+        if(mCloudConflictedNames.hasDuplicatedNodes(index))
         {
             return true;
         }
     }
 
     return false;
+}
+
+bool NameConflictedStalledIssue::areAllDuplicatedNodes() const
+{
+    for(int index = 0; index < mCloudConflictedNames.size(); ++index)
+    {
+        if(!mCloudConflictedNames.areAllDuplicatedNodes(index))
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 const QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>>& NameConflictedStalledIssue::getNameConflictLocalData() const

@@ -136,19 +136,39 @@ public:
             mConflictedNames.append(newConflictedName);
         }
 
-        bool hasDuplicatedNodes() const
+        bool areAllDuplicatedNodes(int index) const
+        {
+            auto result(true);
+
+            if(!mDuplicatedSolved)
+            {
+                if(mConflictedNames.size() > index)
+                {
+                    auto conflictedNames = mConflictedNames.at(index);
+                    if(!conflictedNames.solved
+                            && conflictedNames.conflictedNames.size() < 2)
+                    {
+                        result = false;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        bool hasDuplicatedNodes(int index) const
         {
             auto result(false);
 
             if(!mDuplicatedSolved)
             {
-                foreach(auto conflictedNames, mConflictedNames)
+                if(mConflictedNames.size() > index)
                 {
+                    auto conflictedNames = mConflictedNames.at(index);
                     if(!conflictedNames.solved
-                            && conflictedNames.conflictedNames.size() > 1)
+                       && conflictedNames.conflictedNames.size() > 1)
                     {
                         result = true;
-                        break;
                     }
                 }
             }
@@ -272,6 +292,7 @@ public:
     void autoSolveIssue() override;
 
     bool hasDuplicatedNodes() const;
+    bool areAllDuplicatedNodes() const;
 
     void updateIssue(const mega::MegaSyncStall *stallIssue) override;
 
