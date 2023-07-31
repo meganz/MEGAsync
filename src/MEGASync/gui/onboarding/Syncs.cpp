@@ -25,6 +25,7 @@ void Syncs::addSync(const QString &localPath, mega::MegaHandle remoteHandle)
     }
 
     QString warningMessage;
+    bool isLocalFolderError = true;
     auto syncability (SyncController::isLocalFolderAllowedForSync(localPath, mega::MegaSync::TYPE_TWOWAY, warningMessage));
     if (syncability != SyncController::CANT_SYNC)
     {
@@ -42,6 +43,10 @@ void Syncs::addSync(const QString &localPath, mega::MegaHandle remoteHandle)
     if (syncability != SyncController::CANT_SYNC)
     {
         syncability = std::max(SyncController::isRemoteFolderSyncable(node, warningMessage), syncability);
+        if(syncability == SyncController::CANT_SYNC)
+        {
+            isLocalFolderError = false;
+        }
     }
 
     if (syncability == SyncController::CANT_SYNC)
@@ -66,7 +71,7 @@ void Syncs::addSync(const QString &localPath, mega::MegaHandle remoteHandle)
         }
         else
         {
-            emit cantSync(warningMessage);
+            emit cantSync(warningMessage, isLocalFolderError);
         }
     }
     else if (syncability == SyncController::CAN_SYNC

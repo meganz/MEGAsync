@@ -5,8 +5,6 @@
 #include "Platform.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
-#include "onboarding/Onboarding.h"
-
 #include "mega/types.h"
 
 LoginController::LoginController(QObject *parent)
