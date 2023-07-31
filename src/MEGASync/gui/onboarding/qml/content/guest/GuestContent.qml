@@ -18,6 +18,7 @@ import Guest 1.0
 import GuestController 1.0
 import ApiEnums 1.0
 import LoginController 1.0
+import Onboarding 1.0
 
 Rectangle {
     id: content
@@ -36,7 +37,7 @@ Rectangle {
     radius: 10
     color: Styles.surface1
 
-    state: content.stateBlocked
+    state: content.stateNormal
     states: [
         State {
             name: content.stateNormal
@@ -263,6 +264,17 @@ Rectangle {
 
         onRegisterFinished: (success) => {
             content.state = content.stateNormal;
+        }
+    }
+
+    Connections {
+        target: Onboarding
+
+        onAccountBlocked: (errorCode) => {
+            if(errorCode === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL
+               || errorCode === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_SMS) {
+                content.state = content.stateBlocked;
+            }
         }
     }
 

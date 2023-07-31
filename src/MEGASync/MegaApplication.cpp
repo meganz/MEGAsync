@@ -6077,13 +6077,13 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 msgInfo.ignoreCloseAll = true;
                 QMegaMessageBox::critical(msgInfo);
                 break;
-        }
-        }
-        if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-        {
-                emit dialog->getDialog()->wrapper()->accountBlocked();
+            }
         }
 
+        if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+            emit dialog->getDialog()->wrapper()->accountBlocked(event->getNumber());
+        }
     }
     else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
     {
