@@ -141,12 +141,17 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
 
     // Show in file explorer action
-    auto showLocalAction (new MenuItemAction(PlatformStrings::fileExplorer(),
-                                             QLatin1String("://images/sync_context_menu/folder-small.png")));
-    connect(showLocalAction, &MenuItemAction::triggered, this, [sync]()
+    MenuItemAction* showLocalAction(nullptr);
+    QFileInfo localFolder(sync->getLocalFolder());
+    if(localFolder.exists())
     {
-        Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
-    });
+        showLocalAction  = new MenuItemAction(PlatformStrings::fileExplorer(),
+                                                 QLatin1String("://images/sync_context_menu/folder-small.png"));
+        connect(showLocalAction, &MenuItemAction::triggered, this, [sync]()
+        {
+            Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
+        });
+    }
 
     // Show in Mega web action
     auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
@@ -164,11 +169,18 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
         removeActionClicked(sync);
     });
 
-    showLocalAction->setParent(menu);
+    if(showLocalAction)
+    {
+        showLocalAction->setParent(menu);
+    }
+
     showRemoteAction->setParent(menu);
     delAction->setParent(menu);
 
-    menu->addAction(showLocalAction);
+    if(showLocalAction)
+    {
+        menu->addAction(showLocalAction);
+    }
     menu->addAction(showRemoteAction);
     menu->addSeparator();
 
