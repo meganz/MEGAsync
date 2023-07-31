@@ -25,8 +25,11 @@ SyncsPage {
         spacing: 24
 
         Header {
-            title: OnboardingStrings.installationTypeTitle
-            description: OnboardingStrings.installationTypeDescription
+            Layout.leftMargin: 3
+            title: OnboardingStrings.welcomeToMEGA
+            description: OnboardingStrings.choose
+            spacing: 36
+            descriptionWeight: Font.DemiBold
         }
 
         ButtonGroup {
@@ -34,7 +37,7 @@ SyncsPage {
         }
 
         ColumnLayout {
-            spacing: 20
+            spacing: 12
 
             SyncsHorizontalButton {
                 id: syncButton

@@ -17,7 +17,7 @@ ComputerNamePageForm {
         id: computerName
 
         onDeviceNameSet: {
-                syncsPanel.state = syncType;
+            syncsPanel.state = syncType;
         }
     }
 }

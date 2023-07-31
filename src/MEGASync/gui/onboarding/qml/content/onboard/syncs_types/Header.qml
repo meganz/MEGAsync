@@ -10,6 +10,7 @@ ColumnLayout {
 
     property alias title: title.text
     property alias description: description.text
+    property alias descriptionWeight: description.font.weight
 
     spacing: 12
 

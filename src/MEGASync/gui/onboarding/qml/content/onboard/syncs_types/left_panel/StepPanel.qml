@@ -290,7 +290,7 @@ Rectangle {
                 id: step1_computerName
 
                 number: 1
-                text: OnboardingStrings.computerName
+                text: OnboardingStrings.deviceName
             }
 
             Rectangle {
@@ -307,7 +307,7 @@ Rectangle {
                 id: step2_installationType
 
                 number: 2
-                text: OnboardingStrings.installationType
+                text: OnboardingStrings.setUpOptions
             }
 
             Rectangle {

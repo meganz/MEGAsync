@@ -27,12 +27,15 @@ SyncsPage {
         spacing: 12
 
         Header {
+            Layout.leftMargin: computerNameTextField.sizes.focusBorderWidth
             Layout.preferredWidth: parent.width
-            title: OnboardingStrings.computerNameTitle
-            description: OnboardingStrings.computerNameDescription
+            title: OnboardingStrings.deviceNameTitle
+            description: OnboardingStrings.deviceNameDescription
         }
 
         MegaImages.SvgImage {
+            Layout.topMargin: 20
+            Layout.leftMargin: computerNameTextField.sizes.focusBorderWidth
             source: Images.pcMega
             sourceSize: Qt.size(48, 48)
             color: Styles.textPrimary
@@ -42,8 +45,9 @@ SyncsPage {
             id: computerNameTextField
 
             Layout.preferredWidth: parent.width
-            title: OnboardingStrings.computerName
+            title: OnboardingStrings.deviceName
             textField.text: computerName.deviceName
+            sizes: MegaTextFields.LargeSizes {}
         }
     }
 }

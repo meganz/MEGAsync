@@ -81,6 +81,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: titleLoader.bottom
+        anchors.topMargin: sizes.titleSpacing
 
         selectByMouse: true
         selectionColor: Styles.focus

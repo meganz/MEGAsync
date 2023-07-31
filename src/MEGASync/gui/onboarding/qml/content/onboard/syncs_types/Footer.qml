@@ -19,7 +19,7 @@ RowLayout {
     property alias rightSecondary: rightSecondary
     property alias rightPrimary: rightPrimary
 
-    MegaButtons.SecondaryButton {
+    MegaButtons.OutlineButton {
         id: leftSecondary
 
         text: OnboardingStrings.notNow

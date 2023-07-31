@@ -4,7 +4,7 @@ import Onboard 1.0
 Item {
     id: root
 
-    property string deviceName: OnboardingStrings.myComputer
+    property string deviceName: "My Device"
 
     signal deviceNameSet
 
