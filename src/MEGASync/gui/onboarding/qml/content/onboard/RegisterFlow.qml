@@ -105,7 +105,7 @@ Rectangle {
         width: 1
         height: 464
         radius: 2
-        border.color: Styles.borderDisabled
+        color: Styles.borderDisabled
     }
 
     StackView {
