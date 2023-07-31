@@ -26,9 +26,12 @@ const char* MULTIPLE_ACTIONS_PROPERTY = "ACTIONS_PROPERTY";
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
-    ui(new Ui::StalledIssueHeader)
+    ui(new Ui::StalledIssueHeader),
+    mIsExpandable(true)
 {
     ui->setupUi(this);
+
+    ui->errorDescription->hide();
 
     connect(ui->multipleActionButton, &QPushButton::clicked, this, &StalledIssueHeader::onMultipleActionClicked);
 }
@@ -42,6 +45,17 @@ void StalledIssueHeader::expand(bool state)
 {
     auto arrowIcon = Utilities::getCachedPixmap(state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png") :  QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
     ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
+}
+
+bool StalledIssueHeader::isExpandable() const
+{
+    return mIsExpandable;
+}
+
+void StalledIssueHeader::setIsExpandable(bool newIsExpandable)
+{
+    mIsExpandable = newIsExpandable;
+    ui->arrow->setVisible(mIsExpandable);
 }
 
 bool StalledIssueHeader::adaptativeHeight()
@@ -159,6 +173,7 @@ QString StalledIssueHeader::displayFileName(bool preferCloud)
 
 void StalledIssueHeader::setTitleDescriptionText(const QString &text)
 {
+    ui->errorDescription->show();
     ui->errorDescriptionText->setText(text);
 }
 

@@ -37,6 +37,17 @@ void DefaultHeader::refreshCaseUi(StalledIssueHeader* header)
     header->setTitleDescriptionText(tr("Reason not found."));
 }
 
+//Detected Hard Link
+SymLinkHeader::SymLinkHeader(StalledIssueHeader *header)
+    : StalledIssueHeaderCase(header)
+{}
+
+void SymLinkHeader::refreshCaseUi(StalledIssueHeader* header)
+{
+    header->setText(tr("Detected sym link: <b>%1</b>").arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
+    header->setIsExpandable(false);
+}
+
 //Local folder not scannable
 FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)
@@ -367,9 +378,9 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
                     actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates"), SolveOptions::RemoveDuplicateAndRename);
                 }
                 else if(nameConflict->hasDuplicatedNodes())
-            {
-                actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates and rename the rest"), SolveOptions::RemoveDuplicateAndRename);
-            }
+                {
+                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates and rename the rest"), SolveOptions::RemoveDuplicateAndRename);
+                }
             }
 
             actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), SolveOptions::RenameAll);

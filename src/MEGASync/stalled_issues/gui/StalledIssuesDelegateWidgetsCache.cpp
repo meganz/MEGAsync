@@ -167,7 +167,14 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
     {
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {
-            headerCase = new FileIssueHeader(header);
+            if(issue.consultData()->consultLocalData() && issue.consultData()->consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink)
+            {
+                headerCase = new SymLinkHeader(header);
+            }
+            else
+            {
+                headerCase = new FileIssueHeader(header);
+            }
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:

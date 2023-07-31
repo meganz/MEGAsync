@@ -364,35 +364,35 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
                 auto viewPos = mView->mapFromGlobal(mouseButtonEvent->globalPos());
                 auto index = mView->indexAt(viewPos);
 
-                if(index.isValid())
+                if(index.isValid() && !index.parent().isValid())
                 {
-                    if(!index.parent().isValid())
+                    if(auto header = dynamic_cast<StalledIssueHeader*>(mEditor.data()))
                     {
-                        auto currentState = mView->isExpanded(index);
-                        currentState ? mView->collapse(index) : mView->expand(index);
-
-                        if(mEditor)
+                        if(header->isExpandable())
                         {
+                            auto currentState = mView->isExpanded(index);
+                            currentState ? mView->collapse(index) : mView->expand(index);
+
                             mEditor->expand(!currentState);
-                        }
 
-                        auto childIndex = index.model()->index(0,0,index);
-                        //If it is going to be expanded
-                        if(!currentState)
-                        {
-                            if(childIndex.isValid())
+                            auto childIndex = index.model()->index(0,0,index);
+                            //If it is going to be expanded
+                            if(!currentState)
                             {
-                                mView->scrollTo(childIndex);
+                                if(childIndex.isValid())
+                                {
+                                    mView->scrollTo(childIndex);
+                                }
                             }
+
+                            //As soon as the child is expanded,
+                            //update the size as it may be the first time the widget is shown and it is outdated
+                            QTimer::singleShot(0,[this, childIndex](){
+                                sizeHintChanged(childIndex);
+                            });
+
+                            return true;
                         }
-
-                        //As soon as the child is expanded,
-                        //update the size as it may be the first time the widget is shown and it is outdated
-                        QTimer::singleShot(0,[this, childIndex](){
-                        sizeHintChanged(childIndex);
-                        });
-
-                        return true;
                     }
                 }
             }

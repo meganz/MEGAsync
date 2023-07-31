@@ -30,6 +30,9 @@ public:
     ~StalledIssueHeader();
 
     void expand(bool state) override;
+    bool isExpandable() const;
+    void setIsExpandable(bool newIsExpandable);
+
     virtual bool adaptativeHeight();
 
     void showAction(const QString& actionButtonText);
@@ -60,6 +63,7 @@ public:
     void setData(StalledIssueHeaderCase* issueData);
     void reset();
 
+
 protected:
     QString fileName();
 
@@ -81,6 +85,7 @@ private:
 
     Ui::StalledIssueHeader *ui;
     QPointer<StalledIssueHeaderCase> mHeaderCase;
+    bool mIsExpandable;
 };
 
 Q_DECLARE_METATYPE(QList<StalledIssueHeader::ActionInfo>)

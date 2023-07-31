@@ -29,6 +29,18 @@ protected slots:
     void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
+//Sym Link
+class SymLinkHeader : public StalledIssueHeaderCase
+{
+    Q_OBJECT
+
+public:
+    SymLinkHeader(StalledIssueHeader* header);
+
+protected slots:
+    void refreshCaseUi(StalledIssueHeader* header) override;
+};
+
 //Create folder failed
 class FileIssueHeader : public StalledIssueHeaderCase
 {
