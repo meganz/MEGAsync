@@ -55,6 +55,7 @@ private:
 
     mutable QPointer<StalledIssueBaseDelegateWidget> mEditor;
 
+    QTimer mUpdateSizeHintTimerFromResize;
     QTimer mUpdateSizeHintTimer;
     QList<int> mVisibleIndexesRange;
 };

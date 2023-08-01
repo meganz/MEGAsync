@@ -7,7 +7,7 @@
 #include <QScrollBar>
 #include <QApplication>
 
-const int SCROLL_STOP_THRESHOLD = 30;
+const int SCROLL_STOP_THRESHOLD = 50;
 
 StalledIssuesView::StalledIssuesView(QWidget *parent)
     :  LoadingSceneView<StalledIssueLoadingItem, QTreeView>(parent)

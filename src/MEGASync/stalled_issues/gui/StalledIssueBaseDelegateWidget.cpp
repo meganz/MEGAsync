@@ -88,7 +88,9 @@ bool StalledIssueBaseDelegateWidget::event(QEvent *event)
 {
     if(event->type() == QEvent::WhatsThisClicked)
     {
+        QTimer::singleShot(50, [this](){
         checkForSizeHintChanges();
+        });
     }
 
     return QWidget::event(event);
@@ -98,8 +100,14 @@ void StalledIssueBaseDelegateWidget::checkForSizeHintChanges()
 {
     if(mDelegate && mData.consultData())
     {
+        layout()->activate();
+        updateGeometry();
+
         StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
         mData.removeDelegateSize(sizeType);
+
+        //Update sizeHint cache
+        sizeHint();
 
         if(auto stalledDelegate = dynamic_cast<StalledIssueDelegate*>(mDelegate))
         {
@@ -120,14 +128,8 @@ void StalledIssueBaseDelegateWidget::updateSizeHint()
         layout()->activate();
         updateGeometry();
 
-        auto currentSize(size());
-        auto realSize(QWidget::sizeHint());
-
-        if(currentSize.height() != realSize.height())
-        {
-            StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
-            mData.removeDelegateSize(sizeType);
-            mDelegate->sizeHintChanged(getCurrentIndex());
-        }
+        StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
+        mData.removeDelegateSize(sizeType);
+        mDelegate->sizeHintChanged(getCurrentIndex());
     }
 }
