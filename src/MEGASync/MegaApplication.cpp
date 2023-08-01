@@ -4702,10 +4702,6 @@ void MegaApplication::showVerifyAccountInfo(std::function<void()> func)
     connect(verifyEmail.data(), SIGNAL(logout()), this, SLOT(unlink()));
 
     DialogOpener::showDialog(verifyEmail, func);
-    if(auto dialog = DialogOpener::findDialog<VerifyLockMessage>())
-    {
-        dialog->setIgnoreCloseAllAction(true);
-    }
 }
 
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
