@@ -225,6 +225,7 @@ Rectangle {
 
         onFetchingNodesFinished: (firstTime) => {
             content.state = content.stateNormal;
+            guestWindow.hide();
         }
 
         onLogout: {

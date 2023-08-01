@@ -1173,6 +1173,7 @@ void MegaApplication::start()
         }
 
         openOnboardingDialog();
+        openGuestDialog();
 
         if (!preferences->isFirstStartDone())
         {
@@ -5455,6 +5456,7 @@ void MegaApplication::openGuestDialog()
 
     QPointer<QmlDialogWrapper<GuestController>> guest = new QmlDialogWrapper<GuestController>();
     DialogOpener::showDialog(guest);
+    DialogOpener::closeAllDialogs();
 }
 
 void MegaApplication::openOnboardingDialog()
