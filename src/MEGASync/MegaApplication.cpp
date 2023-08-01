@@ -5798,6 +5798,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                 {
                     createInfoDialog();
                     checkSystemTray();
+                    createTrayIcon();
                     showInfoDialog();
                 }
                 else if (!megaApi->isLoggedIn())

@@ -35,11 +35,6 @@ void selectorsImpl(QString uploadTitle, QString defaultDir, bool multiSelection,
 void raiseFileSelectionPanels();
 void closeFileSelectionPanels(QWidget* parent);
 
-//You take the ownership of the returned value
-NSPopover* allocatePopOverWithView(NSView* view, QSize size);
-void showPopOverRelativeToRect(WId view, id popOver, QPointF rect);
-void releaseIdObject(id obj);
-
 static NSOpenPanel *panel = nullptr;
 
 #endif // MACXFUNCTIONS_H
