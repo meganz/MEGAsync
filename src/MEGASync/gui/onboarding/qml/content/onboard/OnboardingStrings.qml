@@ -78,7 +78,7 @@ QtObject {
     readonly property var setUpMEGA: qsTr("Set up MEGA")
     readonly property var signUp: qsTr("Sign up")
     readonly property var signUpTitle: qsTr("Create your [b]MEGA account[/b]")
-    readonly property var storageSpace: qsTr("Storage space")
+    readonly property var availableStorage: qsTr("Available storage:")
     readonly property var syncButtonDescription: qsTr("Sync your device and MEGA and any changes will automatically and instantly apply to MEGA and vice versa.")
     readonly property var syncDescription: qsTr("Lorem ipsum dolor asitmet")
     readonly property var syncTitle: qsTr("Choose sync type")
