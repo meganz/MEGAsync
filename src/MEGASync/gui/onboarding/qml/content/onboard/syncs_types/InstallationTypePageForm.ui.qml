@@ -52,7 +52,7 @@ SyncsPage {
             SyncsHorizontalButton {
                 id: backupsButton
 
-                title: OnboardingStrings.backUp
+                title: OnboardingStrings.backup
                 description: OnboardingStrings.backupButtonDescription
                 imageSource: Images.installationTypeBackups
                 type: SyncsType.Backup

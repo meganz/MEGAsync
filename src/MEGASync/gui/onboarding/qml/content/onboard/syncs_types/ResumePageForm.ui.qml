@@ -26,7 +26,7 @@ SyncsPage {
 
     footerButtons {
         leftSecondary.visible: false
-        rightSecondary.text: OnboardingStrings.openInSettings
+        rightSecondary.text: OnboardingStrings.viewInSettings
         rightPrimary {
             text: OnboardingStrings.done
             icons: MegaButtons.Icon {}
@@ -103,7 +103,7 @@ SyncsPage {
                     id: syncButton
 
                     title: OnboardingStrings.sync
-                    description: OnboardingStrings.syncButtonDescription
+                    description: OnboardingStrings.finalPageButtonSync
                     imageSource: Images.sync
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Sync
@@ -113,7 +113,7 @@ SyncsPage {
                            : (parent.width - parent.spacing) / 2
                     height: (finalPageRoot.state === finalPageRoot.stateFullSync)
                             ? 148
-                            : 170
+                            : 196
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)
@@ -124,14 +124,14 @@ SyncsPage {
                 SyncsVerticalButton {
                     id: backupsButton
 
-                    title: OnboardingStrings.backUp
-                    description: OnboardingStrings.backupButtonDescription
+                    title: OnboardingStrings.backup
+                    description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Backup
                     checkable: false
                     width: (parent.width - parent.spacing) / 2
-                    height: 170
+                    height: 196
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)
