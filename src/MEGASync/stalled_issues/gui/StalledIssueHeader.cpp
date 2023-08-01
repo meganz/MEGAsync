@@ -304,6 +304,9 @@ void StalledIssueHeader::refreshUi()
 
    resetSolvingWidgets();
 
+   //By default it is expandable
+   setIsExpandable(true);
+
     if(mHeaderCase)
     {
         mHeaderCase->refreshCaseUi(this);
