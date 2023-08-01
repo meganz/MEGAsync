@@ -40,7 +40,7 @@ bool StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
         {
             MegaSyncApp->getMegaApi()->createFolder(dateFolder.toUtf8().constData(), parentNode.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
                                                       [this, moveLambda]
-                                                      (const mega::MegaError& e, const mega::MegaRequest& request)
+                                                      (const mega::MegaRequest& request,const mega::MegaError& e)
             {
                 if (e.getErrorCode() == mega::MegaError::API_OK)
                 {
@@ -77,7 +77,7 @@ bool StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
     {
         MegaSyncApp->getMegaApi()->createFolder(duplicatedFolder.toUtf8().constData(), binNode.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
                                                                                                                                 [this, fullDuplicatedFolderPath, moveToDateFolder]
-                                                                                                                                (const mega::MegaError& e, const mega::MegaRequest& request)
+                                                                                                                                (const mega::MegaRequest& request,const mega::MegaError& e)
         {
             if (e.getErrorCode() == mega::MegaError::API_OK)
             {
@@ -158,7 +158,7 @@ void StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
         auto rubbishNode = MegaSyncApp->getMegaApi()->getRubbishNode();
         QPointer<StalledIssuesUtilities> currentThis(this);
         MegaSyncApp->getMegaApi()->moveNode(node,rubbishNode,
-                                            new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [=](const mega::MegaError& e, const mega::MegaRequest& request){
+                                            new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [=](const mega::MegaRequest& request,const mega::MegaError& e){
             if(currentThis)
             {
                 if (request.getType() == mega::MegaRequest::TYPE_MOVE

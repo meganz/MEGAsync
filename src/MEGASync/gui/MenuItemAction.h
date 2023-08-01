@@ -14,7 +14,6 @@ public:
 
     void setLabelText(const QString& title);
     void setIcon(const QIcon& icon);
-    void setHoverIcon(const QIcon& icon);
     void setHighlight(bool highlight);
     bool getAccent() const;
     void setAccent(bool enabled);
@@ -29,12 +28,11 @@ private:
     struct Colors {static const QString Normal; static const QString Highlight; static const QString Accent;};
     bool mAccent; /* accent items will have red label text */
     QWidget* mContainer;
-    QIcon mIcon;
-    QIcon mHoverIcon;
     QLabel* mTitle;
     QLabel* mValue;
     QPushButton* mIconButton;
     QHBoxLayout* mActionLayout;
+    QIcon mIcon;
 
     void setupActionWidget(const QSize& iconSize);
 

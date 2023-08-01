@@ -40,13 +40,7 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& icon,
 
 void MenuItemAction::setIcon(const QIcon& icon)
 {
-    mIcon = icon;
-    mIconButton->setIcon(mIcon);
-}
-
-void MenuItemAction::setHoverIcon(const QIcon& icon)
-{
-    mHoverIcon = icon;
+    mIconButton->setIcon(icon);
 }
 
 void MenuItemAction::setHighlight(bool highlight)
@@ -63,14 +57,7 @@ void MenuItemAction::setHighlight(bool highlight)
 
 MenuItemAction::~MenuItemAction()
 {
-    QLayout* layout (mContainer->layout());
-    QLayoutItem* child;
-    while ((child = layout->takeAt(0)) != 0)
-    {
-        delete child->widget();
-        delete child;
-    }
-    mContainer->deleteLater();
+    mContainer->deleteLater(); // This deletes mTitle, mValue and mIconButton, because they are all children of mContainer
 }
 
 void MenuItemAction::setManagesHoverStates(bool managesHoverStates)

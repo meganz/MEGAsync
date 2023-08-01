@@ -562,7 +562,7 @@ void MegaApplication::initialize()
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
 
-    delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
+    delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi, mFolderTransferListener);
     downloader = new MegaDownloader(megaApi, mFolderTransferListener);
@@ -3510,11 +3510,12 @@ void MegaApplication::processUpgradeSecurityEvent()
     msgInfo.title = tr("Security upgrade");
     msgInfo.text = message;
     msgInfo.buttons = QMessageBox::Ok|QMessageBox::Cancel;
+    msgInfo.textFormat = Qt::RichText;
     msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
         {
         if (msg->result() == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e, const MegaRequest&){
+            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaRequest&, const MegaError& e){
                 if (e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMessage = tr("Failed to ugrade security. Error: %1")
@@ -8157,26 +8158,4 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
     model->removeSyncedFolderByBackupId(sync->getBackupId());
 
     onGlobalSyncStateChanged(api);
-}
-
-MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent, MegaApplication *app)
-    : QTMegaListener(megaApi, parent)
-{
-    this->app = app;
-}
-
-void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
-{
-    QTMegaListener::onRequestFinish(api, request, e);
-
-    if (request->getType() != MegaRequest::TYPE_FETCH_NODES
-            || e->getErrorCode() != MegaError::API_OK)
-    {
-        return;
-    }
-}
-
-void MEGASyncDelegateListener::onEvent(MegaApi *api, MegaEvent *e)
-{
-    QTMegaListener::onEvent(api, e);
 }

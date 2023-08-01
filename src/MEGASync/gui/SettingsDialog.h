@@ -78,6 +78,7 @@ public slots:
 private slots:
     void on_bBackupCenter_clicked();
     void on_bHelp_clicked();
+    void on_bRestart_clicked();
 #ifdef Q_OS_MACOS
     void onAnimationFinished();
     void initializeNativeUIComponents();
@@ -151,8 +152,6 @@ protected:
     void closeEvent(QCloseEvent * event);
 #endif
 
-    void restartApp();
-
 private slots:
     void onShellNotificationsProcessed();
 #ifdef Q_OS_MACOS
@@ -178,15 +177,15 @@ private:
     QPropertyAnimation* mMinHeightAnimation;
     QPropertyAnimation* mMaxHeightAnimation;
     QParallelAnimationGroup* mAnimationGroup;
-    std::unique_ptr<QCustomMacToolbar> mToolBar;
-    std::unique_ptr<QMacToolBarItem> bGeneral;
-    std::unique_ptr<QMacToolBarItem> bAccount;
-    std::unique_ptr<QMacToolBarItem> bSyncs;
-    std::unique_ptr<QMacToolBarItem> bBackup;
-    std::unique_ptr<QMacToolBarItem> bSecurity;
-    std::unique_ptr<QMacToolBarItem> bFolders;
-    std::unique_ptr<QMacToolBarItem> bNetwork;
-    std::unique_ptr<QMacToolBarItem> bNotifications;
+    QCustomMacToolbar* mToolBar;
+    QMacToolBarItem *bGeneral;
+    QMacToolBarItem *bAccount;
+    QMacToolBarItem *bSyncs;
+    QMacToolBarItem *bBackup;
+    QMacToolBarItem *bSecurity;
+    QMacToolBarItem *bFolders;
+    QMacToolBarItem* bNetwork;
+    QMacToolBarItem* bNotifications;
 #endif
 
     Ui::SettingsDialog* mUi;

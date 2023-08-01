@@ -384,7 +384,7 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
             {
                 MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
                                                                                               [this]
-                                                                                              (const mega::MegaError& e, const mega::MegaRequest& request)
+                                                                                              (const mega::MegaRequest& request, const mega::MegaError& e)
                 {
                     if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
                             && e.getErrorCode() == mega::MegaError::API_OK)
@@ -471,7 +471,7 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
                 if(auto context = requestReady(RemoteAttributeTypes::User, caller))
                 {
                     mOwner = user;
-                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [this ,func, context](const mega::MegaError& e, const mega::MegaRequest& request) {
+                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [this ,func, context](const mega::MegaRequest& request, const mega::MegaError& e) {
                         if (e.getErrorCode() == mega::MegaError::API_OK)
                         {
                             auto emailFromRequest = request.getEmail();

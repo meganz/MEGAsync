@@ -3,7 +3,6 @@
 #include "syncs/control/SyncSettings.h"
 #include "syncs/control/SyncInfo.h"
 
-#include "QTMegaRequestListener.h"
 #include "megaapi.h"
 
 #include <QString>
@@ -16,7 +15,7 @@
  * Uses SyncInfo.h class as the data model.
  *
  */
-class SyncController: public QObject, public mega::MegaRequestListener
+class SyncController: public QObject
 {
     Q_OBJECT
 
@@ -30,7 +29,7 @@ public:
     };
 
     SyncController(QObject* parent = nullptr);
-    ~SyncController();
+    ~SyncController(){}
 
     void addBackup(const QString& localFolder, const QString& syncName = QString());
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
@@ -68,10 +67,6 @@ signals:
     void signalSyncOperationError(std::shared_ptr<SyncSettings> sync);
     void backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> err);
 
-protected:
-    // override from MegaRequestListener
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req, mega::MegaError* e) override;
-
 private:
     void createPendingBackups();
     QString getSyncAPIErrorMsg(int megaError);
@@ -79,7 +74,6 @@ private:
     QMap<QString, QString> mPendingBackups;
 
     mega::MegaApi* mApi;
-    mega::QTMegaRequestListener* mDelegateListener;
     SyncInfo* mSyncInfo;
 };
 

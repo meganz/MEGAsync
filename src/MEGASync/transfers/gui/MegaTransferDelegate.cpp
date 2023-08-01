@@ -51,7 +51,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             return;
         }
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
         auto width = mView->width();
         width -= mView->contentsMargins().left();
         width -= mView->contentsMargins().right();
