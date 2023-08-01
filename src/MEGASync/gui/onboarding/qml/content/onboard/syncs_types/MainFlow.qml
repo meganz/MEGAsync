@@ -65,8 +65,6 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
-                step3Text: OnboardingStrings.syncChooseType;
-                step4Text: OnboardingStrings.confirm;
             }
         },
         State {
@@ -80,8 +78,6 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
-                step3Text: OnboardingStrings.backupSelectFolders;
-                step4Text: OnboardingStrings.backupConfirm;
             }
         },
         State {
@@ -166,7 +162,6 @@ Rectangle {
 
             BackupsFlow {}
         }
-
 
         Component {
             id: finalPage

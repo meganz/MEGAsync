@@ -19,7 +19,7 @@ Qml.CheckBox {
     property Colors colors: Colors {}
     property Icons icons: Icons {}
 
-    spacing: (text.length === 0) ? 0 : 8
+    spacing: (text.length === 0) ? 0 : sizes.spacing
     indicator: checkBoxOutRect
     contentItem: Loader { id: textLoader }
     padding: 0

@@ -124,7 +124,7 @@ SyncsPage {
                 SyncsVerticalButton {
                     id: backupsButton
 
-                    title: OnboardingStrings.backup
+                    title: OnboardingStrings.backUp
                     description: OnboardingStrings.backupButtonDescription
                     imageSource: Images.installationTypeBackups
                     ButtonGroup.group: buttonGroup

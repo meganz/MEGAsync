@@ -18,8 +18,8 @@ SyncsPage {
     property alias folderField: folderField
 
     footerButtons.rightPrimary {
-        text: OnboardingStrings.backup
-        icons.source: Images.cloud
+        text: OnboardingStrings.backUp
+        icons.source: Images.database
         enabled: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.None
     }
 
@@ -34,7 +34,6 @@ SyncsPage {
 
         Header {
             title: OnboardingStrings.confirmBackupFoldersTitle
-            description: OnboardingStrings.confirmBackupFoldersDescription
         }
 
         ColumnLayout {

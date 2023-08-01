@@ -78,6 +78,7 @@ Rectangle {
                     Layout.leftMargin: headerFooterMargin
                     text: OnboardingStrings.selectAll
                     tristate: true
+                    sizes.spacing: 12
 
                     onCheckStateChanged: {
                         if (!selectAll.fromModel) {
@@ -103,7 +104,7 @@ Rectangle {
 
             Rectangle {
                 height: borderRectangle.border.width
-                color: borderRectangle.border.color
+                color: Styles.borderSubtle
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -146,7 +147,7 @@ Rectangle {
                 }
 
                 MegaTexts.Text {
-                    text: OnboardingStrings.addFolders
+                    text: OnboardingStrings.addFolder
                     font.weight: Font.DemiBold
                 }
             }
