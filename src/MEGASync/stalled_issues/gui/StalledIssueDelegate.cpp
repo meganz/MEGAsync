@@ -260,6 +260,19 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         bool renderDelegate(editorCurrentIndex != index);
 
+        QRect geometry(option.rect);
+
+#ifdef __APPLE__
+        auto width = mView->width();
+        width -= mView->contentsMargins().left();
+        width -= mView->contentsMargins().right();
+        if(mView->verticalScrollBar() && mView->verticalScrollBar()->isVisible())
+        {
+            width -= mView->verticalScrollBar()->width();
+        }
+        geometry.setWidth(width);
+#endif
+
         if(renderDelegate)
         {
             auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
@@ -272,7 +285,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             painter->save();
 
             w->expand(isExpanded);
-            w->setGeometry(option.rect);
+            w->setGeometry(geometry);
 
             auto pixmap = w->grab();
             painter->drawPixmap(0,0,w->width(), w->height(),pixmap);
@@ -299,7 +312,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             painter->setRenderHint(QPainter::Antialiasing, false);
             painter->setPen(QPen(Qt::black, 1));
             painter->setOpacity(0.2);
-            painter->drawLine(QPoint(0 - option.rect.x(), option.rect.height()-1),QPoint(mView->width(),option.rect.height()-1));
+            painter->drawLine(QPoint(0 - geometry.x(), geometry.height()-1),QPoint(mView->width(), geometry.height()-1));
         }
 
         painter->restore();
