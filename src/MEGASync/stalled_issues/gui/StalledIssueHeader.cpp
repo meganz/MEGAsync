@@ -293,6 +293,8 @@ void StalledIssueHeader::refreshUi()
 
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
 
+    resetSolvingWidgets();
+
     if(getData().consultData()->canBeIgnored())
     {
         getData().consultData()->isSolved() ? issueIgnored() : showIgnoreFile();
@@ -300,9 +302,12 @@ void StalledIssueHeader::refreshUi()
     else
     {
         ui->ignoreFileButton->hide();
-    }
 
-   resetSolvingWidgets();
+        if(getData().consultData()->isSolved())
+        {
+            showSolvedMessage();
+        }
+    }
 
    //By default it is expandable
    setIsExpandable(true);
