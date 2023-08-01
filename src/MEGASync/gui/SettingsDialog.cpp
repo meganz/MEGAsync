@@ -422,13 +422,13 @@ void SettingsDialog::initializeNativeUIComponents()
 
     bSyncs=mToolBar->addItem(QIcon(), tr("Sync"));
     mToolBar->customizeIconToolBarItem(bSyncs, syncs);
-    mUi->syncSettings->setToolBarItem(bSyncs.get());
+    mUi->syncSettings->setToolBarItem(bSyncs);
     connect(bSyncs, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSyncs_clicked);
 
     bBackup=mToolBar->addItem(QIcon(), tr("Backup"));
     mToolBar->customizeIconToolBarItem(bBackup, backup);
-    mUi->backupSettings->setToolBarItem(bBackup.get());
+    mUi->backupSettings->setToolBarItem(bBackup);
     connect(bBackup, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bBackup_clicked);
 
