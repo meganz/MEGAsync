@@ -13,7 +13,7 @@ Button {
     property string imageSource
     property size imageSourceSize
     property Component contentComponent
-    property Colors colors: Colors{
+    property Colors colors: Colors {
         background: Styles.pageBackground
         hover: Styles.buttonOutlineBackgroundHover
         pressed: Styles.pageBackground
@@ -24,43 +24,27 @@ Button {
         borderSelected: Styles.borderStrongSelected
     }
 
-    function getBorderColor()
-    {
-        if(button.pressed)
-        {
+    function getBorderColor() {
+        if(button.pressed) {
             return colors.borderPressed;
-        }
-        if(button.hovered)
-        {
+        } else if(button.hovered) {
             return  colors.borderHover;
-        }
-        if(button.checked)
-        {
+        } else if(button.checked) {
             return colors.borderSelected;
-        }
-        if(!button.enabled)
-        {
+        } else if(!button.enabled) {
             return colors.borderDisabled;
         }
         return colors.border;
     }
 
-    function getBackgroundColor()
-    {
-        if(button.pressed)
-        {
+    function getBackgroundColor() {
+        if(button.pressed) {
             return colors.pressed;
-        }
-        if(button.hovered)
-        {
+        } else if(button.hovered) {
             return colors.hover;
-        }
-        if(button.checked)
-        {
+        } else if(button.checked) {
             return colors.background;
-        }
-        if(!button.enabled)
-        {
+        } else if(!button.enabled) {
             return colors.disabled;
         }
         return colors.background;
@@ -82,7 +66,7 @@ Button {
         border.width: focusRect.focusBorderWidth
         radius: focusRect.focusBorderRadius
 
-        Rectangle{
+        Rectangle {
             id: buttonBackground
 
             readonly property int borderRadius: 6
@@ -107,7 +91,7 @@ Button {
             radius: 5.0
             samples: 11
             cached: true
-            color: "#0d000000"//
+            color: "#0d000000"
             source: buttonBackground
         }
 
