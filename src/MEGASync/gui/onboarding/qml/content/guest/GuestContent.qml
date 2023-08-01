@@ -26,6 +26,7 @@ Rectangle {
     property string description: ""
     property bool indeterminate: true
     property double progressValue: 0.0
+    property bool validating2FA: false
 
     readonly property string stateNormal: "NORMAL"
     readonly property string stateInProgress: "IN_PROGRESS"
@@ -195,22 +196,28 @@ Rectangle {
         target: LoginControllerAccess
 
         onLoginStarted: {
-            content.indeterminate = true;
-            content.description = OnboardingStrings.statusLogin;
-            content.state = content.stateInProgress;
+            if(!content.validating2FA) {
+                content.indeterminate = true;
+                content.description = OnboardingStrings.statusLogin;
+                content.state = content.stateInProgress;
+            }
         }
 
         onLoginFinished: (errorCode, errorMsg) => {
-            if(errorCode === ApiEnums.API_OK) {
-                return;
-            }
-
-            if(errorCode === ApiEnums.API_EMFAREQUIRED) {
-                content.indeterminate = true;
-                content.description = OnboardingStrings.status2FA;
-                content.state = content.stateInProgress;
-            } else {
-                content.state = content.stateNormal;
+            switch(errorCode) {
+                case ApiEnums.API_EMFAREQUIRED:
+                    content.indeterminate = true;
+                    content.description = OnboardingStrings.status2FA;
+                    content.state = content.stateInProgress;
+                    content.validating2FA = true;
+                    break;
+                case ApiEnums.API_EFAILED:
+                case ApiEnums.API_EEXPIRED:
+                    break;
+                default:
+                    content.state = content.stateNormal;
+                    content.validating2FA = false;
+                    break;
             }
         }
 
