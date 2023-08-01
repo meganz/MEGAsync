@@ -770,6 +770,8 @@ else()
         ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
+        ${MEGAsyncDir}/platform/macx/NativeMacPopover.h
+        ${MEGAsyncDir}/platform/macx/NativeMacPopoverPrivate.h
 
         ${MEGAsyncDir}/platform/macx/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
@@ -787,6 +789,8 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
         ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.mm
+        ${MEGAsyncDir}/platform/macx/NativeMacPopover.mm
+        ${MEGAsyncDir}/platform/macx/NativeMacPopoverPrivate.mm
 
         )
 endif()
