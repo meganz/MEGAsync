@@ -231,8 +231,44 @@ Rectangle {
             content.state = content.stateNormal;
         }
 
+        onRegisterStarted: {
+            content.indeterminate = true;
+            content.description = OnboardingStrings.statusSignUp;
+            content.state = content.stateInProgress;
+        }
+
         onRegisterFinished: (success) => {
+            if(!success) {
+                content.state = content.stateNormal;
+                return;
+            }
+
+            content.indeterminate = true;
+            content.description = OnboardingStrings.statusWaitingForEmail;
+            content.state = content.stateInProgress;
+        }
+
+        onEmailConfirmed: {
             content.state = content.stateNormal;
+        }
+
+        onAccountCreationResumed: {
+            content.indeterminate = true;
+            content.description = OnboardingStrings.statusWaitingForEmail;
+            content.state = content.stateInProgress;
+        }
+
+        onAccountCreateCancelled: {
+            content.state = content.stateNormal;
+        }
+
+    }
+
+    Component.onCompleted: {
+        if(LoginControllerAccess.isAccountConfirmationResumed()) {
+            content.indeterminate = true;
+            content.description = OnboardingStrings.statusWaitingForEmail;
+            content.state = content.stateInProgress;
         }
     }
 

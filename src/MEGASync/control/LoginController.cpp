@@ -18,6 +18,7 @@ LoginController::LoginController(QObject *parent)
       , mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
       , mFetchingNodes(false)
       , mEmailConfirmed(false)
+      , mConfirmationResumed(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
@@ -47,6 +48,7 @@ void LoginController::login(const QString &email, const QString &password)
 void LoginController::createAccount(const QString &email, const QString &password,
                                 const QString &name, const QString &lastName)
 {
+    mConfirmationResumed = false;
     mMegaApi->createAccount(email.toUtf8().constData(), password.toUtf8().constData(),
                              name.toUtf8().constData(), lastName.toUtf8().constData());
 }
@@ -102,6 +104,11 @@ void LoginController::guestWindowLoginClicked()
 void LoginController::guestWindowSignupClicked()
 {
     emit goToSignupPage();
+}
+
+bool LoginController::isAccountConfirmationResumed() const
+{
+    return mConfirmationResumed;
 }
 
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -192,7 +199,11 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
         mConnectivityTimer->start();
         emit loginStarted();
     }
-    if (request->getType() == mega::MegaRequest::TYPE_FETCH_NODES)
+    else if (request->getType() == mega::MegaRequest::TYPE_CREATE_ACCOUNT)
+    {
+        emit registerStarted();
+    }
+    else if (request->getType() == mega::MegaRequest::TYPE_FETCH_NODES)
     {
         emit fetchingNodesProgress(0.15);
     }
@@ -303,6 +314,7 @@ void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::
         mEmail = credentials.email;
         emit emailChanged();
         emit accountCreationResumed();
+        mConfirmationResumed = true;
     }
 }
 
