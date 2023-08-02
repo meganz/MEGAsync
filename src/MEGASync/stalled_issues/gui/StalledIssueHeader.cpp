@@ -30,9 +30,6 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     mIsExpandable(true)
 {
     ui->setupUi(this);
-
-    ui->errorDescription->hide();
-
     connect(ui->multipleActionButton, &QPushButton::clicked, this, &StalledIssueHeader::onMultipleActionClicked);
 }
 
@@ -86,6 +83,7 @@ void StalledIssueHeader::propagateButtonClick()
 
 void StalledIssueHeader::showAction(const QString &actionButtonText)
 {
+    ui->actionContainer->show();
     ui->actionButton->setVisible(true);
     ui->actionButton->setText(actionButtonText);
 }
@@ -95,8 +93,32 @@ void StalledIssueHeader::hideAction()
     ui->actionButton->setVisible(false);
 }
 
+void StalledIssueHeader::updateHeaderSizes()
+{
+    layout()->activate();
+
+    ui->actionContainer->layout()->activate();
+    ui->actionContainer->updateGeometry();
+
+    ui->titleContainer->layout()->activate();
+    ui->titleContainer->updateGeometry();
+
+    ui->errorContainer->layout()->activate();
+    ui->errorContainer->updateGeometry();
+
+    ui->errorDescription->layout()->activate();
+    ui->errorDescription->updateGeometry();
+
+    ui->errorTitle->layout()->activate();
+    ui->errorTitle->updateGeometry();
+
+    ui->errorTitleTextContainer->layout()->activate();
+    ui->errorTitleTextContainer->updateGeometry();
+}
+
 void StalledIssueHeader::showMultipleAction(const QString &actionButtonText, const QList<ActionInfo>& actions)
 {
+    ui->actionContainer->show();
     ui->multipleActionButton->setVisible(true);
     ui->multipleActionButton->setText(actionButtonText);
     ui->multipleActionButton->setProperty(MULTIPLE_ACTIONS_PROPERTY, QVariant::fromValue<QList<ActionInfo>>(actions));
@@ -139,6 +161,7 @@ void StalledIssueHeader::onMultipleActionClicked()
 
 void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixmap)
 {
+    ui->actionContainer->show();
     ui->actionMessageContainer->setVisible(true);
     ui->actionMessage->setText(message);
 
@@ -163,7 +186,15 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
 
 void StalledIssueHeader::setText(const QString &text)
 {
-    ui->fileNameTitle->setText(text);
+    if(text.isEmpty())
+    {
+        ui->fileNameTitle->hide();
+    }
+    else
+    {
+        ui->fileNameTitle->show();
+        ui->fileNameTitle->setText(text);
+    }
 }
 
 QString StalledIssueHeader::displayFileName(bool preferCloud)
@@ -173,8 +204,15 @@ QString StalledIssueHeader::displayFileName(bool preferCloud)
 
 void StalledIssueHeader::setTitleDescriptionText(const QString &text)
 {
-    ui->errorDescription->show();
-    ui->errorDescriptionText->setText(text);
+    if(text.isEmpty())
+    {
+        ui->errorDescription->hide();
+    }
+    else
+    {
+        ui->errorDescription->show();
+        ui->errorDescriptionText->setText(text);
+    }
 }
 
 void StalledIssueHeader::setData(StalledIssueHeaderCase * issueData)
@@ -186,6 +224,22 @@ void StalledIssueHeader::reset()
 {
     StalledIssueBaseDelegateWidget::reset();
     mHeaderCase->deleteLater();
+}
+
+void StalledIssueHeader::refreshCaseTitles()
+{
+    if(mHeaderCase)
+    {
+        mHeaderCase->refreshCaseTitles(this);
+    }
+}
+
+void StalledIssueHeader::refreshCaseActions()
+{
+    if(mHeaderCase)
+    {
+        mHeaderCase->refreshCaseActions(this);
+    }
 }
 
 QString StalledIssueHeader::fileName()
@@ -311,13 +365,6 @@ void StalledIssueHeader::refreshUi()
 
    //By default it is expandable
    setIsExpandable(true);
-
-    if(mHeaderCase)
-    {
-        mHeaderCase->refreshCaseUi(this);
-    }
-
-    update();
 }
 
 void StalledIssueHeader::resetSolvingWidgets()

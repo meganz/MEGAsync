@@ -49,6 +49,8 @@ public:
         int id;
     };
 
+    void updateHeaderSizes();
+
     void showMultipleAction(const QString& actionButtonText, const QList<ActionInfo>& actions);
     void hideMultipleAction();
 
@@ -62,6 +64,9 @@ public:
 
     void setData(StalledIssueHeaderCase* issueData);
     void reset();
+
+    void refreshCaseTitles();
+    void refreshCaseActions();
 
 
 protected:

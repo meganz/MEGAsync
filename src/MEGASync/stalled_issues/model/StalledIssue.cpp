@@ -195,7 +195,7 @@ bool LocalStalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
 /// \param stallIssue
 ///
 StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
-    :mHeaderDelegateSize(QSize(60,60))
+    //:mHeaderDelegateSize(QSize(60,60))
 {
     originalStall.reset(stallIssue->copy());
 }

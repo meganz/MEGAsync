@@ -6,6 +6,8 @@
 #include "StalledIssuesView.h"
 #include "MegaDelegateHoverManager.h"
 #include "StalledIssue.h"
+#include <DialogOpener.h>
+#include <StalledIssuesDialog.h>
 
 #include <QPainter>
 #include <QMouseEvent>
@@ -97,7 +99,8 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
             return size;
         }
 
-        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, dialog->getDialog()->size()));
         if(w)
         {
             size = w->sizeHint();
@@ -277,7 +280,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         if(renderDelegate)
         {
             auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
-            StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
+            StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, geometry.size()));
             if(!w)
             {
                 return;
@@ -488,7 +491,7 @@ QModelIndex StalledIssueDelegate::getEditorCurrentIndex() const
     return QModelIndex();
 }
 
-StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant& data) const
+StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant& data, const QSize& size) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
 
@@ -501,11 +504,11 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
 
     if(finalIndex.parent().isValid())
     {
-        item = mCacheManager.getStalledIssueInfoWidget(finalIndex,mView->viewport(), data);
+        item = mCacheManager.getStalledIssueInfoWidget(finalIndex,mView->viewport(), data, size);
     }
     else
     {
-        item = mCacheManager.getStalledIssueHeaderWidget(finalIndex,mView->viewport(), data);
+        item = mCacheManager.getStalledIssueHeaderWidget(finalIndex,mView->viewport(), data, size);
     }
 
     return item;

@@ -31,7 +31,7 @@ DefaultHeader::DefaultHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)
 {}
 
-void DefaultHeader::refreshCaseUi(StalledIssueHeader* header)
+void DefaultHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Error detected with <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Reason not found."));
@@ -42,9 +42,10 @@ SymLinkHeader::SymLinkHeader(StalledIssueHeader *header)
     : StalledIssueHeaderCase(header)
 {}
 
-void SymLinkHeader::refreshCaseUi(StalledIssueHeader* header)
+void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Detected sym link: <b>%1</b>").arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
+    header->setTitleDescriptionText(QString());
     header->setIsExpandable(false);
 }
 
@@ -53,7 +54,7 @@ FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)
 {}
 
-void FileIssueHeader::refreshCaseUi(StalledIssueHeader* header)
+void FileIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     if(header->getData().consultData()->hasFiles() > 0)
@@ -71,7 +72,7 @@ MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(StalledIssueHeader*
     : StalledIssueHeaderCase(header)
 {}
 
-void MoveOrRenameCannotOccurHeader::refreshCaseUi(StalledIssueHeader* header)
+void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Cannot move or rename <b>%1</b>").arg(header->displayFileName()));
     if (header->getData().consultData()->mDetectedMEGASide)
@@ -89,7 +90,7 @@ DeleteOrMoveWaitingOnScanningHeader::DeleteOrMoveWaitingOnScanningHeader(Stalled
     : StalledIssueHeaderCase(header)
 {}
 
-void DeleteOrMoveWaitingOnScanningHeader::refreshCaseUi(StalledIssueHeader* header)
+void DeleteOrMoveWaitingOnScanningHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Can´t find <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
@@ -100,7 +101,7 @@ DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(StalledIssueHeader* heade
     : StalledIssueHeaderCase(header)
 {}
 
-void DeleteWaitingOnMovesHeader::refreshCaseUi(StalledIssueHeader* header)
+void DeleteWaitingOnMovesHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Waiting to move <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting for other processes to complete."));
@@ -112,7 +113,7 @@ UploadIssueHeader::UploadIssueHeader(StalledIssueHeader* header)
 {
 }
 
-void UploadIssueHeader::refreshCaseUi(StalledIssueHeader* header)
+void UploadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Can´t upload <b>%1</b> to the selected location").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot reach the destination folder."));
@@ -124,7 +125,7 @@ DownloadIssueHeader::DownloadIssueHeader(StalledIssueHeader* header)
 {
 }
 
-void DownloadIssueHeader::refreshCaseUi(StalledIssueHeader* header)
+void DownloadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Can´t download <b>%1</b> to the selected location").arg(header->displayFileName(true)));
     header->setTitleDescriptionText(tr("A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location."));
@@ -135,7 +136,7 @@ CannotCreateFolderHeader::CannotCreateFolderHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)
 {}
 
-void CannotCreateFolderHeader::refreshCaseUi(StalledIssueHeader* header)
+void CannotCreateFolderHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Cannot create <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
@@ -146,7 +147,7 @@ CannotPerformDeletionHeader::CannotPerformDeletionHeader(StalledIssueHeader* hea
     : StalledIssueHeaderCase(header)
 {}
 
-void CannotPerformDeletionHeader::refreshCaseUi(StalledIssueHeader* header)
+void CannotPerformDeletionHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Cannot perform deletion <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
@@ -158,7 +159,7 @@ SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader
 {
 }
 
-void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi(StalledIssueHeader* header)
+void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Unable to sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
@@ -169,7 +170,7 @@ void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi(StalledIssueHeader* 
 //    : StalledIssueHeaderCase(header)
 //{}
 
-//void CreateFolderNameTooLongHeader::refreshCaseUi(StalledIssueHeader* header)
+//void CreateFolderNameTooLongHeader::refreshCaseTitles(StalledIssueHeader* header)
 //{
 //    auto maxCharacters(0);
 
@@ -193,7 +194,7 @@ FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(StalledIssueHeade
 {
 }
 
-void FolderMatchedAgainstFileHeader::refreshCaseUi(StalledIssueHeader* header)
+void FolderMatchedAgainstFileHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot sync folders against files."));
@@ -209,11 +210,8 @@ void LocalAndRemotePreviouslyUnsyncedDifferHeader::onActionButtonClicked(Stalled
     LocalAndRemoteActionButtonClicked::actionClicked(header);
 }
 
-void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseUi(StalledIssueHeader* header)
+void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseActions(StalledIssueHeader *header)
 {
-    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
-    header->setTitleDescriptionText(tr("This file has conflicting copies"));
-
     if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
     {
         if(conflict->isSolvable() && !conflict->isSolved())
@@ -230,6 +228,12 @@ void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseUi(StalledIssueHea
             header->showSolvedMessage();
         }
     }
+}
+
+void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseTitles(StalledIssueHeader* header)
+{
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
+    header->setTitleDescriptionText(tr("This file has conflicting copies"));
 }
 
 //Local and remote previously synced differ
@@ -243,11 +247,8 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::onActionButtonClicked(Stal
     LocalAndRemoteActionButtonClicked::actionClicked(header);
 }
 
-void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseUi(StalledIssueHeader* header)
+void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseActions(StalledIssueHeader *header)
 {
-    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
-    header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
-
     if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
     {
         if(conflict->isSolvable() && !conflict->isSolved())
@@ -264,6 +265,12 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseUi(StalledIssue
             header->showSolvedMessage();
         }
     }
+}
+
+void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseTitles(StalledIssueHeader* header)
+{
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
+    header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
 }
 
 void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header)
@@ -329,7 +336,34 @@ NameConflictsHeader::NameConflictsHeader(StalledIssueHeader* header)
 {
 }
 
-void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
+void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
+{
+    if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
+    {
+        if(!nameConflict->isSolved())
+        {
+            QList<StalledIssueHeader::ActionInfo> actions;
+
+            if(header->getData().consultData()->hasFiles() > 0)
+            {
+                if(nameConflict->areAllDuplicatedNodes())
+                {
+                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates"), SolveOptions::RemoveDuplicateAndRename);
+                }
+                else if(nameConflict->hasDuplicatedNodes())
+                {
+                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates and rename the rest"), SolveOptions::RemoveDuplicateAndRename);
+                }
+            }
+
+            actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), SolveOptions::RenameAll);
+
+            header->showMultipleAction(tr("Solve options"), actions);
+        }
+    }
+}
+
+void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
@@ -365,27 +399,6 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
         {
             header->setTitleDescriptionText(tr("These folders contain multiple names on one side, that would all become the same single name on the other side."
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
-        }
-
-        if(!nameConflict->isSolved())
-        {
-            QList<StalledIssueHeader::ActionInfo> actions;
-
-            if(header->getData().consultData()->hasFiles() > 0)
-            {
-                if(nameConflict->areAllDuplicatedNodes())
-                {
-                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates"), SolveOptions::RemoveDuplicateAndRename);
-                }
-                else if(nameConflict->hasDuplicatedNodes())
-                {
-                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates and rename the rest"), SolveOptions::RemoveDuplicateAndRename);
-                }
-            }
-
-            actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), SolveOptions::RenameAll);
-
-            header->showMultipleAction(tr("Solve options"), actions);
         }
     }
 }

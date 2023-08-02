@@ -44,7 +44,7 @@ private:
     QColor getRowColor(const QModelIndex& index) const;
     QModelIndex getEditorCurrentIndex() const;
 
-    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data) const;
+    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data, const QSize& size = QSize()) const;
 
     StalledIssuesView* mView;
     StalledIssuesProxyModel* mProxyModel;

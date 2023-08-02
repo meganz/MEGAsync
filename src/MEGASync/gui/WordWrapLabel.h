@@ -14,7 +14,7 @@ protected:
     void resizeEvent(QResizeEvent *e) override;
 
 private:
-    void adaptHeight();
+    void adaptHeight(bool sendEvent = false);
 };
 
 #endif // WORDWRAPLABEL_H

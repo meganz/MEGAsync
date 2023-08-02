@@ -12,7 +12,8 @@ public:
     StalledIssueHeaderCase(StalledIssueHeader *header);
     ~StalledIssueHeaderCase() = default;
 
-    virtual void refreshCaseUi(StalledIssueHeader* header) = 0;
+    virtual void refreshCaseActions(StalledIssueHeader* header){}
+    virtual void refreshCaseTitles(StalledIssueHeader* header) = 0;
     virtual void onActionButtonClicked(StalledIssueHeader*){}
     virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader*, int){}
 };
@@ -26,7 +27,7 @@ public:
     DefaultHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Sym Link
@@ -38,7 +39,7 @@ public:
     SymLinkHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Create folder failed
@@ -50,7 +51,7 @@ public:
     FileIssueHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Move or rename failed
@@ -62,7 +63,7 @@ public:
     MoveOrRenameCannotOccurHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Delete or Move Waiting onScanning
@@ -74,7 +75,7 @@ public:
     DeleteOrMoveWaitingOnScanningHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Delete waiting on moves
@@ -86,7 +87,7 @@ public:
     DeleteWaitingOnMovesHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Upsync needs target folder
@@ -98,7 +99,7 @@ public:
     UploadIssueHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Downsync needs target folder
@@ -110,7 +111,7 @@ public:
     DownloadIssueHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Create folder failed
@@ -122,7 +123,7 @@ public:
     CannotCreateFolderHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Create folder failed
@@ -134,7 +135,7 @@ public:
     CannotPerformDeletionHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //SyncItemExceedsSupoortedTreeDepth
@@ -146,7 +147,7 @@ public:
     SyncItemExceedsSupoortedTreeDepthHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 
@@ -159,7 +160,7 @@ public:
     FolderMatchedAgainstFileHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 class LocalAndRemoteActionButtonClicked : QObject
@@ -177,7 +178,8 @@ public:
     void onActionButtonClicked(StalledIssueHeader *header) override;
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseActions(StalledIssueHeader *header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Local and remote previously synced differ
@@ -190,7 +192,8 @@ public:
     void onActionButtonClicked(StalledIssueHeader *header) override;
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseActions(StalledIssueHeader *header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Local and remote previously synced differ
@@ -203,7 +206,8 @@ public:
     void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index) override;
 
 protected slots:
-    void refreshCaseUi(StalledIssueHeader* header) override;
+    void refreshCaseActions(StalledIssueHeader *header) override;
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 
 private:
     enum SolveOptions

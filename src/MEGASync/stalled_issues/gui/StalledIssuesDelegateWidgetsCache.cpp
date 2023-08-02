@@ -39,27 +39,45 @@ int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
     return row % nbRowsMaxInView;
 }
 
-StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
+StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue, const QSize &size) const
 {
     auto row = getMaxCacheRow(index.row());
     auto& header = mStalledIssueHeaderWidgets[row];
 
-    if(!header)
+    bool firstTime(!header);
+
+    if(firstTime)
     {
         header = new StalledIssueHeader(parent);
-        header->updateGeometry();
-        header->layout()->activate();
         header->setDelegate(mDelegate);
-        header->hide();
     }
 
     createHeaderCaseWidget(header, issue);
+
+    if(firstTime)
+    {
+        header->resize(QSize(size.width(), header->size().height()));
+    }
+
     header->updateUi(index, issue);
+
+    if(firstTime)
+    {
+        header->show();
+        header->hide();
+    }
+
+    header->refreshCaseActions();
+    header->updateHeaderSizes();
+    header->refreshCaseTitles();
 
     return header;
 }
 
-StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
+StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex &index,
+                                                                                             QWidget *parent,
+                                                                                             const StalledIssueVariant &issue,
+                                                                                             const QSize& size) const
 {
     auto row = getMaxCacheRow(index.parent().row());
 
@@ -79,8 +97,7 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
         }
 
         item = createBodyWidget(index, parent, issue);
-        item->updateGeometry();
-        item->layout()->activate();
+        item->resize(size);
         item->setDelegate(mDelegate);
         item->setAttribute(Qt::WA_WState_ExplicitShowHide, false);
         item->setAttribute(Qt::WA_WState_Hidden , true);

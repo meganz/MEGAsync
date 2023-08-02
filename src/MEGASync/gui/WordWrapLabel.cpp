@@ -3,9 +3,10 @@
 #include <QDebug>
 #include <QEvent>
 #include <QApplication>
+#include <QResizeEvent>
 
 const int MINIMUM_DOC_HEIGHT = 3;
-const int MINMUM_HEIGHT = 13;
+const int MINMUM_HEIGHT = 16;
 
 WordWrapLabel::WordWrapLabel(QWidget* parent)
     : QTextEdit(parent)
@@ -19,22 +20,17 @@ WordWrapLabel::WordWrapLabel(QWidget* parent)
     setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
     document()->setDocumentMargin(0);
-    setMaximumHeight(MINMUM_HEIGHT);
+    setFixedHeight(MINMUM_HEIGHT);
 }
 
 void WordWrapLabel::setText(const QString &text)
 {
-    auto firstText(toPlainText().isEmpty());
     QTextEdit::setText(text);
-
-    if(!firstText)
-    {
-        setLineWrapColumnOrWidth(lineWrapColumnOrWidth());
-        adaptHeight();
-    }
+    setLineWrapColumnOrWidth(lineWrapColumnOrWidth());
+    adaptHeight();
 }
 
-void WordWrapLabel::adaptHeight()
+void WordWrapLabel::adaptHeight(bool sendEvent)
 {
     QSize docSize = document()->size().toSize();
     if(docSize.isValid() && docSize.height() > MINIMUM_DOC_HEIGHT)
@@ -42,7 +38,10 @@ void WordWrapLabel::adaptHeight()
         if((docSize.height() + 3) != (height()))
         {
             setFixedHeight(docSize.height() + 3);
-            qApp->postEvent(this, new QEvent(QEvent::WhatsThisClicked));
+            if(sendEvent)
+            {
+                qApp->postEvent(this, new QEvent(QEvent::WhatsThisClicked));
+            }
         }
     }
 }
@@ -56,7 +55,10 @@ void WordWrapLabel::resizeEvent (QResizeEvent *event)
       */
     updateGeometry();
 
-    adaptHeight();
+    if(!toPlainText().isEmpty())
+    {
+        adaptHeight(true);
+    }
 
     QTextEdit::resizeEvent(event);
 }
