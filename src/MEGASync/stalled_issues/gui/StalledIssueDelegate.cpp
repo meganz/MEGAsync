@@ -316,7 +316,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             painter->setRenderHint(QPainter::Antialiasing, false);
             painter->setPen(QPen(Qt::black, 1));
             painter->setOpacity(0.2);
-            painter->drawLine(QPoint(0 - geometry.x(), geometry.height()-1),QPoint(mView->width(), geometry.height()-1));
+            painter->drawLine(QPoint(0 - geometry.x(), geometry.height()-1),QPoint(geometry.width(), geometry.height()-1));
         }
 
         painter->restore();
@@ -339,7 +339,18 @@ QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem
     if(stalledIssueItem.consultData())
     {
         mEditor = getStalledIssueItemWidget(index, stalledIssueItem);
-        mEditor->setGeometry(option.rect);
+        auto geometry(option.rect);
+#ifdef __APPLE__
+        auto width = mView->width();
+        width -= mView->contentsMargins().left();
+        width -= mView->contentsMargins().right();
+        if(mView->verticalScrollBar() && mView->verticalScrollBar()->isVisible())
+        {
+            width -= mView->verticalScrollBar()->width();
+        }
+        geometry.setWidth(width);
+#endif
+        mEditor->setGeometry(geometry);
         mEditor->update();
     }
 
