@@ -26,6 +26,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "onboarding/Onboarding.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -240,8 +241,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     arrow->setStyleSheet(QString::fromAscii("border: none;"));
     arrow->resize(30,10);
     arrow->hide();
-
-    dummy = NULL;
 #endif
 
     //Create the overlay widget with a transparent background
@@ -261,10 +260,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     {
         setAvatar();
         setUsage();
-    }
-    else
-    {
-        regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED, olddialog);
     }
     highDpiResize.init(this);
 
@@ -297,6 +292,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mResetTransferSummaryWidget.setInterval(2000);
     mResetTransferSummaryWidget.setSingleShot(true);
     connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
+
+    regenerate();
 }
 
 InfoDialog::~InfoDialog()
@@ -364,6 +361,7 @@ void InfoDialog::enableTransferAlmostOverquotaAlert()
 
 void InfoDialog::hideEvent(QHideEvent *event)
 {
+
 #ifdef __APPLE__
     arrow->hide();
 #endif
@@ -391,6 +389,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
 #ifdef _WIN32
     lastWindowHideTime = std::chrono::steady_clock::now();
 #endif
+
 }
 
 void InfoDialog::setAvatar()
@@ -1364,7 +1363,7 @@ void InfoDialog::on_bStorageDetails_clicked()
     */
 }
 
-void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
+void InfoDialog::regenerate(int blockState)
 {
     int actualAccountState;
 
@@ -1376,60 +1375,30 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
     {
         return;
     }
-
     loggedInMode = actualAccountState;
 
-    QLayout *dialogLayout = layout();
     switch(loggedInMode)
     {
         case STATE_LOGOUT:
         case STATE_LOCKED_EMAIL:
         case STATE_LOCKED_SMS:
         {
-            updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
-            setOverQuotaMode(false);
-            ui->wPSA->removeAnnounce();
-
-            dialogLayout->removeWidget(ui->wInfoDialogIn);
             ui->wInfoDialogIn->setVisible(false);
-
-            #ifdef __APPLE__
-                if (!dummy)
-                {
-                    dummy = new QWidget();
-                }
-
-                dummy->resize(1,1);
-                dummy->setWindowFlags(Qt::FramelessWindowHint);
-                dummy->setAttribute(Qt::WA_NoSystemBackground);
-                dummy->setAttribute(Qt::WA_TranslucentBackground);
-                dummy->show();
-            #endif
-
-            adjustSize();
+            setVisible(false);
+            hide();
             break;
         }
-
         case STATE_LOGGEDIN:
         {
-            dialogLayout->addWidget(ui->wInfoDialogIn);
             ui->wInfoDialogIn->setVisible(true);
-
-            #ifdef __APPLE__
-                if (dummy)
-                {
-                    dummy->hide();
-                    delete dummy;
-                    dummy = NULL;
-                }
-            #endif
-
             adjustSize();
+            show();
+            app->repositionInfoDialog();
             break;
         }
     }
-    app->repositionInfoDialog();
 
+    app->repositionInfoDialog();
     app->onGlobalSyncStateChanged(NULL);
 }
 

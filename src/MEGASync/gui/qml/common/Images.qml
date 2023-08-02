@@ -4,12 +4,13 @@ import QtQuick 2.12
 QtObject {
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //   Paths - Sorted alphabetically
+    //   Paths
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url imagesPath: Qt.resolvedUrl("../../images/qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesPath + "/onboarding/")
     readonly property url imagesPasswordPath: Qt.resolvedUrl(imagesPath + "/password/")
+    readonly property url imagesGuestPath: Qt.resolvedUrl(imagesPath + "/guest/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths - Sorted alphabetically by dir
@@ -25,6 +26,8 @@ QtObject {
     readonly property url loader: imagesPath + "loader.svg"
     readonly property url smallCircle: imagesPath + "small_circle.svg"
     readonly property url tip: imagesPath + "tip.svg"
+    readonly property url megaOutline: imagesPath + "mega_outline.svg"
+    readonly property url mega: imagesPath + "mega.svg"
     readonly property url trash: imagesPath + "trash.svg"
     readonly property url xCircle: imagesPath + "x_circle.svg"
 
@@ -39,7 +42,6 @@ QtObject {
     readonly property url key: imagesOnboardingPath + "key.svg"
     readonly property url login: imagesOnboardingPath + "login.png"
     readonly property url warning: imagesOnboardingPath + "warning.png"
-    readonly property url mega: imagesOnboardingPath + "mega.svg"
     readonly property url pc: imagesOnboardingPath + "pc.svg"
     readonly property url pcMega: imagesOnboardingPath + "pc_mega.svg"
     readonly property url person: imagesOnboardingPath + "person.svg"
@@ -55,10 +57,17 @@ QtObject {
     readonly property url sync: imagesOnboardingPath + "sync.svg"
     readonly property url twofa: imagesOnboardingPath + "twofa.png"
     readonly property url okIcon: imagesOnboardingPath + "OKIcon.png"
+
     readonly property url passwordVeryWeak: imagesPasswordPath + "very_weak.svg"
     readonly property url passwordWeak: imagesPasswordPath + "weak.svg"
     readonly property url passwordAverage: imagesPasswordPath + "average.svg"
     readonly property url passwordGood: imagesPasswordPath + "good.svg"
     readonly property url passwordStrong: imagesPasswordPath + "strong.svg"
+
+    readonly property url exit: imagesGuestPath + "exit.svg"
+    readonly property url guest: imagesGuestPath + "guest.png"
+    readonly property url menu: imagesGuestPath + "menu.svg"
+    readonly property url settings: imagesGuestPath + "settings.svg"
+    readonly property url warningGuest: imagesGuestPath + "warning.png"
 
 }

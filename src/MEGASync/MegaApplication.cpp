@@ -30,6 +30,7 @@
 #include "qml/ApiEnums.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/BackupsModel.h"
+#include "onboarding/GuestController.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -1171,11 +1172,12 @@ void MegaApplication::start()
             createTrayIcon();
         }
 
+        openOnboardingDialog();
+        openGuestDialog();
 
         if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(AppStatsEvents::EVENT_1ST_START, "MEGAsync first start", false, nullptr);
-            openInfoWizard();
         }
         else if (!QSystemTrayIcon::isSystemTrayAvailable() && !getenv("START_MEGASYNC_IN_BACKGROUND"))
         {
@@ -1183,7 +1185,6 @@ void MegaApplication::start()
         }
 
         onGlobalSyncStateChanged(megaApi);
-        return;
     }
     else //Otherwise, login in the account
     {
@@ -2345,7 +2346,7 @@ void MegaApplication::repositionInfoDialog()
     }
 
     int posx, posy;
-    calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
+    Platform::getInstance()->calculateInfoDialogCoordinates(infoDialog->rect(), &posx, &posy);
 
     fixMultiscreenResizeBug(posx, posy);
 
@@ -2378,7 +2379,8 @@ void MegaApplication::raiseInfoDialog()
 {
     if(preferences && !preferences->logged())
     {
-        openInfoWizard();
+        openGuestDialog();
+        return;
     }
 
     if (infoDialog)
@@ -2459,7 +2461,6 @@ void MegaApplication::showInfoDialog()
             }
 
             repositionInfoDialog();
-
             raiseInfoDialog();
         }
         else
@@ -2484,174 +2485,6 @@ void MegaApplication::showInfoDialogNotifications()
 {
     showInfoDialog();
     infoDialog->showNotifications();
-}
-
-void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    int xSign = 1;
-    int ySign = 1;
-    QPoint position;
-    QRect screenGeometry;
-
-    #ifdef __APPLE__
-        QPoint positionTrayIcon;
-        positionTrayIcon = trayIcon->geometry().topLeft();
-    #endif
-
-    position = QCursor::pos();
-    QScreen* currentScreen = QGuiApplication::screenAt(position);
-    if (currentScreen)
-    {
-        screenGeometry = currentScreen->availableGeometry();
-
-        QString otherInfo = QString::fromUtf8("pos = [%1,%2], name = %3").arg(position.x()).arg(position.y()).arg(currentScreen->name());
-        logInfoDialogCoordinates("availableGeometry", screenGeometry, otherInfo);
-
-        if (!screenGeometry.isValid())
-        {
-            screenGeometry = currentScreen->geometry();
-            otherInfo = QString::fromUtf8("dialog rect = %1").arg(RectToString(dialog->rect()));
-            logInfoDialogCoordinates("screenGeometry", screenGeometry, otherInfo);
-
-            if (screenGeometry.isValid())
-            {
-                screenGeometry.setTop(28);
-            }
-            else
-            {
-                screenGeometry = dialog->rect();
-                screenGeometry.setBottom(screenGeometry.bottom() + 4);
-                screenGeometry.setRight(screenGeometry.right() + 4);
-            }
-
-            logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
-        }
-        else
-        {
-            if (screenGeometry.y() < 0)
-            {
-                ySign = -1;
-            }
-
-            if (screenGeometry.x() < 0)
-            {
-                xSign = -1;
-            }
-        }
-
-    #ifdef __APPLE__
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. posTrayIcon = %1")
-                     .arg(QString::fromUtf8("[%1,%2]").arg(positionTrayIcon.x()).arg(positionTrayIcon.y()))
-                     .toUtf8().constData());
-        if (positionTrayIcon.x() || positionTrayIcon.y())
-        {
-            if ((positionTrayIcon.x() + dialog->width() / 2) > screenGeometry.right())
-            {
-                *posx = screenGeometry.right() - dialog->width() - 1;
-            }
-            else
-            {
-                *posx = positionTrayIcon.x() + trayIcon->geometry().width() / 2 - dialog->width() / 2 - 1;
-            }
-        }
-        else
-        {
-            *posx = screenGeometry.right() - dialog->width() - 1;
-        }
-        *posy = screenGeometry.top();
-
-        if (*posy == 0)
-        {
-            *posy = 22;
-        }
-    #else
-        #ifdef WIN32
-            QRect totalGeometry = QApplication::desktop()->screenGeometry();
-            APPBARDATA pabd;
-            pabd.cbSize = sizeof(APPBARDATA);
-            pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
-            //TODO: the following only takes into account the position of the tray for the main screen.
-            //Alternatively we might want to do that according to where the taskbar is for the targetted screen.
-            if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
-                    && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
-            {
-                int size;
-                switch (pabd.uEdge)
-                {
-                    case ABE_LEFT:
-                        position = screenGeometry.bottomLeft();
-                        if (totalGeometry == screenGeometry)
-                        {
-                            size = pabd.rc.right - pabd.rc.left;
-                            size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
-                            screenGeometry.setLeft(screenGeometry.left() + size);
-                        }
-                        break;
-                    case ABE_RIGHT:
-                        position = screenGeometry.bottomRight();
-                        if (totalGeometry == screenGeometry)
-                        {
-                            size = pabd.rc.right - pabd.rc.left;
-                            size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
-                            screenGeometry.setRight(screenGeometry.right() - size);
-                        }
-                        break;
-                    case ABE_TOP:
-                        position = screenGeometry.topRight();
-                        if (totalGeometry == screenGeometry)
-                        {
-                            size = pabd.rc.bottom - pabd.rc.top;
-                            size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
-                            screenGeometry.setTop(screenGeometry.top() + size);
-                        }
-                        break;
-                    case ABE_BOTTOM:
-                        position = screenGeometry.bottomRight();
-                        if (totalGeometry == screenGeometry)
-                        {
-                            size = pabd.rc.bottom - pabd.rc.top;
-                            size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
-                            screenGeometry.setBottom(screenGeometry.bottom() - size);
-                        }
-                        break;
-                }
-
-
-                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. pabd.uEdge = %1, pabd.rc = %2")
-                             .arg(pabd.uEdge)
-                             .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(pabd.rc.left).arg(pabd.rc.top).arg(pabd.rc.right).arg(pabd.rc.bottom))
-                             .toUtf8().constData());
-
-            }
-        #endif
-
-        if (position.x() * xSign > (screenGeometry.right() / 2) * xSign)
-        {
-            *posx = screenGeometry.right() - dialog->width() - 2;
-        }
-        else
-        {
-            *posx = screenGeometry.left() + 2;
-        }
-
-        if (position.y() * ySign > (screenGeometry.bottom() / 2) * ySign)
-        {
-            *posy = screenGeometry.bottom() - dialog->height() - 2;
-        }
-        else
-        {
-            *posy = screenGeometry.top() + 2;
-        }
-    #endif
-    }
-
-    QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(RectToString(dialog->rect())).arg(*posx).arg(*posy);
-    logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
 
 void MegaApplication::deleteMenu(QMenu *menu)
@@ -2737,6 +2570,7 @@ void MegaApplication::createInfoDialog()
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
     scanStageController.updateReference(infoDialog);
+    repositionInfoDialog();
 }
 
 QuotaState MegaApplication::getTransferQuotaState() const
@@ -3191,11 +3025,6 @@ void MegaApplication::ConnectServerSignals(HTTPServer* server)
     connect(server, &HTTPServer::onExternalAddBackup, this, &MegaApplication::externalAddBackup, Qt::QueuedConnection);
 }
 
-QString MegaApplication::RectToString(const QRect &rect)
-{
-    return QString::fromUtf8("[%1,%2,%3,%4]").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
-}
-
 void MegaApplication::fixMultiscreenResizeBug(int &posX, int &posY)
 {
     // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
@@ -3238,16 +3067,6 @@ void MegaApplication::fixMultiscreenResizeBug(int &posX, int &posY)
             }
         }
     });
-}
-
-void MegaApplication::logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation)
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. %1: valid = %2, geom = %3, %4")
-                 .arg(QString::fromUtf8(message))
-                 .arg(screenGeometry.isValid())
-                 .arg(RectToString(screenGeometry))
-                 .arg(otherInformation)
-                 .toUtf8().constData());
 }
 
 bool MegaApplication::dontAskForExitConfirmation(bool force)
@@ -3391,6 +3210,9 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterModule("Components.Images", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components.Images", 1, 0, "SvgImage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/Image.qml")), "Components.Images", 1, 0, "Image");
+
+    qmlRegisterModule("Components.ProgressBars", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/progressBars/HorizontalProgressBar.qml")), "Components.ProgressBars", 1, 0, "HorizontalProgressBar");
 
     qmlRegisterModule("Components.ScrollBars", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/scrollBars/ScrollBar.qml")), "Components.ScrollBars", 1, 0, "ScrollBar");
@@ -4106,6 +3928,11 @@ void MegaApplication::enableFinderExt()
 }
 #endif
 
+QSystemTrayIcon *MegaApplication::getTrayIcon()
+{
+    return trayIcon;
+}
+
 void MegaApplication::openFolderPath(QString localPath)
 {
     if (!localPath.isEmpty())
@@ -4509,7 +4336,7 @@ void MegaApplication::importLinks()
         {
             if (!preferences->logged())
             {
-                openInfoWizard();
+                openOnboardingDialog();
                 return;
             }
 
@@ -4748,7 +4575,7 @@ void MegaApplication::changeState()
 
     if (infoDialog)
     {
-        infoDialog->regenerateLayout();
+        infoDialog->regenerate();
     }
     updateTrayIconMenu();
 }
@@ -4895,7 +4722,7 @@ void MegaApplication::processUploads()
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -4973,7 +4800,7 @@ void MegaApplication::processDownloads()
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5155,7 +4982,7 @@ void MegaApplication::externalLinkDownload(QString megaLink, QString auth)
     }
     else
     {
-        openInfoWizard();
+        openOnboardingDialog();
     }
 }
 
@@ -5168,7 +4995,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5214,7 +5041,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5256,7 +5083,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5275,7 +5102,7 @@ void MegaApplication::externalAddBackup()
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5294,7 +5121,7 @@ void MegaApplication::externalOpenTransferManager(int tab)
 
     if (!preferences->logged())
     {
-        openInfoWizard();
+        openOnboardingDialog();
         return;
     }
 
@@ -5613,7 +5440,26 @@ void MegaApplication::onMessageClicked()
     }
 }
 
-void MegaApplication::openInfoWizard()
+void MegaApplication::openGuestDialog()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestController>>())
+    {
+        DialogOpener::showDialog(dialog->getDialog());
+        dialog->getDialog()->raise();
+        return;
+    }
+
+    QPointer<QmlDialogWrapper<GuestController>> guest = new QmlDialogWrapper<GuestController>();
+    DialogOpener::showDialog(guest);
+    DialogOpener::closeAllDialogs();
+}
+
+void MegaApplication::openOnboardingDialog()
 {
     if (appfinished)
     {
@@ -6208,7 +6054,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                     {
                         if (infoDialog->getLoggedInMode() != blockState)
                         {
-                            infoDialog->regenerateLayout(blockState);
+                            infoDialog->regenerate(blockState);
                             DialogOpener::closeAllDialogs();
                         }
                     }
@@ -6800,7 +6646,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             //in any case we reflect the change in the InfoDialog
             if (infoDialog)
             {
-                infoDialog->regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED);
+                infoDialog->regenerate();
             }
 
             if (mSettingsDialog)

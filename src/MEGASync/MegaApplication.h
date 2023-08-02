@@ -221,6 +221,8 @@ public:
     void raiseInfoDialog();
     bool isShellNotificationProcessingOngoing();
 
+    QSystemTrayIcon* getTrayIcon();
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -246,7 +248,8 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
-    void openInfoWizard();
+    void openGuestDialog();
+    void openOnboardingDialog();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -325,6 +328,7 @@ public slots:
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
+
 private slots:
     void openFolderPath(QString path);
     void registerUserActivity();
@@ -356,7 +360,6 @@ protected:
     void disableSyncs();
     void restoreSyncs();
     void createTransferManagerDialog(TransfersWidget::TM_TAB tab);
-    void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
     void startHttpsServer();
@@ -576,11 +579,7 @@ private:
 
     void ConnectServerSignals(HTTPServer* server);
 
-    static QString RectToString(const QRect& rect);
-
     void fixMultiscreenResizeBug(int& posX, int& posY);
-
-    static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();

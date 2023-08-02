@@ -1,0 +1,6 @@
+module Guest
+singleton GuestStrings 1.0 GuestStrings.qml
+GuestContent 1.0 GuestContent.qml
+MenuItem 1.0 MenuItem.qml
+GuestDialog 1.0 GuestDialog.qml
+BasePage 1.0 BasePage.qml

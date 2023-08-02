@@ -22,6 +22,9 @@ Item {
     signal logoutByUser
     signal logoutBySdk
     signal accountCreateCancelled
+    signal goToSignupPage
+    signal goToLoginPage
+    signal logout
 
     function login(user, pass) {
         console.debug("mockup LoginController::login() : user -> " + user);

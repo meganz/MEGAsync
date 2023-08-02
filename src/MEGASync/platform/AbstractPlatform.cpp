@@ -248,3 +248,18 @@ std::shared_ptr<AbstractShellNotifier> AbstractPlatform::getShellNotifier()
 {
     return mShellNotifier;
 }
+
+QString AbstractPlatform::rectToString(const QRect &rect)
+{
+    return QString::fromUtf8("[%1,%2,%3,%4]").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
+}
+
+void AbstractPlatform::logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation)
+{
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. %1: valid = %2, geom = %3, %4")
+                       .arg(QString::fromUtf8(message))
+                       .arg(screenGeometry.isValid())
+                       .arg(rectToString(screenGeometry))
+                       .arg(otherInformation)
+                       .toUtf8().constData());
+}

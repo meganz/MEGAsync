@@ -43,6 +43,8 @@ public:
     void reloadFileManagerExtension() override;
     void enableFileManagerExtension(bool value) override;
 
+    void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
+
 private:
     void disableSignalHandler();
     bool isFileManagerExtensionEnabled();

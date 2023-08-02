@@ -2,6 +2,7 @@
 
 #include <QSet>
 #include <QX11Info>
+#include <QScreen>
 
 #include <cstdlib>
 #include <cstring>
@@ -512,4 +513,75 @@ xcb_atom_t PlatformImplementation::getAtom(xcb_connection_t * const connection, 
     free(reply);
 
     return result;
+}
+
+void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)
+{
+    int xSign = 1;
+    int ySign = 1;
+    QPoint position;
+    QRect screenGeometry;
+
+    position = QCursor::pos();
+    QScreen* currentScreen = QGuiApplication::screenAt(position);
+    if (currentScreen)
+    {
+        screenGeometry = currentScreen->availableGeometry();
+
+        QString otherInfo = QString::fromUtf8("pos = [%1,%2], name = %3").arg(position.x()).arg(position.y()).arg(currentScreen->name());
+        logInfoDialogCoordinates("availableGeometry", screenGeometry, otherInfo);
+
+        if (!screenGeometry.isValid())
+        {
+            screenGeometry = currentScreen->geometry();
+            otherInfo = QString::fromUtf8("dialog rect = %1").arg(rectToString(rect));
+            logInfoDialogCoordinates("screenGeometry", screenGeometry, otherInfo);
+
+            if (screenGeometry.isValid())
+            {
+                screenGeometry.setTop(28);
+            }
+            else
+            {
+                screenGeometry = rect;
+                screenGeometry.setBottom(screenGeometry.bottom() + 4);
+                screenGeometry.setRight(screenGeometry.right() + 4);
+            }
+
+            logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
+        }
+        else
+        {
+            if (screenGeometry.y() < 0)
+            {
+                ySign = -1;
+            }
+
+            if (screenGeometry.x() < 0)
+            {
+                xSign = -1;
+            }
+        }
+
+        if (position.x() * xSign > (screenGeometry.right() / 2) * xSign)
+        {
+            *posx = screenGeometry.right() - rect.width() - 2;
+        }
+        else
+        {
+            *posx = screenGeometry.left() + 2;
+        }
+
+        if (position.y() * ySign > (screenGeometry.bottom() / 2) * ySign)
+        {
+            *posy = screenGeometry.bottom() - rect.height() - 2;
+        }
+        else
+        {
+            *posy = screenGeometry.top() + 2;
+        }
+    }
+
+    QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(rectToString(rect)).arg(*posx).arg(*posy);
+    logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }

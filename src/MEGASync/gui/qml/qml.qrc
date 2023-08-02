@@ -31,6 +31,7 @@
         <file>components/images/Image.qml</file>
         <file>components/images/SvgImage.qml</file>
         <file>components/scrollBars/ScrollBar.qml</file>
+        <file>components/progressBars/HorizontalProgressBar.qml</file>
         <file>components/textFields/EmailTextField.qml</file>
         <file>components/textFields/IconTextField.qml</file>
         <file>components/textFields/PasswordTextField.qml</file>

@@ -44,6 +44,8 @@ public:
     virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
     virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
 
+    void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
+
 private:
     QStringList getListRunningProcesses();
     static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);

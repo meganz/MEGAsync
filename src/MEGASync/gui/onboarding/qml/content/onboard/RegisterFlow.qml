@@ -9,6 +9,7 @@ import Common 1.0
 
 // C++
 import LoginController 1.0
+import Onboarding 1.0
 
 Rectangle {
     id: registerFlow
@@ -168,6 +169,19 @@ Rectangle {
 
         LoginController {
             id: loginController
+
+            onGoToLoginPage: {
+                registerFlow.state = registerFlow.login;
+                onboardingWindow.show();
+                onboardingWindow.raise();
+            }
+
+            onGoToSignupPage: {
+                registerFlow.state = registerFlow.register;
+                onboardingWindow.show();
+                onboardingWindow.raise();
+            }
         }
     }
+
 }

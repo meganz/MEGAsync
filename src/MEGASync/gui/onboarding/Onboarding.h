@@ -2,11 +2,8 @@
 #define ONBOARDING_H
 
 #include "qml/QmlDialogWrapper.h"
-#include "QTMegaRequestListener.h"
 
-#include <QQmlContext>
-
-class Onboarding : public QMLComponent, public mega::MegaRequestListener, public mega::MegaGlobalListener
+class Onboarding : public QMLComponent
 {
     Q_OBJECT
 
