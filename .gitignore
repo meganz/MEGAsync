@@ -62,7 +62,7 @@ built64/
 built32/
 sign64/
 sign32/
-
+qt-deploy-*
 
 .vs
 

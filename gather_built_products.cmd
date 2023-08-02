@@ -6,11 +6,11 @@ IF EXIST sign64 (
 )
 
 IF [%MEGA_VCPKGPATH%]==[] (
-	SET VCPKGPATH=C:\Users\build\MEGA\build-MEGASync\3rdParty_MSVC2019_20221029\3rdParty_desktop
+	SET MEGA_VCPKGPATH=C:\Users\build\MEGA\build-MEGASync\3rdParty_MSVC2019_20221029\3rdParty_desktop
 )
 
 IF [%MEGA_THIRD_PARTY_DLL_DIR%]==[] (
-	SET THIRD_PARTY_DLL_DIR=bin_dlls_signed
+	SET MEGA_THIRD_PARTY_DLL_DIR=bin_dlls_signed
 )
 
 REM Clean up any previous leftovers

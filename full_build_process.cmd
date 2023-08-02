@@ -16,7 +16,7 @@ IF NOT "%1" == "" (
 	SET MEGA_ARCH=%1
 	SET MEGA_SIGN=%2
 	SET MEGA_CORES=%3
-	SET VERSION_SUFFIX=%4
+	SET MEGA_VERSION_SUFFIX=%4
 	
 	IF [%MEGA_VCPKGPATH%]==[] (
 		echo "Error: VCPKGPATH environment variable is not set. Please set it."
@@ -83,6 +83,7 @@ IF %VALID_CORES% EQU 0 (
 echo "Info: CORES SET to %MEGA_CORES%"
 
 call production_build.cmd
+call deploy_qt.cmd
 call gather_built_products.cmd
 call make_uninstallers.cmd
 call make_installers.cmd
@@ -99,5 +100,5 @@ echo 	- Architecture : 64 or 32/64 to build either for 64 bit or both 32 and 64 
 echo 	- Sign: sign or nosign if the binaries must be signed or not
 echo 	- Cores: the number of cores to build the project, or 0 for default value (4)
 echo 	- Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
-echo VCPKGPATH environment variable should be set to the root of the 3rd party dir.
+echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
 exit /B
