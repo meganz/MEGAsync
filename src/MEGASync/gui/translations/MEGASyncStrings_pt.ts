@@ -130,11 +130,6 @@
         <translation>Selecionar</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation>Aviso</translation>
-    </message>
-    <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
         <translation>Digite um nome de arquivo ou um caminho completo válido.</translation>
@@ -183,7 +178,7 @@
     <message>
         <source>NEW</source>
         <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
-        <translation>NOVA</translation>
+        <translation>Nova</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -858,11 +853,6 @@
         <translation>Não foi possível notificar o problema - tente novamente mais tarde. Se o problema persistir, entre em contato com a nossa equipe de suporte em [A]support@mega.nz[/A].</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
         <translation>Você quer cancelar a o envio das informações sobre o problema?</translation>
@@ -980,11 +970,6 @@
         <source>OK</source>
         <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
-        <translation>Erro</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -1363,11 +1348,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation>Selecionar pasta local</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Você não possui permissões nesta pasta local.</translation>
@@ -1379,11 +1359,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <source>Download</source>
         <translatorcomment>Window title for download node selector</translatorcomment>
         <translation>Fazer download</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Erro</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -1611,11 +1586,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation>Selecionar</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation>Você não pode sincronizar uma pasta sem acesso completo as permissões</translation>
@@ -1672,11 +1642,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
         <translation>Listando arquivos…</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>Erro</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -1853,11 +1818,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation>Selecionar</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Você não possui permissões nesta pasta local.</translation>
@@ -2011,11 +1971,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation>Não há notificações relacionadas a pagamentos</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 usado</translation>
-    </message>
-    <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation>Upgrade</translation>
@@ -2064,11 +2019,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
         <translation><numerusform>Você tem [A]%n hora[/A] para fazer o upgrade. Se você não fizer o upgrade neste período, os seus arquivos serão deletados.</numerusform><numerusform>Você tem [A]%n horas[/A] para fazer o upgrade. Se você não fizer o upgrade neste período, os seus arquivos serão deletados.</numerusform></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Erro</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2337,11 +2287,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
 <context>
     <name>MegaApplication</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-    <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>Logando</translation>
@@ -2454,7 +2399,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Error</source>
-        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
         <translation>Erro</translation>
     </message>
     <message>
@@ -2911,6 +2856,11 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>O backup da pasta “%1” foi temporariamente desativado: %2</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
+        <translation>Aviso</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2987,7 +2937,7 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Chave inválida/Erro de decodificação</translation>
+        <translation>Erro de decodificação</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3057,7 +3007,7 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Não foi possível fazer a transferência devido a uma estrutura de diretório recursiva</translation>
+        <translation>Não foi possível fazer a transferência devido a uma estrutura de pasta recursiva</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -3340,11 +3290,6 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
         <translation>Abrir no MEGA</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Error messagebox title</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
         <translation>Não foi possível abrir o arquivo. Certifique-se de que o arquivo na sua unidade local não foi excluído ou movido.</translation>
@@ -3489,6 +3434,14 @@ As suas transferências incompletas referentes a sincronizações não serão ca
     </message>
 </context>
 <context>
+    <name>MultiQFileDialog</name>
+    <message>
+        <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
+        <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
+        <translation>O número de itens selecionados é excessivo. Para continuar, desmarque alguns ou selecione a pasta principal.</translation>
+    </message>
+</context>
+<context>
     <name>NewFolderDialog</name>
     <message>
         <source>Enter the new folder name</source>
@@ -3528,11 +3481,6 @@ Digite um nome diferente.
 </context>
 <context>
     <name>NodeSelector</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Erro</translation>
-    </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
@@ -3605,21 +3553,6 @@ Digite um nome diferente.
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Ordenar por nome</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Hoje à %1</numerusform><numerusform>Hoje às %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Ontem à %1</numerusform><numerusform>Ontem às %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 à %2</numerusform><numerusform>%1 às %2</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3795,14 +3728,6 @@ Digite um nome diferente.
     </message>
 </context>
 <context>
-    <name>Notificator</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-</context>
-<context>
     <name>OsNotifications</name>
     <message numerus="yes">
         <source>[A] removed %n item</source>
@@ -3943,11 +3868,6 @@ Digite um nome diferente.
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Aviso</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -4130,14 +4050,12 @@ Digite um nome diferente.
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced system notifications.
-- We've enhanced the UI.
-- We've fixed the detected crashes on Windows, Linux, and macOS.
+        <source>- UI enhancements.
+- Detected crash fixes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation>- Melhoria nas notificações do sistema.
-- Aprimoramento da interface do usuário.
-- Correção de erros detectados em Windows, Linux e macOS.</translation>
+        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
+        <translation>- Aprimoramento na interface do usuário.
+- Correção de falhas detectadas no Windows, Linux e macOS.</translation>
     </message>
 </context>
 <context>
@@ -4223,11 +4141,6 @@ Digite um nome diferente.
         <translation>Atualizar</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
         <translation>As configurações de proxy são inválidas ou o proxy não responde</translation>
@@ -4296,12 +4209,12 @@ Digite um nome diferente.
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Diretório principal</translation>
+        <translation>Pasta principal</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Acessar o diretório principal</translation>
+        <translation>Acesse a pasta principal</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4361,7 +4274,7 @@ Digite um nome diferente.
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Encontrar diretório</translation>
+        <translation>Encontrar pasta</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4376,7 +4289,7 @@ Digite um nome diferente.
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Diretório:</translation>
+        <translation>Pasta:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4396,7 +4309,7 @@ Digite um nome diferente.
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Diretórios</translation>
+        <translation>Pastas</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4411,7 +4324,7 @@ Digite um nome diferente.
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Não foi possível deletar o diretório.</translation>
+        <translation>Não foi possível deletar a pasta.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4519,8 +4432,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Diretório não encontrado.
- Verifique se o nome do diretório foi indicado corretamente.</translation>
+A pasta não foi encontrada.
+ Verifique se o nome da pasta é correto.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -4837,21 +4750,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Dados indisponíveis temporariamente</translation>
     </message>
     <message>
-        <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) de %3 utilizado</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
-        <translation>Aviso</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Deletar</translation>
@@ -4987,11 +4885,6 @@ Do you want to restart MEGAsync now?</source>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
         <translation>Você está prestes a remover permanentemente todas as versões. Gostaria de continuar?</translation>
-    </message>
-    <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 usado</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -5628,11 +5521,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Label of error.</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
         <translation>Usuário já existe</translation>
@@ -5698,11 +5586,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Criando conta…</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label warning.</translatorcomment>
-        <translation>Aviso</translation>
-    </message>
-    <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
         <translation>Por favor, selecione uma pasta local</translation>
@@ -5752,11 +5635,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
         <translation>Sua conta foi bloqueada. Por favor, entre em contato com support@mega.nz</translation>
-    </message>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
-        <translation>MEGA</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -6003,11 +5881,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>StreamNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Não é possível fazer streaming de pastas. Selecione um arquivo para fazer streaming.</translation>
@@ -6069,11 +5942,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
         <translation>Tem a certeza que pretende parar o streaming?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation>Erro</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -6310,19 +6178,9 @@ Para continuar, selecione outra pasta.</translation>
 <context>
     <name>SyncNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
         <translation>Para sincronizar esta pasta, você precisa ter permissão de acesso total a ela.</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Aviso</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -7231,11 +7089,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UploadNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>Para fazer o upload desta pasta, você precisa ter permissões de leitura e escrita ou acesso total a ela.</translation>
@@ -7403,6 +7256,16 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1&#xa0;[A]s[/A]</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 usado</numerusform><numerusform>%1 usados</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 (%2%) usado de %3 </numerusform><numerusform>%1 (%2%) usados de %3 </numerusform></translation>
     </message>
 </context>
 <context>
