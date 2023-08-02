@@ -11,6 +11,7 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QElapsedTimer>
+#include <QPainterPath>
 
 const QColor HOVER_COLOR = QColor("#FAFAFA");
 const QColor SELECTED_BORDER_COLOR = QColor("#E9E9E9");
