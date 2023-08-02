@@ -626,7 +626,7 @@ private:
             *action = nullptr;
         }
 
-        *action = new MenuItemAction(actionName, QIcon(QString::fromUtf8(iconPath)), true);
+        *action = new MenuItemAction(actionName, QIcon(QString::fromUtf8(iconPath)));
         connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
         (*action)->setEnabled(previousEnabledState);
     }
@@ -673,17 +673,6 @@ public:
         app->preferences->deferSyncs(false);
         app->onCheckDeferredPreferencesSync(false);
     }
-};
-
-class MEGASyncDelegateListener: public mega::QTMegaListener
-{
-public:
-    MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent = NULL, MegaApplication *app = NULL);
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onEvent(mega::MegaApi *api, mega::MegaEvent *e) override;
-
-protected:
-    MegaApplication *app;
 };
 
 #endif // MEGAAPPLICATION_H

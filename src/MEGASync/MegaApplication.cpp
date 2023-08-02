@@ -558,7 +558,7 @@ void MegaApplication::initialize()
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
 
-    delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
+    delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi, mFolderTransferListener);
     downloader = new MegaDownloader(megaApi, mFolderTransferListener);
@@ -1163,7 +1163,6 @@ void MegaApplication::start()
             checkSystemTray();
             createTrayIcon();
         }
-
 
         if (!preferences->isFirstStartDone())
         {
@@ -2460,7 +2459,10 @@ void MegaApplication::showInfoDialog()
         }
     }
 
-    updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    if(!getBlockState())
+    {
+      updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    }
 }
 
 void MegaApplication::showInfoDialogNotifications()
@@ -2710,6 +2712,10 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
+    if (blockState)
+    {
+        infoDialog->regenerateLayout(blockState);
+    }
     connect(infoDialog.data(), &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
     connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
     connect(infoDialog.data(), &InfoDialog::almostTransferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
@@ -3488,7 +3494,7 @@ void MegaApplication::processUpgradeSecurityEvent()
         {
         if (msg->result() == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaRequest&, const MegaError& e){
                 if (e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMessage = tr("Failed to ugrade security. Error: %1")
@@ -5786,7 +5792,10 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             {
                 if (blockState)
                 {
-                    showInfoMessage(tr("Locked account"));
+                    createInfoDialog();
+                    checkSystemTray();
+                    createTrayIcon();
+                    showInfoDialog();
                 }
                 else if (!megaApi->isLoggedIn())
                 {
@@ -6196,7 +6205,7 @@ void MegaApplication::createInfoDialogMenus()
 
     if (updateAvailable)
     {
-        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         updateAction->setEnabled(previousEnabledState);
         connect(updateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked, Qt::QueuedConnection);
 
@@ -6204,7 +6213,7 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        aboutAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
 
         infoDialogMenu->addAction(aboutAction);
@@ -6472,6 +6481,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
+                if(blockState == eventNumber)
+                {
+                    break;
+                }
                 blockState = eventNumber;
                 emit blocked();
                 blockStateSet = true;
@@ -6479,8 +6492,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 {
                     preferences->setBlockedState(blockState);
                 }
-
-                showVerifyAccountInfo([this]()
+                if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
                 {
                     if (infoDialog)
                     {
@@ -6490,13 +6502,12 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                             DialogOpener::closeAllDialogs();
                         }
                     }
-                    else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
-                    {
-                        showVerifyAccountInfo();
-                    }
+
+                    showVerifyAccountInfo();
 
                     whyamiblockedPeriodicPetition = false;
-                });
+
+                }
                 break;
             }
             case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
@@ -8139,26 +8150,4 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
     model->removeSyncedFolderByBackupId(sync->getBackupId());
 
     onGlobalSyncStateChanged(api);
-}
-
-MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent, MegaApplication *app)
-    : QTMegaListener(megaApi, parent)
-{
-    this->app = app;
-}
-
-void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
-{
-    QTMegaListener::onRequestFinish(api, request, e);
-
-    if (request->getType() != MegaRequest::TYPE_FETCH_NODES
-            || e->getErrorCode() != MegaError::API_OK)
-    {
-        return;
-    }
-}
-
-void MEGASyncDelegateListener::onEvent(MegaApi *api, MegaEvent *e)
-{
-    QTMegaListener::onEvent(api, e);
 }
