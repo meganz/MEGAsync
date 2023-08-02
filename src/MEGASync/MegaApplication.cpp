@@ -341,7 +341,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     nUnviewedTransfers = 0;
     completedTabActive = false;
     nodescurrent = false;
-    mQueringWhyAmIBlocked = false;
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
@@ -1505,7 +1504,7 @@ if (!preferences->lastExecutionTime())
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 reports blocked, and no block state has been received before, lets query the block status")
                      .arg(cachedBlockedState).toUtf8().constData());
 
-        whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
+        //TODO whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
     }
 
     preferences->monitorUserAttributes();
@@ -5278,7 +5277,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     //If account is suspended chech status
     if (blockState)
     {
-        whyAmIBlocked();
+        //todo whyAmIBlocked();
     }
 
 #ifdef Q_OS_LINUX
@@ -5474,7 +5473,7 @@ void MegaApplication::openSettings(int tab)
 
     if (isLinux && blockState) //we force a whyamiblocked here since trayIconActivated might not be available
     {
-        whyAmIBlocked();
+        //todo whyAmIBlocked();
     }
 
 #ifndef __MACH__
@@ -6545,11 +6544,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
-        break;
-    }
-    case MegaRequest::TYPE_WHY_AM_I_BLOCKED:
-    {
-        mQueringWhyAmIBlocked = false;
         break;
     }
     case MegaRequest::TYPE_GET_USER_DATA:

@@ -26,21 +26,12 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
         case mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
         {
             mBlockedAccount->setAccountBlocked(event->getNumber());
-
-            if (!mWhyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
-            {
-                //show QML guestwidget in account blocked pane
-                DialogOpener::closeAllDialogs();
-
-                showVerifyAccountInfo();
-                whyamiblockedPeriodicPetition = false;
-            }
             break;
         }
         case mega::MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = getMEGAString();
+            msgInfo.title = MegaSyncApp->getMEGAString();
             msgInfo.text = tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details.");
             msgInfo.ignoreCloseAll = true;
             QMegaMessageBox::warning(msgInfo);
@@ -49,7 +40,7 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
         default:
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = getMEGAString();
+            msgInfo.title = MegaSyncApp->getMEGAString();
             msgInfo.text = QCoreApplication::translate("MegaError", event->getText());
             msgInfo.ignoreCloseAll = true;
             QMegaMessageBox::critical(msgInfo);
@@ -85,13 +76,31 @@ void AccountStatusController::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
     }
 }
 
-void AccountStatusController::whyAmIblocked()
+void AccountStatusController::whyAmIBlocked()
 {
     if(!mQueringWhyAmIBlocked)
     {
         mMegaApi->whyAmIBlocked();
         mQueringWhyAmIBlocked = true;
     }
+}
+
+void AccountStatusController::isAccountBlocked() const
+{
+    return mBlockedAccount->isAccountBlocked();
+}
+
+void BlockedAccount::showVerifyAccountInfo()
+{
+    QPointer<VerifyLockMessage> verifyEmail = new VerifyLockMessage(mBlockState);
+    connect(verifyEmail.data(), SIGNAL(logout()), MegaSyncApp, SLOT(unlink()));
+
+    DialogOpener::showDialog(verifyEmail);
+}
+
+bool BlockedAccount::isAccountBlocked() const
+{
+    return mBlockState == mega::MegaApi::ACCOUNT_NOT_BLOCKED;
 }
 
 
@@ -104,7 +113,16 @@ BlockedAccount::BlockedAccount(QObject *parent)
 
 void BlockedAccount::setAccountBlocked(int blockState)
 {
+    if(mBlockState == blockState)
+    {
+        return;
+    }
+
     mBlockState = blockState;
+    //show QML guestwidget in account blocked pane
+    DialogOpener::closeAllDialogs();
+
+    showVerifyAccountInfo();
     if (Preferences::instance()->logged())
     {
         Preferences::instance()->setBlockedState(blockState);
@@ -113,22 +131,42 @@ void BlockedAccount::setAccountBlocked(int blockState)
 
 BlockedAccountLinux::BlockedAccountLinux(QObject *parent)
     : BlockedAccount(parent)
+    , mIsPeriodicPetition(false)
 {
     mTimer = new QTimer(this);
     mTimer->setInterval(Preferences::STATE_REFRESH_INTERVAL_MS / 10);
-    connect(mTimer, &QTimer::timeout, this, &BlockedAccountLinux::timeout);
+    connect(mTimer, &QTimer::timeout, this, &BlockedAccountLinux::onTimeout);
 }
 
 void BlockedAccountLinux::setAccountBlocked(int blockState)
 {
-    BlockedAccount::setAccountBlocked(blockState);
+    if(mBlockState == blockState)
+    {
+        return;
+    }
+
+    mBlockState = blockState;
     if(blockState > mega::MegaApi::ACCOUNT_NOT_BLOCKED)
     {
         mTimer->start();
     }
+
+    if (!mIsPeriodicPetition) //Do not force show on periodic whyamiblocked call
+    {
+        //show QML guestwidget in account blocked pane
+        DialogOpener::closeAllDialogs();
+        showVerifyAccountInfo();
+    }
+    mIsPeriodicPetition = false;
+
+    if (Preferences::instance()->logged())
+    {
+        Preferences::instance()->setBlockedState(blockState);
+    }
 }
 
-void BlockedAccountLinux::timeout()
+void BlockedAccountLinux::onTimeout()
 {
-
+    static_cast<AccountStatusController*>(parent())->whyAmIBlocked();
+    mIsPeriodicPetition = true;
 }
