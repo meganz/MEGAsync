@@ -26,7 +26,7 @@ SyncsPage {
 
     footerButtons {
         leftSecondary.visible: false
-        rightSecondary.text: OnboardingStrings.openInSettings
+        rightSecondary.text: OnboardingStrings.viewInSettings
         rightPrimary {
             text: OnboardingStrings.done
             icons: MegaButtons.Icon {}
@@ -87,7 +87,7 @@ SyncsPage {
         }
 
         Rectangle {
-            Layout.preferredWidth: parent.width
+            Layout.preferredWidth: parent.width + 8
             Layout.topMargin: 24
             color: "transparent"
 
@@ -98,12 +98,14 @@ SyncsPage {
             RowLayout {
                 spacing: 12
                 anchors.fill: parent
+                anchors.leftMargin: -syncButton.focusBorderWidth
+                anchors.rightMargin: backupsButton.focusBorderWidth
 
                 SyncsVerticalButton {
                     id: syncButton
 
                     title: OnboardingStrings.sync
-                    description: OnboardingStrings.syncButtonDescription
+                    description: OnboardingStrings.finalPageButtonSync
                     imageSource: Images.sync
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Sync
@@ -113,25 +115,26 @@ SyncsPage {
                            : (parent.width - parent.spacing) / 2
                     height: (finalPageRoot.state === finalPageRoot.stateFullSync)
                             ? 148
-                            : 170
+                            : 180
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)
                     contentMargin: 24
                     contentSpacing: 8
+                    focus: true
                 }
 
                 SyncsVerticalButton {
                     id: backupsButton
 
                     title: OnboardingStrings.backup
-                    description: OnboardingStrings.backupButtonDescription
+                    description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Backup
                     checkable: false
                     width: (parent.width - parent.spacing) / 2
-                    height: 170
+                    height: 180
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)

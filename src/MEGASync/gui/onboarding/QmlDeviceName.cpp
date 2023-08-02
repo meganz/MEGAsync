@@ -1,36 +1,34 @@
-#include "ComputerName.h"
-#include "UserAttributesRequests/DeviceName.h"
+#include "QmlDeviceName.h"
 
-
-ComputerName::ComputerName(QObject *parent)
+QmlDeviceName::QmlDeviceName(QObject *parent)
     : QObject{parent}
     , mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName())
     , mChanging(false)
 {
     connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
-            this, &ComputerName::onDeviceNameSet);
+            this, &QmlDeviceName::onDeviceNameSet);
     if(mDeviceNameRequest->isAttributeReady())
     {
         onDeviceNameSet();
     }
 }
 
-QString ComputerName::getDeviceName()
+QString QmlDeviceName::getDeviceName()
 {
-    return mDeviceName;
+    return mName;
 }
 
-bool ComputerName::setDeviceName(const QString &newName)
+bool QmlDeviceName::setDeviceName(const QString &newName)
 {
     mChanging = mDeviceNameRequest->setDeviceName(newName);
     return mChanging;
 }
 
-void ComputerName::onDeviceNameSet()
+void QmlDeviceName::onDeviceNameSet()
 {
-    if(mDeviceName != mDeviceNameRequest->getDeviceName())
+    if(mName != mDeviceNameRequest->getDeviceName())
     {
-        mDeviceName = mDeviceNameRequest->getDeviceName();
+        mName = mDeviceNameRequest->getDeviceName();
         emit deviceNameChanged();
         if(mChanging)
         {

@@ -135,16 +135,6 @@ Item {
         exitLoggedInFinished();
     }
 
-    function getComputerName() {
-        console.info("getComputerName()");
-        return "My PC name";
-    }
-
-    function setDeviceName(deviceName) {
-        console.info("setDeviceName(deviceName)" + deviceName)
-        return false;
-    }
-
     function getPasswordStrength(password) {
         console.info("getPasswordStrength(password)" + password);
         var strength = password.length - 1;

@@ -30,7 +30,7 @@
 #include "qml/ApiEnums.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/BackupsModel.h"
-#include "onboarding/GuestController.h"
+#include "onboarding/GuestContent.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -5446,14 +5446,14 @@ void MegaApplication::openGuestDialog()
         return;
     }
 
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestController>>())
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>())
     {
         DialogOpener::showDialog(dialog->getDialog());
         dialog->getDialog()->raise();
         return;
     }
 
-    QPointer<QmlDialogWrapper<GuestController>> guest = new QmlDialogWrapper<GuestController>();
+    QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
     DialogOpener::showDialog(guest);
     DialogOpener::closeAllDialogs();
 }

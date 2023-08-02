@@ -360,9 +360,10 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/onboarding/AccountInfoData.h
     ${MEGAsyncDir}/gui/onboarding/BackupsModel.h
     ${MEGAsyncDir}/gui/onboarding/Syncs.h
-    ${MEGAsyncDir}/gui/onboarding/ComputerName.h
+    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.h
     ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.h
     ${MEGAsyncDir}/gui/onboarding/BackupsController.h
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.h
 
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
@@ -594,9 +595,10 @@ set (SRCS
     ${MEGAsyncDir}/gui/onboarding/AccountInfoData.cpp
     ${MEGAsyncDir}/gui/onboarding/BackupsModel.cpp
     ${MEGAsyncDir}/gui/onboarding/Syncs.cpp
-    ${MEGAsyncDir}/gui/onboarding/ComputerName.cpp
+    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.cpp
     ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.cpp
     ${MEGAsyncDir}/gui/onboarding/BackupsController.cpp
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.cpp
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp

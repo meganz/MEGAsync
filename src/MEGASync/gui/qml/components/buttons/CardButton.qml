@@ -8,12 +8,15 @@ import Common 1.0
 Button {
     id: button
 
+    readonly property int focusBorderWidth: 4
+    readonly property int focusBorderRadius: 8
+
     property string title
     property string description
     property string imageSource
     property size imageSourceSize
     property Component contentComponent
-    property Colors colors: Colors{
+    property Colors colors: Colors {
         background: Styles.pageBackground
         hover: Styles.buttonOutlineBackgroundHover
         pressed: Styles.pageBackground
@@ -24,43 +27,27 @@ Button {
         borderSelected: Styles.borderStrongSelected
     }
 
-    function getBorderColor()
-    {
-        if(button.pressed)
-        {
+    function getBorderColor() {
+        if(button.pressed) {
             return colors.borderPressed;
-        }
-        if(button.hovered)
-        {
+        } else if(button.hovered) {
             return  colors.borderHover;
-        }
-        if(button.checked)
-        {
+        } else if(button.checked) {
             return colors.borderSelected;
-        }
-        if(!button.enabled)
-        {
+        } else if(!button.enabled) {
             return colors.borderDisabled;
         }
         return colors.border;
     }
 
-    function getBackgroundColor()
-    {
-        if(button.pressed)
-        {
+    function getBackgroundColor() {
+        if(button.pressed) {
             return colors.pressed;
-        }
-        if(button.hovered)
-        {
+        } else if(button.hovered) {
             return colors.hover;
-        }
-        if(button.checked)
-        {
+        } else if(button.checked) {
             return colors.background;
-        }
-        if(!button.enabled)
-        {
+        } else if(!button.enabled) {
             return colors.disabled;
         }
         return colors.background;
@@ -71,24 +58,19 @@ Button {
     autoExclusive : true
 
     background: Rectangle {
-
         id: focusRect
-
-        readonly property int focusBorderRadius: 10
-        readonly property int focusBorderWidth: 3
 
         color: "transparent"
         border.color: button.enabled ? (button.focus ? Styles.focus : "transparent") : "transparent"
-        border.width: focusRect.focusBorderWidth
-        radius: focusRect.focusBorderRadius
+        border.width: button.focusBorderWidth
+        radius: button.focusBorderRadius
 
-        Rectangle{
+        Rectangle {
             id: buttonBackground
 
-            readonly property int borderRadius: 8
-            readonly property int borderWidth: 2
+            readonly property int borderRadius: 6
 
-            border.width: borderWidth
+            border.width: (button.pressed || button.hovered || button.checked) ? 2 : 1
             radius: borderRadius
             color: getBackgroundColor()
             border.color: getBorderColor()
@@ -108,7 +90,7 @@ Button {
             radius: 5.0
             samples: 11
             cached: true
-            color: "#0d000000"//
+            color: "#0d000000"
             source: buttonBackground
         }
 

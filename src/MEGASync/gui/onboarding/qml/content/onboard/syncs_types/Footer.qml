@@ -19,7 +19,16 @@ RowLayout {
     property alias rightSecondary: rightSecondary
     property alias rightPrimary: rightPrimary
 
-    MegaButtons.SecondaryButton {
+    anchors {
+        bottom: parent.bottom
+        right: parent.right
+        left: parent.left
+        leftMargin: -leftSecondary.sizes.focusBorderWidth
+        bottomMargin: -leftSecondary.sizes.focusBorderWidth
+        rightMargin: -rightPrimary.sizes.focusBorderWidth
+    }
+
+    MegaButtons.OutlineButton {
         id: leftSecondary
 
         text: OnboardingStrings.notNow

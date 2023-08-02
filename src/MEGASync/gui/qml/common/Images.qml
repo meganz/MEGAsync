@@ -30,9 +30,9 @@ QtObject {
     readonly property url mega: imagesPath + "mega.svg"
     readonly property url trash: imagesPath + "trash.svg"
     readonly property url xCircle: imagesPath + "x_circle.svg"
+    readonly property url smallCheck: imagesPath + "small_check.svg"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
-    readonly property url cloud: imagesOnboardingPath + "cloud.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"
     readonly property url edit: imagesOnboardingPath + "edit.svg"
     readonly property url folder: imagesOnboardingPath + "folder.svg"
