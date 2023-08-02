@@ -1578,7 +1578,6 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
     }
 
     storageState = state;
-    int previousCachedStoragestate = preferences->getStorageState();
     preferences->setStorageState(storageState);
     if (preferences->logged())
     {

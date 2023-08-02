@@ -270,6 +270,7 @@ public:
             });
             return showDialogImpl(dialog);
         }
+        return nullptr;
     }
 
     template <class DialogType, class ParentType, class CallbackClass>
@@ -289,6 +290,7 @@ public:
 
             return showDialogImpl(dialog);
         }
+        return nullptr;
     }
 
     template <class DialogType, class CallbackClass>
@@ -306,6 +308,7 @@ public:
 
             return showDialogImpl(dialog);
         }
+        return nullptr;
     }
 
     template <class DialogType>
@@ -317,6 +320,7 @@ public:
             dialog->setModal(false);
             return showDialogImpl(dialog, false);
         }
+        return nullptr;
     }
 
     template <class DialogType>
