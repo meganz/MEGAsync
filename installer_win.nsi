@@ -626,6 +626,10 @@ modeselected:
   File /r "${QT_DEPLOY_PATH}\*"
 !endif
 
+  ; Remove unused Qt libs
+  Delete "$INSTDIR\Qt5Xml.dll"
+  Delete "$INSTDIR\Qt5Concurrent.dll"
+
   ;Disable bearer plugin if it's a reinstallation
   RMDir /r "$INSTDIR\bearer"
 
@@ -962,11 +966,11 @@ Section Uninstall
   Delete "$INSTDIR\libuv.dll"
   Delete "$INSTDIR\qt.conf"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
-  Delete "$INSTDIR\avcodec-58.dll"
-  Delete "$INSTDIR\avformat-58.dll"
-  Delete "$INSTDIR\avutil-56.dll"
-  Delete "$INSTDIR\swscale-5.dll"
-  Delete "$INSTDIR\swresample-3.dll"
+  Delete "$INSTDIR\avcodec-59.dll"
+  Delete "$INSTDIR\avformat-59.dll"
+  Delete "$INSTDIR\avutil-57.dll"
+  Delete "$INSTDIR\swscale-6.dll"
+  Delete "$INSTDIR\swresample-4.dll"
 
   ;Still remove old DLLs though we no longer produce them (non-VCPKG may still produce them)
   Delete "$INSTDIR\avcodec-57.dll"
@@ -976,6 +980,11 @@ Section Uninstall
   Delete "$INSTDIR\swresample-2.dll"
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
+  Delete "$INSTDIR\avcodec-58.dll"
+  Delete "$INSTDIR\avformat-58.dll"
+  Delete "$INSTDIR\avutil-56.dll"
+  Delete "$INSTDIR\swscale-5.dll"
+  Delete "$INSTDIR\swresample-3.dll"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
