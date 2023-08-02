@@ -1,20 +1,19 @@
 import QtQuick 2.0
-import Onboard 1.0
 
 Item {
     id: root
 
-    property string deviceName: "My Device"
+    property string mName: "My Device"
 
     signal deviceNameSet
 
     function getDeviceName() {
-        console.debug("mockup ComputerName::getComputerName()");
+        console.debug("mockup QmlDeviceName::getDeviceName()");
         return "My PC name";
     }
 
     function setDeviceName(deviceName) {
-        console.debug("mockup ComputerName::setDeviceName() : deviceName -> " + deviceName);
+        console.debug("mockup QmlDeviceName::setDeviceName() : deviceName -> " + deviceName);
         deviceNameSet();
         return false;
     }

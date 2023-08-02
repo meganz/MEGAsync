@@ -15,7 +15,7 @@ import Onboard 1.0
 import Guest 1.0
 
 // C++
-import GuestController 1.0
+import GuestContent 1.0
 import ApiEnums 1.0
 import LoginController 1.0
 
@@ -115,7 +115,7 @@ Rectangle {
             icon.source: Images.megaOutline
             position: MenuItem.Position.First
             onTriggered: {
-                GuestController.onAboutMEGAClicked();
+                GuestContent.onAboutMEGAClicked();
                 guestWindow.hide();
             }
         }
@@ -126,7 +126,7 @@ Rectangle {
             text: GuestStrings.menuPreferences
             icon.source: Images.settings
             onTriggered: {
-                GuestController.onPreferencesClicked();
+                GuestContent.onPreferencesClicked();
                 guestWindow.hide();
             }
         }
@@ -138,7 +138,7 @@ Rectangle {
             icon.source: Images.exit
             position: MenuItem.Position.Last
             onTriggered: {
-                GuestController.onExitClicked();
+                GuestContent.onExitClicked();
                 guestWindow.hide();
             }
         }

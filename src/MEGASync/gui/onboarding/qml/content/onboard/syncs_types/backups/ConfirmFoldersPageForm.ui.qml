@@ -12,7 +12,7 @@ import Onboard.Syncs_types 1.0
 
 // C++
 import BackupsModel 1.0
-import ComputerName 1.0
+import QmlDeviceName 1.0
 
 SyncsPage {
 
@@ -53,12 +53,12 @@ SyncsPage {
                 title: OnboardingStrings.backupTo
                 leftIcon.source: Images.database
                 textField.readOnly: true
-                textField.text: "/" + computerName.deviceName
+                textField.text: "/" + deviceName.mName
             }
         }
     }
 
-    ComputerName {
-        id: computerName
+    QmlDeviceName {
+        id: deviceName
     }
 }

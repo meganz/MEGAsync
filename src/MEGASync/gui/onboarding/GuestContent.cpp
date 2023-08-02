@@ -1,40 +1,44 @@
-#include "GuestController.h"
+#include "GuestContent.h"
 #include "MegaApplication.h"
 #include "GuestQmlDialog.h"
 
 #include <QQmlEngine>
 
-GuestController::GuestController(QObject *parent)
+GuestContent::GuestContent(QObject *parent)
     : QMLComponent(parent)
 {
     qmlRegisterModule("Guest", 1, 0);
-    qmlRegisterModule("GuestController", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestContent.qml")), "Guest", 1, 0, "GuestContent");
+    qmlRegisterModule("GuestContent", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestItem.qml")), "Guest", 1, 0, "GuestItem");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestStrings.qml")), "Guest", 1, 0, "GuestStrings");
     qmlRegisterType<GuestQmlDialog>("GuestQmlDialog", 1, 0, "GuestQmlDialog");
 }
 
-void GuestController::onAboutMEGAClicked()
+GuestContent::~GuestContent()
+{
+}
+
+void GuestContent::onAboutMEGAClicked()
 {
     MegaSyncApp->onAboutClicked();
 }
 
-void GuestController::onPreferencesClicked()
+void GuestContent::onPreferencesClicked()
 {
     MegaSyncApp->openSettings();
 }
 
-void GuestController::onExitClicked()
+void GuestContent::onExitClicked()
 {
     MegaSyncApp->tryExitApplication();
 }
 
-QUrl GuestController::getQmlUrl()
+QUrl GuestContent::getQmlUrl()
 {
     return QUrl(QString::fromUtf8("qrc:/content/guest/GuestDialog.qml"));
 }
 
-QString GuestController::contextName()
+QString GuestContent::contextName()
 {
-    return QString::fromUtf8("GuestController");
+    return QString::fromUtf8("GuestContent");
 }

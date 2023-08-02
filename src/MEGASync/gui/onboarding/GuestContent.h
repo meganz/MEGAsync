@@ -1,15 +1,16 @@
-#ifndef GUESTCONTROLLER_H
-#define GUESTCONTROLLER_H
+#ifndef GUESTCONTENT_H
+#define GUESTCONTENT_H
 
 #include "qml/QmlDialogWrapper.h"
 
-class GuestController : public QMLComponent
+class GuestContent : public QMLComponent
 {
     Q_OBJECT
 
 public:
 
-    explicit GuestController(QObject *parent = 0);
+    explicit GuestContent(QObject *parent = 0);
+    ~GuestContent();
 
     QUrl getQmlUrl() override;
 
@@ -21,4 +22,4 @@ public:
 
 };
 
-#endif // GUESTCONTROLLER_H
+#endif // GUESTCONTENT_H

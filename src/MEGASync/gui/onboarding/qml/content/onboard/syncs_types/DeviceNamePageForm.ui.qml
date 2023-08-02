@@ -13,7 +13,7 @@ import Onboard 1.0
 
 SyncsPage {
 
-    property alias computerNameTextField: computerNameTextField
+    property alias deviceNameTextField: deviceNameTextField
 
     footerButtons.rightSecondary.visible: false
 
@@ -27,7 +27,7 @@ SyncsPage {
         spacing: 12
 
         Header {
-            Layout.leftMargin: computerNameTextField.sizes.focusBorderWidth
+            Layout.leftMargin: deviceNameTextField.sizes.focusBorderWidth
             Layout.preferredWidth: parent.width
             title: OnboardingStrings.deviceNameTitle
             description: OnboardingStrings.deviceNameDescription
@@ -35,18 +35,18 @@ SyncsPage {
 
         MegaImages.SvgImage {
             Layout.topMargin: 20
-            Layout.leftMargin: computerNameTextField.sizes.focusBorderWidth
+            Layout.leftMargin: deviceNameTextField.sizes.focusBorderWidth
             source: Images.pcMega
             sourceSize: Qt.size(48, 48)
             color: Styles.textPrimary
         }
 
         MegaTextFields.TextField {
-            id: computerNameTextField
+            id: deviceNameTextField
 
             Layout.preferredWidth: parent.width
             title: OnboardingStrings.deviceName
-            textField.text: computerName.deviceName
+            textField.text: deviceName.mName
             sizes: MegaTextFields.LargeSizes {}
         }
     }

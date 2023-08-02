@@ -13,7 +13,7 @@ import Onboard 1.0
 Rectangle {
     id: root
 
-    readonly property string step1ComputerName: "STEP1_COMPUTER_NAME"
+    readonly property string step1DeviceName: "STEP1_DEVICE_NAME"
     readonly property string step2InstallationType: "STEP2_INSTALLATION_TYPE"
     readonly property string step3: "STEP3"
     readonly property string step4: "STEP4"
@@ -34,13 +34,13 @@ Rectangle {
     color: Styles.surface1
     height: parent.height
 
-    state: step1ComputerName
+    state: step1DeviceName
 
     states: [
         State {
-            name: step1ComputerName
+            name: step1DeviceName
             PropertyChanges {
-                target: step1_computerName;
+                target: step1_deviceName;
                 toState: Step.ToStates.Current;
             }
             PropertyChanges {
@@ -71,7 +71,7 @@ Rectangle {
         State {
             name: step2InstallationType
             PropertyChanges {
-                target: step1_computerName;
+                target: step1_deviceName;
                 toState: Step.ToStates.Done;
             }
             PropertyChanges {
@@ -102,7 +102,7 @@ Rectangle {
         State {
             name: step3
             PropertyChanges {
-                target: step1_computerName;
+                target: step1_deviceName;
                 toState: Step.ToStates.Done;
             }
             PropertyChanges {
@@ -137,7 +137,7 @@ Rectangle {
         State {
             name: step4
             PropertyChanges {
-                target: step1_computerName;
+                target: step1_deviceName;
                 toState: Step.ToStates.Done;
             }
             PropertyChanges {
@@ -172,7 +172,7 @@ Rectangle {
         State {
             name: step4Warning
             PropertyChanges {
-                target: step1_computerName;
+                target: step1_deviceName;
                 toState: Step.ToStates.Done;
             }
             PropertyChanges {
@@ -207,7 +207,7 @@ Rectangle {
         State {
             name: step4Error
             PropertyChanges {
-                target: step1_computerName;
+                target: step1_deviceName;
                 toState: Step.ToStates.Done;
             }
             PropertyChanges {
@@ -242,7 +242,7 @@ Rectangle {
         State {
             name: stepAllDone
             PropertyChanges {
-                target: step1_computerName;
+                target: step1_deviceName;
                 toState: Step.ToStates.Done;
             }
             PropertyChanges {
@@ -287,7 +287,7 @@ Rectangle {
             spacing: 4
 
             Step {
-                id: step1_computerName
+                id: step1_deviceName
 
                 number: 1
                 text: OnboardingStrings.deviceName

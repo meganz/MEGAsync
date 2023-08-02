@@ -18,7 +18,7 @@ import BackupsProxyModel 1.0
 Rectangle {
     id: syncsPanel
 
-    readonly property string computerName: "computerName"
+    readonly property string deviceName: "deviceName"
     readonly property string syncType: "syncType"
     readonly property string syncsFlow: "syncs"
     readonly property string backupsFlow: "backups"
@@ -32,16 +32,16 @@ Rectangle {
     property int typeSelected: SyncsType.Types.None
 
     color: Styles.surface1
-    state: computerName
+    state: deviceName
     states: [
         State {
-            name: computerName
+            name: deviceName
             StateChangeScript {
-                script: rightPanel.replace(computerNamePage);
+                script: rightPanel.replace(deviceNamePage);
             }
             PropertyChanges {
                 target: stepPanel;
-                state: stepPanel.step1ComputerName;
+                state: stepPanel.step1DeviceName;
             }
         },
         State {
@@ -140,9 +140,9 @@ Rectangle {
         }
 
         Component {
-            id: computerNamePage
+            id: deviceNamePage
 
-            ComputerNamePage {}
+            DeviceNamePage {}
         }
 
         Component {

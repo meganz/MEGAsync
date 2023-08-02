@@ -2,19 +2,19 @@ import QtQml 2.12
 
 //Local
 import Onboard 1.0
-import ComputerName 1.0
+import QmlDeviceName 1.0
 
-ComputerNamePageForm {
+DeviceNamePageForm {
 
     footerButtons.rightPrimary.onClicked: {
-        if(!computerName.setDeviceName(computerNameTextField.text)) {
+        if(!deviceName.setDeviceName(deviceNameTextField.text)) {
             syncsPanel.state = syncType;
             return;
         }
     }
 
-    ComputerName {
-        id: computerName
+    QmlDeviceName {
+        id: deviceName
 
         onDeviceNameSet: {
             syncsPanel.state = syncType;
