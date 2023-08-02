@@ -4,6 +4,7 @@ INCLUDEPATH += $$PWD
 QT       += network
 
 SOURCES += $$PWD/HTTPServer.cpp \
+    $$PWD/AccountStatusController.cpp \
     $$PWD/DialogOpener.cpp \
     $$PWD/DownloadQueueController.cpp \
     $$PWD/LoginController.cpp \
@@ -24,9 +25,10 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/ConnectivityChecker.cpp \
     $$PWD/TransferBatch.cpp \
     $$PWD/TextDecorator.cpp \
-    $$PWD/qrcodegen.c \
+    $$PWD/qrcodegen.c
 
 HEADERS  +=  $$PWD/HTTPServer.h \
+    $$PWD/AccountStatusController.h \
     $$PWD/AppStatsEvents.h \
     $$PWD/DialogOpener.h \
     $$PWD/DownloadQueueController.h \

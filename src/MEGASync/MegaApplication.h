@@ -58,7 +58,6 @@ Q_DECLARE_METATYPE(QQueue<QString>)
 
 class LogoutController;
 class NotificatorBase;
-class MEGASyncDelegateListener;
 class ShellNotifier;
 class TransferMetadata;
 class DuplicatedNodeDialog;
@@ -200,7 +199,6 @@ public:
      * @param email of sync configuration to migrate from previous sessions. If present
      * syncs configured in previous sessions will be loaded.
      */
-    void whyAmIBlocked(bool periodicCall = false);
     QPointer<OverQuotaDialog> showSyncOverquotaDialog();
     bool finished() const;
     bool isInfoDialogVisible() const;
@@ -445,7 +443,6 @@ protected:
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mVaultNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
-    bool mQueringWhyAmIBlocked = false;
     bool queuedUserStats[3];
     int queuedStorageUserStatsReason;
     long long userStatsLastRequest[3];

@@ -15,6 +15,8 @@
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 
+#include "control/AccountStatusController.h"
+
 #include "PlatformStrings.h"
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
@@ -340,7 +342,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     completedTabActive = false;
     nodescurrent = false;
     mQueringWhyAmIBlocked = false;
-    whyamiblockedPeriodicPetition = false;
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
@@ -567,6 +568,7 @@ void MegaApplication::initialize()
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
+    AccountStatusController* stdss = new AccountStatusController(this);
 
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
@@ -1055,8 +1057,6 @@ void MegaApplication::start()
     paused = false;
     nodescurrent = false;
     getUserDataRequestReady = false;
-    mQueringWhyAmIBlocked = false;
-    whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     eventsPendingLoggedIn.clear();
@@ -2129,7 +2129,6 @@ void MegaApplication::periodicTasks()
     {
         return;
     }
-    return;
 
     if (!cleaningSchedulerExecution || ((QDateTime::currentMSecsSinceEpoch() - cleaningSchedulerExecution) > Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS))
     {
@@ -2177,15 +2176,15 @@ void MegaApplication::periodicTasks()
 
         onGlobalSyncStateChanged(megaApi);
 
-        if (isLinux)
-        {
-            updateTrayIcon();
-        }
+#ifdef Q_OS_LINUX
+        updateTrayIcon();
 
-        if (isLinux && blockState && !(counter%10))
+        if (blockState && !(counter%10))
         {
             whyAmIBlocked(true);
         }
+#endif
+
     }
 
     if (trayIcon)
@@ -3325,8 +3324,6 @@ void MegaApplication::unlink(bool keepLogs)
     mRootNode.reset();
     mRubbishNode.reset();
     mVaultNode.reset();
-    mQueringWhyAmIBlocked = false;
-    whyamiblockedPeriodicPetition = false;
     if(megaApi->isLoggedIn())
     {
         megaApi->logout(true, nullptr);
@@ -3993,16 +3990,6 @@ void MegaApplication::onTransfersModelUpdate()
             && !TransfersStats.pendingUploads)
     {
         onGlobalSyncStateChanged(megaApi);
-    }
-}
-
-void MegaApplication::whyAmIBlocked(bool periodicCall)
-{
-    if (!mQueringWhyAmIBlocked)
-    {
-        whyamiblockedPeriodicPetition = periodicCall;
-        mQueringWhyAmIBlocked = true;
-        megaApi->whyAmIBlocked();
     }
 }
 
@@ -6026,65 +6013,6 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
             }
         }
     }
-    else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
-    {
-        switch (event->getNumber())
-        {
-            case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
-            case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
-            {
-                blockState = eventNumber;
-                emit blocked();
-                blockStateSet = true;
-                if (preferences->logged())
-                {
-                    preferences->setBlockedState(blockState);
-                }
-
-                showVerifyAccountInfo([this]()
-                {
-                    if (infoDialog)
-                    {
-                        if (infoDialog->getLoggedInMode() != blockState)
-                        {
-                            infoDialog->regenerate(blockState);
-                            DialogOpener::closeAllDialogs();
-                        }
-                    }
-                    else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
-                    {
-                        showVerifyAccountInfo();
-                    }
-
-                    whyamiblockedPeriodicPetition = false;
-                });
-                break;
-            }
-            case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = getMEGAString();
-                msgInfo.text = tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details.");
-                msgInfo.ignoreCloseAll = true;
-                QMegaMessageBox::warning(msgInfo);
-                break;
-            }
-            default:
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = getMEGAString();
-                msgInfo.text = QCoreApplication::translate("MegaError", event->getText());
-                msgInfo.ignoreCloseAll = true;
-                QMegaMessageBox::critical(msgInfo);
-                break;
-            }
-        }
-
-        if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-        {
-            emit dialog->getDialog()->wrapper()->accountBlocked(event->getNumber());
-        }
-    }
     else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
     {
         nodescurrent = true;
@@ -6621,33 +6549,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_WHY_AM_I_BLOCKED:
     {
-        if (e->getErrorCode() == MegaError::API_OK
-                && request->getNumber() == MegaApi::ACCOUNT_NOT_BLOCKED)
-        {
-            blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
-            emit unblocked();
-            blockStateSet = true;
-            if (preferences->logged())
-            {
-                preferences->setBlockedState(blockState);
-            }
-
-            requestUserData(); // querying some user attributes might have been rejected: we query them again
-
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer blocked").toUtf8().constData());
-
-            //in any case we reflect the change in the InfoDialog
-            if (infoDialog)
-            {
-                infoDialog->regenerate();
-            }
-
-            if (mSettingsDialog)
-            {
-                mSettingsDialog->setProxyOnly(false);
-            }
-        }
-
         mQueringWhyAmIBlocked = false;
         break;
     }
