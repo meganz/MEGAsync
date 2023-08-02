@@ -87,7 +87,7 @@ SyncsPage {
         }
 
         Rectangle {
-            Layout.preferredWidth: parent.width
+            Layout.preferredWidth: parent.width + 8
             Layout.topMargin: 24
             color: "transparent"
 
@@ -98,6 +98,8 @@ SyncsPage {
             RowLayout {
                 spacing: 12
                 anchors.fill: parent
+                anchors.leftMargin: -syncButton.focusBorderWidth
+                anchors.rightMargin: backupsButton.focusBorderWidth
 
                 SyncsVerticalButton {
                     id: syncButton
@@ -113,12 +115,13 @@ SyncsPage {
                            : (parent.width - parent.spacing) / 2
                     height: (finalPageRoot.state === finalPageRoot.stateFullSync)
                             ? 148
-                            : 196
+                            : 180
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)
                     contentMargin: 24
                     contentSpacing: 8
+                    focus: true
                 }
 
                 SyncsVerticalButton {
@@ -131,7 +134,7 @@ SyncsPage {
                     type: SyncsType.Backup
                     checkable: false
                     width: (parent.width - parent.spacing) / 2
-                    height: 196
+                    height: 180
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)

@@ -8,6 +8,9 @@ import Common 1.0
 Button {
     id: button
 
+    readonly property int focusBorderWidth: 4
+    readonly property int focusBorderRadius: 8
+
     property string title
     property string description
     property string imageSource
@@ -55,16 +58,12 @@ Button {
     autoExclusive : true
 
     background: Rectangle {
-
         id: focusRect
-
-        readonly property int focusBorderRadius: 8
-        readonly property int focusBorderWidth: 4
 
         color: "transparent"
         border.color: button.enabled ? (button.focus ? Styles.focus : "transparent") : "transparent"
-        border.width: focusRect.focusBorderWidth
-        radius: focusRect.focusBorderRadius
+        border.width: button.focusBorderWidth
+        radius: button.focusBorderRadius
 
         Rectangle {
             id: buttonBackground

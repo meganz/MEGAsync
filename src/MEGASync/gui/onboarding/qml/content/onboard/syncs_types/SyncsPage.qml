@@ -14,11 +14,5 @@ Rectangle {
 
     Footer {
         id: footerButtons
-
-        anchors {
-            bottom: parent.bottom
-            right: parent.right
-            left: parent.left
-        }
     }
 }

@@ -29,7 +29,7 @@ Rectangle {
     readonly property int contentHeight: 464
     readonly property int lineWidth: 2
 
-    property int typeSelected: SyncsType.Types.None
+    property int typeSelected: SyncsType.Types.Backup
 
     color: Styles.surface1
     state: deviceName
@@ -101,7 +101,7 @@ Rectangle {
     Rectangle {
         id: leftPanel
 
-        width: stepPanelWidth + lineWidth
+        width: stepPanelWidth
         height: parent.height
         color: Styles.surface1
         z: 2
@@ -122,7 +122,7 @@ Rectangle {
             radius: lineWidth
             color: Styles.borderDisabled
             height: contentHeight
-            anchors.left: leftPanel.right
+            anchors.right: leftPanel.right
             anchors.top: parent.top
             anchors.topMargin: contentMargin
         }

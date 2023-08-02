@@ -27,7 +27,6 @@ SyncsPage {
         spacing: 12
 
         Header {
-            Layout.leftMargin: deviceNameTextField.sizes.focusBorderWidth
             Layout.preferredWidth: parent.width
             title: OnboardingStrings.deviceNameTitle
             description: OnboardingStrings.deviceNameDescription
@@ -35,7 +34,6 @@ SyncsPage {
 
         MegaImages.SvgImage {
             Layout.topMargin: 20
-            Layout.leftMargin: deviceNameTextField.sizes.focusBorderWidth
             source: Images.pcMega
             sourceSize: Qt.size(48, 48)
             color: Styles.textPrimary
@@ -44,7 +42,9 @@ SyncsPage {
         MegaTextFields.TextField {
             id: deviceNameTextField
 
-            Layout.preferredWidth: parent.width
+            Layout.leftMargin: -deviceNameTextField.sizes.focusBorderWidth
+            Layout.rightMargin: -deviceNameTextField.sizes.focusBorderWidth
+            Layout.preferredWidth: parent.width + 2 * deviceNameTextField.sizes.focusBorderWidth
             title: OnboardingStrings.deviceName
             textField.text: deviceName.mName
             sizes: MegaTextFields.LargeSizes {}

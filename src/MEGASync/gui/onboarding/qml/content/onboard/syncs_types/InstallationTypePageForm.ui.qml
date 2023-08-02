@@ -25,7 +25,6 @@ SyncsPage {
         spacing: 24
 
         Header {
-            Layout.leftMargin: 3
             title: OnboardingStrings.welcomeToMEGA
             description: OnboardingStrings.choose
             spacing: 36
@@ -42,6 +41,8 @@ SyncsPage {
             SyncsHorizontalButton {
                 id: syncButton
 
+                Layout.leftMargin: -syncButton.focusBorderWidth
+                Layout.rightMargin: -syncButton.focusBorderWidth
                 title: OnboardingStrings.sync
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync
@@ -52,6 +53,8 @@ SyncsPage {
             SyncsHorizontalButton {
                 id: backupsButton
 
+                Layout.leftMargin: -backupsButton.focusBorderWidth
+                Layout.rightMargin: -backupsButton.focusBorderWidth
                 title: OnboardingStrings.backup
                 description: OnboardingStrings.backupButtonDescription
                 imageSource: Images.installationTypeBackups
