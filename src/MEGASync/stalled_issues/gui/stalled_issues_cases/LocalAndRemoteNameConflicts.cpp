@@ -74,8 +74,6 @@ void LocalAndRemoteNameConflicts::refreshUi()
         {
             ui->selectLabel->setText(FOLDERS_DESCRIPTION);
         }
-
-        update();
     }
 }
 

@@ -10,6 +10,12 @@
     <height>58</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
     <width>0</width>
@@ -117,7 +123,13 @@ QPushButton[main=true]
    </property>
    <item>
     <widget class="QWidget" name="backgroundWidget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
       <property name="spacing">
        <number>10</number>
       </property>
@@ -136,7 +148,7 @@ QPushButton[main=true]
       <item>
        <widget class="QWidget" name="generalContainer" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -159,10 +171,16 @@ QPushButton[main=true]
          </property>
          <item>
           <widget class="QFrame" name="contents">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,0">
+           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,1">
             <property name="spacing">
              <number>8</number>
             </property>
@@ -288,6 +306,12 @@ QPushButton[main=true]
          </item>
          <item>
           <widget class="QWidget" name="extraInfoContainer" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <layout class="QVBoxLayout" name="extraInfoLayout">
             <property name="spacing">
              <number>5</number>

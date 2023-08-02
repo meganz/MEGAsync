@@ -20,9 +20,6 @@ StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->file->hide();
-    ui->moveFile->hide();
-
     ui->lines->installEventFilter(this);
     ui->moveLines->installEventFilter(this);
     ui->movePathProblemLines->installEventFilter(this);
@@ -65,10 +62,10 @@ void StalledIssueFilePath::updateUi(StalledIssueDataPtr newData)
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
-    fillFilePath();
-    fillMoveFilePath();
     updateFileIcons();
     updateMoveFileIcons();
+    fillFilePath();
+    fillMoveFilePath();
 }
 
 void StalledIssueFilePath::showFullPath()
@@ -88,15 +85,6 @@ void StalledIssueFilePath::fillFilePath()
     {
         ui->file->show();
 
-        auto filePath = getFilePath();
-        if(!filePath.isEmpty())
-        {
-            ui->filePathEdit->setText(filePath);
-        }
-        else
-        {
-            ui->filePathEdit->setText(QString::fromUtf8("-"));
-        }
 
         auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
 
@@ -116,6 +104,20 @@ void StalledIssueFilePath::fillFilePath()
 
         ui->filePathContainer->setProperty(HAS_PROBLEM,hasProblem);
         setStyleSheet(styleSheet());
+
+        auto filePath = getFilePath();
+        if(!filePath.isEmpty())
+        {
+            ui->filePathEdit->setText(filePath);
+        }
+        else
+        {
+            ui->filePathEdit->setText(QString::fromUtf8("-"));
+        }
+    }
+    else
+    {
+        ui->file->hide();
     }
 }
 
@@ -130,6 +132,12 @@ void StalledIssueFilePath::fillMoveFilePath()
 {
     if(!mData->getMovePath().isEmpty())
     {
+        auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        hasProblem ?  ui->movePathProblemMessage->setText(getSyncPathProblemString(mData->getMovePath().mPathProblem)) : ui->movePathProblemContainer->hide();
+        hasProblem ? ui->moveFilePathContainer->setCursor(Qt::ArrowCursor) : ui->moveFilePathContainer->setCursor(Qt::PointingHandCursor);
+        ui->moveFilePathContainer->setProperty(HAS_PROBLEM,hasProblem);
+        setStyleSheet(styleSheet());
+
         ui->moveFile->show();
 
         auto filePath = getMoveFilePath();
@@ -141,12 +149,10 @@ void StalledIssueFilePath::fillMoveFilePath()
         {
             ui->moveFilePathEdit->setText(QString::fromUtf8("-"));
         }
-
-        auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
-        hasProblem ?  ui->movePathProblemMessage->setText(getSyncPathProblemString(mData->getMovePath().mPathProblem)) : ui->movePathProblemContainer->hide();
-        hasProblem ? ui->moveFilePathContainer->setCursor(Qt::ArrowCursor) : ui->moveFilePathContainer->setCursor(Qt::PointingHandCursor);
-        ui->moveFilePathContainer->setProperty(HAS_PROBLEM,hasProblem);
-        setStyleSheet(styleSheet());
+    }
+    else
+    {
+        ui->moveFile->hide();
     }
 }
 

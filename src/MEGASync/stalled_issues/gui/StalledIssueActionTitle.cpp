@@ -54,6 +54,20 @@ void StalledIssueActionTitle::removeBackgroundColor()
 
 void StalledIssueActionTitle::setTitle(const QString &title)
 {
+    layout()->activate();
+
+    ui->backgroundWidget->layout()->activate();
+    ui->actionContainer->updateGeometry();
+
+    ui->generalContainer->layout()->activate();
+    ui->generalContainer->updateGeometry();
+
+    ui->contents->layout()->activate();
+    ui->contents->updateGeometry();
+
+    ui->titleContainer->layout()->activate();
+    ui->titleContainer->updateGeometry();
+
     ui->titleLabel->setText(title);
     ui->titleLabel->setProperty(MESSAGE_TEXT, title);
 }

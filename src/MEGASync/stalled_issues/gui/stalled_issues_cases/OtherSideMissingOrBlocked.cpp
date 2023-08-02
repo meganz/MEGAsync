@@ -3,6 +3,8 @@
 
 #include "StalledIssueHeader.h"
 
+#include <QGraphicsOpacityEffect>
+
 OtherSideMissingOrBlocked::OtherSideMissingOrBlocked(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
     ui(new Ui::OtherSideMissingOrBlocked)
@@ -28,9 +30,6 @@ void OtherSideMissingOrBlocked::refreshUi()
 {
     auto issue = getData();
 
-    ui->localPath->hide();
-    ui->remotePath->hide();
-
     auto localData = issue.consultData()->consultLocalData();
     auto cloudData = issue.consultData()->consultCloudData();
 
@@ -39,10 +38,33 @@ void OtherSideMissingOrBlocked::refreshUi()
         ui->remotePath->show();
         ui->remotePath->updateUi(cloudData);
     }
+    else
+    {
+        ui->remotePath->hide();
+    }
 
     if(localData)
     {
         ui->localPath->show();
         ui->localPath->updateUi(localData);
+    }
+    else
+    {
+        ui->localPath->hide();
+    }
+
+    if(issue.consultData()->isSolved())
+    {
+        if(!graphicsEffect())
+        {
+            auto effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.30);
+            setGraphicsEffect(effect);
+        }
+    }
+    else if(graphicsEffect())
+    {
+        graphicsEffect()->deleteLater();
+        setGraphicsEffect(nullptr);
     }
 }

@@ -640,6 +640,12 @@ QPushButton
       </item>
       <item row="1" column="1">
        <widget class="QWidget" name="moveFilePathContainer" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
@@ -649,7 +655,7 @@ QPushButton
         <property name="itsHover" stdset="0">
          <bool>false</bool>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0,0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
          <property name="spacing">
           <number>6</number>
          </property>

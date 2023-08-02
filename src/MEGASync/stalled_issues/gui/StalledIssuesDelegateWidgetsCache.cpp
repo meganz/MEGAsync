@@ -97,10 +97,11 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
         }
 
         item = createBodyWidget(index, parent, issue);
-        item->resize(size);
+        item->resize(QSize(size.width(), item->size().height()));
+        item->show();
+        item->hide();
+        item->updateUi(index, issue);
         item->setDelegate(mDelegate);
-        item->setAttribute(Qt::WA_WState_ExplicitShowHide, false);
-        item->setAttribute(Qt::WA_WState_Hidden , true);
 
         itemsByRowMap.insert(row, item);
     }
@@ -141,11 +142,6 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
             item = new OtherSideMissingOrBlocked(parent);
             break;
         }
-    }
-
-    if(item)
-    {
-        item->updateUi(index, issue);
     }
 
     return item;

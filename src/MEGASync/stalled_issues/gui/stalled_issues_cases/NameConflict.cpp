@@ -72,16 +72,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
 {
     auto nameData = getData(issue);
 
-    if(nameData)
-    {
-        ui->path->show();
-        ui->path->updateUi(nameData);
-    }
-    else
-    {
-        ui->path->hide();
-    }
-
     //Fill conflict names
     auto conflictedNames = getConflictedNames(issue);
 
@@ -110,6 +100,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
                 layout->setContentsMargins(5,35,0,10);
 
                 ui->nameConflictsLayout->addWidget(groupContainer);
+                ui->nameConflictsLayout->activate();
             }
 
             parent = groupContainer;
@@ -130,10 +121,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         {
             title = mTitlesByIndex.value(index);
         }
-
-        title->setTitle(conflictedName);
-
-        updateTitleExtraInfo(title, info);
 
         nameData->checkTrailingSpaces(conflictedName);
 
@@ -174,6 +161,20 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         }
 
         allSolved &= info->isSolved();
+
+        titleLayout->activate();
+        title->setTitle(conflictedName);
+        updateTitleExtraInfo(title, info);
+    }
+
+    if(nameData)
+    {
+        ui->path->show();
+        ui->path->updateUi(nameData);
+    }
+    else
+    {
+        ui->path->hide();
     }
 
     if(allSolved)
