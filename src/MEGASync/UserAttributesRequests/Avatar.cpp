@@ -102,7 +102,7 @@ AttributeRequest::RequestInfo Avatar::fillRequestInfo()
     };
     QSharedPointer<ParamInfo> avatarParamInfo(new ParamInfo(avatarRequestFunc));
     ParamInfoMap paramInfo({{mega::MegaApi::USER_ATTR_AVATAR, avatarParamInfo}});
-    RequestInfo ret(paramInfo, QMap<int, int>({{mega::MegaUser::CHANGE_TYPE_AVATAR,
+    RequestInfo ret(paramInfo, QMap<int64_t, int>({{mega::MegaUser::CHANGE_TYPE_AVATAR,
                                                 mega::MegaApi::USER_ATTR_AVATAR}}));
     return ret;
 }

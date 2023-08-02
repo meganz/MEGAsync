@@ -16,6 +16,7 @@
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
+#include "syncs/gui/Twoways/BindFolderDialog.h"
 
 #include "mega/types.h"
 
@@ -242,6 +243,10 @@ SettingsDialog::~SettingsDialog()
     mApp->dettachBandwidthObserver(*this);
     mApp->dettachAccountObserver(*this);
 
+#ifdef Q_OS_MACOS
+    mToolBar->deleteLater();
+#endif
+
     delete mUi;
 }
 
@@ -256,8 +261,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bGeneral->click();
 #else
-        mToolBar->setSelectedItem(bGeneral.get());
-        emit bGeneral.get()->activated();
+        mToolBar->setSelectedItem(bGeneral);
+        emit bGeneral->activated();
 #endif
         break;
 
@@ -265,8 +270,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bAccount->click();
 #else
-        mToolBar->setSelectedItem(bAccount.get());
-        emit bAccount.get()->activated();
+        mToolBar->setSelectedItem(bAccount);
+        emit bAccount->activated();
 #endif
         break;
 
@@ -274,8 +279,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bSyncs->click();
 #else
-        mToolBar->setSelectedItem(bSyncs.get());
-        emit bSyncs.get()->activated();
+        mToolBar->setSelectedItem(bSyncs);
+        emit bSyncs->activated();
 #endif
         break;
 
@@ -283,8 +288,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bBackup->click();
 #else
-        mToolBar->setSelectedItem(bBackup.get());
-        emit bBackup.get()->activated();
+        mToolBar->setSelectedItem(bBackup);
+        emit bBackup->activated();
 #endif
         break;
 
@@ -292,8 +297,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bSecurity->click();
 #else
-        mToolBar->setSelectedItem(bSecurity.get());
-        emit bSecurity.get()->activated();
+        mToolBar->setSelectedItem(bSecurity);
+        emit bSecurity->activated();
 #endif
         break;
 
@@ -301,8 +306,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bFolders->click();
 #else
-        mToolBar->setSelectedItem(bFolders.get());
-        emit bFolders.get()->activated();
+        mToolBar->setSelectedItem(bFolders);
+        emit bFolders->activated();
 #endif
         break;
 
@@ -310,8 +315,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bNetwork->click();
 #else
-        mToolBar->setSelectedItem(bNetwork.get());
-        emit bNetwork.get()->activated();
+        mToolBar->setSelectedItem(bNetwork);
+        emit bNetwork->activated();
 #endif
         break;
 
@@ -319,8 +324,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bNotifications->click();
 #else
-        mToolBar->setSelectedItem(bNotifications.get());
-        emit bNotifications.get()->activated();
+        mToolBar->setSelectedItem(bNotifications);
+        emit bNotifications->activated();
 #endif
         break;
 
@@ -349,7 +354,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         // TODO: Re-evaluate sizes for Network tab
         setMinimumHeight(435);
         setMaximumHeight(435);
-        mToolBar->setSelectedItem(bNetwork.get());
+        mToolBar->setSelectedItem(bNetwork);
 #else
         mUi->bNetwork->setEnabled(true);
         mUi->bNetwork->setChecked(true);
@@ -391,7 +396,7 @@ void SettingsDialog::initializeNativeUIComponents()
             this, &SettingsDialog::on_bHelp_clicked);
 
     // Set native NSToolBar for settings.
-    mToolBar = ::mega::make_unique<QCustomMacToolbar>();
+    mToolBar = new QCustomMacToolbar();
 
     QString general(QString::fromUtf8("settings-general"));
     QString account(QString::fromUtf8("settings-account"));
@@ -403,49 +408,49 @@ void SettingsDialog::initializeNativeUIComponents()
     QString notifications(QString::fromUtf8("settings-notifications"));
 
     // add Items
-    bGeneral.reset(mToolBar->addItem(QIcon(), tr("General")));
-    mToolBar->customizeIconToolBarItem(bGeneral.get(), general);
-    connect(bGeneral.get(), &QMacToolBarItem::activated,
+    bGeneral = mToolBar->addItem(QIcon(), tr("General"));
+    mToolBar->customizeIconToolBarItem(bGeneral, general);
+    connect(bGeneral, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bGeneral_clicked);
 
-    bAccount.reset(mToolBar->addItem(QIcon(), tr("Account")));
-    mToolBar->customizeIconToolBarItem(bAccount.get(), account);
-    connect(bAccount.get(), &QMacToolBarItem::activated,
+    bAccount=mToolBar->addItem(QIcon(), tr("Account"));
+    mToolBar->customizeIconToolBarItem(bAccount, account);
+    connect(bAccount, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bAccount_clicked);
 
-    bSyncs.reset(mToolBar->addItem(QIcon(), tr("Sync")));
-    mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
-    connect(bSyncs.get(), &QMacToolBarItem::activated,
+    bSyncs=mToolBar->addItem(QIcon(), tr("Sync"));
+    mToolBar->customizeIconToolBarItem(bSyncs, syncs);
+    connect(bSyncs, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSyncs_clicked);
 
-    bBackup.reset(mToolBar->addItem(QIcon(), tr("Backup")));
-    mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
-    connect(bBackup.get(), &QMacToolBarItem::activated,
+    bBackup=mToolBar->addItem(QIcon(), tr("Backup"));
+    mToolBar->customizeIconToolBarItem(bBackup, backup);
+    connect(bBackup, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bBackup_clicked);
 
-    bSecurity.reset(mToolBar->addItem(QIcon(), tr("Security")));
-    mToolBar->customizeIconToolBarItem(bSecurity.get(), security);
-    connect(bSecurity.get(), &QMacToolBarItem::activated,
+    bSecurity=mToolBar->addItem(QIcon(), tr("Security"));
+    mToolBar->customizeIconToolBarItem(bSecurity, security);
+    connect(bSecurity, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSecurity_clicked);
 
-    bFolders.reset(mToolBar->addItem(QIcon(), tr("Folders")));
-    mToolBar->customizeIconToolBarItem(bFolders.get(), folders);
-    connect(bFolders.get(), &QMacToolBarItem::activated,
+    bFolders=mToolBar->addItem(QIcon(), tr("Folders"));
+    mToolBar->customizeIconToolBarItem(bFolders, folders);
+    connect(bFolders, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bFolders_clicked);
 
-    bNetwork.reset(mToolBar->addItem(QIcon(), tr("Network")));
-    mToolBar->customizeIconToolBarItem(bNetwork.get(), network);
-    connect(bNetwork.get(), &QMacToolBarItem::activated,
+    bNetwork=mToolBar->addItem(QIcon(), tr("Network"));
+    mToolBar->customizeIconToolBarItem(bNetwork, network);
+    connect(bNetwork, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bNetwork_clicked);
 
-    bNotifications.reset(mToolBar->addItem(QIcon(), tr("Notifications")));
-    mToolBar->customizeIconToolBarItem(bNotifications.get(), notifications);
-    connect(bNotifications.get(), &QMacToolBarItem::activated,
+    bNotifications = mToolBar->addItem(QIcon(), tr("Notifications"));
+    mToolBar->customizeIconToolBarItem(bNotifications, notifications);
+    connect(bNotifications, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bNotifications_clicked);
 
     mToolBar->setSelectableItems(true);
     mToolBar->setAllowsUserCustomization(false);
-    mToolBar->setSelectedItem(bGeneral.get());
+    mToolBar->setSelectedItem(bGeneral);
 
     // Attach to the window according Qt docs
     this->window()->winId(); // create window->windowhandle()
@@ -776,9 +781,21 @@ void SettingsDialog::animateSettingPage(int endValue, int duration)
     mAnimationGroup->start();
 }
 
+void SettingsDialog::closeMenus()
+{
+    auto menus = findChildren<QMenu*>();
+    foreach(auto& menu, menus)
+    {
+        if(dynamic_cast<QAbstractItemView*>(menu->parentWidget()))
+        {
+            menu->close();
+        }
+    }
+}
+
 void SettingsDialog::closeEvent(QCloseEvent *event)
 {
-    emit closeMenus();
+    closeMenus();
     QDialog::closeEvent(event);
 }
 
@@ -799,14 +816,14 @@ void SettingsDialog::macOSretainSizeWhenHidden()
 
 void SettingsDialog::reloadToolBarItemNames()
 {
-    bGeneral.get()->setText(tr("General"));
-    bAccount.get()->setText(tr("Account"));
-    bSyncs.get()->setText(tr("Sync"));
-    bBackup.get()->setText(tr("Backup"));
-    bSecurity.get()->setText(tr("Security"));
-    bFolders.get()->setText(tr("Folders"));
-    bNetwork.get()->setText(tr("Network"));
-    bNotifications.get()->setText(tr("Notifications"));
+    bGeneral->setText(tr("General"));
+    bAccount->setText(tr("Account"));
+    bSyncs->setText(tr("Sync"));
+    bBackup->setText(tr("Backup"));
+    bSecurity->setText(tr("Security"));
+    bFolders->setText(tr("Folders"));
+    bNetwork->setText(tr("Network"));
+    bNotifications->setText(tr("Notifications"));
 }
 #endif
 
@@ -850,7 +867,7 @@ void SettingsDialog::on_bGeneral_clicked()
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     onCacheSizeAvailable();
 
     mUi->pGeneral->hide();
@@ -872,38 +889,29 @@ void SettingsDialog::on_bClearCache_clicked()
         }
     }
 
-    QPointer<SettingsDialog> thisPointer(this);
-
-    QPointer<QMessageBox> warningDel = new QMessageBox(this);
-    warningDel->setIcon(QMessageBox::Warning);
-    warningDel->setWindowTitle(tr("Clear local backup"));
-    warningDel->setTextFormat(Qt::RichText);
-    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-
-    warningDel->setText(tr("Backups of the previous versions of your synced files in your computer"
-                           " will be permanently deleted. Please, check your backup folders to see"
-                           " if you need to rescue something before continuing:")
-                        + QString::fromUtf8("<br/>") + syncs
-                        + QString::fromUtf8("<br/><br/>")
-                        + tr("Do you want to delete your local backup now?"));
-    warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);
-    warningDel->setDefaultButton(QMessageBox::No);
-
-    int result = warningDel->exec();
-    if (!warningDel || (result != QMessageBox::Yes))
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = tr("Clear local backup");
+    msgInfo.text = tr("Backups of the previous versions of your synced files in your computer"
+                      " will be permanently deleted. Please, check your backup folders to see"
+                      " if you need to rescue something before continuing:")
+                   + QString::fromUtf8("<br/>") + syncs
+                   + QString::fromUtf8("<br/><br/>")
+                   + tr("Do you want to delete your local backup now?");
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        delete warningDel;
-        return;
-    }
+        if(msg->result() == QMessageBox::Yes)
+        {
+            QtConcurrent::run(deleteCache);
+            mCacheSize = 0;
+            onCacheSizeAvailable();
+        }
+    };
 
-    delete warningDel;
-
-    if (thisPointer)
-    {
-        QtConcurrent::run(deleteCache);
-        mCacheSize = 0;
-        onCacheSizeAvailable();
-    }
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void SettingsDialog::on_bClearRemoteCache_clicked()
@@ -917,68 +925,62 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     std::unique_ptr<const char[]> base64Handle(syncDebris->getBase64Handle());
 
-    QPointer<SettingsDialog> thisPointer(this);
-
-    QPointer<QMessageBox> warningDel = new QMessageBox(QMessageBox::Warning,tr("Clear remote backup"),
-                                                       tr("Backups of the previous versions of your synced files in MEGA will be"
-                                                          " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
-                                                          " of your MEGA account to see if you need to rescue something"
-                                                          " before continuing.")
-                                                       .replace(QString::fromUtf8("[A]"),
-                                                                QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
-                                                                .arg(QString::fromUtf8(base64Handle.get())))
-                                                       + QString::fromUtf8("<br/><br/>")
-                                                       + tr("Do you want to delete your remote backup now?"),
-                                                       QMessageBox::Yes | QMessageBox::No,
-                                                       this
-                                                       );
-    warningDel->setAttribute(Qt::WA_DeleteOnClose);
-    warningDel->setTextFormat(Qt::RichText);
-    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-    warningDel->setDefaultButton(QMessageBox::No);
-
-    int result = warningDel->exec();
-    if (!thisPointer || (result != QMessageBox::Yes))
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = tr("Clear remote backup");
+    msgInfo.text = tr("Backups of the previous versions of your synced files in MEGA will be"
+                      " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
+                      " of your MEGA account to see if you need to rescue something"
+                      " before continuing.")
+            .replace(QString::fromUtf8("[A]"),
+                     QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
+                     .arg(QString::fromUtf8(base64Handle.get())))
+            + QString::fromUtf8("<br/><br/>")
+            + tr("Do you want to delete your remote backup now?");
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        return;
-    }
+        if(msg->result() == QMessageBox::Yes)
+        {
+            QtConcurrent::run(deleteRemoteCache, mMegaApi);
+            mRemoteCacheSize = 0;
+            onCacheSizeAvailable();
+        }
+    };
 
-    QtConcurrent::run(deleteRemoteCache, mMegaApi);
-    mRemoteCacheSize = 0;
-    onCacheSizeAvailable();
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void SettingsDialog::on_bClearFileVersions_clicked()
 {
-    QPointer<SettingsDialog> thisPointer = QPointer<SettingsDialog>(this);
-    QPointer<QMessageBox> warningDel = new QMessageBox(QMessageBox::Warning,QString::fromUtf8("MEGAsync"),
-                                                       tr("You are about to permanently remove all file versions."
-                                                          " Would you like to proceed?"),
-                                                       QMessageBox::Yes | QMessageBox::No,
-                                                       this
-                                                       );
-
-    warningDel->setAttribute(Qt::WA_DeleteOnClose);
-    warningDel->setTextFormat(Qt::RichText);
-    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-    warningDel->setDefaultButton(QMessageBox::No);
-
-    int result = warningDel->exec();
-    if (!thisPointer || (result != QMessageBox::Yes))
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.text = tr("You are about to permanently remove all file versions."
+                      " Would you like to proceed?");
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        return;
-    }
-
-    mMegaApi->removeVersions(new MegaListenerFuncExecuter(true, [](MegaApi* api,
-                                                         MegaRequest* request, MegaError* e)
-    {
-        Q_UNUSED(api)
-        Q_UNUSED(request)
-        if (e->getErrorCode() == MegaError::API_OK)
+        if(msg->result() == QMessageBox::Yes)
         {
-            MegaSyncApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+            mMegaApi->removeVersions(new MegaListenerFuncExecuter(true, [](MegaApi* api,
+                                                                 MegaRequest* request, MegaError* e)
+            {
+                Q_UNUSED(api)
+                Q_UNUSED(request)
+                if (e->getErrorCode() == MegaError::API_OK)
+                {
+                    MegaSyncApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+                }
+            }));
         }
-    }));
+    };
+
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void SettingsDialog::on_cCacheSchedulerEnabled_toggled()
@@ -1056,21 +1058,35 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
     if (mLoadingSettings) return;
     if (!checked)
     {
-        auto answer = QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                                               tr("Disabling file versioning will prevent"
-                                                  " the creation and storage of new file versions."
-                                                  " Do you want to continue?"),
-                                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-        if (answer == QMessageBox::No)
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.text = tr("Disabling file versioning will prevent"
+                          " the creation and storage of new file versions."
+                          " Do you want to continue?");
+        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+        msgInfo.defaultButton = QMessageBox::No;
+        msgInfo.parent = this;
+        msgInfo.finishFunc = [this, checked](QPointer<QMessageBox> msg)
         {
-            mUi->cFileVersioning->blockSignals(true);
-            mUi->cFileVersioning->setChecked(true);
-            mUi->cFileVersioning->blockSignals(false);
-            return;
-        }
+            if(msg->result() == QMessageBox::No)
+            {
+                mUi->cFileVersioning->blockSignals(true);
+                mUi->cFileVersioning->setChecked(true);
+                mUi->cFileVersioning->blockSignals(false);
+            }
+            else
+            {
+                mMegaApi->setFileVersionsOption(!checked);
+            }
+        };
+
+        QMegaMessageBox::warning(msgInfo);
     }
-    // This is actually saved to Preferences after the MegaApi call succeeds;
-    mMegaApi->setFileVersionsOption(!checked);
+    else
+    {
+        // This is actually saved to Preferences after the MegaApi call succeeds;
+        mMegaApi->setFileVersionsOption(!checked);
+    }
 }
 
 void SettingsDialog::on_cbSleepMode_toggled(bool checked)
@@ -1085,15 +1101,21 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 
     if (checked && !result)
     {
-        QMegaMessageBox::critical(nullptr, tr("Sleep mode can't be setup"),
-                                               tr("Your operating system doesn't allow its sleep setting to be overwritten."),
-                                               QMessageBox::Ok, QMessageBox::Ok);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = tr("Sleep mode can't be setup");
+        msgInfo.text = tr("Your operating system doesn't allow its sleep setting to be overwritten.");
+        msgInfo.buttons = QMessageBox::Ok;
+        msgInfo.defaultButton = QMessageBox::Ok;
+        msgInfo.parent = this;
+        msgInfo.finishFunc = [this, checked](QPointer<QMessageBox> msg)
+        {
+            mUi->cbSleepMode->blockSignals(true);
+            mUi->cbSleepMode->setChecked(!checked);
+            mPreferences->setAwakeIfActive(!checked);
+            mUi->cbSleepMode->blockSignals(false);
+        };
 
-        mUi->cbSleepMode->blockSignals(true);
-        mUi->cbSleepMode->setChecked(!checked);
-        mPreferences->setAwakeIfActive(!checked);
-        mUi->cbSleepMode->blockSignals(false);
-        return;
+        QMegaMessageBox::critical(msgInfo);
     }
 }
 
@@ -1143,19 +1165,23 @@ void SettingsDialog::on_bUpdate_clicked()
 
 void SettingsDialog::on_bFullCheck_clicked()
 {
-    QPointer<SettingsDialog> currentDialog = this;
-    if (QMegaMessageBox::warning(nullptr, tr("Full scan"),
-                                 tr("MEGAsync will perform a full scan of your synced folders"
-                                    " when it starts.\n\nDo you want to restart MEGAsync now?"),
-                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            == QMessageBox::Yes)
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = tr("Full scan");
+    msgInfo.text = tr("MEGAsync will perform a full scan of your synced folders"
+                      " when it starts.\n\nDo you want to restart MEGAsync now?");
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.parent = this;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        if (currentDialog)
+        if(msg->result() == QMessageBox::Yes)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: full re-scan requested");
             restartApp();
         }
-    }
+    };
+
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void SettingsDialog::on_bSendBug_clicked()
@@ -1204,16 +1230,14 @@ void SettingsDialog::updateStorageElements()
 
         if (Utilities::isBusinessAccount())
         {
-            mUi->lStorage->setText(tr("%1 used").arg(Utilities::getSizeString(usedStorage)));
+            mUi->lStorage->setText(Utilities::createSimpleUsedString(usedStorage));
         }
         else
         {
             int percentage = Utilities::partPer(usedStorage, totalStorage);
+
             mUi->pStorageQuota->setValue(std::min(percentage, mUi->pStorageQuota->maximum()));
-            mUi->lStorage->setText(tr("%1 (%2%) of %3 used").arg(
-                                      Utilities::getSizeString(usedStorage),
-                                      QString::number(percentage),
-                                      Utilities::getSizeString(totalStorage)));
+            mUi->lStorage->setText(Utilities::createCompleteUsedString(usedStorage, totalStorage, percentage));
         }
     }
 }
@@ -1233,7 +1257,7 @@ void SettingsDialog::updateBandwidthElements()
     }
     else if (Utilities::isBusinessAccount())
     {
-        mUi->lBandwidth->setText(tr("%1 used").arg(Utilities::getSizeString(usedBandwidth)));
+        mUi->lBandwidth->setText(Utilities::createSimpleUsedString(usedBandwidth));
     }
     else
     {
@@ -1246,10 +1270,7 @@ void SettingsDialog::updateBandwidthElements()
         {
             int percentage = Utilities::partPer(usedBandwidth, totalBandwidth);
             mUi->pTransferQuota->setValue(std::min(percentage, 100));
-            mUi->lBandwidth->setText(tr("%1 (%2%) of %3 used").arg(
-                                        Utilities::getSizeString(usedBandwidth),
-                                        QString::number(std::min(percentage, 100)),
-                                        Utilities::getSizeString(totalBandwidth)));
+            mUi->lBandwidth->setText(Utilities::createCompleteUsedString(usedBandwidth, totalBandwidth, std::min(percentage, 100)));
         }
     }
 }
@@ -1338,7 +1359,7 @@ void SettingsDialog::on_bAccount_clicked()
     mUi->wStack->setCurrentWidget(mUi->pAccount);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pAccount->hide();
     animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1373,14 +1394,18 @@ void SettingsDialog::on_bMyAccount_clicked()
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
+#ifdef Q_OS_MACOS
+    auto accountDetailsDialog = new AccountDetailsDialog(this);
+#else
     auto accountDetailsDialog = new AccountDetailsDialog();
+#endif
+
     mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
 void SettingsDialog::on_bLogout_clicked()
 {
-    QPointer<SettingsDialog> currentDialog = this;
     QString text;
     bool haveSyncs (false);
     bool haveBackups (false);
@@ -1406,17 +1431,32 @@ void SettingsDialog::on_bLogout_clicked()
         text = tr("Synchronizations will stop working.");
     }
 
-    // Display the message if it has been set
-    if (text.isEmpty() || QMegaMessageBox::question(nullptr, tr("Log out"),
-                                                    text + QLatin1Char(' ') + tr("Are you sure?"),
-                                                    QMessageBox::Yes | QMessageBox::No)
-            == QMessageBox::Yes)
+    auto unlink = [this](){
+        close();
+        mApp->unlink();
+    };
+
+    if(text.isEmpty())
     {
-        if (currentDialog)
+        unlink();
+    }
+    else
+    {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = tr("Log out");
+        msgInfo.text = text + QLatin1Char(' ') + tr("Are you sure?");
+        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+        msgInfo.defaultButton = QMessageBox::Yes;
+        msgInfo.parent = this;
+        msgInfo.finishFunc = [this,unlink](QPointer<QMessageBox> msg)
         {
-            close();
-            mApp->unlink();
-        }
+            if(msg->result() == QMessageBox::Yes)
+            {
+                unlink();
+            }
+        };
+
+        QMegaMessageBox::question(msgInfo);
     }
 }
 
@@ -1429,38 +1469,53 @@ void SettingsDialog::connectSyncHandlers()
         if (errorCode != MegaError::API_OK)
         {
             onSavingSyncsCompleted(SyncStateInformation::SAVING_SYNCS_FINISHED);
+
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title = tr("Error adding sync");
+            msgInfo.text = errorMsg;
+
             Text::Link link(Utilities::SUPPORT_URL);
             Text::Decorator dec(&link);
-            QString msg = errorMsg;
-            dec.process(msg);
-            QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+            dec.process(msgInfo.text);
+
+            QMegaMessageBox::warning(msgInfo);
         }
     });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error removing sync"),
-                                  tr("Your sync can't be removed. Reason: %1")
-                                  .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = tr("Error removing sync");
+        msgInfo.text = tr("Your sync can't be removed. Reason: %1")
+                .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
+        QMegaMessageBox::warning(msgInfo);
     });
 
     connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error enabling sync"),
-                                  tr("Your sync \"%1\" can't be enabled. Reason: %2")
-                                  .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = tr("Error enabling sync");
+        msgInfo.text = tr("Your sync \"%1\" can't be enabled. Reason: %2")
+                .arg(sync->name())
+                .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode)));
+        QMegaMessageBox::warning(msgInfo);
     });
 
     connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error disabling sync"),
-                                  tr("Your sync \"%1\" can't be disabled. Reason: %2")
-                                  .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = tr("Error disabling sync");
+        msgInfo.text = tr("Your sync \"%1\" can't be disabled. Reason: %2")
+                .arg(sync->name())
+                .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode)));
+        QMegaMessageBox::warning(msgInfo);
     });
 }
 
@@ -1550,7 +1605,7 @@ void SettingsDialog::on_bSyncs_clicked()
     mUi->wStack->setCurrentWidget(mUi->pSyncs);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pSyncs->hide();
     animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1626,7 +1681,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 
     #ifdef Q_OS_MACOS
                 QString syncs(QString::fromUtf8("settings-syncs-error"));
-                mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
+                mToolBar->customizeIconToolBarItem(bSyncs, syncs);
     #else
                mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs-warn.png")));
     #endif
@@ -1637,7 +1692,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 
     #ifdef Q_OS_MACOS
                 QString syncs(QString::fromUtf8("settings-syncs"));
-                mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
+                mToolBar->customizeIconToolBarItem(bSyncs, syncs);
     #else
                  mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs.png")));
     #endif
@@ -1653,7 +1708,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 
 #ifdef Q_OS_MACOS
             QString backup(QString::fromUtf8("settings-backups-error"));
-            mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
+            mToolBar->customizeIconToolBarItem(bBackup, backup);
 #else
             mUi->bBackup->setIcon(QIcon(QString::fromUtf8(":/images/settings-backups-warn.png")));
 #endif
@@ -1664,7 +1719,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 
 #ifdef Q_OS_MACOS
             QString backup(QString::fromUtf8("settings-backup"));
-            mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
+            mToolBar->customizeIconToolBarItem(bBackup, backup);
 #else
             mUi->bBackup->setIcon(QIcon(QString::fromUtf8(":/images/settings-backup.png")));
 #endif
@@ -1692,42 +1747,58 @@ void SettingsDialog::connectBackupHandlers()
             Text::Decorator dec(&link);
             QString msg = errorMsg;
             dec.process(msg);
-            QMegaMessageBox::critical(nullptr, tr("Error adding backup %1").arg(name), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title = tr("Error adding backup %1").arg(name);
+            msgInfo.text = msg;
+            QMegaMessageBox::critical(msgInfo);
         }
     });
 
     connect(&mBackupController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error removing backup"),
-                                  tr("Your backup can't be removed. Reason: %1")
-                                  .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = tr("Error removing backup");
+        msgInfo.text = tr("Your backup can't be removed. Reason: %1")
+                .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
+        QMegaMessageBox::warning(msgInfo);
     });
 
     connect(&mBackupController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error moving or removing remote backup folder"),
-                                 tr("Failed to move or remove the remote backup folder. Reason: %1")
-                                 .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = tr("Error moving or removing remote backup folder");
+        msgInfo.text = tr("Failed to move or remove the remote backup folder. Reason: %1")
+                .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
+        QMegaMessageBox::warning(msgInfo);
     });
 
     connect(&mBackupController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error enabling backup"),
-                                  tr("Your backup \"%1\" can't be enabled. Reason: %2")
-                                  .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title =  tr("Error enabling backup");
+        msgInfo.text = tr("Your backup \"%1\" can't be enabled. Reason: %2")
+                .arg(sync->name())
+                .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode)));
+        QMegaMessageBox::warning(msgInfo);
     });
 
     connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
-                                  tr("Your backup \"%1\" can't be disabled. Reason: %2")
-                                  .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title =  tr("Error disabling backup");
+        msgInfo.text = tr("Your backup \"%1\" can't be disabled. Reason: %2")
+                .arg(sync->name())
+                .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode)));
+        QMegaMessageBox::warning(msgInfo);
     });
 }
 
@@ -1770,6 +1841,7 @@ void SettingsDialog::on_bBackup_clicked()
     mUi->wStack->setCurrentWidget(mUi->pBackup);
 
 #ifdef Q_OS_MACOS
+    closeMenus();
     mUi->pBackup->hide();
     animateSettingPage(SETTING_ANIMATION_BACKUP_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1867,7 +1939,7 @@ void SettingsDialog::on_bSecurity_clicked()
     mUi->wStack->setCurrentWidget(mUi->pSecurity);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pSecurity->hide();
     animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1883,46 +1955,59 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     }
 #endif
 
-    DialogBlocker* blocker = new DialogBlocker(this);
     QDir dir(defaultPath);
-    QPointer<SettingsDialog> currentDialog = this;
-    QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Export Master key"),
-                                                    dir.filePath(tr("MEGA-RECOVERYKEY")),
-                                                    QString::fromUtf8("Txt file (*.txt)"), nullptr,
-                                                    QFileDialog::ShowDirsOnly
-                                                    | QFileDialog::DontResolveSymlinks);
 
-    if(currentDialog)
+    QFileDialog* dialog = new QFileDialog(this);
+    dialog->setFileMode(QFileDialog::AnyFile);
+    dialog->setOptions(QFileDialog::ShowDirsOnly
+                      | QFileDialog::DontResolveSymlinks);
+    dialog->selectFile(dir.filePath(tr("MEGA-RECOVERYKEY")));
+    dialog->setWindowTitle(tr("Export Master key"));
+    dialog->setNameFilter(QString::fromUtf8("Txt file (*.txt)"));
+    const QStringList schemes = QStringList(QStringLiteral("file"));
+    dialog->setSupportedSchemes(schemes);
+    dialog->setAcceptMode(QFileDialog::AcceptSave);
+    DialogOpener::showDialog<QFileDialog>(dialog, [this, dialog]
     {
-        blocker->deleteLater();
-
-        if (fileName.isEmpty())
+        if(dialog->result() == QDialog::Accepted)
         {
-            return;
+            auto fileNames = dialog->selectedFiles();
+
+            if (fileNames.isEmpty())
+            {
+                return;
+            }
+
+            QFile file(fileNames.first());
+            if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+                msgInfo.title =  tr("Unable to write file");
+                msgInfo.text = file.errorString();
+                QMegaMessageBox::warning(msgInfo);
+            }
+            else
+            {
+                QTextStream out(&file);
+                out << mMegaApi->exportMasterKey();
+
+                file.close();
+
+                mMegaApi->masterKeyExported();
+
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+                msgInfo.title =  QMegaMessageBox::warningTitle();
+                msgInfo.text =   tr("Exporting the master key and keeping it in a secure location"
+                                    " enables you to set a new password without data loss.")
+                        + QString::fromUtf8("\n")
+                        + tr("Always keep physical control of your master key (e.g. on a"
+                             " client device, external storage, or print).");
+                QMegaMessageBox::information(msgInfo);
+            }
         }
-
-        QFile file(fileName);
-        if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
-        {
-            QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString());
-            return;
-        }
-
-        QTextStream out(&file);
-        out << mMegaApi->exportMasterKey();
-
-        file.close();
-
-        mMegaApi->masterKeyExported();
-
-        QMegaMessageBox::information(this, tr("Warning"),
-                                     tr("Exporting the master key and keeping it in a secure location"
-                                        " enables you to set a new password without data loss.")
-                                     + QString::fromUtf8("\n")
-                                     + tr("Always keep physical control of your master key (e.g. on a"
-                                          " client device, external storage, or print)."),
-                                     QMessageBox::Ok);
-    }
+    });
 }
 
 void SettingsDialog::on_bChangePassword_clicked()
@@ -1985,7 +2070,7 @@ void SettingsDialog::on_bFolders_clicked()
     mUi->wStack->setCurrentWidget(mUi->pFolders);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pFolders->hide();
     animateSettingPage(SETTING_ANIMATION_FOLDERS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -2042,8 +2127,12 @@ void SettingsDialog::on_bDownloadFolder_clicked()
                 }
                 else
                 {
-                    QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions"
-                                                                       " in this local folder."));
+                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    msgInfo.parent = this;
+                    msgInfo.title =  QMegaMessageBox::errorTitle();
+                    msgInfo.text =   tr("You don't have write permissions"
+                                        " in this local folder.");
+                    QMegaMessageBox::critical(msgInfo);
                 }
             }
         }
@@ -2216,17 +2305,20 @@ void SettingsDialog::onShellNotificationsProcessed()
 
 void SettingsDialog::on_bRestart_clicked()
 {
-    QPointer<SettingsDialog> currentDialog = this;
-    if (QMegaMessageBox::warning(nullptr, tr("Restart MEGAsync"),
-                                 tr("Do you want to restart MEGAsync now?"),
-                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            == QMessageBox::Yes)
-    {
-        if (currentDialog)
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title =  tr("Restart MEGAsync");
+    msgInfo.text =   tr("Do you want to restart MEGAsync now?");
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+        if(msg->result() == QMessageBox::Yes)
         {
             restartApp();
         }
-    }
+    };
+    QMegaMessageBox::warning(msgInfo);
 }
 
 // Network -----------------------------------------------------------------------------------------
@@ -2242,7 +2334,7 @@ void SettingsDialog::on_bNetwork_clicked()
     mUi->wStack->setCurrentWidget(mUi->pNetwork);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pNetwork->hide();
     animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -2295,7 +2387,7 @@ void SettingsDialog::on_bNotifications_clicked()
     mUi->wStack->setCurrentWidget(mUi->pNotifications);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pNotifications->hide();
     animateSettingPage(SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif

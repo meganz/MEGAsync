@@ -46,7 +46,7 @@ mkdir $archives
 ../src/MEGASync/mega/contrib/build_sdk.sh -q -n -e -g -w -s -v -u -W -o $archives
 
 # get current version
-MEGASYNC_VERSION=`grep -Po 'const QString Preferences::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../src/MEGASync/control/Preferences.cpp`
+MEGASYNC_VERSION=`grep -Po '#define VER_PRODUCTVERSION_STR[[:space:]]*"\K.*(?=\.)' ../src/MEGASync/control/Version.h`
 export MEGASYNC_NAME=megasync-$MEGASYNC_VERSION
 rm -rf $MEGASYNC_NAME.tar.gz
 rm -rf $MEGASYNC_NAME
@@ -94,7 +94,7 @@ if [ "$last_version" != "$MEGASYNC_VERSION" ]; then
     if [ -f $changelog ]; then
         mv $changelog $changelogold
     fi
-    ./generate_rpm_changelog_entry.sh ../src/MEGASync/control/Preferences.cpp > $changelog
+    ./generate_rpm_changelog_entry.sh ../src/MEGASync/control/Version.h > $changelog
     if [ -f $changelogold ]; then
         cat $changelogold >> $changelog
         rm $changelogold
@@ -106,7 +106,7 @@ if [ "$last_version" != "$MEGASYNC_VERSION" ]; then
     if [ -f $changelog ]; then
         mv $changelog $changelogold
     fi
-    ./generate_deb_changelog_entry.sh $MEGASYNC_VERSION ../src/MEGASync/control/Preferences.cpp > $changelog
+    ./generate_deb_changelog_entry.sh $MEGASYNC_VERSION ../src/MEGASync/control/Version.h > $changelog
     if [ -f $changelogold ]; then
         cat $changelogold >> $changelog
         rm $changelogold

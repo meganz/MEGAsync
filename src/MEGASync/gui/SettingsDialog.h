@@ -2,7 +2,6 @@
 #define SETTINGSDIALOG_H
 
 #include "AccountDetailsDialog.h"
-#include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
@@ -80,12 +79,6 @@ public:
 
 signals:
     void userActivity();
-#ifdef Q_OS_MACOS
-    // Due to issues with QT and window manager on macOS, menus are not closing when
-    // you close settings dialog using close toolbar button. To fix it, emit a signal when about to close
-    // and force to close the sync menu (if visible)
-    void closeMenus();
-#endif
 
 public slots:
     // Network
@@ -194,6 +187,12 @@ protected:
 
 private slots:
     void onShellNotificationsProcessed();
+#ifdef Q_OS_MACOS
+    // Due to issues with QT and window manager on macOS, menus are not closing when
+    // you close settings dialog using close toolbar button. To fix it, emit a signal when about to close
+    // and force to close the sync menu (if visible)
+    void closeMenus();
+#endif
 
 private:
     void connectSyncHandlers();
@@ -219,15 +218,15 @@ private:
     QPropertyAnimation* mMinHeightAnimation;
     QPropertyAnimation* mMaxHeightAnimation;
     QParallelAnimationGroup* mAnimationGroup;
-    std::unique_ptr<QCustomMacToolbar> mToolBar;
-    std::unique_ptr<QMacToolBarItem> bGeneral;
-    std::unique_ptr<QMacToolBarItem> bAccount;
-    std::unique_ptr<QMacToolBarItem> bSyncs;
-    std::unique_ptr<QMacToolBarItem> bBackup;
-    std::unique_ptr<QMacToolBarItem> bSecurity;
-    std::unique_ptr<QMacToolBarItem> bFolders;
-    std::unique_ptr<QMacToolBarItem> bNetwork;
-    std::unique_ptr<QMacToolBarItem> bNotifications;
+    QCustomMacToolbar* mToolBar;
+    QMacToolBarItem *bGeneral;
+    QMacToolBarItem *bAccount;
+    QMacToolBarItem *bSyncs;
+    QMacToolBarItem *bBackup;
+    QMacToolBarItem *bSecurity;
+    QMacToolBarItem *bFolders;
+    QMacToolBarItem* bNetwork;
+    QMacToolBarItem* bNotifications;
 #endif
 
     Ui::SettingsDialog* mUi;

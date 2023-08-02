@@ -9,6 +9,8 @@
 #include "platform/PowerOptions.h"
 #include "PlatformStrings.h"
 #include "TransferMetaData.h"
+#include <QMegaMessageBox.h>
+#include "MegaTransferView.h"
 
 #include <QSharedData>
 
@@ -20,6 +22,9 @@ static const QModelIndex DEFAULT_IDX = QModelIndex();
 
 const int MAX_TRANSFERS = 2000;
 const int CANCEL_THRESHOLD_THREAD = 100;
+const int QUICK_CANCEL_THRESHOLD = 10000;
+const int QUICK_CANCEL_MIN_THRESHOLD = 300;
+const double QUICK_CANCEL_PERCENTAGE_THRESHOLD = 0.8;
 const int START_THRESHOLD_THREAD = 50;
 const int FAILED_THRESHOLD_THREAD = 100;
 const int PAUSE_RESUME_THRESHOLD_THREAD = 300;
@@ -216,11 +221,6 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
     //These type of transfers are not added to TransferMetaData item
     if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer() && !transfer->isStreamingTransfer())
     {
-        if(isRetried(transfer))
-        {
-            return;
-        }
-
         TransferMetaDataContainer::start(transfer);
     }
 
@@ -565,7 +565,7 @@ bool TransferThread::isRetriedFolder(mega::MegaTransfer *transfer)
     auto appDataId = TransferMetaDataContainer::appDataToId(transfer->getAppData());
     if(appDataId.first)
     {
-        auto data = TransferMetaDataContainer::getAppData(appDataId.second);
+        auto data = TransferMetaDataContainer::getAppDataById(appDataId.second);
         if(data)
         {
             if(data->isRetriedFolder(transfer))
@@ -793,7 +793,7 @@ TransfersModel::TransfersModel(QObject *parent) :
     mMostPriorityTransferTimer.setSingleShot(true);
     QObject::connect(&mMostPriorityTransferTimer, &QTimer::timeout, this, &TransfersModel::askForMostPriorityTransfer);
 
-    connect(&mUpdateTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::updateTransfersCount);
+    connect(&mUpdateTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onUpdateTransfersFinished);
     connect(&mClearTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onClearTransfersFinished);
     connect(&mAskForMostPriorityTransfersWatcher, &QFutureWatcher<QPair<int,int>>::finished, this, &TransfersModel::onAskForMostPriorityTransfersFinished);
 
@@ -895,6 +895,8 @@ void TransfersModel::onProcessTransfers()
     {
         mostPriorityTransferMayChanged(true);
 
+        bool asynchronousProcessed(false);
+
         int containsTransfersToStart(mTransfersToProcess.startTransfersByTag.size());
         int containsSyncTransfersToStart(mTransfersToProcess.startSyncTransfersByTag.size());
         int containsTransfersToUpdate(mTransfersToProcess.updateTransfersByTag.size());
@@ -939,6 +941,7 @@ void TransfersModel::onProcessTransfers()
             if(isUiBlockedModeActive() || containsTransfersFailed > FAILED_THRESHOLD_THREAD)
             {
                 setUiBlockedMode(true);
+                asynchronousProcessed = true;
 
                 auto future = QtConcurrent::run([this](){
                     if(mModelMutex.tryLock())
@@ -994,6 +997,8 @@ void TransfersModel::onProcessTransfers()
             {
                 if(isUiBlockedByCounter())
                 {
+                    asynchronousProcessed = true;
+
                     auto future = QtConcurrent::run([this, containsTransfersToUpdate](){
                         if(mModelMutex.tryLock())
                         {
@@ -1026,14 +1031,17 @@ void TransfersModel::onProcessTransfers()
             }
         }
 
-        updateTransfersCount();
+        //Do not update transfers count yet, as the filtering will be done in a differente thread
+        if(!asynchronousProcessed)
+        {
+            modelHasChanged(true);
+            updateTransfersCount();
+        }
 
         if(isUiBlockedModeActive())
         {
             setUiBlockedMode(false);
         }
-
-        modelHasChanged(true);
     }
     else
     {
@@ -1206,7 +1214,27 @@ void TransfersModel::processCancelTransfers()
 
         mRowsToCancel.clear();
 
-        removeRows(indexesToCancel);
+        float cancelledPercentage(indexesToCancel.size()/(rowCount()*1.0));
+
+        //For large amount of transfers, this is quite faster: remove all transfers and recreate the tags by row map
+        if(indexesToCancel.size() >= QUICK_CANCEL_THRESHOLD
+                || (indexesToCancel.size() >  QUICK_CANCEL_MIN_THRESHOLD && cancelledPercentage > QUICK_CANCEL_PERCENTAGE_THRESHOLD))
+        {
+            std::sort(indexesToCancel.begin(), indexesToCancel.end(),[](QModelIndex check1, QModelIndex check2){
+                return check1.row() > check2.row();
+            });
+
+            foreach(auto& index, indexesToCancel)
+            {
+                removeTransfer(index.row());
+            }
+
+            restoreTagsByRow();
+        }
+        else
+        {
+            removeRows(indexesToCancel);
+        }
     }
 }
 
@@ -1312,13 +1340,13 @@ std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
 
     if (d->getState() == TransferData::TRANSFER_FAILED)
     {
-        auto transfer = mMegaApi->getTransferByTag(d->mTag);
-        if(transfer)
+        if(d->mFailedTransfer)
         {
-            node.reset(transfer->getPublicMegaNode());
+            node.reset(d->mFailedTransfer->getPublicMegaNode());
         }
     }
-    else if(d->mNodeHandle)
+
+    if(!node && d->mNodeHandle != mega::INVALID_HANDLE)
     {
         node.reset(mMegaApi->getNodeByHandle(d->mNodeHandle));
     }
@@ -1375,6 +1403,13 @@ void TransfersModel::openFolder(const QFileInfo& info)
             emit showInFolderFinished(Platform::getInstance()->showInFolder(info.filePath()));
         });
     }
+    else
+    {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.text = MegaTransferView::errorOpeningFileText();
+        QMegaMessageBox::warning(msgInfo);
+    }
 }
 
 QFileInfo TransfersModel::getFileInfoByIndex(const QModelIndex& index)
@@ -1410,7 +1445,7 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
                     auto oldAppDataId = TransferMetaDataContainer::appDataToId(failedTransfer->getAppData());
                     if(oldAppDataId.first)
                     {
-                        data = TransferMetaDataContainer::getAppData(oldAppDataId.second);
+                        data = TransferMetaDataContainer::getAppDataById(oldAppDataId.second);
                         if(data)
                         {
                             TransferMetaDataContainer::retryTransfer(failedTransfer.get(), oldAppDataId.second);
@@ -1418,7 +1453,7 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
                     }
                 }
 
-                data = TransferMetaDataContainer::getAppData(appData);
+                data = TransferMetaDataContainer::getAppDataById(appData);
                 //When retrying, the appDataId is a new one
                 if(!data)
                 {
@@ -1431,7 +1466,7 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
                         data = TransferMetaDataContainer::createTransferMetaDataWithappDataId<DownloadTransferMetaData>(appData, QString::fromUtf8(failedTransfer->getParentPath()));
                     }
 
-                    data->setInitialPendingTransfers(transfers.size());
+                    data->setInitialTransfers(transfers.size());
                 }
                 else
                 {
@@ -1442,7 +1477,12 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
                 if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
                 {
                     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(failedTransfer->getNodeHandle()));
-                    mMegaApi->startDownload(node.get(), failedTransfer->getPath(), failedTransfer->getFileName(), appDataRaw, false, nullptr, nullptr);
+                    mMegaApi->startDownload(node.get(), failedTransfer->getPath(),
+                                            failedTransfer->getFileName(), appDataRaw,
+                                            false, nullptr,
+                                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
+                                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
+                                            nullptr);
                 }
                 else
                 {
@@ -1753,22 +1793,31 @@ void TransfersModel::showSyncCancelledWarning()
 {
     if(syncsInRowsToCancel())
     {
-        QPointer<QMessageBox> removeSync = new QMessageBox(QMessageBox::Warning, QLatin1Literal("MEGAsync"),
-                                                           tr("Sync transfers cannot be cancelled individually.\n"
-                                                                         "Please delete the folder sync from settings to cancel them."),
-                                                           QMessageBox::No | QMessageBox::Yes, mCancelledFrom);
-        removeSync->setButtonText(QMessageBox::No, tr("Dismiss"));
-        removeSync->setButtonText(QMessageBox::Yes, tr("Open settings"));
-        removeSync->open();
-
-        connect(removeSync.data(), &QMessageBox::finished, [this, removeSync](){
-            if(removeSync->result() == QMessageBox::Yes)
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.text = tr("Sync transfers cannot be cancelled individually.\n"
+                          "Please delete the folder sync from settings to cancel them.");
+        msgInfo.parent = mCancelledFrom;
+        msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
+        QMap<QMessageBox::Button, QString> textsByButton;
+        textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
+        textsByButton.insert(QMessageBox::No, tr("Dismiss"));
+        msgInfo.buttonsText = textsByButton;
+        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        {
+            if(msg->result() == QMessageBox::Yes)
             {
-                MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+                //Do it in the following event loop to ensure dialog is correctly raised
+                QTimer::singleShot(0,
+                []()
+                {
+                    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+                });
             }
 
             resetSyncInRowsToCancel();
-        });
+        };
+        QMegaMessageBox::warning(msgInfo);
     }
 }
 
@@ -1914,6 +1963,12 @@ void TransfersModel::onClearTransfersFinished()
     //The clear transfer is the only action which does not receive a SDK request
     emit transfersProcessChanged();
     emit unblockUiAndFilter();
+}
+
+void TransfersModel::onUpdateTransfersFinished()
+{
+    modelHasChanged(true);
+    updateTransfersCount();
 }
 
 void TransfersModel::onKeepPCAwake()
@@ -2084,7 +2139,6 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
 
         //This needs to be done after pausing all the transfers one by one
         mMegaApi->pauseTransfers(mAreAllPaused);
-
     }
 
     return tagsUpdated;
@@ -2297,6 +2351,19 @@ void TransfersModel::sendDataChanged(int row)
     }
 }
 
+void TransfersModel::restoreTagsByRow()
+{
+    mTagByOrder.clear();
+    for(int row = 0; row < rowCount(); ++row)
+    {
+        auto transfer = getTransfer(row);
+        if(transfer)
+        {
+            mTagByOrder.insert(transfer->mTag, QPersistentModelIndex(index(row,0)));
+        }
+    }
+}
+
 bool TransfersModel::isUiBlockedModeActive() const
 {
     return mUiBlockedCounter > 0;
@@ -2316,8 +2383,6 @@ void TransfersModel::setUiBlockedMode(bool state)
 
         if(mUiBlockedCounter == 0)
         {
-            updateTransfersCount();
-
             if(!mRowsToCancel.isEmpty() || !mFailedTransferToClear.isEmpty())
             {
                 auto task = QtConcurrent::run([this]()
@@ -2338,6 +2403,7 @@ void TransfersModel::setUiBlockedMode(bool state)
             }
             else
             {
+                updateTransfersCount();
                 emit unblockUiAndFilter();
             }
         }

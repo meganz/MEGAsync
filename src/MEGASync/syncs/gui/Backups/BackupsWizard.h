@@ -12,6 +12,7 @@
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <QStyledItemDelegate>
+#include <QStandardPaths>
 
 namespace Ui
 {
@@ -74,7 +75,7 @@ class BackupsWizard : public QDialog
         void setupError();
 
         bool atLeastOneFolderChecked() const;
-        bool isFolderSyncable(const QString& path, bool displayWarning = false, bool fromCheckAction = false) const;
+        void isFolderSyncable(const QString& path, std::function<void (bool)> func, bool displayWarning = false, bool fromCheckAction = false);
 
         void setupLists();
         void setupHeaders();
@@ -83,6 +84,8 @@ class BackupsWizard : public QDialog
         void showMore();
         void setCurrentWidgetsSteps(QWidget* widget);
         void updateSize();
+
+        void checkStandardLocations(QList<QStandardPaths::StandardLocation> locations);
 
         Ui::BackupsWizard* mUi;
         std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;

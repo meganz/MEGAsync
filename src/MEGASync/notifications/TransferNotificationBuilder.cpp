@@ -135,7 +135,12 @@ QStringList TransferNotificationBuilder::buildSingleUploadActions()
         auto completedId = data->getFirstTransferIdByState(TransferData::TRANSFER_COMPLETED);
         if(completedId.handle != mega::INVALID_HANDLE)
         {
-            actions << tr("Get link");
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(completedId.handle));
+
+            if(!Utilities::isIncommingShare(node.get()))
+            {
+                actions << tr("Get link");
+            }
         }
     }
 

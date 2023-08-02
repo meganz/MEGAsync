@@ -10,6 +10,9 @@
     <height>99</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
    <string/>
   </property>
@@ -64,6 +67,9 @@ height: 16px;
        <property name="enabled">
         <bool>true</bool>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="accessibleName">
         <string>Local folder:</string>
        </property>
@@ -109,6 +115,9 @@ height: 16px;
       <widget class="QLineEdit" name="eMegaFolder">
        <property name="enabled">
         <bool>true</bool>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="accessibleName">
         <string>MEGA folder:</string>

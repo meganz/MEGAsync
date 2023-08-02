@@ -130,11 +130,6 @@
         <translation>선택</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation>경고</translation>
-    </message>
-    <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
         <translation>올바른 파일 이름이나 절대 경로를 입력하세요.</translation>
@@ -795,7 +790,7 @@
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation>문제 보고</translation>
+        <translation>문제 신고</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
@@ -856,11 +851,6 @@
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
         <translation>오류로 인해 문제를 업로드할 수 없습니다. 나중에 다시 시도하거나 문제가 지속될 경우 [A]support@mega.nz[/A]를 통해 지원 팀에 연락하세요.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>OK</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
@@ -982,11 +972,6 @@
         <translation>OK</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>Please enter your password</source>
         <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
         <translation>암호를 입력하세요</translation>
@@ -1050,7 +1035,7 @@
     <message>
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>오류 보고</translation>
+        <translation>오류 신고</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
@@ -1252,7 +1237,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>비즈니스 계정의 보류를 피하려면 결제 문제를 최대한 빨리 해결하세요</translation>
+        <translation>비즈니스 계정의 정지를 피하려면 결제 문제를 최대한 빨리 해결하세요</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1363,11 +1348,6 @@
         <translation>로컬 폴더 선택</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
@@ -1379,11 +1359,6 @@
         <source>Download</source>
         <translatorcomment>Window title for download node selector</translatorcomment>
         <translation>다운로드</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -1611,11 +1586,6 @@
         <translation>선택</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation>전체 액세스 권한 없이 공유된 폴더를 동기화할 수 없습니다</translation>
@@ -1672,11 +1642,6 @@
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
         <translation>파일 목록 불러오는 중…</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>오류</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -1854,11 +1819,6 @@
         <translation>선택</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
@@ -2012,11 +1972,6 @@
         <translation>결제에 대한 알림 없음</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 사용됨</translation>
-    </message>
-    <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation>계정 업그레이드</translation>
@@ -2065,11 +2020,6 @@
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
         <translation><numerusform>업그레이드까지 [A]%n시간[/A] 남았습니다. 그 후, 당신의 데이터는 삭제 대상이 됩니다.</numerusform></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2338,11 +2288,6 @@
 <context>
     <name>MegaApplication</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-    <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>로그인하는 중</translation>
@@ -2455,7 +2400,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Error</source>
-        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
         <translation>오류</translation>
     </message>
     <message>
@@ -2911,6 +2856,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>백업 “%1”이/가 일시적으로 비활성화 되었습니다: %2</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
+        <translation>경고</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2987,7 +2937,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>잘못된 키/복호화 오류</translation>
+        <translation>복호화 오류</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3057,7 +3007,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>재귀적 경로 구조로 인하여 전송 실패</translation>
+        <translation>재귀적 폴더 구조로 인하여 전송 실패</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -3340,11 +3290,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>MEGA에서 열기</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Error messagebox title</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
         <translation>파일을 열 수 없습니다. 로컬 드라이브의 파일이 삭제되거나 이동되지 않았는지 확인하세요.</translation>
@@ -3491,6 +3436,14 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     </message>
 </context>
 <context>
+    <name>MultiQFileDialog</name>
+    <message>
+        <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
+        <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
+        <translation>너무 많은 항목이 선택 되었습니다. 계속 하려면 일부를 선택 해제하거나 부모 폴더를 선택하세요.</translation>
+    </message>
+</context>
+<context>
     <name>NewFolderDialog</name>
     <message>
         <source>Enter the new folder name</source>
@@ -3529,11 +3482,6 @@ Enter a different name</source>
 </context>
 <context>
     <name>NodeSelector</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>오류</translation>
-    </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
@@ -3606,21 +3554,6 @@ Enter a different name</source>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>이름으로 정렬</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>오늘 %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>어제 %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 %2</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3796,14 +3729,6 @@ Enter a different name</source>
     </message>
 </context>
 <context>
-    <name>Notificator</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-</context>
-<context>
     <name>OsNotifications</name>
     <message numerus="yes">
         <source>[A] removed %n item</source>
@@ -3944,11 +3869,6 @@ Enter a different name</source>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>취소</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>경고</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -4131,14 +4051,12 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced system notifications.
-- We've enhanced the UI.
-- We've fixed the detected crashes on Windows, Linux, and macOS.
+        <source>- UI enhancements.
+- Detected crash fixes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation>- 시스템 알림을 향상하였습니다.
-- UI를 향상하였습니다.
-- Windows, Linux, 그리고 macOS에서 감지된 충돌을 수정하였습니다.</translation>
+        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
+        <translation>- UI 향상됨.
+- Windows, Linux, 그리고 macOS에서 탐지된 충돌 수정됨.</translation>
     </message>
 </context>
 <context>
@@ -4224,11 +4142,6 @@ Enter a different name</source>
         <translation>업데이트</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
         <translation>프록시 설정이 잘못 되었거나 프록시가 응답하지 않습니다</translation>
@@ -4297,12 +4210,12 @@ Enter a different name</source>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>상위 디렉토리</translation>
+        <translation>부모 폴더</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>상위 디렉토리로 가기</translation>
+        <translation>부모 폴더로 가기</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4362,7 +4275,7 @@ Enter a different name</source>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>디렉토리 찾기</translation>
+        <translation>폴더 찾기</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4377,7 +4290,7 @@ Enter a different name</source>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>디렉토리:</translation>
+        <translation>폴더:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4397,7 +4310,7 @@ Enter a different name</source>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>디렉토리</translation>
+        <translation>폴더</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4412,7 +4325,7 @@ Enter a different name</source>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>디렉토리를 삭제할 수 없습니다.</translation>
+        <translation>폴더를 삭제할 수 없습니다.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4520,8 +4433,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-경로를 찾을 수 없습니다.
-올바른 경로명을 입력하였는지 확인하세요.</translation>
+폴더를 찾지 못하였습니다.
+올바른 폴더 이름을 입력했는지 확인하세요.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -4838,21 +4751,6 @@ Do you want to delete it anyway?</source>
         <translation>데이터가 일시적으로 사용 불가능합니다</translation>
     </message>
     <message>
-        <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%3 중 %1(%2%)사용됨</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
-        <translation>경고</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>비우기</translation>
@@ -4990,11 +4888,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>모든 파일 버전 기록을 삭제하려고 합니다. 계속하시겠습니까?</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 사용됨</translation>
-    </message>
-    <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
         <translation>MEGA-복구키</translation>
@@ -5077,7 +4970,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>문제 보고</translation>
+        <translation>문제 신고</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -5197,7 +5090,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report:</source>
         <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>문제 보고:</translation>
+        <translation>문제 신고:</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -5322,7 +5215,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-        <translation>문제 보고</translation>
+        <translation>문제 신고</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -5629,11 +5522,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>취소</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Label of error.</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
         <translation>이용자가 이미 존재합니다</translation>
@@ -5699,11 +5587,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>계정 생성 중…</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label warning.</translatorcomment>
-        <translation>경고</translation>
-    </message>
-    <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
         <translation>로컬 폴더를 선택하세요</translation>
@@ -5753,11 +5636,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
         <translation>계정이 막혔습니다. support@mega.nz로 연락하세요</translation>
-    </message>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
-        <translation>MEGA</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -6005,11 +5883,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>StreamNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>폴더를 스트림할 수 없습니다. 스트림할 파일을 선택하세요.</translation>
@@ -6071,11 +5944,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
         <translation>스트리밍을 중단하시겠습니까?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation>오류</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -6312,19 +6180,9 @@ To continue, select a different folder.</source>
 <context>
     <name>SyncNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
         <translation>이 폴더를 동기화 하려면, 폴더에 대한 전체 권한이 필요합니다.</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>경고</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -7233,11 +7091,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UploadNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>이 폴더를 업로드 하려면, 폴더에 대한 읽기와 쓰기 또는 전체 권한이 필요합니다.</translation>
@@ -7405,6 +7258,16 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1[A]초[/A]</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 사용됨</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation><numerusform>%3 중 %1 (%2%) 사용됨</numerusform></translation>
     </message>
 </context>
 <context>

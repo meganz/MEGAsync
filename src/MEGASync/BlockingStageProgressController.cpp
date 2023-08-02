@@ -22,4 +22,5 @@ void BlockingStageProgressController::update(const FolderTransferUpdateEvent &ev
 void BlockingStageProgressController::stopUiUpdating()
 {
     uiUpdatingTimer.stop();
+    data = FolderTransferUpdateEvent();
 }

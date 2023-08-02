@@ -1,6 +1,7 @@
 #include "TransferBatch.h"
 
 #include <MegaApplication.h>
+#include <TransferMetaData.h>
 
 #include <QDir>
 
@@ -8,54 +9,42 @@
 /*** TransferBatch *******/
 /*************************/
 
-TransferBatch::TransferBatch()
+TransferBatch::TransferBatch(unsigned long long appDataId)
+    : mHasFinished(false), mAppDataId(appDataId)
 {
     mCancelToken = std::shared_ptr<mega::MegaCancelToken>(mega::MegaCancelToken::createInstance());
 }
 
 bool TransferBatch::isEmpty()
 {
-    return mPendingNodes.isEmpty();
-}
-
-void TransferBatch::add(const QString &nodePath, const QString& nodeName)
-{
-    auto nodePathWithNativeSeparators = QDir::toNativeSeparators(nodePath);
-    if(!nodeName.isEmpty())
-    {
-        if(!nodePathWithNativeSeparators.endsWith(QDir::separator()))
-        {
-            nodePathWithNativeSeparators = nodePathWithNativeSeparators + QDir::separator();
-        }
-
-        std::unique_ptr<char[]> escapedChar(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toStdString().c_str()));
-        nodePathWithNativeSeparators = nodePathWithNativeSeparators + QString::fromUtf8(escapedChar.get());
-    }
-
-    mPendingNodes.push_back(nodePathWithNativeSeparators.normalized(QString::NormalizationForm_C));
+    return mHasFinished;
 }
 
 void TransferBatch::cancel()
 {
+    auto data = TransferMetaDataContainer::getAppDataById(mAppDataId);
+    if(data)
+    {
+        data->processCancelled();
+    }
+
     mCancelToken->cancel();
 }
 
-void TransferBatch::onScanCompleted(const QString& nodePath)
+void TransferBatch::onScanCompleted(unsigned long long appDataId)
 {
-    std::string nodePathCopy = nodePath.toStdString();
-    std::unique_ptr<char[]>  escapedChar(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodePathCopy.c_str()));
-    QString convertedNodePath = QDir::toNativeSeparators(QString::fromUtf8(escapedChar.get()));
-
-    auto it = std::find(mPendingNodes.begin(), mPendingNodes.end(), convertedNodePath.normalized(QString::NormalizationForm_C));
-    if (it != mPendingNodes.end())
-    {
-        mPendingNodes.erase(it);
-    }
+    mHasFinished = appDataId == mAppDataId;
 }
 
 QString TransferBatch::description()
 {
-    return QString::fromLatin1("%1 nodes").arg(mPendingNodes.size());
+    auto data = TransferMetaDataContainer::getAppDataById(mAppDataId);
+    if(data)
+    {
+        return QString::fromLatin1("%1 nodes").arg(data->getPendingFiles());
+    }
+
+    return QString();
 }
 
 mega::MegaCancelToken* TransferBatch::getCancelTokenPtr()
@@ -96,11 +85,15 @@ void BlockingBatch::cancelTransfer()
     }
 }
 
-void BlockingBatch::onScanCompleted(const QString& nodePath)
+void BlockingBatch::onScanCompleted(unsigned long long appDataId)
 {
     if (isValid())
     {
-        mBatch->onScanCompleted(nodePath);
+        mBatch->onScanCompleted(appDataId);
+        if (mBatch->isEmpty())
+        {
+            clearBatch();
+        }
     }
 }
 
@@ -116,18 +109,6 @@ bool BlockingBatch::isBlockingStageFinished()
 void BlockingBatch::setAsUnblocked()
 {
     clearBatch();
-}
-
-void BlockingBatch::onTransferFinished(const QString& nodePath, bool stillProcessing)
-{
-    if (isValid())
-    {
-        mBatch->onScanCompleted(nodePath);
-        if (!stillProcessing && mBatch->isEmpty())
-        {
-            clearBatch();
-        }
-    }
 }
 
 bool BlockingBatch::hasCancelToken()

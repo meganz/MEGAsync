@@ -585,10 +585,10 @@ padding-left: -16px;</string>
                     <active>
                      <colorrole role="WindowText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="255">
-                        <red>102</red>
-                        <green>102</green>
-                        <blue>102</blue>
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -601,12 +601,21 @@ padding-left: -16px;</string>
                        </color>
                       </brush>
                      </colorrole>
-                     <colorrole role="Base">
+                     <colorrole role="Text">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="255">
-                        <red>255</red>
-                        <green>255</green>
-                        <blue>255</blue>
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="ButtonText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -616,6 +625,15 @@ padding-left: -16px;</string>
                         <red>255</red>
                         <green>255</green>
                         <blue>255</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="PlaceholderText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -623,10 +641,10 @@ padding-left: -16px;</string>
                     <inactive>
                      <colorrole role="WindowText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="255">
-                        <red>102</red>
-                        <green>102</green>
-                        <blue>102</blue>
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -639,12 +657,21 @@ padding-left: -16px;</string>
                        </color>
                       </brush>
                      </colorrole>
-                     <colorrole role="Base">
+                     <colorrole role="Text">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="255">
-                        <red>255</red>
-                        <green>255</green>
-                        <blue>255</blue>
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="ButtonText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -654,6 +681,15 @@ padding-left: -16px;</string>
                         <red>255</red>
                         <green>255</green>
                         <blue>255</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="PlaceholderText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -661,10 +697,10 @@ padding-left: -16px;</string>
                     <disabled>
                      <colorrole role="WindowText">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="127">
-                        <red>255</red>
-                        <green>255</green>
-                        <blue>255</blue>
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -677,12 +713,21 @@ padding-left: -16px;</string>
                        </color>
                       </brush>
                      </colorrole>
-                     <colorrole role="Base">
+                     <colorrole role="Text">
                       <brush brushstyle="SolidPattern">
-                       <color alpha="255">
-                        <red>255</red>
-                        <green>255</green>
-                        <blue>255</blue>
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="ButtonText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -692,6 +737,15 @@ padding-left: -16px;</string>
                         <red>255</red>
                         <green>255</green>
                         <blue>255</blue>
+                       </color>
+                      </brush>
+                     </colorrole>
+                     <colorrole role="PlaceholderText">
+                      <brush brushstyle="SolidPattern">
+                       <color alpha="50">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
                        </color>
                       </brush>
                      </colorrole>
@@ -745,6 +799,9 @@ padding-left: -16px;</string>
                    <height>32</height>
                   </size>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true"/>
                  </property>
@@ -752,7 +809,7 @@ padding-left: -16px;</string>
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_win.qrc">
                    <normaloff>:/images/streaming_link.png</normaloff>:/images/streaming_link.png</iconset>
                  </property>
                 </widget>
@@ -910,7 +967,7 @@ padding-left: -16px;</string>
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/icon_error.png</normaloff>:/images/icon_error.png</iconset>
         </property>
         <property name="iconSize">
@@ -986,7 +1043,10 @@ padding-left: -16px;</string>
   <tabstop>bClose</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -200,11 +200,7 @@ void MegaProxyStyle::polish(QWidget *widget)
 #ifdef Q_OS_MAC
     else if (QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSBigSur) //It only fails from macOS Monterey
     {
-        if(auto messageBox = qobject_cast<QMessageBox*>(widget))
-        {
-            messageBox->setTextInteractionFlags(Qt::TextInteractionFlag::NoTextInteraction);
-        }
-        else if(auto dialog = qobject_cast<QDialog*>(widget))
+        if(auto dialog = qobject_cast<QDialog*>(widget))
         {
             dialog->installEventFilter(this);
         }

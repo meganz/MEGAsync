@@ -31,16 +31,14 @@ public:
 
     bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
                               const QString &path);
-    bool isQueueProcessingOngoing();
 protected:
-    bool download(WrappedNode *parent, QFileInfo info, const std::shared_ptr<DownloadTransferMetaData>& data, mega::MegaCancelToken *cancelToken);
+    void download(WrappedNode *parent, QFileInfo info, const std::shared_ptr<DownloadTransferMetaData>& data, mega::MegaCancelToken *cancelToken);
 
     mega::MegaApi *megaApi;
     QMap<mega::MegaHandle, QString> pathMap;
 
 signals:
     void startingTransfers();
-    void folderTransferUpdated(const FolderTransferUpdateEvent& event);
 
 private slots:
     void onAvailableSpaceCheckFinished(bool isDownloadPossible);
@@ -57,8 +55,7 @@ private:
     static QString createPathWithSeparator(const QString& path);
 
     bool mNoTransferStarted = true;
-    bool mProcessingTransferQueue = false;
-    std::shared_ptr<FolderTransferListener> listener;
+    std::shared_ptr<FolderTransferListener> mFolderTransferListener;
     DownloadQueueController mQueueData;
 };
 

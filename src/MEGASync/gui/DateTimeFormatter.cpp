@@ -17,7 +17,7 @@ QString DateTimeFormatter::create(const QString& languageCode, const QDateTime& 
 }
 
 DateTimeFormatter::DateTimeFormatter(const QString& languageCode, const QDateTime &datetime, QLocale::FormatType format)
-    : QObject(nullptr), mLocale(languageCode), mDatetime(datetime), mFormat(format)
+    : QObject(nullptr), mLocale(languageCode), mDatetime(datetime), mAddDotForShorMonths(true), mFormat(format)
 {
 }
 

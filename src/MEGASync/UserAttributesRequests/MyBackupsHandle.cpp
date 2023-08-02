@@ -70,7 +70,7 @@ AttributeRequest::RequestInfo MyBackupsHandle::fillRequestInfo()
                                                       << mega::MegaError::API_OK
                                                       << mega::MegaError::API_ENOENT));
     ParamInfoMap paramInfoMap({{mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER, paramInfo}});
-    RequestInfo ret(paramInfoMap, QMap<int, int>({{mega::MegaUser::CHANGE_TYPE_MY_BACKUPS_FOLDER,
+    RequestInfo ret(paramInfoMap, QMap<int64_t, int>({{mega::MegaUser::CHANGE_TYPE_MY_BACKUPS_FOLDER,
                                                    mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER}}));
     return ret;
 }
