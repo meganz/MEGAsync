@@ -19,6 +19,7 @@
 #include <time.h>
 #include <iostream>
 #include <dpapi.h>
+#include <shellapi.h>
 
 #if QT_VERSION >= 0x050200
 #include <QtWin>
