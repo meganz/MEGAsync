@@ -10,6 +10,7 @@ C:\Qt\5.12.12\msvc2017_64\bin\windeployqt.exe --no-translations --no-compiler-ru
  --no-opengl-sw --no-system-d3d-compiler ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
  --qmldir src\MEGASync\gui\onboarding\qml\ ^
+ --qmldir src\MEGASync\gui\qml\ ^
  build-x64-windows-mega\Release\MEGAsync.exe ^
  build-x64-windows-mega\Release\MEGAupdater.exe ^
  build-x64-windows-mega\Release\MEGAShellExt.dll
@@ -32,6 +33,7 @@ C:\Qt\5.12.12\msvc2017\bin\windeployqt.exe --no-translations --no-compiler-runti
  --no-opengl-sw --no-system-d3d-compiler ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
  --qmldir src\MEGASync\gui\onboarding\qml ^
+ --qmldir src\MEGASync\gui\qml\ ^
  build-x86-windows-mega\Release\MEGAsync.exe ^
  build-x86-windows-mega\Release\MEGAShellExt.dll
  build-x86-windows-mega\Release\MEGAupdater.exe ^
