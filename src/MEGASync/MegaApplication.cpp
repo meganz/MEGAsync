@@ -1164,7 +1164,6 @@ void MegaApplication::start()
             createTrayIcon();
         }
 
-
         if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(AppStatsEvents::EVENT_1ST_START, "MEGAsync first start", false, nullptr);
@@ -2460,7 +2459,10 @@ void MegaApplication::showInfoDialog()
         }
     }
 
-    updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    if(!getBlockState())
+    {
+      updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    }
 }
 
 void MegaApplication::showInfoDialogNotifications()
@@ -2710,6 +2712,10 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
+    if (blockState)
+    {
+        infoDialog->regenerateLayout(blockState);
+    }
     connect(infoDialog.data(), &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
     connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
     connect(infoDialog.data(), &InfoDialog::almostTransferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
@@ -5786,7 +5792,10 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             {
                 if (blockState)
                 {
-                    showInfoMessage(tr("Locked account"));
+                    createInfoDialog();
+                    checkSystemTray();
+                    createTrayIcon();
+                    showInfoDialog();
                 }
                 else if (!megaApi->isLoggedIn())
                 {
@@ -6472,6 +6481,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
+                if(blockState == eventNumber)
+                {
+                    break;
+                }
                 blockState = eventNumber;
                 emit blocked();
                 blockStateSet = true;
@@ -6479,8 +6492,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 {
                     preferences->setBlockedState(blockState);
                 }
-
-                showVerifyAccountInfo([this]()
+                if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
                 {
                     if (infoDialog)
                     {
@@ -6490,13 +6502,12 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                             DialogOpener::closeAllDialogs();
                         }
                     }
-                    else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
-                    {
-                        showVerifyAccountInfo();
-                    }
+
+                    showVerifyAccountInfo();
 
                     whyamiblockedPeriodicPetition = false;
-                });
+
+                }
                 break;
             }
             case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
