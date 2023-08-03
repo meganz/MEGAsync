@@ -2457,7 +2457,10 @@ void MegaApplication::showInfoDialog()
         }
     }
 
-    updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    if(!getBlockState())
+    {
+      updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    }
 }
 
 void MegaApplication::showInfoDialogNotifications()
@@ -2539,6 +2542,10 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
+    if (blockState)
+    {
+        infoDialog->regenerateLayout(blockState);
+    }
     connect(infoDialog.data(), &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
     connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
     connect(infoDialog.data(), &InfoDialog::almostTransferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
