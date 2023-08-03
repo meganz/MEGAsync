@@ -111,6 +111,10 @@ void StalledIssueHeader::updateHeaderSizes()
 
     ui->errorTitleTextContainer->layout()->activate();
     ui->errorTitleTextContainer->updateGeometry();
+
+    ui->fileNameTitle->updateGeometry();
+    ui->errorDescriptionText->updateGeometry();
+
 }
 
 void StalledIssueHeader::showMultipleAction(const QString &actionButtonText, const QList<ActionInfo>& actions)
