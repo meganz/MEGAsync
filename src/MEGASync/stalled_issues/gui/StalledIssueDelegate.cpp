@@ -99,8 +99,24 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
             return size;
         }
 
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, dialog->getDialog()->size()));
+        QSize proposedSize;
+        auto parentIndex(index.parent());
+        if(parentIndex.isValid())
+        {
+            StalledIssueVariant parentStalledIssueItem (qvariant_cast<StalledIssueVariant>(parentIndex.data(Qt::DisplayRole)));
+            StalledIssueBaseDelegateWidget* parentW (getStalledIssueItemWidget(parentIndex, parentStalledIssueItem));
+            if(parentW)
+            {
+                proposedSize = parentW->size();
+            }
+        }
+        else
+        {
+            auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+            proposedSize = dialog->getDialog()->size();
+        }
+
+        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, proposedSize));
         if(w)
         {
             size = w->sizeHint();
@@ -421,12 +437,6 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
                                     mView->scrollTo(childIndex);
                                 }
                             }
-
-                            //As soon as the child is expanded,
-                            //update the size as it may be the first time the widget is shown and it is outdated
-                            QTimer::singleShot(0,[this, childIndex](){
-                                sizeHintChanged(childIndex);
-                            });
 
                             return true;
                         }

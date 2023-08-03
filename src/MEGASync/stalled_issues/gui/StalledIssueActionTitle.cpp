@@ -54,19 +54,7 @@ void StalledIssueActionTitle::removeBackgroundColor()
 
 void StalledIssueActionTitle::setTitle(const QString &title)
 {
-    layout()->activate();
-
-    ui->backgroundWidget->layout()->activate();
-    ui->actionContainer->updateGeometry();
-
-    ui->generalContainer->layout()->activate();
-    ui->generalContainer->updateGeometry();
-
-    ui->contents->layout()->activate();
-    ui->contents->updateGeometry();
-
-    ui->titleContainer->layout()->activate();
-    ui->titleContainer->updateGeometry();
+    updateSizeHints();
 
     ui->titleLabel->setText(title);
     ui->titleLabel->setProperty(MESSAGE_TEXT, title);
@@ -149,31 +137,19 @@ void StalledIssueActionTitle::showIcon()
     ui->icon->show();
 }
 
-void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& pixmap)
+void StalledIssueActionTitle::setMessage(const QString &message, const QPixmap& pixmap)
 {
-    QWidget* labelContainer = new QWidget(this);
-    labelContainer->installEventFilter(this);
-    labelContainer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    QHBoxLayout* labelContainerLayout = new QHBoxLayout();
-    labelContainerLayout->setObjectName(QString::fromLatin1("messageLayout"));
-    labelContainerLayout->setContentsMargins(0,0,10,0);
-    labelContainer->setLayout(labelContainerLayout);
-    labelContainerLayout->addStretch();
+    updateSizeHints();
+    ui->messageContainer->show();
+    ui->messageContainer->installEventFilter(this);
 
     if(!pixmap.isNull())
     {
-        auto iconLabel = new QLabel(this);
-        iconLabel->setPixmap(pixmap);
-        labelContainerLayout->addWidget(iconLabel);
+        ui->iconLabel->setPixmap(pixmap);
     }
 
-    auto messageLabel = new QLabel(message, this);
-    messageLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    messageLabel->setProperty(MESSAGE_TEXT, message);
-    labelContainerLayout->addWidget(messageLabel);
-
-    ui->messageContainer->show();
-    ui->messageLayout->addWidget(labelContainer);
+    ui->messageLabel->setText(ui->messageLabel->fontMetrics().elidedText(message, Qt::ElideMiddle, ui->contents->width()/3));
+    ui->messageLabel->setProperty(MESSAGE_TEXT, message);
 }
 
 QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QString &info, int level)
@@ -249,25 +225,12 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
         {
             updateExtraInfoLayout();
         }
-        else
+        else if(watched == ui->messageContainer)
         {
-            auto contentWidget = dynamic_cast<QWidget*>(watched);
-            if(contentWidget)
-            {
-                auto width = contentWidget->width();
+            auto width = ui->contents->width()/3;
 
-                if(width > (ui->contents->width()/3))
-                {
-                    width = ui->contents->width()/3;
-                }
-
-                auto childLabels = contentWidget->findChildren<QLabel*>();
-                foreach(auto label, childLabels)
-                {
-                    auto elidedText = label->fontMetrics().elidedText(label->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, width);
-                    label->setText(elidedText);
-                }
-            }
+            auto elidedText = ui->messageLabel->fontMetrics().elidedText(ui->messageLabel->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, width);
+            ui->messageLabel->setText(elidedText);
         }
     }
 
@@ -517,6 +480,30 @@ void StalledIssueActionTitle::updateExtraInfoLayout()
             infoLabel->setText(elidedText);
         }
     }
+}
+
+void StalledIssueActionTitle::updateSizeHints()
+{
+    layout()->activate();
+
+    ui->backgroundWidget->layout()->activate();
+    ui->actionContainer->updateGeometry();
+
+    ui->generalContainer->layout()->activate();
+    ui->generalContainer->updateGeometry();
+
+    ui->contents->layout()->activate();
+    ui->contents->updateGeometry();
+
+    ui->messageContainer->layout()->activate();
+    ui->messageContainer->updateGeometry();
+
+    ui->messageLabel->updateGeometry();
+
+    ui->titleContainer->layout()->activate();
+    ui->titleContainer->updateGeometry();
+
+    ui->titleLabel->updateGeometry();
 }
 
 void StalledIssueActionTitle::setInfo(const QString &newPath, mega::MegaHandle handle)

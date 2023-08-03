@@ -348,15 +348,15 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
             {
                 if(nameConflict->areAllDuplicatedNodes())
                 {
-                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates"), SolveOptions::RemoveDuplicateAndRename);
+                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates"), NameConflictedStalledIssue::RemoveDuplicated);
                 }
                 else if(nameConflict->hasDuplicatedNodes())
                 {
-                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates and rename the rest"), SolveOptions::RemoveDuplicateAndRename);
+                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates and rename the rest"), NameConflictedStalledIssue::RemoveDuplicatedAndRename);
                 }
             }
 
-            actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), SolveOptions::RenameAll);
+            actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::RenameAll);
 
             header->showMultipleAction(tr("Solve options"), actions);
         }
@@ -403,7 +403,6 @@ void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
     }
 }
 
-
 void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
@@ -418,12 +417,32 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::No, tr("Cancel"));
 
-        auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::NamesWouldClashWhenSynced);
-        auto selection = dialog->getDialog()->getSelection(reasons);
+        auto solutionCanBeApplied = [index](const std::shared_ptr<const StalledIssue> issue) -> bool{
+            auto result = issue->getReason() == mega::MegaSyncStall::NamesWouldClashWhenSynced;
+            if(result)
+            {
+                if(auto nameIssue = StalledIssue::convert<NameConflictedStalledIssue>(issue))
+                {
+                    if(index == NameConflictedStalledIssue::RemoveDuplicated)
+                    {
+                        result = nameIssue->hasFiles() > 0 && nameIssue->areAllDuplicatedNodes();
+                    }
+                    else if(index == NameConflictedStalledIssue::RemoveDuplicatedAndRename)
+                    {
+                        result = nameIssue->hasFiles() > 0 &&
+                                 nameIssue->hasDuplicatedNodes() &&
+                                 !nameIssue->areAllDuplicatedNodes();
+                    }
+                }
+            }
+            return result;
+        };
+
+        auto selection = dialog->getDialog()->getSelection(solutionCanBeApplied);
 
         if(selection.size() <= 1)
         {
-            auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
+            auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(solutionCanBeApplied);
 
             if(allSimilarIssues.size() != selection.size())
             {
@@ -444,22 +463,21 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         msgInfo.buttonsText = textsByButton;
         msgInfo.text = tr("Are you sure you want to solve the issue?");
 
-        QString renameAction(tr("This action will rename the conflicted items (adding a suffix like (1))."));
-        QString removeAction;
-
-        if(header->getData().consultData()->hasFiles() > 0)
+        if(index == NameConflictedStalledIssue::RenameAll)
         {
-            if(nameConflict->areAllDuplicatedNodes())
+            msgInfo.informativeText = tr("This action will rename the conflicted items (adding a suffix like (1)).");
+        }
+        else
+        {
+            if(index == NameConflictedStalledIssue::RemoveDuplicated)
             {
-               removeAction = tr("This action will delete the duplicate files.");
+               msgInfo.informativeText = tr("This action will delete the duplicate files.");
             }
-            else if(nameConflict->hasDuplicatedNodes())
+            else
             {
-                removeAction = tr("This action will delete the duplicate files and rename the rest of names (adding a suffix like (1)).");
+                msgInfo.informativeText = tr("This action will delete the duplicate files and rename the rest of names (adding a suffix like (1)).");
             }
         }
-        msgInfo.informativeText = index == SolveOptions::RemoveDuplicateAndRename ? removeAction
-                                             : renameAction;
 
         msgInfo.finishFunc = [this, index, selection, header, nameConflict](QMessageBox* msgBox)
         {

@@ -72,11 +72,11 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data,
 
             if(data->isCloud())
             {
-                ui->chooseTitle->addMessage(tr("Chosen"), icon.pixmap(24,24));
+                ui->chooseTitle->setMessage(tr("Chosen"), icon.pixmap(24,24));
             }
             else
             {
-                ui->chooseTitle->addMessage(tr("Local file is being uploaded"), icon.pixmap(24,24));
+                ui->chooseTitle->setMessage(tr("Local file is being uploaded"), icon.pixmap(24,24));
             }
         }
         else
@@ -84,12 +84,12 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data,
             if(data->isCloud())
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->addMessage(tr("New version available soon"), icon.pixmap(24,24));
+                ui->chooseTitle->setMessage(tr("New version available soon"), icon.pixmap(24,24));
             }
             else
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->addMessage(movedToBinText(), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(movedToBinText(), icon.pixmap(16,16));
             }
         }
     }

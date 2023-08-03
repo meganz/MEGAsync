@@ -486,7 +486,7 @@ void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
 
 void NameConflictedStalledIssue::autoSolveIssue()
 {
-    solveIssue(0);
+    solveIssue(ActionSelected::RemoveDuplicatedAndRename);
     if(isSolved())
     {
         MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_AUTOMATICALLY, "Name conflict issue solved automatically", false, nullptr);
@@ -497,14 +497,15 @@ void NameConflictedStalledIssue::solveIssue(int option)
 {
     auto result(false);
 
-    if(option == 0)
+    if(option == ActionSelected::RemoveDuplicatedAndRename
+       || option == ActionSelected::RemoveDuplicated)
     {
         mCloudConflictedNames.removeDuplicatedNodes();
     }
 
     result = checkAndSolveConflictedNamesSolved(SideChecked::Cloud);
 
-    if(!result)
+    if(!result && option != ActionSelected::RemoveDuplicated)
     {
         renameNodesAutomatically();
     }

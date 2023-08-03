@@ -156,7 +156,8 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
                     titleText = tr("No action needed");
                 }
 
-                title->addMessage(titleText, icon.pixmap(24,24));
+                titleLayout->activate();
+                title->setMessage(titleText, icon.pixmap(24,24));
             }
         }
 

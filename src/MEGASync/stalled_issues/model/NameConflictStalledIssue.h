@@ -271,6 +271,13 @@ public:
          bool mDuplicatedSolved = false;
     };
 
+    enum ActionSelected
+    {
+        RemoveDuplicatedAndRename = 0,
+        RemoveDuplicated,
+        RenameAll
+    };
+
     NameConflictedStalledIssue(){}
     NameConflictedStalledIssue(const NameConflictedStalledIssue& tdr);
     NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue);

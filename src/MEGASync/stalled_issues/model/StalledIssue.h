@@ -260,6 +260,12 @@ public:
     virtual void fillIssue(const mega::MegaSyncStall *stall);
     virtual void endFillingIssue();
 
+    template <class Type>
+    static const std::shared_ptr<const Type> convert(const std::shared_ptr<const StalledIssue> data)
+    {
+        return std::dynamic_pointer_cast<const Type>(data);
+    }
+
 protected:
     bool initLocalIssue(const mega::MegaSyncStall *stallIssue);
     const QExplicitlySharedDataPointer<LocalStalledIssueData>& getLocalData() const;
@@ -330,7 +336,7 @@ public:
     template <class Type>
     const std::shared_ptr<const Type> convert() const
     {
-        return std::dynamic_pointer_cast<Type>(mData);
+        return StalledIssue::convert<Type>(mData);
     }
 
 private:

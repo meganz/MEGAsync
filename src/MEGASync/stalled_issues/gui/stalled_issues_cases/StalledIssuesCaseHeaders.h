@@ -208,13 +208,6 @@ public:
 protected slots:
     void refreshCaseActions(StalledIssueHeader *header) override;
     void refreshCaseTitles(StalledIssueHeader* header) override;
-
-private:
-    enum SolveOptions
-    {
-        RemoveDuplicateAndRename = 0,
-        RenameAll
-    };
 };
 
 #endif // STALLEDISSUESCASEHEADERS_H

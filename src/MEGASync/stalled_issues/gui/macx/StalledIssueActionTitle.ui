@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>141</width>
-    <height>58</height>
+    <width>154</width>
+    <height>78</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -180,7 +180,7 @@ QPushButton[main=true]
            <property name="styleSheet">
             <string notr="true"/>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,1">
+           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0">
             <property name="spacing">
              <number>8</number>
             </property>
@@ -262,22 +262,9 @@ QPushButton[main=true]
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>5</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QWidget" name="messageContainer" native="true">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -298,6 +285,20 @@ QPushButton[main=true]
                <property name="bottomMargin">
                 <number>0</number>
                </property>
+               <item>
+                <widget class="QLabel" name="iconLabel">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="messageLabel">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>

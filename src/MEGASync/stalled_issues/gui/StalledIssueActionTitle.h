@@ -31,7 +31,7 @@ public:
     void hideActionButton(int id);
 
     virtual void showIcon();
-    void addMessage(const QString& message, const QPixmap &pixmap = QPixmap());
+    void setMessage(const QString& message, const QPixmap &pixmap = QPixmap());
 
     QLabel* addExtraInfo(const QString& title, const QString& info, int level);
 
@@ -62,6 +62,8 @@ public:
     void hideAttribute(AttributeType type);
 
     void updateExtraInfoLayout();
+
+    void updateSizeHints();
 
 signals:
     void actionClicked(int id);
