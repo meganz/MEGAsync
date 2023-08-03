@@ -175,7 +175,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/Onboarding.h \
     $$PWD/onboarding/AccountInfoData.h \
     $$PWD/onboarding/BackupsModel.h \
-    $$PWD/onboarding/Login.h \
     $$PWD/onboarding/Syncs.h \
     $$PWD/onboarding/QmlDeviceName.h \
     $$PWD/onboarding/PasswordStrengthChecker.h \
