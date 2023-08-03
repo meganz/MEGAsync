@@ -531,7 +531,6 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
                 resolveIssue(row);
             }
 
-            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -551,7 +550,6 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
                 resolveIssue(index.row());
             }
 
-            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -590,7 +588,6 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
                 resolveIssue(row);
             }
 
-            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -611,7 +608,6 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
                 resolveIssue(potentialIndex.row());
             }
 
-            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -659,7 +655,6 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
                 resolveIssue(row);
             }
 
-            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -679,7 +674,6 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
                 resolveIssue(index.row());
             }
 
-            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -720,7 +714,6 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &
                 resolveIssue(row);
             }
 
-            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -741,7 +734,6 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &
                 resolveIssue(potentialIndex.row());
             }
 
-            emit stalledIssuesChanged();
             unBlockUi();
         });
     }

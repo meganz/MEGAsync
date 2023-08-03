@@ -76,9 +76,6 @@ void StalledIssueHeader::propagateButtonClick()
 {
     QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
     qApp->processEvents();
-
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-    dialog->getDialog()->updateView();
 }
 
 void StalledIssueHeader::showAction(const QString &actionButtonText)

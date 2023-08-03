@@ -1208,7 +1208,7 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
             }
         }
 
-        if(!itemsBeingRenamed.contains(suggestedName))
+        if(!itemsBeingRenamed.contains(suggestedName, Qt::CaseInsensitive))
         {
             auto foundNode = std::shared_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode, suggestedName.toStdString().c_str(),
                                                                                                      node->isFile() ? MegaNode::TYPE_FILE : MegaNode::TYPE_FOLDER));

@@ -116,11 +116,6 @@ QModelIndexList StalledIssuesDialog::getSelection(std::function<bool (const std:
     return list;
 }
 
-void StalledIssuesDialog::updateView()
-{
-    ui->stalledIssuesTree->update();
-}
-
 bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
 {
     if(event->type() == QEvent::MouseButtonRelease)

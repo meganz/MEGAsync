@@ -123,8 +123,12 @@ void StalledIssueFilePath::fillFilePath()
 
 QString StalledIssueFilePath::getFilePath() const
 {
-    auto filePath = mShowFullPath? mData->getNativeFilePath() : mData->getNativePath();
-    mData->checkTrailingSpaces(filePath);
+    QString filePath;
+    if(mData)
+    {
+        filePath = mShowFullPath? mData->getNativeFilePath() : mData->getNativePath();
+        mData->checkTrailingSpaces(filePath);
+    }
     return filePath;
 }
 

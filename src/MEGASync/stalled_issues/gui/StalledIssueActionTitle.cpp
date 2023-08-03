@@ -523,7 +523,7 @@ void StalledIssueActionTitle::setInfo(const QString &newPath, mega::MegaHandle h
 {
     mPath = newPath;
 
-    if(mIsCloud)
+    if(mIsCloud && (!mNode || (mNode->getHandle() != handle)))
     {
         mNode.reset(handle != mega::INVALID_HANDLE ? MegaSyncApp->getMegaApi()->getNodeByHandle(handle)
                                                                              : MegaSyncApp->getMegaApi()->getNodeByPath(mPath.toUtf8().constData()));
