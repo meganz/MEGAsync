@@ -17,17 +17,6 @@ Column {
 
     function error() {
         var error = false;
-        if(firstName.text.length === 0) {
-            error = true;
-            firstName.error = true;
-            firstName.hint.visible = true;
-        }
-
-        if(lastName.text.length === 0) {
-            error = true;
-            lastName.error = true;
-            lastName.hint.visible = true;
-        }
 
         var valid = email.valid();
         if(!valid) {
@@ -37,12 +26,14 @@ Column {
         email.error = !valid;
         email.hint.visible = !valid;
 
-        valid = password.text.length !== 0;
+        valid = password.text.length >= 8;
         if(!valid) {
             error = true;
             password.error = true;
+            password.hint.text = OnboardingStrings.minimum8Chars;
         }
         password.error = !valid;
+        password.hint.visible = !valid;
 
         if(confirmPassword.text.length === 0) {
             error = true;
@@ -53,7 +44,6 @@ Column {
             error = true;
             confirmPassword.error = true;
             confirmPassword.hint.visible = true;
-            confirmPassword.type = MegaTextFields.TextField.Type.Error;
             confirmPassword.hint.text = OnboardingStrings.errorPasswordsMatch;
             password.hint.visible = false;
             password.error = true;
@@ -109,7 +99,8 @@ Column {
                 id: nameLayout
 
                 anchors.left: parent.left
-                anchors.right: parent.right
+                anchors.leftMargin: -firstName.sizes.focusBorderWidth
+                width: email.width
                 spacing: 8
 
                 MegaTextFields.TextField {
@@ -119,11 +110,6 @@ Column {
                     title: OnboardingStrings.firstName
                     hint.icon: Images.person
                     hint.text: OnboardingStrings.errorName
-
-                    textField.onTextChanged: {
-                        firstName.error = false;
-                        firstName.hint.visible = false;
-                    }
                 }
 
                 MegaTextFields.TextField {
@@ -133,11 +119,6 @@ Column {
                     title: OnboardingStrings.lastName
                     hint.icon: Images.person
                     hint.text: OnboardingStrings.errorLastName
-
-                    textField.onTextChanged: {
-                        lastName.error = false;
-                        lastName.hint.visible = false;
-                    }
                 }
             }
         }
@@ -146,7 +127,8 @@ Column {
             id: email
 
             anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.leftMargin: -email.sizes.focusBorderWidth
+            width: contentWidth + email.sizes.focusBorderWidth
             title: OnboardingStrings.email
             hint.icon: Images.mail
         }
@@ -155,7 +137,8 @@ Column {
             id: password
 
             anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.leftMargin: -password.sizes.focusBorderWidth
+            width: email.width
             title: OnboardingStrings.password
 
             textField.onTextChanged: {
@@ -192,7 +175,8 @@ Column {
             id: confirmPassword
 
             anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.leftMargin: -confirmPassword.sizes.focusBorderWidth
+            width: email.width
             title: OnboardingStrings.confirmPassword
             hint.icon: Images.key
         }
@@ -203,7 +187,6 @@ Column {
 
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.leftMargin: confirmPassword.sizes.focusBorderWidth
         url: Links.terms
         text: OnboardingStrings.agreeTerms
     }
