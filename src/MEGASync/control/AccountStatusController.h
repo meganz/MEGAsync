@@ -10,38 +10,10 @@
 
 class mega::MegaApi;
 
-class BlockedAccount : public QObject
-{
-
-public:
-    explicit BlockedAccount(QObject* parent = nullptr);
-    virtual void setAccountBlocked(int blockState);
-    void showVerifyAccountInfo();
-    bool isAccountBlocked() const;
-
-protected:
-    int mBlockState;
-};
-
-class BlockedAccountLinux : public BlockedAccount
-{
-    Q_OBJECT
-
-public:
-    explicit BlockedAccountLinux(QObject* parent = nullptr);
-    void setAccountBlocked(int blockState) override;
-
-private slots:
-    void onTimeout();
-
-private:
-    QTimer* mTimer;
-};
-
-
 class AccountStatusController : public QObject, public mega::MegaListener
 {
     Q_OBJECT
+    Q_PROPERTY(int blockedState READ getBlockedState NOTIFY accountBlocked)
 public:
     AccountStatusController(QObject* parent = nullptr);
 
@@ -49,14 +21,21 @@ public:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
 
     void whyAmIBlocked();
+    int getBlockedState() const;
     bool isAccountBlocked() const;
+    void loggedIn();
+
+signals:
+    void accountBlocked(/*int blocked*/);
 
 private:
-    BlockedAccount* mBlockedAccount;
+    void showVerifyAccountInfo();
     mega::MegaApi* mMegaApi;
     mega::QTMegaListener *mDelegateListener;
     std::shared_ptr<Preferences> mPreferences;
     bool mQueringWhyAmIBlocked;
+    int mBlockedState;
+    bool mBlockedStateSet;
 };
 
 

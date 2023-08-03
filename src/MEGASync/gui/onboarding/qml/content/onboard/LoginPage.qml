@@ -74,7 +74,7 @@ LoginPageForm {
     }
 
     Connections {
-        target: Onboarding
+        target: AccountStatusControllerAccess
 
         onAccountBlocked: {
             setNormalStatus();

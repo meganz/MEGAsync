@@ -37,7 +37,7 @@ Rectangle {
     radius: 10
     color: Styles.surface1
 
-    state: content.stateNormal
+    state: AccountStatusControllerAccess.blockedState ? content.stateBlocked : content.stateNormal
     states: [
         State {
             name: content.stateNormal

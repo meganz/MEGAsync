@@ -62,6 +62,7 @@ class ShellNotifier;
 class TransferMetadata;
 class DuplicatedNodeDialog;
 class LinkProcessor;
+class AccountStatusController;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -172,7 +173,6 @@ public:
     int getNumUnviewedTransfers();
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
-    void showVerifyAccountInfo(std::function<void ()> func = nullptr);
 
     void removeFinishedBlockedTransfer(int transferTag);
     bool finishedTransfersWhileBlocked(int transferTag);
@@ -203,7 +203,6 @@ public:
     bool finished() const;
     bool isInfoDialogVisible() const;
 
-    int getBlockState() const;
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
 
     void updateTrayIconMenu();
@@ -520,13 +519,12 @@ protected:
     long long lastSSLcertUpdate;
     bool nodescurrent;
     int businessStatus = -2;
-    int blockState;
-    bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
     std::shared_ptr<TransferQuota> mTransferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
+    AccountStatusController* mStatusController;
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 

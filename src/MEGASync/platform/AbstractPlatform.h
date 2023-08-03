@@ -67,8 +67,6 @@ public:
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 
-    void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy);
-
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
 
