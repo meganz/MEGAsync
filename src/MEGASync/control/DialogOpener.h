@@ -348,6 +348,25 @@ public:
     }
 
     template <class DialogType>
+    static void addDialog(QPointer<DialogType> dialog)
+    {
+        if(dialog)
+        {
+            QString classType = className<DialogType>();
+            auto info = findSiblingDialogInfo<DialogType>(classType);
+
+            if(!info)
+            {
+                info = std::make_shared<DialogInfo<DialogType>>();
+                info->setDialog(dialog);
+                info->setDialogClass(classType);
+                mOpenedDialogs.append(info);
+                initDialog(dialog);
+            }
+        }
+    }
+
+    template <class DialogType>
     static void removeDialog(QPointer<DialogType> dialog)
     {
         if(dialog)
