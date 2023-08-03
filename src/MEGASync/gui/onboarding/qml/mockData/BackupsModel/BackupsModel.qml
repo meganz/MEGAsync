@@ -37,7 +37,7 @@ ListModel {
 
     signal backupsCreationFinished()
     signal checkAllStateChanged()
-    signal existConfilctsChanged()
+    signal existConflictsChanged()
     signal noneSelected()
 
     property string mTotalSize: "24.7 MB"

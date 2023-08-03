@@ -2,7 +2,6 @@
 import QtQuick 2.12
 
 // C++
-import Onboarding 1.0
 import BackupsController 1.0
 import BackupsModel 1.0
 
@@ -23,19 +22,6 @@ ConfirmFoldersPageForm {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             backupsProxyModel.createBackups();
-        }
-    }
-
-    Component.onCompleted: {
-        Onboarding.getComputerName();
-    }
-
-    Connections {
-        target: Onboarding
-
-        onDeviceNameReady: (deviceName) => {
-            folderField.textField.text = "/" + deviceName;
-            folderField.enabled = true;
         }
     }
 

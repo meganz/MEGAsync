@@ -354,10 +354,13 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/qml/ApiEnums.h
     ${MEGAsyncDir}/gui/onboarding/ChooseFolder.h
     ${MEGAsyncDir}/gui/onboarding/Onboarding.h
+    ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.h
+    ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.h
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.h
     ${MEGAsyncDir}/gui/onboarding/AccountInfoData.h
     ${MEGAsyncDir}/gui/onboarding/BackupsModel.h
     ${MEGAsyncDir}/gui/onboarding/Syncs.h
-    ${MEGAsyncDir}/gui/onboarding/ComputerName.h
+    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.h
     ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.h
     ${MEGAsyncDir}/gui/onboarding/BackupsController.h
 
@@ -585,10 +588,13 @@ set (SRCS
     ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.cpp
     ${MEGAsyncDir}/gui/onboarding/ChooseFolder.cpp
     ${MEGAsyncDir}/gui/onboarding/Onboarding.cpp
+    ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.cpp
+    ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.cpp
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.cpp
     ${MEGAsyncDir}/gui/onboarding/AccountInfoData.cpp
     ${MEGAsyncDir}/gui/onboarding/BackupsModel.cpp
     ${MEGAsyncDir}/gui/onboarding/Syncs.cpp
-    ${MEGAsyncDir}/gui/onboarding/ComputerName.cpp
+    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.cpp
     ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.cpp
     ${MEGAsyncDir}/gui/onboarding/BackupsController.cpp
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp

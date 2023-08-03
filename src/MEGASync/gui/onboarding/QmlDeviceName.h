@@ -1,18 +1,18 @@
-#ifndef COMPUTERNAME_H
-#define COMPUTERNAME_H
+#ifndef QMLDEVICENAME_H
+#define QMLDEVICENAME_H
 
 #include "UserAttributesRequests/DeviceName.h"
 
 #include <QObject>
 #include <memory>
 
-class ComputerName : public QObject
+class QmlDeviceName : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString deviceName MEMBER mDeviceName READ getDeviceName WRITE setDeviceName NOTIFY deviceNameChanged)
+    Q_PROPERTY(QString mName READ getDeviceName WRITE setDeviceName NOTIFY deviceNameChanged)
 
 public:
-    explicit ComputerName(QObject *parent = nullptr);
+    explicit QmlDeviceName(QObject *parent = nullptr);
 
     Q_INVOKABLE QString getDeviceName();
     Q_INVOKABLE bool setDeviceName(const QString& newName);
@@ -25,10 +25,10 @@ private slots:
     void onDeviceNameSet();
 
 private:
-    QString mDeviceName;
+    QString mName;
     std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
     bool mChanging;
     bool mRequesting;
 };
 
-#endif // COMPUTERNAME_H
+#endif // QMLDEVICENAME_H

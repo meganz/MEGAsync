@@ -9,7 +9,6 @@ AccountInfoData::AccountInfoData(QObject *parent)
     , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
     , mType(AccountType::ACCOUNT_TYPE_FREE)
     , mTotalStorage(QString())
-    , mUsedStorage(QString())
 {
     requestAccountInfoData();
 }
@@ -17,10 +16,6 @@ AccountInfoData::AccountInfoData(QObject *parent)
 void AccountInfoData::requestAccountInfoData()
 {
     mMegaApi->getAccountDetails(this->mDelegateListener.get());
-}
-
-void AccountInfoData::onRequestStart(MegaApi*, MegaRequest* request)
-{
 }
 
 void AccountInfoData::aboutToBeDestroyed()
@@ -41,7 +36,6 @@ void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
                 MegaAccountDetails* accountDetails = request->getMegaAccountDetails();
                 mType = static_cast<AccountInfoData::AccountType>(accountDetails->getProLevel());
                 mTotalStorage = Utilities::getSizeString(accountDetails->getStorageMax());
-                mUsedStorage = Utilities::getSizeString(accountDetails->getStorageUsed());
                 emit accountDetailsChanged();
             } else {
                 qDebug() << "AccountInfoData::onRequestFinish -> TYPE_ACCOUNT_DETAILS Error code -> " << error->getErrorCode();

@@ -18,7 +18,7 @@ import BackupsProxyModel 1.0
 Rectangle {
     id: syncsPanel
 
-    readonly property string computerName: "computerName"
+    readonly property string deviceName: "deviceName"
     readonly property string syncType: "syncType"
     readonly property string syncsFlow: "syncs"
     readonly property string backupsFlow: "backups"
@@ -29,19 +29,19 @@ Rectangle {
     readonly property int contentHeight: 464
     readonly property int lineWidth: 2
 
-    property int typeSelected: SyncsType.Types.None
+    property int typeSelected: SyncsType.Types.Backup
 
     color: Styles.surface1
-    state: computerName
+    state: deviceName
     states: [
         State {
-            name: computerName
+            name: deviceName
             StateChangeScript {
-                script: rightPanel.replace(computerNamePage);
+                script: rightPanel.replace(deviceNamePage);
             }
             PropertyChanges {
                 target: stepPanel;
-                state: stepPanel.step1ComputerName;
+                state: stepPanel.step1DeviceName;
             }
         },
         State {
@@ -65,8 +65,6 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
-                step3Text: OnboardingStrings.syncChooseType;
-                step4Text: OnboardingStrings.confirm;
             }
         },
         State {
@@ -80,8 +78,6 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
-                step3Text: OnboardingStrings.backupSelectFolders;
-                step4Text: OnboardingStrings.backupConfirm;
             }
         },
         State {
@@ -105,7 +101,7 @@ Rectangle {
     Rectangle {
         id: leftPanel
 
-        width: stepPanelWidth + lineWidth
+        width: stepPanelWidth
         height: parent.height
         color: Styles.surface1
         z: 2
@@ -126,7 +122,7 @@ Rectangle {
             radius: lineWidth
             color: Styles.borderDisabled
             height: contentHeight
-            anchors.left: leftPanel.right
+            anchors.right: leftPanel.right
             anchors.top: parent.top
             anchors.topMargin: contentMargin
         }
@@ -144,9 +140,9 @@ Rectangle {
         }
 
         Component {
-            id: computerNamePage
+            id: deviceNamePage
 
-            ComputerNamePage {}
+            DeviceNamePage {}
         }
 
         Component {
@@ -166,7 +162,6 @@ Rectangle {
 
             BackupsFlow {}
         }
-
 
         Component {
             id: finalPage

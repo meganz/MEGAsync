@@ -32,7 +32,7 @@
 #include "qml/ApiEnums.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/BackupsModel.h"
-#include "onboarding/GuestController.h"
+#include "onboarding/GuestContent.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -1172,6 +1172,7 @@ void MegaApplication::start()
         }
 
         openOnboardingDialog();
+        openGuestDialog();
 
         if (!preferences->isFirstStartDone())
         {
@@ -1576,7 +1577,6 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
     }
 
     storageState = state;
-    int previousCachedStoragestate = preferences->getStorageState();
     preferences->setStorageState(storageState);
     if (preferences->logged())
     {
@@ -3923,6 +3923,11 @@ void MegaApplication::enableFinderExt()
 }
 #endif
 
+QSystemTrayIcon *MegaApplication::getTrayIcon()
+{
+    return trayIcon;
+}
+
 void MegaApplication::openFolderPath(QString localPath)
 {
     if (!localPath.isEmpty())
@@ -5427,15 +5432,16 @@ void MegaApplication::openGuestDialog()
         return;
     }
 
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestController>>())
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>())
     {
         DialogOpener::showDialog(dialog->getDialog());
         dialog->getDialog()->raise();
         return;
     }
 
-    QPointer<QmlDialogWrapper<GuestController>> guest = new QmlDialogWrapper<GuestController>();
+    QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
     DialogOpener::showDialog(guest);
+    DialogOpener::closeAllDialogs();
 }
 
 void MegaApplication::openOnboardingDialog()

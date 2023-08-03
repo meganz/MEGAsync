@@ -19,5 +19,6 @@ QtObject {
     property int borderRadius: 8
     property int borderWidth: 1
     property int hintTextSize: MegaTexts.Text.Size.Normal
+    property int titleSpacing: 1
 
 }

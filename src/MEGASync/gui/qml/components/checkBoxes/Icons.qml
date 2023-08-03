@@ -5,7 +5,7 @@ import QtQuick 2.12
 import Common 1.0
 
 QtObject {
-    property url checked: Images.check
+    property url checked: Images.smallCheck
     property url indeterminate: Images.indeterminate
 }
 

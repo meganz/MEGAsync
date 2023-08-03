@@ -62,9 +62,8 @@ Item {
             Column {
                 id: textColumn
 
-                height: titleLoader.height + textLoader.height + spacing
+                height: titleLoader.height + textLoader.height
                 width: mainLayout.width - iconLoader.width - mainLayout.spacing
-                spacing: titleLoader.height > 0 && textLoader.height > 0 ? attributes.spacing : 0
 
                 Loader {
                     id: titleLoader

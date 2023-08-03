@@ -14,8 +14,8 @@
         <file>content/onboard/TwoFAPage.qml</file>
         <file>content/onboard/TwoFAPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/MainFlow.qml</file>
-        <file>content/onboard/syncs_types/ComputerNamePage.qml</file>
-        <file>content/onboard/syncs_types/ComputerNamePageForm.ui.qml</file>
+        <file>content/onboard/syncs_types/DeviceNamePage.qml</file>
+        <file>content/onboard/syncs_types/DeviceNamePageForm.ui.qml</file>
         <file>content/onboard/syncs_types/Footer.qml</file>
         <file>content/onboard/syncs_types/Header.qml</file>
         <file>content/onboard/syncs_types/InfoAccount.qml</file>
@@ -58,7 +58,7 @@
         <file>content/onboard/PasswordInfoContentForm.ui.qml</file>
         <file>content/onboard/PasswordInfoPopUp.qml</file>
         <file>content/guest/BasePage.qml</file>
-        <file>content/guest/GuestContent.qml</file>
+        <file>content/guest/GuestItem.qml</file>
         <file>content/guest/GuestDialog.qml</file>
         <file>content/guest/GuestStrings.qml</file>
         <file>content/guest/MenuItem.qml</file>

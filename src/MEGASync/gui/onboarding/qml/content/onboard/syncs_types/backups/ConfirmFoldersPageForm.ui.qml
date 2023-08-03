@@ -12,14 +12,15 @@ import Onboard.Syncs_types 1.0
 
 // C++
 import BackupsModel 1.0
+import QmlDeviceName 1.0
 
 SyncsPage {
 
     property alias folderField: folderField
 
     footerButtons.rightPrimary {
-        text: OnboardingStrings.backup
-        icons.source: Images.cloud
+        text: OnboardingStrings.backUp
+        icons.source: Images.database
         enabled: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.None
     }
 
@@ -34,7 +35,6 @@ SyncsPage {
 
         Header {
             title: OnboardingStrings.confirmBackupFoldersTitle
-            description: OnboardingStrings.confirmBackupFoldersDescription
         }
 
         ColumnLayout {
@@ -53,8 +53,12 @@ SyncsPage {
                 title: OnboardingStrings.backupTo
                 leftIcon.source: Images.database
                 textField.readOnly: true
-                enabled: false
+                textField.text: "/" + deviceName.mName
             }
         }
+    }
+
+    QmlDeviceName {
+        id: deviceName
     }
 }

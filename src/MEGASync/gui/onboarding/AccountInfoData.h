@@ -11,7 +11,6 @@ class AccountInfoData : public QObject, public mega::MegaRequestListener
 
     Q_PROPERTY(AccountType type MEMBER mType)
     Q_PROPERTY(QString totalStorage MEMBER mTotalStorage)
-    Q_PROPERTY(QString usedStorage MEMBER mUsedStorage)
 
 public:
     enum AccountType {
@@ -26,9 +25,6 @@ public:
     Q_ENUM(AccountType)
 
     explicit AccountInfoData(QObject *parent = 0);
-
-    void onRequestStart(mega::MegaApi*,
-                        mega::MegaRequest *request) override;
 
     void onRequestFinish(mega::MegaApi*,
                          mega::MegaRequest *request,
@@ -47,7 +43,6 @@ private:
 
     AccountType mType;
     QString mTotalStorage;
-    QString mUsedStorage;
 
 };
 

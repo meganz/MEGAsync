@@ -63,6 +63,8 @@ public:
     virtual void reloadFileManagerExtension() {};
     virtual void enableFileManagerExtension(bool) {};
 
+    virtual void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) = 0;
+
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 
     void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy);
@@ -70,9 +72,9 @@ public:
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
 
-private:
-    QString RectToString(const QRect &rect);
     void logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation);
+    QString rectToString(const QRect &rect);
+
 };
 
 #endif // ABSTRACTPLATFORM_H

@@ -220,6 +220,8 @@ public:
     void raiseInfoDialog();
     bool isShellNotificationProcessingOngoing();
 
+    QSystemTrayIcon* getTrayIcon();
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -325,6 +327,7 @@ public slots:
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
+
 private slots:
     void openFolderPath(QString path);
     void registerUserActivity();

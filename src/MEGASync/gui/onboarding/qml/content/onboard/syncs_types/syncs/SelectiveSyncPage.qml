@@ -37,9 +37,18 @@ SelectiveSyncPageForm {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             console.log(message);
-            localFolderChooser.folderField.error = true;
-            localFolderChooser.folderField.hint.text = message;
-            localFolderChooser.folderField.hint.visible = true;
+            var folderChooser;
+            if(localFolderError)
+            {
+                folderChooser = localFolderChooser;
+            }
+            else
+            {
+                folderChooser = remoteFolderChooser;
+            }
+            folderChooser.folderField.error = true;
+            folderChooser.folderField.hint.text = message;
+            folderChooser.folderField.hint.visible = true;
         }
     }
 

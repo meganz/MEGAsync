@@ -30,7 +30,7 @@ ResumePageForm {
         }
 
         rightPrimary.onClicked: {
-            Onboarding.exitLoggedIn();
+            onboardingWindow.close();
         }
     }
 

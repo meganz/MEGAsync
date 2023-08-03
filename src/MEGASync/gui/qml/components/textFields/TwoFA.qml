@@ -39,10 +39,6 @@ ColumnLayout {
     RowLayout {
         id: mainLayout
 
-        function error() {
-            return hasError ? TextField.DescriptionType.Error : TextField.DescriptionType.None;
-        }
-
         Layout.preferredHeight: digit1.heightWithFocus
         spacing: 2
 
@@ -51,7 +47,6 @@ ColumnLayout {
 
             next: digit2
             error: hasError
-            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -60,7 +55,6 @@ ColumnLayout {
             next: digit3
             previous: digit1
             error: hasError
-            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -69,7 +63,6 @@ ColumnLayout {
             next: digit4
             previous: digit2
             error: hasError
-            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -78,7 +71,6 @@ ColumnLayout {
             next: digit5
             previous: digit3
             error: hasError
-            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -87,7 +79,6 @@ ColumnLayout {
             next: digit6
             previous: digit4
             error: hasError
-            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -95,7 +86,6 @@ ColumnLayout {
 
             previous: digit5
             error: hasError
-            onTextChanged: { hasError = false }
         }
     }
 
@@ -105,7 +95,7 @@ ColumnLayout {
         visible: hasError
         Layout.leftMargin: 3
         title: qsTr("Authentication failed")
-        text: qsTr("Please, try again.")
+        text: qsTr("Try again")
         Layout.preferredWidth: root.width - 4
         Layout.preferredHeight: notification.height
         attributes.type: MegaTexts.NotificationInfo.Type.Error

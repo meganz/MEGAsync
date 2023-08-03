@@ -26,4 +26,9 @@ MegaTextFields.TextField {
         }
     }
 
+    textField.onTextChanged: {
+        error = false;
+        hint.visible = false;
+    }
+
 }

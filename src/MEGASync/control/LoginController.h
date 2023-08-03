@@ -33,6 +33,7 @@ public:
     Q_INVOKABLE void cancelCreateAccount() const;
     Q_INVOKABLE void guestWindowLoginClicked();
     Q_INVOKABLE void guestWindowSignupClicked();
+    Q_INVOKABLE bool isAccountConfirmationResumed() const;
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request) override;
@@ -45,6 +46,7 @@ public:
 signals:
     void loginStarted();
     void loginFinished(int errorCode, const QString& errorMsg);
+    void registerStarted();
     void registerFinished(bool success);
     void emailChanged();
     void changeRegistrationEmailFinished(bool success);
@@ -88,6 +90,7 @@ private:
     QTimer *mConnectivityTimer;
     bool mFetchingNodes;
     bool mEmailConfirmed;
+    bool mConfirmationResumed;
     QString mEmail;
     QString mName;
     QString mLastName;

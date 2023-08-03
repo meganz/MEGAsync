@@ -13,7 +13,7 @@ Qml.Button {
 
     function getLinkColor() {
         var color = Styles.linkPrimary;
-        if(!enabled) {
+        if(!enabled && !visited) {
             color = Styles.linkInverse;
         } else if(visited) {
             color = Styles.linkVisited;

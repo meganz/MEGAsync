@@ -7,7 +7,7 @@
 #include "AccountInfoData.h"
 #include "ChooseFolder.h"
 #include "PasswordStrengthChecker.h"
-#include "ComputerName.h"
+#include "QmlDeviceName.h"
 #include "LoginController.h"
 
 #include "OnboardingQmlDialog.h"
@@ -26,7 +26,7 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType<LoginController>("LoginController", 1, 0, "LoginController");
     qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
     qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker", 1, 0, "PasswordStrengthChecker");
-    qmlRegisterType<ComputerName>("ComputerName", 1, 0, "ComputerName");
+    qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
 
     qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
@@ -57,8 +57,10 @@ Onboarding::Onboarding(QObject *parent)
 
     qmlRegisterModule("BackupsModel", 1, 0);
     qmlRegisterModule("BackupsController", 1, 0);
-}
 
+    // Makes the Guest window transparent (macOS)
+    QQuickWindow::setDefaultAlphaBuffer(true);
+}
 
 QUrl Onboarding::getQmlUrl()
 {

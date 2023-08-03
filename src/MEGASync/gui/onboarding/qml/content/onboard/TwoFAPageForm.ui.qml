@@ -23,9 +23,10 @@ StackViewPage {
 
         spacing: contentSpacing
         anchors {
-            verticalCenter: root.verticalCenter
+            top: root.top
             left: root.left
             right: root.right
+            topMargin: 115
         }
 
         Header {
@@ -40,6 +41,7 @@ StackViewPage {
         MegaButtons.HelpButton {
             text: OnboardingStrings.twoFANeedHelp
             url: Links.recovery
+            visible: !twoFAField.hasError
         }
     }
 
@@ -65,7 +67,6 @@ StackViewPage {
             text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
             Layout.rightMargin: -loginButton.sizes.focusBorderWidth
-            icons.source: Images.arrowRight
         }
     }
 }
