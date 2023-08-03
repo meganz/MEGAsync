@@ -21,7 +21,4 @@ GuestQmlDialog {
         id: guestItem
     }
 
-    Component.onCompleted: {
-        guestWindow.realocate();
-    }
 }

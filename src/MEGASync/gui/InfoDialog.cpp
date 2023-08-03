@@ -292,8 +292,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mResetTransferSummaryWidget.setInterval(2000);
     mResetTransferSummaryWidget.setSingleShot(true);
     connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
-
-    regenerate();
 }
 
 InfoDialog::~InfoDialog()
@@ -322,10 +320,15 @@ void InfoDialog::showEvent(QShowEvent *event)
     {
         ui->bTransferManager->showAnimated();
     }
-
     isShown = true;
-    QDialog::showEvent(event);
     mTransferScanCancelUi->update();
+    regenerate();
+
+#ifdef __APPLE__
+    arrow->show();
+#endif
+
+    QDialog::showEvent(event);
 }
 
 void InfoDialog::moveEvent(QMoveEvent*)
@@ -1132,7 +1135,6 @@ void InfoDialog::addBackup()
 void InfoDialog::moveArrow(QPoint p)
 {
     arrow->move(p.x()-(arrow->width()/2+1), 2);
-    arrow->show();
 }
 #endif
 
@@ -1392,13 +1394,11 @@ void InfoDialog::regenerate(int blockState)
         {
             ui->wInfoDialogIn->setVisible(true);
             adjustSize();
-            show();
-            app->repositionInfoDialog();
+            repositionInfoDialog();
             break;
         }
     }
 
-    app->repositionInfoDialog();
     app->onGlobalSyncStateChanged(NULL);
 }
 
@@ -1849,4 +1849,75 @@ void InfoDialog::setupSyncController()
             }
         });
     }
+}
+
+void InfoDialog::fixMultiscreenResizeBug(int& posX, int& posY)
+{
+    // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
+    // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
+    // it is reverted to the correct size.
+
+    ensurePolished();
+    auto initialDialogWidth  = width();
+    auto initialDialogHeight = height();
+    QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posX, posY](){
+        if (width() > initialDialogWidth || height() > initialDialogHeight) //miss scaling detected
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
+                         .arg(width()).arg(height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                         .toUtf8().constData());
+
+            resize(initialDialogWidth,initialDialogHeight);
+
+            auto iDPos = pos();
+            if (iDPos.x() != posX || iDPos.y() != posY )
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                             QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
+                             .arg(iDPos.x()).arg(iDPos.y()).arg(posX).arg(posY)
+                             .toUtf8().constData());
+                move(posX, posY);
+
+                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
+                    if (width() > initialDialogWidth || height() > initialDialogHeight) //miss scaling detected
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                     QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
+                                     .arg(width()).arg(height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                                     .toUtf8().constData());
+
+                        resize(initialDialogWidth,initialDialogHeight);
+                    }
+                });
+            }
+        }
+    });
+}
+
+void InfoDialog::repositionInfoDialog()
+{
+    int posx, posy;
+    Platform::getInstance()->calculateInfoDialogCoordinates(rect(), &posx, &posy);
+
+    fixMultiscreenResizeBug(posx, posy);
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Moving Info Dialog to posx = %1, posy = %2")
+                 .arg(posx)
+                 .arg(posy)
+                 .toUtf8().constData());
+
+    move(posx, posy);
+
+#ifdef __APPLE__
+    QPoint positionTrayIcon = app->getTrayIcon()->geometry().topLeft();
+    QPoint globalCoordinates(positionTrayIcon.x() + app->getTrayIcon()->geometry().width()/2, posy);
+
+    //Work-Around to paint the arrow correctly
+    //show();
+    //QPixmap px = QPixmap::grabWidget(this);
+    //hide();
+    QPoint localCoordinates = mapFromGlobal(globalCoordinates);
+    moveArrow(localCoordinates);
+#endif
 }

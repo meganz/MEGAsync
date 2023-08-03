@@ -14,6 +14,9 @@ public:
 public slots:
     void realocate();
 
+protected:
+    void showEvent(QShowEvent *) override;
+
 };
 
 #endif // GUESTQMLDIALOG_H

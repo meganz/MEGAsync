@@ -103,7 +103,6 @@ public:
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
-    void repositionInfoDialog();
 
     QString getFormattedDateByCurrentLanguage(const QDateTime& datetime, QLocale::FormatType format = QLocale::FormatType::LongFormat) const;
 
@@ -578,8 +577,6 @@ private:
     int mProcessingShellNotifications = 0;
 
     void ConnectServerSignals(HTTPServer* server);
-
-    void fixMultiscreenResizeBug(int& posX, int& posY);
 
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();
