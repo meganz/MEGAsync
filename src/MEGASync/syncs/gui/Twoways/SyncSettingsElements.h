@@ -5,6 +5,7 @@
 
 namespace Ui {
 class SyncAccountFullMessage;
+class SyncStallModeSelector;
 }
 
 class SyncSettingsUIBase;
@@ -22,9 +23,12 @@ public:
 
 private slots:
     void onPurchaseMoreStorage();
+    void onSmartModeSelected(bool checked);
+    void onAdvanceModeSelected(bool checked);
 
 private:
     Ui::SyncAccountFullMessage* syncAccountFullMessageUI;
+    Ui::SyncStallModeSelector* syncStallModeSelectorUI;
 };
 
 #endif // SYNCSETTINGSELEMENTS_H

@@ -213,6 +213,7 @@ set (FORMS
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/FolderBinder.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/BindFolderDialog.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncAccountFullMessage.ui
+    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncStallModeSelector.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncSettingsUIBase.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupsWizard.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/AddBackupDialog.ui

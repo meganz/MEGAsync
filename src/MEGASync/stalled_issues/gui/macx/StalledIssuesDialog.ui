@@ -186,14 +186,14 @@ background-color: #f0f0f0;
        <item>
         <widget class="QWidget" name="Container" native="true">
          <property name="styleSheet">
-          <string notr="true">#Verbose[SELECTED=true], #Smart[SELECTED=true] 
+          <string notr="true">#Advance[SELECTED=true], #Smart[SELECTED=true] 
 {
 border: 2px solid #f0373a;
 border-radius: 6px;
 background-color: white;
 }
 
-#Verbose[SELECTED=false], #Smart[SELECTED=false] 
+#Advance[SELECTED=false], #Smart[SELECTED=false] 
 {
 border: 2px solid #c2c2c2;
 border-radius: 6px;
@@ -304,7 +304,7 @@ Sync Issues automatically</string>
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="Verbose">
+           <widget class="QFrame" name="Advance">
             <property name="minimumSize">
              <size>
               <width>250</width>
@@ -321,7 +321,7 @@ Sync Issues automatically</string>
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="styleSheet">
-             <string notr="true">#VerboseTitle
+             <string notr="true">#AdvanceTitle
 {
   font-family: &quot;Poppins&quot;;
   font-size:16px;
@@ -330,7 +330,7 @@ Sync Issues automatically</string>
   color: #e2564c;
 }
 
-#VerboseDescription
+#AdvanceDescription
 {
   font-family: &quot;Poppins&quot;;
   font-size:14px;
@@ -357,10 +357,10 @@ Sync Issues automatically</string>
               <number>30</number>
              </property>
              <item>
-              <widget class="QWidget" name="VerboseIcon" native="true"/>
+              <widget class="QWidget" name="AdvanceIcon" native="true"/>
              </item>
              <item>
-              <widget class="QLabel" name="VerboseTitle">
+              <widget class="QLabel" name="AdvanceTitle">
                <property name="text">
                 <string>Advanced</string>
                </property>
@@ -370,7 +370,7 @@ Sync Issues automatically</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="VerboseDescription">
+              <widget class="QLabel" name="AdvanceDescription">
                <property name="text">
                 <string>Get full control
 of the sync issues</string>

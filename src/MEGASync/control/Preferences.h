@@ -178,7 +178,7 @@ public:
     {
         None = 0,
         Smart,
-        Verbose
+        Advance
     };
     StalledIssuesModeType stalledIssuesMode();
     void setStalledIssuesMode(StalledIssuesModeType value);

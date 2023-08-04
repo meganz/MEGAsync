@@ -52,6 +52,7 @@ win32 {
                 $$PWD/gui/Twoways/win/BindFolderDialog.ui \
                 $$PWD/gui/Twoways/win/SyncSettingsUIBase.ui \
                 $$PWD/gui/Twoways/win/SyncAccountFullMessage.ui \
+                $$PWD/gui/Twoways/win/SyncStallModeSelector.ui \
                 $$PWD/gui/Backups/win/BackupsWizard.ui \
                 $$PWD/gui/Backups/win/AddBackupDialog.ui \
                 $$PWD/gui/Backups/win/RemoveBackupDialog.ui \
@@ -67,6 +68,7 @@ macx {
                 $$PWD/gui/Twoways/macx/BindFolderDialog.ui \
                 $$PWD/gui/Twoways/macx/SyncAccountFullMessage.ui \
                 $$PWD/gui/Twoways/macx/SyncSettingsUIBase.ui \
+                $$PWD/gui/Twoways/macx/SyncStallModeSelector.ui \
                 $$PWD/gui/Backups/macx/BackupsWizard.ui \
                 $$PWD/gui/Backups/macx/AddBackupDialog.ui \
                 $$PWD/gui/Backups/macx/RemoveBackupDialog.ui \
@@ -82,6 +84,7 @@ unix:!macx {
                 $$PWD/gui/Twoways/linux/BindFolderDialog.ui \
                 $$PWD/gui/Twoways/linux/SyncAccountFullMessage.ui \
                 $$PWD/gui/Twoways/linux/SyncSettingsUIBase.ui \
+                $$PWD/gui/Twoways/linux/SyncStallModeSelector.ui \
                 $$PWD/gui/Backups/linux/BackupsWizard.ui \
                 $$PWD/gui/Backups/linux/AddBackupDialog.ui \
                 $$PWD/gui/Backups/linux/RemoveBackupDialog.ui \
@@ -89,7 +92,3 @@ unix:!macx {
                 $$PWD/gui/Backups/linux/BackupRenameWidget.ui\
                 $$PWD/gui/Backups/linux/OpenBackupsFolder.ui
 }
-
-FORMS += \
-
-

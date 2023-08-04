@@ -124,21 +124,21 @@ bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
         {
             if(wid->isEnabled())
             {
-                if(obj == ui->Verbose)
+                if(obj == ui->Advance)
                 {
                     ui->Smart->setProperty(MODE_SELECTED, false);
                     ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-                    ui->Verbose->setProperty(MODE_SELECTED, true);
-                    ui->Verbose->setStyleSheet(ui->Verbose->styleSheet());
+                    ui->Advance->setProperty(MODE_SELECTED, true);
+                    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
 
-                    mModeSelected = Preferences::StalledIssuesModeType::Verbose;
+                    mModeSelected = Preferences::StalledIssuesModeType::Advance;
                 }
                 else if(obj == ui->Smart)
                 {
                     ui->Smart->setProperty(MODE_SELECTED, true);
                     ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-                    ui->Verbose->setProperty(MODE_SELECTED, false);
-                    ui->Verbose->setStyleSheet(ui->Verbose->styleSheet());
+                    ui->Advance->setProperty(MODE_SELECTED, false);
+                    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
 
                     mModeSelected = Preferences::StalledIssuesModeType::Smart;
                 }
@@ -227,12 +227,12 @@ void StalledIssuesDialog::showModeSelector()
         if(mode == Preferences::StalledIssuesModeType::Smart)
         {
             ui->Smart->setProperty(MODE_SELECTED, true);
-            ui->Verbose->setProperty(MODE_SELECTED, false);
+            ui->Advance->setProperty(MODE_SELECTED, false);
         }
         else
         {
             ui->Smart->setProperty(MODE_SELECTED, false);
-            ui->Verbose->setProperty(MODE_SELECTED, true);
+            ui->Advance->setProperty(MODE_SELECTED, true);
         }
 
         ui->SelectButton->setEnabled(true);
@@ -241,14 +241,14 @@ void StalledIssuesDialog::showModeSelector()
     else
     {
         ui->Smart->setProperty(MODE_SELECTED, false);
-        ui->Verbose->setProperty(MODE_SELECTED, false);
+        ui->Advance->setProperty(MODE_SELECTED, false);
     }
 
     ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-    ui->Verbose->setStyleSheet(ui->Verbose->styleSheet());
+    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
 
     ui->stackedWidget->setCurrentWidget(ui->ModeSelector);
-    ui->Verbose->installEventFilter(this);
+    ui->Advance->installEventFilter(this);
     ui->Smart->installEventFilter(this);
 }
 
