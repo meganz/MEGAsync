@@ -49,6 +49,8 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
     connect(syncStallModeSelectorUI->SmartSelector, &QRadioButton::toggled, this, &SyncSettingsElements::onSmartModeSelected);
     connect(syncStallModeSelectorUI->AdvanceSelector, &QRadioButton::toggled, this, &SyncSettingsElements::onAdvanceModeSelected);
 
+    connect(Preferences::instance().get(), &Preferences::valueChanged, this, &SyncSettingsElements::onPreferencesValueChanged);
+
     syncSettingsUi->insertUIElement(syncStallModeSelector, 1);
 }
 
@@ -77,6 +79,27 @@ void SyncSettingsElements::onAdvanceModeSelected(bool checked)
     if(checked)
     {
         Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::Advance);
+    }
+}
+
+void SyncSettingsElements::onPreferencesValueChanged(QString key)
+{
+    if(key == Preferences::stalledIssuesModeKey)
+    {
+        auto modeSelected = Preferences::instance()->stalledIssuesMode();
+
+        if(modeSelected == Preferences::StalledIssuesModeType::Smart && !syncStallModeSelectorUI->SmartSelector->isChecked())
+        {
+            syncStallModeSelectorUI->SmartSelector->blockSignals(true);
+            syncStallModeSelectorUI->SmartSelector->setChecked(true);
+            syncStallModeSelectorUI->SmartSelector->blockSignals(false);
+        }
+        else if(modeSelected == Preferences::StalledIssuesModeType::Advance && !syncStallModeSelectorUI->AdvanceSelector->isChecked())
+        {
+            syncStallModeSelectorUI->AdvanceSelector->blockSignals(true);
+            syncStallModeSelectorUI->AdvanceSelector->setChecked(true);
+            syncStallModeSelectorUI->AdvanceSelector->blockSignals(false);
+        }
     }
 }
 

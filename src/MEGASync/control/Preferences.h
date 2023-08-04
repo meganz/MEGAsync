@@ -26,6 +26,7 @@ class Preferences : public QObject
 signals:
     void stateChanged();
     void updated(int lastVersion);
+    void valueChanged(QString key);
 
 private:
     Preferences();
@@ -536,6 +537,9 @@ public:
     static void overridePreference(const QSettings &settings, QString &&name, T &value);
     static void overridePreferences(const QSettings &settings);
 
+    //Public keys for valueChanged signals
+    static const QString stalledIssuesModeKey;
+
 protected:
     QMutex mutex;
     void login(QString account);
@@ -559,8 +563,8 @@ protected:
     template<typename T>
     T getValueConcurrent(const QString &key, const T &defaultValue);
     void setAndCachedValue(const QString &key, const QVariant &value);
-    void setValueAndSyncConcurrent(const QString &key, const QVariant &value);
-    void setValueConcurrent(const QString &key, const QVariant &value);
+    void setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
+    void setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
     void setCachedValue(const QString &key, const QVariant &value);
     void cleanCache();
     void removeFromCache(const QString &key);
@@ -747,7 +751,6 @@ protected:
     static const bool defaultDeprecatedNotifications;
 
     //Stalled issues smart choice
-    static const QString stalledIssuesModeKey;
     static const StalledIssuesModeType defaultStalledIssuesMode;
 
     //Stalled issues event date

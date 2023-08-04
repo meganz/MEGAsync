@@ -26,6 +26,8 @@ private slots:
     void onSmartModeSelected(bool checked);
     void onAdvanceModeSelected(bool checked);
 
+    void onPreferencesValueChanged(QString key);
+
 private:
     Ui::SyncAccountFullMessage* syncAccountFullMessageUI;
     Ui::SyncStallModeSelector* syncStallModeSelectorUI;

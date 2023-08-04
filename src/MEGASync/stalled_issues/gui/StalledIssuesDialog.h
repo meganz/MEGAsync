@@ -48,9 +48,11 @@ private slots:
     void onLoadingSceneChanged(bool state);
 
     void showModeSelector();
+    void onPreferencesValueChanged(QString key);
 
 private:
     void showView(bool update);
+    void selectNewMode();
 
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;

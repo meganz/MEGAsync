@@ -53,7 +53,9 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     ui->stalledIssuesTree->setItemDelegate(mDelegate);
     connect(&ui->stalledIssuesTree->loadingView(), &ViewLoadingSceneBase::sceneVisibilityChange, this, &StalledIssuesDialog::onLoadingSceneChanged);
 
-    connect(ui->ModeSelectorButton, &QPushButton::clicked, this, &StalledIssuesDialog::showModeSelector);
+    connect(ui->SettingsButton, &QPushButton::clicked, this, [](){
+        MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    });
 
     connect(ui->SelectButton, &QPushButton::clicked, this, [this](){
         auto valueChanged(mModeSelected != Preferences::instance()->stalledIssuesMode());
@@ -64,8 +66,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
         showView(valueChanged);
     });
 
-    //Temporary
-    //ui->Smart->setDisabled(true);
+    Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::None);
 
     if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::None)
     {
@@ -75,6 +76,8 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     {
         showView(true);
     }
+
+    connect(Preferences::instance().get(), &Preferences::valueChanged, this, &StalledIssuesDialog::onPreferencesValueChanged);
 }
 
 StalledIssuesDialog::~StalledIssuesDialog()
@@ -126,23 +129,14 @@ bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
             {
                 if(obj == ui->Advance)
                 {
-                    ui->Smart->setProperty(MODE_SELECTED, false);
-                    ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-                    ui->Advance->setProperty(MODE_SELECTED, true);
-                    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-
                     mModeSelected = Preferences::StalledIssuesModeType::Advance;
                 }
                 else if(obj == ui->Smart)
                 {
-                    ui->Smart->setProperty(MODE_SELECTED, true);
-                    ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-                    ui->Advance->setProperty(MODE_SELECTED, false);
-                    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-
                     mModeSelected = Preferences::StalledIssuesModeType::Smart;
                 }
 
+                selectNewMode();
                 ui->SelectButton->setEnabled(true);
             }
         }
@@ -252,6 +246,20 @@ void StalledIssuesDialog::showModeSelector()
     ui->Smart->installEventFilter(this);
 }
 
+void StalledIssuesDialog::onPreferencesValueChanged(QString key)
+{
+    if(key == Preferences::stalledIssuesModeKey)
+    {
+        auto newModeSelected = Preferences::instance()->stalledIssuesMode();
+
+        if(newModeSelected != mModeSelected)
+        {
+            mModeSelected = newModeSelected;
+            selectNewMode();
+        }
+    }
+}
+
 void StalledIssuesDialog::showView(bool update)
 {
     ui->stackedWidget->setCurrentWidget(ui->View);
@@ -260,6 +268,16 @@ void StalledIssuesDialog::showView(bool update)
     {
         on_updateButton_clicked();
     }
+}
+
+void StalledIssuesDialog::selectNewMode()
+{
+    bool smartSelected(mModeSelected==Preferences::StalledIssuesModeType::Smart);
+
+    ui->Smart->setProperty(MODE_SELECTED, smartSelected);
+    ui->Smart->setStyleSheet(ui->Smart->styleSheet());
+    ui->Advance->setProperty(MODE_SELECTED, !smartSelected);
+    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
 }
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool)
