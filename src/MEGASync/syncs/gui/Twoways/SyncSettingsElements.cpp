@@ -34,16 +34,14 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
     syncStallModeSelectorUI->setupUi(syncStallModeSelector);
 
     auto mode = Preferences::instance()->stalledIssuesMode();
-    if(mode != Preferences::StalledIssuesModeType::None)
+    if(mode == Preferences::StalledIssuesModeType::Smart)
     {
-        if(mode == Preferences::StalledIssuesModeType::Smart)
-        {
-           syncStallModeSelectorUI->SmartSelector->setChecked(true);
-        }
-        else
-        {
-            syncStallModeSelectorUI->AdvanceSelector->setChecked(true);
-        }
+        syncStallModeSelectorUI->SmartSelector->setChecked(true);
+    }
+    //Lazy hack -> if no mode has been selected, the Advance one is "selected" on the GUI (not on preferences)
+    else
+    {
+        syncStallModeSelectorUI->AdvanceSelector->setChecked(true);
     }
 
     connect(syncStallModeSelectorUI->SmartSelector, &QRadioButton::toggled, this, &SyncSettingsElements::onSmartModeSelected);
