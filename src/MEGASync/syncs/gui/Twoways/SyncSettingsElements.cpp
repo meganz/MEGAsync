@@ -28,7 +28,7 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
     syncAccountFullMessageUI->setupUi(syncAccountFull);
     connect(syncAccountFullMessageUI->bBuyMoreSpace, &QPushButton::clicked, this, &SyncSettingsElements::onPurchaseMoreStorage);
 
-    syncSettingsUi->insertUIElement(syncAccountFull, 0);
+    syncSettingsUi->insertUIElement(syncAccountFull, 1);
 
     QWidget* syncStallModeSelector(new QWidget());
     syncStallModeSelectorUI->setupUi(syncStallModeSelector);
@@ -51,7 +51,7 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
 
     connect(Preferences::instance().get(), &Preferences::valueChanged, this, &SyncSettingsElements::onPreferencesValueChanged);
 
-    syncSettingsUi->insertUIElement(syncStallModeSelector, 1);
+    syncSettingsUi->insertUIElement(syncStallModeSelector, 2);
 }
 
 void SyncSettingsElements::setOverQuotaMode(bool mode)
