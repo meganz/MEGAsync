@@ -57,8 +57,11 @@ void SyncSettingsUIBase::insertUIElement(QWidget *widget, int position)
     {
         auto previousWidget = ui->SyncSettingsLayout->itemAt(position-1)->widget();
         setTabOrder(previousWidget,widget);
-        auto nextWidget = ui->SyncSettingsLayout->itemAt(position + 1)->widget();
-        setTabOrder(widget, nextWidget);
+        if(ui->SyncSettingsLayout->count() > (position + 1))
+        {
+            auto nextWidget = ui->SyncSettingsLayout->itemAt(position + 1)->widget();
+            setTabOrder(widget, nextWidget);
+        }
     }
     else if(position > 0  && position >= ui->SyncSettingsLayout->count())
     {
