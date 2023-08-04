@@ -83,7 +83,7 @@ font-size: 12px;
          <string>Let MEGA solve sync issues automatically</string>
         </property>
         <property name="indent">
-         <number>15</number>
+         <number>20</number>
         </property>
        </widget>
       </item>
@@ -116,7 +116,7 @@ font-size: 12px;
          <string>Get full control of the sync issues</string>
         </property>
         <property name="indent">
-         <number>15</number>
+         <number>19</number>
         </property>
        </widget>
       </item>
