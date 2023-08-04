@@ -287,7 +287,9 @@ void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::No, tr("Cancel"));
 
-        auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::NamesWouldClashWhenSynced);
+        auto reasons(QList<mega::MegaSyncStall::SyncStallReason>()
+                     << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
+                     << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
         auto selection = dialog->getDialog()->getSelection(reasons);
 
         if(selection.size() <= 1)

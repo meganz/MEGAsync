@@ -3657,6 +3657,7 @@ void MegaApplication::unlink(bool keepLogs)
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
+    syncStalled = false;
 
     // Any running sync/backup will be disabled by logout, so warn user if they log in again
     unique_ptr<MegaSyncList> syncList(megaApi->getSyncs());
