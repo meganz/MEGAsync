@@ -2318,38 +2318,6 @@ void MegaApplication::onAboutClicked()
     showChangeLog();
 }
 
-void MegaApplication::repositionInfoDialog()
-{
-    if (!infoDialog)
-    {
-        return;
-    }
-
-    int posx, posy;
-    Platform::getInstance()->calculateInfoDialogCoordinates(infoDialog->rect(), &posx, &posy);
-
-    fixMultiscreenResizeBug(posx, posy);
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Moving Info Dialog to posx = %1, posy = %2")
-                 .arg(posx)
-                 .arg(posy)
-                 .toUtf8().constData());
-
-    infoDialog->move(posx, posy);
-
-#ifdef __APPLE__
-    QPoint positionTrayIcon = trayIcon->geometry().topLeft();
-    QPoint globalCoordinates(positionTrayIcon.x() + trayIcon->geometry().width()/2, posy);
-
-    //Work-Around to paint the arrow correctly
-    infoDialog->show();
-    QPixmap px = QPixmap::grabWidget(infoDialog);
-    infoDialog->hide();
-    QPoint localCoordinates = infoDialog->mapFromGlobal(globalCoordinates);
-    infoDialog->moveArrow(localCoordinates);
-#endif
-}
-
 QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &datetime, QLocale::FormatType format) const
 {
     return DateTimeFormatter::create(currentLanguageCode, datetime, format);
@@ -2440,7 +2408,6 @@ void MegaApplication::showInfoDialog()
                                    "Main dialog shown while almost overquota", false, nullptr);
             }
 
-            repositionInfoDialog();
             raiseInfoDialog();
         }
         else
@@ -2553,7 +2520,6 @@ void MegaApplication::createInfoDialog()
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
     scanStageController.updateReference(infoDialog);
-    repositionInfoDialog();
 }
 
 QuotaState MegaApplication::getTransferQuotaState() const
@@ -3001,50 +2967,6 @@ void MegaApplication::ConnectServerSignals(HTTPServer* server)
     connect(server, &HTTPServer::onExternalOpenTransferManagerRequested, this, &MegaApplication::externalOpenTransferManager, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalShowInFolderRequested, this, &MegaApplication::openFolderPath, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalAddBackup, this, &MegaApplication::externalAddBackup, Qt::QueuedConnection);
-}
-
-void MegaApplication::fixMultiscreenResizeBug(int &posX, int &posY)
-{
-    // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
-    // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
-    // it is reverted to the correct size.
-
-    infoDialog->ensurePolished();
-    auto initialDialogWidth  = infoDialog->width();
-    auto initialDialogHeight = infoDialog->height();
-    QTimer::singleShot(1, infoDialog, [this, initialDialogWidth, initialDialogHeight, posX, posY](){
-        if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                         QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
-                         .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
-                         .toUtf8().constData());
-
-            infoDialog->resize(initialDialogWidth,initialDialogHeight);
-
-            auto iDPos = infoDialog->pos();
-            if (iDPos.x() != posX || iDPos.y() != posY )
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                             QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
-                             .arg(iDPos.x()).arg(iDPos.y()).arg(posX).arg(posY)
-                             .toUtf8().constData());
-                infoDialog->move(posX, posY);
-
-                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
-                    if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                                     QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
-                                     .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
-                                     .toUtf8().constData());
-
-                        infoDialog->resize(initialDialogWidth,initialDialogHeight);
-                    }
-                });
-            }
-        }
-    });
 }
 
 bool MegaApplication::dontAskForExitConfirmation(bool force)
@@ -4969,7 +4891,6 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     QWidget* parent(nullptr);
 
 #ifdef Q_OS_WIN
-    repositionInfoDialog();
     parent = infoDialog;
 #endif
 
@@ -5011,7 +4932,6 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     QWidget* parent(nullptr);
 
 #ifdef Q_OS_WIN
-    repositionInfoDialog();
     parent = infoDialog;
 #endif
 
@@ -5381,8 +5301,7 @@ void MegaApplication::openGuestDialog()
     }
 
     QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
-    DialogOpener::showDialog(guest);
-    //DialogOpener::closeAllDialogs();
+    DialogOpener::addDialog(guest);
 }
 
 void MegaApplication::openOnboardingDialog()
@@ -5401,6 +5320,7 @@ void MegaApplication::openOnboardingDialog()
 
     QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
     DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
+    DialogOpener::raiseAllDialogs();
 }
 
 void MegaApplication::openSettings(int tab)

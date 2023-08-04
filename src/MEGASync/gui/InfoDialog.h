@@ -262,6 +262,8 @@ protected:
     void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
                            bool animate = true);
     void setupSyncController();
+    void fixMultiscreenResizeBug(int& posX, int& posY);
+    void repositionInfoDialog();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

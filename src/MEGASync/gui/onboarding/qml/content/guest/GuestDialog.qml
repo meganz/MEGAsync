@@ -21,10 +21,6 @@ GuestQmlDialog {
         id: guestItem
     }
 
-    Component.onCompleted: {
-        guestWindow.realocate();
-    }
-
     onVisibleChanged:
     {
         if(visible)
