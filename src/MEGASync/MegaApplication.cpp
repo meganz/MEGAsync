@@ -2357,7 +2357,7 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
 
 void MegaApplication::raiseInfoDialog()
 {
-    if(preferences && !preferences->logged())
+    if(preferences && !preferences->logged() || mStatusController->isAccountBlocked())
     {
         openGuestDialog();
         return;
@@ -4533,11 +4533,6 @@ void MegaApplication::changeState()
     if (appfinished)
     {
         return;
-    }
-
-    if (infoDialog)
-    {
-        infoDialog->regenerate();
     }
     updateTrayIconMenu();
 }

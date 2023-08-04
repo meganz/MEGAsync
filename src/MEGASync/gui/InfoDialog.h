@@ -82,7 +82,6 @@ public:
 #endif
 
     void on_bStorageDetails_clicked();
-    void regenerate(int blockState = mega::MegaApi::ACCOUNT_NOT_BLOCKED);
     HighDpiResize<QDialog> highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;

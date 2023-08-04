@@ -204,7 +204,7 @@ Rectangle {
                 image.source: Images.warningGuest
                 imageTopMargin: 110
                 title: GuestStrings.accountTempLocked
-                description: GuestStrings.accountTempLockedSMS
+                description: GuestStrings.accountTempLockedEmail
                 leftButton {
                     text: GuestStrings.logOut
                     onClicked: {
@@ -213,7 +213,8 @@ Rectangle {
                     }
                 }
                 rightButton {
-                    text: GuestStrings.verifyNow
+                    text: GuestStrings.resendEmail
+                    icons.source: Images.mail
                     onClicked: {
                         GuestContent.onVerifyEmailClicked();
                     }

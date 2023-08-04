@@ -3,6 +3,7 @@
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
 #include "onboarding/Onboarding.h"
+#include "onboarding/GuestContent.h"
 #include <QDebug>
 
 AccountStatusController::AccountStatusController(QObject* parent)
@@ -90,6 +91,7 @@ void AccountStatusController::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
             {
                 return;
             }
+            mBlockedState = blockState;
             if (Preferences::instance()->logged())
             {
                 Preferences::instance()->setBlockedState(blockState);
@@ -105,6 +107,11 @@ void AccountStatusController::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
             {
                 lockDialog->close();
             }
+            if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>())
+            {
+                dialog->close();
+            }
+            MegaSyncApp->showInfoDialog();
         }
 
         MegaSyncApp->updateTrayIconMenu();
