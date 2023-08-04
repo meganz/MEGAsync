@@ -326,7 +326,7 @@ void InfoDialog::showEvent(QShowEvent *event)
 #ifdef __APPLE__
     arrow->show();
 #endif
-
+    repositionInfoDialog();
     QDialog::showEvent(event);
 }
 
