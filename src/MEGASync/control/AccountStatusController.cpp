@@ -18,6 +18,14 @@ AccountStatusController::AccountStatusController(QObject* parent)
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), this);
 }
 
+AccountStatusController::~AccountStatusController()
+{
+    if(MegaSyncApp)
+    {
+        MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), nullptr);
+    }
+}
+
 void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
 {
     if (event->getType() == mega::MegaEvent::EVENT_ACCOUNT_BLOCKED)
@@ -43,7 +51,7 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
                 Preferences::instance()->setBlockedState(blockState);
             }
 
-            emit accountBlocked(/*event->getNumber()*/);
+            emit accountBlocked(event->getNumber());
             break;
         }
         case mega::MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
@@ -91,7 +99,12 @@ void AccountStatusController::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer blocked").toUtf8().constData());
 
             //in any case we reflect the change in the InfoDialog
-            emit accountBlocked(/*blockState*/);
+            emit accountBlocked(blockState);
+
+            if(auto lockDialog = DialogOpener::findDialog<VerifyLockMessage>())
+            {
+                lockDialog->close();
+            }
         }
 
         MegaSyncApp->updateTrayIconMenu();
@@ -99,9 +112,9 @@ void AccountStatusController::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
     }
 }
 
-void AccountStatusController::whyAmIBlocked()
+void AccountStatusController::whyAmIBlocked(bool force)
 {
-    if(!mQueringWhyAmIBlocked)
+    if(!mQueringWhyAmIBlocked && isAccountBlocked() || !mQueringWhyAmIBlocked && force)
     {
         mMegaApi->whyAmIBlocked();
         mQueringWhyAmIBlocked = true;
@@ -110,7 +123,11 @@ void AccountStatusController::whyAmIBlocked()
 
 bool AccountStatusController::isAccountBlocked() const
 {
-    return (mBlockedState != mega::MegaApi::ACCOUNT_NOT_BLOCKED);
+    if(mMegaApi->isLoggedIn())
+    {
+        return (mBlockedState != mega::MegaApi::ACCOUNT_NOT_BLOCKED);
+    }
+    return false;
 }
 
 int AccountStatusController::getBlockedState() const
@@ -132,8 +149,15 @@ void AccountStatusController::loggedIn()
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 reports blocked, and no block state has been received before, lets query the block status")
                                                    .arg(cachedBlockedState).toUtf8().constData());
 
-        whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
+        whyAmIBlocked(true);// lets query again, to trigger transition and restoreSyncs
     }
+}
+
+void AccountStatusController::reset()
+{
+    mBlockedState = mega::MegaApi::ACCOUNT_NOT_BLOCKED;
+    mQueringWhyAmIBlocked = false;
+    mBlockedStateSet = false;
 }
 
 void AccountStatusController::showVerifyAccountInfo()

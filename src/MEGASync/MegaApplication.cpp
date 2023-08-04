@@ -1169,7 +1169,7 @@ void MegaApplication::start()
         }
 
         openOnboardingDialog();
-        openGuestDialog();
+       // openGuestDialog();
 
         if (!preferences->isFirstStartDone())
         {
@@ -1497,6 +1497,7 @@ void MegaApplication::onLogout()
 {
     model->reset();
     mTransfersModel->resetModel();
+    mStatusController->reset();
 
     // Queue processing of logout cleanup to avoid race conditions
     // due to threadifing processing.
@@ -2457,7 +2458,7 @@ void MegaApplication::showInfoDialog()
         }
     }
 
-    if(!getBlockState())
+    if(!mStatusController->isAccountBlocked())
     {
       updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
     }
@@ -2542,10 +2543,6 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
-    if (blockState)
-    {
-        infoDialog->regenerateLayout(blockState);
-    }
     connect(infoDialog.data(), &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
     connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
     connect(infoDialog.data(), &InfoDialog::almostTransferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
@@ -3161,6 +3158,10 @@ void MegaApplication::registerCommonQMLElements()
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
+
+    qmlRegisterModule("Onboard", 1, 0);
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingStrings.qml")), "Onboard", 1, 0, "OnboardingStrings");
+
 
     qmlRegisterModule("Components.BusyIndicator", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components.BusyIndicator", 1, 0, "BusyIndicator");
@@ -5274,6 +5275,28 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
     if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::Context)
     {
+        if (!infoDialog)
+        {
+            if (reason == QSystemTrayIcon::Trigger)
+            {
+                if (mStatusController->isAccountBlocked())
+                {
+                    createInfoDialog();
+                    checkSystemTray();
+                    createTrayIcon();
+                    showInfoDialog();
+                }
+                else if (!megaApi->isLoggedIn())
+                {
+                    showInfoMessage(tr("Logging in..."));
+                }
+                else
+                {
+                    showInfoMessage(tr("Fetching file list..."));
+                }
+            }
+            return;
+        }
 
 #ifndef __APPLE__
         if (reason == QSystemTrayIcon::Context)
@@ -5364,7 +5387,7 @@ void MegaApplication::openGuestDialog()
 
     QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
     DialogOpener::showDialog(guest);
-    DialogOpener::closeAllDialogs();
+    //DialogOpener::closeAllDialogs();
 }
 
 void MegaApplication::openOnboardingDialog()

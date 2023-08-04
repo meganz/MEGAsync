@@ -24,4 +24,12 @@ GuestQmlDialog {
     Component.onCompleted: {
         guestWindow.realocate();
     }
+
+    onVisibleChanged:
+    {
+        if(visible)
+        {
+            AccountStatusControllerAccess.whyAmIBlocked();
+        }
+    }
 }

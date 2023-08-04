@@ -17,7 +17,6 @@ import Guest 1.0
 // C++
 import GuestContent 1.0
 import ApiEnums 1.0
-import LoginController 1.0
 
 Rectangle {
     id: content
@@ -37,7 +36,7 @@ Rectangle {
     radius: 10
     color: Styles.surface1
 
-    state: AccountStatusControllerAccess.blockedState ? content.stateBlocked : content.stateNormal
+    state: AccountStatusControllerAccess.isAccountBlocked() ? content.stateBlocked : content.stateNormal
     states: [
         State {
             name: content.stateNormal
@@ -209,17 +208,26 @@ Rectangle {
                 leftButton {
                     text: GuestStrings.logOut
                     onClicked: {
-                        LoginControllerAccess.guestWindowSignupClicked();
+                        GuestContent.onLogouClicked();
+                        //content.state = content.stateNormal;
                     }
                 }
                 rightButton {
                     text: GuestStrings.verifyNow
                     onClicked: {
-                        LoginControllerAccess.guestWindowLoginClicked();
+                        GuestContent.onVerifyEmailClicked();
                     }
                 }
             }
         }
+    }
+
+    Connections {
+        target: AccountStatusControllerAccess
+
+        onAccountBlocked: {
+            content.state = content.stateBlocked;
+    }
     }
 
     Connections {

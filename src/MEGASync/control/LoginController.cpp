@@ -38,6 +38,7 @@ LoginController::LoginController(QObject *parent)
 
 LoginController::~LoginController()
 {
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), nullptr);
 }
 
 void LoginController::login(const QString &email, const QString &password)
