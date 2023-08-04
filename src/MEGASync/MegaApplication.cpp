@@ -1169,7 +1169,7 @@ void MegaApplication::start()
         }
 
         openOnboardingDialog();
-       // openGuestDialog();
+        openGuestDialog();
 
         if (!preferences->isFirstStartDone())
         {
@@ -2327,7 +2327,7 @@ void MegaApplication::raiseInfoDialog()
 {
     if(preferences && !preferences->logged() || mStatusController->isAccountBlocked())
     {
-        openGuestDialog();
+        openGuestDialog(true);
         return;
     }
 
@@ -5286,7 +5286,7 @@ void MegaApplication::onMessageClicked()
     }
 }
 
-void MegaApplication::openGuestDialog()
+void MegaApplication::openGuestDialog(bool showOnCreate)
 {
     if (appfinished)
     {
@@ -5301,7 +5301,14 @@ void MegaApplication::openGuestDialog()
     }
 
     QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
-    DialogOpener::addDialog(guest);
+    if(showOnCreate)
+    {
+        DialogOpener::showDialog(guest);
+    }
+    else
+    {
+        DialogOpener::addDialog(guest);
+    }
 }
 
 void MegaApplication::openOnboardingDialog()

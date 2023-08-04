@@ -322,7 +322,6 @@ void InfoDialog::showEvent(QShowEvent *event)
     }
     isShown = true;
     mTransferScanCancelUi->update();
-    regenerate();
 
 #ifdef __APPLE__
     arrow->show();
