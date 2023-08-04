@@ -22,7 +22,7 @@ IF NOT "%1" == "" (
 		echo "Error: VCPKGPATH environment variable is not set. Please set it."
 		goto Usage
 	)
-
+	
 	:: CHECK NUMBER OF ARGUMENTS
 	IF "%3" == "" (
 		echo "Error: too few arguments"
@@ -37,6 +37,11 @@ IF NOT "%1" == "" (
 		SET MEGA_VCPKGPATH=C:\Users\build\MEGA\build-MEGASync\3rdParty_MSVC2019_20221029\3rdParty_desktop
 	)
 )
+
+IF NOT [%MEGA_QTPATH%]==[] (
+	SET MEGA_QTPATH=%MEGA_QTPATH%
+)
+
 
 :: CHECK ARCHITECTURE
 IF "%MEGA_ARCH%" EQU "64" (
