@@ -50,15 +50,13 @@ StackView {
     Component {
         id: selectBackupFoldersPage
 
-        SelectFoldersPage {
-        }
+        SelectFoldersPage {}
     }
 
     Component {
         id: confirmBackupFoldersPage
 
-        ConfirmFoldersPage {
-        }
+        ConfirmFoldersPage {}
     }
 
 }

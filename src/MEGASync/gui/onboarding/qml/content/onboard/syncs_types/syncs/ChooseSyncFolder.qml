@@ -22,9 +22,7 @@ Rectangle {
     property bool isValid: false
     property alias folderField: folderField
 
-    readonly property int buttonWidth: 85
-    readonly property int buttonHeight: 36
-    readonly property int textEditMargin: 8
+    readonly property int textEditMargin: 2
 
     function getSyncData() {
         return local ? localFolderChooser.getFolder() : remoteFolderChooser.getHandle();
@@ -36,16 +34,12 @@ Rectangle {
     }
 
     function reset() {
-        if(local)
-        {
+        if(local) {
             localFolderChooser.reset();
-        }
-        else
-        {
+        } else {
             remoteFolderChooser.reset();
         }
     }
-
 
     width: parent.width
     height: folderField.height
@@ -70,7 +64,6 @@ Rectangle {
     MegaButtons.OutlineButton {
         id: changeButton
 
-        width: buttonWidth
         height: folderField.textField.height
         anchors.right: parent.right
         anchors.bottom: parent.bottom

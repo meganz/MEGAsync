@@ -26,26 +26,26 @@ SyncsPage {
 
         Header {
             title: OnboardingStrings.syncTitle
-            description: OnboardingStrings.syncDescription
         }
 
         Rectangle {
             Layout.preferredHeight: 208
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignLeft
-            color: Styles.surface1
+            color: "transparent"
 
             ButtonGroup {
                 id: buttonGroup
             }
 
             RowLayout {
-                spacing: 8
+                spacing: 15
                 anchors.fill: parent
 
                 SyncTypeButton {
                     id: fullSyncButton
 
+                    Layout.leftMargin: -fullSyncButton.focusBorderWidth
                     title: OnboardingStrings.fullSync
                     type: SyncsType.Types.FullSync
                     description: OnboardingStrings.fullSyncButtonDescription
@@ -58,6 +58,7 @@ SyncsPage {
                 SyncTypeButton {
                     id: backupsButton
 
+                    Layout.rightMargin: -backupsButton.focusBorderWidth
                     title: OnboardingStrings.selectiveSync
                     type: SyncsType.Types.SelectiveSync
                     description: OnboardingStrings.selectiveSyncButtonDescription
