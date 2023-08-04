@@ -51,7 +51,7 @@ private:
     StalledIssuesModel* mSourceModel;
     StalledIssuesDelegateWidgetsCache mCacheManager;
 
-    mutable QMap<QModelIndex, bool> mMouseHoverOrSelectedLastState;
+    mutable QMap<QModelIndex, QStyle::State> mMouseHoverOrSelectedLastState;
 
     mutable QPointer<StalledIssueBaseDelegateWidget> mEditor;
 

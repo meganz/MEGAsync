@@ -179,13 +179,13 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         detectRelativeHover();
 
-        //The selected/hover state has changed
-        bool isHoverOrSelected((parentState & QStyle::State_MouseOver) && (parentState & QStyle::State_Selected));
-        if(isHoverOrSelected != mMouseHoverOrSelectedLastState.value(index, false))
+        //The selected/hover state has change
+        QStyle::State checkState(QStyle::State_MouseOver | QStyle::State_Selected);
+        auto previousState(mMouseHoverOrSelectedLastState.value(index, QStyle::State_None));
+        if((parentState & checkState) != (previousState & checkState))
         {
             mView->update(index.parent().isValid() ? index.parent() : index.model()->index(0,0,index));
-
-            mMouseHoverOrSelectedLastState.insert(index, isHoverOrSelected);
+            mMouseHoverOrSelectedLastState.insert(index, parentState);
         }
 
         QColor fillColor;
