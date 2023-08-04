@@ -56,7 +56,7 @@ Rectangle {
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: "/MEGA"
         leftIcon.source: local ? Images.pc : Images.megaOutline
-        leftIcon.color: Styles.iconSecondary
+        leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
         hint.icon: Images.alertTriangle
     }

@@ -20,6 +20,8 @@ SyncsPage {
         enabled: BackupsModel.mCheckAllState !== Qt.Unchecked
     }
 
+    footerButtons.rightSecondary.visible: !comesFromResumePage
+
     ColumnLayout {
 
         anchors {

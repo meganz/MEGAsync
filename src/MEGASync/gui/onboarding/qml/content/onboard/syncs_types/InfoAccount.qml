@@ -141,5 +141,6 @@ Item {
         cached: true
         color: "#0d000000"
         source: background
+        visible: parent.enabled
     }
 }
