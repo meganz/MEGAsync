@@ -178,7 +178,7 @@
     <message>
         <source>NEW</source>
         <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
-        <translation>NEW</translation>
+        <translation>New</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -2467,6 +2467,11 @@ https://mega.co.nz/#sync</source>
         <translation>No update available at this time</translation>
     </message>
     <message>
+        <source>Error</source>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
+        <translation>Error</translation>
+    </message>
+    <message>
         <source>Starting</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
         <translation>Starting</translation>
@@ -2496,6 +2501,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
         <translation>Your config is corrupted, please start over</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
+        <translation>The app is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2924,17 +2934,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Warning</source>
         <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
-        <translation type="unfinished">Warning</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
-        <translation type="unfinished">Error</translation>
-    </message>
-    <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>The app is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
+        <translation>Warning</translation>
     </message>
 </context>
 <context>
@@ -3012,7 +3012,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Invalid key/Decryption error</translation>
+        <translation>Decryption error</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3082,7 +3082,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Transfer failed due to a recursive directory structure</translation>
+        <translation>Transfer failed due to a recursive folder structure</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -3528,7 +3528,7 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
         <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Too many items selected. To continue, deselect some or select the parent folder instead.</translation>
     </message>
 </context>
 <context>
@@ -4145,11 +4145,12 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced system notifications.
-- We&apos;ve enhanced the UI.
-- We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
+        <source>- UI enhancements.
+- Detected crash fixes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
+        <translation>- UI enhanced.
+- Detected crashes fixed on Windows, Linux, and macOS.</translation>
     </message>
 </context>
 <context>
@@ -4303,12 +4304,12 @@ Enter a different name.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Parent directory</translation>
+        <translation>Parent folder</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Go to the parent directory</translation>
+        <translation>Go to the parent folder</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4368,7 +4369,7 @@ Enter a different name.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Find directory</translation>
+        <translation>Find folder</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4383,7 +4384,7 @@ Enter a different name.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Directory:</translation>
+        <translation>Folder:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4403,7 +4404,7 @@ Enter a different name.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Directories</translation>
+        <translation>Folders</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4418,7 +4419,7 @@ Enter a different name.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Could not delete directory.</translation>
+        <translation>Could not delete folder.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4526,8 +4527,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Directory not found.
-Please verify the correct directory name was given.</translation>
+Folder not found.
+Please verify the correct folder name was given.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -7429,7 +7430,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 used</numerusform>
             <numerusform>%1 used</numerusform>
         </translation>
@@ -7437,7 +7438,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 (%2%) of %3 used</numerusform>
             <numerusform>%1 (%2%) of %3 used</numerusform>
         </translation>

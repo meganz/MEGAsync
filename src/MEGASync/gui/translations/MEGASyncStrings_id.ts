@@ -130,11 +130,6 @@
         <translation>Pilih</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation>Peringatan</translation>
-    </message>
-    <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
         <translation>Harap masukkan nama file yang valid atau path absolut.</translation>
@@ -183,7 +178,7 @@
     <message>
         <source>NEW</source>
         <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
-        <translation>BARU</translation>
+        <translation>Baru</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -858,11 +853,6 @@
         <translation>Masalah Anda tidak dapat diunggah karena terjadi kesalahan. Silakan coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.nz[/A] jika masalah terus berlanjut.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
         <translation>Ingin membatalkan pengunggahan masalah yang anda laporkan?</translation>
@@ -980,11 +970,6 @@
         <source>OK</source>
         <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
-        <translation>Error</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -1363,11 +1348,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Pilih folder lokal</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
@@ -1379,11 +1359,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Download</source>
         <translatorcomment>Window title for download node selector</translatorcomment>
         <translation>Unduh</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -1611,11 +1586,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Pilih</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation>Anda tidak dapat men-sync folder berbagi tanpa Full Access permissions</translation>
@@ -1672,11 +1642,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
         <translation>Mengambil list file…</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>Error</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -1853,11 +1818,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Pilih</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
@@ -2011,11 +1971,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Tidak ada pemberitahuan untuk pembayaran</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 digunakan</translation>
-    </message>
-    <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation>Upgrade akun</translation>
@@ -2064,11 +2019,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
         <translation><numerusform>Anda memiliki [A]%n jam[/A] sisa untuk meningkatkan. Setelah itu, data anda dapat dihapus.</numerusform></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2337,11 +2287,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
 <context>
     <name>MegaApplication</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-    <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>Memasukkan</translation>
@@ -2454,7 +2399,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Error</source>
-        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
         <translation>Error</translation>
     </message>
     <message>
@@ -2910,6 +2855,11 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>Cadangan anda “%1” telah dinonaktifkan sementara: %2</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
+        <translation>Peringatan</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2986,7 +2936,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Key salah/Decryption error</translation>
+        <translation>Kesalahan dekripsi</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3056,7 +3006,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Transfer gagal karena struktur direktori rekursif</translation>
+        <translation>Transfer gagal karena struktur folder rekursif</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -3339,11 +3289,6 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <translation>Buka di MEGA</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Error messagebox title</translatorcomment>
-        <translation>Kesalahan</translation>
-    </message>
-    <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
         <translation>File tidak dapat dibuka. Pastikan file di drive lokal anda belum dihapus atau dipindahkan.</translation>
@@ -3488,6 +3433,14 @@ Transfer sinkronisasi tidak lengkap yang anda pilih tidak akan dibatalkan. Semua
     </message>
 </context>
 <context>
+    <name>MultiQFileDialog</name>
+    <message>
+        <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
+        <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
+        <translation>Terlalu banyak item terpilih. Untuk melanjutkan, batalkan beberapa pilihan atau pilih folder induk sebagai gantinya</translation>
+    </message>
+</context>
+<context>
     <name>NewFolderDialog</name>
     <message>
         <source>Enter the new folder name</source>
@@ -3526,11 +3479,6 @@ Masukkan nama yang berbeda.</translation>
 </context>
 <context>
     <name>NodeSelector</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Error</translation>
-    </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
@@ -3603,21 +3551,6 @@ Masukkan nama yang berbeda.</translation>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Urutkan berdasarkan nama</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Hari ini jam %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Kemarin jam %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 jam %2</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3793,14 +3726,6 @@ Masukkan nama yang berbeda.</translation>
     </message>
 </context>
 <context>
-    <name>Notificator</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-</context>
-<context>
     <name>OsNotifications</name>
     <message numerus="yes">
         <source>[A] removed %n item</source>
@@ -3941,11 +3866,6 @@ Masukkan nama yang berbeda.</translation>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>Batal</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Peringatan</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -4128,14 +4048,12 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced system notifications.
-- We've enhanced the UI.
-- We've fixed the detected crashes on Windows, Linux, and macOS.
+        <source>- UI enhancements.
+- Detected crash fixes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation>- Kami telah meningkatkan notifikasi sistem.
-- Kami telah meningkatkan UI.
-- Kami telah memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.</translation>
+        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
+        <translation>- UI ditingkatkan.
+- Kerusakan terdeteksi telah diperbaiki di Windows, Linux, dan macOS.</translation>
     </message>
 </context>
 <context>
@@ -4221,11 +4139,6 @@ Masukkan nama yang berbeda.</translation>
         <translation>Perbarui</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
-        <translation>Kesalahan</translation>
-    </message>
-    <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
         <translation>Setelan proxy anda tidak valid atau proxy tidak merespons</translation>
@@ -4294,12 +4207,12 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Direktori induk</translation>
+        <translation>Folder induk</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Pergi ke direktori induk</translation>
+        <translation>Pergi ke folder induk</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4359,7 +4272,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Temukan direktori</translation>
+        <translation>Temukan folder</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4374,7 +4287,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Direktori:</translation>
+        <translation>Folder:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4394,7 +4307,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Direktori</translation>
+        <translation>Folder</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4409,7 +4322,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Tidak dapat menghapus direktori.</translation>
+        <translation>Tidak dapat menghapus folder.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4517,8 +4430,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Direktori tidak ditemukan.
-Harap verifikasi nama direktori yang diberikan dengan benar.</translation>
+Folder tidak ditemukan.
+Harap verifikasi nama folder yang benar telah diberikan.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -4835,21 +4748,6 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Data sementara tidak tersedia</translation>
     </message>
     <message>
-        <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) dari %3 terpakai</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
-        <translation>Peringatan</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Hapus</translation>
@@ -4985,11 +4883,6 @@ Do you want to restart MEGAsync now?</source>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
         <translation>Anda akan secara permanen menghapus semua versi file. Apakah anda ingin melanjutkan?</translation>
-    </message>
-    <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 digunakan</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -5626,11 +5519,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Label of error.</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
         <translation>Pengguna sudah terdaftar</translation>
@@ -5696,11 +5584,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Membuat akun…</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label warning.</translatorcomment>
-        <translation>Peringatan</translation>
-    </message>
-    <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
         <translation>Harap pilih satu folder lokal</translation>
@@ -5750,11 +5633,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
         <translation>Akun anda telah di-blok. Harap kontak support@mega.nz</translation>
-    </message>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
-        <translation>MEGA</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -6001,11 +5879,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>StreamNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Anda tidak dapat mengalirkan folder. Pilih file untuk streaming.</translation>
@@ -6067,11 +5940,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
         <translation>Apakah anda yakin ingin menghentikan streaming?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation>Error</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -6308,19 +6176,9 @@ Untuk melanjutkan, pilih folder lain.</translation>
 <context>
     <name>SyncNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
-    </message>
-    <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
         <translation>Untuk menyinkronkan folder ini, anda harus memiliki izin akses penuh ke folder tersebut.</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Peringatan</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -7230,11 +7088,6 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
 <context>
     <name>UploadNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>Untuk mengunggah folder ini, anda harus memiliki izin baca dan tulis atau akses penuh ke folder tersebut.</translation>
@@ -7402,6 +7255,16 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1&#xa0;[A]d[/A]</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 terpakai</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 (%2%) dari %3 terpakai</numerusform></translation>
     </message>
 </context>
 <context>

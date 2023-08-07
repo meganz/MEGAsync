@@ -130,11 +130,6 @@
         <translation>Wybierz</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation>Ostrzeżenie</translation>
-    </message>
-    <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
         <translation>Wprowadź poprawną nazwę pliku lub ścieżkę.</translation>
@@ -183,7 +178,7 @@
     <message>
         <source>NEW</source>
         <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
-        <translation>NOWY</translation>
+        <translation>Nowe</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -858,11 +853,6 @@
         <translation>Twoja sprawa nie może zostać załadowana z powodu błędu. Spróbuj ponownie później lub skontaktuj się z naszym zespołem pomocy technicznej poprzez [A]support@mega.nz[/A], jeśli problem nadal występuje.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
         <translation>Chcesz zrezygnować z przesyłania zgłoszonej sprawy?</translation>
@@ -980,11 +970,6 @@
         <source>OK</source>
         <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
-        <translation>Błąd</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -1363,11 +1348,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translation>Wybierz lokalny katalog</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Nie masz uprawnień zapisu do tego lokalnego katalogu.</translation>
@@ -1379,11 +1359,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <source>Download</source>
         <translatorcomment>Window title for download node selector</translatorcomment>
         <translation>Pobierz</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Błąd</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -1611,11 +1586,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translation>Wybierz</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation>Nie możesz synchronizować udostępnionego katalogu bez pełnych uprawnień dostępu</translation>
@@ -1672,11 +1642,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
         <translation>Pobieram listę plików…</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>Błąd</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -1853,11 +1818,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translation>Wybierz</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Nie masz uprawnień zapisu do tego lokalnego katalogu.</translation>
@@ -2011,11 +1971,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translation>Brak powiadomień o płatnościach</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 używane</translation>
-    </message>
-    <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation>Zmień konto</translation>
@@ -2064,11 +2019,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
         <translation><numerusform>Masz jeszcze [A]%n godzinę[/A] na aktualizację. Po tym czasie Twoje dane zostaną usunięte.</numerusform><numerusform>Masz jeszcze [A]%n godzin[/A] na aktualizację. Po tym czasie Twoje dane zostaną usunięte.</numerusform><numerusform>Masz jeszcze [A]%n godzin[/A] na aktualizację. Po tym czasie Twoje dane zostaną usunięte.</numerusform><numerusform>Masz jeszcze [A]%n godzin[/A] na aktualizację. Po tym czasie Twoje dane zostaną usunięte.</numerusform></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Błąd</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2337,11 +2287,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
 <context>
     <name>MegaApplication</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-    <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>Trwa logowanie</translation>
@@ -2454,7 +2399,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Error</source>
-        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
         <translation>Błąd</translation>
     </message>
     <message>
@@ -2913,6 +2858,11 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>Twój backup &#8220;%1&#8221; został tymczasowo wyłączony: %2</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
+        <translation>Ostrzeżenie</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2989,7 +2939,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Błędny klucz/Błąd deszyfrowania</translation>
+        <translation>Błąd opisu</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3059,7 +3009,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Przesyłanie nie powiodło się z powodu rekurencyjnej struktury katalogów</translation>
+        <translation>Transfer nie powiódł się z powodu rekursywnej struktury katalogów</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -3342,11 +3292,6 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
         <translation>Otwórz w MEGA</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Error messagebox title</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
         <translation>Nie można otworzyć pliku. Sprawdź, czy plik na dysku lokalnym nie został usunięty lub przeniesiony.</translation>
@@ -3491,6 +3436,14 @@ Twoje wybrane niekompletne transfery synchronizacyjne nie zostaną anulowane. Ws
     </message>
 </context>
 <context>
+    <name>MultiQFileDialog</name>
+    <message>
+        <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
+        <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
+        <translation>Wybrano zbyt wiele elementów. Aby kontynuować, usuń zaznaczenie niektórych elementów lub wybierz katalog nadrzędny.</translation>
+    </message>
+</context>
+<context>
     <name>NewFolderDialog</name>
     <message>
         <source>Enter the new folder name</source>
@@ -3529,11 +3482,6 @@ Wprowadź inną nazwę.</translation>
 </context>
 <context>
     <name>NodeSelector</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
@@ -3606,21 +3554,6 @@ Wprowadź inną nazwę.</translation>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Sortuj według nazwy</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Dzisiaj o %1</numerusform><numerusform>Dzisiaj o %1</numerusform><numerusform>Dzisiaj o %1</numerusform><numerusform>Dzisiaj o %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Przedwczoraj o %1</numerusform><numerusform>Przedwczoraj o %1</numerusform><numerusform>Przedwczoraj o %1</numerusform><numerusform>Przedwczoraj o %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 o %2</numerusform><numerusform>%1 o %2</numerusform><numerusform>%1 o %2</numerusform><numerusform>%1 o %2</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3796,14 +3729,6 @@ Wprowadź inną nazwę.</translation>
     </message>
 </context>
 <context>
-    <name>Notificator</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-</context>
-<context>
     <name>OsNotifications</name>
     <message numerus="yes">
         <source>[A] removed %n item</source>
@@ -3944,11 +3869,6 @@ Wprowadź inną nazwę.</translation>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>Anuluj</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Ostrzeżenie</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -4131,14 +4051,12 @@ Wprowadź inną nazwę.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced system notifications.
-- We've enhanced the UI.
-- We've fixed the detected crashes on Windows, Linux, and macOS.
+        <source>- UI enhancements.
+- Detected crash fixes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation> Ulepszyliśmy powiadomienia systemowe.
-- Ulepszyliśmy interfejs użytkownika.
-- Naprawiliśmy wykryte awarie w systemach Windows, Linux i macOS.</translation>
+        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
+        <translation>- Ulepszony interfejs użytkownika.
+- Naprawiono wykryte awarie w systemach Windows, Linux i macOS.</translation>
     </message>
 </context>
 <context>
@@ -4224,11 +4142,6 @@ Wprowadź inną nazwę.</translation>
         <translation>Zapisz zmiany</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
         <translation>Ustawienia proxy są nieprawidłowe lub proxy nie odpowiada.</translation>
@@ -4297,12 +4210,12 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Główny katalog</translation>
+        <translation>Katalog nadrzędny</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Przejdź do głównego katalogu</translation>
+        <translation>Przejdź do katalogu nadrzędnego</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4521,7 +4434,7 @@ Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
 Nie znaleziono katalogu.
-Sprawdź, czy podano poprawną nazwę katalogu.</translation>
+Sprawdź, czy podano prawidłową nazwę katalogu.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -4838,21 +4751,6 @@ Czy mimo to chcesz je usunąć?</translation>
         <translation>Dane chwilowo niedostępne</translation>
     </message>
     <message>
-        <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) z %3 użyte</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
-        <translation>Ostrzeżenie</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Wyczyść</translation>
@@ -4988,11 +4886,6 @@ Do you want to restart MEGAsync now?</source>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
         <translation>Masz zamiary usunąć wszystkie wersje plików. Czy chcesz kontynuować?</translation>
-    </message>
-    <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 używane</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -5629,11 +5522,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Label of error.</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
         <translation>Użytkownik już&#xa0;istnieje</translation>
@@ -5699,11 +5587,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Tworzenie konta…</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label warning.</translatorcomment>
-        <translation>Ostrzeżenie</translation>
-    </message>
-    <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
         <translation>Wybierz lokalny katalog</translation>
@@ -5753,11 +5636,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
         <translation>Twoje konto zostało zablokowane. Skontaktuj się z support@mega.nz</translation>
-    </message>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
-        <translation>MEGA</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -6004,11 +5882,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>StreamNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Nie można przesyłać strumieniowo katalogów. Wybierz plik do przesłania strumieniowego.</translation>
@@ -6070,11 +5943,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
         <translation>Czy na pewno chcesz wstrzymać udostępnianie?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation>Błąd</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -6311,19 +6179,9 @@ Aby kontynuować, wybierz inny katalog.</translation>
 <context>
     <name>SyncNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
         <translation>Aby zsynchronizować ten katalog, musisz mieć do niego pełne uprawnienia.</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Ostrzeżenie</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -7232,11 +7090,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UploadNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Błąd</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>Aby przesłać ten katalog, musisz mieć do niego uprawnienia do odczytu i zapisu lub pełnego dostępu.</translation>
@@ -7404,6 +7257,16 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1&#xa0;[A]s[/A]</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 wykorzystane</numerusform><numerusform>%1 wykorzystane</numerusform><numerusform>%1 wykorzystane</numerusform><numerusform>%1 wykorzystane</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 (%2%) z %3 wykorzystane</numerusform><numerusform>%1 (%2%) z %3 wykorzystane</numerusform><numerusform>%1 (%2%) z %3 wykorzystane</numerusform><numerusform>%1 (%2%) z %3 wykorzystane</numerusform></translation>
     </message>
 </context>
 <context>

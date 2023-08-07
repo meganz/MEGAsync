@@ -8,7 +8,7 @@
 #include "QTMegaRequestListener.h"
 
 #ifdef __APPLE__
-    #include "macx/LockedPopOver.h"
+    #include "platform/macx/NativeMacPopover.h"
     #import <objc/runtime.h>
 #else
     #include "LockedPopOver.h"
@@ -52,8 +52,7 @@ private:
     bool m_haveMainDialog;
 
 #ifdef __APPLE__
-    std::unique_ptr<LockedPopOver> m_nativeWidget{new LockedPopOver()};
-    id m_popover;
+    NativeMacPopover mPopOver;
 #else
     std::unique_ptr<LockedPopOver> mLockedPopOver{new LockedPopOver(this)};
 #endif

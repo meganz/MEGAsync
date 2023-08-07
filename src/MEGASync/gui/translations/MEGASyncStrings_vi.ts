@@ -130,11 +130,6 @@
         <translation>Chọn</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation>Chú Ý</translation>
-    </message>
-    <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
         <translation>Xin nhập một đường dẫn hoặc tên tệp tin một cách hợp lệ.</translation>
@@ -183,7 +178,7 @@
     <message>
         <source>NEW</source>
         <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
-        <translation>MỚI</translation>
+        <translation>Mới</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -858,11 +853,6 @@
         <translation>Báo cáo lỗi đã không thể gửi đi được do xảy ra trục trặc. Xin thử lại sau hoặc liên hệ với đội trợ giúp qua e-mail [A]support@mega.nz[/A]nếu vấn đề tiếp tục tiếp diễn.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
         <translation>Muốn hủy bỏ việc gửi đăng tải lên báo cáo?</translation>
@@ -980,11 +970,6 @@
         <source>OK</source>
         <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
-        <translation>Lỗi</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -1363,11 +1348,6 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <translation>Chọn thư mục cục bộ</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Bạn không&#xa0;có quyền&#xa0;hạn ghi dữ&#xa0;liệu vào thư&#xa0;mục này.</translation>
@@ -1379,11 +1359,6 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <source>Download</source>
         <translatorcomment>Window title for download node selector</translatorcomment>
         <translation>Tải&#xa0;xuống</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Lỗi</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -1611,11 +1586,6 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <translation>Chọn</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation>Bạn không thể đồng bộ thư mục chia sẻ khi không có phép truy cập Toàn Quyền</translation>
@@ -1672,11 +1642,6 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
         <translation>Đang truy vấn danh sách các tệp tin…</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>Lỗi</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -1853,11 +1818,6 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <translation>Chọn</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Bạn không&#xa0;có quyền&#xa0;hạn ghi dữ&#xa0;liệu vào thư&#xa0;mục này.</translation>
@@ -2011,11 +1971,6 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <translation>Không có thông báo liên quan tới thanh toán</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>Đang dùng %1</translation>
-    </message>
-    <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation>Nâng cấp tài khoản</translation>
@@ -2064,11 +2019,6 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
         <translation><numerusform>Quý khách còn lại [A]%n giờ đồng hồ[/A] để tiến hành nâng cấp. Nếu không sau thời gian này, dữ liệu của quý khách sẽ bị xóa bỏ.</numerusform></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Lỗi</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2337,11 +2287,6 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
 <context>
     <name>MegaApplication</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-    <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>Đang đăng nhập</translation>
@@ -2454,7 +2399,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Error</source>
-        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
         <translation>Lỗi</translation>
     </message>
     <message>
@@ -2910,6 +2855,11 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>Việc sao&#xa0;lưu “%1” của bạn tạm&#xa0;thời bị tắt: %2</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
+        <translation>Chú Ý</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2986,7 +2936,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Chìa&#xa0;khóa không hợp&#xa0;lệ/Lỗi giải&#xa0;mã</translation>
+        <translation>Lỗi giải mã</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3056,7 +3006,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Truyền tải bị thất bại do cấu trúc đệ quy của thư mục</translation>
+        <translation>Truyền&#xa0;tải bị thất&#xa0;bại do cấu&#xa0;trúc đệ&#xa0;quy của thư&#xa0;mục</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -3339,11 +3289,6 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
         <translation>Mở trong MEGA</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Error messagebox title</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
         <translation>Tệp&#xa0;tin không thể mở được. Xin kiểm&#xa0;tra tệp&#xa0;tin nằm trong ổ&#xa0;đĩa nội&#xa0;bộ không có bị đổi chỗ hoặc đã bị xóa.</translation>
@@ -3487,6 +3432,14 @@ Các phiên truyền tải đồng bộ chưa hoàn tất mà bạn đã ch�
     </message>
 </context>
 <context>
+    <name>MultiQFileDialog</name>
+    <message>
+        <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
+        <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
+        <translation>Đã chọn quá nhiều mục. Để có thể tiếp&#xa0;tục, hãy bỏ chọn một số mục hoặc đi ra chọn thư&#xa0;mục chính để thay&#xa0;thế.</translation>
+    </message>
+</context>
+<context>
     <name>NewFolderDialog</name>
     <message>
         <source>Enter the new folder name</source>
@@ -3525,11 +3478,6 @@ Nhập một tên khác.</translation>
 </context>
 <context>
     <name>NodeSelector</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
@@ -3602,21 +3550,6 @@ Nhập một tên khác.</translation>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Xếp theo tên</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Hôm nay lúc %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Hôm qua lúc %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 lúc %2</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3792,14 +3725,6 @@ Nhập một tên khác.</translation>
     </message>
 </context>
 <context>
-    <name>Notificator</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-</context>
-<context>
     <name>OsNotifications</name>
     <message numerus="yes">
         <source>[A] removed %n item</source>
@@ -3940,11 +3865,6 @@ Nhập một tên khác.</translation>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>Hủy</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Chú ý</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -4127,14 +4047,12 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced system notifications.
-- We've enhanced the UI.
-- We've fixed the detected crashes on Windows, Linux, and macOS.
+        <source>- UI enhancements.
+- Detected crash fixes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation>- Cải&#xa0;thiện thông&#xa0;báo hệ&#xa0;thống.
-- Cải tiến giao diện người dùng.
-- Khắc phục sự cố đã phát hiện trên Windows, Linux và macOS.</translation>
+        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
+        <translation>- Giao&#xa0;diện người dùng được cải&#xa0;tiến.
+- Phát hiện các sự cố và được sửa cho Windows, Linux và macOS.</translation>
     </message>
 </context>
 <context>
@@ -4220,11 +4138,6 @@ Nhập một tên khác.</translation>
         <translation>Cập nhật</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
         <translation>Thiết&#xa0;đặt proxy của bạn không hợp&#xa0;lệ hoặc proxy không phản&#xa0;hồi</translation>
@@ -4293,12 +4206,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Danh mục chủ</translation>
+        <translation>Thư&#xa0;mục chính</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Đi đến danh mục chủ</translation>
+        <translation>Đi đến thư&#xa0;mục chính</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4358,7 +4271,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Tìm danh mục</translation>
+        <translation>Tìm thư&#xa0;mục</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4373,7 +4286,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Danh mục:</translation>
+        <translation>Thư&#xa0;mục:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4393,7 +4306,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Danh mục</translation>
+        <translation>Thư&#xa0;mục</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4408,7 +4321,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Không xóa được danh mục.</translation>
+        <translation>Không thể xóa thư&#xa0;mục.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4516,8 +4429,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Danh mục không tìm thấy.
-Xin kiểm tra xem tên của danh mục có chính xác.</translation>
+Không tìm thấy thư mục.
+Vui lòng xác nhận tên thư mục đã đưa ra là có chính xác.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -4834,21 +4747,6 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translation>Số liệu tạm thời không khả dụng</translation>
     </message>
     <message>
-        <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 đã dùng trong tổng %3 (%2%)</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
-        <translation>Chú ý</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Dọn</translation>
@@ -4984,11 +4882,6 @@ Do you want to restart MEGAsync now?</source>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
         <translation>Thao tác này sẽ xóa bỏ tất cả các thông tin lập lịch sử phiên bản đang có trong ổ mây. Chắc chắn tiến hành?</translation>
-    </message>
-    <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>Đang dùng %1</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -5625,11 +5518,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Hủy</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Label of error.</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
         <translation>Tên này có người dùng rồi</translation>
@@ -5695,11 +5583,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Đang tạo tài khoản…</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label warning.</translatorcomment>
-        <translation>Chú ý</translation>
-    </message>
-    <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
         <translation>Xin chọn một thư mục cục bộ</translation>
@@ -5749,11 +5632,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
         <translation>Tài khoản của quý khách bị khóa. Vui lòng liên hệ support@mega.nz</translation>
-    </message>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
-        <translation>MEGA</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -6000,11 +5878,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>StreamNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Không&#xa0;thể truyền&#xa0;phát cả thư&#xa0;mục được. Chọn ra một tệp&#xa0;tin để phát.</translation>
@@ -6066,11 +5939,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
         <translation>Bạn có chắc muốn ngưng việc streaming?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation>Lỗi</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -6307,19 +6175,9 @@ To continue, select a different folder.</source>
 <context>
     <name>SyncNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
         <translation>Để đồng&#xa0;bộ thư&#xa0;mục này, bạn cần có toàn quyền truy&#xa0;cập vào thư&#xa0;mục đó.</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -7228,11 +7086,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UploadNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Lỗi</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>Để tải thư&#xa0;mục này lên, bạn cần có quyền đọc &amp; ghi hoặc toàn quyền truy&#xa0;cập vào thư&#xa0;mục đó.</translation>
@@ -7400,6 +7253,16 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1 [A]giây[/A]</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation><numerusform>Đang dùng %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 (%2%) trong tổng %3 đang được sử&#xa0;dụng</numerusform></translation>
     </message>
 </context>
 <context>
