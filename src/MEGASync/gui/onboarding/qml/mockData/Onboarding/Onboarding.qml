@@ -27,10 +27,6 @@ Item {
         //backupsUpdated("C:\\Users\\mega\\Documents", -14, true);
     }
 
-    function openPreferences(sync) {
-        console.info("openPreferences() -> " + sync);
-    }
-
     function exitLoggedIn() {
         console.info("exitLoggedIn()");
     }
