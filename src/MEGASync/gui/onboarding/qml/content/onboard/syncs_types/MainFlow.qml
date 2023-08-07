@@ -30,6 +30,7 @@ Rectangle {
     readonly property int lineWidth: 2
 
     property int typeSelected: SyncsType.Types.Backup
+    property bool comesFromResumePage: false
 
     color: Styles.surface1
     state: deviceName

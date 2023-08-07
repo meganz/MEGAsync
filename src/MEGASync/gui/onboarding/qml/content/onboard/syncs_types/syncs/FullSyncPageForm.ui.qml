@@ -36,14 +36,15 @@ SyncsPage {
         }
 
         InfoAccount {
+            Layout.topMargin: 16
             Layout.preferredWidth: parent.width
         }
 
         ChooseSyncFolder {
             id: localFolderChooser
 
-            Layout.preferredWidth: parent.width
-            Layout.leftMargin: -4
+            Layout.preferredWidth: parent.width + 8
+            Layout.leftMargin: -4            
         }
     }
 }

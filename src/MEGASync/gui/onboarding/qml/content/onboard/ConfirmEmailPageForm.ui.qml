@@ -33,10 +33,9 @@ StackViewPage {
         spacing: 24
 
         MegaTexts.RichText {
-            id: title
-
             Layout.fillWidth: true
             font.pixelSize: MegaTexts.Text.Size.Large
+            font.bold: true
             text: OnboardingStrings.confirmEmailTitle
             wrapMode: Text.WordWrap
             color: Styles.textPrimary
@@ -46,6 +45,13 @@ StackViewPage {
             Layout.preferredWidth: layout.width
             text: OnboardingStrings.confirmEmailBodyText
             font.pixelSize: MegaTexts.Text.Size.Medium
+        }
+
+        MegaTexts.RichText {
+            Layout.fillWidth: true
+            text: OnboardingStrings.confirmEmailBodyText2
+            font.pixelSize: MegaTexts.Text.Size.Medium
+            url: Links.contact
         }
 
         RowLayout {
@@ -78,11 +84,15 @@ StackViewPage {
             manageMouse: true
         }
     }
+
     MegaButtons.OutlineButton {
         id: cancelAccount
+
         anchors {
             right: parent.right
             bottom: parent.bottom
+            rightMargin: -cancelAccount.sizes.focusBorderWidth
+            bottomMargin: 29
         }
         text: OnboardingStrings.cancelAccount
     }

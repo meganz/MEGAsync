@@ -35,6 +35,7 @@ ResumePageForm {
     }
 
     Component.onCompleted: {
+        comesFromResumePage = true;
         switch(typeSelected) {
             case SyncsType.Types.SelectiveSync:
                 state = stateSelectiveSync;

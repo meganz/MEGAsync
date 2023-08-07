@@ -18,9 +18,6 @@ Qml.RoundButton {
     property Progress progress: Progress {}
     property Sizes sizes: Sizes {}
 
-    readonly property int focusBorderWidth: 3
-    property int borderWidth: 2
-
     Timer {
         id: busyTimer
 

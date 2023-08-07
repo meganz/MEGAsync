@@ -9,5 +9,6 @@ QtObject {
     readonly property url pricing: "https://mega.io/es/pricing"
     readonly property url desktopSyncApp: "https://help.mega.io/installs-apps/desktop-syncing"
     readonly property url backupCentre: "https://mega.nz/fm/devices"
+    readonly property url contact: "https://mega.io/es/contact"
 
 }

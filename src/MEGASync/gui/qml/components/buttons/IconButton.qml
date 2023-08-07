@@ -6,7 +6,7 @@ import Components.Buttons 1.0 as MegaButtons
 import Common 1.0
 
 MegaButtons.Button {
-    borderWidth: 0
+    sizes.borderWidth: 0
     leftPadding: 5 + sizes.focusBorderWidth
     rightPadding: 5 + sizes.focusBorderWidth
     topPadding: 5 + sizes.focusBorderWidth

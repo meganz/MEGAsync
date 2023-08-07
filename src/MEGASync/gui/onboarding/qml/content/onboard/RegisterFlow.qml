@@ -121,7 +121,7 @@ Rectangle {
             right: registerFlow.right
             leftMargin: 48
             rightMargin: 48
-            topMargin: 45
+            topMargin: 48
             bottomMargin: 16
         }
 
