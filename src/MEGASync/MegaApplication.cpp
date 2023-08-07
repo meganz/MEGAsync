@@ -5374,6 +5374,14 @@ void MegaApplication::openGuestDialog()
 
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>())
     {
+#ifdef __APPLE__
+        if(dialog->getDialog()->window()->isVisible())
+        {
+            dialog->getDialog()->window()->hide();
+            return;
+        }
+#endif
+
         DialogOpener::showDialog(dialog->getDialog());
         dialog->getDialog()->raise();
         return;
