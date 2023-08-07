@@ -200,22 +200,29 @@ void LoginController::onRequestUpdate(mega::MegaApi *api, mega::MegaRequest *req
 void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *request)
 {
     Q_UNUSED(api)
-    if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
+    switch(request->getType())
+    {
+    case mega::MegaRequest::TYPE_LOGIN:
     {
         mConnectivityTimer->start();
         emit loginStarted();
+        break;
     }
-    else if (request->getType() == mega::MegaRequest::TYPE_CREATE_ACCOUNT)
+    case mega::MegaRequest::TYPE_CREATE_ACCOUNT:
     {
         emit registerStarted();
+        break;
     }
-    else if (request->getType() == mega::MegaRequest::TYPE_FETCH_NODES)
+    case mega::MegaRequest::TYPE_FETCH_NODES:
     {
         emit fetchingNodesProgress(0.15);
+        break;
     }
-    if (request->getType() == mega::MegaRequest::TYPE_DELETE)
+    case mega::MegaRequest::TYPE_DELETE:
     {
         mMegaApi = nullptr;
+        break;
+    }
     }
 }
 
