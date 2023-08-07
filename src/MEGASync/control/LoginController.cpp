@@ -115,6 +115,11 @@ bool LoginController::isAccountConfirmationResumed() const
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
     Q_UNUSED(api)
+    if(!mMegaApi)
+    {
+        return;
+    }
+
     switch(request->getType())
     {
         case mega::MegaRequest::TYPE_LOGIN:
@@ -207,6 +212,10 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     else if (request->getType() == mega::MegaRequest::TYPE_FETCH_NODES)
     {
         emit fetchingNodesProgress(0.15);
+    }
+    if (request->getType() == mega::MegaRequest::TYPE_DELETE)
+    {
+        mMegaApi = nullptr;
     }
 }
 
