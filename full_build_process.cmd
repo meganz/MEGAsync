@@ -38,10 +38,13 @@ IF NOT "%1" == "" (
 	)
 )
 
-IF NOT [%MEGA_QTPATH%]==[] (
-	SET MEGA_QTPATH=%MEGA_QTPATH%
+IF [%MEGA_QTPATH%]==[] (
+	IF NOT [%MEGAQTPATH%]==[] (
+		SET MEGA_QTPATH=%MEGAQTPATH%
+	) ELSE (
+		SET MEGA_QTPATH=C:\Qt\5.12.12\msvc2017_64
+	)
 )
-
 
 :: CHECK ARCHITECTURE
 IF "%MEGA_ARCH%" EQU "64" (
@@ -124,5 +127,6 @@ echo 	- Architecture : 64 or 32/64 to build either for 64 bit or both 32 and 64 
 echo 	- Sign: sign or nosign if the binaries must be signed or not
 echo 	- Cores: the number of cores to build the project, or 0 for default value (4)
 echo 	- Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
-echo VCPKGPATH environment variable should be set to the root of the 3rd party dir.
+echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
+echo MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.12.12\msvc2017_64
 exit /B
