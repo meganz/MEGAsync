@@ -119,8 +119,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mIsFirstFileTwoWaySynced(false),
     mIsFirstFileBackedUp(false),
     scanStageController(this),
-    mDisableGfx (false),
-    mEngine(new QQmlEngine(this))
+    mDisableGfx (false)
 {
 
 #if defined Q_OS_MACX && !defined QT_DEBUG
@@ -2265,9 +2264,9 @@ void MegaApplication::cleanAll()
     deleteMenu(initialTrayMenu);
     deleteMenu(infoDialogMenu);
     deleteMenu(guestMenu);
-#ifdef _WIN32
+//#ifdef _WIN32
     deleteMenu(windowsMenu);
-#endif
+//#endif
 
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after
@@ -2460,8 +2459,11 @@ void MegaApplication::deleteMenu(QMenu *menu)
         QList<QAction *> actions = menu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
-            menu->removeAction(actions[i]);
-            delete actions[i];
+            if(!actions[i]->parent())
+            {
+                menu->removeAction(actions[i]);
+                delete actions[i];
+            }
         }
         menu->deleteLater();
     }
@@ -5700,8 +5702,8 @@ void MegaApplication::createInfoDialogMenus()
 
     infoDialogMenu->addAction(myCloudAction);
     infoDialogMenu->addSeparator();
-    infoDialogMenu->addAction(mSyncs2waysMenu->getAction().get());
-    infoDialogMenu->addAction(mBackupsMenu->getAction().get());
+    infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
+    infoDialogMenu->addAction(mBackupsMenu->getAction());
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);
