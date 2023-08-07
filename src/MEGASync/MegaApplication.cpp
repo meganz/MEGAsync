@@ -2245,9 +2245,9 @@ void MegaApplication::cleanAll()
     deleteMenu(initialTrayMenu);
     deleteMenu(infoDialogMenu);
     deleteMenu(guestMenu);
-//#ifdef _WIN32
+#ifdef _WIN32
     deleteMenu(windowsMenu);
-//#endif
+#endif
 
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after

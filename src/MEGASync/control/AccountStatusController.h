@@ -5,10 +5,9 @@
 #include "Preferences/Preferences.h"
 
 #include <QObject>
+#include <megaapi.h>
 
 #include <memory>
-
-class mega::MegaApi;
 
 class AccountStatusController : public QObject, public mega::MegaListener
 {
