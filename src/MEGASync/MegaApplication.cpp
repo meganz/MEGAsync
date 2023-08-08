@@ -5211,7 +5211,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                 }
                 else
                 {
-                    showInfoMessage(tr("Fetching file list..."));
+                    //showInfoMessage(tr("Fetching file list..."));
+                    openGuestDialog(true);
                 }
             }
             return;

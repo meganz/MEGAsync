@@ -261,11 +261,9 @@ Rectangle {
         }
 
         onFetchingNodesProgress: (progress) => {
-            if(progress === 0.15) {
-                content.indeterminate = false;
-                content.description = OnboardingStrings.statusFetchNodes;
-                content.state = content.stateInProgress;
-            }
+            content.indeterminate = false;
+            content.description = OnboardingStrings.statusFetchNodes;
+            content.state = content.stateInProgress;
             content.progressValue = progress;
         }
 
