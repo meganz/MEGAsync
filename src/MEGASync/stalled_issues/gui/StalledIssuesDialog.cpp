@@ -125,14 +125,14 @@ bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
         {
             if(wid->isEnabled())
             {
-                if(obj == ui->Advance)
+                //if(obj == ui->Advance)
                 {
                     mModeSelected = Preferences::StalledIssuesModeType::Advance;
                 }
-                else if(obj == ui->Smart)
-                {
-                    mModeSelected = Preferences::StalledIssuesModeType::Smart;
-                }
+                //else if(obj == ui->Smart)
+                //{
+                //    mModeSelected = Preferences::StalledIssuesModeType::Smart;
+                //}
 
                 selectNewMode();
             }
@@ -228,6 +228,7 @@ void StalledIssuesDialog::showModeSelector()
 
         ui->SelectButton->setEnabled(true);
         mModeSelected = mode;
+        mModeSelected = Preferences::StalledIssuesModeType::Advance;
     }
     else
     {
@@ -252,6 +253,7 @@ void StalledIssuesDialog::onPreferencesValueChanged(QString key)
         if(newModeSelected != mModeSelected)
         {
             mModeSelected = newModeSelected;
+            mModeSelected = Preferences::StalledIssuesModeType::Advance;
             selectNewMode();
         }
     }
@@ -269,6 +271,7 @@ void StalledIssuesDialog::showView(bool update)
 
 void StalledIssuesDialog::selectNewMode()
 {
+    mModeSelected = Preferences::StalledIssuesModeType::Advance;
     bool smartSelected(mModeSelected==Preferences::StalledIssuesModeType::Smart);
 
     ui->Smart->setProperty(MODE_SELECTED, smartSelected);

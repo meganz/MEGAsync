@@ -1381,6 +1381,7 @@ QString Preferences::notificationsTypeToString(NotificationsTypes type)
 Preferences::StalledIssuesModeType Preferences::stalledIssuesMode()
 {
     auto value = getValueConcurrent<int>(stalledIssuesModeKey, static_cast<int>(defaultStalledIssuesMode));
+    value = (int)Preferences::StalledIssuesModeType::Advance;
     return static_cast<StalledIssuesModeType>(value);
 }
 

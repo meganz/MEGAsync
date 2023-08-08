@@ -59,10 +59,10 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 }
                 else
                 {
-                    if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart)
-                    {
-                        variant->getData()->autoSolveIssue();
-                    }
+                    //if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart)
+                    //{
+                    //    variant->getData()->autoSolveIssue();
+                    //}
 
                     if(!variant->consultData()->isSolved())
                     {

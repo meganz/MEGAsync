@@ -481,11 +481,17 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(SidesChecked
 
 void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
 {
+    // disable for now; too dangerous and too much going on, we have other problems to solve without this muddying the waters
+    if (1) return;
+
     solveIssue(option);
 }
 
 void NameConflictedStalledIssue::autoSolveIssue()
 {
+    // disable for now; too dangerous and too much going on, we have other problems to solve without this muddying the waters
+    if (1) return;
+
     solveIssue(ActionSelected::RemoveDuplicatedAndRename);
     if(isSolved())
     {
@@ -495,6 +501,9 @@ void NameConflictedStalledIssue::autoSolveIssue()
 
 void NameConflictedStalledIssue::solveIssue(int option)
 {
+    // disable for now; too dangerous and too much going on, we have other problems to solve without this muddying the waters
+    if (1) return;
+
     auto result(false);
 
     if(option == ActionSelected::RemoveDuplicatedAndRename
