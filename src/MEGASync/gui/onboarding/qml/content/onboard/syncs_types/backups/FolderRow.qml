@@ -109,17 +109,19 @@ Rectangle {
                     anchors.bottom: parent.bottom
                     spacing: contentRoot.imageTextSpacing
 
-                    MegaImages.SvgImage {
+                    Image {
+                        height: contentRoot.imageWidth
+                        width: contentRoot.imageWidth
                         anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        source: Images.folder
+                        source: Images.standard_DirIcon
                         sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
-                        //opacity: mSelectable ? 1.0 : 0.3
+                        opacity: enabled ? 1.0 : 0.3
                     }
 
                     MegaTexts.Text {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
+                        anchors.topMargin: 1
                         width: contentRoot.width - checkbox.width - contentRoot.checkboxSpacing
                                - contentRoot.imageTextSpacing - contentRoot.imageWidth - contentRoot.sizeTextWidth
                         maximumLineCount: 1
@@ -196,7 +198,6 @@ Rectangle {
                     color: mError === BackupsModel.BackupErrorCode.SDKCreation
                            ? Styles.textError
                            : Styles.textWarning
-                    //opacity: mSelectable ? 1.0 : 0.3
                 }
 
                 MegaTexts.Text {
@@ -314,14 +315,14 @@ Rectangle {
                             break;
                         case BackupsModel.BackupErrorCode.ExistsRemote:
                             editTextField.hint.text =
-                                OnboardingStrings.confirmBackupErrorRemote.replace(/"([^"]*)"/g,
+                                OnboardingStrings.confirmBackupErrorRemote.replace(RegexExpressions.betweenCommas,
                                                                                    '"' + editTextField.text + '"');
                             editTextField.hint.visible = true;
                             root.height = editTextField.height + root.extraMarginWhenHintShowed;
                             break;
                         case BackupsModel.BackupErrorCode.DuplicatedName:
                             editTextField.hint.text =
-                                OnboardingStrings.confirmBackupErrorDuplicated.replace(/"([^"]*)"/g,
+                                OnboardingStrings.confirmBackupErrorDuplicated.replace(RegexExpressions.betweenCommas,
                                                                                        '"' + editTextField.text + '"');
                             editTextField.hint.visible = true;
                             root.height = editTextField.height + root.extraMarginWhenHintShowed;
