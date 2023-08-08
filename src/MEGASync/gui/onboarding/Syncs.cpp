@@ -74,8 +74,7 @@ void Syncs::addSync(const QString &localPath, mega::MegaHandle remoteHandle)
             emit cantSync(warningMessage, isLocalFolderError);
         }
     }
-    else if (syncability == SyncController::CAN_SYNC
-               || syncability == SyncController::WARN_SYNC)
+    else if (syncability == SyncController::WARN_SYNC)
     {
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.title = QMegaMessageBox::errorTitle();
@@ -88,9 +87,17 @@ void Syncs::addSync(const QString &localPath, mega::MegaHandle remoteHandle)
             {
                 mSyncController->addSync(localPath, remoteHandle);
             }
+            else if(msgBox->result() == QMessageBox::No)
+            {
+                emit cancelSync();
+            }
         };
 
         QMegaMessageBox::warning(msgInfo);
+    }
+    else if (syncability == SyncController::CAN_SYNC)
+    {
+        mSyncController->addSync(localPath, remoteHandle);
     }
 }
 

@@ -19,6 +19,7 @@ public:
 signals:
     void syncSetupSuccess();
     void cantSync(const QString& message, bool localFolderError);
+    void cancelSync();
 
 private:
     SyncController* mSyncController;

@@ -36,19 +36,21 @@ SelectiveSyncPageForm {
         onCantSync: {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            console.log(message);
             var folderChooser;
-            if(localFolderError)
-            {
+            if(localFolderError) {
                 folderChooser = localFolderChooser;
-            }
-            else
-            {
+            } else {
                 folderChooser = remoteFolderChooser;
             }
             folderChooser.folderField.error = true;
             folderChooser.folderField.hint.text = message;
             folderChooser.folderField.hint.visible = true;
+            console.log("Selective sync can't sync, message -> " + message);
+        }
+
+        onCancelSync: {
+            root.enabled = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
         }
     }
 
