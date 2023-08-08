@@ -11,11 +11,11 @@ TwoFAPageForm {
     loginButton.onClicked: {
         state = code2FAStatus;
         loginButton.icons.busyIndicatorVisible = true;
-        loginController.login2FA(twoFAField.key);
+        LoginControllerAccess.login2FA(twoFAField.key);
     }
 
     Connections {
-        target: loginController
+        target: LoginControllerAccess
 
         onFetchingNodesProgress: {
             loginButton.progress.value = progress;

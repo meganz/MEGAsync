@@ -61,7 +61,7 @@ signals:
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);
-    virtual void onFetchNodesSuccess(bool& firstTime);
+    virtual void onFetchNodesSuccess();
     void onAccountCreation(mega::MegaRequest* request, mega::MegaError* e);
     void onAccountCreationResume(mega::MegaRequest* request, mega::MegaError* e);
     void onEmailChanged(mega::MegaRequest* request, mega::MegaError* e);
@@ -91,6 +91,7 @@ private:
     bool mFetchingNodes;
     bool mEmailConfirmed;
     bool mConfirmationResumed;
+    bool mFirstTime;
     QString mEmail;
     QString mName;
     QString mLastName;
@@ -107,7 +108,7 @@ public:
 
 protected:
     void onLogin(mega::MegaRequest* request, mega::MegaError* e) override;
-    void onFetchNodesSuccess(bool& firstTime) override;
+    void onFetchNodesSuccess() override;
 
 };
 

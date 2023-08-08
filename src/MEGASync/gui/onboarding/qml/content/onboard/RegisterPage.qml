@@ -18,7 +18,7 @@ RegisterPageForm {
         nextButton.icons.busyIndicatorVisible = true;
         state = signUpStatus;
 
-        loginController.createAccount(registerContent.email.text,
+        LoginControllerAccess.createAccount(registerContent.email.text,
                                       registerContent.password.text,
                                       registerContent.firstName.text,
                                       registerContent.lastName.text);
@@ -38,7 +38,7 @@ RegisterPageForm {
     }
 
     Connections {
-        target: loginController
+        target: LoginControllerAccess
 
         onRegisterFinished: (success) => {
             if(success) {

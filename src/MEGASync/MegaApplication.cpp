@@ -119,6 +119,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv),
     mSyncs2waysMenu(nullptr),
     mBackupsMenu(nullptr),
+    mLoginController(nullptr),
     mIsFirstFileTwoWaySynced(false),
     mIsFirstFileBackedUp(false),
     scanStageController(this),
@@ -1167,6 +1168,7 @@ void MegaApplication::start()
             createTrayIcon();
         }
 
+        mLoginController = new LoginController();
         openOnboardingDialog();
         openGuestDialog();
 
@@ -1183,10 +1185,8 @@ void MegaApplication::start()
     }
     else //Otherwise, login in the account
     {
-        FastLoginController *loginController = new FastLoginController();
-        connect(loginController, &LoginController::fetchingNodesFinished,
-                loginController, &LoginController::deleteLater);
-        if (!loginController->fastLogin()) //In case preferences are corrupt with empty session, just unlink and remove associated data.
+        mLoginController = new FastLoginController();
+        if (!static_cast<FastLoginController*>(mLoginController)->fastLogin()) //In case preferences are corrupt with empty session, just unlink and remove associated data.
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "MEGAsync preferences logged but empty session. Unlink account and fresh start.");
             unlink();
@@ -1197,6 +1197,11 @@ void MegaApplication::start()
             checkupdate = true;
         }
     }
+    connect(mLoginController, &LoginController::fetchingNodesFinished,
+            [=](){
+                mLoginController->deleteLater();
+                mLoginController = nullptr;
+            });
 }
 
 void MegaApplication::requestUserData()
@@ -2211,7 +2216,11 @@ void MegaApplication::cleanAll()
 
     PowerOptions::appShutdown();
     mSyncController.reset();
-    //UserAttributes::UserAttributesManager::instance().reset();
+
+    if(mLoginController)
+    {
+        delete mLoginController;
+    }
 
     removeAllFinishedTransfers();
     clearViewedTransfers();

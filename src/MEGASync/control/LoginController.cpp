@@ -19,6 +19,7 @@ LoginController::LoginController(QObject *parent)
       , mFetchingNodes(false)
       , mEmailConfirmed(false)
       , mConfirmationResumed(false)
+      , mFirstTime(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
@@ -212,11 +213,6 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
         emit fetchingNodesProgress(0.15);
         break;
     }
-    case mega::MegaRequest::TYPE_DELETE:
-    {
-        mMegaApi = nullptr;
-        break;
-    }
     }
 }
 
@@ -248,11 +244,14 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         {
             mPreferences->setSession(QString::fromUtf8(session.get()));
         }
+        bool logged = mPreferences->logged();
+        mFirstTime = !logged && !mPreferences->hasEmail(QString::fromUtf8(request->getEmail()));
         // We will proceed with a new login
-        mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(request->getEmail()));
 
-        auto email = request->getEmail();
-        fetchNodes(QString::fromUtf8(email ? email : ""));
+        auto email = QString::fromUtf8(request->getEmail());
+        mPreferences->setEmailAndGeneralSettings(email);
+
+        fetchNodes(email);
         if (!mPreferences->hasLoggedIn())
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -293,14 +292,8 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
     emit loginFinished(e->getErrorCode(), errorMsg);
 }
 
-void LoginController::onFetchNodesSuccess(bool& firstTime)
+void LoginController::onFetchNodesSuccess()
 {
-    std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
-    bool logged = mPreferences->logged();
-    firstTime = !logged && email && !mPreferences->hasEmail(QString::fromUtf8(email.get()));
-
-//    // We will proceed with a new login
-//    mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
     SyncInfo::instance()->rewriteSyncSettings(); //write sync settings into user's preferences
 
     MegaSyncApp->loggedIn(true);
@@ -355,9 +348,8 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
         mPreferences->setNeedsFetchNodesInGeneral(false);
 
-        bool fTime(false);
-        onFetchNodesSuccess(fTime);
-        emit fetchingNodesFinished(fTime);
+        onFetchNodesSuccess();
+        emit fetchingNodesFinished(mFirstTime);
     }
     else
     {
@@ -729,9 +721,8 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
     MegaSyncApp->onGlobalSyncStateChanged(mMegaApi);
 }
 
-void FastLoginController::onFetchNodesSuccess(bool &firstTime)
+void FastLoginController::onFetchNodesSuccess()
 {
-    Q_UNUSED(firstTime)
     MegaSyncApp->loggedIn(false);
 }
 

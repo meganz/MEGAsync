@@ -62,6 +62,7 @@ class ShellNotifier;
 class TransferMetadata;
 class DuplicatedNodeDialog;
 class LinkProcessor;
+class LoginController;
 class AccountStatusController;
 
 enum GetUserStatsReason {
@@ -519,6 +520,7 @@ protected:
     bool nodescurrent;
     int businessStatus = -2;
     bool whyamiblockedPeriodicPetition = false;
+    LoginController* mLoginController;
     friend class DeferPreferencesSyncForScope;
     std::shared_ptr<TransferQuota> mTransferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
