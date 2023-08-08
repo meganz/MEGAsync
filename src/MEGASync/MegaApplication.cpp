@@ -659,8 +659,8 @@ void MegaApplication::initialize()
     connect(mTransferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
     periodicTasksTimer = new QTimer(this);
-    periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
     connect(periodicTasksTimer, SIGNAL(timeout()), this, SLOT(periodicTasks()));
+    periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
 
     networkCheckTimer = new QTimer(this);
     networkCheckTimer->start(Preferences::NETWORK_REFRESH_INTERVAL_MS);
@@ -1267,6 +1267,8 @@ void MegaApplication::loggedIn(bool fromWizard)
     {
         return;
     }
+
+    clearUserAttributes();
 
     //Send pending crash report log if neccessary
     if (!crashReportFilePath.isNull() && megaApi)
@@ -2209,7 +2211,7 @@ void MegaApplication::cleanAll()
 
     PowerOptions::appShutdown();
     mSyncController.reset();
-    UserAttributes::UserAttributesManager::instance().reset();
+    //UserAttributes::UserAttributesManager::instance().reset();
 
     removeAllFinishedTransfers();
     clearViewedTransfers();
@@ -2324,7 +2326,7 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
 
 void MegaApplication::raiseInfoDialog()
 {
-    if(preferences && !preferences->logged() || mStatusController->isAccountBlocked())
+    if(preferences && preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK|| mStatusController->isAccountBlocked())
     {
         openGuestDialog(true);
         return;

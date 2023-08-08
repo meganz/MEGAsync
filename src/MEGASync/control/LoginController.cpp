@@ -126,16 +126,10 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
         {
             mConnectivityTimer->stop();
             MegaSyncApp->initLocalServer();
-
             if(e->getErrorCode() == mega::MegaError::API_OK)
             {
-                std::unique_ptr<char []> session(mMegaApi->dumpSession());
-                if (session)
-                {
-                    mPreferences->setSession(QString::fromUtf8(session.get()));
-                }
+                mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
             }
-
             onLogin(request, e);
             break;
         }
@@ -249,7 +243,13 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
     QString errorMsg;
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
-        mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
+        std::unique_ptr<char []> session(mMegaApi->dumpSession());
+        if (session)
+        {
+            mPreferences->setSession(QString::fromUtf8(session.get()));
+        }
+        // We will proceed with a new login
+        mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(request->getEmail()));
 
         auto email = request->getEmail();
         fetchNodes(QString::fromUtf8(email ? email : ""));
@@ -299,8 +299,8 @@ void LoginController::onFetchNodesSuccess(bool& firstTime)
     bool logged = mPreferences->logged();
     firstTime = !logged && email && !mPreferences->hasEmail(QString::fromUtf8(email.get()));
 
-    // We will proceed with a new login
-    mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+//    // We will proceed with a new login
+//    mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
     SyncInfo::instance()->rewriteSyncSettings(); //write sync settings into user's preferences
 
     MegaSyncApp->loggedIn(true);
