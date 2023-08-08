@@ -28,7 +28,8 @@
 //"- item n\n"
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- Minor fixes after QA round \n"                                                                    \
+"- Sync Rework ALPHA test version.\n"                                                              \
+"- All the very latest code changes.\n"                                                            \
 )
 
 #endif // VERSION_H
