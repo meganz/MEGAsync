@@ -15,6 +15,8 @@ StackView {
     readonly property string register: "register"
     readonly property string syncs: "syncs"
 
+    property bool isNewUser: false
+
     state: register
 
     states: [

@@ -46,7 +46,7 @@ StackViewPage {
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Medium
-            text: qsTr("Confirm account by login")
+            text: OnboardingStrings.confirmAccountByLogin
         }
 
         MegaTextFields.EmailTextField {

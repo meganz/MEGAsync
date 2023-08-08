@@ -144,6 +144,8 @@ LoginPageForm {
                     break;
                 case ApiEnums.API_OK: //mega::MegaError::API_OK:
                     state = fetchNodesStatus;
+                    isNewUser = loginController.emailConfirmed
+                                 && loginController.email === email.text;
                     break;
                 default:
                     break;
