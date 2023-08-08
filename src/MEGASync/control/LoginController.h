@@ -26,6 +26,7 @@ public:
     Q_INVOKABLE void createAccount(const QString& email, const QString& password, const QString& name, const QString& lastName);
     Q_INVOKABLE void changeRegistrationEmail(const QString& email);
     Q_INVOKABLE void login2FA(const QString& pin);
+    Q_INVOKABLE void cancelLogin2FA();
     Q_INVOKABLE QString getEmail() const;
     Q_INVOKABLE QString getPassword() const;
     Q_INVOKABLE bool getIsEmailConfirmed() const;
@@ -58,6 +59,7 @@ signals:
     void accountCreateCancelled();
     void goToLoginPage();
     void goToSignupPage();
+    void login2FACancelled();
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);

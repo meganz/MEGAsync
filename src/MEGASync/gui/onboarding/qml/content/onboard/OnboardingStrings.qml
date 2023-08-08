@@ -61,7 +61,7 @@ QtObject {
     readonly property var welcomeToMEGA: qsTr("Welcome to MEGA")
     readonly property var lastName: qsTr("Last name")
     readonly property var login: qsTr("Log in")
-    readonly property var loginTitle: qsTr("Log in into your [b]MEGA account[/b]")
+    readonly property var loginTitle: qsTr("Log in to your [b]MEGA account[/b]")
     readonly property var next: qsTr("Next")
     readonly property var notNow: qsTr("Not now")
     readonly property var viewInSettings: qsTr("View in Settings")

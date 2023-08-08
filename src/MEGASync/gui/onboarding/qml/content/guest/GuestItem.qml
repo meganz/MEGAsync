@@ -215,7 +215,6 @@ Rectangle {
                 case ApiEnums.API_EEXPIRED:
                     break;
                 default:
-                    content.state = content.stateNormal;
                     content.validating2FA = false;
                     break;
             }
@@ -267,6 +266,10 @@ Rectangle {
         }
 
         onAccountCreateCancelled: {
+            content.state = content.stateNormal;
+        }
+
+        onLogin2FACancelled: {
             content.state = content.stateNormal;
         }
 
