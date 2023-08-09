@@ -313,8 +313,8 @@ void InfoDialog::showEvent(QShowEvent *event)
     }
     isShown = true;
     mTransferScanCancelUi->update();
-    regenerate();
 
+    repositionInfoDialog();
     QDialog::showEvent(event);
 }
 
@@ -1329,52 +1329,9 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 void InfoDialog::on_bStorageDetails_clicked()
 {
-    /*
-    QPointer<QmlDialogWrapper<AccountDetailsDialog>> accountDetailsDialog = new QmlDialogWrapper<AccountDetailsDialog>();
-    app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    DialogOpener::showDialog(accountDetailsDialog, [accountDetailsDialog]
-    {
-        //qDebug()<<accountDetailsDialog->wrapper()->test();
-        qDebug()<<accountDetailsDialog->result();
-    });
-    */
-}
-
-void InfoDialog::regenerate(int blockState)
-{
-    int actualAccountState;
-
-    blockState ? actualAccountState = blockState
-                  : mPreferences->logged() ? actualAccountState = STATE_LOGGEDIN
-                                          : actualAccountState = STATE_LOGOUT;
-
-    if (actualAccountState == loggedInMode)
-    {
-        return;
-    }
-    loggedInMode = actualAccountState;
-
-    switch(loggedInMode)
-    {
-        case STATE_LOGOUT:
-        case STATE_LOCKED_EMAIL:
-        case STATE_LOCKED_SMS:
-        {
-            ui->wInfoDialogIn->setVisible(false);
-            setVisible(false);
-            hide();
-            break;
-        }
-        case STATE_LOGGEDIN:
-        {
-            ui->wInfoDialogIn->setVisible(true);
-            adjustSize();
-            break;
-        }
-    }
-
-    repositionInfoDialog();
-    app->onGlobalSyncStateChanged(NULL);
+    auto dialog = new AccountDetailsDialog();
+    dialog->setAttribute(Qt::WA_DeleteOnClose, true);
+    dialog->show();
 }
 
 void InfoDialog::animateStates(bool opt)

@@ -33,6 +33,16 @@ void GuestContent::onExitClicked()
     MegaSyncApp->tryExitApplication();
 }
 
+void GuestContent::onVerifyEmailClicked()
+{
+    MegaSyncApp->getMegaApi()->resendVerificationEmail();
+}
+
+void GuestContent::onLogouClicked()
+{
+    MegaSyncApp->unlink();
+}
+
 QUrl GuestContent::getQmlUrl()
 {
     return QUrl(QString::fromUtf8("qrc:/content/guest/GuestDialog.qml"));

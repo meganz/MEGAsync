@@ -348,8 +348,10 @@ public:
     }
 
     template <class DialogType>
-    static void addDialog(QPointer<DialogType> dialog)
+    static std::shared_ptr<DialogInfo<DialogType>> addDialog(QPointer<DialogType> dialog)
     {
+        std::shared_ptr<DialogInfo<DialogType>> ret = nullptr;
+
         if(dialog)
         {
             QString classType = className<DialogType>();
@@ -363,7 +365,9 @@ public:
                 mOpenedDialogs.append(info);
                 initDialog(dialog);
             }
+            ret = info;
         }
+        return ret;
     }
 
     template <class DialogType>
