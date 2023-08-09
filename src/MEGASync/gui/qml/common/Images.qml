@@ -13,7 +13,7 @@ QtObject {
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesPath + "/guest/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //   Image paths - Sorted alphabetically by dir
+    //   Image paths
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url alertCircle: imagesPath + "alert_circle.svg"
@@ -69,5 +69,11 @@ QtObject {
     readonly property url menu: imagesGuestPath + "menu.svg"
     readonly property url settings: imagesGuestPath + "settings.svg"
     readonly property url warningGuest: imagesGuestPath + "warning.png"
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //   Standard Icons
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    readonly property url standard_DirIcon: "image://standardicons/SP_DirIcon"
 
 }

@@ -81,6 +81,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/qml/QmlClipboard.cpp \
     $$PWD/qml/QmlDialog.cpp \
     $$PWD/qml/QmlDialogWrapper.cpp \
+    $$PWD/qml/StandardIconProvider.cpp \
     $$PWD/onboarding/ChooseFolder.cpp \
     $$PWD/onboarding/Onboarding.cpp \
     $$PWD/onboarding/AccountInfoData.cpp \
@@ -171,6 +172,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/qml/QmlDialog.h \
     $$PWD/qml/QmlDialogWrapper.h \
     $$PWD/qml/ApiEnums.h \
+    $$PWD/qml/StandardIconProvider.h \
     $$PWD/onboarding/ChooseFolder.h \
     $$PWD/onboarding/Onboarding.h \
     $$PWD/onboarding/AccountInfoData.h \
@@ -182,7 +184,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/BackupsController.h \
     $$PWD/onboarding/GuestQmlDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \
-    $$PWD/onboarding/GuestContent.h
+    $$PWD/onboarding/GuestContent.h \
 
 INCLUDEPATH += $$PWD
 

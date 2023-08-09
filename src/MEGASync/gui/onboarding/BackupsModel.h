@@ -71,6 +71,8 @@ public:
 
     explicit BackupsModel(QObject* parent = nullptr);
 
+    ~BackupsModel();
+
     QHash<int,QByteArray> roleNames() const override;
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
