@@ -234,15 +234,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     ui->wListTransfers->setupTransfers();
 
-#ifdef __APPLE__
-    arrow = new QPushButton(this);
-    arrow->setIcon(QIcon(QString::fromAscii("://images/top_arrow.png")));
-    arrow->setIconSize(QSize(30,10));
-    arrow->setStyleSheet(QString::fromAscii("border: none;"));
-    arrow->resize(30,10);
-    arrow->hide();
-#endif
-
     //Create the overlay widget with a transparent background
     overlay = new QPushButton(ui->pUpdated);
     overlay->setStyleSheet(QString::fromAscii("background-color: transparent; "
@@ -323,9 +314,6 @@ void InfoDialog::showEvent(QShowEvent *event)
     isShown = true;
     mTransferScanCancelUi->update();
 
-#ifdef __APPLE__
-    arrow->show();
-#endif
     repositionInfoDialog();
     QDialog::showEvent(event);
 }
@@ -363,11 +351,6 @@ void InfoDialog::enableTransferAlmostOverquotaAlert()
 
 void InfoDialog::hideEvent(QHideEvent *event)
 {
-
-#ifdef __APPLE__
-    arrow->hide();
-#endif
-
     if (filterMenu && filterMenu->isVisible())
     {
         filterMenu->hide();
@@ -1130,13 +1113,6 @@ void InfoDialog::addBackup()
     }
 }
 
-#ifdef __APPLE__
-void InfoDialog::moveArrow(QPoint p)
-{
-    arrow->move(p.x()-(arrow->width()/2+1), 2);
-}
-#endif
-
 void InfoDialog::onOverlayClicked()
 {
     app->uploadActionClicked();
@@ -1725,17 +1701,6 @@ void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, l
     filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
 
-void InfoDialog::paintEvent(QPaintEvent * e)
-{
-    QDialog::paintEvent(e);
-
-#ifdef __APPLE__
-    QPainter p(this);
-    p.setCompositionMode(QPainter::CompositionMode_Clear);
-    p.fillRect(ui->wArrow->rect(), Qt::transparent);
-#endif
-}
-
 double InfoDialog::computeRatio(long long completed, long long remaining)
 {
     return static_cast<double>(completed) / static_cast<double>(remaining);
@@ -1864,16 +1829,4 @@ void InfoDialog::repositionInfoDialog()
                  .toUtf8().constData());
 
     move(posx, posy);
-
-#ifdef __APPLE__
-    QPoint positionTrayIcon = app->getTrayIcon()->geometry().topLeft();
-    QPoint globalCoordinates(positionTrayIcon.x() + app->getTrayIcon()->geometry().width()/2, posy);
-
-    //Work-Around to paint the arrow correctly
-    //show();
-    //QPixmap px = QPixmap::grabWidget(this);
-    //hide();
-    QPoint localCoordinates = mapFromGlobal(globalCoordinates);
-    moveArrow(localCoordinates);
-#endif
 }

@@ -66,6 +66,11 @@ void LoginController::login2FA(const QString &pin)
     mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(), mPassword.toUtf8().constData(), pin.toUtf8().constData());
 }
 
+void LoginController::cancelLogin2FA()
+{
+    emit login2FACancelled();
+}
+
 QString LoginController::getEmail() const
 {
     return mEmail;

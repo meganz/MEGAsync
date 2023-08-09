@@ -25,7 +25,7 @@ SyncsPage {
         spacing: 24
 
         Header {
-            title: OnboardingStrings.welcomeToMEGA
+            title: isNewUser ? OnboardingStrings.welcomeToMEGA : OnboardingStrings.letsGetYouSetUp
             description: OnboardingStrings.choose
             spacing: 36
             descriptionWeight: Font.DemiBold

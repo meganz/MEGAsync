@@ -61,7 +61,7 @@ QtObject {
     readonly property var welcomeToMEGA: qsTr("Welcome to MEGA")
     readonly property var lastName: qsTr("Last name")
     readonly property var login: qsTr("Log in")
-    readonly property var loginTitle: qsTr("Log in into your [b]MEGA account[/b]")
+    readonly property var loginTitle: qsTr("Log in to your [b]MEGA account[/b]")
     readonly property var next: qsTr("Next")
     readonly property var notNow: qsTr("Not now")
     readonly property var viewInSettings: qsTr("View in Settings")
@@ -114,5 +114,7 @@ QtObject {
     readonly property var passwordEasilyGuessed: qsTr("Your password could be easily guessed. Try making it stronger.")
     readonly property var finalPageButtonBackup: qsTr("Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can't be modified or deleted from MEGA cloud.")
     readonly property var finalPageButtonSync: qsTr("Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.")
+    readonly property var confirmAccountByLogin: qsTr("Confirm account by login")
+    readonly property var letsGetYouSetUp: qsTr("Let's get you set up")
 
 }

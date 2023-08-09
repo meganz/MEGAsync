@@ -69,6 +69,8 @@ Rectangle {
         anchors.bottom: parent.bottom
         text: OnboardingStrings.change
         onClicked: {
+            folderField.error = false;
+            folderField.hint.visible = false;
             var folderChooser = local ? localFolderChooser : remoteFolderChooser;
             folderChooser.openFolderSelector();
         }
