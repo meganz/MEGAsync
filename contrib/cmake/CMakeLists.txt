@@ -280,6 +280,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/DialogOpener.h
     ${MEGAsyncDir}/control/Version.h
     ${MEGAsyncDir}/control/LoginController.h
+    ${MEGAsyncDir}/control/AccountStatusController.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -650,6 +651,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TextDecorator.cpp
     ${MEGAsyncDir}/control/DialogOpener.cpp
     ${MEGAsyncDir}/control/LoginController.cpp
+	${MEGAsyncDir}/control/AccountStatusController.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp

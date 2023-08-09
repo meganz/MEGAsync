@@ -17,7 +17,6 @@ import Guest 1.0
 // C++
 import GuestContent 1.0
 import ApiEnums 1.0
-import LoginController 1.0
 
 Rectangle {
     id: content
@@ -30,13 +29,14 @@ Rectangle {
 
     readonly property string stateNormal: "NORMAL"
     readonly property string stateInProgress: "IN_PROGRESS"
+    readonly property string stateBlocked: "BLOCKED"
 
     width: 400
     height: 560
     radius: 10
     color: Styles.surface1
 
-    state: content.stateNormal
+    state: AccountStatusControllerAccess.isAccountBlocked() ? content.stateBlocked : content.stateNormal
     states: [
         State {
             name: content.stateNormal
@@ -48,6 +48,12 @@ Rectangle {
             name: content.stateInProgress
             StateChangeScript {
                 script: stack.replace(progressPage);
+            }
+        },
+        State {
+            name: content.stateBlocked
+            StateChangeScript {
+                script: stack.replace(blockedPage);
             }
         }
     ]
@@ -190,6 +196,39 @@ Rectangle {
                 progressValue: content.progressValue
             }
         }
+
+        Component {
+            id: blockedPage
+
+            BasePage {
+                image.source: Images.warningGuest
+                imageTopMargin: 110
+                title: GuestStrings.accountTempLocked
+                description: GuestStrings.accountTempLockedEmail
+                leftButton {
+                    text: GuestStrings.logOut
+                    onClicked: {
+                        GuestContent.onLogouClicked();
+                        //content.state = content.stateNormal;
+                    }
+                }
+                rightButton {
+                    text: GuestStrings.resendEmail
+                    icons.source: Images.mail
+                    onClicked: {
+                        GuestContent.onVerifyEmailClicked();
+                    }
+                }
+            }
+        }
+    }
+
+    Connections {
+        target: AccountStatusControllerAccess
+
+        onAccountBlocked: {
+            content.state = content.stateBlocked;
+    }
     }
 
     Connections {
@@ -221,11 +260,9 @@ Rectangle {
         }
 
         onFetchingNodesProgress: (progress) => {
-            if(progress === 0.15) {
-                content.indeterminate = false;
-                content.description = OnboardingStrings.statusFetchNodes;
-                content.state = content.stateInProgress;
-            }
+            content.indeterminate = false;
+            content.description = OnboardingStrings.statusFetchNodes;
+            content.state = content.stateInProgress;
             content.progressValue = progress;
         }
 

@@ -52,19 +52,19 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
         }
     }
     mAddAction->setLabelText(getAddText());
-    mAddAction->setParent(this);
-    connect(mAddAction.get(), &MenuItemAction::triggered,
+    mAddAction->setParent(mMenu);
+    connect(mAddAction, &MenuItemAction::triggered,
             this, &SyncsMenu::onAddSync);
 
     mMenuAction->setLabelText(getMenuText());
     mMenuAction->setIcon(iconMenu);
-    mMenuAction->setParent(this);
+    mMenuAction->setParent(mMenu);
 
-    Platform::getInstance()->initMenu(mMenu.get(), "SyncsMenu");
+    Platform::getInstance()->initMenu(mMenu, "SyncsMenu");
     mMenu->setToolTipsVisible(true);
 
     //Highlight menu entry on mouse over
-    connect(mMenu.get(), &QMenu::hovered,
+    connect(mMenu, &QMenu::hovered,
             this, &SyncsMenu::highLightMenuEntry);
     mMenu->installEventFilter(this);
 }
@@ -81,7 +81,7 @@ void SyncsMenu::refresh()
     const auto actions (mMenu->actions());
     for (QAction* a : actions)
     {
-        if (a != mAddAction.get() && a != mDevNameAction.get())
+        if (a != mAddAction && a != mDevNameAction)
         {
             mMenu->removeAction(a);
             delete a;
@@ -89,11 +89,11 @@ void SyncsMenu::refresh()
     }
     if (mDevNameAction)
     {
-        mMenu->removeAction(mDevNameAction.get());
+        mMenu->removeAction(mDevNameAction);
     }
     if (mAddAction)
     {
-        mMenu->removeAction(mAddAction.get());
+        mMenu->removeAction(mAddAction);
     }
 
     int activeFolders (0);
@@ -124,6 +124,7 @@ void SyncsMenu::refresh()
                 });
 
                 mMenu->addAction(action);
+                action->setParent(mMenu);
                 if (!firstBackup)
                 {
                     firstBackup = action;
@@ -137,7 +138,7 @@ void SyncsMenu::refresh()
             static const QIcon iconAdd (QLatin1String("://images/icons/ico_add_sync.png"));
             mAddAction->setIcon(iconAdd);
             mMenu->addSeparator();
-            mMenu->addAction(mAddAction.get());
+            mMenu->addAction(mAddAction);
         }
     }
 
@@ -172,28 +173,28 @@ void SyncsMenu::refresh()
             if (!mDevNameAction)
             {
                 // Display device name before folders
-                mDevNameAction.reset(new MenuItemAction(QString(), QIcon(DEVICE_ICON)));
+                mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON));
                 // Insert the action in the menu to make sure it is here when the
                 // set device name slot is called.
-                mMenu->insertAction(firstBackup, mDevNameAction.get());
+                mMenu->insertAction(firstBackup, mDevNameAction);
                 onDeviceNameSet(mDeviceNameRequest->getDeviceName());
             }
             else
             {
-                mMenu->insertAction(firstBackup, mDevNameAction.get());
+                mMenu->insertAction(firstBackup, mDevNameAction);
             }
         }
-        mMenuAction->setMenu(mMenu.get());
+        mMenuAction->setMenu(mMenu);
     }
 }
 
-std::shared_ptr<MenuItemAction> SyncsMenu::getAction()
+MenuItemAction* SyncsMenu::getAction()
 {
     refresh();
     return mMenu->actions().isEmpty() ? mAddAction : mMenuAction;
 }
 
-std::shared_ptr<QMenu> SyncsMenu::getMenu()
+QMenu *SyncsMenu::getMenu()
 {
     refresh();
     return mMenu->actions().isEmpty() ? nullptr : mMenu;
@@ -219,7 +220,7 @@ void SyncsMenu::setEnabled(bool state)
 
 bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
 {
-    if (obj == mMenu.get() && e->type() == QEvent::Leave)
+    if (obj == mMenu && e->type() == QEvent::Leave)
     {
         if (mLastHovered)
         {
@@ -228,7 +229,7 @@ bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
         }
         return true;
     }
-    else if(obj == mMenu.get() && e->type() == QEvent::LanguageChange)
+    else if(obj == mMenu && e->type() == QEvent::LanguageChange)
     {
         mMenuAction->setLabelText(getMenuText());
         mAddAction->setLabelText(getAddText());
@@ -248,12 +249,12 @@ void SyncsMenu::onDeviceNameSet(QString name)
         mDevNameAction->setLabelText(name);
         // Get next action to refresh devicename
         auto actions (mMenu->actions());
-        auto idx (actions.indexOf(mDevNameAction.get()));
+        auto idx (actions.indexOf(mDevNameAction));
         auto idxNext (idx + 1);
         if (idx >= 0 && idxNext < actions.size())
         {
-            mMenu->removeAction(mDevNameAction.get());
-            mMenu->insertAction(actions.at(idxNext), mDevNameAction.get());
+            mMenu->removeAction(mDevNameAction);
+            mMenu->insertAction(actions.at(idxNext), mDevNameAction);
         }
     }
 }

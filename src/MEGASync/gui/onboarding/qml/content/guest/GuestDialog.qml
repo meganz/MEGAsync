@@ -21,4 +21,11 @@ GuestQmlDialog {
         id: guestItem
     }
 
+    onVisibleChanged:
+    {
+        if(visible)
+        {
+            AccountStatusControllerAccess.whyAmIBlocked();
+        }
+    }
 }

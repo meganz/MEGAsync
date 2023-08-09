@@ -15,7 +15,7 @@ class LoginController : public QObject, public mega::MegaRequestListener, public
 {
     Q_OBJECT
     Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
-    Q_PROPERTY(QString password MEMBER mPassword READ getPassword)
+    Q_PROPERTY(QString password MEMBER mPassword READ getPassword NOTIFY passwordChanged)
     Q_PROPERTY(bool emailConfirmed MEMBER mEmailConfirmed READ getIsEmailConfirmed NOTIFY emailConfirmed)
 
 public:
@@ -50,6 +50,7 @@ signals:
     void registerStarted();
     void registerFinished(bool success);
     void emailChanged();
+    void passwordChanged();
     void changeRegistrationEmailFinished(bool success);
     void fetchingNodesProgress(double progress);
     void fetchingNodesFinished(bool firstTime);
@@ -63,7 +64,7 @@ signals:
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);
-    virtual void onFetchNodesSuccess(bool& firstTime);
+    virtual void onFetchNodesSuccess();
     void onAccountCreation(mega::MegaRequest* request, mega::MegaError* e);
     void onAccountCreationResume(mega::MegaRequest* request, mega::MegaError* e);
     void onEmailChanged(mega::MegaRequest* request, mega::MegaError* e);
@@ -93,6 +94,7 @@ private:
     bool mFetchingNodes;
     bool mEmailConfirmed;
     bool mConfirmationResumed;
+    bool mFirstTime;
     QString mEmail;
     QString mName;
     QString mLastName;
@@ -109,7 +111,7 @@ public:
 
 protected:
     void onLogin(mega::MegaRequest* request, mega::MegaError* e) override;
-    void onFetchNodesSuccess(bool& firstTime) override;
+    void onFetchNodesSuccess() override;
 
 };
 
@@ -122,7 +124,7 @@ public:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
 
 signals:
-    void onLogoutFinished();
+    void onLogoutFinished(bool isLocalLogout);
 
 private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;

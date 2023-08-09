@@ -6,7 +6,6 @@ import Onboard 1.0
 
 // C++
 import Onboarding 1.0
-import LoginController 1.0
 import ApiEnums 1.0
 
 LoginPageForm {
@@ -58,7 +57,7 @@ LoginPageForm {
 
         loginButton.icons.busyIndicatorVisible = true;
         state = logInStatus;
-        loginController.login(email.text, password.text);
+        LoginControllerAccess.login(email.text, password.text);
         onboardingWindow.loggingIn = true;
         loginAttempt = true;
     }
@@ -74,7 +73,7 @@ LoginPageForm {
     }
 
     Connections {
-        target: Onboarding
+        target: AccountStatusControllerAccess
 
         onAccountBlocked: {
             setNormalStatus();
@@ -83,7 +82,7 @@ LoginPageForm {
     }
 
     Connections {
-        target: loginController
+        target: LoginControllerAccess
 
         onFetchingNodesProgress: {
             console.debug("LOGIN PAGE progress: " + progress);
