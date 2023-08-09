@@ -88,14 +88,7 @@ bool LoginController::getIsEmailConfirmed() const
 
 void LoginController::cancelLogin() const
 {
-    if(mMegaApi->isLoggedIn())
-    {
-        mMegaApi->logout(true, nullptr);
-    }
-    else
-    {
-        mMegaApi->localLogout();
-    }
+    mMegaApi->localLogout();
 }
 
 void LoginController::cancelCreateAccount() const
