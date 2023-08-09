@@ -2336,7 +2336,7 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
 
 void MegaApplication::raiseInfoDialog()
 {
-    if(preferences && preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK|| mStatusController->isAccountBlocked())
+    if((preferences && preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK) || mStatusController->isAccountBlocked())
     {
         openGuestDialog(true);
         return;

@@ -2,7 +2,6 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
-#include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
 #include <QDebug>
 
@@ -37,7 +36,7 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
         case mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
         {
             mBlockedStateSet = true;
-            int blockState = event->getNumber();
+            int blockState = static_cast<int>(event->getNumber());
             if(mBlockedState == blockState)
             {
                 return;
@@ -52,7 +51,7 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
                 Preferences::instance()->setBlockedState(blockState);
             }
 
-            emit accountBlocked(event->getNumber());
+            emit accountBlocked(static_cast<int>(event->getNumber()));
             break;
         }
         case mega::MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
@@ -121,7 +120,7 @@ void AccountStatusController::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
 
 void AccountStatusController::whyAmIBlocked(bool force)
 {
-    if(!mQueringWhyAmIBlocked && isAccountBlocked() || !mQueringWhyAmIBlocked && force)
+    if((!mQueringWhyAmIBlocked && isAccountBlocked()) || force)
     {
         mMegaApi->whyAmIBlocked();
         mQueringWhyAmIBlocked = true;

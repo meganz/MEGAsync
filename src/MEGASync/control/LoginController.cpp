@@ -114,11 +114,6 @@ bool LoginController::isAccountConfirmationResumed() const
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
     Q_UNUSED(api)
-    if(!mMegaApi)
-    {
-        return;
-    }
-
     switch(request->getType())
     {
         case mega::MegaRequest::TYPE_LOGIN:
