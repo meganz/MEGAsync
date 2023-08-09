@@ -172,7 +172,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
 
     # Prepare bundle
     cp -R ${MSYNC_PREFIX}MEGAsync.app ${MSYNC_PREFIX}MEGAsync_orig.app
-    ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -qmldir=../src/MEGASync/gui/onboarding/qml -no-strip
+    ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -qmldir=../src/MEGASync/gui/onboarding/qml -qmldir=../src/MEGASync/gui/qml -no-strip
     dsymutil ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
     strip ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
     dsymutil ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
@@ -181,6 +181,9 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     mv ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAupdater
 
     touch ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
+
+    # Delete unused debug libs
+    find ${MSYNC_PREFIX}MEGAsync.app/Contents -type d -name "*.dSYM" -exec rm -r {} +
 
     if [ ${build_cmake} -ne 1 ]; then
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ] && cp -L $CARES_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
