@@ -797,5 +797,5 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
         emit dialog->getDialog()->wrapper()->logout();
     }
 
-    emit onLogoutFinished();
+    emit onLogoutFinished(!request->getFlag());
 }

@@ -187,7 +187,7 @@ public:
     void resetRootNodes();
     void initLocalServer();
     void loggedIn(bool fromWizard);
-    void onLogout();
+    void onLogout(bool isLocalLogout);
 
     MegaSyncLogger& getLogger() const;
     void pushToThreadPool(std::function<void()> functor);
@@ -243,7 +243,7 @@ public slots:
     void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
-    void start();
+    void start(bool restartFromLocalLogout = false);
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
     void openGuestDialog(bool showOnCreate = false);

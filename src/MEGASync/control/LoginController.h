@@ -124,7 +124,7 @@ public:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
 
 signals:
-    void onLogoutFinished();
+    void onLogoutFinished(bool isLocalLogout);
 
 private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
