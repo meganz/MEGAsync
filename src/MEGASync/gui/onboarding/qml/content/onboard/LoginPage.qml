@@ -82,6 +82,16 @@ LoginPageForm {
     }
 
     Connections {
+        target: LogoutControllerAccess
+
+        onLogout: {
+            cancelLogin.close();
+            onboardingWindow.forceClose();
+            setNormalStatus();
+        }
+    }
+
+    Connections {
         target: LoginControllerAccess
 
         onFetchingNodesProgress: {
@@ -103,12 +113,6 @@ LoginPageForm {
 
         onAccountCreationResumed: {
             registerFlow.state = confirmEmail;
-        }
-
-        onLogout: {
-            cancelLogin.close();
-            onboardingWindow.forceClose();
-            setNormalStatus();
         }
 
         onLoginFinished: (errorCode, errorMsg) => {

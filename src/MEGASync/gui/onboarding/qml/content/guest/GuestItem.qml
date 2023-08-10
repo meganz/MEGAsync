@@ -232,6 +232,14 @@ Rectangle {
     }
 
     Connections {
+        target: LogoutControllerAccess
+
+        onLogout: {
+            content.state = content.stateNormal;
+        }
+    }
+
+    Connections {
         target: LoginControllerAccess
 
         onLoginStarted: {
@@ -269,10 +277,6 @@ Rectangle {
         onFetchingNodesFinished: (firstTime) => {
             content.state = content.stateNormal;
             guestWindow.hide();
-        }
-
-        onLogout: {
-            content.state = content.stateNormal;
         }
 
         onRegisterStarted: {

@@ -17,9 +17,7 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "onboarding/OnboardingQmlDialog.h"
 
-#include "control/AccountStatusController.h"
-
-#include "PlatformStrings.h"
+#include "PlatformStrings.h"..
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
@@ -726,7 +724,7 @@ void MegaApplication::initialize()
             this, &MegaApplication::onNotificationProcessed);
 
     mLogoutController = new LogoutController(this);
-    connect(mLogoutController, &LogoutController::onLogoutFinished, this, &MegaApplication::onLogout);
+    connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
 }
 
 QString MegaApplication::applicationFilePath()
