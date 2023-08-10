@@ -15,6 +15,7 @@
 #include "TransferMetaData.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "onboarding/OnboardingQmlDialog.h"
 
 #include "control/AccountStatusController.h"
 
@@ -2224,6 +2225,10 @@ void MegaApplication::cleanAll()
     removeAllFinishedTransfers();
     clearViewedTransfers();
     DialogOpener::closeAllDialogs();
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        static_cast<OnboardingQmlDialog*>(dialog->getDialog()->window())->forceClose();
+    }
 
     if(mBlockingBatch.isValid())
     {
