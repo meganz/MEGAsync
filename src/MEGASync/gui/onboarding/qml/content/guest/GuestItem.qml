@@ -17,6 +17,7 @@ import Guest 1.0
 // C++
 import GuestContent 1.0
 import ApiEnums 1.0
+import AccountStatusController 1.0
 
 Rectangle {
     id: content

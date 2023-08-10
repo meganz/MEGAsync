@@ -9,6 +9,7 @@
 #include "PasswordStrengthChecker.h"
 #include "QmlDeviceName.h"
 #include "LoginController.h"
+#include "AccountStatusController.h"
 
 #include "OnboardingQmlDialog.h"
 
@@ -23,6 +24,7 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingDialog.qml")), "Onboard", 1, 0, "OnboardingDialog");
 
     qmlRegisterType<LoginController>("LoginController", 1, 0, "LoginController");
+    qmlRegisterType<AccountStatusController>("AccountStatusController", 1, 0, "AccountStatusController");
     qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
     qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker", 1, 0, "PasswordStrengthChecker");
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
