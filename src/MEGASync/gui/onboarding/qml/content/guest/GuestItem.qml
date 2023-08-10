@@ -244,6 +244,8 @@ Rectangle {
 
         onLoginFinished: (errorCode, errorMsg) => {
             switch(errorCode) {
+                case ApiEnums.API_OK:
+                    break;
                 case ApiEnums.API_EMFAREQUIRED:
                     content.indeterminate = true;
                     content.description = OnboardingStrings.status2FA;
@@ -254,6 +256,7 @@ Rectangle {
                 case ApiEnums.API_EEXPIRED:
                     break;
                 default:
+                    content.state = content.stateNormal;
                     content.validating2FA = false;
                     break;
             }
