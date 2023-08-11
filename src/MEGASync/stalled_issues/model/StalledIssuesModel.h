@@ -10,6 +10,9 @@
 #include <QMutex>
 #include <QAbstractItemModel>
 #include <QTimer>
+#include <QPointer>
+
+class LoadingSceneMessageHandler;
 
 class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 {
@@ -71,7 +74,7 @@ public:
 
     void finishStalledIssues(const QModelIndexList& indexes);
     void updateStalledIssues();
-    void updateStalledIssuesWhenReady();;
+    void updateStalledIssuesWhenReady();
 
     void lockModelMutex(bool lock);
 
@@ -88,6 +91,8 @@ public:
     bool isRawInfoVisible() const;
 
     //SOLVE PROBLEMS
+    void stopSolvingIssues();
+
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
@@ -103,6 +108,7 @@ public:
 
     //IgnoreConflicts
     void ignoreItems(const QModelIndexList& list);
+    void ignoreSymLinks(const QModelIndex &index);
 
 
 signals:
@@ -115,6 +121,10 @@ signals:
     void setIsEventRequest();
 
     void showRawInfoChanged();
+
+    void updateLoadingMessage(QString message);
+
+    void refreshFilter();
 
 protected slots:
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
@@ -130,6 +140,7 @@ private:
     void reset();
     QModelIndex getSolveIssueIndex(const QModelIndex& index);
     void quitReceiverThread();
+    void finishSolvingIssues();
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
     void operator=(const StalledIssuesModel&) = delete;
@@ -155,6 +166,9 @@ private:
 
     QTimer mEventTimer;
     bool mRawInfoVisible;
+
+    std::atomic_bool mSolvingIssues {false};
+    std::atomic_bool mStopSolvingIssues {false};
 };
 
 #endif // STALLEDISSUESMODEL_H

@@ -31,6 +31,7 @@ public:
 
 protected:
     bool eventFilter(QObject *, QEvent *) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private slots:
     void on_doneButton_clicked();

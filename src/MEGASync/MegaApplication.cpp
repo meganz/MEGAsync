@@ -7900,7 +7900,7 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
             syncStalled = !syncStalled;
 
             auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-            if(!dialog)
+            if(!dialog && syncStalled)
             {
                 //For Smart mode -> resolve problems as soon as they are received
                 //For Events -> Send events as soon as issues are received

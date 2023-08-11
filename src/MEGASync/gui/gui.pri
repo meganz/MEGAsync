@@ -53,6 +53,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BugReportDialog.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
+    $$PWD/ViewLoadingScene.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
     $$PWD/ProxySettings.cpp \
     $$PWD/BandwidthSettings.cpp \
@@ -207,6 +208,7 @@ win32 {
                 $$PWD/win/NodeNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui \
                 $$PWD/win/LowDiskSpaceDialog.ui \
+                $$PWD/win/ViewLoadingScene.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/win/NodeSelector.ui \
@@ -257,6 +259,7 @@ macx {
                 $$PWD/macx/NodeNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui \
                 $$PWD/macx/LowDiskSpaceDialog.ui \
+                $$PWD/macx/ViewLoadingScene.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/macx/NodeSelector.ui \
@@ -330,6 +333,7 @@ unix:!macx {
                 $$PWD/linux/NotificationsSettings.ui \
                 $$PWD/linux/LowDiskSpaceDialog.ui \
                 $$PWD/linux/RemoteItemUi.ui \
+                $$PWD/linux/ViewLoadingScene.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/linux/NodeSelector.ui \
@@ -340,4 +344,3 @@ unix:!macx {
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
-

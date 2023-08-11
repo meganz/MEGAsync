@@ -68,6 +68,7 @@ public:
     void refreshCaseTitles();
     void refreshCaseActions();
 
+    void hideIgnoreFile();
 
 protected:
     QString fileName();

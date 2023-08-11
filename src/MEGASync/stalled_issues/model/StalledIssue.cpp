@@ -376,6 +376,11 @@ void StalledIssue::setIsSolved()
     mIsSolved = true;
 }
 
+bool StalledIssue::isSymLink() const
+{
+    return consultLocalData() && consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
+}
+
 bool StalledIssue::isSolvable() const
 {
     return mReason == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced ||

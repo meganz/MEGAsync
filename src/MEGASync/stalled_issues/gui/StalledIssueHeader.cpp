@@ -60,6 +60,73 @@ bool StalledIssueHeader::adaptativeHeight()
     return false;
 }
 
+void StalledIssueHeader::on_ignoreFileButton_clicked()
+{
+    propagateButtonClick();
+
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+    auto isSymLink(getData().consultData()->isSymLink());
+    auto canBeIgnoredChecker = [isSymLink](const std::shared_ptr<const StalledIssue> issue){
+        return isSymLink == issue->isSymLink() && issue->canBeIgnored();
+    };
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+    auto selection = dialog->getDialog()->getSelection(canBeIgnoredChecker);
+
+    if(selection.size() <= 1)
+    {
+        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(canBeIgnoredChecker);
+
+        if(allSimilarIssues.size() != selection.size())
+        {
+            msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+            textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+        }
+
+    }
+    else
+    {
+        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+    }
+
+    msgInfo.buttonsText = textsByButton;
+    msgInfo.text = tr("Are you sure you want to ignore this issue?");
+    msgInfo.informativeText = tr("This action will ignore this issue and it will not be synced.");
+
+    msgInfo.finishFunc = [this, selection](QMessageBox* msgBox)
+    {
+        if(msgBox->result() == QDialogButtonBox::Ok)
+        {
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
+        }
+        else if(msgBox->result() == QDialogButtonBox::Yes)
+        {
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList());
+        }
+    };
+
+    QMegaMessageBox::warning(msgInfo);
+}
+
+
+void StalledIssueHeader::hideIgnoreFile()
+{
+    ui->ignoreFileButton->hide();
+}
+
 void StalledIssueHeader::showIgnoreFile()
 {
     ui->ignoreFileButton->show();
@@ -74,7 +141,7 @@ void StalledIssueHeader::issueIgnored()
 
 void StalledIssueHeader::propagateButtonClick()
 {
-    QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
+    QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::AltModifier));
     qApp->processEvents();
 }
 
@@ -256,66 +323,6 @@ void StalledIssueHeader::on_actionButton_clicked()
 
         mHeaderCase->onActionButtonClicked(this);
     }
-}
-
-void StalledIssueHeader::on_ignoreFileButton_clicked()
-{
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-    propagateButtonClick();
-
-    auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
-        return issue->canBeIgnored();
-    };
-
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-
-    auto selection = dialog->getDialog()->getSelection(canBeIgnoredChecker);
-
-    if(selection.size() <= 1)
-    {
-        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(canBeIgnoredChecker);
-
-        if(allSimilarIssues.size() != selection.size())
-        {
-            msgInfo.buttons |= QMessageBox::Yes;
-            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-            textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
-        }
-        else
-        {
-            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-        }
-
-    }
-    else
-    {
-        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
-    }
-
-    msgInfo.buttonsText = textsByButton;
-    msgInfo.text = tr("Are you sure you want to ignore this issue?");
-    msgInfo.informativeText = tr("This action will ignore this issue and it will not be synced.");
-
-    msgInfo.finishFunc = [this, selection](QMessageBox* msgBox)
-    {
-        if(msgBox->result() == QDialogButtonBox::Ok)
-        {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
-        }
-        else if(msgBox->result() == QDialogButtonBox::Yes)
-        {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList());
-        }
-    };
-
-    QMegaMessageBox::warning(msgInfo);
 }
 
 void StalledIssueHeader::refreshUi()

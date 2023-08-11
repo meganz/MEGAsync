@@ -84,7 +84,7 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data,
             if(data->isCloud())
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->setMessage(tr("New version available soon"), icon.pixmap(24,24));
+                ui->chooseTitle->setMessage(movedToBinText(), icon.pixmap(24,24));
             }
             else
             {
@@ -116,7 +116,7 @@ bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
 
 void StalledIssueChooseWidget::onActionClicked(int button_id)
 {
-    QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
+    QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::AltModifier));
     qApp->processEvents();
 
     emit chooseButtonClicked(button_id);

@@ -17,11 +17,13 @@ public:
 
     int rowCount(const QModelIndex &parent) const override;
     void filter(StalledIssueFilterCriterion filterCriterion);
-    void updateFilter();
 
     void setSourceModel(QAbstractItemModel *sourceModel) override;
     void updateStalledIssues();
     void updateStalledIssuesWhenReady();
+
+public slots:
+    void updateFilter();
 
 signals:
     void modelFiltered();

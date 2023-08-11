@@ -49,6 +49,11 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     mProxyModel->setSourceModel(MegaSyncApp->getStalledIssuesModel());
     connect(mProxyModel, &StalledIssuesProxyModel::modelFiltered, this, &StalledIssuesDialog::onModelFiltered);
 
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::updateLoadingMessage, ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::updateMessage, Qt::QueuedConnection);
+    connect(ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::onStopPressed, this, [this](){
+        MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues();
+    });
+
     mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
     ui->stalledIssuesTree->setItemDelegate(mDelegate);
     connect(&ui->stalledIssuesTree->loadingView(), &ViewLoadingSceneBase::sceneVisibilityChange, this, &StalledIssuesDialog::onLoadingSceneChanged);
@@ -142,6 +147,14 @@ bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
     return QDialog::eventFilter(obj, event);
 }
 
+void StalledIssuesDialog::mouseReleaseEvent(QMouseEvent *event)
+{
+    //User cliked outside the view
+    ui->stalledIssuesTree->clearSelection();
+
+    QDialog::mouseReleaseEvent(event);
+}
+
 void StalledIssuesDialog::on_doneButton_clicked()
 {
     close();
@@ -207,7 +220,8 @@ void StalledIssuesDialog::onModelFiltered()
 
 void StalledIssuesDialog::onLoadingSceneChanged(bool state)
 {
-    setDisabled(state);
+    ui->footer->setDisabled(state);
+    ui->header->setDisabled(state);
 }
 
 void StalledIssuesDialog::showModeSelector()

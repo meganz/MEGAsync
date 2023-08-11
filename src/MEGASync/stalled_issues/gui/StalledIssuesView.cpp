@@ -29,18 +29,24 @@ void StalledIssuesView::mousePressEvent(QMouseEvent *event)
     QPoint pos = event->pos();
     QPersistentModelIndex index = indexAt(pos);
 
-    if(!index.parent().isValid())
+    auto currentState(state());
+    setState(NoState);
+
+    QItemSelectionModel::SelectionFlags command = selectionCommand(index.parent(), event);
+    if(command == QItemSelectionModel::SelectionFlag::Clear && event->modifiers() == Qt::KeyboardModifier::NoModifier)
     {
-        QItemSelectionModel::SelectionFlags command = selectionCommand(index, event);
-        selectionModel()->select(index, command);
+        selectionModel()->clearSelection();
     }
-    else
+
+    if(index.parent().isValid())
     {
-        QItemSelectionModel::SelectionFlags command = selectionCommand(index.parent(), event);
         selectionModel()->select(index.parent(), command);
+        return;
     }
 
     LoadingSceneView<StalledIssueLoadingItem, QTreeView>::mousePressEvent(event);
+
+    setState(currentState);
 }
 
 void StalledIssuesView::keyPressEvent(QKeyEvent *event)

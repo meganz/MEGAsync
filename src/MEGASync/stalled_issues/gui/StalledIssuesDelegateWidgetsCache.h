@@ -18,6 +18,8 @@ class StalledIssueBaseDelegateWidget;
 class StalledIssuesDelegateWidgetsCache
 {
 public:
+    static const int DELEGATEWIDGETS_CACHESIZE;
+
     StalledIssuesDelegateWidgetsCache(QStyledItemDelegate* delegate);
 
     StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue, const QSize& size) const;

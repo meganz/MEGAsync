@@ -234,6 +234,7 @@ public:
     void setIsSolved();
     virtual void autoSolveIssue(){}
 
+    bool isSymLink() const;
     bool canBeIgnored() const;
     QStringList getIgnoredFiles() const;
 

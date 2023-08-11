@@ -9,6 +9,8 @@
 
 #include "Utilities.h"
 
+const int StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE = 30;
+
 StalledIssuesDelegateWidgetsCache::StalledIssuesDelegateWidgetsCache(QStyledItemDelegate *delegate)
     : mDelegate(delegate)
 {}
@@ -35,7 +37,7 @@ void StalledIssuesDelegateWidgetsCache::reset()
 
 int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
 {
-    auto nbRowsMaxInView(30);
+    auto nbRowsMaxInView(DELEGATEWIDGETS_CACHESIZE);
     return row % nbRowsMaxInView;
 }
 
@@ -180,7 +182,7 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
     {
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {
-            if(issue.consultData()->consultLocalData() && issue.consultData()->consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink)
+            if(issue.consultData()->isSymLink())
             {
                 headerCase = new SymLinkHeader(header);
             }

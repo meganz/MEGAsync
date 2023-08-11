@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ViewLoadingSceneUI</class>
+ <widget class="QWidget" name="ViewLoadingSceneUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>16</width>
+    <height>16</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="MessageContainer" native="true">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>90</y>
+     <width>300</width>
+     <height>150</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>300</width>
+     <height>150</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#MessageContainer
+{
+border: 2px solid #f0373a;
+border-radius: 6px;
+background-color: white;
+}
+
+#MessageLabel
+{
+  font-family: &quot;Poppins&quot;;
+  font-size:16px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #666666;
+}
+
+QPushButton 
+{ 
+font-size: 16px; font-weight:400;
+padding-top : 11px; padding-bottom : 12px; padding-left : 18px; padding-right : 18px;
+background-color : #FCFCFC;
+border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 3px;
+color: #333333;
+}
+
+QPushButton:pressed 
+{ 
+background-color : rgb(238, 238, 236); 
+}
+QPushButton:disabled 
+{ 
+background-color : rgb(218, 218, 216); 
+}
+QPushButton#pProceed 
+{ 
+background-color: #00BFA5;
+color: #FFFFFF; 
+border-color: #00AC94;
+}
+QPushButton#pProceed:pressed
+{ 
+background-color: rgb(0, 179, 155);
+}
+QPushButton#pProceed:disabled 
+{ 
+background-color: rgb(70, 159, 135);
+}</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>10</number>
+    </property>
+    <property name="leftMargin">
+     <number>10</number>
+    </property>
+    <property name="topMargin">
+     <number>10</number>
+    </property>
+    <property name="rightMargin">
+     <number>10</number>
+    </property>
+    <property name="bottomMargin">
+     <number>10</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="MessageLabel">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item alignment="Qt::AlignHCenter">
+     <widget class="QPushButton" name="StopButton">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -26,6 +26,11 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
         {
             for (size_t i = 0; i < stalls->size(); ++i)
             {
+                if(i > 20)
+                {
+                    continue;
+                }
+
                 auto stall = stalls->get(i);
                 std::shared_ptr<StalledIssueVariant> variant;
 
@@ -198,7 +203,10 @@ void StalledIssuesModel::updateStalledIssues()
 {
     blockUi();
 
-    mMegaApi->getMegaSyncStallList(nullptr);
+    if(!mSolvingIssues)
+    {
+        mMegaApi->getMegaSyncStallList(nullptr);
+    }
 }
 
 void StalledIssuesModel::updateStalledIssuesWhenReady()
@@ -308,7 +316,7 @@ Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex &index) const
 
 bool StalledIssuesModel::isEmpty() const
 {
-    return rowCount(QModelIndex()) == 0 || !MegaSyncApp->getMegaApi()->isSyncStalled();
+    return !MegaSyncApp->getMegaApi()->isSyncStalled();
 }
 
 void StalledIssuesModel::finishStalledIssues(const QModelIndexList &indexes)
@@ -458,6 +466,11 @@ bool StalledIssuesModel::isRawInfoVisible() const
     return mRawInfoVisible;
 }
 
+void StalledIssuesModel::stopSolvingIssues()
+{
+    mStopSolvingIssues = true;
+}
+
 void StalledIssuesModel::reset()
 {
     beginResetModel();
@@ -480,6 +493,12 @@ QModelIndex StalledIssuesModel::getSolveIssueIndex(const QModelIndex &index)
 void StalledIssuesModel::quitReceiverThread()
 {
     mStalledIssuesThread->quit();
+}
+
+void StalledIssuesModel::finishSolvingIssues()
+{
+    mSolvingIssues = false;
+    emit refreshFilter();
 }
 
 int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion criterion)
@@ -523,8 +542,9 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
         {
             for(int row = 0; row < rowCount(QModelIndex()); ++row)
             {
-                if(mThreadFinished)
+                if(mThreadFinished || mStopSolvingIssues)
                 {
+                    mStopSolvingIssues = false;
                     break;
                 }
 
@@ -542,8 +562,9 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
         {
             foreach(auto index, list)
             {
-                if(mThreadFinished)
+                if(mThreadFinished || mStopSolvingIssues)
                 {
+                    mStopSolvingIssues = false;
                     break;
                 }
 
@@ -572,22 +593,31 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
         }
     };
 
+    auto loadingMessage = [this](int issue, int total){
+        QString message(tr("Fixing issues\n%1 of %2").arg(issue).arg(total));
+        emit updateLoadingMessage(message);
+    };
+
     if(list.isEmpty())
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue, loadingMessage]()
         {
-            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            auto totalRows(rowCount(QModelIndex()));
+            for(int row = 0; row < totalRows; ++row)
             {
-                if(mThreadFinished)
+                if(mThreadFinished || mStopSolvingIssues)
                 {
+                    mStopSolvingIssues = false;
                     break;
                 }
 
+                loadingMessage(row+1, totalRows);
                 resolveIssue(row);
             }
 
+            finishSolvingIssues();
             unBlockUi();
         });
     }
@@ -595,19 +625,26 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, resolveIssue]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, resolveIssue, loadingMessage]()
         {
+            auto counter(1);
             foreach(auto index, list)
             {
-                if(mThreadFinished)
+                if(mThreadFinished|| mStopSolvingIssues)
                 {
+                    mStopSolvingIssues = false;
                     break;
-
                 }
+
                 auto potentialIndex = getSolveIssueIndex(index);
+
+                loadingMessage(counter, list.size());
                 resolveIssue(potentialIndex.row());
+
+                counter++;
             }
 
+            finishSolvingIssues();
             unBlockUi();
         });
     }
@@ -647,8 +684,9 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
         {
             for(int row = 0; row < rowCount(QModelIndex()); ++row)
             {
-                if(mThreadFinished)
+                if(mThreadFinished|| mStopSolvingIssues)
                 {
+                    mStopSolvingIssues = false;
                     break;
                 }
 
@@ -666,12 +704,46 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
         {
             foreach(auto index, list)
             {
-                if(mThreadFinished)
+                if(mThreadFinished|| mStopSolvingIssues)
                 {
+                    mStopSolvingIssues = false;
                     break;
                 }
 
                 resolveIssue(index.row());
+            }
+
+            unBlockUi();
+        });
+    }
+}
+
+void StalledIssuesModel::ignoreSymLinks(const QModelIndex& index)
+{
+    auto item = mStalledIssues.at(index.row());
+    if(item->getData()->canBeIgnored())
+    {
+        mUtilities.ignoreSymLinks(item->getData()->consultLocalData()->getNativeFilePath());
+        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
+                                             "Issue ignored manually", false, nullptr);
+
+        blockUi();
+
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this]()
+        {
+            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            {
+                if(mThreadFinished || mStopSolvingIssues)
+                {
+                    mStopSolvingIssues = false;
+                    break;
+                }
+
+                auto item = mStalledIssues.at(row);
+                if(item->getData()->isSymLink())
+                {
+                    item->getData()->setIsSolved();
+                }
             }
 
             unBlockUi();
@@ -698,43 +770,58 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &
         }
     };
 
+    auto loadingMessage = [this](int issue, int total){
+        QString message(tr("Fixing name conflict issues\n%1 of %2").arg(issue).arg(total));
+        emit updateLoadingMessage(message);
+    };
+
     if(list.isEmpty())
     {
         blockUi();
+        mSolvingIssues = true;
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, option, resolveIssue]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, option, resolveIssue, loadingMessage]()
         {
-            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            auto totalRows(rowCount(QModelIndex()));
+            for(int row = 0; row < totalRows; ++row)
             {
-                if(mThreadFinished)
+                if(mThreadFinished || mStopSolvingIssues)
                 {
+                    mStopSolvingIssues = false;
                     break;
                 }
 
+                loadingMessage(row + 1, totalRows);
                 resolveIssue(row);
             }
 
-            unBlockUi();
+            finishSolvingIssues();
         });
     }
     else
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, option, resolveIssue]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, option, resolveIssue, loadingMessage]()
         {
+            mSolvingIssues = true;
+            auto counter(1);
             foreach(auto index, list)
             {
-                if(mThreadFinished)
+                if(mThreadFinished || mStopSolvingIssues)
                 {
+                    mStopSolvingIssues = false;
                     break;
                 }
 
+                loadingMessage(counter, list.size());
                 auto potentialIndex = getSolveIssueIndex(index);
                 resolveIssue(potentialIndex.row());
+
+                counter++;
             }
 
-            unBlockUi();
+            finishSolvingIssues();
         });
     }
 }

@@ -38,7 +38,7 @@ protected:
 protected slots:
     void onHoverEnter(const QModelIndex& index);
     void onHoverLeave(const QModelIndex&);
-    void updateVisibleIndexesSizeHint(int updateDelay = 50);
+    void updateVisibleIndexesSizeHint(int updateDelay, bool forceUpdate);
 
 private:
     QColor getRowColor(const QModelIndex& index) const;
@@ -58,6 +58,10 @@ private:
     QTimer mUpdateSizeHintTimerFromResize;
     QTimer mUpdateSizeHintTimer;
     QList<int> mVisibleIndexesRange;
+
+    mutable int mSizeHintRequested = 0;
+    mutable bool mFreshStart = true;
+    mutable QMap<int, QPair<int, QSize>> mAverageHeaderHeight;
 };
 
 #endif // STALLEDISSUEDELEGATE_H

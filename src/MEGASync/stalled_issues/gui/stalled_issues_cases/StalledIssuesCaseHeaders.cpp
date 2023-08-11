@@ -42,11 +42,105 @@ SymLinkHeader::SymLinkHeader(StalledIssueHeader *header)
     : StalledIssueHeaderCase(header)
 {}
 
+void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader*, int index)
+{
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+    auto isSymLinkChecker = [](const std::shared_ptr<const StalledIssue> issue){
+        return issue->isSymLink();
+    };
+
+    auto selection = dialog->getDialog()->getSelection(isSymLinkChecker);
+
+    if(index == IgnoreType::IgnoreAll)
+    {
+         textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+    }
+    else
+    {
+        if(selection.size() <= 1)
+        {
+            auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(isSymLinkChecker);
+
+            if(allSimilarIssues.size() != selection.size())
+            {
+                msgInfo.buttons |= QMessageBox::Yes;
+                textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar symlinks (%1)").arg(allSimilarIssues.size()));
+                textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+            }
+            else
+            {
+                textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+            }
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+        }
+    }
+
+    msgInfo.buttonsText = textsByButton;
+
+    if(index == IgnoreType::IgnoreAll)
+    {
+        msgInfo.text = tr("Are you sure you want to ignore all symlinks in this sync?");
+        msgInfo.informativeText = tr("This action will ignore all present and future symlinks in this sync.");
+    }
+    else
+    {
+        msgInfo.text = tr("Are you sure you want to ignore this symlink?");
+        msgInfo.informativeText = tr("This action will ignore this symlink and it will not be synced.");
+    }
+
+    msgInfo.finishFunc = [this, index, selection](QMessageBox* msgBox)
+    {
+        if(msgBox->result() == QDialogButtonBox::Ok)
+        {
+            if(index == IgnoreType::IgnoreAll)
+            {
+                MegaSyncApp->getStalledIssuesModel()->ignoreSymLinks(selection.first());
+            }
+            else
+            {
+                MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
+            }
+        }
+        else if(msgBox->result() == QDialogButtonBox::Yes)
+        {
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList());
+        }
+    };
+
+    QMegaMessageBox::warning(msgInfo);
+
+}
+
 void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Detected sym link: <b>%1</b>").arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
     header->setTitleDescriptionText(QString());
     header->setIsExpandable(false);
+}
+
+void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
+{
+    if(!header->getData().consultData()->isSolved())
+    {
+        QList<StalledIssueHeader::ActionInfo> actions;
+        actions << StalledIssueHeader::ActionInfo(tr("Ignore symlink"), IgnoreType::IgnoreThis);
+        actions << StalledIssueHeader::ActionInfo(tr("Ignore all symlinks in sync"), IgnoreType::IgnoreAll);
+
+        header->showMultipleAction(tr("Ignore"), actions);
+        header->hideIgnoreFile();
+    }
 }
 
 //Local folder not scannable

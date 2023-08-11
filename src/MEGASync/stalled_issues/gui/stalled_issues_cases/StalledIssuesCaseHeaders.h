@@ -35,11 +35,19 @@ class SymLinkHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
+    enum IgnoreType
+    {
+        IgnoreAll,
+        IgnoreThis
+    };
+
 public:
     SymLinkHeader(StalledIssueHeader* header);
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader*, int index) override;
 
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
+    void refreshCaseActions(StalledIssueHeader *header) override;
 };
 
 //Create folder failed

@@ -36,33 +36,60 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
     mSourceModel = qobject_cast<StalledIssuesModel*>(
                       mProxyModel->sourceModel());
 
+
+    connect(mProxyModel, &StalledIssuesProxyModel::modelFiltered, [this](){
+        mSizeHintRequested = mProxyModel->rowCount(QModelIndex());
+        if(mSizeHintRequested == 0)
+        {
+            mSourceModel->unBlockUi();
+        }
+        else
+        {
+            mFreshStart = true;
+            mAverageHeaderHeight.clear();
+        }
+
+        updateVisibleIndexesSizeHint(UPDATE_SIZE_TIMER, true);
+    });
+
     mCacheManager.setProxyModel(mProxyModel);
 
     mUpdateSizeHintTimer.setSingleShot(true);
     connect(&mUpdateSizeHintTimer, &QTimer::timeout, [this](){
-        emit sizeHintChanged(QModelIndex());
+        if(mSizeHintRequested == 0)
+        {
+            mSizeHintRequested = mProxyModel->rowCount(QModelIndex());
+            emit sizeHintChanged(QModelIndex());
+        }
     });
 
     connect(mView, &StalledIssuesView::scrollStopped, this, [this](){
-        updateVisibleIndexesSizeHint(UPDATE_SIZE_TIMER);
+        updateVisibleIndexesSizeHint(UPDATE_SIZE_TIMER, false);
     });
 
     mUpdateSizeHintTimerFromResize.setSingleShot(true);
     connect(&mUpdateSizeHintTimerFromResize, &QTimer::timeout, this, [this](){
-        mVisibleIndexesRange.clear();
-        //Update it as soon as possible
-        updateVisibleIndexesSizeHint(UPDATE_SIZE_TIMER);
+        updateVisibleIndexesSizeHint(UPDATE_SIZE_TIMER, true);
     });
 
     mView->installEventFilter(this);
 }
 
-void StalledIssueDelegate::updateVisibleIndexesSizeHint(int updateDelay)
+void StalledIssueDelegate::updateVisibleIndexesSizeHint(int updateDelay, bool forceUpdate)
 {
+    if(forceUpdate)
+    {
+        mVisibleIndexesRange.clear();
+    }
+
     auto firstIndex = mView->indexAt(QPoint(0,0));
     auto firstRow = firstIndex.parent().isValid() ? firstIndex.parent().row() : firstIndex.row();
 
-    for(int row = firstRow - 15; row <= (firstRow + 15); ++row)
+    int delegateWidgetMiddleSize(StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE/2);
+
+    bool sizeHintUpdateNeeded(false);
+
+    for(int row = firstRow - delegateWidgetMiddleSize; row <= (firstRow + delegateWidgetMiddleSize); ++row)
     {
         if(row >= 0)
         {
@@ -71,7 +98,7 @@ void StalledIssueDelegate::updateVisibleIndexesSizeHint(int updateDelay)
                 auto index = mProxyModel->index(row, 0);
                 if(index.isValid())
                 {
-                    if(mVisibleIndexesRange.size() == 30)
+                    if(mVisibleIndexesRange.size() == StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE)
                     {
                         mVisibleIndexesRange.removeFirst();
                     }
@@ -80,23 +107,63 @@ void StalledIssueDelegate::updateVisibleIndexesSizeHint(int updateDelay)
 
                     StalledIssueVariant stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
                     stalledIssueItem.removeDelegateSize(StalledIssue::Header);
+                    stalledIssueItem.removeDelegateSize(StalledIssue::Body);
+
+                    sizeHintUpdateNeeded = true;
                 }
 
-                mUpdateSizeHintTimer.start(updateDelay);
             }
         }
+    }
+
+    if(sizeHintUpdateNeeded)
+    {
+        mUpdateSizeHintTimer.start(updateDelay);
     }
 }
 
 QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+    if(mSizeHintRequested > 0)
+    {
+        mSizeHintRequested--;
+
+        if(mSizeHintRequested == 0)
+        {
+            mSourceModel->unBlockUi();
+        }
+    }
+
     StalledIssueVariant stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
     {
+
         StalledIssue::SizeType sizeType = index.parent().isValid() ? StalledIssue::Body : StalledIssue::Header;
         auto size = stalledIssueItem.getDelegateSize(sizeType);
         if(size.isValid())
         {
             return size;
+        }
+
+        if(mFreshStart)
+        {
+            if(index.row() >= StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE)
+            {
+                auto averageSizeInfo(mAverageHeaderHeight.value(stalledIssueItem.consultData()->getReason()));
+                auto averageSize = averageSizeInfo.second;
+
+                QSize defaultSize;
+                if(averageSize.isValid())
+                {
+                    defaultSize = QSize(averageSize.width(), averageSize.height()/averageSizeInfo.first);
+                }
+                else
+                {
+                    defaultSize = QSize(100,60);
+                }
+
+                stalledIssueItem.setDelegateSize(defaultSize, StalledIssue::Header);
+                return defaultSize;
+            }
         }
 
         QSize proposedSize;
@@ -120,6 +187,21 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
         if(w)
         {
             size = w->sizeHint();
+
+            if(mFreshStart)
+            {
+                if(mAverageHeaderHeight.contains(stalledIssueItem.consultData()->getReason()))
+                {
+                    auto& info = mAverageHeaderHeight[stalledIssueItem.consultData()->getReason()];
+                    info.first++;
+                    info.second = QSize(info.second.width(), info.second.height() + size.height());
+                }
+                else
+                {
+                    mAverageHeaderHeight.insert(stalledIssueItem.consultData()->getReason(), qMakePair(1, size));
+                }
+            }
+
             return size;
         }
     }
@@ -140,6 +222,8 @@ void StalledIssueDelegate::updateSizeHint()
 
 void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    mFreshStart = false;
+
     auto rowCount (index.model()->rowCount());
     auto row (index.row());
 
@@ -401,8 +485,7 @@ bool StalledIssueDelegate::event(QEvent *event)
 
 bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
 {
-    if(object == mView && (event->type() == QEvent::Resize
-                           || event->type() == QEvent::Show))
+    if(object == mView && event->type() == QEvent::Resize)
     {
         mUpdateSizeHintTimerFromResize.start(UPDATE_SIZE_TIMER);
 

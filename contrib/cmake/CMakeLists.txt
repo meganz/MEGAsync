@@ -206,6 +206,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/LowDiskSpaceDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ViewLoadingScene.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelector.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorLoadingDelegate.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorTreeViewWidget.ui

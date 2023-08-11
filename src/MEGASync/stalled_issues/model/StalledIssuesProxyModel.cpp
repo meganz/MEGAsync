@@ -53,7 +53,6 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
             sourceM->lockModelMutex(false);
             blockSignals(false);
             sourceM->blockSignals(false);
-            sourceM->unBlockUi();
         });
 
         mFilterWatcher.setFuture(filterAction);
@@ -75,6 +74,11 @@ void StalledIssuesProxyModel::updateFilter()
 void StalledIssuesProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     QSortFilterProxyModel::setSourceModel(sourceModel);
+    auto sourceM = qobject_cast<StalledIssuesModel*>(sourceModel);
+    if(sourceM)
+    {
+        connect(sourceM, &StalledIssuesModel::refreshFilter, this, &StalledIssuesProxyModel::updateFilter);
+    }
 }
 
 void StalledIssuesProxyModel::updateStalledIssues()

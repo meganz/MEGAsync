@@ -25,7 +25,14 @@ bool StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
                 std::unique_ptr<mega::MegaNode> nodeToMove(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
                 if(nodeToMove)
                 {
-                    MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(),rubbishNode.get());
+                    QEventLoop moveEventLoop;
+                    MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(),rubbishNode.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                                                      [this, &moveEventLoop]
+                                                                                                                      (const mega::MegaRequest&,const mega::MegaError&)
+                    {
+                        moveEventLoop.quit();
+                    }));
+                    moveEventLoop.exec();
                 }
             }
 
@@ -126,6 +133,43 @@ void StalledIssuesUtilities::ignoreFile(const QString &path)
                 streamIn.setCodec("UTF-8");
 
                 QString line(QString::fromLatin1("\n-:%1").arg(ignoreDir.relativeFilePath(path)));
+                streamIn << line;
+
+                ignore.close();
+                mIgnoreMutex.unlock();
+
+                break;
+            }
+
+            if(!ignoreDir.cdUp())
+            {
+                break;
+            }
+        }
+
+        emit actionFinished();
+    });
+}
+
+void StalledIssuesUtilities::ignoreSymLinks(const QString& path)
+{
+    QtConcurrent::run([this, path]()
+    {
+        QFileInfo tempFile(path);
+        QDir ignoreDir(tempFile.path());
+
+        while(ignoreDir.exists())
+        {
+            QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
+            if(ignore.exists())
+            {
+                mIgnoreMutex.lockForWrite();
+                ignore.open(QFile::Append | QFile::Text);
+
+                QTextStream streamIn(&ignore);
+                streamIn.setCodec("UTF-8");
+
+                QString line(QString::fromLatin1("\n-s:*"));
                 streamIn << line;
 
                 ignore.close();

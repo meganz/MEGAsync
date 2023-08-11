@@ -75,7 +75,7 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &t
     button->setCursor(Qt::PointingHandCursor);
     connect(button, &QPushButton::clicked, this, [this]()
     {
-        QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
+        QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::AltModifier));
         qApp->processEvents();
         emit actionClicked(sender()->property(BUTTON_ID).toInt());
     });

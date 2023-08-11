@@ -643,9 +643,8 @@ QMenu* MegaTransferView::createContextMenu()
         if(d->isCompleted() || d->mType & TransferData::TRANSFER_DOWNLOAD)
         {
             if(!containsIncomingShares)
-            {
+            {                
                 std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(d->mNodeHandle));
-
                 if(Utilities::isIncommingShare(node.get()))
                 {
                     containsIncomingShares = true;
