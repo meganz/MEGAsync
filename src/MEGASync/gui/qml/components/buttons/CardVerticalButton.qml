@@ -28,9 +28,6 @@ CardButton {
             spacing: contentSpacing
 
             MegaImages.SvgImage {
-//                color: button.checked || button.hovered
-//                       ? Styles.iconAccent
-//                       : Styles.iconSecondary
                 source: imageSource
                 sourceSize: imageSourceSize
             }

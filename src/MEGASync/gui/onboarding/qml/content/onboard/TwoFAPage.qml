@@ -10,7 +10,7 @@ TwoFAPageForm {
 
     signUpButton.onClicked: {
         registerFlow.state = register;
-        loginController.cancelLogin2FA();
+        LoginControllerAccess.cancelLogin2FA();
     }
 
     loginButton.onClicked: {
