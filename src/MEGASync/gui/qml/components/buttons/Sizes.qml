@@ -12,7 +12,8 @@ QtObject {
     property int height: 36
     property int spacing: 8
     property int radius: 6
-    property int focusBorderRadius: 11
+    property int maskBorderRadius: 8
+    property int focusBorderRadius: 10
     property int focusBorderWidth: 3
     property int borderWidth: 2
     property int iconWidth: 16
