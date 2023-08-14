@@ -199,17 +199,46 @@ class LoadingSceneMessageHandler : public QObject
     Q_OBJECT
 
 public:
-    LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI* viewBase, QObject* parent);
+    LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI* viewBaseUI, QWidget* viewBase);
+    ~LoadingSceneMessageHandler();
+
+    struct MessageInfo
+    {
+        enum ButtonType
+        {
+            Stop,
+            Ok
+        };
+
+        QString message;
+        int count = 0;
+        int total = 0;
+        ButtonType buttonType;
+    };
+
+    void hideLoadingMessage();
+    void setTopParent(QWidget* widget);
 
 public slots:
-    void updateMessage(QString message);
+    void updateMessage(const MessageInfo& info);
 
 signals:
     void onStopPressed();
+    void loadingMessageVisibilityChange(bool value);
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
+    void sendLoadingMessageVisibilityChange(bool value);
+
     Ui::ViewLoadingSceneUI* ui;
+    QWidget* mViewBase;
+    QWidget* mTopParent;
+    QWidget* mFadeOutWidget;
 };
+
+Q_DECLARE_METATYPE(LoadingSceneMessageHandler::MessageInfo)
 
 class ViewLoadingSceneBase : public QObject
 {
@@ -230,6 +259,11 @@ class ViewLoadingSceneBase : public QObject
 
     void show();
     void hide();
+
+    void setTopParent(QWidget* widget)
+    {
+        mMessageHandler->setTopParent(widget);
+    }
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -275,7 +309,6 @@ public:
         mViewDelegate(nullptr),
         mView(nullptr),
         mViewModel(nullptr),
-        mPotentialSourceModel(nullptr),
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
         mViewLayout(nullptr),
@@ -439,14 +472,11 @@ private:
         mLoadingDelegate->setLoading(true);
 
         emit sceneVisibilityChange(true);
-
-        mLoadingSceneUI->setEnabled(true);
     }
 
     QAbstractItemDelegate* mViewDelegate;
     LoadingSceneView<DelegateWidget, ViewType>* mView;
     QPointer<QAbstractItemModel> mViewModel;
-    QAbstractItemModel* mPotentialSourceModel;
     QPointer<QStandardItemModel> mLoadingModel;
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
@@ -462,6 +492,11 @@ public:
     LoadingSceneView(QWidget* parent): ViewType(parent)
     {
         mLoadingView.setView(this);
+    }
+
+    void setTopParent(QWidget* widget)
+    {
+        mLoadingView.setTopParent(widget);
     }
 
     void setViewPortEventsBlocked(bool newViewPortEventsBlocked)

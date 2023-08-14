@@ -5,6 +5,7 @@
 #include "QTMegaGlobalListener.h"
 #include "StalledIssue.h"
 #include "StalledIssuesUtilities.h"
+#include "ViewLoadingScene.h"
 
 #include <QObject>
 #include <QMutex>
@@ -37,6 +38,7 @@ public slots:
 
 signals:
     void stalledIssuesReady(StalledIssuesReceiver::StalledIssuesReceived);
+    void solvingIssues(int issueCount, int total);
 
 protected:
     void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest *request, ::mega::MegaError*);
@@ -93,12 +95,17 @@ public:
     //SOLVE PROBLEMS
     void stopSolvingIssues();
 
+    //Solve all issues
+    void solveAllIssues();
+
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
 
     bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveCloudConflictedNameByRename(const QString &renameTo, int conflictIndex, const QModelIndex& index);
+
+    void finishConflictManually();
 
     void semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option);
 
@@ -122,7 +129,7 @@ signals:
 
     void showRawInfoChanged();
 
-    void updateLoadingMessage(QString message);
+    void updateLoadingMessage(const LoadingSceneMessageHandler::MessageInfo& message);
 
     void refreshFilter();
 
@@ -140,7 +147,14 @@ private:
     void reset();
     QModelIndex getSolveIssueIndex(const QModelIndex& index);
     void quitReceiverThread();
-    void finishSolvingIssues();
+
+    bool checkIfUserStopSolving();
+    void startSolvingIssues();
+    void finishSolvingIssues(int issuesFixed);
+
+    void sendFixingIssuesMessage(int issue, int totalIssues);
+
+    void issueSolved(std::shared_ptr<StalledIssueVariant> issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
     void operator=(const StalledIssuesModel&) = delete;
@@ -160,6 +174,7 @@ private:
     mutable QMutex mModelMutex;
 
     mutable StalledIssuesVariantList mStalledIssues;
+    mutable StalledIssuesVariantList mSolvedStalledIssues;
     mutable QHash<StalledIssueVariant*, int> mStalledIssuesByOrder;
 
     QHash<int, int> mCountByFilterCriterion;
@@ -168,7 +183,8 @@ private:
     bool mRawInfoVisible;
 
     std::atomic_bool mSolvingIssues {false};
-    std::atomic_bool mStopSolvingIssues {false};
+    std::atomic_bool mIssuesSolved {false};
+    std::atomic_bool mSolvingIssuesFinished {false};
 };
 
 #endif // STALLEDISSUESMODEL_H

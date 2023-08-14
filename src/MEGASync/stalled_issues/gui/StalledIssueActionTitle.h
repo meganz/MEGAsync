@@ -48,7 +48,7 @@ public:
     void updateUser(const QString& user, bool show);
     void updateVersionsCount(int versions);
     void updateSize(int64_t size);
-    void updateFingerprint(const QString &fp);
+    void updateCRC(const QString &fp);
 
     enum class AttributeType
     {
@@ -57,7 +57,7 @@ public:
         Size,
         User,
         Versions,
-        Fingerprint
+        CRC
     };
     void hideAttribute(AttributeType type);
 

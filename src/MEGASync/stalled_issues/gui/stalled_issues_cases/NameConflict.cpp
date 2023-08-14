@@ -245,14 +245,14 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
 
     if(MegaSyncApp->getStalledIssuesModel()->isRawInfoVisible())
     {
-        info->mItemAttributes->requestFingerprint(title, [this, index](const QString& fp)
+        info->mItemAttributes->requestCRC(title, [this, index](const QString& fp)
         {
-            mTitlesByIndex.value(index)->updateFingerprint(fp);
+            mTitlesByIndex.value(index)->updateCRC(fp);
         });
     }
     else
     {
-        title->updateFingerprint(QString());
+        title->updateCRC(QString());
     }
 
     //These items go in order

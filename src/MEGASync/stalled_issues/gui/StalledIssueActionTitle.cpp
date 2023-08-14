@@ -309,7 +309,7 @@ void StalledIssueActionTitle::updateSize(int64_t size)
     showAttribute(AttributeType::Size);
 }
 
-void StalledIssueActionTitle::updateFingerprint(const QString& fp)
+void StalledIssueActionTitle::updateCRC(const QString& fp)
 {
     auto rawValues = isRawInfoVisible();
 
@@ -317,21 +317,21 @@ void StalledIssueActionTitle::updateFingerprint(const QString& fp)
     {
         QString fpText = fp.isEmpty() ? tr("-") : fp;
 
-        auto& fpLabel = mUpdateLabels[AttributeType::Fingerprint];
+        auto& fpLabel = mUpdateLabels[AttributeType::CRC];
         if(!fpLabel)
         {
-            fpLabel = addExtraInfo(tr("Fingerprint:"), fpText, 0);
+            fpLabel = addExtraInfo(tr("CRC:"), fpText, 0);
         }
         else
         {
             updateLabel(fpLabel, fpText);
         }
 
-        showAttribute(AttributeType::Fingerprint);
+        showAttribute(AttributeType::CRC);
     }
     else
     {
-        hideAttribute(AttributeType::Fingerprint);
+        hideAttribute(AttributeType::CRC);
     }
 }
 

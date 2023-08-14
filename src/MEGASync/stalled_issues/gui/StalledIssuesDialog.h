@@ -46,7 +46,7 @@ private slots:
 
     void onStalledIssuesLoaded();
     void onModelFiltered();
-    void onLoadingSceneChanged(bool state);
+    void onLoadingSceneVisibilityChange(bool state);
 
     void showModeSelector();
     void onPreferencesValueChanged(QString key);
@@ -54,6 +54,10 @@ private slots:
 private:
     void showView(bool update);
     void selectNewMode();
+    void hoverMode(Preferences::StalledIssuesModeType mode);
+    void unhoverMode(Preferences::StalledIssuesModeType mode);
+
+    bool setNewModeToPreferences();
 
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;

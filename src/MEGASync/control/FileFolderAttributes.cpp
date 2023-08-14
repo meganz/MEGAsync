@@ -76,15 +76,15 @@ void FileFolderAttributes::requestCreatedTime(QObject* caller, std::function<voi
     }
 }
 
-void FileFolderAttributes::requestFingerprint(QObject *caller, std::function<void (const QString &)> func)
+void FileFolderAttributes::requestCRC(QObject *caller, std::function<void (const QString &)> func)
 {
-    if(auto context = requestReady(AttributeTypes::Fingerprint, caller))
+    if(auto context = requestReady(AttributeTypes::CRC, caller))
     {
-        connect(this, &FileFolderAttributes::fingerprintReady, context, [this, func](const QString& fp){
+        connect(this, &FileFolderAttributes::CRCReady, context, [this, func](const QString& fp){
             if(func)
             {
                 func(fp);
-                requestFinish(AttributeTypes::Fingerprint);
+                requestFinish(AttributeTypes::CRC);
             }
         });
     }
@@ -284,9 +284,9 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
     emit createdTimeReady(mCreatedTime);
 }
 
-void LocalFileFolderAttributes::requestFingerprint(QObject *caller, std::function<void (const QString &)> func)
+void LocalFileFolderAttributes::requestCRC(QObject *caller, std::function<void (const QString &)> func)
 {
-    FileFolderAttributes::requestFingerprint(caller,func);
+    FileFolderAttributes::requestCRC(caller,func);
 
     if(!mPath.isEmpty())
     {
@@ -296,13 +296,14 @@ void LocalFileFolderAttributes::requestFingerprint(QObject *caller, std::functio
         {
             if(fileInfo.isFile())
             {
-                std::unique_ptr<char[]> fp(MegaSyncApp->getMegaApi()->getFingerprint(QDir::toNativeSeparators(fileInfo.filePath()).toUtf8().constData()));
-                mFp = QString::fromUtf8(fp.get());
+//                std::unique_ptr<char[]> fp(MegaSyncApp->getMegaApi()->getFingerprint(QDir::toNativeSeparators(fileInfo.filePath()).toUtf8().constData()));
+                std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(QDir::toNativeSeparators(fileInfo.filePath()).toUtf8().constData()));
+                mFp = QString::fromUtf8(crc.get());
             }
 
         }
 
-        emit fingerprintReady(mFp);
+        emit CRCReady(mFp);
     }
 }
 
@@ -437,16 +438,17 @@ void RemoteFileFolderAttributes::requestCreatedTime(QObject* caller,std::functio
     emit createdTimeReady(mCreatedTime);
 }
 
-void RemoteFileFolderAttributes::requestFingerprint(QObject *caller, std::function<void (const QString &)> func)
+void RemoteFileFolderAttributes::requestCRC(QObject *caller, std::function<void (const QString &)> func)
 {
-    FileFolderAttributes::requestFingerprint(caller, func);
+    FileFolderAttributes::requestCRC(caller, func);
 
     std::unique_ptr<mega::MegaNode> node = getNode();
     if(node)
     {
         if (const char* fp = node->getFingerprint())
         {
-            mFp = QString::fromUtf8(node->getFingerprint());
+            std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRCFromFingerprint(fp));
+            mFp = QString::fromUtf8(crc.get());
         }
         else
         {
@@ -454,7 +456,7 @@ void RemoteFileFolderAttributes::requestFingerprint(QObject *caller, std::functi
         }
     }
 
-    emit fingerprintReady(mFp);
+    emit CRCReady(mFp);
 }
 
 void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void (QString, bool)> func)

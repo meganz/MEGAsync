@@ -24,7 +24,11 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
 
         if (auto stalls = request->getMegaSyncStallList())
         {
-            for (size_t i = 0; i < stalls->size(); ++i)
+            StalledIssuesVariantList solvableItems;
+
+            auto totalSize(stalls->size());
+
+            for (size_t i = 0; i < totalSize; ++i)
             {
                 if(i > 20)
                 {
@@ -64,16 +68,33 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 }
                 else
                 {
-                    //if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart)
-                    //{
-                    //    variant->getData()->autoSolveIssue();
-                    //}
-
-                    if(!variant->consultData()->isSolved())
+                    if(variant->getData()->isSolvable())
+                    {
+                        solvableItems.append(variant);
+                    }
+                    else
                     {
                         mCacheStalledIssues.stalledIssues.append(variant);
                     }
                 }
+            }
+
+            auto solvableTotalIssues(solvableItems.size());
+            auto counter(1);
+            foreach(auto solvableIssue, solvableItems)
+            {
+                if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart)
+                {
+                    emit solvingIssues(counter, solvableTotalIssues);
+                    solvableIssue->getData()->autoSolveIssue();
+                }
+
+                if(!solvableIssue->getData()->isSolved())
+                {
+                    mCacheStalledIssues.stalledIssues.append(solvableIssue);
+                }
+
+                counter++;
             }
         }
 
@@ -112,6 +133,16 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
 
     mGlobalListener = new mega::QTMegaGlobalListener(mMegaApi,this);
     mMegaApi->addGlobalListener(mGlobalListener);
+
+    connect(mStalledIssuedReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](int issueCounter, int totalIssues)
+    {
+        LoadingSceneMessageHandler::MessageInfo info;
+        info.message = tr("Solving issues");
+        info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::Stop;
+        info.count = issueCounter;
+        info.total = totalIssues;
+        emit updateLoadingMessage(info);
+    }, Qt::QueuedConnection);
 
     mStalledIssuesThread->start();
 
@@ -178,6 +209,31 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
             }
 
             endInsertRows();
+        }
+
+        totalRows = rowCount(QModelIndex());
+        rowsToBeInserted = static_cast<int>(mSolvedStalledIssues.size());
+
+        if(rowsToBeInserted > 0)
+        {
+             beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
+
+             for (auto it = mSolvedStalledIssues.begin(); it != mSolvedStalledIssues.end();)
+             {
+                 if(mThreadFinished)
+                 {
+                     return;
+                 }
+
+                 std::shared_ptr<StalledIssueVariant> issue(*it);
+                 mStalledIssues.append(issue);
+                 mStalledIssuesByOrder.insert(issue.get(), rowCount(QModelIndex()) - 1);
+                 mCountByFilterCriterion[static_cast<int>(StalledIssueFilterCriterion::SOLVED_CONFLICTS)]++;
+
+                 it++;
+             }
+
+             endInsertRows();
         }
 
         blockSignals(false);
@@ -466,11 +522,6 @@ bool StalledIssuesModel::isRawInfoVisible() const
     return mRawInfoVisible;
 }
 
-void StalledIssuesModel::stopSolvingIssues()
-{
-    mStopSolvingIssues = true;
-}
-
 void StalledIssuesModel::reset()
 {
     beginResetModel();
@@ -495,25 +546,111 @@ void StalledIssuesModel::quitReceiverThread()
     mStalledIssuesThread->quit();
 }
 
-void StalledIssuesModel::finishSolvingIssues()
+bool StalledIssuesModel::checkIfUserStopSolving()
+{
+    if(mThreadFinished || mSolvingIssuesFinished)
+    {
+        mSolvingIssuesFinished = false;
+        return true;
+    }
+
+    return false;
+}
+
+void StalledIssuesModel::stopSolvingIssues()
+{
+    if(mIssuesSolved)
+    {
+        mIssuesSolved = false;
+        refreshFilter();
+    }
+    else
+    {
+        mSolvingIssuesFinished = true;
+    }
+}
+
+void StalledIssuesModel::startSolvingIssues()
+{
+    mSolvingIssues = true;
+}
+
+void StalledIssuesModel::finishSolvingIssues(int issuesFixed)
 {
     mSolvingIssues = false;
-    emit refreshFilter();
+    mIssuesSolved = true;
+
+    LoadingSceneMessageHandler::MessageInfo info;
+    info.message = tr("%n issues fixed", "", issuesFixed);
+    info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::Ok;
+    emit updateLoadingMessage(info);
+
+    emit stalledIssuesCountChanged();
+}
+
+void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
+{
+    LoadingSceneMessageHandler::MessageInfo info;
+    info.message = tr("Fixing issues");
+    info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::Stop;
+    info.count = issue;
+    info.total = totalIssues;
+    emit updateLoadingMessage(info);
 }
 
 int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion criterion)
 {
     if(criterion == StalledIssueFilterCriterion::ALL_ISSUES)
     {
-        return rowCount(QModelIndex());
+        return (rowCount(QModelIndex()) - mCountByFilterCriterion.value(static_cast<int>(StalledIssueFilterCriterion::SOLVED_CONFLICTS),0));
     }
     else
     {
-        return mCountByFilterCriterion.value((int)criterion,0);
+        return mCountByFilterCriterion.value(static_cast<int>(criterion),0);
     }
 }
 
-//METHODS TO MODIFY DATA
+//METHODS TO SOLVE ISSUES
+void StalledIssuesModel::issueSolved(std::shared_ptr<StalledIssueVariant> issue)
+{
+    if(issue->consultData()->isSolved())
+    {
+        mSolvedStalledIssues.append(issue);
+        mCountByFilterCriterion[static_cast<int>(StalledIssueFilterCriterion::SOLVED_CONFLICTS)]++;
+        mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason(issue->consultData()->getReason()))]--;
+    }
+}
+
+void StalledIssuesModel::solveAllIssues()
+{
+    blockUi();
+
+    startSolvingIssues();
+    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this]()
+    {
+        auto totalRows(rowCount(QModelIndex()));
+        auto issuesFixed(0);
+        for(int row = 0; row < totalRows; ++row)
+        {
+            if(checkIfUserStopSolving())
+            {
+                break;
+            }
+
+            auto item = mStalledIssues.at(row);
+            if(item->consultData()->isSolvable())
+            {
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
+                item->getData()->autoSolveIssue();
+                issueSolved(item);
+            }
+         }
+
+        finishSolvingIssues(issuesFixed);
+    });
+}
+
 void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &list)
 {
     auto resolveIssue = [this, remote](int row)
@@ -525,6 +662,7 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
             if(auto issue = item->convert<LocalOrRemoteUserMustChooseStalledIssue>())
             {
                 remote ? issue->chooseRemoteSide() : issue->chooseLocalSide();
+                issueSolved(item);
                 if(item->consultData()->isSolved())
                 {
                     MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_MANUALLY,
@@ -534,24 +672,28 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
         }
     };
 
+    startSolvingIssues();
     if(list.isEmpty())
     {
         blockUi();
 
         Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue]()
         {
-            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            auto issuesFixed(0);
+            auto totalRows(rowCount(QModelIndex()));
+            for(int row = 0; row < totalRows; ++row)
             {
-                if(mThreadFinished || mStopSolvingIssues)
+                if(checkIfUserStopSolving())
                 {
-                    mStopSolvingIssues = false;
                     break;
                 }
 
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
                 resolveIssue(row);
             }
 
-            unBlockUi();
+            finishSolvingIssues(issuesFixed);
         });
     }
     else
@@ -560,18 +702,21 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
 
         Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue, list]()
         {
+            auto issuesFixed(0);
+            auto totalRows(list.size());
             foreach(auto index, list)
             {
-                if(mThreadFinished || mStopSolvingIssues)
+                if(checkIfUserStopSolving())
                 {
-                    mStopSolvingIssues = false;
                     break;
                 }
 
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
                 resolveIssue(index.row());
             }
 
-            unBlockUi();
+            finishSolvingIssues(issuesFixed);
         });
     }
 }
@@ -580,12 +725,14 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
 {
     auto resolveIssue = [this](int row)
     {
-        auto item = mStalledIssues.at(row)->convert<LocalOrRemoteUserMustChooseStalledIssue>();
-        if(item)
+        auto issue(mStalledIssues.at(row));
+        auto localRemoteIssue = mStalledIssues.at(row)->convert<LocalOrRemoteUserMustChooseStalledIssue>();
+        if(localRemoteIssue)
         {
-            item->chooseLastMTimeSide();
+            localRemoteIssue->chooseLastMTimeSide();
+            issueSolved(issue);
 
-            if(item->isSolved())
+            if(localRemoteIssue->isSolved())
             {
                 MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_SEMI_AUTOMATICALLY,
                                                      "Local/Remote issue solved semi-automatically", false, nullptr);
@@ -593,59 +740,54 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
         }
     };
 
-    auto loadingMessage = [this](int issue, int total){
-        QString message(tr("Fixing issues\n%1 of %2").arg(issue).arg(total));
-        emit updateLoadingMessage(message);
-    };
-
+    startSolvingIssues();
     if(list.isEmpty())
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue, loadingMessage]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue]()
         {
+            auto issuesFixed(0);
             auto totalRows(rowCount(QModelIndex()));
             for(int row = 0; row < totalRows; ++row)
             {
-                if(mThreadFinished || mStopSolvingIssues)
+                if(checkIfUserStopSolving())
                 {
-                    mStopSolvingIssues = false;
                     break;
                 }
 
-                loadingMessage(row+1, totalRows);
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
                 resolveIssue(row);
             }
 
-            finishSolvingIssues();
-            unBlockUi();
+            finishSolvingIssues(issuesFixed);
         });
     }
     else
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, resolveIssue, loadingMessage]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, resolveIssue]()
         {
-            auto counter(1);
+            auto issuesFixed(0);
+            auto totalRows(list.size());
             foreach(auto index, list)
             {
-                if(mThreadFinished|| mStopSolvingIssues)
+                if(checkIfUserStopSolving())
                 {
-                    mStopSolvingIssues = false;
                     break;
                 }
 
-                auto potentialIndex = getSolveIssueIndex(index);
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
 
-                loadingMessage(counter, list.size());
+                auto potentialIndex = getSolveIssueIndex(index);
                 resolveIssue(potentialIndex.row());
 
-                counter++;
             }
 
-            finishSolvingIssues();
-            unBlockUi();
+            finishSolvingIssues(issuesFixed);
         });
     }
 }
@@ -671,29 +813,34 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
             }
 
             item->getData()->setIsSolved();
+            issueSolved(item);
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
                                                  "Issue ignored manually", false, nullptr);
         }
     };
 
+    startSolvingIssues();
     if(list.isEmpty())
     {
         blockUi();
 
         Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue]()
         {
-            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            auto issuesFixed(0);
+            auto totalRows(rowCount(QModelIndex()));
+            for(int row = 0; row < totalRows; ++row)
             {
-                if(mThreadFinished|| mStopSolvingIssues)
+                if(checkIfUserStopSolving())
                 {
-                    mStopSolvingIssues = false;
                     break;
                 }
 
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
                 resolveIssue(row);
             }
 
-            unBlockUi();
+            finishSolvingIssues(issuesFixed);
         });
     }
     else
@@ -702,18 +849,21 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
 
         Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue, list]()
         {
+            auto issuesFixed(0);
+            auto totalRows(list.size());
             foreach(auto index, list)
             {
-                if(mThreadFinished|| mStopSolvingIssues)
+                if(checkIfUserStopSolving())
                 {
-                    mStopSolvingIssues = false;
                     break;
                 }
 
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
                 resolveIssue(index.row());
             }
 
-            unBlockUi();
+            finishSolvingIssues(issuesFixed);
         });
     }
 }
@@ -727,15 +877,17 @@ void StalledIssuesModel::ignoreSymLinks(const QModelIndex& index)
         MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
                                              "Issue ignored manually", false, nullptr);
 
+        startSolvingIssues();
         blockUi();
 
         Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this]()
         {
-            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            auto issuesFixed(0);
+            auto totalRows(rowCount(QModelIndex()));
+            for(int row = 0; row < totalRows; ++row)
             {
-                if(mThreadFinished || mStopSolvingIssues)
+                if(checkIfUserStopSolving())
                 {
-                    mStopSolvingIssues = false;
                     break;
                 }
 
@@ -744,9 +896,13 @@ void StalledIssuesModel::ignoreSymLinks(const QModelIndex& index)
                 {
                     item->getData()->setIsSolved();
                 }
+
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
+                issueSolved(item);
             }
 
-            unBlockUi();
+            finishSolvingIssues(issuesFixed);
         });
     }
 }
@@ -761,6 +917,7 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &
             if(auto nameConflict = item->convert<NameConflictedStalledIssue>())
             {
                 nameConflict->semiAutoSolveIssue(option);
+                issueSolved(item);
                 if(item->consultData()->isSolved())
                 {
                     MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY,
@@ -770,58 +927,53 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &
         }
     };
 
-    auto loadingMessage = [this](int issue, int total){
-        QString message(tr("Fixing name conflict issues\n%1 of %2").arg(issue).arg(total));
-        emit updateLoadingMessage(message);
-    };
-
+    startSolvingIssues();
     if(list.isEmpty())
     {
         blockUi();
-        mSolvingIssues = true;
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, option, resolveIssue, loadingMessage]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, option, resolveIssue]()
         {
+            auto issuesFixed(0);
             auto totalRows(rowCount(QModelIndex()));
             for(int row = 0; row < totalRows; ++row)
             {
-                if(mThreadFinished || mStopSolvingIssues)
+                if(checkIfUserStopSolving())
                 {
-                    mStopSolvingIssues = false;
                     break;
                 }
 
-                loadingMessage(row + 1, totalRows);
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
                 resolveIssue(row);
             }
 
-            finishSolvingIssues();
+            finishSolvingIssues(issuesFixed);
         });
     }
     else
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, option, resolveIssue, loadingMessage]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, option, resolveIssue]()
         {
-            mSolvingIssues = true;
-            auto counter(1);
+            auto issuesFixed(0);
+            auto totalRows(list.size());
+
             foreach(auto index, list)
             {
-                if(mThreadFinished || mStopSolvingIssues)
+                if(checkIfUserStopSolving())
                 {
-                    mStopSolvingIssues = false;
                     break;
                 }
 
-                loadingMessage(counter, list.size());
+                issuesFixed++;
+                sendFixingIssuesMessage(issuesFixed, totalRows);
                 auto potentialIndex = getSolveIssueIndex(index);
                 resolveIssue(potentialIndex.row());
-
-                counter++;
             }
 
-            finishSolvingIssues();
+            finishSolvingIssues(issuesFixed);
         });
     }
 }
@@ -832,15 +984,19 @@ bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, con
 
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
+    auto issue(mStalledIssues.at(potentialIndex.row()));
+    if(auto nameConflict = issue->convert<NameConflictedStalledIssue>())
     {
         result = nameConflict->solveLocalConflictedNameByRemove(conflictIndex);
+        issueSolved(issue);
 
         if(nameConflict->isSolved())
         {
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
                                                  "Name conflict issue solved manually", false, nullptr);
+            finishConflictManually();
         }
+
     }
 
     return result;
@@ -852,15 +1008,19 @@ bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString &renameT
 
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
+    auto issue(mStalledIssues.at(potentialIndex.row()));
+    if(auto nameConflict = issue->convert<NameConflictedStalledIssue>())
     {
         result = nameConflict->solveLocalConflictedNameByRename(conflictIndex, renameTo);
+        issueSolved(issue);
 
         if(nameConflict->isSolved())
         {
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
                                                  "Name conflict issue solved manually", false, nullptr);
+            finishConflictManually();
         }
+
     }
 
     return result;
@@ -872,15 +1032,19 @@ bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, con
 
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
+    auto issue(mStalledIssues.at(potentialIndex.row()));
+    if(auto nameConflict = issue->convert<NameConflictedStalledIssue>())
     {
         result = nameConflict-> solveCloudConflictedNameByRemove(conflictIndex);
+        issueSolved(issue);
 
         if(nameConflict->isSolved())
         {
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
                                                  "Name conflict issue solved manually", false, nullptr);
+            finishConflictManually();
         }
+
     }
 
     return result;
@@ -892,16 +1056,26 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameT
 
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
+    auto issue(mStalledIssues.at(potentialIndex.row()));
+    if(auto nameConflict = issue->convert<NameConflictedStalledIssue>())
     {
         result = nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo);
+        issueSolved(issue);
 
         if(nameConflict->isSolved())
         {
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
                                                  "Name conflict issue solved manually", false, nullptr);
+            finishConflictManually();
         }
     }
 
     return result;
+}
+
+void StalledIssuesModel::finishConflictManually()
+{
+    blockUi();
+    //Only was issue was fixed
+    finishSolvingIssues(1);
 }

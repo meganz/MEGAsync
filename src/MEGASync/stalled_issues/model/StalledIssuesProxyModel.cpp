@@ -102,6 +102,11 @@ bool StalledIssuesProxyModel::filterAcceptsRow(int source_row, const QModelIndex
     if(index.data().isValid())
     {
         const auto d (qvariant_cast<StalledIssueVariant>(index.data()));
+        if(d.consultData()->isSolved())
+        {
+            return  mFilterCriterion == StalledIssueFilterCriterion::SOLVED_CONFLICTS;
+        }
+
         if(mFilterCriterion == StalledIssueFilterCriterion::ALL_ISSUES)
         {
             return true;

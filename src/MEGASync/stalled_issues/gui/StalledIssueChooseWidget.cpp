@@ -172,14 +172,14 @@ void LocalStalledIssueChooseWidget::updateExtraInfo(LocalStalledIssueDataPtr loc
 
     if(MegaSyncApp->getStalledIssuesModel()->isRawInfoVisible())
     {
-        localData->getFileFolderAttributes()->requestFingerprint(this, [this](const QString& fp)
+        localData->getFileFolderAttributes()->requestCRC(this, [this](const QString& fp)
         {
-            ui->name->updateFingerprint(fp);
+            ui->name->updateCRC(fp);
         });
     }
     else
     {
-        ui->name->updateFingerprint(QString());
+        ui->name->updateCRC(QString());
     }
 }
 
@@ -221,14 +221,14 @@ void CloudStalledIssueChooseWidget::updateExtraInfo(CloudStalledIssueDataPtr clo
 
         if(MegaSyncApp->getStalledIssuesModel()->isRawInfoVisible())
         {
-            cloudData->getFileFolderAttributes()->requestFingerprint(this, [this](const QString& fp)
+            cloudData->getFileFolderAttributes()->requestCRC(this, [this](const QString& fp)
             {
-                ui->name->updateFingerprint(fp);
+                ui->name->updateCRC(fp);
             });
         }
         else
         {
-            ui->name->updateFingerprint(QString());
+            ui->name->updateCRC(QString());
         }
 
         cloudData->getFileFolderAttributes()->requestVersions(this, [this](int versions){

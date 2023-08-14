@@ -19,6 +19,7 @@ enum class StalledIssueFilterCriterion
     NAME_CONFLICTS,
     ITEM_TYPE_CONFLICTS,
     OTHER_CONFLICTS,
+    SOLVED_CONFLICTS
 };
 
 class StalledIssueData : public QSharedData

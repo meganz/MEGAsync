@@ -1478,5 +1478,14 @@
         <file>images/sync_states/hand-error.png</file>
         <file>images/sync_states/hand-error@2x.png</file>
         <file>images/sync_states/hand-error@3x.png</file>
+        <file>images/StalledIssues/advanced-mode.png</file>
+        <file>images/StalledIssues/advanced-mode@2x.png</file>
+        <file>images/StalledIssues/advanced-mode@3x.png</file>
+        <file>images/StalledIssues/smart-mode.png</file>
+        <file>images/StalledIssues/smart-mode@2x.png</file>
+        <file>images/StalledIssues/smart-mode@3x.png</file>
+        <file>images/StalledIssues/solve-issues-button.png</file>
+        <file>images/StalledIssues/solve-issues-button@2x.png</file>
+        <file>images/StalledIssues/solve-issues-button@3x.png</file>
     </qresource>
 </RCC>
