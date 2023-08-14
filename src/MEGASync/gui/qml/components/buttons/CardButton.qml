@@ -9,7 +9,7 @@ Button {
     id: button
 
     readonly property int focusBorderWidth: 4
-    readonly property int focusBorderRadius: 8
+    readonly property int focusBorderRadius: 10
 
     property string title
     property string description
