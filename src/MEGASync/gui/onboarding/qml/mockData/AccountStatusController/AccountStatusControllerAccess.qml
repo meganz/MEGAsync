@@ -1,0 +1,2 @@
+pragma Singleton
+AccountStatusController {}

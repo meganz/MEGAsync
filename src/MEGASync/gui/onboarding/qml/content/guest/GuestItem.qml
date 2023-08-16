@@ -17,6 +17,7 @@ import Guest 1.0
 // C++
 import GuestContent 1.0
 import ApiEnums 1.0
+import AccountStatusController 1.0
 
 Rectangle {
     id: content
@@ -252,6 +253,8 @@ Rectangle {
 
         onLoginFinished: (errorCode, errorMsg) => {
             switch(errorCode) {
+                case ApiEnums.API_OK:
+                    break;
                 case ApiEnums.API_EMFAREQUIRED:
                     content.indeterminate = true;
                     content.description = OnboardingStrings.status2FA;
@@ -262,6 +265,7 @@ Rectangle {
                 case ApiEnums.API_EEXPIRED:
                     break;
                 default:
+                    content.state = content.stateNormal;
                     content.validating2FA = false;
                     break;
             }

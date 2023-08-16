@@ -14,6 +14,7 @@ import Onboard 1.0
 
 // C++
 import Onboarding 1.0
+import LoginController 1.0
 
 StackViewPage {
     id: root

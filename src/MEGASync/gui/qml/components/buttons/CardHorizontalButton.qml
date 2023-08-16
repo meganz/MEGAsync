@@ -36,9 +36,6 @@ CardButton {
             spacing: 20
 
             MegaImages.SvgImage {
-                color: Styles.buttonOutlinePressed /*button.checked || button.hovered
-                       ? Styles.iconAccent
-                       : Styles.iconSecondary*/
                 source: imageSource
                 sourceSize: imageSourceSize
                 anchors.verticalCenter: parent.verticalCenter

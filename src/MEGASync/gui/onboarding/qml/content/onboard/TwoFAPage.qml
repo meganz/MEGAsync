@@ -4,6 +4,7 @@ import QtQuick.Controls 2.12
 
 // C++
 import ApiEnums 1.0
+import LoginController 1.0
 
 TwoFAPageForm {
 

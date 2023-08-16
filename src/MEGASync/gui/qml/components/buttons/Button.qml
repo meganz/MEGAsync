@@ -139,14 +139,16 @@ Qml.RoundButton {
             layer.enabled: true
 
             layer.effect: OpacityMask {
+
                 maskSource: Item {
                     width: backgroundRect.width
                     height: backgroundRect.height
+
                     Rectangle {
                         anchors.centerIn: parent
                         width:  backgroundRect.width
                         height: backgroundRect.height
-                        radius: 7
+                        radius: sizes.radius
                     }
                 }
             }

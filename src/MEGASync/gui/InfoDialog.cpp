@@ -1828,5 +1828,8 @@ void InfoDialog::repositionInfoDialog()
                  .arg(posy)
                  .toUtf8().constData());
 
-    move(posx, posy);
+    if(posx != this->x() || posy != this->y())
+    {
+        move(posx, posy);
+    }
 }

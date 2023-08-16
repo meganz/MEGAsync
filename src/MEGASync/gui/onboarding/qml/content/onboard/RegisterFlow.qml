@@ -7,11 +7,9 @@ import QtQuick.Layouts 1.12
 // QML common
 import Common 1.0
 
-// Local
-
-
 // C++
 import Onboarding 1.0
+import LoginController 1.0
 
 Rectangle {
     id: registerFlow
