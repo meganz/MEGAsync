@@ -188,7 +188,16 @@ void StalledIssueHeader::showMultipleAction(const QString &actionButtonText, con
 {
     ui->actionContainer->show();
     ui->multipleActionButton->setVisible(true);
-    ui->multipleActionButton->setText(actionButtonText);
+    if(actions.size() == 1)
+    {
+        ui->multipleActionButton->setText(actions.first().actionText);
+        ui->multipleActionButton->setIcon(QIcon());
+    }
+    else
+    {
+        ui->multipleActionButton->setText(actionButtonText);
+    }
+
     ui->multipleActionButton->setProperty(MULTIPLE_ACTIONS_PROPERTY, QVariant::fromValue<QList<ActionInfo>>(actions));
 }
 
@@ -204,26 +213,33 @@ void StalledIssueHeader::onMultipleActionClicked()
     auto actions(ui->multipleActionButton->property(MULTIPLE_ACTIONS_PROPERTY).value<QList<ActionInfo>>());
     if(!actions.isEmpty())
     {
-        QMenu *menu(new QMenu(ui->multipleActionButton));
-        Platform::getInstance()->initMenu(menu, "MultipleActionStalledIssues");
-        menu->setAttribute(Qt::WA_DeleteOnClose);
-
-        foreach(auto action, actions)
+        if(actions.size() == 1)
         {
-            // Show in system file explorer action
-            auto actionItem (new MenuItemAction(action.actionText, QString()));
-            auto id(action.id);
-            connect(actionItem, &MenuItemAction::triggered, this, [this, id]()
-            {
-                mHeaderCase->onMultipleActionButtonOptionSelected(this, id);
-            });
-            actionItem->setParent(menu);
-            menu->addAction(actionItem);
+            mHeaderCase->onMultipleActionButtonOptionSelected(this, actions.first().id);
         }
+        else
+        {
+            QMenu *menu(new QMenu(ui->multipleActionButton));
+            Platform::getInstance()->initMenu(menu, "MultipleActionStalledIssues");
+            menu->setAttribute(Qt::WA_DeleteOnClose);
 
-        auto pos(ui->actionContainer->mapToGlobal(ui->multipleActionButton->pos()));
-        pos.setY(pos.y() + ui->multipleActionButton->height());
-        menu->popup(pos);
+            foreach(auto action, actions)
+            {
+                // Show in system file explorer action
+                auto actionItem (new MenuItemAction(action.actionText, QString()));
+                auto id(action.id);
+                connect(actionItem, &MenuItemAction::triggered, this, [this, id]()
+                {
+                    mHeaderCase->onMultipleActionButtonOptionSelected(this, id);
+                });
+                actionItem->setParent(menu);
+                menu->addAction(actionItem);
+            }
+
+            auto pos(ui->actionContainer->mapToGlobal(ui->multipleActionButton->pos()));
+            pos.setY(pos.y() + ui->multipleActionButton->height());
+            menu->popup(pos);
+        }
     }
 }
 

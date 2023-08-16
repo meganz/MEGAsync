@@ -5,6 +5,7 @@
 #include <MegaApplication.h>
 #include <FileFolderAttributes.h>
 #include <StalledIssuesUtilities.h>
+#include <Utilities.h>
 
 class NameConflictedStalledIssue : public StalledIssue
 {
@@ -17,6 +18,7 @@ public:
             REMOVE = 0,
             RENAME,
             SOLVED_BY_OTHER_SIDE,
+            MERGED,
             UNSOLVED
         };
 
@@ -266,6 +268,48 @@ public:
             mDuplicatedSolved = true;
         }
 
+        void mergeFolders()
+        {
+            auto conflictedNames = getConflictedNames();
+            if(!conflictedNames.isEmpty())
+            {
+                std::sort(conflictedNames.begin(), conflictedNames.end(),
+                          [](std::shared_ptr<ConflictedNameInfo> info1, std::shared_ptr<ConflictedNameInfo> info2)
+                {
+                    auto info1FileCount(0);
+                    if(!info1->mIsFile)
+                    {
+                        auto file1Attr = std::dynamic_pointer_cast<RemoteFileFolderAttributes>(info1->mItemAttributes);
+                        info1FileCount = file1Attr->fileCount();
+                    }
+
+                    auto info2FileCount(0);
+                    if(!info2->mIsFile)
+                    {
+                        auto file1Attr = std::dynamic_pointer_cast<RemoteFileFolderAttributes>(info2->mItemAttributes);
+                        info2FileCount = file1Attr->fileCount();
+                    }
+
+                    return info1FileCount > info2FileCount;
+                });
+
+                auto biggestFolder(conflictedNames.takeFirst());
+                std::unique_ptr<mega::MegaNode> targetFolder(MegaSyncApp->getMegaApi()->getNodeByHandle(biggestFolder->mHandle));
+                foreach(auto conflictedFolder, conflictedNames)
+                {
+                    std::unique_ptr<mega::MegaNode> folderToMerge(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedFolder->mHandle));
+                    if(folderToMerge && folderToMerge->isFolder())
+                    {
+                        FoldersMerge mergeItem(targetFolder.get(), folderToMerge.get());
+                        mergeItem.merge(FoldersMerge::ActionForDuplicates::Ignore);
+                        MegaSyncApp->getMegaApi()->remove(folderToMerge.get());
+                        conflictedFolder->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::MERGED;
+                    }
+                }
+            }
+        }
+
+
     private:
          QList<CloudConflictedNames> mConflictedNames;
          bool mDuplicatedSolved = false;
@@ -273,10 +317,12 @@ public:
 
     enum ActionSelected
     {
-        RemoveDuplicatedAndRename = 0,
-        RemoveDuplicated,
-        RenameAll
+        None = 0,
+        RemoveDuplicated = 0x01,
+        Rename = 0x02,
+        MergeFolders = 0x04
     };
+    Q_DECLARE_FLAGS(ActionsSelected, ActionSelected)
 
     NameConflictedStalledIssue(){}
     NameConflictedStalledIssue(const NameConflictedStalledIssue& tdr);

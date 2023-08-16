@@ -59,6 +59,7 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader*, in
     };
 
     auto selection = dialog->getDialog()->getSelection(isSymLinkChecker);
+    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(isSymLinkChecker);
 
     if(index == IgnoreType::IgnoreAll)
     {
@@ -68,8 +69,6 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader*, in
     {
         if(selection.size() <= 1)
         {
-            auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(isSymLinkChecker);
-
             if(allSimilarIssues.size() != selection.size())
             {
                 msgInfo.buttons |= QMessageBox::Yes;
@@ -100,7 +99,7 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader*, in
         msgInfo.informativeText = tr("This action will ignore this symlink and it will not be synced.");
     }
 
-    msgInfo.finishFunc = [this, index, selection](QMessageBox* msgBox)
+    msgInfo.finishFunc = [this, index, selection, allSimilarIssues](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
@@ -115,7 +114,7 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader*, in
         }
         else if(msgBox->result() == QDialogButtonBox::Yes)
         {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList());
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(allSimilarIssues);
         }
     };
 
@@ -384,12 +383,12 @@ void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header
         auto reasons(QList<mega::MegaSyncStall::SyncStallReason>()
                      << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
                      << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
+
         auto selection = dialog->getDialog()->getSelection(reasons);
+        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
         if(selection.size() <= 1)
         {
-            auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
-
             if(allSimilarIssues.size() != selection.size())
             {
                 msgInfo.buttons |= QMessageBox::Yes;
@@ -410,7 +409,7 @@ void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header
         msgInfo.text = tr("Are you sure you want to solve the issue?");
         msgInfo.informativeText = tr("This action will choose the latest modified side");
 
-        msgInfo.finishFunc = [selection, header, conflict](QMessageBox* msgBox)
+        msgInfo.finishFunc = [selection, allSimilarIssues, header, conflict](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
@@ -418,7 +417,7 @@ void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(QModelIndexList());
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(allSimilarIssues);
             }
         };
 
@@ -448,11 +447,30 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
                 }
                 else if(nameConflict->hasDuplicatedNodes())
                 {
-                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates and rename the rest"), NameConflictedStalledIssue::RemoveDuplicatedAndRename);
+                    NameConflictedStalledIssue::ActionsSelected selection(NameConflictedStalledIssue::RemoveDuplicated | NameConflictedStalledIssue::Rename);
+                    QString actionMessage;
+                    if(header->getData().consultData()->hasFolders() > 1)
+                    {
+                        selection |= NameConflictedStalledIssue::MergeFolders;
+                        actionMessage = tr("Remove duplicates, merge folders and rename the rest");
+                    }
+                    else
+                    {
+                        actionMessage = tr("Remove duplicates and rename the rest");
+                    }
+                    actions << StalledIssueHeader::ActionInfo(actionMessage, selection);
                 }
-            }
+                else if(header->getData().consultData()->hasFolders() > 1)
+                {
+                     actions << StalledIssueHeader::ActionInfo(tr("Merge folders and rename the rest"), NameConflictedStalledIssue::Rename | NameConflictedStalledIssue::MergeFolders);
+                }
 
-            actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::RenameAll);
+                actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::Rename);
+            }
+            else if(header->getData().consultData()->hasFolders() > 1)
+            {
+                actions << StalledIssueHeader::ActionInfo(tr("Merge folders"), NameConflictedStalledIssue::MergeFolders);
+            }
 
             header->showMultipleAction(tr("Solve options"), actions);
         }
@@ -523,11 +541,18 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
                     {
                         result = nameIssue->hasFiles() > 0 && nameIssue->areAllDuplicatedNodes();
                     }
-                    else if(index == NameConflictedStalledIssue::RemoveDuplicatedAndRename)
+
+                    if(result && (index & NameConflictedStalledIssue::RemoveDuplicated &&
+                                  index & NameConflictedStalledIssue::Rename))
                     {
                         result = nameIssue->hasFiles() > 0 &&
                                  nameIssue->hasDuplicatedNodes() &&
                                  !nameIssue->areAllDuplicatedNodes();
+                    }
+
+                    if(result && (index & NameConflictedStalledIssue::MergeFolders))
+                    {
+                        result = nameIssue->hasFolders() > 0;
                     }
                 }
             }
@@ -535,11 +560,10 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         };
 
         auto selection = dialog->getDialog()->getSelection(solutionCanBeApplied);
+        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(solutionCanBeApplied);
 
         if(selection.size() <= 1)
         {
-            auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(solutionCanBeApplied);
-
             if(allSimilarIssues.size() != selection.size())
             {
                 msgInfo.buttons |= QMessageBox::Yes;
@@ -559,9 +583,13 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         msgInfo.buttonsText = textsByButton;
         msgInfo.text = tr("Are you sure you want to solve the issue?");
 
-        if(index == NameConflictedStalledIssue::RenameAll)
+        if(index == NameConflictedStalledIssue::Rename)
         {
             msgInfo.informativeText = tr("This action will rename the conflicted items (adding a suffix like (1)).");
+        }
+        else if(index == NameConflictedStalledIssue::MergeFolders)
+        {
+            msgInfo.informativeText = tr("This action will merge all folders into a single one.\We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
         }
         else
         {
@@ -569,13 +597,17 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             {
                msgInfo.informativeText = tr("This action will delete the duplicate files.");
             }
+            else if(!(index & NameConflictedStalledIssue::MergeFolders))
+            {
+                msgInfo.informativeText = tr("This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).");
+            }
             else
             {
-                msgInfo.informativeText = tr("This action will delete the duplicate files and rename the rest of names (adding a suffix like (1)).");
+                 msgInfo.informativeText = tr("This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).");
             }
         }
 
-        msgInfo.finishFunc = [this, index, selection, header, nameConflict](QMessageBox* msgBox)
+        msgInfo.finishFunc = [this, index, selection, allSimilarIssues, header, nameConflict](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
@@ -583,7 +615,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(QModelIndexList(), index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(allSimilarIssues, index);
             }
         };
 

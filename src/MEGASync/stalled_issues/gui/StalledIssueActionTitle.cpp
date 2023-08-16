@@ -124,7 +124,7 @@ void StalledIssueActionTitle::showIcon()
     QIcon fileTypeIcon;
     QFileInfo fileInfo(mPath);
 
-    if(mIsCloud)
+    if(mIsCloud && mNode)
     {
         fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(mNode.get(), fileInfo, false);
     }

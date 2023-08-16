@@ -472,4 +472,30 @@ private:
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
 
+//This class is use to merge two remote folders
+class FoldersMerge : public QObject
+{
+    Q_OBJECT
+
+public:
+    FoldersMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge)
+        : mFolderTarget(folderTarget),
+          mFolderToMerge(folderToMerge)
+    {}
+
+    enum ActionForDuplicates
+    {
+        Rename,
+        Ignore
+    };
+    void merge(ActionForDuplicates action);
+
+signals:
+    void progressIndicator(const QString& nodeName);
+
+private:
+    mega::MegaNode* mFolderTarget;
+    mega::MegaNode* mFolderToMerge;
+};
+
 #endif // UTILITIES_H

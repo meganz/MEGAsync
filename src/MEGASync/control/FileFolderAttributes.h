@@ -21,6 +21,23 @@ public:
     FileFolderAttributes(QObject* parent);
     virtual ~FileFolderAttributes();
 
+    virtual void initAllAttributes();
+
+    template <typename AttributeType, typename VariableType, typename Func1>
+    void requestCustomValue(AttributeType* sender, QObject* caller,std::function<void(VariableType)> func, Func1 signal, int type)
+    {
+        if(auto context = requestReady(type, caller))
+        {
+            connect(sender, signal, context, [this, func, type](VariableType value){
+                if(func)
+                {
+                    func(value);
+                    requestFinish(type);
+                }
+            });
+        }
+    }
+
     virtual void requestSize(QObject* caller,std::function<void(qint64)> func);
     virtual void requestModifiedTime(QObject *caller, std::function<void(const QDateTime&)> func);
     virtual void requestCreatedTime(QObject *caller, std::function<void(const QDateTime&)> func);
@@ -54,6 +71,7 @@ protected:
         ModifiedTime,
         CreatedTime,
         CRC,
+        FileCount,
         LocalAttributes = 10,
         RemoteAttributes = 20,
         Last
@@ -110,13 +128,22 @@ public:
 
     ~RemoteFileFolderAttributes() override;
 
+    void initAllAttributes() override;
+
     void requestSize(QObject* caller,std::function<void(qint64)> func) override;
+    void requestFileCount(QObject* caller, std::function<void (int)> func);
     void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCRC(QObject* caller,std::function<void(const QString&)> func) override;
     void requestUser(QObject* caller, std::function<void(QString, bool)> func);
     void requestUser(QObject* caller, mega::MegaHandle currentUser, std::function<void(QString, bool)> func);
     void requestVersions(QObject*, std::function<void(int)> func);
+
+    int versionCount();
+    int fileCount();
+
+signals:
+    void fileCountReady(int);
 
 private:
     enum class Version
@@ -139,6 +166,7 @@ private:
     mega::MegaHandle mOwner = mega::INVALID_HANDLE;
     std::shared_ptr<const UserAttributes::FullName> mUserFullName;
     int mVersionCount;
+    int mFileCount;
 };
 
 #endif // FILEFOLDERATTRIBUTES_H

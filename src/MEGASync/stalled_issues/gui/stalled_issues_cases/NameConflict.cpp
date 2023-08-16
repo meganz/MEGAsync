@@ -150,6 +150,11 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
                     icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
                     titleText = tr("Renamed to \"%1\"").arg(info->mRenameTo);
                 }
+                else if(info->mSolved ==  NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::MERGED)
+                {
+                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                    titleText = tr("Merged");
+                }
                 else
                 {
                     icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));

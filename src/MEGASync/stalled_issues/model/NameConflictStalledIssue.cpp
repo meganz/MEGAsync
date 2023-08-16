@@ -1,6 +1,7 @@
 #include "NameConflictStalledIssue.h"
 
 #include "mega/types.h"
+#include "Utilities.h"
 #include "AppStatsEvents.h"
 
 //Name conflict Stalled Issue
@@ -39,10 +40,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             setIsFile(localPath.filePath(), true);
 
             //Use for autosolve
-            if(localPath.isFile())
-            {
-                info->mItemAttributes->requestModifiedTime(nullptr, nullptr);
-            }
+            info->mItemAttributes->initAllAttributes();
         }
     }
 
@@ -75,9 +73,6 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
                 if(node->isFile())
                 {
-                    //Use for autosolve
-                    info->mItemAttributes->requestModifiedTime(nullptr, nullptr);
-
                     mCloudConflictedNames.addFileConflictedName(node->getModificationTime(), node->getSize(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), info);
                     mFiles++;
                 }
@@ -86,6 +81,9 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
                     mCloudConflictedNames.addFolderConflictedName(cloudHandle, info);
                     mFolders++;
                 }
+
+                //Use for autosolve
+                info->mItemAttributes->initAllAttributes();
             }
         }
     }
@@ -486,7 +484,7 @@ void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
 
 void NameConflictedStalledIssue::autoSolveIssue()
 {
-    solveIssue(ActionSelected::RemoveDuplicatedAndRename);
+    solveIssue(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
     if(isSolved())
     {
         MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_AUTOMATICALLY, "Name conflict issue solved automatically", false, nullptr);
@@ -497,18 +495,22 @@ void NameConflictedStalledIssue::solveIssue(int option)
 {
     auto result(false);
 
-    if(option == ActionSelected::RemoveDuplicatedAndRename
-       || option == ActionSelected::RemoveDuplicated)
+    if(option & ActionSelected::MergeFolders && hasFolders() > 1)
+    {
+        mCloudConflictedNames.mergeFolders();
+        result = checkAndSolveConflictedNamesSolved(SideChecked::Cloud);
+    }
+
+    if(!result & option & ActionSelected::RemoveDuplicated)
     {
         mCloudConflictedNames.removeDuplicatedNodes();
+        result = checkAndSolveConflictedNamesSolved(SideChecked::Cloud);
     }
 
-    result = checkAndSolveConflictedNamesSolved(SideChecked::Cloud);
 
-    if(!result && option != ActionSelected::RemoveDuplicated)
+    if(!result && option & ActionSelected::Rename)
     {
         renameNodesAutomatically();
+        checkAndSolveConflictedNamesSolved();
     }
-
-    result = checkAndSolveConflictedNamesSolved();
 }

@@ -81,12 +81,12 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
                  << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
+
     auto selection = dialog->getDialog()->getSelection(reasons);
+    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
     if(selection.size() <= 1)
     {
-        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
-
         if(allSimilarIssues.size() != selection.size())
         {
             msgInfo.buttons |= QMessageBox::Yes;
@@ -123,7 +123,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         msgInfo.informativeText = tr("The <b>remote folder</b> %1 will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>").arg(localInfo.fileName());
     }
 
-    msgInfo.finishFunc = [this, selection, dialog](QMessageBox* msgBox)
+    msgInfo.finishFunc = [this, selection, allSimilarIssues, dialog](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
@@ -131,7 +131,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         }
         else if(msgBox->result() == QDialogButtonBox::Yes)
         {
-            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, QModelIndexList());
+            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, allSimilarIssues);
         }
     };
 
@@ -158,11 +158,10 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
                      << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
     auto selection = dialog->getDialog()->getSelection(reasons);
+    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
     if(selection.size() <= 1)
     {
-        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
-
         if(allSimilarIssues.size() != selection.size())
         {
             msgInfo.buttons |= QMessageBox::Yes;
@@ -173,7 +172,6 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         {
             textsByButton.insert(QMessageBox::Ok, tr("Ok"));
         }
-
     }
     else
     {
@@ -200,7 +198,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
     }
 
-    msgInfo.finishFunc = [this, selection](QMessageBox* msgBox)
+    msgInfo.finishFunc = [this, selection, allSimilarIssues](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
@@ -208,7 +206,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         }
         else if(msgBox->result() == QDialogButtonBox::Yes)
         {
-            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, QModelIndexList());
+            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, allSimilarIssues);
         }
     };
 

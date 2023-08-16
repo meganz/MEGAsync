@@ -25,6 +25,14 @@ FileFolderAttributes::~FileFolderAttributes()
 {
 }
 
+void FileFolderAttributes::initAllAttributes()
+{
+    requestSize(nullptr, nullptr);
+    requestModifiedTime(nullptr, nullptr);
+    requestCreatedTime(nullptr, nullptr);
+    requestCRC(nullptr, nullptr);
+}
+
 void FileFolderAttributes::requestSize(QObject* caller,std::function<void (qint64)> func)
 {
     if(auto context = requestReady(AttributeTypes::Size, caller))
@@ -296,7 +304,6 @@ void LocalFileFolderAttributes::requestCRC(QObject *caller, std::function<void (
         {
             if(fileInfo.isFile())
             {
-//                std::unique_ptr<char[]> fp(MegaSyncApp->getMegaApi()->getFingerprint(QDir::toNativeSeparators(fileInfo.filePath()).toUtf8().constData()));
                 std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(QDir::toNativeSeparators(fileInfo.filePath()).toUtf8().constData()));
                 mFp = QString::fromUtf8(crc.get());
             }
@@ -353,19 +360,30 @@ RemoteFileFolderAttributes::RemoteFileFolderAttributes(const QString &filePath, 
     : FileFolderAttributes(parent),
       mFilePath(filePath),
       mHandle(mega::INVALID_HANDLE),
-      mVersionCount(0)
+      mVersionCount(0),
+      mFileCount(0)
 {
 }
 
 RemoteFileFolderAttributes::RemoteFileFolderAttributes(mega::MegaHandle handle, QObject* parent)
     : FileFolderAttributes(parent),
       mHandle(handle),
-      mVersionCount(0)
+      mVersionCount(0),
+      mFileCount(0)
 {
 }
 
 RemoteFileFolderAttributes::~RemoteFileFolderAttributes()
 {
+}
+
+void RemoteFileFolderAttributes::initAllAttributes()
+{
+    FileFolderAttributes::initAllAttributes();
+
+    requestUser(nullptr, nullptr);
+    requestVersions(nullptr, nullptr);
+    requestFileCount(nullptr, nullptr);
 }
 
 void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(qint64)> func)
@@ -401,6 +419,38 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
 
     //We always send the size, even if the request is async...just to show on GUI a "loading size..." or the most recent size while the new is received
     emit sizeReady(mSize);
+}
+
+void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function<void (int)> func)
+{
+    FileFolderAttributes::requestCustomValue<RemoteFileFolderAttributes, int>(this, caller,func, &RemoteFileFolderAttributes::fileCountReady,
+                                                              RemoteFileFolderAttributes::FileCount);
+
+    if(attributeNeedsUpdate(RemoteFileFolderAttributes::FileCount))
+    {
+        std::unique_ptr<mega::MegaNode> node = getNode();
+        if(node && node->isFolder())
+        {
+            MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                          [this, func]
+                                                                                          (const mega::MegaRequest& request, const mega::MegaError& e)
+            {
+                if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
+                        && e.getErrorCode() == mega::MegaError::API_OK)
+                {
+                    auto folderInfo = request.getMegaFolderInfo();
+                    mFileCount = std::max(folderInfo->getNumFiles(), 0);
+                    if(func)
+                    {
+                        func(mVersionCount);
+                    }
+                }
+            }));
+        }
+    }
+
+    //We always send the size, even if the request is async...just to show on GUI a "loading size..." or the most recent size while the new is received
+    emit fileCountReady(mVersionCount);
 }
 
 void RemoteFileFolderAttributes::requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func)
@@ -486,7 +536,7 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
                                 {
                                     requestFinish(RemoteAttributeTypes::User);
                                 }
-                                else
+                                else if(func)
                                 {
                                     this->connect(mUserFullName.get(), &UserAttributes::FullName::fullNameReady, context, [this, func]{
                                         func(mUserFullName->getFullName(), true);
@@ -501,14 +551,17 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
         }
     }
 
-    if(mUserFullName)
+    if(func)
     {
-        //We always send the name, even if the request is async...just to show on GUI a "loading user..." or the most recent user while the new is received
-        func(mUserFullName->getFullName(), true);
-    }
-    else
-    {
-        func(QString(), true);
+        if(mUserFullName)
+        {
+            //We always send the name, even if the request is async...just to show on GUI a "loading user..." or the most recent user while the new is received
+            func(mUserFullName->getFullName(), true);
+        }
+        else
+        {
+            func(QString(), true);
+        }
     }
 }
 
@@ -528,7 +581,10 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, mega::MegaHandle c
             mOwner = mega::INVALID_HANDLE;
             mUserEmail.clear();
             mUserFullName = nullptr;
-            func(QString(), false);
+            if(func)
+            {
+                func(QString(), false);
+            }
         }
     }
 }
@@ -544,7 +600,20 @@ void RemoteFileFolderAttributes::requestVersions(QObject*, std::function<void (i
         }
     }
 
-    func(mVersionCount);
+    if(func)
+    {
+        func(mVersionCount);
+    }
+}
+
+int RemoteFileFolderAttributes::versionCount()
+{
+    return mVersionCount;
+}
+
+int RemoteFileFolderAttributes::fileCount()
+{
+    return mFileCount;
 }
 
 std::unique_ptr<mega::MegaNode> RemoteFileFolderAttributes::getNode(Version type) const

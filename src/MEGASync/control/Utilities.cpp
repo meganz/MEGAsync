@@ -1542,3 +1542,79 @@ TimeInterval::TimeInterval(long long secs, bool secondPrecision)
     minutes = static_cast<int>((secs / 60) % 60);
     seconds = static_cast<int>(secs % 60);
 }
+
+//FOLDER MERGE LOGIC
+void FoldersMerge::merge(ActionForDuplicates action)
+{
+    QStringList itemsBeingRenamed;
+
+    std::unique_ptr<MegaNodeList> folderTargetNodes(MegaSyncApp->getMegaApi()->getChildren(mFolderTarget));
+    QMap<QString, int> nodesIndexesByName;
+    for(int index = 0; index < folderTargetNodes->size(); ++index)
+    {
+        auto node(folderTargetNodes->get(index));
+        nodesIndexesByName.insertMulti(QString::fromUtf8(node->getName()), index);
+    }
+
+    QEventLoop eventLoop;
+
+    std::unique_ptr<MegaNodeList> folderToMergeNodes(MegaSyncApp->getMegaApi()->getChildren(mFolderToMerge));
+    for(int index = 0; index < folderToMergeNodes->size(); ++index)
+    {
+        auto node(folderToMergeNodes->get(index));
+        QString nodeName(QString::fromUtf8(node->getName()));
+        auto targetIndexes(nodesIndexesByName.values(nodeName));
+        if(!targetIndexes.isEmpty())
+        {
+            bool duplicateFound(false);
+            foreach(auto targetIndex, targetIndexes)
+            {
+                auto targetNode(folderTargetNodes->get(targetIndex));
+                if(node->isFile() && targetNode->isFile())
+                {
+                    auto nodeFp(QString::fromUtf8(node->getFingerprint()));
+                    auto targetNodeFp(QString::fromUtf8(targetNode->getFingerprint()));
+                    if(nodeFp == targetNodeFp)
+                    {
+                        duplicateFound = true;
+                        break;
+                    }
+                }
+                else if(node->isFolder() && targetNode->isFolder())
+                {
+                    FoldersMerge folderMerge(targetNode, node);
+                    folderMerge.merge(action);
+                    MegaSyncApp->getMegaApi()->remove(node, new OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                      [this, &eventLoop]
+                                                                                      (const MegaRequest&,const MegaError&)
+                    {
+                        eventLoop.quit();
+                    }));
+                    eventLoop.exec();
+                }
+            }
+
+            if(!duplicateFound || action == ActionForDuplicates::Rename)
+            {
+                auto newName = Utilities::getNonDuplicatedNodeName(node, mFolderTarget, nodeName, true, itemsBeingRenamed);
+                MegaSyncApp->getMegaApi()->moveNode(node, mFolderTarget,newName.toUtf8().constData(), new OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                                                                [this, &eventLoop]
+                                                                                                                                (const MegaRequest&,const MegaError&)
+                {
+                    eventLoop.quit();
+                }));
+                eventLoop.exec();
+            }
+        }
+        else
+        {
+            MegaSyncApp->getMegaApi()->moveNode(node, mFolderTarget, new OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                                        [this, &eventLoop]
+                                                                                                        (const MegaRequest&,const MegaError&)
+            {
+                eventLoop.quit();
+            }));
+            eventLoop.exec();
+        }
+    }
+}

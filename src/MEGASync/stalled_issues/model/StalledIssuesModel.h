@@ -85,8 +85,8 @@ public:
 
     void updateIndex(const QModelIndex& index);
 
-    StalledIssuesVariantList getIssuesByReason(QList<mega::MegaSyncStall::SyncStallReason> reasons);
-    StalledIssuesVariantList getIssues(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker);
+    QModelIndexList getIssuesByReason(QList<mega::MegaSyncStall::SyncStallReason> reasons);
+    QModelIndexList getIssues(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker);
 
     //SHOW RAW INFO
     void showRawInfo(bool state);
