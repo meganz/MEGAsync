@@ -18,9 +18,6 @@ Qml.RoundButton {
     property Progress progress: Progress {}
     property Sizes sizes: Sizes {}
 
-    readonly property int focusBorderWidth: 3
-    property int borderWidth: 2
-
     Timer {
         id: busyTimer
 
@@ -142,14 +139,16 @@ Qml.RoundButton {
             layer.enabled: true
 
             layer.effect: OpacityMask {
+
                 maskSource: Item {
                     width: backgroundRect.width
                     height: backgroundRect.height
+
                     Rectangle {
                         anchors.centerIn: parent
                         width:  backgroundRect.width
                         height: backgroundRect.height
-                        radius: 7
+                        radius: sizes.radius
                     }
                 }
             }

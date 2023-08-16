@@ -280,6 +280,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/DialogOpener.h
     ${MEGAsyncDir}/control/Version.h
     ${MEGAsyncDir}/control/LoginController.h
+    ${MEGAsyncDir}/control/AccountStatusController.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -356,11 +357,11 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/onboarding/Onboarding.h
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.h
     ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.h
-    ${MEGAsyncDir}/gui/onboarding/GuestController.h
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.h
     ${MEGAsyncDir}/gui/onboarding/AccountInfoData.h
     ${MEGAsyncDir}/gui/onboarding/BackupsModel.h
     ${MEGAsyncDir}/gui/onboarding/Syncs.h
-    ${MEGAsyncDir}/gui/onboarding/ComputerName.h
+    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.h
     ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.h
     ${MEGAsyncDir}/gui/onboarding/BackupsController.h
 
@@ -590,11 +591,11 @@ set (SRCS
     ${MEGAsyncDir}/gui/onboarding/Onboarding.cpp
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.cpp
     ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.cpp
-    ${MEGAsyncDir}/gui/onboarding/GuestController.cpp
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.cpp
     ${MEGAsyncDir}/gui/onboarding/AccountInfoData.cpp
     ${MEGAsyncDir}/gui/onboarding/BackupsModel.cpp
     ${MEGAsyncDir}/gui/onboarding/Syncs.cpp
-    ${MEGAsyncDir}/gui/onboarding/ComputerName.cpp
+    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.cpp
     ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.cpp
     ${MEGAsyncDir}/gui/onboarding/BackupsController.cpp
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
@@ -650,6 +651,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TextDecorator.cpp
     ${MEGAsyncDir}/control/DialogOpener.cpp
     ${MEGAsyncDir}/control/LoginController.cpp
+	${MEGAsyncDir}/control/AccountStatusController.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp
@@ -800,6 +802,8 @@ else()
         ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
+        ${MEGAsyncDir}/platform/macx/NativeMacPopover.h
+        ${MEGAsyncDir}/platform/macx/NativeMacPopoverPrivate.h
 
         ${MEGAsyncDir}/platform/macx/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
@@ -817,6 +821,8 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
         ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.mm
+        ${MEGAsyncDir}/platform/macx/NativeMacPopover.mm
+        ${MEGAsyncDir}/platform/macx/NativeMacPopoverPrivate.mm
 
         )
 endif()

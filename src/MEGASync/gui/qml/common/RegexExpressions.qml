@@ -9,5 +9,6 @@ QtObject {
     readonly property var lowerCaseLeters: /[a-z]/
     readonly property var numbers: /\d/
     readonly property var specialCharacters: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
+    readonly property var betweenCommas: /"([^"]*)"/g
 
 }

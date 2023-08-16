@@ -77,12 +77,7 @@ public:
     void setUiInCancellingStage();
     void updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 
-#ifdef __APPLE__
-    void moveArrow(QPoint p);
-#endif
-
     void on_bStorageDetails_clicked();
-    void regenerate(int blockState = mega::MegaApi::ACCOUNT_NOT_BLOCKED);
     HighDpiResize<QDialog> highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
@@ -179,9 +174,6 @@ signals:
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
-#ifdef __APPLE__
-    QPushButton *arrow;
-#endif
 
     FilterAlertWidget *filterMenu;
 
@@ -240,7 +232,6 @@ protected:
     bool checkFailedState();
     void changeEvent(QEvent * event) override;
     bool eventFilter(QObject *obj, QEvent *e) override;
-    void paintEvent( QPaintEvent * e) override;
 
 protected:
     QDateTime lastPopupUpdate;
@@ -263,6 +254,8 @@ protected:
     void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
                            bool animate = true);
     void setupSyncController();
+    void fixMultiscreenResizeBug(int& posX, int& posY);
+    void repositionInfoDialog();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

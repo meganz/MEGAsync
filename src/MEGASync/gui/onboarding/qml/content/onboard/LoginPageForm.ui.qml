@@ -14,6 +14,7 @@ import Onboard 1.0
 
 // C++
 import Onboarding 1.0
+import LoginController 1.0
 
 StackViewPage {
     id: root
@@ -42,11 +43,11 @@ StackViewPage {
         MegaTexts.RichText {
             id: confirmText
 
-            visible: loginController.emailConfirmed
+            visible: LoginControllerAccess.emailConfirmed
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Medium
-            text: qsTr("Confirm account by login")
+            text: OnboardingStrings.confirmAccountByLogin
         }
 
         MegaTextFields.EmailTextField {
@@ -56,7 +57,7 @@ StackViewPage {
             anchors.left: parent.left
             anchors.leftMargin: -email.sizes.focusBorderWidth
             title: OnboardingStrings.email
-            text: loginController.email
+            text: LoginControllerAccess.email
         }
 
         MegaTextFields.PasswordTextField {

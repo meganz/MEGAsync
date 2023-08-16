@@ -10,7 +10,7 @@ import Components.Images 1.0 as MegaImages
 CardButton {
     id: button
 
-    Layout.preferredWidth: 400
+    Layout.preferredWidth: 408
     Layout.preferredHeight: 88
     Layout.fillWidth: true
     width: 400
@@ -36,9 +36,6 @@ CardButton {
             spacing: 20
 
             MegaImages.SvgImage {
-                color: Styles.buttonOutlinePressed /*button.checked || button.hovered
-                       ? Styles.iconAccent
-                       : Styles.iconSecondary*/
                 source: imageSource
                 sourceSize: imageSourceSize
                 anchors.verticalCenter: parent.verticalCenter

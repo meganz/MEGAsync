@@ -1,23 +1,31 @@
+// System
 import QtQuick 2.12
 import QtQuick.Window 2.12
 
+// Local
 import Guest 1.0
+
+// C++
 import GuestQmlDialog 1.0
 
 GuestQmlDialog {
     id: guestWindow
 
-    width: guestContent.width
-    height: guestContent.height
+    width: guestItem.width
+    height: guestItem.height
     modality: Qt.NonModal
     flags: Qt.FramelessWindowHint
     color: "transparent"
 
-    GuestContent {
-        id: guestContent
+    GuestItem {
+        id: guestItem
     }
 
-    Component.onCompleted: {
-        guestWindow.realocate();
+    onVisibleChanged:
+    {
+        if(visible)
+        {
+            AccountStatusControllerAccess.whyAmIBlocked();
+        }
     }
 }

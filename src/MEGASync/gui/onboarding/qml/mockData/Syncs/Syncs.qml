@@ -5,6 +5,7 @@ Item {
 
     signal cantSync
     signal syncSetupSuccess
+    signal cancelSync
 
     function addSync(localPath , remoteHandle) {
         console.info("addSync()" + " localPath:" + localPath + " remoteHandle:" + remoteHandle)

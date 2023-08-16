@@ -3,7 +3,7 @@ InstallationTypePageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsPanel.state = computerName;
+            syncsPanel.state = deviceName;
         }
 
         rightPrimary.onClicked: {

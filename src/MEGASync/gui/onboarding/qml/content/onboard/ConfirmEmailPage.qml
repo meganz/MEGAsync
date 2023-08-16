@@ -11,13 +11,13 @@ ConfirmEmailPageForm {
     }
 
     cancelAccount.onClicked: {
-        loginController.cancelCreateAccount();
+        LoginControllerAccess.cancelCreateAccount();
     }
 
-    email: loginController.email
+    email: LoginControllerAccess.email
 
     Connections {
-        target: loginController
+        target: LoginControllerAccess
 
         onEmailConfirmed: {
             registerFlow.state = login;

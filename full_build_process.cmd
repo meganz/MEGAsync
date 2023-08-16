@@ -82,6 +82,26 @@ IF %VALID_CORES% EQU 0 (
 
 echo "Info: CORES SET to %MEGA_CORES%"
 
+REM Clean up any previous leftovers
+IF EXIST built32 (
+    rmdir /s /q built32
+)
+IF EXIST sign32 (
+    rmdir /s /q sign32
+)
+IF EXIST built64 (
+    rmdir /s /q built64
+)
+IF EXIST sign64 (
+    rmdir /s /q sign64
+)
+IF EXIST build-x64-windows-mega (
+    rmdir /s /q build-x64-windows-mega
+)
+IF EXIST build-x86-windows-mega (
+    rmdir /s /q build-x86-windows-mega
+)
+
 call production_build.cmd
 call deploy_qt.cmd
 call gather_built_products.cmd

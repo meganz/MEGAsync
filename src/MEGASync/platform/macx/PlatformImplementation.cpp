@@ -6,6 +6,7 @@
 #include <pwd.h>
 
 using namespace std;
+using namespace mega;
 
 static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
@@ -400,7 +401,7 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
             }
         }
 
-        mega::MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. posTrayIcon = %1")
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. posTrayIcon = %1")
                            .arg(QString::fromUtf8("[%1,%2]").arg(positionTrayIcon.x()).arg(positionTrayIcon.y()))
                            .toUtf8().constData());
 

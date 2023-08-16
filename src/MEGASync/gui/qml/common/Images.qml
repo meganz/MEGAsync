@@ -13,7 +13,7 @@ QtObject {
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesPath + "/guest/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //   Image paths - Sorted alphabetically by dir
+    //   Image paths
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url alertCircle: imagesPath + "alert_circle.svg"
@@ -30,9 +30,9 @@ QtObject {
     readonly property url mega: imagesPath + "mega.svg"
     readonly property url trash: imagesPath + "trash.svg"
     readonly property url xCircle: imagesPath + "x_circle.svg"
+    readonly property url smallCheck: imagesPath + "small_check.svg"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
-    readonly property url cloud: imagesOnboardingPath + "cloud.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"
     readonly property url edit: imagesOnboardingPath + "edit.svg"
     readonly property url folder: imagesOnboardingPath + "folder.svg"
@@ -69,5 +69,11 @@ QtObject {
     readonly property url menu: imagesGuestPath + "menu.svg"
     readonly property url settings: imagesGuestPath + "settings.svg"
     readonly property url warningGuest: imagesGuestPath + "warning.png"
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //   Standard Icons
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    readonly property url standard_DirIcon: "image://standardicons/SP_DirIcon"
 
 }

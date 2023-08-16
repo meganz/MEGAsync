@@ -15,9 +15,9 @@ import Onboard 1.0
 import Guest 1.0
 
 // C++
-import GuestController 1.0
+import GuestContent 1.0
 import ApiEnums 1.0
-import LoginController 1.0
+import AccountStatusController 1.0
 
 Rectangle {
     id: content
@@ -30,13 +30,14 @@ Rectangle {
 
     readonly property string stateNormal: "NORMAL"
     readonly property string stateInProgress: "IN_PROGRESS"
+    readonly property string stateBlocked: "BLOCKED"
 
     width: 400
     height: 560
     radius: 10
     color: Styles.surface1
 
-    state: content.stateNormal
+    state: AccountStatusControllerAccess.isAccountBlocked() ? content.stateBlocked : content.stateNormal
     states: [
         State {
             name: content.stateNormal
@@ -48,6 +49,12 @@ Rectangle {
             name: content.stateInProgress
             StateChangeScript {
                 script: stack.replace(progressPage);
+            }
+        },
+        State {
+            name: content.stateBlocked
+            StateChangeScript {
+                script: stack.replace(blockedPage);
             }
         }
     ]
@@ -115,7 +122,7 @@ Rectangle {
             icon.source: Images.megaOutline
             position: MenuItem.Position.First
             onTriggered: {
-                GuestController.onAboutMEGAClicked();
+                GuestContent.onAboutMEGAClicked();
                 guestWindow.hide();
             }
         }
@@ -126,7 +133,7 @@ Rectangle {
             text: GuestStrings.menuPreferences
             icon.source: Images.settings
             onTriggered: {
-                GuestController.onPreferencesClicked();
+                GuestContent.onPreferencesClicked();
                 guestWindow.hide();
             }
         }
@@ -138,7 +145,7 @@ Rectangle {
             icon.source: Images.exit
             position: MenuItem.Position.Last
             onTriggered: {
-                GuestController.onExitClicked();
+                GuestContent.onExitClicked();
                 guestWindow.hide();
             }
         }
@@ -190,6 +197,39 @@ Rectangle {
                 progressValue: content.progressValue
             }
         }
+
+        Component {
+            id: blockedPage
+
+            BasePage {
+                image.source: Images.warningGuest
+                imageTopMargin: 110
+                title: GuestStrings.accountTempLocked
+                description: GuestStrings.accountTempLockedEmail
+                leftButton {
+                    text: GuestStrings.logOut
+                    onClicked: {
+                        GuestContent.onLogouClicked();
+                        //content.state = content.stateNormal;
+                    }
+                }
+                rightButton {
+                    text: GuestStrings.resendEmail
+                    icons.source: Images.mail
+                    onClicked: {
+                        GuestContent.onVerifyEmailClicked();
+                    }
+                }
+            }
+        }
+    }
+
+    Connections {
+        target: AccountStatusControllerAccess
+
+        onAccountBlocked: {
+            content.state = content.stateBlocked;
+    }
     }
 
     Connections {
@@ -205,6 +245,8 @@ Rectangle {
 
         onLoginFinished: (errorCode, errorMsg) => {
             switch(errorCode) {
+                case ApiEnums.API_OK:
+                    break;
                 case ApiEnums.API_EMFAREQUIRED:
                     content.indeterminate = true;
                     content.description = OnboardingStrings.status2FA;
@@ -222,11 +264,9 @@ Rectangle {
         }
 
         onFetchingNodesProgress: (progress) => {
-            if(progress === 0.15) {
-                content.indeterminate = false;
-                content.description = OnboardingStrings.statusFetchNodes;
-                content.state = content.stateInProgress;
-            }
+            content.indeterminate = false;
+            content.description = OnboardingStrings.statusFetchNodes;
+            content.state = content.stateInProgress;
             content.progressValue = progress;
         }
 
@@ -267,6 +307,10 @@ Rectangle {
         }
 
         onAccountCreateCancelled: {
+            content.state = content.stateNormal;
+        }
+
+        onLogin2FACancelled: {
             content.state = content.stateNormal;
         }
 

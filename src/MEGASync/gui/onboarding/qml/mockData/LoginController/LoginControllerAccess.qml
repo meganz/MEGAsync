@@ -1,1 +1,2 @@
+pragma Singleton
 LoginController {}

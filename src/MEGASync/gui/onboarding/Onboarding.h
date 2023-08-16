@@ -18,7 +18,7 @@ public:
     Q_INVOKABLE void openPreferences(bool sync) const;
 
 signals:
-    void accountBlocked();
+    void accountBlocked(int errorCode);
     void logout();
 
 };

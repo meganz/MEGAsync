@@ -32,11 +32,16 @@ FullSyncPageForm {
 
         onCantSync: {
             root.enabled = true;
-            footerButtons.nextButton.icons.busyIndicatorVisible = false;
-            console.log(message);
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             localFolderChooser.folderField.error = true;
             localFolderChooser.folderField.hint.text = message;
             localFolderChooser.folderField.hint.visible = true;
+            console.log("Full sync can't sync, message -> " + message);
+        }
+
+        onCancelSync: {
+            root.enabled = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
         }
     }
 }

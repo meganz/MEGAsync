@@ -22,9 +22,7 @@ Rectangle {
     property bool isValid: false
     property alias folderField: folderField
 
-    readonly property int buttonWidth: 85
-    readonly property int buttonHeight: 36
-    readonly property int textEditMargin: 8
+    readonly property int textEditMargin: 2
 
     function getSyncData() {
         return local ? localFolderChooser.getFolder() : remoteFolderChooser.getHandle();
@@ -36,16 +34,12 @@ Rectangle {
     }
 
     function reset() {
-        if(local)
-        {
+        if(local) {
             localFolderChooser.reset();
-        }
-        else
-        {
+        } else {
             remoteFolderChooser.reset();
         }
     }
-
 
     width: parent.width
     height: folderField.height
@@ -62,7 +56,7 @@ Rectangle {
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: "/MEGA"
         leftIcon.source: local ? Images.pc : Images.megaOutline
-        leftIcon.color: Styles.iconSecondary
+        leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
         hint.icon: Images.alertTriangle
     }
@@ -70,12 +64,13 @@ Rectangle {
     MegaButtons.OutlineButton {
         id: changeButton
 
-        width: buttonWidth
         height: folderField.textField.height
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         text: OnboardingStrings.change
         onClicked: {
+            folderField.error = false;
+            folderField.hint.visible = false;
             var folderChooser = local ? localFolderChooser : remoteFolderChooser;
             folderChooser.openFolderSelector();
         }

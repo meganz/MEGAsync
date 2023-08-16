@@ -3,6 +3,9 @@
 #include "MultiQFileDialog.h"
 #include "control/DialogOpener.h"
 
+#include <QScreen>
+#include <QDesktopWidget>
+
 void AbstractPlatform::prepareForSync()
 {
 

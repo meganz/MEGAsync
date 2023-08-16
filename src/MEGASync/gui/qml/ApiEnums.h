@@ -6,6 +6,7 @@
 namespace ApiEnums
 {
     Q_NAMESPACE
+
     /**
      * @brief Declaration of API error codes.
      */
@@ -51,6 +52,19 @@ namespace ApiEnums
         LOCAL_ENOSPC = -1000, ///< Insufficient space.
     };
     Q_ENUM_NS(MegaError)
+
+    enum BlockedAccountError {
+        ACCOUNT_NOT_BLOCKED = 0,
+        ACCOUNT_BLOCKED_EXCESS_DATA_USAGE = 100,        // (deprecated)
+        ACCOUNT_BLOCKED_TOS_COPYRIGHT = 200,            // suspended due to copyright violations
+        ACCOUNT_BLOCKED_TOS_NON_COPYRIGHT = 300,        // suspended due to multiple breaches of MEGA ToS
+        ACCOUNT_BLOCKED_SUBUSER_DISABLED = 400,         // subuser disabled by business administrator
+        ACCOUNT_BLOCKED_SUBUSER_REMOVED = 401,          // subuser removed by business administrator
+        ACCOUNT_BLOCKED_VERIFICATION_SMS = 500,         // temporary blocked, require SMS verification
+        ACCOUNT_BLOCKED_VERIFICATION_EMAIL = 700       // temporary blocked, require email verification
+    };
+    Q_ENUM_NS(BlockedAccountError)
+
 };
 
 #endif // APIENUMS_H

@@ -6,6 +6,7 @@
 #include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
 #include "MegaApplication.h"
+#include "qml/StandardIconProvider.h"
 
 #include <QQmlContext>
 
@@ -69,6 +70,13 @@ BackupsModel::BackupsModel(QObject* parent)
 
     qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",
                                              QString::fromUtf8("Cannot create WarningLevel in QML"));
+
+    MegaSyncApp->qmlEngine()->addImageProvider(QLatin1String("standardicons"), new StandardIconProvider);
+}
+
+BackupsModel::~BackupsModel()
+{
+    MegaSyncApp->qmlEngine()->removeImageProvider(QLatin1String("standardicons"));
 }
 
 QHash<int, QByteArray> BackupsModel::roleNames() const

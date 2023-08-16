@@ -25,6 +25,7 @@ Item {
     signal goToSignupPage
     signal goToLoginPage
     signal logout
+    signal login2FACancelled
 
     function login(user, pass) {
         console.debug("mockup LoginController::login() : user -> " + user);
@@ -56,6 +57,10 @@ Item {
     function cancelCreateAccount() {
         console.debug("mockup LoginController::cancelCreateAccount()");
         accountCreateCancelled();
+    }
+
+    function cancelLogin2FA() {
+        console.debug("mockup LoginController::cancelLogin2FA()");
     }
 
     Timer {

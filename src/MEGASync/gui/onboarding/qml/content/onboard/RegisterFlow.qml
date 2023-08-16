@@ -8,8 +8,8 @@ import QtQuick.Layouts 1.12
 import Common 1.0
 
 // C++
-import LoginController 1.0
 import Onboarding 1.0
+import LoginController 1.0
 
 Rectangle {
     id: registerFlow
@@ -60,7 +60,7 @@ Rectangle {
 
         visible: false
         onAccepted: {
-            loginController.cancelLogin();
+            LoginControllerAccess.cancelLogin();
         }
     }
 
@@ -105,7 +105,7 @@ Rectangle {
         width: 1
         height: 464
         radius: 2
-        border.color: Styles.borderDisabled
+        color: Styles.borderDisabled
     }
 
     StackView {
@@ -118,7 +118,7 @@ Rectangle {
             right: registerFlow.right
             leftMargin: 48
             rightMargin: 48
-            topMargin: 45
+            topMargin: 48
             bottomMargin: 16
         }
 
@@ -167,8 +167,8 @@ Rectangle {
             ChangeEmailPage {}
         }
 
-        LoginController {
-            id: loginController
+        Connections {
+            target: LoginControllerAccess
 
             onGoToLoginPage: {
                 registerFlow.state = registerFlow.login;

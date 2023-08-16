@@ -23,3 +23,9 @@ void GuestQmlDialog::realocate()
     setX(posx);
     setY(posy);
 }
+
+void GuestQmlDialog::showEvent(QShowEvent *event)
+{
+    realocate();
+    QmlDialog::showEvent(event);
+}

@@ -35,7 +35,7 @@ Rectangle {
         width: tableRectangle.width
         height: tableRectangle.height
         color: "transparent"
-        border.color: Styles.borderStrong
+        border.color: tableRectangle.enabled ? Styles.borderStrong : Styles.borderDisabled
         border.width: 1
         radius: 8
         z: 5
@@ -78,12 +78,13 @@ Rectangle {
 
                     MegaImages.SvgImage {
                         source: Images.database
-                        color: Styles.iconPrimary
+                        color: tableRectangle.enabled ? Styles.iconPrimary : Styles.iconDisabled
                         sourceSize: Qt.size(16, 16)
                     }
 
                     MegaTexts.Text {
                         text: OnboardingStrings.backupFolders
+                        font.weight: Font.DemiBold
                     }
                 }
 
@@ -98,7 +99,7 @@ Rectangle {
 
             Rectangle {
                 height: borderRectangle.border.width
-                color: borderRectangle.border.color
+                color: tableRectangle.enabled ? Styles.borderSubtle : Styles.borderDisabled
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right

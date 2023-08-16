@@ -25,8 +25,10 @@ SyncsPage {
         spacing: 24
 
         Header {
-            title: OnboardingStrings.installationTypeTitle
-            description: OnboardingStrings.installationTypeDescription
+            title: isNewUser ? OnboardingStrings.welcomeToMEGA : OnboardingStrings.letsGetYouSetUp
+            description: OnboardingStrings.choose
+            spacing: 36
+            descriptionWeight: Font.DemiBold
         }
 
         ButtonGroup {
@@ -34,11 +36,13 @@ SyncsPage {
         }
 
         ColumnLayout {
-            spacing: 20
+            spacing: 12
 
             SyncsHorizontalButton {
                 id: syncButton
 
+                Layout.leftMargin: -syncButton.focusBorderWidth
+                Layout.rightMargin: -syncButton.focusBorderWidth
                 title: OnboardingStrings.sync
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync
@@ -49,6 +53,8 @@ SyncsPage {
             SyncsHorizontalButton {
                 id: backupsButton
 
+                Layout.leftMargin: -backupsButton.focusBorderWidth
+                Layout.rightMargin: -backupsButton.focusBorderWidth
                 title: OnboardingStrings.backup
                 description: OnboardingStrings.backupButtonDescription
                 imageSource: Images.installationTypeBackups

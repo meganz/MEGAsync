@@ -63,7 +63,7 @@ StackViewPage {
             right: parent.right
             bottomMargin: 29
         }
-        spacing: 8
+        spacing: 2
 
         MegaButtons.OutlineButton {
             id: cancelButton
