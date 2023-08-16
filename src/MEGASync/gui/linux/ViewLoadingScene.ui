@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>16</width>
-    <height>16</height>
+    <width>706</width>
+    <height>419</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,10 +22,10 @@
   <widget class="QWidget" name="MessageContainer" native="true">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>90</y>
+     <x>180</x>
+     <y>120</y>
      <width>300</width>
-     <height>150</height>
+     <height>161</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -37,69 +37,78 @@
    <property name="styleSheet">
     <string notr="true">#MessageContainer
 {
-border: 2px solid #f0373a;
-border-radius: 6px;
+border: 1px solid white;
+border-radius: 10px;
 background-color: white;
 }
 
 #MessageLabel
 {
-  font-family: &quot;Poppins&quot;;
   font-size:16px;
   line-height: 30px;
   font-weight: 600;
   color: #666666;
 }
 
-QPushButton 
-{ 
-font-size: 16px; font-weight:400;
-padding-top : 11px; padding-bottom : 12px; padding-left : 18px; padding-right : 18px;
-background-color : #FCFCFC;
-border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 3px;
-color: #333333;
+#ProgressLabel
+{
+  font-size:12px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #303233;
 }
 
-QPushButton:pressed 
+QPushButton 
 { 
-background-color : rgb(238, 238, 236); 
+font-size: 14px; font-weight:400;
+line-height: 20px;
+padding-top : 5px; padding-bottom : 8px; padding-left : 10px; padding-right : 10px;
+background-color : #AAAAAA;
+border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 3px;
+color: #FFFFFF;
 }
-QPushButton:disabled 
-{ 
-background-color : rgb(218, 218, 216); 
+
+QProgressBar 
+{
+ border: none;
+     background-color: rgba(0,0,0,0.10);
 }
-QPushButton#pProceed 
-{ 
-background-color: #00BFA5;
-color: #FFFFFF; 
-border-color: #00AC94;
-}
-QPushButton#pProceed:pressed
-{ 
-background-color: rgb(0, 179, 155);
-}
-QPushButton#pProceed:disabled 
-{ 
-background-color: rgb(70, 159, 135);
+
+QProgressBar::chunk 
+{
+    background-color: #04101E;
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
-     <number>10</number>
+     <number>20</number>
     </property>
     <property name="leftMargin">
-     <number>10</number>
+     <number>48</number>
     </property>
     <property name="topMargin">
      <number>10</number>
     </property>
     <property name="rightMargin">
-     <number>10</number>
+     <number>48</number>
     </property>
     <property name="bottomMargin">
-     <number>10</number>
+     <number>25</number>
     </property>
     <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item alignment="Qt::AlignVCenter">
      <widget class="QLabel" name="MessageLabel">
       <property name="text">
        <string/>
@@ -109,7 +118,45 @@ background-color: rgb(70, 159, 135);
       </property>
      </widget>
     </item>
-    <item alignment="Qt::AlignHCenter">
+    <item alignment="Qt::AlignVCenter">
+     <widget class="QProgressBar" name="ProgressBar">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>2</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>2</height>
+       </size>
+      </property>
+      <property name="value">
+       <number>24</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+     <widget class="QLabel" name="ProgressLabel"/>
+    </item>
+    <item>
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
      <widget class="QPushButton" name="StopButton">
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
@@ -117,8 +164,44 @@ background-color: rgb(70, 159, 135);
       <property name="text">
        <string>Stop</string>
       </property>
+      <property name="autoDefault">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="LoadingViewContainer" native="true">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>10</y>
+     <width>12</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QVBoxLayout" name="viewLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
    </layout>
   </widget>
  </widget>
