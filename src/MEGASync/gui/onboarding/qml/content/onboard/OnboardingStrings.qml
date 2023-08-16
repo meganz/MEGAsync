@@ -114,7 +114,8 @@ QtObject {
     readonly property var passwordEasilyGuessed: qsTr("Your password could be easily guessed. Try making it stronger.")
     readonly property var finalPageButtonBackup: qsTr("Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can't be modified or deleted from MEGA cloud.")
     readonly property var finalPageButtonSync: qsTr("Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.")
-    readonly property var confirmAccountByLogin: qsTr("Confirm account by login")
     readonly property var letsGetYouSetUp: qsTr("Let's get you set up")
+    readonly property var confirmEmailAndPassword: qsTr("Confirm your email and password")
+    readonly property var accountWillBeActivated: qsTr("Once confirmed, your account will be activated.")
 
 }
