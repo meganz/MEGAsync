@@ -15,7 +15,7 @@ LoginPageForm {
 
     property bool loginAttempt: false
 
-    function setNormalStatus(){
+    function setNormalStatus() {
         root.enabled = true;
         loginButton.icons.busyIndicatorVisible = false;
         loginButton.progress.value = 0;
