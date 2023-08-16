@@ -95,7 +95,6 @@ Rectangle {
 
         font {
             pixelSize: MegaTexts.Text.Medium
-            weight: Font.Light
             family: Styles.fontFamily
             styleName: Styles.fontStyleName
         }

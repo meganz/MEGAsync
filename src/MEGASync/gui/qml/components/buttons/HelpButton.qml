@@ -93,7 +93,6 @@ Qml.Button {
             text: button.text
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: MegaTexts.Text.Size.Medium
-            font.weight: Font.Light
         }
     }
 }

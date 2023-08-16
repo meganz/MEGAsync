@@ -75,7 +75,6 @@ SyncsPage {
             Layout.topMargin: 8
             text: description
             font.pixelSize: MegaTexts.Text.Size.Medium
-            font.weight: Font.Light
         }
 
         MegaTexts.Text {

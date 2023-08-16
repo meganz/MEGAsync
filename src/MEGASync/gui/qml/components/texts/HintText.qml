@@ -88,7 +88,6 @@ Row {
             color: styles.titleColor
             opacity: enabled ? 1.0 : 0.2
             font.bold: true
-            font.weight: Font.Light
             font.pixelSize: textSize
         }
     }
@@ -100,7 +99,6 @@ Row {
             text: root.text
             color: styles.textColor
             opacity: enabled ? 1.0 : 0.2
-            font.weight: Font.Light
             font.pixelSize: textSize
         }
     }

@@ -31,7 +31,6 @@ ColumnLayout {
         Layout.fillWidth: true
         font.family: "Inter"
         font.styleName: "normal"
-        font.weight: Font.Light
         font.pixelSize: MegaTexts.Text.Size.Medium
         wrapMode: Text.WordWrap
     }
