@@ -10,21 +10,13 @@ import PasswordStrengthChecker 1.0
 PasswordInfoContentForm {
 
     function allChecked() {
-        return upperLowerCaseChecked && numberSpecialCharacterChecked && longerChecked;
+        return upperLowerCaseChecked && numberSpecialCharacterChecked;
     }
 
     function checkPasswordConditions(password) {
-        if(password.length < 8) {
-            strengthTitle.text = OnboardingStrings.passwordAtleast8Chars;
-            strenghtIcon.visible = false;
-        } else {
-            strenghtIcon.visible = true;
-            setPasswordStrengthTitle(password);
-        }
-
+        strengthTitle.font.strikeout = (password.length > 8);
         upperLowerCaseChecked = hasUpperAndLowerCase(password);
         numberSpecialCharacterChecked = hasNumberOrSpecialCharacter(password);
-        longerChecked = hasLongSize(password);
     }
 
     function hasUpperAndLowerCase(password) {
@@ -35,39 +27,6 @@ PasswordInfoContentForm {
     function hasNumberOrSpecialCharacter(password) {
         return ((RegexExpressions.numbers).test(password))
                 || ((RegexExpressions.specialCharacters).test(password));
-    }
-
-    function hasLongSize(password) {
-        return password.length > 16;
-    }
-
-    function setPasswordStrengthTitle(password) {
-        switch(checker.getPasswordStrength(password)) {
-            case PasswordStrengthChecker.PasswordStrengthVeryWeak:
-                strengthTitle.text = OnboardingStrings.passwordStrengthVeryWeak;
-                strenghtIcon.source = Images.passwordVeryWeak;
-                break;
-            case PasswordStrengthChecker.PasswordStrengthWeak:
-                strengthTitle.text = OnboardingStrings.passwordStrengthWeak;
-                strenghtIcon.source = Images.passwordWeak;
-                break;
-            case PasswordStrengthChecker.PasswordStrengthMedium:
-                strengthTitle.text = OnboardingStrings.passwordStrengthMedium;
-                strenghtIcon.source = Images.passwordAverage;
-                break;
-            case PasswordStrengthChecker.PasswordStrengthGood:
-                strengthTitle.text = OnboardingStrings.passwordStrengthGood;
-                strenghtIcon.source = Images.passwordGood;
-                break;
-            case PasswordStrengthChecker.PasswordStrengthStrong:
-                strengthTitle.text = OnboardingStrings.passwordStrengthStrong;
-                strenghtIcon.source = Images.passwordStrong;
-                break;
-            default:
-                console.error("PasswordInfoContent::setPasswordStrengthTitle value not found -> "
-                              + strength);
-                break;
-        }
     }
 
     PasswordStrengthChecker {

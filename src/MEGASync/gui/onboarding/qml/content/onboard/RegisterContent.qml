@@ -12,6 +12,9 @@ import Common 1.0
 //Local
 import Onboard 1.0
 
+// C++
+import PasswordStrengthChecker 1.0
+
 Column {
     id: formColumn
 
@@ -154,10 +157,17 @@ Column {
                         hint.text = OnboardingStrings.minimum8Chars;
                         hint.styles.textColor = Styles.textError;
                         hint.visible = true;
-                    } else if(!passwordInfoPopup.content.allChecked()) {
-                        hint.text = OnboardingStrings.passwordEasilyGuessed;
-                        hint.styles.textColor = Styles.textWarning;
-                        hint.visible = true;
+                    } else {
+                        var strength = checker.getPasswordStrength(textField.text);
+
+                        if(!passwordInfoPopup.content.allChecked()
+                            || strength === PasswordStrengthChecker.PasswordStrengthVeryWeak
+                            || strength === PasswordStrengthChecker.PasswordStrengthWeak) {
+
+                            hint.text = OnboardingStrings.passwordEasilyGuessed;
+                            hint.styles.textColor = Styles.textWarning;
+                            hint.visible = true;
+                        }
                     }
                     passwordInfoPopup.close();
                 }
@@ -167,7 +177,11 @@ Column {
                 id: passwordInfoPopup
 
                 x: -335
-                y: -78
+                y: -54
+            }
+
+            PasswordStrengthChecker {
+                id: checker
             }
         }
 

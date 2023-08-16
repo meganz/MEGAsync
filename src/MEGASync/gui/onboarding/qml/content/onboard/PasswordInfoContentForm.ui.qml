@@ -12,10 +12,8 @@ import Onboard 1.0
 Rectangle {
 
     property alias strengthTitle: strengthTitle
-    property alias strenghtIcon: strenghtIcon
     property alias upperLowerCaseChecked: conditionUpperLowerCase.checked
     property alias numberSpecialCharacterChecked: conditionNumberSpecialCharacter.checked
-    property alias longerChecked: conditionLonger.checked
 
     readonly property int contentMargin: 24
     readonly property int iconWidth: 24
@@ -23,7 +21,7 @@ Rectangle {
     readonly property int conditionSpacing: 12
 
     width: 320
-    height: 225
+    height: 180
     color: Styles.pageBackground
     radius: 8
 
@@ -32,28 +30,14 @@ Rectangle {
         anchors.margins: contentMargin
         spacing: contentMargin
 
-        Row {
+        MegaTexts.Text {
+            id: strengthTitle
+
             width: parent.width
-
-            MegaTexts.Text {
-                id: strengthTitle
-
-                width: parent.width - strenghtIcon.width
-                height: strenghtIcon.height
-                font.pixelSize: MegaTexts.Text.Size.MediumLarge
-                font.bold: true
-                verticalAlignment: Text.AlignVCenter
-                text: OnboardingStrings.passwordAtleast8Chars
-            }
-
-            MegaImages.SvgImage {
-                id: strenghtIcon
-
-                source: Images.passwordVeryWeak
-                sourceSize: Qt.size(iconWidth, iconWidth)
-                color: Styles.iconSecondary
-                visible: false
-            }
+            height: strenghtIcon.height
+            font.bold: true
+            verticalAlignment: Text.AlignVCenter
+            text: OnboardingStrings.passwordAtleast8Chars
         }
 
         Rectangle {
@@ -83,12 +67,6 @@ Rectangle {
                 id: conditionNumberSpecialCharacter
 
                 text: OnboardingStrings.numberOrSpecialChar;
-            }
-
-            PasswordConditionItem {
-                id: conditionLonger
-
-                text: OnboardingStrings.longerPassword;
             }
 
         }

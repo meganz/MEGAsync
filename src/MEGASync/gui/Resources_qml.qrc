@@ -35,11 +35,6 @@
         <file>images/qml/onboarding/sync.svg</file>
         <file>images/qml/onboarding/twofa.png</file>
         <file>images/qml/onboarding/mail.svg</file>
-        <file>images/qml/password/average.svg</file>
-        <file>images/qml/password/good.svg</file>
-        <file>images/qml/password/strong.svg</file>
-        <file>images/qml/password/very_weak.svg</file>
-        <file>images/qml/password/weak.svg</file>
         <file>images/qml/onboarding/OKIcon.png</file>
         <file>images/qml/onboarding/warning.png</file>
         <file>images/qml/mega.svg</file>

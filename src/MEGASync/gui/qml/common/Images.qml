@@ -9,7 +9,6 @@ QtObject {
 
     readonly property url imagesPath: Qt.resolvedUrl("../../images/qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesPath + "/onboarding/")
-    readonly property url imagesPasswordPath: Qt.resolvedUrl(imagesPath + "/password/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesPath + "/guest/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -57,12 +56,6 @@ QtObject {
     readonly property url sync: imagesOnboardingPath + "sync.svg"
     readonly property url twofa: imagesOnboardingPath + "twofa.png"
     readonly property url okIcon: imagesOnboardingPath + "OKIcon.png"
-
-    readonly property url passwordVeryWeak: imagesPasswordPath + "very_weak.svg"
-    readonly property url passwordWeak: imagesPasswordPath + "weak.svg"
-    readonly property url passwordAverage: imagesPasswordPath + "average.svg"
-    readonly property url passwordGood: imagesPasswordPath + "good.svg"
-    readonly property url passwordStrong: imagesPasswordPath + "strong.svg"
 
     readonly property url exit: imagesGuestPath + "exit.svg"
     readonly property url guest: imagesGuestPath + "guest.png"
