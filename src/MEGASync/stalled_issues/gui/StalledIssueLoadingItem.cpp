@@ -3,6 +3,8 @@
 
 #include <StalledIssueHeader.h>
 
+const int LOADINGITEM_HEIGHT = 50; /*check ui*/
+
 StalledIssueLoadingItem::StalledIssueLoadingItem(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StalledIssueLoadingItem)
@@ -17,5 +19,6 @@ StalledIssueLoadingItem::~StalledIssueLoadingItem()
 
 QSize StalledIssueLoadingItem::widgetSize()
 {
-    return QSize(500, StalledIssueHeader::HEIGHT);
+    //500 is no taken into account as it changes depending on the stalled issue dialog
+    return QSize(500, LOADINGITEM_HEIGHT);
 }
