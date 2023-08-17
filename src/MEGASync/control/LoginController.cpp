@@ -39,7 +39,6 @@ LoginController::LoginController(QObject *parent)
 
 LoginController::~LoginController()
 {
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), nullptr);
 }
 
 void LoginController::login(const QString &email, const QString &password)
@@ -730,10 +729,6 @@ LogoutController::LogoutController(QObject *parent)
 
 LogoutController::~LogoutController()
 {
-    if(auto rootContext = MegaSyncApp->qmlEngine()->rootContext())
-    {
-        rootContext->setContextProperty(QString::fromUtf8("LogoutControllerAccess"), nullptr);
-    }
 }
 
 void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)

@@ -8,7 +8,6 @@ import Onboard 1.0
 import Onboarding 1.0
 import ApiEnums 1.0
 import LoginController 1.0
-import AccountStatusController 1.0
 
 LoginPageForm {
     id: root

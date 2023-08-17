@@ -122,7 +122,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mIsFirstFileTwoWaySynced(false),
     mIsFirstFileBackedUp(false),
     scanStageController(this),
-    mDisableGfx (false)
+    mDisableGfx (false),
+    mEngine(new QQmlEngine())
 {
 
 #if defined Q_OS_MACX && !defined QT_DEBUG
@@ -723,7 +724,7 @@ void MegaApplication::initialize()
     connect(Platform::getInstance()->getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
             this, &MegaApplication::onNotificationProcessed);
 
-    mLogoutController = new LogoutController(&mEngine);
+    mLogoutController = new LogoutController(mEngine);
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
 }
 
@@ -1167,7 +1168,7 @@ void MegaApplication::start(bool restartFromLocalLogout)
             createTrayIcon();
         }
 
-        mLoginController = new LoginController();
+        mLoginController = new LoginController(mEngine);
         if(!restartFromLocalLogout)
         {
             openOnboardingDialog();
@@ -1187,7 +1188,7 @@ void MegaApplication::start(bool restartFromLocalLogout)
     }
     else //Otherwise, login in the account
     {
-        mLoginController = new FastLoginController();
+        mLoginController = new FastLoginController(mEngine);
         if (!static_cast<FastLoginController*>(mLoginController)->fastLogin()) //In case preferences are corrupt with empty session, just unlink and remove associated data.
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "MEGAsync preferences logged but empty session. Unlink account and fresh start.");
@@ -1199,11 +1200,6 @@ void MegaApplication::start(bool restartFromLocalLogout)
             checkupdate = true;
         }
     }
-    connect(mLoginController, &LoginController::fetchingNodesFinished,
-            [=](){
-                mLoginController->deleteLater();
-                mLoginController = nullptr;
-            });
 }
 
 void MegaApplication::requestUserData()
@@ -2215,11 +2211,6 @@ void MegaApplication::cleanAll()
     PowerOptions::appShutdown();
     mSyncController.reset();
 
-    if(mLoginController)
-    {
-        delete mLoginController;
-    }
-
     removeAllFinishedTransfers();
     clearViewedTransfers();
     DialogOpener::closeAllDialogs();
@@ -2233,6 +2224,8 @@ void MegaApplication::cleanAll()
         mBlockingBatch.cancelTransfer();
     }
 
+    delete mEngine;
+    mEngine = nullptr;
     delete httpServer;
     httpServer = nullptr;
     delete httpsServer;

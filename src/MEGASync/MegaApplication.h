@@ -139,7 +139,7 @@ public:
     void migrateSyncConfToSdk(QString email = QString());
 
     mega::MegaApi *getMegaApi() { return megaApi; }
-    QQmlEngine *qmlEngine() { return &mEngine;}
+    QQmlEngine *qmlEngine() { return mEngine;}
     mega::MegaApi *getMegaApiFolders() { return megaApiFolders; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
@@ -629,7 +629,7 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
-    QQmlEngine mEngine;
+    QQmlEngine* mEngine;
 
     void processUpgradeSecurityEvent();
 

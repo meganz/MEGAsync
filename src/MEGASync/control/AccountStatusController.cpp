@@ -20,10 +20,6 @@ AccountStatusController::AccountStatusController(QObject* parent)
 
 AccountStatusController::~AccountStatusController()
 {
-    if(MegaSyncApp)
-    {
-        MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), nullptr);
-    }
 }
 
 void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
