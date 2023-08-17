@@ -135,6 +135,7 @@ signals:
 
 protected slots:
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
+    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes) override;
 
 private slots:
     void onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived);

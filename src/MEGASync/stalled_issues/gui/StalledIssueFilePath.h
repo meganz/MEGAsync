@@ -42,8 +42,8 @@ private:
     void fillMoveFilePath();
     QString getMoveFilePath() const;
 
-    std::unique_ptr<mega::MegaNode> getHandle() const;
-    std::unique_ptr<mega::MegaNode> getMoveHandle() const;
+    std::unique_ptr<mega::MegaNode> getNode() const;
+    std::unique_ptr<mega::MegaNode> getMoveNode() const;
 
     QString getSyncPathProblemString(mega::MegaSyncStall::SyncPathProblem pathProblem);
     QString getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem);

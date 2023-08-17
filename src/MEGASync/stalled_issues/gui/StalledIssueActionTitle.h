@@ -45,8 +45,8 @@ public:
 
     void updateLastTimeModified(const QDateTime &time);
     void updateCreatedTime(const QDateTime &time);
-    void updateUser(const QString& user, bool show);
-    void updateVersionsCount(int versions);
+    bool updateUser(const QString& user, bool show);
+    bool updateVersionsCount(int versions);
     void updateSize(int64_t size);
     void updateCRC(const QString &fp);
 

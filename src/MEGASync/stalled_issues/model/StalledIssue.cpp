@@ -140,7 +140,7 @@ void StalledIssueData::checkTrailingSpaces(QString &name) const
 //CLOUD
 std::shared_ptr<mega::MegaNode> CloudStalledIssueData::getNode() const
 {
-    if(mRemoteNode)
+    if(mRemoteNode && mRemoteNode->getHandle() == mPathHandle)
     {
         return mRemoteNode;
     }
@@ -176,6 +176,17 @@ mega::MegaHandle CloudStalledIssueData::getPathHandle() const
 mega::MegaHandle CloudStalledIssueData::getMovePathHandle() const
 {
     return mMovePathHandle;
+}
+
+void CloudStalledIssueData::setPathHandle(mega::MegaHandle newPathHandle)
+{
+    mPathHandle = newPathHandle;
+    auto attr = getFileFolderAttributes();
+    if(attr)
+    {
+        attr->setHandle(mPathHandle);
+    }
+
 }
 
 //LOCAL
@@ -414,12 +425,12 @@ const CloudStalledIssueDataPtr StalledIssue::consultCloudData() const
     return mCloudData;
 }
 
-const QExplicitlySharedDataPointer<LocalStalledIssueData> &StalledIssue::getLocalData() const
+const QExplicitlySharedDataPointer<LocalStalledIssueData> &StalledIssue::getLocalData()
 {
     return mLocalData;
 }
 
-const QExplicitlySharedDataPointer<CloudStalledIssueData> &StalledIssue::getCloudData() const
+const QExplicitlySharedDataPointer<CloudStalledIssueData> &StalledIssue::getCloudData()
 {
     return mCloudData;
 }
@@ -481,8 +492,8 @@ bool StalledIssue::operator==(const StalledIssue &data)
 {
     bool equal(true);
 
-    equal &= (mLocalData == data.getLocalData());
-    equal &= (mCloudData == data.getCloudData());
+    equal &= (mLocalData == data.mLocalData);
+    equal &= (mCloudData == data.mCloudData);
 
     return equal;
 }

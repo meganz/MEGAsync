@@ -165,7 +165,7 @@ QString StalledIssueFilePath::getMoveFilePath() const
     return mShowFullPath? mData->getNativeMoveFilePath() : mData->getNativeMovePath();
 }
 
-std::unique_ptr<mega::MegaNode> StalledIssueFilePath::getHandle() const
+std::unique_ptr<mega::MegaNode> StalledIssueFilePath::getNode() const
 {
     if(auto cloudIssue = mData->convert<CloudStalledIssueData>())
     {
@@ -194,7 +194,7 @@ std::unique_ptr<mega::MegaNode> StalledIssueFilePath::getHandle() const
     return nullptr;
 }
 
-std::unique_ptr<mega::MegaNode> StalledIssueFilePath::getMoveHandle() const
+std::unique_ptr<mega::MegaNode> StalledIssueFilePath::getMoveNode() const
 {
     if(auto cloudIssue = mData->convert<CloudStalledIssueData>())
     {
@@ -232,7 +232,7 @@ void StalledIssueFilePath::updateFileIcons()
     auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
     if(mData->isCloud())
     {
-        auto node(getHandle());
+        auto node(getNode());
         fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, hasProblem);
         if(!node)
         {
@@ -257,7 +257,7 @@ void StalledIssueFilePath::updateMoveFileIcons()
 
     if(mData->isCloud())
     {
-        auto node(getMoveHandle());
+        auto node(getMoveNode());
         fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, hasProblem);
         if(!node)
         {

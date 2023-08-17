@@ -274,6 +274,42 @@ void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi*)
 {
 }
 
+void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes)
+{
+    if(nodes)
+    {
+        for (int i = 0; i < nodes->size(); i++)
+        {
+            mega::MegaNode *node = nodes->get(i);
+            if (node->getChanges() & mega::MegaNode::CHANGE_TYPE_PARENT)
+            {
+                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                if(parentNode && parentNode->getType() == mega::MegaNode::TYPE_FILE)
+                {
+                    for(int row = 0; row < rowCount(QModelIndex()); ++row)
+                    {
+                        auto item = mStalledIssues.at(row);
+                        if(item->getData()->containsHandle(node->getHandle()))
+                        {
+                            auto parentFound(false);
+                            while (!parentFound)
+                            {
+                                auto currentParentHandle(parentNode->getHandle());
+                                parentNode.reset(MegaSyncApp->getMegaApi()->getNodeByHandle(parentNode->getParentHandle()));
+                                if(!parentNode || parentNode->getType() != mega::MegaNode::TYPE_FILE)
+                                {
+                                    item->getData()->updateHandle(currentParentHandle);
+                                    parentFound = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 Qt::DropActions StalledIssuesModel::supportedDropActions() const
 {
     return Qt::IgnoreAction;

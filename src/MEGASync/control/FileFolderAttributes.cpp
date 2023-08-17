@@ -357,6 +357,11 @@ qint64 LocalFileFolderAttributes::calculateSize()
     return newSize;
 }
 
+void LocalFileFolderAttributes::setPath(const QString &newPath)
+{
+    mPath = newPath;
+}
+
 //REMOTE
 RemoteFileFolderAttributes::RemoteFileFolderAttributes(const QString &filePath, QObject *parent, bool waitForAttributes)
     : FileFolderAttributes(parent),
@@ -406,9 +411,8 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
             }
             else
             {
-                QEventLoop eventLoop;
                 MegaSyncApp->getMegaApi()->getFolderInfo(node.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                              [this, &eventLoop]
+                                                                                              [this]
                                                                                               (const mega::MegaRequest& request, const mega::MegaError& e)
                 {
                     if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
@@ -419,14 +423,15 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
                         emit sizeReady(mSize);
                     }
 
-                    if(eventLoop.isRunning())
+                    if(mEventLoop.isRunning())
                     {
-                        eventLoop.quit();
+                        mEventLoop.quit();
                     }
                 }));
-                if(mWaitForAttributes)
+
+                if(mWaitForAttributes && mSize < 0 && !mEventLoop.isRunning())
                 {
-                    eventLoop.exec();
+                    mEventLoop.exec();
                 }
             }
         }
@@ -446,13 +451,12 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
         std::unique_ptr<mega::MegaNode> node = getNode();
         if(node && node->isFolder())
         {
-            QEventLoop eventLoop;
             MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                          [this, func, &eventLoop]
+                                                                                          [this, func]
                                                                                           (const mega::MegaRequest& request, const mega::MegaError& e)
             {
                 if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
-                        && e.getErrorCode() == mega::MegaError::API_OK)
+                    && e.getErrorCode() == mega::MegaError::API_OK)
                 {
                     auto folderInfo = request.getMegaFolderInfo();
                     mFileCount = std::max(folderInfo->getNumFiles(), 0);
@@ -461,14 +465,14 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
                         func(mVersionCount);
                     }
                 }
-                if(eventLoop.isRunning())
+                if(mEventLoop.isRunning())
                 {
-                    eventLoop.quit();
+                    mEventLoop.quit();
                 }
             }));
-            if(mWaitForAttributes)
+            if(mWaitForAttributes && mFileCount < 0 && !mEventLoop.isRunning())
             {
-                eventLoop.exec();
+                mEventLoop.exec();
             }
         }
     }
@@ -547,8 +551,7 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
                 if(auto context = requestReady(RemoteAttributeTypes::User, caller))
                 {
                     mOwner = user;
-                    QEventLoop eventLoop;
-                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [this ,func, context, &eventLoop](const mega::MegaRequest& request, const mega::MegaError& e) {
+                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [this ,func, context](const mega::MegaRequest& request, const mega::MegaError& e) {
                         if (e.getErrorCode() == mega::MegaError::API_OK)
                         {
                             auto emailFromRequest = request.getEmail();
@@ -570,15 +573,15 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
                                 }
                             }
                         }
-                        if(eventLoop.isRunning())
+                        if(mEventLoop.isRunning())
                         {
-                            eventLoop.quit();
+                            mEventLoop.quit();
                         }
                     }));
 
-                    if(mWaitForAttributes)
+                    if(mWaitForAttributes && mUserEmail.isEmpty() && !mEventLoop.isRunning())
                     {
-                        eventLoop.exec();
+                        mEventLoop.exec();
                     }
                 }
             }
@@ -659,17 +662,19 @@ std::unique_ptr<mega::MegaNode> RemoteFileFolderAttributes::getNode(Version type
     {
         node.reset(MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle));
     }
-    else
+
+    if(!node)
     {
         node.reset(MegaSyncApp->getMegaApi()->getNodeByPath(mFilePath.toUtf8().constData()));
     }
 
     if(node)
     {
-        auto nodeVersions = MegaSyncApp->getMegaApi()->getVersions(node.get());
-        if(nodeVersions->size() > 1)
+        std::unique_ptr<mega::MegaNodeList> versions(MegaSyncApp->getMegaApi()->getVersions(node.get()));
+
+        if(versions->size() > 1)
         {
-            lastVersionNode.reset(nodeVersions->get(type == Version::Last ? 0 : (nodeVersions->size() - 1)));
+            lastVersionNode.reset(versions->get(type == Version::Last ? 0 : (versions->size() - 1))->copy());
         }
         else
         {
@@ -678,4 +683,9 @@ std::unique_ptr<mega::MegaNode> RemoteFileFolderAttributes::getNode(Version type
     }
 
     return lastVersionNode;
+}
+
+void RemoteFileFolderAttributes::setHandle(mega::MegaHandle newHandle)
+{
+    mHandle = newHandle;
 }

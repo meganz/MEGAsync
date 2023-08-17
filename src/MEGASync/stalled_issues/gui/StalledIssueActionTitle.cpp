@@ -191,20 +191,6 @@ void StalledIssueActionTitle::setSolved(bool state)
 {
     ui->backgroundWidget->setProperty(DISCARDED,state);
     setStyleSheet(styleSheet());
-
-    if(state && !ui->titleContainer->graphicsEffect())
-    {
-        auto effect = new QGraphicsOpacityEffect(this);
-        effect->setOpacity(0.30);
-        ui->titleContainer->setGraphicsEffect(effect);
-    }
-
-    if(state && !ui->extraInfoContainer->graphicsEffect())
-    {
-        auto effect = new QGraphicsOpacityEffect(this);
-        effect->setOpacity(0.30);
-        ui->extraInfoContainer->setGraphicsEffect(effect);
-    }
 }
 
 bool StalledIssueActionTitle::isSolved() const
@@ -237,12 +223,14 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
-void StalledIssueActionTitle::updateUser(const QString &user, bool show)
+bool StalledIssueActionTitle::updateUser(const QString &user, bool show)
 {
+    auto& userLabel = mUpdateLabels[AttributeType::User];
+    bool visible(userLabel && !userLabel->text().isEmpty());
+
     if(show)
     {
         auto userText = user.isEmpty() ? tr("Loading user…") : user;
-        auto& userLabel = mUpdateLabels[AttributeType::User];
         if(!userLabel)
         {
             userLabel = addExtraInfo(tr("Upload by:"), userText, 1);
@@ -256,16 +244,27 @@ void StalledIssueActionTitle::updateUser(const QString &user, bool show)
     }
     else
     {
+        if(userLabel)
+        {
+            userLabel->setText(QString());
+        }
+
         hideAttribute(AttributeType::User);
     }
+
+    //As it is added to the second row, we need to know when it has been added/removed to modify the row height
+    return show != visible;
 }
 
-void StalledIssueActionTitle::updateVersionsCount(int versions)
+bool StalledIssueActionTitle::updateVersionsCount(int versions)
 {
-    if(versions > 1)
+    auto& versionsLabel = mUpdateLabels[AttributeType::Versions];
+    bool visible(versionsLabel && !versionsLabel->text().isEmpty());
+    bool show(versions > 1);
+
+    if(show)
     {
         QString versionsText(QString::number(versions));
-        auto& versionsLabel = mUpdateLabels[AttributeType::Versions];
         if(!versionsLabel)
         {
             versionsLabel = addExtraInfo(tr("Versions:"), versionsText, 1);
@@ -279,8 +278,17 @@ void StalledIssueActionTitle::updateVersionsCount(int versions)
     }
     else
     {
+        if(versionsLabel)
+        {
+            versionsLabel->setText(QString());
+        }
+
         hideAttribute(AttributeType::Versions);
     }
+
+
+    //As it is added to the second row, we need to know when it has been added/removed to modify the row height
+    return show != visible;
 }
 
 void StalledIssueActionTitle::updateSize(int64_t size)

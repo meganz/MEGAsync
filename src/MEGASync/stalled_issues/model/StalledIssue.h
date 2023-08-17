@@ -145,6 +145,8 @@ public:
     mega::MegaHandle getPathHandle() const;
     mega::MegaHandle getMovePathHandle() const;
 
+    void setPathHandle(mega::MegaHandle newPathHandle);
+
 private:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
@@ -223,6 +225,12 @@ public:
     const LocalStalledIssueDataPtr consultLocalData() const;
     const CloudStalledIssueDataPtr consultCloudData() const;
 
+    const QExplicitlySharedDataPointer<LocalStalledIssueData>& getLocalData();
+    const QExplicitlySharedDataPointer<CloudStalledIssueData>& getCloudData();
+
+    virtual bool containsHandle(mega::MegaHandle handle){return getCloudData()->getPathHandle() == handle;}
+    virtual void updateHandle(mega::MegaHandle handle){getCloudData()->setPathHandle(handle);}
+
     mega::MegaSyncStall::SyncStallReason getReason() const;
     QString getFileName(bool preferCloud) const;
     static StalledIssueFilterCriterion getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason);
@@ -270,11 +278,9 @@ public:
 
 protected:
     bool initLocalIssue(const mega::MegaSyncStall *stallIssue);
-    const QExplicitlySharedDataPointer<LocalStalledIssueData>& getLocalData() const;
     QExplicitlySharedDataPointer<LocalStalledIssueData> mLocalData;
 
     bool initCloudIssue(const mega::MegaSyncStall *stallIssue);
-    const QExplicitlySharedDataPointer<CloudStalledIssueData>& getCloudData() const;
     QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
     void setIsFile(const QString& path, bool isLocal);
@@ -345,7 +351,7 @@ private:
     friend class StalledIssuesModel;
     friend class StalledIssuesReceiver;
 
-    const std::shared_ptr<StalledIssue> &getData() const
+    std::shared_ptr<StalledIssue> &getData()
     {
         return mData;
     }

@@ -22,7 +22,6 @@ public:
             UNSOLVED
         };
 
-        mega::MegaHandle mHandle;
         QString getUnescapeConflictedName()
         {
             if(mUnescapedConflictedName.isEmpty())
@@ -38,6 +37,7 @@ public:
             return mConflictedName;
         }
 
+        mega::MegaHandle mHandle;
         QString mConflictedPath;
         QString mRenameTo;
         SolvedType mSolved;
@@ -65,6 +65,20 @@ public:
             return mConflictedName == data.mConflictedName;
         }
         bool isSolved() const {return mSolved != SolvedType::UNSOLVED;}
+
+        void solveByRename(const QString& newName)
+        {
+            mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;
+            mRenameTo = newName;
+            QFileInfo adaptedPath(mConflictedPath);
+            adaptedPath.setFile(adaptedPath.path(), newName);
+            mConflictedPath = adaptedPath.filePath();
+
+            if(auto localAttributes = std::dynamic_pointer_cast<LocalFileFolderAttributes>(mItemAttributes))
+            {
+                localAttributes->setPath(mConflictedPath);
+            }
+        }
 
     private:
         QString mConflictedName;
@@ -333,6 +347,9 @@ public:
     const QList<std::shared_ptr<ConflictedNameInfo>>& getNameConflictLocalData() const;
     const CloudConflictedNamesByHandle& getNameConflictCloudData() const;
 
+    bool containsHandle(mega::MegaHandle handle) override;
+    void updateHandle(mega::MegaHandle handle) override;
+
     bool solveLocalConflictedNameByRemove(int conflictIndex);
     bool solveCloudConflictedNameByRemove(int conflictIndex);
 
@@ -379,6 +396,17 @@ private:
 
     CloudConflictedNamesByHandle mCloudConflictedNames;
     QList<std::shared_ptr<ConflictedNameInfo>> mLocalConflictedNames;
+
+    //Convenient class
+    //Last name conflict node that has been modified (handle must be updated)
+    struct LastNodeModified
+    {
+        std::shared_ptr<ConflictedNameInfo> cloudItem;
+        bool usedAsCloudDataHandle = false;
+
+        bool isValid(){return cloudItem != nullptr;}
+    };
+    LastNodeModified mLastModifiedNode;
 };
 
 Q_DECLARE_METATYPE(NameConflictedStalledIssue)

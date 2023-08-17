@@ -57,7 +57,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::isBeingSolved(TransfersModel::Uplo
 {
     auto result(false);
 
-    auto node = getCloudData()->getNode();
+    auto node = consultCloudData()->getNode();
     if(node)
     {
         info.filename = consultLocalData()->getFileName();

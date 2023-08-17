@@ -259,13 +259,6 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
 {
     QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
     showMessage(customMessage.isEmpty() ? tr("Solved") : customMessage, icon.pixmap(24,24));
-
-    if(!ui->titleContainer->graphicsEffect())
-    {
-        auto fileNameEffect = new QGraphicsOpacityEffect(this);
-        fileNameEffect->setOpacity(0.30);
-        ui->titleContainer->setGraphicsEffect(fileNameEffect);
-    }
 }
 
 void StalledIssueHeader::setText(const QString &text)

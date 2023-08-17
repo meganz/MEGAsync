@@ -76,7 +76,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     auto conflictedNames = getConflictedNames(issue);
 
     //Reset widgets
-    bool firstTime(mTitlesByIndex.isEmpty());
     bool allSolved(true);
 
     for(int index = conflictedNames.size()-1; index >= 0; index--)
@@ -109,7 +108,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
 
         StalledIssueActionTitle* title(nullptr);
 
-        if(firstTime)
+        if(!mTitlesByIndex.contains(index))
         {
             title = new StalledIssueActionTitle(parent);
             initTitle(title, index, conflictedName);
@@ -262,19 +261,25 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
 
     //These items go in order
     //Modified time -- created time -- size
-    //User
+    //Versions count -- User
     if(isCloud())
     {
         auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info->mItemAttributes));
 
         cloudAttributes->requestVersions(title,[this, index](int versions)
         {
-            mTitlesByIndex.value(index)->updateVersionsCount(versions);
+            if(mTitlesByIndex.value(index)->updateVersionsCount(versions))
+            {
+                mDelegateWidget->updateSizeHint();
+            }
         });
 
         cloudAttributes->requestUser(title, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this, index](QString user, bool showAttribute)
         {
-            mTitlesByIndex.value(index)->updateUser(user, showAttribute);
+            if(mTitlesByIndex.value(index)->updateUser(user, showAttribute))
+            {
+                mDelegateWidget->updateSizeHint();
+            }
         });
     }
 
@@ -289,12 +294,6 @@ void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDeleg
 
 void NameConflict::setDisabled()
 {
-    if(!ui->pathContainer->graphicsEffect())
-    {
-        auto effect = new QGraphicsOpacityEffect(this);
-        effect->setOpacity(0.30);
-        ui->pathContainer->setGraphicsEffect(effect);
-    }
 }
 
 void NameConflict::onActionClicked(int actionId)

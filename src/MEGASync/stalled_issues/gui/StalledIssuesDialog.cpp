@@ -211,6 +211,7 @@ void StalledIssuesDialog::onUiBlocked()
 {
     if(!ui->stalledIssuesTree->loadingView().isLoadingViewSet())
     {
+        ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
         ui->stalledIssuesTree->loadingView().toggleLoadingScene(true);
     }
 }

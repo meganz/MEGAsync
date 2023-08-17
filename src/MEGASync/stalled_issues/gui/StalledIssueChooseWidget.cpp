@@ -128,10 +128,6 @@ void StalledIssueChooseWidget::setSolved()
     {
         ui->chooseTitle->setSolved(true);
         ui->name->setSolved(true);
-
-        auto pathEffect = new QGraphicsOpacityEffect(this);
-        pathEffect->setOpacity(0.30);
-        ui->pathContainer->setGraphicsEffect(pathEffect);
     }
 }
 

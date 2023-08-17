@@ -9,6 +9,8 @@
 #include <functional>
 #include <memory>
 
+#include <QEventLoop>
+
 namespace UserAttributes{
 class FullName;
 }
@@ -104,6 +106,8 @@ public:
     void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCRC(QObject* caller,std::function<void(const QString&)> func) override;
 
+    void setPath(const QString &newPath);
+
 private slots:
     void onModifiedTimeCalculated();
     void onSizeCalculated();
@@ -142,6 +146,8 @@ public:
     int versionCount();
     int fileCount();
 
+    void setHandle(mega::MegaHandle newHandle);
+
 signals:
     void fileCountReady(int);
 
@@ -169,6 +175,8 @@ private:
     int mFileCount;
 
     bool mWaitForAttributes;
+
+    QEventLoop mEventLoop;
 };
 
 #endif // FILEFOLDERATTRIBUTES_H

@@ -52,19 +52,4 @@ void OtherSideMissingOrBlocked::refreshUi()
     {
         ui->localPath->hide();
     }
-
-    if(issue.consultData()->isSolved())
-    {
-        if(!graphicsEffect())
-        {
-            auto effect = new QGraphicsOpacityEffect(this);
-            effect->setOpacity(0.30);
-            setGraphicsEffect(effect);
-        }
-    }
-    else if(graphicsEffect())
-    {
-        graphicsEffect()->deleteLater();
-        setGraphicsEffect(nullptr);
-    }
 }
