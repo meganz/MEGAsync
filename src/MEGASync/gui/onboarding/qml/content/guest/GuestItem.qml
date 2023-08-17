@@ -17,6 +17,8 @@ import Guest 1.0
 // C++
 import GuestContent 1.0
 import ApiEnums 1.0
+import LoginController 1.0
+import AccountStatusController 1.0
 
 Rectangle {
     id: content
@@ -209,7 +211,6 @@ Rectangle {
                     text: GuestStrings.logOut
                     onClicked: {
                         GuestContent.onLogouClicked();
-                        //content.state = content.stateNormal;
                     }
                 }
                 rightButton {
@@ -228,7 +229,7 @@ Rectangle {
 
         onAccountBlocked: {
             content.state = content.stateBlocked;
-    }
+        }
     }
 
     Connections {
