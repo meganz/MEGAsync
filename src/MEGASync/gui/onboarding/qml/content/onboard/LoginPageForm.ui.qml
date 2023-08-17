@@ -74,7 +74,6 @@ StackViewPage {
 
         MegaButtons.HelpButton {
             anchors.left: parent.left
-            anchors.right: parent.right
             text: OnboardingStrings.forgotPassword
             url: Links.recovery
         }
