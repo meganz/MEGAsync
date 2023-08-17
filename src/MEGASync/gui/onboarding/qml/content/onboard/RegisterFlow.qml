@@ -59,6 +59,7 @@ Rectangle {
         id: cancelLogin
 
         visible: false
+        modality: Qt.WindowModal
         onAccepted: {
             LoginControllerAccess.cancelLogin();
         }
@@ -183,5 +184,4 @@ Rectangle {
             }
         }
     }
-
 }

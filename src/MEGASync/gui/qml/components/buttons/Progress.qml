@@ -18,6 +18,12 @@ Item {
             backgroundLoader.sourceComponent = progressBarComp;
         }
 
+        if(value == 0)
+        {
+            root.width = 0;
+            return;
+        }
+
         if(value < 1) {
             if(busyTimer.running) {
                 return;
