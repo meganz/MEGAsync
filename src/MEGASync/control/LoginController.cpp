@@ -39,7 +39,6 @@ LoginController::LoginController(QObject *parent)
 
 LoginController::~LoginController()
 {
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), nullptr);
 }
 
 void LoginController::login(const QString &email, const QString &password)
@@ -725,6 +724,11 @@ LogoutController::LogoutController(QObject *parent)
       , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LogoutControllerAccess"), this);
+}
+
+LogoutController::~LogoutController()
+{
 }
 
 void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -792,10 +796,5 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
         Preferences::instance()->setNotifyDisabledSyncsOnLogin(true);
     }
 
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-    {
-        emit dialog->getDialog()->wrapper()->logout();
-    }
-
-    emit onLogoutFinished(!request->getFlag());
+    emit logout(!request->getFlag());
 }

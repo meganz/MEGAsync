@@ -121,10 +121,11 @@ class LogoutController : public QObject, mega::MegaRequestListener
 
 public:
     explicit LogoutController(QObject* parent =  nullptr);
+    virtual ~LogoutController();
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
 
 signals:
-    void onLogoutFinished(bool isLocalLogout);
+    void logout(bool isLocalLogout);
 
 private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;

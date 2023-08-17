@@ -46,12 +46,14 @@ bool OnboardingQmlDialog::event(QEvent *evnt)
         if(mLoggingIn)
         {
             emit closingButLoggingIn();
+            evnt->ignore();
             return true;
         }
         else if(mega::NOTLOGGEDIN == MegaSyncApp->getMegaApi()->isLoggedIn()
                || mega::EPHEMERALACCOUNT == MegaSyncApp->getMegaApi()->isLoggedIn())
         {
             hide();
+            evnt->ignore();
             return true;
         }
     }
