@@ -20,6 +20,7 @@ Qml.Button {
     Layout.preferredWidth: width
     Layout.preferredHeight: height
     spacing: 6
+    opacity: enabled ? 1.0 : 0.3
 
     contentItem: Row {
         anchors.fill: parent
@@ -28,6 +29,7 @@ Qml.Button {
         MegaImages.SvgImage {
             id: icon
 
+            anchors.verticalCenter: parent.verticalCenter
             source: Images.helpCircle
             color: visited ? Styles.linkVisited : Styles.linkPrimary
             sourceSize: button.iconSize
@@ -36,11 +38,12 @@ Qml.Button {
         MegaTexts.Text {
             id: textComponent
 
-            anchors.top: parent.top
             color: icon.color
             text: button.text
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: MegaTexts.Text.Size.Medium
+            lineHeight: 20
+            lineHeightMode: Text.FixedHeight
         }
     }
 
