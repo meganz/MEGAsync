@@ -730,7 +730,10 @@ LogoutController::LogoutController(QObject *parent)
 
 LogoutController::~LogoutController()
 {
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LogoutControllerAccess"), nullptr);
+    if(auto rootContext = MegaSyncApp->qmlEngine()->rootContext())
+    {
+        rootContext->setContextProperty(QString::fromUtf8("LogoutControllerAccess"), nullptr);
+    }
 }
 
 void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)

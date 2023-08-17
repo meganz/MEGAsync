@@ -723,7 +723,7 @@ void MegaApplication::initialize()
     connect(Platform::getInstance()->getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
             this, &MegaApplication::onNotificationProcessed);
 
-    mLogoutController = new LogoutController(this);
+    mLogoutController = new LogoutController(&mEngine);
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
 }
 
