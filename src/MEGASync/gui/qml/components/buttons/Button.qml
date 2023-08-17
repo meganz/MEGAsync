@@ -31,7 +31,7 @@ Qml.RoundButton {
             return colors.borderPressed;
         }
         if(button.hovered) {
-            return  colors.borderHover;
+            return colors.borderHover;
         }
         if(!button.enabled && !icons.busyIndicatorVisible) {
             return colors.borderDisabled;

@@ -77,6 +77,8 @@ Rectangle {
         anchors.topMargin: 9
         anchors.rightMargin: 9
         icons.source: Images.menu
+        z: 3
+
         onClicked: {
             menuButton.checked = true;
             menu.visible = !menu.visible;
