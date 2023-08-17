@@ -21,6 +21,8 @@
         <file>images/qml/onboarding/installation_type_backups.svg</file>
         <file>images/qml/onboarding/key.svg</file>
         <file>images/qml/onboarding/login.png</file>
+		<file>images/qml/onboarding/login@2x.png</file>
+		<file>images/qml/onboarding/login@3x.png</file>
         <file>images/qml/onboarding/pc.svg</file>
         <file>images/qml/onboarding/pc_mega.svg</file>
         <file>images/qml/onboarding/person.svg</file>
@@ -41,6 +43,8 @@
         <file>images/qml/mega_outline.svg</file>
         <file>images/qml/guest/exit.svg</file>
         <file>images/qml/guest/guest.png</file>
+		<file>images/qml/guest/guest@2x.png</file>
+		<file>images/qml/guest/guest@3x.png</file>
         <file>images/qml/guest/menu.svg</file>
         <file>images/qml/guest/settings.svg</file>
         <file>images/qml/guest/warning.png</file>
