@@ -157,7 +157,7 @@ void DuplicatedRemoteItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> info, Nod
 {
     if(!mFolderAttributes)
     {
-        mFolderAttributes = new RemoteFileFolderAttributes(info->getRemoteConflictNode()->getHandle(), this);
+        mFolderAttributes = new RemoteFileFolderAttributes(info->getRemoteConflictNode()->getHandle(), this, false);
         mFolderAttributes->requestModifiedTime(this,[this](const QDateTime& time)
         {
             setModifiedTime(time);

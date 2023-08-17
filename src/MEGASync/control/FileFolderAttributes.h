@@ -123,8 +123,8 @@ class RemoteFileFolderAttributes : public FileFolderAttributes
     Q_OBJECT
 
 public:
-    RemoteFileFolderAttributes(const QString& filePath, QObject *parent);
-    RemoteFileFolderAttributes(mega::MegaHandle handle, QObject *parent);
+    RemoteFileFolderAttributes(const QString& filePath, QObject *parent, bool waitForAttributes);
+    RemoteFileFolderAttributes(mega::MegaHandle handle, QObject *parent, bool waitForAttributes);
 
     ~RemoteFileFolderAttributes() override;
 
@@ -167,6 +167,8 @@ private:
     std::shared_ptr<const UserAttributes::FullName> mUserFullName;
     int mVersionCount;
     int mFileCount;
+
+    bool mWaitForAttributes;
 };
 
 #endif // FILEFOLDERATTRIBUTES_H

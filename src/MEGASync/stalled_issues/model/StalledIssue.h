@@ -129,11 +129,11 @@ public:
     {
         if(mPathHandle != mega::INVALID_HANDLE)
         {
-            mAttributes = std::make_shared<RemoteFileFolderAttributes>(mPathHandle, nullptr);
+            mAttributes = std::make_shared<RemoteFileFolderAttributes>(mPathHandle, nullptr, false);
         }
         else
         {
-            mAttributes = std::make_shared<RemoteFileFolderAttributes>(mPath.path, nullptr);
+            mAttributes = std::make_shared<RemoteFileFolderAttributes>(mPath.path, nullptr, false);
         }
     }
 

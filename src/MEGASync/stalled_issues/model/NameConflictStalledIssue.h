@@ -276,18 +276,18 @@ public:
                 std::sort(conflictedNames.begin(), conflictedNames.end(),
                           [](std::shared_ptr<ConflictedNameInfo> info1, std::shared_ptr<ConflictedNameInfo> info2)
                 {
-                    auto info1FileCount(0);
+                    auto info1FileCount(-1);
                     if(!info1->mIsFile)
                     {
                         auto file1Attr = std::dynamic_pointer_cast<RemoteFileFolderAttributes>(info1->mItemAttributes);
                         info1FileCount = file1Attr->fileCount();
                     }
 
-                    auto info2FileCount(0);
+                    auto info2FileCount(-1);
                     if(!info2->mIsFile)
                     {
-                        auto file1Attr = std::dynamic_pointer_cast<RemoteFileFolderAttributes>(info2->mItemAttributes);
-                        info2FileCount = file1Attr->fileCount();
+                        auto fileAttr = std::dynamic_pointer_cast<RemoteFileFolderAttributes>(info2->mItemAttributes);
+                        info2FileCount = fileAttr->fileCount();
                     }
 
                     return info1FileCount > info2FileCount;
