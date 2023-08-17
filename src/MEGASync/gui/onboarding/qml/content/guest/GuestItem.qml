@@ -17,7 +17,6 @@ import Guest 1.0
 // C++
 import GuestContent 1.0
 import ApiEnums 1.0
-import AccountStatusController 1.0
 
 Rectangle {
     id: content
@@ -233,6 +232,14 @@ Rectangle {
     }
 
     Connections {
+        target: LogoutControllerAccess
+
+        onLogout: {
+            content.state = content.stateNormal;
+        }
+    }
+
+    Connections {
         target: LoginControllerAccess
 
         onLoginStarted: {
@@ -273,10 +280,6 @@ Rectangle {
         onFetchingNodesFinished: (firstTime) => {
             content.state = content.stateNormal;
             guestWindow.hide();
-        }
-
-        onLogout: {
-            content.state = content.stateNormal;
         }
 
         onRegisterStarted: {
