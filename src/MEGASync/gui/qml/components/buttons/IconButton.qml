@@ -7,10 +7,6 @@ import Common 1.0
 
 MegaButtons.Button {
     sizes.borderWidth: 0
-    leftPadding: 5 + sizes.focusBorderWidth
-    rightPadding: 5 + sizes.focusBorderWidth
-    topPadding: 5 + sizes.focusBorderWidth
-    bottomPadding: 5 + sizes.focusBorderWidth
     height: 32 + 2 * sizes.focusBorderWidth
     width: height
     Layout.preferredHeight: height
@@ -34,5 +30,9 @@ MegaButtons.Button {
         borderPressed: "transparent"
     }
 
-    sizes.iconWidth: 24
+    sizes {
+        iconWidth: 24
+        verticalPadding: 4
+        horizontalPadding: 4
+    }
 }
