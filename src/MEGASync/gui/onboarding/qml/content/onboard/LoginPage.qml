@@ -96,7 +96,6 @@ LoginPageForm {
         target: LoginControllerAccess
 
         onFetchingNodesProgress: {
-            console.debug("LOGIN PAGE progress: " + progress);
             loginButton.progress.value = progress;
         }
 
