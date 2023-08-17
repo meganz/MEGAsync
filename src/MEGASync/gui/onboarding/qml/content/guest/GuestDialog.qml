@@ -7,6 +7,7 @@ import Guest 1.0
 
 // C++
 import GuestQmlDialog 1.0
+import AccountStatusController 1.0
 
 GuestQmlDialog {
     id: guestWindow
@@ -21,10 +22,8 @@ GuestQmlDialog {
         id: guestItem
     }
 
-    onVisibleChanged:
-    {
-        if(visible)
-        {
+    onVisibleChanged:  {
+        if(visible) {
             AccountStatusControllerAccess.whyAmIBlocked();
         }
     }

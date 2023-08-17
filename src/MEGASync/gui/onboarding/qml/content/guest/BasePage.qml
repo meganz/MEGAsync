@@ -93,7 +93,6 @@ Item {
         }
 
         Row {
-            spacing: 8
             anchors.horizontalCenter: parent.horizontalCenter
 
             MegaButtons.OutlineButton {

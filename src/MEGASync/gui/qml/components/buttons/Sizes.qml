@@ -14,7 +14,7 @@ QtObject {
     property int radius: 6
     property int maskBorderRadius: 8
     property int focusBorderRadius: 10
-    property int focusBorderWidth: 3
+    property int focusBorderWidth: 4
     property int borderWidth: 2
     property int iconWidth: 16
     property size iconSize: Qt.size(iconWidth, iconWidth)
