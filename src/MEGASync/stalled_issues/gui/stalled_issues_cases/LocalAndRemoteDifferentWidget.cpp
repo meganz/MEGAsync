@@ -62,14 +62,25 @@ void LocalAndRemoteDifferentWidget::refreshUi()
     {
         ui->chooseRemoteCopy->hide();
     }
+
+    if(issue->isPotentiallySolved())
+    {
+        ui->chooseLocalCopy->hideActionButton();
+        ui->chooseRemoteCopy->hideActionButton();
+    }
 }
 
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 {
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+    if(checkIssue(dialog ? dialog->getDialog() : nullptr))
+    {
+        return;
+    }
+
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
-
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
@@ -140,10 +151,15 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 {
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+    if(checkIssue(dialog ? dialog->getDialog() : nullptr))
+    {
+        return;
+    }
+
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
-
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
@@ -180,13 +196,20 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 
     msgInfo.buttonsText = textsByButton;
 
-    if(node->isFile())
+    if(node)
     {
-        msgInfo.text = tr("Are you sure you want to keep the <b>remote file</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+        if(node->isFile())
+        {
+            msgInfo.text = tr("Are you sure you want to keep the <b>remote file</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+        }
+        else
+        {
+            msgInfo.text = tr("Are you sure you want to keep the <b>remote folder</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+        }
     }
     else
     {
-        msgInfo.text = tr("Are you sure you want to keep the <b>remote folder</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+        msgInfo.text = tr("Are you sure you want to keep the <b>remote item</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
     }
 
     if(localInfo.isFile())
@@ -211,4 +234,27 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     };
 
     QMegaMessageBox::warning(msgInfo);
+}
+
+bool LocalAndRemoteDifferentWidget::checkIssue(QDialog *dialog)
+{
+    if(MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(getCurrentIndex()))
+    {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = dialog;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.textFormat = Qt::RichText;
+        msgInfo.buttons = QMessageBox::Ok;
+        msgInfo.text = tr("The problem may have been solved externally.\nPlease, update the list.");
+        QMegaMessageBox::warning(msgInfo);
+
+        ui->chooseLocalCopy->hideActionButton();
+        ui->chooseRemoteCopy->hideActionButton();
+
+        updateSizeHint();
+
+        return true;
+    }
+
+    return false;
 }

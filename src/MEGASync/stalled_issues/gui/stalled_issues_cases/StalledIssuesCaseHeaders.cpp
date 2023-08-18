@@ -26,6 +26,28 @@ StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
     header->setData(this);
 }
 
+//Issue checker
+bool HeaderCaseIssueChecker::checkIssue(StalledIssueHeader *header, bool isSingleSelection)
+{
+    if(isSingleSelection && MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(header->getCurrentIndex()))
+    {
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.textFormat = Qt::RichText;
+        msgInfo.buttons = QMessageBox::Ok;
+        msgInfo.text = tr("The problem may have been solved externally.\nPlease, update the list.");
+        QMegaMessageBox::warning(msgInfo);
+
+        header->updateSizeHint();
+        return true;
+    }
+
+    return false;
+}
+
 //Local folder not scannable
 DefaultHeader::DefaultHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)
@@ -42,9 +64,19 @@ SymLinkHeader::SymLinkHeader(StalledIssueHeader *header)
     : StalledIssueHeaderCase(header)
 {}
 
-void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader*, int index)
+void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
 {
+    auto isSymLinkChecker = [](const std::shared_ptr<const StalledIssue> issue){
+        return issue->isSymLink();
+    };
+
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    auto selection = dialog->getDialog()->getSelection(isSymLinkChecker);
+
+    if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+    {
+        return;
+    }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
@@ -54,11 +86,6 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader*, in
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::No, tr("Cancel"));
 
-    auto isSymLinkChecker = [](const std::shared_ptr<const StalledIssue> issue){
-        return issue->isSymLink();
-    };
-
-    auto selection = dialog->getDialog()->getSelection(isSymLinkChecker);
     auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(isSymLinkChecker);
 
     if(index == IgnoreType::IgnoreAll)
@@ -370,7 +397,17 @@ void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header
 {
     if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
     {
+        auto reasons(QList<mega::MegaSyncStall::SyncStallReason>()
+                     << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
+                     << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
+
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+        auto selection = dialog->getDialog()->getSelection(reasons);
+
+        if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+        {
+            return;
+        }
 
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
@@ -380,11 +417,6 @@ void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::No, tr("Cancel"));
 
-        auto reasons(QList<mega::MegaSyncStall::SyncStallReason>()
-                     << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
-                     << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
-
-        auto selection = dialog->getDialog()->getSelection(reasons);
         auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
         if(selection.size() <= 1)
@@ -521,16 +553,6 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-        QMap<QMessageBox::Button, QString> textsByButton;
-        textsByButton.insert(QMessageBox::No, tr("Cancel"));
-
         auto solutionCanBeApplied = [index](const std::shared_ptr<const StalledIssue> issue) -> bool{
             auto result = issue->getReason() == mega::MegaSyncStall::NamesWouldClashWhenSynced;
             if(result)
@@ -559,7 +581,22 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             return result;
         };
 
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
         auto selection = dialog->getDialog()->getSelection(solutionCanBeApplied);
+
+        if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+        {
+            return;
+        }
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.textFormat = Qt::RichText;
+        msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+        QMap<QMessageBox::Button, QString> textsByButton;
+        textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
         auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(solutionCanBeApplied);
 
         if(selection.size() <= 1)

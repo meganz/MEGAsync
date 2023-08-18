@@ -80,7 +80,6 @@ private:
     bool isRawInfoVisible() const;
     void showAttribute(AttributeType type);
     void updateLabel(QLabel* label, const QString& text);
-
     QMap<AttributeType, QPointer<QLabel>> mUpdateLabels;
 };
 

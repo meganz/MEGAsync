@@ -128,8 +128,9 @@ void StalledIssueBaseDelegateWidget::updateSizeHint()
         layout()->activate();
         updateGeometry();
 
-        StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
-        mData.removeDelegateSize(sizeType);
+        mData.removeDelegateSize(StalledIssue::Header);
+        mData.removeDelegateSize(StalledIssue::Body);
+
         mDelegate->sizeHintChanged(getCurrentIndex());
     }
 }

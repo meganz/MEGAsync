@@ -135,7 +135,6 @@ void StalledIssueHeader::showIgnoreFile()
 void StalledIssueHeader::issueIgnored()
 {
     ui->ignoreFileButton->hide();
-    QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
     showSolvedMessage(tr("Ignored"));
 }
 
@@ -163,6 +162,9 @@ void StalledIssueHeader::updateHeaderSizes()
 
     ui->actionContainer->layout()->activate();
     ui->actionContainer->updateGeometry();
+
+    ui->actionButtonsContainer->layout()->activate();
+    ui->actionButtonsContainer->updateGeometry();
 
     ui->titleContainer->layout()->activate();
     ui->titleContainer->updateGeometry();
@@ -259,6 +261,7 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
 {
     QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
     showMessage(customMessage.isEmpty() ? tr("Solved") : customMessage, icon.pixmap(24,24));
+    ui->actionButtonsContainer->hide();
 }
 
 void StalledIssueHeader::setText(const QString &text)
@@ -374,9 +377,17 @@ void StalledIssueHeader::refreshUi()
     {
         ui->ignoreFileButton->hide();
 
-        if(getData().consultData()->isSolved())
+        if(getData().consultData()->isPotentiallySolved())
+        {
+            showSolvedMessage(tr("Issue may be fixed externally"));
+        }
+        else if(getData().consultData()->isSolved())
         {
             showSolvedMessage();
+        }
+        else
+        {
+            ui->actionButtonsContainer->show();
         }
     }
 

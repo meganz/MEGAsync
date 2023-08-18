@@ -231,6 +231,7 @@ protected:
 
 private:
     void sendLoadingMessageVisibilityChange(bool value);
+    void updateMessagePos();
 
     Ui::ViewLoadingSceneUI* ui;
     QWidget* mViewBase;

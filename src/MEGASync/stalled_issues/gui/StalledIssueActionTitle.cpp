@@ -57,12 +57,11 @@ void StalledIssueActionTitle::setTitle(const QString &title)
     updateSizeHints();
 
     ui->titleLabel->setText(title);
-    ui->titleLabel->setProperty(MESSAGE_TEXT, title);
 }
 
 QString StalledIssueActionTitle::title() const
 {
-    return ui->titleLabel->property(MESSAGE_TEXT).toString();
+    return ui->titleLabel->toPlainText();
 }
 
 void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &text, int id, bool mainButton)
@@ -128,13 +127,20 @@ void StalledIssueActionTitle::showIcon()
     {
         fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(mNode.get(), fileInfo, false);
     }
-    else
+    else if(fileInfo.exists())
     {
         fileTypeIcon = StalledIssuesUtilities::getLocalFileIcon(fileInfo, false);
     }
+    else if(!ui->icon->pixmap())
+    {
+        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(nullptr, QFileInfo(), false);
+    }
 
-    ui->icon->setPixmap(fileTypeIcon.pixmap(ui->icon->size()));
-    ui->icon->show();
+    if(!fileTypeIcon.isNull())
+    {
+        ui->icon->setPixmap(fileTypeIcon.pixmap(ui->icon->size()));
+        ui->icon->show();
+    }
 }
 
 void StalledIssueActionTitle::setMessage(const QString &message, const QPixmap& pixmap)
@@ -516,7 +522,10 @@ void StalledIssueActionTitle::updateSizeHints()
 
 void StalledIssueActionTitle::setInfo(const QString &newPath, mega::MegaHandle handle)
 {
-    mPath = newPath;
+    if(mPath != newPath)
+    {
+        mPath = newPath;
+    }
 
     if(mIsCloud && (!mNode || (mNode->getHandle() != handle)))
     {

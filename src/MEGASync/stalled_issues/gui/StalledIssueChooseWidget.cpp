@@ -109,6 +109,11 @@ const StalledIssueDataPtr &StalledIssueChooseWidget::data()
     return mData;
 }
 
+void StalledIssueChooseWidget::hideActionButton()
+{
+    ui->chooseTitle->hideActionButton(BUTTON_ID);
+}
+
 bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
 {
     return QFrame::eventFilter(watched, event);

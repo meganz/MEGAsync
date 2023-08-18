@@ -138,11 +138,18 @@ void StalledIssueData::checkTrailingSpaces(QString &name) const
 }
 
 //CLOUD
-std::shared_ptr<mega::MegaNode> CloudStalledIssueData::getNode() const
+std::shared_ptr<mega::MegaNode> CloudStalledIssueData::getNode(bool refresh) const
 {
-    if(mRemoteNode && mRemoteNode->getHandle() == mPathHandle)
+    if(refresh)
     {
-        return mRemoteNode;
+        mRemoteNode.reset();
+    }
+    else
+    {
+        if(mRemoteNode && mRemoteNode->getHandle() == mPathHandle)
+        {
+            return mRemoteNode;
+        }
     }
 
     auto newNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(mPathHandle));
@@ -379,12 +386,17 @@ void StalledIssue::removeDelegateSize(SizeType type)
 
 bool StalledIssue::isSolved() const
 {
-    return mIsSolved;
+    return mIsSolved == SolveType::Solved;
+}
+
+bool StalledIssue::isPotentiallySolved() const
+{
+    return mIsSolved == SolveType::PotentiallySolved;
 }
 
 void StalledIssue::setIsSolved()
 {
-    mIsSolved = true;
+    mIsSolved = SolveType::Solved;
 }
 
 bool StalledIssue::isSymLink() const
@@ -433,6 +445,32 @@ const QExplicitlySharedDataPointer<LocalStalledIssueData> &StalledIssue::getLoca
 const QExplicitlySharedDataPointer<CloudStalledIssueData> &StalledIssue::getCloudData()
 {
     return mCloudData;
+}
+
+bool StalledIssue::checkForExternalChanges()
+{
+    if(!isSolved())
+    {
+        if(mLocalData)
+        {
+            QFileInfo fileInfo(mLocalData->getPath().path);
+            if(!fileInfo.exists())
+            {
+                mIsSolved = SolveType::PotentiallySolved;
+            }
+        }
+
+        if(mCloudData)
+        {
+            auto node = mCloudData->getNode(true);
+            if(!node || MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
+            {
+                mIsSolved = SolveType::PotentiallySolved;
+            }
+        }
+    }
+
+    return isPotentiallySolved();
 }
 
 void StalledIssue::setIsFile(const QString &path, bool isLocal)
@@ -503,7 +541,7 @@ void StalledIssue::updateIssue(const mega::MegaSyncStall *stallIssue)
     mLocalData.reset();
     mCloudData.reset();
 
-    mIsSolved = false;
+    mIsSolved = SolveType::Unsolved;
 
     fillIssue(stallIssue);
     endFillingIssue();

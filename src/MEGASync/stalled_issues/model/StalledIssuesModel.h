@@ -14,6 +14,7 @@
 #include <QPointer>
 
 class LoadingSceneMessageHandler;
+class NameConflictedStalledIssue;
 
 class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 {
@@ -98,6 +99,8 @@ public:
     //Solve all issues
     void solveAllIssues();
 
+    bool checkForExternalChanges(const QModelIndex &index);
+
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
@@ -151,10 +154,11 @@ private:
 
     bool checkIfUserStopSolving();
     void startSolvingIssues();
-    void finishSolvingIssues(int issuesFixed);
+    void finishSolvingIssues(int issuesFixed, bool sendMessage = true);
 
     void sendFixingIssuesMessage(int issue, int totalIssues);
 
+    void solveListOfIssues(const QModelIndexList& list, std::function<bool(int)> solveFunc);
     void issueSolved(std::shared_ptr<StalledIssueVariant> issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;

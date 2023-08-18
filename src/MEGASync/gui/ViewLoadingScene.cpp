@@ -93,10 +93,6 @@ void LoadingSceneMessageHandler::updateMessage(const MessageInfo &info)
     {
         if(!info.message.isEmpty() && !ui->MessageLabel->isVisible())
         {
-            if(info.total != 0)
-            {
-            }
-
             sendLoadingMessageVisibilityChange(true);
         }
 
@@ -110,12 +106,12 @@ void LoadingSceneMessageHandler::updateMessage(const MessageInfo &info)
             ui->ProgressLabel->setText(tr("%1 of %2").arg(info.count).arg(info.total));
             ui->ProgressBar->setMaximum(info.total);
             ui->ProgressBar->setValue(info.count);
-
-
         }
 
         ui->StopButton->setVisible(info.total > 1 || info.buttonType == MessageInfo::ButtonType::Ok);
         ui->StopButton->setText(info.buttonType == MessageInfo::ButtonType::Stop ? tr("Stop") : tr("Ok"));
+
+        ui->MessageContainer->adjustSize();
     }
 }
 
@@ -123,31 +119,7 @@ bool LoadingSceneMessageHandler::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::Resize)
     {
-        if(watched == mTopParent && mFadeOutWidget)
-        {
-            mFadeOutWidget->setGeometry(mTopParent->geometry());
-        }
-        else if(watched == mViewBase)
-        {
-            auto messageGeo(ui->MessageContainer->geometry());
-
-            if(mTopParent)
-            {
-                if(mFadeOutWidget)
-                {
-                    mFadeOutWidget->setGeometry(QRect(QPoint(0,0), mTopParent->size()));
-                }
-
-                QRect topRect(QPoint(0,0), mTopParent->size());
-                messageGeo.moveCenter(topRect.center());
-            }
-            else
-            {
-                messageGeo.moveCenter(mViewBase->geometry().center());
-            }
-
-            ui->MessageContainer->setGeometry(messageGeo);
-        }
+        updateMessagePos();
     }
     else if(event->type() == QEvent::KeyRelease && ui->MessageContainer->isVisible())
     {
@@ -169,6 +141,23 @@ void LoadingSceneMessageHandler::sendLoadingMessageVisibilityChange(bool value)
         mFadeOutWidget = new QWidget(mTopParent ? mTopParent : mViewBase);
         mFadeOutWidget->show();
         mFadeOutWidget->setStyleSheet(QString::fromLatin1("background-color: rgba(0,0,0,0.20);"));
+    }
+
+    if(mFadeOutWidget)
+    {
+        mFadeOutWidget->setVisible(value);
+    }
+
+    ui->MessageContainer->setVisible(value);
+
+    updateMessagePos();
+    emit loadingMessageVisibilityChange(value);
+}
+
+void LoadingSceneMessageHandler::updateMessagePos()
+{
+    if(mFadeOutWidget)
+    {
         if(mTopParent)
         {
             mFadeOutWidget->setGeometry(QRect(QPoint(0,0), mTopParent->size()));
@@ -178,6 +167,12 @@ void LoadingSceneMessageHandler::sendLoadingMessageVisibilityChange(bool value)
             mFadeOutWidget->resize(mViewBase->size());
             mFadeOutWidget->move(0,0);
         }
+
+        mFadeOutWidget->stackUnder(ui->MessageContainer);
+    }
+    else
+    {
+        ui->LoadingViewContainer->stackUnder(ui->MessageContainer);
     }
 
     auto messageGeo(ui->MessageContainer->geometry());
@@ -191,20 +186,5 @@ void LoadingSceneMessageHandler::sendLoadingMessageVisibilityChange(bool value)
         messageGeo.moveCenter(mViewBase->geometry().center());
     }
     ui->MessageContainer->setGeometry(messageGeo);
-
-    if(mFadeOutWidget)
-    {
-
-        mFadeOutWidget->setVisible(value);
-        mFadeOutWidget->stackUnder(ui->MessageContainer);
-    }
-    else
-    {
-        ui->LoadingViewContainer->stackUnder(ui->MessageContainer);
-    }
-
-    ui->MessageContainer->setVisible(value);
     ui->MessageContainer->raise();
-
-    emit loadingMessageVisibilityChange(value);
 }

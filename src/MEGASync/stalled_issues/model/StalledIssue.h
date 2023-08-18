@@ -121,7 +121,7 @@ public:
         return true;
     }
 
-    std::shared_ptr<mega::MegaNode> getNode() const;
+    std::shared_ptr<mega::MegaNode> getNode(bool refresh = false) const;
 
     bool isEqual(const mega::MegaSyncStall *stall) const override;
 
@@ -230,6 +230,9 @@ public:
 
     virtual bool containsHandle(mega::MegaHandle handle){return getCloudData()->getPathHandle() == handle;}
     virtual void updateHandle(mega::MegaHandle handle){getCloudData()->setPathHandle(handle);}
+    virtual void updateName(){}
+
+    virtual bool checkForExternalChanges();
 
     mega::MegaSyncStall::SyncStallReason getReason() const;
     QString getFileName(bool preferCloud) const;
@@ -239,7 +242,15 @@ public:
 
     virtual void updateIssue(const mega::MegaSyncStall *stallIssue);
 
+    enum SolveType
+    {
+        Unsolved,
+        Solved,
+        PotentiallySolved
+    };
+
     bool isSolved() const;
+    bool isPotentiallySolved() const;
     void setIsSolved();
     virtual void autoSolveIssue(){}
 
@@ -287,7 +298,7 @@ protected:
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
-    mutable bool mIsSolved = false;
+    mutable SolveType mIsSolved = SolveType::Unsolved;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
     QStringList mIgnoredPaths;

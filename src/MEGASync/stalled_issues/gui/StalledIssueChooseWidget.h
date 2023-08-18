@@ -23,6 +23,8 @@ public:
     void updateUi(StalledIssueDataPtr data, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
     const StalledIssueDataPtr& data();
 
+    void hideActionButton();
+
 signals:
     void chooseButtonClicked(int id);
 

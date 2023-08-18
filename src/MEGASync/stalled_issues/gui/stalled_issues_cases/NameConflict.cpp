@@ -154,6 +154,11 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
                     icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
                     titleText = tr("Merged");
                 }
+                else if(info->mSolved ==  NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::CHANGED_EXTERNALLY)
+                {
+                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                    titleText = tr("Modified externally");
+                }
                 else
                 {
                     icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
@@ -300,8 +305,24 @@ void NameConflict::onActionClicked(int actionId)
 {
     if(auto chooseTitle = dynamic_cast<StalledIssueActionTitle*>(sender()))
     {
-        auto issueData = getData(mIssue);
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+        if(MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(mDelegateWidget->getCurrentIndex()))
+        {
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+            msgInfo.title = MegaSyncApp->getMEGAString();
+            msgInfo.textFormat = Qt::RichText;
+            msgInfo.buttons = QMessageBox::Ok;
+            msgInfo.text = tr("The problem may have been solved externally.\nPlease, update the list.");
+            QMegaMessageBox::warning(msgInfo);
+
+            mDelegateWidget->updateSizeHint();
+
+            return;
+        }
+
+        auto issueData = getData(mIssue);
 
         QFileInfo info;
         auto titleFileName = chooseTitle->property(TITLE_FILENAME).toString();
@@ -329,7 +350,21 @@ void NameConflict::onActionClicked(int actionId)
             }
             else
             {
-                renameDialog = new RenameLocalNodeDialog(filePath, dialog->getDialog());
+                if(info.exists())
+                {
+                    renameDialog = new RenameLocalNodeDialog(filePath, dialog->getDialog());
+                }
+                else
+                {
+                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+                    msgInfo.title = MegaSyncApp->getMEGAString();
+                    msgInfo.textFormat = Qt::RichText;
+                    msgInfo.buttons = QMessageBox::Ok;
+                    msgInfo.text = tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
+                    QMegaMessageBox::warning(msgInfo);
+                    return;
+                }
             }
 
             renameDialog->init();
@@ -390,8 +425,22 @@ void NameConflict::onActionClicked(int actionId)
             }
             else
             {
-                isFile = info.isFile();
-                fileName = info.fileName();
+                if(info.exists())
+                {
+                    isFile = info.isFile();
+                    fileName = info.fileName();
+                }
+                else
+                {
+                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+                    msgInfo.title = MegaSyncApp->getMEGAString();
+                    msgInfo.textFormat = Qt::RichText;
+                    msgInfo.buttons = QMessageBox::Ok;
+                    msgInfo.text = tr("%1 no longer exists.\nPlease refresh the view").arg(info.fileName());
+                    QMegaMessageBox::warning(msgInfo);
+                    return;
+                }
             }
 
             QMegaMessageBox::MessageBoxInfo msgInfo;

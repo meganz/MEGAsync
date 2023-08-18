@@ -19,6 +19,7 @@ public:
             RENAME,
             SOLVED_BY_OTHER_SIDE,
             MERGED,
+            CHANGED_EXTERNALLY,
             UNSOLVED
         };
 
@@ -52,6 +53,7 @@ public:
 
         ConflictedNameInfo(const QFileInfo& fileInfo, bool isFile, std::shared_ptr<FileFolderAttributes> attributes)
             : mConflictedName(fileInfo.fileName()),
+              mHandle(mega::INVALID_HANDLE),
               mConflictedPath(fileInfo.filePath()),
               mSolved(SolvedType::UNSOLVED),
               mDuplicatedGroupId(-1),
@@ -65,6 +67,33 @@ public:
             return mConflictedName == data.mConflictedName;
         }
         bool isSolved() const {return mSolved != SolvedType::UNSOLVED;}
+
+        void checkLocalChange()
+        {
+            if(mSolved == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
+            {
+                if(mHandle != mega::INVALID_HANDLE)
+                {
+                    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle));
+                    if(node)
+                    {
+                        auto nodePath = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(mHandle));
+                        if(nodePath != mConflictedPath)
+                        {
+                            mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::CHANGED_EXTERNALLY;
+                        }
+                    }
+                }
+                else
+                {
+                    QFileInfo adaptedPath(mConflictedPath);
+                    if(!adaptedPath.exists())
+                    {
+                        mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::CHANGED_EXTERNALLY;
+                    }
+                }
+            }
+        }
 
         void solveByRename(const QString& newName)
         {
@@ -349,6 +378,9 @@ public:
 
     bool containsHandle(mega::MegaHandle handle) override;
     void updateHandle(mega::MegaHandle handle) override;
+    void updateName() override;
+
+    bool checkForExternalChanges() override;
 
     bool solveLocalConflictedNameByRemove(int conflictIndex);
     bool solveCloudConflictedNameByRemove(int conflictIndex);
@@ -367,14 +399,7 @@ public:
     void updateIssue(const mega::MegaSyncStall *stallIssue) override;
 
 private:
-    enum class SideChecked
-    {
-        Local = 0x01,
-        Cloud = 0x02,
-        All = Local | Cloud
-    };
-    Q_DECLARE_FLAGS(SidesChecked, SideChecked);
-    bool checkAndSolveConflictedNamesSolved(SidesChecked sidesChecked = SideChecked::All);
+    bool checkAndSolveConflictedNamesSolved(bool isPotentiallySolved = false);
 
     void solveIssue(int option);
 

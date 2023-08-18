@@ -28,6 +28,8 @@ private slots:
     void onRemoteButtonClicked(int);
 
 private:
+    bool checkIssue(QDialog* dialog);
+
     Ui::LocalAndRemoteDifferentWidget *ui;
 };
 

@@ -241,7 +241,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         auto detectRelativeHover =   [this, index, &parentState](){
             QPoint cursorPos = QCursor::pos();
             auto viewPos = mView->mapFromGlobal(cursorPos);
-            if(viewPos.y() >= 0 && mView->isActiveWindow())
+            if(viewPos.y() >= 0)
             {
                 auto hoverIndex = mView->indexAt(viewPos);
                 if(hoverIndex.isValid() && (index.parent() == hoverIndex ||
