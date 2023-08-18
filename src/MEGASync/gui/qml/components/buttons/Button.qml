@@ -118,7 +118,7 @@ Qml.RoundButton {
         id: focusRect
 
         color: "transparent"
-        border.color: button.enabled ? (button.focus ? Styles.focus : "transparent") : "transparent"
+        border.color: button.enabled ? (button.activeFocus ? Styles.focus : "transparent") : "transparent"
         border.width: sizes.focusBorderWidth
         radius: sizes.focusBorderRadius
         height: button.height

@@ -135,13 +135,14 @@ LoginPageForm {
                     password.hint.visible = true;
                     break;
                 case ApiEnums.API_EINCOMPLETE: //mega::MegaError::API_EINCOMPLETE: -> account not confirmed
-                    //what to do here?                    //add banners
-                    break;
-                case ApiEnums.API_ETOOMANY: //mega::MegaError::API_ETOOMANY: -> too many attempts
-                    //what to do here?                    //add banners
+                case ApiEnums.API_ETOOMANY:   //mega::MegaError::API_ETOOMANY: -> too many attempts
+                    email.error = true;
+                    password.error = true;
+                    password.hint.text = errorMsg;
+                    password.hint.visible = true;
                     break;
                 case ApiEnums.API_EBLOCKED: //mega::MegaError::API_EBLOCKED: ->  blocked account
-                    //what to do here?                    //add banners
+                    //This never happens, API error?                  //add banners
                     break;
                 case ApiEnums.API_EACCESS: //locallogout called prior to login finished
                     //add banners
