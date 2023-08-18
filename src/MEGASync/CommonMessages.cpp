@@ -51,6 +51,12 @@ QString CommonMessages::errorInvalidChars()
     return QCoreApplication::translate("CommonMessages", "The following characters are not allowed:\n%1").arg(Utilities::FORBIDDEN_CHARS);
 }
 
+QString CommonMessages::getExpiredProFlexiMessage()
+{
+    return QCoreApplication::translate("CommonMessages", "Your Pro Flexi account has been deactivated due to payment failure or you've cancelled your subscription. "
+                                       "You won't be able to access the data stored in your account until you've made a payment and reactivated your subscription.");
+}
+
 int CommonMessages::computeDaysToExpiration(int64_t expirationTimeStampInSecs)
 {
     QDateTime expiredDate;

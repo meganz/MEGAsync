@@ -1,7 +1,7 @@
 #include "VerifyLockMessage.h"
 
 #ifdef __APPLE__
-    #include "platform/macx/LockedPopOver.h""
+    #include "platform/macx/LockedPopOver.h"
 #endif
 
 #include "ui_VerifyLockMessage.h"
