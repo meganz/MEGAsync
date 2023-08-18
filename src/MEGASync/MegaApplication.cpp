@@ -16,7 +16,7 @@
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "onboarding/OnboardingQmlDialog.h"
-#include "PlatformStrings.h"..
+#include "PlatformStrings.h"
 
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"

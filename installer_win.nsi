@@ -40,8 +40,10 @@ VIAddVersionKey "ProductName" "MEGAsync"
 
 !ifdef BUILD_X64_VERSION
 !define QT_PATH "C:\Qt\5.12.12\msvc2017_64"
+!define QT_DEPLOY_PATH "qt-deploy-x64"
 !else
 !define QT_PATH "C:\Qt\5.12.12\msvc2017"
+!define QT_DEPLOY_PATH "qt-deploy-x86"
  !endif
 
 !ifdef BUILD_X64_VERSION
@@ -620,98 +622,16 @@ modeselected:
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip files below
   ;x86_32 files
-  File "${QT_PATH}\bin\Qt5Core.dll"
-  AccessControl::SetFileOwner "$INSTDIR\Qt5Core.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Qt5Core.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\bin\Qt5Gui.dll"
-  AccessControl::SetFileOwner "$INSTDIR\Qt5Gui.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Qt5Gui.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\bin\Qt5Widgets.dll"
-  AccessControl::SetFileOwner "$INSTDIR\Qt5Widgets.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Qt5Widgets.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\bin\Qt5Network.dll"
-  AccessControl::SetFileOwner "$INSTDIR\Qt5Network.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Qt5Network.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\bin\Qt5Xml.dll"
-  AccessControl::SetFileOwner "$INSTDIR\Qt5Xml.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Qt5Xml.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\bin\Qt5Svg.dll"
-  AccessControl::SetFileOwner "$INSTDIR\Qt5Svg.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Qt5Svg.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\bin\Qt5Concurrent.dll"
-  AccessControl::SetFileOwner "$INSTDIR\Qt5Concurrent.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\Qt5Concurrent.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  SetOutPath "$INSTDIR\imageformats"
-  File "${QT_PATH}\plugins\imageformats\qgif.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qgif.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qgif.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qicns.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qicns.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qicns.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qico.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qico.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qico.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qjpeg.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qjpeg.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qjpeg.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qsvg.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qsvg.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qsvg.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qtga.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qtga.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qtga.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qtiff.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qtiff.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qtiff.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qwbmp.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qwbmp.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qwbmp.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qwebp.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qwebp.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qwebp.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  SetOutPath "$INSTDIR\iconengines"
-  File "${QT_PATH}\plugins\iconengines\qsvgicon.dll"
-  AccessControl::SetFileOwner "$INSTDIR\iconengines" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\iconengines" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\iconengines\qsvgicon.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\iconengines\qsvgicon.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  SetOutPath "$INSTDIR\platforms"
-  File "${QT_PATH}\plugins\platforms\qwindows.dll"
-  AccessControl::SetFileOwner "$INSTDIR\platforms" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\platforms" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\platforms\qwindows.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\platforms\qwindows.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  SetOutPath "$INSTDIR\styles"
-  File "${QT_PATH}\plugins\styles\qwindowsvistastyle.dll"
-  AccessControl::SetFileOwner "$INSTDIR\styles" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\styles" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME" "GenericRead + GenericWrite"
+  SetOutPath "$INSTDIR"
+  File /r "${QT_DEPLOY_PATH}\*"
 !endif
+
+  ; Remove unused Qt libs
+  Delete "$INSTDIR\Qt5Xml.dll"
+  Delete "$INSTDIR\Qt5Concurrent.dll"
 
   ;Disable bearer plugin if it's a reinstallation
   RMDir /r "$INSTDIR\bearer"
-
 
   SetOutPath "$INSTDIR"
   SetOverwrite on
@@ -1046,11 +966,11 @@ Section Uninstall
   Delete "$INSTDIR\libuv.dll"
   Delete "$INSTDIR\qt.conf"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
-  Delete "$INSTDIR\avcodec-58.dll"
-  Delete "$INSTDIR\avformat-58.dll"
-  Delete "$INSTDIR\avutil-56.dll"
-  Delete "$INSTDIR\swscale-5.dll"
-  Delete "$INSTDIR\swresample-3.dll"
+  Delete "$INSTDIR\avcodec-59.dll"
+  Delete "$INSTDIR\avformat-59.dll"
+  Delete "$INSTDIR\avutil-57.dll"
+  Delete "$INSTDIR\swscale-6.dll"
+  Delete "$INSTDIR\swresample-4.dll"
 
   ;Still remove old DLLs though we no longer produce them (non-VCPKG may still produce them)
   Delete "$INSTDIR\avcodec-57.dll"
@@ -1060,6 +980,11 @@ Section Uninstall
   Delete "$INSTDIR\swresample-2.dll"
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
+  Delete "$INSTDIR\avcodec-58.dll"
+  Delete "$INSTDIR\avformat-58.dll"
+  Delete "$INSTDIR\avutil-56.dll"
+  Delete "$INSTDIR\swscale-5.dll"
+  Delete "$INSTDIR\swresample-3.dll"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
