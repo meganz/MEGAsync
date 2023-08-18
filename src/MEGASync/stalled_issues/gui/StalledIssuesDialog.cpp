@@ -69,7 +69,6 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
         showView(valueChanged);
     });
 
-    Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::None);
     if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::None)
     {
         connect(Preferences::instance().get(), &Preferences::valueChanged, this, &StalledIssuesDialog::onPreferencesValueChanged);

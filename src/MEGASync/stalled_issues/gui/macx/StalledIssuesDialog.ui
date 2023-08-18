@@ -901,7 +901,7 @@ color:#333333;
                 <UInt>4</UInt>
                </property>
                <property name="iconPrefix" stdset="0">
-                <string>check-circle</string>
+                <string>solved-issues</string>
                </property>
               </widget>
              </item>

@@ -30,11 +30,6 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
 
             for (size_t i = 0; i < totalSize; ++i)
             {
-                if(i > 20)
-                {
-                    continue;
-                }
-
                 auto stall = stalls->get(i);
                 std::shared_ptr<StalledIssueVariant> variant;
 

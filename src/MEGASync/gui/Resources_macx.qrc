@@ -1229,5 +1229,11 @@
         <file>images/StalledIssues/solve-issues-button.png</file>
         <file>images/StalledIssues/solve-issues-button@2x.png</file>
         <file>images/StalledIssues/solve-issues-button@3x.png</file>
+        <file>images/StalledIssues/solved-issues-outline.png</file>
+        <file>images/StalledIssues/solved-issues-outline@2x.png</file>
+        <file>images/StalledIssues/solved-issues-outline@3x.png</file>
+        <file>images/StalledIssues/solved-issues-solid.png</file>
+        <file>images/StalledIssues/solved-issues-solid@2x.png</file>
+        <file>images/StalledIssues/solved-issues-solid@3x.png</file>
     </qresource>
 </RCC>
