@@ -17,6 +17,8 @@ MegaTextFields.TextField {
     height: heightWithFocus
     width: widthWidthFocus
 
+    error: hasError
+
     textField.validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
     textField.height: height + 6 // add the focus border size (3 up + 3 down)
     textField.font.pixelSize: 48
