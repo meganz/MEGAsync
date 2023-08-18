@@ -845,7 +845,7 @@ void BackupsWizard::onMyBackupsFolderHandleSet(mega::MegaHandle)
                              + mDeviceNameRequest->getDeviceName());
 }
 
-void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name)
+void BackupsWizard::onSyncAddRequestStatus(int errorCode, int, const QString& errorMsg, const QString& name)
 {
     // Update BackupInfo
     BackupInfo info = mBackupsStatus.value(name);

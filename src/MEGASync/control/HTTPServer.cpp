@@ -587,11 +587,15 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                     firstnode = false;
                 }
 
+                const QByteArray nameArray = name.toUtf8();
+                const QByteArray publicAuthArray = publicAuth.toUtf8();
+                const QByteArray privateAuthArray = privateAuth.toUtf8();
+
                 if (type != MegaNode::TYPE_FILE)
                 {
-                    MegaNode *node = megaApi->createForeignFolderNode(h, name.toUtf8().constData(), p,
-                                                                     privateAuth.toUtf8().constData(),
-                                                                     publicAuth.toUtf8().constData());
+                    MegaNode *node = megaApi->createForeignFolderNode(h, nameArray.constData(), p,
+                                                                     privateAuthArray.constData(),
+                                                                     publicAuthArray.constData());
                     downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node));
                 }
                 else
@@ -599,16 +603,20 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                     QString key = Utilities::extractJSONString(file, QString::fromUtf8("k"));
                     if (key.size() == 43)
                     {
+                        const QByteArray keyArray = key.toUtf8();
                         long long size = Utilities::extractJSONNumber(file, QString::fromUtf8("s"));
                         long long mtime = Utilities::extractJSONNumber(file, QString::fromUtf8("ts"));
 
                         QString crc    = Utilities::extractJSONString(file, QString::fromUtf8("c"));
+                        const QByteArray crcArray = crc.toUtf8();
 
-                        MegaNode *node = megaApi->createForeignFileNode(h, key.toUtf8().constData(),
-                                                         name.toUtf8().constData(), size, mtime,
-                                                         crc.isEmpty() ? nullptr : crc.toUtf8().constData(),
-                                                         p, privateAuth.toUtf8().constData(),
-                                                         publicAuth.toUtf8().constData(), chatAuth.isEmpty() ? NULL : chatAuth.toUtf8().constData());
+                        const QByteArray chatAuthArray = chatAuth.toUtf8();
+                        MegaNode *node = megaApi->createForeignFileNode(h, keyArray.constData(),
+                                                         nameArray.constData(), size, mtime,
+                                                         crc.isEmpty() ? nullptr : crcArray.constData(),
+                                                         p, privateAuthArray.constData(),
+                                                         publicAuthArray.constData(),
+                                                         chatAuth.isEmpty() ? nullptr :  chatAuthArray.constData());
                         downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node));
                         QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(h);
                         if (it != webTransferStateRequests.end())
