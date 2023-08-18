@@ -178,6 +178,10 @@ Rectangle {
                 root.backPressed();
             } else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
                 pastePressed();
+            } else if(event.key === Qt.Key_Up) {
+                textField.cursorPosition = 0;
+            } else if(event.key === Qt.Key_Down) {
+                textField.cursorPosition = textField.text.length;
             }
         }
     }
@@ -243,9 +247,3 @@ Rectangle {
         }
     }
 }
-
-
-
-
-
-
