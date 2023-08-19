@@ -92,18 +92,19 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
     auto& item = itemsByRowMap[row];
 
-    if(item && item->getData().consultData()->getReason() == issue.consultData()->getReason())
+    if(item &&
+       item->getCurrentIndex() == sourceIndex)
     {
         item->updateUi(sourceIndex, issue);
     }
-    else if(!item || (item && item->getData().consultData()->getReason() != issue.consultData()->getReason()))
+    else
     {
         if(item)
         {
             item->deleteLater();
         }
 
-        item = createBodyWidget(sourceIndex, parent, issue);
+        item = createBodyWidget(parent, issue);
         item->resize(QSize(size.width(), item->size().height()));
         item->show();
         item->hide();
@@ -116,7 +117,7 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
     return item;
 }
 
-StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
+StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWidget(QWidget *parent, const StalledIssueVariant &issue) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
     auto reason = issue.consultData()->getReason();

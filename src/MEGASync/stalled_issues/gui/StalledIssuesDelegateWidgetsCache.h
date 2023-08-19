@@ -37,7 +37,7 @@ private:
 
     int getMaxCacheRow(int row) const;
 
-    StalledIssueBaseDelegateWidget* createBodyWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
+    StalledIssueBaseDelegateWidget* createBodyWidget(QWidget *parent, const StalledIssueVariant &issue) const;
     StalledIssueHeaderCase* createHeaderCaseWidget(StalledIssueHeader* header, const StalledIssueVariant &issue) const;
 
     StalledIssuesProxyModel* mProxyModel;

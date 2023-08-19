@@ -614,7 +614,7 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
     }
     else
     {
-        item = mCacheManager.getStalledIssueHeaderWidget(finalIndex,proxyIndex, mView->viewport(), data, size);
+        item = mCacheManager.getStalledIssueHeaderWidget(finalIndex, proxyIndex, mView->viewport(), data, size);
     }
 
     return item;
