@@ -462,10 +462,16 @@ bool StalledIssue::checkForExternalChanges()
 
         if(mCloudData)
         {
-            auto node = mCloudData->getNode(true);
-            if(!node || MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
+            auto currentNode = mCloudData->getNode();
+            if(currentNode)
             {
-                mIsSolved = SolveType::PotentiallySolved;
+                auto node = mCloudData->getNode(true);
+                if(!node ||
+                   MegaSyncApp->getMegaApi()->isInRubbish(node.get()) ||
+                   currentNode->getParentHandle() != node->getParentHandle())
+                {
+                    mIsSolved = SolveType::PotentiallySolved;
+                }
             }
         }
     }

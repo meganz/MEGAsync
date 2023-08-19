@@ -22,8 +22,8 @@ public:
 
     StalledIssuesDelegateWidgetsCache(QStyledItemDelegate* delegate);
 
-    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue, const QSize& size) const;
-    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue, const QSize& size) const;
+    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, const QModelIndex &proxyIndex, QWidget *parent, const StalledIssueVariant &issue, const QSize& size) const;
+    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, const QModelIndex &proxyIndex, QWidget *parent, const StalledIssueVariant &issue, const QSize& size) const;
 
     static bool adaptativeHeight(mega::MegaSyncStall::SyncStallReason reason);
 

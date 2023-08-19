@@ -164,8 +164,7 @@ void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
         actions << StalledIssueHeader::ActionInfo(tr("Ignore symlink"), IgnoreType::IgnoreThis);
         actions << StalledIssueHeader::ActionInfo(tr("Ignore all symlinks in sync"), IgnoreType::IgnoreAll);
 
-        header->showMultipleAction(tr("Ignore"), actions);
-        header->hideIgnoreFile();
+        header->showActions(tr("Ignore"), actions);
     }
 }
 
@@ -325,9 +324,9 @@ LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDi
 {
 }
 
-void LocalAndRemotePreviouslyUnsyncedDifferHeader::onActionButtonClicked(StalledIssueHeader *header)
+void LocalAndRemotePreviouslyUnsyncedDifferHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int index)
 {
-    LocalAndRemoteActionButtonClicked::actionClicked(header);
+    LocalAndRemoteActionButtonClicked::onMultipleActionButtonOptionSelected(header, index);
 }
 
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseActions(StalledIssueHeader *header)
@@ -336,7 +335,8 @@ void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseActions(StalledIss
     {
         if(conflict->isSolvable() && !conflict->isSolved())
         {
-            header->showAction(tr("Solve"));
+            StalledIssueHeader::ActionInfo action(tr("Solve"), LocalAndRemoteActionButtonClicked::LocalAndRemoveButton::Solve);
+            header->showAction(action);
         }
         else
         {
@@ -362,9 +362,9 @@ LocalAndRemoteChangedSinceLastSyncedStateHeader::LocalAndRemoteChangedSinceLastS
 {
 }
 
-void LocalAndRemoteChangedSinceLastSyncedStateHeader::onActionButtonClicked(StalledIssueHeader *header)
+void LocalAndRemoteChangedSinceLastSyncedStateHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int index)
 {
-    LocalAndRemoteActionButtonClicked::actionClicked(header);
+    LocalAndRemoteActionButtonClicked::onMultipleActionButtonOptionSelected(header, index);
 }
 
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseActions(StalledIssueHeader *header)
@@ -373,7 +373,8 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseActions(Stalled
     {
         if(conflict->isSolvable() && !conflict->isSolved())
         {
-            header->showAction(tr("Solve"));
+            StalledIssueHeader::ActionInfo action(tr("Solve"), LocalAndRemoteActionButtonClicked::LocalAndRemoveButton::Solve);
+            header->showAction(action);
         }
         else
         {
@@ -393,7 +394,7 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseTitles(StalledI
     header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
 }
 
-void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header)
+void LocalAndRemoteActionButtonClicked::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int)
 {
     if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
     {
@@ -504,7 +505,7 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
                 actions << StalledIssueHeader::ActionInfo(tr("Merge folders"), NameConflictedStalledIssue::MergeFolders);
             }
 
-            header->showMultipleAction(tr("Solve options"), actions);
+            header->showActions(tr("Solve options"), actions);
         }
     }
 }

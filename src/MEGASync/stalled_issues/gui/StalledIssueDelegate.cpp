@@ -136,72 +136,74 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
 
     StalledIssueVariant stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
     {
+        QSize size;
 
         StalledIssue::SizeType sizeType = index.parent().isValid() ? StalledIssue::Body : StalledIssue::Header;
-        auto size = stalledIssueItem.getDelegateSize(sizeType);
-        if(size.isValid())
-        {
-            return size;
-        }
+        size = stalledIssueItem.getDelegateSize(sizeType);
 
-        if(mFreshStart)
+        if(!size.isValid() && mFreshStart)
         {
-            if(index.row() >= StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE)
+            auto parentRow(index.parent().isValid() ? index.parent().row() : index.row());
+            if((mVisibleIndexesRange.isEmpty() && parentRow > StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE)
+               || (!mVisibleIndexesRange.isEmpty() && !mVisibleIndexesRange.contains(parentRow)))
             {
                 auto averageSizeInfo(mAverageHeaderHeight.value(stalledIssueItem.consultData()->getReason()));
                 auto averageSize = averageSizeInfo.second;
 
-                QSize defaultSize;
                 if(averageSize.isValid())
                 {
-                    defaultSize = QSize(averageSize.width(), averageSize.height()/averageSizeInfo.first);
+                    size = QSize(averageSize.width(), averageSize.height()/averageSizeInfo.first);
                 }
                 else
                 {
-                    defaultSize = QSize(100,60);
+                    size = QSize(100,60);
                 }
 
-                stalledIssueItem.setDelegateSize(defaultSize, StalledIssue::Header);
-                return defaultSize;
+                stalledIssueItem.setDelegateSize(size, StalledIssue::Header);
             }
         }
 
-        QSize proposedSize;
-        auto parentIndex(index.parent());
-        if(parentIndex.isValid())
+        if(!size.isValid())
         {
-            StalledIssueVariant parentStalledIssueItem (qvariant_cast<StalledIssueVariant>(parentIndex.data(Qt::DisplayRole)));
-            StalledIssueBaseDelegateWidget* parentW (getStalledIssueItemWidget(parentIndex, parentStalledIssueItem));
-            if(parentW)
+            QSize proposedSize;
+            auto parentIndex(index.parent());
+            if(parentIndex.isValid())
             {
-                proposedSize = parentW->size();
+                StalledIssueVariant parentStalledIssueItem (qvariant_cast<StalledIssueVariant>(parentIndex.data(Qt::DisplayRole)));
+                StalledIssueBaseDelegateWidget* parentW (getStalledIssueItemWidget(parentIndex, parentStalledIssueItem));
+                if(parentW)
+                {
+                    proposedSize = parentW->size();
+                }
             }
-        }
-        else
-        {
-            auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-            proposedSize = dialog->getDialog()->size();
-        }
-
-        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, proposedSize));
-        if(w)
-        {
-            size = w->sizeHint();
-
-            if(mFreshStart)
+            else
             {
-                if(mAverageHeaderHeight.contains(stalledIssueItem.consultData()->getReason()))
-                {
-                    auto& info = mAverageHeaderHeight[stalledIssueItem.consultData()->getReason()];
-                    info.first++;
-                    info.second = QSize(info.second.width(), info.second.height() + size.height());
-                }
-                else
-                {
-                    mAverageHeaderHeight.insert(stalledIssueItem.consultData()->getReason(), qMakePair(1, size));
-                }
+                auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+                proposedSize = dialog->getDialog()->size();
             }
 
+            StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, proposedSize));
+            if(w)
+            {
+                size = w->sizeHint();
+                if(mFreshStart)
+                {
+                    if(mAverageHeaderHeight.contains(stalledIssueItem.consultData()->getReason()))
+                    {
+                        auto& info = mAverageHeaderHeight[stalledIssueItem.consultData()->getReason()];
+                        info.first++;
+                        info.second = QSize(info.second.width(), info.second.height() + size.height());
+                    }
+                    else
+                    {
+                        mAverageHeaderHeight.insert(stalledIssueItem.consultData()->getReason(), qMakePair(1, size));
+                    }
+                }
+            }
+        }
+
+        if(size.isValid())
+        {
             return size;
         }
     }
@@ -595,12 +597,12 @@ QModelIndex StalledIssueDelegate::getEditorCurrentIndex() const
     return QModelIndex();
 }
 
-StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant& data, const QSize& size) const
+StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex& proxyIndex, const StalledIssueVariant& data, const QSize& size) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
 
-    auto finalIndex(index);
-    auto sourceIndex = mProxyModel->mapToSource(index);
+    auto finalIndex(proxyIndex);
+    auto sourceIndex = mProxyModel->mapToSource(proxyIndex);
     if(sourceIndex.isValid())
     {
         finalIndex = sourceIndex;
@@ -608,11 +610,11 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
 
     if(finalIndex.parent().isValid())
     {
-        item = mCacheManager.getStalledIssueInfoWidget(finalIndex,mView->viewport(), data, size);
+        item = mCacheManager.getStalledIssueInfoWidget(finalIndex, proxyIndex, mView->viewport(), data, size);
     }
     else
     {
-        item = mCacheManager.getStalledIssueHeaderWidget(finalIndex,mView->viewport(), data, size);
+        item = mCacheManager.getStalledIssueHeaderWidget(finalIndex,proxyIndex, mView->viewport(), data, size);
     }
 
     return item;

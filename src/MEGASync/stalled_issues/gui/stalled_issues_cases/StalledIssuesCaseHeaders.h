@@ -14,7 +14,6 @@ public:
 
     virtual void refreshCaseActions(StalledIssueHeader* header){}
     virtual void refreshCaseTitles(StalledIssueHeader* header) = 0;
-    virtual void onActionButtonClicked(StalledIssueHeader*){}
     virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader*, int){}
 };
 
@@ -43,7 +42,7 @@ class SymLinkHeader : public StalledIssueHeaderCase
 
     enum IgnoreType
     {
-        IgnoreAll,
+        IgnoreAll = StalledIssueHeader::ActionsId::Custom,
         IgnoreThis
     };
 
@@ -180,7 +179,11 @@ protected slots:
 class LocalAndRemoteActionButtonClicked : QObject
 {
 public:
-    static void actionClicked(StalledIssueHeader *header);
+    enum LocalAndRemoveButton
+    {
+        Solve = StalledIssueHeader::ActionsId::Custom
+    };
+    static void onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int);
 };
 
 class LocalAndRemotePreviouslyUnsyncedDifferHeader : public StalledIssueHeaderCase
@@ -189,7 +192,7 @@ class LocalAndRemotePreviouslyUnsyncedDifferHeader : public StalledIssueHeaderCa
 
 public:
     LocalAndRemotePreviouslyUnsyncedDifferHeader(StalledIssueHeader* header);
-    void onActionButtonClicked(StalledIssueHeader *header) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int index) override;
 
 protected slots:
     void refreshCaseActions(StalledIssueHeader *header) override;
@@ -203,7 +206,7 @@ class LocalAndRemoteChangedSinceLastSyncedStateHeader : public StalledIssueHeade
 
 public:
     LocalAndRemoteChangedSinceLastSyncedStateHeader(StalledIssueHeader* header);
-    void onActionButtonClicked(StalledIssueHeader *header) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int index) override;
 
 protected slots:
     void refreshCaseActions(StalledIssueHeader *header) override;

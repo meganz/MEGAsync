@@ -18,7 +18,14 @@ class StalledIssueHeader : public StalledIssueBaseDelegateWidget
 {
     Q_OBJECT
 
+
 public:
+    enum ActionsId
+    {
+        Custom = 0,
+        Ignore = Qt::UserRole
+    };
+
     static const int BODY_INDENT;
     static const int ARROW_INDENT;
     static const int ICON_INDENT;
@@ -35,8 +42,8 @@ public:
 
     virtual bool adaptativeHeight();
 
-    void showAction(const QString& actionButtonText);
-    void hideAction();
+    //void showAction(const QString& actionButtonText);
+    //void hideAction();
 
     struct ActionInfo
     {
@@ -51,8 +58,9 @@ public:
 
     void updateHeaderSizes();
 
-    void showMultipleAction(const QString& actionButtonText, const QList<ActionInfo>& actions);
-    void hideMultipleAction();
+    void showAction(const ActionInfo& actions);
+    void showActions(const QString& actionButtonText, const QList<ActionInfo>& actions);
+    void hideAction();
 
     void showMessage(const QString& message, const QPixmap &pixmap);
     void showSolvedMessage(const QString& customMessage = QString());
@@ -68,14 +76,8 @@ public:
     void refreshCaseTitles();
     void refreshCaseActions();
 
-    void hideIgnoreFile();
-
 protected:
     QString fileName();
-
-protected slots:
-    virtual void on_actionButton_clicked();
-    virtual void on_ignoreFileButton_clicked();
 
 private slots:
     void onMultipleActionClicked();
@@ -83,6 +85,7 @@ private slots:
 private:
     void showIgnoreFile();
     void issueIgnored();
+    void onIgnoreFileActionClicked();
 
     void propagateButtonClick();
 

@@ -135,7 +135,7 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
     connect(mStalledIssuedReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](int issueCounter, int totalIssues)
     {
         LoadingSceneMessageHandler::MessageInfo info;
-        info.message = tr("Solving issues");
+        info.message = tr("Processing issues");
         info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::Stop;
         info.count = issueCounter;
         info.total = totalIssues;
@@ -664,8 +664,11 @@ void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::fun
                 }
                 else
                 {
-                    solveFunc(potentialIndex.row());
-                    issuesFixed++;
+                    if(solveFunc(potentialIndex.row()))
+                    {
+                        issuesFixed++;
+                        issueSolved(issue);
+                    }
                 }
             }
             issueCounter++;
@@ -731,7 +734,7 @@ void StalledIssuesModel::solveAllIssues()
         auto item = mStalledIssues.at(row);
         if(item->consultData()->isSolvable())
         {
-            issueSolved(item);
+            item->getData()->autoSolveIssue();
             return true;
         }
         return false;
@@ -757,7 +760,6 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
             if(auto issue = item->convert<LocalOrRemoteUserMustChooseStalledIssue>())
             {
                 remote ? issue->chooseRemoteSide() : issue->chooseLocalSide();
-                issueSolved(item);
                 if(item->consultData()->isSolved())
                 {
                     MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_MANUALLY,
@@ -783,7 +785,6 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
         if(localRemoteIssue)
         {
             localRemoteIssue->chooseLastMTimeSide();
-            issueSolved(issue);
 
             if(localRemoteIssue->isSolved())
             {
@@ -819,7 +820,6 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
             }
 
             item->getData()->setIsSolved();
-            issueSolved(item);
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
                                                  "Issue ignored manually", false, nullptr);
 
@@ -833,9 +833,9 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
     solveListOfIssues(list, resolveIssue);
 }
 
-void StalledIssuesModel::ignoreSymLinks(const QModelIndex& index)
+void StalledIssuesModel::ignoreSymLinks(const QModelIndex& fixedIndex)
 {
-    auto item = mStalledIssues.at(index.row());
+    auto item = mStalledIssues.at(fixedIndex.row());
     if(item->getData()->canBeIgnored())
     {
         mUtilities.ignoreSymLinks(item->getData()->consultLocalData()->getNativeFilePath());
@@ -845,16 +845,22 @@ void StalledIssuesModel::ignoreSymLinks(const QModelIndex& index)
         auto resolveIssue = [this](int row) -> bool
         {
             auto item = mStalledIssues.at(row);
-            if(item->getData()->isSymLink())
-            {
-                item->getData()->setIsSolved();
-                return true;
-            }
+            item->getData()->setIsSolved();
 
-            return false;
+            return true;
         };
 
-        solveListOfIssues(QModelIndexList() << index, resolveIssue);
+        QModelIndexList list;
+        auto totalRows(rowCount(QModelIndex()));
+        for(int row = 0; row < totalRows; ++row)
+        {
+            auto item = mStalledIssues.at(row);
+            if(item->getData()->isSymLink())
+            {
+                list.append(index(row,0));
+            }
+        }
+        solveListOfIssues(list, resolveIssue);
     }
 }
 
@@ -870,7 +876,6 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &
                 if(auto nameConflict = item->convert<NameConflictedStalledIssue>())
                 {
                     nameConflict->semiAutoSolveIssue(option);
-                    issueSolved(item);
                     if(item->consultData()->isSolved())
                     {
                         MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY,

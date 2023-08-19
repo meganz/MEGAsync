@@ -194,7 +194,7 @@ bool NameConflictedStalledIssue::checkForExternalChanges()
         {
             if(!conflictedName->isSolved())
             {
-                conflictedName->checkLocalChange();
+                conflictedName->checkExternalChange();
 
                 if(conflictedName->isSolved())
                 {
@@ -218,7 +218,7 @@ bool NameConflictedStalledIssue::checkForExternalChanges()
             {
                 if(!conflictedName->isSolved())
                 {
-                    conflictedName->checkLocalChange();
+                    conflictedName->checkExternalChange();
 
                     if(conflictedName->isSolved())
                     {

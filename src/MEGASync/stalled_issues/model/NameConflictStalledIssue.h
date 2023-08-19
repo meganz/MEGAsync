@@ -68,7 +68,7 @@ public:
         }
         bool isSolved() const {return mSolved != SolvedType::UNSOLVED;}
 
-        void checkLocalChange()
+        void checkExternalChange()
         {
             if(mSolved == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
             {

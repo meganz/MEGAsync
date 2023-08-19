@@ -21,6 +21,7 @@ const int StalledIssueHeader::GROUPBOX_INDENT = BODY_INDENT - 9;// Following the
 const int StalledIssueHeader::GROUPBOX_CONTENTS_INDENT = 9;// Following the InVision mockups
 const int StalledIssueHeader::HEIGHT = 60;
 
+const char* MULTIACTION_ICON = "MULTIACTION_ICON";
 const char* FILENAME_PROPERTY = "FILENAME_PROPERTY";
 const char* MULTIPLE_ACTIONS_PROPERTY = "ACTIONS_PROPERTY";
 
@@ -31,6 +32,10 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->multipleActionButton, &QPushButton::clicked, this, &StalledIssueHeader::onMultipleActionClicked);
+
+    QSizePolicy sp_retain = ui->arrow->sizePolicy();
+    sp_retain.setRetainSizeWhenHidden(true);
+    ui->arrow->setSizePolicy(sp_retain);
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -60,7 +65,7 @@ bool StalledIssueHeader::adaptativeHeight()
     return false;
 }
 
-void StalledIssueHeader::on_ignoreFileButton_clicked()
+void StalledIssueHeader::onIgnoreFileActionClicked()
 {
     propagateButtonClick();
 
@@ -122,19 +127,19 @@ void StalledIssueHeader::on_ignoreFileButton_clicked()
 }
 
 
-void StalledIssueHeader::hideIgnoreFile()
-{
-    ui->ignoreFileButton->hide();
-}
+//void StalledIssueHeader::hideIgnoreFile()
+//{
+//    ui->ignoreFileButton->hide();
+//}
 
 void StalledIssueHeader::showIgnoreFile()
 {
-    ui->ignoreFileButton->show();
+    StalledIssueHeader::ActionInfo action(tr("Ignore"), ActionsId::Ignore);
+    showAction(action);
 }
 
 void StalledIssueHeader::issueIgnored()
 {
-    ui->ignoreFileButton->hide();
     showSolvedMessage(tr("Ignored"));
 }
 
@@ -144,66 +149,34 @@ void StalledIssueHeader::propagateButtonClick()
     qApp->processEvents();
 }
 
-void StalledIssueHeader::showAction(const QString &actionButtonText)
+void StalledIssueHeader::showAction(const ActionInfo& action)
 {
-    ui->actionContainer->show();
-    ui->actionButton->setVisible(true);
-    ui->actionButton->setText(actionButtonText);
+    showActions(QString(), QList<ActionInfo>() << action);
 }
 
-void StalledIssueHeader::hideAction()
-{
-    ui->actionButton->setVisible(false);
-}
-
-void StalledIssueHeader::updateHeaderSizes()
-{
-    layout()->activate();
-
-    ui->actionContainer->layout()->activate();
-    ui->actionContainer->updateGeometry();
-
-    ui->actionButtonsContainer->layout()->activate();
-    ui->actionButtonsContainer->updateGeometry();
-
-    ui->titleContainer->layout()->activate();
-    ui->titleContainer->updateGeometry();
-
-    ui->errorContainer->layout()->activate();
-    ui->errorContainer->updateGeometry();
-
-    ui->errorDescription->layout()->activate();
-    ui->errorDescription->updateGeometry();
-
-    ui->errorTitle->layout()->activate();
-    ui->errorTitle->updateGeometry();
-
-    ui->errorTitleTextContainer->layout()->activate();
-    ui->errorTitleTextContainer->updateGeometry();
-
-    ui->fileNameTitle->updateGeometry();
-    ui->errorDescriptionText->updateGeometry();
-
-}
-
-void StalledIssueHeader::showMultipleAction(const QString &actionButtonText, const QList<ActionInfo>& actions)
+void StalledIssueHeader::showActions(const QString &actionButtonText, const QList<ActionInfo>& actions)
 {
     ui->actionContainer->show();
     ui->multipleActionButton->setVisible(true);
     if(actions.size() == 1)
     {
         ui->multipleActionButton->setText(actions.first().actionText);
+        ui->multipleActionButton->setProperty(MULTIACTION_ICON, QVariant::fromValue<QIcon>(ui->multipleActionButton->icon()));
         ui->multipleActionButton->setIcon(QIcon());
     }
     else
     {
         ui->multipleActionButton->setText(actionButtonText);
+        if(ui->multipleActionButton->icon().isNull())
+        {
+            ui->multipleActionButton->setIcon(ui->multipleActionButton->property(MULTIACTION_ICON).value<QIcon>());
+        }
     }
 
     ui->multipleActionButton->setProperty(MULTIPLE_ACTIONS_PROPERTY, QVariant::fromValue<QList<ActionInfo>>(actions));
 }
 
-void StalledIssueHeader::hideMultipleAction()
+void StalledIssueHeader::hideAction()
 {
     ui->multipleActionButton->setVisible(false);
 }
@@ -217,7 +190,14 @@ void StalledIssueHeader::onMultipleActionClicked()
     {
         if(actions.size() == 1)
         {
-            mHeaderCase->onMultipleActionButtonOptionSelected(this, actions.first().id);
+            if(actions.first().id == ActionsId::Ignore)
+            {
+                onIgnoreFileActionClicked();
+            }
+            else
+            {
+                mHeaderCase->onMultipleActionButtonOptionSelected(this, actions.first().id);
+            }
         }
         else
         {
@@ -261,7 +241,7 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
 {
     QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
     showMessage(customMessage.isEmpty() ? tr("Solved") : customMessage, icon.pixmap(24,24));
-    ui->actionButtonsContainer->hide();
+    ui->multipleActionButton->hide();
 }
 
 void StalledIssueHeader::setText(const QString &text)
@@ -319,22 +299,44 @@ void StalledIssueHeader::refreshCaseActions()
     if(mHeaderCase)
     {
         mHeaderCase->refreshCaseActions(this);
+        updateHeaderSizes();
+    }
+}
+
+void StalledIssueHeader::updateHeaderSizes()
+{
+    //Why two times? not sure, but works
+    for(int times = 0; times < 2; ++times)
+    {
+        layout()->activate();
+        updateGeometry();
+
+        ui->actionContainer->layout()->activate();
+        ui->actionContainer->updateGeometry();
+
+        ui->titleContainer->layout()->activate();
+        ui->titleContainer->updateGeometry();
+
+        ui->errorContainer->layout()->activate();
+        ui->errorContainer->updateGeometry();
+
+        ui->errorDescription->layout()->activate();
+        ui->errorDescription->updateGeometry();
+
+        ui->errorTitle->layout()->activate();
+        ui->errorTitle->updateGeometry();
+
+        ui->errorTitleTextContainer->layout()->activate();
+        ui->errorTitleTextContainer->updateGeometry();
+
+        ui->fileNameTitle->updateGeometry();
+        ui->errorDescriptionText->updateGeometry();
     }
 }
 
 QString StalledIssueHeader::fileName()
 {
     return QString();
-}
-
-void StalledIssueHeader::on_actionButton_clicked()
-{
-    if(mHeaderCase)
-    {
-        propagateButtonClick();
-
-        mHeaderCase->onActionButtonClicked(this);
-    }
 }
 
 void StalledIssueHeader::refreshUi()
@@ -369,25 +371,26 @@ void StalledIssueHeader::refreshUi()
 
     resetSolvingWidgets();
 
-    if(getData().consultData()->canBeIgnored())
+    if(getData().consultData()->isPotentiallySolved())
     {
-        getData().consultData()->isSolved() ? issueIgnored() : showIgnoreFile();
+        showSolvedMessage(tr("Issue may be fixed externally"));
     }
-    else
+    else if(getData().consultData()->isSolved())
     {
-        ui->ignoreFileButton->hide();
-
-        if(getData().consultData()->isPotentiallySolved())
+        if(getData().consultData()->canBeIgnored())
         {
-            showSolvedMessage(tr("Issue may be fixed externally"));
-        }
-        else if(getData().consultData()->isSolved())
-        {
-            showSolvedMessage();
+            issueIgnored();
         }
         else
         {
-            ui->actionButtonsContainer->show();
+            showSolvedMessage();
+        }
+    }
+    else
+    {
+        if(getData().consultData()->canBeIgnored())
+        {
+            showIgnoreFile();
         }
     }
 
@@ -397,7 +400,6 @@ void StalledIssueHeader::refreshUi()
 
 void StalledIssueHeader::resetSolvingWidgets()
 {
-    ui->actionButton->hide();
     ui->multipleActionButton->hide();
     ui->actionMessageContainer->hide();
 }

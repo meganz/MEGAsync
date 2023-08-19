@@ -118,7 +118,7 @@ public:
 
     //IgnoreConflicts
     void ignoreItems(const QModelIndexList& list);
-    void ignoreSymLinks(const QModelIndex &index);
+    void ignoreSymLinks(const QModelIndex &fixedIndex);
 
 
 signals:

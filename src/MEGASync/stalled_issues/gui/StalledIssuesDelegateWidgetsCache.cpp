@@ -33,6 +33,8 @@ void StalledIssuesDelegateWidgetsCache::reset()
     {
         qDeleteAll(map);
     }
+
+    mStalledIssueWidgets.clear();
 }
 
 int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
@@ -41,9 +43,13 @@ int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
     return row % nbRowsMaxInView;
 }
 
-StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue, const QSize &size) const
+StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index,
+                                                                                   const QModelIndex& proxyIndex,
+                                                                                   QWidget *parent,
+                                                                                   const StalledIssueVariant &issue,
+                                                                                   const QSize &size) const
 {
-    auto row = getMaxCacheRow(index.row());
+    auto row = getMaxCacheRow(proxyIndex.row());
     auto& header = mStalledIssueHeaderWidgets[row];
 
     bool firstTime(!header);
@@ -68,20 +74,19 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
         header->show();
         header->hide();
     }
-
     header->refreshCaseActions();
-    header->updateHeaderSizes();
     header->refreshCaseTitles();
 
     return header;
 }
 
-StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex &index,
+StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex& sourceIndex,
+                                                                                             const QModelIndex& proxyIndex,
                                                                                              QWidget *parent,
                                                                                              const StalledIssueVariant &issue,
                                                                                              const QSize& size) const
 {
-    auto row = getMaxCacheRow(index.parent().row());
+    auto row = getMaxCacheRow(proxyIndex.parent().row());
 
     auto reason = issue.consultData()->getReason();
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
@@ -89,7 +94,7 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
 
     if(item && item->getData().consultData()->getReason() == issue.consultData()->getReason())
     {
-        item->updateUi(index, issue);
+        item->updateUi(sourceIndex, issue);
     }
     else if(!item || (item && item->getData().consultData()->getReason() != issue.consultData()->getReason()))
     {
@@ -98,11 +103,11 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
             item->deleteLater();
         }
 
-        item = createBodyWidget(index, parent, issue);
+        item = createBodyWidget(sourceIndex, parent, issue);
         item->resize(QSize(size.width(), item->size().height()));
         item->show();
         item->hide();
-        item->updateUi(index, issue);
+        item->updateUi(sourceIndex, issue);
         item->setDelegate(mDelegate);
 
         itemsByRowMap.insert(row, item);
