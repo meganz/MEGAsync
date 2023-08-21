@@ -41,6 +41,8 @@ Rectangle {
         }
     }
 
+    Layout.preferredWidth: width
+    Layout.preferredHeight: folderField.height
     width: parent.width
     height: folderField.height
     color: "transparent"
@@ -51,7 +53,6 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: changeButton.left
         anchors.top: parent.top
-        anchors.bottom: parent.bottom
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: "/MEGA"
@@ -66,7 +67,8 @@ Rectangle {
 
         height: folderField.textField.height
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors.top: parent.top
+        anchors.topMargin: 15
         text: OnboardingStrings.change
         onClicked: {
             folderField.error = false;

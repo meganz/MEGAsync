@@ -42,6 +42,7 @@ Rectangle {
         return titleLoader.height;
     }
 
+    Layout.preferredHeight: height
     height: textField.height + getTitleHeight() + getHintHeight()
     color: "transparent"
 
