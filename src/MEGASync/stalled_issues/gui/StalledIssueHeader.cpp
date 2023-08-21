@@ -126,12 +126,6 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
     QMegaMessageBox::warning(msgInfo);
 }
 
-
-//void StalledIssueHeader::hideIgnoreFile()
-//{
-//    ui->ignoreFileButton->hide();
-//}
-
 void StalledIssueHeader::showIgnoreFile()
 {
     StalledIssueHeader::ActionInfo action(tr("Ignore"), ActionsId::Ignore);
@@ -161,8 +155,11 @@ void StalledIssueHeader::showActions(const QString &actionButtonText, const QLis
     if(actions.size() == 1)
     {
         ui->multipleActionButton->setText(actions.first().actionText);
-        ui->multipleActionButton->setProperty(MULTIACTION_ICON, QVariant::fromValue<QIcon>(ui->multipleActionButton->icon()));
-        ui->multipleActionButton->setIcon(QIcon());
+        if(!ui->multipleActionButton->icon().isNull())
+        {
+            ui->multipleActionButton->setProperty(MULTIACTION_ICON, QVariant::fromValue<QIcon>(ui->multipleActionButton->icon()));
+            ui->multipleActionButton->setIcon(QIcon());
+        }
     }
     else
     {

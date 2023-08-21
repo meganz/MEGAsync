@@ -43,6 +43,8 @@ protected slots:
 private:
     QColor getRowColor(const QModelIndex& index) const;
     QModelIndex getEditorCurrentIndex() const;
+    QModelIndex getRelativeIndex(const QModelIndex &index) const;
+    QModelIndex getHeaderIndex(const QModelIndex& index) const;
 
     StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &proxyIndex, const StalledIssueVariant &data, const QSize& size = QSize()) const;
 
@@ -51,7 +53,7 @@ private:
     StalledIssuesModel* mSourceModel;
     StalledIssuesDelegateWidgetsCache mCacheManager;
 
-    mutable QMap<QModelIndex, QStyle::State> mMouseHoverOrSelectedLastState;
+    mutable QModelIndex mLastHoverIndex;
 
     mutable QPointer<StalledIssueBaseDelegateWidget> mEditor;
 

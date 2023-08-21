@@ -887,7 +887,7 @@ color:#333333;
               </widget>
              </item>
              <item>
-              <widget class="QFrame" name="solvedIssuesTab">
+              <widget class="StalledIssueTab" name="solvedIssuesTab">
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>

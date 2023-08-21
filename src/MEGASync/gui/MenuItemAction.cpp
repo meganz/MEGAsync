@@ -33,6 +33,10 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& icon,
             mIcon = QIcon(icon);
         }
     }
+    else
+    {
+        mIconButton->hide();
+    }
 
     setupActionWidget(iconSize);
     setDefaultWidget(mContainer);
@@ -41,6 +45,7 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& icon,
 void MenuItemAction::setIcon(const QIcon& icon)
 {
     mIconButton->setIcon(icon);
+    mIconButton->show();
 }
 
 void MenuItemAction::setHighlight(bool highlight)

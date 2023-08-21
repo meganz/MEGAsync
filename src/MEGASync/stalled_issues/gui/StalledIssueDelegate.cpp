@@ -15,7 +15,11 @@
 #include <QElapsedTimer>
 #include <QPainterPath>
 
+#ifdef Q_OS_MACOS
+const QColor HOVER_COLOR = QColor("#EAEAEA");
+#else
 const QColor HOVER_COLOR = QColor("#FAFAFA");
+#endif
 const QColor SELECTED_BORDER_COLOR = QColor("#E9E9E9");
 const float LEFT_MARGIN = 4.0;
 const float RIGHT_MARGIN = 6.0;
@@ -214,7 +218,6 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
 void StalledIssueDelegate::resetCache()
 {
     mCacheManager.reset();
-    mMouseHoverOrSelectedLastState.clear();
 }
 
 void StalledIssueDelegate::updateSizeHint()
@@ -234,74 +237,71 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         bool isExpanded(mView->isExpanded(index));
 
         auto pos (option.rect.topLeft());
+        QRect geometry(option.rect);
+
+#ifdef __APPLE__
+        auto width = mView->size().width();
+        width -= mView->contentsMargins().left();
+        width -= mView->contentsMargins().right();
+        if(mView->verticalScrollBar() && mView->verticalScrollBar()->isVisible())
+        {
+            width -= mView->verticalScrollBar()->width();
+        }
+        geometry.setWidth(width);
+#endif
 
         auto rowColor = Qt::white;
-        auto backgroundRect = isExpanded ? option.rect : option.rect.adjusted(0,0,0,-1);
+        auto backgroundRect = isExpanded ? geometry : option.rect.adjusted(0,0,0,-1);
 
-        QStyle::State parentState = option.state;
+        QStyle::State state = option.state;
 
-        auto detectRelativeHover =   [this, index, &parentState](){
-            QPoint cursorPos = QCursor::pos();
-            auto viewPos = mView->mapFromGlobal(cursorPos);
-            if(viewPos.y() >= 0)
-            {
-                auto hoverIndex = mView->indexAt(viewPos);
-                if(hoverIndex.isValid() && (index.parent() == hoverIndex ||
-                                            index == hoverIndex.parent() ||
-                                            index == hoverIndex))
-                {
-                    parentState |= QStyle::State_MouseOver;
-                }
-            }
-        };
+        auto headerIndex(getHeaderIndex(index));
+        if(!(state & QStyle::State_MouseOver) && mLastHoverIndex == headerIndex)
+        {
+            state |= QStyle::State_MouseOver;
+        }
+
+        if((state & QStyle::State_MouseOver) && mLastHoverIndex != headerIndex)
+        {
+            state &= ~QStyle::State_MouseOver;
+        }
 
         if(index.parent().isValid())
         {
             if(mView->selectionModel()->isSelected(index.parent()))
             {
-                parentState|= QStyle::State_Selected;
+                state |= QStyle::State_Selected;
             }
-        }
-
-        detectRelativeHover();
-
-        //The selected/hover state has change
-        QStyle::State checkState(QStyle::State_MouseOver | QStyle::State_Selected);
-        auto previousState(mMouseHoverOrSelectedLastState.value(index, QStyle::State_None));
-        if((parentState & checkState) != (previousState & checkState))
-        {
-            mView->update(index.parent().isValid() ? index.parent() : index.model()->index(0,0,index));
-            mMouseHoverOrSelectedLastState.insert(index, parentState);
         }
 
         QColor fillColor;
         QPen pen;
         QPainterPath path;
 
-        if(parentState & (QStyle::State_MouseOver | QStyle::State_Selected))
+        if(state & (QStyle::State_MouseOver | QStyle::State_Selected))
         {
             path.setFillRule( Qt::WindingFill );
-            path.addRoundedRect(QRectF(option.rect.x() + LEFT_MARGIN,
-                                       option.rect.y() + TOP_MARGIN,
-                                       option.rect.width() - RIGHT_MARGIN,
-                                       option.rect.height() - BOTTON_MARGIN), CORNER_RADIUS, CORNER_RADIUS);
+            path.addRoundedRect(QRectF(geometry.x() + LEFT_MARGIN,
+                                       geometry.y() + TOP_MARGIN,
+                                       geometry.width() - RIGHT_MARGIN,
+                                       geometry.height() - BOTTON_MARGIN), CORNER_RADIUS, CORNER_RADIUS);
 
             if(index.parent().isValid())
             {
-                path.addRect(QRectF(option.rect.x() + LEFT_MARGIN,
-                                    option.rect.y(),
-                                    option.rect.width() - RIGHT_MARGIN,
+                path.addRect(QRectF(geometry.x() + LEFT_MARGIN,
+                                    geometry.y(),
+                                    geometry.width() - RIGHT_MARGIN,
                                     RECT_BORDERS_MARGIN)); // Bottom corners not rounded
             }
             else if(isExpanded)
             {
-                path.addRect(QRectF(option.rect.x() + LEFT_MARGIN,
-                                    option.rect.y() + RECT_BORDERS_MARGIN,
-                                    option.rect.width() - RIGHT_MARGIN,
-                                    option.rect.height() - RECT_BORDERS_MARGIN)); // Bottom corners not rounded
+                path.addRect(QRectF(geometry.x() + LEFT_MARGIN,
+                                    geometry.y() + RECT_BORDERS_MARGIN,
+                                    geometry.width() - RIGHT_MARGIN,
+                                    geometry.height() - RECT_BORDERS_MARGIN)); // Bottom corners not rounded
             }
 
-            if(parentState & QStyle::State_MouseOver && parentState & QStyle::State_Selected)
+            if(state & QStyle::State_MouseOver && state & QStyle::State_Selected)
             {
                 pen.setColor(SELECTED_BORDER_COLOR);
                 pen.setWidth(PEN_WIDTH);
@@ -309,12 +309,12 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             }
             else
             {
-                if(parentState & QStyle::State_MouseOver)
+                if(state & QStyle::State_MouseOver)
                 {
                     pen.setColor(HOVER_COLOR);
                     fillColor = HOVER_COLOR;
                 }
-                else if (parentState & QStyle::State_Selected)
+                else if (state & QStyle::State_Selected)
                 {
                     pen.setColor(SELECTED_BORDER_COLOR);
                     pen.setWidth(PEN_WIDTH);
@@ -336,23 +336,23 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         }
 
         //REMOVE SEPARATION LINE WHEN EXPANDED
-        if(parentState & (QStyle::State_MouseOver | QStyle::State_Selected))
+        if(state & (QStyle::State_MouseOver | QStyle::State_Selected))
         {
             QRectF collision;
 
             if(index.parent().isValid())
             {
-                collision = QRectF(option.rect.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
-                                   option.rect.y() - PEN_WIDTH/2,
-                                   option.rect.x() + option.rect.width() - RIGHT_MARGIN - PEN_WIDTH,
+                collision = QRectF(geometry.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
+                                   geometry.y() - PEN_WIDTH/2,
+                                   geometry.x() + geometry.width() - RIGHT_MARGIN - PEN_WIDTH,
                                    PEN_WIDTH);
 
             }
             else if(isExpanded)
             {
-                collision = QRectF(option.rect.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
-                                   option.rect.y() + option.rect.height() - PEN_WIDTH/2,
-                                   option.rect.x() + option.rect.width() - RIGHT_MARGIN - PEN_WIDTH,
+                collision = QRectF(geometry.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
+                                   geometry.y() + geometry.height() - PEN_WIDTH/2,
+                                   geometry.x() + geometry.width() - RIGHT_MARGIN - PEN_WIDTH,
                                    PEN_WIDTH);
             }
 
@@ -365,19 +365,6 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         QModelIndex editorCurrentIndex(getEditorCurrentIndex());
 
         bool renderDelegate(editorCurrentIndex != index);
-
-        QRect geometry(option.rect);
-
-#ifdef __APPLE__
-        auto width = mView->width();
-        width -= mView->contentsMargins().left();
-        width -= mView->contentsMargins().right();
-        if(mView->verticalScrollBar() && mView->verticalScrollBar()->isVisible())
-        {
-            width -= mView->verticalScrollBar()->width();
-        }
-        geometry.setWidth(width);
-#endif
 
         if(renderDelegate)
         {
@@ -443,7 +430,7 @@ QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem
         mEditor = getStalledIssueItemWidget(index, stalledIssueItem);
         auto geometry(option.rect);
 #ifdef __APPLE__
-        auto width = mView->width();
+        auto width = mView->size().width();
         width -= mView->contentsMargins().left();
         width -= mView->contentsMargins().right();
         if(mView->verticalScrollBar() && mView->verticalScrollBar()->isVisible())
@@ -470,6 +457,14 @@ bool StalledIssueDelegate::event(QEvent *event)
     {
         if(hoverEvent->type() == QEvent::Enter)
         {
+            auto headerIndex(getHeaderIndex(hoverEvent->index()));
+            auto relativeIndex(getRelativeIndex(hoverEvent->index()));
+
+            mLastHoverIndex = headerIndex;
+            QTimer::singleShot(0, this, [this, relativeIndex](){
+                mView->update(relativeIndex);
+            });
+
             onHoverEnter(hoverEvent->index());
         }
         else if(hoverEvent->type() == QEvent::MouseMove)
@@ -478,6 +473,16 @@ bool StalledIssueDelegate::event(QEvent *event)
         }
         else if(hoverEvent->type() == QEvent::Leave)
         {
+            auto headerIndex(getHeaderIndex(hoverEvent->index()));
+            if(mLastHoverIndex == headerIndex)
+            {
+                auto relativeIndex(getRelativeIndex(hoverEvent->index()));
+                QTimer::singleShot(0, this, [this, relativeIndex](){
+                    mView->update(relativeIndex);
+                });
+
+                mLastHoverIndex = QModelIndex();
+            }
             onHoverLeave(hoverEvent->index());
         }
     }
@@ -595,6 +600,16 @@ QModelIndex StalledIssueDelegate::getEditorCurrentIndex() const
     }
 
     return QModelIndex();
+}
+
+QModelIndex StalledIssueDelegate::getRelativeIndex(const QModelIndex& index) const
+{
+    return index.parent().isValid() ? index.parent() : index.model()->index(0,0,index);
+}
+
+QModelIndex StalledIssueDelegate::getHeaderIndex(const QModelIndex &index) const
+{
+    return index.parent().isValid() ? index.parent() : index;
 }
 
 StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex& proxyIndex, const StalledIssueVariant& data, const QSize& size) const

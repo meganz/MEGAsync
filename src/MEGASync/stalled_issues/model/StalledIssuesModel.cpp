@@ -167,6 +167,7 @@ StalledIssuesModel::~StalledIssuesModel()
     mStalledIssuedReceiver->deleteLater();
 
     mRequestListener->deleteLater();
+    mGlobalListener->deleteLater();
 }
 
 void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived)

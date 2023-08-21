@@ -49,6 +49,9 @@ void StalledIssueTab::mouseReleaseEvent(QMouseEvent *event)
             setItsOn(true);
 
             updateIcon();
+
+            //We don´t want to propagate it to the stalled issue dialog
+            return;
         }
     }
 
