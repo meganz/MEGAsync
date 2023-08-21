@@ -60,7 +60,7 @@ public:
     static QString getErrStrCurrentBackupInsideExistingBackup();
 
 signals:
-    void syncAddStatus(int errorCode, QString errorMsg, QString name);
+    void syncAddStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);
     void syncRemoveError(std::shared_ptr<mega::MegaError> err);
     void signalSyncOperationBegins(std::shared_ptr<SyncSettings> sync);
     void signalSyncOperationEnds(std::shared_ptr<SyncSettings> sync);

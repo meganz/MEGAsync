@@ -9,6 +9,7 @@
 #include "gui/Login2FA.h"
 #include "gui/GuiUtilities.h"
 #include "platform/Platform.h"
+#include "CommonMessages.h"
 #include "DialogOpener.h"
 
 #include <QKeyEvent>
@@ -253,7 +254,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 QMegaMessageBox::MessageBoxInfo msgInfo;
                 msgInfo.title = QMegaMessageBox::errorTitle();
-                msgInfo.text = QCoreApplication::translate("MegaError", error->getErrorString());
+                msgInfo.text = getErrorMessage(error);
                 QMegaMessageBox::warning(msgInfo);
             }
 
@@ -321,6 +322,17 @@ void SetupWizard::show2FA(MegaRequest *request, bool invalidCode)
             megaApi->multiFactorAuthLogin(requestCopy->getEmail(), requestCopy->getPassword(), pin.toUtf8().constData());
         }
     });
+}
+
+QString SetupWizard::getErrorMessage(mega::MegaError *error) const
+{
+    //Uncomment when isProFlexiAccount is available
+//    if (error->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
+//            && megaApi->isProFlexiAccount())
+//    {
+//        return CommonMessages::getExpiredProFlexiMessage();
+//    }
+    return QCoreApplication::translate("MegaError", error->getErrorString());
 }
 
 void SetupWizard::onRequestUpdate(MegaApi *, MegaRequest *request)

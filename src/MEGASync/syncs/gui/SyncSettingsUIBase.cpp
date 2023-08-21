@@ -318,4 +318,3 @@ void SyncSettingsUIBase::rescanDeep(std::shared_ptr<SyncSettings> sync)
 {
      MegaSyncApp->getMegaApi()->rescanSync(sync->backupId(), true);
 }
-

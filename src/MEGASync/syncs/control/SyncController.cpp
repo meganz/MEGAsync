@@ -91,7 +91,7 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
                         errorMsg);
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
         }
-        emit syncAddStatus(errorCode, errorMsg, localFolder);
+        emit syncAddStatus(errorCode, syncErrorCode, errorMsg, localFolder);
     }));
 }
 

@@ -756,7 +756,7 @@ if (CMAKE_HOST_WIN32)
         ${MEGAsyncDir}/google_breakpad/client/windows/crash_generation/crash_generation_client.cc
 
         ${MEGAsyncDir}/control/win/Utilities.cpp
-         ${MEGAsyncDir}/platform/win/RecursiveShellNotifier.cpp
+        ${MEGAsyncDir}/platform/win/RecursiveShellNotifier.cpp
         ${MEGAsyncDir}/platform/win/ThreadedQueueShellNotifier.cpp
         ${MEGAsyncDir}/platform/win/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
@@ -858,6 +858,8 @@ else()
         ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
+        ${MEGAsyncDir}/platform/macx/NativeMacPopover.h
+        ${MEGAsyncDir}/platform/macx/NativeMacPopoverPrivate.h
 
         ${MEGAsyncDir}/platform/macx/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
@@ -875,6 +877,8 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
         ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.mm
+        ${MEGAsyncDir}/platform/macx/NativeMacPopover.mm
+        ${MEGAsyncDir}/platform/macx/NativeMacPopoverPrivate.mm
 
         )
 endif()

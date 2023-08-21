@@ -542,6 +542,7 @@ protected:
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
+    // Note: mSyncController is used only to add the syncs set up in the onboarding wizard
     std::unique_ptr<SyncController> mSyncController;
 
     QPointer<TransfersModel> mTransfersModel;
