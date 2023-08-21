@@ -156,7 +156,7 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
     mEventTimer.setSingleShot(true);
 }
 
-std::atomic_bool StalledIssuesModel::issuesRequested() const
+bool StalledIssuesModel::issuesRequested() const
 {
     return mIssuesRequested.load();
 }

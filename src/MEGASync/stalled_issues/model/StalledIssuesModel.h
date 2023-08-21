@@ -121,7 +121,7 @@ public:
     void ignoreSymLinks(const QModelIndex &fixedIndex);
 
 
-    std::atomic_bool issuesRequested() const;
+    bool issuesRequested() const;
 
 signals:
     void stalledIssuesChanged();
