@@ -136,7 +136,7 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
     {
         LoadingSceneMessageHandler::MessageInfo info;
         info.message = tr("Processing issues");
-        info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::Stop;
+        info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::None;
         info.count = issueCounter;
         info.total = totalIssues;
         emit updateLoadingMessage(info);
