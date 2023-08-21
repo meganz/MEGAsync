@@ -38,8 +38,14 @@ bool HeaderCaseIssueChecker::checkIssue(StalledIssueHeader *header, bool isSingl
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.textFormat = Qt::RichText;
         msgInfo.buttons = QMessageBox::Ok;
-        msgInfo.text = tr("The problem may have been solved externally.\nPlease, update the list.");
-        QMegaMessageBox::warning(msgInfo);
+        QMap<QMessageBox::StandardButton, QString> buttonsText;
+        buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
+        msgInfo.buttonsText = buttonsText;
+        msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
+        msgInfo.finishFunc = [](QPointer<QMessageBox>){
+            MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+        };
+        QMegaMessageBox::information(msgInfo);
 
         header->updateSizeHint();
         return true;

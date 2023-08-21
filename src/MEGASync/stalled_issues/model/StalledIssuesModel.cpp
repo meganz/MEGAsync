@@ -294,7 +294,8 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes
                             while (!parentFound)
                             {
                                 auto currentParentHandle(parentNode->getHandle());
-                                parentNode.reset(MegaSyncApp->getMegaApi()->getNodeByHandle(parentNode->getParentHandle()));
+                                auto parentNodeRaw(MegaSyncApp->getMegaApi()->getParentNode(parentNode.get()));
+                                parentNode.reset(parentNodeRaw);
                                 if(!parentNode || parentNode->getType() != mega::MegaNode::TYPE_FILE)
                                 {
                                     item->getData()->updateHandle(currentParentHandle);
@@ -583,9 +584,9 @@ void StalledIssuesModel::quitReceiverThread()
 
 bool StalledIssuesModel::checkIfUserStopSolving()
 {
-    if(mThreadFinished || mSolvingIssuesFinished)
+    if(mThreadFinished || mSolvingIssuesStopped)
     {
-        mSolvingIssuesFinished = false;
+        mSolvingIssuesStopped = false;
         return true;
     }
 
@@ -601,7 +602,7 @@ void StalledIssuesModel::stopSolvingIssues()
     }
     else
     {
-        mSolvingIssuesFinished = true;
+        mSolvingIssuesStopped = true;
     }
 }
 
@@ -683,7 +684,7 @@ void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::fun
             unBlockUi();
 
             //Run the messagebox in the mGUI thread)
-            Utilities::queueFunctionInAppThread([]()
+            Utilities::queueFunctionInAppThread([this]()
             {
                 auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
@@ -692,7 +693,14 @@ void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::fun
                 msgInfo.title = MegaSyncApp->getMEGAString();
                 msgInfo.textFormat = Qt::RichText;
                 msgInfo.buttons = QMessageBox::Ok;
-                msgInfo.text = tr("The problem may have been solved externally.\nPlease, update the list.");
+                QMap<QMessageBox::StandardButton, QString> buttonsText;
+                buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
+                msgInfo.buttonsText = buttonsText;
+                msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
+                msgInfo.finishFunc = [this](QPointer<QMessageBox>){
+                    updateStalledIssues();
+                };
+
                 QMegaMessageBox::warning(msgInfo);
             });
         }

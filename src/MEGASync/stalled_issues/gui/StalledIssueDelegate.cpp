@@ -247,7 +247,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         {
             width -= mView->verticalScrollBar()->width();
         }
-        geometry.setWidth(width);
+        geometry.setWidth(std::min(width, option.rect.width()));
 #endif
 
         auto rowColor = Qt::white;
@@ -437,7 +437,7 @@ QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem
         {
             width -= mView->verticalScrollBar()->width();
         }
-        geometry.setWidth(width);
+        geometry.setWidth(std::min(width, option.rect.width()));
 #endif
         mEditor->setGeometry(geometry);
         mEditor->update();

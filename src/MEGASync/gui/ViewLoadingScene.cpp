@@ -108,8 +108,15 @@ void LoadingSceneMessageHandler::updateMessage(const MessageInfo &info)
             ui->ProgressBar->setValue(info.count);
         }
 
-        ui->StopButton->setVisible(info.total > 1 || info.buttonType == MessageInfo::ButtonType::Ok);
-        ui->StopButton->setText(info.buttonType == MessageInfo::ButtonType::Stop ? tr("Stop") : tr("Ok"));
+        if(info.buttonType == MessageInfo::ButtonType::None)
+        {
+            ui->StopButton->setVisible(info.total > 1 || info.buttonType == MessageInfo::ButtonType::Ok);
+            ui->StopButton->setText(info.buttonType == MessageInfo::ButtonType::Stop ? tr("Stop") : tr("Ok"));
+        }
+        else
+        {
+            ui->StopButton->hide();
+        }
 
         ui->MessageContainer->adjustSize();
     }

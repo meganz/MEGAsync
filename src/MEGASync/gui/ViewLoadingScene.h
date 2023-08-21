@@ -206,6 +206,7 @@ public:
     {
         enum ButtonType
         {
+            None,
             Stop,
             Ok
         };

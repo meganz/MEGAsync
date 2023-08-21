@@ -313,8 +313,14 @@ void NameConflict::onActionClicked(int actionId)
             msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
             msgInfo.title = MegaSyncApp->getMEGAString();
             msgInfo.textFormat = Qt::RichText;
-            msgInfo.buttons = QMessageBox::Ok;
-            msgInfo.text = tr("The problem may have been solved externally.\nPlease, update the list.");
+            QMap<QMessageBox::StandardButton, QString> buttonsText;
+            buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
+            msgInfo.buttonsText = buttonsText;
+            msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
+            msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+                MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+            };
+
             QMegaMessageBox::warning(msgInfo);
 
             mDelegateWidget->updateSizeHint();

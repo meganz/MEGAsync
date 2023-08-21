@@ -189,7 +189,7 @@ private:
 
     std::atomic_bool mSolvingIssues {false};
     std::atomic_bool mIssuesSolved {false};
-    std::atomic_bool mSolvingIssuesFinished {false};
+    std::atomic_bool mSolvingIssuesStopped {false};
 };
 
 #endif // STALLEDISSUESMODEL_H
