@@ -598,7 +598,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
-    ${MEGAsyncDir}/gui/GuiUtilities.cpp
+	${MEGAsyncDir}/gui/ViewLoadingScene.cpp
     ${MEGAsyncDir}/gui/ScanningWidget.cpp
     ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp

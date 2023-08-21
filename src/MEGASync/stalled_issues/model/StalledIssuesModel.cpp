@@ -156,6 +156,11 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
     mEventTimer.setSingleShot(true);
 }
 
+std::atomic_bool StalledIssuesModel::issuesRequested() const
+{
+    return mIssuesRequested.load();
+}
+
 StalledIssuesModel::~StalledIssuesModel()
 {
     mMegaApi->removeRequestListener(mRequestListener);
@@ -238,6 +243,8 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
         blockSignals(false);
         mModelMutex.unlock();
 
+        mIssuesRequested = false;
+
         emit stalledIssuesCountChanged();
         emit stalledIssuesChanged();
     });
@@ -256,11 +263,15 @@ void StalledIssuesModel::onSendEvent()
 
 void StalledIssuesModel::updateStalledIssues()
 {
-    blockUi();
-
-    if(!mSolvingIssues)
+    if(!mIssuesRequested)
     {
-        mMegaApi->getMegaSyncStallList(nullptr);
+        blockUi();
+
+        if(!mSolvingIssues)
+        {
+            mIssuesRequested = true;
+            mMegaApi->getMegaSyncStallList(nullptr);
+        }
     }
 }
 

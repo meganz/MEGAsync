@@ -121,6 +121,8 @@ public:
     void ignoreSymLinks(const QModelIndex &fixedIndex);
 
 
+    std::atomic_bool issuesRequested() const;
+
 signals:
     void stalledIssuesChanged();
     void stalledIssuesCountChanged();
@@ -172,7 +174,7 @@ private:
     mega::QTMegaGlobalListener* mGlobalListener;
     mega::MegaApi* mMegaApi;
     bool mUpdateWhenGlobalStateChanges;
-    bool mIssuesRequested;
+    std::atomic_bool mIssuesRequested {false};
     StalledIssuesUtilities mUtilities;
     QStringList ignoredItems;
 

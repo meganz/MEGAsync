@@ -77,6 +77,10 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     else
     {
         showView(true);
+        if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
+        {
+            onUiBlocked();
+        }
     }
 }
 
