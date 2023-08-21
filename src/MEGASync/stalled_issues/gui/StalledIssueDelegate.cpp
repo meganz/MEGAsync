@@ -16,7 +16,7 @@
 #include <QPainterPath>
 
 #ifdef Q_OS_MACOS
-const QColor HOVER_COLOR = QColor("#EAEAEA");
+const QColor HOVER_COLOR = QColor("#F7F7F7");
 #else
 const QColor HOVER_COLOR = QColor("#FAFAFA");
 #endif
@@ -41,7 +41,7 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
                       mProxyModel->sourceModel());
 
 
-    connect(mProxyModel, &StalledIssuesProxyModel::modelFiltered, [this](){
+    connect(mProxyModel, &StalledIssuesProxyModel::modelFiltered, this, [this](){
         mSizeHintRequested = mProxyModel->rowCount(QModelIndex());
         if(mSizeHintRequested == 0)
         {
@@ -59,7 +59,7 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
     mCacheManager.setProxyModel(mProxyModel);
 
     mUpdateSizeHintTimer.setSingleShot(true);
-    connect(&mUpdateSizeHintTimer, &QTimer::timeout, [this](){
+    connect(&mUpdateSizeHintTimer, &QTimer::timeout, this, [this](){
         if(mSizeHintRequested == 0)
         {
             mSizeHintRequested = mProxyModel->rowCount(QModelIndex());
