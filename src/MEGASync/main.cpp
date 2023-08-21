@@ -429,6 +429,15 @@ int main(int argc, char *argv[])
         MegaApi::log(message.logLevel, message.message.toStdString().c_str());
     }
 
+#ifdef Q_OS_LINUX
+    auto megaLibGL = getenv("MEGA_LIBGL_ALWAYS_SOFTWARE");
+    if (megaLibGL && !strcmp(megaLibGL, "1"))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting LIBGL_ALWAYS_SOFTWARE to 1");
+        qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
+    }
+#endif
+
 #ifndef Q_OS_MACX
     const auto scaleFactorLogMessages = scaleFactorManager.getLogMessages();
     for(const auto& message : scaleFactorLogMessages)
