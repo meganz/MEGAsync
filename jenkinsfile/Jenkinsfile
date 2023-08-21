@@ -73,7 +73,7 @@ pipeline {
                                     booleanParam(name: 'BUILD_LINUX', value: false),
                                     booleanParam(name: 'BUILD_MAC', value: false),
                                     booleanParam(name: 'BUILD_WINDOWS', value: true),
-                                    booleanParam(name: 'UPLOAD_WInDows_PACKAGES', value: "${UPLOAD_WINDOWS_PACKAGES}"),
+                                    booleanParam(name: 'UPLOAD_WINDOWS_PACKAGES', value: "${UPLOAD_WINDOWS_PACKAGES}"),
                                     booleanParam(name: 'IS_RELEASE', value: "${IS_RELEASE}"),
                                     string(name: 'RELEASE_CANDIDATE', value: "${RELEASE_CANDIDATE}")
                                     ].plus(env.SDK_BRANCH ? [string(name: 'SDK_BRANCH', value: "${SDK_BRANCH}")] : [])
