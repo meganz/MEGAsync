@@ -36,6 +36,10 @@ SelectiveSyncPageForm {
         onCantSync: {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+            if(message.empty())
+            {
+                return;
+            }
             var folderChooser;
             if(localFolderError) {
                 folderChooser = localFolderChooser;

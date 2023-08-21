@@ -33,6 +33,10 @@ FullSyncPageForm {
         onCantSync: {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+            if(message.empty())
+            {
+                return;
+            }
             localFolderChooser.folderField.error = true;
             localFolderChooser.folderField.hint.text = message;
             localFolderChooser.folderField.hint.visible = true;
