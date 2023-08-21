@@ -237,7 +237,8 @@ void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixm
 void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
 {
     QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-    showMessage(customMessage.isEmpty() ? tr("Solved") : customMessage, icon.pixmap(24,24));
+    QString defaultSolveMessage(getData().consultData()->isPotentiallySolved() ? tr("Issue may be fixed externally") : tr("Solved"));
+    showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(24,24));
     ui->multipleActionButton->hide();
 }
 
@@ -368,11 +369,7 @@ void StalledIssueHeader::refreshUi()
 
     resetSolvingWidgets();
 
-    if(getData().consultData()->isPotentiallySolved())
-    {
-        showSolvedMessage(tr("Issue may be fixed externally"));
-    }
-    else if(getData().consultData()->isSolved())
+    if(getData().consultData()->isSolved())
     {
         if(getData().consultData()->canBeIgnored())
         {

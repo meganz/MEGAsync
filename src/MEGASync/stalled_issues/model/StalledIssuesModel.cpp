@@ -716,7 +716,7 @@ int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion cr
 //METHODS TO SOLVE ISSUES
 void StalledIssuesModel::issueSolved(std::shared_ptr<StalledIssueVariant> issue)
 {
-    if(issue->consultData()->isSolved())
+    if(issue->consultData()->isSolved() && !issue->consultData()->isPotentiallySolved())
     {
         mSolvedStalledIssues.append(issue);
         mCountByFilterCriterion[static_cast<int>(StalledIssueFilterCriterion::SOLVED_CONFLICTS)]++;

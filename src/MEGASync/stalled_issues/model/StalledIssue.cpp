@@ -386,7 +386,7 @@ void StalledIssue::removeDelegateSize(SizeType type)
 
 bool StalledIssue::isSolved() const
 {
-    return mIsSolved == SolveType::Solved;
+    return mIsSolved != SolveType::Unsolved;
 }
 
 bool StalledIssue::isPotentiallySolved() const
