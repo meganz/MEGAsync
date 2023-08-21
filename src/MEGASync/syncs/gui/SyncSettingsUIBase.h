@@ -108,12 +108,12 @@ public:
 
         connect(mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, int syncErrorCode, const QString errorMsg, const QString localPath)
         {
-            const QString title = QCoreApplication::translate("GuiUtilities", "Error adding sync");
+            const QString title = tr("Error adding %1").arg(typeString());
 
             if (Preferences::instance()->accountType() == mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI &&
                 syncErrorCode == mega::MegaSync::ACCOUNT_EXPIRED)
             {
-                QString message = QCoreApplication::translate("GuiUtilities", "%1 can't be added as your Pro Flexi account has been deactivated due to payment failure "
+                QString message = tr("%1 can't be added as your Pro Flexi account has been deactivated due to payment failure "
                              "or you've cancelled your subscription. To continue, make a payment and reactivate your subscription.").arg(localPath);
                 GuiUtilities::showPayReactivateOrDismiss(title, message);
             }
@@ -129,7 +129,7 @@ public:
 
                     QMegaMessageBox::MessageBoxInfo msgInfo;
                     msgInfo.parent = this;
-                    msgInfo.title = tr("Error adding %1").arg(typeString());
+                    msgInfo.title = title;
                     msgInfo.text = msg;
                     msgInfo.textFormat = Qt::RichText;
                     QMegaMessageBox::warning(msgInfo);
