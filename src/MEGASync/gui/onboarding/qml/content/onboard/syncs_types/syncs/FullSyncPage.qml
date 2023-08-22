@@ -30,16 +30,18 @@ FullSyncPageForm {
             localFolderChooser.reset();
         }
 
-        onCantSync: {
+        onCantSync: (message, localFolderError) => {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            if(message.empty())
-            {
+
+            if(message.length === 0) {
                 return;
             }
+
             localFolderChooser.folderField.error = true;
             localFolderChooser.folderField.hint.text = message;
             localFolderChooser.folderField.hint.visible = true;
+
             console.log("Full sync can't sync, message -> " + message);
         }
 
