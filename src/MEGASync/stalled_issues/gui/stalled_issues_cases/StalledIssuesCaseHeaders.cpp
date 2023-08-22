@@ -45,7 +45,7 @@ bool HeaderCaseIssueChecker::checkIssue(StalledIssueHeader *header, bool isSingl
         msgInfo.finishFunc = [](QPointer<QMessageBox>){
             MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
         };
-        QMegaMessageBox::information(msgInfo);
+        QMegaMessageBox::warning(msgInfo);
 
         header->updateSizeHint();
         return true;
