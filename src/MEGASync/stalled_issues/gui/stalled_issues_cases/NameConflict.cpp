@@ -393,9 +393,6 @@ void NameConflict::onActionClicked(int actionId)
                         areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(newName, conflictIndex, mDelegateWidget->getCurrentIndex());
                     }
 
-                    // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-                    MegaSyncApp->getMegaApi()->clearStalledPath(issueData->original.get());
-
                     if(areAllSolved)
                     {
                         emit allSolved();
@@ -499,9 +496,6 @@ void NameConflict::onActionClicked(int actionId)
                         areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
                         mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath));
                     }
-
-                    // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-                    MegaSyncApp->getMegaApi()->clearStalledPath(issueData->original.get());
 
                     if(areAllSolved)
                     {

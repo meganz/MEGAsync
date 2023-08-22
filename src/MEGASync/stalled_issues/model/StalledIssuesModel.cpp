@@ -161,18 +161,31 @@ bool StalledIssuesModel::issuesRequested() const
     return mIssuesRequested.load();
 }
 
+void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi *api)
+{
+    auto isSyncStalled(api->isSyncStalled());
+    if(isSyncStalled)
+    {
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+        if(!dialog)
+        {
+            //For Smart mode -> resolve problems as soon as they are received
+            updateStalledIssues();
+        }
+    }
+
+    emit stalledIssuesChanged();
+}
+
 StalledIssuesModel::~StalledIssuesModel()
 {
-    mMegaApi->removeRequestListener(mRequestListener);
-    mMegaApi->removeGlobalListener(mGlobalListener);
+    delete mRequestListener;
+    delete mGlobalListener;
 
     mThreadFinished = true;
 
     mStalledIssuesThread->quit();
     mStalledIssuedReceiver->deleteLater();
-
-    mRequestListener->deleteLater();
-    mGlobalListener->deleteLater();
 }
 
 void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived)
@@ -278,10 +291,6 @@ void StalledIssuesModel::updateStalledIssues()
 void StalledIssuesModel::updateStalledIssuesWhenReady()
 {
     mUpdateWhenGlobalStateChanges = true;
-}
-
-void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi*)
-{
 }
 
 void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes)
@@ -822,7 +831,6 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
 
 void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
 {
-
     auto resolveIssue = [this](int row) -> bool
     {
         auto item = mStalledIssues.at(row);
@@ -839,7 +847,7 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
                 }
             }
 
-            item->getData()->setIsSolved();
+            item->getData()->setIsSolved(false);
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
                                                  "Issue ignored manually", false, nullptr);
 
@@ -865,7 +873,7 @@ void StalledIssuesModel::ignoreSymLinks(const QModelIndex& fixedIndex)
         auto resolveIssue = [this](int row) -> bool
         {
             auto item = mStalledIssues.at(row);
-            item->getData()->setIsSolved();
+            item->getData()->setIsSolved(false);
 
             return true;
         };
@@ -875,7 +883,8 @@ void StalledIssuesModel::ignoreSymLinks(const QModelIndex& fixedIndex)
         for(int row = 0; row < totalRows; ++row)
         {
             auto item = mStalledIssues.at(row);
-            if(item->getData()->isSymLink())
+            if(item->getData()->isSymLink() &&
+               !item->getData()->isSolved())
             {
                 list.append(index(row,0));
             }

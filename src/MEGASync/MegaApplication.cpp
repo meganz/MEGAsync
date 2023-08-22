@@ -7853,17 +7853,9 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         waiting = megaApi->isWaiting() || megaApi->isSyncStalled();
         syncing = megaApi->isSyncing();
 
-        if(getStalledIssuesModel() && syncStalled != megaApi->isSyncStalled())
+        if(syncStalled != megaApi->isSyncStalled())
         {
             syncStalled = !syncStalled;
-
-            auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-            if(!dialog && syncStalled)
-            {
-                //For Smart mode -> resolve problems as soon as they are received
-                //For Events -> Send events as soon as issues are received
-                getStalledIssuesModel()->updateStalledIssues();
-            }
         }
 
         auto transferCount = model->getTransfersCount();

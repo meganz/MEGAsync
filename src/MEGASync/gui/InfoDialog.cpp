@@ -306,8 +306,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
-            this,  &InfoDialog::onStalledIssuesReceived);
-    onStalledIssuesReceived();
+            this,  &InfoDialog::onStalledIssuesChanged);
+    onStalledIssuesChanged();
 }
 
 InfoDialog::~InfoDialog()
@@ -605,7 +605,7 @@ void InfoDialog::onTransfersStateChanged()
     }
 }
 
-void InfoDialog::onStalledIssuesReceived()
+void InfoDialog::onStalledIssuesChanged()
 {
     if (!MegaSyncApp->getStalledIssuesModel()->isEmpty())
     {

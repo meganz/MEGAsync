@@ -251,7 +251,7 @@ public:
 
     bool isSolved() const;
     bool isPotentiallySolved() const;
-    void setIsSolved();
+    void setIsSolved(bool potentially);
     virtual void autoSolveIssue(){}
 
     bool isSymLink() const;

@@ -394,9 +394,11 @@ bool StalledIssue::isPotentiallySolved() const
     return mIsSolved == SolveType::PotentiallySolved;
 }
 
-void StalledIssue::setIsSolved()
+void StalledIssue::setIsSolved(bool potentially)
 {
-    mIsSolved = SolveType::Solved;
+    mIsSolved = potentially ? SolveType::PotentiallySolved : SolveType::Solved;
+    // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
+    MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
 }
 
 bool StalledIssue::isSymLink() const
@@ -456,7 +458,7 @@ bool StalledIssue::checkForExternalChanges()
             QFileInfo fileInfo(mLocalData->getPath().path);
             if(!fileInfo.exists())
             {
-                mIsSolved = SolveType::PotentiallySolved;
+                setIsSolved(true);
             }
         }
 
@@ -470,7 +472,7 @@ bool StalledIssue::checkForExternalChanges()
                    MegaSyncApp->getMegaApi()->isInRubbish(node.get()) ||
                    currentNode->getParentHandle() != node->getParentHandle())
                 {
-                    mIsSolved = SolveType::PotentiallySolved;
+                    setIsSolved(true);
                 }
             }
         }

@@ -139,7 +139,7 @@ signals:
     void refreshFilter();
 
 protected slots:
-    void onGlobalSyncStateChanged(mega::MegaApi *api) override;
+    void onGlobalSyncStateChanged(mega::MegaApi* api) override;
     void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes) override;
 
 private slots:

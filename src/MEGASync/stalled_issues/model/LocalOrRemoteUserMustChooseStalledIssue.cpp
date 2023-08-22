@@ -79,8 +79,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStal
     //Check if transfer already exists
     if(isBeingSolved(info))
     {
-        MegaSyncApp->getMegaApi()->clearStalledPath(getOriginalStall().get());
-        setIsSolved();
+        setIsSolved(false);
     }
 }
 
@@ -113,10 +112,8 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
                 //Using appDataId == 0 means that there will be no notification for this upload
                 mUploader->upload(info.localPath, info.filename, parentNode, 0, nullptr);
 
-                // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-                MegaSyncApp->getMegaApi()->clearStalledPath(getOriginalStall().get());
                 mChosenSide = ChosenSide::Local;
-                setIsSolved();
+                setIsSolved(false);
             }
         }
     }
@@ -127,10 +124,8 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseRemoteSide()
     StalledIssuesUtilities utilities;
     utilities.removeLocalFile(consultLocalData()->getNativeFilePath());
 
-    // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-    MegaSyncApp->getMegaApi()->clearStalledPath(getOriginalStall().get());
     mChosenSide = ChosenSide::Remote;
-    setIsSolved();
+    setIsSolved(false);
 }
 
 LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseStalledIssue::getChosenSide() const

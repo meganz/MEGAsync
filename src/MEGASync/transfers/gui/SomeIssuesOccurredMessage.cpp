@@ -28,9 +28,6 @@ void SomeIssuesOccurredMessage::on_viewIssuesButton_clicked()
     else
     {
         auto newStalledIssuesDialog = new StalledIssuesDialog();
-        DialogOpener::showDialog<StalledIssuesDialog>(newStalledIssuesDialog, [this](){
-                //Update the list of issues to show/hide again the button
-                MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
-        });
+        DialogOpener::showDialog<StalledIssuesDialog>(newStalledIssuesDialog);
     }
 }

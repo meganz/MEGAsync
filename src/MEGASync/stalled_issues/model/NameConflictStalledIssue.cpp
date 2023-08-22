@@ -560,8 +560,7 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(bool isPoten
 
     if(!isSolved() && unsolvedItems == 0)
     {
-        mIsSolved = isPotentiallySolved ? SolveType::PotentiallySolved : SolveType::Solved;
-        MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
+        setIsSolved(isPotentiallySolved);
     }
 
     return mIsSolved;
