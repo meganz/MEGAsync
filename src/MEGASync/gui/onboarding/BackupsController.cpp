@@ -1,5 +1,10 @@
 #include "BackupsController.h"
 
+#include "MegaApplication.h"
+#include "TextDecorator.h"
+#include "QMegaMessageBox.h"
+#include "Utilities.h"
+
 BackupsController::BackupsController(QObject *parent)
     : QObject(parent)
     , mBackupController(new SyncController())
@@ -73,6 +78,20 @@ void BackupsController::onBackupAddRequestStatus(int errorCode,
             {
                 message = tr("These folders weren't backed up. Try again.");
             }
+
+            Text::Link link(Utilities::SUPPORT_URL);
+            Text::Decorator dec(&link);
+            QString msg = errorMsg;
+            dec.process(msg);
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = tr("Error adding backup");
+            msgInfo.text = MegaSyncApp->getMegaApi()->isBusinessAccount()
+                                && !MegaSyncApp->getMegaApi()->isBusinessAccountActive()
+                           ? QCoreApplication::translate("MegaSyncError",
+                                                         mega::MegaSync::getMegaSyncErrorCode(mega::MegaSync::ACCOUNT_EXPIRED))
+                           : msg;
+            msgInfo.textFormat = Qt::RichText;
+            QMegaMessageBox::warning(msgInfo);
         }
 
         emit backupsCreationFinished(mBackupsProcessedWithError == 0, message);
