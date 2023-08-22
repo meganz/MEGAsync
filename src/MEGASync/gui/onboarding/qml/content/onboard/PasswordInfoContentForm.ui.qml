@@ -34,7 +34,6 @@ Rectangle {
             id: strengthTitle
 
             width: parent.width
-            height: strenghtIcon.height
             font.bold: true
             verticalAlignment: Text.AlignVCenter
             text: OnboardingStrings.passwordAtleast8Chars
