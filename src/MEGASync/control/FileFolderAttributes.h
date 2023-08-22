@@ -34,8 +34,8 @@ public:
                 if(func)
                 {
                     func(value);
-                    requestFinish(type);
                 }
+                requestFinish(type);
             });
         }
     }

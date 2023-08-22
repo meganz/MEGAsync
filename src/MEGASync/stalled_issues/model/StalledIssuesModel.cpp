@@ -167,7 +167,7 @@ void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi *api)
     if(isSyncStalled)
     {
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-        if(!dialog || (mStalledIssues.size() == mSolvedStalledIssues.size()))
+        if(!dialog && mStalledIssues.size() == mSolvedStalledIssues.size())
         {
             //For Smart mode -> resolve problems as soon as they are received
             updateStalledIssues();

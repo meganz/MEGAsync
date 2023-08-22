@@ -7852,11 +7852,7 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting() || megaApi->isSyncStalled();
         syncing = megaApi->isSyncing();
-
-        if(syncStalled != megaApi->isSyncStalled())
-        {
-            syncStalled = !syncStalled;
-        }
+        syncStalled = megaApi->isSyncStalled();
 
         auto transferCount = model->getTransfersCount();
         transferring = transferCount.pendingUploads || transferCount.pendingDownloads;
