@@ -126,6 +126,7 @@ public:
 signals:
     void stalledIssuesChanged();
     void stalledIssuesCountChanged();
+    void stalledIssuesReceived();
 
     void uiBlocked();
     void uiUnblocked();

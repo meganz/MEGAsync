@@ -35,7 +35,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiUnblocked,
             this,  &StalledIssuesDialog::onUiUnblocked);
 
-    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesReceived,
             this,  &StalledIssuesDialog::onStalledIssuesLoaded);
 
     //Init all categories

@@ -259,7 +259,7 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
         mIssuesRequested = false;
 
         emit stalledIssuesCountChanged();
-        emit stalledIssuesChanged();
+        emit stalledIssuesReceived();
     });
 }
 
@@ -276,15 +276,11 @@ void StalledIssuesModel::onSendEvent()
 
 void StalledIssuesModel::updateStalledIssues()
 {
-    if(!mIssuesRequested)
+    if(!mIssuesRequested && !mSolvingIssues)
     {
         blockUi();
-
-        if(!mSolvingIssues)
-        {
-            mIssuesRequested = true;
-            mMegaApi->getMegaSyncStallList(nullptr);
-        }
+        mIssuesRequested = true;
+        mMegaApi->getMegaSyncStallList(nullptr);
     }
 }
 
