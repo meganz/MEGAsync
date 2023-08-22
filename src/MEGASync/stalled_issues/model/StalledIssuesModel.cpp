@@ -167,7 +167,7 @@ void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi *api)
     if(isSyncStalled)
     {
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-        if(!dialog)
+        if(!dialog || (mStalledIssues.size() == mSolvedStalledIssues.size()))
         {
             //For Smart mode -> resolve problems as soon as they are received
             updateStalledIssues();
@@ -648,7 +648,7 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
 {
     LoadingSceneMessageHandler::MessageInfo info;
     info.message = tr("Fixing issues");
-    info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::Stop;
+    info.buttonType = info.total > 1 ? LoadingSceneMessageHandler::MessageInfo::ButtonType::Stop : LoadingSceneMessageHandler::MessageInfo::ButtonType::None;
     info.count = issue;
     info.total = totalIssues;
     emit updateLoadingMessage(info);
