@@ -62,11 +62,6 @@ unsigned int Preferences::MUTEX_STEALER_PERIOD_MS             = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE      = 0;
 
 const qint16 Preferences::HTTP_PORT  = 6341;
-const qint16 Preferences::HTTPS_PORT = 6342;
-
-const long long Preferences::defaultHttpsCertExpiration = 1586476799;
-const long long Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS = 3888000; // 45 days
-const long long Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS = 7200; // 2 hours
 
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 QString Preferences::BASE_URL = QString::fromAscii("https://mega.nz");
@@ -237,10 +232,6 @@ const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSL
 const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
 const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
 const QString Preferences::oneTimeActionDoneKey     = QString::fromAscii("oneTimeActionDone");
-const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsKey2");
-const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert2");
-const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
-const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
 const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
 const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");

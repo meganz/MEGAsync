@@ -484,8 +484,6 @@ public:
     static const QString UPDATE_BACKUP_FOLDER_NAME;
     static const QString PROXY_TEST_URL;
     static const QString PROXY_TEST_SUBSTRING;
-    static const long long LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS;
-    static const long long LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS;
     static const char UPDATE_PUBLIC_KEY[];
 
     static const char CLIENT_KEY[];
@@ -498,7 +496,6 @@ public:
     static const QString TRANSLATION_FOLDER;
     static const QString TRANSLATION_PREFIX;
     static const qint16 HTTP_PORT;
-    static const qint16 HTTPS_PORT;
 
     static const int LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG;
 
@@ -697,10 +694,6 @@ protected:
     static const QString maxMemoryUsageKey;
     static const QString maxMemoryReportTimeKey;
     static const QString oneTimeActionDoneKey;
-    static const QString httpsKeyKey;
-    static const QString httpsCertKey;
-    static const QString httpsCertIntermediateKey;
-    static const QString httpsCertExpirationKey;
     static const QString transferIdentifierKey;
     static const QString lastPublicHandleKey;
     static const QString lastPublicHandleTimestampKey;
@@ -751,10 +744,6 @@ protected:
     static const int defaultFilePermissions;
     static const bool defaultUseHttpsOnly;
     static const bool defaultSSLcertificateException;
-    static const QString defaultHttpsKey;
-    static const QString defaultHttpsCert;
-    static const QString defaultHttpsCertIntermediate;
-    static const long long defaultHttpsCertExpiration;
     static const int defaultAccountStatus;
     static const bool defaultNeedsFetchNodes;
     static const bool defaultNeverCreateLink;
