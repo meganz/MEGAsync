@@ -326,15 +326,6 @@ public:
     bool getNotifyDisabledSyncsOnLogin();
     void setNotifyDisabledSyncsOnLogin(bool notify);
 
-    QString getHttpsKey();
-    void setHttpsKey(QString key);
-    QString getHttpsCert();
-    void setHttpsCert(QString cert);
-    QString getHttpsCertIntermediate();
-    void setHttpsCertIntermediate(QString intermediate);
-    long long getHttpsCertExpiration();
-    void setHttpsCertExpiration(long long expiration);
-
     void getLastHandleInfo(mega::MegaHandle &lastHandle, int &type, long long &timestamp);
     void setLastPublicHandle(mega::MegaHandle handle, int type);
 
