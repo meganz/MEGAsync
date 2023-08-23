@@ -1,6 +1,7 @@
 #include "Preferences.h"
 #include "Version.h"
 #include "platform/Platform.h"
+#include "AppStatsEvents.h"
 #include "UserAttributesRequests/FullName.h"
 
 #include <QDesktopServices>
@@ -1386,7 +1387,38 @@ Preferences::StalledIssuesModeType Preferences::stalledIssuesMode()
 
 void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
 {
-    setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value), true);
+    auto currentValue(stalledIssuesMode());
+    if(value != currentValue)
+    {
+        if(value == StalledIssuesModeType::Smart)
+        {
+            if(currentValue == StalledIssuesModeType::None)
+            {
+                QString eventMessage(QString::fromLatin1("Smart mode selected by default"));
+                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED, eventMessage.toUtf8().constData(), false, nullptr);
+            }
+            else
+            {
+                QString eventMessage(QString::fromLatin1("Smart mode selected"));
+                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE, eventMessage.toUtf8().constData(), false, nullptr);
+            }
+        }
+        else
+        {
+            if(currentValue == StalledIssuesModeType::None)
+            {
+                QString eventMessage(QString::fromLatin1("Advanced mode selected by default"));
+                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED, eventMessage.toUtf8().constData(), false, nullptr);
+            }
+            else
+            {
+                QString eventMessage(QString::fromLatin1("Advanced mode selected"));
+                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE, eventMessage.toUtf8().constData(), false, nullptr);
+            }
+        }
+
+        setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value), true);
+    }
 }
 
 QDate Preferences::stalledIssuesEventLastDate()

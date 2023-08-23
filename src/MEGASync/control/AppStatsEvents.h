@@ -49,6 +49,10 @@ enum AppStatsEvents
     EVENT_SI_IGNORE_SOLVED_MANUALLY                 = 99541,
     EVENT_SI_STALLED_ISSUE_RECEIVED                 = 99542,
     EVENT_SI_IGNORE_ALL_SYMLINK                     = 99543,
+    EVENT_SI_SMART_MODE_FIRST_SELECTED              = 99544,
+    EVENT_SI_ADVANCED_MODE_FIRST_SELECTED           = 99545,
+    EVENT_SI_CHANGE_TO_SMART_MODE                   = 99546,
+    EVENT_SI_CHANGE_TO_ADVANCED_MODE                = 99547,
     EVENT_SI_STALLED_ISSUE_RESERVED                 = 99565,
 };
 
