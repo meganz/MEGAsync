@@ -354,9 +354,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     connect(mFolderTransferListener.get(), &FolderTransferListener::folderTransferUpdated,
             this, &MegaApplication::onFolderTransferUpdate);
 
-    connect(&scanStageController, &ScanStageController::enableTransferActions,
-            this, &MegaApplication::enableTransferActions);
-
     connect(&transferProgressController, &BlockingStageProgressController::updateUi,
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
@@ -1443,6 +1440,10 @@ if (!preferences->lastExecutionTime())
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
     });
+
+    // Connect ScanStage signal
+    connect(&scanStageController, &ScanStageController::enableTransferActions,
+            this, &MegaApplication::enableTransferActions);
 
     // Process any pending download/upload queued during GuestMode
     processDownloads();
@@ -5147,7 +5148,7 @@ void MegaApplication::createTrayIcon()
 
 void MegaApplication::processUploads()
 {
-    if (appfinished)
+    if (appfinished || !megaApi->isLoggedIn())
     {
         return;
     }
@@ -5225,7 +5226,7 @@ void MegaApplication::processUploads()
 
 void MegaApplication::processDownloads()
 {
-    if (appfinished)
+    if (appfinished || !megaApi->isLoggedIn())
     {
         return;
     }
