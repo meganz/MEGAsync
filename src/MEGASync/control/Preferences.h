@@ -515,6 +515,7 @@ public:
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const QString FINDER_EXT_BUNDLE_ID;
     static QString BASE_URL;
+    static QString BASE_MEGA_IO_URL;
 
     static void setBaseUrl(const QString &value);
     template<typename T>
