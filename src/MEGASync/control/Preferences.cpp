@@ -1390,31 +1390,39 @@ void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
     auto currentValue(stalledIssuesMode());
     if(value != currentValue)
     {
+        QString eventMessage;
+        int eventType(0);
+
         if(value == StalledIssuesModeType::Smart)
         {
             if(currentValue == StalledIssuesModeType::None)
             {
-                QString eventMessage(QString::fromLatin1("Smart mode selected by default"));
-                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED, eventMessage.toUtf8().constData(), false, nullptr);
+                eventMessage = QString::fromLatin1("Smart mode selected by default");
+                eventType = AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED;
             }
             else
             {
-                QString eventMessage(QString::fromLatin1("Smart mode selected"));
-                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE, eventMessage.toUtf8().constData(), false, nullptr);
+                eventMessage = QString::fromLatin1("Smart mode selected");
+                eventType = AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE;
             }
         }
         else
         {
             if(currentValue == StalledIssuesModeType::None)
             {
-                QString eventMessage(QString::fromLatin1("Advanced mode selected by default"));
-                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED, eventMessage.toUtf8().constData(), false, nullptr);
+                eventMessage = QString::fromLatin1("Advanced mode selected by default");
+                eventType = AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED;
             }
             else
             {
-                QString eventMessage(QString::fromLatin1("Advanced mode selected"));
-                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE, eventMessage.toUtf8().constData(), false, nullptr);
+                eventMessage = QString::fromLatin1("Advanced mode selected");
+                eventType = AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE;
             }
+        }
+
+        if(eventType != 0)
+        {
+            MegaSyncApp->getMegaApi()->sendEvent(eventType, eventMessage.toUtf8().constData(), false, nullptr);
         }
 
         setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value), true);
