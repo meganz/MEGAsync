@@ -110,8 +110,16 @@ void LoadingSceneMessageHandler::updateMessage(const MessageInfo &info)
 
         if(info.buttonType != MessageInfo::ButtonType::None)
         {
-            ui->StopButton->setVisible(true);
-            ui->StopButton->setText(info.buttonType == MessageInfo::ButtonType::Stop ? tr("Stop") : tr("Ok"));
+            if(info.buttonType == MessageInfo::ButtonType::Stop)
+            {
+                ui->StopButton->setVisible(info.total > 1);
+                ui->StopButton->setText(tr("Stop"));
+            }
+            else if(info.buttonType == MessageInfo::ButtonType::Ok)
+            {
+                ui->StopButton->setVisible(true);
+                ui->StopButton->setText(tr("Ok"));
+            }
         }
         else
         {

@@ -654,9 +654,9 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
 {
     LoadingSceneMessageHandler::MessageInfo info;
     info.message = tr("Fixing issues");
-    info.buttonType = info.total > 1 ? LoadingSceneMessageHandler::MessageInfo::ButtonType::Stop : LoadingSceneMessageHandler::MessageInfo::ButtonType::None;
     info.count = issue;
     info.total = totalIssues;
+    info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::Stop;
     emit updateLoadingMessage(info);
 }
 
