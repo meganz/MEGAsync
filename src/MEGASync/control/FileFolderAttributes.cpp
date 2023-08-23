@@ -264,34 +264,36 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
 
     if(!mPath.isEmpty() && attributeNeedsUpdate(AttributeTypes::CreatedTime))
     {
-#ifdef Q_OS_WINDOWS
-        struct stat result;
-        const QString sourcePath = mPath;
-        QVarLengthArray<wchar_t, MAX_PATH + 1> file(sourcePath.length() + 2);
-        sourcePath.toWCharArray(file.data());
-        file[sourcePath.length()] = wchar_t{};
-        file[sourcePath.length() + 1] = wchar_t{};
-        if(_wstat(file.constData(), &result)==0)
-        {
-            mCreatedTime = QDateTime::fromSecsSinceEpoch(result.st_ctime);
-        }
-#elif defined(Q_OS_MACOS)
-        struct stat the_time;
-        stat(mPath.toUtf8(), &the_time);
-        mCreatedTime.setTime_t(the_time.st_birthtimespec.tv_sec);
-#endif
         QFileInfo fileInfo(mPath);
-        if(!fileInfo.isFile())
+        if(fileInfo.exists())
         {
-            if(mIsEmpty)
+#ifdef Q_OS_WINDOWS
+            struct stat result;
+            const QString sourcePath = mPath;
+            QVarLengthArray<wchar_t, MAX_PATH + 1> file(sourcePath.length() + 2);
+            sourcePath.toWCharArray(file.data());
+            file[sourcePath.length()] = wchar_t{};
+            file[sourcePath.length() + 1] = wchar_t{};
+            if(_wstat(file.constData(), &result)==0)
             {
-                mModifiedTime = mCreatedTime;
-                emit modifiedTimeReady(mModifiedTime);
+                mCreatedTime = QDateTime::fromSecsSinceEpoch(result.st_ctime);
             }
+#elif defined(Q_OS_MACOS)
+            struct stat the_time;
+            stat(mPath.toUtf8(), &the_time);
+            mCreatedTime.setTime_t(the_time.st_birthtimespec.tv_sec);
+#endif
+            if(!fileInfo.isFile())
+            {
+                if(mIsEmpty)
+                {
+                    mModifiedTime = mCreatedTime;
+                    emit modifiedTimeReady(mModifiedTime);
+                }
+            }
+            emit createdTimeReady(mCreatedTime);
         }
     }
-
-    emit createdTimeReady(mCreatedTime);
 }
 
 void LocalFileFolderAttributes::requestCRC(QObject *caller, std::function<void (const QString &)> func)

@@ -428,19 +428,6 @@ QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem
     if(stalledIssueItem.consultData())
     {
         mEditor = getStalledIssueItemWidget(index, stalledIssueItem);
-        auto geometry(option.rect);
-#ifdef __APPLE__
-        auto width = mView->size().width();
-        width -= mView->contentsMargins().left();
-        width -= mView->contentsMargins().right();
-        if(mView->verticalScrollBar() && mView->verticalScrollBar()->isVisible())
-        {
-            width -= mView->verticalScrollBar()->width();
-        }
-        geometry.setWidth(std::min(width, option.rect.width()));
-#endif
-        mEditor->setGeometry(geometry);
-        mEditor->update();
     }
 
     return mEditor;

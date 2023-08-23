@@ -6865,6 +6865,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         model->reset();
         mTransfersModel->resetModel();
+        mStalledIssuesModel->fullReset();
 
         // Queue processing of logout cleanup to avoid race conditions
         // due to threadifing processing.

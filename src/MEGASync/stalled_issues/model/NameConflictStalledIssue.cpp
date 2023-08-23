@@ -63,6 +63,10 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             auto cloudHandle(stall->cloudNodeHandle(index));
             auto cloudPath = QString::fromUtf8(stall->path(true,index));
+            if(cloudPath.startsWith(QLatin1String("//")))
+            {
+                cloudPath = cloudPath.remove(0,1);
+            }
 
             std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(cloudHandle));
             if(node)

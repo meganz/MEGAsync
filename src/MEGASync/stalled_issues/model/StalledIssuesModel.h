@@ -71,6 +71,9 @@ public:
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
+    //Removes the pending and solved issues
+    void fullReset();
+
     bool isEmpty() const;
 
     int getCountByFilterCriterion(StalledIssueFilterCriterion criterion);

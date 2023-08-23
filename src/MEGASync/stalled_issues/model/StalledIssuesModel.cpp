@@ -422,6 +422,12 @@ Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex &index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 }
 
+void StalledIssuesModel::fullReset()
+{
+    mSolvedStalledIssues.clear();
+    reset();
+}
+
 bool StalledIssuesModel::isEmpty() const
 {
     return !MegaSyncApp->getMegaApi()->isSyncStalled();
