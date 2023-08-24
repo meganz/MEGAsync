@@ -26,8 +26,6 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     this->setWindowFlags(flags);
 #endif
 
-    ui->stalledIssuesTree->setTopParent(this);
-
     setAttribute(Qt::WA_DeleteOnClose, true);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiBlocked,
@@ -307,6 +305,11 @@ void StalledIssuesDialog::onPreferencesValueChanged(QString key)
 
 void StalledIssuesDialog::showView(bool update)
 {
+    if(ui->stackedWidget->currentWidget() == ui->ModeSelector)
+    {
+        ui->stalledIssuesTree->setTopParent(this);
+    }
+
     ui->stackedWidget->setCurrentWidget(ui->View);
 
     if(update)
