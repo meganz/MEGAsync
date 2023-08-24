@@ -540,6 +540,7 @@ protected:
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
+    // Note: mSyncController is used only to add the syncs set up in the onboarding wizard
     std::unique_ptr<SyncController> mSyncController;
 
     QPointer<TransfersModel> mTransfersModel;
@@ -673,17 +674,6 @@ public:
         app->preferences->deferSyncs(false);
         app->onCheckDeferredPreferencesSync(false);
     }
-};
-
-class MEGASyncDelegateListener: public mega::QTMegaListener
-{
-public:
-    MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent = NULL, MegaApplication *app = NULL);
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onEvent(mega::MegaApi *api, mega::MegaEvent *e) override;
-
-protected:
-    MegaApplication *app;
 };
 
 #endif // MEGAAPPLICATION_H

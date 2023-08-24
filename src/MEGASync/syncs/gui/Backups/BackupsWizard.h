@@ -113,7 +113,7 @@ class BackupsWizard : public QDialog
         void onItemChanged(QStandardItem *item = nullptr);
         void onDeviceNameSet(QString deviceName);
         void onMyBackupsFolderHandleSet(mega::MegaHandle h = mega::INVALID_HANDLE);
-        void onSyncAddRequestStatus(int errorCode, const QString &errorMsg, const QString &name);
+        void onSyncAddRequestStatus(int errorCode, int syncErrorCode, const QString &errorMsg, const QString &name);
 };
 
 class ProxyModel : public QSortFilterProxyModel

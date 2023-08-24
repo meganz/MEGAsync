@@ -208,6 +208,7 @@ private:
     void syncsStateInformation(SyncStateInformation state);
 
     void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
+    void connectAddSyncHandler();
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();

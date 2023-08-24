@@ -29,7 +29,6 @@ QHash<QString, QString> Utilities::languageNames;
 
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
-const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
 
 const unsigned long long KB = 1024;

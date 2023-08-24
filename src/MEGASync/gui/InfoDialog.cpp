@@ -14,6 +14,7 @@
 #include "InfoDialog.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
+#include "GuiUtilities.h"
 #include "MegaApplication.h"
 #include "TransferManager.h"
 #include "MenuItemAction.h"
@@ -1909,25 +1910,6 @@ void InfoDialog::setupSyncController()
     if (!mSyncController)
     {
         mSyncController.reset(new SyncController());
-
-        // Connect sync controller signals
-        connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
-        {
-            if (errorCode != MegaError::API_OK)
-            {
-                QString msg = errorMsg;
-                Text::Link link(Utilities::SUPPORT_URL);
-                Text::Decorator tc(&link);
-                tc.process(msg);
-
-                QMegaMessageBox::MessageBoxInfo info;
-                info.title = QMegaMessageBox::errorTitle();
-                info.text = tr("Error adding %1:").arg(name)
-                        + QString::fromLatin1("\n")
-                        + msg;
-
-                QMegaMessageBox::warning(info);
-            }
-        });
+        GuiUtilities::connectAddSyncDefaultHandler(mSyncController.get(), mPreferences->accountType());
     }
 }
