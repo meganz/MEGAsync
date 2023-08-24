@@ -5,6 +5,7 @@ import Common 1.0
 
 // Local
 import Onboard 1.0
+import LoginController 1.0
 
 RegisterPageForm {
     id: registerPage
@@ -15,41 +16,13 @@ RegisterPageForm {
             return;
         }
 
-        nextButton.icons.busyIndicatorVisible = true;
-        state = signUpStatus;
-
         LoginControllerAccess.createAccount(registerContent.email.text,
                                       registerContent.password.text,
                                       registerContent.firstName.text,
                                       registerContent.lastName.text);
     }
 
-    nextButton.progress.onAnimationFinished: {
-        if(completed) {
-            registerContent.clean();
-            state = normalStatus;
-            nextButton.icons.busyIndicatorVisible = false;
-            registerFlow.state = confirmEmail;
-        }
-    }
-
     loginButton.onClicked: {
-        registerFlow.state = login;
-    }
-
-    Connections {
-        target: LoginControllerAccess
-
-        onRegisterFinished: (success) => {
-            if(success) {
-                registerFlow.state = confirmEmail;
-                registerContent.clean();
-            } else {
-                nextButton.progress.value = 0;
-                registerContent.showEmailAlreadyExistsError();
-            }
-            state = normalStatus;
-            nextButton.icons.busyIndicatorVisible = false;
-        }
+        LoginControllerAccess.state = LoginController.LOGGED_OUT;
     }
 }

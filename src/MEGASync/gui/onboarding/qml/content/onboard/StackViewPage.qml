@@ -11,92 +11,51 @@ import Components.Texts 1.0 as MegaTexts
 //Local
 import Onboarding 1.0
 import Onboard 1.0
+import LoginController 1.0
 
 Rectangle {
-    id: root
+    id: baseWindow
     
-    readonly property string normalStatus: "normal"
-    readonly property string logInStatus: "login"
-    readonly property string signUpStatus: "signUp"
-    readonly property string fetchNodesStatus: "fetchNodes"
-    readonly property string code2FAStatus: "twoFA"
+    property alias statusText: statusText
 
     readonly property int contentSpacing: 24
 
-    color: Styles.surface1
+    function getStatusText() {
+            switch(LoginControllerAccess.state)
+            {
+            case LoginController.FETCHING_NODES:
+            case LoginController.FETCHING_NODES_2FA:
+            {
+                return OnboardingStrings.statusFetchNodes;
+            }
+            case LoginController.LOGGING_IN:
+            {
+                return OnboardingStrings.statusLogin;
+            }
+            case LoginController.LOGGING_IN_2FA_VALIDATING:
+            {
+                return OnboardingStrings.status2FA;
+            }
+            case LoginController.CREATING_ACCOUNT:
+            {
+                return OnboardingStrings.statusSignUp;
+            }
+            }
+            return "";
+    }
 
-    state: normalStatus
-    states: [
-        State {
-            name: normalStatus
-            PropertyChanges {
-                target: statusText
-                visible: false
-            }
-            PropertyChanges {
-                target: root
-                enabled: true
-            }
-        },
-        State {
-            name: logInStatus
-            PropertyChanges {
-                target: statusText
-                text: OnboardingStrings.statusLogin
-                visible: true
-            }
-            PropertyChanges {
-                target: root
-                enabled: false
-            }
-        },
-        State {
-            name: signUpStatus
-            PropertyChanges {
-                target: statusText
-                text: OnboardingStrings.statusSignUp
-                visible: true
-            }
-            PropertyChanges {
-                target: root
-                enabled: false
-            }
-        },
-        State {
-            name: fetchNodesStatus
-            PropertyChanges {
-                target: statusText
-                text: OnboardingStrings.statusFetchNodes
-                visible: true
-            }
-            PropertyChanges {
-                target: root
-                enabled: false
-            }
-        },
-        State {
-            name: code2FAStatus
-            PropertyChanges {
-                target: statusText
-                text: OnboardingStrings.status2FA
-                visible: true
-            }
-            PropertyChanges {
-                target: root
-                enabled: false
-            }
-        }
-    ]
+    color: Styles.surface1
 
     MegaTexts.SecondaryText {
         id: statusText
 
         anchors {
             horizontalCenter: parent.horizontalCenter
-            bottom: root.bottom
+            bottom: baseWindow.bottom
         }
         font.pixelSize: MegaTexts.Text.Size.Small
         color: Styles.textSecondary
+        text: getStatusText();
     }
 
 }

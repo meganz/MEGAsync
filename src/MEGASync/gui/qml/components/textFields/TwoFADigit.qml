@@ -37,7 +37,6 @@ MegaTextFields.TextField {
     textField.onFocusChanged: {
         if(textField.focus) {
             textField.select(0, 1);
-            hasError = false;
         }
     }
 

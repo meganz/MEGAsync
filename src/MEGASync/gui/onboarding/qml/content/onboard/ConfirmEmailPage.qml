@@ -12,7 +12,7 @@ ConfirmEmailPageForm {
     id: confirmEmailPage
 
     changeEmailLinkText.onLinkActivated: {
-        registerFlow.state = changeConfirmEmail;
+        LoginControllerAccess.state = LoginController.CHANGING_REGISTER_EMAIL;
     }
 
     cancelAccount.onClicked: {
@@ -25,8 +25,6 @@ ConfirmEmailPageForm {
         target: LoginControllerAccess
 
         onEmailConfirmed: {
-            registerFlow.state = login;
-
             // The following four lines are required by Ubuntu to bring the window to the front and
             // move it to the center
             onboardingWindow.hide();
@@ -37,10 +35,6 @@ ConfirmEmailPageForm {
             // The following two lines are required by Windows (activate) and macOS (raise)
             onboardingWindow.requestActivate();
             onboardingWindow.raise();
-        }
-
-        onAccountCreateCancelled: {
-            registerFlow.state = login;
         }
     }
 }

@@ -10,7 +10,7 @@ import LoginController 1.0
 ChangeEmailPageForm {
 
     cancelButton.onClicked: {
-        registerFlow.state = confirmEmail;
+        LoginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
     }
 
     resendButton.onClicked: {
@@ -32,7 +32,7 @@ ChangeEmailPageForm {
 
         onChangeRegistrationEmailFinished: (success) => {
             if(success) {
-                registerFlow.state = confirmEmail;
+                LoginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
             } else {
                 emailTextField.error = true;
                 emailTextField.hint.text = OnboardingStrings.errorEmailAlreadyExist;

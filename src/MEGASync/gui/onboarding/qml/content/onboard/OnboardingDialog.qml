@@ -13,6 +13,7 @@ import Onboard.Syncs_types.Syncs 1.0
 // C++
 import OnboardingQmlDialog 1.0
 import Onboarding 1.0
+import LoginController 1.0
 
 OnboardingQmlDialog {
     id: onboardingWindow
@@ -32,5 +33,4 @@ OnboardingQmlDialog {
 
         anchors.fill: parent
     }
-
 }

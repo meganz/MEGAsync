@@ -13,9 +13,4 @@ MegaTextFields.TextField {
     }
 
     hint.icon: Images.alertTriangle
-
-    textField.onTextChanged: {
-        error = false;
-        hint.visible = false;
-    }
 }

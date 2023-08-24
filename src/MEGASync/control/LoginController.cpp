@@ -16,10 +16,11 @@ LoginController::LoginController(QObject *parent)
       , mPreferences(Preferences::instance())
       , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
       , mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
-      , mFetchingNodes(false)
-      , mEmailConfirmed(false)
-      , mConfirmationResumed(false)
       , mFirstTime(false)
+      , mProgress(0)
+      , mState(LOGGED_OUT)
+      , mLoginError(mega::MegaError::API_OK)
+      , mLoginErrorMsg(QString())
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
@@ -35,6 +36,7 @@ LoginController::LoginController(QObject *parent)
     }
 
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), this);
+    qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
 
 LoginController::~LoginController()
@@ -49,7 +51,6 @@ void LoginController::login(const QString &email, const QString &password)
 void LoginController::createAccount(const QString &email, const QString &password,
                                 const QString &name, const QString &lastName)
 {
-    mConfirmationResumed = false;
     mMegaApi->createAccount(email.toUtf8().constData(), password.toUtf8().constData(),
                              name.toUtf8().constData(), lastName.toUtf8().constData());
 }
@@ -67,22 +68,12 @@ void LoginController::login2FA(const QString &pin)
 
 void LoginController::cancelLogin2FA()
 {
-    emit login2FACancelled();
+    setState(LOGGED_OUT);
 }
 
 QString LoginController::getEmail() const
 {
     return mEmail;
-}
-
-QString LoginController::getPassword() const
-{
-    return mPassword;
-}
-
-bool LoginController::getIsEmailConfirmed() const
-{
-    return mEmailConfirmed;
 }
 
 void LoginController::cancelLogin() const
@@ -95,19 +86,70 @@ void LoginController::cancelCreateAccount() const
     mMegaApi->cancelCreateAccount();
 }
 
-void LoginController::guestWindowLoginClicked()
+void LoginController::guestWindowButtonClicked()
 {
-    emit goToLoginPage();
+    emit guestDialogButtonClicked();
 }
 
-void LoginController::guestWindowSignupClicked()
+double LoginController::getProgress() const
 {
-    emit goToSignupPage();
+    return mProgress;
 }
 
-bool LoginController::isAccountConfirmationResumed() const
+LoginController::State LoginController::getState() const
 {
-    return mConfirmationResumed;
+    return mState;
+}
+
+void LoginController::setState(State state)
+{
+    if(mState != state)
+    {
+        mState = state;
+        emit stateChanged();
+    }
+}
+
+int LoginController::getLoginError() const
+{
+    return mLoginError;
+}
+
+QString LoginController::getLoginErrorMsg() const
+{
+    return mLoginErrorMsg;
+}
+
+void LoginController::setLoginError(int error)
+{
+    if(error != mLoginError)
+    {
+        mLoginError = error;
+        emit loginErrorChanged();
+    }
+}
+
+void LoginController::setLoginErrorMsg(const QString &msg)
+{
+    if(msg != mLoginErrorMsg)
+    {
+        mLoginErrorMsg = msg;
+        emit loginErrorMsgChanged();
+    }
+}
+
+QString LoginController::getCreateAccountErrorMsg() const
+{
+    return mCreateAccountErrorMsg;
+}
+
+void LoginController::setCreateAccountErrorMsg(const QString &msg)
+{
+    if(msg != mCreateAccountErrorMsg)
+    {
+        mCreateAccountErrorMsg = msg;
+        emit createAccountErrorMsgChanged();
+    }
 }
 
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -122,6 +164,17 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
             if(e->getErrorCode() == mega::MegaError::API_OK)
             {
                 mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
+            }
+            else if(e->getErrorCode() != mega::MegaError::API_EMFAREQUIRED)
+            {
+                if(request->getText())
+                {
+                    setState(LOGGING_IN_2FA_FAILED);
+                }
+                else
+                {
+                    setState(LOGGED_OUT);
+                }
             }
             onLogin(request, e);
             break;
@@ -176,10 +229,8 @@ void LoginController::onRequestUpdate(mega::MegaApi *api, mega::MegaRequest *req
             double total = static_cast<double>(request->getTotalBytes());
             double part = static_cast<double>(request->getTransferredBytes());
             double progress = part/total;
-            if(progress > 0.15)
-            {
-                emit fetchingNodesProgress(progress);
-            }
+            mProgress = progress;
+            emit progressChanged();
         }
     }
 }
@@ -192,17 +243,32 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     case mega::MegaRequest::TYPE_LOGIN:
     {
         mConnectivityTimer->start();
-        emit loginStarted();
+        setLoginError(mega::MegaError::API_OK);
+        if(request->getText())
+        {
+            setState(LOGGING_IN_2FA_VALIDATING);
+        }
+        else
+        {
+            setState(LOGGING_IN);
+        }
         break;
     }
     case mega::MegaRequest::TYPE_CREATE_ACCOUNT:
     {
-        emit registerStarted();
+        setState(CREATING_ACCOUNT);
         break;
     }
     case mega::MegaRequest::TYPE_FETCH_NODES:
     {
-        emit fetchingNodesProgress(0.15);
+        if(mState == LOGGING_IN_2FA_VALIDATING)
+        {
+            setState(FETCHING_NODES_2FA);
+        }
+        else
+        {
+            setState(FETCHING_NODES);
+        }
         break;
     }
     }
@@ -221,14 +287,13 @@ void LoginController::emailConfirmation(const QString& email)
     if(mEmail == email)
     {
         mPreferences->removeEphemeralCredentials();
-        mEmailConfirmed = true;
+        setState(EMAIL_CONFIRMED);
         emit emailConfirmed();
     }
 }
 
 void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
 {
-    QString errorMsg;
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
         std::unique_ptr<char []> session(mMegaApi->dumpSession());
@@ -256,12 +321,12 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         {
             case mega::MegaError::API_EINCOMPLETE:
             {
-                errorMsg = tr("Please check your e-mail and click the link to confirm your account.");
+                mLoginErrorMsg = tr("Please check your e-mail and click the link to confirm your account.");
                 break;
             }
             case mega::MegaError::API_ETOOMANY:
             {
-                errorMsg = tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                mLoginErrorMsg = tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
                                .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
                                .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")));
                 break;
@@ -270,18 +335,29 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
             {
                 mPassword = QString::fromUtf8(request->getPassword());
                 mEmail = QString::fromUtf8(request->getEmail());
+                setState(LOGGING_IN_2FA_REQUIRED);
+                break;
+            }
+            case mega::MegaError::API_ENOENT:
+            {
+                mLoginErrorMsg = tr("Invalid email or password. Please try again.");
                 break;
             }
             default:
             {
-                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
+                mLoginErrorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
                 break;
             }
         }
     }
 
     MegaSyncApp->onGlobalSyncStateChanged(mMegaApi);
-    emit loginFinished(e->getErrorCode(), errorMsg);
+    if(mLoginError != e->getErrorCode() && e->getErrorCode() != mega::MegaError::API_EMFAREQUIRED)
+    {
+        mLoginError = e->getErrorCode();
+        emit loginErrorMsgChanged();
+        emit loginErrorChanged();
+    }
 }
 
 void LoginController::onFetchNodesSuccess()
@@ -303,8 +379,13 @@ void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaEr
         credentials.email = mEmail;
         credentials.sessionId = QString::fromUtf8(request->getSessionKey());
         mPreferences->setEphemeralCredentials(credentials);
+        setState(WAITING_EMAIL_CONFIRMATION);
     }
-    emit registerFinished(e->getErrorCode() == mega::MegaError::API_OK);
+    else
+    {
+        setState(CREATING_ACCOUNT_FAILED);
+        setCreateAccountErrorMsg(tr("User already exist"));
+    }
 }
 
 void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::MegaError *e)
@@ -315,14 +396,16 @@ void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::
         EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
         mEmail = credentials.email;
         emit emailChanged();
-        emit accountCreationResumed();
-        mConfirmationResumed = true;
+        setState(WAITING_EMAIL_CONFIRMATION);
     }
 }
 
 void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError *e)
 {
     mEmail = QString::fromUtf8(request->getEmail());
+    EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
+    credentials.email = mEmail;
+    mPreferences->setEphemeralCredentials(credentials);
     emit emailChanged();
     emit changeRegistrationEmailFinished(e->getErrorCode() == mega::MegaError::API_OK);
 }
@@ -341,7 +424,6 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mPreferences->setNeedsFetchNodesInGeneral(false);
 
         onFetchNodesSuccess();
-        emit fetchingNodesFinished(mFirstTime);
     }
     else
     {
@@ -349,6 +431,14 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mPreferences->setNeedsFetchNodesInGeneral(true);
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                                                                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+    }
+    if(mFirstTime)
+    {
+        setState(FETCH_NODES_FINISHED_ONBOARDING);
+    }
+    else
+    {
+        setState(FETCH_NODES_FINISHED);
     }
 }
 
@@ -359,7 +449,7 @@ void LoginController::onWhyAmIBlocked(mega::MegaRequest *request, mega::MegaErro
     {
         // if we received a block before nodes were fetch,
         // we want to try again now that we are no longer blocked
-        if (!mFetchingNodes && !MegaSyncApp->getRootNode())
+        if (mState != FETCHING_NODES && !MegaSyncApp->getRootNode())
         {
             fetchNodes();
             //show fetchnodes page in new guestwidget
@@ -377,7 +467,7 @@ void LoginController::onAccountCreationCancel(mega::MegaRequest *request, mega::
     mName.clear();
     mLastName.clear();
     emit emailChanged();
-    emit accountCreateCancelled();
+    setState(LOGGED_OUT);
 }
 
 void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
@@ -386,14 +476,12 @@ void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
     Q_UNUSED(request)
 
     emit logout();
-    mFetchingNodes = false;
+    setState(LOGGED_OUT);
 }
 
 void LoginController::fetchNodes(const QString& email)
 {
-    assert(!mFetchingNodes);
-    mFetchingNodes = true;
-
+    assert(mState != FETCHING_NODES);
            // We need to load exclusions and migrate sync configurations from MEGAsync held cache, to SDK's
            // prior fetching nodes (when the SDK will resume syncing)
 
