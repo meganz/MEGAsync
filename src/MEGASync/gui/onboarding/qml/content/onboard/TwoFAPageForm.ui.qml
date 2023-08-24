@@ -11,6 +11,7 @@ import Common 1.0
 // Local
 import Onboard 1.0
 import Onboard.Syncs_types 1.0
+import ApiEnums 1.0
 
 StackViewPage {
     id: root
@@ -36,6 +37,7 @@ StackViewPage {
 
         MegaTextFields.TwoFA {
             id: twoFAField
+            hasError: LoginControllerAccess.loginError !== ApiEnums.API_OK;
         }
 
         MegaButtons.HelpButton {
@@ -65,6 +67,7 @@ StackViewPage {
             id: loginButton
 
             text: OnboardingStrings.login
+            progress.value: LoginControllerAccess.progress
             Layout.alignment: Qt.AlignRight
             Layout.rightMargin: -loginButton.sizes.focusBorderWidth
         }

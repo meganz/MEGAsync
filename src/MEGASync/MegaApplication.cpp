@@ -1172,7 +1172,6 @@ void MegaApplication::start(bool restartFromLocalLogout)
         if(!restartFromLocalLogout)
         {
             openOnboardingDialog();
-            openGuestDialog();
         }
 
         if (!preferences->isFirstStartDone())
@@ -2332,7 +2331,7 @@ void MegaApplication::raiseInfoDialog()
 {
     if((preferences && preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK) || mStatusController->isAccountBlocked())
     {
-        openGuestDialog(true);
+        openGuestDialog();
         return;
     }
 
@@ -5216,7 +5215,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                 else
                 {
                     //showInfoMessage(tr("Fetching file list..."));
-                    openGuestDialog(true);
+                    openGuestDialog();
                 }
             }
             return;
@@ -5295,7 +5294,7 @@ void MegaApplication::onMessageClicked()
     }
 }
 
-void MegaApplication::openGuestDialog(bool showOnCreate)
+void MegaApplication::openGuestDialog()
 {
     if (appfinished)
     {
@@ -5318,14 +5317,7 @@ void MegaApplication::openGuestDialog(bool showOnCreate)
     }
 
     QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
-    if(showOnCreate)
-    {
-        DialogOpener::showDialog(guest);
-    }
-    else
-    {
-        DialogOpener::addDialog(guest);
-    }
+    DialogOpener::showDialog(guest);
 }
 
 void MegaApplication::openOnboardingDialog()

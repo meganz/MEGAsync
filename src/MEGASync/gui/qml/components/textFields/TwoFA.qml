@@ -31,9 +31,21 @@ ColumnLayout {
 
     property string key: digit1.textField.text + digit2.textField.text + digit3.textField.text
                          + digit4.textField.text + digit5.textField.text + digit6.textField.text
-    property bool hasError: false
+    property bool hasError: false    
 
     signal allDigitsFilled
+
+    onHasErrorChanged: {
+        if(hasError)
+        {
+            digit1.textField.text = "";
+            digit2.textField.text = "";
+            digit3.textField.text = "";
+            digit4.textField.text = "";
+            digit5.textField.text = "";
+            digit6.textField.text = "";
+        }
+    }
 
     spacing: 15
     Layout.leftMargin: -digit1.sizes.focusBorderWidth

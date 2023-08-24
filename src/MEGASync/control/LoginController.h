@@ -15,10 +15,32 @@ class LoginController : public QObject, public mega::MegaRequestListener, public
 {
     Q_OBJECT
     Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
-    Q_PROPERTY(QString password MEMBER mPassword READ getPassword NOTIFY passwordChanged)
-    Q_PROPERTY(bool emailConfirmed MEMBER mEmailConfirmed READ getIsEmailConfirmed NOTIFY emailConfirmed)
+    Q_PROPERTY(double progress MEMBER mProgress READ getProgress NOTIFY progressChanged)
+    Q_PROPERTY(State state MEMBER mState READ getState  WRITE setState NOTIFY stateChanged)
+    Q_PROPERTY(int loginError MEMBER mLoginError READ getLoginError WRITE setLoginError NOTIFY loginErrorChanged)
+    Q_PROPERTY(QString loginErrorMsg MEMBER mLoginErrorMsg READ getLoginErrorMsg WRITE setLoginErrorMsg NOTIFY loginErrorMsgChanged)
+    Q_PROPERTY(QString createAccountErrorMsg MEMBER mCreateAccountErrorMsg
+                   READ getCreateAccountErrorMsg WRITE setCreateAccountErrorMsg NOTIFY createAccountErrorMsgChanged)
 
 public:
+    enum State {
+        LOGGED_OUT = 0,
+        SIGN_UP,
+        CHANGING_REGISTER_EMAIL,
+        LOGGING_IN,
+        LOGGING_IN_2FA_REQUIRED,
+        LOGGING_IN_2FA_VALIDATING,
+        LOGGING_IN_2FA_FAILED,
+        CREATING_ACCOUNT,
+        CREATING_ACCOUNT_FAILED,
+        WAITING_EMAIL_CONFIRMATION,
+        EMAIL_CONFIRMED,
+        FETCHING_NODES,
+        FETCHING_NODES_2FA,
+        FETCH_NODES_FINISHED,
+        FETCH_NODES_FINISHED_ONBOARDING
+    };
+    Q_ENUM(State)
 
     explicit LoginController(QObject *parent = nullptr);
     virtual ~LoginController();
@@ -28,13 +50,18 @@ public:
     Q_INVOKABLE void login2FA(const QString& pin);
     Q_INVOKABLE void cancelLogin2FA();
     Q_INVOKABLE QString getEmail() const;
-    Q_INVOKABLE QString getPassword() const;
-    Q_INVOKABLE bool getIsEmailConfirmed() const;
     Q_INVOKABLE void cancelLogin() const;
     Q_INVOKABLE void cancelCreateAccount() const;
-    Q_INVOKABLE void guestWindowLoginClicked();
-    Q_INVOKABLE void guestWindowSignupClicked();
-    Q_INVOKABLE bool isAccountConfirmationResumed() const;
+    Q_INVOKABLE void guestWindowButtonClicked();
+    Q_INVOKABLE double getProgress() const;
+    Q_INVOKABLE State getState() const;
+    Q_INVOKABLE void setState(State state);
+    Q_INVOKABLE int getLoginError() const;
+    Q_INVOKABLE QString getLoginErrorMsg() const;
+    Q_INVOKABLE void setLoginError(int error);
+    Q_INVOKABLE void setLoginErrorMsg(const QString& msg);
+    Q_INVOKABLE QString getCreateAccountErrorMsg() const;
+    Q_INVOKABLE void setCreateAccountErrorMsg(const QString& msg);
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request) override;
@@ -45,22 +72,17 @@ public:
     void emailConfirmation(const QString& email);
 
 signals:
-    void loginStarted();
-    void loginFinished(int errorCode, const QString& errorMsg);
-    void registerStarted();
-    void registerFinished(bool success);
+
     void emailChanged();
-    void passwordChanged();
     void changeRegistrationEmailFinished(bool success);
-    void fetchingNodesProgress(double progress);
-    void fetchingNodesFinished(bool firstTime);
     void emailConfirmed();
-    void accountCreationResumed();
     void logout();
-    void accountCreateCancelled();
-    void goToLoginPage();
-    void goToSignupPage();
-    void login2FACancelled();
+    void progressChanged();
+    void stateChanged();
+    void loginErrorMsgChanged();
+    void loginErrorChanged();
+    void guestDialogButtonClicked();
+    void createAccountErrorMsgChanged();
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);
@@ -91,10 +113,12 @@ private:
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 
     QTimer *mConnectivityTimer;
-    bool mFetchingNodes;
-    bool mEmailConfirmed;
-    bool mConfirmationResumed;
     bool mFirstTime;
+    int mLoginError;
+    QString mLoginErrorMsg;
+    QString mCreateAccountErrorMsg;
+    double mProgress;
+    State mState;
     QString mEmail;
     QString mName;
     QString mLastName;

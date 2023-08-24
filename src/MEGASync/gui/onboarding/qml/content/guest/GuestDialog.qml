@@ -7,7 +7,7 @@ import Guest 1.0
 
 // C++
 import GuestQmlDialog 1.0
-import AccountStatusController 1.0
+import LoginController 1.0
 
 GuestQmlDialog {
     id: guestWindow
@@ -25,6 +25,11 @@ GuestQmlDialog {
     onVisibleChanged:  {
         if(visible) {
             AccountStatusControllerAccess.whyAmIBlocked();
+            if(LoginControllerAccess.state !== LoginController.SIGN_UP
+                    && LoginControllerAccess.state !== LoginController.LOGGED_OUT)
+            {
+                LoginControllerAccess.guestWindowButtonClicked();
+            }
         }
     }
 }

@@ -21,12 +21,42 @@ Rectangle {
     readonly property string changeConfirmEmail: "changeConfirmEmail"
 
     color: Styles.surface1
-    state: login
+
+    function getState() {
+        switch(LoginControllerAccess.state)
+        {
+        case LoginController.WAITING_EMAIL_CONFIRMATION:
+        {
+            return registerFlow.confirmEmail;
+        }
+        case LoginController.SIGN_UP:
+        case LoginController.CREATING_ACCOUNT:
+        case LoginController.CREATING_ACCOUNT_FAILED:
+        {
+            return registerFlow.register;
+        }
+        case LoginController.LOGGING_IN_2FA_REQUIRED:
+        case LoginController.LOGGING_IN_2FA_VALIDATING:
+        case LoginController.LOGGING_IN_2FA_FAILED:
+        case LoginController.FETCHING_NODES_2FA:
+        {
+            return registerFlow.twoFA;
+        }
+        case LoginController.CHANGING_REGISTER_EMAIL:
+        {
+            return registerFlow.changeConfirmEmail;
+        }
+        }
+        return registerFlow.login;
+    }
+    state: getState();
     states: [
         State {
             name: login
             StateChangeScript {
-                script: stack.replace(loginPage);
+                script: {
+                    stack.replace(loginPage);
+                }
             }
         },
         State {
@@ -38,7 +68,9 @@ Rectangle {
         State {
             name: register
             StateChangeScript {
-                script: stack.replace(registerPage);
+                script: {
+                    stack.replace(registerPage);
+                }
             }
         },
         State {
@@ -171,14 +203,7 @@ Rectangle {
         Connections {
             target: LoginControllerAccess
 
-            onGoToLoginPage: {
-                registerFlow.state = registerFlow.login;
-                onboardingWindow.show();
-                onboardingWindow.raise();
-            }
-
-            onGoToSignupPage: {
-                registerFlow.state = registerFlow.register;
+            onGuestDialogButtonClicked: {
                 onboardingWindow.show();
                 onboardingWindow.raise();
             }

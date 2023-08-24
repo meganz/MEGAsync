@@ -13,6 +13,7 @@ import Onboard 1.0
 
 // C++
 import Onboarding 1.0
+import LoginController 1.0
 
 StackViewPage {
     id: rootRegisterPage
@@ -20,6 +21,8 @@ StackViewPage {
     property alias registerContent: registerContent
     property alias loginButton: loginButton
     property alias nextButton: nextButton
+
+    enabled: LoginControllerAccess.state !== LoginController.CREATING_ACCOUNT;
 
     Column {
         id: mainColumn
@@ -76,6 +79,7 @@ StackViewPage {
                         && registerContent.termsCheckBox.checked
             icons.source: Images.arrowRight
             text: OnboardingStrings.next
+            icons.busyIndicatorVisible: LoginControllerAccess.state === LoginController.CREATING_ACCOUNT;
         }
     }
 }

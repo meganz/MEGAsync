@@ -246,7 +246,7 @@ public slots:
     void start(bool restartFromLocalLogout = false);
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
-    void openGuestDialog(bool showOnCreate = false);
+    void openGuestDialog();
     void openOnboardingDialog();
     void importLinks();
     void officialWeb();

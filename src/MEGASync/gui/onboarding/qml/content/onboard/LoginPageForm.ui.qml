@@ -15,6 +15,7 @@ import Onboard 1.0
 // C++
 import Onboarding 1.0
 import LoginController 1.0
+import ApiEnums 1.0
 
 StackViewPage {
     id: root
@@ -45,7 +46,7 @@ StackViewPage {
         MegaTexts.RichText {
             id: confirmText
 
-            visible: LoginControllerAccess.emailConfirmed
+            visible: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED;
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Medium
@@ -60,6 +61,7 @@ StackViewPage {
             anchors.leftMargin: -email.sizes.focusBorderWidth
             title: OnboardingStrings.email
             text: LoginControllerAccess.email
+            error: LoginControllerAccess.loginError !== ApiEnums.API_OK;
         }
 
         MegaTextFields.PasswordTextField {
@@ -70,6 +72,9 @@ StackViewPage {
             anchors.leftMargin: -password.sizes.focusBorderWidth
             title: OnboardingStrings.password
             hint.icon: Images.alertTriangle
+            error: LoginControllerAccess.loginError !== ApiEnums.API_OK ;
+            hint.text: LoginControllerAccess.loginErrorMsg;
+            hint.visible: LoginControllerAccess.loginErrorMsg.length !== 0;
         }
 
         MegaButtons.HelpButton {
@@ -98,6 +103,7 @@ StackViewPage {
 
             text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
+            progress.value: LoginControllerAccess.progress
             Layout.rightMargin: -loginButton.sizes.focusBorderWidth
         }
     }

@@ -8,14 +8,13 @@ import LoginController 1.0
 
 TwoFAPageForm {
 
+    id: twoFAPageId
     signUpButton.onClicked: {
-        registerFlow.state = register;
+        LoginControllerAccess.state = LoginController.SIGN_UP;
         LoginControllerAccess.cancelLogin2FA();
     }
 
     loginButton.onClicked: {
-        state = code2FAStatus;
-        loginButton.icons.busyIndicatorVisible = true;
         LoginControllerAccess.login2FA(twoFAField.key);
     }
 
@@ -24,46 +23,52 @@ TwoFAPageForm {
         loginButton.clicked();
     }
 
-    Connections {
-        target: LoginControllerAccess
+    readonly property string validating2FA: "validating"
+    readonly property string fetchingNodes2FA: "fetchingNodes2FA"
+    readonly property string validating2FAFailed: "validating2FAFailed"
+    readonly property string normal: "normal"
 
-        onFetchingNodesProgress: {
-            loginButton.progress.value = progress;
+    function getState() {
+        switch(LoginControllerAccess.state)
+        {
+        case LoginController.LOGGING_IN_2FA_VALIDATING:
+        {
+            return validating2FA;
         }
-
-        onFetchingNodesFinished: {
-            onboardingWindow.loggingIn = false;
-            if(firstTime) {
-                loginButton.icons.busyIndicatorVisible = false;
-                onboardingFlow.state = syncs;
-            } else {
-                onboardingWindow.close();
-            }
+        case LoginController.FETCHING_NODES_2FA:
+        {
+            return fetchingNodes2FA;
         }
-
-        onLoginFinished: {
-            switch(errorCode) {
-                case ApiEnums.API_EMFAREQUIRED: //mega::MegaError::API_EMFAREQUIRED:->2FA required
-                    loginButton.icons.busyIndicatorVisible = false;
-                    break;
-                case ApiEnums.API_EFAILED: //mega::MegaError::API_EFAILED: ->
-                case ApiEnums.API_EEXPIRED: //mega::MegaError::API_EEXPIRED: -> 2FA failed
-                    twoFAField.hasError = true;
-                    loginButton.icons.busyIndicatorVisible = false;
-                    state = normalStatus;
-                    break;
-                case ApiEnums.API_ETOOMANY: //mega::MegaError::API_ETOOMANY: -> too many attempts
-                    //what to do here?
-                    break;
-                case ApiEnums.API_EBLOCKED: //mega::MegaError::API_EBLOCKED: ->  blocked account
-                    //what to do here?                    //add banners
-                    break;
-                case ApiEnums.API_OK: //mega::MegaError::API_OK:
-                    state = fetchNodesStatus;
-                    break;
-                default:
-                    break;
-            }
         }
+        return normal;
     }
+    state: getState();
+    states: [
+        State {
+            name: normal
+            PropertyChanges {
+                target: twoFAPageId
+                enabled: true
+            }
+            PropertyChanges {
+                target: loginButton
+                icons.busyIndicatorVisible: false
+            }
+        },
+        State {
+            name: validating2FA
+            PropertyChanges {
+                target: twoFAPageId
+                enabled: false
+            }
+            PropertyChanges {
+                target: loginButton
+                icons.busyIndicatorVisible: true
+            }
+        },
+        State {
+            name: fetchingNodes2FA
+            extend: validating2FA
+        }
+    ]
 }

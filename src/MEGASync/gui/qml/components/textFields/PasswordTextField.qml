@@ -6,11 +6,11 @@ import Components.TextFields 1.0 as MegaTextFields
 
 MegaTextFields.TextField {
 
+    property bool cleanWhenError: true
+
     textField {
         echoMode: TextInput.Password
         onTextChanged: {
-            error = false;
-            hint.visible = false;
             rightIcon.visible = textField.focus && textField.text.length > 0;
         }
     }
@@ -27,6 +27,12 @@ MegaTextFields.TextField {
         } else if(textField.echoMode === TextInput.Normal) {
             textField.echoMode = TextInput.Password;
             rightIcon.source = "images/eye.svg";
+        }
+    }
+
+    onErrorChanged: {
+        if(error && cleanWhenError) {
+            textField.text = "";
         }
     }
 

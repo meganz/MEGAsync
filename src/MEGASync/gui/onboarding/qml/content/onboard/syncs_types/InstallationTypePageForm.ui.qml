@@ -8,6 +8,7 @@ import Common 1.0
 
 // Local
 import Onboard 1.0
+import LoginController 1.0
 
 SyncsPage {
 
@@ -25,7 +26,7 @@ SyncsPage {
         spacing: 24
 
         Header {
-            title: isNewUser ? OnboardingStrings.welcomeToMEGA : OnboardingStrings.letsGetYouSetUp
+            title: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED ? OnboardingStrings.welcomeToMEGA : OnboardingStrings.letsGetYouSetUp
             description: OnboardingStrings.choose
             spacing: 36
             descriptionWeight: Font.DemiBold

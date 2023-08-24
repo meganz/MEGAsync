@@ -18,7 +18,6 @@ import Guest 1.0
 import GuestContent 1.0
 import ApiEnums 1.0
 import LoginController 1.0
-import AccountStatusController 1.0
 
 Rectangle {
     id: content
@@ -27,29 +26,125 @@ Rectangle {
     property string description: ""
     property bool indeterminate: true
     property double progressValue: 0.0
-    property bool validating2FA: false
 
-    readonly property string stateNormal: "NORMAL"
+    readonly property string stateLoggedOut: "LOGGED_OUT"
     readonly property string stateInProgress: "IN_PROGRESS"
+    readonly property string stateInProgressFetchNodes: "IN_PROGRESS_FETCH_NODES"
+    readonly property string stateInProgressLoggingIn: "IN_PROGRESS_LOGGING"
+    readonly property string stateInProgress2FA: "IN_PROGRESS_2FA"
+    readonly property string stateInProgressCreatingAccount: "CREATING_ACCOUNT"
+    readonly property string stateInProgressWaitingEmailConfirm: "WAITING_EMAIL_CONFIRMATION"
+    readonly property string stateFetchNodesFinished: "FETCH_NODES_FINISHED"
     readonly property string stateBlocked: "BLOCKED"
+
+
+    function getState(){
+        if(AccountStatusControllerAccess.isAccountBlocked())
+        {
+            return content.stateBlocked;
+        }
+        else
+        {
+            switch(LoginControllerAccess.state)
+            {
+            case LoginController.LOGGING_IN:
+            {
+                return content.stateInProgressLoggingIn;
+            }
+            case LoginController.LOGGING_IN_2FA_REQUIRED:
+            case LoginController.LOGGING_IN_2FA_VALIDATING:
+            case LoginController.LOGGING_IN_2FA_FAILED:
+            {
+                return content.stateInProgress2FA;
+            }
+            case LoginController.CREATING_ACCOUNT:
+            {
+                return content.stateInProgressCreatingAccount;
+            }
+            case LoginController.WAITING_EMAIL_CONFIRMATION:
+            case LoginController.CHANGING_REGISTER_EMAIL:
+            {
+                return content.stateInProgressWaitingEmailConfirm;
+            }
+            case LoginController.FETCHING_NODES:
+            case LoginController.FETCHING_NODES_2FA:
+            {
+                return content.stateInProgressFetchNodes;
+            }
+            case LoginController.FETCH_NODES_FINISHED:
+            case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
+            {
+                return content.stateFetchNodesFinished;
+            }
+            }
+            return content.stateLoggedOut;
+        }
+    }
 
     width: 400
     height: 560
     radius: 10
     color: Styles.surface1
 
-    state: AccountStatusControllerAccess.isAccountBlocked() ? content.stateBlocked : content.stateNormal
+    state: getState();
     states: [
         State {
-            name: content.stateNormal
+            name: content.stateLoggedOut
             StateChangeScript {
                 script: stack.replace(initialPage);
+            }
+        },
+        State {
+            name: content.stateFetchNodesFinished
+            extend: content.stateLoggedOut
+            StateChangeScript {
+                script: guestWindow.hide();
             }
         },
         State {
             name: content.stateInProgress
             StateChangeScript {
                 script: stack.replace(progressPage);
+            }
+        },
+        State {
+            name: content.stateInProgressFetchNodes
+            extend: content.stateInProgress
+            PropertyChanges {
+                target: content;
+                description: OnboardingStrings.statusFetchNodes;
+            }
+        },
+        State {
+            name: content.stateInProgress2FA
+            extend: content.stateInProgress
+            PropertyChanges {
+                target: content;
+                description: OnboardingStrings.status2FA;
+            }
+        },
+        State {
+            name: content.stateInProgressLoggingIn
+            extend: content.stateInProgress
+            PropertyChanges {
+                target: content;
+                description: OnboardingStrings.statusLogin;
+            }
+        },
+        State {
+            name: content.stateInProgressCreatingAccount
+            extend: content.stateInProgress
+            PropertyChanges {
+                target: content;
+                description: OnboardingStrings.statusSignUp;
+            }
+        },
+        State {
+            name: content.stateInProgressWaitingEmailConfirm
+            extend: content.stateInProgress
+            PropertyChanges {
+                target: content;
+                description: OnboardingStrings.statusWaitingForEmail;
             }
         },
         State {
@@ -170,13 +265,15 @@ Rectangle {
                 leftButton {
                     text: OnboardingStrings.signUp
                     onClicked: {
-                        LoginControllerAccess.guestWindowSignupClicked();
+                        LoginControllerAccess.guestWindowButtonClicked();
+                        LoginControllerAccess.state = LoginController.SIGN_UP;
                     }
                 }
                 rightButton {
                     text: OnboardingStrings.login
                     onClicked: {
-                        LoginControllerAccess.guestWindowLoginClicked();
+                        LoginControllerAccess.guestWindowButtonClicked();
+                        LoginControllerAccess.state = LoginController.LOGGED_OUT;
                     }
                 }
             }
@@ -196,8 +293,8 @@ Rectangle {
                     text: OnboardingStrings.login
                     enabled: false
                 }
-                indeterminate: content.indeterminate
-                progressValue: content.progressValue
+                indeterminate: LoginControllerAccess.progress === 0;
+                progressValue: LoginControllerAccess.progress
             }
         }
 
@@ -238,96 +335,7 @@ Rectangle {
         target: LogoutControllerAccess
 
         onLogout: {
-            content.state = content.stateNormal;
+            content.state = content.stateLoggedOut;
         }
     }
-
-    Connections {
-        target: LoginControllerAccess
-
-        onLoginStarted: {
-            if(!content.validating2FA) {
-                content.indeterminate = true;
-                content.description = OnboardingStrings.statusLogin;
-                content.state = content.stateInProgress;
-            }
-        }
-
-        onLoginFinished: (errorCode, errorMsg) => {
-            switch(errorCode) {
-                case ApiEnums.API_OK:
-                    break;
-                case ApiEnums.API_EMFAREQUIRED:
-                    content.indeterminate = true;
-                    content.description = OnboardingStrings.status2FA;
-                    content.state = content.stateInProgress;
-                    content.validating2FA = true;
-                    break;
-                case ApiEnums.API_EFAILED:
-                case ApiEnums.API_EEXPIRED:
-                    break;
-                default:
-                    content.state = content.stateNormal;
-                    content.validating2FA = false;
-                    break;
-            }
-        }
-
-        onFetchingNodesProgress: (progress) => {
-            content.indeterminate = false;
-            content.description = OnboardingStrings.statusFetchNodes;
-            content.state = content.stateInProgress;
-            content.progressValue = progress;
-        }
-
-        onFetchingNodesFinished: (firstTime) => {
-            content.state = content.stateNormal;
-            guestWindow.hide();
-        }
-
-        onRegisterStarted: {
-            content.indeterminate = true;
-            content.description = OnboardingStrings.statusSignUp;
-            content.state = content.stateInProgress;
-        }
-
-        onRegisterFinished: (success) => {
-            if(!success) {
-                content.state = content.stateNormal;
-                return;
-            }
-
-            content.indeterminate = true;
-            content.description = OnboardingStrings.statusWaitingForEmail;
-            content.state = content.stateInProgress;
-        }
-
-        onEmailConfirmed: {
-            content.state = content.stateNormal;
-        }
-
-        onAccountCreationResumed: {
-            content.indeterminate = true;
-            content.description = OnboardingStrings.statusWaitingForEmail;
-            content.state = content.stateInProgress;
-        }
-
-        onAccountCreateCancelled: {
-            content.state = content.stateNormal;
-        }
-
-        onLogin2FACancelled: {
-            content.state = content.stateNormal;
-        }
-
-    }
-
-    Component.onCompleted: {
-        if(LoginControllerAccess.isAccountConfirmationResumed()) {
-            content.indeterminate = true;
-            content.description = OnboardingStrings.statusWaitingForEmail;
-            content.state = content.stateInProgress;
-        }
-    }
-
 }

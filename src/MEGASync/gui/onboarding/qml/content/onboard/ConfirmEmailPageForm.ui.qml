@@ -52,6 +52,7 @@ StackViewPage {
             text: OnboardingStrings.confirmEmailBodyText2
             font.pixelSize: MegaTexts.Text.Size.Medium
             url: Links.contact
+            manageMouse: true;
         }
 
         RowLayout {

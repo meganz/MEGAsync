@@ -11,17 +11,135 @@ import LoginController 1.0
 import AccountStatusController 1.0
 
 LoginPageForm {
-    id: root
+    id: loginPage
 
     property bool loginAttempt: false
 
-    function setNormalStatus() {
-        root.enabled = true;
-        loginButton.icons.busyIndicatorVisible = false;
-        loginButton.progress.value = 0;
-        state = normalStatus;
-        password.text = "";
-        onboardingWindow.loggingIn = false;
+    readonly property string stateLoggedOut: "LOGGED_OUT"
+    readonly property string stateInProgress: "IN_PROGRESS"
+    readonly property string stateInProgressLoggingIn: "IN_PROGRESS_LOGGING"
+    readonly property string stateInProgress2FA: "IN_PROGRESS_2FA"
+    readonly property string state2FARequired: "2FA_REQUIRED"
+    readonly property string stateInProgressFetchNodes: "IN_PROGRESS_FETCH_NODES"
+    readonly property string stateInProgressCreatingAccount: "CREATING_ACCOUNT"
+    readonly property string stateInProgressWaitingEmailConfirm: "WAITING_EMAIL_CONFIRMATION"
+    readonly property string stateFetchNodesFinished: "FETCH_NODES_FINISHED"
+    readonly property string stateFetchNodesFinishedOnboarding: "FETCH_NODES_FINISHED_ONBOARDING"
+
+    function getState(){
+            switch(LoginControllerAccess.state)
+            {
+            case LoginController.LOGGING_IN:
+            {
+                return stateInProgressLoggingIn;
+            }
+            case LoginController.LOGGING_IN_2FA_REQUIRED:
+            case LoginController.LOGGING_IN_2FA_VALIDATING:
+            case LoginController.LOGGING_IN_2FA_FAILED:
+            {
+                return state2FARequired;
+            }
+            case LoginController.CREATING_ACCOUNT:
+            {
+                return stateInProgressCreatingAccount;
+            }
+            case LoginController.WAITING_EMAIL_CONFIRMATION:
+            {
+                return stateInProgressWaitingEmailConfirm;
+            }
+            case LoginController.FETCHING_NODES:
+            {
+                return stateInProgressFetchNodes;
+            }
+            case LoginController.FETCH_NODES_FINISHED:
+            {
+                return stateFetchNodesFinished;
+            }
+            case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
+            {
+                return stateFetchNodesFinishedOnboarding;
+            }
+            }
+            return stateLoggedOut;
+    }
+
+    state: getState();
+    states: [
+        State {
+            name: stateLoggedOut
+            PropertyChanges {
+                target: loginButton;
+                icons.busyIndicatorVisible: false;
+                progress.value: 0;
+            }
+            PropertyChanges {
+                target: onboardingWindow
+                loggingIn: false;
+            }
+            PropertyChanges {
+                target: loginPage;
+                enabled: true;
+            }
+        },
+        State {
+            name: stateInProgress
+            PropertyChanges {
+                target: loginButton
+                icons.busyIndicatorVisible: true;
+            }
+            PropertyChanges {
+                target: onboardingWindow
+                loggingIn: true;
+            }
+            PropertyChanges {
+                target: loginPage;
+                enabled: false;
+            }
+        },
+        State {
+            name: stateInProgressLoggingIn
+            extend: stateInProgress
+        },
+        State {
+            name: stateInProgressFetchNodes
+            extend: stateInProgress
+        },
+        State {
+            name: stateInProgressCreatingAccount
+            extend: stateInProgress
+        },
+        State {
+            name: stateInProgressWaitingEmailConfirm
+            extend: stateInProgress
+
+        },
+        State {
+            name: stateFetchNodesFinished
+            extend: stateLoggedOut
+            StateChangeScript {
+                script: onboardingWindow.close();
+            }
+        },
+        State {
+            name: stateFetchNodesFinishedOnboarding
+            extend: stateLoggedOut
+            PropertyChanges {
+                target: onboardingFlow
+                state: syncs
+            }
+        }
+    ]
+
+    email.onTextChanged: {
+        LoginControllerAccess.loginError = ApiEnums.API_OK;
+        LoginControllerAccess.loginErrorMsg = "";
+    }
+
+    password.onTextChanged: {
+        if(password.textField.text.length > 0) {
+            LoginControllerAccess.loginError = ApiEnums.API_OK;
+            LoginControllerAccess.loginErrorMsg = "";
+        }
     }
 
     Keys.onEnterPressed: {
@@ -40,45 +158,33 @@ LoginPageForm {
         var valid = email.valid();
         if(!valid) {
             error = true;
-            email.hint.text = OnboardingStrings.errorValidEmail;
+            LoginControllerAccess.loginError = ApiEnums.API_EINTERNAL;
+            LoginControllerAccess.loginErrorMsg = OnboardingStrings.errorValidEmail;
         }
-        email.error = !valid;
-        email.hint.visible = !valid;
 
         valid = (password.text.length !== 0);
         if(!valid) {
             error = true;
-            password.hint.text = OnboardingStrings.errorEmptyPassword;
+            LoginControllerAccess.loginError = ApiEnums.API_EINTERNAL;
+            LoginControllerAccess.loginErrorMsg = OnboardingStrings.errorEmptyPassword;
         }
-        password.error = !valid;
-        password.hint.visible = !valid;
 
         if(error) {
             return;
         }
 
-        loginButton.icons.busyIndicatorVisible = true;
-        state = logInStatus;
         LoginControllerAccess.login(email.text, password.text);
-        onboardingWindow.loggingIn = true;
         loginAttempt = true;
     }
 
     signUpButton.onClicked: {
-        registerFlow.state = register;
-    }
-
-    password.onTextChanged: {
-        if(loginAttempt && !email.hint.visible && email.error) {
-            email.error = false;
-        }
+        LoginControllerAccess.state = LoginController.SIGN_UP;
     }
 
     Connections {
         target: AccountStatusControllerAccess
 
         onAccountBlocked: {
-            setNormalStatus();
             onboardingWindow.forceClose();
         }
     }
@@ -89,72 +195,6 @@ LoginPageForm {
         onLogout: {
             cancelLogin.close();
             onboardingWindow.forceClose();
-            setNormalStatus();
-        }
-    }
-
-    Connections {
-        target: LoginControllerAccess
-
-        onFetchingNodesProgress: {
-            loginButton.progress.value = progress;
-        }
-
-        onFetchingNodesFinished: (firstTime) => {
-            console.debug("LOGIN PAGE finish: " + firstTime);
-            onboardingWindow.loggingIn = false;
-            if(firstTime) {
-                loginButton.icons.busyIndicatorVisible = false;
-                state = normalStatus;
-                onboardingFlow.state = syncs;
-            } else {
-                onboardingWindow.close();
-            }
-        }
-
-        onAccountCreationResumed: {
-            registerFlow.state = confirmEmail;
-        }
-
-        onLoginFinished: (errorCode, errorMsg) => {
-            if(errorCode !== ApiEnums.API_OK) {
-                setNormalStatus();
-            }
-
-            switch(errorCode) {
-                case ApiEnums.API_EMFAREQUIRED: //-26: //mega::MegaError::API_EMFAREQUIRED:->2FA required
-                    registerFlow.state = twoFA;
-                    break;
-                case ApiEnums.API_EFAILED: //mega::MegaError::API_EFAILED: ->
-                case ApiEnums.API_EEXPIRED: //mega::MegaError::API_EEXPIRED: -> 2FA failed
-                    break;
-                case ApiEnums.API_ENOENT: //mega::MegaError::API_ENOENT: -> user or pass failed
-                    email.error = true;
-                    password.error = true;
-                    password.hint.text = OnboardingStrings.errorLogin;
-                    password.hint.visible = true;
-                    break;
-                case ApiEnums.API_EINCOMPLETE: //mega::MegaError::API_EINCOMPLETE: -> account not confirmed
-                case ApiEnums.API_ETOOMANY:   //mega::MegaError::API_ETOOMANY: -> too many attempts
-                    email.error = true;
-                    password.error = true;
-                    password.hint.text = errorMsg;
-                    password.hint.visible = true;
-                    break;
-                case ApiEnums.API_EBLOCKED: //mega::MegaError::API_EBLOCKED: ->  blocked account
-                    //This never happens, API error?                  //add banners
-                    break;
-                case ApiEnums.API_EACCESS: //locallogout called prior to login finished
-                    //add banners
-                    break;
-                case ApiEnums.API_OK: //mega::MegaError::API_OK:
-                    state = fetchNodesStatus;
-                    isNewUser = LoginControllerAccess.emailConfirmed
-                                 && LoginControllerAccess.email === email.text;
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

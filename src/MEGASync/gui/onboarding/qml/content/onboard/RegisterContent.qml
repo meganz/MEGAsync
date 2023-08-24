@@ -24,10 +24,12 @@ Column {
         var valid = email.valid();
         if(!valid) {
             error = true;
-            email.hint.text = OnboardingStrings.errorValidEmail;
+            LoginControllerAccess.createAccountErrorMsg = OnboardingStrings.errorValidEmail;
         }
-        email.error = !valid;
-        email.hint.visible = !valid;
+        else
+        {
+            LoginControllerAccess.createAccountErrorMsg = "";
+        }
 
         valid = password.text.length >= 8;
         if(!valid) {
@@ -65,12 +67,6 @@ Column {
         lastName.text = "";
         email.text = "";
         termsCheckBox.checked = false;
-    }
-
-    function showEmailAlreadyExistsError() {
-        email.error = true;
-        email.hint.text = OnboardingStrings.errorEmailAlreadyExist;
-        email.hint.visible = true;
     }
 
     property alias firstName: firstName
@@ -134,6 +130,9 @@ Column {
             width: contentWidth + email.sizes.focusBorderWidth
             title: OnboardingStrings.email
             hint.icon: Images.mail
+            hint.text: LoginControllerAccess.createAccountErrorMsg;
+            error: LoginControllerAccess.createAccountErrorMsg.length !== 0;
+            hint.visible: error;
         }
 
         MegaTextFields.PasswordTextField {
@@ -143,6 +142,7 @@ Column {
             anchors.leftMargin: -password.sizes.focusBorderWidth
             width: email.width
             title: OnboardingStrings.password
+            cleanWhenError: false
 
             textField.onTextChanged: {
                 passwordInfoPopup.content.checkPasswordConditions(text);
@@ -193,6 +193,7 @@ Column {
             width: email.width
             title: OnboardingStrings.confirmPassword
             hint.icon: Images.key
+            cleanWhenError: false
         }
     }
 
