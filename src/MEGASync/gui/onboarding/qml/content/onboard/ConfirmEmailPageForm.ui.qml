@@ -89,9 +89,9 @@ StackViewPage {
         id: cancelAccount
 
         anchors {
-            right: parent.right
+            left: parent.left
             bottom: parent.bottom
-            rightMargin: -cancelAccount.sizes.focusBorderWidth
+            leftMargin: -cancelAccount.sizes.focusBorderWidth
             bottomMargin: 29
         }
         text: OnboardingStrings.cancelAccount

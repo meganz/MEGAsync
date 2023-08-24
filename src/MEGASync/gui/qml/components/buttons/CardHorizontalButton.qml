@@ -63,7 +63,6 @@ CardButton {
                     anchors.right: parent.right
                     color: Styles.textSecondary
                     font.pixelSize: MegaTexts.Text.Size.Small
-                    font.weight: Font.Light
                     lineHeightMode: Text.FixedHeight
                     lineHeight: descriptionLineHeight
                     width: 314

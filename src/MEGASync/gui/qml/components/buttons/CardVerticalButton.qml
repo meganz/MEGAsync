@@ -21,7 +21,8 @@ CardButton {
 
             readonly property int textSpacing: 8
             readonly property int textTopHeight: 24
-            readonly property int textBottomHeight: 64
+            readonly property int textTopMargin: 24
+            readonly property int textLineHeight: 16
 
             anchors.fill: parent
             anchors.margins: contentMargin
@@ -42,7 +43,7 @@ CardButton {
                     height: main.textTopHeight
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.topMargin: 24
+                    anchors.topMargin: main.textTopMargin
                     anchors.leftMargin: button.textHorizontalExtraMargin
                     anchors.rightMargin: button.textHorizontalExtraMargin
                     font.pixelSize: MegaTexts.Text.Size.MediumLarge
@@ -51,14 +52,14 @@ CardButton {
 
                 MegaTexts.Text {
                     text: description
-                    height: main.textBottomHeight
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.leftMargin: button.textHorizontalExtraMargin
                     anchors.rightMargin: button.textHorizontalExtraMargin
                     font.pixelSize: MegaTexts.Text.Size.Small
-                    font.weight: Font.Light
                     color: Styles.textSecondary
+                    lineHeight: main.textLineHeight
+                    lineHeightMode: Text.FixedHeight
                 }
             }
         }

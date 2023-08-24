@@ -92,6 +92,7 @@ Button {
             cached: true
             color: "#0d000000"
             source: buttonBackground
+            visible: !button.hovered
         }
 
         Loader {

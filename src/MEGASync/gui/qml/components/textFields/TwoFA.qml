@@ -33,8 +33,16 @@ ColumnLayout {
                          + digit4.textField.text + digit5.textField.text + digit6.textField.text
     property bool hasError: false
 
+    signal allDigitsFilled
+
     spacing: 15
     Layout.leftMargin: -digit1.sizes.focusBorderWidth
+
+    onKeyChanged: {
+        if(key.length === 6) {
+            allDigitsFilled();
+        }
+    }
 
     RowLayout {
         id: mainLayout
@@ -46,7 +54,6 @@ ColumnLayout {
             id: digit1
 
             next: digit2
-            error: hasError
         }
 
         TwoFADigit {
@@ -54,7 +61,6 @@ ColumnLayout {
 
             next: digit3
             previous: digit1
-            error: hasError
         }
 
         TwoFADigit {
@@ -62,7 +68,6 @@ ColumnLayout {
 
             next: digit4
             previous: digit2
-            error: hasError
         }
 
         TwoFADigit {
@@ -70,7 +75,6 @@ ColumnLayout {
 
             next: digit5
             previous: digit3
-            error: hasError
         }
 
         TwoFADigit {
@@ -78,14 +82,12 @@ ColumnLayout {
 
             next: digit6
             previous: digit4
-            error: hasError
         }
 
         TwoFADigit {
             id: digit6
 
             previous: digit5
-            error: hasError
         }
     }
 

@@ -75,7 +75,6 @@ SyncsPage {
             Layout.topMargin: 8
             text: description
             font.pixelSize: MegaTexts.Text.Size.Medium
-            font.weight: Font.Light
         }
 
         MegaTexts.Text {
@@ -115,7 +114,7 @@ SyncsPage {
                            : (parent.width - parent.spacing) / 2
                     height: (finalPageRoot.state === finalPageRoot.stateFullSync)
                             ? 148
-                            : 180
+                            : 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)
@@ -134,7 +133,7 @@ SyncsPage {
                     type: SyncsType.Backup
                     checkable: false
                     width: (parent.width - parent.spacing) / 2
-                    height: 180
+                    height: 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)

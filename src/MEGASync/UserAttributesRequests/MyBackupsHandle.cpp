@@ -56,8 +56,8 @@ void MyBackupsHandle::onMyBackupsFolderReady(mega::MegaHandle h)
         mMyBackupsFolderHandle = h;
         std::unique_ptr<char[]> path (MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(h));
         mMyBackupsFolderPath = QString::fromUtf8(path.get());
-        emit attributeReady(mMyBackupsFolderHandle);
     }
+    emit attributeReady(mMyBackupsFolderHandle);
 }
 
 AttributeRequest::RequestInfo MyBackupsHandle::fillRequestInfo()
@@ -143,7 +143,6 @@ void CreateMyBackupsListener::onRequestFinish(mega::MegaApi *, mega::MegaRequest
         if(error->getErrorCode() == mega::MegaError::API_OK)
         {
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "MyBackups folder created");
-            emit backupFolderCreated(incoming_request->getNodeHandle());
         }
         else
         {
@@ -151,6 +150,7 @@ void CreateMyBackupsListener::onRequestFinish(mega::MegaApi *, mega::MegaRequest
                                QString::fromUtf8("Error creating MyBackups folder: %1")
                                .arg(error->getErrorCode()).toUtf8().constData());
         }
+        emit backupFolderCreated(incoming_request->getNodeHandle());
     }
 }
 

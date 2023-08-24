@@ -116,6 +116,7 @@ void Syncs::onSyncAddRequestStatus(int errorCode, const QString &errorMsg, const
         msgInfo.textFormat = Qt::RichText;
 
         QMegaMessageBox::warning(msgInfo);
+        emit cantSync();
     }
     else
     {

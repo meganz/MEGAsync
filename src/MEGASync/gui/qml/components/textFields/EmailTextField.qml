@@ -12,10 +12,6 @@ MegaTextFields.TextField {
         return text.match(validEmailRegex);
     }
 
-    textField.validator: RegExpValidator {
-        regExp: RegexExpressions.email
-    }
-
     hint.icon: Images.alertTriangle
 
     textField.onTextChanged: {

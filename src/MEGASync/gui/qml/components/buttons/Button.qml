@@ -31,7 +31,7 @@ Qml.RoundButton {
             return colors.borderPressed;
         }
         if(button.hovered) {
-            return  colors.borderHover;
+            return colors.borderHover;
         }
         if(!button.enabled && !icons.busyIndicatorVisible) {
             return colors.borderDisabled;
@@ -118,7 +118,7 @@ Qml.RoundButton {
         id: focusRect
 
         color: "transparent"
-        border.color: button.enabled ? (button.focus ? Styles.focus : "transparent") : "transparent"
+        border.color: button.enabled ? (button.activeFocus ? Styles.focus : "transparent") : "transparent"
         border.width: sizes.focusBorderWidth
         radius: sizes.focusBorderRadius
         height: button.height

@@ -20,6 +20,18 @@ Qml.MenuItem {
 
     property int position: MenuItem.Position.Inter
 
+    function getBackgroundColor(){
+        if(menuItem.pressed)
+        {
+            return Styles.surface2;
+        }
+        else if(menuItem.hovered)
+        {
+            return Styles.textInverse;
+        }
+        return "transparent";
+    }
+
     width: 200
     height: position === MenuItem.Position.First || position === MenuItem.Position.Last ? 48 : 40
     leftPadding: paddingSize
@@ -30,7 +42,9 @@ Qml.MenuItem {
     contentItem: Rectangle {
         implicitWidth: 184
         implicitHeight: 40
-        color: menuItem.hovered || menuItem.focus ? Styles.iconButtonPressedBackground : "transparent"
+        color: getBackgroundColor();
+        border.color: menuItem.visualFocus ? Styles.focus : "transparent";
+        border.width: 4
         radius: 4
 
         Row {
@@ -46,7 +60,7 @@ Qml.MenuItem {
                 anchors.bottomMargin: 12
                 source: menuItem.icon.source
                 sourceSize: Qt.size(16, 16)
-                color: menuItem.hovered ? Styles.iconButtonHover : Styles.iconPrimary
+                color: Styles.iconPrimary
             }
 
             MegaTexts.Text {
@@ -57,7 +71,7 @@ Qml.MenuItem {
                 verticalAlignment: Text.AlignVCenter
                 text: menuItem.text
                 font.pixelSize: MegaTexts.Text.Size.Medium
-                color: menuItem.hovered ? Styles.iconButtonHover : Styles.textPrimary
+                color: Styles.textPrimary
             }
         }
     }
@@ -67,12 +81,11 @@ Qml.MenuItem {
     }
 
     MouseArea {
-        id: aboutMenuMouseArea
+        id: mouseArea
 
         anchors.fill: menuItem
         cursorShape: Qt.PointingHandCursor
-        hoverEnabled: true
-        onClicked: menuItem.triggered()
+        onPressed: mouse.accepted = false;
     }
 
 }

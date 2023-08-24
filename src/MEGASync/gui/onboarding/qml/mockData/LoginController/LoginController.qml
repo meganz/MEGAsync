@@ -13,7 +13,9 @@ Item {
     // Mockup
     property bool require2FA: true
 
+    signal loginStarted
     signal loginFinished(int errorCode, string errorMsg)
+    signal registerStarted
     signal registerFinished(bool success)
     signal changeRegistrationEmailFinished(bool success)
     signal fetchingNodesProgress(double progress)
@@ -61,6 +63,11 @@ Item {
 
     function cancelLogin2FA() {
         console.debug("mockup LoginController::cancelLogin2FA()");
+    }
+
+    function isAccountConfirmationResumed() {
+        console.debug("mockup LoginController::isAccountConfirmationResumed()");
+        return false;
     }
 
     Timer {

@@ -8,6 +8,7 @@ import Onboard.Syncs_types 1.0
 
 // C++
 import Onboarding 1.0
+import LoginController 1.0
 
 StackView {
     id: onboardingFlow

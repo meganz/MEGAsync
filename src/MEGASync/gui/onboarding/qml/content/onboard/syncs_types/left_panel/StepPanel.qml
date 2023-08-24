@@ -346,10 +346,14 @@ Rectangle {
         }
     }
 
-    MegaButtons.HelpButton {
+    MegaButtons.IconButton {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        url: Links.desktopSyncApp
+        icons.source: Images.helpCircle
+        sizes.iconSize: Qt.size(24, 24)
+        onClicked: {
+            Qt.openUrlExternally(Links.desktopSyncApp);
+        }
     }
 
 }

@@ -50,7 +50,6 @@ Qml.ToolTip {
             Layout.maximumHeight: 560 - 2 * root.padding
             // TODO: Get dialog sizes 800/560 by other way (com.qmldialog.QmlDialog) ???
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            font.weight: Font.Light
         }
     }
 

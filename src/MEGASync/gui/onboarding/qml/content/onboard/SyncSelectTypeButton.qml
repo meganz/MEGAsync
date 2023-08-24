@@ -52,7 +52,6 @@ Button {
                     Layout.preferredWidth: 324
                     Layout.preferredHeight: 32
                     font.pixelSize: MegaTexts.Text.Size.Small
-                    font.weight: Font.Light
                 }
             }
         }

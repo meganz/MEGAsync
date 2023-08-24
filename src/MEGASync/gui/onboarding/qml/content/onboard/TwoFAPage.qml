@@ -19,6 +19,11 @@ TwoFAPageForm {
         LoginControllerAccess.login2FA(twoFAField.key);
     }
 
+    twoFAField.onAllDigitsFilled: {
+        loginButton.forceActiveFocus();
+        loginButton.clicked();
+    }
+
     Connections {
         target: LoginControllerAccess
 

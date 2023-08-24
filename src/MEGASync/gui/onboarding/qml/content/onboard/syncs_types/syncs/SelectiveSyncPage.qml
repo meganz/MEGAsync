@@ -33,9 +33,14 @@ SelectiveSyncPageForm {
             remoteFolderChooser.reset();
         }
 
-        onCantSync: {
+        onCantSync: (message, localFolderError) => {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+
+            if(message.length === 0) {
+                return;
+            }
+
             var folderChooser;
             if(localFolderError) {
                 folderChooser = localFolderChooser;
@@ -45,6 +50,7 @@ SelectiveSyncPageForm {
             folderChooser.folderField.error = true;
             folderChooser.folderField.hint.text = message;
             folderChooser.folderField.hint.visible = true;
+
             console.log("Selective sync can't sync, message -> " + message);
         }
 

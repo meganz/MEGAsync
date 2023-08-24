@@ -3,7 +3,7 @@ import QtQuick 2.0
 Item {
     id: root
 
-    signal cantSync
+    signal cantSync(string message, bool localFolderError)
     signal syncSetupSuccess
     signal cancelSync
 

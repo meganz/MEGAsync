@@ -42,6 +42,7 @@ Rectangle {
         return titleLoader.height;
     }
 
+    Layout.preferredHeight: height
     height: textField.height + getTitleHeight() + getHintHeight()
     color: "transparent"
 
@@ -95,7 +96,6 @@ Rectangle {
 
         font {
             pixelSize: MegaTexts.Text.Medium
-            weight: Font.Light
             family: Styles.fontFamily
             styleName: Styles.fontStyleName
         }
@@ -104,7 +104,7 @@ Rectangle {
             id: focusBorder
 
             color: "transparent"
-            border.color: textField.focus ? Styles.focus : "transparent"
+            border.color: textField.activeFocus ? Styles.focus : "transparent"
             border.width: sizes.focusBorderWidth
             radius: sizes.focusBorderRadius
 
@@ -179,6 +179,10 @@ Rectangle {
                 root.backPressed();
             } else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
                 pastePressed();
+            } else if(event.key === Qt.Key_Up) {
+                textField.cursorPosition = 0;
+            } else if(event.key === Qt.Key_Down) {
+                textField.cursorPosition = textField.text.length;
             }
         }
     }
@@ -244,9 +248,3 @@ Rectangle {
         }
     }
 }
-
-
-
-
-
-

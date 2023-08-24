@@ -1,2 +1,4 @@
 LoginController 1.0 LoginController.qml
 singleton LoginControllerAccess 1.0 LoginControllerAccess.qml
+LogoutController 1.0 LogoutController.qml
+singleton LogoutControllerAccess 1.0 LogoutControllerAccess.qml
