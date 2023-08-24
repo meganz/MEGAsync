@@ -17,6 +17,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "GuiUtilities.h"
 
 #include "mega/types.h"
 
@@ -1465,24 +1466,6 @@ void SettingsDialog::on_bLogout_clicked()
 void SettingsDialog::connectSyncHandlers()
 {
     connect(mUi->syncTableView, &BackupTableView::removeSync, this, &SettingsDialog::removeSync);
-    connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
-    {
-        if (errorCode != MegaError::API_OK)
-        {
-            onSavingSyncsCompleted(SyncStateInformation::SAVING_SYNCS_FINISHED);
-
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.parent = this;
-            msgInfo.title = tr("Error adding sync");
-            msgInfo.text = errorMsg;
-
-            Text::Link link(Utilities::SUPPORT_URL);
-            Text::Decorator dec(&link);
-            dec.process(msgInfo.text);
-
-            QMegaMessageBox::warning(msgInfo);
-        }
-    });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
@@ -1541,6 +1524,7 @@ void SettingsDialog::loadSyncSettings()
             onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         }
     });
+    connectAddSyncHandler();
 
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
@@ -1592,6 +1576,18 @@ void SettingsDialog::addSyncFolderAfterOverQuotaCheck(MegaHandle megaFolderHandl
     mSyncController.addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName(), MegaSync::TYPE_TWOWAY);
     });
 
+}
+
+void SettingsDialog::connectAddSyncHandler()
+{
+    GuiUtilities::connectAddSyncDefaultHandler(&mSyncController, mPreferences->accountType());
+    connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, int, const QString, const QString)
+    {
+        if (errorCode != MegaError::API_OK)
+        {
+            onSavingSyncsCompleted(SyncStateInformation::SAVING_SYNCS_FINISHED);
+        }
+    });
 }
 
 void SettingsDialog::on_bSyncs_clicked()
@@ -1739,19 +1735,15 @@ void SettingsDialog::connectBackupHandlers()
             this, &SettingsDialog::onMyBackupsFolderHandleSet);
     onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
 
-    connect(&mBackupController, &SyncController::syncAddStatus, this, [this](const int errorCode, const QString errorMsg, QString name)
+    connect(&mBackupController, &SyncController::syncAddStatus, this, [this](const int errorCode, const int, const QString errorMsg, QString name)
     {
         if (errorCode != MegaError::API_OK)
         {
             onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-            Text::Link link(Utilities::SUPPORT_URL);
-            Text::Decorator dec(&link);
-            QString msg = errorMsg;
-            dec.process(msg);
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.parent = this;
             msgInfo.title = tr("Error adding backup %1").arg(name);
-            msgInfo.text = msg;
+            msgInfo.text = GuiUtilities::decoratedWithSupportUrl(errorMsg);
             QMegaMessageBox::critical(msgInfo);
         }
     });

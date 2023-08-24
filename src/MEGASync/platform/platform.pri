@@ -177,7 +177,9 @@ macx {
         $$PWD/macx/LockedPopOver.h \
         $$PWD/macx/Protocol.h \
         $$PWD/macx/MacXExtServerService.h \
-        $$PWD/macx/QCustomMacToolbar.h
+        $$PWD/macx/QCustomMacToolbar.h \
+        $$PWD/macx/NativeMacPopover.h \
+        $$PWD/macx/NativeMacPopoverPrivate.h
 
 
     OBJECTIVE_SOURCES += \
@@ -194,7 +196,9 @@ macx {
             $$PWD/macx/NSPopover+MISSINGBackgroundView.mm \
             $$PWD/macx/LockedPopOver.mm \
             $$PWD/macx/QCustomMacToolbar.mm \
-            $$PWD/macx/PowerOptions.mm
+            $$PWD/macx/PowerOptions.mm \
+            $$PWD/macx/NativeMacPopover.mm \
+            $$PWD/macx/NativeMacPopoverPrivate.mm
 
     LIBS += -framework Cocoa
     LIBS += -framework Security

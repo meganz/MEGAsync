@@ -6,7 +6,9 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
+#include "CommonMessages.h"
 #include "EventUpdater.h"
+#include "GuiUtilities.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 #include "ConnectivityChecker.h"
@@ -558,7 +560,7 @@ void MegaApplication::initialize()
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
 
-    delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
+    delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi, mFolderTransferListener);
     downloader = new MegaDownloader(megaApi, mFolderTransferListener);
@@ -1164,7 +1166,6 @@ void MegaApplication::start()
             createTrayIcon();
         }
 
-
         if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(AppStatsEvents::EVENT_1ST_START, "MEGAsync first start", false, nullptr);
@@ -1282,33 +1283,17 @@ void MegaApplication::loggedIn(bool fromWizard)
         crashReportFilePath.clear();
     }
 
-    mSyncController.reset(new SyncController());
-    connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
-    {
-        if (errorCode != MegaError::API_OK)
-        {
-            QString msg = errorMsg;
-            Text::Link link(Utilities::SUPPORT_URL);
-            Text::Decorator tc(&link);
-            tc.process(msg);
-
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("Error adding %1:").arg(name)
-                                     + QString::fromLatin1("\n")
-                    + msg;
-            QMegaMessageBox::warning(msgInfo);
-        }
-    });
-
-    //Check business status in case we need to alert the user
-    if (megaApi->isBusinessAccount())
-    {
-        manageBusinessStatus(megaApi->getBusinessStatus());
-    }
-
     registerUserActivity();
     pauseTransfers(paused);
+
+    // This must be done before mSettingsDialog->setProxyOnly(false);
+    if (megaApi->isBusinessAccount() || megaApi->isProFlexiAccount())
+    {
+        // Make sure the business/pro flexi nature of the account are set in preferences
+        preferences->setAccountType(megaApi->isProFlexiAccount() ? Preferences::ACCOUNT_TYPE_PRO_FLEXI
+                                                                 : Preferences::ACCOUNT_TYPE_BUSINESS);
+        manageBusinessStatus(megaApi->getBusinessStatus());
+    }
 
     int cachedStorageState = preferences->getStorageState();
 
@@ -1544,12 +1529,18 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
     std::unique_ptr<char[]> email(megaApi->getMyEmail());
     loadSyncExclusionRules(QString::fromUtf8(email.get()));
 
-    // add syncs from setupWizard
-    for (auto & ps : syncs)
+    if (!syncs.isEmpty())
     {
-        QString localFolderPath = ps.localFolder();
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from SetupWizard: ").arg(localFolderPath).toUtf8().constData());
-        mSyncController->addSync(localFolderPath, ps.megaFolderHandle(), ps.syncName(), MegaSync::TYPE_TWOWAY);
+        mSyncController.reset(new SyncController());
+        GuiUtilities::connectAddSyncDefaultHandler(mSyncController.get(), preferences->accountType());
+
+        // add syncs from setupWizard
+        for (auto & ps : syncs)
+        {
+            QString localFolderPath = ps.localFolder();
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from SetupWizard: ").arg(localFolderPath).toUtf8().constData());
+            mSyncController->addSync(localFolderPath, ps.megaFolderHandle(), ps.syncName(), MegaSync::TYPE_TWOWAY);
+        }
     }
 }
 
@@ -2460,7 +2451,10 @@ void MegaApplication::showInfoDialog()
         }
     }
 
-    updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    if(!getBlockState())
+    {
+      updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+    }
 }
 
 void MegaApplication::showInfoDialogNotifications()
@@ -2710,6 +2704,10 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
+    if (blockState)
+    {
+        infoDialog->regenerateLayout(blockState);
+    }
     connect(infoDialog.data(), &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
     connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
     connect(infoDialog.data(), &InfoDialog::almostTransferOverquotaMsgVisibilityChange, mTransferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
@@ -3568,7 +3566,12 @@ void MegaApplication::setupWizardFinished(QPointer<SetupWizard> dialog)
             }
 
             loggedIn(true);
-            startSyncs(syncs);
+
+            const bool hasErrorPreventingSync = megaApi->getBusinessStatus() == MegaApi::BUSINESS_STATUS_EXPIRED;
+            if (!hasErrorPreventingSync)
+            {
+                startSyncs(syncs);
+            }
         }
     }
 }
@@ -5786,7 +5789,10 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             {
                 if (blockState)
                 {
-                    showInfoMessage(tr("Locked account"));
+                    createInfoDialog();
+                    checkSystemTray();
+                    createTrayIcon();
+                    showInfoDialog();
                 }
                 else if (!megaApi->isLoggedIn())
                 {
@@ -6315,27 +6321,9 @@ void MegaApplication::manageBusinessStatus(int64_t event)
         {
             if (megaApi->isMasterBusinessAccount())
             {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = getMEGAString();
-                msgInfo.text = tr("Payment Failed");
-                msgInfo.informativeText = tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.");
-                msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
-                msgInfo.defaultButton = QMessageBox::Yes;
-                QMap<QMessageBox::StandardButton, QString> buttonsText;
-                buttonsText.insert(QMessageBox::Yes, tr("Pay Now"));
-                buttonsText.insert(QMessageBox::No, tr("Dismiss"));
-                msgInfo.buttonsText = buttonsText;
-                msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
-                {
-                    if(msg->result() == QMessageBox::Yes)
-                    {
-                        QString url = QString::fromUtf8("mega://#repay");
-                        Utilities::getPROurlWithParameters(url);
-                        Utilities::openUrl(QUrl(url));
-                    }
-                };
-
-                QMegaMessageBox::warning(msgInfo);
+                const QString message = tr("This month's payment has failed. Please resolve your payment issue as soon as possible "
+                                           "to avoid any suspension of your business account.");
+                GuiUtilities::showPayNowOrDismiss(tr("Payment Failed"), message);
             }
 
             if (preferences->logged() &&
@@ -6350,44 +6338,35 @@ void MegaApplication::manageBusinessStatus(int64_t event)
         }
         case MegaApi::BUSINESS_STATUS_EXPIRED:
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = getMEGAString();
-            QMap<QMessageBox::StandardButton, QString> buttonsText;
-            buttonsText.insert(QMessageBox::No, tr("Dismiss"));
-
-            if (megaApi->isMasterBusinessAccount())
+            const QString title = tr("Account deactivated");
+            if (megaApi->isProFlexiAccount())
             {
-                msgInfo.text = tr("Your Business account is expired");
-                msgInfo.informativeText = tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.");
-                msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
-                buttonsText.insert(QMessageBox::Yes, tr("Pay Now"));
-                msgInfo.defaultButton = QMessageBox::Yes;
-                msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
-                {
-                    if(msg->result() == QMessageBox::Yes)
-                    {
-                        QString url = QString::fromUtf8("mega://#repay");
-                        Utilities::getPROurlWithParameters(url);
-                        Utilities::openUrl(QUrl(url));
-                    }
-                };
+                const QString message = CommonMessages::getExpiredProFlexiMessage();
+                GuiUtilities::showPayReactivateOrDismiss(title, message);
+            }
+            else if (megaApi->isMasterBusinessAccount())
+            {
+                const QString message = tr("It seems the payment for your business account has failed. "
+                                           "Your account is suspended as read only until you proceed with the needed payments.");
+                GuiUtilities::showPayNowOrDismiss(title, message);
             }
             else
             {
-                msgInfo.textFormat = Qt::RichText;
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = getMEGAString();
                 msgInfo.text = tr("Account Suspended");
+                msgInfo.textFormat = Qt::RichText;
                 msgInfo.informativeText = tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
-                                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                            .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                            .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
                             + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
                             tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
-                                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
-                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromUtf8("\n");
-                msgInfo.buttons = QMessageBox::No;
-            }
+                            .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
+                            .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromUtf8("\n");
 
-            msgInfo.buttonsText = buttonsText;
-            QMegaMessageBox::warning(msgInfo);
+                msgInfo.buttonsText.insert(QMessageBox::No, tr("Dismiss"));
+                QMegaMessageBox::warning(msgInfo);
+            }
 
             break;
         }
@@ -6472,6 +6451,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
+                if(blockState == eventNumber)
+                {
+                    break;
+                }
                 blockState = eventNumber;
                 emit blocked();
                 blockStateSet = true;
@@ -6479,8 +6462,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 {
                     preferences->setBlockedState(blockState);
                 }
-
-                showVerifyAccountInfo([this]()
+                if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
                 {
                     if (infoDialog)
                     {
@@ -6490,13 +6472,12 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                             DialogOpener::closeAllDialogs();
                         }
                     }
-                    else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
-                    {
-                        showVerifyAccountInfo();
-                    }
+
+                    showVerifyAccountInfo();
 
                     whyamiblockedPeriodicPetition = false;
-                });
+
+                }
                 break;
             }
             case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
@@ -7611,27 +7592,6 @@ void MegaApplication::onCheckDeferredPreferencesSync(bool timeout)
     }
 }
 
-void MegaApplication::showAddSyncError(MegaRequest *request, MegaError* e, QString localpath, QString remotePath)
-{
-    if (e->getErrorCode() != MegaError::API_OK)
-    {
-        showAddSyncError(request->getNumDetails(), localpath, remotePath);
-    }
-}
-
-void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString /*remotePath*/)
-{
-    if (errorCode != MegaError::API_OK)
-    {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title =  tr("Error adding sync");
-        msgInfo.text = tr("This sync can't be added: %1. Reason: %2").arg(localpath)
-                                  .arg( errorCode > 0 ? QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))
-                                   : QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode)));
-        QMegaMessageBox::critical(msgInfo);
-    }
-}
-
 void MegaApplication::onAccountUpdate(MegaApi *)
 {
     if (appfinished || !preferences->logged())
@@ -8109,26 +8069,4 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
     model->removeSyncedFolderByBackupId(sync->getBackupId());
 
     onGlobalSyncStateChanged(api);
-}
-
-MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent, MegaApplication *app)
-    : QTMegaListener(megaApi, parent)
-{
-    this->app = app;
-}
-
-void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
-{
-    QTMegaListener::onRequestFinish(api, request, e);
-
-    if (request->getType() != MegaRequest::TYPE_FETCH_NODES
-            || e->getErrorCode() != MegaError::API_OK)
-    {
-        return;
-    }
-}
-
-void MEGASyncDelegateListener::onEvent(MegaApi *api, MegaEvent *e)
-{
-    QTMegaListener::onEvent(api, e);
 }
