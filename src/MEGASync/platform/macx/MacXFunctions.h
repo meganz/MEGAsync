@@ -26,7 +26,6 @@ QString defaultOpenApp(QString extension);
 void enableBlurForWindow(QWidget *window);
 bool registerUpdateDaemon();
 bool runHttpServer();
-bool runHttpsServer();
 bool userActive();
 double uptime();
 QString appBundlePath();

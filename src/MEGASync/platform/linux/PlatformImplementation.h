@@ -36,7 +36,6 @@ public:
     QString getWindowManagerName() override;
     bool registerUpdateJob() override;
     bool shouldRunHttpServer() override;
-    bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
 

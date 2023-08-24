@@ -234,7 +234,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     megaApiFolders = nullptr;
     delegateListener = nullptr;
     httpServer = nullptr;
-    httpsServer = nullptr;
     exportOps = 0;
     infoDialog = nullptr;
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
@@ -251,8 +250,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     lastHovered = nullptr;
     isPublic = false;
     prevVersion = 0;
-    updatingSSLcert = false;
-    lastSSLcertUpdate = 0;
     mTransfersModel = nullptr;
 
     notificationsModel = nullptr;
@@ -2221,8 +2218,6 @@ void MegaApplication::cleanAll()
 
     delete httpServer;
     httpServer = nullptr;
-    delete httpsServer;
-    httpsServer = nullptr;
     delete uploader;
     uploader = nullptr;
     delete downloader;
@@ -2649,38 +2644,17 @@ void MegaApplication::startHttpServer()
 {
     if (!httpServer)
     {
-        httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
+        httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT);
         ConnectServerSignals(httpServer);
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTP server started");
     }
 }
 
-void MegaApplication::startHttpsServer()
-{
-    if (!httpsServer)
-    {
-        httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-        ConnectServerSignals(httpsServer);
-        connect(httpsServer, SIGNAL(onConnectionError()), this, SLOT(onHttpServerConnectionError()), Qt::QueuedConnection);
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
-    }
-}
-
 void MegaApplication::initLocalServer()
 {
-    // Run both servers for now, until we receive the confirmation of the criteria to start them dynamically
-    if (!httpServer) // && Platform::getInstance()->shouldRunHttpServer())
+    if (!httpServer)
     {
         startHttpServer();
-    }
-
-    if (!updatingSSLcert) // && (httpsServer || Platform::getInstance()->shouldRunHttpsServer()))
-    {
-        long long currentTime = QDateTime::currentMSecsSinceEpoch() / 1000;
-        if ((currentTime - lastSSLcertUpdate) > Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS)
-        {
-            renewLocalSSLcert();
-        }
     }
 }
 
@@ -2770,29 +2744,6 @@ QPointer<SetupWizard> MegaApplication::getSetupWizard() const
     return mSetupWizard;
 }
 
-void MegaApplication::renewLocalSSLcert()
-{
-    if (!updatingSSLcert)
-    {
-        lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
-        megaApi->getLocalSSLCertificate();
-    }
-}
-
-
-void MegaApplication::onHttpServerConnectionError()
-{
-    auto now = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000;
-    if (now - this->lastTsConnectionError > 10)
-    {
-        this->lastTsConnectionError = now;
-        this->renewLocalSSLcert();
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Local SSL cert renewal discarded");
-    }
-}
 void MegaApplication::triggerInstallUpdate()
 {
     if (appfinished)
@@ -6559,10 +6510,6 @@ void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
     {
         connectivityTimer->start();
     }
-    else if (request->getType() == MegaRequest::TYPE_GET_LOCAL_SSL_CERT)
-    {
-        updatingSSLcert = true;
-    }
 }
 
 //Called when a request has finished
@@ -6848,62 +6795,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                  }
              });
         });
-        break;
-    }
-    case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
-    {
-        updatingSSLcert = false;
-        bool retry = false;
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            MegaStringMap *data = request->getMegaStringMap();
-            if (data)
-            {
-                preferences->setHttpsKey(QString::fromUtf8(data->get("key")));
-                preferences->setHttpsCert(QString::fromUtf8(data->get("cert")));
-
-                QString intermediates;
-                QString key = QString::fromUtf8("intermediate_");
-                const char *value;
-                int i = 1;
-                while ((value = data->get((key + QString::number(i)).toUtf8().constData())))
-                {
-                    if (i != 1)
-                    {
-                        intermediates.append(QString::fromUtf8(";"));
-                    }
-                    intermediates.append(QString::fromUtf8(value));
-                    i++;
-                }
-
-                preferences->setHttpsCertIntermediate(intermediates);
-                preferences->setHttpsCertExpiration(request->getNumber());
-                megaApi->sendEvent(AppStatsEvents::EVENT_LOCAL_SSL_CERT_RENEWED,
-                                   "Local SSL certificate renewed", false, nullptr);
-                delete httpsServer;
-                httpsServer = nullptr;
-                startHttpsServer();
-                break;
-            }
-            else // Request aborted
-            {
-                retry=true;
-            }
-        }
-
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Error renewing the local SSL certificate");
-        if (e->getErrorCode() == MegaError::API_EACCESS || retry)
-        {
-            static bool retried = false;
-            if (!retried)
-            {
-                retried = true;
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
-                renewLocalSSLcert();
-                break;
-            }
-        }
-
         break;
     }
     case MegaRequest::TYPE_FETCH_NODES:
