@@ -50,7 +50,8 @@ bool OnboardingQmlDialog::event(QEvent *evnt)
             return true;
         }
         else if(mega::NOTLOGGEDIN == MegaSyncApp->getMegaApi()->isLoggedIn()
-               || mega::EPHEMERALACCOUNT == MegaSyncApp->getMegaApi()->isLoggedIn())
+               || mega::EPHEMERALACCOUNT == MegaSyncApp->getMegaApi()->isLoggedIn()
+               || mega::CONFIRMEDACCOUNT == MegaSyncApp->getMegaApi()->isLoggedIn())
         {
             hide();
             evnt->ignore();

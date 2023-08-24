@@ -38,7 +38,7 @@ StackViewPage {
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Large
-            text: LoginControllerAccess.emailConfirmed
+            text: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED
                   ? OnboardingStrings.confirmEmailAndPassword
                   : OnboardingStrings.loginTitle
         }
