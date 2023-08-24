@@ -57,8 +57,6 @@ public:
     const std::shared_ptr<const FileFolderAttributes> getAttributes() const {return mAttributes;}
     std::shared_ptr<FileFolderAttributes> getAttributes() {return mAttributes;}
 
-    virtual bool isEqual(const mega::MegaSyncStall*) const {return false;}
-
     void checkTrailingSpaces(QString& name) const;
 
     std::shared_ptr<mega::MegaSyncStall> original;
@@ -122,8 +120,6 @@ public:
     }
 
     std::shared_ptr<mega::MegaNode> getNode(bool refresh = false) const;
-
-    bool isEqual(const mega::MegaSyncStall *stall) const override;
 
     void initFileFolderAttributes() override
     {
@@ -192,8 +188,6 @@ public:
     {
         return false;
     }
-
-    bool isEqual(const mega::MegaSyncStall *stall) const override;
 
     void initFileFolderAttributes() override
     {

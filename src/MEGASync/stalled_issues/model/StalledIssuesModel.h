@@ -8,7 +8,7 @@
 #include "ViewLoadingScene.h"
 
 #include <QObject>
-#include <QMutex>
+#include <QReadWriteLock>
 #include <QAbstractItemModel>
 #include <QTimer>
 #include <QPointer>
@@ -151,6 +151,8 @@ private slots:
     void onSendEvent();
 
 private:
+    std::shared_ptr<StalledIssueVariant> getStalledIssueByRow(int row) const;
+
     void removeRows(QModelIndexList &indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     void updateStalledIssuedByOrder();
@@ -182,7 +184,7 @@ private:
     StalledIssuesUtilities mUtilities;
     QStringList ignoredItems;
 
-    mutable QMutex mModelMutex;
+    mutable QReadWriteLock mModelMutex;
 
     mutable StalledIssuesVariantList mStalledIssues;
     mutable StalledIssuesVariantList mSolvedStalledIssues;

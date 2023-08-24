@@ -190,8 +190,6 @@ StalledIssuesModel::~StalledIssuesModel()
 
 void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived)
 {
-    reset();
-
     if(!issuesReceived.stalledIssues.isEmpty() && !mEventTimer.isActive())
     {
         mEventTimer.start(EVENT_REQUEST_DELAY);
@@ -199,7 +197,9 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
 
     Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, issuesReceived]()
     {
-        mModelMutex.lock();
+        reset();
+        mModelMutex.lockForWrite();
+        qDebug() << "START PROCESSING TO MODEL";
 
         blockSignals(true);
 
@@ -274,6 +274,14 @@ void StalledIssuesModel::onSendEvent()
     }
 }
 
+std::shared_ptr<StalledIssueVariant> StalledIssuesModel::getStalledIssueByRow(int row) const
+{
+    mModelMutex.lockForRead();
+    auto issue = mStalledIssues.at(row);
+    mModelMutex.unlock();
+    return issue;
+}
+
 void StalledIssuesModel::updateStalledIssues()
 {
     if(!mIssuesRequested && !mSolvingIssues)
@@ -293,36 +301,43 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes
 {
     if(nodes)
     {
-        for (int i = 0; i < nodes->size(); i++)
+        mega::MegaNodeList* copiedNodes(nodes->copy());
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, copiedNodes]()
         {
-            mega::MegaNode *node = nodes->get(i);
-            if (node->getChanges() & mega::MegaNode::CHANGE_TYPE_PARENT)
+            for (int i = 0; i < copiedNodes->size(); i++)
             {
-                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-                if(parentNode && parentNode->getType() == mega::MegaNode::TYPE_FILE)
+                mega::MegaNode *node = copiedNodes->get(i);
+                if (node->getChanges() & mega::MegaNode::CHANGE_TYPE_PARENT)
                 {
-                    for(int row = 0; row < rowCount(QModelIndex()); ++row)
+                    std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                    if(parentNode && parentNode->getType() == mega::MegaNode::TYPE_FILE)
                     {
-                        auto item = mStalledIssues.at(row);
-                        if(item->getData()->containsHandle(node->getHandle()))
-                        {                            
-                            auto parentFound(false);
-                            while (!parentFound)
+                        for(int row = 0; row < rowCount(QModelIndex()); ++row)
+                        {
+                            mModelMutex.lockForWrite();
+                            auto item = mStalledIssues.at(row);
+                            if(item->getData()->containsHandle(node->getHandle()))
                             {
-                                auto currentParentHandle(parentNode->getHandle());
-                                auto parentNodeRaw(MegaSyncApp->getMegaApi()->getParentNode(parentNode.get()));
-                                parentNode.reset(parentNodeRaw);
-                                if(!parentNode || parentNode->getType() != mega::MegaNode::TYPE_FILE)
+                                auto parentFound(false);
+                                while (!parentFound)
                                 {
-                                    item->getData()->updateHandle(currentParentHandle);
-                                    parentFound = true;
+                                    auto currentParentHandle(parentNode->getHandle());
+                                    auto parentNodeRaw(MegaSyncApp->getMegaApi()->getParentNode(parentNode.get()));
+                                    parentNode.reset(parentNodeRaw);
+                                    if(!parentNode || parentNode->getType() != mega::MegaNode::TYPE_FILE)
+                                    {
+                                        item->getData()->updateHandle(currentParentHandle);
+                                        parentFound = true;
+                                    }
                                 }
                             }
+                            mModelMutex.unlock();
                         }
                     }
                 }
             }
-        }
+            delete copiedNodes;
+        });
     }
 }
 
@@ -370,12 +385,12 @@ QVariant StalledIssuesModel::data(const QModelIndex &index, int role) const
         }
         else
         {
-            return QVariant::fromValue(StalledIssueVariant(*(mStalledIssues.at(index.row()).get())));
+            return QVariant::fromValue(StalledIssueVariant(*(getStalledIssueByRow(index.row()).get())));
         }
     }
     else if(role == ADAPTATIVE_HEIGHT_ROLE)
     {
-        auto issue = mStalledIssues.at(index.row());
+        auto issue = getStalledIssueByRow(index.row());
         return StalledIssuesDelegateWidgetsCache::adaptativeHeight(issue->getData()->getReason());
     }
 
@@ -508,7 +523,7 @@ void StalledIssuesModel::updateStalledIssuedByOrder()
     //Recalculate rest of items
     for(int row = 0; row < rowCount(QModelIndex()); ++row)
     {
-        auto item = mStalledIssues.at(row);
+        auto item = getStalledIssueByRow(row);
         mStalledIssuesByOrder.insert(item.get(), row);
 
         mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason(item->consultData()->getReason()))]++;
@@ -519,14 +534,6 @@ void StalledIssuesModel::updateStalledIssuedByOrder()
 
 void StalledIssuesModel::lockModelMutex(bool lock)
 {
-    if (lock)
-    {
-        mModelMutex.lock();
-    }
-    else
-    {
-        mModelMutex.unlock();
-    }
 }
 
 void StalledIssuesModel::blockUi()
@@ -559,7 +566,7 @@ QModelIndexList StalledIssuesModel::getIssues(std::function<bool (const std::sha
 
     for(int row = 0; row < rowCount(QModelIndex()); ++row)
     {
-        auto issue(mStalledIssues.at(row));
+        auto issue(getStalledIssueByRow(row));
         if(issue && !issue->consultData()->isSolved() && checker(issue->consultData()))
         {
             list.append(index(row,0));
@@ -584,9 +591,14 @@ void StalledIssuesModel::reset()
 {
     beginResetModel();
 
+    lockModelMutex(true);
+
+    qDebug() << "MODEL RESET";
     mStalledIssues.clear();
     mStalledIssuesByOrder.clear();
     mCountByFilterCriterion.clear();
+
+    lockModelMutex(false);
 
     endResetModel();
 
@@ -676,6 +688,8 @@ void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::fun
                 break;
             }
 
+            mModelMutex.lockForWrite();
+
             sendFixingIssuesMessage(issueCounter, totalRows);
 
             auto potentialIndex = getSolveIssueIndex(index);
@@ -696,6 +710,8 @@ void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::fun
                 }
             }
             issueCounter++;
+
+            mModelMutex.unlock();
         }
 
         bool sendMessage(true);
@@ -812,7 +828,7 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
     auto resolveIssue = [this](int row) -> bool
     {
         auto issue(mStalledIssues.at(row));
-        auto localRemoteIssue = mStalledIssues.at(row)->convert<LocalOrRemoteUserMustChooseStalledIssue>();
+        auto localRemoteIssue = issue->convert<LocalOrRemoteUserMustChooseStalledIssue>();
         if(localRemoteIssue)
         {
             localRemoteIssue->chooseLastMTimeSide();
@@ -884,7 +900,7 @@ void StalledIssuesModel::ignoreSymLinks(const QModelIndex& fixedIndex)
         auto totalRows(rowCount(QModelIndex()));
         for(int row = 0; row < totalRows; ++row)
         {
-            auto item = mStalledIssues.at(row);
+            auto item = getStalledIssueByRow(row);
             if(item->getData()->isSymLink() &&
                !item->getData()->isSolved())
             {

@@ -164,17 +164,6 @@ std::shared_ptr<mega::MegaNode> CloudStalledIssueData::getNode(bool refresh) con
     }
 }
 
-bool CloudStalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
-{
-    QString sourcePath;
-    QString targetPath;
-
-    sourcePath = QString::fromUtf8(stall->path(true,0));
-    targetPath = QString::fromUtf8(stall->path(true,1));
-
-    return (sourcePath.compare(mPath.path) == 0 || targetPath.compare(mMovePath.path) == 0);
-}
-
 mega::MegaHandle CloudStalledIssueData::getPathHandle() const
 {
     return mPathHandle;
@@ -194,18 +183,6 @@ void CloudStalledIssueData::setPathHandle(mega::MegaHandle newPathHandle)
         attr->setHandle(mPathHandle);
     }
 
-}
-
-//LOCAL
-bool LocalStalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
-{
-    QString sourcePath;
-    QString targetPath;
-
-    sourcePath = QString::fromUtf8(stall->path(false,0));
-    targetPath = QString::fromUtf8(stall->path(false,1));
-
-    return (sourcePath.compare(mPath.path) == 0 || targetPath.compare(mMovePath.path) == 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
