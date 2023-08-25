@@ -283,7 +283,7 @@ public:
 
         void removeDuplicatedNodes()
         {
-            std::unique_ptr<StalledIssuesSyncDebrisUtilities> utilities(new StalledIssuesSyncDebrisUtilities());
+            std::unique_ptr<MoveToBinUtilities> utilities(new MoveToBinUtilities());
             QList<mega::MegaHandle> nodesToMove;
 
             for(int index = 0; index < mConflictedNames.size(); ++index)
@@ -307,7 +307,7 @@ public:
                 }
             }
 
-            utilities->moveToSyncDebris(nodesToMove);
+            utilities->moveToBin(nodesToMove, QLatin1String("SyncDuplicated"), true);
             mDuplicatedSolved = true;
         }
 
@@ -344,8 +344,7 @@ public:
                     if(folderToMerge && folderToMerge->isFolder())
                     {
                         FoldersMerge mergeItem(targetFolder.get(), folderToMerge.get());
-                        mergeItem.merge(FoldersMerge::ActionForDuplicates::Ignore);
-                        MegaSyncApp->getMegaApi()->remove(folderToMerge.get());
+                        mergeItem.merge(FoldersMerge::ActionForDuplicates::IgnoreAndMoveToBin);
                         conflictedFolder->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::MERGED;
                     }
                 }

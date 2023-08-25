@@ -15,6 +15,7 @@
 #include <QIcon>
 #include <QLabel>
 #include <QQueue>
+#include <QEventLoop>
 
 #include <QEasingCurve>
 
@@ -472,6 +473,20 @@ private:
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
 
+//This class is used to move a handle to the MEGA bin
+class MoveToBinUtilities
+{
+public:
+    MoveToBinUtilities(){}
+
+    bool moveToBin(const QList<mega::MegaHandle>& handles, const QString& binFolderName, bool addDateFolder);
+
+private:
+    QList<mega::MegaHandle> mHandles;
+    QEventLoop mEventLoop;
+    bool mResult = false;
+};
+
 //This class is use to merge two remote folders
 class FoldersMerge : public QObject
 {
@@ -486,7 +501,8 @@ public:
     enum ActionForDuplicates
     {
         Rename,
-        Ignore
+        IgnoreAndRemove,
+        IgnoreAndMoveToBin
     };
     void merge(ActionForDuplicates action);
 

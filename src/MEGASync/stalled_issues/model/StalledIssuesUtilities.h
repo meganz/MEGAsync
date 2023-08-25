@@ -42,17 +42,4 @@ private:
     QList<mega::MegaHandle> mRemoteHandles;
 };
 
-class StalledIssuesSyncDebrisUtilities
-{
-public:
-    StalledIssuesSyncDebrisUtilities(){}
-
-    bool moveToSyncDebris(const QList<mega::MegaHandle>& handles);
-
-private:
-    QList<mega::MegaHandle> mHandles;
-    QEventLoop mEventLoop;
-    bool mResult = false;
-};
-
 #endif // STALLEDISSUESUTILITIES_H

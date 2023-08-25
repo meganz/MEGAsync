@@ -199,7 +199,6 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
     {
         reset();
         mModelMutex.lockForWrite();
-        qDebug() << "START PROCESSING TO MODEL";
 
         blockSignals(true);
 
@@ -593,7 +592,6 @@ void StalledIssuesModel::reset()
 
     lockModelMutex(true);
 
-    qDebug() << "MODEL RESET";
     mStalledIssues.clear();
     mStalledIssuesByOrder.clear();
     mCountByFilterCriterion.clear();
