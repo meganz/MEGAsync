@@ -9,7 +9,7 @@
 class QmlDeviceName : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString mName READ getDeviceName WRITE setDeviceName NOTIFY deviceNameChanged)
+    Q_PROPERTY(QString name MEMBER mName READ getDeviceName WRITE setDeviceName NOTIFY deviceNameChanged)
 
 public:
     explicit QmlDeviceName(QObject *parent = nullptr);

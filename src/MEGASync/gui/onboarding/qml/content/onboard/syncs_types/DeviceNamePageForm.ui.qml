@@ -46,7 +46,7 @@ SyncsPage {
             Layout.rightMargin: -deviceNameTextField.sizes.focusBorderWidth
             Layout.preferredWidth: parent.width + 2 * deviceNameTextField.sizes.focusBorderWidth
             title: OnboardingStrings.deviceName
-            textField.text: deviceName.mName
+            textField.text: deviceName.name
             sizes: MegaTextFields.LargeSizes {}
         }
     }

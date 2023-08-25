@@ -53,7 +53,7 @@ SyncsPage {
                 title: OnboardingStrings.backupTo
                 leftIcon.source: Images.database
                 textField.readOnly: true
-                textField.text: "/" + deviceName.mName
+                textField.text: "/" + deviceName.name
             }
         }
     }
