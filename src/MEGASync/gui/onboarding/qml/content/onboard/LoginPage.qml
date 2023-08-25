@@ -117,7 +117,7 @@ LoginPageForm {
             name: stateFetchNodesFinished
             extend: stateLoggedOut
             StateChangeScript {
-                script: onboardingWindow.close();
+                script: onboardingWindow.forceClose();
             }
         },
         State {
