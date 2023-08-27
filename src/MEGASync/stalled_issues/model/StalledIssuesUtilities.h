@@ -29,14 +29,13 @@ public:
 
     static QIcon getLocalFileIcon(const QFileInfo& fileInfo, bool hasProblem);
     static QIcon getRemoteFileIcon(mega::MegaNode* node, const QFileInfo &fileInfo, bool hasProblem);
+    static QIcon getIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
 
 signals:
     void actionFinished();
     void remoteActionFinished(mega::MegaHandle handle);
 
 private:
-    static QIcon getFileIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
-
     mutable QReadWriteLock  mIgnoreMutex;
 
     QList<mega::MegaHandle> mRemoteHandles;

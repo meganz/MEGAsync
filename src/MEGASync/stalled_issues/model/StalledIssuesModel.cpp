@@ -114,6 +114,7 @@ void StalledIssuesReceiver::onSetIsEventRequest()
 
 const int StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE = Qt::UserRole;
 const int EVENT_REQUEST_DELAY = 600000; /*10 minutes*/
+const char* FILEWATCHER_ROW = "FILEWATCHER_ROW";
 
 StalledIssuesModel::StalledIssuesModel(QObject *parent)
     : QAbstractItemModel(parent),
@@ -273,6 +274,19 @@ void StalledIssuesModel::onSendEvent()
     }
 }
 
+void StalledIssuesModel::onLocalFileModified(const QString &)
+{
+    if(!mSolvingIssues)
+    {
+        auto row = sender()->property(FILEWATCHER_ROW).toUInt();
+        std::shared_ptr<StalledIssueVariant> issue(getStalledIssueByRow(row));
+        if(issue)
+        {
+            issue->getData()->resetUIUpdated();
+        }
+    }
+}
+
 std::shared_ptr<StalledIssueVariant> StalledIssuesModel::getStalledIssueByRow(int row) const
 {
     mModelMutex.lockForRead();
@@ -326,6 +340,7 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes
                                     if(!parentNode || parentNode->getType() != mega::MegaNode::TYPE_FILE)
                                     {
                                         item->getData()->updateHandle(currentParentHandle);
+                                        item->getData()->resetUIUpdated();
                                         parentFound = true;
                                     }
                                 }
@@ -586,8 +601,42 @@ bool StalledIssuesModel::isRawInfoVisible() const
     return mRawInfoVisible;
 }
 
+void StalledIssuesModel::UiItemUpdate(const QModelIndex &oldIndex, const QModelIndex &newIndex)
+{
+    if(oldIndex.isValid() && oldIndex != newIndex)
+    {
+        auto oldType = oldIndex.parent().isValid() ? StalledIssue::Type::Body : StalledIssue::Type::Header;
+        auto row(oldType == StalledIssue::Type::Body ?
+                 oldIndex.parent().row() :
+                 oldIndex.row());
+        auto oldIssue(getStalledIssueByRow(row));
+        oldIssue->getData()->resetUIUpdated();
+        mLocalFileWatchersByRow.remove(row);
+    }
+
+    auto newType = newIndex.parent().isValid() ? StalledIssue::Type::Body : StalledIssue::Type::Header;
+    auto row(newType == StalledIssue::Type::Body ?
+             newIndex.parent().row() :
+             newIndex.row());
+    auto newIssue(getStalledIssueByRow(row));
+    newIssue->getData()->UIUpdated(newType);
+    auto newIssueFiles = newIssue->getData()->getLocalFiles();
+    if(!newIssueFiles.isEmpty() && !mLocalFileWatchersByRow.contains(row))
+    {
+        auto deleter = [](QFileSystemWatcher* object){
+            object->deleteLater();
+          };
+        std::shared_ptr<QFileSystemWatcher> fileWatcher(new QFileSystemWatcher(newIssueFiles), deleter);
+        fileWatcher->setProperty(FILEWATCHER_ROW, row);
+        mLocalFileWatchersByRow.insert(row, fileWatcher);
+        connect(fileWatcher.get(), &QFileSystemWatcher::fileChanged, this, &StalledIssuesModel::onLocalFileModified);
+    }
+}
+
 void StalledIssuesModel::reset()
 {
+    mLocalFileWatchersByRow.clear();
+
     beginResetModel();
 
     lockModelMutex(true);
@@ -877,36 +926,38 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
     solveListOfIssues(list, resolveIssue);
 }
 
-void StalledIssuesModel::ignoreSymLinks(const QModelIndex& fixedIndex)
+void StalledIssuesModel::ignoreSymLinks()
 {
-    auto item = mStalledIssues.at(fixedIndex.row());
-    if(item->getData()->canBeIgnored())
+    std::unique_ptr<mega::MegaSyncList>syncs(MegaSyncApp->getMegaApi()->getSyncs());
+    for (int i = 0; i < syncs->size(); ++i)
     {
-        mUtilities.ignoreSymLinks(item->getData()->consultLocalData()->getNativeFilePath());
-        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_ALL_SYMLINK,
-                                             "All symlink ignored", false, nullptr);
-
-        auto resolveIssue = [this](int row) -> bool
-        {
-            auto item = mStalledIssues.at(row);
-            item->getData()->setIsSolved(false);
-
-            return true;
-        };
-
-        QModelIndexList list;
-        auto totalRows(rowCount(QModelIndex()));
-        for(int row = 0; row < totalRows; ++row)
-        {
-            auto item = getStalledIssueByRow(row);
-            if(item->getData()->isSymLink() &&
-               !item->getData()->isSolved())
-            {
-                list.append(index(row,0));
-            }
-        }
-        solveListOfIssues(list, resolveIssue);
+        auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(syncs->get(i)->getLocalFolder())));
+        mUtilities.ignoreSymLinks(folderPath);
     }
+    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_ALL_SYMLINK,
+                                         "All symlink ignored", false, nullptr);
+
+    auto resolveIssue = [this](int row) -> bool
+    {
+        auto item = mStalledIssues.at(row);
+        item->getData()->setIsSolved(false);
+
+        return true;
+    };
+
+    QModelIndexList list;
+    auto totalRows(rowCount(QModelIndex()));
+    for(int row = 0; row < totalRows; ++row)
+    {
+        auto item = getStalledIssueByRow(row);
+        if(item->getData()->isSymLink() &&
+           !item->getData()->isSolved())
+        {
+            list.append(index(row,0));
+        }
+    }
+    solveListOfIssues(list, resolveIssue);
+
 }
 
 void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &list, int option)

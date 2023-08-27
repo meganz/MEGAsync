@@ -51,8 +51,7 @@ void StalledIssuesUtilities::ignoreSymLinks(const QString& path)
 {
     QtConcurrent::run([this, path]()
     {
-        QFileInfo tempFile(path);
-        QDir ignoreDir(tempFile.path());
+        QDir ignoreDir(path);
 
         while(ignoreDir.exists())
         {
@@ -144,14 +143,14 @@ QIcon StalledIssuesUtilities::getLocalFileIcon(const QFileInfo &fileInfo, bool h
         isFile = !fileInfo.completeSuffix().isEmpty();
     }
 
-    return getFileIcon(isFile, fileInfo, hasProblem);
+    return getIcon(isFile, fileInfo, hasProblem);
 }
 
 QIcon StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode *node, const QFileInfo& fileInfo, bool hasProblem)
 {
     if(node)
     {
-        return getFileIcon(node->isFile(), fileInfo, hasProblem);
+        return getIcon(node->isFile(), fileInfo, hasProblem);
     }
     else
     {
@@ -159,7 +158,7 @@ QIcon StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode *node, const QFil
     }
 }
 
-QIcon StalledIssuesUtilities::getFileIcon(bool isFile, const QFileInfo& fileInfo, bool hasProblem)
+QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bool hasProblem)
 {
     QIcon fileTypeIcon;
 

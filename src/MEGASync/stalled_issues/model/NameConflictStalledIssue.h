@@ -47,10 +47,6 @@ public:
         bool mIsFile;
         std::shared_ptr<FileFolderAttributes>  mItemAttributes;
 
-        ConflictedNameInfo()
-            : mSolved(SolvedType::UNSOLVED)
-        {}
-
         ConflictedNameInfo(const QFileInfo& fileInfo, bool isFile, std::shared_ptr<FileFolderAttributes> attributes)
             : mConflictedName(fileInfo.fileName()),
               mHandle(mega::INVALID_HANDLE),
@@ -60,7 +56,8 @@ public:
               mDuplicated(false),
               mIsFile(isFile),
               mItemAttributes(attributes)
-        {}
+        {
+        }
 
         bool operator==(const ConflictedNameInfo &data)
         {
@@ -130,7 +127,7 @@ public:
 
         bool solved = false;
 
-        QMap<int64_t, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
+        QMultiMap<int64_t, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
     };
 
     class CloudConflictedNamesByHandle
@@ -144,6 +141,56 @@ public:
             CloudConflictedNames newConflictedName;
             newConflictedName.conflictedNames.insert(handle, info);
             mConflictedNames.append(newConflictedName);
+        }
+
+        void updateFileConflictedName(int64_t modifiedtimestamp, int64_t size, int64_t oldcreationtimestamp,
+                                      int64_t newcreationtimestamp,
+                                      QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
+        {
+            bool isDuplicated(false);
+
+            if(info->mDuplicated)
+            {
+                auto& namesByHandle = mConflictedNames[info->mDuplicatedGroupId];
+                namesByHandle.conflictedNames.remove(oldcreationtimestamp, info);
+            }
+
+            for(int index = 0; index < mConflictedNames.size(); ++index)
+            {
+                auto& namesByHandle = mConflictedNames[index];
+
+                if(fingerprint == namesByHandle.fingerprint
+                   && size == namesByHandle.size
+                   && modifiedtimestamp == namesByHandle.modifiedTime)
+                {
+                    info->mDuplicatedGroupId = index;
+                    info->mDuplicated = true;
+
+                    namesByHandle.conflictedNames.insertMulti(newcreationtimestamp, info);
+
+                    isDuplicated = true;
+                    break;
+                }
+
+            }
+
+            if(!isDuplicated && info->mDuplicated)
+            {
+                auto& namesByHandle = mConflictedNames[info->mDuplicatedGroupId];
+                auto duplicatedIssues = namesByHandle.conflictedNames.size();
+
+                if(duplicatedIssues == 1)
+                {
+                    auto remainIndex(namesByHandle.conflictedNames.first());
+                    remainIndex->mDuplicated = false;
+                }
+
+                CloudConflictedNames newConflictedName(fingerprint, size, modifiedtimestamp);
+                newConflictedName.conflictedNames.insertMulti(newcreationtimestamp,info);
+                mConflictedNames.append(newConflictedName);
+
+                info->mDuplicated = false;
+            }
         }
 
         void addFileConflictedName(int64_t modifiedtimestamp, int64_t size, int64_t creationtimestamp,
@@ -396,6 +443,8 @@ public:
     bool areAllDuplicatedNodes() const;
 
     void updateIssue(const mega::MegaSyncStall *stallIssue) override;
+
+    QStringList getLocalFiles() override;
 
 private:
     bool checkAndSolveConflictedNamesSolved(bool isPotentiallySolved = false);

@@ -142,7 +142,7 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
     {
         QSize size;
 
-        StalledIssue::SizeType sizeType = index.parent().isValid() ? StalledIssue::Body : StalledIssue::Header;
+        StalledIssue::Type sizeType = index.parent().isValid() ? StalledIssue::Body : StalledIssue::Header;
         size = stalledIssueItem.getDelegateSize(sizeType);
 
         if(!size.isValid() && mFreshStart)
@@ -372,6 +372,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, geometry.size()));
             if(!w)
             {
+                painter->restore();
                 return;
             }
 

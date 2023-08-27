@@ -26,12 +26,12 @@ WordWrapLabel::WordWrapLabel(QWidget* parent)
 void WordWrapLabel::setText(const QString &text)
 {
     QTextEdit::setText(text);
-    setLineWrapColumnOrWidth(lineWrapColumnOrWidth());
     adaptHeight();
 }
 
 void WordWrapLabel::adaptHeight(bool sendEvent)
 {
+    setLineWrapColumnOrWidth(lineWrapColumnOrWidth());
     QSize docSize = document()->size().toSize();
     if(docSize.isValid() && docSize.height() > MINIMUM_DOC_HEIGHT)
     {

@@ -123,8 +123,8 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
 
     if(index == IgnoreType::IgnoreAll)
     {
-        msgInfo.text = tr("Are you sure you want to ignore all symlinks in this sync?");
-        msgInfo.informativeText = tr("This action will ignore all present and future symlinks in this sync.");
+        msgInfo.text = tr("Are you sure you want to ignore all symlinks in all syncs?");
+        msgInfo.informativeText = tr("This action will ignore all present and future symlinks in all your syncs.");
     }
     else
     {
@@ -138,7 +138,7 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
         {
             if(index == IgnoreType::IgnoreAll)
             {
-                MegaSyncApp->getStalledIssuesModel()->ignoreSymLinks(selection.first());
+                MegaSyncApp->getStalledIssuesModel()->ignoreSymLinks();
             }
             else
             {

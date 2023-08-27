@@ -12,6 +12,7 @@
 #include <QAbstractItemModel>
 #include <QTimer>
 #include <QPointer>
+#include <QFileSystemWatcher>
 
 class LoadingSceneMessageHandler;
 class NameConflictedStalledIssue;
@@ -96,6 +97,9 @@ public:
     void showRawInfo(bool state);
     bool isRawInfoVisible() const;
 
+    //ISSUE USE FOR UI ITEM
+    void UiItemUpdate(const QModelIndex& oldIndex, const QModelIndex& newIndex);
+
     //SOLVE PROBLEMS
     void stopSolvingIssues();
 
@@ -121,8 +125,7 @@ public:
 
     //IgnoreConflicts
     void ignoreItems(const QModelIndexList& list);
-    void ignoreSymLinks(const QModelIndex &fixedIndex);
-
+    void ignoreSymLinks();
 
     bool issuesRequested() const;
 
@@ -149,6 +152,7 @@ protected slots:
 private slots:
     void onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived);
     void onSendEvent();
+    void onLocalFileModified(const QString&);
 
 private:
     std::shared_ptr<StalledIssueVariant> getStalledIssueByRow(int row) const;
@@ -172,7 +176,6 @@ private:
     StalledIssuesModel(const StalledIssuesModel&) = delete;
     void operator=(const StalledIssuesModel&) = delete;
     
-
     QThread* mStalledIssuesThread;
     StalledIssuesReceiver* mStalledIssuedReceiver;
     std::atomic_bool mThreadFinished { false };
@@ -198,6 +201,8 @@ private:
     std::atomic_bool mSolvingIssues {false};
     std::atomic_bool mIssuesSolved {false};
     std::atomic_bool mSolvingIssuesStopped {false};
+
+    QMap<int, std::shared_ptr<QFileSystemWatcher>> mLocalFileWatchersByRow;
 };
 
 #endif // STALLEDISSUESMODEL_H

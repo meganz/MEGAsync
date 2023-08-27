@@ -105,6 +105,16 @@ void NameConflictedStalledIssue::updateIssue(const mega::MegaSyncStall *stallIss
    endFillingIssue();
 }
 
+QStringList NameConflictedStalledIssue::getLocalFiles()
+{
+    QStringList files;
+    foreach(auto nameConflict, mLocalConflictedNames)
+    {
+        files << nameConflict->mConflictedPath;
+    }
+    return files;
+}
+
 bool NameConflictedStalledIssue::hasDuplicatedNodes() const
 {
     for(int index = 0; index < mCloudConflictedNames.size(); ++index)
@@ -163,6 +173,18 @@ void NameConflictedStalledIssue::updateHandle(mega::MegaHandle handle)
 {
     if(mLastModifiedNode.isValid())
     {
+        std::unique_ptr<mega::MegaNode> oldNode(MegaSyncApp->getMegaApi()->getNodeByHandle(mLastModifiedNode.cloudItem->mHandle));
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        if(node && oldNode)
+        {
+            mLastModifiedNode.cloudItem->mHandle = handle;
+
+            if(node->isFile())
+            {
+                mCloudConflictedNames.updateFileConflictedName(node->getModificationTime(), node->getSize(), oldNode->getCreationTime(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), mLastModifiedNode.cloudItem);
+            }
+        }
+
         mLastModifiedNode.cloudItem->mHandle = handle;
         if(auto remoteAttr = std::dynamic_pointer_cast<RemoteFileFolderAttributes>(mLastModifiedNode.cloudItem->mItemAttributes))
         {

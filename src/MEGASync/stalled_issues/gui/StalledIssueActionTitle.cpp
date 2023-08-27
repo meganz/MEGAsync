@@ -27,7 +27,8 @@ const char* EXTRAINFO_SIZE = "extrainfo_size";
 StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StalledIssueActionTitle),
-    mIsCloud(false)
+    mIsCloud(false),
+    mIsFile(false)
 {
     ui->setupUi(this);
 
@@ -120,21 +121,9 @@ void StalledIssueActionTitle::hideActionButton(int id)
 
 void StalledIssueActionTitle::showIcon()
 {
-    QIcon fileTypeIcon;
     QFileInfo fileInfo(mPath);
 
-    if(mIsCloud && mNode)
-    {
-        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(mNode.get(), fileInfo, false);
-    }
-    else if(fileInfo.exists())
-    {
-        fileTypeIcon = StalledIssuesUtilities::getLocalFileIcon(fileInfo, false);
-    }
-    else if(!ui->icon->pixmap())
-    {
-        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(nullptr, QFileInfo(), false);
-    }
+    QIcon fileTypeIcon = StalledIssuesUtilities::getIcon(mIsFile, fileInfo, false);
 
     if(!fileTypeIcon.isNull())
     {
@@ -518,6 +507,11 @@ void StalledIssueActionTitle::updateSizeHints()
     ui->titleContainer->updateGeometry();
 
     ui->titleLabel->updateGeometry();
+}
+
+void StalledIssueActionTitle::setIsFile(bool newIsFile)
+{
+    mIsFile = newIsFile;
 }
 
 void StalledIssueActionTitle::setInfo(const QString &newPath, mega::MegaHandle handle)

@@ -306,6 +306,8 @@ void StalledIssue::endFillingIssue()
     {
         mLocalData->initFileFolderAttributes();
     }
+
+    mNeedsUIUpdate = qMakePair(true, true);
 }
 
 const std::shared_ptr<mega::MegaSyncStall> &StalledIssue::getOriginalStall() const
@@ -323,39 +325,39 @@ uint8_t StalledIssue::hasFolders() const
     return mFolders;
 }
 
-QSize StalledIssue::getDelegateSize(SizeType type) const
+QSize StalledIssue::getDelegateSize(Type type) const
 {
     switch(type)
     {
-        case SizeType::Header:
+        case Type::Header:
             return mHeaderDelegateSize;
-        case SizeType::Body:
+        case Type::Body:
             return mBodyDelegateSize;
     }
     return QSize(0, 0);
 }
 
-void StalledIssue::setDelegateSize(const QSize &newDelegateSize, SizeType type)
+void StalledIssue::setDelegateSize(const QSize &newDelegateSize, Type type)
 {
     switch(type)
     {
-        case SizeType::Header:
+        case Type::Header:
             mHeaderDelegateSize = newDelegateSize;
             break;
-        case SizeType::Body:
+        case Type::Body:
             mBodyDelegateSize = newDelegateSize;
             break;
     }
 }
 
-void StalledIssue::removeDelegateSize(SizeType type)
+void StalledIssue::removeDelegateSize(Type type)
 {
     switch(type)
     {
-        case SizeType::Header:
+        case Type::Header:
             mHeaderDelegateSize = QSize();
             break;
-        case SizeType::Body:
+        case Type::Body:
             mBodyDelegateSize = QSize();
             break;
     }
@@ -376,6 +378,8 @@ void StalledIssue::setIsSolved(bool potentially)
     mIsSolved = potentially ? SolveType::PotentiallySolved : SolveType::Solved;
     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
     MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
+
+    mNeedsUIUpdate = qMakePair(true, true);
 }
 
 bool StalledIssue::isSymLink() const
@@ -458,6 +462,17 @@ bool StalledIssue::checkForExternalChanges()
     return isPotentiallySolved();
 }
 
+QStringList StalledIssue::getLocalFiles()
+{
+    QStringList files;
+    if(getLocalData())
+    {
+        files << getLocalData()->getFilePath();
+    }
+
+    return files;
+}
+
 void StalledIssue::setIsFile(const QString &path, bool isLocal)
 {
     if(isLocal)
@@ -473,6 +488,37 @@ void StalledIssue::setIsFile(const QString &path, bool isLocal)
             node->isFile()  ? mFiles++ : mFolders++;
         }
     }
+}
+
+bool StalledIssue::needsUIUpdate(Type type) const
+{
+    switch(type)
+    {
+        case Type::Header:
+            return mNeedsUIUpdate.first;
+        case Type::Body:
+            return mNeedsUIUpdate.second;
+    }
+
+    return true;
+}
+
+void StalledIssue::UIUpdated(Type type)
+{
+    switch(type)
+    {
+        case Type::Header:
+            mNeedsUIUpdate.first = false;
+            break;
+        case Type::Body:
+            mNeedsUIUpdate.second = false;
+            break;
+    }
+}
+
+void StalledIssue::resetUIUpdated()
+{
+    mNeedsUIUpdate = qMakePair(true, true);
 }
 
 mega::MegaSyncStall::SyncStallReason StalledIssue::getReason() const

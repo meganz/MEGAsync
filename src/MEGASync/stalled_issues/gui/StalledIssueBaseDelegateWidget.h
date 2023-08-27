@@ -55,6 +55,7 @@ private:
 
     mutable StalledIssueVariant mData;
     QPersistentModelIndex mCurrentIndex;
+    QTimer mResizeNeedTimer;
 };
 
 #endif // STALLEDISSUEBASEDELEGATEWIDGET_H

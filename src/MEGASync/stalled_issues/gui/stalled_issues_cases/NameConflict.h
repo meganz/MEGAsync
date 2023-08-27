@@ -15,7 +15,9 @@ class NameDuplicatedContainer : public QWidget
 public:
     NameDuplicatedContainer(QWidget* parent)
         : QWidget(parent)
-    {}
+    {
+        setObjectName(QLatin1String("DuplicatedContainer"));
+    }
 
 protected:
     void paintEvent(QPaintEvent *) override;

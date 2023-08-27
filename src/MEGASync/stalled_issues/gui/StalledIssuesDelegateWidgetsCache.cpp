@@ -43,7 +43,7 @@ int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
     return row % nbRowsMaxInView;
 }
 
-StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index,
+StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &sourceIndex,
                                                                                    const QModelIndex& proxyIndex,
                                                                                    QWidget *parent,
                                                                                    const StalledIssueVariant &issue,
@@ -52,9 +52,12 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
     auto row = getMaxCacheRow(proxyIndex.row());
     auto& header = mStalledIssueHeaderWidgets[row];
 
-    bool firstTime(!header);
+    bool isNew(!header);
+    bool needsUpdate(isNew ||
+               header->getCurrentIndex() != sourceIndex ||
+               issue.consultData()->needsUIUpdate(StalledIssue::Type::Header));
 
-    if(firstTime)
+    if(isNew)
     {
         header = new StalledIssueHeader(parent);
         header->setDelegate(mDelegate);
@@ -62,20 +65,27 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
 
     createHeaderCaseWidget(header, issue);
 
-    if(firstTime)
+    if(isNew)
     {
         header->resize(QSize(size.width(), header->size().height()));
     }
 
-    header->updateUi(index, issue);
+    if(needsUpdate)
+    {
+        header->updateUi(sourceIndex, issue);
+    }
 
-    if(firstTime)
+    if(isNew)
     {
         header->show();
         header->hide();
     }
-    header->refreshCaseActions();
-    header->refreshCaseTitles();
+
+    if(needsUpdate)
+    {
+        header->refreshCaseActions();
+        header->refreshCaseTitles();
+    }
 
     return header;
 }
@@ -92,12 +102,10 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
     auto& item = itemsByRowMap[row];
 
-    if(item &&
-       item->getCurrentIndex() == sourceIndex)
-    {
-        item->updateUi(sourceIndex, issue);
-    }
-    else
+    bool needsUpdate(!item ||
+               item->getCurrentIndex() != sourceIndex);
+
+    if(needsUpdate)
     {
         if(item)
         {
@@ -112,6 +120,10 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
         item->setDelegate(mDelegate);
 
         itemsByRowMap.insert(row, item);
+    }
+    else if(needsUpdate || issue.consultData()->needsUIUpdate(StalledIssue::Type::Body))
+    {
+        item->updateUi(sourceIndex, issue);
     }
 
     return item;

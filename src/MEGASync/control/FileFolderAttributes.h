@@ -53,8 +53,6 @@ public:
         return std::dynamic_pointer_cast<Type>(attributes);
     }
 
-
-
     int64_t size() const;
     int64_t modifiedTime() const;
     int64_t createdTime() const;
@@ -65,6 +63,8 @@ signals:
     void modifiedTimeReady(const QDateTime&);
     void createdTimeReady(const QDateTime&);
     void CRCReady(const QString&);
+
+    void attributesChanged();
 
 protected:
     enum AttributeTypes
@@ -85,6 +85,16 @@ protected:
     QDateTime mModifiedTime;
     QDateTime mCreatedTime;
     QString mFp;
+
+    template <class ValueType>
+    void setValue(const ValueType& newValue, ValueType& member)
+    {
+        if(member != newValue)
+        {
+            member = newValue;
+            emit attributesChanged();
+        }
+    }
 
     bool attributeNeedsUpdate(int type);
     QObject* requestReady(int type, QObject* caller);
