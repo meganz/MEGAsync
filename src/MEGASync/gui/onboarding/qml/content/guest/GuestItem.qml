@@ -228,7 +228,7 @@ Rectangle {
         MenuItem {
             id: preferencesItem
 
-            text: GuestStrings.menuPreferences
+            text: GuestStrings.menuSettings
             icon.source: Images.settings
             onTriggered: {
                 GuestContent.onPreferencesClicked();

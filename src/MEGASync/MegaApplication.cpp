@@ -3091,7 +3091,6 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterModule("Onboard", 1, 0);
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingStrings.qml")), "Onboard", 1, 0, "OnboardingStrings");
 
-
     qmlRegisterModule("Components.BusyIndicator", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components.BusyIndicator", 1, 0, "BusyIndicator");
     qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums", QString::fromUtf8("Cannot create ApiEnums in QML"));
@@ -3163,6 +3162,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Links.qml")), "Common", 1, 0, "Links");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/RegexExpressions.qml")), "Common", 1, 0, "RegexExpressions");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Styles.qml")), "Common", 1, 0, "Styles");
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/OS.qml")), "Common", 1, 0, "OS");
 
     qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);

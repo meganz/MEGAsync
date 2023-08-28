@@ -8,6 +8,7 @@
         <file>common/Links.qml</file>
         <file>common/RegexExpressions.qml</file>
         <file>common/Styles.qml</file>
+		<file>common/OS.qml</file>
         <file>components/busyIndicator/BusyIndicator.qml</file>
         <file>components/buttons/Button.qml</file>
         <file>components/buttons/CardButton.qml</file>
