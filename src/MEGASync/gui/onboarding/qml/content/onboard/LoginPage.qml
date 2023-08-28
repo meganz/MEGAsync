@@ -193,6 +193,7 @@ LoginPageForm {
         target: LogoutControllerAccess
 
         onLogout: {
+            password.text = "";
             cancelLogin.close();
             onboardingWindow.forceClose();
         }
