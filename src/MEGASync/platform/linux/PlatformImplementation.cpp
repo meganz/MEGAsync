@@ -14,8 +14,8 @@ PlatformImplementation::PlatformImplementation()
 {
     autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
     desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
-    set_icon = QString::fromUtf8("gvfs-set-attribute -t string \"%1\" metadata::custom-icon file://%2");
-    remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
+    set_icon = QString::fromUtf8("gio set -t string \"%1\" metadata::custom-icon file://%2");
+    remove_icon = QString::fromUtf8("gio set -t unset \"%1\" metadata::custom-icon");
     custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
 }
 
