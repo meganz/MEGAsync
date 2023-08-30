@@ -90,11 +90,11 @@ pipeline {
         }
 
         stage('build MEGASync packages'){
-            when { expression { env.gitlabTriggerPhrase != null && ( env.gitlabTriggerPhrase.startsWith('build packages'))  }}
+            when { expression { env.gitlabTriggerPhrase != null && ( env.gitlabTriggerPhrase.startsWith('trigger package'))  }}
             parallel {
                 stage('build macOS package') {
                     when {
-                        expression { env.gitlabTriggerPhrase == 'build packages' || env.gitlabTriggerPhrase == ('build packages macos')  }
+                        expression { env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase == ('trigger package macos')  }
                     }
                     steps {
                         gitlabCommitStatus(name: 'MacOS packages') {
@@ -138,7 +138,7 @@ pipeline {
                 }
                 stage('build linux package') {
                     when {
-                        expression { env.gitlabTriggerPhrase == 'build packages' || env.gitlabTriggerPhrase == ('build packages linux')  }
+                        expression { env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase == ('trigger package linux')  }
                     }
                     steps {
                         gitlabCommitStatus(name: 'Linux packages') {
@@ -181,7 +181,7 @@ pipeline {
                 }
                 stage('build windows package') {
                     when {
-                        expression { env.gitlabTriggerPhrase == 'build packages' || env.gitlabTriggerPhrase == ('build packages windows')  }
+                        expression { env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase == ('trigger package windows')  }
                     }
                     steps {
                         gitlabCommitStatus(name: 'Windows packages') {
