@@ -112,18 +112,16 @@ Item {
                     visible: !accountInfo.newUser
                 }
 
-                MegaTexts.Text {
+                MegaTexts.SecondaryText {
                     font.weight: Font.DemiBold
-                    color: Styles.textSecondary
                     text: "/"
                     visible: !accountInfo.newUser
                 }
 
-                MegaTexts.Text {
+                MegaTexts.SecondaryText {
                     id: totalStorage
 
                     font.weight: Font.DemiBold
-                    color: Styles.textSecondary
                     text: accountInfo.totalStorage
                 }
             }
