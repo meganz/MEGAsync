@@ -265,14 +265,12 @@ Rectangle {
                 leftButton {
                     text: OnboardingStrings.signUp
                     onClicked: {
-                        LoginControllerAccess.guestWindowButtonClicked();
                         LoginControllerAccess.state = LoginController.SIGN_UP;
                     }
                 }
                 rightButton {
                     text: OnboardingStrings.login
                     onClicked: {
-                        LoginControllerAccess.guestWindowButtonClicked();
                         LoginControllerAccess.state = LoginController.LOGGED_OUT;
                     }
                 }
@@ -302,40 +300,31 @@ Rectangle {
             id: blockedPage
 
             BasePage {
+
+                function isEmailBlock()
+                {
+                    return AccountStatusControllerAccess.blockedState === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL;
+                }
+
                 image.source: Images.warningGuest
                 imageTopMargin: 110
                 title: GuestStrings.accountTempLocked
-                description: GuestStrings.accountTempLockedEmail
+                description: isEmailBlock() ? GuestStrings.accountTempLockedEmail : GuestStrings.accountTempLockedSMS;
+                descriptionUrl: isEmailBlock() ? "" : Links.terms;
                 leftButton {
                     text: GuestStrings.logOut
                     onClicked: {
-                        GuestContent.onLogouClicked();
+                        GuestContent.onLogoutClicked();
                     }
                 }
                 rightButton {
-                    text: GuestStrings.resendEmail
-                    icons.source: Images.mail
+                    text: isEmailBlock() ? GuestStrings.resendEmail : GuestStrings.verifyNow;
+                    icons.source: isEmailBlock() ? Images.mail : "";
                     onClicked: {
                         GuestContent.onVerifyEmailClicked();
                     }
                 }
             }
-        }
-    }
-
-    Connections {
-        target: AccountStatusControllerAccess
-
-        onAccountBlocked: {
-            content.state = content.stateBlocked;
-        }
-    }
-
-    Connections {
-        target: LogoutControllerAccess
-
-        onLogout: {
-            content.state = content.stateLoggedOut;
         }
     }
 }

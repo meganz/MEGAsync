@@ -42,9 +42,27 @@ Item {
                 MegaImages.SvgImage {
                     id: typeImage
 
-                    source: Images.shield_account_free
+                    source: {
+                        switch(accountInfo.type) {
+                            case AccountInfoData.ACCOUNT_TYPE_FREE:
+                                return Images.shield_account_free;
+                            case AccountInfoData.ACCOUNT_TYPE_PROI:
+                                return Images.shield_account_proI;
+                            case AccountInfoData.ACCOUNT_TYPE_PROII:
+                                return Images.shield_account_proII;
+                            case AccountInfoData.ACCOUNT_TYPE_PROIII:
+                                return Images.shield_account_proIII;
+                            case AccountInfoData.ACCOUNT_TYPE_LITE:
+                                return Images.shield_account_lite;
+                            case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
+                                return Images.building;
+                            case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
+                                return Images.infinity;
+                            default:
+                                break;
+                        }
+                    }
                     sourceSize: Qt.size(16, 16)
-                    visible: false
                 }
 
                 MegaTexts.Text {
@@ -53,12 +71,24 @@ Item {
                     Layout.alignment: Qt.AlignLeft
                     font.weight: Font.DemiBold
                     font.pixelSize: MegaTexts.Text.Size.Medium
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            Qt.openUrlExternally(Links.pricing);
+                    text: {
+                        switch(accountInfo.type) {
+                            case AccountInfoData.ACCOUNT_TYPE_FREE:
+                                return OnboardingStrings.accountTypeFree;
+                            case AccountInfoData.ACCOUNT_TYPE_PROI:
+                                return OnboardingStrings.accountTypeProI;
+                            case AccountInfoData.ACCOUNT_TYPE_PROII:
+                                return OnboardingStrings.accountTypeProII;
+                            case AccountInfoData.ACCOUNT_TYPE_PROIII:
+                                return OnboardingStrings.accountTypeProIII;
+                            case AccountInfoData.ACCOUNT_TYPE_LITE:
+                                return OnboardingStrings.accountTypeLite;
+                            case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
+                                return OnboardingStrings.accountTypeBusiness;
+                            case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
+                                return OnboardingStrings.accountTypeProFlexi;
+                            default:
+                                break;
                         }
                     }
                 }
@@ -70,61 +100,38 @@ Item {
                 Layout.rightMargin: 24
 
                 MegaTexts.Text {
-                    text: OnboardingStrings.availableStorage
+                    text: accountInfo.newUser
+                          ? OnboardingStrings.availableStorage
+                          : OnboardingStrings.storageSpace
                     font.weight: Font.DemiBold
+                }
+
+                MegaTexts.Text {
+                    font.weight: Font.DemiBold
+                    text: accountInfo.usedStorage
+                    visible: !accountInfo.newUser
+                }
+
+                MegaTexts.Text {
+                    font.weight: Font.DemiBold
+                    color: Styles.textSecondary
+                    text: "/"
+                    visible: !accountInfo.newUser
                 }
 
                 MegaTexts.Text {
                     id: totalStorage
 
-                    font.weight: Font.ExtraLight
+                    font.weight: Font.DemiBold
+                    color: Styles.textSecondary
+                    text: accountInfo.totalStorage
                 }
-
             }
 
         }
 
         AccountInfoData {
             id: accountInfo
-
-            onAccountDetailsChanged: {
-                switch(accountInfo.type) {
-                    case AccountInfoData.ACCOUNT_TYPE_FREE:
-                        typeImage.source = Images.shield_account_free;
-                        typeText.text = OnboardingStrings.accountTypeFree;
-                        break;
-                    case AccountInfoData.ACCOUNT_TYPE_PROI:
-                        typeImage.source = Images.shield_account_proI;
-                        typeText.text = OnboardingStrings.accountTypeProI;
-                        break;
-                    case AccountInfoData.ACCOUNT_TYPE_PROII:
-                        typeImage.source = Images.shield_account_proII;
-                        typeText.text = OnboardingStrings.accountTypeProII;
-                        break;
-                    case AccountInfoData.ACCOUNT_TYPE_PROIII:
-                        typeImage.source = Images.shield_account_proIII;
-                        typeText.text = OnboardingStrings.accountTypeProIII;
-                        break;
-                    case AccountInfoData.ACCOUNT_TYPE_LITE:
-                        typeImage.source = Images.shield_account_lite;
-                        typeText.text = OnboardingStrings.accountTypeLite;
-                        break;
-                    case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
-                        typeImage.source = Images.building;
-                        typeText.text = OnboardingStrings.accountTypeBusiness;
-                        break;
-                    case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
-                        typeImage.source = Images.infinity;
-                        typeText.text = OnboardingStrings.accountTypeProFlexi;
-                        break;
-                    default:
-                        break;
-                }
-
-                typeImage.visible = true;
-                totalStorage.text = accountInfo.totalStorage;
-                enabled = true;
-            }
 
             Component.onDestruction: {
                 accountInfo.aboutToBeDestroyed();

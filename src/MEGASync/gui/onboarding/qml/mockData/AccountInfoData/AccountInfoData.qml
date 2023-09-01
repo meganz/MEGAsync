@@ -13,6 +13,7 @@ Item {
     }
 
     property int type: AccountInfoData.AccountType.ACCOUNT_TYPE_PROII
+    property string usedStorage: "24.3 MB"
     property string totalStorage: "25 GB"
 
     signal accountDetailsChanged
@@ -24,6 +25,7 @@ Item {
     Component.onCompleted: {
         // Simulate the arrival of the API request
         type = AccountInfoData.ACCOUNT_TYPE_LITE;
+        usedStorage = "107.56 MB";
         totalStorage = "30 GB";
         accountDetailsChanged();
     }

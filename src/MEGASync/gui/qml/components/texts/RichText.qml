@@ -38,10 +38,9 @@ MegaTexts.Text {
     Component.onCompleted: {
         control.text = control.text.replace("[b]","<b>")
         control.text = control.text.replace("[/b]","</b>")
-        control.text = control.text.replace("[a]","<b>
-                                            <a style=\"text-decoration:none\"
+        control.text = control.text.replace("[a]", "<a style=\"text-decoration:none\"
                                             style=\"color:" + urlColor + ";\" href=\"" + url + "\">")
-        control.text = control.text.replace("[/a]","</a></b></font>")
+        control.text = control.text.replace("[/a]","</a>")
     }
 
     onLinkActivated: {

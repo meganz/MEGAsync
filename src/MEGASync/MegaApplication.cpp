@@ -2331,6 +2331,15 @@ void MegaApplication::raiseInfoDialog()
 {
     if((preferences && preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK) || mStatusController->isAccountBlocked())
     {
+        if (!preferences->logged())
+        {
+            openOnboardingDialog();
+        }
+        else if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+            DialogOpener::showDialog(dialog->getDialog());
+            dialog->getDialog()->raise();
+        }
         openGuestDialog();
         return;
     }
@@ -5350,7 +5359,7 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = !getRootNode() || !preferences->logged() || mStatusController->isAccountBlocked();
+        proxyOnly = !mLoginController->isLoginFinished() || mStatusController->isAccountBlocked();
         megaApi->retryPendingConnections();
     }
 

@@ -20,7 +20,7 @@ public:
     Q_INVOKABLE void onPreferencesClicked();
     Q_INVOKABLE void onExitClicked();
     Q_INVOKABLE void onVerifyEmailClicked();
-    Q_INVOKABLE void onLogouClicked();
+    Q_INVOKABLE void onLogoutClicked();
 };
 
 #endif // GUESTCONTENT_H

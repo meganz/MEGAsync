@@ -20,6 +20,7 @@ Item {
     property double progressValue: 15.0
     property string title: ""
     property string description: ""
+    property string descriptionUrl: ""
     property int spacing: 24
 
     onShowProgressBarChanged: {
@@ -139,10 +140,13 @@ Item {
     Component {
         id: descriptionComponent
 
-        MegaTexts.SecondaryText {
+        MegaTexts.RichText {
             id: titleText
 
+            color: Styles.textSecondary;
             text: description
+            url: descriptionUrl
+            manageMouse: true
             font.pixelSize: MegaTexts.Text.Size.Small
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

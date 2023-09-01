@@ -13,8 +13,8 @@ import Onboard 1.0
 ConfirmCloseDialog {
     id: dialog
 
-    titleText: OnboardingStrings.cancelLoginTitle
-    bodyText: OnboardingStrings.cancelLoginBodyText
-    cancelButtonText: OnboardingStrings.cancelLoginSecondaryButton
-    acceptButtonText: OnboardingStrings.cancelLoginPrimaryButton
+    titleText: OnboardingStrings.cancelAccountCreationTitle
+    bodyText: OnboardingStrings.cancelAccountCreationBody
+    cancelButtonText: OnboardingStrings.cancelAccountCancelButton
+    acceptButtonText: OnboardingStrings.cancelAccountAcceptButton
 }

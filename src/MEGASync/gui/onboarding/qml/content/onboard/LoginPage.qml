@@ -107,11 +107,18 @@ LoginPageForm {
         State {
             name: stateInProgressCreatingAccount
             extend: stateInProgress
+            PropertyChanges {
+                target: onboardingWindow
+                loggingIn: false;
+            }
         },
         State {
             name: stateInProgressWaitingEmailConfirm
             extend: stateInProgress
-
+            PropertyChanges {
+                target: onboardingWindow
+                loggingIn: false;
+            }
         },
         State {
             name: stateFetchNodesFinished
@@ -153,23 +160,21 @@ LoginPageForm {
     }
 
     loginButton.onClicked: {
-        var error = false;
-
-        var valid = email.valid();
-        if(!valid) {
-            error = true;
-            LoginControllerAccess.loginError = ApiEnums.API_EINTERNAL;
-            LoginControllerAccess.loginErrorMsg = OnboardingStrings.errorValidEmail;
+        var emailValid = email.valid();
+        LoginControllerAccess.emailError = !emailValid;
+        var emailText = "";
+        if(!emailValid) {
+            emailText = email.text.length === 0
+                        ? OnboardingStrings.errorEmptyEmail
+                        : OnboardingStrings.errorValidEmail;
         }
+        LoginControllerAccess.emailErrorMsg = emailText;
 
-        valid = (password.text.length !== 0);
-        if(!valid) {
-            error = true;
-            LoginControllerAccess.loginError = ApiEnums.API_EINTERNAL;
-            LoginControllerAccess.loginErrorMsg = OnboardingStrings.errorEmptyPassword;
-        }
+        var passwordValid = password.text.length > 0;
+        LoginControllerAccess.passwordError = !passwordValid;
+        LoginControllerAccess.passwordErrorMsg = passwordValid ? "" : OnboardingStrings.errorEmptyPassword;
 
-        if(error) {
+        if(!emailValid || !passwordValid) {
             return;
         }
 
@@ -184,8 +189,11 @@ LoginPageForm {
     Connections {
         target: AccountStatusControllerAccess
 
-        onAccountBlocked: {
-            onboardingWindow.forceClose();
+        onBlockedStateChanged: {
+            if(blockState >= ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_SMS)
+            {
+                onboardingWindow.forceClose();
+            }
         }
     }
 
@@ -197,5 +205,14 @@ LoginPageForm {
             cancelLogin.close();
             onboardingWindow.forceClose();
         }
+    }
+
+    Component.onDestruction:
+    {
+        LoginControllerAccess.emailError = false;
+        LoginControllerAccess.emailErrorMsg = "";
+        LoginControllerAccess.passwordError = false;
+        LoginControllerAccess.passwordErrorMsg = "";
+        LoginControllerAccess.email = "";
     }
 }

@@ -9,15 +9,15 @@ QtObject {
     //   Sorted alphabetically
     // !!!!!!!!!!!!!!!!!!!!!!!!!
 
-    readonly property var menuAboutMEGA: qsTr("About MEGA")
-    readonly property var menuExit: OS.isMac() ? qsTr("Quit") : qsTr("Exit")
-    readonly property var menuSettings: qsTr("Settings")
-    readonly property var logInOrSignUp: qsTr("Log in or sign up to MEGA")
-    readonly property var accountTempLocked: qsTr("Account temporarily locked")
-    readonly property var accountTempLockedSMS: qsTr("Your account has been temporarily locked due to a potential breach of our Terms of Service. To unlock your account, verify your phone number.")
-    readonly property var accountTempLockedEmail: qsTr("Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we've sent you.")
-    readonly property var resendEmail: qsTr("Resend email")
-    readonly property var logOut: qsTr("Log out")
-    readonly property var verifyNow: qsTr("Verify now")
+    readonly property string menuAboutMEGA: qsTr("About MEGA")
+    readonly property string menuExit: OS.isMac() ? qsTr("Quit") : qsTr("Exit")
+    readonly property string menuSettings: qsTr("Settings")
+    readonly property string logInOrSignUp: qsTr("Log in or sign up to MEGA")
+    readonly property string accountTempLocked: qsTr("Account temporarily locked")
+    readonly property string accountTempLockedSMS: qsTr("Your account has been temporarily locked due to a potential breach of our [a]Terms of Service[/a]. To unlock your account, verify your phone number.")
+    readonly property string accountTempLockedEmail: qsTr("Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we've sent you.")
+    readonly property string resendEmail: qsTr("Resend email")
+    readonly property string logOut: qsTr("Log out")
+    readonly property string verifyNow: qsTr("Verify now")
 
 }

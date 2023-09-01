@@ -15,10 +15,6 @@ ConfirmEmailPageForm {
         LoginControllerAccess.state = LoginController.CHANGING_REGISTER_EMAIL;
     }
 
-    cancelAccount.onClicked: {
-        LoginControllerAccess.cancelCreateAccount();
-    }
-
     email: LoginControllerAccess.email
 
     Connections {

@@ -9,8 +9,10 @@ class AccountInfoData : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
 
-    Q_PROPERTY(AccountType type MEMBER mType)
-    Q_PROPERTY(QString totalStorage MEMBER mTotalStorage)
+    Q_PROPERTY(AccountType type MEMBER mType NOTIFY accountDetailsChanged)
+    Q_PROPERTY(QString totalStorage MEMBER mTotalStorage NOTIFY accountDetailsChanged)
+    Q_PROPERTY(QString usedStorage MEMBER mUsedStorage NOTIFY accountDetailsChanged)
+    Q_PROPERTY(bool newUser MEMBER mNewUser NOTIFY accountDetailsChanged)
 
 public:
     enum AccountType {
@@ -43,6 +45,10 @@ private:
 
     AccountType mType;
     QString mTotalStorage;
+    QString mUsedStorage;
+    bool mNewUser;
+
+    static const long long INITIAL_SPACE;
 
 };
 
