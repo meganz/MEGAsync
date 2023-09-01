@@ -5,7 +5,6 @@
 #include "Platform.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
-#include "onboarding/Onboarding.h"
 #include "mega/types.h"
 
 #include <QQmlContext>
@@ -17,10 +16,12 @@ LoginController::LoginController(QObject *parent)
       , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
       , mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
       , mFirstTime(false)
+      , mEmailError(false)
+      , mEmailErrorMsg(QString())
+      , mPasswordError(false)
+      , mPasswordErrorMsg(QString())
       , mProgress(0)
       , mState(LOGGED_OUT)
-      , mLoginError(mega::MegaError::API_OK)
-      , mLoginErrorMsg(QString())
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
@@ -86,11 +87,6 @@ void LoginController::cancelCreateAccount() const
     mMegaApi->cancelCreateAccount();
 }
 
-void LoginController::guestWindowButtonClicked()
-{
-    emit guestDialogButtonClicked();
-}
-
 double LoginController::getProgress() const
 {
     return mProgress;
@@ -110,31 +106,59 @@ void LoginController::setState(State state)
     }
 }
 
-int LoginController::getLoginError() const
+bool LoginController::getEmailError() const
 {
-    return mLoginError;
+    return mEmailError;
 }
 
-QString LoginController::getLoginErrorMsg() const
+QString LoginController::getEmailErrorMsg() const
 {
-    return mLoginErrorMsg;
+    return mEmailErrorMsg;
 }
 
-void LoginController::setLoginError(int error)
+void LoginController::setEmailError(bool error)
 {
-    if(error != mLoginError)
+    if(error != mEmailError)
     {
-        mLoginError = error;
-        emit loginErrorChanged();
+        mEmailError = error;
+        emit emailErrorChanged();
     }
 }
 
-void LoginController::setLoginErrorMsg(const QString &msg)
+void LoginController::setEmailErrorMsg(const QString &msg)
 {
-    if(msg != mLoginErrorMsg)
+    if(msg != mEmailErrorMsg)
     {
-        mLoginErrorMsg = msg;
-        emit loginErrorMsgChanged();
+        mEmailErrorMsg = msg;
+        emit emailErrorMsgChanged();
+    }
+}
+
+bool LoginController::getPasswordError() const
+{
+    return mPasswordError;
+}
+
+QString LoginController::getPasswordErrorMsg() const
+{
+    return mPasswordErrorMsg;
+}
+
+void LoginController::setPasswordError(bool error)
+{
+    if(error != mPasswordError)
+    {
+        mPasswordError = error;
+        emit passwordErrorChanged();
+    }
+}
+
+void LoginController::setPasswordErrorMsg(const QString &msg)
+{
+    if(msg != mPasswordErrorMsg)
+    {
+        mPasswordErrorMsg = msg;
+        emit passwordErrorMsgChanged();
     }
 }
 
@@ -150,6 +174,11 @@ void LoginController::setCreateAccountErrorMsg(const QString &msg)
         mCreateAccountErrorMsg = msg;
         emit createAccountErrorMsgChanged();
     }
+}
+
+bool LoginController::isLoginFinished() const
+{
+    return getState() >= LoginController::State::FETCH_NODES_FINISHED;
 }
 
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -243,7 +272,6 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     case mega::MegaRequest::TYPE_LOGIN:
     {
         mConnectivityTimer->start();
-        setLoginError(mega::MegaError::API_OK);
         if(request->getText())
         {
             setState(LOGGING_IN_2FA_VALIDATING);
@@ -321,14 +349,14 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         {
             case mega::MegaError::API_EINCOMPLETE:
             {
-                mLoginErrorMsg = tr("Please check your e-mail and click the link to confirm your account.");
+                setPasswordErrorMsg(tr("Please check your e-mail and click the link to confirm your account."));
                 break;
             }
             case mega::MegaError::API_ETOOMANY:
             {
-                mLoginErrorMsg = tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
-                               .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
-                               .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")));
+                setPasswordErrorMsg(tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                                    .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                                    .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm"))));
                 break;
             }
             case mega::MegaError::API_EMFAREQUIRED:
@@ -340,23 +368,23 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
             }
             case mega::MegaError::API_ENOENT:
             {
-                mLoginErrorMsg = tr("Invalid email or password. Please try again.");
+                setPasswordErrorMsg(tr("Invalid email or password. Please try again."));
                 break;
             }
             default:
             {
-                mLoginErrorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
+                setPasswordErrorMsg(QCoreApplication::translate("MegaError", e->getErrorString()));
                 break;
             }
         }
     }
 
     MegaSyncApp->onGlobalSyncStateChanged(mMegaApi);
-    if(mLoginError != e->getErrorCode() && e->getErrorCode() != mega::MegaError::API_EMFAREQUIRED)
+
+    if(e->getErrorCode() != mega::MegaError::API_EMFAREQUIRED)
     {
-        mLoginError = e->getErrorCode();
-        emit loginErrorMsgChanged();
-        emit loginErrorChanged();
+        setEmailError(e->getErrorCode() != mega::MegaError::API_OK);
+        setPasswordError(e->getErrorCode() != mega::MegaError::API_OK);
     }
 }
 
@@ -384,7 +412,7 @@ void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaEr
     else
     {
         setState(CREATING_ACCOUNT_FAILED);
-        setCreateAccountErrorMsg(tr("User already exist"));
+        setCreateAccountErrorMsg(getRepeatedEmailMsg());
     }
 }
 
@@ -402,12 +430,19 @@ void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::
 
 void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError *e)
 {
-    mEmail = QString::fromUtf8(request->getEmail());
-    EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
-    credentials.email = mEmail;
-    mPreferences->setEphemeralCredentials(credentials);
-    emit emailChanged();
-    emit changeRegistrationEmailFinished(e->getErrorCode() == mega::MegaError::API_OK);
+    if(e->getErrorCode() != mega::MegaError::API_OK)
+    {
+        emit changeRegistrationEmailFinished(false, getRepeatedEmailMsg());
+    }
+    else
+    {
+        mEmail = QString::fromUtf8(request->getEmail());
+        EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
+        credentials.email = mEmail;
+        mPreferences->setEphemeralCredentials(credentials);
+        emit emailChanged();
+        emit changeRegistrationEmailFinished(true);
+    }
 }
 
 void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *e)
@@ -461,13 +496,14 @@ void LoginController::onAccountCreationCancel(mega::MegaRequest *request, mega::
 {
     Q_UNUSED(request)
     Q_UNUSED(e)
+    mMegaApi->logout(false, nullptr); //megaapi->cancelCreateAccount doesn´t invalidate the ephemeral session.
     mPreferences->removeEphemeralCredentials();
     mEmail.clear();
     mPassword.clear();
     mName.clear();
     mLastName.clear();
     emit emailChanged();
-    setState(LOGGED_OUT);
+    emit accountCreationCancelled();
 }
 
 void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
@@ -475,7 +511,6 @@ void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
     Q_UNUSED(e)
     Q_UNUSED(request)
 
-    emit logout();
     setState(LOGGED_OUT);
 }
 
@@ -662,6 +697,11 @@ void LoginController::loadSyncExclusionRules(const QString& email)
     {
         mPreferences->leaveUser();
     }
+}
+
+QString LoginController::getRepeatedEmailMsg()
+{
+    return tr("Another user with this email address already exists. Try again.");
 }
 
 long long LoginController::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)
@@ -864,7 +904,7 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
 
             QMegaMessageBox::critical(msgInfo);
         }
-        else if (paramType != mega::MegaError::API_EACCESS)
+        else if (paramType != mega::MegaError::API_EACCESS && paramType != mega::MegaError::API_EBLOCKED)
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = tr("MEGAsync");

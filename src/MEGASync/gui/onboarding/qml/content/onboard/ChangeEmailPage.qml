@@ -30,12 +30,12 @@ ChangeEmailPageForm {
     Connections {
         target: LoginControllerAccess
 
-        onChangeRegistrationEmailFinished: (success) => {
+        onChangeRegistrationEmailFinished: (success, errorMsg) => {
             if(success) {
                 LoginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
             } else {
                 emailTextField.error = true;
-                emailTextField.hint.text = OnboardingStrings.errorEmailAlreadyExist;
+                emailTextField.hint.text = errorMsg;
                 emailTextField.hint.visible = true;
             }
         }

@@ -39,6 +39,11 @@ void Syncs::addSync(const QString &localPath, mega::MegaHandle remoteHandle)
 
     // If OK, check that we can sync the selected remote folder
     std::shared_ptr<mega::MegaNode> node (MegaSyncApp->getMegaApi()->getNodeByHandle(remoteHandle));
+    if(node == nullptr)
+    {
+        emit cantSync(tr("Folder can't be synced as it can't be located. It may have been moved or deleted, or you might not have access."), false);
+        return;
+    }
 
     if (syncability != SyncController::CANT_SYNC)
     {

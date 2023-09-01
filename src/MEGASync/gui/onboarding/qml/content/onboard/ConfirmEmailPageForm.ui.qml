@@ -20,7 +20,6 @@ StackViewPage {
 
     property alias email: email.text
     property alias changeEmailLinkText: changeEmailLinkText
-    property alias cancelAccount: cancelAccount
 
     ColumnLayout {
         id: layout
@@ -48,7 +47,7 @@ StackViewPage {
         }
 
         MegaTexts.RichText {
-            Layout.fillWidth: true
+            Layout.preferredWidth: layout.width
             text: OnboardingStrings.confirmEmailBodyText2
             font.pixelSize: MegaTexts.Text.Size.Medium
             url: Links.contact
@@ -57,20 +56,27 @@ StackViewPage {
 
         RowLayout {
             spacing: 9
+            Layout.preferredWidth: layout.width
 
             MegaImages.SvgImage {
+                id: mailImage
+
                 source: Images.mail
                 sourceSize: Qt.size(24, 24)
-                Layout.alignment: Qt.AlignVCenter
+                Layout.alignment: Qt.AlignTop
                 color: Styles.textPrimary
             }
 
             MegaTexts.Text {
                 id: email
 
-                Layout.alignment: Qt.AlignVCenter
+                Layout.preferredWidth: parent.width - mailImage.width - parent.spacing
+                Layout.topMargin: 3
                 font.pixelSize: MegaTexts.Text.Size.Medium
                 font.bold: true
+                wrapMode: Text.Wrap
+                lineHeightMode: Text.FixedHeight
+                lineHeight: 20
             }
         }
 
@@ -84,17 +90,5 @@ StackViewPage {
             color: Styles.textPrimary
             manageMouse: true
         }
-    }
-
-    MegaButtons.OutlineButton {
-        id: cancelAccount
-
-        anchors {
-            left: parent.left
-            bottom: parent.bottom
-            leftMargin: -cancelAccount.sizes.focusBorderWidth
-            bottomMargin: 29
-        }
-        text: OnboardingStrings.cancelAccount
     }
 }

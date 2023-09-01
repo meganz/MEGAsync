@@ -91,9 +91,17 @@ Rectangle {
         id: cancelLogin
 
         visible: false
-        modality: Qt.WindowModal
         onAccepted: {
             LoginControllerAccess.cancelLogin();
+        }
+    }
+
+    CancelCreateAccount {
+        id: cancelCreateAccount
+
+        visible: false
+        onAccepted: {
+            LoginControllerAccess.cancelCreateAccount();
         }
     }
 
@@ -101,6 +109,10 @@ Rectangle {
         target: onboardingWindow
         onClosingButLoggingIn: {
             cancelLogin.visible = true;
+        }
+
+        onClosingButCreatingAccount: {
+            cancelCreateAccount.visible = true;
         }
     }
 
@@ -203,9 +215,9 @@ Rectangle {
         Connections {
             target: LoginControllerAccess
 
-            onGuestDialogButtonClicked: {
-                onboardingWindow.show();
-                onboardingWindow.raise();
+            onAccountCreationCancelled: {
+                cancelCreateAccount.close();
+                onboardingWindow.forceClose();
             }
         }
     }

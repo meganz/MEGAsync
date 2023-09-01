@@ -47,7 +47,7 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
                 Preferences::instance()->setBlockedState(blockState);
             }
 
-            emit accountBlocked(static_cast<int>(event->getNumber()));
+            emit blockedStateChanged(static_cast<int>(event->getNumber()));
             break;
         }
         case mega::MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
@@ -96,7 +96,7 @@ void AccountStatusController::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer blocked").toUtf8().constData());
 
             //in any case we reflect the change in the InfoDialog
-            emit accountBlocked(blockState);
+            emit blockedStateChanged(blockState);
 
             if(auto lockDialog = DialogOpener::findDialog<VerifyLockMessage>())
             {

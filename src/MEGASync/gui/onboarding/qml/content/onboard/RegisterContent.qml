@@ -205,4 +205,8 @@ Column {
         url: Links.terms
         text: OnboardingStrings.agreeTerms
     }
+
+    Component.onDestruction: {
+        LoginControllerAccess.createAccountErrorMsg ="";
+    }
 }

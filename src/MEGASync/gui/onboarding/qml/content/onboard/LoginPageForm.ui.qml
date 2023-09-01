@@ -46,7 +46,7 @@ StackViewPage {
         MegaTexts.RichText {
             id: confirmText
 
-            visible: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED;
+            visible: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Medium
@@ -61,7 +61,9 @@ StackViewPage {
             anchors.leftMargin: -email.sizes.focusBorderWidth
             title: OnboardingStrings.email
             text: LoginControllerAccess.email
-            error: LoginControllerAccess.loginError !== ApiEnums.API_OK;
+            error: LoginControllerAccess.emailError
+            hint.text: LoginControllerAccess.emailErrorMsg
+            hint.visible: LoginControllerAccess.emailErrorMsg.length !== 0
         }
 
         MegaTextFields.PasswordTextField {
@@ -72,9 +74,9 @@ StackViewPage {
             anchors.leftMargin: -password.sizes.focusBorderWidth
             title: OnboardingStrings.password
             hint.icon: Images.alertTriangle
-            error: LoginControllerAccess.loginError !== ApiEnums.API_OK ;
-            hint.text: LoginControllerAccess.loginErrorMsg;
-            hint.visible: LoginControllerAccess.loginErrorMsg.length !== 0;
+            error: LoginControllerAccess.passwordError
+            hint.text: LoginControllerAccess.passwordErrorMsg
+            hint.visible: LoginControllerAccess.passwordErrorMsg.length !== 0
         }
 
         MegaButtons.HelpButton {

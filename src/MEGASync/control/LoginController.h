@@ -17,8 +17,10 @@ class LoginController : public QObject, public mega::MegaRequestListener, public
     Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
     Q_PROPERTY(double progress MEMBER mProgress READ getProgress NOTIFY progressChanged)
     Q_PROPERTY(State state MEMBER mState READ getState  WRITE setState NOTIFY stateChanged)
-    Q_PROPERTY(int loginError MEMBER mLoginError READ getLoginError WRITE setLoginError NOTIFY loginErrorChanged)
-    Q_PROPERTY(QString loginErrorMsg MEMBER mLoginErrorMsg READ getLoginErrorMsg WRITE setLoginErrorMsg NOTIFY loginErrorMsgChanged)
+    Q_PROPERTY(bool emailError MEMBER mEmailError READ getEmailError WRITE setEmailError NOTIFY emailErrorChanged)
+    Q_PROPERTY(QString emailErrorMsg MEMBER mEmailErrorMsg READ getEmailErrorMsg WRITE setEmailErrorMsg NOTIFY emailErrorMsgChanged)
+    Q_PROPERTY(bool passwordError MEMBER mPasswordError READ getPasswordError WRITE setPasswordError NOTIFY passwordErrorChanged)
+    Q_PROPERTY(QString passwordErrorMsg MEMBER mPasswordErrorMsg READ getPasswordErrorMsg WRITE setPasswordErrorMsg NOTIFY passwordErrorMsgChanged)
     Q_PROPERTY(QString createAccountErrorMsg MEMBER mCreateAccountErrorMsg
                    READ getCreateAccountErrorMsg WRITE setCreateAccountErrorMsg NOTIFY createAccountErrorMsgChanged)
 
@@ -52,16 +54,20 @@ public:
     Q_INVOKABLE QString getEmail() const;
     Q_INVOKABLE void cancelLogin() const;
     Q_INVOKABLE void cancelCreateAccount() const;
-    Q_INVOKABLE void guestWindowButtonClicked();
     Q_INVOKABLE double getProgress() const;
     Q_INVOKABLE State getState() const;
     Q_INVOKABLE void setState(State state);
-    Q_INVOKABLE int getLoginError() const;
-    Q_INVOKABLE QString getLoginErrorMsg() const;
-    Q_INVOKABLE void setLoginError(int error);
-    Q_INVOKABLE void setLoginErrorMsg(const QString& msg);
+    Q_INVOKABLE bool getEmailError() const;
+    Q_INVOKABLE QString getEmailErrorMsg() const;
+    Q_INVOKABLE void setEmailError(bool error);
+    Q_INVOKABLE void setEmailErrorMsg(const QString& msg);
+    Q_INVOKABLE bool getPasswordError() const;
+    Q_INVOKABLE QString getPasswordErrorMsg() const;
+    Q_INVOKABLE void setPasswordError(bool error);
+    Q_INVOKABLE void setPasswordErrorMsg(const QString& msg);
     Q_INVOKABLE QString getCreateAccountErrorMsg() const;
     Q_INVOKABLE void setCreateAccountErrorMsg(const QString& msg);
+    bool isLoginFinished() const;
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request) override;
@@ -74,15 +80,16 @@ public:
 signals:
 
     void emailChanged();
-    void changeRegistrationEmailFinished(bool success);
+    void changeRegistrationEmailFinished(bool success, const QString& errorMsg = QString());
     void emailConfirmed();
-    void logout();
     void progressChanged();
     void stateChanged();
-    void loginErrorMsgChanged();
-    void loginErrorChanged();
-    void guestDialogButtonClicked();
+    void emailErrorMsgChanged();
+    void emailErrorChanged();
+    void passwordErrorMsgChanged();
+    void passwordErrorChanged();
     void createAccountErrorMsgChanged();
+    void accountCreationCancelled();
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);
@@ -108,14 +115,17 @@ private:
     long long computeExclusionSizeLimit(const long long sizeLimitValue, const int unit);
     void migrateSyncConfToSdk(const QString& email);
     void loadSyncExclusionRules(const QString& email);
+    QString getRepeatedEmailMsg();
 
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 
     QTimer *mConnectivityTimer;
     bool mFirstTime;
-    int mLoginError;
-    QString mLoginErrorMsg;
+    bool mEmailError;
+    QString mEmailErrorMsg;
+    bool mPasswordError;
+    QString mPasswordErrorMsg;
     QString mCreateAccountErrorMsg;
     double mProgress;
     State mState;

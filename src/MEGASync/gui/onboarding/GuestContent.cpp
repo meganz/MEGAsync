@@ -38,7 +38,7 @@ void GuestContent::onVerifyEmailClicked()
     MegaSyncApp->getMegaApi()->resendVerificationEmail();
 }
 
-void GuestContent::onLogouClicked()
+void GuestContent::onLogoutClicked()
 {
     MegaSyncApp->unlink();
 }

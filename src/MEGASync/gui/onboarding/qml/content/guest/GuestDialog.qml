@@ -25,11 +25,6 @@ GuestQmlDialog {
     onVisibleChanged:  {
         if(visible) {
             AccountStatusControllerAccess.whyAmIBlocked();
-            if(LoginControllerAccess.state !== LoginController.SIGN_UP
-                    && LoginControllerAccess.state !== LoginController.LOGGED_OUT)
-            {
-                LoginControllerAccess.guestWindowButtonClicked();
-            }
         }
     }
 }

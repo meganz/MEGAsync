@@ -436,6 +436,10 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
             break;
         }
         case SyncError::REMOTE_NODE_INSIDE_RUBBISH:
+        {
+            message = tr("Folder can't be synced as it's in the MEGA Rubbish bin.");
+            break;
+        }
         case SyncError::INVALID_REMOTE_TYPE:
         {
             message = tr("Invalid remote path.");

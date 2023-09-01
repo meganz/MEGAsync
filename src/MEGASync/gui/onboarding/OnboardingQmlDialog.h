@@ -20,6 +20,7 @@ public:
 signals:
     void loggingInChanged();
     void closingButLoggingIn();
+    void closingButCreatingAccount();
 
 protected:
     bool event(QEvent *) override;
@@ -27,7 +28,7 @@ protected:
 private:
     bool mLoggingIn;
     bool mCloseClicked;
-
+    bool mForceClose;
 };
 
 #endif // ONBOARDINGQMLDIALOG_H

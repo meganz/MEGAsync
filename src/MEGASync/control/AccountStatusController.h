@@ -12,6 +12,8 @@
 class AccountStatusController : public QObject, public mega::MegaListener
 {
     Q_OBJECT
+    Q_PROPERTY(int blockedState MEMBER mBlockedState READ getBlockedState NOTIFY blockedStateChanged FINAL)
+
 public:
     AccountStatusController(QObject* parent = nullptr);
     virtual ~AccountStatusController();
@@ -20,14 +22,14 @@ public:
     void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
 
-    int getBlockedState() const;
     void loggedIn();
     void reset();
+    Q_INVOKABLE int getBlockedState() const;
     Q_INVOKABLE bool isAccountBlocked() const;
     Q_INVOKABLE void whyAmIBlocked(bool force = false);
 
 signals:
-    void accountBlocked(int blocked);
+    void blockedStateChanged(int blockState);
 
 private:
     void showVerifyAccountInfo();

@@ -14,6 +14,7 @@ import Onboard.Syncs_types.Backups 1.0
 
 // C++
 import BackupsProxyModel 1.0
+import LoginController 1.0
 
 Rectangle {
     id: syncsPanel
@@ -168,6 +169,14 @@ Rectangle {
             id: finalPage
 
             ResumePage {}
+        }
+    }
+
+    Connections {
+        target: LogoutControllerAccess
+
+        onLogout: {
+            onboardingWindow.forceClose();
         }
     }
 }

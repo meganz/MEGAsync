@@ -3,12 +3,16 @@
 
 using namespace mega;
 
+const long long AccountInfoData::INITIAL_SPACE = 1000000;
+
 AccountInfoData::AccountInfoData(QObject *parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
     , mType(AccountType::ACCOUNT_TYPE_FREE)
     , mTotalStorage(QString())
+    , mUsedStorage(QString())
+    , mNewUser(false)
 {
     requestAccountInfoData();
 }
@@ -36,9 +40,14 @@ void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
                 MegaAccountDetails* accountDetails = request->getMegaAccountDetails();
                 mType = static_cast<AccountInfoData::AccountType>(accountDetails->getProLevel());
                 mTotalStorage = Utilities::getSizeString(accountDetails->getStorageMax());
+                mUsedStorage = Utilities::getSizeString(accountDetails->getStorageUsed());
+                mNewUser = accountDetails->getStorageUsed() < INITIAL_SPACE
+                            && Preferences::instance()->cloudDriveFiles() <= 1
+                            && SyncInfo::instance()->getNumSyncedFolders(SyncInfo::AllHandledSyncTypes) == 0;
                 emit accountDetailsChanged();
             } else {
-                qDebug() << "AccountInfoData::onRequestFinish -> TYPE_ACCOUNT_DETAILS Error code -> " << error->getErrorCode();
+                qDebug() << "AccountInfoData::onRequestFinish -> TYPE_ACCOUNT_DETAILS Error code -> "
+                         << error->getErrorCode();
             }
         }
     }

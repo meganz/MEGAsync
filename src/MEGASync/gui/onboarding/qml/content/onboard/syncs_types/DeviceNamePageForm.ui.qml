@@ -48,6 +48,7 @@ SyncsPage {
             title: OnboardingStrings.deviceName
             textField.text: deviceName.name
             sizes: MegaTextFields.LargeSizes {}
+            hint.icon: Images.alertTriangle
         }
     }
 }
