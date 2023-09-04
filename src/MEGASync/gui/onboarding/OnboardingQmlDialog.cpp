@@ -34,7 +34,10 @@ void OnboardingQmlDialog::setLoggingIn(bool value)
 void OnboardingQmlDialog::forceClose()
 {
     mForceClose = true;
-    close();
+    if(!close())
+    {
+        hide();
+    }
 }
 
 bool OnboardingQmlDialog::event(QEvent *evnt)

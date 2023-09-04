@@ -293,9 +293,7 @@ Rectangle {
                     return "";
                 }
                 description: getDescription();
-                onDescriptionChanged: {
-                    console.log("PUTA MIERDA::::" + description);
-                }
+
                 showProgressBar: true
                 leftButton {
                     text: OnboardingStrings.signUp
