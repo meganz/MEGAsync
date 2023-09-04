@@ -18,7 +18,7 @@ SelectiveSyncPageForm {
             localFolderChooser.folderField.hint.visible = false;
             localFolderChooser.folderField.error = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncsCpp.addSync(localFolderChooser.getSyncData(), remoteFolderChooser.getSyncData());
+            syncsCpp.addSync(localFolderChooser.localTest, remoteFolderChooser.remoteTest);
         }
     }
 

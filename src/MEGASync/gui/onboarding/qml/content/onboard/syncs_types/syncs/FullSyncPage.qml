@@ -16,7 +16,7 @@ FullSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncsCpp.addSync(localFolderChooser.getSyncData());
+            syncsCpp.addSync(localFolderChooser.localTest);
         }
     }
 

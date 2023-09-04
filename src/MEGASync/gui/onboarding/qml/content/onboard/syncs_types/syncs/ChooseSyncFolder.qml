@@ -16,21 +16,22 @@ import ChooseRemoteFolder 1.0
 
 Rectangle {
 
+    property alias localTest: localFolderChooser
+    property alias remoteTest: remoteFolderChooser
+
     property bool local: true
     property url selectedUrl: selectedUrl
     property double selectedNode: selectedNode
-    property bool isValid: false
+    property bool isValid: true
     property alias folderField: folderField
 
     readonly property int textEditMargin: 2
 
-    function getSyncData() {
-        return local ? localFolderChooser.getFolder() : remoteFolderChooser.getHandle();
-    }
-
-    function folderSelectionChanged(folder) {
+    function folderSelectionChanged(folder, defaultFolder) {
         isValid = folder.length;
-        folderField.text = isValid ? folder : "/MEGA";
+        if(isValid) {
+            folderField.text = folder;
+        }
     }
 
     function reset() {
@@ -55,7 +56,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
-        text: "/MEGA"
+        text: local ? localFolderChooser.folderName : remoteFolderChooser.folderName
         leftIcon.source: local ? Images.pc : Images.megaOutline
         leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
