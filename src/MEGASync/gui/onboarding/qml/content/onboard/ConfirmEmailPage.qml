@@ -15,8 +15,6 @@ ConfirmEmailPageForm {
         LoginControllerAccess.state = LoginController.CHANGING_REGISTER_EMAIL;
     }
 
-    email: LoginControllerAccess.email
-
     Connections {
         target: LoginControllerAccess
 

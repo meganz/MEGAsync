@@ -23,7 +23,6 @@ Rectangle {
     id: content
 
     property string title: ""
-    property string description: ""
     property bool indeterminate: true
     property double progressValue: 0.0
 
@@ -110,42 +109,18 @@ Rectangle {
         State {
             name: content.stateInProgressFetchNodes
             extend: content.stateInProgress
-            PropertyChanges {
-                target: content;
-                description: OnboardingStrings.statusFetchNodes;
-            }
-        },
-        State {
-            name: content.stateInProgress2FA
-            extend: content.stateInProgress
-            PropertyChanges {
-                target: content;
-                description: OnboardingStrings.status2FA;
-            }
         },
         State {
             name: content.stateInProgressLoggingIn
             extend: content.stateInProgress
-            PropertyChanges {
-                target: content;
-                description: OnboardingStrings.statusLogin;
-            }
         },
         State {
             name: content.stateInProgressCreatingAccount
             extend: content.stateInProgress
-            PropertyChanges {
-                target: content;
-                description: OnboardingStrings.statusSignUp;
-            }
         },
         State {
             name: content.stateInProgressWaitingEmailConfirm
             extend: content.stateInProgress
-            PropertyChanges {
-                target: content;
-                description: OnboardingStrings.statusWaitingForEmail;
-            }
         },
         State {
             name: content.stateBlocked
@@ -281,7 +256,46 @@ Rectangle {
             id: progressPage
 
             BasePage {
-                description: content.description
+
+                function getDescription() {
+                    switch(LoginControllerAccess.state)
+                    {
+                    case LoginController.LOGGING_IN:
+                    {
+                        return OnboardingStrings.statusLogin;
+                    }
+                    case LoginController.LOGGING_IN_2FA_REQUIRED:
+                    case LoginController.LOGGING_IN_2FA_VALIDATING:
+                    case LoginController.LOGGING_IN_2FA_FAILED:
+                    {
+                        return OnboardingStrings.status2FA;
+                    }
+                    case LoginController.CREATING_ACCOUNT:
+                    {
+                        return OnboardingStrings.statusSignUp;
+                    }
+                    case LoginController.WAITING_EMAIL_CONFIRMATION:
+                    case LoginController.CHANGING_REGISTER_EMAIL:
+                    {
+                        return OnboardingStrings.statusWaitingForEmail;
+                    }
+                    case LoginController.FETCHING_NODES:
+                    case LoginController.FETCHING_NODES_2FA:
+                    {
+                        return OnboardingStrings.statusFetchNodes;
+                    }
+                    case LoginController.FETCH_NODES_FINISHED:
+                    case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
+                    {
+                        return "";
+                    }
+                    }
+                    return "";
+                }
+                description: getDescription();
+                onDescriptionChanged: {
+                    console.log("PUTA MIERDA::::" + description);
+                }
                 showProgressBar: true
                 leftButton {
                     text: OnboardingStrings.signUp

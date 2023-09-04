@@ -726,6 +726,11 @@ void MegaApplication::initialize()
 
     mLogoutController = new LogoutController(mEngine);
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
+
+    if (!preferences->logged() && preferences->getSession().isEmpty())
+    {
+        openOnboardingDialog();
+    }
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1037,7 +1042,7 @@ void MegaApplication::updateTrayIcon()
     }
 }
 
-void MegaApplication::start(bool restartFromLocalLogout)
+void MegaApplication::start()
 {
 
 #ifdef Q_OS_LINUX
@@ -1169,10 +1174,6 @@ void MegaApplication::start(bool restartFromLocalLogout)
         }
 
         mLoginController = new LoginController(mEngine);
-        if(!restartFromLocalLogout)
-        {
-            openOnboardingDialog();
-        }
 
         if (!preferences->isFirstStartDone())
         {
@@ -1496,7 +1497,7 @@ if (!preferences->lastExecutionTime())
     preferences->monitorUserAttributes();
 }
 
-void MegaApplication::onLogout(bool isLocalLogout)
+void MegaApplication::onLogout()
 {
     model->reset();
     mTransfersModel->resetModel();
@@ -1505,9 +1506,9 @@ void MegaApplication::onLogout(bool isLocalLogout)
     // Queue processing of logout cleanup to avoid race conditions
     // due to threadifing processing.
     // Eg: transfers added to data model after a logout
-    mThreadPool->push([this, isLocalLogout]()
+    mThreadPool->push([this]()
     {
-        Utilities::queueFunctionInAppThread([this, isLocalLogout]()
+        Utilities::queueFunctionInAppThread([this]()
         {
             if (preferences)
             {
@@ -1526,7 +1527,7 @@ void MegaApplication::onLogout(bool isLocalLogout)
                 delete mLoginController;
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
-                start(isLocalLogout);
+                start();
                 periodicTasks();
             }
         });
