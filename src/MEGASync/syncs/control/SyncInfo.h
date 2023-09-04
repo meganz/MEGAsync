@@ -140,7 +140,7 @@ public:
 
     void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs);
 
-    void SyncInfo::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
+    void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
 
     void onEvent(mega::MegaApi* api, mega::MegaEvent* event) override;
 
