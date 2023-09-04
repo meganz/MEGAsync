@@ -68,7 +68,7 @@ pipeline {
                         gitlabCommitStatus(name: 'Windows build') {
                             script {
                                 echo "Triggering MEGAsync job for windows."
-                                build job: '../MEGAsync-package-build-windows/CID-83-movewindows-builds-into-CICD', wait: true, propagate: true, parameters: [
+                                build job: '../MEGAsync-package-build-windows/main', wait: true, propagate: true, parameters: [
                                     string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
                                     booleanParam(name: 'BUILD_LINUX', value: false),
                                     booleanParam(name: 'BUILD_MAC', value: false),

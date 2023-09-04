@@ -187,7 +187,7 @@ pipeline {
                         gitlabCommitStatus(name: 'Windows packages') {
                             script {
                                 echo "Building MEGAsync windows pkgs."
-                                def triggeredBuild = build job: 'MEGAsync-package-build-windows/CID-83-movewindows-builds-into-CICD/', wait: true, propagate: false, parameters: [
+                                def triggeredBuild = build job: 'MEGAsync-package-build-windows/main', wait: true, propagate: false, parameters: [
                                     string(name: 'MEGASYNC_BRANCH', value: "${env.gitlabSourceBranch}"),
                                     booleanParam(name: 'BUILD_WINDOWS', value: true),
                                     string(name: 'BUILD_OPTIONS', value: "${BUILD_OPTIONS}"),
