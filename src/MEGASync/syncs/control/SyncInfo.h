@@ -15,7 +15,10 @@
 #include <memory>
 
 class Preferences;
-
+namespace mega
+{
+	class QTMegaListener;
+}
 /**
  * @brief The Sync Model class
  *
@@ -31,7 +34,7 @@ class Preferences;
  *
  */
 
-class SyncInfo : public QObject
+class SyncInfo : public QObject, public mega::MegaListener
 {
     Q_OBJECT
     using SyncType = mega::MegaSync::SyncType;
@@ -58,13 +61,13 @@ protected:
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> syncsSettingPickedFromOldConfig;
     QMap<SyncType, QSet<mega::MegaHandle>> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
+	mega::QTMegaListener* delegateListener;
 
 public:
     static const QVector<SyncType> AllHandledSyncTypes;
 
     void reset();
     static SyncInfo *instance();
-
     /**
      * @brief Updates sync model
      * @param sync MegaSync object with the required information
@@ -136,4 +139,9 @@ public:
     static QSet<QString> getRemoteBackupFolderNames();
 
     void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs);
+
+    void SyncInfo::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
+
+    void onEvent(mega::MegaApi* api, mega::MegaEvent* event) override;
+
 };

@@ -334,7 +334,6 @@ private slots:
     void onSyncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
     void onSyncDeleted(std::shared_ptr<SyncSettings> syncSettings);
     void onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting);
-    void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
     void onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting);
     void onBlocked();
     void onUnblocked();
