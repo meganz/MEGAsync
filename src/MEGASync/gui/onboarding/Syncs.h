@@ -36,10 +36,11 @@ private:
     struct SyncProcessInfo
     {
         QString localPath = QString::fromUtf8("");
-        SyncController::Syncability syncability = SyncController::CANT_SYNC;
-        QString warningMsg = QString::fromUtf8("");
+        SyncController::Syncability localSyncability = SyncController::CANT_SYNC;
+        QString localWarningMsg = QString::fromUtf8("");
     } mProcessInfo;
 
+    bool processLocal(ChooseLocalFolder* local);
     void processRemote(mega::MegaHandle remoteHandle);
 
 private slots:

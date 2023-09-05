@@ -24,35 +24,12 @@ Syncs::~Syncs()
 void Syncs::addSync(ChooseLocalFolder* local, ChooseRemoteFolder* remote)
 {
     // First, process local folder
-    // If folder is empty, the default one (MEGA) should be created
-    // Otherwise, the selected folder in the ChooseLocalFolder is used
-    if(!local->createDefault())
+    if(!processLocal(local))
     {
         return;
     }
-    mProcessInfo.localPath = local->getFolder();
 
-    mProcessInfo.syncability =
-        SyncController::isLocalFolderAllowedForSync(mProcessInfo.localPath,
-                                                    mega::MegaSync::TYPE_TWOWAY,
-                                                    mProcessInfo.warningMsg);
-    if (mProcessInfo.syncability != SyncController::CANT_SYNC)
-    {
-        mProcessInfo.syncability =
-            SyncController::areLocalFolderAccessRightsOk(mProcessInfo.localPath,
-                                                         mega::MegaSync::TYPE_TWOWAY,
-                                                         mProcessInfo.warningMsg);
-    }
-
-    if (mProcessInfo.syncability != SyncController::CANT_SYNC)
-    {
-        mProcessInfo.syncability =
-            SyncController::isLocalFolderSyncable(mProcessInfo.localPath,
-                                                  mega::MegaSync::TYPE_TWOWAY,
-                                                  mProcessInfo.warningMsg);
-    }
-
-    // Then, process remote folder
+    // Then, get the remote handle and process remote folder
     mega::MegaHandle remoteHandle = mega::INVALID_HANDLE;
     if(!remote)
     {
@@ -78,10 +55,32 @@ void Syncs::addSync(ChooseLocalFolder* local, ChooseRemoteFolder* remote)
     processRemote(remoteHandle);
 }
 
+bool Syncs::processLocal(ChooseLocalFolder* local)
+{
+    // If folder is empty, the default one (MEGA) should be created
+    // Otherwise, the selected folder in the ChooseLocalFolder is used
+    if(!local->createDefault())
+    {
+        return false;
+    }
+    mProcessInfo.localPath = local->getFolder();
+
+    mProcessInfo.localSyncability =
+        SyncController::isLocalFolderSyncable(mProcessInfo.localPath,
+                                              mega::MegaSync::TYPE_TWOWAY,
+                                              mProcessInfo.localWarningMsg);
+
+    if(mProcessInfo.localSyncability == SyncController::CANT_SYNC)
+    {
+        emit cantSync(mProcessInfo.localWarningMsg);
+    }
+
+    return true;
+}
+
 void Syncs::processRemote(mega::MegaHandle remoteHandle)
 {
     std::shared_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(remoteHandle));
-    bool isLocalFolderError = true;
     if(node == nullptr)
     {
         emit cantSync(tr("Folder can't be synced as it can't be located. "
@@ -90,20 +89,13 @@ void Syncs::processRemote(mega::MegaHandle remoteHandle)
         return;
     }
 
-    if (mProcessInfo.syncability != SyncController::CANT_SYNC)
+    QString remoteWarningMsg;
+    SyncController::Syncability remoteSyncability =
+        SyncController::isRemoteFolderSyncable(node, remoteWarningMsg);
+    if (remoteSyncability == SyncController::CANT_SYNC)
     {
-        mProcessInfo.syncability =
-            std::max(SyncController::isRemoteFolderSyncable(node, mProcessInfo.warningMsg),
-                     mProcessInfo.syncability);
-        if(mProcessInfo.syncability == SyncController::CANT_SYNC)
-        {
-            isLocalFolderError = false;
-        }
-    }
-
-    if (mProcessInfo.syncability == SyncController::CANT_SYNC)
-    {
-        // If can't sync because remote node does not exist, try to create it
+        // Only remote CANT_SYNC at this point
+        // The local CANT_SYNC was processed in the processLocal method
         if (!node)
         {
             auto rootNode = MegaSyncApp->getRootNode();
@@ -124,14 +116,15 @@ void Syncs::processRemote(mega::MegaHandle remoteHandle)
         }
         else
         {
-            emit cantSync(mProcessInfo.warningMsg, isLocalFolderError);
+            emit cantSync(remoteWarningMsg, false);
         }
     }
-    else if (mProcessInfo.syncability == SyncController::WARN_SYNC)
+    else if (mProcessInfo.localSyncability == SyncController::WARN_SYNC)
     {
+        // Only local WARN_SYNC at this point
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.text =  mProcessInfo.warningMsg
+        msgInfo.text =  mProcessInfo.localWarningMsg
                        + QLatin1Char('\n')
                        + tr("Do you want to continue?");
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
@@ -148,7 +141,8 @@ void Syncs::processRemote(mega::MegaHandle remoteHandle)
 
         QMegaMessageBox::warning(msgInfo);
     }
-    else if (mProcessInfo.syncability == SyncController::CAN_SYNC)
+    else if (mProcessInfo.localSyncability == SyncController::CAN_SYNC
+                && remoteSyncability == SyncController::CAN_SYNC)
     {
         mSyncController->addSync(mProcessInfo.localPath, remoteHandle);
     }
