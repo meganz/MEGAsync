@@ -15,6 +15,9 @@ Item {
 
     property string title: ""
     property string text: ""
+    property int time: 0
+
+    signal visibilityTimerFinished
 
     visible: false
     height: content.height
@@ -34,6 +37,14 @@ Item {
         }
 
         textLoader.sourceComponent = textComponent;
+    }
+
+    onVisibleChanged: {
+        if(visible && root.time > 0) {
+            visibilityTimer.start();
+        } else if(visibilityTimer.running) {
+            visibilityTimer.stop();
+        }
     }
 
     Rectangle {
@@ -117,6 +128,17 @@ Item {
         MegaTexts.Text {
             text: root.text
             color: attributes.textColor
+        }
+    }
+
+    Timer {
+        id: visibilityTimer
+
+        interval: root.time
+        running: false
+        repeat: false
+        onTriggered: {
+            visibilityTimerFinished();
         }
     }
 

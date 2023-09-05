@@ -12,6 +12,7 @@ import Common 1.0
 import Onboard 1.0
 import Onboard.Syncs_types 1.0
 import ApiEnums 1.0
+import LoginController 1.0
 
 StackViewPage {
     id: root
@@ -37,7 +38,8 @@ StackViewPage {
 
         MegaTextFields.TwoFA {
             id: twoFAField
-            hasError: LoginControllerAccess.loginError !== ApiEnums.API_OK;
+
+            focus: true
         }
 
         MegaButtons.HelpButton {
@@ -72,4 +74,5 @@ StackViewPage {
             Layout.rightMargin: -loginButton.sizes.focusBorderWidth
         }
     }
+
 }
