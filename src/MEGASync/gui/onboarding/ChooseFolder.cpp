@@ -12,7 +12,7 @@ QString ChooseLocalFolder::DEFAULT_FOLDER(QString::fromUtf8("/MEGA"));
 ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
     : QObject(parent)
     , mFolderName(DEFAULT_FOLDER)
-    , mFolder(QString())
+    , mFolder(QString(DEFAULT_FOLDER))
 {
 }
 
@@ -24,7 +24,7 @@ void ChooseLocalFolder::openFolderSelector()
             QString fPath = selection.first();
             mFolder = (QDir::toNativeSeparators(QDir(fPath).canonicalPath()));
             mFolderName = QDir::fromNativeSeparators(fPath).split(QString::fromLatin1("/")).last().prepend(QString::fromLatin1("/"));
-            emit folderChanged(mFolderName);
+            emit folderChanged(mFolder);
         }
     });
 }
@@ -37,7 +37,7 @@ const QString ChooseLocalFolder::getFolder()
 void ChooseLocalFolder::reset()
 {
     mFolderName = DEFAULT_FOLDER;
-    mFolder.clear();
+    mFolder = DEFAULT_FOLDER;
     emit folderChanged(mFolderName);
 }
 

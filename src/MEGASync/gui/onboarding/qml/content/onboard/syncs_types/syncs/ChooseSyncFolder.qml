@@ -56,7 +56,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
-        text: local ? localFolderChooser.folderName : remoteFolderChooser.folderName
+        text: local ? localFolderChooser.folder : remoteFolderChooser.folderName
         leftIcon.source: local ? Images.pc : Images.megaOutline
         leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
