@@ -1752,7 +1752,7 @@ void MegaApplication::rebootApplication(bool update)
 
     reboot = true;
     auto transferCount = getTransfersModel()->getTransfersCount();
-    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting()))
+    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting() || megaApi->isScanning()))
     {
         if (!updateBlocked)
         {
@@ -5906,7 +5906,6 @@ void MegaApplication::openSettings(int tab)
     }
     else
     {
-
         //Show a new settings dialog
         mSettingsDialog = new SettingsDialog(this, proxyOnly);
         mSettingsDialog->setUpdateAvailable(updateAvailable);
