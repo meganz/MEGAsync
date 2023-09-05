@@ -449,7 +449,7 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
                 }
                 case SyncError::INVALID_REMOTE_TYPE:
                 {
-                    message = tr("Invalid remote path.");
+                    message = tr("This selection can't be synced as it’s a file.");
                     break;
                 }
             }
