@@ -284,7 +284,10 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     }
     case mega::MegaRequest::TYPE_CREATE_ACCOUNT:
     {
-        setState(CREATING_ACCOUNT);
+        if(request->getParamType() == mega::MegaApi::CREATE_ACCOUNT)
+        {
+            setState(CREATING_ACCOUNT);
+        }
         break;
     }
     case mega::MegaRequest::TYPE_FETCH_NODES:
@@ -425,6 +428,11 @@ void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::
         mEmail = credentials.email;
         emit emailChanged();
         setState(WAITING_EMAIL_CONFIRMATION);
+    }
+    else
+    {
+        mPreferences->removeEphemeralCredentials();
+        setState(LOGGED_OUT);
     }
 }
 

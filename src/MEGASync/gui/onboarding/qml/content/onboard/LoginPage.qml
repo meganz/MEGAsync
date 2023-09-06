@@ -213,6 +213,5 @@ LoginPageForm {
         LoginControllerAccess.emailErrorMsg = "";
         LoginControllerAccess.passwordError = false;
         LoginControllerAccess.passwordErrorMsg = "";
-        LoginControllerAccess.email = "";
     }
 }

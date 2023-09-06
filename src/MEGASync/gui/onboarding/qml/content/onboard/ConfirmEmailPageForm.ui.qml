@@ -18,7 +18,6 @@ import Onboarding 1.0
 StackViewPage {
     id: root
 
-    property alias email: email.text
     property alias changeEmailLinkText: changeEmailLinkText
 
     ColumnLayout {
@@ -70,6 +69,7 @@ StackViewPage {
             MegaTexts.Text {
                 id: email
 
+                text: LoginControllerAccess.email
                 Layout.preferredWidth: parent.width - mailImage.width - parent.spacing
                 Layout.topMargin: 3
                 font.pixelSize: MegaTexts.Text.Size.Medium
