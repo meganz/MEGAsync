@@ -50,7 +50,6 @@ public:
     Q_INVOKABLE void createAccount(const QString& email, const QString& password, const QString& name, const QString& lastName);
     Q_INVOKABLE void changeRegistrationEmail(const QString& email);
     Q_INVOKABLE void login2FA(const QString& pin);
-    Q_INVOKABLE void cancelLogin2FA();
     Q_INVOKABLE QString getEmail() const;
     Q_INVOKABLE void cancelLogin() const;
     Q_INVOKABLE void cancelCreateAccount() const;
@@ -115,13 +114,13 @@ private:
     long long computeExclusionSizeLimit(const long long sizeLimitValue, const int unit);
     void migrateSyncConfToSdk(const QString& email);
     void loadSyncExclusionRules(const QString& email);
+    void dumpSession();
     QString getRepeatedEmailMsg();
 
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 
     QTimer *mConnectivityTimer;
-    bool mFirstTime;
     bool mEmailError;
     QString mEmailErrorMsg;
     bool mPasswordError;

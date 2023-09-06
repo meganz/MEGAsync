@@ -168,17 +168,21 @@ Rectangle {
         }
 
         replaceEnter: Transition {
-            XAnimator {
-                from: (stack.mirrored ? -1 : 1) * leftImage.width
-                to: 0
-                duration: 400
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to:1
+                duration: 100
+                easing.type: Easing.OutQuad
             }
         }
         replaceExit: Transition {
-            XAnimator {
-                from: 0
-                to: (stack.mirrored ? -1 : 1) * stack.width
-                duration: 300
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to:0
+                duration: 100
+                easing.type: Easing.InQuad
             }
         }
 

@@ -375,6 +375,7 @@ const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSL
 const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
 const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
 const QString Preferences::oneTimeActionDoneKey     = QString::fromAscii("oneTimeActionDone");
+const QString Preferences::oneTimeActionUserDoneKey     = QString::fromAscii("oneTimeActionDone");
 const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsKey2");
 const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert2");
 const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
@@ -2224,6 +2225,24 @@ void Preferences::setOneTimeActionDone(int action, bool done)
     }
     mSettings->sync();
     mutex.unlock();
+}
+
+
+bool Preferences::isOneTimeActionUserDone(int action)
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    return getValue<bool>(oneTimeActionUserDoneKey + QString::number(action), false);
+}
+
+void Preferences::setOneTimeActionUserDone(int action, bool done)
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    mSettings->setValue(oneTimeActionUserDoneKey + QString::number(action), done);
+    setCachedValue(oneTimeActionUserDoneKey + QString::number(action), done);
 }
 
 

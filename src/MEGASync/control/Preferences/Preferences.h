@@ -320,6 +320,9 @@ public:
     bool isOneTimeActionDone(int action);
     void setOneTimeActionDone(int action, bool done);
 
+    bool isOneTimeActionUserDone(int action);
+    void setOneTimeActionUserDone(int action, bool done);
+
     QStringList getPreviousCrashes();
     void setPreviousCrashes(QStringList crashes);
     long long getLastReboot();
@@ -432,7 +435,8 @@ public:
         ONE_TIME_ACTION_ACTIVE_FINDER_EXT = 2,
         ONE_TIME_ACTION_REGISTER_UPDATE_TASK = 3,
         ONE_TIME_ACTION_OS_TOO_OLD = 4,
-        ONE_TIME_ACTION_HGFS_WARNING = 5
+        ONE_TIME_ACTION_HGFS_WARNING = 5,
+        ONE_TIME_ACTION_ONBOARDING_SHOWN
     };
 
     enum {
@@ -712,6 +716,7 @@ protected:
     static const QString maxMemoryUsageKey;
     static const QString maxMemoryReportTimeKey;
     static const QString oneTimeActionDoneKey;
+    static const QString oneTimeActionUserDoneKey;
     static const QString httpsKeyKey;
     static const QString httpsCertKey;
     static const QString httpsCertIntermediateKey;
