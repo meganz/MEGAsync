@@ -33,7 +33,7 @@ QtObject {
     readonly property string confirmBackupFoldersTitle: qsTr("Confirm folders to back up")
     readonly property string confirmEmailTitle: qsTr("Account created")
     readonly property string confirmEmailBodyText: qsTr("To activate your account, you need to verify your email address. We've sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.")
-    readonly property string confirmEmailBodyText2: qsTr("If you don't receive the email within 1 hour, contact [b][a]support@mega.nz[/a][/b]")
+    readonly property string confirmEmailBodyText2: qsTr("If you don't receive the email within 1 hour, please [b][a]contact support[/a][/b].")
     readonly property string confirmEmailChangeText: qsTr("If you have misspelled your email address, [b][a]change it here[/a][/b].")
     readonly property string confirmPassword: qsTr("Confirm password")
     readonly property string done: qsTr("Done")
