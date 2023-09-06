@@ -727,7 +727,7 @@ void MegaApplication::initialize()
     mLogoutController = new LogoutController(mEngine);
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
 
-    if (!preferences->logged() && preferences->getSession().isEmpty())
+    if (preferences->getSession().isEmpty())
     {
         openOnboardingDialog();
     }
@@ -1145,7 +1145,7 @@ void MegaApplication::start()
 #endif
 
     //Start the initial setup wizard if needed
-    if (!preferences->logged() && preferences->getSession().isEmpty())
+    if (preferences->getSession().isEmpty())
     {
         if (!preferences->installationTime())
         {
@@ -2332,7 +2332,7 @@ void MegaApplication::raiseInfoDialog()
 {
     if((preferences && preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK) || mStatusController->isAccountBlocked())
     {
-        if (!preferences->logged())
+        if (preferences->getSession().isEmpty())
         {
             openOnboardingDialog();
         }

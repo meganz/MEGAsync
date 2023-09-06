@@ -15,7 +15,6 @@ LoginController::LoginController(QObject *parent)
       , mPreferences(Preferences::instance())
       , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
       , mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
-      , mFirstTime(false)
       , mEmailError(false)
       , mEmailErrorMsg(QString())
       , mPasswordError(false)
@@ -65,11 +64,6 @@ void LoginController::changeRegistrationEmail(const QString &email)
 void LoginController::login2FA(const QString &pin)
 {
     mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(), mPassword.toUtf8().constData(), pin.toUtf8().constData());
-}
-
-void LoginController::cancelLogin2FA()
-{
-    setState(LOGGED_OUT);
 }
 
 QString LoginController::getEmail() const
@@ -327,19 +321,11 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
 {
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
-        std::unique_ptr<char []> session(mMegaApi->dumpSession());
-        if (session)
-        {
-            mPreferences->setSession(QString::fromUtf8(session.get()));
-        }
-        bool logged = mPreferences->logged();
-        mFirstTime = !logged && !mPreferences->hasEmail(QString::fromUtf8(request->getEmail()));
-        // We will proceed with a new login
+        mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(request->getEmail()));
 
-        auto email = QString::fromUtf8(request->getEmail());
-        mPreferences->setEmailAndGeneralSettings(email);
+        dumpSession();
 
-        fetchNodes(email);
+        fetchNodes(mEmail);
         if (!mPreferences->hasLoggedIn())
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -456,6 +442,18 @@ void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError
 void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *e)
 {
     Q_UNUSED(request)
+
+    if(!mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
+    {
+        setState(FETCH_NODES_FINISHED_ONBOARDING);
+        mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
+        dumpSession();
+    }
+    else
+    {
+        setState(FETCH_NODES_FINISHED);
+    }
+
     if (e->getErrorCode() == mega::MegaError::API_OK)
     {
         //Update/set root node
@@ -474,14 +472,6 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mPreferences->setNeedsFetchNodesInGeneral(true);
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                                                                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-    }
-    if(mFirstTime)
-    {
-        setState(FETCH_NODES_FINISHED_ONBOARDING);
-    }
-    else
-    {
-        setState(FETCH_NODES_FINISHED);
     }
 }
 
@@ -704,6 +694,18 @@ void LoginController::loadSyncExclusionRules(const QString& email)
     if (temporarilyLoggedPrefs)
     {
         mPreferences->leaveUser();
+    }
+}
+
+void LoginController::dumpSession()
+{
+    if(mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
+    {
+        std::unique_ptr<char []> session(mMegaApi->dumpSession());
+        if (session)
+        {
+            mPreferences->setSession(QString::fromUtf8(session.get()));
+        }
     }
 }
 

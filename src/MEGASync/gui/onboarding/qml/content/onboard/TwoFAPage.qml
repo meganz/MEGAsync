@@ -11,7 +11,7 @@ TwoFAPageForm {
     id: twoFAPageId
     signUpButton.onClicked: {
         LoginControllerAccess.state = LoginController.SIGN_UP;
-        LoginControllerAccess.cancelLogin2FA();
+        LoginControllerAccess.email = "";
     }
 
     loginButton.onClicked: {
