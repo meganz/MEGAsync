@@ -1271,8 +1271,6 @@ void MegaApplication::loggedIn(bool fromWizard)
         return;
     }
 
-    clearUserAttributes();
-
     //Send pending crash report log if neccessary
     if (!crashReportFilePath.isNull() && megaApi)
     {
