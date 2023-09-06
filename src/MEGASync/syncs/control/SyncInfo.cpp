@@ -1,6 +1,5 @@
 
 #include "SyncInfo.h"
-#include "QTMegaListener.h"
 #include "platform/Platform.h"
 #include "control/AppStatsEvents.h"
 #include "QMegaMessageBox.h"
@@ -38,7 +37,7 @@ SyncInfo::SyncInfo() : QObject(),
     mIsFirstTwoWaySyncDone (preferences->isFirstSyncDone()),
     mIsFirstBackupDone (preferences->isFirstBackupDone()),
     syncMutex (QMutex::Recursive),
-    delegateListener(mega::make_unique<mega::QTMegaListener>(MegaSyncApp->getMegaApi(), this))
+    delegateListener(mega::make_unique<QTMegaListener>(MegaSyncApp->getMegaApi(), this))
 {
     MegaSyncApp->getMegaApi()->addListener(delegateListener.get());
 }

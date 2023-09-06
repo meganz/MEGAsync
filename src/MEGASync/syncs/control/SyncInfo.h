@@ -1,6 +1,7 @@
 #pragma once
 
 #include "syncs/control/SyncSettings.h"
+#include "QTMegaListener.h"
 
 #include "megaapi.h"
 
@@ -15,10 +16,6 @@
 #include <memory>
 
 class Preferences;
-namespace mega
-{
-	class QTMegaListener;
-}
 /**
  * @brief The Sync Model class
  *
@@ -61,7 +58,7 @@ protected:
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> syncsSettingPickedFromOldConfig;
     QMap<SyncType, QSet<mega::MegaHandle>> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
-	std::unique_ptr<mega::QTMegaListener> delegateListener;
+    std::unique_ptr<mega::QTMegaListener> delegateListener;
 
 public:
     static const QVector<SyncType> AllHandledSyncTypes;
