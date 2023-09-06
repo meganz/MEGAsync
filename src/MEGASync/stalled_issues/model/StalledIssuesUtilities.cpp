@@ -52,34 +52,22 @@ void StalledIssuesUtilities::ignoreSymLinks(const QString& path)
     QtConcurrent::run([this, path]()
     {
         QDir ignoreDir(path);
-
-        while(ignoreDir.exists())
+        QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
+        if(ignore.exists())
         {
-            QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
-            if(ignore.exists())
-            {
-                mIgnoreMutex.lockForWrite();
-                ignore.open(QFile::Append | QFile::Text);
+            mIgnoreMutex.lockForWrite();
+            ignore.open(QFile::Append | QFile::Text);
 
-                QTextStream streamIn(&ignore);
-                streamIn.setCodec("UTF-8");
+            QTextStream streamIn(&ignore);
+            streamIn.setCodec("UTF-8");
 
-                QString line(QString::fromLatin1("\n-s:*"));
-                streamIn << line;
+            QString line(QString::fromLatin1("\n-s:*"));
+            streamIn << line;
 
-                ignore.close();
-                mIgnoreMutex.unlock();
-
-                break;
-            }
-
-            if(!ignoreDir.cdUp())
-            {
-                break;
-            }
+            ignore.close();
+            mIgnoreMutex.unlock();
+            emit actionFinished();
         }
-
-        emit actionFinished();
     });
 }
 

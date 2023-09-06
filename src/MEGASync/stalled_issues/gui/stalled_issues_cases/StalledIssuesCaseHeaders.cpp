@@ -168,7 +168,7 @@ void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
     {
         QList<StalledIssueHeader::ActionInfo> actions;
         actions << StalledIssueHeader::ActionInfo(tr("Ignore symlink"), IgnoreType::IgnoreThis);
-        actions << StalledIssueHeader::ActionInfo(tr("Ignore all symlinks in sync"), IgnoreType::IgnoreAll);
+        actions << StalledIssueHeader::ActionInfo(tr("Ignore all symlinks in all syncs"), IgnoreType::IgnoreAll);
 
         header->showActions(tr("Ignore"), actions);
     }
