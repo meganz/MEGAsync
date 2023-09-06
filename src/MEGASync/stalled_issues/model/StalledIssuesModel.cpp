@@ -883,8 +883,8 @@ void StalledIssuesModel::ignoreSymLinks(const QModelIndex& fixedIndex)
     if(item->getData()->canBeIgnored())
     {
         mUtilities.ignoreSymLinks(item->getData()->consultLocalData()->getNativeFilePath());
-        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
-                                             "Issue ignored manually", false, nullptr);
+        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_ALL_SYMLINK,
+                                             "All symlink ignored", false, nullptr);
 
         auto resolveIssue = [this](int row) -> bool
         {
