@@ -5218,13 +5218,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                     createTrayIcon();
                     showInfoDialog();
                 }
-                else if (!megaApi->isLoggedIn())
-                {
-                    showInfoMessage(tr("Logging in..."));
-                }
                 else
                 {
-                    //showInfoMessage(tr("Fetching file list..."));
                     openGuestDialog();
                 }
             }
