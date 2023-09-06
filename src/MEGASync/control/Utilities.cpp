@@ -1707,7 +1707,7 @@ void FoldersMerge::merge(ActionForDuplicates action)
                     folderMerge.merge(action);
                     depth--;
                     std::unique_ptr<MegaNodeList>folderChild(MegaSyncApp->getMegaApi()->getChildren(node));
-                    if(ActionForDuplicates::IgnoreAndRemove || folderChild->size() == 0)
+                    if(action == ActionForDuplicates::IgnoreAndRemove || folderChild->size() == 0)
                     {
                         MegaSyncApp->getMegaApi()->remove(node, new OnFinishOneShot(MegaSyncApp->getMegaApi(),
                                                                                     [this, &eventLoop]
@@ -1748,7 +1748,7 @@ void FoldersMerge::merge(ActionForDuplicates action)
         }
     }
 
-    //Only done in the first folder
+    //Only done when the recursion finishes
     if(depth == 0)
     {
         std::unique_ptr<MegaNodeList>folderChild(MegaSyncApp->getMegaApi()->getChildren(mFolderToMerge));
