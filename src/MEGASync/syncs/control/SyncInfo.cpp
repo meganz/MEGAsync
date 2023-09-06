@@ -6,6 +6,7 @@
 #include "QMegaMessageBox.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include <MegaNodeNames.h>
+#include <mega/types.h>
 
 #include <assert.h>
 
@@ -37,9 +38,9 @@ SyncInfo::SyncInfo() : QObject(),
     mIsFirstTwoWaySyncDone (preferences->isFirstSyncDone()),
     mIsFirstBackupDone (preferences->isFirstBackupDone()),
     syncMutex (QMutex::Recursive),
-    delegateListener(new QTMegaListener(MegaSyncApp->getMegaApi(), this))
+    delegateListener(mega::make_unique<mega::QTMegaListener>(MegaSyncApp->getMegaApi(), this))
 {
-    MegaSyncApp->getMegaApi()->addListener(delegateListener);
+    MegaSyncApp->getMegaApi()->addListener(delegateListener.get());
 }
 
 bool SyncInfo::hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const

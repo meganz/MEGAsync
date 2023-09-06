@@ -491,10 +491,8 @@ void MegaApplication::initialize()
     megaApi->disableGfxFeatures(mDisableGfx);
 
     model = SyncInfo::instance();
-    connect(model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSettings>)),
-        this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSettings>)));
-    connect(model, SIGNAL(syncRemoved(std::shared_ptr<SyncSettings>)),
-        this, SLOT(onSyncDeleted(std::shared_ptr<SyncSettings>)));
+	connect(model, &SyncInfo::syncStateChanged, this, static_cast<void (MegaApplication::*)(std::shared_ptr<SyncSettings>)>(&MegaApplication::onSyncStateChanged));
+    connect(model, &SyncInfo::syncRemoved, this, static_cast<void (MegaApplication::*)(std::shared_ptr<SyncSettings>)>(&MegaApplication::onSyncDeleted));
 
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
