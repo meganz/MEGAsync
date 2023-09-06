@@ -74,7 +74,7 @@ StackViewPage {
             enabled: registerContent.firstName.text !== ""
                         && registerContent.lastName.text !== ""
                         && registerContent.email.text !== ""
-                        && registerContent.password.text !== ""
+                        && registerContent.password.validPassword
                         && registerContent.confirmPassword.text !== ""
                         && registerContent.termsCheckBox.checked
             icons.source: Images.arrowRight

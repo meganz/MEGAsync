@@ -8,8 +8,12 @@ import Common 1.0
 import Components.Images 1.0 as MegaImages
 
 Popup {
+    id: passwordPopup
 
-    property alias content: content
+    property alias allChecked: content.allChecked
+    property alias validPassword: content.validPassword
+
+    property string password: ""
 
     focus: false
     closePolicy: Popup.NoAutoClose
@@ -49,6 +53,8 @@ Popup {
 
             PasswordInfoContent {
                 id: content
+
+                password: passwordPopup.password
             }
 
             MegaImages.SvgImage {

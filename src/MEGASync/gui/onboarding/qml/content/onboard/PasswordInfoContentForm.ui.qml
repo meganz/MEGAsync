@@ -11,9 +11,10 @@ import Onboard 1.0
 
 Rectangle {
 
-    property alias strengthTitle: strengthTitle
-    property alias upperLowerCaseChecked: conditionUpperLowerCase.checked
-    property alias numberSpecialCharacterChecked: conditionNumberSpecialCharacter.checked
+    property alias conditionUpperLowerCase: conditionUpperLowerCase
+    property alias conditionNumberSpecialCharacter: conditionNumberSpecialCharacter
+
+    property string password: ""
 
     readonly property int contentMargin: 24
     readonly property int iconWidth: 24
@@ -37,6 +38,7 @@ Rectangle {
             font.bold: true
             verticalAlignment: Text.AlignVCenter
             text: OnboardingStrings.passwordAtleast8Chars
+            font.strikeout: password.length >= 8
         }
 
         Rectangle {

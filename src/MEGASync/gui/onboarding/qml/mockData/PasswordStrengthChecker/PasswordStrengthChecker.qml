@@ -1,28 +1,16 @@
 import QtQuick 2.0
-import Components.TextFields 1.0 as MegaTextFields
 
 Item {
-    id: root
 
     enum PasswordStrength {
-        PasswordStrengthVeryWeak,
-        PasswordStrengthWeak,
-        PasswordStrengthMedium,
-        PasswordStrengthGood,
-        PasswordStrengthStrong
+        PASSWORD_STRENGTH_VERYWEAK = 0,
+        PASSWORD_STRENGTH_WEAK = 1,
+        PASSWORD_STRENGTH_MEDIUM = 2,
+        PASSWORD_STRENGTH_GOOD = 3,
+        PASSWORD_STRENGTH_STRONG = 4
     }
 
-    property string test: "test"
+    property string password: ""
+    property int strength: PasswordStrengthChecker.PASSWORD_STRENGTH_VERYWEAK
 
-    function getPasswordStrength(password) {
-        console.info("getPasswordStrength(password)" + password);
-        var strength = password.length - 1;
-        return strength > PasswordStrengthChecker.PasswordStrengthStrong
-               ? PasswordStrengthChecker.PasswordStrengthStrong
-               : strength;
-    }
-
-    onTestChanged: {
-        console.log(test);
-    }
 }
