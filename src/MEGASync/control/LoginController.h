@@ -74,8 +74,6 @@ public:
 
     void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
 
-    void emailConfirmation(const QString& email);
-
 signals:
 
     void emailChanged();
@@ -116,6 +114,7 @@ private:
     void loadSyncExclusionRules(const QString& email);
     void dumpSession();
     QString getRepeatedEmailMsg();
+    void setEmail(const QString& email);
 
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
