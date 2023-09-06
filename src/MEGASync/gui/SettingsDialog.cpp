@@ -1410,6 +1410,52 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
     mUi->syncSettings->addButtonClicked(megaFolderHandle);
 }
 
+void SettingsDialog::setEnabledAllControls(const bool enabled)
+{
+    setGeneralTabEnabled(enabled);
+    mUi->pAccount->setEnabled(enabled);
+    mUi->pSyncs->setEnabled(enabled);
+    mUi->pBackup->setEnabled(enabled);
+    mUi->pSecurity->setEnabled(enabled);
+    mUi->pFolders->setEnabled(enabled);
+    mUi->pNetwork->setEnabled(enabled);
+    mUi->pNotifications->setEnabled(enabled);
+
+    mUi->wStackFooter->setEnabled(enabled);
+}
+
+void SettingsDialog::setGeneralTabEnabled(const bool enabled)
+{
+    // We want to keep only the "Send bug report" button enabled.
+    // If we call setEnable() on the whole SettingsDialog, it will be
+    // disabled and can't be enabled without enabling everything.
+    // Another approach is to loop through all child widgets of SettingsDialog,
+    // but we need to take care to skip all parents of BugReport button.
+    // Experimentally it didn't work, so the last solution is to
+    // call setEnable() manually for all controls and leave
+    // Bug report controls as they are.
+
+#ifdef Q_OS_MACOS
+    mUi->gGeneralDefaultOptions->setEnabled(enabled);
+    mUi->gLanguage->setEnabled(enabled);
+    mUi->gDebris->setEnabled(enabled);
+    mUi->gSyncDebris->setEnabled(enabled);
+    mUi->gVersions->setEnabled(enabled);
+    mUi->gSleepMode->setEnabled(enabled);
+#else
+    mUi->gGeneral->setEnabled(enabled);
+    mUi->gLanguage->setEnabled(enabled);
+    mUi->gCache->setEnabled(enabled);
+    mUi->gRemoteCache->setEnabled(enabled);
+    mUi->gFileVersions->setEnabled(enabled);
+#ifdef Q_OS_LINUX
+    mUi->gSleepSettings->setEnabled(enabled);
+#else
+    mUi->gSleepMode->setEnabled(enabled);
+#endif
+#endif
+}
+
 void SettingsDialog::on_bSyncs_clicked()
 {
     emit userActivity();

@@ -85,6 +85,7 @@ private:
     QMap<TransfersWidget::TM_TAB, QFrame*> mTabFramesToggleGroup;
     QMap<TransfersWidget::TM_TAB, QLabel*> mNumberLabelsGroup;
     QMap<TransfersWidget::TM_TAB, QWidget*> mTabNoItem;
+    QMap<TransfersWidget::TM_TAB, QPair<int, Qt::SortOrder>> mTabSortCriterion;
 
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
@@ -176,6 +177,8 @@ private slots:
     void onScanningAnimationUpdate();
 
     void onTransferQuotaExceededUpdate();
+
+    void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
 };
 
 #endif // TRANSFERMANAGER_H

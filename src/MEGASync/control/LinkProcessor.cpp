@@ -33,7 +33,7 @@ LinkProcessor::LinkProcessor(QStringList linkList, MegaApi *megaApi, MegaApi *me
 
 LinkProcessor::~LinkProcessor()
 {
-    delete delegateListener;
+    delegateListener->deleteLater();
 }
 
 QString LinkProcessor::getLink(int id)

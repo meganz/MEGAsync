@@ -184,6 +184,9 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     connect(mUi->wTransfers, &TransfersWidget::changeToAllTransfersTab,
                 this, &TransferManager::on_tAllTransfers_clicked);
 
+    connect(mUi->wTransfers, &TransfersWidget::sortCriterionChanged,
+        this, &TransferManager::onSortCriterionChanged);
+
     connect(mUi->wTransfers,
             &TransfersWidget::loadingViewVisibilityChanged,[this](bool state)
     {
@@ -861,6 +864,10 @@ void TransferManager::onTransferQuotaExceededUpdate()
     mUi->lTransferOverQuotaInfo->setText(text);
 }
 
+void TransferManager::onSortCriterionChanged(int sortBy, Qt::SortOrder order)
+{
+    mTabSortCriterion.insert(mUi->wTransfers->getCurrentTab(), QPair<int, Qt::SortOrder>{ sortBy ,order });
+}
 
 void TransferManager::refreshSpeed()
 {
@@ -1172,6 +1179,12 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
     if (mUi->wTransfers->getCurrentTab() != newTab)
     {
         filterByTab(newTab);
+
+        auto tabFound = mTabSortCriterion.find(newTab);
+        if (tabFound != mTabSortCriterion.end())
+        {
+            mUi->wTransfers->setSortCriterion(tabFound->first, tabFound->second);
+        }
 
         //First, update the data
         onTransfersDataUpdated();

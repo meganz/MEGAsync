@@ -90,11 +90,11 @@ pipeline {
         }
 
         stage('build MEGASync packages'){
-            when { expression { env.gitlabTriggerPhrase != null && ( env.gitlabTriggerPhrase.startsWith('build packages'))  }}
+            when { expression { env.gitlabTriggerPhrase != null && ( env.gitlabTriggerPhrase.startsWith('trigger package'))  }}
             parallel {
                 stage('build macOS package') {
                     when {
-                        expression { env.gitlabTriggerPhrase == 'build packages' || env.gitlabTriggerPhrase == ('build packages macos')  }
+                        expression { env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase == ('trigger package macos')  }
                     }
                     steps {
                         gitlabCommitStatus(name: 'MacOS packages') {
@@ -138,7 +138,7 @@ pipeline {
                 }
                 stage('build linux package') {
                     when {
-                        expression { env.gitlabTriggerPhrase == 'build packages' || env.gitlabTriggerPhrase == ('build packages linux')  }
+                        expression { env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase == ('trigger package linux')  }
                     }
                     steps {
                         gitlabCommitStatus(name: 'Linux packages') {
@@ -176,7 +176,48 @@ pipeline {
                                     error "Job failed"
                                 }
                             }
-
+                        }
+                    }
+                }
+                stage('build windows package') {
+                    when {
+                        expression { env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase == ('trigger package windows')  }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Windows packages') {
+                            script {
+                                echo "Building MEGAsync windows pkgs."
+                                def triggeredBuild = build job: 'MEGAsync-package-build-windows/main', wait: true, propagate: false, parameters: [
+                                    string(name: 'MEGASYNC_BRANCH', value: "${env.gitlabSourceBranch}"),
+                                    booleanParam(name: 'BUILD_WINDOWS', value: true),
+                                    string(name: 'BUILD_OPTIONS', value: "${BUILD_OPTIONS}"),
+                                    string(name: 'BUILD_DESCRIPTION', value: "${env.currentBuildDescription}"),
+                                    string(name: 'MEGASYNC_TEAM', value: "${MEGASYNC_TEAM}"),
+                                    booleanParam(name: 'IS_SPRINT', value: true),
+                                    booleanParam(name: 'UPLOAD_WINDOWS_PACKAGES', value: true)
+                                    ].plus(env.SDK_BRANCH ? [string(name: 'SDK_BRANCH', value: "${SDK_BRANCH}")] : [])
+                                env.TRIGGERED_BUILD_URL_WINDOWS_PKG = triggeredBuild.getAbsoluteUrl()
+                                env.TRIGGERED_PROJECT_NAME_WINDOWS_PKG = triggeredBuild.getProjectName()
+                                env.TRIGGERED_BUILD_DISPLAY_NAME_WINDOWS_PKG = triggeredBuild.getFullDisplayName()
+                                if (triggeredBuild.result != 'SUCCESS') {
+                                    currentBuild.currentResult = 'FAILURE'
+                                }
+                            }
+                        }
+                    }
+                    post{
+                        always {
+                            script{
+                                if (currentBuild.currentResult == 'SUCCESS'){
+                                    addGitLabMRComment(comment: ":white_check_mark: ${env.TRIGGERED_PROJECT_NAME_WINDOWS_PKG} <b>Windows</b>  SUCCEEDED :muscle:<br/>Build results: [Jenkins [${env.TRIGGERED_BUILD_DISPLAY_NAME_WINDOWS_PKG}]](${env.TRIGGERED_BUILD_URL_WINDOWS_PKG})<br/>Commit: ${env.GIT_COMMIT}<br/>Packages URL (/productversionstr/windows): ${env.REPO_URL}/MEGAsync-sprints/${env.MEGASYNC_TEAM}/" )
+                                    updateGitlabCommitStatus(name: 'Windows compilation', state: 'success')
+                                }
+                                if (currentBuild.currentResult == 'FAILURE'){
+                                    addGitLabMRComment(comment: ":red_circle: ${env.TRIGGERED_PROJECT_NAME_WINDOWS_PKG} <b>Windows</b> FAILURE  :worried:<br/>Build results: [Jenkins [${env.TRIGGERED_BUILD_DISPLAY_NAME_WINDOWS_PKG}]](${env.TRIGGERED_BUILD_URL_WINDOWS_PKG})<br/>Commit: ${env.GIT_COMMIT}" )
+                                    updateGitlabCommitStatus(name: 'Windows compilation', state: 'failed')
+                                    error "Job failed"
+                                }
+                            }
                         }
                     }
                 }

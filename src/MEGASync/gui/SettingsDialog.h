@@ -75,6 +75,9 @@ public slots:
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
 
+    //Enable/Disable controls
+    void setEnabledAllControls(const bool enabled);
+
 private slots:
     void on_bBackupCenter_clicked();
     void on_bHelp_clicked();
@@ -169,6 +172,8 @@ private:
     void setShortCutsForToolBarItems();
     void showUnexpectedSyncError(const QString& message);
     void updateCacheSchedulerDaysLabel();
+
+    void setGeneralTabEnabled(const bool enabled);
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();

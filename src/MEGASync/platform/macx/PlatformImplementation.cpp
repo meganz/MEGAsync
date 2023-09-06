@@ -257,11 +257,6 @@ bool PlatformImplementation::shouldRunHttpServer()
     return runHttpServer();
 }
 
-bool PlatformImplementation::shouldRunHttpsServer()
-{
-    return runHttpsServer();
-}
-
 bool PlatformImplementation::isUserActive()
 {
     return userActive();

@@ -160,13 +160,21 @@ public:
     void setToolBarItem(QToolButton* item);
 #endif
 
-    void setParentDialog(QDialog *newParentDialog);
+    template <class DialogType>
+    void setParentDialog(DialogType *newParentDialog)
+    {
+        mParentDialog = newParentDialog;
+        connect(this, &SyncSettingsUIBase::disableParentDialog, newParentDialog, &DialogType::setEnabledAllControls);
+    }
 
 public slots:
     virtual void addButtonClicked(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
 #ifndef Q_OS_WINDOWS
     void onPermissionsClicked();
 #endif
+
+signals:
+    void disableParentDialog(bool state);
 
 protected:
     Ui::SyncSettingsUIBase* ui;

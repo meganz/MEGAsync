@@ -44,7 +44,6 @@ public:
     virtual bool registerUpdateJob() = 0;
     virtual void uninstall();
     virtual bool shouldRunHttpServer() = 0;
-    virtual bool shouldRunHttpsServer() = 0;
     virtual bool isUserActive() = 0;
     virtual QString getDeviceName() = 0;
     virtual void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true);

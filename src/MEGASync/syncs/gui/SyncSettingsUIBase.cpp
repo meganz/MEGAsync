@@ -91,7 +91,7 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
             case SAVING:
                 if(mParentDialog)
                 {
-                    mParentDialog->setEnabled(false);
+                    emit disableParentDialog(false);
                 }
                 ui->wSpinningIndicatorSyncs->start();
                 ui->sSyncsState->setCurrentWidget(ui->pSavingSyncs);
@@ -99,7 +99,7 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
             case SAVING_FINISHED:
                 if(mParentDialog)
                 {
-                    mParentDialog->setEnabled(true);
+                    emit disableParentDialog(true);
                 }
                 ui->wSpinningIndicatorSyncs->stop();
                 // If any sync is disabled, shows warning message
@@ -203,11 +203,6 @@ void SyncSettingsUIBase::onPermissionsClicked()
     });
 }
 #endif
-
-void SyncSettingsUIBase::setParentDialog(QDialog *newParentDialog)
-{
-    mParentDialog = newParentDialog;
-}
 
 void SyncSettingsUIBase::addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle)
 {

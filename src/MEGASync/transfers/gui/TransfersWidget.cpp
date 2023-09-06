@@ -101,6 +101,7 @@ TransfersModel* TransfersWidget::getModel()
 void TransfersWidget::onHeaderItemClicked(int sortBy, Qt::SortOrder order)
 {
     mProxyModel->sort(sortBy, order);
+    emit sortCriterionChanged(sortBy, order);
 }
 
 void TransfersWidget::on_tCancelClearVisible_clicked()
@@ -778,4 +779,18 @@ QString TransfersWidget::getPauseTooltip(TM_TAB tab)
             return tr("Pause all transfers");
         }
     }
+}
+
+void TransfersWidget::setSortCriterion(int sortBy, Qt::SortOrder order)
+{
+    auto columns = ui->wTableHeader->findChildren<TransferWidgetHeaderItem*>();
+    foreach(auto column, columns)
+    {
+        if(column->sortCriterion() == sortBy)
+        {
+            column->setSortOrder(order);
+            break;
+        }
+    }
+    mProxyModel->sort(sortBy, order);
 }
