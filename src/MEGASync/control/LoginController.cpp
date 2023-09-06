@@ -443,17 +443,6 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
 {
     Q_UNUSED(request)
 
-    if(!mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
-    {
-        setState(FETCH_NODES_FINISHED_ONBOARDING);
-        mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
-        dumpSession();
-    }
-    else
-    {
-        setState(FETCH_NODES_FINISHED);
-    }
-
     if (e->getErrorCode() == mega::MegaError::API_OK)
     {
         //Update/set root node
@@ -472,6 +461,17 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mPreferences->setNeedsFetchNodesInGeneral(true);
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                                                                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+    }
+
+    if(!mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
+    {
+        setState(FETCH_NODES_FINISHED_ONBOARDING);
+        mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
+        dumpSession();
+    }
+    else
+    {
+        setState(FETCH_NODES_FINISHED);
     }
 }
 
