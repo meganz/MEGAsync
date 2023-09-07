@@ -76,7 +76,10 @@ BackupsModel::BackupsModel(QObject* parent)
 
 BackupsModel::~BackupsModel()
 {
-    MegaSyncApp->qmlEngine()->removeImageProvider(QLatin1String("standardicons"));
+    if(auto engine = MegaSyncApp->qmlEngine())
+    {
+        engine->removeImageProvider(QLatin1String("standardicons"));
+    }
 }
 
 QHash<int, QByteArray> BackupsModel::roleNames() const

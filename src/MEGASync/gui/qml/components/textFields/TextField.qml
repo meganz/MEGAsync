@@ -3,6 +3,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
 import QtQuick.Layouts 1.12
 
+
 // Local
 import Common 1.0
 import Components.Texts 1.0 as MegaTexts
@@ -93,6 +94,8 @@ Rectangle {
         bottomPadding: sizes.padding
         placeholderTextColor: Styles.textPlaceholder
         color: enabled ? Styles.textPrimary : Styles.textDisabled
+        Qml.ToolTip.text: textField.text
+        Qml.ToolTip.visible: textField.text && contentWidth > width - leftPadding - rightPadding ? hovered : false
 
         font {
             pixelSize: MegaTexts.Text.Medium

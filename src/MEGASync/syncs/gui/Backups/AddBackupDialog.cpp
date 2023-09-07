@@ -104,9 +104,15 @@ void AddBackupDialog::on_changeButton_clicked()
 
 void AddBackupDialog::onDeviceNameSet(const QString &devName)
 {
-    mUi->backupToLabel->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
-                                + QLatin1Char('/')
-                                + devName);
+    QString textToElide = UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
+                          + QLatin1Char('/')
+                          + devName;
+    QString text = mUi->backupToLabel->fontMetrics().elidedText(textToElide, Qt::ElideMiddle, mUi->folderLineEdit->width() + mUi->changeButton->width());
+    mUi->backupToLabel->setText(text);
+    if(textToElide != text)
+    {
+        mUi->backupToLabel->setToolTip(textToElide);
+    }
 }
 
 void AddBackupDialog::checkNameConflict()

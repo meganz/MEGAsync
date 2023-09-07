@@ -831,8 +831,23 @@ void BackupsWizard::onItemChanged(QStandardItem *item)
 
 void BackupsWizard::onDeviceNameSet(QString deviceName)
 {
-    mUi->lDeviceNameStep1->setText(deviceName);
-    mUi->lDeviceNameStep2->setText(deviceName);
+
+    QString elidedTextStep1 = mUi->lDeviceNameStep1->fontMetrics().elidedText(deviceName, Qt::ElideMiddle, 400);
+    QString elidedTextStep2 = mUi->lDeviceNameStep1->fontMetrics().elidedText(deviceName, Qt::ElideMiddle, 375);
+
+    if(elidedTextStep1 != deviceName)
+    {
+        mUi->lDeviceNameStep1->setToolTip(deviceName);
+    }
+
+    if(elidedTextStep2 != deviceName)
+    {
+        mUi->lDeviceNameStep2->setToolTip(deviceName);
+    }
+
+    mUi->lDeviceNameStep1->setText(elidedTextStep1);
+    mUi->lDeviceNameStep2->setText(elidedTextStep2);
+
     onMyBackupsFolderHandleSet();
     onItemChanged();
 }
@@ -840,9 +855,18 @@ void BackupsWizard::onDeviceNameSet(QString deviceName)
 void BackupsWizard::onMyBackupsFolderHandleSet(mega::MegaHandle)
 {
     // Update path display
-    mUi->leBackupTo->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
-                             + QLatin1Char('/')
-                             + mDeviceNameRequest->getDeviceName());
+    QString text = UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
+                   + QLatin1Char('/')
+                   + mDeviceNameRequest->getDeviceName();
+    mUi->leBackupTo->setText(text);
+    if(mUi->leBackupTo->fontMetrics().width(text) > mUi->leBackupTo->width())
+    {
+        mUi->leBackupTo->setToolTip(text);
+    }
+    else
+    {
+        mUi->leBackupTo->setToolTip(QString());
+    }
 }
 
 void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name)
