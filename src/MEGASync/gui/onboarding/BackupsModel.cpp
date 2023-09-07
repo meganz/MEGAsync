@@ -36,6 +36,8 @@ BackupFolder::BackupFolder(const QString& folder,
     mSize = Utilities::getSizeString(folderSize);
 }
 
+int BackupsModel::CHECK_DIRS_TIME = 1000;
+
 BackupsModel::BackupsModel(QObject* parent)
     : QAbstractListModel(parent)
     , mRoleNames(QAbstractItemModel::roleNames())
@@ -63,6 +65,7 @@ BackupsModel::BackupsModel(QObject* parent)
             this, &BackupsModel::onBackupsCreationFinished);
     connect(mBackupsController.get(), &BackupsController::backupFinished,
             this, &BackupsModel::onBackupFinished);
+    connect(&mCheckDirsTimer, &QTimer::timeout, this, &BackupsModel::checkDirectories);
 
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsModel"), this);
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsController"),
@@ -72,6 +75,9 @@ BackupsModel::BackupsModel(QObject* parent)
                                              QString::fromUtf8("Cannot create WarningLevel in QML"));
 
     MegaSyncApp->qmlEngine()->addImageProvider(QLatin1String("standardicons"), new StandardIconProvider);
+
+    mCheckDirsTimer.setInterval(CHECK_DIRS_TIME);
+    mCheckDirsTimer.start();
 }
 
 BackupsModel::~BackupsModel()
@@ -408,36 +414,45 @@ void BackupsModel::reviewConflicts()
     int duplicatedCount = 0;
     int syncConflictCount = 0;
     int pathRelationCount = 0;
+    int unavailableCount = 0;
 
     while (item != mBackupFolderList.end())
     {
         if(item->mSelected)
         {
-            if(item->mError == DuplicatedName)
+            switch(item->mError)
             {
-                duplicatedCount++;
-            }
-            else if(item->mError == ExistsRemote)
-            {
-                if(firstRemoteNameConflict.isEmpty())
-                {
-                    firstRemoteNameConflict = item->mName;
-                }
-                remoteCount++;
-            }
-            else if(item->mError == SyncConflict)
-            {
-                syncConflictCount++;
-            }
-            else if(item->mError == PathRelation)
-            {
-                pathRelationCount++;
+                case DuplicatedName:
+                    duplicatedCount++;
+                    break;
+                case ExistsRemote:
+                    if(firstRemoteNameConflict.isEmpty())
+                    {
+                        firstRemoteNameConflict = item->mName;
+                    }
+                    remoteCount++;
+                    break;
+                case SyncConflict:
+                    syncConflictCount++;
+                    break;
+                case PathRelation:
+                    pathRelationCount++;
+                    break;
+                case UnavailableDir:
+                    unavailableCount++;
+                    break;
+                default:
+                    break;
             }
         }
         item++;
     }
 
-    mConflictsSize = duplicatedCount + remoteCount + syncConflictCount + pathRelationCount;
+    mConflictsSize = duplicatedCount
+                        + remoteCount
+                        + syncConflictCount
+                        + pathRelationCount
+                        + unavailableCount;
 
     if(syncConflictCount > 0)
     {
@@ -468,10 +483,16 @@ void BackupsModel::reviewConflicts()
                           "Folder names will not change on your computer.");
         setGlobalError(BackupErrorCode::ExistsRemote);
     }
-    else if(pathRelationCount > 1)
+    else if(pathRelationCount > 0)
     {
         conflictText = tr("Backup folders can't contain or be contained by other backup folder");
         setGlobalError(BackupErrorCode::PathRelation);
+    }
+    else if(unavailableCount > 0)
+    {
+        conflictText = tr("Folder can't be backed up as it can't be located. "
+                          "It may have been moved or deleted, or you might not have access.");
+        setGlobalError(BackupErrorCode::UnavailableDir);
     }
     changeConflictsNotificationText(conflictText);
 }
@@ -777,6 +798,44 @@ void BackupsModel::onBackupFinished(const QString& folder, bool done)
     }
 }
 
+bool BackupsModel::checkDirectories()
+{
+    bool success = true;
+    bool reviewErrors = false;
+    for (int row = 0; row < rowCount(); row++)
+    {
+        if (mBackupFolderList[row].mSelected)
+        {
+            if(!QDir(mBackupFolderList[row].mFolder).exists())
+            {
+                setData(index(row, 0), QVariant(BackupsModel::UnavailableDir), ErrorRole);
+                success = false;
+            }
+            else if(mBackupFolderList[row].mError == BackupErrorCode::UnavailableDir)
+            {
+                // If actual error is UnavailableDir and it could be located again
+                // Then, clean this error
+                setData(index(row, 0), QVariant(BackupsModel::None), ErrorRole);
+                reviewErrors = true;
+            }
+        }
+    }
+
+    if(reviewErrors)
+    {
+        // If one or more UnavailableDir errors have been reverted
+        // Then we need to check all the conflicts again
+        check();
+    }
+    else
+    {
+        // Only review the global conflict
+        reviewConflicts();
+    }
+
+    return success;
+}
+
 // ************************************************************************************************
 // * BackupsProxyModel
 // ************************************************************************************************
@@ -818,6 +877,12 @@ bool BackupsProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourc
 
 void BackupsProxyModel::createBackups()
 {
+    if(!backupsModel()->checkDirectories())
+    {
+        return;
+    }
+
+    // All expected errors have been handled
     BackupsController::BackupInfoList candidateList;
     for (int row = 0; row < rowCount(); row++)
     {

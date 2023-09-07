@@ -6,6 +6,7 @@
 
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>
+#include <QTimer>
 
 struct BackupFolder
 {
@@ -65,7 +66,8 @@ public:
         ExistsRemote = 2,
         SyncConflict = 3,
         PathRelation = 4,
-        SDKCreation = 5
+        UnavailableDir = 5,
+        SDKCreation = 6
     };
     Q_ENUM(BackupErrorCode)
 
@@ -107,6 +109,8 @@ public slots:
 
     void change(const QString& oldFolder, const QString& newFolder);
 
+    bool checkDirectories();
+
 signals:
 
     void totalSizeChanged();
@@ -120,6 +124,7 @@ signals:
     void globalErrorChanged();
 
 private:
+    static int CHECK_DIRS_TIME;
 
     QList<BackupFolder> mBackupFolderList;
     QHash<int, QByteArray> mRoleNames;
@@ -131,6 +136,7 @@ private:
     QString mConflictsNotificationText;
     Qt::CheckState mCheckAllState;
     int mGlobalError;
+    QTimer mCheckDirsTimer;
 
     void populateDefaultDirectoryList();
 

@@ -58,6 +58,7 @@ Rectangle {
                 } else {
                     if(mError === BackupsModel.BackupErrorCode.SyncConflict
                         || mError === BackupsModel.BackupErrorCode.PathRelation
+                        || mError === BackupsModel.BackupErrorCode.UnavailableDir
                         || mError === BackupsModel.BackupErrorCode.SDKCreation) {
                         return conflictContent;
                     } else {
@@ -175,6 +176,7 @@ Rectangle {
 
             property bool showChange: mError === BackupsModel.BackupErrorCode.SyncConflict
                                         || mError === BackupsModel.BackupErrorCode.PathRelation
+                                        || mError === BackupsModel.BackupErrorCode.UnavailableDir
                                         || mError === BackupsModel.BackupErrorCode.SDKCreation
 
             Row {
