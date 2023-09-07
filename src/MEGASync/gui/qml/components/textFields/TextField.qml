@@ -95,7 +95,7 @@ Rectangle {
         placeholderTextColor: Styles.textPlaceholder
         color: enabled ? Styles.textPrimary : Styles.textDisabled
         Qml.ToolTip.text: textField.text
-        Qml.ToolTip.visible: textField.text && contentWidth > width - leftPadding - rightPadding ? hovered : false
+        Qml.ToolTip.visible: textField.text && textField.readOnly && textField.contentWidth  > width - leftPadding - rightPadding ? hovered : false
 
         font {
             pixelSize: MegaTexts.Text.Medium
