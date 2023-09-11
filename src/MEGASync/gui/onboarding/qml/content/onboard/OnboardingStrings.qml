@@ -119,6 +119,7 @@ QtObject {
     readonly property string accountWillBeActivated: qsTr("Once confirmed, your account will be activated.")
     readonly property string errorEmptyEmail: qsTr("Enter your email address")
     readonly property string errorEmptyDeviceName: qsTr("Enter a device name")
+    readonly property string errorDeviceNameLimit: qsTr("Names longer that 32 characters are not supported")
     readonly property string storageSpace: qsTr("Storage space:")
 
 }

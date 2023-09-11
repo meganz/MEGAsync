@@ -1991,7 +1991,6 @@ void MegaApplication::checkOverStorageStates()
             if (!mStorageOverquotaDialog)
             {
                 mStorageOverquotaDialog = new UpgradeOverStorage(megaApi, mPricing, mCurrency);
-                DialogOpener::showDialog(mStorageOverquotaDialog);
             }
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
