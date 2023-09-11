@@ -15,6 +15,9 @@ Item {
 
     property string title: ""
     property string text: ""
+    property int time: 0
+
+    signal visibilityTimerFinished
 
     visible: false
     height: content.height
@@ -36,6 +39,14 @@ Item {
         textLoader.sourceComponent = textComponent;
     }
 
+    onVisibleChanged: {
+        if(visible && root.time > 0) {
+            visibilityTimer.start();
+        } else if(visibilityTimer.running) {
+            visibilityTimer.stop();
+        }
+    }
+
     Rectangle {
         id: content
 
@@ -52,7 +63,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: attributes.margin
-            height: textColumn.height + 2 * attributes.margin
+            height: textColumn.height > 0 ? textColumn.height + 2 * attributes.margin : 0
             spacing: attributes.spacing
 
             Loader {
@@ -62,7 +73,16 @@ Item {
             Column {
                 id: textColumn
 
-                height: titleLoader.height + textLoader.height
+                height: {
+                    var h = 0;
+                    if(root.title.length !== 0) {
+                        h += titleLoader.height;
+                    }
+                    if(root.text.length !== 0) {
+                        h += textLoader.height;
+                    }
+                    return h;
+                }
                 width: mainLayout.width - iconLoader.width - mainLayout.spacing
 
                 Loader {
@@ -117,6 +137,17 @@ Item {
         MegaTexts.Text {
             text: root.text
             color: attributes.textColor
+        }
+    }
+
+    Timer {
+        id: visibilityTimer
+
+        interval: root.time
+        running: false
+        repeat: false
+        onTriggered: {
+            visibilityTimerFinished();
         }
     }
 

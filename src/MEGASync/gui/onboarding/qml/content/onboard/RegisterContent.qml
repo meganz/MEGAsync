@@ -12,9 +12,6 @@ import Common 1.0
 //Local
 import Onboard 1.0
 
-// C++
-import PasswordStrengthChecker 1.0
-
 Column {
     id: formColumn
 
@@ -138,37 +135,36 @@ Column {
         MegaTextFields.PasswordTextField {
             id: password
 
+            property bool validPassword: password.textField.text.length >= 8
+                                            && passwordInfoPopup.validPassword
+
             anchors.left: parent.left
             anchors.leftMargin: -password.sizes.focusBorderWidth
             width: email.width
             title: OnboardingStrings.password
             cleanWhenError: false
 
-            textField.onTextChanged: {
-                passwordInfoPopup.content.checkPasswordConditions(text);
-            }
-
             textField.onFocusChanged: {
                 if (textField.focus) {
                     passwordInfoPopup.open();
                     hint.visible = false;
                 } else {
+                    var hintVisible = true;
                     if(textField.text.length < 8) {
                         hint.text = OnboardingStrings.minimum8Chars;
                         hint.styles.textColor = Styles.textError;
-                        hint.visible = true;
                     } else {
-                        var strength = checker.getPasswordStrength(textField.text);
-
-                        if(!passwordInfoPopup.content.allChecked()
-                            || strength === PasswordStrengthChecker.PasswordStrengthVeryWeak
-                            || strength === PasswordStrengthChecker.PasswordStrengthWeak) {
-
+                        if(!passwordInfoPopup.validPassword) {
+                            hint.text = OnboardingStrings.passwordEasilyGuessed;
+                            hint.styles.textColor = Styles.textError;
+                        } else if(!passwordInfoPopup.allChecked) {
                             hint.text = OnboardingStrings.passwordEasilyGuessed;
                             hint.styles.textColor = Styles.textWarning;
-                            hint.visible = true;
+                        } else {
+                            hintVisible = false;
                         }
                     }
+                    hint.visible = hintVisible;
                     passwordInfoPopup.close();
                 }
             }
@@ -178,11 +174,9 @@ Column {
 
                 x: -335
                 y: -54
+                password: password.textField.text
             }
 
-            PasswordStrengthChecker {
-                id: checker
-            }
         }
 
         MegaTextFields.PasswordTextField {

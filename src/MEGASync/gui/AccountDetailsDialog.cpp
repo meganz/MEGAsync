@@ -206,7 +206,7 @@ void AccountDetailsDialog::refresh()
                       : 0);
         mUi->pbCloudDrive->setValue(std::min(PRECISION, parts));
 
-        mUi->lUsedCloudDrive->setText(Utilities::getSizeString(usedStorage));
+        mUi->lUsedCloudDrive->setText(Utilities::getSizeString(usedCloudDriveStorage));
 
         // ---- Vault usage
         auto usedVaultStorage = preferences->vaultStorage();

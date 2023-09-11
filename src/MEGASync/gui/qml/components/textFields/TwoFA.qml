@@ -35,18 +35,6 @@ ColumnLayout {
 
     signal allDigitsFilled
 
-    onHasErrorChanged: {
-        if(hasError)
-        {
-            digit1.textField.text = "";
-            digit2.textField.text = "";
-            digit3.textField.text = "";
-            digit4.textField.text = "";
-            digit5.textField.text = "";
-            digit6.textField.text = "";
-        }
-    }
-
     spacing: 15
     Layout.leftMargin: -digit1.sizes.focusBorderWidth
 
@@ -114,6 +102,18 @@ ColumnLayout {
         Layout.preferredHeight: notification.height
         attributes.type: MegaTexts.NotificationInfo.Type.Error
         attributes.icon.source: Images.lock
+        time: 2000
+
+        onVisibilityTimerFinished: {
+            hasError = false;
+            digit1.textField.text = "";
+            digit2.textField.text = "";
+            digit3.textField.text = "";
+            digit4.textField.text = "";
+            digit5.textField.text = "";
+            digit6.textField.text = "";
+            digit1.textField.forceActiveFocus();
+        }
     }
 
     Shortcut {
@@ -122,6 +122,7 @@ ColumnLayout {
             pastePin();
         }
     }
+
 }
 
 

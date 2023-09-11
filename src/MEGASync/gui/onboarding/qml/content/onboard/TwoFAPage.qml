@@ -7,11 +7,11 @@ import ApiEnums 1.0
 import LoginController 1.0
 
 TwoFAPageForm {
-
     id: twoFAPageId
+
     signUpButton.onClicked: {
         LoginControllerAccess.state = LoginController.SIGN_UP;
-        LoginControllerAccess.cancelLogin2FA();
+        LoginControllerAccess.email = "";
     }
 
     loginButton.onClicked: {
@@ -29,20 +29,19 @@ TwoFAPageForm {
     readonly property string normal: "normal"
 
     function getState() {
-        switch(LoginControllerAccess.state)
-        {
-        case LoginController.LOGGING_IN_2FA_VALIDATING:
-        {
-            return validating2FA;
+        switch(LoginControllerAccess.state) {
+            case LoginController.LOGGING_IN_2FA_VALIDATING:
+                return validating2FA;
+            case LoginController.FETCHING_NODES_2FA:
+                return fetchingNodes2FA;
+            case LoginController.LOGGING_IN_2FA_FAILED:
+                return validating2FAFailed;
+            default:
+                return normal;
         }
-        case LoginController.FETCHING_NODES_2FA:
-        {
-            return fetchingNodes2FA;
-        }
-        }
-        return normal;
     }
-    state: getState();
+
+    state: getState()
     states: [
         State {
             name: normal
@@ -64,6 +63,14 @@ TwoFAPageForm {
             PropertyChanges {
                 target: loginButton
                 icons.busyIndicatorVisible: true
+            }
+        },
+        State {
+            name: validating2FAFailed
+            extend: normal
+            PropertyChanges {
+                target: twoFAField
+                hasError: true
             }
         },
         State {

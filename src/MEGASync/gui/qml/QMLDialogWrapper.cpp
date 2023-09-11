@@ -102,14 +102,12 @@ QRect QmlDialogWrapperBase::geometry()
 
 bool QmlDialogWrapperBase::isMaximized()
 {
-    QWindow::Visibility state = qvariant_cast<QWindow::Visibility>(QQmlProperty::read(mWindow, QString::fromUtf8("visibility")));
-    return (state & QWindow::Maximized);
+    return (mWindow->windowState() & Qt::WindowState::WindowMaximized);
 }
 
 bool QmlDialogWrapperBase::isMinimized()
 {
-    QWindow::Visibility state = qvariant_cast<QWindow::Visibility>(QQmlProperty::read(mWindow, QString::fromUtf8("visibility")));
-     return (state & QWindow::Minimized);
+    return (mWindow->windowState() & Qt::WindowState::WindowMinimized);
 }
 
 void QmlDialogWrapperBase::show()

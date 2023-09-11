@@ -4,6 +4,7 @@
 #include "Preferences/Preferences.h"
 #include "gui/PlanWidget.h"
 #include "MegaApplication.h"
+#include "DialogOpener.h"
 
 using namespace mega;
 
@@ -154,7 +155,7 @@ void UpgradeOverStorage::updatePlans()
         {
             card->setPriceFontSizePx(minPriceFontSize);
         }
-        show();
+        DialogOpener::showDialog<UpgradeOverStorage>(this);
     }
 }
 

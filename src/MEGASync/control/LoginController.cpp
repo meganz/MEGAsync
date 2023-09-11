@@ -15,7 +15,6 @@ LoginController::LoginController(QObject *parent)
       , mPreferences(Preferences::instance())
       , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
       , mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
-      , mFirstTime(false)
       , mEmailError(false)
       , mEmailErrorMsg(QString())
       , mPasswordError(false)
@@ -65,11 +64,6 @@ void LoginController::changeRegistrationEmail(const QString &email)
 void LoginController::login2FA(const QString &pin)
 {
     mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(), mPassword.toUtf8().constData(), pin.toUtf8().constData());
-}
-
-void LoginController::cancelLogin2FA()
-{
-    setState(LOGGED_OUT);
 }
 
 QString LoginController::getEmail() const
@@ -284,7 +278,10 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     }
     case mega::MegaRequest::TYPE_CREATE_ACCOUNT:
     {
-        setState(CREATING_ACCOUNT);
+        if(request->getParamType() == mega::MegaApi::CREATE_ACCOUNT)
+        {
+            setState(CREATING_ACCOUNT);
+        }
         break;
     }
     case mega::MegaRequest::TYPE_FETCH_NODES:
@@ -306,14 +303,7 @@ void LoginController::onEvent(mega::MegaApi *, mega::MegaEvent *event)
 {
     if(event->getType() == mega::MegaEvent::EVENT_CONFIRM_USER_EMAIL)
     {
-        emailConfirmation(QString::fromLatin1(event->getText()));
-    }
-}
-
-void LoginController::emailConfirmation(const QString& email)
-{
-    if(mEmail == email)
-    {
+        setEmail(QString::fromLatin1(event->getText()));
         mPreferences->removeEphemeralCredentials();
         setState(EMAIL_CONFIRMED);
         emit emailConfirmed();
@@ -324,19 +314,11 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
 {
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
-        std::unique_ptr<char []> session(mMegaApi->dumpSession());
-        if (session)
-        {
-            mPreferences->setSession(QString::fromUtf8(session.get()));
-        }
-        bool logged = mPreferences->logged();
-        mFirstTime = !logged && !mPreferences->hasEmail(QString::fromUtf8(request->getEmail()));
-        // We will proceed with a new login
+        mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(request->getEmail()));
 
-        auto email = QString::fromUtf8(request->getEmail());
-        mPreferences->setEmailAndGeneralSettings(email);
+        dumpSession();
 
-        fetchNodes(email);
+        fetchNodes(mEmail);
         if (!mPreferences->hasLoggedIn())
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -362,7 +344,7 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
             case mega::MegaError::API_EMFAREQUIRED:
             {
                 mPassword = QString::fromUtf8(request->getPassword());
-                mEmail = QString::fromUtf8(request->getEmail());
+                setEmail(QString::fromLatin1(request->getEmail()));
                 setState(LOGGING_IN_2FA_REQUIRED);
                 break;
             }
@@ -399,8 +381,7 @@ void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaEr
 {
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
-        mEmail = QString::fromUtf8(request->getEmail());
-        emit emailChanged();
+        setEmail(QString::fromLatin1(request->getEmail()));
         mName = QString::fromUtf8(request->getName());
         mLastName = QString::fromUtf8(request->getText());
         EphemeralCredentials credentials;
@@ -422,9 +403,13 @@ void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
         EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
-        mEmail = credentials.email;
-        emit emailChanged();
+        setEmail(credentials.email);
         setState(WAITING_EMAIL_CONFIRMATION);
+    }
+    else
+    {
+        mPreferences->removeEphemeralCredentials();
+        setState(LOGGED_OUT);
     }
 }
 
@@ -436,11 +421,10 @@ void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError
     }
     else
     {
-        mEmail = QString::fromUtf8(request->getEmail());
+        setEmail(QString::fromLatin1(request->getEmail()));
         EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
         credentials.email = mEmail;
         mPreferences->setEphemeralCredentials(credentials);
-        emit emailChanged();
         emit changeRegistrationEmailFinished(true);
     }
 }
@@ -448,6 +432,7 @@ void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError
 void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *e)
 {
     Q_UNUSED(request)
+
     if (e->getErrorCode() == mega::MegaError::API_OK)
     {
         //Update/set root node
@@ -467,9 +452,12 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                                                                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
     }
-    if(mFirstTime)
+
+    if(!mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
     {
         setState(FETCH_NODES_FINISHED_ONBOARDING);
+        mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
+        dumpSession();
     }
     else
     {
@@ -699,9 +687,30 @@ void LoginController::loadSyncExclusionRules(const QString& email)
     }
 }
 
+void LoginController::dumpSession()
+{
+    if(mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
+    {
+        std::unique_ptr<char []> session(mMegaApi->dumpSession());
+        if (session)
+        {
+            mPreferences->setSession(QString::fromUtf8(session.get()));
+        }
+    }
+}
+
 QString LoginController::getRepeatedEmailMsg()
 {
     return tr("Another user with this email address already exists. Try again.");
+}
+
+void LoginController::setEmail(const QString &email)
+{
+    if(mEmail != email)
+    {
+        mEmail = email;
+        emit emailChanged();
+    }
 }
 
 long long LoginController::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)

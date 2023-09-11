@@ -19,7 +19,9 @@ public:
     Q_INVOKABLE void openFolderSelector();
     Q_INVOKABLE const QString getFolder();
     Q_INVOKABLE void reset();
-    QString getDefaultPath();
+    bool createDefault();
+
+    static QString DEFAULT_FOLDER;
 
 private:
     QString mFolder;
@@ -40,6 +42,7 @@ public:
     Q_INVOKABLE void openFolderSelector();
     Q_INVOKABLE const mega::MegaHandle getHandle();
     Q_INVOKABLE void reset();
+    Q_INVOKABLE const QString getFolder();
 
 private:
     mega::MegaHandle mFolderHandle;

@@ -7,11 +7,12 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include <DialogOpener.h>
 
+QString ChooseLocalFolder::DEFAULT_FOLDER(QString::fromUtf8("/MEGA"));
 
 ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
     : QObject(parent)
-    , mFolderName(QString())
-    , mFolder(getDefaultPath())
+    , mFolderName(DEFAULT_FOLDER)
+    , mFolder(QString(DEFAULT_FOLDER))
 {
 }
 
@@ -23,7 +24,7 @@ void ChooseLocalFolder::openFolderSelector()
             QString fPath = selection.first();
             mFolder = (QDir::toNativeSeparators(QDir(fPath).canonicalPath()));
             mFolderName = QDir::fromNativeSeparators(fPath).split(QString::fromLatin1("/")).last().prepend(QString::fromLatin1("/"));
-            emit folderChanged(mFolderName);
+            emit folderChanged(mFolder);
         }
     });
 }
@@ -35,22 +36,29 @@ const QString ChooseLocalFolder::getFolder()
 
 void ChooseLocalFolder::reset()
 {
-    mFolderName = QString();
-    mFolder = getDefaultPath();
+    mFolderName = DEFAULT_FOLDER;
+    mFolder = DEFAULT_FOLDER;
     emit folderChanged(mFolderName);
 }
 
-QString ChooseLocalFolder::getDefaultPath()
+bool ChooseLocalFolder::createDefault()
 {
-    const auto standardPaths (QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation));
-    QDir dir (QDir::cleanPath(standardPaths.first()));
-    return QDir::toNativeSeparators(dir.canonicalPath());
+    bool success = true;
+    if(mFolder.isEmpty())
+    {
+        QString defaultFolderPath = Utilities::getDefaultBasePath();
+        defaultFolderPath.append(DEFAULT_FOLDER);
+        defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
+        QDir defaultFolder(defaultFolderPath);
+        success = defaultFolder.mkpath(QString::fromUtf8("."));
+        mFolder = QDir::toNativeSeparators(QDir(defaultFolder).canonicalPath());
+    }
+    return success;
 }
-
 
 ChooseRemoteFolder::ChooseRemoteFolder(QObject *parent)
     : QObject(parent)
-    , mFolderName(QString())
+    , mFolderName(ChooseLocalFolder::DEFAULT_FOLDER)
     , mFolderHandle(mega::INVALID_HANDLE)
 {
 }
@@ -88,5 +96,10 @@ void ChooseRemoteFolder::reset()
 {
     mFolderHandle = mega::INVALID_HANDLE;
     mFolderName = QString();
-    emit folderChanged(QString());
+    emit folderChanged(mFolderName);
+}
+
+const QString ChooseRemoteFolder::getFolder()
+{
+    return mFolderName;
 }

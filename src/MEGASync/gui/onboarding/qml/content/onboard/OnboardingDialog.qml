@@ -33,4 +33,5 @@ OnboardingQmlDialog {
 
         anchors.fill: parent
     }
+
 }

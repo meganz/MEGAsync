@@ -27,7 +27,7 @@ Rectangle {
     width: parent.width
     radius: tableRadius
 
-    color: "white"
+    color: Styles.pageBackground
 
     Rectangle {
         id: borderRectangle
@@ -42,6 +42,8 @@ Rectangle {
     }
 
     ListView {
+        id: backupsListView
+
         model: BackupsModel
         anchors.fill: parent
         headerPositioning: ListView.OverlayHeader
@@ -60,7 +62,7 @@ Rectangle {
             height: headerFooterHeight
             anchors.left: parent.left
             anchors.right: parent.right
-            color: "white"
+            color: Styles.pageBackground
             radius: tableRadius
             z: 3
 
@@ -79,6 +81,7 @@ Rectangle {
                     text: OnboardingStrings.selectAll
                     tristate: true
                     sizes.spacing: 12
+                    enabled: backupsListView.count > 0
 
                     onCheckStateChanged: {
                         if (!selectAll.fromModel) {
@@ -129,7 +132,7 @@ Rectangle {
             anchors.right: parent.right
             height: headerFooterHeight
             radius: tableRadius
-            color: "white"
+            color: Styles.pageBackground
             z: 3
 
             RowLayout {

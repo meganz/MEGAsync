@@ -8,29 +8,23 @@ import Onboard 1.0
 import PasswordStrengthChecker 1.0
 
 PasswordInfoContentForm {
+    id: passwordInfoContentForm
 
-    function allChecked() {
-        return upperLowerCaseChecked && numberSpecialCharacterChecked;
-    }
+    property bool allChecked: upperLowerCaseChecked && numberSpecialCharacterChecked
+    property bool upperLowerCaseChecked: (RegexExpressions.upperCaseLeters).test(password)
+                                            && (RegexExpressions.lowerCaseLeters).test(password)
+    property bool numberSpecialCharacterChecked: (RegexExpressions.numbers).test(password)
+                                                 || (RegexExpressions.specialCharacters).test(password)
+    property bool validPassword: checker.strength >= PasswordStrengthChecker.PASSWORD_STRENGTH_WEAK
+                                    && checker.strength <= PasswordStrengthChecker.PASSWORD_STRENGTH_STRONG
 
-    function checkPasswordConditions(password) {
-        strengthTitle.font.strikeout = (password.length > 8);
-        upperLowerCaseChecked = hasUpperAndLowerCase(password);
-        numberSpecialCharacterChecked = hasNumberOrSpecialCharacter(password);
-    }
-
-    function hasUpperAndLowerCase(password) {
-        return ((RegexExpressions.upperCaseLeters).test(password))
-                && ((RegexExpressions.lowerCaseLeters).test(password))
-    }
-
-    function hasNumberOrSpecialCharacter(password) {
-        return ((RegexExpressions.numbers).test(password))
-                || ((RegexExpressions.specialCharacters).test(password));
-    }
+    conditionUpperLowerCase.checked: upperLowerCaseChecked
+    conditionNumberSpecialCharacter.checked: numberSpecialCharacterChecked
 
     PasswordStrengthChecker {
         id: checker
+
+        password: passwordInfoContentForm.password
     }
 
 }

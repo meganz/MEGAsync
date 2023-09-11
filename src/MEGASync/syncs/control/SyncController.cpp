@@ -393,6 +393,13 @@ SyncController::Syncability SyncController::areLocalFolderAccessRightsOk(const Q
 // In case of several warnings, only the last one is returned.
 SyncController::Syncability SyncController::isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
 {
+    // Check if the directory exists
+    QDir dir(path);
+    if (!dir.exists()) {
+        message = tr("The local path is unavailable");
+        return Syncability::CANT_SYNC;
+    }
+
     Syncability syncability (Syncability::CAN_SYNC);
 
     // First check if the path is allowed
@@ -421,62 +428,62 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
     std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
     switch (err->getErrorCode())
     {
-    case MegaError::API_OK:
-    {
-        syncability = Syncability::CAN_SYNC;
-        break;
-    }
-    case MegaError::API_EACCESS:
-    {
-        switch (err->getSyncError())
+        case MegaError::API_OK:
         {
-        case SyncError::SHARE_NON_FULL_ACCESS:
-        {
-            message = tr("You don't have enough permissions for this remote folder.");
+            syncability = Syncability::CAN_SYNC;
             break;
         }
-        case SyncError::REMOTE_NODE_INSIDE_RUBBISH:
+        case MegaError::API_EACCESS:
         {
-            message = tr("Folder can't be synced as it's in the MEGA Rubbish bin.");
+            switch (err->getSyncError())
+            {
+                case SyncError::SHARE_NON_FULL_ACCESS:
+                {
+                    message = tr("You don't have enough permissions for this remote folder.");
+                    break;
+                }
+                case SyncError::REMOTE_NODE_INSIDE_RUBBISH:
+                {
+                    message = tr("Folder can't be synced as it's in the MEGA Rubbish bin.");
+                    break;
+                }
+                case SyncError::INVALID_REMOTE_TYPE:
+                {
+                    message = tr("This selection can't be synced as it’s a file.");
+                    break;
+                }
+            }
             break;
         }
-        case SyncError::INVALID_REMOTE_TYPE:
+        case MegaError::API_EEXIST:
+        {
+            switch (err->getSyncError())
+            {
+                case SyncError::ACTIVE_SYNC_SAME_PATH:
+                {
+                    message = tr("The selected MEGA folder is already synced.");
+                    break;
+                }
+                case SyncError::ACTIVE_SYNC_BELOW_PATH:
+                {
+                    message = tr("Folder contents already synced.");
+                    break;
+                }
+                case SyncError::ACTIVE_SYNC_ABOVE_PATH:
+                {
+                    message = tr("Folder already synced.");
+                    break;
+                }
+            }
+            break;
+        }
+        case MegaError::API_ENOENT:
+        case MegaError::API_EARGS:
+        default:
         {
             message = tr("Invalid remote path.");
             break;
         }
-        }
-        break;
-    }
-    case MegaError::API_EEXIST:
-    {
-        switch (err->getSyncError())
-        {
-        case SyncError::ACTIVE_SYNC_SAME_PATH:
-        {
-            message = tr("The selected MEGA folder is already synced.");
-            break;
-        }
-        case SyncError::ACTIVE_SYNC_BELOW_PATH:
-        {
-            message = tr("Folder contents already synced.");
-            break;
-        }
-        case SyncError::ACTIVE_SYNC_ABOVE_PATH:
-        {
-            message = tr("Folder already synced.");
-            break;
-        }
-        }
-        break;
-    }
-    case MegaError::API_ENOENT:
-    case MegaError::API_EARGS:
-    default:
-    {
-        message = tr("Invalid remote path.");
-        break;
-    }
     }
     return (syncability);
 }
