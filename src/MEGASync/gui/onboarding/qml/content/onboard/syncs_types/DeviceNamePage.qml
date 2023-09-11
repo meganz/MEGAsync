@@ -4,10 +4,17 @@ import Onboard 1.0
 // C++
 import QmlDeviceName 1.0
 
+import Common 1.0
+
+
 DeviceNamePageForm {
 
     footerButtons.rightPrimary.onClicked: {
         var emptyText = deviceNameTextField.text.length === 0;
+        if(emptyText)
+        {
+            deviceNameTextField.hint.styles.textColor = Styles.textError;
+        }
         deviceNameTextField.error = emptyText;
         deviceNameTextField.hint.text = emptyText ? OnboardingStrings.errorEmptyDeviceName : "";
         deviceNameTextField.hint.visible = emptyText;
@@ -25,6 +32,13 @@ DeviceNamePageForm {
         deviceNameTextField.error = false;
         deviceNameTextField.hint.text = "";
         deviceNameTextField.hint.visible = false;
+
+        if(deviceNameTextField.text.length >= deviceNameTextField.textField.maximumLength)
+        {
+            deviceNameTextField.hint.styles.textColor = Styles.textSecondary;
+            deviceNameTextField.hint.text = OnboardingStrings.errorDeviceNameLimit;
+            deviceNameTextField.hint.visible = true;
+        }
     }
 
     QmlDeviceName {

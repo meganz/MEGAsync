@@ -47,8 +47,10 @@ SyncsPage {
             Layout.preferredWidth: parent.width + 2 * deviceNameTextField.sizes.focusBorderWidth
             title: OnboardingStrings.deviceName
             textField.text: deviceName.name
+            textField.maximumLength: 32//32 is non-technical length limit for device name
+                                       //UX choice
+            hint.icon: ""
             sizes: MegaTextFields.LargeSizes {}
-            hint.icon: Images.alertTriangle
         }
     }
 }
