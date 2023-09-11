@@ -27,7 +27,7 @@ Rectangle {
     width: parent.width
     radius: tableRadius
 
-    color: "white"
+    color: Styles.pageBackground
 
     Rectangle {
         id: borderRectangle
@@ -60,7 +60,7 @@ Rectangle {
             height: headerFooterHeight
             anchors.left: parent.left
             anchors.right: parent.right
-            color: "white"
+            color: Styles.pageBackground
             radius: tableRadius
             z: 3
 
@@ -129,7 +129,7 @@ Rectangle {
             anchors.right: parent.right
             height: headerFooterHeight
             radius: tableRadius
-            color: "white"
+            color: Styles.pageBackground
             z: 3
 
             RowLayout {

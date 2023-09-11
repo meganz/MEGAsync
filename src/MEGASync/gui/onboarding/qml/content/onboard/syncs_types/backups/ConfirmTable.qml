@@ -27,7 +27,7 @@ Rectangle {
             ? 192 : 192 - headerFooterHeight + listView.footerItem.height
     width: parent.width
     radius: tableRadius
-    color: "white"
+    color: Styles.pageBackground
 
     Rectangle {
         id: borderRectangle
@@ -62,7 +62,7 @@ Rectangle {
             height: headerFooterHeight
             anchors.left: parent.left
             anchors.right: parent.right
-            color: "white"
+            color: Styles.pageBackground
             radius: tableRectangle.radius
             z: 3
 
@@ -126,7 +126,7 @@ Rectangle {
             anchors.right: parent.right
             height: notificationItem.height
             radius: tableRadius
-            color: "white"
+            color: Styles.pageBackground
             z: 3
             visible: BackupsModel.mGlobalError !== BackupsModel.BackupErrorCode.None
 

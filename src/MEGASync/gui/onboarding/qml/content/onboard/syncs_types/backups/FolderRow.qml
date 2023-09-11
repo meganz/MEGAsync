@@ -44,7 +44,7 @@ Rectangle {
         anchors.rightMargin: internalMargin
         anchors.leftMargin: internalMargin
         radius: internalMargin
-        color: (index % 2 === 0) ? "transparent" : Styles.surface2
+        color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface2
 
         Loader {
             id: content
