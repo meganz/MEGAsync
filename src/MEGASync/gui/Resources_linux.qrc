@@ -1470,5 +1470,14 @@
         <file>images/StalledIssues/solved-issues-solid.png</file>
         <file>images/StalledIssues/solved-issues-solid@2x.png</file>
         <file>images/StalledIssues/solved-issues-solid@3x.png</file>
+        <file>images/StalledIssues/help-circle-link.png</file>
+        <file>images/StalledIssues/help-circle-link@2x.png</file>
+        <file>images/StalledIssues/help-circle-link@3x.png</file>
+        <file>images/StalledIssues/help-stalled-issues.png</file>
+        <file>images/StalledIssues/help-stalled-issues@2x.png</file>
+        <file>images/StalledIssues/help-stalled-issues@3x.png</file>
+        <file>images/StalledIssues/settings-stalled-issues.png</file>
+        <file>images/StalledIssues/settings-stalled-issues@2x.png</file>
+        <file>images/StalledIssues/settings-stalled-issues@3x.png</file>
     </qresource>
 </RCC>

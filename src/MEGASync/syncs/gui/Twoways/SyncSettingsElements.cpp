@@ -44,6 +44,9 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
         syncStallModeSelectorUI->AdvanceSelector->setChecked(true);
     }
 
+    connect(syncStallModeSelectorUI->LearnMoreButton, &QPushButton::clicked,[](){
+        Utilities::openUrl(QUrl::fromLocalFile(Utilities::SYNC_SUPPORT_URL));
+    });
     connect(syncStallModeSelectorUI->SmartSelector, &QRadioButton::toggled, this, &SyncSettingsElements::onSmartModeSelected);
     connect(syncStallModeSelectorUI->AdvanceSelector, &QRadioButton::toggled, this, &SyncSettingsElements::onAdvanceModeSelected);
 

@@ -31,6 +31,7 @@ QHash<QString, QString> Utilities::languageNames;
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
+const QString Utilities::SYNC_SUPPORT_URL = QString::fromLatin1("https://help.mega.io/installs-apps/desktop-syncing/sync-v2");
 
 const unsigned long long KB = 1024;
 const unsigned long long MB = 1024 * KB;

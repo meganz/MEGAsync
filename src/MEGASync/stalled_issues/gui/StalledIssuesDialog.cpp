@@ -62,6 +62,10 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
         MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
     });
 
+    connect(ui->HelpButton, &QPushButton::clicked, this, [](){
+        Utilities::openUrl(QUrl::fromLocalFile(Utilities::SYNC_SUPPORT_URL));
+    });
+
     connect(ui->SelectButton, &QPushButton::clicked, this, [this](){
         auto valueChanged = setNewModeToPreferences();
         showView(valueChanged);

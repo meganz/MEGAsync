@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>253</width>
-    <height>137</height>
+    <width>359</width>
+    <height>154</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,70 +54,156 @@ font-size: 12px;
      <property name="title">
       <string>Sync stall mode</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <item>
-       <widget class="QRadioButton" name="SmartSelector">
-        <property name="text">
-         <string>Smart</string>
-        </property>
+       <widget class="QWidget" name="SelectorsContainer" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>15</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QRadioButton" name="SmartSelector">
+           <property name="text">
+            <string>Smart</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="SmartDescription">
+           <property name="text">
+            <string>Let MEGA solve sync issues automatically</string>
+           </property>
+           <property name="indent">
+            <number>15</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>10</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="AdvanceSelector">
+           <property name="text">
+            <string>Advanced</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="AdvanceDescription">
+           <property name="text">
+            <string>Get full control of the sync issues</string>
+           </property>
+           <property name="indent">
+            <number>15</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="SmartDescription">
-        <property name="text">
-         <string>Let MEGA solve sync issues automatically</string>
-        </property>
-        <property name="indent">
-         <number>20</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>10</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="AdvanceSelector">
-        <property name="text">
-         <string>Advanced</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="AdvanceDescription">
-        <property name="text">
-         <string>Get full control of the sync issues</string>
-        </property>
-        <property name="indent">
-         <number>19</number>
-        </property>
+       <widget class="QWidget" name="LearnMoreContainer" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item alignment="Qt::AlignBottom">
+          <widget class="QWidget" name="ButtonContainer" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="LearnMoreButton">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Learn more</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
