@@ -213,6 +213,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/SearchLineEdit.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/FolderBinder.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/BindFolderDialog.ui
+	    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/IgnoresEditingDialog.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncAccountFullMessage.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncStallModeSelector.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncSettingsUIBase.ui
@@ -386,6 +387,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/SyncSettingsUIBase.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.h
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.h
+	${MEGAsyncDir}/syncs/gui/Twoways/IgnoresEditingDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.h
@@ -716,6 +718,7 @@ set (SRCS
     ${MEGAsyncDir}/syncs/gui/SyncSettingsUIBase.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.cpp
+	${MEGAsyncDir}/syncs/gui/Twoways/IgnoresEditingDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.cpp

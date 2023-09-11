@@ -13,6 +13,7 @@ SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
            $$PWD/gui/SyncTooltipCreator.cpp \
            $$PWD/gui/SyncsMenu.cpp \
            $$PWD/gui/Twoways/BindFolderDialog.cpp \
+		   $$PWD/gui/Twoways/IgnoresEditingDialog.cpp \
            $$PWD/gui/Twoways/FolderBinder.cpp \
            $$PWD/gui/Twoways/SyncTableView.cpp \
            $$PWD/gui/Twoways/SyncSettingsUI.cpp \
@@ -35,6 +36,7 @@ HEADERS += $$PWD/gui/Backups/AddBackupDialog.h \
            $$PWD/gui/SyncTooltipCreator.h \
            $$PWD/gui/SyncsMenu.h \
            $$PWD/gui/Twoways/BindFolderDialog.h \
+           $$PWD/gui/Twoways/IgnoresEditingDialog.h \
            $$PWD/gui/Twoways/FolderBinder.h \
            $$PWD/gui/Twoways/SyncTableView.h \
            $$PWD/gui/Twoways/SyncSettingsUI.h \
@@ -50,6 +52,7 @@ win32 {
     RESOURCES += $$PWD/../gui/Resources_win.qrc
     FORMS    += $$PWD/gui/Twoways/win/FolderBinder.ui \
                 $$PWD/gui/Twoways/win/BindFolderDialog.ui \
+				$$PWD/gui/Twoways/win/IgnoresEditingDialog.ui \
                 $$PWD/gui/Twoways/win/SyncSettingsUIBase.ui \
                 $$PWD/gui/Twoways/win/SyncAccountFullMessage.ui \
                 $$PWD/gui/Twoways/win/SyncStallModeSelector.ui \
@@ -66,6 +69,7 @@ macx {
     RESOURCES += $$PWD/../gui/Resources_macx.qrc
     FORMS    += $$PWD/gui/Twoways/macx/FolderBinder.ui \
                 $$PWD/gui/Twoways/macx/BindFolderDialog.ui \
+				$$PWD/gui/Twoways/macx/IgnoresEditingDialog.ui \
                 $$PWD/gui/Twoways/macx/SyncAccountFullMessage.ui \
                 $$PWD/gui/Twoways/macx/SyncSettingsUIBase.ui \
                 $$PWD/gui/Twoways/macx/SyncStallModeSelector.ui \
@@ -82,6 +86,7 @@ unix:!macx {
     RESOURCES += $$PWD/../gui/Resources_linux.qrc
     FORMS    += $$PWD/gui/Twoways/linux/FolderBinder.ui \
                 $$PWD/gui/Twoways/linux/BindFolderDialog.ui \
+				$$PWD/gui/Twoways/linux/IgnoresEditingDialog.ui \
                 $$PWD/gui/Twoways/linux/SyncAccountFullMessage.ui \
                 $$PWD/gui/Twoways/linux/SyncSettingsUIBase.ui \
                 $$PWD/gui/Twoways/linux/SyncStallModeSelector.ui \

@@ -159,6 +159,22 @@ border-right:0px;
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="bEditExclusions">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
+           <property name="text">
+            <string>Edit exclusion rules</string>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="hSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
