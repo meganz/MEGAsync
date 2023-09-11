@@ -42,6 +42,8 @@ Rectangle {
     }
 
     ListView {
+        id: backupsListView
+
         model: BackupsModel
         anchors.fill: parent
         headerPositioning: ListView.OverlayHeader
@@ -79,6 +81,7 @@ Rectangle {
                     text: OnboardingStrings.selectAll
                     tristate: true
                     sizes.spacing: 12
+                    enabled: backupsListView.count > 0
 
                     onCheckStateChanged: {
                         if (!selectAll.fromModel) {
