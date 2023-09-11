@@ -155,7 +155,7 @@ private slots:
     void onLocalFileModified(const QString&);
 
 private:
-    std::shared_ptr<StalledIssueVariant> getStalledIssueByRow(int row) const;
+    StalledIssueVariant getStalledIssueByRow(int row) const;
 
     void removeRows(QModelIndexList &indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
@@ -171,7 +171,7 @@ private:
     void sendFixingIssuesMessage(int issue, int totalIssues);
 
     void solveListOfIssues(const QModelIndexList& list, std::function<bool(int)> solveFunc);
-    void issueSolved(std::shared_ptr<StalledIssueVariant> issue);
+    void issueSolved(const StalledIssueVariant &issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
     void operator=(const StalledIssuesModel&) = delete;
@@ -191,7 +191,7 @@ private:
 
     mutable StalledIssuesVariantList mStalledIssues;
     mutable StalledIssuesVariantList mSolvedStalledIssues;
-    mutable QHash<StalledIssueVariant*, int> mStalledIssuesByOrder;
+    mutable QHash<const StalledIssue*, int> mStalledIssuesByOrder;
 
     QHash<int, int> mCountByFilterCriterion;
 

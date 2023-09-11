@@ -403,7 +403,7 @@ private:
 
 Q_DECLARE_METATYPE(StalledIssueVariant)
 
-using StalledIssuesVariantList = QList<std::shared_ptr<StalledIssueVariant>>;
+using StalledIssuesVariantList = QList<StalledIssueVariant>;
 Q_DECLARE_METATYPE(StalledIssuesVariantList)
 
 #endif // STALLEDISSUE_H
