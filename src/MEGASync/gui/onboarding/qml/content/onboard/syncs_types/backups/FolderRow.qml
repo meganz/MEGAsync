@@ -21,7 +21,7 @@ import ChooseLocalFolder 1.0
 Rectangle {
     id: root
 
-    readonly property int totalHeight: 32
+    readonly property int totalHeight: 34
     readonly property int horizontalMargin: 8
     readonly property int internalMargin: 8
     readonly property int extraMarginWhenHintShowed: 5
@@ -44,7 +44,7 @@ Rectangle {
         anchors.rightMargin: internalMargin
         anchors.leftMargin: internalMargin
         radius: internalMargin
-        color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface2
+        color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface1
 
         Loader {
             id: content
@@ -135,7 +135,7 @@ Rectangle {
                 }
             }
 
-            MegaTexts.Text {
+            MegaTexts.SecondaryText {
                 width: contentRoot.sizeTextWidth
                 anchors.right: parent.right
                 anchors.top: parent.top
@@ -146,7 +146,6 @@ Rectangle {
                 verticalAlignment: Qt.AlignVCenter
                 maximumLineCount: 1
                 wrapMode: Text.WrapAnywhere
-                color: enabled ? Styles.textSecondary : Styles.textDisabled
             }
 
             MouseArea {
@@ -242,7 +241,7 @@ Rectangle {
                 }
             }
 
-            Row {
+            Item {
                 id: buttonRow
 
                 anchors.right: parent.right
@@ -250,6 +249,10 @@ Rectangle {
                 anchors.bottom: parent.bottom
 
                 MegaButtons.SecondaryButton {
+                    anchors.right: removeButton.left
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.rightMargin: -sizes.focusBorderWidth
                     text: contentRoot.showChange ? OnboardingStrings.changeFolder : OnboardingStrings.rename
                     icons.position: MegaButtons.Icon.Position.LEFT
                     icons.source: contentRoot.showChange ? "" : Images.edit
@@ -272,6 +275,11 @@ Rectangle {
                 }
 
                 MegaButtons.SecondaryButton {
+                    id: removeButton
+
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
                     icons.source: Images.trash
                     onClicked: {
                         BackupsModel.remove(mFolder);
