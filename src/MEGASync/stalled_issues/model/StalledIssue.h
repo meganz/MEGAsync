@@ -222,7 +222,7 @@ public:
     const QExplicitlySharedDataPointer<LocalStalledIssueData>& getLocalData();
     const QExplicitlySharedDataPointer<CloudStalledIssueData>& getCloudData();
 
-    virtual bool containsHandle(mega::MegaHandle handle){return getCloudData()->getPathHandle() == handle;}
+    virtual bool containsHandle(mega::MegaHandle handle){return getCloudData() && getCloudData()->getPathHandle() == handle;}
     virtual void updateHandle(mega::MegaHandle handle){getCloudData()->setPathHandle(handle);}
     virtual void updateName(){}
 
