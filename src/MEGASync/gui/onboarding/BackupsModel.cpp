@@ -306,10 +306,11 @@ void BackupsModel::updateSelectedAndTotalSize()
     if(mBackupsTotalSize != lastTotalSize)
     {
         emit totalSizeChanged();
-        if(mBackupsTotalSize <= 0)
-        {
-            emit noneSelected();
-        }
+    }
+
+    if(!mSelectedRowsTotal)
+    {
+        emit noneSelected();
     }
 }
 
