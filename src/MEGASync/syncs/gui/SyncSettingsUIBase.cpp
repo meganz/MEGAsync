@@ -6,6 +6,7 @@
 
 #include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/gui/Twoways/BindFolderDialog.h>
+#include <syncs/gui/Twoways/IgnoresEditingDialog.h>
 #include <syncs/model/SyncItemModel.h>
 
 #ifndef Q_OS_WIN
@@ -34,6 +35,8 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
 
     connect(ui->gSyncs, &RemoteItemUi::addClicked, this, &SyncSettingsUIBase::addButtonClicked);
     connect(ui->gSyncs, &RemoteItemUi::deleteClicked, this, &SyncSettingsUIBase::removeSyncButtonClicked);
+    connect(ui->gSyncs, &RemoteItemUi::editExclusionsClicked, this, &SyncSettingsUIBase::editExclusionsClicked);
+
 #ifndef Q_OS_WINDOWS
     connect(ui->gSyncs, &RemoteItemUi::permissionsClicked, this, &SyncSettingsUIBase::onPermissionsClicked);
 #endif
@@ -242,6 +245,12 @@ void SyncSettingsUIBase::removeSyncButtonClicked()
         QModelIndex index = mTable->selectionModel()->selectedRows().first();
         removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
     }
+}
+
+void SyncSettingsUIBase::editExclusionsClicked()
+{
+    QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(this);
+    DialogOpener::showDialog(exclusionRules);
 }
 
 void SyncSettingsUIBase::removeSync(std::shared_ptr<SyncSettings> sync)

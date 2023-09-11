@@ -189,6 +189,7 @@ protected:
 
 protected slots:
     virtual void removeSyncButtonClicked();
+    virtual void editExclusionsClicked();
     virtual void removeSync(std::shared_ptr<SyncSettings> sync);
     void setSyncToRun(std::shared_ptr<SyncSettings> sync);
     void setSyncToPause(std::shared_ptr<SyncSettings> sync);

@@ -27,6 +27,7 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
     });
     connect(ui->bDelete, &QPushButton::clicked, this, &RemoteItemUi::deleteClicked);
     ui->bAdd->setAutoDefault(true);
+    connect(ui->bEditExclusions, &QPushButton::clicked, this, &RemoteItemUi::editExclusionsClicked);
 #endif
 }
 
