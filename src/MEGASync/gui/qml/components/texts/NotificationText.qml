@@ -63,7 +63,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: attributes.margin
-            height: textColumn.height + 2 * attributes.margin
+            height: textColumn.height > 0 ? textColumn.height + 2 * attributes.margin : 0
             spacing: attributes.spacing
 
             Loader {
@@ -73,7 +73,16 @@ Item {
             Column {
                 id: textColumn
 
-                height: titleLoader.height + textLoader.height
+                height: {
+                    var h = 0;
+                    if(root.title.length !== 0) {
+                        h += titleLoader.height;
+                    }
+                    if(root.text.length !== 0) {
+                        h += textLoader.height;
+                    }
+                    return h;
+                }
                 width: mainLayout.width - iconLoader.width - mainLayout.spacing
 
                 Loader {
