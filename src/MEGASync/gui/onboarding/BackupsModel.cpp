@@ -273,21 +273,21 @@ void BackupsModel::populateDefaultDirectoryList()
     };
 
     // Iterate defaultPaths to add to mBackupFolderList if the path is not empty
-//    for (auto type : defaultPaths)
-//    {
-//        const auto standardPaths (QStandardPaths::standardLocations(type));
-//        QDir dir (QDir::cleanPath(standardPaths.first()));
-//        QString path (QDir::toNativeSeparators(dir.canonicalPath()));
-//        if(dir.exists() && dir != QDir::home() && isLocalFolderSyncable(path))
-//        {
-//            mBackupFolderList.append(BackupFolder(path, mSyncController.getSyncNameFromPath(path), false));
-//        }
-//        else
-//        {
-//            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
-//                               QString::fromUtf8("Default path %1 is not valid.").arg(path).toUtf8().constData());
-//        }
-//    }
+    for (auto type : defaultPaths)
+    {
+        const auto standardPaths (QStandardPaths::standardLocations(type));
+        QDir dir (QDir::cleanPath(standardPaths.first()));
+        QString path (QDir::toNativeSeparators(dir.canonicalPath()));
+        if(dir.exists() && dir != QDir::home() && isLocalFolderSyncable(path))
+        {
+            mBackupFolderList.append(BackupFolder(path, mSyncController.getSyncNameFromPath(path), false));
+        }
+        else
+        {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                               QString::fromUtf8("Default path %1 is not valid.").arg(path).toUtf8().constData());
+        }
+    }
 }
 
 void BackupsModel::updateSelectedAndTotalSize()
