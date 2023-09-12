@@ -38,6 +38,7 @@ signals:
     void signalSuspendSync(std::shared_ptr<SyncSettings> sync);
     void signalDisableSync(std::shared_ptr<SyncSettings> sync);
     void signalOpenMegaignore(std::shared_ptr<SyncSettings> sync);
+    void signaladdExclusions(std::shared_ptr<SyncSettings> sync);
     void signalRescanQuick(std::shared_ptr<SyncSettings> sync);
     void signalRescanDeep(std::shared_ptr<SyncSettings> sync);
 

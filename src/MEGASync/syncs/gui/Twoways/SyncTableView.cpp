@@ -234,11 +234,14 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
            addRun();
         }
     }
+    auto addExclusions(new MenuItemAction(tr("Add exclusions"), QLatin1String("://images/sync_context_menu/slash-circle.png")));
+    connect(addExclusions, &MenuItemAction::triggered, this, [this, sync]() { emit signaladdExclusions(sync); });
 
     auto openMegaignore (new MenuItemAction(tr("Edit .megaignore"), QLatin1String("://images/sync_context_menu/edit-small.png")));
     connect(openMegaignore, &MenuItemAction::triggered, this, [this, sync]() { emit signalOpenMegaignore(sync); });
     openMegaignore->setParent(menu);
     menu->addSeparator();
+    menu->addAction(addExclusions);
     menu->addAction(openMegaignore);
 
     if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)

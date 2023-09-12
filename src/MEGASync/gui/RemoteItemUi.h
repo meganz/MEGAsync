@@ -27,7 +27,7 @@ public:
 signals:
     void addClicked(mega::MegaHandle);
     void deleteClicked();
-    void editExclusionsClicked();
+
 #ifndef Q_OS_WIN
     void permissionsClicked();
 #endif
