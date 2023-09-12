@@ -30,11 +30,10 @@ void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
     mBackupController->addBackup(mBackupsToDoList.first().first, mBackupsToDoList.first().second);
 }
 
-void BackupsController::onBackupAddRequestStatus(int errorCode,
-                                          const QString& errorMsg,
-                                          const QString& name)
+void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name)
 {
     Q_UNUSED(errorMsg)
+    Q_UNUSED(syncErrorCode)
 
     bool found = false;
     auto it = mBackupsToDoList.constBegin();

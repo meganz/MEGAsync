@@ -359,7 +359,6 @@ protected:
     void deleteMenu(QMenu *menu);
     void startHttpServer();
     void startHttpsServer();
-    void initLocalServer();
     void refreshStorageUIs();
     void manageBusinessStatus(int64_t event);
     void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);

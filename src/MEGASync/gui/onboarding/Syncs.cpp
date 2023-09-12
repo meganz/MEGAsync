@@ -194,9 +194,10 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
     }
 }
 
-void Syncs::onSyncAddRequestStatus(int errorCode, const QString &errorMsg, const QString &name)
+void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name)
 {
     Q_UNUSED(name)
+    Q_UNUSED(syncErrorCode)
     if (errorCode != mega::MegaError::API_OK)
     {
         Text::Link link(Utilities::SUPPORT_URL);

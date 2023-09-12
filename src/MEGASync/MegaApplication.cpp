@@ -1536,34 +1536,6 @@ void MegaApplication::checkSystemTray()
     }
 }
 
-void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    // Load default exclusion rules before adding the new syncs from setup wizard.
-    // We could not load them before fetch nodes, because default exclusion rules
-    // are only created once the local preferences are logged.
-    std::unique_ptr<char[]> email(megaApi->getMyEmail());
-    loadSyncExclusionRules(QString::fromUtf8(email.get()));
-
-    if (!syncs.isEmpty())
-    {
-        mSyncController.reset(new SyncController());
-        GuiUtilities::connectAddSyncDefaultHandler(mSyncController.get(), preferences->accountType());
-
-        // add syncs from setupWizard
-        for (auto & ps : syncs)
-        {
-            QString localFolderPath = ps.localFolder();
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from SetupWizard: ").arg(localFolderPath).toUtf8().constData());
-            mSyncController->addSync(localFolderPath, ps.megaFolderHandle(), ps.syncName(), MegaSync::TYPE_TWOWAY);
-        }
-    }
-}
-
 void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 {
     if (state == MegaApi::STORAGE_STATE_CHANGE)
@@ -6000,62 +5972,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->disableFileVersioning(request->getFlag());
             }
         }
-        break;
-    }
-    case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
-    {
-        updatingSSLcert = false;
-        bool retry = false;
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            MegaStringMap *data = request->getMegaStringMap();
-            if (data)
-            {
-                preferences->setHttpsKey(QString::fromUtf8(data->get("key")));
-                preferences->setHttpsCert(QString::fromUtf8(data->get("cert")));
-
-                QString intermediates;
-                QString key = QString::fromUtf8("intermediate_");
-                const char *value;
-                int i = 1;
-                while ((value = data->get((key + QString::number(i)).toUtf8().constData())))
-                {
-                    if (i != 1)
-                    {
-                        intermediates.append(QString::fromUtf8(";"));
-                    }
-                    intermediates.append(QString::fromUtf8(value));
-                    i++;
-                }
-
-                preferences->setHttpsCertIntermediate(intermediates);
-                preferences->setHttpsCertExpiration(request->getNumber());
-                megaApi->sendEvent(AppStatsEvents::EVENT_LOCAL_SSL_CERT_RENEWED,
-                                   "Local SSL certificate renewed", false, nullptr);
-                delete httpsServer;
-                httpsServer = nullptr;
-                startHttpsServer();
-                break;
-            }
-            else // Request aborted
-            {
-                retry=true;
-            }
-        }
-
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Error renewing the local SSL certificate");
-        if (e->getErrorCode() == MegaError::API_EACCESS || retry)
-        {
-            static bool retried = false;
-            if (!retried)
-            {
-                retried = true;
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
-                renewLocalSSLcert();
-                break;
-            }
-        }
-
         break;
     }
     case MegaRequest::TYPE_CHANGE_PW:
