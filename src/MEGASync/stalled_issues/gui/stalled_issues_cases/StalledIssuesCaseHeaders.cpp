@@ -633,7 +633,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         }
         else if(index == NameConflictedStalledIssue::MergeFolders)
         {
-            msgInfo.informativeText = tr("This action will merge all folders into a single one.\We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
+            //msgInfo.informativeText = tr("This action will merge all folders into a single one.\We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
         }
         else
         {

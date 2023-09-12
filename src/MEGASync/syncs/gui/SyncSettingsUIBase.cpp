@@ -35,7 +35,6 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
 
     connect(ui->gSyncs, &RemoteItemUi::addClicked, this, &SyncSettingsUIBase::addButtonClicked);
     connect(ui->gSyncs, &RemoteItemUi::deleteClicked, this, &SyncSettingsUIBase::removeSyncButtonClicked);
-    connect(ui->gSyncs, &RemoteItemUi::editExclusionsClicked, this, &SyncSettingsUIBase::editExclusionsClicked);
 
 #ifndef Q_OS_WINDOWS
     connect(ui->gSyncs, &RemoteItemUi::permissionsClicked, this, &SyncSettingsUIBase::onPermissionsClicked);
@@ -247,12 +246,6 @@ void SyncSettingsUIBase::removeSyncButtonClicked()
     }
 }
 
-void SyncSettingsUIBase::editExclusionsClicked()
-{
-    QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(this);
-    DialogOpener::showDialog(exclusionRules);
-}
-
 void SyncSettingsUIBase::removeSync(std::shared_ptr<SyncSettings> sync)
 {
     syncsStateInformation(SAVING);
@@ -281,6 +274,12 @@ void SyncSettingsUIBase::setSyncToDisabled(std::shared_ptr<SyncSettings> sync)
 {
     syncsStateInformation(SAVING);
     mSyncController->setSyncToDisabled(sync);
+}
+
+void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync)
+{
+	QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(this);
+	DialogOpener::showDialog(exclusionRules);
 }
 
 void SyncSettingsUIBase::openMegaIgnore(std::shared_ptr<SyncSettings> sync)
