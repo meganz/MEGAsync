@@ -32,6 +32,7 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
 
     QWidget* syncStallModeSelector(new QWidget());
     syncStallModeSelectorUI->setupUi(syncStallModeSelector);
+    syncStallModeSelectorUI->LearnMoreButton->setAutoDefault(false);
 
     auto mode = Preferences::instance()->stalledIssuesMode();
     if(mode == Preferences::StalledIssuesModeType::Smart)
@@ -45,7 +46,7 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
     }
 
     connect(syncStallModeSelectorUI->LearnMoreButton, &QPushButton::clicked,[](){
-        Utilities::openUrl(QUrl::fromLocalFile(Utilities::SYNC_SUPPORT_URL));
+        Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
     });
     connect(syncStallModeSelectorUI->SmartSelector, &QRadioButton::toggled, this, &SyncSettingsElements::onSmartModeSelected);
     connect(syncStallModeSelectorUI->AdvanceSelector, &QRadioButton::toggled, this, &SyncSettingsElements::onAdvanceModeSelected);

@@ -63,7 +63,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     });
 
     connect(ui->HelpButton, &QPushButton::clicked, this, [](){
-        Utilities::openUrl(QUrl::fromLocalFile(Utilities::SYNC_SUPPORT_URL));
+        Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
     });
 
     connect(ui->SelectButton, &QPushButton::clicked, this, [this](){

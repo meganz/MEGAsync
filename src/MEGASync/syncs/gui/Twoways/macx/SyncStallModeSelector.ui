@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>434</width>
-    <height>127</height>
+    <height>149</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -208,6 +208,9 @@ margin-right: 8px;
            </property>
            <item>
             <widget class="QPushButton" name="LearnMoreButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
              <property name="text">
               <string>Learn more</string>
              </property>
