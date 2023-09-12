@@ -474,7 +474,7 @@ private:
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
 
 //This class is used to move a handle to the MEGA bin
-class MoveToBinUtilities
+class MoveToBinUtilities : public QObject
 {
 public:
     MoveToBinUtilities(){}

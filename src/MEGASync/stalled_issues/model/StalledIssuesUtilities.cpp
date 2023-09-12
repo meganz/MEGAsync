@@ -96,10 +96,10 @@ void StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
     {
         mRemoteHandles.append(node->getHandle());
         auto rubbishNode = MegaSyncApp->getMegaApi()->getRubbishNode();
-        QPointer<StalledIssuesUtilities> currentThis(this);
         MegaSyncApp->getMegaApi()->moveNode(node,rubbishNode,
-                                            new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [=](const mega::MegaRequest& request,const mega::MegaError& e){
-            if(currentThis)
+                                            new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this, [=](bool isContextValid,
+                                                                      const mega::MegaRequest& request,const mega::MegaError& e){
+            if(isContextValid)
             {
                 if (request.getType() == mega::MegaRequest::TYPE_MOVE
                         || request.getType() == mega::MegaRequest::TYPE_RENAME)

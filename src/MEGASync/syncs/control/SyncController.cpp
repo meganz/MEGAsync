@@ -60,7 +60,7 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
                      syncName.isEmpty() ? nullptr : syncCleanName.toUtf8().constData(),
                      remoteHandle, nullptr,
-                     new OnFinishOneShot(mApi, [=](const mega::MegaRequest& request, const MegaError& e)
+                     new OnFinishOneShot(mApi, this, [=](bool isContextValid, const mega::MegaRequest& request, const MegaError& e)
     {
         auto errorCode (e.getErrorCode());
         auto syncErrorCode (request.getNumDetails());
@@ -82,16 +82,20 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
 
         if(error)
         {
-            std::shared_ptr<MegaNode> remoteNode(mApi->getNodeByHandle(request.getNodeHandle()));
+            std::shared_ptr<MegaNode> remoteNode(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
             QString logMsg = QString::fromUtf8("Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5").arg(
                         getSyncTypeString(type),
                         QString::fromUtf8(request.getName()),
                         localFolder,
-                        QString::fromUtf8(mApi->getNodePath(remoteNode.get())),
+                        QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(remoteNode.get())),
                         errorMsg);
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
         }
-        emit syncAddStatus(errorCode, syncErrorCode, errorMsg, localFolder);
+
+        if(isContextValid)
+        {
+            emit syncAddStatus(errorCode, syncErrorCode, errorMsg, localFolder);
+        }
     }));
 }
 
@@ -110,7 +114,7 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
     MegaHandle backupRoot = syncSetting->getMegaHandle();
     MegaHandle backupId = syncSetting->backupId();
 
-    mApi->removeSync(backupId, new OnFinishOneShot(mApi, [=](const mega::MegaRequest&, const MegaError& e){
+    mApi->removeSync(backupId, new OnFinishOneShot(mApi, this, [=](bool isContextValid, const mega::MegaRequest&, const MegaError& e){
         if (e.getErrorCode() != MegaError::API_OK)
         {
             QString errorMsg = QString::fromUtf8(e.getErrorString());
@@ -119,25 +123,34 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
                                  getSyncTypeString(sync ? sync->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
                                  errorMsg, QString::number(backupId));
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-            emit syncRemoveError(std::shared_ptr<MegaError>(e.copy()));
+            if(isContextValid)
+            {
+                emit syncRemoveError(std::shared_ptr<MegaError>(e.copy()));
+            }
         }
         else if (isBackup)
         {
             // We now have to delete or remove the remote folder
-            mApi->moveOrRemoveDeconfiguredBackupNodes(backupRoot, remoteHandle,
-                                                      new OnFinishOneShot(mApi, [=](const mega::MegaRequest&, const MegaError& e){
+            MegaSyncApp->getMegaApi()->moveOrRemoveDeconfiguredBackupNodes(backupRoot, remoteHandle,
+                                                      new OnFinishOneShot(MegaSyncApp->getMegaApi(), this, [=](bool isContextValid,
+                                                                          const mega::MegaRequest&,
+                                                                          const MegaError& e){
                 if (e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMsg = QString::fromUtf8(e.getErrorString());
                     QString logMsg = QString::fromUtf8("Error moving or deleting remote backup folder (request error): %1 (sync id): %2 (Folder handle):%3").arg(
-                                         errorMsg, QString::number(backupId), QString::number(backupRoot));
+                                errorMsg, QString::number(backupId), QString::number(backupRoot));
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-                    emit backupMoveOrRemoveRemoteFolderError(std::shared_ptr<MegaError>(e.copy()));
+
+                    if(isContextValid)
+                    {
+                        emit backupMoveOrRemoveRemoteFolderError(std::shared_ptr<MegaError>(e.copy()));
+                    }
                 }
                 else
                 {
                     QString logMsg = QString::fromUtf8("Remote backup folder correctly moved or removed. (Backup id): %1 (Folder handle): %2").arg(
-                                        QString::number(backupId), QString::number(backupRoot));
+                                QString::number(backupId), QString::number(backupRoot));
                     MegaApi::log(MegaApi::LOG_LEVEL_INFO, logMsg.toUtf8().constData());
                 }
             }));
@@ -158,12 +171,11 @@ void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
                  .toUtf8().constData());
 
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_RUNNING,
-                          new OnFinishOneShot(mApi, [=](const MegaRequest&, const MegaError& e){
+                          new OnFinishOneShot(mApi, this, [=](bool isContextValid, const MegaRequest&, const MegaError& e){
         emit signalSyncOperationEnds(syncSetting);
-        int errorCode (e.getErrorCode());
         auto syncErrorCode (static_cast<MegaSync::Error>(e.getSyncError()));
 
-        if (syncSetting && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
+        if (isContextValid && syncSetting && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
         {
             emit signalSyncOperationError(syncSetting);
         }
@@ -183,7 +195,13 @@ void SyncController::setSyncToPause(std::shared_ptr<SyncSettings> syncSetting)
                  .toUtf8().constData());
 
     emit signalSyncOperationBegins(syncSetting);
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_PAUSED, new OnFinishOneShot(mApi, [=](const MegaRequest&,const MegaError& e){
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_PAUSED, new OnFinishOneShot(mApi, this, [=](bool isContextValid,
+                                                                                                  const MegaRequest&,const MegaError& e){
+        if(!isContextValid)
+        {
+            return;
+        }
+
         emit signalSyncOperationEnds(syncSetting);
         if (e.getErrorCode() != MegaError::API_OK)
         {
@@ -205,7 +223,13 @@ void SyncController::setSyncToSuspend(std::shared_ptr<SyncSettings> syncSetting)
                  .toUtf8().constData());
 
     emit signalSyncOperationBegins(syncSetting);
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED, new OnFinishOneShot(mApi, [=](const MegaRequest&,const MegaError& e){
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED, new OnFinishOneShot(mApi, this, [=](bool isContextValid,
+                                                                                                     const MegaRequest&,const MegaError& e){
+        if(!isContextValid)
+        {
+            return;
+        }
+
         emit signalSyncOperationEnds(syncSetting);
         if (e.getErrorCode() != MegaError::API_OK)
         {
@@ -227,7 +251,13 @@ void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting
                  .toUtf8().constData());
 
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED,
-                          new OnFinishOneShot(mApi, [=](const mega::MegaRequest&, const MegaError& e){
+                          new OnFinishOneShot(mApi, this, [=](bool isContextValid, const mega::MegaRequest&, const MegaError& e){
+
+        if(!isContextValid)
+        {
+            return;
+        }
+
         // NOTE: As of sdk commit 94e2b9dd1db6a886e21cc1ee826bda58c8c33f99, this never fails
         // and errorCode is always MegaError::API_OK.
         emit signalSyncOperationEnds(syncSetting);

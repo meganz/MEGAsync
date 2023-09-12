@@ -354,8 +354,9 @@ void DesktopNotifications::replyIncomingPendingRequest(MegaNotification::Action 
             if(action == MegaNotification::Action::firstButton)
             {
                 megaApp->getMegaApi()->replyContactRequest(request, mega::MegaContactRequest::REPLY_ACTION_ACCEPT,
-                                                           new mega::OnFinishOneShot(megaApp->getMegaApi(), [=](const mega::MegaRequest&, const mega::MegaError& e){
-                    if (e.getErrorCode() == mega::MegaError::API_OK)
+                                                           new mega::OnFinishOneShot(megaApp->getMegaApi(), this,
+                                                                                     [=](bool isContextValid, const mega::MegaRequest&, const mega::MegaError& e){
+                    if (isContextValid && e.getErrorCode() == mega::MegaError::API_OK)
                     {
                         UserAttributes::UserAttributesManager::instance().updateEmptyAttributesByUser(sourceEmail.toStdString().c_str());
                     }

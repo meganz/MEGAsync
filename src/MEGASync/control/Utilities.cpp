@@ -1562,8 +1562,10 @@ bool MoveToBinUtilities::moveToBin(const QList<MegaHandle>& handles, const QStri
             {
                 QEventLoop moveEventLoop;
                 MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(),rubbishNode.get(), new OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                                  [this, &moveEventLoop]
-                                                                                                                  (const MegaRequest&,const MegaError&)
+                                                                                                            [&moveEventLoop]
+                                                                                                            (bool,
+                                                                                                            const MegaRequest&,
+                                                                                                            const MegaError&)
                 {
                     moveEventLoop.quit();
                 }));
@@ -1582,10 +1584,15 @@ bool MoveToBinUtilities::moveToBin(const QList<MegaHandle>& handles, const QStri
         std::unique_ptr<MegaNode> duplicatedRubbishDateNode(MegaSyncApp->getMegaApi()->getNodeByPath(dateFolderPath.toUtf8().constData()));
         if(!duplicatedRubbishDateNode)
         {
-            MegaSyncApp->getMegaApi()->createFolder(dateFolder.toUtf8().constData(), parentNode.get(), new OnFinishOneShot(MegaSyncApp->getMegaApi(),
+            MegaSyncApp->getMegaApi()->createFolder(dateFolder.toUtf8().constData(), parentNode.get(), new OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
                                                       [this, moveLambda]
-                                                      (const MegaRequest& request,const MegaError& e)
+                                                      (bool isContextValid, const MegaRequest& request,const MegaError& e)
             {
+                if(!isContextValid)
+                {
+                    return;
+                }
+
                 if (e.getErrorCode() == MegaError::API_OK)
                 {
                     std::unique_ptr<MegaNode> newFolder(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
@@ -1618,10 +1625,15 @@ bool MoveToBinUtilities::moveToBin(const QList<MegaHandle>& handles, const QStri
     std::unique_ptr<MegaNode> duplicatedRubbishNode(MegaSyncApp->getMegaApi()->getNodeByPath(fullDuplicatedFolderPath.toUtf8().constData()));
     if(!duplicatedRubbishNode)
     {
-        MegaSyncApp->getMegaApi()->createFolder(binFolderName.toUtf8().constData(), binNode.get(), new OnFinishOneShot(MegaSyncApp->getMegaApi(),
+        MegaSyncApp->getMegaApi()->createFolder(binFolderName.toUtf8().constData(), binNode.get(), new OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
                                                                                                                                 [this, fullDuplicatedFolderPath, moveLambda, moveToDateFolder, addDateFolder]
-                                                                                                                                (const MegaRequest& request,const MegaError& e)
+                                                                                                                                (bool isContextValid, const MegaRequest& request,const MegaError& e)
         {
+            if(!isContextValid)
+            {
+                return;
+            }
+
             if (e.getErrorCode() == MegaError::API_OK)
             {
                 std::unique_ptr<MegaNode> newFolder(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
@@ -1710,8 +1722,8 @@ void FoldersMerge::merge(ActionForDuplicates action)
                     if(action == ActionForDuplicates::IgnoreAndRemove || folderChild->size() == 0)
                     {
                         MegaSyncApp->getMegaApi()->remove(node, new OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                    [this, &eventLoop]
-                                                                                    (const MegaRequest&,const MegaError&)
+                                                                                    [&eventLoop]
+                                                                                    (bool, const MegaRequest&,const MegaError&)
                         {
                             eventLoop.quit();
                         }));
@@ -1728,8 +1740,8 @@ void FoldersMerge::merge(ActionForDuplicates action)
             {
                 auto newName = Utilities::getNonDuplicatedNodeName(node, mFolderTarget, nodeName, true, itemsBeingRenamed);
                 MegaSyncApp->getMegaApi()->moveNode(node, mFolderTarget,newName.toUtf8().constData(), new OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                                                [this, &eventLoop]
-                                                                                                                                (const MegaRequest&,const MegaError&)
+                                                                                                                                [&eventLoop]
+                                                                                                                                (bool, const MegaRequest&,const MegaError&)
                 {
                     eventLoop.quit();
                 }));
@@ -1739,8 +1751,8 @@ void FoldersMerge::merge(ActionForDuplicates action)
         else
         {
             MegaSyncApp->getMegaApi()->moveNode(node, mFolderTarget, new OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                        [this, &eventLoop]
-                                                                                                        (const MegaRequest&,const MegaError&)
+                                                                                                        [&eventLoop]
+                                                                                                        (bool, const MegaRequest&,const MegaError&)
             {
                 eventLoop.quit();
             }));
