@@ -79,7 +79,7 @@ class HTTPServer: public QTcpServer
     public:
         static const unsigned int MAX_REQUEST_TIME_SECS;
 
-        HTTPServer(mega::MegaApi *megaApi, quint16 port, bool sslEnabled);
+        HTTPServer(mega::MegaApi *megaApi, quint16 port);
         ~HTTPServer();
 
         void incomingConnection(qintptr socket);
@@ -96,13 +96,12 @@ class HTTPServer: public QTcpServer
         void onLinkReceived(QString link, QString auth);
         void onExternalDownloadRequested(QQueue<WrappedNode *> files);
         void onExternalDownloadRequestFinished();
-        void onExternalFileUploadRequested(qlonglong targetHandle);
-        void onExternalFolderUploadRequested(qlonglong targetHandle);
-        void onExternalFolderSyncRequested(qlonglong targetHandle);
+        void onExternalFileUploadRequested(qulonglong targetHandle);
+        void onExternalFolderUploadRequested(qulonglong targetHandle);
+        void onExternalFolderSyncRequested(qulonglong targetHandle);
         void onExternalOpenTransferManagerRequested(int tab);
         void onExternalShowInFolderRequested(QString path);
         void onExternalAddBackup();
-        void onConnectionError();
 
     private slots:
         void onVersionCommandFinished();
@@ -112,9 +111,6 @@ class HTTPServer: public QTcpServer
         void discardClient();
         void rejectRequest(QAbstractSocket *socket, QString response = QString::fromUtf8("403 Forbidden"));
         void processRequest(QPointer<QAbstractSocket> socket, HTTPRequest request);
-        void error(QAbstractSocket::SocketError);
-        void sslErrors(const QList<QSslError> & errors);
-        void peerVerifyError(const QSslError & error);
 
     private:
         QString findCorrespondingAllowedOrigin(const QStringList& headers);
@@ -151,7 +147,6 @@ class HTTPServer: public QTcpServer
 
         RequestType GetRequestType(const HTTPRequest& request);
         bool disabled;
-        bool sslEnabled;
         mega::MegaApi *megaApi;
         QMap<QAbstractSocket*, HTTPRequest*> requests;
         static bool isFirstWebDownloadDone;

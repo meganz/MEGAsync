@@ -51,7 +51,6 @@ public:
     bool registerUpdateJob() override;
     void uninstall() override;
     bool shouldRunHttpServer() override;
-    bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
 

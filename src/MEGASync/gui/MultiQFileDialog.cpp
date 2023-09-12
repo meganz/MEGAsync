@@ -96,7 +96,7 @@ bool MultiQFileDialog::eventFilter(QObject *obj, QEvent *e)
         {
             // Override the OK button enabled state to respect our own logic.
             // We return to prevent QFileDialog from overriding us.
-            return onEnabledChangeEvent();
+            return false;
         }
         else if (e->type() == QEvent::HoverEnter)
         {
@@ -240,45 +240,6 @@ void MultiQFileDialog::onKeyPressEvent(QKeyEvent *keyEvent)
             }
         }
         mShowHidden = !mShowHidden;
-    }
-}
-
-bool MultiQFileDialog::onEnabledChangeEvent()
-{
-    bool enabled (mBOpen->isEnabled());
-    bool pathExists (QFileInfo::exists(mLe->text()));
-    if (!pathExists)
-    {
-        pathExists = true;
-        const QStringList items (mLe->text().split(QString::fromUtf8("\"")));
-        auto item (items.cbegin());
-
-        while (pathExists && item != items.cend())
-        {
-            if (!item->trimmed().isEmpty())
-            {
-                pathExists &= QFileInfo::exists(directory().absolutePath()
-                                                + QDir::separator() + *item);
-            }
-            item++;
-        }
-    }
-
-    if (enabled && !mEnableOkButton && !pathExists)
-    {
-        mBOpen->setEnabled(false);
-        mEnableOkButton = false;
-        return true;
-    }
-    else if (!enabled && pathExists)
-    {
-        mEnableOkButton = true;
-        mBOpen->setEnabled(true);
-        return true;
-    }
-    else
-    {
-        return false;
     }
 }
 
