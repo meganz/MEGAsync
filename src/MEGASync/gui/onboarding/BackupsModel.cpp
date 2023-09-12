@@ -18,6 +18,7 @@ BackupFolder::BackupFolder()
     , mDone(false)
     , mError(0)
     , folderSize(0)
+    , sdkError(QString())
 {
 }
 
@@ -31,6 +32,7 @@ BackupFolder::BackupFolder(const QString& folder,
     , mDone(false)
     , mError(0)
     , folderSize(0)
+    , sdkError(QString())
 {
     Utilities::getFolderSize(folder, &folderSize);
     mSize = Utilities::getSizeString(folderSize);
@@ -395,6 +397,7 @@ void BackupsModel::checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
             while(repeatedCounter < repeatedStrings && ++i < rowCount())
             {
                 if (mBackupFolderList[i].mSelected
+                        && mBackupFolderList[i].mError == BackupErrorCode::None
                         && mBackupFolderList[i].mName == current)
                 {
                     if(isFirst)
@@ -414,11 +417,13 @@ void BackupsModel::reviewConflicts()
 {
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
     QString firstRemoteNameConflict = QString::fromUtf8("");
+    QString conflictText(QString::fromUtf8(""));
     int remoteCount = 0;
     int duplicatedCount = 0;
     int syncConflictCount = 0;
     int pathRelationCount = 0;
     int unavailableCount = 0;
+    int sdkCount = 0;
 
     while (item != mBackupFolderList.end())
     {
@@ -445,11 +450,36 @@ void BackupsModel::reviewConflicts()
                 case UnavailableDir:
                     unavailableCount++;
                     break;
+                case SDKCreation:
+                    if(sdkCount == 0 && !item->sdkError.isEmpty())
+                    {
+                        conflictText = item->sdkError;
+                    }
+                    sdkCount++;
+                    break;
                 default:
                     break;
             }
         }
         item++;
+    }
+
+    if(sdkCount > 0)
+    {
+        setGlobalError(BackupErrorCode::SDKCreation);
+        if(conflictText.isEmpty())
+        {
+            if(sdkCount == 1)
+            {
+                conflictText = tr("Folder wasn't backed up. Try again.");
+            }
+            else
+            {
+                conflictText = tr("These folders weren't backed up. Try again.");
+            }
+        }
+        changeConflictsNotificationText(conflictText);
+        return;
     }
 
     mConflictsSize = duplicatedCount
@@ -465,7 +495,6 @@ void BackupsModel::reviewConflicts()
         return;
     }
 
-    QString conflictText(QString::fromUtf8(""));
     if(duplicatedCount > 0)
     {
         conflictText = tr("You can't back up folders with the same name. "
@@ -561,7 +590,8 @@ void BackupsModel::check()
     // Clean errors
     for (int row = 0; row < rowCount(); row++)
     {
-        if (mBackupFolderList[row].mSelected)
+        if (mBackupFolderList[row].mSelected
+                && mBackupFolderList[row].mError != BackupErrorCode::SDKCreation)
         {
             mBackupFolderList[row].mError = BackupErrorCode::None;
         }
@@ -740,6 +770,12 @@ void BackupsModel::change(const QString& oldFolder, const QString& newFolder)
             }
             setData(index(getRow(oldFolder), 0), QVariant(mSyncController.getSyncNameFromPath(newFolder)), NameRole);
             setData(index(getRow(oldFolder), 0), QVariant(newFolder), FolderRole);
+
+            if(item->mError == BackupErrorCode::SDKCreation)
+            {
+                item->mError = BackupErrorCode::None;
+            }
+
             checkSelectedAll();
             check();
         }
@@ -778,18 +814,19 @@ void BackupsModel::setGlobalError(BackupErrorCode error)
     emit globalErrorChanged();
 }
 
-void BackupsModel::onBackupsCreationFinished(bool success, const QString& message)
+void BackupsModel::onBackupsCreationFinished(bool success)
 {
     clean();
     if(!success)
     {
-        mConflictsNotificationText = message;
-        emit existConflictsChanged();
-        setGlobalError(BackupErrorCode::SDKCreation);
+        mConflictsNotificationText.clear();
+        reviewConflicts();
     }
 }
 
-void BackupsModel::onBackupFinished(const QString& folder, bool done)
+void BackupsModel::onBackupFinished(const QString& folder,
+                                    bool done,
+                                    const QString& sdkError)
 {
     int row = getRow(folder);
     if(done)
@@ -798,6 +835,7 @@ void BackupsModel::onBackupFinished(const QString& folder, bool done)
     }
     else
     {
+        mBackupFolderList[row].sdkError = sdkError;
         setData(index(row, 0), QVariant(BackupsModel::SDKCreation), ErrorRole);
     }
 }

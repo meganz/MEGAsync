@@ -20,6 +20,7 @@ struct BackupFolder
 
     // Back (without role)
     long long folderSize;
+    QString sdkError;
 
     BackupFolder();
 
@@ -181,9 +182,11 @@ private slots:
 
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
 
-    void onBackupsCreationFinished(bool success, const QString& message);
+    void onBackupsCreationFinished(bool success);
 
-    void onBackupFinished(const QString& folder, bool done);
+    void onBackupFinished(const QString& folder,
+                          bool done,
+                          const QString& sdkError = QString());
 
 };
 
