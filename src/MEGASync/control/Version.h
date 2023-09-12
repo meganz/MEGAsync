@@ -7,7 +7,7 @@
 // Update scripts relying on this value if you move it
 #define VER_PRODUCTVERSION_STR      "5.0.21.0\0"
 
-#define VER_BUILD_ID                3
+#define VER_BUILD_ID                4
 
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
@@ -17,7 +17,7 @@
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
-#define VER_SDK_ID                  "e456a46"
+#define VER_SDK_ID                  "46506b2"
 
 // Update scrips relying on this value if you move it
 // Format: 1 item by line, starting from line following the #define
@@ -28,13 +28,14 @@
 //"- item n\n"
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- Sync Rework Extended-ALPHA test version.\n"                                                              \
+"- Sync Rework Extended-ALPHA test version.\n"                                                     \
 "- Crash when moving among categories\n"                                                           \
 "- Progress message when fixing issues\n"                                                          \
 "- Multiselection fixed for view\n"                                                                \
 "- New header for SymLink issues\n"                                                                \
 "- New solved category\n"                                                                          \
 "- New folders merge logic\n"                                                                      \
+"- New links to help center\n"                                                                     \
 "- Detect in an issue has been solved externally\n"                                                \
 "- All the very latest code changes.\n"                                                            \
 )
