@@ -112,8 +112,9 @@ bool PlatformImplementation::showInFolder(QString pathIn)
     // Path is passed through QUrl which properly escapes special chars in native platform URIs
     // which takes care of path names also containing double-quotes withing, which will stop
     // Nautilus from parsing the argument string all-together
+
     return QProcess::startDetached(filebrowser + QString::fromLatin1(" \"")
-                            + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
+                            + QUrl::fromLocalFile(pathIn).toString(QUrl::RemoveFilename) + QString::fromLatin1("\""));
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
