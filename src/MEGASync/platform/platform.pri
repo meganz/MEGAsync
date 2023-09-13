@@ -3,13 +3,17 @@ INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD/AbstractPlatform.cpp \
     $$PWD/Platform.cpp \
-    $$PWD/ShellNotifier.cpp
+    $$PWD/ShellNotifier.cpp \
+    $$PWD/linux/DolphinFileManager.cpp
 
 HEADERS +=  $$PWD/Platform.h \
             $$PWD/AbstractPlatform.h \
             $$PWD/ShellNotifier.h \
             $$PWD/PowerOptions.h \
-            $$PWD/PlatformStrings.h
+            $$PWD/PlatformStrings.h \
+            $$PWD/linux/DolphinFileManager.h \
+            $$PWD/linux/FileManagerFactory.h \
+            $$PWD/linux/IFileManager.h
 win32 {
     SOURCES +=	$$PWD/win/PlatformImplementation.cpp \
     $$PWD/win/RecursiveShellNotifier.cpp \

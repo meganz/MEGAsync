@@ -7,6 +7,9 @@
 #include <cstring>
 #include <map>
 
+#include "IFileManager.h"
+#include "FileManagerFactory.h"
+
 using namespace std;
 using namespace mega;
 
@@ -107,14 +110,21 @@ bool PlatformImplementation::isTilingWindowManager()
 
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
-    QString filebrowser = getDefaultFileBrowserApp();
+    QString fileBrowser = getDefaultFileBrowserApp();
     // Nautilus on Gnome, does not open the directory if argument is given without surrounding double-quotes;
     // Path is passed through QUrl which properly escapes special chars in native platform URIs
     // which takes care of path names also containing double-quotes withing, which will stop
     // Nautilus from parsing the argument string all-together
 
-    return QProcess::startDetached(filebrowser + QString::fromLatin1(" \"")
-                            + QUrl::fromLocalFile(pathIn).toString(QUrl::RemoveFilename) + QString::fromLatin1("\""));
+    QString fileBrowserParams;
+    std::unique_ptr<IFileManager> fileManager(FileManagerFactory::getFileManager(fileBrowser));
+    if (fileManager != nullptr)
+    {
+        fileBrowserParams = fileManager->getShowInFolderParams();
+    }
+
+    return QProcess::startDetached(fileBrowser + fileBrowserParams + QString::fromLatin1(" \"")
+                    + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
