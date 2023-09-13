@@ -3158,6 +3158,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components.Texts", 1, 0, "RichText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/SecondaryText.qml")), "Components.Texts", 1, 0, "SecondaryText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/Text.qml")), "Components.Texts", 1, 0, "Text");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/ElidedText.qml")), "Components.Texts", 1, 0, "ElidedText");
 
     qmlRegisterModule("Components.ToolTips", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/toolTips/ToolTip.qml")), "Components.ToolTips", 1, 0, "ToolTip");
