@@ -7,6 +7,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/AccountStatusController.cpp \
     $$PWD/DialogOpener.cpp \
     $$PWD/DownloadQueueController.cpp \
+    $$PWD/FileFolderAttributes.cpp \
     $$PWD/LoginController.cpp \
     $$PWD/Preferences/Preferences.cpp \
     $$PWD/Preferences/EphemeralCredentials.cpp \
@@ -31,6 +32,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/AccountStatusController.h \
     $$PWD/AppStatsEvents.h \
     $$PWD/DialogOpener.h \
+    $$PWD/FileFolderAttributes.h \
     $$PWD/DownloadQueueController.h \
     $$PWD/LoginController.h \
     $$PWD/Preferences/Preferences.h \
