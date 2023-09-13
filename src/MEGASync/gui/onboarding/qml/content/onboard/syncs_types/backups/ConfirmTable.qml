@@ -104,6 +104,11 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.right: parent.right
             }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+            }
         }
     }
 
@@ -143,6 +148,11 @@ Rectangle {
                 attributes.topBorderRect: true
                 text: BackupsModel.mConflictsNotificationText
                 visible: parent.visible
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
             }
         }
     }

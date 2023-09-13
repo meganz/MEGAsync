@@ -112,6 +112,11 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.right: parent.right
             }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+            }
         }
     }
 
@@ -178,6 +183,11 @@ Rectangle {
                 onFolderChanged: {
                     BackupsModel.insert(folderDialog.getFolder());
                 }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
             }
         }
     }
