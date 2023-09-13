@@ -46,6 +46,9 @@ class BackupsModel : public QAbstractListModel
     Q_PROPERTY(int mGlobalError
                READ getGlobalError
                NOTIFY globalErrorChanged)
+    Q_PROPERTY(bool mExistsOnlyGlobalError
+               READ existsOnlyGlobalError
+               NOTIFY existsOnlyGlobalErrorChanged)
 
 public:
 
@@ -98,6 +101,8 @@ public:
 
     int getGlobalError() const;
 
+    bool existsOnlyGlobalError() const;
+
 public slots:
 
     void insert(const QString& folder);
@@ -112,6 +117,8 @@ public slots:
 
     bool checkDirectories();
 
+    void clean(bool resetErrors = false);
+
 signals:
 
     void totalSizeChanged();
@@ -123,6 +130,8 @@ signals:
     void noneSelected();
 
     void globalErrorChanged();
+
+    void existsOnlyGlobalErrorChanged();
 
 private:
     static int CHECK_DIRS_TIME;
@@ -138,6 +147,7 @@ private:
     Qt::CheckState mCheckAllState;
     int mGlobalError;
     QTimer mCheckDirsTimer;
+    bool mExistsOnlyGlobalError;
 
     void populateDefaultDirectoryList();
 
@@ -173,8 +183,6 @@ private:
     bool existOtherRelatedFolder(const int currentIndex);
 
     bool existsFolder(const QString& inputPath);
-
-    void clean();
 
     void setGlobalError(BackupErrorCode error);
 

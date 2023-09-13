@@ -234,6 +234,11 @@ int BackupsModel::getGlobalError() const
     return mGlobalError;
 }
 
+bool BackupsModel::existsOnlyGlobalError() const
+{
+    return mExistsOnlyGlobalError;
+}
+
 void BackupsModel::insert(const QString &folder)
 {
     QString inputPath(QDir::toNativeSeparators(QDir(folder).absolutePath()));
@@ -389,7 +394,7 @@ void BackupsModel::checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
     int row = -1;
     while(repeatedCounter < repeatedStrings && ++row < rowCount())
     {
-        if (mBackupFolderList[row].mSelected)
+        if (mBackupFolderList[row].mSelected && !mBackupFolderList[row].mDone)
         {
             QString current(mBackupFolderList[row].mName);
             int i = row;
@@ -397,6 +402,7 @@ void BackupsModel::checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
             while(repeatedCounter < repeatedStrings && ++i < rowCount())
             {
                 if (mBackupFolderList[i].mSelected
+                        && !mBackupFolderList[i].mDone
                         && mBackupFolderList[i].mError == BackupErrorCode::None
                         && mBackupFolderList[i].mName == current)
                 {
@@ -464,6 +470,15 @@ void BackupsModel::reviewConflicts()
         item++;
     }
 
+    mConflictsSize = duplicatedCount
+                        + remoteCount
+                        + syncConflictCount
+                        + pathRelationCount
+                        + unavailableCount;
+
+    mExistsOnlyGlobalError = mConflictsSize == 0;
+    emit existsOnlyGlobalErrorChanged();
+
     if(sdkCount > 0)
     {
         setGlobalError(BackupErrorCode::SDKCreation);
@@ -481,12 +496,6 @@ void BackupsModel::reviewConflicts()
         changeConflictsNotificationText(conflictText);
         return;
     }
-
-    mConflictsSize = duplicatedCount
-                        + remoteCount
-                        + syncConflictCount
-                        + pathRelationCount
-                        + unavailableCount;
 
     if(syncConflictCount > 0)
     {
@@ -553,6 +562,7 @@ void BackupsModel::checkRemoteDuplicatedBackups(const QSet<QString>& candidateSe
             while(!found && ++row < rowCount())
             {
                 if ((found = mBackupFolderList[row].mSelected && mBackupFolderList[row].mName == *backup)
+                        && !mBackupFolderList[row].mDone
                         && mBackupFolderList[row].mError == BackupErrorCode::None)
                 {
                     mBackupFolderList[row].mError = BackupErrorCode::ExistsRemote;
@@ -603,7 +613,7 @@ void BackupsModel::check()
     QStringList candidateList;
     for (int row = 0; row < rowCount(); row++)
     {
-        if (mBackupFolderList[row].mSelected)
+        if (mBackupFolderList[row].mSelected && !mBackupFolderList[row].mDone)
         {
             candidateList.append(mBackupFolderList[row].mName);
             QString message;
@@ -789,17 +799,28 @@ void BackupsModel::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
     check();
 }
 
-void BackupsModel::clean()
+void BackupsModel::clean(bool resetErrors)
 {
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
     while (item != mBackupFolderList.end())
     {
-        if(item->mDone)
+        if(item->mSelected)
         {
-            const auto row = std::distance(mBackupFolderList.begin(), item);
-            beginRemoveRows(QModelIndex(), row, row);
-            item = mBackupFolderList.erase(item);
-            endRemoveRows();
+            if(item->mDone)
+            {
+                const auto row = std::distance(mBackupFolderList.begin(), item);
+                beginRemoveRows(QModelIndex(), row, row);
+                item = mBackupFolderList.erase(item);
+                endRemoveRows();
+            }
+            else
+            {
+                if(resetErrors)
+                {
+                    setData(index(getRow(item->mFolder), 0), QVariant(BackupsModel::None), ErrorRole);
+                }
+                item++;
+            }
         }
         else
         {
@@ -816,8 +837,11 @@ void BackupsModel::setGlobalError(BackupErrorCode error)
 
 void BackupsModel::onBackupsCreationFinished(bool success)
 {
-    clean();
-    if(!success)
+    if(success)
+    {
+        clean();
+    }
+    else
     {
         mConflictsNotificationText.clear();
         reviewConflicts();
@@ -928,10 +952,13 @@ void BackupsProxyModel::createBackups()
     BackupsController::BackupInfoList candidateList;
     for (int row = 0; row < rowCount(); row++)
     {
-        BackupsController::BackupInfo candidate;
-        candidate.first = index(row, 0).data(BackupsModel::BackupFolderRoles::FolderRole).toString();
-        candidate.second = index(row, 0).data(BackupsModel::BackupFolderRoles::NameRole).toString();
-        candidateList.append(candidate);
+        if(!index(row, 0).data(BackupsModel::BackupFolderRoles::DoneRole).toBool())
+        {
+            BackupsController::BackupInfo candidate;
+            candidate.first = index(row, 0).data(BackupsModel::BackupFolderRoles::FolderRole).toString();
+            candidate.second = index(row, 0).data(BackupsModel::BackupFolderRoles::NameRole).toString();
+            candidateList.append(candidate);
+        }
     }
     backupsModel()->backupsController()->addBackups(candidateList);
 }

@@ -22,6 +22,8 @@ SyncsPage {
         text: OnboardingStrings.backUp
         icons.source: Images.database
         enabled: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.None
+                    || (BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation
+                            && BackupsModel.mExistsOnlyGlobalError)
     }
 
     ColumnLayout {

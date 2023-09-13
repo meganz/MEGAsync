@@ -22,6 +22,7 @@ void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
 {
     if(backupsInfoList.size() <= 0)
     {
+        emit backupsCreationFinished(true);
         return;
     }
 

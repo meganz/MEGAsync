@@ -11,6 +11,7 @@ ConfirmFoldersPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
+            BackupsModel.clean(true);
             backupsProxyModel.selectedFilterEnabled = false;
             backupsFlow.state = backupsFlow.selectBackup;
         }

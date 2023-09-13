@@ -114,7 +114,7 @@ Rectangle {
                         height: contentRoot.imageWidth
                         width: contentRoot.imageWidth
                         anchors.top: parent.top
-                        source: Images.standard_DirIcon
+                        source: mDone ? Images.checkCircle : Images.standard_DirIcon
                         sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
                         opacity: enabled ? 1.0 : 0.3
                     }
@@ -190,8 +190,7 @@ Rectangle {
                 spacing: imageTextSpacing
 
                 MegaImages.SvgImage {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
+                    anchors.verticalCenter: parent.verticalCenter
                     source: mError === BackupsModel.BackupErrorCode.SDKCreation
                             ? Images.alertCircle
                             : Images.alertTriangle

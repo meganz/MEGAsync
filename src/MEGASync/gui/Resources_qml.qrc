@@ -49,5 +49,6 @@
         <file>images/qml/guest/settings.svg</file>
         <file>images/qml/guest/warning.png</file>
         <file>images/qml/small_check.svg</file>
+		<file>images/qml/check_circle.svg</file>
     </qresource>
 </RCC>
