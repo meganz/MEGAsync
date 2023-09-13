@@ -66,6 +66,11 @@ Rectangle {
             radius: tableRadius
             z: 3
 
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+            }
+
             RowLayout {
                 width: parent.width
                 anchors.verticalCenter: parent.verticalCenter
@@ -111,11 +116,6 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
             }
         }
     }

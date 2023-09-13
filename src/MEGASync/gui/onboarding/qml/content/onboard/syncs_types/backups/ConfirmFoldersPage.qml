@@ -6,7 +6,6 @@ import BackupsController 1.0
 import BackupsModel 1.0
 
 ConfirmFoldersPageForm {
-    id: root
 
     footerButtons {
 
@@ -17,7 +16,9 @@ ConfirmFoldersPageForm {
         }
 
         rightPrimary.onClicked: {
-            root.enabled = false;
+            footerButtons.enabled = false;
+            confirmHeader.enabled = false;
+            disableTableButtons = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             backupsProxyModel.createBackups();
         }
@@ -47,7 +48,9 @@ ConfirmFoldersPageForm {
         target: BackupsController
 
         onBackupsCreationFinished: (success) => {
-            root.enabled = true;
+            footerButtons.enabled = true;
+            confirmHeader.enabled = true;
+            disableTableButtons = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             if(success) {
                 syncsPanel.state = syncsPanel.finalState;

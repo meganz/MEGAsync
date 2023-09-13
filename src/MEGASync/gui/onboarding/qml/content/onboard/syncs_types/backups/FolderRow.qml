@@ -117,7 +117,6 @@ Rectangle {
                         anchors.top: parent.top
                         source: mDone ? Images.checkCircle : Images.standard_DirIcon
                         sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
-                        opacity: enabled ? 1.0 : 0.3
                     }
 
                     MegaTexts.ElidedText {
@@ -128,6 +127,7 @@ Rectangle {
                                - contentRoot.imageTextSpacing - contentRoot.imageWidth - contentRoot.sizeTextWidth
                         font.pixelSize: MegaTexts.Text.Size.Small
                         text: mName
+                        color: Styles.textPrimary
                     }
                 }
             }
@@ -143,6 +143,7 @@ Rectangle {
                 verticalAlignment: Qt.AlignVCenter
                 maximumLineCount: 1
                 wrapMode: Text.WrapAnywhere
+                color: Styles.textSecondary
             }
 
             MouseArea {
@@ -261,6 +262,7 @@ Rectangle {
                         }
                     }
                     sizes: MegaButtons.SmallSizes {}
+                    enabled: !disableButtons
 
                     ChooseLocalFolder {
                         id: folderDialog
@@ -282,6 +284,7 @@ Rectangle {
                         BackupsModel.remove(mFolder);
                     }
                     sizes: MegaButtons.SmallSizes {}
+                    enabled: !disableButtons
                 }
             }
 

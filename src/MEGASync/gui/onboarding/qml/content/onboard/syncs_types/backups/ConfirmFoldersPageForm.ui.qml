@@ -17,6 +17,8 @@ import QmlDeviceName 1.0
 SyncsPage {
 
     property alias folderField: folderField
+    property alias disableTableButtons: confirmFoldersTable.disableButtons
+    property alias confirmHeader: confirmHeader
 
     footerButtons.rightPrimary {
         text: OnboardingStrings.backUp
@@ -36,6 +38,8 @@ SyncsPage {
         spacing: 24
 
         Header {
+            id: confirmHeader
+
             title: OnboardingStrings.confirmBackupFoldersTitle
         }
 
@@ -45,7 +49,9 @@ SyncsPage {
             Layout.preferredWidth: parent.width
             spacing: 24
 
-            ConfirmTable {}
+            ConfirmTable {
+                id: confirmFoldersTable
+            }
 
             MegaTextFields.TextField {
                 id: folderField

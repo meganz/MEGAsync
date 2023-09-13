@@ -3149,6 +3149,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/Sizes.qml")), "Components.TextFields", 1, 0, "Sizes");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/SmallSizes.qml")), "Components.TextFields", 1, 0, "SmallSizes");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/LargeSizes.qml")), "Components.TextFields", 1, 0, "LargeSizes");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/Colors.qml")), "Components.TextFields", 1, 0, "Colors");
 
     qmlRegisterModule("Components.Texts", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintStyle.qml")), "Components.Texts", 1, 0, "HintStyle");
