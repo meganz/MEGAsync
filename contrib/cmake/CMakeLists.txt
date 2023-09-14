@@ -68,7 +68,7 @@ set (USE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 1 CACHE STRING "")
 set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
-set (NO_READLINE 1 CACHE STRING "")
+set (NO_READLINE 0 CACHE STRING "")
 set (USE_DRIVE_NOTIFICATIONS 1 CACHE STRING "")
 set (USE_PCRE 0 CACHE STRING "")
 if (WIN32)
@@ -86,13 +86,17 @@ get_filename_component(MEGAsyncDir ${MEGAsyncDir} REALPATH)
 
 ## Use prebuild 3rdparties
 set (USE_PREBUILT_3RDPARTY 1 CACHE STRING "")
-set(prebuilt_dir "${MEGAsyncDir}/mega/bindings/qt/3rdparty")
-#specify where 3rd party libraries are available
-set(Mega3rdPartyDir "${prebuilt_dir}"  CACHE STRING "")
-
 
 ## Use vcpkg 3rdparties
-#set (USE_THIRDPARTY_FROM_VCPKG 1 CACHE STRING "")
+If (WIN32 OR APPLE)
+    set (USE_THIRDPARTY_FROM_VCPKG 1 CACHE STRING "")
+    set (prebuilt_dir "${MEGAsyncDir}/../../../3rdparty_desktop")
+else()
+    set (USE_THIRDPARTY_FROM_VCPKG 0 CACHE STRING "")
+endif()
+
+set(Mega3rdPartyDir "${prebuilt_dir}"  CACHE STRING "")
+
 #set(Mega3rdPartyDir "C:/path/to/vcpkg/parent/folder"  CACHE STRING "")
 
 

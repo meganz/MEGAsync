@@ -3320,9 +3320,9 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>You can’t run the desktop app from this location. Move it into the Applications folder then run it.</translation>
     </message>
     <message>
-        <source>Account expired (business or Pro Flexi)</source>
-        <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Account deactivated</translation>
+		<source>Your plan has expired</source>
+        <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
