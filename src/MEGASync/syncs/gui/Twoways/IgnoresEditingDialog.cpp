@@ -2,32 +2,51 @@
 #include "ui_IgnoresEditingDialog.h"
 
 #include "AddExclusionDialog.h"
+
 #include <QPointer>
 
-
-IgnoresEditingDialog::IgnoresEditingDialog(QWidget *parent) :
+IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::IgnoresEditingDialog),
-    mPreferences(Preferences::instance())
+    mPreferences(Preferences::instance()),
+    mManager(syncLocalFolder)
 {
     ui->setupUi(this);
-    for (auto cb : { ui->cbExcludeUpperUnit, ui->cbExcludeLowerUnit })
+
+    ui->cbExcludeLowerUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
+    auto lowLimit = mManager.getLowLimitRule();
+    if(lowLimit)
     {
-        cb->clear();
-        cb->addItem(tr("B"));
-        cb->addItem(tr("KB"));
-        cb->addItem(tr("MB"));
-        cb->addItem(tr("GB"));
+        ui->eLowerThan->setValue(lowLimit->value());
+        ui->cbExcludeLowerUnit->setCurrentIndex(lowLimit->unit());
+        ui->cExcludeLowerThan->setChecked(!lowLimit->isCommented());
+        ui->eLowerThan->setEnabled(!lowLimit->isCommented());
+        ui->cbExcludeLowerUnit->setEnabled(!lowLimit->isCommented());
     }
-    ui->eLowerThan->setValue(static_cast<int>(mPreferences->lowerSizeLimitValue()));
-    ui->cbExcludeLowerUnit->setCurrentIndex(mPreferences->lowerSizeLimitUnit());
-    ui->eUpperThan->setValue(static_cast<int>(mPreferences->upperSizeLimitValue()));
-    ui->cbExcludeUpperUnit->setCurrentIndex(mPreferences->upperSizeLimitUnit());
+    else
+    {
+        ui->eLowerThan->setValue(0);
+        ui->cbExcludeLowerUnit->setCurrentIndex(MegaIgnoreSizeRule::UnitTypes::B);
+    }
+
+    ui->cbExcludeUpperUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
+    auto highLimit = mManager.getHighLimitRule();
+    if(highLimit)
+    {
+        ui->eUpperThan->setValue(highLimit->value());
+        ui->cbExcludeUpperUnit->setCurrentIndex(highLimit->unit());
+        ui->cExcludeUpperThan->setChecked(!highLimit->isCommented());
+        ui->eUpperThan->setEnabled(!highLimit->isCommented());
+        ui->cbExcludeUpperUnit->setEnabled(!highLimit->isCommented());
+    }
+    else
+    {
+        ui->eUpperThan->setValue(0);
+        ui->cbExcludeUpperUnit->setCurrentIndex(MegaIgnoreSizeRule::UnitTypes::B);
+    }
+
     QObject::connect(ui->cExcludeExtenstions, &QCheckBox::toggled, ui->tExcludeExtensions, &QPlainTextEdit::setEnabled);
     ui->tExcludeExtensions->setEnabled(false);
-    ui->cbExcludeLowerUnit->setEnabled(false);
-    ui->cbExcludeUpperUnit->setEnabled(false);
-
 }
 
 IgnoresEditingDialog::~IgnoresEditingDialog()
@@ -87,27 +106,49 @@ void IgnoresEditingDialog::on_bDeleteName_clicked()
     //saveExcludeSyncNames();
 }
 
+void IgnoresEditingDialog::on_eUpperThan_valueChanged(int i)
+{
+    auto highLimit = mManager.getHighLimitRule();
+    highLimit->setValue(i);
+}
+
+void IgnoresEditingDialog::on_eLowerThan_valueChanged(int i)
+{
+    auto lowLimit = mManager.getLowLimitRule();
+    lowLimit->setValue(i);
+}
+
+void IgnoresEditingDialog::on_cbExcludeUpperUnit_currentIndexChanged(int i)
+{
+    auto highLimit = mManager.getHighLimitRule();
+    highLimit->setUnit(i);
+}
+
+void IgnoresEditingDialog::on_cbExcludeLowerUnit_currentIndexChanged(int i)
+{
+    auto lowLimit = mManager.getLowLimitRule();
+    lowLimit->setUnit(i);
+}
+
 void IgnoresEditingDialog::on_cExcludeUpperThan_clicked()
 {
-    //if (mLoadingSettings) return;
     bool enable (ui->cExcludeUpperThan->isChecked());
-    mPreferences->setUpperSizeLimit(enable);
-    mPreferences->setCrashed(true);
+
     ui->eUpperThan->setEnabled(enable);
     ui->cbExcludeUpperUnit->setEnabled(enable);
-    //ui->gExcludedFilesInfo->show();
-    //ui->bRestart->show();
+
+    auto highLimit = mManager.getHighLimitRule();
+    highLimit->setCommented(!enable);
 }
 
 void IgnoresEditingDialog::on_cExcludeLowerThan_clicked()
 {
-    //if (mLoadingSettings) return;
     bool enable (ui->cExcludeLowerThan->isChecked());
-    mPreferences->setLowerSizeLimit(enable);
-    mPreferences->setCrashed(true);
+
     ui->eLowerThan->setEnabled(enable);
     ui->cbExcludeLowerUnit->setEnabled(enable);
-    //ui->gExcludedFilesInfo->show();
-    //ui->bRestart->show();
+
+    auto lowLimit = mManager.getLowLimitRule();
+    lowLimit->setCommented(!enable);
 }
 //
