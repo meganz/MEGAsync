@@ -24,7 +24,10 @@ void ChooseLocalFolder::openFolderSelector()
             QString fPath = selection.first();
             mFolder = (QDir::toNativeSeparators(QDir(fPath).canonicalPath()));
             mFolderName = QDir::fromNativeSeparators(fPath).split(QString::fromLatin1("/")).last().prepend(QString::fromLatin1("/"));
-            emit folderChanged(mFolder);
+            if(!mFolder.isNull() && !mFolder.isEmpty())
+            {
+                emit folderChanged();
+            }
         }
     });
 }
@@ -38,7 +41,7 @@ void ChooseLocalFolder::reset()
 {
     mFolderName.clear();
     mFolder = DEFAULT_FOLDER;
-    emit folderChanged(mFolderName);
+    emit folderChanged();
 }
 
 bool ChooseLocalFolder::createDefault()
@@ -81,7 +84,11 @@ void ChooseRemoteFolder::openFolderSelector()
             if(auto node = MegaSyncApp->getMegaApi()->getNodeByHandle(mFolderHandle))
             {
                 mFolderName = QString::fromUtf8(node->getName());
-                emit folderChanged(mFolderName.prepend(QString::fromLatin1("/")));
+                mFolderName.prepend(QString::fromLatin1("/"));
+                if(!mFolderName.isNull() && !mFolderName.isEmpty())
+                {
+                    emit folderNameChanged();
+                }
             }
         }
     });
@@ -95,11 +102,11 @@ const mega::MegaHandle ChooseRemoteFolder::getHandle()
 void ChooseRemoteFolder::reset()
 {
     mFolderHandle = mega::INVALID_HANDLE;
-    mFolderName = QString();
-    emit folderChanged(mFolderName);
+    mFolderName = ChooseLocalFolder::DEFAULT_FOLDER;
+    emit folderNameChanged();
 }
 
-const QString ChooseRemoteFolder::getFolder()
+const QString ChooseRemoteFolder::getFolderName()
 {
     return mFolderName;
 }

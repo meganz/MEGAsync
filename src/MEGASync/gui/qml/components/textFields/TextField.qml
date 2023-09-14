@@ -3,11 +3,11 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
 import QtQuick.Layouts 1.12
 
-
 // Local
 import Common 1.0
 import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
+import Components.ToolTips 1.0 as MegaToolTips
 
 Rectangle {
     id: root
@@ -17,6 +17,7 @@ Rectangle {
     property alias text: textField.text
     property alias placeholderText: textField.placeholderText
     property alias rightIconMouseArea: rightIconMouseArea
+    property alias toolTip: toolTip
 
     // Component properties
     property bool error: false
@@ -95,8 +96,6 @@ Rectangle {
         bottomPadding: sizes.padding
         placeholderTextColor: colors.placeholder
         color: enabled ? colors.text : colors.textDisabled
-        Qml.ToolTip.text: textField.text
-        Qml.ToolTip.visible: textField.text && textField.readOnly && textField.contentWidth  > width - leftPadding - rightPadding ? hovered : false
 
         font {
             pixelSize: MegaTexts.Text.Medium
@@ -252,4 +251,15 @@ Rectangle {
             z: 2
         }
     }
+
+    MegaToolTips.ToolTip {
+        id: toolTip
+
+        visible: textField.text
+                    && textField.readOnly
+                    && textField.contentWidth > textField.width - textField.leftPadding - textField.rightPadding
+                    && textField.hovered
+        text: textField.text
+    }
+
 }
