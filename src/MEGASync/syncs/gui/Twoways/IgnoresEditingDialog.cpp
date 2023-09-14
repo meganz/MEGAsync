@@ -16,9 +16,10 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, QWidg
     auto nameRules = mManager.getNameRules();
     foreach(auto rule, nameRules)
     {
-        QListWidgetItem* item = new QListWidgetItem(rule->getRuleAsString(), ui->lExcludedNames);
+        QListWidgetItem* item = new QListWidgetItem(rule->getModifiedRule(), ui->lExcludedNames);
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
         item->setCheckState(rule->isCommented() ? Qt::Unchecked : Qt::Checked); // AND initialize check state
+        item->setData(Qt::UserRole, rule->originalRule());
     }
 
     ui->cbExcludeLowerUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
@@ -131,10 +132,13 @@ void IgnoresEditingDialog::on_bDeleteName_clicked()
 
     for (int i = 0; i < selected.size(); i++)
     {
+        if(auto rule = mManager.getRuleByOriginalRule(selected[i]->data(Qt::UserRole).toString()))
+        {
+            rule->setDeleted(true);
+        }
+
         delete selected[i];
     }
-
-
 }
 
 void IgnoresEditingDialog::on_eUpperThan_valueChanged(int i)

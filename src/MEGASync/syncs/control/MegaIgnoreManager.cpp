@@ -34,23 +34,23 @@ MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder)
                {
                    if(line.startsWith(MegaIgnoreSizeRule::HIGH_STRING))
                    {
-                       mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, line, isCommented);
-                       mRules.append(mLowLimitRule);
+                       mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
+                       mRules.append(mHighLimitRule);
                    }
                    else if(line.startsWith(MegaIgnoreSizeRule::LOW_STRING))
                    {
-                       mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, line, isCommented);
+                       mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
                        mRules.append(mLowLimitRule);
                    }
                    else
                    {
                        if(lineSplitted.at(1).startsWith(QLatin1String("*.")))
                        {
-                           mRules.append(std::make_shared<MegaIgnoreExtensionRule>(this, line, isCommented));
+                           mRules.append(std::make_shared<MegaIgnoreExtensionRule>(line, isCommented));
                        }
                        else
                        {
-                           mRules.append(std::make_shared<MegaIgnoreNameRule>(this, line, isCommented));
+                           mRules.append(std::make_shared<MegaIgnoreNameRule>(line, isCommented));
                        }
                    }
                }
@@ -60,16 +60,29 @@ MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder)
 
        if(!mLowLimitRule)
        {
-           mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, MegaIgnoreSizeRule::Threshold::Low);
+           mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::Low);
            mRules.append(mLowLimitRule);
        }
 
        if(!mHighLimitRule)
        {
-           mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, MegaIgnoreSizeRule::Threshold::High);
+           mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::High);
            mRules.append(mHighLimitRule);
        }
     }
+}
+
+std::shared_ptr<MegaIgnoreRule> MegaIgnoreManager::getRuleByOriginalRule(const QString &originalRule)
+{
+    foreach(auto& rule, mRules)
+    {
+        if(rule->originalRule() == originalRule)
+        {
+            return rule;
+        }
+    }
+
+    return nullptr;
 }
 
 std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getLowLimitRule() const
@@ -130,9 +143,9 @@ void MegaIgnoreManager::applyChanges()
     QStringList rules;
     foreach(auto& rule, mRules)
     {
-        if(rule->isValid())
+        if(rule->isValid() && !rule->isDeleted())
         {
-            rules.append(rule->getRuleAsString());
+            rules.append(rule->getModifiedRule());
         }
     }
 
@@ -161,16 +174,20 @@ bool MegaIgnoreRule::isCommented() const
     return mIsCommented;
 }
 
-void MegaIgnoreRule::setId(int newId)
+const QString &MegaIgnoreRule::originalRule() const
 {
-    id = newId;
+    return mRule;
 }
 
-int MegaIgnoreRule::getId() const
+bool MegaIgnoreRule::isDeleted() const
 {
-    return id;
+    return mIsDeleted;
 }
 
+void MegaIgnoreRule::setDeleted(bool newIsDeleted)
+{
+    mIsDeleted = newIsDeleted;
+}
 
 /////////////////MEGA IGNORE NAME RULE
 MegaIgnoreNameRule::MegaIgnoreNameRule(const QString &rule, bool isCommented)
@@ -217,7 +234,7 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString &rule, bool isCommented)
 }
 
 
-QString MegaIgnoreNameRule::getRuleAsString()
+QString MegaIgnoreNameRule::getModifiedRule()
 {
     if(mIsDirty)
     {
@@ -250,13 +267,13 @@ QString MegaIgnoreNameRule::getRuleAsString()
     }
     else
     {
-        return MegaIgnoreRule::getRuleAsString();
+        return MegaIgnoreRule::getModifiedRule();
     }
 }
 
 ////////////////MEGA IGNORE EXTENSION RULE
 MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(const QString &rule, bool isCommented)
-    : MegaIgnoreNameRule(manager, rule, isCommented)
+    : MegaIgnoreNameRule(rule, isCommented)
 {
     mRuleType = RuleType::ExtensionRule;
     auto extensionSplitter(mPattern.split(QLatin1String(".")));
@@ -322,7 +339,7 @@ bool MegaIgnoreSizeRule::isValid()
     return !isCommented() && mValue > 0;
 }
 
-QString MegaIgnoreSizeRule::getRuleAsString()
+QString MegaIgnoreSizeRule::getModifiedRule()
 {
     if(mIsDirty)
     {
@@ -340,7 +357,7 @@ QString MegaIgnoreSizeRule::getRuleAsString()
     }
     else
     {
-        return MegaIgnoreRule::getRuleAsString();
+        return MegaIgnoreRule::getModifiedRule();
     }
 }
 
