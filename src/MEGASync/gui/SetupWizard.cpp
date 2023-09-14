@@ -20,6 +20,9 @@
 
 using namespace mega;
 
+const QString SetupWizard::defaultSyncFolderName = QString::fromLatin1("MEGA");
+const QString SetupWizard::defaultSyncFolderPath = QString::fromLatin1("/") + SetupWizard::defaultSyncFolderName;
+
 SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetupWizard)
@@ -234,7 +237,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (error->getErrorCode() == MegaError::API_OK)
             {
-                MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
+                MegaNode *node = megaApi->getNodeByPath(defaultSyncFolderPath.toUtf8().constData());
                 if (!node)
                 {
                     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -465,8 +468,8 @@ void SetupWizard::on_bNext_clicked()
         QString defaultFolderPath = Utilities::getDefaultBasePath();
         if (ui->rAdvancedSetup->isChecked())
         {
-            defaultFolderPath.append(QString::fromUtf8("/MEGAsync"));
-            ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
+            defaultFolderPath.append(defaultSyncFolderPath);
+            ui->eMegaFolder->setText(defaultSyncFolderPath);
             ui->lAdvancedSetup->setText(tr("Selective sync:"));
             ui->lHeader->setText(tr("Set up selective sync"));
             ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_selective_sync.png")));
@@ -574,8 +577,8 @@ void SetupWizard::on_bNext_clicked()
                 }
                 else
                 {
-                    ui->eMegaFolder->setText(QString::fromLatin1("/MEGAsync"));
-                    megaApi->createFolder("MEGAsync", rootNode.get());
+                    ui->eMegaFolder->setText(defaultSyncFolderPath);
+                    megaApi->createFolder(defaultSyncFolderName.toUtf8().constData(), rootNode.get());
                     creatingDefaultSyncFolder = true;
 
                     ui->lProgress->setText(tr("Creating folder…"));
