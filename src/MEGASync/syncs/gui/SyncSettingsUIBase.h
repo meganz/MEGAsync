@@ -68,10 +68,10 @@ public:
         {
             model = new ModelType(mTable);
             model->fillData();
-            connect(model, &ModelType::signalSyncCheckboxOn, this, &SyncSettingsUIBase::setSyncToRun);
-            connect(model, &ModelType::signalSyncCheckboxOff, this, &SyncSettingsUIBase::setSyncToSuspend);
+            connect(model.data(), &ModelType::signalSyncCheckboxOn, this, &SyncSettingsUIBase::setSyncToRun);
+            connect(model.data(), &ModelType::signalSyncCheckboxOff, this, &SyncSettingsUIBase::setSyncToSuspend);
 
-            connect(model, &ModelType::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
+            connect(model.data(), &ModelType::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
             {
                 onSavingSyncsCompleted(SAVING_FINISHED);
             });
