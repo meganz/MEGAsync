@@ -262,19 +262,13 @@ QString PlatformImplementation::getDefaultOpenAppByMimeType(QString mimeType)
     }
 
     QString line = contents.first();
-    int index = line.indexOf(QChar::fromAscii('%'));
-    int size = -1;
-    if (index != -1)
+    QRegExp captureRegexCommand(QString::fromUtf8("^Exec=([^' ']*)"));
+    if (captureRegexCommand.indexIn(line) != -1)
     {
-        size = index - 6;
+        return captureRegexCommand.cap(1); // return first group from regular expression.
     }
 
-    if (!size)
-    {
-        return QString();
-    }
-
-    return line.mid(5, size);
+    return QString();
 }
 
 bool PlatformImplementation::getValue(const char * const name, const bool default_value)
