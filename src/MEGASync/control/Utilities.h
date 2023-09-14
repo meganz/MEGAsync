@@ -16,6 +16,7 @@
 #include <QLabel>
 #include <QQueue>
 #include <QEventLoop>
+#include <QMetaEnum>
 
 #include <QEasingCurve>
 
@@ -426,7 +427,28 @@ public:
 Q_DECLARE_METATYPE(Utilities::FileType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
 
+template <class EnumType>
+class EnumConversions
+{
+public:
+    EnumConversions()
+        : mMetaEnum(QMetaEnum::fromType<EnumType>())
+    {
+    }
 
+    QString getString(EnumType type)
+    {
+        return QString::fromUtf8(mMetaEnum.valueToKey(static_cast<int>(type)));
+    }
+
+    EnumType  getEnum(const QString& typeAsString)
+    {
+        return static_cast<EnumType>(mMetaEnum.keyToValue(typeAsString.toStdString().c_str()));
+    }
+
+private:
+    QMetaEnum mMetaEnum;
+};
 
 // This class encapsulates a MEGA node and adds useful information, like the origin
 // of the transfer.
