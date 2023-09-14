@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
-    <height>434</height>
+    <width>393</width>
+    <height>457</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -242,6 +242,25 @@
          </size>
         </property>
        </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gExcludeByType">
+     <property name="title">
+      <string>Exclude by type</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="cExcludeExtenstions">
+        <property name="text">
+         <string>Exclude files with extension</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPlainTextEdit" name="tExcludeExtensions"/>
       </item>
      </layout>
     </widget>
