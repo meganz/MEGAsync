@@ -19,8 +19,10 @@ public:
     QSet<QString> getRemoteFolders() const;
 
 signals:
-    void backupFinished(const QString& folder, bool done);
-    void backupsCreationFinished(bool success, const QString& message);
+    void backupFinished(const QString& folder,
+                        bool done,
+                        const QString& sdkError = QString());
+    void backupsCreationFinished(bool success);
 
 private:
     mega::MegaApi* mMegaApi;
@@ -31,6 +33,8 @@ private:
 
     // The first field contains the full path and the second contains the backup name
     BackupInfoList mBackupsToDoList;
+
+    bool existsName(const QString& name) const;
 
 private slots:
     void onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);

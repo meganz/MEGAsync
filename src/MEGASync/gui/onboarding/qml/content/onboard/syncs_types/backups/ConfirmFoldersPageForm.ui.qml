@@ -17,11 +17,15 @@ import QmlDeviceName 1.0
 SyncsPage {
 
     property alias folderField: folderField
+    property alias disableTableButtons: confirmFoldersTable.disableButtons
+    property alias confirmHeader: confirmHeader
 
     footerButtons.rightPrimary {
         text: OnboardingStrings.backUp
         icons.source: Images.database
         enabled: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.None
+                    || (BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation
+                            && BackupsModel.mExistsOnlyGlobalError)
     }
 
     ColumnLayout {
@@ -34,6 +38,8 @@ SyncsPage {
         spacing: 24
 
         Header {
+            id: confirmHeader
+
             title: OnboardingStrings.confirmBackupFoldersTitle
         }
 
@@ -43,7 +49,9 @@ SyncsPage {
             Layout.preferredWidth: parent.width
             spacing: 24
 
-            ConfirmTable {}
+            ConfirmTable {
+                id: confirmFoldersTable
+            }
 
             MegaTextFields.TextField {
                 id: folderField

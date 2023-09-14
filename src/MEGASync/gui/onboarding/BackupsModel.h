@@ -7,10 +7,13 @@
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>
 #include <QTimer>
+#include "control/FileFolderAttributes.h"
 
-struct BackupFolder
+class BackupFolder : public QObject
 {
+    Q_OBJECT
     // Front (with role)
+public:
     QString mName;
     QString mFolder;
     QString mSize;
@@ -19,13 +22,19 @@ struct BackupFolder
     int mError;
 
     // Back (without role)
-    long long folderSize;
+    qint64 folderSize;
+    QString sdkError;
 
     BackupFolder();
 
+    BackupFolder(const BackupFolder& folder);
+
     BackupFolder(const QString& folder,
                  const QString& displayName,
-                 bool selected = true);
+                 bool selected = true, QObject* parent = nullptr);
+
+    FileFolderAttributes* mFolderAttr;
+    void setSize(qint64 size);
 };
 
 class BackupsModel : public QAbstractListModel
@@ -45,6 +54,9 @@ class BackupsModel : public QAbstractListModel
     Q_PROPERTY(int mGlobalError
                READ getGlobalError
                NOTIFY globalErrorChanged)
+    Q_PROPERTY(bool mExistsOnlyGlobalError
+               READ existsOnlyGlobalError
+               NOTIFY existsOnlyGlobalErrorChanged)
 
 public:
 
@@ -97,6 +109,10 @@ public:
 
     int getGlobalError() const;
 
+    bool existsOnlyGlobalError() const;
+
+    int getRow(const QString& folder);
+
 public slots:
 
     void insert(const QString& folder);
@@ -111,6 +127,8 @@ public slots:
 
     bool checkDirectories();
 
+    void clean(bool resetErrors = false);
+
 signals:
 
     void totalSizeChanged();
@@ -123,10 +141,12 @@ signals:
 
     void globalErrorChanged();
 
+    void existsOnlyGlobalErrorChanged();
+
 private:
     static int CHECK_DIRS_TIME;
 
-    QList<BackupFolder> mBackupFolderList;
+    QList<BackupFolder*> mBackupFolderList;
     QHash<int, QByteArray> mRoleNames;
     int mSelectedRowsTotal;
     long long mBackupsTotalSize;
@@ -137,6 +157,7 @@ private:
     Qt::CheckState mCheckAllState;
     int mGlobalError;
     QTimer mCheckDirsTimer;
+    bool mExistsOnlyGlobalError;
 
     void populateDefaultDirectoryList();
 
@@ -154,9 +175,8 @@ private:
     bool isRelatedFolder(const QString& folder,
                          const QString& existingPath) const;
 
-    QModelIndex getModelIndex(QList<BackupFolder>::iterator item);
+    QModelIndex getModelIndex(QList<BackupFolder*>::iterator item);
 
-    int getRow(const QString& folder);
 
     void setAllSelected(bool selected);
 
@@ -173,17 +193,17 @@ private:
 
     bool existsFolder(const QString& inputPath);
 
-    void clean();
-
     void setGlobalError(BackupErrorCode error);
 
 private slots:
 
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
 
-    void onBackupsCreationFinished(bool success, const QString& message);
+    void onBackupsCreationFinished(bool success);
 
-    void onBackupFinished(const QString& folder, bool done);
+    void onBackupFinished(const QString& folder,
+                          bool done,
+                          const QString& sdkError = QString());
 
 };
 

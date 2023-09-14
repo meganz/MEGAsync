@@ -82,11 +82,12 @@ Rectangle {
 
             readonly property int contentMargin: 8
             readonly property int checkboxWidth: 16
-            readonly property int checkboxSpacing: 12
             readonly property int imageTextSpacing: 8
             readonly property int imageWidth: 16
             readonly property int textWidth: 248
             readonly property int sizeTextWidth: 50
+
+            property int checkboxSpacing: !checkbox.visible ? 0 : 12
 
             anchors.fill: parent
             anchors.margins: contentMargin
@@ -114,23 +115,19 @@ Rectangle {
                         height: contentRoot.imageWidth
                         width: contentRoot.imageWidth
                         anchors.top: parent.top
-                        source: Images.standard_DirIcon
+                        source: mDone ? Images.checkCircle : Images.standard_DirIcon
                         sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
-                        opacity: enabled ? 1.0 : 0.3
                     }
 
-                    MegaTexts.Text {
+                    MegaTexts.ElidedText {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.topMargin: 1
                         width: contentRoot.width - checkbox.width - contentRoot.checkboxSpacing
                                - contentRoot.imageTextSpacing - contentRoot.imageWidth - contentRoot.sizeTextWidth
-                        maximumLineCount: 1
                         font.pixelSize: MegaTexts.Text.Size.Small
-                        wrapMode: Text.WrapAnywhere
                         text: mName
-                        horizontalAlignment: Qt.AlignLeft
-                        verticalAlignment: Qt.AlignVCenter
+                        color: Styles.textPrimary
                     }
                 }
             }
@@ -146,6 +143,7 @@ Rectangle {
                 verticalAlignment: Qt.AlignVCenter
                 maximumLineCount: 1
                 wrapMode: Text.WrapAnywhere
+                color: Styles.textSecondary
             }
 
             MouseArea {
@@ -190,8 +188,7 @@ Rectangle {
                 spacing: imageTextSpacing
 
                 MegaImages.SvgImage {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
+                    anchors.verticalCenter: parent.verticalCenter
                     source: mError === BackupsModel.BackupErrorCode.SDKCreation
                             ? Images.alertCircle
                             : Images.alertTriangle
@@ -201,22 +198,20 @@ Rectangle {
                            : Styles.textWarning
                 }
 
-                MegaTexts.Text {
+                MegaTexts.ElidedText {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     width: contentRoot.width - contentRoot.imageTextSpacing - contentRoot.imageWidth
-                            - buttonRow.width - 8
-                    maximumLineCount: 1
+                            - buttonRow.width - contentRoot.contentMargin
                     font.pixelSize: MegaTexts.Text.Size.Small
-                    wrapMode: Text.WrapAnywhere
                     text: mName
-                    horizontalAlignment: Qt.AlignLeft
-                    verticalAlignment: Qt.AlignVCenter
                     color: mError === BackupsModel.BackupErrorCode.SDKCreation
                            ? Styles.textError
                            : Styles.textWarning
+                    showTooltip: false
                 }
             }
+
             MouseArea {
                 hoverEnabled: true
                 anchors.fill: imageText
@@ -247,8 +242,11 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
+                width: leftButton.width + removeButton.width - leftButton.sizes.focusBorderWidth
 
                 MegaButtons.SecondaryButton {
+                    id: leftButton
+
                     anchors.right: removeButton.left
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
@@ -264,6 +262,7 @@ Rectangle {
                         }
                     }
                     sizes: MegaButtons.SmallSizes {}
+                    enabled: !disableButtons
 
                     ChooseLocalFolder {
                         id: folderDialog
@@ -285,6 +284,7 @@ Rectangle {
                         BackupsModel.remove(mFolder);
                     }
                     sizes: MegaButtons.SmallSizes {}
+                    enabled: !disableButtons
                 }
             }
 

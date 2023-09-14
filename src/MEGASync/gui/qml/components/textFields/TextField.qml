@@ -25,6 +25,7 @@ Rectangle {
     property LeftIcon leftIcon: LeftIcon {}
     property Hint hint: Hint {}
     property Sizes sizes: Sizes {}
+    property Colors colors: Colors {}
 
     signal backPressed()
     signal pastePressed()
@@ -86,14 +87,14 @@ Rectangle {
         anchors.topMargin: sizes.titleSpacing
 
         selectByMouse: true
-        selectionColor: Styles.focus
+        selectionColor: colors.selection
         height: sizes.height + 2 * sizes.focusBorderWidth
         leftPadding: calculatePaddingWithIcon(leftIcon.source != "")
         rightPadding: calculatePaddingWithIcon(rightIcon.source != "")
         topPadding: sizes.padding
         bottomPadding: sizes.padding
-        placeholderTextColor: Styles.textPlaceholder
-        color: enabled ? Styles.textPrimary : Styles.textDisabled
+        placeholderTextColor: colors.placeholder
+        color: enabled ? colors.text : colors.textDisabled
         Qml.ToolTip.text: textField.text
         Qml.ToolTip.visible: textField.text && textField.readOnly && textField.contentWidth  > width - leftPadding - rightPadding ? hovered : false
 
@@ -107,7 +108,7 @@ Rectangle {
             id: focusBorder
 
             color: "transparent"
-            border.color: textField.activeFocus ? Styles.focus : "transparent"
+            border.color: textField.activeFocus ? colors.focus : "transparent"
             border.width: sizes.focusBorderWidth
             radius: sizes.focusBorderRadius
 
@@ -131,13 +132,13 @@ Rectangle {
             Rectangle {
 
                 function getBorderColor() {
-                    var color = Styles.borderStrong;
+                    var color = colors.border;
                     if(!enabled) {
-                        color = Styles.borderDisabled;
+                        color = colors.borderDisabled;
                     } else if(error) {
-                        color = Styles.textError;
+                        color = colors.borderError;
                     } else if(textField.focus) {
-                        color = Styles.borderStrongSelected;
+                        color = colors.borderFocus;
                     }
                     return color;
                 }
@@ -152,7 +153,7 @@ Rectangle {
                 }
                 width: textField.width - 2 * sizes.focusBorderWidth
                 height: textField.height - 2 * sizes.focusBorderWidth
-                color: Styles.pageBackground
+                color: colors.background
                 border.color: getBorderColor()
                 border.width: sizes.borderWidth
                 radius: sizes.borderRadius
@@ -209,6 +210,7 @@ Rectangle {
 
             text: title
             font.weight: Font.DemiBold
+            color: enabled ? colors.title : colors.titleDisabled
         }
     }
 

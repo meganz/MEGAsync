@@ -57,5 +57,7 @@
         <file>components/texts/Text.qml</file>
         <file>components/toolTips/ToolTip.qml</file>
         <file>components/views/ScrollPanel.qml</file>
+		<file>components/texts/ElidedText.qml</file>
+		<file>components/textFields/Colors.qml</file>
     </qresource>
 </RCC>

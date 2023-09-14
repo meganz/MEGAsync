@@ -7,7 +7,7 @@ import Common 1.0
 QtObject {
     property bool visible: false
     property url source: ""
-    property color color: enabled ? Styles.iconSecondary : Styles.iconDisabled
+    property color color: enabled ? colors.icon : colors.iconDisabled
 
     onSourceChanged: {
         if(source === "") {

@@ -66,6 +66,11 @@ Rectangle {
             radius: tableRadius
             z: 3
 
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+            }
+
             RowLayout {
                 width: parent.width
                 anchors.verticalCenter: parent.verticalCenter
@@ -178,6 +183,11 @@ Rectangle {
                 onFolderChanged: {
                     BackupsModel.insert(folderDialog.getFolder());
                 }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
             }
         }
     }

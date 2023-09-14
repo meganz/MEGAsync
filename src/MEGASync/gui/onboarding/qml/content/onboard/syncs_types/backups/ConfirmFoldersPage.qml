@@ -6,20 +6,19 @@ import BackupsController 1.0
 import BackupsModel 1.0
 
 ConfirmFoldersPageForm {
-    id: root
-
-    property bool existsSDKError: false
 
     footerButtons {
 
         rightSecondary.onClicked: {
+            BackupsModel.clean(true);
             backupsProxyModel.selectedFilterEnabled = false;
             backupsFlow.state = backupsFlow.selectBackup;
         }
 
         rightPrimary.onClicked: {
-            root.existsSDKError = false;
-            root.enabled = false;
+            footerButtons.enabled = false;
+            confirmHeader.enabled = false;
+            disableTableButtons = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             backupsProxyModel.createBackups();
         }
@@ -33,12 +32,14 @@ ConfirmFoldersPageForm {
         }
 
         onExistConflictsChanged: {
-            if(!root.existsSDKError) {
-                if(BackupsModel.mConflictsNotificationText !== "") {
-                    stepPanel.state = stepPanel.step4Warning;
+            if(BackupsModel.mConflictsNotificationText !== "") {
+                if(BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation) {
+                    stepPanel.state = stepPanel.step4Error;
                 } else {
-                    stepPanel.state = stepPanel.step4;
+                    stepPanel.state = stepPanel.step4Warning;
                 }
+            } else {
+                stepPanel.state = stepPanel.step4;
             }
         }
     }
@@ -46,9 +47,10 @@ ConfirmFoldersPageForm {
     Connections {
         target: BackupsController
 
-        onBackupsCreationFinished: (success, message) => {
-            root.existsSDKError = !success;
-            root.enabled = true;
+        onBackupsCreationFinished: (success) => {
+            footerButtons.enabled = true;
+            confirmHeader.enabled = true;
+            disableTableButtons = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             if(success) {
                 syncsPanel.state = syncsPanel.finalState;

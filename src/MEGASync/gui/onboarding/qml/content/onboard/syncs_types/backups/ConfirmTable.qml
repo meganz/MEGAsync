@@ -21,6 +21,8 @@ Rectangle {
     readonly property int headerFooterHeight: 40
     readonly property int tableRadius: 8
 
+    property bool disableButtons: false
+
     Layout.preferredWidth: parent.width
     Layout.preferredHeight: height
     height: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.None
@@ -35,7 +37,7 @@ Rectangle {
         width: tableRectangle.width
         height: tableRectangle.height
         color: "transparent"
-        border.color: tableRectangle.enabled ? Styles.borderStrong : Styles.borderDisabled
+        border.color: Styles.borderStrong
         border.width: 1
         radius: 8
         z: 5
@@ -78,13 +80,14 @@ Rectangle {
 
                     MegaImages.SvgImage {
                         source: Images.database
-                        color: tableRectangle.enabled ? Styles.iconPrimary : Styles.iconDisabled
+                        color: Styles.iconPrimary
                         sourceSize: Qt.size(16, 16)
                     }
 
                     MegaTexts.Text {
                         text: OnboardingStrings.backupFolders
                         font.weight: Font.DemiBold
+                        color: Styles.textPrimary
                     }
                 }
 
@@ -94,15 +97,21 @@ Rectangle {
                     text: BackupsModel.mTotalSize
                     font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.DemiBold
+                    color: Styles.textPrimary
                 }
             }
 
             Rectangle {
                 height: borderRectangle.border.width
-                color: tableRectangle.enabled ? Styles.borderSubtle : Styles.borderDisabled
+                color: Styles.borderSubtle
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
             }
         }
     }
@@ -143,6 +152,11 @@ Rectangle {
                 attributes.topBorderRect: true
                 text: BackupsModel.mConflictsNotificationText
                 visible: parent.visible
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
             }
         }
     }

@@ -11,6 +11,7 @@ import Components.Images 1.0 as MegaImages
 Qml.ToolTip {
     id: root
 
+    readonly property int tooltipMargin: 6
     property url leftIconSource: ""
     property int contentSpacing: 0
 
@@ -19,7 +20,7 @@ Qml.ToolTip {
             return;
         }
 
-        contentSpacing = 4;
+        contentSpacing = padding;
         leftIconLoader.sourceComponent = leftIcon;
     }
 
@@ -27,7 +28,7 @@ Qml.ToolTip {
     padding: 4
 
     background: Rectangle {
-        height: parent.height
+        anchors.fill: parent
         color: Styles.buttonPrimary
         radius: 4
     }
@@ -47,9 +48,10 @@ Qml.ToolTip {
             color: Styles.textInverse
             // TODO: Get dialog sizes 800/560 by other way (com.qmldialog.QmlDialog) ???
             Layout.maximumWidth: 800 - leftIconLoader.width - 2 * root.padding
-            Layout.maximumHeight: 560 - 2 * root.padding
+                                 - (leftIconLoader.width > 0 ? 3 : 2) * root.tooltipMargin
+            Layout.maximumHeight: 560 - 2 * root.padding - 2 * root.tooltipMargin
             // TODO: Get dialog sizes 800/560 by other way (com.qmldialog.QmlDialog) ???
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            wrapMode: Text.Wrap
         }
     }
 
