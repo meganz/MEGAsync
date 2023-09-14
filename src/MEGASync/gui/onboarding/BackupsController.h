@@ -37,7 +37,7 @@ private:
     bool existsName(const QString& name) const;
 
 private slots:
-    void onBackupAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name);
+    void onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);
 
 };
 

@@ -44,7 +44,7 @@ you can install (or build) all the library dependencies we need.
 
 Here is the third-party dependency list for APT based distros (e.g. Ubuntu):
 ```
-$ sudo apt install qt5-default qttools5-dev-tools qtbase5-dev qt5-qmake libqt5x11extras5-dev libqt5dbus5 libqt5svg5-dev libcrypto++-dev libraw-dev libc-ares-dev libssl-dev libsqlite3-dev zlib1g-dev libavcodec-dev libavutil-dev libavformat-dev libswscale-dev libmediainfo-dev libfreeimage-dev libreadline-dev libsodium-dev libuv1-dev libudev-dev libzen-dev
+$ sudo apt install qt5-default qttools5-dev-tools qtbase5-dev qt5-qmake libqt5x11extras5-dev libqt5dbus5 libqt5svg5-dev libcrypto++-dev libraw-dev libc-ares-dev libssl-dev libsqlite3-dev zlib1g-dev libavcodec-dev libavutil-dev libavformat-dev libswscale-dev libmediainfo-dev libfreeimage-dev libreadline-dev libsodium-dev libuv1-dev libudev-dev libzen-dev qtdeclarative5-dev qml-module-qtquick-controls2 qml-module-qtquick-dialogs
 ```
 
 ## RPM Libraries

@@ -44,7 +44,7 @@ private:
     void processRemote(mega::MegaHandle remoteHandle);
 
 private slots:
-    void onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name);
+    void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);
 };
 
 #endif // SYNCS_H

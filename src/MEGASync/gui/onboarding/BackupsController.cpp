@@ -45,11 +45,10 @@ bool BackupsController::existsName(const QString& name) const
     return found;
 }
 
-void BackupsController::onBackupAddRequestStatus(int errorCode,
-                                                 const QString& errorMsg,
-                                                 const QString& name)
+void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name)
 {
     Q_UNUSED(errorMsg)
+    Q_UNUSED(syncErrorCode)
 
     if(!existsName(name))
     {

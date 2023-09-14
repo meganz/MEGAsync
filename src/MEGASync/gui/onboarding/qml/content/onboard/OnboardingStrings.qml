@@ -79,7 +79,7 @@ QtObject {
     readonly property string signUp: qsTr("Sign up")
     readonly property string signUpTitle: qsTr("Create your [b]MEGA account[/b]")
     readonly property string availableStorage: qsTr("Available storage:")
-    readonly property string syncButtonDescription: qsTr("Sync your device and MEGA and any changes will automatically and instantly apply to MEGA and vice versa.")
+    readonly property string syncButtonDescription: qsTr("Sync your device with MEGA and any changes will automatically and instantly apply to MEGA and vice versa.")
     readonly property string syncTitle: qsTr("Choose sync type")
     readonly property string sync: qsTr("Sync")
     readonly property string syncChooseType: qsTr("Sync: Choose type")

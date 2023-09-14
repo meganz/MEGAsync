@@ -9,7 +9,9 @@
 #include "control/LoginController.h"
 #include "control/AccountStatusController.h"
 #include "control/Preferences/EphemeralCredentials.h"
+#include "CommonMessages.h"
 #include "EventUpdater.h"
+#include "GuiUtilities.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 #include "TransferMetaData.h"
@@ -249,7 +251,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     megaApiFolders = nullptr;
     delegateListener = nullptr;
     httpServer = nullptr;
-    httpsServer = nullptr;
     exportOps = 0;
     infoDialog = nullptr;
     mSettingsDialog = nullptr;
@@ -263,8 +264,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     lastHovered = nullptr;
     isPublic = false;
     prevVersion = 0;
-    updatingSSLcert = false;
-    lastSSLcertUpdate = 0;
     mTransfersModel = nullptr;
     mStatusController = nullptr;
 
@@ -1282,33 +1281,17 @@ void MegaApplication::loggedIn(bool fromWizard)
         crashReportFilePath.clear();
     }
 
-    mSyncController.reset(new SyncController());
-    connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
-    {
-        if (errorCode != MegaError::API_OK)
-        {
-            QString msg = errorMsg;
-            Text::Link link(Utilities::SUPPORT_URL);
-            Text::Decorator tc(&link);
-            tc.process(msg);
-
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("Error adding %1:").arg(name)
-                                     + QString::fromLatin1("\n")
-                    + msg;
-            QMegaMessageBox::warning(msgInfo);
-        }
-    });
-
-    //Check business status in case we need to alert the user
-    if (megaApi->isBusinessAccount())
-    {
-        manageBusinessStatus(megaApi->getBusinessStatus());
-    }
-
     registerUserActivity();
     pauseTransfers(paused);
+
+    // This must be done before mSettingsDialog->setProxyOnly(false);
+    if (megaApi->isBusinessAccount() || megaApi->isProFlexiAccount())
+    {
+        // Make sure the business/pro flexi nature of the account are set in preferences
+        preferences->setAccountType(megaApi->isProFlexiAccount() ? Preferences::ACCOUNT_TYPE_PRO_FLEXI
+                                                                 : Preferences::ACCOUNT_TYPE_BUSINESS);
+        manageBusinessStatus(megaApi->getBusinessStatus());
+    }
 
     int cachedStorageState = preferences->getStorageState();
 
@@ -1762,7 +1745,7 @@ void MegaApplication::rebootApplication(bool update)
 
     reboot = true;
     auto transferCount = getTransfersModel()->getTransfersCount();
-    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting()))
+    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting() || megaApi->isScanning()))
     {
         if (!updateBlocked)
         {
@@ -2227,8 +2210,6 @@ void MegaApplication::cleanAll()
     mEngine = nullptr;
     delete httpServer;
     httpServer = nullptr;
-    delete httpsServer;
-    httpsServer = nullptr;
     delete uploader;
     uploader = nullptr;
     delete downloader;
@@ -2471,38 +2452,17 @@ void MegaApplication::startHttpServer()
 {
     if (!httpServer)
     {
-        httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
+        httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT);
         ConnectServerSignals(httpServer);
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTP server started");
     }
 }
 
-void MegaApplication::startHttpsServer()
-{
-    if (!httpsServer)
-    {
-        httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-        ConnectServerSignals(httpsServer);
-        connect(httpsServer, SIGNAL(onConnectionError()), this, SLOT(onHttpServerConnectionError()), Qt::QueuedConnection);
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
-    }
-}
-
 void MegaApplication::initLocalServer()
 {
-    // Run both servers for now, until we receive the confirmation of the criteria to start them dynamically
-    if (!httpServer) // && Platform::getInstance()->shouldRunHttpServer())
+    if (!httpServer)
     {
         startHttpServer();
-    }
-
-    if (!updatingSSLcert) // && (httpsServer || Platform::getInstance()->shouldRunHttpsServer()))
-    {
-        long long currentTime = QDateTime::currentMSecsSinceEpoch() / 1000;
-        if ((currentTime - lastSSLcertUpdate) > Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS)
-        {
-            renewLocalSSLcert();
-        }
     }
 }
 
@@ -2578,29 +2538,6 @@ std::shared_ptr<MegaPricing> MegaApplication::getPricing() const
     return mPricing;
 }
 
-void MegaApplication::renewLocalSSLcert()
-{
-    if (!updatingSSLcert)
-    {
-        lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
-        megaApi->getLocalSSLCertificate();
-    }
-}
-
-
-void MegaApplication::onHttpServerConnectionError()
-{
-    auto now = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000;
-    if (now - this->lastTsConnectionError > 10)
-    {
-        this->lastTsConnectionError = now;
-        this->renewLocalSSLcert();
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Local SSL cert renewal discarded");
-    }
-}
 void MegaApplication::triggerInstallUpdate()
 {
     if (appfinished)
@@ -5380,7 +5317,6 @@ void MegaApplication::openSettings(int tab)
     }
     else
     {
-
         //Show a new settings dialog
         mSettingsDialog = new SettingsDialog(this, proxyOnly);
         mSettingsDialog->setUpdateAvailable(updateAvailable);
@@ -5746,27 +5682,9 @@ void MegaApplication::manageBusinessStatus(int64_t event)
         {
             if (megaApi->isMasterBusinessAccount())
             {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = getMEGAString();
-                msgInfo.text = tr("Payment Failed");
-                msgInfo.informativeText = tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.");
-                msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
-                msgInfo.defaultButton = QMessageBox::Yes;
-                QMap<QMessageBox::StandardButton, QString> buttonsText;
-                buttonsText.insert(QMessageBox::Yes, tr("Pay Now"));
-                buttonsText.insert(QMessageBox::No, tr("Dismiss"));
-                msgInfo.buttonsText = buttonsText;
-                msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
-                {
-                    if(msg->result() == QMessageBox::Yes)
-                    {
-                        QString url = QString::fromUtf8("mega://#repay");
-                        Utilities::getPROurlWithParameters(url);
-                        Utilities::openUrl(QUrl(url));
-                    }
-                };
-
-                QMegaMessageBox::warning(msgInfo);
+                const QString message = tr("This month's payment has failed. Please resolve your payment issue as soon as possible "
+                                           "to avoid any suspension of your business account.");
+                GuiUtilities::showPayNowOrDismiss(tr("Payment Failed"), message);
             }
 
             if (preferences->logged() &&
@@ -5781,44 +5699,35 @@ void MegaApplication::manageBusinessStatus(int64_t event)
         }
         case MegaApi::BUSINESS_STATUS_EXPIRED:
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = getMEGAString();
-            QMap<QMessageBox::StandardButton, QString> buttonsText;
-            buttonsText.insert(QMessageBox::No, tr("Dismiss"));
-
-            if (megaApi->isMasterBusinessAccount())
+            const QString title = tr("Account deactivated");
+            if (megaApi->isProFlexiAccount())
             {
-                msgInfo.text = tr("Your Business account is expired");
-                msgInfo.informativeText = tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.");
-                msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
-                buttonsText.insert(QMessageBox::Yes, tr("Pay Now"));
-                msgInfo.defaultButton = QMessageBox::Yes;
-                msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
-                {
-                    if(msg->result() == QMessageBox::Yes)
-                    {
-                        QString url = QString::fromUtf8("mega://#repay");
-                        Utilities::getPROurlWithParameters(url);
-                        Utilities::openUrl(QUrl(url));
-                    }
-                };
+                const QString message = CommonMessages::getExpiredProFlexiMessage();
+                GuiUtilities::showPayReactivateOrDismiss(title, message);
+            }
+            else if (megaApi->isMasterBusinessAccount())
+            {
+                const QString message = tr("It seems the payment for your business account has failed. "
+                                           "Your account is suspended as read only until you proceed with the needed payments.");
+                GuiUtilities::showPayNowOrDismiss(title, message);
             }
             else
             {
-                msgInfo.textFormat = Qt::RichText;
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = getMEGAString();
                 msgInfo.text = tr("Account Suspended");
+                msgInfo.textFormat = Qt::RichText;
                 msgInfo.informativeText = tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
-                                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                            .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                            .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
                             + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
                             tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
-                                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
-                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromUtf8("\n");
-                msgInfo.buttons = QMessageBox::No;
-            }
+                            .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
+                            .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromUtf8("\n");
 
-            msgInfo.buttonsText = buttonsText;
-            QMegaMessageBox::warning(msgInfo);
+                msgInfo.buttonsText.insert(QMessageBox::No, tr("Dismiss"));
+                QMegaMessageBox::warning(msgInfo);
+            }
 
             break;
         }
@@ -5949,11 +5858,6 @@ void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
     {
         return;
     }
-
-    if (request->getType() == MegaRequest::TYPE_GET_LOCAL_SSL_CERT)
-    {
-        updatingSSLcert = true;
-    }
 }
 
 //Called when a request has finished
@@ -6071,62 +5975,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
         break;
     }
-    case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
-    {
-        updatingSSLcert = false;
-        bool retry = false;
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            MegaStringMap *data = request->getMegaStringMap();
-            if (data)
-            {
-                preferences->setHttpsKey(QString::fromUtf8(data->get("key")));
-                preferences->setHttpsCert(QString::fromUtf8(data->get("cert")));
-
-                QString intermediates;
-                QString key = QString::fromUtf8("intermediate_");
-                const char *value;
-                int i = 1;
-                while ((value = data->get((key + QString::number(i)).toUtf8().constData())))
-                {
-                    if (i != 1)
-                    {
-                        intermediates.append(QString::fromUtf8(";"));
-                    }
-                    intermediates.append(QString::fromUtf8(value));
-                    i++;
-                }
-
-                preferences->setHttpsCertIntermediate(intermediates);
-                preferences->setHttpsCertExpiration(request->getNumber());
-                megaApi->sendEvent(AppStatsEvents::EVENT_LOCAL_SSL_CERT_RENEWED,
-                                   "Local SSL certificate renewed", false, nullptr);
-                delete httpsServer;
-                httpsServer = nullptr;
-                startHttpsServer();
-                break;
-            }
-            else // Request aborted
-            {
-                retry=true;
-            }
-        }
-
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Error renewing the local SSL certificate");
-        if (e->getErrorCode() == MegaError::API_EACCESS || retry)
-        {
-            static bool retried = false;
-            if (!retried)
-            {
-                retried = true;
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
-                renewLocalSSLcert();
-                break;
-            }
-        }
-
-        break;
-    }
     case MegaRequest::TYPE_CHANGE_PW:
     {
         if (e->getErrorCode() == MegaError::API_OK)
@@ -6159,7 +6007,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             break;
         }
-
 
         auto root = getRootNode();
         auto vault = getVaultNode();
@@ -6722,27 +6569,6 @@ void MegaApplication::onCheckDeferredPreferencesSync(bool timeout)
             onDeferredPreferencesSyncTimer->setInterval(100);
             onDeferredPreferencesSyncTimer->start();
         }
-    }
-}
-
-void MegaApplication::showAddSyncError(MegaRequest *request, MegaError* e, QString localpath, QString remotePath)
-{
-    if (e->getErrorCode() != MegaError::API_OK)
-    {
-        showAddSyncError(request->getNumDetails(), localpath, remotePath);
-    }
-}
-
-void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString /*remotePath*/)
-{
-    if (errorCode != MegaError::API_OK)
-    {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title =  tr("Error adding sync");
-        msgInfo.text = tr("This sync can't be added: %1. Reason: %2").arg(localpath)
-                                  .arg( errorCode > 0 ? QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))
-                                   : QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode)));
-        QMegaMessageBox::critical(msgInfo);
     }
 }
 

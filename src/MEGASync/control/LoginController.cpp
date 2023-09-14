@@ -432,7 +432,6 @@ void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError
 void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *e)
 {
     Q_UNUSED(request)
-
     if (e->getErrorCode() == mega::MegaError::API_OK)
     {
         //Update/set root node
@@ -453,15 +452,18 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
                                                                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
     }
 
-    if(!mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
+    if(e->getErrorCode() == mega::MegaError::API_OK)
     {
-        setState(FETCH_NODES_FINISHED_ONBOARDING);
-        mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
-        dumpSession();
-    }
-    else
-    {
-        setState(FETCH_NODES_FINISHED);
+        if(!mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
+        {
+            MegaSyncApp->openOnboardingDialog();
+            setState(FETCH_NODES_FINISHED_ONBOARDING);
+            mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
+        }
+        else
+        {
+            setState(FETCH_NODES_FINISHED);
+        }
     }
 }
 
@@ -689,13 +691,10 @@ void LoginController::loadSyncExclusionRules(const QString& email)
 
 void LoginController::dumpSession()
 {
-    if(mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
+    std::unique_ptr<char []> session(mMegaApi->dumpSession());
+    if (session)
     {
-        std::unique_ptr<char []> session(mMegaApi->dumpSession());
-        if (session)
-        {
-            mPreferences->setSession(QString::fromUtf8(session.get()));
-        }
+        mPreferences->setSession(QString::fromUtf8(session.get()));
     }
 }
 

@@ -318,8 +318,6 @@ public slots:
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
-    void renewLocalSSLcert();
-    void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
@@ -432,8 +430,6 @@ protected:
     QString crashReportFilePath;
 
     HTTPServer *httpServer;
-    HTTPServer *httpsServer;
-    long long lastTsConnectionError = 0;
     mega::MegaHandle fileUploadTarget;
     mega::MegaHandle folderUploadTarget;
 
@@ -515,8 +511,6 @@ protected:
     bool completedTabActive;
     int prevVersion;
     bool isPublic;
-    bool updatingSSLcert;
-    long long lastSSLcertUpdate;
     bool nodescurrent;
     int businessStatus = -2;
     bool whyamiblockedPeriodicPetition = false;
@@ -529,6 +523,7 @@ protected:
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
+    // Note: mSyncController is used only to add the syncs set up in the onboarding wizard
     std::unique_ptr<SyncController> mSyncController;
     LogoutController* mLogoutController;
 

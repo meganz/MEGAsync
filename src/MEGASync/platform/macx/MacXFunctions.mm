@@ -103,6 +103,8 @@ void selectorsImpl(QString title, QString defaultDir, bool multiSelection, bool 
         [panel setCanChooseFiles: showFiles ? YES : NO];
         [panel setCanChooseDirectories:showFolders ? YES : NO];
         [panel setAllowsMultipleSelection:multiSelection ? YES : NO];
+        [panel setCanCreateDirectories: !showFiles && showFolders ? YES : NO];
+
         if(!defaultDir.isEmpty())
         {
             NSURL *baseURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:defaultDir.toUtf8().constData()]];
@@ -517,57 +519,6 @@ bool runHttpServer()
             QString processName = QString::fromUtf8(processPath + position + 1);
             if (!processName.compare(QString::fromUtf8("Google Chrome"), Qt::CaseInsensitive)
                 || !processName.compare(QString::fromUtf8("firefox"), Qt::CaseInsensitive))
-            {
-                delete [] pids;
-                return true;
-            }
-        }
-    }
-
-    delete [] pids;
-    return false;
-}
-
-// Check if it's needed to start the local HTTPS server
-// for communications with the webclient
-bool runHttpsServer()
-{
-    int nProcesses = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
-    int pidBufSize = nProcesses * sizeof(pid_t);
-    pid_t *pids = new pid_t[nProcesses];
-    memset(pids, 0, pidBufSize);
-    proc_listpids(PROC_ALL_PIDS, 0, pids, pidBufSize);
-
-    for (int i = 0; i < nProcesses; ++i)
-    {
-        if (pids[i] == 0)
-        {
-            continue;
-        }
-
-        char processPath[PROC_PIDPATHINFO_MAXSIZE];
-        memset(processPath, 0, PROC_PIDPATHINFO_MAXSIZE);
-        if (proc_pidpath(pids[i], processPath, PROC_PIDPATHINFO_MAXSIZE) <= 0)
-        {
-            continue;
-        }
-
-        int position = strlen(processPath);
-        if (position > 0)
-        {
-            while (position >= 0 && processPath[position] != '/')
-            {
-                position--;
-            }
-
-            // The MEGA webclient sends request to MEGAsync to improve the
-            // user experience. We check if web browsers are running because
-            // otherwise it isn't needed to run the local web server for this purpose.
-            // Here is the list or web browsers that don't allow HTTP communications
-            // with 127.0.0.1 inside HTTPS webs and therefore require a HTTPS server.
-            QString processName = QString::fromUtf8(processPath + position + 1);
-            if (!processName.compare(QString::fromUtf8("Safari"), Qt::CaseInsensitive)
-                || !processName.compare(QString::fromUtf8("Opera"), Qt::CaseInsensitive))
             {
                 delete [] pids;
                 return true;

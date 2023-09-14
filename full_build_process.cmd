@@ -22,7 +22,7 @@ IF NOT "%1" == "" (
 		echo "Error: VCPKGPATH environment variable is not set. Please set it."
 		goto Usage
 	)
-
+	
 	:: CHECK NUMBER OF ARGUMENTS
 	IF "%3" == "" (
 		echo "Error: too few arguments"
@@ -35,6 +35,14 @@ IF NOT "%1" == "" (
 ) ELSE (
 	IF [%MEGA_VCPKGPATH%]==[] (
 		SET MEGA_VCPKGPATH=C:\Users\build\MEGA\build-MEGASync\3rdParty_MSVC2019_20221029\3rdParty_desktop
+	)
+)
+
+IF [%MEGA_QTPATH%]==[] (
+	IF NOT [%MEGAQTPATH%]==[] (
+		SET MEGA_QTPATH=%MEGAQTPATH%
+	) ELSE (
+		SET MEGA_QTPATH=C:\Qt\5.12.12\msvc2017_64
 	)
 )
 
@@ -121,4 +129,5 @@ echo 	- Sign: sign or nosign if the binaries must be signed or not
 echo 	- Cores: the number of cores to build the project, or 0 for default value (4)
 echo 	- Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
+echo MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.12.12\msvc2017_64
 exit /B

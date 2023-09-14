@@ -91,7 +91,12 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
                                  errorMsg);
                              MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
                          }
-                         emit syncAddStatus(errorCode, errorMsg, localFolder);
+
+                         // Note : Error message is determined only with information coming from the SDK and
+                         // sync attributes.
+                         // The error message can be overriden in higher layers depending on higher level information,
+                         // such as account type.
+                         emit syncAddStatus(errorCode, syncErrorCode, errorMsg, localFolder);
                      }));
 }
 
@@ -577,3 +582,4 @@ QString SyncController::getSyncTypeString(const mega::MegaSync::SyncType& syncTy
     }
     return typeString;
 }
+

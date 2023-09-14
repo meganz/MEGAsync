@@ -869,7 +869,7 @@ void BackupsWizard::onMyBackupsFolderHandleSet(mega::MegaHandle)
     }
 }
 
-void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name)
+void BackupsWizard::onSyncAddRequestStatus(int errorCode, int, const QString& errorMsg, const QString& name)
 {
     // Update BackupInfo
     BackupInfo info = mBackupsStatus.value(name);
