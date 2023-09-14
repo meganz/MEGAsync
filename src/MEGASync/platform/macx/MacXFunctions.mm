@@ -103,6 +103,8 @@ void selectorsImpl(QString title, QString defaultDir, bool multiSelection, bool 
         [panel setCanChooseFiles: showFiles ? YES : NO];
         [panel setCanChooseDirectories:showFolders ? YES : NO];
         [panel setAllowsMultipleSelection:multiSelection ? YES : NO];
+        [panel setCanCreateDirectories: !showFiles && showFolders ? YES : NO];
+
         if(!defaultDir.isEmpty())
         {
             NSURL *baseURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:defaultDir.toUtf8().constData()]];
