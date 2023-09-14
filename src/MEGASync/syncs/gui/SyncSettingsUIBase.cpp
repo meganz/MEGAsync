@@ -279,7 +279,7 @@ void SyncSettingsUIBase::setSyncToDisabled(std::shared_ptr<SyncSettings> sync)
 void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync)
 {
     QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(sync->getLocalFolder(), this);
-	DialogOpener::showDialog(exclusionRules);
+    DialogOpener::showDialog(exclusionRules);
 }
 
 void SyncSettingsUIBase::openMegaIgnore(std::shared_ptr<SyncSettings> sync)

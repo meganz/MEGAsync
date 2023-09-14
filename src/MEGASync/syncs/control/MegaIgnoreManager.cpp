@@ -18,7 +18,6 @@ MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder)
        if(ignore.open(QIODevice::ReadOnly))
        {
            QTextStream in(&ignore);
-           mLastRow = 0;
            while (!in.atEnd())
            {
                QString line = in.readLine();
@@ -35,94 +34,116 @@ MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder)
                {
                    if(line.startsWith(MegaIgnoreSizeRule::HIGH_STRING))
                    {
-                       mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, line, isCommented, mLastRow);
+                       mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, line, isCommented);
+                       mRules.append(mLowLimitRule);
                    }
                    else if(line.startsWith(MegaIgnoreSizeRule::LOW_STRING))
                    {
-                       mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, line, isCommented, mLastRow);
+                       mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, line, isCommented);
+                       mRules.append(mLowLimitRule);
                    }
                    else
                    {
                        if(lineSplitted.at(1).startsWith(QLatin1String("*.")))
                        {
-                           mRules.append(std::make_shared<MegaIgnoreExtensionRule>(this, line, isCommented, mLastRow));
+                           mRules.append(std::make_shared<MegaIgnoreExtensionRule>(this, line, isCommented));
                        }
                        else
                        {
-                           mRules.append(std::make_shared<MegaIgnoreNameRule>(this, line, isCommented, mLastRow));
+                           mRules.append(std::make_shared<MegaIgnoreNameRule>(this, line, isCommented));
                        }
                    }
                }
-
-               mLastRow++;
            }
            ignore.close();
+       }
+
+       if(!mLowLimitRule)
+       {
+           mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, MegaIgnoreSizeRule::Threshold::Low);
+           mRules.append(mLowLimitRule);
+       }
+
+       if(!mHighLimitRule)
+       {
+           mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, MegaIgnoreSizeRule::Threshold::High);
+           mRules.append(mHighLimitRule);
        }
     }
 }
 
-std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getLowLimitRule()
+std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getLowLimitRule() const
 {
-    if(!mLowLimitRule)
-    {
-        mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, MegaIgnoreSizeRule::Threshold::Low);
-    }
-
     return mLowLimitRule;
 }
 
-std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getHighLimitRule()
+std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getHighLimitRule() const
 {
-    if(!mHighLimitRule)
-    {
-        mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(this, MegaIgnoreSizeRule::Threshold::High);
-        mLastRow++;
-    }
-
     return mHighLimitRule;
 }
 
-int MegaIgnoreManager::updateRow(int row, const QString &rule)
+QList<std::shared_ptr<MegaIgnoreNameRule> > MegaIgnoreManager::getNameRules() const
 {
-    QFile ignore(mMegaIgnoreFile);
-    QStringList issues;
-    if(ignore.open(QIODevice::ReadOnly))
+    QList<std::shared_ptr<MegaIgnoreNameRule>> rules;
+    foreach(auto& rule, mRules)
     {
-        QTextStream in(&ignore);
-
-        auto fileRow(0);
-        while (!in.atEnd())
+        if(rule->isValid() && rule->ruleType() == MegaIgnoreRule::RuleType::NameRule)
         {
-            auto currentRow = in.readLine();
-            if(fileRow == row)
-            {
-                issues.append(rule);
-            }
-            else
-            {
-                issues.append(currentRow);
-            }
-            fileRow++;
-        }
-
-        if(row < 0)
-        {
-            row = fileRow;
-            issues.append(rule);
-        }
-
-        ignore.close();
-
-        if(ignore.open(QIODevice::WriteOnly))
-        {
-            QTextStream out(&ignore);
-            out << issues.join(QLatin1String("\n"));
-
-            ignore.close();
+            auto nameRule = convert<MegaIgnoreNameRule>(rule);
+            rules.append(nameRule);
         }
     }
 
-    return row;
+    return rules;
+}
+
+QStringList MegaIgnoreManager::getExcludedExtensions() const
+{
+    QStringList extensions;
+    foreach(auto& rule, mRules)
+    {
+        if(rule->isValid() && rule->ruleType() == MegaIgnoreRule::RuleType::ExtensionRule)
+        {
+            auto extensionRule = convert<MegaIgnoreExtensionRule>(rule);
+            if(extensionRule)
+            {
+                extensions.append(extensionRule->extension());
+            }
+        }
+    }
+    return extensions;
+}
+
+void MegaIgnoreManager::enableExtensions(bool state)
+{
+    foreach(auto& rule, mRules)
+    {
+        if(rule->isValid() && rule->ruleType() == MegaIgnoreRule::RuleType::ExtensionRule)
+        {
+            rule->setCommented(!state);
+        }
+    }
+}
+
+void MegaIgnoreManager::applyChanges()
+{
+    QStringList rules;
+    foreach(auto& rule, mRules)
+    {
+        if(rule->isValid())
+        {
+            rules.append(rule->getRuleAsString());
+        }
+    }
+
+    QFile ignore(mMegaIgnoreFile);
+    if(ignore.open(QIODevice::WriteOnly))
+    {
+        QTextStream out(&ignore);
+        out << rules.join(QLatin1String("\n"));
+
+        ignore.close();
+    }
 }
 
 ////////////////MEGA IGNORE RULE
@@ -132,8 +153,6 @@ void MegaIgnoreRule::setCommented(bool newIsCommented)
     {
         mIsDirty = true;
         mIsCommented = newIsCommented;
-
-        mManager->updateRow(mRow, getRuleAsString());
     }
 }
 
@@ -142,10 +161,20 @@ bool MegaIgnoreRule::isCommented() const
     return mIsCommented;
 }
 
+void MegaIgnoreRule::setId(int newId)
+{
+    id = newId;
+}
+
+int MegaIgnoreRule::getId() const
+{
+    return id;
+}
+
 
 /////////////////MEGA IGNORE NAME RULE
-MegaIgnoreNameRule::MegaIgnoreNameRule(MegaIgnoreManager* manager, const QString &rule, bool isCommented, int row)
-    :MegaIgnoreRule(manager, rule, isCommented, row)
+MegaIgnoreNameRule::MegaIgnoreNameRule(const QString &rule, bool isCommented)
+    :MegaIgnoreRule(rule, isCommented)
 {
     mRuleType = RuleType::NameRule;
 
@@ -183,7 +212,7 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(MegaIgnoreManager* manager, const QString
             }
         }
 
-        mRightSideRule = ruleSplitted.at(1);
+        mPattern = ruleSplitted.at(1);
     }
 }
 
@@ -197,6 +226,7 @@ QString MegaIgnoreNameRule::getRuleAsString()
         {
             rule.append(QLatin1String("#"));
         }
+
         rule.append(mClass == Class::Exclude ? QLatin1String("-") : QLatin1String("+"));
         if(mTarget != Target::None)
         {
@@ -214,7 +244,7 @@ QString MegaIgnoreNameRule::getRuleAsString()
             rule.append(convertEnum.getString(mStrategy));
         }
         rule.append(QLatin1String(":"));
-        rule.append(mRightSideRule);
+        rule.append(mPattern);
 
         return rule;
     }
@@ -225,23 +255,28 @@ QString MegaIgnoreNameRule::getRuleAsString()
 }
 
 ////////////////MEGA IGNORE EXTENSION RULE
-MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(MegaIgnoreManager *manager, const QString &rule, bool isCommented, int row)
-    : MegaIgnoreNameRule(manager, rule, isCommented, row)
+MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(const QString &rule, bool isCommented)
+    : MegaIgnoreNameRule(manager, rule, isCommented)
 {
     mRuleType = RuleType::ExtensionRule;
-    auto extensionSplitter(mRightSideRule.split(QLatin1String(".")));
+    auto extensionSplitter(mPattern.split(QLatin1String(".")));
     if(extensionSplitter.size() == 2)
     {
         mExtension = extensionSplitter.at(1);
     }
 }
 
+const QString &MegaIgnoreExtensionRule::extension() const
+{
+    return mExtension;
+}
+
 ////////////////MEGA IGNORE SIZE RULE
-const QString MegaIgnoreSizeRule::LOW_STRING = QLatin1String("exclude-lower");
+const QString MegaIgnoreSizeRule::LOW_STRING = QLatin1String("exclude-smaller");
 const QString MegaIgnoreSizeRule::HIGH_STRING = QLatin1String("exclude-larger");
 
-MegaIgnoreSizeRule::MegaIgnoreSizeRule(MegaIgnoreManager* manager, const QString &rule, bool isCommented, int row)
-    :MegaIgnoreRule(manager, rule, isCommented, row)
+MegaIgnoreSizeRule::MegaIgnoreSizeRule(const QString &rule, bool isCommented)
+    :MegaIgnoreRule(rule, isCommented)
 {
     mRuleType = RuleType::SizeRule;
 
@@ -276,10 +311,15 @@ MegaIgnoreSizeRule::MegaIgnoreSizeRule(MegaIgnoreManager* manager, const QString
     }
 }
 
-MegaIgnoreSizeRule::MegaIgnoreSizeRule(MegaIgnoreManager *manager, Threshold type)
-    :MegaIgnoreRule(manager, QString(), true, -1)
+MegaIgnoreSizeRule::MegaIgnoreSizeRule(Threshold type)
+    :MegaIgnoreRule(QString(), true)
     , mThreshold(type)
 {
+}
+
+bool MegaIgnoreSizeRule::isValid()
+{
+    return !isCommented() && mValue > 0;
 }
 
 QString MegaIgnoreSizeRule::getRuleAsString()
@@ -328,8 +368,6 @@ void MegaIgnoreSizeRule::setValue(uint64_t newValue)
     {
         mIsDirty = true;
         mValue = newValue;
-
-        mManager->updateRow(mRow, getRuleAsString());
     }
 }
 
@@ -339,7 +377,5 @@ void MegaIgnoreSizeRule::setUnit(int newUnit)
     {
         mIsDirty = true;
         mUnit = static_cast<UnitTypes>(newUnit);
-
-        mManager->updateRow(mRow, getRuleAsString());
     }
 }

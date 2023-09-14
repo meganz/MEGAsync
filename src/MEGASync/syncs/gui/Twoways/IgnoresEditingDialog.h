@@ -19,6 +19,8 @@ public:
     explicit IgnoresEditingDialog(const QString& syncLocalFolder, QWidget *parent = nullptr);
     ~IgnoresEditingDialog();
 
+    void applyChanges();
+
 public slots:
 	void on_bAddName_clicked();
 	void on_bDeleteName_clicked();
@@ -27,6 +29,9 @@ public slots:
     void on_eLowerThan_valueChanged(int i);
     void on_cbExcludeUpperUnit_currentIndexChanged(int i);
     void on_cbExcludeLowerUnit_currentIndexChanged(int i);
+
+    void onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
+    void onCExtensionsChecked(bool state);
     void on_cExcludeUpperThan_clicked();
     void on_cExcludeLowerThan_clicked();
 

@@ -13,7 +13,17 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, QWidg
 {
     ui->setupUi(this);
 
+    auto nameRules = mManager.getNameRules();
+    foreach(auto rule, nameRules)
+    {
+        QListWidgetItem* item = new QListWidgetItem(rule->getRuleAsString(), ui->lExcludedNames);
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+        item->setCheckState(rule->isCommented() ? Qt::Unchecked : Qt::Checked); // AND initialize check state
+    }
+
     ui->cbExcludeLowerUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
+    connect(ui->lExcludedNames->model(), &QAbstractItemModel::dataChanged, this, &IgnoresEditingDialog::onlExcludedNamesChanged);
+
     auto lowLimit = mManager.getLowLimitRule();
     if(lowLimit)
     {
@@ -45,13 +55,36 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, QWidg
         ui->cbExcludeUpperUnit->setCurrentIndex(MegaIgnoreSizeRule::UnitTypes::B);
     }
 
-    QObject::connect(ui->cExcludeExtenstions, &QCheckBox::toggled, ui->tExcludeExtensions, &QPlainTextEdit::setEnabled);
-    ui->tExcludeExtensions->setEnabled(false);
+    auto extensions(mManager.getExcludedExtensions());
+    ui->tExcludeExtensions->document()->setPlainText(extensions.join(QLatin1String(", ")));
+    ui->cExcludeExtenstions->setChecked(!extensions.isEmpty());
+    ui->tExcludeExtensions->setEnabled(!extensions.isEmpty());
+    connect(ui->cExcludeExtenstions, &QCheckBox::toggled, this, &IgnoresEditingDialog::onCExtensionsChecked);
+
+    QDialogButtonBox *buttonBox = findChild<QDialogButtonBox*>(QString::fromUtf8("buttonBox"));
+    if (buttonBox)
+    {
+        auto okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setText(QLatin1String("Apply"));
+
+        auto cancelButton = buttonBox->button(QDialogButtonBox::Cancel);
+        cancelButton->setText(QLatin1String("Discard"));
+
+        connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this](){
+            applyChanges();
+            accept();
+        });
+    }
 }
 
 IgnoresEditingDialog::~IgnoresEditingDialog()
 {
     delete ui;
+}
+
+void IgnoresEditingDialog::applyChanges()
+{
+    mManager.applyChanges();
 }
 
 void IgnoresEditingDialog::on_bAddName_clicked()
@@ -81,13 +114,11 @@ void IgnoresEditingDialog::on_bAddName_clicked()
         else if (ui->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive) > 0)
         {
             ui->lExcludedNames->insertItem(i, text);
-            //saveExcludeSyncNames();
             return;
         }
     }
 
     ui->lExcludedNames->addItem(text);
-    //saveExcludeSyncNames();
 }
 
 void IgnoresEditingDialog::on_bDeleteName_clicked()
@@ -103,7 +134,7 @@ void IgnoresEditingDialog::on_bDeleteName_clicked()
         delete selected[i];
     }
 
-    //saveExcludeSyncNames();
+
 }
 
 void IgnoresEditingDialog::on_eUpperThan_valueChanged(int i)
@@ -128,6 +159,20 @@ void IgnoresEditingDialog::on_cbExcludeLowerUnit_currentIndexChanged(int i)
 {
     auto lowLimit = mManager.getLowLimitRule();
     lowLimit->setUnit(i);
+}
+
+void IgnoresEditingDialog::onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+{
+    if(roles.size() == 1 && roles.first() == Qt::CheckStateRole)
+    {
+
+    }
+}
+
+void IgnoresEditingDialog::onCExtensionsChecked(bool state)
+{
+    ui->tExcludeExtensions->setEnabled(state);
+    mManager.enableExtensions(state);
 }
 
 void IgnoresEditingDialog::on_cExcludeUpperThan_clicked()
