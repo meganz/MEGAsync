@@ -23,25 +23,28 @@ public:
     MegaIgnoreRule(const QString& rule, bool isCommented)
         : mRule(rule),
           mIsDirty(false),
-          mIsCommented(isCommented)
+          mIsCommented(isCommented),
+          mIsDeleted(false)
     {}
 
     virtual bool isValid(){return true;}
-    virtual QString getRuleAsString() { return mRule;}
     virtual RuleType ruleType() = 0;
 
     void setCommented(bool newIsCommented);
     bool isCommented() const;
 
-    void setId(int newId);
-    int getId() const;
+    virtual QString getModifiedRule() {return mRule;}
+    const QString& originalRule() const;
+
+    bool isDeleted() const;
+    void setDeleted(bool newIsDeleted);
 
 protected:
     RuleType mRuleType;
     QString mRule;
     bool mIsDirty;
     bool mIsCommented;
-    int id;
+    bool mIsDeleted;
 };
 
 class MegaIgnoreNameRule : public MegaIgnoreRule
@@ -83,7 +86,8 @@ public:
     Q_ENUM(Strategy)
 
     MegaIgnoreNameRule(const QString& rule, bool isCommented);
-    QString getRuleAsString() override;
+    QString getModifiedRule() override;
+    RuleType ruleType() override { return RuleType::NameRule;}
 
 protected:
     QString mPattern;
@@ -122,6 +126,7 @@ class MegaIgnoreExtensionRule : public MegaIgnoreNameRule
 public:
     MegaIgnoreExtensionRule(const QString& rule, bool isCommented);
 
+    RuleType ruleType() override { return RuleType::ExtensionRule;}
     const QString &extension() const;
 
 private:
@@ -156,7 +161,8 @@ public:
     MegaIgnoreSizeRule(Threshold type);
 
     bool isValid() override;
-    QString getRuleAsString() override;
+    RuleType ruleType() override { return RuleType::SizeRule;}
+    QString getModifiedRule() override;
 
     int value() const;
     UnitTypes unit() const;
@@ -176,6 +182,8 @@ class MegaIgnoreManager
 {
 public:
     MegaIgnoreManager(const QString &syncLocalFolder);
+
+    std::shared_ptr<MegaIgnoreRule> getRuleByOriginalRule(const QString& originalRule);
 
     std::shared_ptr<MegaIgnoreSizeRule> getLowLimitRule() const;
     std::shared_ptr<MegaIgnoreSizeRule> getHighLimitRule() const;
