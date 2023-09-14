@@ -23,10 +23,12 @@ public:
     {
         const auto& systemManagerFactories = getFactories();
         auto foundIt = systemManagerFactories.find(systemApplicationId.toStdString());
-        if (foundIt != systemManagerFactories.end()) {
+        if (foundIt != systemManagerFactories.end())
+        {
             return foundIt->second->makeSystemApplicationManager();
         }
-        else {
+        else
+        {
             return nullptr;
         }
     }
@@ -34,17 +36,20 @@ public:
     static bool registerFileManager(const std::string& systemApplicationId, IConcreteSystemApplicationManagerFactory* concreteFileManagerFactory)
     {
         auto& systemManagerFactories = getFactories();
-        if (systemManagerFactories.find(systemApplicationId) == systemManagerFactories.end()) {
+        if (systemManagerFactories.find(systemApplicationId) == systemManagerFactories.end())
+        {
             auto result = systemManagerFactories.emplace(systemApplicationId, concreteFileManagerFactory);
             return result.second;
         }
-        else {
+        else
+        {
             return false;
         }
     }
 
     private:
-    static tSystemApplicationManagerFactories& getFactories() {
+    static tSystemApplicationManagerFactories& getFactories()
+    {
         static tSystemApplicationManagerFactories systemApplicationManagerFactories{};
         return systemApplicationManagerFactories;
     }
@@ -54,11 +59,13 @@ template<class TSystemApplicationManager>
 class ConcreteSystemApplicationManagerFactory : public IConcreteSystemApplicationManagerFactory
 {
     public:
-        static bool Register(const std::string& systemApplicationFactoryId) {
+        static bool Register(const std::string& systemApplicationFactoryId)
+        {
             return SystemApplicationManagerFactory::registerFileManager(systemApplicationFactoryId, new ConcreteSystemApplicationManagerFactory<TSystemApplicationManager>());
         };
 
-        TSystemApplicationManager* makeSystemApplicationManager() {
+        TSystemApplicationManager* makeSystemApplicationManager()
+        {
             return new TSystemApplicationManager();
         }
 };
