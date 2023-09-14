@@ -20,27 +20,28 @@ public:
         SizeRule
     };
 
-    MegaIgnoreRule(MegaIgnoreManager* manager, const QString& rule, bool isCommented, int row)
+    MegaIgnoreRule(const QString& rule, bool isCommented)
         : mRule(rule),
-          mRow(row),
           mIsDirty(false),
-          mIsCommented(isCommented),
-          mManager(manager)
+          mIsCommented(isCommented)
     {}
 
+    virtual bool isValid(){return true;}
     virtual QString getRuleAsString() { return mRule;}
-    RuleType ruleType(){return mRuleType;}
+    virtual RuleType ruleType() = 0;
 
     void setCommented(bool newIsCommented);
     bool isCommented() const;
 
+    void setId(int newId);
+    int getId() const;
+
 protected:
     RuleType mRuleType;
     QString mRule;
-    int mRow;
     bool mIsDirty;
     bool mIsCommented;
-    MegaIgnoreManager* mManager;
+    int id;
 };
 
 class MegaIgnoreNameRule : public MegaIgnoreRule
@@ -81,11 +82,11 @@ public:
     };
     Q_ENUM(Strategy)
 
-    MegaIgnoreNameRule(MegaIgnoreManager* manager, const QString& rule, bool isCommented, int row);
+    MegaIgnoreNameRule(const QString& rule, bool isCommented);
     QString getRuleAsString() override;
 
 protected:
-    QString mRightSideRule;
+    QString mPattern;
 
 private:
     template <class EnumType>
@@ -119,7 +120,9 @@ private:
 class MegaIgnoreExtensionRule : public MegaIgnoreNameRule
 {
 public:
-    MegaIgnoreExtensionRule(MegaIgnoreManager* manager, const QString& rule, bool isCommented, int row);
+    MegaIgnoreExtensionRule(const QString& rule, bool isCommented);
+
+    const QString &extension() const;
 
 private:
     QString mExtension;
@@ -149,8 +152,10 @@ public:
     };
     Q_ENUM(UnitTypes)
 
-    MegaIgnoreSizeRule(MegaIgnoreManager* manager, const QString& rule, bool isCommented, int row);
-    MegaIgnoreSizeRule(MegaIgnoreManager* manage, Threshold type);
+    MegaIgnoreSizeRule(const QString& rule, bool isCommented);
+    MegaIgnoreSizeRule(Threshold type);
+
+    bool isValid() override;
     QString getRuleAsString() override;
 
     int value() const;
@@ -172,21 +177,28 @@ class MegaIgnoreManager
 public:
     MegaIgnoreManager(const QString &syncLocalFolder);
 
-    std::shared_ptr<MegaIgnoreSizeRule> getLowLimitRule();
-    std::shared_ptr<MegaIgnoreSizeRule> getHighLimitRule();
+    std::shared_ptr<MegaIgnoreSizeRule> getLowLimitRule() const;
+    std::shared_ptr<MegaIgnoreSizeRule> getHighLimitRule() const;
+
+    QList<std::shared_ptr<MegaIgnoreNameRule>> getNameRules() const;
+
+    QStringList getExcludedExtensions() const;
+    void enableExtensions(bool state);
+
+    void applyChanges();
 
 private:
-    friend class MegaIgnoreSizeRule;
-    friend class MegaIgnoreRule;
-    int updateRow(int row, const QString& rule);
+    template <class Type>
+    static const std::shared_ptr<Type> convert(const std::shared_ptr<MegaIgnoreRule> data)
+    {
+        return std::dynamic_pointer_cast<Type>(data);
+    }
 
     QString mMegaIgnoreFile;
     QList<std::shared_ptr<MegaIgnoreRule>> mRules;
 
     std::shared_ptr<MegaIgnoreSizeRule> mLowLimitRule;
     std::shared_ptr<MegaIgnoreSizeRule> mHighLimitRule;
-
-    int mLastRow;
 };
 
 #endif // MEGAIGNOREMANAGER_H
