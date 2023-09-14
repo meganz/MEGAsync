@@ -23,6 +23,11 @@ IgnoresEditingDialog::IgnoresEditingDialog(QWidget *parent) :
     ui->cbExcludeLowerUnit->setCurrentIndex(mPreferences->lowerSizeLimitUnit());
     ui->eUpperThan->setValue(static_cast<int>(mPreferences->upperSizeLimitValue()));
     ui->cbExcludeUpperUnit->setCurrentIndex(mPreferences->upperSizeLimitUnit());
+    QObject::connect(ui->cExcludeExtenstions, &QCheckBox::toggled, ui->tExcludeExtensions, &QPlainTextEdit::setEnabled);
+    ui->tExcludeExtensions->setEnabled(false);
+    ui->cbExcludeLowerUnit->setEnabled(false);
+    ui->cbExcludeUpperUnit->setEnabled(false);
+
 }
 
 IgnoresEditingDialog::~IgnoresEditingDialog()
