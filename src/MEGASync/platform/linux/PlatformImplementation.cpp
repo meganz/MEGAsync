@@ -7,8 +7,8 @@
 #include <cstring>
 #include <map>
 
-#include "IFileManager.h"
-#include "FileManagerFactory.h"
+#include "ISystemApplicationManager.h"
+#include "SystemApplicationManagerFactory.h"
 
 using namespace std;
 using namespace mega;
@@ -117,7 +117,7 @@ bool PlatformImplementation::showInFolder(QString pathIn)
     // Nautilus from parsing the argument string all-together
 
     QString fileBrowserParams;
-    std::unique_ptr<IFileManager> fileManager(FileManagerFactory::getFileManager(fileBrowser));
+    std::unique_ptr<ISystemApplicationManager> fileManager(SystemApplicationManagerFactory::getSystemApplicationManager(fileBrowser));
     if (fileManager != nullptr)
     {
         fileBrowserParams = fileManager->getShowInFolderParams();

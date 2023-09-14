@@ -1,12 +1,12 @@
-#ifndef DOLPHIN_FILEMANAGER_H
-#define DOLPHIN_FILEMANAGER_H
+#ifndef NAUTILUS_FILEMANAGER_H
+#define NAUTILUS_FILEMANAGER_H
 
 #include <string>
 
 #include "ISystemApplicationManager.h"
 #include "SystemApplicationManagerFactory.h"
 
-class DolphinFileManager : public ISystemApplicationManager
+class NautilusFileManager : public ISystemApplicationManager
 {
 public:
     QString getShowInFolderParams() const override;

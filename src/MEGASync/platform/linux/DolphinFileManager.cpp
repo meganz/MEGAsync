@@ -1,10 +1,11 @@
 #include "DolphinFileManager.h"
 
-bool DolphinFileManager::registered = ConcreteFileManagerFactory<DolphinFileManager>::Register("dolphin");
+bool DolphinFileManager::registered = ConcreteSystemApplicationManagerFactory<DolphinFileManager>::Register("dolphin");
 
-const QString ShowSelectedInFolder = QLatin1String(" --select");
+const QString ShowSelectedInFolder = QLatin1String("--select");
+const QString OpenNewWindow = QLatin1String("--new-window");
 
 QString DolphinFileManager::getShowInFolderParams() const
 {
-    return ShowSelectedInFolder;
+    return QString(QLatin1String(" %0 %1")).arg(OpenNewWindow, ShowSelectedInFolder);
 }
