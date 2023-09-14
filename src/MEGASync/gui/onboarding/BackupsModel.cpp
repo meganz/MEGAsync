@@ -830,7 +830,7 @@ void BackupsModel::clean(bool resetErrors)
             {
                 if(resetErrors)
                 {
-                    setData(index(getRow((*item)->mFolder), 0), QVariant(BackupsModel::None), ErrorRole);
+                    setData(index(getRow((*item)->mFolder), 0), QVariant(BackupErrorCode::None), ErrorRole);
                 }
                 item++;
             }
@@ -873,7 +873,7 @@ void BackupsModel::onBackupFinished(const QString& folder,
     else
     {
         mBackupFolderList[row]->sdkError = sdkError;
-        setData(index(row, 0), QVariant(BackupsModel::SDKCreation), ErrorRole);
+        setData(index(row, 0), QVariant(BackupErrorCode::SDKCreation), ErrorRole);
     }
 }
 
@@ -883,18 +883,20 @@ bool BackupsModel::checkDirectories()
     bool reviewErrors = false;
     for (int row = 0; row < rowCount(); row++)
     {
-        if (mBackupFolderList[row]->mSelected)
+        if (mBackupFolderList[row]->mSelected
+                && !mBackupFolderList[row]->mDone
+                && mBackupFolderList[row]->mError != SDKCreation)
         {
             if(!QDir(mBackupFolderList[row]->mFolder).exists())
             {
-                setData(index(row, 0), QVariant(BackupsModel::UnavailableDir), ErrorRole);
+                setData(index(row, 0), QVariant(BackupErrorCode::UnavailableDir), ErrorRole);
                 success = false;
             }
             else if(mBackupFolderList[row]->mError == BackupErrorCode::UnavailableDir)
             {
                 // If actual error is UnavailableDir and it could be located again
                 // Then, clean this error
-                setData(index(row, 0), QVariant(BackupsModel::None), ErrorRole);
+                setData(index(row, 0), QVariant(BackupErrorCode::None), ErrorRole);
                 reviewErrors = true;
             }
         }
