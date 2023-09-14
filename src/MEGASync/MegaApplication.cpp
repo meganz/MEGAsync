@@ -543,7 +543,7 @@ void MegaApplication::initialize()
     }
     trayIcon->show();
 
-    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
+    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGA Desktop App is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
     megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
@@ -1342,7 +1342,6 @@ if (!preferences->lastExecutionTime())
         if (!QSystemTrayIcon::isSystemTrayAvailable())
         {
             checkSystemTray();
-
             if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
             {
                 showInfoDialog();
@@ -4132,11 +4131,11 @@ void MegaApplication::checkOperatingSystem()
             msgInfo.title = getMEGAString();
             QString message = tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef __APPLE__
-                    + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.");
+                              + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.");
 #elif defined(_WIN32)
-                    + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.");
+                              + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.");
 #else
-                    + tr("MEGAsync will continue to work, however you might not receive new updates.");
+                              + tr("MEGAsync will continue to work, however you might not receive new updates.");
 #endif
 
             msgInfo.text = message;
@@ -6160,7 +6159,7 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        aboutAction = new MenuItemAction(tr("About"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
 
         infoDialogMenu->addAction(aboutAction);
@@ -6227,7 +6226,7 @@ void MegaApplication::createGuestMenu()
     }
     else
     {
-        updateActionGuest = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        updateActionGuest = new MenuItemAction(tr("About"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onAboutClicked);
     }
 
@@ -6447,7 +6446,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 msgInfo.ignoreCloseAll = true;
                 QMegaMessageBox::critical(msgInfo);
                 break;
-        }
+            }
         }
 
     }

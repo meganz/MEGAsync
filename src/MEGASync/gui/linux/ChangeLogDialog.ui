@@ -365,8 +365,8 @@ border-bottom: 1px solid #EFEFEC;
         </property>
         <property name="minimumSize">
          <size>
-          <width>16777215</width>
-          <height>16777215</height>
+         <width>16777215</width>
+         <height>16777215</height>
          </size>
         </property>
         <property name="text">

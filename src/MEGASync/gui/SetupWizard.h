@@ -119,6 +119,8 @@ private:
     QString getErrorMessage(mega::MegaError* error) const;
 
     QPropertyAnimation *m_animation;
+    static const QString defaultSyncFolderName;
+    static const QString defaultSyncFolderPath;
 
 };
 
