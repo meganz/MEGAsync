@@ -3455,6 +3455,16 @@ void MegaApplication::processUpgradeSecurityEvent()
     QMegaMessageBox::information(msgInfo);
 }
 
+QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
+{
+    QQueue<QString> newUploadQueue;
+    foreach(QString file, newUploads)
+    {
+        newUploadQueue.append(file);
+    }
+    return newUploadQueue;
+}
+
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
 {
     if (appfinished)
@@ -4814,13 +4824,7 @@ void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
                                  parent,
                                  [this/*, blocker*/](QStringList files)
     {
-        QQueue<QString> qFiles;
-        foreach(QString file, files)
-        {
-            qFiles.append(file);
-        }
-
-        shellUpload(qFiles);
+        shellUpload(createQueue(files));
     });
 }
 
@@ -5405,15 +5409,10 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     auto processUpload = [this](QStringList selectedFiles){
         if (!selectedFiles.isEmpty())
         {
-            std::unique_ptr<MegaNode> target(megaApi->getNodeByHandle(fileUploadTarget));
-            int files = 0;
-            for (const auto& path : selectedFiles)
-            {
-                files++;
-                startUpload(path, target.get(), nullptr);
-            }
+            uploadQueue.append(createQueue(selectedFiles));
+            processUploadQueue(fileUploadTarget);
 
-            HTTPServer::onUploadSelectionAccepted(files, 0);
+            HTTPServer::onUploadSelectionAccepted(selectedFiles.size(), 0);
         }
         else
         {
