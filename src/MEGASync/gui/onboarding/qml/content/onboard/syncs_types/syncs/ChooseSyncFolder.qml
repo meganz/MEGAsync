@@ -64,7 +64,7 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: 15
-        text: OnboardingStrings.change
+        text: OnboardingStrings.choose
         onClicked: {
             folderField.error = false;
             folderField.hint.visible = false;
