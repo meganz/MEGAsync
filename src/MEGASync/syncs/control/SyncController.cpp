@@ -192,11 +192,6 @@ void SyncController::enableSync(std::shared_ptr<SyncSettings> syncSetting)
                         errorMsg);
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
         }
-
-        if (syncErrorCode == MegaSync::NO_SYNC_ERROR && syncSetting)
-        {
-            mSyncInfo->removeUnattendedDisabledSync(syncSetting->backupId(), syncSetting->getType());
-        }
     }));
 }
 

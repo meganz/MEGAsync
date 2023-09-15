@@ -70,7 +70,9 @@ private:
     QMap<QString, QString> mPendingBackups;
 
     mega::MegaApi* mApi;
-    SyncInfo* mSyncInfo;
+
+    //Only use const methods
+    const SyncInfo* mSyncInfo;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)

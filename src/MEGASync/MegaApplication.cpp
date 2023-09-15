@@ -2151,8 +2151,6 @@ void MegaApplication::periodicTasks()
             });// end of thread pool function
         }
 
-        onGlobalSyncStateChanged(megaApi);
-
         if (isLinux)
         {
             updateTrayIcon();
@@ -7693,64 +7691,4 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
                  .arg(paused).arg(indexing).arg(waiting).arg(syncing).toUtf8().constData());
 
     updateTrayIcon();
-}
-
-void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    //Do we need this?
-    onGlobalSyncStateChanged(api);
-}
-
-void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *localPath, int newState)
-{
-    if (appfinished || !localPath || localPath->empty())
-    {
-        return;
-    }
-
-    Platform::getInstance()->notifySyncFileChange(localPath, newState);
-}
-
-//Why do we need this?
-void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
-{
-    if (!syncSetting)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("onSyncEnabled for non existing sync").toUtf8().constData());
-        return;
-    }
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Your sync \"%1\" has been re-enabled. Error = %2")
-                 .arg(syncSetting->name()).arg(syncSetting->getError()).toUtf8().constData());
-
-
-    showErrorMessage(tr("Your sync \"%1\" has been enabled")
-                     .arg(syncSetting->name()));
-
-    model->removeUnattendedDisabledSync(syncSetting->backupId(), syncSetting->getType());
-}
-
-void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
-    onGlobalSyncStateChanged(api);
-}
-
-void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
-    onGlobalSyncStateChanged(api);
 }

@@ -12,6 +12,7 @@
 #include <QVector>
 #include <QMap>
 #include <QList>
+#include <QTimer>
 
 #include <memory>
 
@@ -50,10 +51,13 @@ private:
     bool mIsFirstBackupDone;
 
     void saveUnattendedDisabledSyncs();
-    void checkUnattendedDisabledSyncsForErrors(mega::MegaSync::Error error);
+    void checkUnattendedDisabledSyncsForErrors();
+
+    QTimer mShowErrorTimer;
+    int mLastError = mega::MegaSync::NO_SYNC_ERROR;
 
 protected:
-    QMutex syncMutex;
+    mutable QMutex syncMutex;
 
     QMap<SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;
@@ -91,7 +95,7 @@ public:
 
     // Getters
     std::shared_ptr<SyncSettings> getSyncSetting(int num, SyncType type);
-    std::shared_ptr<SyncSettings> getSyncSettingByTag(mega::MegaHandle tag);
+    std::shared_ptr<SyncSettings> getSyncSettingByTag(mega::MegaHandle tag) const;
     QList<std::shared_ptr<SyncSettings>> getSyncSettingsByType(const QVector<SyncType>& types);
     QList<std::shared_ptr<SyncSettings>> getSyncSettingsByType(SyncType type)
         {return getSyncSettingsByType(QVector<SyncType>({type}));}
@@ -109,7 +113,7 @@ public:
     bool hasUnattendedDisabledSyncs(SyncType type) const
         {return hasUnattendedDisabledSyncs(QVector<SyncType>({type}));}
     const QSet<mega::MegaHandle> getUnattendedDisabledSyncs(const SyncType& type) const;
-    void addUnattendedDisabledSync(mega::MegaHandle tag, SyncType type, mega::MegaSync::Error error);
+    void addUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
     void removeUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
     void setUnattendedDisabledSyncs(const QSet<mega::MegaHandle>& tags);
     void dismissUnattendedDisabledSyncs(const QVector<SyncType>& types);
@@ -142,7 +146,8 @@ public:
 
 protected:
     void onEvent(mega::MegaApi* api, mega::MegaEvent* event) override;
-    void onSyncStateChanged(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncStateChanged(mega::MegaApi *, mega::MegaSync *sync) override;
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncFileStateChanged(mega::MegaApi *, mega::MegaSync *, std::string *localPath, int newState) override;
 };
