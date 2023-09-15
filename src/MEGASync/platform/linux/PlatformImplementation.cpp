@@ -7,8 +7,8 @@
 #include <cstring>
 #include <map>
 
-#include "ISystemApplicationManager.h"
-#include "SystemApplicationManagerFactory.h"
+#include "DolphinFileManager.h"
+#include "NautilusFileManager.h"
 
 using namespace std;
 using namespace mega;
@@ -111,20 +111,20 @@ bool PlatformImplementation::isTilingWindowManager()
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
     QString fileBrowser = getDefaultFileBrowserApp();
-    // Nautilus on Gnome, does not open the directory if argument is given without surrounding double-quotes;
-    // Path is passed through QUrl which properly escapes special chars in native platform URIs
-    // which takes care of path names also containing double-quotes withing, which will stop
-    // Nautilus from parsing the argument string all-together
 
-    QString fileBrowserParams;
-    std::unique_ptr<ISystemApplicationManager> fileManager(SystemApplicationManagerFactory::getSystemApplicationManager(fileBrowser));
-    if (fileManager != nullptr)
+    static const QMap<QString, QString> showInForlderCallMap
     {
-        fileBrowserParams = fileManager->getShowInFolderParams();
+        {QLatin1String("dolphin"), DolphinFileManager::getShowInFolderParams()},
+        {QLatin1String("nautilus"), NautilusFileManager::getShowInFolderParams()}
+    };
+
+    QStringList params;
+    if (showInForlderCallMap.constFind(fileBrowser) != showInForlderCallMap.constEnd())
+    {
+        params << showInForlderCallMap[fileBrowser];
     }
 
-    return QProcess::startDetached(fileBrowser + fileBrowserParams + QString::fromLatin1(" \"")
-                    + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
+    return QProcess::startDetached(fileBrowser, params << QUrl::fromLocalFile(pathIn).toString());
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)

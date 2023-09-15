@@ -9,9 +9,7 @@ HEADERS +=  $$PWD/Platform.h \
             $$PWD/AbstractPlatform.h \
             $$PWD/ShellNotifier.h \
             $$PWD/PowerOptions.h \
-            $$PWD/PlatformStrings.h \
-            $$PWD/ISystemApplicationManager.h \
-            $$PWD/SystemApplicationManagerFactory.h
+            $$PWD/PlatformStrings.h
 
 win32 {
     SOURCES +=	$$PWD/win/PlatformImplementation.cpp \

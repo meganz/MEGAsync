@@ -1,17 +1,12 @@
 #ifndef NAUTILUS_FILEMANAGER_H
 #define NAUTILUS_FILEMANAGER_H
 
-#include <string>
+#include <QString>
 
-#include "ISystemApplicationManager.h"
-
-class NautilusFileManager : public ISystemApplicationManager
+class NautilusFileManager
 {
 public:
-    QString getShowInFolderParams() const override;
-
-private:
-    static bool registered;
+    static QString getShowInFolderParams();
 };
 
 #endif

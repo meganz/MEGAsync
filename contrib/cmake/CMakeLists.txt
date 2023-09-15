@@ -380,8 +380,6 @@ set (MOC_INPUT
 
     ${MEGAsyncDir}/platform/PlatformStrings.h
     ${MEGAsyncDir}/platform/PowerOptions.h
-    ${MEGAsyncDir}/platform/SystemApplicationManagerFactory.h
-    ${MEGAsyncDir}/platform/ISystemApplicationManager.h
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
