@@ -454,8 +454,10 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
 
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
-        if(!mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN))
-        {
+        if(!mPreferences->isOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN)
+            && !(mPreferences->isFirstBackupDone() || mPreferences->isFirstSyncDone())) //Onboarding don´t has to be shown to users that
+                                                                                        //doesn´t have one_time_action_onboarding_shown
+        {                                                                               //and they have first backup or first sync done
             MegaSyncApp->openOnboardingDialog();
             setState(FETCH_NODES_FINISHED_ONBOARDING);
             mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);

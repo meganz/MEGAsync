@@ -1,7 +1,6 @@
 
 #include "BackupsModel.h"
 
-#include "mega/types.h"
 #include "megaapi.h"
 #include "Utilities.h"
 #include "syncs/control/SyncController.h"
@@ -29,11 +28,7 @@ BackupFolder::BackupFolder(const QString& folder,
 
 void BackupFolder::setSize(qint64 size)
 {
-    if(size < 0)
-    {
-        mSize = tr("Loading...");
-    }
-    else
+    if(size > 0)
     {
         folderSize = size;
         mSize = Utilities::getSizeString(size);
