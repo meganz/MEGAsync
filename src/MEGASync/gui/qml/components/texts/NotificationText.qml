@@ -9,7 +9,7 @@ import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Item {
-    id: root
+    id: notificationRoot
 
     property NotificationInfo attributes: NotificationInfo {}
 
@@ -40,10 +40,55 @@ Item {
     }
 
     onVisibleChanged: {
-        if(visible && root.time > 0) {
+        if(visible && notificationRoot.time > 0) {
+            animationToVisible.start();
             visibilityTimer.start();
         } else if(visibilityTimer.running) {
             visibilityTimer.stop();
+        }
+    }
+
+    SequentialAnimation {
+        id: animationToVisible
+
+        NumberAnimation {
+            target: notificationRoot
+            property: "visible"
+            from: 0
+            to: 1
+            duration: 0
+        }
+
+        NumberAnimation {
+            target: notificationRoot
+            property: "opacity"
+            from: 0
+            to: 1
+            duration: 200
+        }
+    }
+
+    SequentialAnimation {
+        id: animationToInvisible
+
+        NumberAnimation {
+            target: notificationRoot
+            property: "opacity"
+            from: 1
+            to: 0
+            duration: 200
+        }
+
+        NumberAnimation {
+            target: notificationRoot
+            property: "visible"
+            from: 1
+            to: 0
+            duration: 0
+        }
+
+        onFinished: {
+            visibilityTimerFinished();
         }
     }
 
@@ -75,10 +120,10 @@ Item {
 
                 height: {
                     var h = 0;
-                    if(root.title.length !== 0) {
+                    if(notificationRoot.title.length !== 0) {
                         h += titleLoader.height;
                     }
-                    if(root.text.length !== 0) {
+                    if(notificationRoot.text.length !== 0) {
                         h += textLoader.height;
                     }
                     return h;
@@ -125,7 +170,7 @@ Item {
         id: titleComponent
 
         MegaTexts.Text {
-            text: root.title
+            text: notificationRoot.title
             color: attributes.titleColor
             font.bold: true
         }
@@ -135,7 +180,7 @@ Item {
         id: textComponent
 
         MegaTexts.Text {
-            text: root.text
+            text: notificationRoot.text
             color: attributes.textColor
         }
     }
@@ -143,11 +188,11 @@ Item {
     Timer {
         id: visibilityTimer
 
-        interval: root.time
+        interval: notificationRoot.time
         running: false
         repeat: false
         onTriggered: {
-            visibilityTimerFinished();
+            animationToInvisible.start();
         }
     }
 
