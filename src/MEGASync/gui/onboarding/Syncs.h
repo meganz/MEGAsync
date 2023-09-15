@@ -40,7 +40,7 @@ private:
         QString localWarningMsg = QString::fromUtf8("");
     } mProcessInfo;
 
-    bool processLocal(ChooseLocalFolder* local);
+    void processLocal(ChooseLocalFolder* local);
     void processRemote(mega::MegaHandle remoteHandle);
 
 private slots:

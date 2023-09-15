@@ -7,13 +7,15 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include <DialogOpener.h>
 
-QString ChooseLocalFolder::DEFAULT_FOLDER(QString::fromUtf8("/MEGA"));
+QString ChooseLocalFolder::DEFAULT_FOLDER(QString::fromLatin1("MEGA"));
+QString ChooseLocalFolder::DEFAULT_FOLDER_PATH(QString::fromLatin1("/") + ChooseLocalFolder::DEFAULT_FOLDER);
 
 ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
     : QObject(parent)
-    , mFolderName(QString())
-    , mFolder(QString(DEFAULT_FOLDER))
+    , mFolderName(DEFAULT_FOLDER)
 {
+    // The default one (MEGA) should be created if it not exists
+    createDefault();
 }
 
 void ChooseLocalFolder::openFolderSelector()
@@ -40,28 +42,26 @@ const QString ChooseLocalFolder::getFolder()
 void ChooseLocalFolder::reset()
 {
     mFolderName.clear();
-    mFolder = DEFAULT_FOLDER;
+    mFolder.clear();
     emit folderChanged();
 }
 
-bool ChooseLocalFolder::createDefault()
+void ChooseLocalFolder::createDefault()
 {
-    bool success = true;
-    if(mFolderName.isEmpty())
+    mFolder = Utilities::getDefaultBasePath();
+    mFolder.append(DEFAULT_FOLDER_PATH);
+    mFolder = QDir::toNativeSeparators(mFolder);
+    QDir defaultFolder(mFolder);
+    if (!defaultFolder.exists() && !defaultFolder.mkpath(QString::fromUtf8(".")))
     {
-        QString defaultFolderPath = Utilities::getDefaultBasePath();
-        defaultFolderPath.append(DEFAULT_FOLDER);
-        defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
-        QDir defaultFolder(defaultFolderPath);
-        success = defaultFolder.mkpath(QString::fromUtf8("."));
-        mFolder = QDir::toNativeSeparators(QDir(defaultFolder).canonicalPath());
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                           QString::fromUtf8("ChooseFolder: %1 cannot be created.").arg(mFolder).toUtf8().constData());
     }
-    return success;
 }
 
 ChooseRemoteFolder::ChooseRemoteFolder(QObject *parent)
     : QObject(parent)
-    , mFolderName(ChooseLocalFolder::DEFAULT_FOLDER)
+    , mFolderName(ChooseLocalFolder::DEFAULT_FOLDER_PATH)
     , mFolderHandle(mega::INVALID_HANDLE)
 {
 }
@@ -102,7 +102,7 @@ const mega::MegaHandle ChooseRemoteFolder::getHandle()
 void ChooseRemoteFolder::reset()
 {
     mFolderHandle = mega::INVALID_HANDLE;
-    mFolderName = ChooseLocalFolder::DEFAULT_FOLDER;
+    mFolderName = ChooseLocalFolder::DEFAULT_FOLDER_PATH;
     emit folderNameChanged();
 }
 

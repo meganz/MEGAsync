@@ -19,9 +19,10 @@ public:
     Q_INVOKABLE void openFolderSelector();
     Q_INVOKABLE const QString getFolder();
     Q_INVOKABLE void reset();
-    bool createDefault();
+    void createDefault();
 
     static QString DEFAULT_FOLDER;
+    static QString DEFAULT_FOLDER_PATH;
 
 private:
     QString mFolder;
