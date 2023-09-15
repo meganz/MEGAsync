@@ -23,13 +23,8 @@ BackupFolder::BackupFolder(const QString& folder,
     , mError(0)
     , folderSize(0)
     , sdkError(QString())
+    , mFolderAttr(nullptr)
 {
-    mFolderAttr = new LocalFileFolderAttributes(folder, this);
-
-    mFolderAttr->requestSize(this,[&](qint64 size)
-    {
-        setSize(size);
-    });
 }
 
 void BackupFolder::setSize(qint64 size)
@@ -45,9 +40,24 @@ void BackupFolder::setSize(qint64 size)
         if(auto model = dynamic_cast<BackupsModel*>(parent()))
         {
             auto changedIndex = model->index(model->getRow(mFolder), 0);
+            model->updateSelectedAndTotalSize();
             emit model->dataChanged(changedIndex, changedIndex, {BackupsModel::SizeRole});
         }
     }
+}
+
+void BackupFolder::calculateFolderSize()
+{
+    if(!mFolderAttr)
+    {
+        mFolderAttr = new LocalFileFolderAttributes(mFolder, this);
+    }
+
+    mFolderAttr->requestSize(this,[&](qint64 size)
+                            {
+                                setSize(size);
+                            });
+
 }
 
 int BackupsModel::CHECK_DIRS_TIME = 1000;
@@ -321,7 +331,11 @@ void BackupsModel::updateSelectedAndTotalSize()
         if((*item)->mSelected)
         {
             mSelectedRowsTotal++;
-            mBackupsTotalSize += (*item)->folderSize;
+
+            if((*item)->folderSize > 0)
+            {
+                mBackupsTotalSize += (*item)->folderSize;
+            }
         }
         item++;
     }
@@ -688,6 +702,14 @@ int BackupsModel::getRow(const QString& folder)
     return row;
 }
 
+void BackupsModel::calculateFolderSizes()
+{
+    for(auto& backupFolder : mBackupFolderList)
+    {
+        backupFolder->calculateFolderSize();
+    }
+}
+
 int BackupsModel::rename(const QString& folder, const QString& name)
 {
     int row = getRow(folder);
@@ -938,6 +960,13 @@ void BackupsProxyModel::setSelectedFilterEnabled(bool enabled)
         return;
     }
 
+    if(enabled)
+    {
+        if(auto model = dynamic_cast<BackupsModel*>(sourceModel()))
+        {
+            model->calculateFolderSizes();
+        }
+    }
     mSelectedFilterEnabled = enabled;
     emit selectedFilterEnabledChanged();
 

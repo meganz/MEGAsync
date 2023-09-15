@@ -35,6 +35,7 @@ public:
 
     FileFolderAttributes* mFolderAttr;
     void setSize(qint64 size);
+    void calculateFolderSize();
 };
 
 class BackupsModel : public QAbstractListModel
@@ -113,6 +114,10 @@ public:
 
     int getRow(const QString& folder);
 
+    void calculateFolderSizes();
+
+    void updateSelectedAndTotalSize();
+
 public slots:
 
     void insert(const QString& folder);
@@ -160,8 +165,6 @@ private:
     bool mExistsOnlyGlobalError;
 
     void populateDefaultDirectoryList();
-
-    void updateSelectedAndTotalSize();
 
     void checkSelectedAll();
 

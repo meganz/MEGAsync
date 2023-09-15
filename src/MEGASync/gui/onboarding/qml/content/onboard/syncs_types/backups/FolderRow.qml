@@ -144,6 +144,7 @@ Rectangle {
                 maximumLineCount: 1
                 wrapMode: Text.WrapAnywhere
                 color: Styles.textSecondary
+                visible: backupsProxyModel.selectedFilterEnabled
             }
 
             MouseArea {
