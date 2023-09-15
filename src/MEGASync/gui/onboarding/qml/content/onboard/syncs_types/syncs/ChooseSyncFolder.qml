@@ -14,7 +14,7 @@ import Onboard 1.0
 import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
 
-Rectangle {
+Item {
 
     property alias localTest: localFolderChooser
     property alias remoteTest: remoteFolderChooser
@@ -26,13 +26,6 @@ Rectangle {
     property alias folderField: folderField
 
     readonly property int textEditMargin: 2
-
-    function folderSelectionChanged(folder, defaultFolder) {
-        isValid = folder.length;
-        if(isValid) {
-            folderField.text = folder;
-        }
-    }
 
     function reset() {
         if(local) {
@@ -46,7 +39,6 @@ Rectangle {
     Layout.preferredHeight: folderField.height
     width: parent.width
     height: folderField.height
-    color: "transparent"
 
     MegaTextFields.TextField {
         id: folderField
@@ -61,6 +53,8 @@ Rectangle {
         leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
         hint.icon: Images.alertTriangle
+        toolTip.leftIconSource: leftIcon.source
+        toolTip.timeout: 5000
     }
 
     MegaButtons.OutlineButton {
@@ -70,7 +64,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: 15
-        text: OnboardingStrings.change
+        text: OnboardingStrings.choose
         onClicked: {
             folderField.error = false;
             folderField.hint.visible = false;
@@ -81,17 +75,9 @@ Rectangle {
 
     ChooseLocalFolder {
         id: localFolderChooser
-
-        onFolderChanged: {
-            folderSelectionChanged(folder);
-        }
     }
 
     ChooseRemoteFolder {
         id: remoteFolderChooser
-
-        onFolderChanged: {
-            folderSelectionChanged(folder);
-        }
     }
 }

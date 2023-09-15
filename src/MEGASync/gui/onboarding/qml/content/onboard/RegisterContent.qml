@@ -155,7 +155,7 @@ Column {
                         hint.styles.textColor = Styles.textError;
                     } else {
                         if(!passwordInfoPopup.validPassword) {
-                            hint.text = OnboardingStrings.passwordEasilyGuessed;
+                            hint.text = OnboardingStrings.passwordEasilyGuessedError;
                             hint.styles.textColor = Styles.textError;
                         } else if(!passwordInfoPopup.allChecked) {
                             hint.text = OnboardingStrings.passwordEasilyGuessed;

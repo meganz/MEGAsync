@@ -23,11 +23,7 @@ Syncs::~Syncs()
 
 void Syncs::addSync(ChooseLocalFolder* local, ChooseRemoteFolder* remote)
 {
-    // First, process local folder
-    if(!processLocal(local))
-    {
-        return;
-    }
+    processLocal(local);
 
     // Then, get the remote handle and process remote folder
     mega::MegaHandle remoteHandle = mega::INVALID_HANDLE;
@@ -43,7 +39,6 @@ void Syncs::addSync(ChooseLocalFolder* local, ChooseRemoteFolder* remote)
         {
             // Relative sync with default folder (MEGA)
             QString defaultFolder(ChooseLocalFolder::DEFAULT_FOLDER);
-            defaultFolder.remove(0, 1);
             mMegaApi->createFolder(defaultFolder.toStdString().c_str(),
                                    MegaSyncApp->getRootNode().get());
             mCreatingDefaultFolder = true;
@@ -55,16 +50,9 @@ void Syncs::addSync(ChooseLocalFolder* local, ChooseRemoteFolder* remote)
     processRemote(remoteHandle);
 }
 
-bool Syncs::processLocal(ChooseLocalFolder* local)
+void Syncs::processLocal(ChooseLocalFolder* local)
 {
-    // If folder is empty, the default one (MEGA) should be created
-    // Otherwise, the selected folder in the ChooseLocalFolder is used
-    if(!local->createDefault())
-    {
-        return false;
-    }
     mProcessInfo.localPath = local->getFolder();
-
     mProcessInfo.localSyncability =
         SyncController::isLocalFolderSyncable(mProcessInfo.localPath,
                                               mega::MegaSync::TYPE_TWOWAY,
@@ -74,8 +62,6 @@ bool Syncs::processLocal(ChooseLocalFolder* local)
     {
         emit cantSync(mProcessInfo.localWarningMsg);
     }
-
-    return true;
 }
 
 void Syncs::processRemote(mega::MegaHandle remoteHandle)
@@ -158,7 +144,6 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
         case mega::MegaRequest::TYPE_CREATE_FOLDER:
         {
             QString defaultFolder(ChooseLocalFolder::DEFAULT_FOLDER);
-            defaultFolder.remove(0, 1);
             if (!mCreatingDefaultFolder || defaultFolder.compare(QString::fromUtf8(request->getName())))
             {
                 break;
@@ -169,7 +154,7 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
             if (error->getErrorCode() == mega::MegaError::API_OK)
             {
                 mega::MegaNode* node =
-                    mMegaApi->getNodeByPath(ChooseLocalFolder::DEFAULT_FOLDER.toStdString().c_str());
+                    mMegaApi->getNodeByPath(ChooseLocalFolder::DEFAULT_FOLDER_PATH.toStdString().c_str());
                 if (!node)
                 {
                     emit cantSync(tr("MEGA folder doesn't exist"), false);

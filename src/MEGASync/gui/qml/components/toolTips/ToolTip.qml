@@ -9,11 +9,10 @@ import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 
 Qml.ToolTip {
-    id: root
+    id: tooltipRoot
 
-    readonly property int tooltipMargin: 6
     property url leftIconSource: ""
-    property int contentSpacing: 0
+    property int contentSpacing: 4
 
     onLeftIconSourceChanged: {
         if(leftIconSource === "") {
@@ -31,28 +30,45 @@ Qml.ToolTip {
         anchors.fill: parent
         color: Styles.buttonPrimary
         radius: 4
-    }
-
-    contentItem: RowLayout {
-        height: textToolTip.height
-        spacing: contentSpacing
 
         Loader {
             id: leftIconLoader
+
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin: tooltipRoot.padding
         }
+    }
+
+
+    contentItem: Item {
+        implicitWidth: textToolTip.width + leftIconLoader.width + contentSpacing
+        implicitHeight: Math.max(leftIconLoader.width, textToolTip.height)
 
         MegaTexts.Text {
             id: textToolTip
 
-            text: root.text
+            property int maxWidth: 778 - leftIconLoader.width - contentSpacing
+
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.leftMargin: leftIconLoader.width + contentSpacing
+            text: tooltipRoot.text
             color: Styles.textInverse
-            // TODO: Get dialog sizes 800/560 by other way (com.qmldialog.QmlDialog) ???
-            Layout.maximumWidth: 800 - leftIconLoader.width - 2 * root.padding
-                                 - (leftIconLoader.width > 0 ? 3 : 2) * root.tooltipMargin
-            Layout.maximumHeight: 560 - 2 * root.padding - 2 * root.tooltipMargin
-            // TODO: Get dialog sizes 800/560 by other way (com.qmldialog.QmlDialog) ???
             wrapMode: Text.Wrap
+            width: Math.min(textMetrics.width + contentSpacing, maxWidth)
+            lineHeight: Math.max(leftIconLoader.height, textMetrics.height)
+            lineHeightMode: Text.FixedHeight
+            verticalAlignment: Qt.AlignVCenter
+
+            TextMetrics {
+                id: textMetrics
+
+                font: textToolTip.font
+                text: textToolTip.text
+            }
         }
+
     }
 
     Component {
