@@ -42,6 +42,8 @@ public:
     void reloadFileManagerExtension() override;
     void enableFileManagerExtension(bool value) override;
 
+    void streamWithApp(const QString& app, const QString& url) override;
+
 private:
     void disableSignalHandler();
     bool isFileManagerExtensionEnabled();
