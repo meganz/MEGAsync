@@ -439,6 +439,12 @@ void PlatformImplementation::fileAndFolderSelector(QString title, QString defaul
     AbstractPlatform::fileAndFolderSelector(title, defaultDir, multiSelection, parent, func);
 }
 
+void PlatformImplementation::streamWithApp(const QString &app, const QString &url)
+{
+    QString command = QString::fromUtf8("%1 \"%2\"").arg(QDir::toNativeSeparators(app)).arg(url);
+    QProcess::startDetached(command);
+}
+
 QStringList PlatformImplementation::getListRunningProcesses()
 {
     QProcess p;
