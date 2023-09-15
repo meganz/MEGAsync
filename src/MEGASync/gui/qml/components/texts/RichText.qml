@@ -36,11 +36,11 @@ MegaTexts.Text {
     textFormat: Text.RichText
 
     Component.onCompleted: {
-        control.text = control.text.replace("[b]","<b>")
-        control.text = control.text.replace("[/b]","</b>")
-        control.text = control.text.replace("[a]", "<a style=\"text-decoration:none\"
+        control.text = control.text.replace("[B]","<b>")
+        control.text = control.text.replace("[/B]","</b>")
+        control.text = control.text.replace("[A]", "<a style=\"text-decoration:none\"
                                             style=\"color:" + urlColor + ";\" href=\"" + url + "\">")
-        control.text = control.text.replace("[/a]","</a>")
+        control.text = control.text.replace("[/A]","</a>")
     }
 
     onLinkActivated: {

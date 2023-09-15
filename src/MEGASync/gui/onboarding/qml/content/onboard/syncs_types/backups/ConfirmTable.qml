@@ -150,7 +150,7 @@ Rectangle {
                 attributes.icon.visible: false
                 attributes.radius: parent.radius
                 attributes.topBorderRect: true
-                text: BackupsModel.mConflictsNotificationText
+                text: qsTr("Unable to create backup. Try again and if issue continues, contact [A]Support[/A].");//BackupsModel.mConflictsNotificationText
                 visible: parent.visible
             }
 

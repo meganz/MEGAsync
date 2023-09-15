@@ -12,7 +12,7 @@ QtObject {
         Error = 2
     }
 
-    property int type: NotificationInfo.Type.None
+    property int type: NotificationInfo.Type.Warning
 
     property color backgroundColor
     property color iconColor

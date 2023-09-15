@@ -124,7 +124,7 @@ Item {
     Component {
         id: titleComponent
 
-        MegaTexts.Text {
+        MegaTexts.RichText {
             text: root.title
             color: attributes.titleColor
             font.bold: true
@@ -134,9 +134,11 @@ Item {
     Component {
         id: textComponent
 
-        MegaTexts.Text {
+        MegaTexts.RichText {
             text: root.text
             color: attributes.textColor
+            url: Links.contact
+            manageMouse: true
         }
     }
 
@@ -150,5 +152,4 @@ Item {
             visibilityTimerFinished();
         }
     }
-
 }
