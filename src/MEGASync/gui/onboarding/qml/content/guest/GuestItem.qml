@@ -333,7 +333,14 @@ Rectangle {
                     text: isEmailBlock() ? GuestStrings.resendEmail : GuestStrings.verifyNow;
                     icons.source: isEmailBlock() ? Images.mail : "";
                     onClicked: {
-                        GuestContent.onVerifyEmailClicked();
+                        if(isEmailBlock())
+                        {
+                            GuestContent.onVerifyEmailClicked();
+                        }
+                        else
+                        {
+                            GuestContent.onVerifyPhoneClicked();
+                        }
                     }
                 }
             }

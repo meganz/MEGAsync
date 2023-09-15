@@ -38,6 +38,11 @@ void GuestContent::onVerifyEmailClicked()
     MegaSyncApp->getMegaApi()->resendVerificationEmail();
 }
 
+void GuestContent::onVerifyPhoneClicked()
+{
+    MegaSyncApp->goToMyCloud();
+}
+
 void GuestContent::onLogoutClicked()
 {
     MegaSyncApp->unlink();
