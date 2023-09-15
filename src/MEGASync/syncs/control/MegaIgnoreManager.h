@@ -20,20 +20,20 @@ public:
         SizeRule
     };
 
-    MegaIgnoreRule(const QString& rule, bool isCommented)
+    explicit MegaIgnoreRule(const QString& rule, bool isCommented)
         : mRule(rule),
           mIsDirty(false),
           mIsCommented(isCommented),
           mIsDeleted(false)
     {}
 
-    virtual bool isValid(){return true;}
-    virtual RuleType ruleType() = 0;
+    virtual bool isValid() const {return true;}
+    virtual RuleType ruleType() const = 0;
 
     void setCommented(bool newIsCommented);
     bool isCommented() const;
 
-    virtual QString getModifiedRule() {return mRule;}
+    virtual QString getModifiedRule() const {return mRule;}
     const QString& originalRule() const;
 
     bool isDeleted() const;
@@ -85,9 +85,9 @@ public:
     };
     Q_ENUM(Strategy)
 
-    MegaIgnoreNameRule(const QString& rule, bool isCommented);
-    QString getModifiedRule() override;
-    RuleType ruleType() override { return RuleType::NameRule;}
+    explicit MegaIgnoreNameRule(const QString& rule, bool isCommented);
+    QString getModifiedRule() const override;
+    RuleType ruleType() const override { return RuleType::NameRule;}
 
 protected:
     QString mPattern;
@@ -126,7 +126,7 @@ class MegaIgnoreExtensionRule : public MegaIgnoreNameRule
 public:
     MegaIgnoreExtensionRule(const QString& rule, bool isCommented);
 
-    RuleType ruleType() override { return RuleType::ExtensionRule;}
+    RuleType ruleType() const override { return RuleType::ExtensionRule;}
     const QString &extension() const;
 
 private:
@@ -160,9 +160,9 @@ public:
     MegaIgnoreSizeRule(const QString& rule, bool isCommented);
     MegaIgnoreSizeRule(Threshold type);
 
-    bool isValid() override;
-    RuleType ruleType() override { return RuleType::SizeRule;}
-    QString getModifiedRule() override;
+    bool isValid() const override;
+    RuleType ruleType() const override { return RuleType::SizeRule;}
+    QString getModifiedRule() const override;
 
     int value() const;
     UnitTypes unit() const;
@@ -194,6 +194,8 @@ public:
     void enableExtensions(bool state);
 
     void applyChanges();
+    
+    static bool isValidRule(const QString& line);
 
 private:
     template <class Type>

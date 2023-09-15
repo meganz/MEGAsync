@@ -8,6 +8,12 @@
 #include <QRegularExpression>
 #include <QApplication>
 
+namespace
+{
+    constexpr char SIZE_RULE_REG_EX[] = "#*(exclude-(larger|smaller)):[0-9]+[kmgb]?$";
+    constexpr char OTHER_RULE_REG_EX[] = "#*[+-][]adfsNnpGgRr]*:[^:]+";
+}
+
 MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder)
 {
     auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
@@ -93,6 +99,24 @@ std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getLowLimitRule() const
 std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getHighLimitRule() const
 {
     return mHighLimitRule;
+}
+
+bool MegaIgnoreManager::isValidRule(const QString& line)
+{
+    // Sanity check
+	if (line.isEmpty())
+		return false;
+    // Check if size rule
+
+	const QRegularExpression sizeRuleRegularExpression(QLatin1String(SIZE_RULE_REG_EX), QRegularExpression::CaseInsensitiveOption);
+	QRegularExpressionMatch match = sizeRuleRegularExpression.match(line);
+	if (match.hasMatch())
+		return true;
+
+    // Check if other type of rule
+	QRegularExpression nonSizeRuleRegularExpression{ QLatin1String(OTHER_RULE_REG_EX) };
+	match = nonSizeRuleRegularExpression.match(line);
+	return match.hasMatch();
 }
 
 QList<std::shared_ptr<MegaIgnoreNameRule> > MegaIgnoreManager::getNameRules() const
@@ -233,8 +257,7 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString &rule, bool isCommented)
     }
 }
 
-
-QString MegaIgnoreNameRule::getModifiedRule()
+QString MegaIgnoreNameRule::getModifiedRule() const
 {
     if(mIsDirty)
     {
@@ -334,12 +357,12 @@ MegaIgnoreSizeRule::MegaIgnoreSizeRule(Threshold type)
 {
 }
 
-bool MegaIgnoreSizeRule::isValid()
+bool MegaIgnoreSizeRule::isValid()const
 {
     return !isCommented() && mValue > 0;
 }
 
-QString MegaIgnoreSizeRule::getModifiedRule()
+QString MegaIgnoreSizeRule::getModifiedRule() const
 {
     if(mIsDirty)
     {
