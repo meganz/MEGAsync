@@ -50,6 +50,7 @@ private:
     bool mIsFirstBackupDone;
 
     void saveUnattendedDisabledSyncs();
+    void checkUnattendedDisabledSyncsForErrors(mega::MegaSync::Error error);
 
 protected:
     QMutex syncMutex;
@@ -108,7 +109,7 @@ public:
     bool hasUnattendedDisabledSyncs(SyncType type) const
         {return hasUnattendedDisabledSyncs(QVector<SyncType>({type}));}
     const QSet<mega::MegaHandle> getUnattendedDisabledSyncs(const SyncType& type) const;
-    void addUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
+    void addUnattendedDisabledSync(mega::MegaHandle tag, SyncType type, mega::MegaSync::Error error);
     void removeUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
     void setUnattendedDisabledSyncs(const QSet<mega::MegaHandle>& tags);
     void dismissUnattendedDisabledSyncs(const QVector<SyncType>& types);
@@ -139,6 +140,9 @@ public:
 
     void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
 
+protected:
     void onEvent(mega::MegaApi* api, mega::MegaEvent* event) override;
-
+    void onSyncStateChanged(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
 };

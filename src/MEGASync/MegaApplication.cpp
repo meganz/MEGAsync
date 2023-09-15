@@ -496,7 +496,6 @@ void MegaApplication::initialize()
     connect(model, SIGNAL(syncRemoved(std::shared_ptr<SyncSettings>)),
         this, SLOT(onSyncDeleted(std::shared_ptr<SyncSettings>)));
 
-
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
     megaApiFolders->disableGfxFeatures(mDisableGfx);
 
@@ -7703,19 +7702,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    if (sync->getRunState() == MegaSync::RUNSTATE_DISABLED)
-    {
-        if (sync->getError())
-        {
-            model->addUnattendedDisabledSync(sync->getBackupId(),
-                                             static_cast<MegaSync::SyncType>(sync->getType()));
-        }
-        onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
-    }
-
-    model->updateSyncSettings(sync); //Note, we are not updating the remote sync path
-    // we asume that cannot change for existing syncs.
-
+    //Do we need this?
     onGlobalSyncStateChanged(api);
 }
 
@@ -7729,25 +7716,7 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
     Platform::getInstance()->notifySyncFileChange(localPath, newState);
 }
 
-void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
-{
-    if (!syncSetting)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("onSyncDisabled for non existing sync").toUtf8().constData());
-        return;
-    }
-
-    auto errorCode (syncSetting->getError());
-    auto syncType (syncSetting->getType());
-
-    if (errorCode != MegaError::API_OK)
-    {
-        model->addUnattendedDisabledSync(syncSetting->backupId(),
-                                         static_cast<MegaSync::SyncType>(syncType));
-    }
-}
-
+//Why do we need this?
 void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (!syncSetting)
@@ -7773,8 +7742,6 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    auto syncSetting = model->updateSyncSettings(sync);
-
     onGlobalSyncStateChanged(api);
 }
 
@@ -7784,8 +7751,6 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
     {
         return;
     }
-
-    model->removeSyncedFolderByBackupId(sync->getBackupId());
 
     onGlobalSyncStateChanged(api);
 }
