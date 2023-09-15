@@ -642,6 +642,7 @@ private:
     }
 
     void processUpgradeSecurityEvent();
+    QQueue<QString> createQueue(const QStringList& newUploads) const;
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
