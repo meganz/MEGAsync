@@ -701,7 +701,10 @@ void BackupsModel::calculateFolderSizes()
 {
     for(auto& backupFolder : mBackupFolderList)
     {
-        backupFolder->calculateFolderSize();
+        if(backupFolder->mSelected)
+        {
+            backupFolder->calculateFolderSize();
+        }
     }
 }
 
