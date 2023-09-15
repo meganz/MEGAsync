@@ -1193,7 +1193,7 @@ void SetupWizard::lTermsLink_clicked()
 
 void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 {
-    Utilities::openUrl(QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
+    Utilities::openUrl(QUrl(Preferences::BASE_MEGA_IO_URL + QString::fromUtf8("/terms")));
 }
 
 void SetupWizard::on_bLearMore_clicked()
