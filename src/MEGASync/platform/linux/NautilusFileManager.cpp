@@ -1,5 +1,7 @@
 #include "NautilusFileManager.h"
 
+#include "SystemApplicationManagerFactory.h"
+
 bool NautilusFileManager::registered = ConcreteSystemApplicationManagerFactory<NautilusFileManager>::Register("nautilus");
 
 const QString OpenNewWindow = QLatin1String("--new-window");

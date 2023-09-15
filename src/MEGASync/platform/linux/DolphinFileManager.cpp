@@ -1,5 +1,7 @@
 #include "DolphinFileManager.h"
 
+#include "SystemApplicationManagerFactory.h"
+
 bool DolphinFileManager::registered = ConcreteSystemApplicationManagerFactory<DolphinFileManager>::Register("dolphin");
 
 const QString ShowSelectedInFolder = QLatin1String("--select");

@@ -4,7 +4,6 @@
 #include <string>
 
 #include "ISystemApplicationManager.h"
-#include "SystemApplicationManagerFactory.h"
 
 class DolphinFileManager : public ISystemApplicationManager
 {

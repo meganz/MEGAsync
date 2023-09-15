@@ -7,6 +7,7 @@ class ISystemApplicationManager
 {
     public:
         virtual QString getShowInFolderParams() const = 0;
+        virtual ~ISystemApplicationManager() = default;
 };
 
 #endif // ISYSTEMAPPLICATIONMANAGER_H
