@@ -65,6 +65,8 @@ public:
 
     void updateSizeHints();
 
+    void setIsFile(bool newIsFile);
+
 signals:
     void actionClicked(int id);
 
@@ -72,6 +74,7 @@ protected:
     Ui::StalledIssueActionTitle *ui;
     bool mIsCloud;
     QString mPath;
+    bool mIsFile;
     std::unique_ptr<mega::MegaNode> mNode;
 
     bool eventFilter(QObject *watched, QEvent *event) override;

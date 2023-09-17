@@ -13,6 +13,11 @@ StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
       mDelegate(nullptr)
 {
+    connect(&mResizeNeedTimer, &QTimer::timeout, this, [this](){
+        checkForSizeHintChanges();
+    });
+    mResizeNeedTimer.setInterval(50);
+    mResizeNeedTimer.setSingleShot(true);
 }
 
 void StalledIssueBaseDelegateWidget::updateIndex()
@@ -32,8 +37,13 @@ void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &,
 
 void StalledIssueBaseDelegateWidget::updateUi(const QModelIndex& index, const StalledIssueVariant & issueData)
 {
-    mCurrentIndex = QPersistentModelIndex(index);
-    mData = issueData;
+    MegaSyncApp->getStalledIssuesModel()->UiItemUpdate(mCurrentIndex, index);
+
+    if(mCurrentIndex != index)
+    {
+        mCurrentIndex = QPersistentModelIndex(index);
+        mData = issueData;
+    }
 
     refreshUi();
 }
@@ -56,7 +66,7 @@ void StalledIssueBaseDelegateWidget::reset()
 
 QSize StalledIssueBaseDelegateWidget::sizeHint() const
 {
-    StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
+    StalledIssue::Type sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
 
     QSize size;
 
@@ -88,9 +98,7 @@ bool StalledIssueBaseDelegateWidget::event(QEvent *event)
 {
     if(event->type() == QEvent::WhatsThisClicked)
     {
-        QTimer::singleShot(50, [this](){
-        checkForSizeHintChanges();
-        });
+        mResizeNeedTimer.start();
     }
 
     return QWidget::event(event);
@@ -103,8 +111,8 @@ void StalledIssueBaseDelegateWidget::checkForSizeHintChanges()
         layout()->activate();
         updateGeometry();
 
-        StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
-        mData.removeDelegateSize(sizeType);
+        mData.removeDelegateSize(StalledIssue::Header);
+        mData.removeDelegateSize(StalledIssue::Body);
 
         //Update sizeHint cache
         sizeHint();
@@ -123,14 +131,5 @@ void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate *newDelegat
 
 void StalledIssueBaseDelegateWidget::updateSizeHint()
 {
-    if(mDelegate)
-    {
-        layout()->activate();
-        updateGeometry();
-
-        mData.removeDelegateSize(StalledIssue::Header);
-        mData.removeDelegateSize(StalledIssue::Body);
-
-        mDelegate->sizeHintChanged(getCurrentIndex());
-    }
+    mResizeNeedTimer.start();
 }

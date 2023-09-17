@@ -70,6 +70,8 @@ NameConflict::~NameConflict()
 
 void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> issue)
 {
+    bool duplicatedRemoved(false);
+
     auto nameData = getData(issue);
 
     //Fill conflict names
@@ -78,6 +80,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     //Reset widgets
     bool allSolved(true);
 
+    auto totalSize(0);
     for(int index = conflictedNames.size()-1; index >= 0; index--)
     {
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(index));
@@ -119,12 +122,37 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         else
         {
             title = mTitlesByIndex.value(index);
+
+            if(!info->mDuplicated && title->parent() != ui->nameConflicts)
+            {
+                QPointer<QWidget> groupContainer = mContainerByDuplicateByGroupId[info->mDuplicatedGroupId];
+
+                if(groupContainer)
+                {
+                    groupContainer->layout()->removeWidget(title);
+                    if(groupContainer->layout()->count() < 2)
+                    {
+                        if(groupContainer->layout()->count() == 1)
+                        {
+                            auto lastTitle = groupContainer->layout()->takeAt(0)->widget();
+                            ui->nameConflictsLayout->addWidget(lastTitle);
+                        }
+
+                        mContainerByDuplicateByGroupId.remove(info->mDuplicatedGroupId);
+                        groupContainer->deleteLater();
+                        duplicatedRemoved = true;
+                    }
+                }
+
+                ui->nameConflictsLayout->addWidget(title);
+            }
         }
 
         nameData->checkTrailingSpaces(conflictedName);
 
-        title->setInfo(info->mConflictedPath, info->mHandle);
         title->setIsCloud(isCloud());
+        title->setInfo(info->mConflictedPath, info->mHandle);
+        title->setIsFile(info->mIsFile);
         title->showIcon();
 
         if(title && info->isSolved() != title->isSolved())
@@ -173,8 +201,11 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         allSolved &= info->isSolved();
 
         titleLayout->activate();
+        parent->updateGeometry();
         title->setTitle(conflictedName);
         updateTitleExtraInfo(title, info);
+
+        totalSize += title->size().height();
     }
 
     if(nameData)
@@ -187,12 +218,24 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         ui->path->hide();
     }
 
+    totalSize += ui->pathContainer->size().height();
+
     if(allSolved)
     {
         setDisabled();
     }
 
     mIssue = issue;
+
+    ui->nameConflicts->layout()->activate();
+    ui->nameConflicts->updateGeometry();
+    layout()->activate();
+    updateGeometry();
+
+    if(duplicatedRemoved)
+    {
+        mDelegateWidget->updateSizeHint();
+    }
 }
 
 void NameConflict::initTitle(StalledIssueActionTitle* title, int index, const QString& conflictedName)

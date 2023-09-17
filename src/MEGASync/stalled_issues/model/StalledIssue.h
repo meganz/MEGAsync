@@ -43,6 +43,8 @@ public:
     const Path& getMovePath() const;
     virtual bool isCloud() const {return false;}
 
+    virtual bool isFile() const {return false;}
+
     QString getFilePath() const;
     QString getMoveFilePath() const;
 
@@ -119,6 +121,17 @@ public:
         return true;
     }
 
+    bool isFile() const
+    {
+        auto node(getNode());
+        if(node)
+        {
+            return node->isFile();
+        }
+
+        return StalledIssueData::isFile();
+    }
+
     std::shared_ptr<mega::MegaNode> getNode(bool refresh = false) const;
 
     void initFileFolderAttributes() override
@@ -189,6 +202,17 @@ public:
         return false;
     }
 
+    bool isFile() const override
+    {
+        QFileInfo info(mPath.path);
+        if(info.exists())
+        {
+            return info.isFile();
+        }
+
+        return StalledIssueData::isFile();
+    }
+
     void initFileFolderAttributes() override
     {
         mAttributes = std::make_shared<LocalFileFolderAttributes>(mPath.path, nullptr);
@@ -228,6 +252,8 @@ public:
 
     virtual bool checkForExternalChanges();
 
+    virtual QStringList getLocalFiles();
+
     mega::MegaSyncStall::SyncStallReason getReason() const;
     QString getFileName(bool preferCloud) const;
     static StalledIssueFilterCriterion getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason);
@@ -260,15 +286,15 @@ public:
     uint8_t hasFiles() const;
     uint8_t hasFolders() const;
 
-    enum SizeType
+    enum Type
     {
         Header = 0,
         Body
     };
 
-    QSize getDelegateSize(SizeType type) const;
-    void setDelegateSize(const QSize &newDelegateSize, SizeType type);
-    void removeDelegateSize(SizeType type);
+    QSize getDelegateSize(Type type) const;
+    void setDelegateSize(const QSize &newDelegateSize, Type type);
+    void removeDelegateSize(Type type);
 
     const std::shared_ptr<mega::MegaSyncStall> &getOriginalStall() const;
 
@@ -280,6 +306,10 @@ public:
     {
         return std::dynamic_pointer_cast<const Type>(data);
     }
+
+    bool needsUIUpdate(Type type) const;
+    void UIUpdated(Type type);
+    void resetUIUpdated();
 
 protected:
     bool initLocalIssue(const mega::MegaSyncStall *stallIssue);
@@ -298,6 +328,7 @@ protected:
     QStringList mIgnoredPaths;
     QSize mHeaderDelegateSize;
     QSize mBodyDelegateSize;
+    QPair<bool, bool> mNeedsUIUpdate = qMakePair(false, false);
 };
 
 Q_DECLARE_METATYPE(StalledIssue)
@@ -333,15 +364,15 @@ public:
 
     StalledIssueVariant& operator=(const StalledIssueVariant& other) = default;
 
-    QSize getDelegateSize(StalledIssue::SizeType type) const
+    QSize getDelegateSize(StalledIssue::Type type) const
     {
         return mData->getDelegateSize(type);
     }
-    void setDelegateSize(const QSize &newDelegateSize, StalledIssue::SizeType type)
+    void setDelegateSize(const QSize &newDelegateSize, StalledIssue::Type type)
     {
         mData->setDelegateSize(newDelegateSize, type);
     }
-    void removeDelegateSize(StalledIssue::SizeType type)
+    void removeDelegateSize(StalledIssue::Type type)
     {
         mData->removeDelegateSize(type);
     }
@@ -372,7 +403,7 @@ private:
 
 Q_DECLARE_METATYPE(StalledIssueVariant)
 
-using StalledIssuesVariantList = QList<std::shared_ptr<StalledIssueVariant>>;
+using StalledIssuesVariantList = QList<StalledIssueVariant>;
 Q_DECLARE_METATYPE(StalledIssuesVariantList)
 
 #endif // STALLEDISSUE_H

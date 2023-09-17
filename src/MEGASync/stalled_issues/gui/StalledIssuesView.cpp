@@ -52,7 +52,6 @@ void StalledIssuesView::mousePressEvent(QMouseEvent *event)
 void StalledIssuesView::keyPressEvent(QKeyEvent *event)
 {
     Qt::KeyboardModifiers modifiers = QApplication::queryKeyboardModifiers();
-
 #ifdef Q_OS_MACOS
     if (modifiers.testFlag(Qt::MetaModifier))
     {
@@ -64,7 +63,8 @@ void StalledIssuesView::keyPressEvent(QKeyEvent *event)
         {
             emit MegaSyncApp->getStalledIssuesModel()->showRawInfo(false);
         }
-        else if(event->key() == Qt::Key_Plus)
+        else if(event->key() == Qt::Key_Plus
+                || event->key() == Qt::Key_BracketRight)
         {
             emit MegaSyncApp->getStalledIssuesModel()->showRawInfo(true);
         }

@@ -51,36 +51,23 @@ void StalledIssuesUtilities::ignoreSymLinks(const QString& path)
 {
     QtConcurrent::run([this, path]()
     {
-        QFileInfo tempFile(path);
-        QDir ignoreDir(tempFile.path());
-
-        while(ignoreDir.exists())
+        QDir ignoreDir(path);
+        QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
+        if(ignore.exists())
         {
-            QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
-            if(ignore.exists())
-            {
-                mIgnoreMutex.lockForWrite();
-                ignore.open(QFile::Append | QFile::Text);
+            mIgnoreMutex.lockForWrite();
+            ignore.open(QFile::Append | QFile::Text);
 
-                QTextStream streamIn(&ignore);
-                streamIn.setCodec("UTF-8");
+            QTextStream streamIn(&ignore);
+            streamIn.setCodec("UTF-8");
 
-                QString line(QString::fromLatin1("\n-s:*"));
-                streamIn << line;
+            QString line(QString::fromLatin1("\n-s:*"));
+            streamIn << line;
 
-                ignore.close();
-                mIgnoreMutex.unlock();
-
-                break;
-            }
-
-            if(!ignoreDir.cdUp())
-            {
-                break;
-            }
+            ignore.close();
+            mIgnoreMutex.unlock();
+            emit actionFinished();
         }
-
-        emit actionFinished();
     });
 }
 
@@ -144,14 +131,14 @@ QIcon StalledIssuesUtilities::getLocalFileIcon(const QFileInfo &fileInfo, bool h
         isFile = !fileInfo.completeSuffix().isEmpty();
     }
 
-    return getFileIcon(isFile, fileInfo, hasProblem);
+    return getIcon(isFile, fileInfo, hasProblem);
 }
 
 QIcon StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode *node, const QFileInfo& fileInfo, bool hasProblem)
 {
     if(node)
     {
-        return getFileIcon(node->isFile(), fileInfo, hasProblem);
+        return getIcon(node->isFile(), fileInfo, hasProblem);
     }
     else
     {
@@ -159,7 +146,7 @@ QIcon StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode *node, const QFil
     }
 }
 
-QIcon StalledIssuesUtilities::getFileIcon(bool isFile, const QFileInfo& fileInfo, bool hasProblem)
+QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bool hasProblem)
 {
     QIcon fileTypeIcon;
 

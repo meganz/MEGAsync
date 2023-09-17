@@ -54,6 +54,7 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data,
     }
 
     ui->name->setInfo(data->getNativeFilePath(), handle);
+    ui->name->setIsFile(data->isFile());
     ui->name->setIsCloud(data->isCloud());
     ui->name->showIcon();
 
