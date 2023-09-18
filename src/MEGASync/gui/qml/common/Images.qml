@@ -3,6 +3,8 @@ import QtQuick 2.12
 
 QtObject {
 
+    readonly property string none: ""
+
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Paths
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -31,6 +33,8 @@ QtObject {
     readonly property url xCircle: imagesPath + "x_circle.svg"
     readonly property url smallCheck: imagesPath + "small_check.svg"
     readonly property url checkCircle: imagesPath + "check_circle.svg"
+    readonly property url warning: imagesPath + "warning.png"
+    readonly property url twofa: imagesPath + "lock.png"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"
@@ -41,7 +45,6 @@ QtObject {
     readonly property url installationTypeBackups: imagesOnboardingPath + "installation_type_backups.svg"
     readonly property url key: imagesOnboardingPath + "key.svg"
     readonly property url login: imagesOnboardingPath + "login.png"
-    readonly property url warning: imagesOnboardingPath + "warning.png"
     readonly property url pc: imagesOnboardingPath + "pc.svg"
     readonly property url pcMega: imagesOnboardingPath + "pc_mega.svg"
     readonly property url person: imagesOnboardingPath + "person.svg"
@@ -55,7 +58,6 @@ QtObject {
     readonly property url shield_account_proII: imagesOnboardingPath + "shield_account_proII.svg"
     readonly property url shield_account_proIII: imagesOnboardingPath + "shield_account_proIII.svg"
     readonly property url sync: imagesOnboardingPath + "sync.svg"
-    readonly property url twofa: imagesOnboardingPath + "twofa.png"
     readonly property url okIcon: imagesOnboardingPath + "OKIcon.png"
 
     readonly property url exit: imagesGuestPath + "exit.svg"

@@ -2,7 +2,6 @@
 #define ACCOUNTDETAILSDIALOG_H
 
 #include "Utilities.h"
-#include "control/Preferences/Preferences.h"
 
 #include <QDialog>
 
@@ -18,7 +17,7 @@ public:
     explicit AccountDetailsDialog(QWidget* parent = 0);
     ~AccountDetailsDialog();
     void refresh();
-    void updateStorageElements();
+    void updateStorageElements() override;
 
 protected:
     void changeEvent(QEvent *event) override;

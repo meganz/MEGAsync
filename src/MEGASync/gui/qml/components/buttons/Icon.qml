@@ -22,6 +22,10 @@ QtObject {
     property bool busyIndicatorVisible: false
 
     onSourceChanged: {
+        if(busyIndicatorVisible)
+        {
+            return;
+        }
         switch(position) {
             case Icon.Position.LEFT:
                 leftLoader.sourceComponent = image;

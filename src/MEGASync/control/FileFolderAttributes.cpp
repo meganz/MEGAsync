@@ -413,6 +413,8 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
             }
             else
             {
+
+                //TODO: Uncomment this
 //                MegaSyncApp->getMegaApi()->getFolderInfo(node.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
 //                                                                                              [this]
 //                                                                                              (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
@@ -461,6 +463,7 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
 
         if(attributeNeedsUpdate(RemoteFileFolderAttributes::FileCount))
         {
+            //TODO descomentar esto
 //            MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
 //                                                                                          [this, func]
 //                                                                                          (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
