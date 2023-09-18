@@ -18,7 +18,7 @@ DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *par
 
     if (!defaultPath.size() || !QFile(defaultPath).exists())
     {
-        defaultDownloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
+        defaultDownloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads");
     }
     else
     {
