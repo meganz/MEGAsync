@@ -96,7 +96,7 @@ void StalledIssueBaseDelegateWidget::resizeEvent(QResizeEvent* event)
 
 bool StalledIssueBaseDelegateWidget::event(QEvent *event)
 {
-    if(event->type() == QEvent::WhatsThisClicked)
+    if(event->type() == WordWrapLabel::HeightAdapted)
     {
         mResizeNeedTimer.start();
     }

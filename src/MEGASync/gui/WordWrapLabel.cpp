@@ -8,16 +8,20 @@
 const int MINIMUM_DOC_HEIGHT = 3;
 const int MINMUM_HEIGHT = 16;
 
+//This event is propagated from child to parent, this is why it is used
+const QEvent::Type WordWrapLabel::HeightAdapted = QEvent::WhatsThisClicked;
+
 WordWrapLabel::WordWrapLabel(QWidget* parent)
     : QTextEdit(parent)
 {
     setFrameStyle(QFrame::NoFrame);
     setTextInteractionFlags(Qt::NoTextInteraction);
-    setCursor(Qt::ArrowCursor);
-    viewport()->setCursor(Qt::ArrowCursor);
+    setCursor(parent->cursor());
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+
+    parent->installEventFilter(this);
 
     document()->setDocumentMargin(0);
     setFixedHeight(MINMUM_HEIGHT);
@@ -40,7 +44,7 @@ void WordWrapLabel::adaptHeight(bool sendEvent)
             setFixedHeight(docSize.height() + 3);
             if(sendEvent)
             {
-                qApp->postEvent(this, new QEvent(QEvent::WhatsThisClicked));
+                qApp->postEvent(this, new QEvent(HeightAdapted));
             }
         }
     }
@@ -61,4 +65,19 @@ void WordWrapLabel::resizeEvent (QResizeEvent *event)
     }
 
     QTextEdit::resizeEvent(event);
+}
+
+bool WordWrapLabel::eventFilter(QObject* obj, QEvent* event)
+{
+    if(event->type() == QEvent::CursorChange)
+    {
+        setCursor(dynamic_cast<QWidget*>(obj)->cursor());
+    }
+    return QTextEdit::eventFilter(obj, event);
+}
+
+void WordWrapLabel::setCursor(const QCursor& cursor)
+{
+    QTextEdit::setCursor(cursor);
+    viewport()->setCursor(cursor);
 }
