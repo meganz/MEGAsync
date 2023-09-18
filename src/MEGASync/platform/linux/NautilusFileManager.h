@@ -5,6 +5,8 @@
 
 class NautilusFileManager
 {
+    static const QString OpenNewWindowParam;
+
 public:
     static QStringList getShowInFolderParams();
 };

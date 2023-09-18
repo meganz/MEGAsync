@@ -5,6 +5,9 @@
 
 class DolphinFileManager
 {
+    static const QString ShowSelectedInFolderParam;
+    static const QString OpenNewWindowParam;
+
 public:
     static QStringList getShowInFolderParams();
 };
