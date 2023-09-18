@@ -1573,6 +1573,8 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
 
     QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(rectToString(rect)).arg(*posx).arg(*posy);
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
+}
+
 QString PlatformImplementation::findMimeType(const QString &extensionWithDot)
 {
     return findAssociatedData(ASSOCSTR_CONTENTTYPE, extensionWithDot);
