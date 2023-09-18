@@ -234,7 +234,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     megaApiFolders = nullptr;
     delegateListener = nullptr;
     httpServer = nullptr;
-    httpsServer = nullptr;
     exportOps = 0;
     infoDialog = nullptr;
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
@@ -251,8 +250,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     lastHovered = nullptr;
     isPublic = false;
     prevVersion = 0;
-    updatingSSLcert = false;
-    lastSSLcertUpdate = 0;
     mTransfersModel = nullptr;
 
     notificationsModel = nullptr;
@@ -546,7 +543,7 @@ void MegaApplication::initialize()
     }
     trayIcon->show();
 
-    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
+    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGA Desktop App is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
     megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
@@ -1345,7 +1342,6 @@ if (!preferences->lastExecutionTime())
         if (!QSystemTrayIcon::isSystemTrayAvailable())
         {
             checkSystemTray();
-
             if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
             {
                 showInfoDialog();
@@ -1755,7 +1751,7 @@ void MegaApplication::rebootApplication(bool update)
 
     reboot = true;
     auto transferCount = getTransfersModel()->getTransfersCount();
-    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting()))
+    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting() || megaApi->isScanning()))
     {
         if (!updateBlocked)
         {
@@ -2221,8 +2217,6 @@ void MegaApplication::cleanAll()
 
     delete httpServer;
     httpServer = nullptr;
-    delete httpsServer;
-    httpsServer = nullptr;
     delete uploader;
     uploader = nullptr;
     delete downloader;
@@ -2649,38 +2643,17 @@ void MegaApplication::startHttpServer()
 {
     if (!httpServer)
     {
-        httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
+        httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT);
         ConnectServerSignals(httpServer);
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTP server started");
     }
 }
 
-void MegaApplication::startHttpsServer()
-{
-    if (!httpsServer)
-    {
-        httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-        ConnectServerSignals(httpsServer);
-        connect(httpsServer, SIGNAL(onConnectionError()), this, SLOT(onHttpServerConnectionError()), Qt::QueuedConnection);
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
-    }
-}
-
 void MegaApplication::initLocalServer()
 {
-    // Run both servers for now, until we receive the confirmation of the criteria to start them dynamically
-    if (!httpServer) // && Platform::getInstance()->shouldRunHttpServer())
+    if (!httpServer)
     {
         startHttpServer();
-    }
-
-    if (!updatingSSLcert) // && (httpsServer || Platform::getInstance()->shouldRunHttpsServer()))
-    {
-        long long currentTime = QDateTime::currentMSecsSinceEpoch() / 1000;
-        if ((currentTime - lastSSLcertUpdate) > Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS)
-        {
-            renewLocalSSLcert();
-        }
     }
 }
 
@@ -2770,29 +2743,6 @@ QPointer<SetupWizard> MegaApplication::getSetupWizard() const
     return mSetupWizard;
 }
 
-void MegaApplication::renewLocalSSLcert()
-{
-    if (!updatingSSLcert)
-    {
-        lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
-        megaApi->getLocalSSLCertificate();
-    }
-}
-
-
-void MegaApplication::onHttpServerConnectionError()
-{
-    auto now = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000;
-    if (now - this->lastTsConnectionError > 10)
-    {
-        this->lastTsConnectionError = now;
-        this->renewLocalSSLcert();
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Local SSL cert renewal discarded");
-    }
-}
 void MegaApplication::triggerInstallUpdate()
 {
     if (appfinished)
@@ -4181,11 +4131,11 @@ void MegaApplication::checkOperatingSystem()
             msgInfo.title = getMEGAString();
             QString message = tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef __APPLE__
-                    + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.");
+                              + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.");
 #elif defined(_WIN32)
-                    + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.");
+                              + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.");
 #else
-                    + tr("MEGAsync will continue to work, however you might not receive new updates.");
+                              + tr("MEGAsync will continue to work, however you might not receive new updates.");
 #endif
 
             msgInfo.text = message;
@@ -5955,7 +5905,6 @@ void MegaApplication::openSettings(int tab)
     }
     else
     {
-
         //Show a new settings dialog
         mSettingsDialog = new SettingsDialog(this, proxyOnly);
         mSettingsDialog->setUpdateAvailable(updateAvailable);
@@ -6210,7 +6159,7 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        aboutAction = new MenuItemAction(tr("About"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
 
         infoDialogMenu->addAction(aboutAction);
@@ -6277,7 +6226,7 @@ void MegaApplication::createGuestMenu()
     }
     else
     {
-        updateActionGuest = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        updateActionGuest = new MenuItemAction(tr("About"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onAboutClicked);
     }
 
@@ -6497,7 +6446,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 msgInfo.ignoreCloseAll = true;
                 QMegaMessageBox::critical(msgInfo);
                 break;
-        }
+            }
         }
 
     }
@@ -6558,10 +6507,6 @@ void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
     if (request->getType() == MegaRequest::TYPE_LOGIN)
     {
         connectivityTimer->start();
-    }
-    else if (request->getType() == MegaRequest::TYPE_GET_LOCAL_SSL_CERT)
-    {
-        updatingSSLcert = true;
     }
 }
 
@@ -6850,62 +6795,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         });
         break;
     }
-    case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
-    {
-        updatingSSLcert = false;
-        bool retry = false;
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            MegaStringMap *data = request->getMegaStringMap();
-            if (data)
-            {
-                preferences->setHttpsKey(QString::fromUtf8(data->get("key")));
-                preferences->setHttpsCert(QString::fromUtf8(data->get("cert")));
-
-                QString intermediates;
-                QString key = QString::fromUtf8("intermediate_");
-                const char *value;
-                int i = 1;
-                while ((value = data->get((key + QString::number(i)).toUtf8().constData())))
-                {
-                    if (i != 1)
-                    {
-                        intermediates.append(QString::fromUtf8(";"));
-                    }
-                    intermediates.append(QString::fromUtf8(value));
-                    i++;
-                }
-
-                preferences->setHttpsCertIntermediate(intermediates);
-                preferences->setHttpsCertExpiration(request->getNumber());
-                megaApi->sendEvent(AppStatsEvents::EVENT_LOCAL_SSL_CERT_RENEWED,
-                                   "Local SSL certificate renewed", false, nullptr);
-                delete httpsServer;
-                httpsServer = nullptr;
-                startHttpsServer();
-                break;
-            }
-            else // Request aborted
-            {
-                retry=true;
-            }
-        }
-
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Error renewing the local SSL certificate");
-        if (e->getErrorCode() == MegaError::API_EACCESS || retry)
-        {
-            static bool retried = false;
-            if (!retried)
-            {
-                retried = true;
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
-                renewLocalSSLcert();
-                break;
-            }
-        }
-
-        break;
-    }
     case MegaRequest::TYPE_FETCH_NODES:
     {
         mFetchingNodes = false;
@@ -6960,17 +6849,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                          .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
         }
 
-        break;
-    }
-    case MegaRequest::TYPE_CHANGE_PW:
-    {
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title =  tr("Password changed");
-            msgInfo.text =   tr("Your password has been changed.");
-            QMegaMessageBox::information(msgInfo);
-        }
         break;
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:

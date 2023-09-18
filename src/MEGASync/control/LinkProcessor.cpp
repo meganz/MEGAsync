@@ -33,7 +33,7 @@ LinkProcessor::LinkProcessor(QStringList linkList, MegaApi *megaApi, MegaApi *me
 
 LinkProcessor::~LinkProcessor()
 {
-    delete delegateListener;
+    delegateListener->deleteLater();
 }
 
 QString LinkProcessor::getLink(int id)
@@ -242,7 +242,7 @@ void LinkProcessor::importLinks(QString megaPath)
         }
 
         mRequestCounter++;
-        megaApi->createFolder("MEGAsync Imports", rootNode.get(), delegateListener);
+        megaApi->createFolder("MEGA Imports", rootNode.get(), delegateListener);
     }
 }
 

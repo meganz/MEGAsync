@@ -7,6 +7,7 @@
 #include "QMegaMessageBox.h"
 #include "platform/Platform.h"
 #include "control/Utilities.h"
+#include "Platform.h"
 #include <MegaNodeNames.h>
 
 #include <QCloseEvent>
@@ -333,19 +334,7 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
         return;
     }
 
-#ifndef __APPLE__
-#ifdef _WIN32
-    QString command = QString::fromUtf8("\"%1\" \"%2\"").arg(QDir::toNativeSeparators(app)).arg(streamURL);
-#else
-    QString command = QString::fromUtf8("%1 \"%2\"").arg(QDir::toNativeSeparators(app)).arg(streamURL);
-#endif
-    QProcess::startDetached(command);
-#else
-    QString args;
-    args = QString::fromUtf8("-a ");
-    args += QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromAscii(" \"%1\"").arg(streamURL);
-    QProcess::startDetached(QString::fromAscii("open ") + args);
-#endif
+    Platform::getInstance()->streamWithApp(app, streamURL);
 }
 
 void StreamingFromMegaDialog::showStreamingError()

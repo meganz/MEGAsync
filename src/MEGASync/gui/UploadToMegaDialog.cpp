@@ -10,7 +10,7 @@
 using namespace mega;
 
 const char* UploadToMegaDialog::NODE_PATH_PROPERTY = "node_path";
-const QString UploadToMegaDialog::DEFAULT_FOLDER_NAME = QLatin1String("MEGAsync Uploads");
+const QString UploadToMegaDialog::DEFAULT_FOLDER_NAME = QLatin1String("MEGA Uploads");
 const QString UploadToMegaDialog::DEFAULT_PATH = QLatin1String("/") + DEFAULT_FOLDER_NAME;
 const QString UploadToMegaDialog::ERROR_STRING = QCoreApplication::translate("MegaError", "Decryption error");
 

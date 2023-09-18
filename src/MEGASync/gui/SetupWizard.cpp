@@ -20,6 +20,9 @@
 
 using namespace mega;
 
+const QString SetupWizard::defaultSyncFolderName = QString::fromLatin1("MEGA");
+const QString SetupWizard::defaultSyncFolderPath = QString::fromLatin1("/") + SetupWizard::defaultSyncFolderName;
+
 SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetupWizard)
@@ -234,7 +237,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (error->getErrorCode() == MegaError::API_OK)
             {
-                MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
+                MegaNode *node = megaApi->getNodeByPath(defaultSyncFolderPath.toUtf8().constData());
                 if (!node)
                 {
                     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -465,8 +468,8 @@ void SetupWizard::on_bNext_clicked()
         QString defaultFolderPath = Utilities::getDefaultBasePath();
         if (ui->rAdvancedSetup->isChecked())
         {
-            defaultFolderPath.append(QString::fromUtf8("/MEGAsync"));
-            ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
+            defaultFolderPath.append(defaultSyncFolderPath);
+            ui->eMegaFolder->setText(defaultSyncFolderPath);
             ui->lAdvancedSetup->setText(tr("Selective sync:"));
             ui->lHeader->setText(tr("Set up selective sync"));
             ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_selective_sync.png")));
@@ -557,12 +560,29 @@ void SetupWizard::on_bNext_clicked()
             if (!node)
             {
                 auto rootNode = MegaSyncApp->getRootNode();
-
-                ui->eMegaFolder->setText(QString::fromLatin1("/MEGAsync"));
-                megaApi->createFolder("MEGAsync", rootNode.get());
-                creatingDefaultSyncFolder = true;
-                ui->lProgress->setText(tr("Creating folder…"));
-                page_progress();
+                if (!rootNode)
+                {
+                    page_login();
+                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    msgInfo.title = QMegaMessageBox::errorTitle();
+                    msgInfo.parent = this;
+                    msgInfo.text = tr("Unable to get the filesystem.\n"
+                                      "Please, try again. If the problem persists "
+                                      "please contact bug@mega.co.nz");
+                    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+                        done(QDialog::Rejected);
+                        app->rebootApplication(false);
+                    };
+                    QMegaMessageBox::warning(msgInfo);
+                }
+                else
+                {
+                    ui->eMegaFolder->setText(defaultSyncFolderPath);
+                    megaApi->createFolder(defaultSyncFolderName.toUtf8().constData(), rootNode.get());
+                    creatingDefaultSyncFolder = true;
+                    ui->lProgress->setText(tr("Creating folder…"));
+                    page_progress();
+                }
             }
             else
             {
@@ -627,11 +647,32 @@ void SetupWizard::on_bCancel_clicked()
     if (ui->sPages->currentWidget() == ui->pWelcome)
     {
         setupPreferences();
+        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
 
-        QString localPath (QDir::toNativeSeparators(QDir(ui->eLocalFolder->text()).canonicalPath()));
-        QString syncName (SyncController::getSyncNameFromPath(localPath));
-        mPreconfiguredSyncs.append(PreConfiguredSync(localPath, selectedMegaFolderHandle, syncName));
-        done(QDialog::Accepted);
+        if (!rootNode)
+        {
+            page_login();
+
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("Unable to get the filesystem.\n"
+                              "Please, try again. If the problem persists "
+                              "please contact bug@mega.co.nz");
+            msgInfo.parent = this;
+            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+            {
+                done(QDialog::Rejected);
+                app->rebootApplication(false);
+            };
+            QMegaMessageBox::warning(msgInfo);
+        }
+        else
+        {
+            QString localPath (QDir::toNativeSeparators(QDir(ui->eLocalFolder->text()).canonicalPath()));
+            QString syncName (SyncController::getSyncNameFromPath(localPath));
+            mPreconfiguredSyncs.append(PreConfiguredSync(localPath, selectedMegaFolderHandle, syncName));
+            done(QDialog::Accepted);
+        }
     }
     else
     {
@@ -1151,7 +1192,7 @@ void SetupWizard::lTermsLink_clicked()
 
 void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 {
-    Utilities::openUrl(QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
+    Utilities::openUrl(QUrl(Preferences::BASE_MEGA_IO_URL + QString::fromUtf8("/terms")));
 }
 
 void SetupWizard::on_bLearMore_clicked()
