@@ -999,11 +999,22 @@ void MegaApplication::updateTrayIcon()
         icon = icons["logging"];
     }
 
-    QString tooltip = QString::fromUtf8("%1 %2\n%3").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING).arg(tooltipState);
+    QString tooltip = QString::fromUtf8("%1 %2\n").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING);
 
     if (updateAvailable)
     {
-        tooltip += QString::fromUtf8("\n") + tr("Update available!");
+        // Only overwrite the tooltipState if it is "Up to date", because
+        // in that case it would be conflicting with "Update available!"
+        if (tooltipState != tr("Up to date"))
+        {
+            tooltip += tooltipState + QString::fromUtf8("\n");
+        }
+
+        tooltip += tr("Update available!");
+    }
+    else
+    {
+        tooltip += tooltipState;
     }
 
     if (!icon.isEmpty())
