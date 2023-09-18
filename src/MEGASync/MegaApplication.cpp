@@ -3125,6 +3125,8 @@ void MegaApplication::registerCommonQMLElements()
 
     qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
+}
+
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
 {
     QQueue<QString> newUploadQueue;
