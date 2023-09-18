@@ -44,6 +44,7 @@ public:
     virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
 
     void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
+    void streamWithApp(const QString& app, const QString& url) override;
 
 private:
     QStringList getListRunningProcesses();

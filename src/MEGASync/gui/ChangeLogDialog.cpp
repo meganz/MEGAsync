@@ -89,13 +89,13 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 
 void ChangeLogDialog::on_bTerms_clicked()
 {
-    QString temsUrl = Preferences::BASE_URL + QString::fromAscii("/terms");
+    QString temsUrl = Preferences::BASE_MEGA_IO_URL + QString::fromAscii("/terms");
     Utilities::openUrl(QUrl(temsUrl));
 }
 
 void ChangeLogDialog::on_bPolicy_clicked()
 {
-    QString policyUrl = Preferences::BASE_URL + QString::fromAscii("/privacy");
+    QString policyUrl = Preferences::BASE_MEGA_IO_URL + QString::fromAscii("/privacy");
     Utilities::openUrl(QUrl(policyUrl));
 }
 

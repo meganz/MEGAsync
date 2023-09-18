@@ -63,6 +63,7 @@ public:
     virtual void enableFileManagerExtension(bool) {};
 
     virtual void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) = 0;
+    virtual void streamWithApp(const QString& app, const QString& url) = 0;
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 

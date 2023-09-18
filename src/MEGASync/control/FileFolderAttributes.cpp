@@ -413,38 +413,31 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
             }
             else
             {
+                MegaSyncApp->getMegaApi()->getFolderInfo(node.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                              [this]
+                                                                                              (const mega::MegaRequest& request, const mega::MegaError& e)
+                {
+                    if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
+                        && e.getErrorCode() == mega::MegaError::API_OK)
+                    {
+                        auto folderInfo = request.getMegaFolderInfo();
+                        if(folderInfo)
+                        {
+                            mSize = std::max(folderInfo->getCurrentSize(), 0LL);
+                            emit sizeReady(mSize);
+                        }
+                    }
 
-                //TODO: Uncomment this
-//                MegaSyncApp->getMegaApi()->getFolderInfo(node.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
-//                                                                                              [this]
-//                                                                                              (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
-//                {
-//                    if(!isContextValid)
-//                    {
-//                        return;
-//                    }
+                    if(mEventLoop.isRunning())
+                    {
+                        mEventLoop.quit();
+                    }
+                }));
 
-//                    if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
-//                        && e.getErrorCode() == mega::MegaError::API_OK)
-//                    {
-//                        auto folderInfo = request.getMegaFolderInfo();
-//                        if(folderInfo)
-//                        {
-//                            mSize = std::max(folderInfo->getCurrentSize(), 0LL);
-//                            emit sizeReady(mSize);
-//                        }
-//                    }
-
-//                    if(mEventLoop.isRunning())
-//                    {
-//                        mEventLoop.quit();
-//                    }
-//                }));
-
-//                if(mWaitForAttributes && mSize < 0 && !mEventLoop.isRunning())
-//                {
-//                    mEventLoop.exec();
-//                }
+                if(mWaitForAttributes && mSize < 0 && !mEventLoop.isRunning())
+                {
+                    mEventLoop.exec();
+                }
             }
         }
     }
@@ -463,38 +456,32 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
 
         if(attributeNeedsUpdate(RemoteFileFolderAttributes::FileCount))
         {
-            //TODO descomentar esto
-//            MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
-//                                                                                          [this, func]
-//                                                                                          (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
-//            {
-//                if(!isContextValid)
-//                {
-//                    return;
-//                }
+            MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                          [this, func]
+                                                                                          (const mega::MegaRequest& request, const mega::MegaError& e)
+            {
+                if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
+                        && e.getErrorCode() == mega::MegaError::API_OK)
+                {
+                    auto folderInfo = request.getMegaFolderInfo();
+                    if(folderInfo)
+                    {
+                        mFileCount = std::max(folderInfo->getNumFiles(), 0);
+                    }
+                }
 
-//                if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
-//                        && e.getErrorCode() == mega::MegaError::API_OK)
-//                {
-//                    auto folderInfo = request.getMegaFolderInfo();
-//                    if(folderInfo)
-//                    {
-//                        mFileCount = std::max(folderInfo->getNumFiles(), 0);
-//                    }
-//                }
+                if(mEventLoop.isRunning())
+                {
+                    mEventLoop.quit();
+                }
+            }));
+            if(mWaitForAttributes && mFileCount < 0 && !mEventLoop.isRunning())
+            {
+                mEventLoop.exec();
+            }
 
-//                if(mEventLoop.isRunning())
-//                {
-//                    mEventLoop.quit();
-//                }
-//            }));
-//            if(mWaitForAttributes && mFileCount < 0 && !mEventLoop.isRunning())
-//            {
-//                mEventLoop.exec();
-//            }
-
-//            //We always send the size, even if the request is async...just to show on GUI a "loading size..." or the most recent size while the new is received
-//            emit fileCountReady(mFileCount);
+            //We always send the size, even if the request is async...just to show on GUI a "loading size..." or the most recent size while the new is received
+            emit fileCountReady(mFileCount);
         }
     }
 }
@@ -568,37 +555,32 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
             {
                 if(auto context = requestReady(RemoteAttributeTypes::User, caller))
                 {
-//                    mOwner = user;
-//                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this, [this ,func, context](bool isContextValid,
-//                                                                                           const mega::MegaRequest& request,
-//                                                                                           const mega::MegaError& e) {
-//                        if(!isContextValid)
-//                        {
-//                            return;
-//                        }
+                    mOwner = user;
+                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [this ,func, context](
+                                                                                           const mega::MegaRequest& request,
+                                                                                           const mega::MegaError& e) {
+                        if (e.getErrorCode() == mega::MegaError::API_OK)
+                        {
+                            auto emailFromRequest = request.getEmail();
+                            if (emailFromRequest)
+                            {
+                                mUserEmail = QString::fromUtf8(emailFromRequest);
+                                mUserFullName = UserAttributes::FullName::requestFullName(emailFromRequest);
 
-//                        if (e.getErrorCode() == mega::MegaError::API_OK)
-//                        {
-//                            auto emailFromRequest = request.getEmail();
-//                            if (emailFromRequest)
-//                            {
-//                                mUserEmail = QString::fromUtf8(emailFromRequest);
-//                                mUserFullName = UserAttributes::FullName::requestFullName(emailFromRequest);
-
-//                                if(mUserFullName->isAttributeReady())
-//                                {
-//                                    requestFinish(RemoteAttributeTypes::User);
-//                                }
-//                                else if(func)
-//                                {
-//                                    this->connect(mUserFullName.get(), &UserAttributes::FullName::fullNameReady, context, [this, func]{
-//                                        func(mUserFullName->getFullName(), true);
-//                                        requestFinish(RemoteAttributeTypes::User);
-//                                    });
-//                                }
-//                            }
-//                        }
-//                    }));
+                                if(mUserFullName->isAttributeReady())
+                                {
+                                    requestFinish(RemoteAttributeTypes::User);
+                                }
+                                else if(func)
+                                {
+                                    this->connect(mUserFullName.get(), &UserAttributes::FullName::fullNameReady, context, [this, func]{
+                                        func(mUserFullName->getFullName(), true);
+                                        requestFinish(RemoteAttributeTypes::User);
+                                    });
+                                }
+                            }
+                        }
+                    }));
                 }
             }
         }

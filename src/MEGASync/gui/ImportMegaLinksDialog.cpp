@@ -51,7 +51,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
     QFileInfo test(downloadFolder);
     if (!test.isDir())
     {
-        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads")));
+        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads")));
         defaultFolder.mkpath(QString::fromAscii("."));
         defaultFolderPath = defaultFolder.absolutePath();
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
@@ -295,7 +295,7 @@ void ImportMegaLinksDialog::initImportFolderControl()
 
 void ImportMegaLinksDialog::setInvalidImportFolder()
 {
-    ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
+    ui->eMegaFolder->setText(QString::fromUtf8("/MEGA Imports"));
     mPreferences->setImportFolder(mega::INVALID_HANDLE);
 }
 

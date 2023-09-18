@@ -18,6 +18,7 @@ enum class NodeItemType
     DONT_UPLOAD
 };
 
+class DuplicatedUploadBase;
 
 class DuplicatedNodeInfo : public QObject
 {
@@ -25,7 +26,7 @@ class DuplicatedNodeInfo : public QObject
     Q_OBJECT
 
 public:
-    DuplicatedNodeInfo();
+    DuplicatedNodeInfo(DuplicatedUploadBase* checker);
 
     std::shared_ptr<mega::MegaNode> checkNameNode(const QString& nodeName, std::shared_ptr<mega::MegaNode> parentNode);
 
@@ -41,7 +42,8 @@ public:
     NodeItemType getSolution() const;
     void setSolution(NodeItemType newSolution);
 
-    const QString& getNewName() const;
+    const QString& getNewName();
+    const QString& getDisplayNewName();
     const QString& getName() const;
 
     bool hasConflict() const;
@@ -66,14 +68,14 @@ private:
     QString mLocalPath;
     NodeItemType mSolution;
     QString mNewName;
+    QString mDisplayNewName;
     QString mName;
     bool mIsLocalFile;
     bool mHasConflict;
     bool mHaveDifferentType;
     QDateTime mNodeModifiedTime;
     QDateTime mLocalModifiedTime;
-
-    void initNewName();
+    DuplicatedUploadBase* mChecker;
 };
 
 #endif // DUPLICATEDNODEINFO_H

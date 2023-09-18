@@ -12,6 +12,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/Preferences/Preferences.cpp \
     $$PWD/Preferences/EphemeralCredentials.cpp \
     $$PWD/Preferences/EncryptedSettings.cpp \
+    $$PWD/Preferences.cpp \
     $$PWD/LinkProcessor.cpp \
     $$PWD/MegaUploader.cpp \
     $$PWD/TransferRemainingTime.cpp \
@@ -38,6 +39,8 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/Preferences/Preferences.h \
     $$PWD/Preferences/EphemeralCredentials.h \
     $$PWD/Preferences/EncryptedSettings.h \
+    $$PWD/FileFolderAttributes.h \
+    $$PWD/Preferences.h \
     $$PWD/LinkProcessor.h \
     $$PWD/MegaUploader.h \
     $$PWD/TransferRemainingTime.h \

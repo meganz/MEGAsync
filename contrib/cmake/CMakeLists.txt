@@ -282,6 +282,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/DialogOpener.h
+    ${MEGAsyncDir}/control/FileFolderAttributes.h
     ${MEGAsyncDir}/control/Version.h
     ${MEGAsyncDir}/control/LoginController.h
     ${MEGAsyncDir}/control/AccountStatusController.h
@@ -658,6 +659,7 @@ set (SRCS
     ${MEGAsyncDir}/control/DialogOpener.cpp
     ${MEGAsyncDir}/control/LoginController.cpp
 	${MEGAsyncDir}/control/AccountStatusController.cpp
+    ${MEGAsyncDir}/control/FileFolderAttributes.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp

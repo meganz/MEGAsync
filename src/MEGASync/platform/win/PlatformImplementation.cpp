@@ -659,6 +659,21 @@ bool PlatformImplementation::makePubliclyReadable(const QString& fileName)
     return result;
 }
 
+void PlatformImplementation::streamWithApp(const QString &app, const QString &url)
+{
+    if (isTraditionalApp(app))
+    {
+        QString command = QString::fromUtf8("\"%1\" \"%2\"").arg(QDir::toNativeSeparators(app)).arg(url);
+        QProcess::startDetached(command);
+    }
+    else
+    {
+        QString command = buildWindowsModernAppCommand(app);
+        auto fullCommand = QString::fromLatin1("cmd.exe /c start \"%1\" %2").arg(command, url);
+        std::system(fullCommand.toUtf8().constData()); // QProcess::start doesn't work
+    }
+}
+
 bool PlatformImplementation::startOnStartup(bool value)
 {
     WCHAR path[MAX_PATH];
@@ -1006,58 +1021,35 @@ QByteArray PlatformImplementation::getLocalStorageKey()
 
 QString PlatformImplementation::getDefaultOpenApp(QString extension)
 {
-    DWORD length = 0;
-    ASSOCSTR type = ASSOCSTR_CONTENTTYPE;
-    QString extensionWithDot = QString::fromUtf8(".") + extension;
-    QString mimeType;
+    const QString extensionWithDot = QString::fromUtf8(".") + extension;
 
-    HRESULT ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
-                                 NULL, NULL, &length);
-    if (ret == S_FALSE)
-    {
-        WCHAR *buffer = new WCHAR[length];
-        ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
-                               NULL, buffer, &length);
-        if (ret == S_OK)
-        {
-            mimeType = QString::fromUtf16((ushort *)buffer);
-        }
-        delete [] buffer;
-    }
-
+    const QString mimeType = findMimeType(extensionWithDot);
     if (!mimeType.startsWith(QString::fromUtf8("video")))
     {
         return QString();
     }
 
-    type = ASSOCSTR_EXECUTABLE;
-    ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
-                                 NULL, NULL, &length);
-    if (ret == S_FALSE)
-    { 
-        WCHAR *buffer = new WCHAR[length];
-        ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
-                               NULL, buffer, &length);
-        if (ret == S_OK)
-        {
-            QString result = QString::fromUtf16((ushort *)buffer);
-            delete [] buffer;
-            return result;
-        }
-        delete [] buffer;
+    const QString executableApp = findAssociatedExecutable(extensionWithDot);
+    if (!executableApp.isEmpty())
+    {
+        return executableApp;
     }
 
-    WCHAR buff[MAX_PATH];
-    if (SHGetFolderPath(0, CSIDL_PROGRAM_FILESX86, NULL, SHGFP_TYPE_CURRENT, buff) == S_OK)
+    // SNC-3353
+    // Films and TV app doesn't support streaming. In case this is the detected app,
+    // Detecting it here will cause its call to use the browser for download instead.
+    // Current behaviour is to fall back to Windows Media player Legacy, which is a
+    // better option.
+    // In case it is necessary to start detecting Windows modern app again,
+    // just uncomment this code and it should work.
+    /*
+    const QString modernApp = findAssociatedModernApp(extensionWithDot);
+    if (!modernApp.isEmpty())
     {
-        QString path = QString::fromUtf16((ushort *)buff);
-        path.append(QString::fromUtf8("\\Windows Media Player\\wmplayer.exe"));
-        if (QFile(path).exists())
-        {
-            return path;
-        }
-    }
-    return QString();
+        return modernApp;
+    }*/
+
+    return getDefaultVideoPlayer();
 }
 
 void PlatformImplementation::enableDialogBlur(QDialog*)
@@ -1581,4 +1573,165 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
 
     QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(rectToString(rect)).arg(*posx).arg(*posy);
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
+QString PlatformImplementation::findMimeType(const QString &extensionWithDot)
+{
+    return findAssociatedData(ASSOCSTR_CONTENTTYPE, extensionWithDot);
+}
+
+QString PlatformImplementation::findAssociatedExecutable(const QString &extensionWithDot)
+{
+    return findAssociatedData(ASSOCSTR_EXECUTABLE, extensionWithDot);
+}
+
+QString PlatformImplementation::findAssociatedModernApp(const QString &extensionWithDot)
+{
+    const QString associatedAppRegKey = buildAssociatedRegKey(extensionWithDot);
+    const QString appFileClass = readAppIdFromRegistry(associatedAppRegKey);
+    if (!appFileClass.isEmpty())
+    {
+        const QString editCommandRegKey = buildEditCommandRegKey(appFileClass);
+        return readEditCommand(editCommandRegKey);
+    }
+    return QString();
+}
+
+QString PlatformImplementation::getDefaultVideoPlayer()
+{
+    WCHAR buff[MAX_PATH];
+    if (SHGetFolderPath(0, CSIDL_PROGRAM_FILESX86, NULL, SHGFP_TYPE_CURRENT, buff) == S_OK)
+    {
+        QString path = QString::fromUtf16((ushort *)buff);
+        path.append(QString::fromUtf8("\\Windows Media Player\\wmplayer.exe"));
+        if (QFile(path).exists())
+        {
+            return path;
+        }
+    }
+    return QString();
+}
+
+bool PlatformImplementation::isTraditionalApp(const QString &app)
+{
+    return app.endsWith(QString::fromLatin1(".exe"));
+}
+
+QString PlatformImplementation::buildWindowsModernAppCommand(const QString &app)
+{
+    const QStringList appParts = app.split(QString::fromLatin1("_"));
+    const QString appName = appParts.first();
+    const QString appFamilyName = appName + QString::fromLatin1("_") + appParts.last();
+    return QString::fromUtf8("shell:appsFolder\\%1!%2").arg(appFamilyName, appName);
+}
+
+QString PlatformImplementation::findAssociatedData(const ASSOCSTR type, const QString &extensionWithDot)
+{
+    QString data;
+
+    DWORD length = 0;
+    HRESULT ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
+                                   NULL, NULL, &length);
+    if (ret == S_FALSE)
+    {
+        WCHAR *buffer = new WCHAR[length];
+        ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
+                               NULL, buffer, &length);
+        if (ret == S_OK)
+        {
+            data = QString::fromUtf16((ushort *)buffer);
+        }
+        delete [] buffer;
+    }
+    return data;
+}
+
+QString PlatformImplementation::buildAssociatedRegKey(const QString &extensionWithDot)
+{
+    const QString baseKey = QString::fromLatin1("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\%1\\UserChoice");
+    return baseKey.arg(extensionWithDot);
+}
+
+QString PlatformImplementation::buildEditCommandRegKey(const QString &appId)
+{
+    const QString baseKey = QString::fromLatin1("SOFTWARE\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\CurrentVersion\\AppModel\\PackageRepository\\Extensions\\ProgIDs\\%1");
+    return baseKey.arg(appId);
+}
+
+QString PlatformImplementation::readEditCommand(const QString &regKey)
+{
+    HKEY hSubKey;
+    const bool ok = openRegistry(HKEY_LOCAL_MACHINE, regKey, hSubKey);
+    if (!ok)
+    {
+        return QString();
+    }
+
+    const int valuesCount = getRegKeyValuesCount(hSubKey);
+    if (valuesCount < 1)
+    {
+        return QString();
+    }
+
+    for (int i=0; i<valuesCount; ++i)
+    {
+        const QString keyValue = getRegKeyValue(hSubKey, i);
+        if (!keyValue.isEmpty())
+        {
+            return keyValue;
+        }
+    }
+
+    return QString();
+}
+
+QString PlatformImplementation::readAppIdFromRegistry(const QString &regKey)
+{
+    HKEY hSubKey;
+    const bool ok = openRegistry(HKEY_CURRENT_USER, regKey, hSubKey);
+    if (!ok)
+    {
+        return QString();
+    }
+
+    DWORD type;
+    TCHAR value[MAX_PATH];
+    DWORD valuelen = sizeof(value);
+    LONG result = RegQueryValueEx(hSubKey, L"ProgId", NULL, &type, (LPBYTE)value, &valuelen);
+    RegCloseKey(hSubKey);
+
+    if (result != ERROR_SUCCESS || type != REG_SZ)
+    {
+        return QString();
+    }
+
+    return QString::fromWCharArray(value);
+}
+
+int PlatformImplementation::getRegKeyValuesCount(HKEY regKey)
+{
+    DWORD valuesCount = 0;
+    LONG result = RegQueryInfoKey(regKey, NULL, NULL, NULL, NULL, NULL, NULL,
+                             &valuesCount, NULL, NULL, NULL, NULL);
+    if (result != ERROR_SUCCESS)
+    {
+        return -1;
+    }
+    return static_cast<int>(valuesCount);
+}
+
+QString PlatformImplementation::getRegKeyValue(HKEY regKey, const int valueIndex)
+{
+    const int bufferSize = 16383;
+    TCHAR  valueBuffer[bufferSize];
+    DWORD outBufferSize = bufferSize;
+    valueBuffer[0] = '\0';
+    LONG result = RegEnumValue(regKey, valueIndex, valueBuffer, &outBufferSize,
+                               NULL, NULL, NULL, NULL);
+    return (result == ERROR_SUCCESS ) ? QString::fromWCharArray(valueBuffer) : QString();
+}
+
+bool PlatformImplementation::openRegistry(HKEY baseKey, const QString &regKeyPath, HKEY &openedKey)
+{
+    const std::wstring wideRegKey = regKeyPath.toStdWString();
+    LONG result = RegOpenKeyEx(baseKey, wideRegKey.c_str(), 0, KEY_READ, &openedKey);
+    return (result == ERROR_SUCCESS);
 }

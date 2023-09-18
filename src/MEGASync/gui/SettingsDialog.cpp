@@ -2069,7 +2069,7 @@ void SettingsDialog::updateUploadFolder()
     if (!node)
     {
         mHasDefaultUploadOption = false;
-        mUi->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
+        mUi->eUploadFolder->setText(QString::fromUtf8("/MEGA Uploads"));
     }
     else
     {
@@ -2077,7 +2077,7 @@ void SettingsDialog::updateUploadFolder()
         if (!nPath)
         {
             mHasDefaultUploadOption = false;
-            mUi->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
+            mUi->eUploadFolder->setText(QString::fromUtf8("/MEGA Uploads"));
         }
         else
         {
@@ -2092,7 +2092,7 @@ void SettingsDialog::updateDownloadFolder()
     QString downloadPath = mPreferences->downloadFolder();
     if (!downloadPath.size())
     {
-        downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
+        downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads");
     }
     downloadPath = QDir::toNativeSeparators(downloadPath);
     mUi->eDownloadFolder->setText(downloadPath);
@@ -2332,7 +2332,6 @@ void SettingsDialog::onShellNotificationsProcessed()
 
 void SettingsDialog::on_bRestart_clicked()
 {
-
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title =  tr("Restart MEGAsync");
