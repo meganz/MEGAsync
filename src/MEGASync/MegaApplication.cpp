@@ -351,9 +351,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     connect(mFolderTransferListener.get(), &FolderTransferListener::folderTransferUpdated,
             this, &MegaApplication::onFolderTransferUpdate);
 
-    connect(&scanStageController, &ScanStageController::enableTransferActions,
-            this, &MegaApplication::enableTransferActions);
-
     connect(&transferProgressController, &BlockingStageProgressController::updateUi,
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
@@ -999,11 +996,22 @@ void MegaApplication::updateTrayIcon()
         icon = icons["logging"];
     }
 
-    QString tooltip = QString::fromUtf8("%1 %2\n%3").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING).arg(tooltipState);
+    QString tooltip = QString::fromUtf8("%1 %2\n").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING);
 
     if (updateAvailable)
     {
-        tooltip += QString::fromUtf8("\n") + tr("Update available!");
+        // Only overwrite the tooltipState if it is "Up to date", because
+        // in that case it would be conflicting with "Update available!"
+        if (tooltipState != tr("Up to date"))
+        {
+            tooltip += tooltipState + QString::fromUtf8("\n");
+        }
+
+        tooltip += tr("Update available!");
+    }
+    else
+    {
+        tooltip += tooltipState;
     }
 
     if (!icon.isEmpty())
@@ -1439,6 +1447,10 @@ if (!preferences->lastExecutionTime())
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
     });
+
+    // Connect ScanStage signal
+    connect(&scanStageController, &ScanStageController::enableTransferActions,
+            this, &MegaApplication::enableTransferActions);
 
     // Process any pending download/upload queued during GuestMode
     processDownloads();
@@ -3436,8 +3448,8 @@ void MegaApplication::processUpgradeSecurityEvent()
         {
         if (msg->result() == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaRequest&, const MegaError& e){
-                if (e.getErrorCode() != MegaError::API_OK)
+            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, this, [=](bool isContextValid, const MegaRequest&, const MegaError& e){
+                if (isContextValid && e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMessage = tr("Failed to ugrade security. Error: %1")
                                            .arg(tr(e.getErrorString()));
@@ -3453,6 +3465,16 @@ void MegaApplication::processUpgradeSecurityEvent()
     };
 
     QMegaMessageBox::information(msgInfo);
+}
+
+QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
+{
+    QQueue<QString> newUploadQueue;
+    foreach(QString file, newUploads)
+    {
+        newUploadQueue.append(file);
+    }
+    return newUploadQueue;
 }
 
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
@@ -4814,13 +4836,7 @@ void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
                                  parent,
                                  [this/*, blocker*/](QStringList files)
     {
-        QQueue<QString> qFiles;
-        foreach(QString file, files)
-        {
-            qFiles.append(file);
-        }
-
-        shellUpload(qFiles);
+        shellUpload(createQueue(files));
     });
 }
 
@@ -5097,7 +5113,7 @@ void MegaApplication::createTrayIcon()
 
 void MegaApplication::processUploads()
 {
-    if (appfinished)
+    if (appfinished || !megaApi->isLoggedIn())
     {
         return;
     }
@@ -5175,7 +5191,7 @@ void MegaApplication::processUploads()
 
 void MegaApplication::processDownloads()
 {
-    if (appfinished)
+    if (appfinished || !megaApi->isLoggedIn())
     {
         return;
     }
@@ -5405,15 +5421,10 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     auto processUpload = [this](QStringList selectedFiles){
         if (!selectedFiles.isEmpty())
         {
-            std::unique_ptr<MegaNode> target(megaApi->getNodeByHandle(fileUploadTarget));
-            int files = 0;
-            for (const auto& path : selectedFiles)
-            {
-                files++;
-                startUpload(path, target.get(), nullptr);
-            }
+            uploadQueue.append(createQueue(selectedFiles));
+            processUploadQueue(fileUploadTarget);
 
-            HTTPServer::onUploadSelectionAccepted(files, 0);
+            HTTPServer::onUploadSelectionAccepted(selectedFiles.size(), 0);
         }
         else
         {
