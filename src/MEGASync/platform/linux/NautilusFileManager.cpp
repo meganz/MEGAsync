@@ -1,8 +1,8 @@
 #include "NautilusFileManager.h"
 
-const QString OpenNewWindow = QLatin1String("--new-window");
+static const QString OpenNewWindow = QLatin1String("--new-window");
 
-QString NautilusFileManager::getShowInFolderParams()
+QStringList NautilusFileManager::getShowInFolderParams()
 {
-    return QString(QLatin1String(" %0")).arg(OpenNewWindow);
+    return QStringList() << OpenNewWindow;
 }

@@ -1,12 +1,12 @@
 #ifndef NAUTILUS_FILEMANAGER_H
 #define NAUTILUS_FILEMANAGER_H
 
-#include <QString>
+#include <QStringList>
 
 class NautilusFileManager
 {
 public:
-    static QString getShowInFolderParams();
+    static QStringList getShowInFolderParams();
 };
 
 #endif

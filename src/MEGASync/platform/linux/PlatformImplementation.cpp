@@ -112,16 +112,17 @@ bool PlatformImplementation::showInFolder(QString pathIn)
 {
     QString fileBrowser = getDefaultFileBrowserApp();
 
-    static const QMap<QString, QString> showInForlderCallMap
+    static const QMap<QString, QStringList> showInFolderCallMap
     {
         {QLatin1String("dolphin"), DolphinFileManager::getShowInFolderParams()},
         {QLatin1String("nautilus"), NautilusFileManager::getShowInFolderParams()}
     };
 
     QStringList params;
-    if (showInForlderCallMap.constFind(fileBrowser) != showInForlderCallMap.constEnd())
+    auto itFoundAppParams = showInFolderCallMap.constFind(fileBrowser);
+    if (itFoundAppParams != showInFolderCallMap.constEnd())
     {
-        params << showInForlderCallMap[fileBrowser];
+        params << *itFoundAppParams;
     }
 
     return QProcess::startDetached(fileBrowser, params << QUrl::fromLocalFile(pathIn).toString());

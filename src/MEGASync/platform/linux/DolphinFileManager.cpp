@@ -1,9 +1,9 @@
 #include "DolphinFileManager.h"
 
-const QString ShowSelectedInFolder = QLatin1String("--select");
-const QString OpenNewWindow = QLatin1String("--new-window");
+static const QString ShowSelectedInFolder = QLatin1String("--select");
+static const QString OpenNewWindow = QLatin1String("--new-window");
 
-QString DolphinFileManager::getShowInFolderParams()
+QStringList DolphinFileManager::getShowInFolderParams()
 {
-    return QString(QLatin1String(" %0 %1")).arg(OpenNewWindow, ShowSelectedInFolder);
+    return QStringList() << OpenNewWindow << ShowSelectedInFolder;
 }
