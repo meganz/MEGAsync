@@ -3447,8 +3447,8 @@ void MegaApplication::processUpgradeSecurityEvent()
         {
         if (msg->result() == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaRequest&, const MegaError& e){
-                if (e.getErrorCode() != MegaError::API_OK)
+            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, this, [=](bool isContextValid, const MegaRequest&, const MegaError& e){
+                if (isContextValid && e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMessage = tr("Failed to ugrade security. Error: %1")
                                            .arg(tr(e.getErrorString()));

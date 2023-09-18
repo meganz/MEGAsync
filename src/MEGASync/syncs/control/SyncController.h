@@ -65,8 +65,8 @@ signals:
 
 private:
     void createPendingBackups();
-    QString getSyncAPIErrorMsg(int megaError);
-    QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
+    static QString getSyncAPIErrorMsg(int megaError);
+    static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
     QMap<QString, QString> mPendingBackups;
 
     mega::MegaApi* mApi;
