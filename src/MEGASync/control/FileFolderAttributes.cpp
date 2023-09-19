@@ -415,7 +415,7 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
             {
                 MegaSyncApp->getMegaApi()->getFolderInfo(node.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
                                                                                               [this]
-                                                                                              (const mega::MegaRequest& request, const mega::MegaError& e)
+                                                                                              (bool, const mega::MegaRequest& request, const mega::MegaError& e)
                 {
                     if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
                         && e.getErrorCode() == mega::MegaError::API_OK)
@@ -458,7 +458,7 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
         {
             MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
                                                                                           [this, func]
-                                                                                          (const mega::MegaRequest& request, const mega::MegaError& e)
+                                                                                          (bool, const mega::MegaRequest& request, const mega::MegaError& e)
             {
                 if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
                         && e.getErrorCode() == mega::MegaError::API_OK)
@@ -557,6 +557,7 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
                 {
                     mOwner = user;
                     MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [this ,func, context](
+                                                                                           bool,
                                                                                            const mega::MegaRequest& request,
                                                                                            const mega::MegaError& e) {
                         if (e.getErrorCode() == mega::MegaError::API_OK)
