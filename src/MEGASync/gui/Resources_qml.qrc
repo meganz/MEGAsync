@@ -57,5 +57,8 @@
         <file>images/qml/warning.png</file>
         <file>images/qml/warning@2x.png</file>
         <file>images/qml/warning@3x.png</file>
+        <file>images/qml/guest/warning.png</file>
+        <file>images/qml/guest/warning@2x.png</file>
+        <file>images/qml/guest/warning@3x.png</file>
     </qresource>
 </RCC>
