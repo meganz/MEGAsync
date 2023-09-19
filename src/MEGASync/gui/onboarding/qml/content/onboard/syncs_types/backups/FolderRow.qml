@@ -307,6 +307,10 @@ Rectangle {
                 leftIcon.color: Styles.iconSecondary
                 error: hint.visible
                 sizes: MegaTextFields.SmallSizes {}
+
+                onReturnPressed: {
+                    doneAction()
+                }
             }
 
             MegaButtons.PrimaryButton {
@@ -315,34 +319,39 @@ Rectangle {
                 text: OnboardingStrings.done
                 sizes: MegaButtons.SmallSizes {}
                 onClicked: {
-                    editTextField.hint.visible = false;
-                    var error = BackupsModel.rename(mFolder, editTextField.text);
-                    switch(error) {
-                        case BackupsModel.BackupErrorCode.None:
-                        case BackupsModel.BackupErrorCode.SyncConflict:
-                        case BackupsModel.BackupErrorCode.PathRelation:
-                        case BackupsModel.BackupErrorCode.SDKCreation:
-                            root.height = root.totalHeight;
-                            break;
-                        case BackupsModel.BackupErrorCode.ExistsRemote:
-                            editTextField.hint.text =
-                                OnboardingStrings.confirmBackupErrorRemote.replace(RegexExpressions.betweenCommas,
+                    doneAction()
+                }
+            }
+
+            function doneAction()
+            {
+                editTextField.hint.visible = false;
+                var error = BackupsModel.rename(mFolder, editTextField.text);
+                switch(error) {
+                    case BackupsModel.BackupErrorCode.None:
+                    case BackupsModel.BackupErrorCode.SyncConflict:
+                    case BackupsModel.BackupErrorCode.PathRelation:
+                    case BackupsModel.BackupErrorCode.SDKCreation:
+                        root.height = root.totalHeight;
+                        break;
+                    case BackupsModel.BackupErrorCode.ExistsRemote:
+                        editTextField.hint.text =
+                            OnboardingStrings.confirmBackupErrorRemote.replace(RegexExpressions.betweenCommas,
+                                                                               '"' + editTextField.text + '"');
+                        editTextField.hint.visible = true;
+                        root.height = editTextField.height + root.extraMarginWhenHintShowed;
+                        break;
+                    case BackupsModel.BackupErrorCode.DuplicatedName:
+                        editTextField.hint.text =
+                            OnboardingStrings.confirmBackupErrorDuplicated.replace(RegexExpressions.betweenCommas,
                                                                                    '"' + editTextField.text + '"');
-                            editTextField.hint.visible = true;
-                            root.height = editTextField.height + root.extraMarginWhenHintShowed;
-                            break;
-                        case BackupsModel.BackupErrorCode.DuplicatedName:
-                            editTextField.hint.text =
-                                OnboardingStrings.confirmBackupErrorDuplicated.replace(RegexExpressions.betweenCommas,
-                                                                                       '"' + editTextField.text + '"');
-                            editTextField.hint.visible = true;
-                            root.height = editTextField.height + root.extraMarginWhenHintShowed;
-                            break;
-                        default:
-                            root.height = root.totalHeight;
-                            console.error("FolderRow: Unexpected error after rename -> " + error);
-                            break;
-                    }
+                        editTextField.hint.visible = true;
+                        root.height = editTextField.height + root.extraMarginWhenHintShowed;
+                        break;
+                    default:
+                        root.height = root.totalHeight;
+                        console.error("FolderRow: Unexpected error after rename -> " + error);
+                        break;
                 }
             }
         }
