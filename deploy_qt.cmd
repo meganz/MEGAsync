@@ -1,12 +1,20 @@
 SET MEGA_QT_DEPLOY_DIR=qt-deploy-x64
 
+IF [%MEGA_QTPATH%]==[] (
+	IF NOT [%MEGAQTPATH%]==[] (
+		SET MEGA_QTPATH=%MEGAQTPATH%
+	) ELSE (
+		SET MEGA_QTPATH=C:\Qt\5.12.12\msvc2017_64
+	)
+)
+
 REM Clean up any previous leftovers
 IF EXIST %MEGA_QT_DEPLOY_DIR% (
     rmdir /s /q %MEGA_QT_DEPLOY_DIR%
 )
 
 mkdir %MEGA_QT_DEPLOY_DIR%
-C:\Qt\5.12.12\msvc2017_64\bin\windeployqt.exe --no-translations --no-compiler-runtime ^
+%MEGA_QTPATH%\bin\windeployqt.exe --no-translations --no-compiler-runtime ^
  --no-opengl-sw --no-system-d3d-compiler --no-angle --no-webkit2 --no-qmltooling ^
  --no-patchqt --no-designercomponents ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
@@ -31,7 +39,7 @@ IF EXIST %MEGA_QT_DEPLOY_DIR% (
 )
 
 mkdir %MEGA_QT_DEPLOY_DIR%
-C:\Qt\5.12.12\msvc2017\bin\windeployqt.exe --no-translations --no-compiler-runtime ^
+%MEGA_QTPATH%\..\msvc2017\bin\windeployqt.exe --no-translations --no-compiler-runtime ^
  --no-opengl-sw --no-system-d3d-compiler --no-angle --no-webkit2 --no-qmltooling ^
  --no-patchqt --no-designercomponents ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
