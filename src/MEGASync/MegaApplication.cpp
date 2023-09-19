@@ -6912,11 +6912,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             notifyAccountObservers();
-
-            if (infoDialog)
-            {
-                infoDialog->setAccountType(preferences->accountType());
-            }
         }
 
         if (storage)
@@ -7025,6 +7020,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (infoDialog)
         {
             infoDialog->setUsage();
+            infoDialog->setAccountType(preferences->accountType());
         }
         });//end of queued function
         });// end of thread pool function

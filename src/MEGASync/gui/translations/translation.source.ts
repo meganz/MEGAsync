@@ -1020,6 +1020,16 @@
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
         <translation>You have entered your current password, please enter a new password.</translation>
     </message>
+    <message>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
+        <translation type="unfinished">Password changed</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
+        <translation type="unfinished">Your password has been changed.</translation>
+    </message>
 </context>
 <context>
     <name>CircularUsageProgressBar</name>
@@ -1544,16 +1554,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Update</source>
         <translatorcomment>Action title and button text for the Update action for files</translatorcomment>
         <translation>Update</translation>
-    </message>
-    <message>
-        <source>loading time…</source>
-        <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>Calculating time…</translation>
-    </message>
-    <message>
-        <source>loading size…</source>
-        <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>Calculating size…</translation>
     </message>
     <message>
         <source>Learn more</source>
@@ -2490,12 +2490,6 @@ https://mega.co.nz/#sync</source>
         <translation>Starting</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
-    </message>
-    <message>
         <source>Show status</source>
         <translatorcomment>Label displayed to let the user displays the Information dialog of the app. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation>Show status</translation>
@@ -2629,16 +2623,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Stream</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
         <translation>Stream</translation>
-    </message>
-    <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>Password changed</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>Your password has been changed.</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3310,7 +3294,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>You can’t run the desktop app from this location. Move it into the Applications folder then run it.</translation>
     </message>
     <message>
-		<source>Your plan has expired</source>
+        <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
