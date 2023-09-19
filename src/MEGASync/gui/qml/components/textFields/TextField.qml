@@ -30,6 +30,7 @@ Rectangle {
 
     signal backPressed()
     signal pastePressed()
+    signal returnPressed()
 
     function getHintHeight() {
         if(hintLoader.height > 0) {
@@ -186,6 +187,8 @@ Rectangle {
                 textField.cursorPosition = 0;
             } else if(event.key === Qt.Key_Down) {
                 textField.cursorPosition = textField.text.length;
+            } else if(event.key === Qt.Key_Return) {
+                root.returnPressed()
             }
         }
     }
