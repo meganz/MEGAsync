@@ -3091,6 +3091,11 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.</translation>
     </message>
+    <message>
+        <source>File removed as it violated our Terms of Service</source>
+        <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
+        <translation type="unfinished">Violated Terms of Service.</translation>
+    </message>
 </context>
 <context>
     <name>MegaInfoMessage</name>
