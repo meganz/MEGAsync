@@ -6812,36 +6812,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_OK)
         {
             //Update/set root node
-            getRootNode(true); //TODO: move this to thread pool, notice that mRootNode is used below
+            getRootNode(true);
             getVaultNode(true);
             getRubbishNode(true);
 
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
-
-            // TODO: check with sdk team if this case is possible
-            if (!mRootNode)
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title =  QMegaMessageBox::errorTitle();
-                msgInfo.text =   tr("Unable to get the filesystem.\n"
-                                                       "Please, try again. If the problem persists "
-                                    "please contact bug@mega.co.nz");
-                msgInfo.finishFunc = [this](QPointer<QMessageBox>)
-                {
-                    auto setupWizard = DialogOpener::findDialog<SetupWizard>();
-                    if(setupWizard)
-                    {
-                        setupWizard->close();
-                    }
-
-                    rebootApplication(false);
-                };
-
-                QMegaMessageBox::warning(msgInfo);
-
-                break;
-            }
 
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
             bool logged = preferences->logged();
@@ -6888,47 +6864,29 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        bool storage = (request->getNumDetails() & 0x01) != 0;
-        bool transfer = (request->getNumDetails() & 0x02) != 0;
-        bool pro = (request->getNumDetails() & 0x04) != 0;
+        // We need to be both logged AND have fetched the nodes to continue
+        // Do not continue if there was an error
+        if (mFetchingNodes || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
+        {
+            break;
+        }
+
+        auto flags = request->getNumDetails();
+        bool storage  = flags & 0x01;
+        bool transfer = flags & 0x02;
+        bool pro      = flags & 0x04;
 
         if (storage)  inflightUserStats[0] = false;
         if (transfer) inflightUserStats[1] = false;
         if (pro)      inflightUserStats[2] = false;
-
-        // We need to be both logged AND have fetched the nodes to continue
-        if (mFetchingNodes || !preferences->logged())
-        {
-            break;
-        }
-
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            break;
-        }
-
-        auto root = getRootNode();
-        auto vault = getVaultNode();
-        auto rubbish = getRubbishNode();
-
-        // TODO: investigate: is this case possible and what should we do? Restart the app?
-        if (!root || !vault || !rubbish)
-        {
-            break;
-        }
 
         //Account details retrieved, update the preferences and the information dialog
         shared_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
 
         mThreadPool->push([=]()
         {//thread pool function
-        shared_ptr<MegaNodeList> inShares(megaApi->getInShares());
 
-        if (!inShares)
-        {
-            // TODO: investigate: is this case possible and what should we do? Restart the app?
-            return;
-        }
+        shared_ptr<MegaNodeList> inShares(storage ? megaApi->getInShares() : nullptr);
 
         Utilities::queueFunctionInAppThread([=]()
         {//queued function
@@ -6957,7 +6915,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
 
         if (storage)
-        {
+        {   // Update storage related details
+
+            // Total storage
             preferences->setTotalStorage(details->getStorageMax());
 
             if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
@@ -6971,41 +6931,46 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setUsedStorage(receivedStorageSum);
             }
 
-            MegaHandle rootHandle = root->getHandle();
-            MegaHandle vaultHandle = vault->getHandle();
-            MegaHandle rubbishHandle = rubbish->getHandle();
+            // Cloud Drive
+            auto cloudDriveNode = getRootNode();
+            MegaHandle cloudDriveHandle = cloudDriveNode ? cloudDriveNode->getHandle() : INVALID_HANDLE;
+            preferences->setCloudDriveStorage(details->getStorageUsed(cloudDriveHandle));
+            preferences->setCloudDriveFiles(details->getNumFiles(cloudDriveHandle));
+            preferences->setCloudDriveFolders(details->getNumFolders(cloudDriveHandle));
 
-            // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
-            // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
-            preferences->setVersionsStorage(details->getVersionStorageUsed(rootHandle)
-                                          + details->getVersionStorageUsed(vaultHandle)
-                                          + details->getVersionStorageUsed(rubbishHandle));
-
-            preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
-            preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
-            preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
-
+            // Vault
+            auto vaultNode = getVaultNode();
+            MegaHandle vaultHandle = vaultNode ? vaultNode->getHandle() : INVALID_HANDLE;
             preferences->setVaultStorage(details->getStorageUsed(vaultHandle));
             preferences->setVaultFiles(details->getNumFiles(vaultHandle));
             preferences->setVaultFolders(details->getNumFolders(vaultHandle));
 
+            // Rubbish
+            auto rubbishNode = getRubbishNode();
+            MegaHandle rubbishHandle = rubbishNode ? rubbishNode->getHandle() : INVALID_HANDLE;
             preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
             preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
             preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
 
+            // Versions
+            // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
+            // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
+            preferences->setVersionsStorage(details->getVersionStorageUsed(cloudDriveHandle)
+                                          + details->getVersionStorageUsed(vaultHandle)
+                                          + details->getVersionStorageUsed(rubbishHandle));
+
+            // Inshares
             long long inShareSize = 0, inShareFiles = 0, inShareFolders = 0;
             for (int i = 0; i < inShares->size(); i++)
             {
                 MegaNode *node = inShares->get(i);
-                if (!node)
+                if (node)
                 {
-                    continue;
+                    MegaHandle handle = node->getHandle();
+                    inShareSize += details->getStorageUsed(handle);
+                    inShareFiles += details->getNumFiles(handle);
+                    inShareFolders += details->getNumFolders(handle);
                 }
-
-                MegaHandle handle = node->getHandle();
-                inShareSize += details->getStorageUsed(handle);
-                inShareFiles += details->getNumFiles(handle);
-                inShareFolders += details->getNumFolders(handle);
             }
             preferences->setInShareStorage(inShareSize);
             preferences->setInShareFiles(inShareFiles);
@@ -7018,28 +6983,36 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             notifyStorageObservers();
+
+            if (mStorageOverquotaDialog)
+            {
+                mStorageOverquotaDialog->refreshStorageDetails();
+            }
         }
 
-        const bool proUserIsOverquota (megaApi->getBandwidthOverquotaDelay() &&
-                    preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE);
-        if (proUserIsOverquota)
-        {
-            mTransferQuota->setOverQuota(std::chrono::seconds(megaApi->getBandwidthOverquotaDelay()));
-        }
+        if (transfer)
+        {   // Update transfer related details
+            const bool proUserIsOverquota (megaApi->getBandwidthOverquotaDelay() &&
+                                          preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE);
+            if (proUserIsOverquota)
+            {
+                mTransferQuota->setOverQuota(std::chrono::seconds(megaApi->getBandwidthOverquotaDelay()));
+            }
 
-        preferences->setTotalBandwidth(details->getTransferMax());
-        preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setUsedBandwidth(details->getTransferUsed());
+            preferences->setTotalBandwidth(details->getTransferMax());
+            preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setUsedBandwidth(details->getTransferUsed());
 
-        preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setTemporalBandwidth(details->getTemporalBandwidth());
-        preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
+            preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setTemporalBandwidth(details->getTemporalBandwidth());
+            preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
 
-        notifyBandwidthObservers();
+            notifyBandwidthObservers();
 
-        if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
-        {
-            mTransferQuota->updateQuotaState();
+            if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
+            {
+                mTransferQuota->updateQuotaState();
+            }
         }
 
         preferences->sync();
@@ -7049,14 +7022,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             infoDialog->setUsage();
             infoDialog->setAccountType(preferences->accountType());
         }
-
-        if (mStorageOverquotaDialog)
-        {
-            mStorageOverquotaDialog->refreshStorageDetails();
-        }
-
         });//end of queued function
-
         });// end of thread pool function
         break;
     }
@@ -7634,12 +7600,13 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi*)
 {
+    // TODO isCrashed: onReloadNeeded obsoleted by MegaEvent::EVENT_RELOAD
     if (appfinished)
     {
         return;
     }
 
-    // TODO: investigate this. Could a restart of the app be enough?
+    // TODO isCrashed: investigate this. Could a restart of the app be enough?
 
     //Don't reload the filesystem here because it's unsafe
     //and the most probable cause for this callback is a false positive.

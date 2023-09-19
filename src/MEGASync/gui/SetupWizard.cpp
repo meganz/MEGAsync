@@ -580,7 +580,6 @@ void SetupWizard::on_bNext_clicked()
                     ui->eMegaFolder->setText(defaultSyncFolderPath);
                     megaApi->createFolder(defaultSyncFolderName.toUtf8().constData(), rootNode.get());
                     creatingDefaultSyncFolder = true;
-
                     ui->lProgress->setText(tr("Creating folder…"));
                     page_progress();
                 }
