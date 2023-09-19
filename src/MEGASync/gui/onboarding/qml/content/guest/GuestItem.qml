@@ -123,6 +123,10 @@ Rectangle {
             extend: content.stateInProgress
         },
         State {
+            name: content.stateInProgress2FA
+            extend: content.stateInProgress
+        },
+        State {
             name: content.stateBlocked
             StateChangeScript {
                 script: stack.replace(blockedPage);
