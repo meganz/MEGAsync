@@ -17,6 +17,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "GuiUtilities.h"
 
 #include "mega/types.h"
 
@@ -1465,24 +1466,6 @@ void SettingsDialog::on_bLogout_clicked()
 void SettingsDialog::connectSyncHandlers()
 {
     connect(mUi->syncTableView, &BackupTableView::removeSync, this, &SettingsDialog::removeSync);
-    connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
-    {
-        if (errorCode != MegaError::API_OK)
-        {
-            onSavingSyncsCompleted(SyncStateInformation::SAVING_SYNCS_FINISHED);
-
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.parent = this;
-            msgInfo.title = tr("Error adding sync");
-            msgInfo.text = errorMsg;
-
-            Text::Link link(Utilities::SUPPORT_URL);
-            Text::Decorator dec(&link);
-            dec.process(msgInfo.text);
-
-            QMegaMessageBox::warning(msgInfo);
-        }
-    });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
@@ -1541,6 +1524,7 @@ void SettingsDialog::loadSyncSettings()
             onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         }
     });
+    connectAddSyncHandler();
 
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
@@ -1592,6 +1576,64 @@ void SettingsDialog::addSyncFolderAfterOverQuotaCheck(MegaHandle megaFolderHandl
     mSyncController.addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName(), MegaSync::TYPE_TWOWAY);
     });
 
+}
+
+void SettingsDialog::connectAddSyncHandler()
+{
+    GuiUtilities::connectAddSyncDefaultHandler(&mSyncController, mPreferences->accountType());
+    connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, int, const QString, const QString)
+    {
+        if (errorCode != MegaError::API_OK)
+        {
+            onSavingSyncsCompleted(SyncStateInformation::SAVING_SYNCS_FINISHED);
+        }
+    });
+}
+
+void SettingsDialog::setEnabledAllControls(const bool enabled)
+{
+    setGeneralTabEnabled(enabled);
+    mUi->pAccount->setEnabled(enabled);
+    mUi->pSyncs->setEnabled(enabled);
+    mUi->pBackup->setEnabled(enabled);
+    mUi->pSecurity->setEnabled(enabled);
+    mUi->pFolders->setEnabled(enabled);
+    mUi->pNetwork->setEnabled(enabled);
+    mUi->pNotifications->setEnabled(enabled);
+
+    mUi->wStackFooter->setEnabled(enabled);
+}
+
+void SettingsDialog::setGeneralTabEnabled(const bool enabled)
+{
+    // We want to keep only the "Send bug report" button enabled.
+    // If we call setEnable() on the whole SettingsDialog, it will be
+    // disabled and can't be enabled without enabling everything.
+    // Another approach is to loop through all child widgets of SettingsDialog,
+    // but we need to take care to skip all parents of BugReport button.
+    // Experimentally it didn't work, so the last solution is to
+    // call setEnable() manually for all controls and leave
+    // Bug report controls as they are.
+
+#ifdef Q_OS_MACOS
+    mUi->gGeneralDefaultOptions->setEnabled(enabled);
+    mUi->gLanguage->setEnabled(enabled);
+    mUi->gDebris->setEnabled(enabled);
+    mUi->gSyncDebris->setEnabled(enabled);
+    mUi->gVersions->setEnabled(enabled);
+    mUi->gSleepMode->setEnabled(enabled);
+#else
+    mUi->gGeneral->setEnabled(enabled);
+    mUi->gLanguage->setEnabled(enabled);
+    mUi->gCache->setEnabled(enabled);
+    mUi->gRemoteCache->setEnabled(enabled);
+    mUi->gFileVersions->setEnabled(enabled);
+#ifdef Q_OS_LINUX
+    mUi->gSleepSettings->setEnabled(enabled);
+#else
+    mUi->gSleepMode->setEnabled(enabled);
+#endif
+#endif
 }
 
 void SettingsDialog::on_bSyncs_clicked()
@@ -1662,18 +1704,18 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
     switch (state)
     {
         case SAVING_SYNCS:
-            setEnabled(false);
+            setEnabledAllControls(false);
             //if we are on sync tab
             mUi->wSpinningIndicatorSyncs->start();
             mUi->sSyncsState->setCurrentWidget(mUi->pSavingSyncs);
             break;
         case SAVING_BACKUPS:
-            setEnabled(false);
+            setEnabledAllControls(false);
             mUi->wSpinningIndicatorBackups->start();
             mUi->sBackupsState->setCurrentWidget(mUi->pSavingBackups);
             break;
         case SAVING_SYNCS_FINISHED:
-            setEnabled(true);
+            setEnabledAllControls(true);
             mUi->wSpinningIndicatorSyncs->stop();
             // If any sync is disabled, shows warning message
             if (mModel->syncWithErrorExist(mega::MegaSync::SyncType::TYPE_TWOWAY))
@@ -1700,7 +1742,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
              }
             break;
     case SAVING_BACKUPS_FINISHED:
-        setEnabled(true);
+        setEnabledAllControls(true);
         mUi->wSpinningIndicatorBackups->stop();
         // If any sync is disabled, shows warning message
         if (mModel->syncWithErrorExist(mega::MegaSync::SyncType::TYPE_BACKUP))
@@ -1739,19 +1781,15 @@ void SettingsDialog::connectBackupHandlers()
             this, &SettingsDialog::onMyBackupsFolderHandleSet);
     onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
 
-    connect(&mBackupController, &SyncController::syncAddStatus, this, [this](const int errorCode, const QString errorMsg, QString name)
+    connect(&mBackupController, &SyncController::syncAddStatus, this, [this](const int errorCode, const int, const QString errorMsg, QString name)
     {
         if (errorCode != MegaError::API_OK)
         {
             onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-            Text::Link link(Utilities::SUPPORT_URL);
-            Text::Decorator dec(&link);
-            QString msg = errorMsg;
-            dec.process(msg);
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.parent = this;
             msgInfo.title = tr("Error adding backup %1").arg(name);
-            msgInfo.text = msg;
+            msgInfo.text = GuiUtilities::decoratedWithSupportUrl(errorMsg);
             QMegaMessageBox::critical(msgInfo);
         }
     });
@@ -2030,7 +2068,7 @@ void SettingsDialog::updateUploadFolder()
     if (!node)
     {
         mHasDefaultUploadOption = false;
-        mUi->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
+        mUi->eUploadFolder->setText(QString::fromUtf8("/MEGA Uploads"));
     }
     else
     {
@@ -2038,7 +2076,7 @@ void SettingsDialog::updateUploadFolder()
         if (!nPath)
         {
             mHasDefaultUploadOption = false;
-            mUi->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
+            mUi->eUploadFolder->setText(QString::fromUtf8("/MEGA Uploads"));
         }
         else
         {
@@ -2053,7 +2091,7 @@ void SettingsDialog::updateDownloadFolder()
     QString downloadPath = mPreferences->downloadFolder();
     if (!downloadPath.size())
     {
-        downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
+        downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads");
     }
     downloadPath = QDir::toNativeSeparators(downloadPath);
     mUi->eDownloadFolder->setText(downloadPath);
@@ -2293,7 +2331,6 @@ void SettingsDialog::onShellNotificationsProcessed()
 
 void SettingsDialog::on_bRestart_clicked()
 {
-
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = this;
     msgInfo.title =  tr("Restart MEGAsync");

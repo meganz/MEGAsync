@@ -57,7 +57,7 @@ public:
     static QString getErrStrCurrentBackupInsideExistingBackup();
 
 signals:
-    void syncAddStatus(int errorCode, QString errorMsg, QString name);
+    void syncAddStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);
     void syncRemoveError(std::shared_ptr<mega::MegaError> err);
     void syncEnableError(std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode);
     void syncDisableError(std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode);
@@ -65,8 +65,8 @@ signals:
 
 private:
     void createPendingBackups();
-    QString getSyncAPIErrorMsg(int megaError);
-    QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
+    static QString getSyncAPIErrorMsg(int megaError);
+    static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
     QMap<QString, QString> mPendingBackups;
 
     mega::MegaApi* mApi;

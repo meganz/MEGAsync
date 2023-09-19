@@ -7,6 +7,9 @@
 #include <cstring>
 #include <map>
 
+#include "DolphinFileManager.h"
+#include "NautilusFileManager.h"
+
 using namespace std;
 using namespace mega;
 
@@ -14,8 +17,8 @@ PlatformImplementation::PlatformImplementation()
 {
     autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
     desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
-    set_icon = QString::fromUtf8("gvfs-set-attribute -t string \"%1\" metadata::custom-icon file://%2");
-    remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
+    set_icon = QString::fromUtf8("gio set -t string \"%1\" metadata::custom-icon file://%2");
+    remove_icon = QString::fromUtf8("gio set -t unset \"%1\" metadata::custom-icon");
     custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
 }
 
@@ -107,13 +110,22 @@ bool PlatformImplementation::isTilingWindowManager()
 
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
-    QString filebrowser = getDefaultFileBrowserApp();
-    // Nautilus on Gnome, does not open the directory if argument is given without surrounding double-quotes;
-    // Path is passed through QUrl which properly escapes special chars in native platform URIs
-    // which takes care of path names also containing double-quotes withing, which will stop
-    // Nautilus from parsing the argument string all-together
-    return QProcess::startDetached(filebrowser + QString::fromLatin1(" \"")
-                            + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
+    QString fileBrowser = getDefaultFileBrowserApp();
+
+    static const QMap<QString, QStringList> showInFolderCallMap
+    {
+        {QLatin1String("dolphin"), DolphinFileManager::getShowInFolderParams()},
+        {QLatin1String("nautilus"), NautilusFileManager::getShowInFolderParams()}
+    };
+
+    QStringList params;
+    auto itFoundAppParams = showInFolderCallMap.constFind(fileBrowser);
+    if (itFoundAppParams != showInFolderCallMap.constEnd())
+    {
+        params << *itFoundAppParams;
+    }
+
+    return QProcess::startDetached(fileBrowser, params << QUrl::fromLocalFile(pathIn).toString());
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
@@ -251,19 +263,13 @@ QString PlatformImplementation::getDefaultOpenAppByMimeType(QString mimeType)
     }
 
     QString line = contents.first();
-    int index = line.indexOf(QChar::fromAscii('%'));
-    int size = -1;
-    if (index != -1)
+    QRegExp captureRegexCommand(QString::fromUtf8("^Exec=([^' ']*)"));
+    if (captureRegexCommand.indexIn(line) != -1)
     {
-        size = index - 6;
+        return captureRegexCommand.cap(1); // return first group from regular expression.
     }
 
-    if (!size)
-    {
-        return QString();
-    }
-
-    return line.mid(5, size);
+    return QString();
 }
 
 bool PlatformImplementation::getValue(const char * const name, const bool default_value)
@@ -374,36 +380,6 @@ bool PlatformImplementation::shouldRunHttpServer()
     return false;
 }
 
-// Check if it's needed to start the local HTTPS server
-// for communications with the webclient
-bool PlatformImplementation::shouldRunHttpsServer()
-{
-    QStringList data = getListRunningProcesses();
-
-    if (data.size() > 1)
-    {
-        for (int i = 1; i < data.size(); i++)
-        {
-            // The MEGA webclient sends request to MEGAsync to improve the
-            // user experience. We check if web browsers are running because
-            // otherwise it isn't needed to run the local web server for this purpose.
-            // Here is the list or web browsers that don't allow HTTP communications
-            // with 127.0.0.1 inside HTTPS webs and therefore require a HTTPS server.
-            QString command = data.at(i).trimmed();
-            if (command.contains(QString::fromUtf8("safari"), Qt::CaseInsensitive)
-                    || command.contains(QString::fromUtf8("iexplore"), Qt::CaseInsensitive)
-                    || command.contains(QString::fromUtf8("opera"), Qt::CaseInsensitive)
-                    || command.contains(QString::fromUtf8("iceweasel"), Qt::CaseInsensitive)
-                    || command.contains(QString::fromUtf8("konqueror"), Qt::CaseInsensitive)
-                    )
-            {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 bool PlatformImplementation::isUserActive()
 {
     return true;
@@ -467,6 +443,12 @@ void PlatformImplementation::fileAndFolderSelector(QString title, QString defaul
         defaultDir = QLatin1String("/");
     }
     AbstractPlatform::fileAndFolderSelector(title, defaultDir, multiSelection, parent, func);
+}
+
+void PlatformImplementation::streamWithApp(const QString &app, const QString &url)
+{
+    QString command = QString::fromUtf8("%1 \"%2\"").arg(QDir::toNativeSeparators(app)).arg(url);
+    QProcess::startDetached(command);
 }
 
 QStringList PlatformImplementation::getListRunningProcesses()

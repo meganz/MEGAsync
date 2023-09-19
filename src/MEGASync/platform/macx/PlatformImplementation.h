@@ -28,7 +28,6 @@ public:
     QString getDefaultOpenApp(QString extension) override;
     bool registerUpdateJob() override;
     bool shouldRunHttpServer() override;
-    bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
     void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;
@@ -42,6 +41,8 @@ public:
     void addFileManagerExtensionToSystem() override;
     void reloadFileManagerExtension() override;
     void enableFileManagerExtension(bool value) override;
+
+    void streamWithApp(const QString& app, const QString& url) override;
 
 private:
     void disableSignalHandler();

@@ -10,6 +10,8 @@ public:
     static QString createShellExtensionActionLabel(const QString& action, const int fileCount, const int folderCount);
 
     static QString errorInvalidChars();
+
+    static QString getExpiredProFlexiMessage();
 private:
     static int computeDaysToExpiration(int64_t expirationTimeStampInSecs);
 };
