@@ -101,6 +101,11 @@ Item {
         color: attributes.backgroundColor
         radius: attributes.radius
 
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+        }
+
         Row {
             id: mainLayout
 

@@ -27,11 +27,6 @@ MegaTexts.Text {
     property bool visited: false
     property color urlColor: Styles.linkPrimary
 
-    onManageMouseChanged: {
-        if(manageMouse) {
-            loader.sourceComponent = mouseArea;
-        }
-    }
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     textFormat: Text.RichText
 
@@ -59,19 +54,12 @@ MegaTexts.Text {
         updateLinkColor();
     }
 
-    Loader {
-        id: loader
-
-        anchors.fill: parent
-    }
-
-    Component {
+    MouseArea {
         id: mouseArea
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
-            onPressed: mouse.accepted = false;
-        }
+        anchors.fill: parent
+        cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+        onPressed: mouse.accepted = false;
+        enabled: control.manageMouse
+        hoverEnabled: control.hovered
     }
 }
