@@ -615,6 +615,8 @@ void InfoDialog::onStalledIssuesChanged()
     {
         hideSomeIssues();
     }
+
+    updateState();
 }
 
 void InfoDialog::onResetTransfersSummaryWidget()
@@ -694,40 +696,36 @@ void InfoDialog::updateState()
         return;
     }
 
-    auto failState = checkFailedState();
-    if (mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+    if(!checkFailedState())
     {
-        changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
-    }
-    else if (mPreferences->getGlobalPaused())
-    {
-        if(!failState)
+        if (mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+        {
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
+        }
+        else if (mPreferences->getGlobalPaused())
         {
             mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
             animateStates(mWaiting || mIndexing || mSyncing);
         }
-    }
-    else
-    {
-        if (mIndexing)
-        {
-            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
-        }
-        else if (mSyncing)
-        {
-            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_SYNCING);
-        }
-        else if (mWaiting)
-        {
-            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_WAITING);
-        }
-        else if (mTransferring)
-        {
-            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING);
-        }
         else
         {
-            if(!checkFailedState())
+            if (mIndexing)
+            {
+                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
+            }
+            else if (mSyncing)
+            {
+                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_SYNCING);
+            }
+            else if (mWaiting)
+            {
+                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_WAITING);
+            }
+            else if (mTransferring)
+            {
+                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING);
+            }
+            else
             {
                 changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED, false);
             }
@@ -756,6 +754,7 @@ bool InfoDialog::checkFailedState()
         {
             mState = StatusInfo::TRANSFERS_STATES::STATE_FAILED;
             animateStates(false);
+            changeStatusState(mState);
         }
 
         isFailed = true;

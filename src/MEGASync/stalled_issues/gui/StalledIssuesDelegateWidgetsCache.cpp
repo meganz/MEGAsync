@@ -232,7 +232,14 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
         }
         case mega::MegaSyncStall::SyncStallReason::DownloadIssue:
         {
-            headerCase = new DownloadIssueHeader(header);
+            if(!issue.consultData()->hasFingerprint())
+            {
+                headerCase = new CloudFingerprintMissingHeader(header);
+            }
+            else
+            {
+                headerCase = new DownloadIssueHeader(header);
+            }
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::CannotCreateFolder:

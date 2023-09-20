@@ -233,6 +233,9 @@ using LocalStalledIssueDataList = QList<LocalStalledIssueDataPtr>;
 Q_DECLARE_METATYPE(LocalStalledIssueDataPtr)
 Q_DECLARE_METATYPE(LocalStalledIssueDataList)
 
+class UploadTransferInfo;
+class DownloadTransferInfo;
+
 class StalledIssue
 {
 public:
@@ -273,8 +276,11 @@ public:
     bool isPotentiallySolved() const;
     void setIsSolved(bool potentially);
     virtual void autoSolveIssue(){}
+    bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
+    bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
     bool isSymLink() const;
+    bool hasFingerprint() const;
     bool canBeIgnored() const;
     QStringList getIgnoredFiles() const;
 

@@ -174,6 +174,95 @@ void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
     }
 }
 
+//Cloud Fingerprint missing
+CloudFingerprintMissingHeader::CloudFingerprintMissingHeader(StalledIssueHeader *header)
+    : StalledIssueHeaderCase(header)
+{}
+
+void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
+{
+    auto fingerprintMissingChecker = [](const std::shared_ptr<const StalledIssue> issue){
+        return !issue->hasFingerprint();
+    };
+
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    auto selection = dialog->getDialog()->getSelection(fingerprintMissingChecker);
+
+    if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+    {
+        return;
+    }
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(fingerprintMissingChecker);
+
+    auto pluralNumber(0);
+
+    if(selection.size() <= 1)
+    {
+        if(allSimilarIssues.size() != selection.size())
+        {
+            msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+            textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+        }
+
+        pluralNumber = allSimilarIssues.size();
+    }
+    else
+    {
+        pluralNumber = selection.size();
+        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+    }
+
+    msgInfo.text = tr("Are you sure you want to solve the issue?", "", pluralNumber);
+    msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
+
+    msgInfo.buttonsText = textsByButton;
+
+    msgInfo.finishFunc = [this, index, selection, allSimilarIssues](QMessageBox* msgBox)
+    {
+        if(msgBox->result() == QDialogButtonBox::Ok)
+        {
+            MegaSyncApp->getStalledIssuesModel()->fixFingerprint(selection);
+        }
+        else if(msgBox->result() == QDialogButtonBox::Yes)
+        {
+            MegaSyncApp->getStalledIssuesModel()->fixFingerprint(allSimilarIssues);
+        }
+    };
+
+    QMegaMessageBox::warning(msgInfo);
+
+}
+
+void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header)
+{
+    header->setText(tr("Can´t download <b>%1</b> to the selected location").arg(header->getData().consultData()->consultCloudData()->getNativeFilePath()));
+    header->setTitleDescriptionText(tr("File fingerprint missing"));
+    header->setIsExpandable(false);
+}
+
+void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *header)
+{
+    if(!header->getData().consultData()->isSolved())
+    {
+        header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
+    }
+}
+
 //Local folder not scannable
 FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)

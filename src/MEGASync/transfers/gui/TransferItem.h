@@ -105,6 +105,7 @@ public:
     std::shared_ptr<mega::MegaTransfer> mFailedTransfer;
     QString                             mFilename;
     int                                 mNodeAccess = 0;
+    bool                                mIsTempTransfer = false;
 
     void setState(const TransferState& state);
     void setPreviousState(const TransferState& state);
@@ -138,6 +139,7 @@ public:
     QDateTime getFinishedDateTime() const;
     QString getFormattedFinishedTime() const;
     QString getFullFormattedFinishedTime() const;
+    bool isTempTransfer() const;
 
 private:
     QString         mPath;

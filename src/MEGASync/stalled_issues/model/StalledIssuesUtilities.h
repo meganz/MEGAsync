@@ -1,6 +1,8 @@
 #ifndef STALLEDISSUESUTILITIES_H
 #define STALLEDISSUESUTILITIES_H
 
+#include "StalledIssue.h"
+
 #include <megaapi.h>
 #include <MegaApplication.h>
 #include <Utilities.h>
@@ -14,7 +16,6 @@
 #include <QEventLoop>
 
 #include <memory>
-
 
 class StalledIssuesUtilities : public QObject
 {
@@ -44,7 +45,7 @@ private:
     QList<mega::MegaHandle> mRemoteHandles;
 };
 
-//Only used when there is no local info -> Otherwise, use MegaApi::getSyncedNode(localPath)
+/////////////////////////////////////////////////////////////////////////////////////////
 class StalledIssuesBySyncFilter
 {
 public:
@@ -59,6 +60,20 @@ private:
     bool isBelow(const QString& syncRootPath, const QString& checkPath);
 
     static QMap<QVariant, mega::MegaHandle> mSyncIdCache;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+class MegaDownloader;
+
+class FingerprintMissingSolver : public QObject
+{
+public:
+    FingerprintMissingSolver();
+
+    void solveIssues(const QList<StalledIssueVariant>& pathsToSolve);
+
+private:
+    std::unique_ptr<MegaDownloader> mDownloader;
 };
 
 #endif // STALLEDISSUESUTILITIES_H

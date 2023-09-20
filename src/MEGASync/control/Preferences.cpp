@@ -5,6 +5,7 @@
 #include "UserAttributesRequests/FullName.h"
 
 #include <QDesktopServices>
+#include <QDir>
 #include <assert.h>
 
 using namespace mega;
@@ -2544,6 +2545,21 @@ QString Preferences::getDataPath()
     QString ret = mDataPath;
     mutex.unlock();
     return ret;
+}
+
+QString Preferences::getTempTransfersPath()
+{
+    return getDataPath() + QDir::separator() + QLatin1String("TempTransfers") + QDir::separator();
+}
+
+void Preferences::clearTempTransfersPath()
+{
+    QDir dir(getTempTransfersPath());
+    dir.setFilter(QDir::Hidden | QDir::Files);
+    foreach(QString dirItem, dir.entryList())
+    {
+        dir.remove(dirItem);
+    }
 }
 
 void Preferences::clearTemporalBandwidth()

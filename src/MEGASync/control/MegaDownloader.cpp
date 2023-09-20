@@ -19,14 +19,12 @@ MegaDownloader::MegaDownloader(MegaApi* _megaApi, std::shared_ptr<FolderTransfer
     : QObject(), megaApi(_megaApi), mFolderTransferListener(_listener), mQueueData(_megaApi, pathMap)
 {
     connect(&mQueueData, &DownloadQueueController::finishedAvailableSpaceCheck,
-            this, &MegaDownloader::onAvailableSpaceCheckFinished);
+            this, &MegaDownloader::onAvailableSpaceCheckFinished, Qt::DirectConnection);
 }
 
 bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
-                                          const QString& path)
+                                          const QString& path, bool createAppDataId)
 {
-    auto data = TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(path);
-
     mNoTransferStarted = true;
     // If the destination path doesn't exist and we can't create it,
     // empty queue and abort transfer.
@@ -36,12 +34,18 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
         qDeleteAll(*downloadQueue);
         downloadQueue->clear();
 
-        data->remove();
-
         return false;
     }
 
-    mQueueData.initialize(downloadQueue, downloadBatches, data->getAppId(), path);
+    unsigned long long appDataId(0);
+
+    if(createAppDataId)
+    {
+        auto data = TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(path);
+        appDataId = data->getAppId();
+    }
+
+    mQueueData.initialize(downloadQueue, downloadBatches, appDataId, path);
     mQueueData.startAvailableSpaceChecking();
     return true;
 }
@@ -70,7 +74,7 @@ void MegaDownloader::download(WrappedNode* parent, QFileInfo info, const std::sh
             emit startingTransfers();
             mNoTransferStarted = false;
         }
-        startDownload(parent, QString::number(data->getAppId()), currentPathWithSep, tokenToUse);
+        startDownload(parent, data ? QString::number(data->getAppId()) : QString::number(0), currentPathWithSep, tokenToUse);
     }
     else
     {
@@ -82,11 +86,20 @@ void MegaDownloader::onAvailableSpaceCheckFinished(bool isDownloadPossible)
 {
     if (isDownloadPossible)
     {
-        auto appData = TransferMetaDataContainer::getAppDataById<DownloadTransferMetaData>(mQueueData.getCurrentAppDataId());
-        appData->setInitialTransfers(mQueueData.getDownloadQueueSize());
+        std::shared_ptr<TransferBatch> batch(nullptr);
+        std::shared_ptr<DownloadTransferMetaData> appData(nullptr);
 
-        auto batch = std::shared_ptr<TransferBatch>(new TransferBatch(appData->getAppId()));
-        mQueueData.addTransferBatch(batch);
+        if(mQueueData.getCurrentAppDataId() > 0)
+        {
+            appData = TransferMetaDataContainer::getAppDataById<DownloadTransferMetaData>(mQueueData.getCurrentAppDataId());
+            if(appData)
+            {
+                appData->setInitialTransfers(mQueueData.getDownloadQueueSize());
+                batch.reset(new TransferBatch(appData->getAppId()));
+                mQueueData.addTransferBatch(batch);
+            }
+        }
+
         EventUpdater updater(mQueueData.getDownloadQueueSize());
 
         // Process all nodes in the download queue
@@ -106,19 +119,23 @@ void MegaDownloader::onAvailableSpaceCheckFinished(bool isDownloadPossible)
                 currentPath = mQueueData.getCurrentTargetPath();
             }
 
-            download(wNode, currentPath, appData, batch->getCancelTokenPtr());
+            download(wNode, currentPath, appData, batch ? batch->getCancelTokenPtr() : nullptr);
             delete wNode;
             updater.update(mQueueData.getDownloadQueueSize());
         }
 
-        if (batch->isEmpty())
+        if (batch && batch->isEmpty())
         {
             mQueueData.removeBatch();
         }
     }
     else
     {
-        TransferMetaDataContainer::removeAppData(mQueueData.getCurrentAppDataId());
+        if(mQueueData.getCurrentAppDataId() > 0)
+        {
+            TransferMetaDataContainer::removeAppData(mQueueData.getCurrentAppDataId());
+        }
+
         mQueueData.clearDownloadQueue();
     }
 

@@ -144,6 +144,7 @@ private:
     bool isRetriedFolder(mega::MegaTransfer* transfer);
     bool isCompletedFromFolderRetry(mega::MegaTransfer* transfer);
     bool isIgnored(mega::MegaTransfer* transfer, bool removeCache = false);
+    bool isTempTransfer(mega::MegaTransfer* transfer, bool removeCache = false);
     void updateFailedTransfer(QExplicitlySharedDataPointer<TransferData> data, mega::MegaTransfer* transfer,
                               mega::MegaError* e);
 
@@ -183,6 +184,18 @@ private:
 
     QList<int> mRetriedFolder;
     QList<int> mIgnoredFiles;
+};
+
+struct DownloadTransferInfo
+{
+    mega::MegaHandle nodeHandle;
+};
+
+struct UploadTransferInfo
+{
+    QString localPath;
+    QString filename;
+    mega::MegaHandle parentHandle;
 };
 
 class TransfersModel : public QAbstractItemModel
@@ -264,14 +277,9 @@ public:
 
     bool areAllPaused() const;
 
-    struct UploadTransferInfo
-    {
-        QString localPath;
-        QString filename;
-        mega::MegaHandle parentHandle;
-    };
 
-    const QExplicitlySharedDataPointer<const TransferData> activeTransferFound(const UploadTransferInfo& info) const;
+    const QExplicitlySharedDataPointer<const TransferData> activeDownloadTransferFound(DownloadTransferInfo *info) const;
+    const QExplicitlySharedDataPointer<const TransferData> activeUploadTransferFound(UploadTransferInfo* info) const;
 
     const QExplicitlySharedDataPointer<const TransferData> getTransferByTag(int tag) const;
     QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag);

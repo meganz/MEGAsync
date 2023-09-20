@@ -53,31 +53,13 @@ bool LocalOrRemoteUserMustChooseStalledIssue::isSolvable() const
     return false;
 }
 
-bool LocalOrRemoteUserMustChooseStalledIssue::isBeingSolved(TransfersModel::UploadTransferInfo& info) const
-{
-    auto result(false);
-
-    auto node = consultCloudData()->getNode();
-    if(node)
-    {
-        info.filename = consultLocalData()->getFileName();
-        info.localPath = consultLocalData()->getNativeFilePath();
-        info.parentHandle = node->getParentHandle();
-        auto transfer = MegaSyncApp->getTransfersModel()->activeTransferFound(info);
-
-        result =  transfer != nullptr;
-    }
-
-    return result;
-}
-
 void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
     StalledIssue::fillIssue(stall);
 
-    TransfersModel::UploadTransferInfo info;
+    std::shared_ptr<UploadTransferInfo> info(new UploadTransferInfo());
     //Check if transfer already exists
-    if(isBeingSolved(info))
+    if(isBeingSolvedByUpload(info))
     {
         setIsSolved(false);
     }
@@ -102,15 +84,15 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
 {
     if(getCloudData())
     {
-        TransfersModel::UploadTransferInfo info;
+        std::shared_ptr<UploadTransferInfo> info(new UploadTransferInfo());
         //Check if transfer already exists
-        if(!isBeingSolved(info))
+        if(!isBeingSolvedByUpload(info))
         {
-            std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(info.parentHandle));
+            std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(info->parentHandle));
             if(parentNode)
             {
                 //Using appDataId == 0 means that there will be no notification for this upload
-                mUploader->upload(info.localPath, info.filename, parentNode, 0, nullptr);
+                mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
 
                 mChosenSide = ChosenSide::Local;
                 setIsSolved(false);

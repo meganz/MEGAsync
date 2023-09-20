@@ -2,6 +2,7 @@
 
 #include <MegaApplication.h>
 #include <mega/types.h>
+#include <MegaDownloader.h>
 
 #include <QFile>
 #include <QDir>
@@ -276,4 +277,39 @@ bool StalledIssuesBySyncFilter::isBelow(const QString &syncRootPath, const QStri
     //Get parent folder
     fileDir.cdUp();
     return isBelow(syncRootPath, fileDir.path());
+}
+
+/////////////////////////////////////////////////////
+/// \brief FingerprintMissingSolver::FingerprintMissingSolver
+FingerprintMissingSolver::FingerprintMissingSolver()
+    :mDownloader(new MegaDownloader(MegaSyncApp->getMegaApi(), nullptr))
+{
+}
+
+void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pathsToSolve)
+{
+    QDir dir(Preferences::instance()->getTempTransfersPath());
+    if (dir.exists() ||
+        dir.mkpath(QString::fromUtf8(".")))
+    {
+        std::unique_ptr<QQueue<WrappedNode*>> nodesToDownload(new QQueue<WrappedNode*>());
+
+        foreach(auto issue, pathsToSolve)
+        {
+            std::shared_ptr<DownloadTransferInfo> info(new DownloadTransferInfo());
+            if(!issue.consultData()->isBeingSolvedByDownload(info))
+            {
+                mega::MegaNode* node(MegaSyncApp->getMegaApi()->getNodeByHandle(info->nodeHandle));
+                if(node)
+                {
+                    //Using appData == nullptr means that there will be no notification for this download
+                    nodesToDownload->append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
+                }
+            }
+        }
+
+        BlockingBatch downloadBatches;
+        mDownloader->processDownloadQueue(nodesToDownload.get(), downloadBatches, Preferences::instance()->getTempTransfersPath(), false);
+        qDeleteAll(*nodesToDownload.get());
+    }
 }
