@@ -31,11 +31,11 @@ std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
 const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
-
-const unsigned long long KB = 1024;
-const unsigned long long MB = 1024 * KB;
-const unsigned long long GB = 1024 * MB;
-const unsigned long long TB = 1024 * GB;
+//1024
+const unsigned long long KB = 1000;
+const unsigned long long MB = 1000 * KB;
+const unsigned long long GB = 1000 * MB;
+const unsigned long long TB = 1000 * GB;
 
 // Human-friendly list of forbidden chars for New Remote Folder
 const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");

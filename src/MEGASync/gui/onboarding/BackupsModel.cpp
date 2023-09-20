@@ -32,6 +32,7 @@ void BackupFolder::setSize(qint64 size)
     {
         folderSize = size;
         mSize = Utilities::getSizeString(size);
+        //mSize = QLocale().formattedDataSize(size, 2, QLocale::DataSizeSIFormat);
         if(auto model = dynamic_cast<BackupsModel*>(parent()))
         {
             auto changedIndex = model->index(model->getRow(mFolder), 0);

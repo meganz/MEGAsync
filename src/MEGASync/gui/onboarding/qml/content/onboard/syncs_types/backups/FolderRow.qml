@@ -85,7 +85,6 @@ Rectangle {
             readonly property int imageTextSpacing: 8
             readonly property int imageWidth: 16
             readonly property int textWidth: 248
-            readonly property int sizeTextWidth: 50
 
             property int checkboxSpacing: !checkbox.visible ? 0 : 12
 
@@ -133,7 +132,6 @@ Rectangle {
             }
 
             MegaTexts.SecondaryText {
-                width: contentRoot.sizeTextWidth
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -141,8 +139,6 @@ Rectangle {
                 font.pixelSize: MegaTexts.Text.Size.Small
                 horizontalAlignment: Qt.AlignRight
                 verticalAlignment: Qt.AlignVCenter
-                maximumLineCount: 1
-                wrapMode: Text.WrapAnywhere
                 color: Styles.textSecondary
                 visible: backupsProxyModel.selectedFilterEnabled
             }
