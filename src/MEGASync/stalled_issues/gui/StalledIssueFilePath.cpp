@@ -467,7 +467,7 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         }
         case mega::MegaSyncStall::DestinationPathInUnresolvedArea:
         {
-            return tr("Destination path is in an unresolved area.");
+            return tr("The folder could not be found. Ensure that the path is correct and try again.");
         }
         case mega::MegaSyncStall::MACVerificationFailure:
         {
