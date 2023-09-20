@@ -24,6 +24,7 @@ MegaTexts.Text {
     property url url: defaultUrl
     property bool manageMouse: false
     property bool hovered: false
+    property bool manageHover: false
     property bool visited: false
     property color urlColor: Styles.linkPrimary
 
@@ -60,6 +61,6 @@ MegaTexts.Text {
         cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
         onPressed: mouse.accepted = false;
         enabled: control.manageMouse
-        hoverEnabled: control.hovered
+        hoverEnabled: control.manageHover
     }
 }
