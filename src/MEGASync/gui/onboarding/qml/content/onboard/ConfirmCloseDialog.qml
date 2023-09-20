@@ -20,6 +20,7 @@ Window {
     property alias cancelButtonText: cancelButton.text
     property alias acceptButtonText: acceptButton.text
 
+    flags: Qt.Dialog
     modality: Qt.WindowModal
     minimumWidth: 560
     minimumHeight: 284
