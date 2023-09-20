@@ -292,7 +292,26 @@ void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pat
     if (dir.exists() ||
         dir.mkpath(QString::fromUtf8(".")))
     {
-        std::unique_ptr<QQueue<WrappedNode*>> nodesToDownload(new QQueue<WrappedNode*>());
+        auto tempPath(Preferences::instance()->getTempTransfersPath());
+
+        QMap<QString, std::shared_ptr<QQueue<WrappedNode*>>> nodesToDownloadByPath;
+        auto appendNodeToQueue = [&](const QString& targetPath, mega::MegaNode* node)
+        {
+            if(!nodesToDownloadByPath.contains(targetPath))
+            {
+                auto queue(std::make_shared<QQueue<WrappedNode*>>());
+                queue->append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
+                nodesToDownloadByPath.insert(targetPath, queue);
+            }
+            else
+            {
+                auto queue = nodesToDownloadByPath.value(targetPath);
+                if(queue)
+                {
+                    queue->append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
+                }
+            }
+        };
 
         foreach(auto issue, pathsToSolve)
         {
@@ -300,16 +319,43 @@ void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pat
             if(!issue.consultData()->isBeingSolvedByDownload(info))
             {
                 mega::MegaNode* node(MegaSyncApp->getMegaApi()->getNodeByHandle(info->nodeHandle));
+                if(!issue.consultData()->syncIds().isEmpty())
+                {
+                    auto sync = SyncInfo::instance()->getSyncSettingByTag(issue.consultData()->syncIds().first());
+                    auto localFilePath = sync->getLocalFolder();
+                    auto relativeCloudFilePath = issue.consultData()->consultCloudData()->getPath().path;
+                    relativeCloudFilePath = relativeCloudFilePath.remove(sync->getMegaFolder());
+                    localFilePath = localFilePath + QDir::toNativeSeparators(relativeCloudFilePath);
+                    QFile localPathFile(localFilePath);
+                    if(!localPathFile.exists())
+                    {
+                        QFileInfo  localFilePathInfo(localFilePath);
+                        QString localFolderPath(localFilePathInfo.absolutePath());
+                        QDir createTarget;
+                        createTarget.mkdir(localFolderPath);
+                        QDir localFolderPathDir(localFolderPath);
+                        if(localFolderPathDir.exists())
+                        {
+                            appendNodeToQueue(localFolderPath, node);
+                            continue;
+                        }
+                    }
+
+                }
+
                 if(node)
                 {
-                    //Using appData == nullptr means that there will be no notification for this download
-                    nodesToDownload->append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
+                     appendNodeToQueue(tempPath, node);
                 }
             }
         }
 
-        BlockingBatch downloadBatches;
-        mDownloader->processDownloadQueue(nodesToDownload.get(), downloadBatches, Preferences::instance()->getTempTransfersPath(), false);
-        qDeleteAll(*nodesToDownload.get());
+        foreach(auto targetFolder, nodesToDownloadByPath.keys())
+        {
+            std::shared_ptr<QQueue<WrappedNode*>> nodesToDownload(nodesToDownloadByPath.value(targetFolder));
+            BlockingBatch downloadBatches;
+            mDownloader->processDownloadQueue(nodesToDownload.get(), downloadBatches, targetFolder, targetFolder != tempPath);
+            qDeleteAll(*nodesToDownload.get());
+        }
     }
 }
