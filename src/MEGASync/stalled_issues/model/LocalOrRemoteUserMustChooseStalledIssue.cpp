@@ -39,6 +39,12 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
 
 bool LocalOrRemoteUserMustChooseStalledIssue::isSolvable() const
 {
+    //In case it is a backup, we cannot automatically solve it
+    if(getSyncType() == mega::MegaSync::SyncType::TYPE_BACKUP)
+    {
+        return false;
+    }
+
     if(isFile() && (consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size()))
     {
         //Check names

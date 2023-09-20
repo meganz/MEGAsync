@@ -722,10 +722,11 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
     emit updateLoadingMessage(info);
 }
 
-void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::function<bool (int)> solveFunc)
+void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::function<bool (int)> solveFunc,
+                                           std::function<void (void)> finishFunc)
 {
     startSolvingIssues();
-    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, solveFunc]()
+    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, solveFunc, finishFunc]()
     {
         auto issueCounter(1);
         auto issuesFixed(0);
@@ -791,6 +792,11 @@ void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::fun
 
                 QMegaMessageBox::warning(msgInfo);
             });
+        }
+
+        if(finishFunc)
+        {
+            finishFunc();
         }
 
         finishSolvingIssues(issuesFixed, sendMessage);
@@ -871,6 +877,42 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
     };
 
     solveListOfIssues(list, resolveIssue);
+}
+
+
+void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList &list)
+{
+    QList<std::shared_ptr<SyncSettings>> syncsToDisable;
+    auto resolveIssue = [this, &syncsToDisable](int row) -> bool
+    {
+        auto item = mStalledIssues.at(row);
+        if(item.consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
+           item.consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
+        {
+            if(!item.consultData()->syncIds().isEmpty())
+            {
+                auto sync = SyncInfo::instance()->getSyncSettingByTag(item.consultData()->syncIds().first());
+                if(sync && !syncsToDisable.contains(sync))
+                {
+                    syncsToDisable.append(sync);
+                }
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    auto finishFunc = [&syncsToDisable]()
+    {
+        foreach(auto& sync, syncsToDisable)
+        {
+            SyncController controller;
+            controller.setSyncToDisabled(sync);
+        }
+    };
+
+    solveListOfIssues(list, resolveIssue, finishFunc);
 }
 
 void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &list)

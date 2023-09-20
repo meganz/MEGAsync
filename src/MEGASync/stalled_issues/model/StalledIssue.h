@@ -312,6 +312,8 @@ public:
     void resetUIUpdated();
 
     QList<mega::MegaHandle> syncIds() const;
+    //In case there are two syncs, use the first one
+    mega::MegaSync::SyncType getSyncType() const;
 
 protected:
     bool initLocalIssue(const mega::MegaSyncStall *stallIssue);

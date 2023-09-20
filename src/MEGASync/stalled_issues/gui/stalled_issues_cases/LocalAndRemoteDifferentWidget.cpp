@@ -212,24 +212,52 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         msgInfo.text = tr("Are you sure you want to keep the <b>remote item</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
     }
 
-    if(localInfo.isFile())
+    if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
     {
-        msgInfo.informativeText = tr("The <b>local file</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
+        if(localInfo.isFile())
+        {
+            msgInfo.informativeText = tr("The <b>local file</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
+        }
+        else
+        {
+            msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
+        }
     }
     else
     {
-        msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
+        if(localInfo.isFile())
+        {
+            msgInfo.informativeText = tr("The backup will be disabled in order to protect the local file %1").arg(localInfo.fileName());
+        }
+        else
+        {
+            msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folder %1").arg(localInfo.fileName());
+        }
     }
 
     msgInfo.finishFunc = [this, selection, allSimilarIssues](QMessageBox* msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::Ok)
+        if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
         {
-           MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, selection);
+            if(msgBox->result() == QDialogButtonBox::Ok)
+            {
+                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, selection);
+            }
+            else if(msgBox->result() == QDialogButtonBox::Yes)
+            {
+                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, allSimilarIssues);
+            }
         }
-        else if(msgBox->result() == QDialogButtonBox::Yes)
+        else
         {
-            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, allSimilarIssues);
+            if(msgBox->result() == QDialogButtonBox::Ok)
+            {
+                MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(selection);
+            }
+            else if(msgBox->result() == QDialogButtonBox::Yes)
+            {
+                 MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(allSimilarIssues);
+            }
         }
     };
 

@@ -320,6 +320,29 @@ QList<mega::MegaHandle> StalledIssue::syncIds() const
     return mSyncIds;
 }
 
+mega::MegaSync::SyncType StalledIssue::getSyncType() const
+{
+    mega::MegaSync::SyncType type(mega::MegaSync::SyncType::TYPE_UNKNOWN);
+    if(!syncIds().isEmpty())
+    {
+        foreach(auto& syncId, syncIds())
+        {
+            auto sync = SyncInfo::instance()->getSyncSettingByTag(syncId);
+            auto syncType = sync->getType();
+            if(type != mega::MegaSync::SyncType::TYPE_UNKNOWN &&
+               type != syncType)
+            {
+                type = mega::MegaSync::SyncType::TYPE_UNKNOWN;
+                break;
+            }
+
+            type = syncType;
+        }
+    }
+
+    return type;
+}
+
 void StalledIssue::fillSyncId(const QString& path, bool cloud)
 {
     if(!path.isEmpty())
