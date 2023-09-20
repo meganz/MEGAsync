@@ -322,25 +322,27 @@ void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pat
                 if(!issue.consultData()->syncIds().isEmpty())
                 {
                     auto sync = SyncInfo::instance()->getSyncSettingByTag(issue.consultData()->syncIds().first());
-                    auto localFilePath = sync->getLocalFolder();
-                    auto relativeCloudFilePath = issue.consultData()->consultCloudData()->getPath().path;
-                    relativeCloudFilePath = relativeCloudFilePath.remove(sync->getMegaFolder());
-                    localFilePath = localFilePath + QDir::toNativeSeparators(relativeCloudFilePath);
-                    QFile localPathFile(localFilePath);
-                    if(!localPathFile.exists())
+                    if(sync)
                     {
-                        QFileInfo  localFilePathInfo(localFilePath);
-                        QString localFolderPath(localFilePathInfo.absolutePath());
-                        QDir createTarget;
-                        createTarget.mkdir(localFolderPath);
-                        QDir localFolderPathDir(localFolderPath);
-                        if(localFolderPathDir.exists())
+                        auto localFilePath = sync->getLocalFolder();
+                        auto relativeCloudFilePath = issue.consultData()->consultCloudData()->getPath().path;
+                        relativeCloudFilePath = relativeCloudFilePath.remove(sync->getMegaFolder());
+                        localFilePath = localFilePath + QDir::toNativeSeparators(relativeCloudFilePath);
+                        QFile localPathFile(localFilePath);
+                        if(!localPathFile.exists())
                         {
-                            appendNodeToQueue(localFolderPath, node);
-                            continue;
+                            QFileInfo  localFilePathInfo(localFilePath);
+                            QString localFolderPath(localFilePathInfo.absolutePath());
+                            QDir createTarget;
+                            createTarget.mkdir(localFolderPath);
+                            QDir localFolderPathDir(localFolderPath);
+                            if(localFolderPathDir.exists())
+                            {
+                                appendNodeToQueue(localFolderPath, node);
+                                continue;
+                            }
                         }
                     }
-
                 }
 
                 if(node)
