@@ -525,7 +525,8 @@ bool StalledIssue::checkForExternalChanges()
                 auto node = mCloudData->getNode(true);
                 if(!node ||
                    MegaSyncApp->getMegaApi()->isInRubbish(node.get()) ||
-                   currentNode->getParentHandle() != node->getParentHandle())
+                   currentNode->getParentHandle() != node->getParentHandle() ||
+                   (!hasFingerprint() && node->getFingerprint()))
                 {
                     setIsSolved(true);
                 }
