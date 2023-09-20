@@ -311,7 +311,7 @@ public:
     void UIUpdated(Type type);
     void resetUIUpdated();
 
-    QSet<mega::MegaHandle> syncIds() const;
+    QList<mega::MegaHandle> syncIds() const;
 
 protected:
     bool initLocalIssue(const mega::MegaSyncStall *stallIssue);
@@ -326,7 +326,7 @@ protected:
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
-    QSet<mega::MegaHandle> mSyncIds;
+    QList<mega::MegaHandle> mSyncIds;
     mutable SolveType mIsSolved = SolveType::Unsolved;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;

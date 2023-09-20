@@ -315,7 +315,7 @@ void StalledIssue::endFillingIssue()
     mNeedsUIUpdate = qMakePair(true, true);
 }
 
-QSet<mega::MegaHandle> StalledIssue::syncIds() const
+QList<mega::MegaHandle> StalledIssue::syncIds() const
 {
     return mSyncIds;
 }
@@ -329,7 +329,7 @@ void StalledIssue::fillSyncId(const QString& path, bool cloud)
         if(syncId != mega::INVALID_HANDLE &&
            !mSyncIds.contains(syncId))
         {
-            mSyncIds.insert(syncId);
+            mSyncIds.append(syncId);
         }
     }
 }

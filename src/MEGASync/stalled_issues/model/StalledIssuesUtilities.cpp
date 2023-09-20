@@ -274,8 +274,6 @@ bool StalledIssuesBySyncFilter::isBelow(const QString &syncRootPath, const QStri
 
     QDir fileDir(checkPath);
     //Get parent folder
-    if(fileDir.cdUp())
-    {
-        return isBelow(syncRootPath, fileDir.path());
-    }
+    fileDir.cdUp();
+    return isBelow(syncRootPath, fileDir.path());
 }
