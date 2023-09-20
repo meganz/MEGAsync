@@ -178,13 +178,13 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
                 if(sync->getError())
                 {
                     syncIcon.addFile(QLatin1String(":/images/sync_states/hand-error.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                    syncIcon.addFile(QLatin1String(":/images/sync_states/hand-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
                 }
                 else
                 {
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/hand.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                    syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                    syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
                 }
-
-                syncIcon.addFile(QLatin1String(":/images/sync_states/hand-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
             }
 
             return syncIcon;
@@ -217,7 +217,18 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
             case ::mega::MegaSync::RUNSTATE_PENDING:
             case ::mega::MegaSync::RUNSTATE_LOADING: s = "Loading"; break;
             case ::mega::MegaSync::RUNSTATE_PAUSED: s = "Paused"; break;
-            case ::mega::MegaSync::RUNSTATE_SUSPENDED: s = "Suspended"; break;
+            case ::mega::MegaSync::RUNSTATE_SUSPENDED:
+                {
+                    if(sync->getError())
+                    {
+                        s = "Suspended";
+                    }
+                    else
+                    {
+                        s = "Paused";
+                    }
+                    break;
+                }
             case ::mega::MegaSync::RUNSTATE_DISABLED: s = "Disabled"; break;
             case ::mega::MegaSync::RUNSTATE_RUNNING:
                 {
