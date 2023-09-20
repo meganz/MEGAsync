@@ -15,6 +15,10 @@
 #include <QDateTime>
 #include <QEvent>
 
+namespace Ui {
+class ViewLoadingSceneUI;
+}
+
 template <class DelegateWidget, class ViewType>
 class LoadingSceneView;
 
@@ -190,25 +194,81 @@ private:
     mutable QVector<DelegateWidget*> mLoadingItems;
 };
 
+class LoadingSceneMessageHandler : public QObject
+{
+    Q_OBJECT
+
+public:
+    LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI* viewBaseUI, QWidget* viewBase);
+    ~LoadingSceneMessageHandler();
+
+    struct MessageInfo
+    {
+        enum ButtonType
+        {
+            None,
+            Stop,
+            Ok
+        };
+
+        QString message;
+        int count = 0;
+        int total = 0;
+        ButtonType buttonType;
+    };
+
+    void hideLoadingMessage();
+    void setTopParent(QWidget* widget);
+
+public slots:
+    void updateMessage(const MessageInfo& info);
+
+signals:
+    void onStopPressed();
+    void loadingMessageVisibilityChange(bool value);
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
+private:
+    void sendLoadingMessageVisibilityChange(bool value);
+    void updateMessagePos();
+
+    Ui::ViewLoadingSceneUI* ui;
+    QWidget* mViewBase;
+    QWidget* mTopParent;
+    QWidget* mFadeOutWidget;
+};
+
+Q_DECLARE_METATYPE(LoadingSceneMessageHandler::MessageInfo)
+
 class ViewLoadingSceneBase : public QObject
 {
     Q_OBJECT
 
  public:
-    ViewLoadingSceneBase() :
-        mDelayTimeToShowInMs(0)
-    {
-        mDelayTimerToShow.setSingleShot(true);
-        mDelayTimerToHide.setSingleShot(true);
-
-        connect(&mDelayTimerToShow, &QTimer::timeout, this, &ViewLoadingSceneBase::onDelayTimerToShowTimeout);
-        connect(&mDelayTimerToHide, &QTimer::timeout, this, &ViewLoadingSceneBase::onDelayTimerToHideTimeout);
-    }
+    ViewLoadingSceneBase();
 
     inline void setDelayTimeToShowInMs(int newDelayTimeToShowInMs)
     {
         mDelayTimeToShowInMs = newDelayTimeToShowInMs;
     }
+
+    LoadingSceneMessageHandler* getLoadingMessageHandler()
+    {
+        return mMessageHandler;
+    }
+
+    void show();
+    void hide();
+
+    void setTopParent(QWidget* widget)
+    {
+        mMessageHandler->setTopParent(widget);
+    }
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 signals:
     void sceneVisibilityChange(bool value);
@@ -217,7 +277,8 @@ protected:
     QTimer mDelayTimerToShow;
     QTimer mDelayTimerToHide;
     int mDelayTimeToShowInMs;
-
+    QPointer<QTreeView> mLoadingView;
+    QWidget* mLoadingSceneUI;
 
 private slots:
     void onDelayTimerToShowTimeout()
@@ -233,6 +294,9 @@ private slots:
 private:
     virtual void showLoadingScene() = 0;
     virtual void hideLoadingScene() = 0;
+
+    Ui::ViewLoadingSceneUI* ui;
+    LoadingSceneMessageHandler* mMessageHandler;
 };
 
 template <class DelegateWidget, class ViewType>
@@ -247,14 +311,11 @@ public:
         mViewDelegate(nullptr),
         mView(nullptr),
         mViewModel(nullptr),
-        mPotentialSourceModel(nullptr),
-        mLoadingView(nullptr),
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
         mViewLayout(nullptr),
         mLoadingViewSet(false)
-    {
-    }
+    {}
 
     ~ViewLoadingScene()
     {
@@ -308,7 +369,7 @@ public:
 
         if(!mLoadingModel)
         {
-            mLoadingView = new ViewType();
+            mLoadingView = new ViewType(mLoadingSceneUI);
             mLoadingView->setObjectName(QString::fromStdString("Loading View"));
             mLoadingView->setContentsMargins(mView->contentsMargins());
             mLoadingView->setStyleSheet(mView->styleSheet());
@@ -322,9 +383,6 @@ public:
             mLoadingDelegate = new LoadingSceneDelegate<DelegateWidget>(mLoadingView);
             mLoadingView->setModel(mLoadingModel);
             mLoadingView->setItemDelegate(mLoadingDelegate);
-
-            mLoadingView->hide();
-            mViewLayout->addWidget(mLoadingView);
         }
 
         if(state)
@@ -360,8 +418,8 @@ public:
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
-        mViewLayout->replaceWidget(mLoadingView, mView);
-        mLoadingView->hide();
+        mViewLayout->replaceWidget(mLoadingSceneUI, mView);
+        hide();
         if(mWasFocused)
         {
             mView->setFocus();
@@ -374,6 +432,7 @@ public:
 private:
     void showLoadingScene() override
     {
+        mLoadingViewSet = true;
         int visibleRows(0);
 
         if(mView->isVisible())
@@ -406,23 +465,20 @@ private:
         }
 
         mView->setViewPortEventsBlocked(true);
-        mViewLayout->replaceWidget(mView, mLoadingView);
-        mLoadingView->show();
+        mViewLayout->replaceWidget(mView, mLoadingSceneUI);
+        show();
         mView->hide();
         mView->blockSignals(true);
         mView->header()->blockSignals(true);
         mStartTime = QDateTime::currentMSecsSinceEpoch();
         mLoadingDelegate->setLoading(true);
 
-        mLoadingViewSet = true;
         emit sceneVisibilityChange(true);
     }
 
     QAbstractItemDelegate* mViewDelegate;
     LoadingSceneView<DelegateWidget, ViewType>* mView;
     QPointer<QAbstractItemModel> mViewModel;
-    QAbstractItemModel* mPotentialSourceModel;
-    QPointer<QTreeView> mLoadingView;
     QPointer<QStandardItemModel> mLoadingModel;
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
@@ -440,6 +496,11 @@ public:
         mLoadingView.setView(this);
     }
 
+    void setTopParent(QWidget* widget)
+    {
+        mLoadingView.setTopParent(widget);
+    }
+
     void setViewPortEventsBlocked(bool newViewPortEventsBlocked)
     {
         mViewPortEventsBlocked = newViewPortEventsBlocked;
@@ -448,6 +509,11 @@ public:
     ViewLoadingScene<DelegateWidget, ViewType>& loadingView()
     {
         return mLoadingView;
+    }
+
+    LoadingSceneMessageHandler* getLoadingMessageHandler()
+    {
+        return mLoadingView.getLoadingMessageHandler();
     }
 
 protected:
