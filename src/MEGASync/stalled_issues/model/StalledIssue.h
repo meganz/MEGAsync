@@ -311,6 +311,8 @@ public:
     void UIUpdated(Type type);
     void resetUIUpdated();
 
+    QSet<mega::MegaHandle> syncIds() const;
+
 protected:
     bool initLocalIssue(const mega::MegaSyncStall *stallIssue);
     QExplicitlySharedDataPointer<LocalStalledIssueData> mLocalData;
@@ -318,10 +320,13 @@ protected:
     bool initCloudIssue(const mega::MegaSyncStall *stallIssue);
     QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
+    void fillSyncId(const QString &path, bool cloud);
+
     void setIsFile(const QString& path, bool isLocal);
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
+    QSet<mega::MegaHandle> mSyncIds;
     mutable SolveType mIsSolved = SolveType::Unsolved;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;

@@ -96,6 +96,9 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
             }
         }
 
+        StalledIssuesBySyncFilter filter;
+        filter.resetFilter();
+
         if(mIsEventRequest)
         {
             mIsEventRequest = false;

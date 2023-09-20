@@ -2,6 +2,7 @@
 
 #include "MegaApplication.h"
 #include "UserAttributesRequests/FullName.h"
+#include "StalledIssuesUtilities.h"
 
 StalledIssueData::StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
     : original(std::move(originalstall))
@@ -227,7 +228,9 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
     auto localTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,1));
 
     auto localSourcePath = QString::fromUtf8(stall->path(false,0));
+    fillSyncId(localSourcePath, false);
     auto localTargetPath = QString::fromUtf8(stall->path(false,1));
+    fillSyncId(localTargetPath, false);
 
     if(localSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localSourcePath.isEmpty())
     {
@@ -261,7 +264,9 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
     auto cloudTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,1));
 
     auto cloudSourcePath = QString::fromUtf8(stall->path(true,0));
+    fillSyncId(cloudSourcePath, true);
     auto cloudTargetPath = QString::fromUtf8(stall->path(true,1));
+    fillSyncId(cloudTargetPath, true);
 
     if(cloudSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudSourcePath.isEmpty())
     {
@@ -308,6 +313,25 @@ void StalledIssue::endFillingIssue()
     }
 
     mNeedsUIUpdate = qMakePair(true, true);
+}
+
+QSet<mega::MegaHandle> StalledIssue::syncIds() const
+{
+    return mSyncIds;
+}
+
+void StalledIssue::fillSyncId(const QString& path, bool cloud)
+{
+    if(!path.isEmpty())
+    {
+        StalledIssuesBySyncFilter filter;
+        auto syncId = filter.filterByPath(path, cloud);
+        if(syncId != mega::INVALID_HANDLE &&
+           !mSyncIds.contains(syncId))
+        {
+            mSyncIds.insert(syncId);
+        }
+    }
 }
 
 const std::shared_ptr<mega::MegaSyncStall> &StalledIssue::getOriginalStall() const

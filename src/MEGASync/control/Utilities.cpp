@@ -1379,19 +1379,23 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
 
     if(path1 < path2)
     {
-        firstPath = path1;
-        secondPath = path2;
+        firstPath = cloudPaths ? path1 : QDir::toNativeSeparators(path1);
+        secondPath = cloudPaths ? path2 : QDir::toNativeSeparators(path2);
     }
     else
     {
-        firstPath = path2;
-        secondPath = path1;
+        firstPath = cloudPaths ? path2 : QDir::toNativeSeparators(path2);
+        secondPath = cloudPaths ? path1 : QDir::toNativeSeparators(path1);
     }
 
     QString separator = cloudPaths ? QLatin1String("/") : QString(QDir::separator());
-    if(cloudPaths)
+    if(!firstPath.endsWith(separator))
     {
         firstPath.append(separator);
+    }
+
+    if(!secondPath.endsWith(separator))
+    {
         secondPath.append(separator);
     }
 
@@ -1402,6 +1406,9 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
         index++;
     }
 
+    //Just in case the folder path contains common characters but they are not the same
+    //EXAMPLE and EXAMPLE_1 for example
+    //If ret does not end with a separator it is because folders are not the same
     if(!ret.endsWith(separator))
     {
         auto splittedPath = ret.split(separator);
@@ -1410,7 +1417,8 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
             ret.remove(ret.lastIndexOf(separator) + 1,splittedPath.last().length());
         }
     }
-    else if(cloudPaths)
+
+    if(ret.endsWith(separator))
     {
         ret = ret.remove(ret.length() - 1, 1);
     }

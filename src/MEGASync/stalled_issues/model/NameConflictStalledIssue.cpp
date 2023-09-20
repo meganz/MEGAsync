@@ -37,6 +37,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             std::shared_ptr<ConflictedNameInfo> info(new ConflictedNameInfo(localPath, localPath.isFile(), std::make_shared<LocalFileFolderAttributes>(QDir::toNativeSeparators(localPath.filePath()), nullptr)));
             mLocalConflictedNames.append(info);
 
+            fillSyncId(localPath.filePath(), false);
             setIsFile(localPath.filePath(), true);
 
             //Use for autosolve
@@ -67,6 +68,8 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             {
                 cloudPath = cloudPath.remove(0,1);
             }
+
+            fillSyncId(cloudPath, true);
 
             std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(cloudHandle));
             if(node)

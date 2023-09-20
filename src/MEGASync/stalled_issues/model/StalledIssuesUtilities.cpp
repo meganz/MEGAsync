@@ -177,3 +177,105 @@ QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bo
 
     return fileTypeIcon;
 }
+
+//////////////////////////////////////////////////
+QMap<QVariant, mega::MegaHandle> StalledIssuesBySyncFilter::mSyncIdCache = QMap<QVariant, mega::MegaHandle>();
+
+mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString &path, bool cloud)
+{
+    QVariant key;
+
+    //Cache in case we already checked an issue with the same path
+    if(cloud)
+    {
+        std::unique_ptr<mega::MegaNode> remoteNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
+        if(remoteNode)
+        {
+            key = remoteNode->getParentHandle();
+
+            if(mSyncIdCache.contains(key))
+            {
+                return mSyncIdCache.value(key);
+            }
+        }
+    }
+    else
+    {
+        QFileInfo fileDir(path);
+        if(!fileDir.exists())
+        {
+            return mega::INVALID_HANDLE;
+        }
+
+        key = fileDir.path();
+        if(mSyncIdCache.contains(key))
+        {
+            return mSyncIdCache.value(key);
+        }
+    }
+
+    std::unique_ptr<mega::MegaSyncList> syncList(MegaSyncApp->getMegaApi()->getSyncs());
+    for (int i = 0; i < syncList->size(); ++i)
+    {
+        auto syncId(syncList->get(i)->getBackupId());
+        auto syncSetting = SyncInfo::instance()->getSyncSettingByTag(syncId);
+
+        if(syncSetting)
+        {
+            if(cloud)
+            {
+                auto remoteFolder(syncSetting->getMegaFolder());
+                auto commonPath = Utilities::getCommonPath(path, remoteFolder, cloud);
+                if(commonPath == remoteFolder)
+                {
+                    mSyncIdCache.insert(key, syncId);
+                    return syncId;
+                }
+            }
+            else
+            {
+                auto localFolder(syncSetting->getLocalFolder());
+                auto commonPath = Utilities::getCommonPath(path, localFolder, cloud);
+                if(commonPath == localFolder)
+                {
+                    mSyncIdCache.insert(key, syncId);
+                    return syncId;
+                }
+            }
+        }
+    }
+
+
+    return mega::INVALID_HANDLE;
+}
+
+bool StalledIssuesBySyncFilter::isBelow(mega::MegaHandle syncRootNode, mega::MegaHandle checkNode)
+{
+    if(syncRootNode == checkNode)
+    {
+        return true;
+    }
+
+    std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(checkNode));
+    if(!parentNode)
+    {
+        return false;
+    }
+
+    return isBelow(syncRootNode, parentNode->getParentHandle());
+}
+
+bool StalledIssuesBySyncFilter::isBelow(const QString &syncRootPath, const QString &checkPath)
+{
+    if(syncRootPath == checkPath)
+    {
+        return true;
+    }
+
+    QDir fileDir(checkPath);
+    //Get parent folder
+    if(fileDir.cdUp())
+    {
+        return isBelow(syncRootPath, fileDir.path());
+    }
+}
