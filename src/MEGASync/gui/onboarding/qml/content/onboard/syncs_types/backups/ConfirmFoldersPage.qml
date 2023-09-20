@@ -18,7 +18,6 @@ ConfirmFoldersPageForm {
         rightPrimary.onClicked: {
             footerButtons.enabled = false;
             confirmHeader.enabled = false;
-            disableTableButtons = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             backupsProxyModel.createBackups();
         }
@@ -50,7 +49,6 @@ ConfirmFoldersPageForm {
         onBackupsCreationFinished: (success) => {
             footerButtons.enabled = true;
             confirmHeader.enabled = true;
-            disableTableButtons = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             if(success) {
                 syncsPanel.state = syncsPanel.finalState;

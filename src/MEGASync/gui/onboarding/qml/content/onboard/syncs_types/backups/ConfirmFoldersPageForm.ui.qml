@@ -17,7 +17,6 @@ import QmlDeviceName 1.0
 SyncsPage {
 
     property alias folderField: folderField
-    property alias disableTableButtons: confirmFoldersTable.disableButtons
     property alias confirmHeader: confirmHeader
 
     footerButtons.rightPrimary {

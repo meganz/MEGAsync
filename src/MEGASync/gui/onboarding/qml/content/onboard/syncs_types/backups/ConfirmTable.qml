@@ -21,8 +21,6 @@ Rectangle {
     readonly property int headerFooterHeight: 40
     readonly property int tableRadius: 8
 
-    property bool disableButtons: false
-
     Layout.preferredWidth: parent.width
     Layout.preferredHeight: height
     height: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.None
@@ -150,7 +148,7 @@ Rectangle {
                 attributes.icon.visible: false
                 attributes.radius: parent.radius
                 attributes.topBorderRect: true
-                text: qsTr("Unable to create backup. Try again and if issue continues, contact [A]Support[/A].");//BackupsModel.mConflictsNotificationText
+                text: BackupsModel.mConflictsNotificationText
                 visible: parent.visible
             }
 

@@ -263,7 +263,6 @@ Rectangle {
                         }
                     }
                     sizes: MegaButtons.SmallSizes {}
-                    enabled: !disableButtons
 
                     ChooseLocalFolder {
                         id: folderDialog
@@ -285,7 +284,6 @@ Rectangle {
                         BackupsModel.remove(mFolder);
                     }
                     sizes: MegaButtons.SmallSizes {}
-                    enabled: !disableButtons
                 }
             }
 
