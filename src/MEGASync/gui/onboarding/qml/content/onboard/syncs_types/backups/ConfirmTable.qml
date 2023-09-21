@@ -151,11 +151,6 @@ Rectangle {
                 text: BackupsModel.mConflictsNotificationText
                 visible: parent.visible
             }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-            }
         }
     }
 
