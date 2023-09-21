@@ -131,17 +131,13 @@ void IgnoresEditingDialog::on_bAddName_clicked()
         {
             return;
         }
-        else if (ui->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive) > 0)
-        {
-            ui->lExcludedNames->insertItem(i, text);
-            return;
-        }
     }
-    QListWidgetItem* item = new QListWidgetItem(QLatin1String("-:") + text, ui->lExcludedNames);
+
+    auto rule = mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text);
+    QListWidgetItem* item = new QListWidgetItem(rule->getModifiedRule(), ui->lExcludedNames);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
     item->setCheckState(Qt::Checked); // AND initialize check state
     item->setData(Qt::UserRole, QLatin1String("-:") + text);
-    mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text );
 }
 
 void IgnoresEditingDialog::on_bDeleteName_clicked()

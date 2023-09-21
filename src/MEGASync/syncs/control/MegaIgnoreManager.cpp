@@ -212,9 +212,11 @@ void MegaIgnoreManager::applyChanges()
     }
 }
 
-void MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern)
+std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern)
 {
-	mRules.append(std::make_shared<MegaIgnoreNameRule>(classType, pattern));
+    auto rule = std::make_shared<MegaIgnoreNameRule>(classType, pattern);
+    mRules.append(rule);
+    return rule;
 }
 
 ////////////////MEGA IGNORE RULE
@@ -245,6 +247,11 @@ bool MegaIgnoreRule::isDeleted() const
 void MegaIgnoreRule::setDeleted(bool newIsDeleted)
 {
     mIsDeleted = newIsDeleted;
+}
+
+void MegaIgnoreRule::setIsDirty()
+{
+    mIsDirty = true;
 }
 
 /////////////////MEGA IGNORE NAME RULE
@@ -293,9 +300,11 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString &rule, bool isCommented)
 }
 
 MegaIgnoreNameRule::MegaIgnoreNameRule(Class classType, const QString& pattern) :
-    MegaIgnoreRule(mClass == Class::Exclude ? QLatin1String("-:") : QLatin1String("+:") + pattern, false),
-    mClass(classType)
+    MegaIgnoreRule(QString(), false),
+    mClass(classType),
+    mPattern(pattern)
 {
+    setIsDirty();
     fillWildCardType(pattern);
 }
 
