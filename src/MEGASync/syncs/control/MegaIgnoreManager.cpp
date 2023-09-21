@@ -3,6 +3,7 @@
 #include <Utilities.h>
 
 #include <QDir>
+#include <QChar>
 #include <QTextStream>
 #include <QDebug>
 #include <QRegularExpression>
@@ -10,71 +11,79 @@
 
 namespace
 {
-    constexpr char SIZE_RULE_REG_EX[] = "#*(exclude-(larger|smaller)):[0-9]+[kmgb]?$";
+    //constexpr char SIZE_RULE_REG_EX[] = "#*(exclude-(larger|smaller)):[0-9]+[kmgb]?$";
+    constexpr char SIZE_RULE_LEFT_SIDE_REG_EX[] = "^#*(exclude-(larger|smaller))$";
+    constexpr char SIZE_RULE_RIGHT_SIDE_REG_EX[] = "^[0-9]+[kmgb]?$";
+    constexpr char LARGE_SIZE_LEFT_SIDE_REG_EX[] = "#*(exclude-larger):*";
+    constexpr char SMALL_SIZE_LEFT_SIDE_REG_EX[] = "#*(exclude-smaller):*";
     constexpr char OTHER_RULE_REG_EX[] = "#*[+-][]adfsNnpGgRr]*:[^:]+";
+    constexpr char NON_SIZE_LEFT_SIDE_REG_EX[] = "^#*[+-][]adfsNnpGgRr]*$";
+    constexpr char RIGHT_SIDE_TYPE_RULE_REG_EX[] = "^\\*\\.*";
 }
 
 MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder)
 {
-    auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
-    QFile ignore(ignorePath);
-    if(ignore.exists())
+	const auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
+    mMegaIgnoreFile = ignorePath;
+    parseIgnoresFile();
+}
+
+void MegaIgnoreManager::parseIgnoresFile()
+{
+    mRules.clear();
+    QFile ignore(mMegaIgnoreFile);
+    if (ignore.exists())
     {
-       mMegaIgnoreFile = ignorePath;
-       if(ignore.open(QIODevice::ReadOnly))
-       {
-           QTextStream in(&ignore);
-           while (!in.atEnd())
-           {
-               QString line = in.readLine();
-               bool isCommented(false);
-
-               if(line.startsWith(QLatin1String("#")))
-               {
-                   line.remove(0,1);
-                   isCommented = true;
-               }
-
-               auto lineSplitted(line.split(QLatin1String(":")));
-               if(lineSplitted.size() == 2)
-               {
-                   if(line.startsWith(MegaIgnoreSizeRule::HIGH_STRING))
-                   {
-                       mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
-                       mRules.append(mHighLimitRule);
-                   }
-                   else if(line.startsWith(MegaIgnoreSizeRule::LOW_STRING))
-                   {
-                       mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
-                       mRules.append(mLowLimitRule);
-                   }
-                   else
-                   {
-                       if(lineSplitted.at(1).startsWith(QLatin1String("*.")))
-                       {
-                           mRules.append(std::make_shared<MegaIgnoreExtensionRule>(line, isCommented));
-                       }
-                       else
-                       {
-                           mRules.append(std::make_shared<MegaIgnoreNameRule>(line, isCommented));
-                       }
-                   }
-               }
-           }
-           ignore.close();
-       }
-
-       if(!mLowLimitRule)
-       {
-           mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::Low);
-           mRules.append(mLowLimitRule);
-       }
-
-       if(!mHighLimitRule)
-       {
-           mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::High);
-           mRules.append(mHighLimitRule);
-       }
+        if (ignore.open(QIODevice::ReadOnly))
+        {
+            QTextStream in(&ignore);
+            while (!in.atEnd())
+            {
+                QString line = in.readLine();
+                const bool isCommented(line.startsWith(QLatin1String("#")));
+                const auto ruleType = getRuleType(line);
+                switch (ruleType)
+                {
+                case MegaIgnoreRule::RuleType::SizeRule:
+                {
+                    const static QRegularExpression largeSizeRegEx{ QLatin1String(::LARGE_SIZE_LEFT_SIDE_REG_EX) };
+                    const static QRegularExpression smallSizeRegEx{ QLatin1String(::SMALL_SIZE_LEFT_SIDE_REG_EX) };
+                    QRegularExpressionMatch match = largeSizeRegEx.match(line);
+                    if (largeSizeRegEx.match(line).hasMatch())
+                    {
+                        mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
+                        mRules.append(mHighLimitRule);
+                    }
+                    else if (smallSizeRegEx.match(line).hasMatch())
+                    {
+                        mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
+                        mRules.append(mLowLimitRule);
+                    }
+                    break;
+                }
+                case MegaIgnoreRule::RuleType::ExtensionRule: 
+                    mRules.append(std::make_shared<MegaIgnoreExtensionRule>(line, isCommented));
+                    break;
+                case MegaIgnoreRule::RuleType::NameRule:
+                    mRules.append(std::make_shared<MegaIgnoreNameRule>(line, isCommented));
+                    break;
+                default:
+                    mRules.append(std::make_shared<MegaIgnoreInvalidRule>(line, isCommented));
+                    break;
+                }
+            }
+            ignore.close();
+        }
+        if (!mLowLimitRule)
+        {
+            mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::Low);
+            mRules.append(mLowLimitRule);
+        }
+        if (!mHighLimitRule)
+        {
+            mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::High);
+            mRules.append(mHighLimitRule);
+        }
     }
 }
 
@@ -101,22 +110,40 @@ std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getHighLimitRule() const
     return mHighLimitRule;
 }
 
-bool MegaIgnoreManager::isValidRule(const QString& line)
+QList<std::shared_ptr<MegaIgnoreRule>> MegaIgnoreManager::getAllRules() const
 {
-    // Sanity check
-	if (line.isEmpty())
-		return false;
-    // Check if size rule
+    return mRules;
+}
 
-	const QRegularExpression sizeRuleRegularExpression(QLatin1String(SIZE_RULE_REG_EX), QRegularExpression::CaseInsensitiveOption);
-	QRegularExpressionMatch match = sizeRuleRegularExpression.match(line);
-	if (match.hasMatch())
-		return true;
+MegaIgnoreRule::RuleType MegaIgnoreManager::getRuleType(const QString& line)
+{
+    const auto lineSplitted(line.split(QLatin1String(":")));
+    if (lineSplitted.size() != 2)
+        return MegaIgnoreRule::RuleType::InvalidRule;
+    const QString leftSide = lineSplitted[0];
+    const QString rightSide = lineSplitted[1];
 
-    // Check if other type of rule
-	QRegularExpression nonSizeRuleRegularExpression{ QLatin1String(OTHER_RULE_REG_EX) };
-	match = nonSizeRuleRegularExpression.match(line);
-	return match.hasMatch();
+    std::string s = line.toStdString();
+
+    // Check size rule 
+	static const QRegularExpression sizeRuleLeftSide(QLatin1String(::SIZE_RULE_LEFT_SIDE_REG_EX), QRegularExpression::CaseInsensitiveOption);
+    static const QRegularExpression sizeRuleRightSide(QLatin1String(::SIZE_RULE_RIGHT_SIDE_REG_EX), QRegularExpression::CaseInsensitiveOption);
+    if (sizeRuleLeftSide.match(leftSide).hasMatch() && sizeRuleRightSide.match(rightSide).hasMatch())
+    {
+        return MegaIgnoreRule::RuleType::SizeRule;
+    }
+    // Check if valid left side 
+	const static  QRegularExpression nonSizeRuleRegularExpression{ QLatin1String(::NON_SIZE_LEFT_SIDE_REG_EX) };
+	if (!nonSizeRuleRegularExpression.match(leftSide).hasMatch())
+		return MegaIgnoreRule::RuleType::InvalidRule;
+
+
+   s = rightSide.toStdString();
+   // Check if type rule
+   const static QRegularExpression typeRuleRegEx{ QLatin1String(::RIGHT_SIDE_TYPE_RULE_REG_EX) };
+   if (typeRuleRegEx.match(rightSide).hasMatch())
+       return MegaIgnoreRule::RuleType::ExtensionRule;
+    return MegaIgnoreRule::NameRule;
 }
 
 QList<std::shared_ptr<MegaIgnoreNameRule> > MegaIgnoreManager::getNameRules() const
@@ -144,6 +171,8 @@ QStringList MegaIgnoreManager::getExcludedExtensions() const
             auto extensionRule = convert<MegaIgnoreExtensionRule>(rule);
             if(extensionRule)
             {
+                std::string  s = extensionRule->extension().toStdString();
+                 s = extensionRule->getModifiedRule().toStdString();
                 extensions.append(extensionRule->extension());
             }
         }
@@ -181,6 +210,11 @@ void MegaIgnoreManager::applyChanges()
 
         ignore.close();
     }
+}
+
+void MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern)
+{
+	mRules.append(std::make_shared<MegaIgnoreNameRule>(classType, pattern));
 }
 
 ////////////////MEGA IGNORE RULE
@@ -223,7 +257,8 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString &rule, bool isCommented)
     if(ruleSplitted.size() == 2)
     {
         //First part -> class, target, type, strategy
-        auto leftSide(ruleSplitted.at(0));
+        QString leftSide(ruleSplitted.at(0));
+        leftSide.remove(QRegExp(QLatin1String("^#+")));
         if(!leftSide.isEmpty())
         {
             auto charCounter(0);
@@ -252,9 +287,16 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString &rule, bool isCommented)
                 }
             }
         }
-
         mPattern = ruleSplitted.at(1);
+        fillWildCardType(mPattern);
     }
+}
+
+MegaIgnoreNameRule::MegaIgnoreNameRule(Class classType, const QString& pattern) :
+    MegaIgnoreRule(mClass == Class::Exclude ? QLatin1String("-:") : QLatin1String("+:") + pattern, false),
+    mClass(classType)
+{
+    fillWildCardType(pattern);
 }
 
 QString MegaIgnoreNameRule::getModifiedRule() const
@@ -291,6 +333,27 @@ QString MegaIgnoreNameRule::getModifiedRule() const
     else
     {
         return MegaIgnoreRule::getModifiedRule();
+    }
+}
+
+void MegaIgnoreNameRule::fillWildCardType(const QString& rightSidePart)
+{
+    const int asteriskCount = rightSidePart.count(QLatin1String("*"));
+    if (asteriskCount == 0)
+    {
+        mWildCardType = MegaIgnoreNameRule::WildCardType::Equal;
+    }
+    else if (asteriskCount > 1)
+    {
+        mWildCardType = MegaIgnoreNameRule::WildCardType::Conatains;
+    }
+    else if(rightSidePart.startsWith(QLatin1String("*")))
+    {
+        mWildCardType = MegaIgnoreNameRule::WildCardType::EndsWith;
+    }
+    else
+    {
+        mWildCardType = MegaIgnoreNameRule::WildCardType::StartsWith;
     }
 }
 

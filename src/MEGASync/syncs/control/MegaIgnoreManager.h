@@ -17,7 +17,8 @@ public:
     {
         NameRule,
         ExtensionRule,
-        SizeRule
+        SizeRule,
+        InvalidRule
     };
 
     explicit MegaIgnoreRule(const QString& rule, bool isCommented)
@@ -26,7 +27,7 @@ public:
           mIsCommented(isCommented),
           mIsDeleted(false)
     {}
-
+    virtual ~MegaIgnoreRule() = default;
     virtual bool isValid() const {return true;}
     virtual RuleType ruleType() const = 0;
 
@@ -85,14 +86,27 @@ public:
     };
     Q_ENUM(Strategy)
 
+    enum class WildCardType
+    {
+        Equal,
+        StartsWith,
+        EndsWith,
+        Conatains
+    };
+    Q_ENUM(WildCardType)
+
     explicit MegaIgnoreNameRule(const QString& rule, bool isCommented);
+    explicit MegaIgnoreNameRule(Class classType, const QString& pattern);
     QString getModifiedRule() const override;
     RuleType ruleType() const override { return RuleType::NameRule;}
+    WildCardType wildCardType() { return mWildCardType; }
+
 
 protected:
     QString mPattern;
 
 private:
+    void fillWildCardType(const QString& rightSide);
     template <class EnumType>
     bool detectValue(QString character, EnumType* value, Qt::CaseSensitivity caseSensitive)
     {
@@ -111,7 +125,6 @@ private:
                 return true;
             }
         }
-
         return false;
     }
 
@@ -119,6 +132,7 @@ private:
     Target mTarget = Target::None;
     Type mType = Type::None;
     Strategy mStrategy = Strategy::None;
+    WildCardType mWildCardType = WildCardType::Equal;
 };
 
 class MegaIgnoreExtensionRule : public MegaIgnoreNameRule
@@ -157,8 +171,8 @@ public:
     };
     Q_ENUM(UnitTypes)
 
-    MegaIgnoreSizeRule(const QString& rule, bool isCommented);
-    MegaIgnoreSizeRule(Threshold type);
+    explicit MegaIgnoreSizeRule(const QString& rule, bool isCommented);
+    explicit MegaIgnoreSizeRule(Threshold type);
 
     bool isValid() const override;
     RuleType ruleType() const override { return RuleType::SizeRule;}
@@ -178,6 +192,18 @@ private:
     Threshold mThreshold = Low;
 };
 
+class MegaIgnoreInvalidRule : public MegaIgnoreRule
+{
+    Q_OBJECT
+
+public:
+	explicit MegaIgnoreInvalidRule(const QString& rule, bool isCommented) 
+        :MegaIgnoreRule(rule, isCommented) {}
+
+    bool isValid() const override { return false; }
+    RuleType ruleType() const override { return RuleType::InvalidRule; }
+};
+
 class MegaIgnoreManager
 {
 public:
@@ -190,12 +216,18 @@ public:
 
     QList<std::shared_ptr<MegaIgnoreNameRule>> getNameRules() const;
 
+    QList<std::shared_ptr<MegaIgnoreRule>> getAllRules() const;
+
     QStringList getExcludedExtensions() const;
     void enableExtensions(bool state);
 
     void applyChanges();
     
-    static bool isValidRule(const QString& line);
+    void parseIgnoresFile();
+
+    void addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern);
+
+    static MegaIgnoreRule::RuleType getRuleType(const QString& line);
 
 private:
     template <class Type>
