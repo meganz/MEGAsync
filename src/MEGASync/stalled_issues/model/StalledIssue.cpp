@@ -511,7 +511,8 @@ bool StalledIssue::checkForExternalChanges()
         if(mLocalData)
         {
             QFileInfo fileInfo(mLocalData->getPath().path);
-            if(!fileInfo.exists())
+            //Issues without fingerprint may contain
+            if(!fileInfo.exists() && hasFingerprint())
             {
                 setIsSolved(true);
             }
@@ -526,7 +527,7 @@ bool StalledIssue::checkForExternalChanges()
                 if(!node ||
                    MegaSyncApp->getMegaApi()->isInRubbish(node.get()) ||
                    currentNode->getParentHandle() != node->getParentHandle() ||
-                   (!hasFingerprint() && node->getFingerprint()))
+                   (!hasFingerprint() && (node->getFingerprint() != nullptr)))
                 {
                     setIsSolved(true);
                 }
@@ -542,7 +543,11 @@ QStringList StalledIssue::getLocalFiles()
     QStringList files;
     if(getLocalData())
     {
-        files << getLocalData()->getFilePath();
+        auto file = getLocalData()->getFilePath();
+        if(!file.isEmpty())
+        {
+            files << file;
+        }
     }
 
     return files;
