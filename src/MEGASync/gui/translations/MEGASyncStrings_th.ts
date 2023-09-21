@@ -1237,7 +1237,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>กรุณาแก้ไขปัญหาการชำระเงินของคุณโดยเร็วที่สุด เพื่อหลีกเลี่ยงการถูกระงับบัญชีธุรกิจของคุณ</translation>
+        <translation>กรุณาแก้ไขปัญหาการชำระเงินโดยเร็วที่สุดเพื่อหลีกเลี่ยงการระงับบัญชีธุรกิจของคุณ</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1262,7 +1262,7 @@
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>ติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณ เพื่อแก้ไขปัญหาและเปิดใช้งานบัญชีของคุณ</translation>
+        <translation>ติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อแก้ไขปัญหาและเปิดใช้งานบัญชีของคุณ</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1943,7 +1943,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>พัก/ดำเนินการต่อ</translation>
+        <translation>หยุดชั่วคราวหรือดำเนินการต่อ</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2611,7 +2611,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]ข้อสำคัญ:[/A] ติดต่อผู้ดูแลบัญชีธุรกิจของคุณ เพื่อแก้ไขปัญหาและเปิดใช้งานบัญชีของคุณ</translation>
+        <translation>[A]สำคัญ:[/A] ติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อแก้ไขปัญหาและเปิดใช้งานบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>บัญชีถูกปิดการใช้งานโดยผู้ดูแลระบบของคุณ กรุณาติดต่อผู้ดูแลระบบบัญชีธุรกิจเพื่อขอทราบรายละเอียดเพิ่มเติม</translation>
+        <translation>บัญชีของคุณถูกปิดใช้งานโดยผู้ดูแลระบบของคุณ กรุณาติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อขอรายละเอียดเพิ่มเติม</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3021,12 +3021,15 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>บัญชีถูกระงับเนื่องจากพบการละเมิดลิขสิทธิ์ เราได้ส่งอีเมลถึงคุณพร้อมข้อมูลเพิ่มเติมเกี่ยวกับเรื่องนี้เรียบร้อยแล้ว</translation>
+        <translation>บัญชี MEGA ของคุณถูกระงับเนื่องจากข้อกล่าวหาการละเมิดลิขสิทธิ์ซ้ำหลายครั้ง ซึ่งหมายความว่าคุณไม่สามารถเข้าถึงบัญชีหรือข้อมูลข้างในได้
+
+กรุณาตรวจสอบอีเมลของคุณเพื่อดูข้อมูลเพิ่มเติมเรื่องวิธีการยื่นข้อโต้แย้งได้</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>บัญชีถูกยุติการใช้งานเนื่องจากการละเมิดเงื่อนไขการให้บริการของ MEGA เช่น การสวมสิทธิผู้อื่นในทางที่ผิด การแชร์และการนำเข้าข้อมูลอันเป็นเท็จ หรือการละเมิดระบบ</translation>
+        <translation>บัญชีของคุณถูกยุติการใช้งานเนื่องจากละเมิดเงื่อนไขการให้บริการของ MEGA
+คุณจะไม่สามารถกลับไปใช้ข้อมูลที่เก็บไว้หรือลงทะเบียนบัญชี MEGA ใหม่ได้อีกต่อไป</translation>
     </message>
 </context>
 <context>
@@ -5025,7 +5028,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>ย้าย…</translation>
+        <translation>เลือก</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

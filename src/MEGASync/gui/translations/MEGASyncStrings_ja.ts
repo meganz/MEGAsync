@@ -1235,7 +1235,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>お支払いの問題をできるだけ早く解決し、お客様のビジネスアカウントの一時停止を回避してください</translation>
+        <translation>ビジネスアカウントの停止を避けるために、お支払いの問題をできるだけ早くご解決ください。</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1941,7 +1941,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>一時停止/再開</translation>
+        <translation>一時停止または再開</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2654,7 +2654,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>お客様のアカウントはお客様の管理者によって無効化されました。詳細については、お客様のビジネスアカウント管理者にお問い合わせください。</translation>
+        <translation>あなたのアカウントはあなたの管理者によって無効化されました。詳細については、あなたのビジネスアカウント管理者にお問い合わせください。</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3019,12 +3019,15 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>著作権侵害によりアカウントが停止しました。これに関する詳細情報を記載したメールをお送りしました。</translation>
+        <translation>度重なる著作権侵害の申し立てにより、あなたのMEGAアカウントは停止されました。これは、アカウントまたはアカウント内のデータにアクセスできないことを意味します。
+
+異議申し立て通知を提出する方法の詳細については、メールを確認してください。</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>アカウントは、他人の権利の乱用、違法データの共有やインポート、システムの乱用など、MEGAのご利用規約に違反したために終了しました。</translation>
+        <translation>MEGAのご利用規約に違反したため、あなたのアカウントは停止されました。
+保存されたデータへのアクセスを回復したり、MEGAアカウントを新規登録したりすることはできません。</translation>
     </message>
 </context>
 <context>
@@ -5024,7 +5027,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>移動…</translation>
+        <translation>選ぶ</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

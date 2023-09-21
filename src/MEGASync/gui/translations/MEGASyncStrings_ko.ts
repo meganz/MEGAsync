@@ -1262,7 +1262,7 @@
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>문제를 해결하고 계정을 활성화하려면 당신의 비즈니스 계정 관리자에게 연락하세요.</translation>
+        <translation>문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1944,7 +1944,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>일시중지/재개</translation>
+        <translation>일시정지 또는 재개</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2612,7 +2612,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]중요:[/A] 문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.</translation>
+        <translation>[A]중요:[/A]문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2657,7 +2657,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>당신의 계정이 관리자에 의해 비활성화 되었습니다. 자세한 사항은 당신의 비즈니스 계정 관리자에게 문의하세요.</translation>
+        <translation>당신의 계정은 관리자에 의해 정지되었습니다. 자세한 사항은 비즈니스 계정 관리자에게 연락하세요.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3022,12 +3022,15 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>계정이 저작권 침해로 인해 정지되었습니다. 이메일로 이것에 대한 자세한 정보를 보냈습니다.</translation>
+        <translation>당신의 MEGA 계정이 반복된 저작권 침해 혐의로 인해 정지 되었습니다. 이것은 당신의 계정이나 그 안의 데이터에 접근할 수 없다는 뜻입니다.
+
+이의 제기를 접수하는 방법에 대한 자세한 정보는 이메일을 확인하세요.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>타인의 권리 침해, 불법 데이터의 공유 및 내보내기, 시스템 오용 등의 MEGA 이용 약관 위반으로 계정이 제거되었습니다.</translation>
+        <translation>당신의 계정이 MEGA의 이용 약관 위반으로 삭제되었습니다.
+저장된 데이터에 대한 접근 또는 새 MEGA 계정을 등록하는 것이 금지됩니다.</translation>
     </message>
 </context>
 <context>
@@ -5030,7 +5033,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>이동…</translation>
+        <translation>선택</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

@@ -1237,7 +1237,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Harap selesaikan masalah pembayaran anda sesegera mungkin untuk menghindari penangguhan akun bisnis anda</translation>
+        <translation>Harap selesaikan masalah pembayaran anda sesegera mungkin untuk menghindari penangguhan akun Bisnis anda</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1262,7 +1262,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Hubungi administrator akun bisnis anda untuk menyelesaikan masalah dan mengaktifkan akun anda.</translation>
+        <translation>Hubungi administrator akun bisnis anda untuk menyelesaikan masalah dan aktifkan akun anda.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1943,7 +1943,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Jeda/Lanjutkan</translation>
+        <translation>Jeda atau lanjutkan</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2611,7 +2611,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Penting:[/A] Hubungi administrator akun bisnis anda untuk menyelesaikan masalah dan mengaktifkan akun anda.</translation>
+        <translation>[A]Penting:[/A] Hubungi administrator akun Bisnis anda untuk menyelesaikan masalah dan mengaktifkan akun anda. </translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Akun anda telah dinonaktifkan oleh administrator anda. Silahkan hubungi administrator akun bisnis anda untuk detail lebih lanjut.</translation>
+        <translation>Akun anda telah dinonaktifkan oleh administrator anda. Anda dapat menghubungi administrator akun bisnis anda untuk rincian lebih lanjut.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3021,12 +3021,15 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Akun anda telah ditangguhkan karena pelanggaran hak cipta. Silakan periksa kotak masuk email anda.</translation>
+        <translation>Akun MEGA anda telah ditangguhkan karena tuduhan pelanggaran hak cipta berulang kali. Ini berarti anda tidak dapat mengakses akun atau data anda di dalamnya.
+
+Periksa email anda untuk informasi lebih lanjut tentang cara mengajukan pemberitahuan tanggapan.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Akun dihentikan karena pelanggaran Persyaratan Layanan MEGA, seperti penyalahgunaan hak orang lain, berbagi dan mengimpor data ilegal, atau penyalahgunaan sistem.</translation>
+        <translation>Akun anda dihentikan karena pelanggaran Ketentuan Layanan MEGA.
+Anda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftarkan akun MEGA baru.</translation>
     </message>
 </context>
 <context>
@@ -5027,7 +5030,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Pindah…</translation>
+        <translation>Pilih</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

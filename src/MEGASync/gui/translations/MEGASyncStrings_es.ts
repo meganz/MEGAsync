@@ -1237,7 +1237,7 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Resuelve tu problema de pago lo antes posible para evitar la suspensión de tu cuenta Business</translation>
+        <translation>Resuelve el problema de pago lo antes posible para evitar la suspensión de tu cuenta Business.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1944,7 +1944,7 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pausar/Reanudar</translation>
+        <translation>Pausar o reanudar</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2612,7 +2612,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Importante:[/A] Ponte en contacto con el administrador de tu cuenta Business para resolver el probleme y activar tu cuenta.</translation>
+        <translation>[A]Importante:[/A] Ponte en contacto con el administrador de tu cuenta Business para resolver el problema y activar tu cuenta.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -3023,12 +3023,15 @@ Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la 
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Cuenta suspendida debido a violaciones de derechos de autor. Te enviamos un correo electrónico con más información al respecto.</translation>
+        <translation>Tu cuenta de MEGA ha sido suspendida debido a repetidas notificaciones de presuntas infracciones de derechos de autor. Como consecuencia, no podrás acceder a tu cuenta ni a tus datos.
+
+Revisa el correo electrónico que te enviamos para obtener más información sobre cómo presentar una contranotificación.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Cuenta cerrada por incumplir los Términos de servicio de MEGA, como el abuso de los derechos de otros, el intercambio e importación de datos ilegales o el abuso del sistema.</translation>
+        <translation>Tu cuenta ha sido cerrada debido a un incumplimiento de los Términos de Servicio de MEGA.
+No podrás recuperar el acceso a tus datos ni estás autorizado a registrar una nueva cuenta de MEGA.</translation>
     </message>
 </context>
 <context>
@@ -5029,7 +5032,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Mover…</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

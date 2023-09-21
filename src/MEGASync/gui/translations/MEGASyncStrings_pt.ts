@@ -1943,7 +1943,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pausar/Retomar</translation>
+        <translation>Pausar ou retomar</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>A sua conta foi desativada pelo administrador. Entre em contato com o administrador da conta Business para mais informações.</translation>
+        <translation>A sua conta foi desativada pelo seu administrador. Você deve entrar em contato com o administrador da sua conta business para obter mais informações.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3022,12 +3022,15 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Conta suspensa por infringir direitos autorais. Enviamos um email com mais informações.</translation>
+        <translation>A sua conta no MEGA foi suspensa devido a repetidas alegações de infrações de direitos autorais, e portanto você não poderá acessar a sua conta ou os dados armazenados.
+
+Acesse o seu email para obter mais informações sobre como enviar uma contranotificação.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Conta encerrada devido a uma infração dos Termos de serviço do MEGA, como abuso dos direitos de terceiros, compartilhamento e importação de dados ilegais ou abuso do sistema.</translation>
+        <translation>A sua conta foi encerrada devido a uma infração dos Termos de serviço do MEGA.
+Você não poderá recuperar o acesso aos dados armazenados, nem estará autorizado a cadastrar uma nova conta no MEGA.</translation>
     </message>
 </context>
 <context>
@@ -4344,7 +4347,7 @@ Digite um nome diferente.
     <message>
         <source>Drive</source>
         <translatorcomment>Label to name physical storage drives</translatorcomment>
-        <translation>Nuvem</translation>
+        <translation>Unidade</translation>
     </message>
     <message>
         <source>%1 File</source>
@@ -5029,7 +5032,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Mover…</translation>
+        <translation>Selecionar</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

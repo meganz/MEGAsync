@@ -1237,7 +1237,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>請儘快解決您的付款問題以避免您的商業帳戶被暫停使用</translation>
+        <translation>請儘快解決您的付款問題，以避免您的商業帳戶被暫停</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1943,7 +1943,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>暫停/恢復</translation>
+        <translation>暫停或恢復</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2611,7 +2611,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]重要：[/A]請聯繫您的商業帳戶管理員來解決此問題並啟用您的帳戶。</translation>
+        <translation>[A]重要提示：[/A]聯絡您的商業帳戶管理員以解決問題並啟用您的帳戶。</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>您的帳戶已被您的管理員停用。請與您的商業帳戶管理員聯絡以取得詳情。</translation>
+        <translation>您的帳戶已被您的管理員停用。相關詳細資訊請與您的商業帳戶管理員聯繫。</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3021,12 +3021,15 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>帳戶因侵犯版權而被暫停使用。我們向您發送了一封電子郵件，其中包含更多關於此內容的訊息。</translation>
+        <translation>由於多次被指控侵犯版權，您的MEGA帳戶已被暫停。這意味著您無法存取您的帳戶或其中的資料。
+
+請檢視您的電子郵件以獲得有關如何提交反對通知的更多資訊。</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>帳戶因違反MEGA服務條款而被終止，例如侵犯他人權益、共享和匯入非法資料、或濫用系統資源行為。</translation>
+        <translation>由於違反MEGA的服務條款，您的帳戶已終止。
+您將無法重新存取您儲存的資料，也無法被授權註冊新的MEGA帳戶。</translation>
     </message>
 </context>
 <context>
@@ -5027,7 +5030,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>移動⋯</translation>
+        <translation>選擇</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

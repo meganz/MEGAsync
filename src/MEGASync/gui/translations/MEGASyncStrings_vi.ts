@@ -6,7 +6,7 @@
     <message>
         <source>Account usage details</source>
         <translatorcomment>Title of the dialog that displays account usage details for the actual logged user.</translatorcomment>
-        <translation>Chi tiết sử dụng của tài khoản</translation>
+        <translation>Chi&#xa0;tiết sử&#xa0;dụng của tài&#xa0;khoản</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -102,7 +102,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Nhập tên, dạng tên hay đường dẫn mẫu (được phép sử dụng các ký tự như * và ? để đại diện) hoặc chọn ra tệp tin và thư mục bạn muốn liệt vào danh sách ngoại lệ khỏi quá trình đồng bộ.</translation>
+        <translation>Nhập tên, dạng tên hay đường dẫn mẫu (được phép sử&#xa0;dụng các ký&#xa0;tự như * và ? để đại&#xa0;diện) hoặc chọn ra tệp&#xa0;tin và thư&#xa0;mục bạn muốn liệt vào danh&#xa0;sách ngoại&#xa0;lệ khỏi quá&#xa0;trình đồng&#xa0;bộ.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -1237,7 +1237,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Xin giải quyết vấn đề thanh toán ngay lúc sớm nhất để tránh tài khoản doanh nghiệp bị đình chỉ</translation>
+        <translation>Xin giải&#xa0;quyết vấn&#xa0;đề thanh&#xa0;toán càng sớm càng càng tốt để tránh việc tài&#xa0;khoản Doanh Nghiệp không bị đình&#xa0;chỉ</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1262,7 +1262,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Liên lạc với người quản lý tài khoản doanh nghiệp để giải quyết vấn đề và kích hoạt lại toàn khoản.</translation>
+        <translation>Liên&#xa0;hệ với quản&#xa0;trị viên quản&#xa0;lý tài&#xa0;khoản Doanh&#xa0;Nghiệp để giải&#xa0;quyết và khôi&#xa0;phục tài&#xa0;khoản của bạn.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1943,7 +1943,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Tạm&#xa0;dừng / Tiếp&#xa0;tục</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2611,7 +2611,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Quan trọng:[/A] Liên hệ với người quản lý tài khoản doanh nghiệp để giải quyết vấn đề và khôi phục lại tài khoản.</translation>
+        <translation>[A]Quan&#xa0;trọng[/A] Liên&#xa0;hệ với quản&#xa0;trị viên quản&#xa0;lý tài&#xa0;khoản Doanh&#xa0;Nghiệp để giải&#xa0;quyết và khôi&#xa0;phục tài&#xa0;khoản của bạn.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Tài khoản nhân viên của bạn đã bị đình chỉ bởi ban quản trị. Xin liên hệ với ban tổng quản lý tài khoản doanh nghiệp của bạn để tìm hiểu lý do.</translation>
+        <translation>Tài&#xa0;khoản của bạn đã bị đình&#xa0;chỉ bởi ban quản&#xa0;trị. Xin liên&#xa0;hệ với quản&#xa0;trị viên quản&#xa0;lý tài&#xa0;khoản Doanh&#xa0;Nghiệp của bạn để tìm hiểu lý&#xa0;do.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -2981,7 +2981,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Unknown error</source>
         <translatorcomment>Label to show that an error related with an unknown error occurs during a SDK operation.</translatorcomment>
-        <translation>Lỗi không xác định được</translation>
+        <translation>Lỗi không xác&#xa0;định được</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3021,12 +3021,15 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Tài khoản của bạn đã bị đình chỉ do đã vi phạm bản quyền. Xin kiểm tra hộp thư e-mail của bạn.</translation>
+        <translation>Tài&#xa0;khoản MEGA của quý&#xa0;vị đã bị đình&#xa0;chỉ do đã nhiều lần bị cáo&#xa0;buộc vi&#xa0;phạm bản&#xa0;quyền. Điều này có nghĩa là quý&#xa0;vị không được phép truy&#xa0;cập tài&#xa0;khoản của mình hoặc bất cứ dữ&#xa0;liệu bên trong.
+
+Kiểm tra email của quý vị để biết thêm thông tin và về cách gửi đơn phản đối.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Tài&#xa0;khoản đã bị chấm&#xa0;dứt hoạt&#xa0;động do vi&#xa0;phạm Điều&#xa0;Khoản Dịch&#xa0;Vụ của MEGA; chẳng&#xa0;hạn như lạm&#xa0;dụng hệ&#xa0;thống, quyền&#xa0;hạn sử&#xa0;dụng của người khác hoặc chia&#xa0;sẻ nội&#xa0;dung&#xa0;cấm.</translation>
+        <translation>Tài&#xa0;khoản của quý&#xa0;vị đã bị chấm&#xa0;dứt do vi&#xa0;phạm Điều&#xa0;Khoản Dịch&#xa0;Vụ của MEGA.
+Quý vị sẽ không thể lấy lại quyền truy cập vào dữ liệu đã được lưu trữ của mình hoặc được phép đăng ký tài khoản MEGA mới.</translation>
     </message>
 </context>
 <context>
@@ -3098,7 +3101,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Unknown error</source>
         <translatorcomment>Label to show that an unknown error occurs during a SDK operation.</translatorcomment>
-        <translation>Lỗi không xác định được</translation>
+        <translation>Lỗi không xác&#xa0;định được</translation>
     </message>
     <message>
         <source>File system not supported</source>
@@ -4876,7 +4879,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
         <translatorcomment>Informative text shown when user is trying to disable file versioning before proceeding.</translatorcomment>
-        <translation>Tắt tính năng ghi nhớ lịch sử phiên bản sẽ chấm dứt việc chiếm dụng không gian bởi việc ghi nhớ nội dung cũ. Tiếp tục tiến hành?</translation>
+        <translation>Tắt đi tính&#xa0;năng nhật&#xa0;ký phiên&#xa0;bản tệp&#xa0;tin sẽ chấm&#xa0;dứt việc không&#xa0;gian bị chiếm&#xa0;dụng bởi việc ghi nhớ phiên&#xa0;bản cũ. Tiếp&#xa0;tục tiến&#xa0;hành?</translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -4956,7 +4959,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable file versioning</source>
         <translatorcomment>Label for checkbox to enable / disable file versioning.</translatorcomment>
-        <translation>Bật ghi&#xa0;nhớ phiên&#xa0;bản tệp&#xa0;tin</translation>
+        <translation>Bật viết nhật&#xa0;ký phiên&#xa0;bản tệp&#xa0;tin</translation>
     </message>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
@@ -4971,7 +4974,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>My Account</source>
         <translatorcomment>Button label used to open MEGA web app account overview section for current account. Keep as short as possible.</translatorcomment>
-        <translation>Trang tài khoản</translation>
+        <translation>Tài&#xa0;khoản của tôi</translation>
     </message>
     <message>
         <source>Storage Space</source>
@@ -5026,7 +5029,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Đổi…</translation>
+        <translation>Chọn</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

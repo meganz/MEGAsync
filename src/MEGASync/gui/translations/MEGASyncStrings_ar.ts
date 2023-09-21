@@ -1237,7 +1237,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>الرجاء حل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب أي تعليق لحساب عملك</translation>
+        <translation>يرجى حل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب أي تعليق لحساب الأعمال الخاص بك</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1262,7 +1262,7 @@
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>اتصل بمسؤول حساب الأعمال الخاص بك لحل المشكلة وتنشيط حسابك.</translation>
+        <translation>تواصل مع مشرف حساب الأعمال الخاص بك لحل هذه المشكلة وتفعيل حسابك.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1943,7 +1943,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>توقف/استئناف</translation>
+        <translation>إيقاف أو استئناف</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2611,7 +2611,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]هام:[/A] اتصل بمشرف حساب الأعمال الخاص بك لحل المشكلة و تفعيل حسابك.</translation>
+        <translation>[A]هام:[/A] اتصل بمسؤول حساب الأعمال الخاص بك لحل المشكلة وتفعيل حسابك.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -3026,12 +3026,15 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>تم تعليق الحساب بسبب انتهاكات حقوق النشر. لقد أرسلنا لك بريدًا إلكترونيًا يحتوي على مزيد من المعلومات حول هذا الموضوع.</translation>
+        <translation>لقد تم تعليق حسابك في ميغا MEGA بسبب الادعاءات المتكررة بانتهاكات حقوق الطبع والنشر. هذا يعني أنه لا يمكنك الوصول إلى حسابك أو البيانات الموجودة فيه.
+
+تحقق من بريدك الإلكتروني للحصول على مزيد من المعلومات حول كيفية تقديم إشعار مضاد.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>تم إنهاء الحساب بسبب خرق لشروط خدمة ميغا MEGA ، مثل إساءة استخدام حقوق الآخرين أو مشاركة واستيراد البيانات غير القانونية  أو إساءة استخدام النظام.</translation>
+        <translation>تم إنهاء حسابك بسبب خرق شروط خدمة ميغا MEGA.
+لن تتمكن من استعادة الوصول إلى بياناتك المخزنة أو لن يُسمح لك بتسجيل حساب ميغا MEGA جديد.</translation>
     </message>
 </context>
 <context>
@@ -5032,7 +5035,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>نقل…</translation>
+        <translation>اختر</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

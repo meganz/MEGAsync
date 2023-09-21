@@ -1236,7 +1236,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Per favore, risolvi il problema con il tuo pagamento il prima possibile per evitare una sospensione del tuo account Business</translation>
+        <translation>Per favore, risolvi il problema con il tuo pagamento il prima possibile per evitare la sospensione del tuo account Business.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1261,7 +1261,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Contatta l’amministratore del tuo account Business per risolvere il problema e attivare il tuo account.</translation>
+        <translation>Contatta l’amministratore del tuo account business per risolvere il problema ed attivare il tuo account.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1942,7 +1942,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pausa/Riprendi</translation>
+        <translation>Pausa o riprendi</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2610,7 +2610,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Importante:[/A] Contatta l&#8217;amministratore del tuo account Business per risolvere il problema ed attivare il tuo account.</translation>
+        <translation>[A]Importante:[/A] Contatta l’amministratore del tuo account business per risolvere il problema ed attivare il tuo account.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2655,7 +2655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Il tuo account è stato disabilitato dal tuo amministratore. Per favore, contatta l&#8217;amministratore del tuo account Business per maggiori dettagli.</translation>
+        <translation>Il tuo account è stato disabilitato dal tuo amministratore. Per favore, contatta il tuo amministratore degli account business per ottenere maggiori dettagli.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3021,12 +3021,15 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Account sospeso a causa di violazioni del copyright. Ti invieremo un&#8217;email con maggiori informazioni al riguardo.</translation>
+        <translation>Il tuo account MEGA è stato sospeso a causa di ripetute accuse di violazione di copyright. Questo significa che non puoi accedere al tuo account o ai dati al suo interno.
+
+Controlla la tua email per maggiori informazioni su come puoi inviare una contro-notifica.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Account chiuso a causa di una violazione dei Termini di Servizio di MEGA, come abuso di diritti altrui, condivisione ed importazione di dati illegali, o abuso del sistema.</translation>
+        <translation>Il tuo account è stato chiuso a causa di una violazione dei Termini di Servizio di MEGA.
+Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo account MEGA.</translation>
     </message>
 </context>
 <context>
@@ -5026,7 +5029,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Sposta…</translation>
+        <translation>Scegli</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>

@@ -1237,7 +1237,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Veuillez résoudre votre problème de paiement dès que possible afin d’éviter toute désactivation de votre compte d’entreprise</translation>
+        <translation>Veuillez résoudre votre problème de paiement dès que possible afin d’éviter toute désactivation de votre compte Pour&#xa0;entreprise</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1262,7 +1262,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Contactez l’administrateur de votre compte d’entreprise pour résoudre la situation et activer votre compte.</translation>
+        <translation>Contactez l’administrateur de votre compte Pour&#xa0;entreprise pour résoudre la situation et activer votre compte.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1943,7 +1943,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Mettre en pause/Reprendre</translation>
+        <translation>Mettre en pause ou reprendre</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2606,12 +2606,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Votre compte d’entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte tant que vous n’aurez pas effectué de paiement et réactivé votre abonnement.</translation>
+        <translation>Votre compte Pour&#xa0;entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte tant que vous n’aurez pas effectué de paiement et réactivé votre abonnement.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Important&#xa0;:[/A] Contactez l’administrateur de votre compte d’entreprise pour résoudre le problème et activer votre compte.</translation>
+        <translation>[A]Important&#xa0;:[/A] Contactez l’administrateur de votre compte Pour&#xa0;entreprise pour résoudre le problème et activer votre compte.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Votre compte a été désactivé par votre administrateur. Veuillez contacter l’administrateur de votre compte d’entreprise pour obtenir plus de précisions.</translation>
+        <translation>Votre compte a été désactivé par votre administrateur. Veuillez contacter l’administrateur de votre compte Pour&#xa0;entreprise pour obtenir plus de précisions.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3022,12 +3022,16 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Votre compte a été désactivé en raison de violations du droit d’auteur. Nous vous avons envoyé un courriel avec de plus amples renseignements à ce sujet.</translation>
+        <translation>Votre compte MEGA a été désactivé en raison d’allégations répétées de violation des droits d’auteur. Cela signifie que vous ne pouvez ni accéder à votre compte ni à ses données.
+
+Pour de plus amples renseignements sur la manière de déposer un contre-avis, vérifiez votre boîte de réception des courriels.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Le compte a été résilié à la suite d’un non-respect des Conditions générales d’utilisation de MEGA, telle qu’une violation des droits d’autrui, un partage ou une importation de données illégales, ou un abus du système.</translation>
+        <translation>Votre compte a été résilié en raison du non-respect des Conditions générales d’utilisation de MEGA.
+
+Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autorisé à créer un nouveau compte MEGA.</translation>
     </message>
 </context>
 <context>
@@ -4234,7 +4238,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>List View</source>
         <translatorcomment>Button for changing to filesystem list view mode</translatorcomment>
-        <translation>Vue en liste</translation>
+        <translation>Mode liste</translation>
     </message>
     <message>
         <source>Change to list view mode</source>
@@ -5029,7 +5033,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Déplacer…</translation>
+        <translation>Choisir</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -5179,7 +5183,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pour entreprise</translation>
+        <translation>Pour&#xa0;entreprise</translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>
@@ -6139,7 +6143,7 @@ Afin de poursuivre, sélectionner un dossier différent.</translation>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Vous synchronisez un dossier local formaté avec le système de fichiers FAT. Ce système de fichiers présente des lacunes de gestion des fichiers volumineux et des heures de modification qui peuvent causer des problèmes de synchronisations (p. ex. lors des passages à l’heure avancée), et il est fortement recommandé de ne synchroniser que des dossiers formatés avec des systèmes de fichiers plus fiables comme NTFS (plus de renseignements [A]ici[/A]).</translation>
+        <translation>Vous synchronisez un dossier local formaté avec le système de fichiers FAT. Ce système de fichiers présente des lacunes de gestion des fichiers volumineux et des heures de modification qui peuvent causer des problèmes de synchronisations (p. ex. lors des passages à l’heure avancée), et il est vivement recommandé de ne synchroniser que des dossiers formatés avec des systèmes de fichiers plus fiables comme NTFS (plus de renseignements [A]ici[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>

@@ -689,7 +689,7 @@
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Section title for download rate limit details.</translatorcomment>
-        <translation>Ограничение скорости скачивания</translation>
+        <translation>Ограничить скорость скачивания</translation>
     </message>
     <message>
         <source>Number of connections per transfer</source>
@@ -1237,7 +1237,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Пожалуйста, решите проблему с оплатой, чтобы избежать блокировки вашего бизнес-аккаунта</translation>
+        <translation>Пожалуйста, решите проблему с платежом как можно скорее, чтобы избежать заморозки вашего бизнес-аккаунта.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1262,7 +1262,7 @@
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Обратитесь к администратору своего бизнес-аккаунта, чтобы решить проблему и активировать аккаунт.</translation>
+        <translation>Обратитесь к администратору своего аккаунта, чтобы найти выход и активировать аккаунт.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1943,7 +1943,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Пауза/Возобновить</translation>
+        <translation>Приостановить или возобновить</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2134,7 +2134,7 @@
     <message>
         <source>Create Account</source>
         <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
-        <translation>Регистрация</translation>
+        <translation>Зарегистрироваться</translation>
     </message>
     <message>
         <source>MEGA Desktop app</source>
@@ -2159,7 +2159,7 @@
     <message>
         <source>Create account to join MEGA collaboration platform.</source>
         <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>Создайте аккаунт, чтобы присоединиться к платформе MEGA.</translation>
+        <translation>Зарегистрируйтесь, чтобы присоединиться к платформе MEGA.</translation>
     </message>
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
@@ -2611,7 +2611,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Важно:[/A] Обратитесь к администратору бизнес-аккаунта, чтобы найти выход и активировать аккаунт.</translation>
+        <translation>[A]Важно:[/A] Обратитесь к администратору своего бизнес-аккаунта, чтобы найти выход и активировать аккаунт.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Ваш аккаунт был деактивирован администратором. Пожалуйста, свяжитесь с администратором вашего бизнес-аккаунта для более подробной информации.</translation>
+        <translation>Администратор деактивировал ваш аккаунт. Пожалуйста, обратитесь к администратору бизнес-аккаунта за подробностями.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3024,12 +3024,15 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Аккаунт заблокирован из-за нарушения авторских прав. Мы отправили вам электронное письмо с дополнительной информацией об этом.</translation>
+        <translation>Ваш аккаунт MEGA был заблокирован из-за неоднократных обвинений в нарушении авторских прав. Это значит, что вы не можете получить доступ к аккаунту или данным в нём.
+
+Проверьте электронную почту, чтобы узнать, как подать встречное заявление.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Аккаунт заблокирован из-за нарушения условий использования MEGA, таких как злоупотребление правами других лиц, обмен и импорт незаконных данных или злоупотребление системой.</translation>
+        <translation>Ваш аккаунт был заблокирован из-за нарушения Условий использования MEGA.
+Вы не сможете восстановить доступ к сохранённым данным или получить разрешение на регистрацию нового аккаунта MEGA.</translation>
     </message>
 </context>
 <context>
@@ -4930,7 +4933,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable overlay icons</source>
         <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>Включить пометки на иконках</translation>
+        <translation>Включить наложенные значки</translation>
     </message>
     <message>
         <source>Check for Updates</source>
@@ -5030,7 +5033,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Переместить…</translation>
+        <translation>Выбрать</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -5170,7 +5173,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Free</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Бесплатно</translation>
+        <translation>Бесплатный</translation>
     </message>
     <message>
         <source>Pro Lite</source>

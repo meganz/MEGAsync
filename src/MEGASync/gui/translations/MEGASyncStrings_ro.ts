@@ -1237,7 +1237,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Te rugăm să îți rezolvi problema legată de plată cât mai curând posibil pentru a evita orice suspendare a contului business</translation>
+        <translation>Vă rugăm să rezolvați problema de plată cât mai curând posibil pentru a evita orice suspendare a contului dvs. Business.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1943,7 +1943,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pune pe pauză/Reia</translation>
+        <translation>Pune pe pauză sau reia</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2139,7 +2139,7 @@
     <message>
         <source>MEGA Desktop app</source>
         <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>Aplicație desktop MEGA</translation>
+        <translation>Aplicație Desktop MEGA</translation>
     </message>
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
@@ -2611,7 +2611,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Important:[/A] Contactează administratorul contului business pentru a rezolva problema și a-ți activa contul.</translation>
+        <translation>[A]Important: [/A] Contactați administratorul contului dvs. Business pentru a rezolva problema și a vă activa contul.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Contul tău a fost dezactivat de administrator. Te rugăm să contactezi administratorul contului business pentru detalii suplimentare.</translation>
+        <translation>Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -3023,12 +3023,15 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Cont suspendat din cauza încălcărilor drepturilor de autor. Ți-am trimis un e-mail cu mai multe informații despre acest lucru.</translation>
+        <translation>Contul dvs. MEGA a fost suspendat din cauza acuzațiilor repetate de încălcare a drepturilor de autor. Aceasta înseamnă că nu vă puteți accesa contul sau datele din cadrul acestuia.
+
+Verificați-vă e-mailul pentru mai multe informații despre cum să depuneți o contranotificare. </translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Cont desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, cum ar fi abuzul drepturilor celorlalți; partajarea și/sau importarea de date ilegale; ori abuzul de sistem.</translation>
+        <translation>Contul dvs. a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA.
+Nu veți putea recâștiga accesul la datele stocate sau nu veți putea fi autorizat să înregistrați un nou cont MEGA.</translation>
     </message>
 </context>
 <context>
@@ -4580,7 +4583,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>Mută acest folder din backupuri într-o altă locație din unitatea cloud pentru a avea acces deplin la datele tale. Acestui folder nu i se va mai face backup.</translation>
+        <translation>Mută acest folder din backupuri într-o altă locație din Unitatea cloud pentru a avea acces deplin la datele tale. Acestui folder nu i se va mai face backup.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -5029,7 +5032,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Mută…</translation>
+        <translation>Alege</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -5483,7 +5486,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sincronizează întreaga unitate cloud</translation>
+        <translation>Sincronizează întreaga Unitate cloud</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5624,7 +5627,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Folderul tău local și unitatea ta cloud MEGA vor fi sincronizate automat.</translation>
+        <translation>Folderul tău local și Unitatea ta cloud MEGA vor fi sincronizate automat.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5709,7 +5712,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Sincronizează foldere specifice în unitatea ta cloud</translation>
+        <translation>Sincronizează foldere specifice în Unitatea ta cloud</translation>
     </message>
     <message>
         <source>Selective sync:</source>
@@ -5729,7 +5732,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Foldere specifice din unitatea ta cloud vor fi sincronizate cu un folder local care corespunde.</translation>
+        <translation>Foldere specifice din Unitatea ta cloud vor fi sincronizate cu un folder local care corespunde.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -5749,7 +5752,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Întreaga ta unitate cloud va fi sincronizată cu un folder local.</translation>
+        <translation>Întreaga ta Unitate cloud va fi sincronizată cu un folder local.</translation>
     </message>
     <message>
         <source>Log in</source>

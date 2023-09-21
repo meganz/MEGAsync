@@ -1262,7 +1262,7 @@
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Bitte setzen Sie sich zur Lösung des Problems und zur Aktivierung Ihres Accounts mit dem Administrator Ihres Business-Accounts in Verbindung.</translation>
+        <translation>Bitte setzen Sie sich zur Lösung des Problems und zur Aktivierung Ihres Accounts mit Ihrem Administrator in Verbindung.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1943,7 +1943,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Anhalten/Fortsetzen</translation>
+        <translation>Anhalten oder fortsetzen</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2611,7 +2611,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Wichtig:[/A] Bitte setzen Sie sich zur Lösung des Problems und zur Aktivierung Ihres Accounts mit dem Administrator Ihres Business-Accounts in Verbindung.</translation>
+        <translation>[A]Wichtig:[/A] Bitte setzen Sie sich zur Lösung des Problems und zur Aktivierung Ihres Accounts mit Ihrem Administrator in Verbindung.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -3022,12 +3022,15 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Der Account wurde aufgrund von Urheberrechtsverletzungen gesperrt. Wir haben Ihnen hierzu eine E-Mail mit weiteren Informationen gesendet.</translation>
+        <translation>Ihr MEGA-Account wurde aufgrund von wiederholten Vorwürfen von Urheberrechtsverstößen gesperrt. Dies bedeutet, dass Sie nicht auf Ihren Account oder die darin enthaltenen Daten zugreifen können.
+
+In Ihrem E-Mail-Postfach finden Sie weitere Informationen darüber, wie Sie eine Löschbeanstandung einreichen können.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Der Account wurde wegen Verletzung der MEGA-Nutzungsbedingungen (zum Beispiel Verletzung der Rechte Dritter, Import oder Freigabe illegaler Dateien oder Systemmissbrauch) geschlossen.</translation>
+        <translation>Ihr Account wurde aufgrund eines Verstoßes gegen die Nutzungsbedingungen von MEGA gekündigt.
+Sie können nicht mehr auf Ihre gespeicherten Daten zugreifen und sind nicht berechtigt, einen neuen MEGA-Account zu registrieren.</translation>
     </message>
 </context>
 <context>
@@ -4803,7 +4806,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation>Der Export Ihres Rettungsschlüssels und das Verwahren an einem sicheren Ort ermöglicht es Ihnen, Ihr Passwort ohne Datenverlust zurückzusetzen.</translation>
+        <translation>Wenn Sie Ihren Rettungsschlüssel exportieren und an einem sicheren Ort verwahren, können Sie Ihr Passwort ohne Datenverlust zurücksetzen.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -5028,7 +5031,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Verschieben…</translation>
+        <translation>Auswählen</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -6488,7 +6491,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Global resume button tooltip</translatorcomment>
-        <translation>Alle Transfers vorübergehend anhalten</translation>
+        <translation>Alle Transfers anhalten</translation>
     </message>
     <message numerus="yes">
         <source>%1 result found</source>
@@ -6966,47 +6969,47 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pause all downloads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
-        <translation>Alle Downloads pausieren</translation>
+        <translation>Alle Downloads anhalten</translation>
     </message>
     <message>
         <source>Pause all uploads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
-        <translation>Alle Uploads pausieren</translation>
+        <translation>Alle Uploads anhalten</translation>
     </message>
     <message>
         <source>Pause all search results</source>
         <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
-        <translation>Alle Suchergebnisse pausieren</translation>
+        <translation>Alle Suchergebnisse anhalten</translation>
     </message>
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation>Alle Audiodateien pausieren</translation>
+        <translation>Alle Audiodateien anhalten</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation>Alle Videodateien pausieren</translation>
+        <translation>Alle Videodateien anhalten</translation>
     </message>
     <message>
         <source>Pause all archives</source>
         <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
-        <translation>Alle Archive pausieren</translation>
+        <translation>Alle Archive anhalten</translation>
     </message>
     <message>
         <source>Pause all documents</source>
         <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
-        <translation>Alle Dokumente pausieren</translation>
+        <translation>Alle Dokumente anhalten</translation>
     </message>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation>Alle Bilder pausieren</translation>
+        <translation>Alle Bilder anhalten</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
-        <translation>Alle Transfers vorübergehend anhalten</translation>
+        <translation>Alle Transfers anhalten</translation>
     </message>
 </context>
 <context>
