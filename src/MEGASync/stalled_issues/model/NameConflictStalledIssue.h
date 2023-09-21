@@ -437,7 +437,7 @@ public:
     void renameNodesAutomatically();
 
     void semiAutoSolveIssue(int option);
-    void autoSolveIssue() override;
+    bool autoSolveIssue() override;
 
     bool hasDuplicatedNodes() const;
     bool areAllDuplicatedNodes() const;

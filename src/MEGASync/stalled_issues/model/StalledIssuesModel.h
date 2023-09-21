@@ -120,6 +120,7 @@ public:
     void semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option);
 
     //LocalOrRemoteConflicts
+    void chooseRemoteForBackups(const QModelIndexList& list);
     void chooseSideManually(bool remote, const QModelIndexList& list);
     void semiAutoSolveLocalRemoteIssues(const QModelIndexList& list);
 
@@ -170,7 +171,8 @@ private:
 
     void sendFixingIssuesMessage(int issue, int totalIssues);
 
-    void solveListOfIssues(const QModelIndexList& list, std::function<bool(int)> solveFunc);
+    void solveListOfIssues(const QModelIndexList& list, std::function<bool(int)> solveFunc,
+                           std::function<void ()> finishFunc = nullptr);
     void issueSolved(const StalledIssueVariant &issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
@@ -203,6 +205,9 @@ private:
     std::atomic_bool mSolvingIssuesStopped {false};
 
     QMap<int, std::shared_ptr<QFileSystemWatcher>> mLocalFileWatchersByRow;
+
+    //SyncDisable for backups
+    QList<std::shared_ptr<SyncSettings>> mSyncsToDisable;
 };
 
 #endif // STALLEDISSUESMODEL_H

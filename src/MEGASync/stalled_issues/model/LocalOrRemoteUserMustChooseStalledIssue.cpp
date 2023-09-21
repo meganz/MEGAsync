@@ -12,7 +12,7 @@ LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue
 {
 }
 
-void LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
+bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
     if(isSolvable())
     {
@@ -21,8 +21,11 @@ void LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
         if(isSolved())
         {
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY, "Local/Remote issue solved automatically", false, nullptr);
+            return true;
         }
     }
+
+    return false;
 }
 
 void LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
@@ -39,6 +42,12 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
 
 bool LocalOrRemoteUserMustChooseStalledIssue::isSolvable() const
 {
+    //In case it is a backup, we cannot automatically solve it
+    if(getSyncType() == mega::MegaSync::SyncType::TYPE_BACKUP)
+    {
+        return false;
+    }
+
     if(isFile() && (consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size()))
     {
         //Check names
