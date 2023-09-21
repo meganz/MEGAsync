@@ -123,7 +123,8 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
     : QAbstractItemModel(parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
     mUpdateWhenGlobalStateChanges(false),
-    mRawInfoVisible(false)
+    mRawInfoVisible(false),
+    mIsStalled(false)
 {
     mStalledIssuesThread = new QThread();
     mStalledIssuedReceiver = new StalledIssuesReceiver();
@@ -168,15 +169,15 @@ bool StalledIssuesModel::issuesRequested() const
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi *api)
 {
     auto isSyncStalled(api->isSyncStalled());
-    if(isSyncStalled)
+    if(isSyncStalled &&
+       mStalledIssues.size() == mSolvedStalledIssues.size() &&
+       mIsStalled != isSyncStalled)
     {
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-        if(!dialog && mStalledIssues.size() == mSolvedStalledIssues.size())
-        {
-            //For Smart mode -> resolve problems as soon as they are received
-            updateStalledIssues();
-        }
+        //For Smart mode -> resolve problems as soon as they are received
+        updateStalledIssues();
     }
+
+    mIsStalled = isSyncStalled;
 
     emit stalledIssuesChanged();
 }

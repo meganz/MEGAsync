@@ -188,6 +188,7 @@ private:
     std::atomic_bool mIssuesRequested {false};
     StalledIssuesUtilities mUtilities;
     QStringList ignoredItems;
+    bool mIsStalled;
 
     mutable QReadWriteLock mModelMutex;
 
