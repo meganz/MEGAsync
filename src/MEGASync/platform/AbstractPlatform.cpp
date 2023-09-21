@@ -111,6 +111,13 @@ void AbstractPlatform::initMenu(QMenu *m, const char *objectName, const bool app
     }
 }
 
+QString AbstractPlatform::getSizeStringLocalizedOSbased(qint64 bytes)
+{
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+    return locale.formattedDataSize(bytes, 2, QLocale::DataSizeFormat::DataSizeTraditionalFormat);
+}
+
 void AbstractPlatform::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(QStringList)> func)
 {
     auto previousFileUploadSelector = DialogOpener::findDialog<QFileDialog>();

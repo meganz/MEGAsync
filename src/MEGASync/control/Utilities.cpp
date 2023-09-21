@@ -703,6 +703,11 @@ QString Utilities::getSizeString(unsigned long long bytes)
                     + QCoreApplication::translate("Utilities", "Bytes");
 }
 
+QString Utilities::getSizeStringLocalized(qint64 bytes)
+{
+    return Platform::getInstance()->getSizeStringLocalizedOSbased(bytes);
+}
+
 QString Utilities::getSizeString(long long bytes)
 {
     if (bytes >= 0)

@@ -347,12 +347,17 @@ qint64 LocalFileFolderAttributes::calculateSize()
     QFileInfo fileInfo(mPath);
     if(!mPath.isEmpty() && fileInfo.exists())
     {
-        QDirIterator filesIt(mPath, QDir::Files| QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::Subdirectories);
+        QDirIterator filesIt(mPath, QDir::Files| QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Hidden, QDirIterator::Subdirectories);
 
         while (filesIt.hasNext())
         {
             filesIt.next();
             qDebug()<<mPath<<"  |||||||  NAME:"<<filesIt.fileName()<<"SIZE: "<<filesIt.fileInfo().size();
+//            if(filesIt.fileName() == QString::fromUtf8("Icon\r"))
+//            {
+//                newSize += 1503834;
+//                qDebug()<<filesIt.fileInfo().isReadable();
+//            }
             newSize += filesIt.fileInfo().size();
         }
     }
