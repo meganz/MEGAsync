@@ -11,81 +11,44 @@ import Common 1.0
 Row {
     id: root
 
-    property alias icon: icon.source
-    property string title: ""
-    property string text: ""
+    property alias icon: hintIcon.source
+    property alias title: hintTitle.text
+    property alias text: hintText.text
 
     property HintStyle styles: HintStyle {}
     property int textSize: Text.Size.Normal
 
-    height: visible ? titleLoader.height + textLoader.height : 0
+    height: visible ? hintTitle.height + hintText.height : 0
     visible: false
     spacing: root.icon !== "" ? 8 : 0
 
-    onTitleChanged: {
-        if(title.length === 0) {
-            return;
-        }
-
-        titleLoader.sourceComponent = titleComponent;
-    }
-
-    onTextChanged: {
-        if(text.length === 0) {
-            return;
-        }
-
-        textLoader.sourceComponent = textComponent;
-    }
-
     MegaImages.SvgImage {
-        id: icon
+        id: hintIcon
         color: styles.iconColor
         sourceSize: Qt.size(16, 16)
         opacity: enabled ? 1.0 : 0.2
     }
 
     Column {
+        id: col
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        width: parent.width - icon.width - root.spacing
-        spacing: titleLoader.height > 0 && textLoader.height > 0 ? 2 : 0
-
-        Loader {
-            id: titleLoader
-
-            width: parent.width
-        }
-
-        Loader {
-            id: textLoader
-
-            width: parent.width
-        }
-    }
-
-    Component {
-        id: titleComponent
+        width: parent.width - hintIcon.width - root.spacing
+        spacing: (hintTitle.height > 0 && hintText.height > 0) ? 2 : 0
 
         MegaTexts.Text {
-            text: title
+            id: hintTitle
             color: styles.titleColor
             opacity: enabled ? 1.0 : 0.2
             font.bold: true
             font.pixelSize: textSize
         }
-    }
-
-    Component {
-        id: textComponent
 
         MegaTexts.Text {
-            text: root.text
+            id: hintText
             color: styles.textColor
             opacity: enabled ? 1.0 : 0.2
             font.pixelSize: textSize
         }
     }
 }
-
-
