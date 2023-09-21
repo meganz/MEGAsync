@@ -5,6 +5,8 @@
 #include "syncs/control/MegaIgnoreManager.h"
 
 #include <QDialog>
+#include <QFileSystemWatcher>
+
 #include <memory>
 
 namespace Ui {
@@ -20,6 +22,7 @@ public:
     ~IgnoresEditingDialog();
 
     void applyChanges();
+    void refreshUI();
 
 public slots:
 	void on_bAddName_clicked();
@@ -34,13 +37,16 @@ public slots:
     void onCExtensionsChecked(bool state);
     void on_cExcludeUpperThan_clicked();
     void on_cExcludeLowerThan_clicked();
+    void on_fileChanged(const QString file);
 
 private:
     Ui::IgnoresEditingDialog *ui;
 
 private:
     std::shared_ptr<Preferences> mPreferences;
+    std::shared_ptr<QFileSystemWatcher> mIgnoresFileWatcher;
     MegaIgnoreManager mManager;
+
 };
 
 #endif // IGNORESEDITINGDIALOG_H

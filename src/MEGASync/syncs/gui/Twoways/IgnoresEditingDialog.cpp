@@ -2,64 +2,24 @@
 #include "ui_IgnoresEditingDialog.h"
 
 #include "AddExclusionDialog.h"
+#include "QMegaMessageBox.h"
 
 #include <QPointer>
-
+#include <QDir>
 IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::IgnoresEditingDialog),
     mPreferences(Preferences::instance()),
+    mIgnoresFileWatcher(std::make_shared<QFileSystemWatcher>(this)),
     mManager(syncLocalFolder)
 {
     ui->setupUi(this);
 
-    auto nameRules = mManager.getNameRules();
-    foreach(auto rule, nameRules)
-    {
-        QListWidgetItem* item = new QListWidgetItem(rule->getModifiedRule(), ui->lExcludedNames);
-        item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
-        item->setCheckState(rule->isCommented() ? Qt::Unchecked : Qt::Checked); // AND initialize check state
-        item->setData(Qt::UserRole, rule->originalRule());
-    }
-
     ui->cbExcludeLowerUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
     connect(ui->lExcludedNames->model(), &QAbstractItemModel::dataChanged, this, &IgnoresEditingDialog::onlExcludedNamesChanged);
 
-    auto lowLimit = mManager.getLowLimitRule();
-    if(lowLimit)
-    {
-        ui->eLowerThan->setValue(lowLimit->value());
-        ui->cbExcludeLowerUnit->setCurrentIndex(lowLimit->unit());
-        ui->cExcludeLowerThan->setChecked(!lowLimit->isCommented());
-        ui->eLowerThan->setEnabled(!lowLimit->isCommented());
-        ui->cbExcludeLowerUnit->setEnabled(!lowLimit->isCommented());
-    }
-    else
-    {
-        ui->eLowerThan->setValue(0);
-        ui->cbExcludeLowerUnit->setCurrentIndex(MegaIgnoreSizeRule::UnitTypes::B);
-    }
-
     ui->cbExcludeUpperUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
-    auto highLimit = mManager.getHighLimitRule();
-    if(highLimit)
-    {
-        ui->eUpperThan->setValue(highLimit->value());
-        ui->cbExcludeUpperUnit->setCurrentIndex(highLimit->unit());
-        ui->cExcludeUpperThan->setChecked(!highLimit->isCommented());
-        ui->eUpperThan->setEnabled(!highLimit->isCommented());
-        ui->cbExcludeUpperUnit->setEnabled(!highLimit->isCommented());
-    }
-    else
-    {
-        ui->eUpperThan->setValue(0);
-        ui->cbExcludeUpperUnit->setCurrentIndex(MegaIgnoreSizeRule::UnitTypes::B);
-    }
-
-    auto extensions(mManager.getExcludedExtensions());
-    ui->tExcludeExtensions->document()->setPlainText(extensions.join(QLatin1String(", ")));
-    ui->cExcludeExtenstions->setChecked(!extensions.isEmpty());
-    ui->tExcludeExtensions->setEnabled(!extensions.isEmpty());
+   
     connect(ui->cExcludeExtenstions, &QCheckBox::toggled, this, &IgnoresEditingDialog::onCExtensionsChecked);
 
     QDialogButtonBox *buttonBox = findChild<QDialogButtonBox*>(QString::fromUtf8("buttonBox"));
@@ -76,7 +36,12 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, QWidg
             accept();
         });
     }
+    auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
+    mIgnoresFileWatcher->addPath(ignorePath);
+    QObject::connect(mIgnoresFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, &IgnoresEditingDialog::on_fileChanged);
+    refreshUI();
 }
+
 
 IgnoresEditingDialog::~IgnoresEditingDialog()
 {
@@ -88,6 +53,60 @@ void IgnoresEditingDialog::applyChanges()
     mManager.applyChanges();
 }
 
+void IgnoresEditingDialog::refreshUI()
+{
+    const auto allRules = mManager.getAllRules();
+    ui->lExcludedNames->clear();
+    for(auto rule : allRules)
+    {
+        if (rule->ruleType() == MegaIgnoreRule::RuleType::NameRule || rule->ruleType() == MegaIgnoreRule::RuleType::InvalidRule)
+        {
+            QListWidgetItem* item = new QListWidgetItem(rule->getModifiedRule(), ui->lExcludedNames);
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+            item->setCheckState(rule->isCommented() ? Qt::Unchecked : Qt::Checked); // AND initialize check state
+            item->setData(Qt::UserRole, rule->originalRule());
+            if (!rule->isValid())
+            {
+                static const auto red = QColor("red").lighter(180);
+                item->setBackgroundColor(red);
+            }
+        }
+    }
+    auto lowLimit = mManager.getLowLimitRule();
+    if (lowLimit)
+    {
+        ui->eLowerThan->setValue(lowLimit->value());
+        ui->cbExcludeLowerUnit->setCurrentIndex(lowLimit->unit());
+        ui->cExcludeLowerThan->setChecked(!lowLimit->isCommented());
+        ui->eLowerThan->setEnabled(!lowLimit->isCommented());
+        ui->cbExcludeLowerUnit->setEnabled(!lowLimit->isCommented());
+    }
+    else
+    {
+        ui->eLowerThan->setValue(0);
+        ui->cbExcludeLowerUnit->setCurrentIndex(MegaIgnoreSizeRule::UnitTypes::B);
+    }
+
+    auto highLimit = mManager.getHighLimitRule();
+    if (highLimit)
+    {
+        ui->eUpperThan->setValue(highLimit->value());
+        ui->cbExcludeUpperUnit->setCurrentIndex(highLimit->unit());
+        ui->cExcludeUpperThan->setChecked(!highLimit->isCommented());
+        ui->eUpperThan->setEnabled(!highLimit->isCommented());
+        ui->cbExcludeUpperUnit->setEnabled(!highLimit->isCommented());
+    }
+    else
+    {
+        ui->eUpperThan->setValue(0);
+        ui->cbExcludeUpperUnit->setCurrentIndex(MegaIgnoreSizeRule::UnitTypes::B);
+    }
+    auto extensions(mManager.getExcludedExtensions());
+    ui->tExcludeExtensions->clear();
+    ui->tExcludeExtensions->document()->setPlainText(extensions.join(QLatin1String(", ")));
+    ui->cExcludeExtenstions->setChecked(!extensions.isEmpty());
+    ui->tExcludeExtensions->setEnabled(!extensions.isEmpty());
+}
 void IgnoresEditingDialog::on_bAddName_clicked()
 {
     QPointer<AddExclusionDialog> add = new AddExclusionDialog(this);
@@ -118,8 +137,11 @@ void IgnoresEditingDialog::on_bAddName_clicked()
             return;
         }
     }
-
-    ui->lExcludedNames->addItem(text);
+    QListWidgetItem* item = new QListWidgetItem(QLatin1String("-:") + text, ui->lExcludedNames);
+    item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+    item->setCheckState(Qt::Checked); // AND initialize check state
+    item->setData(Qt::UserRole, QLatin1String("-:") + text);
+    mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text );
 }
 
 void IgnoresEditingDialog::on_bDeleteName_clicked()
@@ -201,3 +223,16 @@ void IgnoresEditingDialog::on_cExcludeLowerThan_clicked()
     lowLimit->setCommented(!enable);
 }
 //
+
+void IgnoresEditingDialog::on_fileChanged(const QString file)
+{
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = tr("Reload");
+    msgInfo.text = tr("Current file has been modified by another program. it will be reloaded");
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok;
+    QMegaMessageBox::warning(msgInfo);
+    mManager.parseIgnoresFile();
+    refreshUI();
+}
