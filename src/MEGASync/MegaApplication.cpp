@@ -36,6 +36,7 @@
 #include <QScreen>
 #include <QSettings>
 #include <QToolTip>
+#include <QFuture>
 
 #include <assert.h>
 
@@ -110,7 +111,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     scanStageController(this),
     mDisableGfx (false)
 {
-
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!getenv("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
     {
@@ -3407,6 +3407,7 @@ MegaApplication::NodeCount MegaApplication::countFilesAndFolders(const QStringLi
             }
         }
     }
+
     return count;
 }
 
@@ -5463,10 +5464,16 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     auto processUpload = [this](QStringList foldersSelected){
         if (!foldersSelected.isEmpty())
         {
-            NodeCount nodeCount = countFilesAndFolders(foldersSelected);
+            QFuture<NodeCount> future;
 
-            processUploads(foldersSelected);
-            HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+            connect(&mWatcher, &QFutureWatcher<NodeCount>::finished, this, [this, foldersSelected]() {
+                const NodeCount nodeCount = mWatcher.result();
+                processUploads(foldersSelected);
+                HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+            });
+
+            future = QtConcurrent::run(countFilesAndFolders, foldersSelected);
+            mWatcher.setFuture(future);
         }
         else
         {
