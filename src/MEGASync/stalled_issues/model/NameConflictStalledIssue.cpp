@@ -600,13 +600,16 @@ void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
     solveIssue(option);
 }
 
-void NameConflictedStalledIssue::autoSolveIssue()
+bool NameConflictedStalledIssue::autoSolveIssue()
 {
     solveIssue(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
     if(isSolved())
     {
         MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_AUTOMATICALLY, "Name conflict issue solved automatically", false, nullptr);
+        return true;
     }
+
+    return false;
 }
 
 void NameConflictedStalledIssue::solveIssue(int option)

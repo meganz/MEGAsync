@@ -755,6 +755,10 @@ void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::fun
                 {
                     if(solveFunc(potentialIndex.row()))
                     {
+                        if(!issue.getData()->isSolved())
+                        {
+                            issue.getData()->setIsSolved(false);
+                        }
                         issuesFixed++;
                         issueSolved(issue);
                     }
@@ -837,8 +841,7 @@ void StalledIssuesModel::solveAllIssues()
         auto item = mStalledIssues.at(row);
         if(item.consultData()->isSolvable())
         {
-            item.getData()->autoSolveIssue();
-            return true;
+            return item.getData()->autoSolveIssue();
         }
         return false;
     };
@@ -882,8 +885,7 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
 
 void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList &list)
 {
-    QList<std::shared_ptr<SyncSettings>> syncsToDisable;
-    auto resolveIssue = [this, &syncsToDisable](int row) -> bool
+    auto resolveIssue = [this](int row) -> bool
     {
         auto item = mStalledIssues.at(row);
         if(item.consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
@@ -892,9 +894,9 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList &list)
             if(!item.consultData()->syncIds().isEmpty())
             {
                 auto sync = SyncInfo::instance()->getSyncSettingByTag(item.consultData()->syncIds().first());
-                if(sync && !syncsToDisable.contains(sync))
+                if(sync && !mSyncsToDisable.contains(sync))
                 {
-                    syncsToDisable.append(sync);
+                    mSyncsToDisable.append(sync);
                 }
                 return true;
             }
@@ -903,13 +905,15 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList &list)
         return false;
     };
 
-    auto finishFunc = [&syncsToDisable]()
+    auto finishFunc = [this]()
     {
-        foreach(auto& sync, syncsToDisable)
+        foreach(auto& sync, mSyncsToDisable)
         {
             SyncController controller;
             controller.setSyncToDisabled(sync);
         }
+
+        mSyncsToDisable.clear();
     };
 
     solveListOfIssues(list, resolveIssue, finishFunc);
@@ -929,9 +933,8 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
             {
                 MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_SEMI_AUTOMATICALLY,
                                                      "Local/Remote issue solved semi-automatically", false, nullptr);
+                return true;
             }
-
-            return true;
         }
         return false;
     };
@@ -957,7 +960,6 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
                 }
             }
 
-            item.getData()->setIsSolved(false);
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
                                                  "Issue ignored manually", false, nullptr);
 
@@ -984,9 +986,6 @@ void StalledIssuesModel::ignoreSymLinks()
 
     auto resolveIssue = [this](int row) -> bool
     {
-        auto item = mStalledIssues.at(row);
-        item.getData()->setIsSolved(false);
-
         return true;
     };
 
@@ -1021,9 +1020,8 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &
                     {
                         MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY,
                                                              "Name conflict issue solved semi-automatically", false, nullptr);
+                        return true;
                     }
-
-                    return true;
                 }
             }
         }

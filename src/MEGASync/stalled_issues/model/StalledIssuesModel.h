@@ -205,6 +205,9 @@ private:
     std::atomic_bool mSolvingIssuesStopped {false};
 
     QMap<int, std::shared_ptr<QFileSystemWatcher>> mLocalFileWatchersByRow;
+
+    //SyncDisable for backups
+    QList<std::shared_ptr<SyncSettings>> mSyncsToDisable;
 };
 
 #endif // STALLEDISSUESMODEL_H
