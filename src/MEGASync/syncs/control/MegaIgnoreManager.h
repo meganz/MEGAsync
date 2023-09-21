@@ -40,6 +40,8 @@ public:
     bool isDeleted() const;
     void setDeleted(bool newIsDeleted);
 
+    void setIsDirty();
+
 protected:
     RuleType mRuleType;
     QString mRule;
@@ -225,7 +227,7 @@ public:
     
     void parseIgnoresFile();
 
-    void addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern);
+    std::shared_ptr<MegaIgnoreNameRule> addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern);
 
     static MegaIgnoreRule::RuleType getRuleType(const QString& line);
 
