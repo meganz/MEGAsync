@@ -11,7 +11,7 @@ import Common 1.0
 Row {
     id: root
 
-    property url icon: ""
+    property alias icon: icon.source
     property string title: ""
     property string text: ""
 
@@ -20,15 +20,7 @@ Row {
 
     height: visible ? titleLoader.height + textLoader.height : 0
     visible: false
-    spacing: iconLoader.width > 0 ? 8 : 0
-
-    onIconChanged: {
-        if(icon.length === 0) {
-            return;
-        }
-
-        iconLoader.sourceComponent = iconComponent;
-    }
+    spacing: root.icon !== "" ? 8 : 0
 
     onTitleChanged: {
         if(title.length === 0) {
@@ -46,14 +38,17 @@ Row {
         textLoader.sourceComponent = textComponent;
     }
 
-    Loader {
-        id: iconLoader
+    MegaImages.SvgImage {
+        id: icon
+        color: styles.iconColor
+        sourceSize: Qt.size(16, 16)
+        opacity: enabled ? 1.0 : 0.2
     }
 
     Column {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        width: parent.width - iconLoader.width - root.spacing
+        width: parent.width - icon.width - root.spacing
         spacing: titleLoader.height > 0 && textLoader.height > 0 ? 2 : 0
 
         Loader {
@@ -66,17 +61,6 @@ Row {
             id: textLoader
 
             width: parent.width
-        }
-    }
-
-    Component {
-        id: iconComponent
-
-        MegaImages.SvgImage {
-            source: icon
-            color: styles.iconColor
-            sourceSize: Qt.size(16, 16)
-            opacity: enabled ? 1.0 : 0.2
         }
     }
 
