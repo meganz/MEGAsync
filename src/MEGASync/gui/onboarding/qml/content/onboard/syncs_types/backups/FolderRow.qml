@@ -10,6 +10,7 @@ import Components.CheckBoxes 1.0 as MegaCheckBoxes
 import Components.ToolTips 1.0 as MegaToolTips
 import Components.Buttons 1.0 as MegaButtons
 import Components.TextFields 1.0 as MegaTextFields
+import Components.BusyIndicator 1.0 as MegaBusyIndicator
 
 // Local
 import Onboard 1.0
@@ -140,7 +141,15 @@ Rectangle {
                 horizontalAlignment: Qt.AlignRight
                 verticalAlignment: Qt.AlignVCenter
                 color: Styles.textSecondary
-                visible: backupsProxyModel.selectedFilterEnabled
+                visible: backupsProxyModel.selectedFilterEnabled && mSizeReady
+            }
+
+            MegaBusyIndicator.BusyIndicator {
+                visible: backupsProxyModel.selectedFilterEnabled && !mSizeReady
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                color: Styles.textAccent
+                imageSize: Qt.size(12, 12)
             }
 
             MouseArea {

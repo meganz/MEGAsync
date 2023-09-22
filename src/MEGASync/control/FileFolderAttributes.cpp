@@ -17,9 +17,9 @@
 #endif
 
 FileFolderAttributes::FileFolderAttributes(QObject* parent)
-    : mCancelled(false),
-      mSize(-1),
-      QObject(parent)
+    : QObject(parent),
+    mCancelled(false),
+    mSize(NOT_READY)
 {
 }
 
@@ -191,7 +191,7 @@ void LocalFileFolderAttributes::requestSize(QObject* caller,std::function<void(q
             }
             else
             {
-                if(mSize < 0)
+                if(mSize <= Status::NOT_READY)
                 {
                     auto future = QtConcurrent::run([this]() -> qint64{
                         return calculateSize();
@@ -345,6 +345,10 @@ qint64 LocalFileFolderAttributes::calculateSize()
     qint64 newSize(0);
 
     QFileInfo fileInfo(mPath);
+    if(!fileInfo.isReadable())
+    {
+        newSize = NOT_READABLE;
+    }
     if(!mPath.isEmpty() && fileInfo.exists())
     {
         QDirIterator filesIt(mPath, QDir::Files| QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Hidden, QDirIterator::Subdirectories);
@@ -352,12 +356,6 @@ qint64 LocalFileFolderAttributes::calculateSize()
         while (filesIt.hasNext())
         {
             filesIt.next();
-            qDebug()<<mPath<<"  |||||||  NAME:"<<filesIt.fileName()<<"SIZE: "<<filesIt.fileInfo().size();
-//            if(filesIt.fileName() == QString::fromUtf8("Icon\r"))
-//            {
-//                newSize += 1503834;
-//                qDebug()<<filesIt.fileInfo().isReadable();
-//            }
             newSize += filesIt.fileInfo().size();
         }
     }

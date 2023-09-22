@@ -19,8 +19,9 @@ BackupFolder::BackupFolder(const QString& folder,
     , mSize(QString::fromUtf8(""))
     , mSelected(selected)
     , mDone(false)
+    , mFolderSizeReady(false)
     , mError(0)
-    , folderSize(0)
+    , folderSize(FileFolderAttributes::NOT_READY)
     , sdkError(QString())
     , mFolderAttr(nullptr)
 {
@@ -28,15 +29,27 @@ BackupFolder::BackupFolder(const QString& folder,
 
 void BackupFolder::setSize(qint64 size)
 {
-    if(size > 0)
+    QVector<int> changedRoles;
+
+    if(size != FileFolderAttributes::NOT_READY)
+    {
+        mFolderSizeReady = true;
+        changedRoles.append(BackupsModel::SizeReadyRole);
+    }
+    if(size > FileFolderAttributes::NOT_READY)
     {
         folderSize = size;
         mSize = Utilities::getSizeStringLocalized(size);
+        changedRoles.append(BackupsModel::SizeRole);
+    }
+
+    if(!changedRoles.isEmpty())
+    {
         if(auto model = dynamic_cast<BackupsModel*>(parent()))
         {
             auto changedIndex = model->index(model->getRow(mFolder), 0);
             model->updateSelectedAndTotalSize();
-            emit model->dataChanged(changedIndex, changedIndex, {BackupsModel::SizeRole});
+            emit model->dataChanged(changedIndex, changedIndex, changedRoles);
         }
     }
 }
@@ -62,6 +75,7 @@ BackupsModel::BackupsModel(QObject* parent)
     , mRoleNames(QAbstractItemModel::roleNames())
     , mSelectedRowsTotal(0)
     , mBackupsTotalSize(0)
+    , mTotalSizeReady(false)
     , mBackupsController(new BackupsController(this))
     , mConflictsSize(0)
     , mConflictsNotificationText(QString::fromUtf8(""))
@@ -71,6 +85,7 @@ BackupsModel::BackupsModel(QObject* parent)
     mRoleNames[NameRole] = "mName";
     mRoleNames[FolderRole] = "mFolder";
     mRoleNames[SizeRole] = "mSize";
+    mRoleNames[SizeReadyRole] = "mSizeReady";
     mRoleNames[SelectedRole] = "mSelected";
     mRoleNames[DoneRole] = "mDone";
     mRoleNames[ErrorRole] = "mError";
@@ -180,6 +195,9 @@ QVariant BackupsModel::data(const QModelIndex &index, int role) const
             case SizeRole:
                 field = item->mSize;
                 break;
+            case SizeReadyRole:
+                field = item->mFolderSizeReady;
+                break;
             case SelectedRole:
                 field = item->mSelected;
                 break;
@@ -199,7 +217,12 @@ QVariant BackupsModel::data(const QModelIndex &index, int role) const
 
 QString BackupsModel::getTotalSize() const
 {
-    return Utilities::getSizeString(mBackupsTotalSize);
+    return Utilities::getSizeStringLocalized(mBackupsTotalSize);
+}
+
+bool BackupsModel::getIsTotalSizeReady() const
+{
+    return mTotalSizeReady;
 }
 
 Qt::CheckState BackupsModel::getCheckAllState() const
@@ -327,6 +350,12 @@ void BackupsModel::updateSelectedAndTotalSize()
         {
             mSelectedRowsTotal++;
 
+            if(!(*item)->mFolderSizeReady)
+            {
+                setTotalSizeReady(false);
+                return;
+            }
+
             if((*item)->folderSize > 0)
             {
                 mBackupsTotalSize += (*item)->folderSize;
@@ -344,6 +373,7 @@ void BackupsModel::updateSelectedAndTotalSize()
     {
         emit noneSelected();
     }
+    setTotalSizeReady(true);
 }
 
 void BackupsModel::checkSelectedAll()
@@ -392,6 +422,10 @@ bool BackupsModel::selectIfExistsInsertion(const QString& inputPath)
 bool BackupsModel::folderContainsOther(const QString& folder,
                                             const QString& other) const
 {
+    if(folder == other)
+    {
+        return true;
+    }
     return folder.startsWith(other) && folder[other.size()] == QDir::separator();
 }
 
@@ -403,8 +437,8 @@ bool BackupsModel::isRelatedFolder(const QString& folder,
 
 QModelIndex BackupsModel::getModelIndex(QList<BackupFolder*>::iterator item)
 {
-    const auto row = std::distance(mBackupFolderList.begin(), item);
-    return QModelIndex(index(row, 0));
+    int row = static_cast<int>(std::distance(mBackupFolderList.begin(), item));
+    return QModelIndex(index(static_cast<int>(row), 0));
 }
 
 void BackupsModel::checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
@@ -595,24 +629,25 @@ void BackupsModel::checkRemoteDuplicatedBackups(const QSet<QString>& candidateSe
     }
 }
 
-bool BackupsModel::existOtherRelatedFolder(const int currentIndex)
+bool BackupsModel::existOtherRelatedFolder(const int currentRow)
 {
-    int row = currentIndex + 1;
-    if(row >= mBackupFolderList.size())
+    if(currentRow > mBackupFolderList.size())
     {
         return false;
     }
 
     bool found = false;
-    QString folder(mBackupFolderList[currentIndex]->mFolder);
-    while(!found && row < rowCount())
+    QString folder(mBackupFolderList[currentRow]->mFolder);
+    int conflictRow = 1;
+    while(!found && conflictRow < rowCount())
     {
-        if((found = mBackupFolderList[row]->mSelected && isRelatedFolder(folder, mBackupFolderList[row]->mFolder)))
+        if((found = mBackupFolderList[conflictRow]->mSelected
+            && conflictRow!=currentRow &&isRelatedFolder(folder, mBackupFolderList[conflictRow]->mFolder)))
         {
-            mBackupFolderList[currentIndex]->mError = BackupErrorCode::PathRelation;
-            mBackupFolderList[row]->mError = BackupErrorCode::PathRelation;
+            mBackupFolderList[currentRow]->mError = BackupErrorCode::PathRelation;
+            mBackupFolderList[conflictRow]->mError = BackupErrorCode::PathRelation;
         }
-        row++;
+        conflictRow++;
     }
     return found;
 }
@@ -866,6 +901,15 @@ void BackupsModel::setGlobalError(BackupErrorCode error)
 {
     mGlobalError = error;
     emit globalErrorChanged();
+}
+
+void BackupsModel::setTotalSizeReady(bool ready)
+{
+    if(mTotalSizeReady != ready)
+    {
+        mTotalSizeReady = ready;
+        emit totalSizeReadyChanged();
+    }
 }
 
 void BackupsModel::onBackupsCreationFinished(bool success)
