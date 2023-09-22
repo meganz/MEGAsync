@@ -30,7 +30,7 @@ public:
     virtual ~MegaDownloader() = default;
 
     bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
-                              const QString &path);
+                              const QString &path, bool createAppDataId = true);
 protected:
     void download(WrappedNode *parent, QFileInfo info, const std::shared_ptr<DownloadTransferMetaData>& data, mega::MegaCancelToken *cancelToken);
 

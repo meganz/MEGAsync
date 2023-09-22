@@ -55,6 +55,20 @@ protected slots:
     void refreshCaseActions(StalledIssueHeader *header) override;
 };
 
+//Sym Link
+class CloudFingerprintMissingHeader : public StalledIssueHeaderCase
+{
+    Q_OBJECT
+
+public:
+    CloudFingerprintMissingHeader(StalledIssueHeader* header);
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader*header, int index) override;
+
+protected slots:
+    void refreshCaseTitles(StalledIssueHeader* header) override;
+    void refreshCaseActions(StalledIssueHeader *header) override;
+};
+
 //Create folder failed
 class FileIssueHeader : public StalledIssueHeaderCase
 {

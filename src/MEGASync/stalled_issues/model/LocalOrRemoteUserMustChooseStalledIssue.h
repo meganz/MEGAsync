@@ -13,7 +13,6 @@ public:
 
     bool autoSolveIssue() override;
     bool isSolvable() const;
-    bool isBeingSolved(TransfersModel::UploadTransferInfo &info) const;
 
     void fillIssue(const mega::MegaSyncStall *stall) override;
     void endFillingIssue() override;

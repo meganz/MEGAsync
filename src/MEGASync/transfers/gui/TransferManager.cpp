@@ -972,6 +972,7 @@ void TransferManager::onStalledIssuesStateChanged()
 {
     mFoundStalledIssues = !MegaSyncApp->getStalledIssuesModel()->isEmpty();
     checkContentInfo();
+    refreshStateStats();
 }
 
 void TransferManager::checkContentInfo()

@@ -68,6 +68,7 @@ public:
     int rowCount(const QModelIndex& parent) const override;
     int columnCount(const QModelIndex& = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role) const override;
+    StalledIssueVariant getStalledIssueByRow(int row) const;
     QModelIndex parent(const QModelIndex& index) const override;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -128,6 +129,9 @@ public:
     void ignoreItems(const QModelIndexList& list);
     void ignoreSymLinks();
 
+    //Fingerprint missing
+    void fixFingerprint(const QModelIndexList& list);
+
     bool issuesRequested() const;
 
 signals:
@@ -156,8 +160,6 @@ private slots:
     void onLocalFileModified(const QString&);
 
 private:
-    StalledIssueVariant getStalledIssueByRow(int row) const;
-
     void removeRows(QModelIndexList &indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     void updateStalledIssuedByOrder();
@@ -209,6 +211,10 @@ private:
 
     //SyncDisable for backups
     QList<std::shared_ptr<SyncSettings>> mSyncsToDisable;
+    
+    //Fix fingerprint
+    QList<StalledIssueVariant> mFingerprintIssuesToFix;
+    FingerprintMissingSolver mFingerprintIssuesSolver;
 };
 
 #endif // STALLEDISSUESMODEL_H

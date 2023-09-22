@@ -918,7 +918,7 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
-    else if (syncStalled)
+    else if (syncStalled && !mStalledIssuesModel->isEmpty())
     {
         tooltipState = tr("Stalled");
         icon = icons["alert"];
@@ -1106,6 +1106,9 @@ void MegaApplication::start()
 #endif
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromUtf8(" ") + Preferences::VERSION_STRING + QString::fromUtf8("\n") + tr("Logging in"));
     trayIcon->show();
+
+    //In case the previous session did not remove all of them
+    Preferences::instance()->clearTempTransfersPath();
 
     if (!preferences->lastExecutionTime())
     {
@@ -2217,6 +2220,7 @@ void MegaApplication::cleanAll()
         Platform::getInstance()->notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
 
+    Preferences::instance()->clearTempTransfersPath();
     PowerOptions::appShutdown();
     mSyncController.reset();
     UserAttributes::UserAttributesManager::instance().reset();

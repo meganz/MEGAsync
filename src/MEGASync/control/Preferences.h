@@ -393,6 +393,9 @@ public:
     bool error();
 
     QString getDataPath();
+    QString getTempTransfersPath();
+    void clearTempTransfersPath();
+
     void clearTemporalBandwidth();
     void clearAll();
     void sync();

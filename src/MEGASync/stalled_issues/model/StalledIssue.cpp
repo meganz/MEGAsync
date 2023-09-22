@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include "UserAttributesRequests/FullName.h"
 #include "StalledIssuesUtilities.h"
+#include "TransfersModel.h"
 
 StalledIssueData::StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
     : original(std::move(originalstall))
@@ -297,6 +298,16 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
         setIsFile(cloudTargetPath, false);
     }
+
+    if(!hasFingerprint())
+    {
+        std::shared_ptr<DownloadTransferInfo> info(new DownloadTransferInfo());
+        //Check if transfer already exists
+        if(isBeingSolvedByDownload(info))
+        {
+            setIsSolved(false);
+        }
+    }
 }
 
 void StalledIssue::endFillingIssue()
@@ -429,17 +440,56 @@ void StalledIssue::setIsSolved(bool potentially)
     mNeedsUIUpdate = qMakePair(true, true);
 }
 
+bool StalledIssue::isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const
+{
+    auto result(false);
+
+    auto node = consultCloudData()->getNode();
+    if(node)
+    {
+        info->filename = consultLocalData()->getFileName();
+        info->localPath = consultLocalData()->getNativeFilePath();
+        info->parentHandle = node->getParentHandle();
+        auto transfer = MegaSyncApp->getTransfersModel()->activeUploadTransferFound(info.get());
+
+        result =  transfer != nullptr;
+    }
+
+    return result;
+}
+
+bool StalledIssue::isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const
+{
+    auto result(false);
+
+    auto node = consultCloudData()->getNode();
+    if(node)
+    {
+        info->nodeHandle = consultCloudData()->getPathHandle();
+        auto transfer = MegaSyncApp->getTransfersModel()->activeDownloadTransferFound(info.get());
+
+        result =  transfer != nullptr;
+    }
+
+    return result;
+}
+
 bool StalledIssue::isSymLink() const
 {
     return consultLocalData() && consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
 }
 
+bool StalledIssue::hasFingerprint() const
+{
+    return consultCloudData() && consultCloudData()->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
+}
+
 bool StalledIssue::isSolvable() const
 {
-    return mReason == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced ||
+    return !isSolved() && (mReason == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced ||
            mReason == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
            mReason == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose ||
-            canBeIgnored();
+            canBeIgnored());
 }
 
 bool StalledIssue::canBeIgnored() const
@@ -484,7 +534,8 @@ bool StalledIssue::checkForExternalChanges()
         if(mLocalData)
         {
             QFileInfo fileInfo(mLocalData->getPath().path);
-            if(!fileInfo.exists())
+            //Issues without fingerprint may contain
+            if(!fileInfo.exists() && hasFingerprint())
             {
                 setIsSolved(true);
             }
@@ -498,7 +549,8 @@ bool StalledIssue::checkForExternalChanges()
                 auto node = mCloudData->getNode(true);
                 if(!node ||
                    MegaSyncApp->getMegaApi()->isInRubbish(node.get()) ||
-                   currentNode->getParentHandle() != node->getParentHandle())
+                   currentNode->getParentHandle() != node->getParentHandle() ||
+                   (!hasFingerprint() && (node->getFingerprint() != nullptr)))
                 {
                     setIsSolved(true);
                 }
@@ -514,7 +566,11 @@ QStringList StalledIssue::getLocalFiles()
     QStringList files;
     if(getLocalData())
     {
-        files << getLocalData()->getFilePath();
+        auto file = getLocalData()->getFilePath();
+        if(!file.isEmpty())
+        {
+            files << file;
+        }
     }
 
     return files;

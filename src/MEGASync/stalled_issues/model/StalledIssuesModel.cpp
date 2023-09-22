@@ -54,25 +54,30 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 }
 
                 variant.getData()->fillIssue(stall);
-                variant.getData()->endFillingIssue();
 
-                if(mIsEventRequest)
+                //Chec if it is being solved...
+                if(!variant.getData()->isSolved())
                 {
-                    if(!variant.getData()->isSolvable())
+                    variant.getData()->endFillingIssue();
+
+                    if(mIsEventRequest)
                     {
-                        QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1").arg(QString::number(stall->reason())));
-                        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, eventMessage.toUtf8().constData(), false, nullptr);
-                    }
-                }
-                else
-                {
-                    if(variant.getData()->isSolvable())
-                    {
-                        solvableItems.append(variant);
+                        if(!variant.getData()->isSolvable())
+                        {
+                            QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1").arg(QString::number(stall->reason())));
+                            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, eventMessage.toUtf8().constData(), false, nullptr);
+                        }
                     }
                     else
                     {
-                        mCacheStalledIssues.stalledIssues.append(variant);
+                        if(variant.getData()->isSolvable())
+                        {
+                            solvableItems.append(variant);
+                        }
+                        else
+                        {
+                            mCacheStalledIssues.stalledIssues.append(variant);
+                        }
                     }
                 }
             }
@@ -264,6 +269,7 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
 
         emit stalledIssuesCountChanged();
         emit stalledIssuesReceived();
+        emit stalledIssuesChanged();
     });
 }
 
@@ -463,7 +469,9 @@ void StalledIssuesModel::fullReset()
 
 bool StalledIssuesModel::isEmpty() const
 {
-    return !MegaSyncApp->getMegaApi()->isSyncStalled();
+    return !MegaSyncApp->getMegaApi()->isSyncStalled() ||
+           rowCount(QModelIndex()) == 0 ||
+           (mSolvedStalledIssues.size() > 0 && rowCount(QModelIndex()) == mSolvedStalledIssues.size());
 }
 
 void StalledIssuesModel::finishStalledIssues(const QModelIndexList &indexes)
@@ -711,6 +719,7 @@ void StalledIssuesModel::finishSolvingIssues(int issuesFixed, bool sendMessage)
     }
 
     emit stalledIssuesCountChanged();
+    emit stalledIssuesChanged();
 }
 
 void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
@@ -1003,6 +1012,27 @@ void StalledIssuesModel::ignoreSymLinks()
     }
     solveListOfIssues(list, resolveIssue);
 
+}
+
+void StalledIssuesModel::fixFingerprint(const QModelIndexList &list)
+{
+    auto finishIssue = [this]()
+    {
+        mFingerprintIssuesSolver.solveIssues(mFingerprintIssuesToFix);
+        mFingerprintIssuesToFix.clear();
+    };
+
+    auto resolveIssue = [this](int row) -> bool
+    {
+        auto issue(mStalledIssues.at(row));
+        mFingerprintIssuesToFix.append(issue);
+
+        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_FINGERPRINT_MISSING_SOLVED_MANUALLY,
+                                             "Cloud fingerprint missing solved manually", false, nullptr);
+        return true;
+    };
+
+    solveListOfIssues(list, resolveIssue, finishIssue);
 }
 
 void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &list, int option)

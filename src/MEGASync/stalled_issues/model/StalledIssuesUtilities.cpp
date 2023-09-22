@@ -2,6 +2,7 @@
 
 #include <MegaApplication.h>
 #include <mega/types.h>
+#include <MegaDownloader.h>
 
 #include <QFile>
 #include <QDir>
@@ -276,4 +277,83 @@ bool StalledIssuesBySyncFilter::isBelow(const QString &syncRootPath, const QStri
     //Get parent folder
     fileDir.cdUp();
     return isBelow(syncRootPath, fileDir.path());
+}
+
+/////////////////////////////////////////////////////
+/// \brief FingerprintMissingSolver::FingerprintMissingSolver
+FingerprintMissingSolver::FingerprintMissingSolver()
+    :mDownloader(new MegaDownloader(MegaSyncApp->getMegaApi(), nullptr))
+{
+}
+
+void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pathsToSolve)
+{
+    QDir dir(Preferences::instance()->getTempTransfersPath());
+    if (dir.exists() ||
+        dir.mkpath(QString::fromUtf8(".")))
+    {
+        auto tempPath(Preferences::instance()->getTempTransfersPath());
+
+        QMap<QString, std::shared_ptr<QQueue<WrappedNode*>>> nodesToDownloadByPath;
+        auto appendNodeToQueue = [&](const QString& targetPath, mega::MegaNode* node)
+        {
+            if(!nodesToDownloadByPath.contains(targetPath))
+            {
+                auto queue(std::make_shared<QQueue<WrappedNode*>>());
+                queue->append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
+                nodesToDownloadByPath.insert(targetPath, queue);
+            }
+            else
+            {
+                auto queue = nodesToDownloadByPath.value(targetPath);
+                if(queue)
+                {
+                    queue->append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
+                }
+            }
+        };
+
+        foreach(auto issue, pathsToSolve)
+        {
+            std::shared_ptr<DownloadTransferInfo> info(new DownloadTransferInfo());
+            if(!issue.consultData()->isBeingSolvedByDownload(info))
+            {
+                mega::MegaNode* node(MegaSyncApp->getMegaApi()->getNodeByHandle(info->nodeHandle));
+
+                auto localPath = issue.consultData()->consultLocalData() ?
+                            issue.consultData()->consultLocalData()->getNativeFilePath() :
+                            QString();
+                if(!localPath.isEmpty())
+                {
+                    QFile localPathFile(localPath);
+                    if(!localPathFile.exists())
+                    {
+                        QFileInfo  localFilePathInfo(localPath);
+                        QString localFolderPath(localFilePathInfo.absolutePath());
+                        QDir createTarget;
+                        createTarget.mkdir(localFolderPath);
+                        QDir localFolderPathDir(localFolderPath);
+                        if(localFolderPathDir.exists())
+                        {
+                            appendNodeToQueue(localFolderPath, node);
+                            continue;
+                        }
+                    }
+                }
+
+                if(node)
+                {
+                     appendNodeToQueue(tempPath, node);
+                }
+            }
+        }
+
+        foreach(auto targetFolder, nodesToDownloadByPath.keys())
+        {
+            std::shared_ptr<QQueue<WrappedNode*>> nodesToDownload(nodesToDownloadByPath.value(targetFolder));
+            BlockingBatch downloadBatches;
+            mDownloader->processDownloadQueue(nodesToDownload.get(), downloadBatches, targetFolder, targetFolder != tempPath);
+            qDeleteAll(*nodesToDownload.get());
+        }
+    }
 }

@@ -96,6 +96,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     auto selection = dialog->getDialog()->getSelection(reasons);
     auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
+    auto pluralNumber(1);
     if(selection.size() <= 1)
     {
         if(allSimilarIssues.size() != selection.size())
@@ -111,6 +112,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     }
     else
     {
+        pluralNumber = selection.size();
         textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
     }
 
@@ -118,20 +120,25 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     if(localInfo.isFile())
     {
-        msgInfo.text = tr("Are you sure you want to keep the <b>local file</b> %1?").arg(ui->chooseLocalCopy->data()->getFileName());
+        msgInfo.text = tr("Are you sure you want to keep the <b>local file</b> %1?", "", pluralNumber).arg(ui->chooseLocalCopy->data()->getFileName());
     }
     else
     {
-        msgInfo.text = tr("Are you sure you want to keep the <b>local folder</b> %1?").arg(ui->chooseLocalCopy->data()->getFileName());
+        msgInfo.text = tr("Are you sure you want to keep the <b>local folder</b> %1?", "", pluralNumber).arg(ui->chooseLocalCopy->data()->getFileName());
     }
 
     if(node->isFile())
     {
-        msgInfo.informativeText = tr("The <b>local file</b> %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease wait for the upload to complete.</br>").arg(localInfo.fileName());
+        msgInfo.informativeText = tr("The <b>local file</b> %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease wait for the upload to complete.</br>", "", pluralNumber).arg(localInfo.fileName());
     }
     else
     {
-        msgInfo.informativeText = tr("The <b>remote folder</b> %1 will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>").arg(localInfo.fileName());
+        msgInfo.informativeText = tr("The <b>remote folder</b> %1 will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>", "", pluralNumber).arg(localInfo.fileName());
+    }
+
+    if(MegaSyncApp->getTransfersModel()->areAllPaused())
+    {
+        msgInfo.informativeText.append(tr("<br><b>Please, resume your transfers to fix the issue</b></br>", "", pluralNumber));
     }
 
     msgInfo.finishFunc = [this, selection, allSimilarIssues, dialog](QMessageBox* msgBox)
@@ -176,6 +183,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     auto selection = dialog->getDialog()->getSelection(reasons);
     auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
+    auto pluralNumber(1);
     if(selection.size() <= 1)
     {
         if(allSimilarIssues.size() != selection.size())
@@ -191,6 +199,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     }
     else
     {
+        pluralNumber = selection.size();
         textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
     }
 
@@ -200,38 +209,39 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     {
         if(node->isFile())
         {
-            msgInfo.text = tr("Are you sure you want to keep the <b>remote file</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+            msgInfo.text = tr("Are you sure you want to keep the <b>remote file</b> %1?", "", pluralNumber).arg(ui->chooseRemoteCopy->data()->getFileName());
         }
         else
         {
-            msgInfo.text = tr("Are you sure you want to keep the <b>remote folder</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+            msgInfo.text = tr("Are you sure you want to keep the <b>remote folder</b> %1?", "", pluralNumber).arg(ui->chooseRemoteCopy->data()->getFileName());
         }
     }
     else
     {
-        msgInfo.text = tr("Are you sure you want to keep the <b>remote item</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+        msgInfo.text = tr("Are you sure you want to keep the <b>remote item</b> %1?", "", pluralNumber).arg(ui->chooseRemoteCopy->data()->getFileName());
     }
 
-    if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
+    //For the moment, TYPE_TWOWAY or TYPE_UNKNOWN
+    if(getData().consultData()->getSyncType() != mega::MegaSync::SyncType::TYPE_BACKUP)
     {
         if(localInfo.isFile())
         {
-            msgInfo.informativeText = tr("The <b>local file</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
+            msgInfo.informativeText = tr("The <b>local file</b> %1 will be moved to OS %2", "", pluralNumber).arg(localInfo.fileName(), PlatformStrings::bin());
         }
         else
         {
-            msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
+            msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to OS %2", "", pluralNumber).arg(localInfo.fileName(), PlatformStrings::bin());
         }
     }
     else
     {
         if(localInfo.isFile())
         {
-            msgInfo.informativeText = tr("The backup will be disabled in order to protect the local file %1").arg(localInfo.fileName());
+            msgInfo.informativeText = tr("The backup will be disabled in order to protect the local file %1", "", pluralNumber).arg(localInfo.fileName());
         }
         else
         {
-            msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folder %1").arg(localInfo.fileName());
+            msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folder %1", "", pluralNumber).arg(localInfo.fileName());
         }
     }
 
