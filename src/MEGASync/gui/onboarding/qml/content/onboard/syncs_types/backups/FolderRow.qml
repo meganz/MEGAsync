@@ -305,8 +305,9 @@ Rectangle {
                 leftIcon.color: Styles.iconSecondary
                 error: hint.visible
                 sizes: MegaTextFields.SmallSizes {}
+                validator: RegExpValidator { regExp: /^[^*><?"\/\\\|: ]+$/ }
 
-                onReturnPressed: {
+                onAccepted: {
                     doneAction()
                 }
             }
@@ -317,7 +318,9 @@ Rectangle {
                 text: OnboardingStrings.done
                 sizes: MegaButtons.SmallSizes {}
                 onClicked: {
-                    doneAction()
+                    if (editTextField.acceptableInput){
+                        doneAction()
+                    }
                 }
             }
 

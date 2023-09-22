@@ -18,6 +18,8 @@ Rectangle {
     property alias placeholderText: textField.placeholderText
     property alias rightIconMouseArea: rightIconMouseArea
     property alias toolTip: toolTip
+    property alias acceptableInput: textField.acceptableInput
+    property alias validator: textField.validator
 
     // Component properties
     property bool error: false
@@ -31,6 +33,7 @@ Rectangle {
     signal backPressed()
     signal pastePressed()
     signal returnPressed()
+    signal accepted()
 
     function getHintHeight() {
         if(hintLoader.height > 0) {
@@ -97,6 +100,10 @@ Rectangle {
         bottomPadding: sizes.padding
         placeholderTextColor: colors.placeholder
         color: enabled ? colors.text : colors.textDisabled
+
+        onAccepted: {
+            root.accepted()
+        }
 
         font {
             pixelSize: MegaTexts.Text.Medium
