@@ -13,12 +13,12 @@ namespace
 {
     //constexpr char SIZE_RULE_REG_EX[] = "#*(exclude-(larger|smaller)):[0-9]+[kmgb]?$";
     constexpr char SIZE_RULE_LEFT_SIDE_REG_EX[] = "^#*(exclude-(larger|smaller))$";
-    constexpr char SIZE_RULE_RIGHT_SIDE_REG_EX[] = "^[0-9]+[kmgb]?$";
+    constexpr char SIZE_RULE_RIGHT_SIDE_REG_EX[] = "^[0-9]+[kmg]?$";
     constexpr char LARGE_SIZE_LEFT_SIDE_REG_EX[] = "#*(exclude-larger):*";
     constexpr char SMALL_SIZE_LEFT_SIDE_REG_EX[] = "#*(exclude-smaller):*";
-    constexpr char OTHER_RULE_REG_EX[] = "#*[+-][]adfsNnpGgRr]*:[^:]+";
     constexpr char NON_SIZE_LEFT_SIDE_REG_EX[] = "^#*[+-][]adfsNnpGgRr]*$";
-    constexpr char RIGHT_SIDE_TYPE_RULE_REG_EX[] = "^\\*\\.*";
+    constexpr char RIGHT_SIDE_TYPE_RULE_REG_EX[] = "^(\\*)?\\..*";
+    constexpr char CAPTURE_EXTENSION_REG_EX[] = "\\.(.*)";
 }
 
 MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder)
@@ -40,6 +40,10 @@ void MegaIgnoreManager::parseIgnoresFile()
             while (!in.atEnd())
             {
                 QString line = in.readLine();
+                if (line.trimmed().isEmpty())
+                {
+                    continue;
+                }
                 const bool isCommented(line.startsWith(QLatin1String("#")));
                 const auto ruleType = getRuleType(line);
                 switch (ruleType)
@@ -118,12 +122,12 @@ QList<std::shared_ptr<MegaIgnoreRule>> MegaIgnoreManager::getAllRules() const
 MegaIgnoreRule::RuleType MegaIgnoreManager::getRuleType(const QString& line)
 {
     const auto lineSplitted(line.split(QLatin1String(":")));
-    if (lineSplitted.size() != 2)
+    if (lineSplitted.size() < 2)
+    {
         return MegaIgnoreRule::RuleType::InvalidRule;
+    }
     const QString leftSide = lineSplitted[0];
-    const QString rightSide = lineSplitted[1];
-
-    std::string s = line.toStdString();
+    const QString rightSide = lineSplitted.mid(1).join(QLatin1String(":"));
 
     // Check size rule 
 	static const QRegularExpression sizeRuleLeftSide(QLatin1String(::SIZE_RULE_LEFT_SIDE_REG_EX), QRegularExpression::CaseInsensitiveOption);
@@ -134,16 +138,18 @@ MegaIgnoreRule::RuleType MegaIgnoreManager::getRuleType(const QString& line)
     }
     // Check if valid left side 
 	const static  QRegularExpression nonSizeRuleRegularExpression{ QLatin1String(::NON_SIZE_LEFT_SIDE_REG_EX) };
-	if (!nonSizeRuleRegularExpression.match(leftSide).hasMatch())
-		return MegaIgnoreRule::RuleType::InvalidRule;
+    if (!nonSizeRuleRegularExpression.match(leftSide).hasMatch())
+    {
+        return MegaIgnoreRule::RuleType::InvalidRule;
+    }
 
-
-   s = rightSide.toStdString();
    // Check if type rule
    const static QRegularExpression typeRuleRegEx{ QLatin1String(::RIGHT_SIDE_TYPE_RULE_REG_EX) };
    if (typeRuleRegEx.match(rightSide).hasMatch())
+   {
        return MegaIgnoreRule::RuleType::ExtensionRule;
-    return MegaIgnoreRule::NameRule;
+   }
+   return MegaIgnoreRule::NameRule;
 }
 
 QList<std::shared_ptr<MegaIgnoreNameRule> > MegaIgnoreManager::getNameRules() const
@@ -196,8 +202,12 @@ void MegaIgnoreManager::applyChanges()
     QStringList rules;
     foreach(auto& rule, mRules)
     {
-        if(rule->isValid() && !rule->isDeleted())
+        if(!rule->isDeleted())
         {
+            if (!rule->isValid())
+            {
+                rule->setCommented(true);
+            }
             rules.append(rule->getModifiedRule());
         }
     }
@@ -249,7 +259,7 @@ void MegaIgnoreRule::setDeleted(bool newIsDeleted)
     mIsDeleted = newIsDeleted;
 }
 
-void MegaIgnoreRule::setIsDirty()
+void MegaIgnoreRule::markAsDirty()
 {
     mIsDirty = true;
 }
@@ -304,7 +314,7 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(Class classType, const QString& pattern) 
     mClass(classType),
     mPattern(pattern)
 {
-    setIsDirty();
+    markAsDirty();
     fillWildCardType(pattern);
 }
 
@@ -372,9 +382,10 @@ MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(const QString &rule, bool isCom
 {
     mRuleType = RuleType::ExtensionRule;
     auto extensionSplitter(mPattern.split(QLatin1String(".")));
-    if(extensionSplitter.size() == 2)
+    QRegExp captureExtension{ QLatin1String(::CAPTURE_EXTENSION_REG_EX) };
+    if (captureExtension.indexIn(rule) != -1) 
     {
-        mExtension = extensionSplitter.at(1);
+        mExtension = captureExtension.cap(1); // Capture extension
     }
 }
 

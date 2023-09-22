@@ -64,7 +64,7 @@ void IgnoresEditingDialog::refreshUI()
             QListWidgetItem* item = new QListWidgetItem(rule->getModifiedRule(), ui->lExcludedNames);
             item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
             item->setCheckState(rule->isCommented() ? Qt::Unchecked : Qt::Checked); // AND initialize check state
-            item->setData(Qt::UserRole, rule->originalRule());
+            item->setData(Qt::UserRole, QVariant::fromValue(rule));
             if (!rule->isValid())
             {
                 static const auto red = QColor("red").lighter(180);
@@ -137,7 +137,7 @@ void IgnoresEditingDialog::on_bAddName_clicked()
     QListWidgetItem* item = new QListWidgetItem(rule->getModifiedRule(), ui->lExcludedNames);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
     item->setCheckState(Qt::Checked); // AND initialize check state
-    item->setData(Qt::UserRole, QLatin1String("-:") + text);
+    item->setData(Qt::UserRole, QVariant::fromValue(rule));
 }
 
 void IgnoresEditingDialog::on_bDeleteName_clicked()
@@ -150,7 +150,7 @@ void IgnoresEditingDialog::on_bDeleteName_clicked()
 
     for (int i = 0; i < selected.size(); i++)
     {
-        if(auto rule = mManager.getRuleByOriginalRule(selected[i]->data(Qt::UserRole).toString()))
+        if(auto rule = selected[i]->data(Qt::UserRole).value<std::shared_ptr<MegaIgnoreRule> >())
         {
             rule->setDeleted(true);
         }
@@ -187,7 +187,10 @@ void IgnoresEditingDialog::onlExcludedNamesChanged(const QModelIndex &topLeft, c
 {
     if(roles.size() == 1 && roles.first() == Qt::CheckStateRole)
     {
-
+        if (auto rule = topLeft.data(Qt::UserRole).value<std::shared_ptr<MegaIgnoreRule> >())
+        {
+            rule->setCommented(!topLeft.data(Qt::CheckStateRole).toBool());
+        }
     }
 }
 
