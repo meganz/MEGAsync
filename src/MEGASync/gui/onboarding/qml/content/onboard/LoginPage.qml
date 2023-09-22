@@ -209,6 +209,16 @@ LoginPageForm {
 
     Component.onDestruction:
     {
+        resetLoginControllerStatus()
+    }
+
+    Component.onCompleted:
+    {
+        resetLoginControllerStatus()
+    }
+
+    function resetLoginControllerStatus()
+    {
         LoginControllerAccess.emailError = false;
         LoginControllerAccess.emailErrorMsg = "";
         LoginControllerAccess.passwordError = false;
