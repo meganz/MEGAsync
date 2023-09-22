@@ -488,10 +488,8 @@ void MegaApplication::initialize()
     megaApi->disableGfxFeatures(mDisableGfx);
 
     model = SyncInfo::instance();
-    connect(model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSettings>)),
-        this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSettings>)));
-    connect(model, SIGNAL(syncRemoved(std::shared_ptr<SyncSettings>)),
-        this, SLOT(onSyncDeleted(std::shared_ptr<SyncSettings>)));
+    connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
+    connect(model, &SyncInfo::syncRemoved, this, &MegaApplication::onSyncModelUpdated);
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
     megaApiFolders->disableGfxFeatures(mDisableGfx);
@@ -4233,12 +4231,7 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
-void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSettings>)
-{
-    createAppMenus();
-}
-
-void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSettings>)
+void MegaApplication::onSyncModelUpdated(std::shared_ptr<SyncSettings>)
 {
     createAppMenus();
 }
