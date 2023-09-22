@@ -32,9 +32,11 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, QWidg
         cancelButton->setText(QLatin1String("Discard"));
 
         connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this](){
+            this->mIgnoresFileWatcher->blockSignals(true);
             applyChanges();
             accept();
         });
+        connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
     }
     auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
     mIgnoresFileWatcher->addPath(ignorePath);
