@@ -40,7 +40,7 @@ public:
     bool isDeleted() const;
     void setDeleted(bool newIsDeleted);
 
-    void setIsDirty();
+    void markAsDirty();
 
 protected:
     RuleType mRuleType;
