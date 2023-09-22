@@ -26,7 +26,7 @@ SyncsPage {
         spacing: 24
 
         Header {
-            title: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED ? OnboardingStrings.welcomeToMEGA : OnboardingStrings.letsGetYouSetUp
+            title: LoginControllerAccess.newAccount ? OnboardingStrings.welcomeToMEGA : OnboardingStrings.letsGetYouSetUp
             description: OnboardingStrings.chooseInstallation
             spacing: 36
             descriptionWeight: Font.DemiBold

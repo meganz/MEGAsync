@@ -14,6 +14,7 @@ class Preferences;
 class LoginController : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
     Q_OBJECT
+    Q_PROPERTY(bool newAccount MEMBER mNewAccount CONSTANT)
     Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
     Q_PROPERTY(double progress MEMBER mProgress READ getProgress NOTIFY progressChanged)
     Q_PROPERTY(State state MEMBER mState READ getState  WRITE setState NOTIFY stateChanged)
@@ -131,6 +132,7 @@ private:
     QString mName;
     QString mLastName;
     QString mPassword;
+    bool mNewAccount;
 };
 
 class FastLoginController : public LoginController
