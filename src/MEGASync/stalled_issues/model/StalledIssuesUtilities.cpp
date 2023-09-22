@@ -320,7 +320,9 @@ void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pat
             {
                 mega::MegaNode* node(MegaSyncApp->getMegaApi()->getNodeByHandle(info->nodeHandle));
 
-                auto localPath = issue.consultData()->consultLocalData()->getNativeMoveFilePath();
+                auto localPath = issue.consultData()->consultLocalData() ?
+                            issue.consultData()->consultLocalData()->getNativeFilePath() :
+                            QString();
                 if(!localPath.isEmpty())
                 {
                     QFile localPathFile(localPath);
