@@ -34,7 +34,6 @@
         <file>images/qml/onboarding/shield_account_proI.svg</file>
         <file>images/qml/onboarding/shield_account_proII.svg</file>
         <file>images/qml/onboarding/shield_account_proIII.svg</file>
-        <file>images/qml/onboarding/sync.svg</file>
         <file>images/qml/onboarding/twofa.png</file>
         <file>images/qml/onboarding/mail.svg</file>
         <file>images/qml/onboarding/OKIcon.png</file>
@@ -60,5 +59,7 @@
         <file>images/qml/guest/warning.png</file>
         <file>images/qml/guest/warning@2x.png</file>
         <file>images/qml/guest/warning@3x.png</file>
+        <file>images/qml/onboarding/syncb.svg</file>
+        <file>images/qml/onboarding/sync.svg</file>
     </qresource>
 </RCC>
