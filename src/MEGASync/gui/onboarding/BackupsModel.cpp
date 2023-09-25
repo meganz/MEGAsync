@@ -153,6 +153,13 @@ bool BackupsModel::setData(const QModelIndex& index, const QVariant& value, int 
                 break;
             case SelectedRole:
             {
+                QDirIterator dirIt(item->mFolder);
+                QFileInfo dirInfo(item->mFolder);
+                if(dirInfo.exists() && !dirInfo.isReadable())
+                {
+                    qDebug()<<"NO READABLE"; //TODO: cosas
+                    return false;
+                }
                 item->mSelected = value.toBool();
                 checkSelectedAll();
                 break;
