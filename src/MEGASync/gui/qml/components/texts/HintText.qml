@@ -16,10 +16,11 @@ Item {
     property alias text: hintText.text
     property HintStyle styles: HintStyle {}
     property int textSize: Text.Size.Normal
+    implicitHeight: row.height
 
     Row {
         id: row
-        height: visible ? hintTitle.height + hintText.height : 0
+        height: visible ? col.implicitHeight : 0
         spacing: root.icon !== "" ? 8 : 0
 
         MegaImages.SvgImage {
