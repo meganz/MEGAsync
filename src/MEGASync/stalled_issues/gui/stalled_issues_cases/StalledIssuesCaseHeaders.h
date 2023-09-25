@@ -69,6 +69,19 @@ protected slots:
     void refreshCaseActions(StalledIssueHeader *header) override;
 };
 
+//Cloud node undecrypted
+class CloudNodeUndecryptedHeader : public StalledIssueHeaderCase
+{
+    Q_OBJECT
+
+public:
+    CloudNodeUndecryptedHeader(StalledIssueHeader* header);
+
+protected slots:
+    void refreshCaseTitles(StalledIssueHeader* header) override;
+};
+
+
 //Create folder failed
 class FileIssueHeader : public StalledIssueHeaderCase
 {

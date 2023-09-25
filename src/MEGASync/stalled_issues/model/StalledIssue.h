@@ -280,9 +280,11 @@ public:
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
     bool isSymLink() const;
-    bool hasFingerprint() const;
+    bool missingFingerprint() const;
     bool canBeIgnored() const;
     QStringList getIgnoredFiles() const;
+
+    bool isUndecrypted() const;
 
     bool isSolvable() const;
 

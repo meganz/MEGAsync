@@ -299,7 +299,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         setIsFile(cloudTargetPath, false);
     }
 
-    if(!hasFingerprint())
+    if(missingFingerprint())
     {
         std::shared_ptr<DownloadTransferInfo> info(new DownloadTransferInfo());
         //Check if transfer already exists
@@ -479,9 +479,9 @@ bool StalledIssue::isSymLink() const
     return consultLocalData() && consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
 }
 
-bool StalledIssue::hasFingerprint() const
+bool StalledIssue::missingFingerprint() const
 {
-    return consultCloudData() && consultCloudData()->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
+    return consultCloudData() && consultCloudData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
 }
 
 bool StalledIssue::isSolvable() const
@@ -500,6 +500,12 @@ bool StalledIssue::canBeIgnored() const
 QStringList StalledIssue::getIgnoredFiles() const
 {
     return mIgnoredPaths;
+}
+
+bool StalledIssue::isUndecrypted() const
+{
+    return consultCloudData() &&
+            consultCloudData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::UndecryptedCloudNode;
 }
 
 bool StalledIssue::isFile() const
@@ -535,7 +541,7 @@ bool StalledIssue::checkForExternalChanges()
         {
             QFileInfo fileInfo(mLocalData->getPath().path);
             //Issues without fingerprint may contain
-            if(!fileInfo.exists() && hasFingerprint())
+            if(!fileInfo.exists() && !missingFingerprint())
             {
                 setIsSolved(true);
             }
@@ -550,7 +556,7 @@ bool StalledIssue::checkForExternalChanges()
                 if(!node ||
                    MegaSyncApp->getMegaApi()->isInRubbish(node.get()) ||
                    currentNode->getParentHandle() != node->getParentHandle() ||
-                   (!hasFingerprint() && (node->getFingerprint() != nullptr)))
+                   (missingFingerprint() && (node->getFingerprint() != nullptr)))
                 {
                     setIsSolved(true);
                 }

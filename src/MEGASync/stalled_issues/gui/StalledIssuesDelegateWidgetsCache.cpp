@@ -204,6 +204,10 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
             {
                 headerCase = new SymLinkHeader(header);
             }
+            else if(issue.consultData()->isUndecrypted())
+            {
+                headerCase = new CloudNodeUndecryptedHeader(header);
+            }
             else
             {
                 headerCase = new FileIssueHeader(header);
@@ -232,7 +236,7 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
         }
         case mega::MegaSyncStall::SyncStallReason::DownloadIssue:
         {
-            if(!issue.consultData()->hasFingerprint())
+            if(issue.consultData()->missingFingerprint())
             {
                 headerCase = new CloudFingerprintMissingHeader(header);
             }

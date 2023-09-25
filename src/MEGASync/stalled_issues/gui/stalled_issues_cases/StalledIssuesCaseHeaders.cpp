@@ -182,7 +182,7 @@ CloudFingerprintMissingHeader::CloudFingerprintMissingHeader(StalledIssueHeader 
 void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
 {
     auto fingerprintMissingChecker = [](const std::shared_ptr<const StalledIssue> issue){
-        return !issue->hasFingerprint();
+        return issue->missingFingerprint();
     };
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
@@ -263,6 +263,17 @@ void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *heade
     {
         header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
     }
+}
+
+//Cloud node undecrypted
+CloudNodeUndecryptedHeader::CloudNodeUndecryptedHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
+{}
+
+void CloudNodeUndecryptedHeader::refreshCaseTitles(StalledIssueHeader* header)
+{
+    header->setText(tr("Clode node undecrypted <b>%1</b>").arg(header->displayFileName()));
+    header->setTitleDescriptionText(tr("Decryption process could not be completed. Reload your account on http://mega.io or contact support."));
 }
 
 //Local folder not scannable
