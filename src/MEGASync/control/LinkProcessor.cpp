@@ -242,7 +242,7 @@ void LinkProcessor::importLinks(QString megaPath)
         }
 
         mRequestCounter++;
-        megaApi->createFolder("MEGAsync Imports", rootNode.get(), delegateListener);
+        megaApi->createFolder("MEGA Imports", rootNode.get(), delegateListener);
     }
 }
 

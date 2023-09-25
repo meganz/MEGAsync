@@ -310,6 +310,9 @@ border-bottom: 1px solid #EFEFEC;
           <height>0</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>
@@ -341,6 +344,9 @@ border-bottom: 1px solid #EFEFEC;
           <height>0</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -365,9 +371,12 @@ border-bottom: 1px solid #EFEFEC;
         </property>
         <property name="minimumSize">
          <size>
-          <width>16777215</width>
-          <height>16777215</height>
+         <width>16777215</width>
+         <height>16777215</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>Credits</string>

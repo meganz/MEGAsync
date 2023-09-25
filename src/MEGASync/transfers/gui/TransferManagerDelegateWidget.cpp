@@ -211,7 +211,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->wProgressBar->setVisible(false);
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->lItemFailed->setText(getState(TRANSFER_STATES::STATE_FAILED));
-                mUi->lItemFailed->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
+                mUi->lItemFailed->setToolTip(getErrorInContext());
                 showTPauseResume = false;
             }
 
@@ -232,7 +232,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
                 pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
-                mUi->lItemStatus->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
+                mUi->lItemStatus->setToolTip(getErrorInContext());
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
 

@@ -11,6 +11,8 @@
 #include <QDataStream>
 #include <QQueue>
 #include <QNetworkInterface>
+#include <QFutureWatcher>
+
 #include <memory>
 
 #include "gui/TransferManager.h"
@@ -646,10 +648,14 @@ private:
     }
 
     void processUpgradeSecurityEvent();
+    QQueue<QString> createQueue(const QStringList& newUploads) const;
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
+
+private:
+    QFutureWatcher<NodeCount> mWatcher;
 };
 
 class DeferPreferencesSyncForScope

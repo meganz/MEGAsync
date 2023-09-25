@@ -39,6 +39,7 @@
 #include <QScreen>
 #include <QSettings>
 #include <QToolTip>
+#include <QFuture>
 
 #include <assert.h>
 
@@ -113,7 +114,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     scanStageController(this),
     mDisableGfx (false)
 {
-
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!getenv("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
     {
@@ -353,9 +353,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     connect(mFolderTransferListener.get(), &FolderTransferListener::folderTransferUpdated,
             this, &MegaApplication::onFolderTransferUpdate);
 
-    connect(&scanStageController, &ScanStageController::enableTransferActions,
-            this, &MegaApplication::enableTransferActions);
-
     connect(&transferProgressController, &BlockingStageProgressController::updateUi,
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
@@ -547,7 +544,7 @@ void MegaApplication::initialize()
     }
     trayIcon->show();
 
-    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
+    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGA Desktop App is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
     megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
@@ -1008,11 +1005,22 @@ void MegaApplication::updateTrayIcon()
         icon = icons["logging"];
     }
 
-    QString tooltip = QString::fromUtf8("%1 %2\n%3").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING).arg(tooltipState);
+    QString tooltip = QString::fromUtf8("%1 %2\n").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING);
 
     if (updateAvailable)
     {
-        tooltip += QString::fromUtf8("\n") + tr("Update available!");
+        // Only overwrite the tooltipState if it is "Up to date", because
+        // in that case it would be conflicting with "Update available!"
+        if (tooltipState != tr("Up to date"))
+        {
+            tooltip += tooltipState + QString::fromUtf8("\n");
+        }
+
+        tooltip += tr("Update available!");
+    }
+    else
+    {
+        tooltip += tooltipState;
     }
 
     if (!icon.isEmpty())
@@ -1354,7 +1362,6 @@ if (!preferences->lastExecutionTime())
         if (!QSystemTrayIcon::isSystemTrayAvailable())
         {
             checkSystemTray();
-
             if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
             {
                 showInfoDialog();
@@ -1458,6 +1465,10 @@ if (!preferences->lastExecutionTime())
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
     });
+
+    // Connect ScanStage signal
+    connect(&scanStageController, &ScanStageController::enableTransferActions,
+            this, &MegaApplication::enableTransferActions);
 
     // Process any pending download/upload queued during GuestMode
     processDownloads();
@@ -1769,7 +1780,7 @@ void MegaApplication::rebootApplication(bool update)
 
     reboot = true;
     auto transferCount = getTransfersModel()->getTransfersCount();
-    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting()))
+    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting() || megaApi->isScanning()))
     {
         if (!updateBlocked)
         {
@@ -3426,6 +3437,7 @@ MegaApplication::NodeCount MegaApplication::countFilesAndFolders(const QStringLi
             }
         }
     }
+
     return count;
 }
 
@@ -3467,8 +3479,7 @@ void MegaApplication::processUpgradeSecurityEvent()
         {
         if (msg->result() == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, this, [=](bool isContextValid,
-                                                         const MegaRequest&, const MegaError& e){
+            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, this, [=](bool isContextValid, const MegaRequest&, const MegaError& e){
                 if (isContextValid && e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMessage = tr("Failed to ugrade security. Error: %1")
@@ -3485,6 +3496,16 @@ void MegaApplication::processUpgradeSecurityEvent()
     };
 
     QMegaMessageBox::information(msgInfo);
+}
+
+QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
+{
+    QQueue<QString> newUploadQueue;
+    foreach(QString file, newUploads)
+    {
+        newUploadQueue.append(file);
+    }
+    return newUploadQueue;
 }
 
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
@@ -4177,11 +4198,11 @@ void MegaApplication::checkOperatingSystem()
             msgInfo.title = getMEGAString();
             QString message = tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef __APPLE__
-                    + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.");
+                              + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.");
 #elif defined(_WIN32)
-                    + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.");
+                              + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.");
 #else
-                    + tr("MEGAsync will continue to work, however you might not receive new updates.");
+                              + tr("MEGAsync will continue to work, however you might not receive new updates.");
 #endif
 
             msgInfo.text = message;
@@ -4863,13 +4884,7 @@ void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
                                  parent,
                                  [this/*, blocker*/](QStringList files)
     {
-        QQueue<QString> qFiles;
-        foreach(QString file, files)
-        {
-            qFiles.append(file);
-        }
-
-        shellUpload(qFiles);
+        shellUpload(createQueue(files));
     });
 }
 
@@ -5146,7 +5161,7 @@ void MegaApplication::createTrayIcon()
 
 void MegaApplication::processUploads()
 {
-    if (appfinished)
+    if (appfinished || !megaApi->isLoggedIn())
     {
         return;
     }
@@ -5224,7 +5239,7 @@ void MegaApplication::processUploads()
 
 void MegaApplication::processDownloads()
 {
-    if (appfinished)
+    if (appfinished || !megaApi->isLoggedIn())
     {
         return;
     }
@@ -5454,15 +5469,10 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     auto processUpload = [this](QStringList selectedFiles){
         if (!selectedFiles.isEmpty())
         {
-            std::unique_ptr<MegaNode> target(megaApi->getNodeByHandle(fileUploadTarget));
-            int files = 0;
-            for (const auto& path : selectedFiles)
-            {
-                files++;
-                startUpload(path, target.get(), nullptr);
-            }
+            uploadQueue.append(createQueue(selectedFiles));
+            processUploadQueue(fileUploadTarget);
 
-            HTTPServer::onUploadSelectionAccepted(files, 0);
+            HTTPServer::onUploadSelectionAccepted(selectedFiles.size(), 0);
         }
         else
         {
@@ -5501,10 +5511,16 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     auto processUpload = [this](QStringList foldersSelected){
         if (!foldersSelected.isEmpty())
         {
-            NodeCount nodeCount = countFilesAndFolders(foldersSelected);
+            QFuture<NodeCount> future;
 
-            processUploads(foldersSelected);
-            HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+            connect(&mWatcher, &QFutureWatcher<NodeCount>::finished, this, [this, foldersSelected]() {
+                const NodeCount nodeCount = mWatcher.result();
+                processUploads(foldersSelected);
+                HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+            });
+
+            future = QtConcurrent::run(countFilesAndFolders, foldersSelected);
+            mWatcher.setFuture(future);
         }
         else
         {
@@ -5955,7 +5971,6 @@ void MegaApplication::openSettings(int tab)
     }
     else
     {
-
         //Show a new settings dialog
         mSettingsDialog = new SettingsDialog(this, proxyOnly);
         mSettingsDialog->setUpdateAvailable(updateAvailable);
@@ -6211,7 +6226,7 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About MEGAsync"), QLatin1String("://images/ico_about_MEGA.png"));
+        aboutAction = new MenuItemAction(tr("About"), QLatin1String("://images/ico_about_MEGA.png"));
         aboutAction->setManagesHoverStates(true);
         connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
 
@@ -6279,7 +6294,7 @@ void MegaApplication::createGuestMenu()
     }
     else
     {
-        updateActionGuest = new MenuItemAction(tr("About MEGAsync"), QLatin1String("://images/ico_about_MEGA.png"));
+        updateActionGuest = new MenuItemAction(tr("About"), QLatin1String("://images/ico_about_MEGA.png"));
         connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onAboutClicked);
     }
 
@@ -6499,7 +6514,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 msgInfo.ignoreCloseAll = true;
                 QMegaMessageBox::critical(msgInfo);
                 break;
-        }
+            }
         }
 
     }
@@ -6855,36 +6870,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_OK)
         {
             //Update/set root node
-            getRootNode(true); //TODO: move this to thread pool, notice that mRootNode is used below
+            getRootNode(true);
             getVaultNode(true);
             getRubbishNode(true);
 
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
-
-            // TODO: check with sdk team if this case is possible
-            if (!mRootNode)
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title =  QMegaMessageBox::errorTitle();
-                msgInfo.text =   tr("Unable to get the filesystem.\n"
-                                                       "Please, try again. If the problem persists "
-                                    "please contact bug@mega.co.nz");
-                msgInfo.finishFunc = [this](QPointer<QMessageBox>)
-                {
-                    auto setupWizard = DialogOpener::findDialog<SetupWizard>();
-                    if(setupWizard)
-                    {
-                        setupWizard->close();
-                    }
-
-                    rebootApplication(false);
-                };
-
-                QMegaMessageBox::warning(msgInfo);
-
-                break;
-            }
 
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
             bool logged = preferences->logged();
@@ -6929,60 +6920,31 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         break;
     }
-    case MegaRequest::TYPE_CHANGE_PW:
-    {
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title =  tr("Password changed");
-            msgInfo.text =   tr("Your password has been changed.");
-            QMegaMessageBox::information(msgInfo);
-        }
-        break;
-    }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        bool storage = (request->getNumDetails() & 0x01) != 0;
-        bool transfer = (request->getNumDetails() & 0x02) != 0;
-        bool pro = (request->getNumDetails() & 0x04) != 0;
+        // We need to be both logged AND have fetched the nodes to continue
+        // Do not continue if there was an error
+        if (mFetchingNodes || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
+        {
+            break;
+        }
+
+        auto flags = request->getNumDetails();
+        bool storage  = flags & 0x01;
+        bool transfer = flags & 0x02;
+        bool pro      = flags & 0x04;
 
         if (storage)  inflightUserStats[0] = false;
         if (transfer) inflightUserStats[1] = false;
         if (pro)      inflightUserStats[2] = false;
-
-        // We need to be both logged AND have fetched the nodes to continue
-        if (mFetchingNodes || !preferences->logged())
-        {
-            break;
-        }
-
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            break;
-        }
-
-        auto root = getRootNode();
-        auto vault = getVaultNode();
-        auto rubbish = getRubbishNode();
-
-        // TODO: investigate: is this case possible and what should we do? Restart the app?
-        if (!root || !vault || !rubbish)
-        {
-            break;
-        }
 
         //Account details retrieved, update the preferences and the information dialog
         shared_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
 
         mThreadPool->push([=]()
         {//thread pool function
-        shared_ptr<MegaNodeList> inShares(megaApi->getInShares());
 
-        if (!inShares)
-        {
-            // TODO: investigate: is this case possible and what should we do? Restart the app?
-            return;
-        }
+        shared_ptr<MegaNodeList> inShares(storage ? megaApi->getInShares() : nullptr);
 
         Utilities::queueFunctionInAppThread([=]()
         {//queued function
@@ -7011,7 +6973,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
 
         if (storage)
-        {
+        {   // Update storage related details
+
+            // Total storage
             preferences->setTotalStorage(details->getStorageMax());
 
             if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
@@ -7025,41 +6989,46 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setUsedStorage(receivedStorageSum);
             }
 
-            MegaHandle rootHandle = root->getHandle();
-            MegaHandle vaultHandle = vault->getHandle();
-            MegaHandle rubbishHandle = rubbish->getHandle();
+            // Cloud Drive
+            auto cloudDriveNode = getRootNode();
+            MegaHandle cloudDriveHandle = cloudDriveNode ? cloudDriveNode->getHandle() : INVALID_HANDLE;
+            preferences->setCloudDriveStorage(details->getStorageUsed(cloudDriveHandle));
+            preferences->setCloudDriveFiles(details->getNumFiles(cloudDriveHandle));
+            preferences->setCloudDriveFolders(details->getNumFolders(cloudDriveHandle));
 
-            // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
-            // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
-            preferences->setVersionsStorage(details->getVersionStorageUsed(rootHandle)
-                                          + details->getVersionStorageUsed(vaultHandle)
-                                          + details->getVersionStorageUsed(rubbishHandle));
-
-            preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
-            preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
-            preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
-
+            // Vault
+            auto vaultNode = getVaultNode();
+            MegaHandle vaultHandle = vaultNode ? vaultNode->getHandle() : INVALID_HANDLE;
             preferences->setVaultStorage(details->getStorageUsed(vaultHandle));
             preferences->setVaultFiles(details->getNumFiles(vaultHandle));
             preferences->setVaultFolders(details->getNumFolders(vaultHandle));
 
+            // Rubbish
+            auto rubbishNode = getRubbishNode();
+            MegaHandle rubbishHandle = rubbishNode ? rubbishNode->getHandle() : INVALID_HANDLE;
             preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
             preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
             preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
 
+            // Versions
+            // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
+            // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
+            preferences->setVersionsStorage(details->getVersionStorageUsed(cloudDriveHandle)
+                                          + details->getVersionStorageUsed(vaultHandle)
+                                          + details->getVersionStorageUsed(rubbishHandle));
+
+            // Inshares
             long long inShareSize = 0, inShareFiles = 0, inShareFolders = 0;
             for (int i = 0; i < inShares->size(); i++)
             {
                 MegaNode *node = inShares->get(i);
-                if (!node)
+                if (node)
                 {
-                    continue;
+                    MegaHandle handle = node->getHandle();
+                    inShareSize += details->getStorageUsed(handle);
+                    inShareFiles += details->getNumFiles(handle);
+                    inShareFolders += details->getNumFolders(handle);
                 }
-
-                MegaHandle handle = node->getHandle();
-                inShareSize += details->getStorageUsed(handle);
-                inShareFiles += details->getNumFiles(handle);
-                inShareFolders += details->getNumFolders(handle);
             }
             preferences->setInShareStorage(inShareSize);
             preferences->setInShareFiles(inShareFiles);
@@ -7072,28 +7041,36 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             notifyStorageObservers();
+
+            if (mStorageOverquotaDialog)
+            {
+                mStorageOverquotaDialog->refreshStorageDetails();
+            }
         }
 
-        const bool proUserIsOverquota (megaApi->getBandwidthOverquotaDelay() &&
-                    preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE);
-        if (proUserIsOverquota)
-        {
-            mTransferQuota->setOverQuota(std::chrono::seconds(megaApi->getBandwidthOverquotaDelay()));
-        }
+        if (transfer)
+        {   // Update transfer related details
+            const bool proUserIsOverquota (megaApi->getBandwidthOverquotaDelay() &&
+                                          preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE);
+            if (proUserIsOverquota)
+            {
+                mTransferQuota->setOverQuota(std::chrono::seconds(megaApi->getBandwidthOverquotaDelay()));
+            }
 
-        preferences->setTotalBandwidth(details->getTransferMax());
-        preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setUsedBandwidth(details->getTransferUsed());
+            preferences->setTotalBandwidth(details->getTransferMax());
+            preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setUsedBandwidth(details->getTransferUsed());
 
-        preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setTemporalBandwidth(details->getTemporalBandwidth());
-        preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
+            preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setTemporalBandwidth(details->getTemporalBandwidth());
+            preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
 
-        notifyBandwidthObservers();
+            notifyBandwidthObservers();
 
-        if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
-        {
-            mTransferQuota->updateQuotaState();
+            if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
+            {
+                mTransferQuota->updateQuotaState();
+            }
         }
 
         preferences->sync();
@@ -7103,14 +7080,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             infoDialog->setUsage();
             infoDialog->setAccountType(preferences->accountType());
         }
-
-        if (mStorageOverquotaDialog)
-        {
-            mStorageOverquotaDialog->refreshStorageDetails();
-        }
-
         });//end of queued function
-
         });// end of thread pool function
         break;
     }
@@ -7688,12 +7658,13 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi*)
 {
+    // TODO isCrashed: onReloadNeeded obsoleted by MegaEvent::EVENT_RELOAD
     if (appfinished)
     {
         return;
     }
 
-    // TODO: investigate this. Could a restart of the app be enough?
+    // TODO isCrashed: investigate this. Could a restart of the app be enough?
 
     //Don't reload the filesystem here because it's unsafe
     //and the most probable cause for this callback is a false positive.

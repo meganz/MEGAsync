@@ -10,6 +10,7 @@ HEADERS +=  $$PWD/Platform.h \
             $$PWD/ShellNotifier.h \
             $$PWD/PowerOptions.h \
             $$PWD/PlatformStrings.h
+
 win32 {
     SOURCES +=	$$PWD/win/PlatformImplementation.cpp \
     $$PWD/win/RecursiveShellNotifier.cpp \
@@ -56,10 +57,15 @@ unix:!macx {
         $$PWD/linux/ExtServer.cpp \
         $$PWD/linux/NotifyServer.cpp \
         $$PWD/linux/PowerOptions.cpp \
-        $$PWD/linux/PlatformStrings.cpp
+        $$PWD/linux/PlatformStrings.cpp \
+        $$PWD/linux/DolphinFileManager.cpp \
+        $$PWD/linux/NautilusFileManager.cpp 
+
     HEADERS += $$PWD/linux/PlatformImplementation.h \
         $$PWD/linux/ExtServer.h \
-        $$PWD/linux/NotifyServer.h
+        $$PWD/linux/NotifyServer.h \
+        $$PWD/linux/DolphinFileManager.h \
+        $$PWD/linux/NautilusFileManager.h 
 
     LIBS += -lssl -lcrypto -ldl -lxcb
     DEFINES += USE_DBUS

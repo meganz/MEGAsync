@@ -566,9 +566,11 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
                 if(auto context = requestReady(RemoteAttributeTypes::User, caller))
                 {
                     mOwner = user;
-                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this, [this ,func, context](bool isContextValid,
+                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this, [this ,func, context](
+                                                                                           bool isContextValid,
                                                                                            const mega::MegaRequest& request,
                                                                                            const mega::MegaError& e) {
+
                         if(!isContextValid)
                         {
                             return;

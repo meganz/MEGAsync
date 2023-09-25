@@ -300,8 +300,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/DialogOpener.h
-    ${MEGAsyncDir}/control/Version.h
     ${MEGAsyncDir}/control/FileFolderAttributes.h
+    ${MEGAsyncDir}/control/Version.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -489,6 +489,8 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/platform/linux/PlatformImplementation.h
         ${MEGAsyncDir}/platform/linux/ExtServer.h
         ${MEGAsyncDir}/platform/linux/NotifyServer.h
+        ${MEGAsyncDir}/platform/linux/DolphinFileManager.h
+        ${MEGAsyncDir}/platform/linux/NautilusFileManager.h
         )
 else()
     set (MOC_INPUT ${MOC_INPUT}
@@ -800,6 +802,8 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/platform/linux/NotifyServer.cpp
         ${MEGAsyncDir}/platform/linux/PlatformStrings.cpp
         ${MEGAsyncDir}/platform/linux/PowerOptions.cpp
+        ${MEGAsyncDir}/platform/linux/DolphinFileManager.cpp
+        ${MEGAsyncDir}/platform/linux/NautilusFileManager.cpp
         )
 else()
     set (SRCS ${SRCS}

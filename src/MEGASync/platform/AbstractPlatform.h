@@ -62,6 +62,8 @@ public:
     virtual void reloadFileManagerExtension() {};
     virtual void enableFileManagerExtension(bool) {};
 
+    virtual void streamWithApp(const QString& app, const QString& url) = 0;
+
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 
 protected:

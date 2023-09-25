@@ -7,6 +7,9 @@
 #include <cstring>
 #include <map>
 
+#include "DolphinFileManager.h"
+#include "NautilusFileManager.h"
+
 using namespace std;
 using namespace mega;
 
@@ -107,13 +110,22 @@ bool PlatformImplementation::isTilingWindowManager()
 
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
-    QString filebrowser = getDefaultFileBrowserApp();
-    // Nautilus on Gnome, does not open the directory if argument is given without surrounding double-quotes;
-    // Path is passed through QUrl which properly escapes special chars in native platform URIs
-    // which takes care of path names also containing double-quotes withing, which will stop
-    // Nautilus from parsing the argument string all-together
-    return QProcess::startDetached(filebrowser + QString::fromLatin1(" \"")
-                            + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
+    QString fileBrowser = getDefaultFileBrowserApp();
+
+    static const QMap<QString, QStringList> showInFolderCallMap
+    {
+        {QLatin1String("dolphin"), DolphinFileManager::getShowInFolderParams()},
+        {QLatin1String("nautilus"), NautilusFileManager::getShowInFolderParams()}
+    };
+
+    QStringList params;
+    auto itFoundAppParams = showInFolderCallMap.constFind(fileBrowser);
+    if (itFoundAppParams != showInFolderCallMap.constEnd())
+    {
+        params << *itFoundAppParams;
+    }
+
+    return QProcess::startDetached(fileBrowser, params << QUrl::fromLocalFile(pathIn).toString());
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
@@ -251,19 +263,13 @@ QString PlatformImplementation::getDefaultOpenAppByMimeType(QString mimeType)
     }
 
     QString line = contents.first();
-    int index = line.indexOf(QChar::fromAscii('%'));
-    int size = -1;
-    if (index != -1)
+    QRegExp captureRegexCommand(QString::fromUtf8("^Exec=([^' ']*)"));
+    if (captureRegexCommand.indexIn(line) != -1)
     {
-        size = index - 6;
+        return captureRegexCommand.cap(1); // return first group from regular expression.
     }
 
-    if (!size)
-    {
-        return QString();
-    }
-
-    return line.mid(5, size);
+    return QString();
 }
 
 bool PlatformImplementation::getValue(const char * const name, const bool default_value)
@@ -437,6 +443,12 @@ void PlatformImplementation::fileAndFolderSelector(QString title, QString defaul
         defaultDir = QLatin1String("/");
     }
     AbstractPlatform::fileAndFolderSelector(title, defaultDir, multiSelection, parent, func);
+}
+
+void PlatformImplementation::streamWithApp(const QString &app, const QString &url)
+{
+    QString command = QString::fromUtf8("%1 \"%2\"").arg(QDir::toNativeSeparators(app)).arg(url);
+    QProcess::startDetached(command);
 }
 
 QStringList PlatformImplementation::getListRunningProcesses()

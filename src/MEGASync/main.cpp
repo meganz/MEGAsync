@@ -701,6 +701,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Incomplete");
     QT_TRANSLATE_NOOP("MegaError", "Invalid key/Decryption error");
     QT_TRANSLATE_NOOP("MegaError", "Bad session ID");
+    QT_TRANSLATE_NOOP("MegaError", "File removed as it violated our Terms of Service");
     QT_TRANSLATE_NOOP("MegaError", "Blocked");
     QT_TRANSLATE_NOOP("MegaError", "Over quota");
     QT_TRANSLATE_NOOP("MegaError", "Temporarily not available");
@@ -732,7 +733,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Local path not available");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote node not found");
     QT_TRANSLATE_NOOP("MegaSyncError", "Reached storage quota limit");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Account expired (business or Pro Flexi)");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Your plan has expired");
     QT_TRANSLATE_NOOP("MegaSyncError", "Foreign target storage quota reached");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote path has changed");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote node moved to Rubbish Bin");
