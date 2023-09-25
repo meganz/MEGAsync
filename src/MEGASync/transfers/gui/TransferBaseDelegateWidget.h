@@ -73,6 +73,7 @@ protected:
     QString getState(TRANSFER_STATES state);
 
     int getNameAvailableSize(QWidget* nameContainer, QWidget* syncLabel, QSpacerItem* spacer);
+    QString getErrorInContext();
 
     virtual void reset();
 

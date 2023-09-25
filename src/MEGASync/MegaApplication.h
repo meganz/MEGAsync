@@ -11,6 +11,8 @@
 #include <QDataStream>
 #include <QQueue>
 #include <QNetworkInterface>
+#include <QFutureWatcher>
+
 #include <memory>
 #include <QQmlEngine>
 
@@ -634,6 +636,9 @@ private:
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
+
+private:
+    QFutureWatcher<NodeCount> mWatcher;
 };
 
 class DeferPreferencesSyncForScope
