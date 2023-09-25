@@ -354,6 +354,13 @@ void PlatformImplementation::initMenu(QMenu* m, const char *objectName, const bo
     }
 }
 
+QString PlatformImplementation::getSizeStringLocalizedOSbased(qint64 bytes)
+{
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+    return locale.formattedDataSize(bytes, 2, QLocale::DataSizeFormat::DataSizeSIFormat);
+}
+
 void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)
 {
     int xSign = 1;

@@ -17,9 +17,9 @@
 #endif
 
 FileFolderAttributes::FileFolderAttributes(QObject* parent)
-    : mCancelled(false),
-      mSize(-1),
-      QObject(parent)
+    : QObject(parent),
+    mCancelled(false),
+    mSize(NOT_READY)
 {
 }
 
@@ -191,7 +191,7 @@ void LocalFileFolderAttributes::requestSize(QObject* caller,std::function<void(q
             }
             else
             {
-                if(mSize < 0)
+                if(mSize <= Status::NOT_READY)
                 {
                     auto future = QtConcurrent::run([this]() -> qint64{
                         return calculateSize();
@@ -345,9 +345,13 @@ qint64 LocalFileFolderAttributes::calculateSize()
     qint64 newSize(0);
 
     QFileInfo fileInfo(mPath);
+    if(!fileInfo.isReadable())
+    {
+        newSize = NOT_READABLE;
+    }
     if(!mPath.isEmpty() && fileInfo.exists())
     {
-        QDirIterator filesIt(mPath, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::Subdirectories);
+        QDirIterator filesIt(mPath, QDir::Files| QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Hidden, QDirIterator::Subdirectories);
 
         while (filesIt.hasNext())
         {
@@ -413,10 +417,15 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
             }
             else
             {
-                MegaSyncApp->getMegaApi()->getFolderInfo(node.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                MegaSyncApp->getMegaApi()->getFolderInfo(node.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
                                                                                               [this]
-                                                                                              (bool, const mega::MegaRequest& request, const mega::MegaError& e)
-                {
+                                                                                              (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
+                {                                                           
+                    if (!isContextValid)
+                    {
+                        return;
+                    }
+
                     if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
                         && e.getErrorCode() == mega::MegaError::API_OK)
                     {
@@ -456,10 +465,15 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
 
         if(attributeNeedsUpdate(RemoteFileFolderAttributes::FileCount))
         {
-            MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+            MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
                                                                                           [this, func]
-                                                                                          (bool, const mega::MegaRequest& request, const mega::MegaError& e)
+                                                                                          (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
             {
+                if (!isContextValid)
+                {
+                    return;
+                }
+
                 if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
                         && e.getErrorCode() == mega::MegaError::API_OK)
                 {
@@ -556,10 +570,16 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
                 if(auto context = requestReady(RemoteAttributeTypes::User, caller))
                 {
                     mOwner = user;
-                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [this ,func, context](
-                                                                                           bool,
+                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this, [this ,func, context](
+                                                                                           bool isContextValid,
                                                                                            const mega::MegaRequest& request,
                                                                                            const mega::MegaError& e) {
+
+                        if (!isContextValid)
+                        {
+                            return;
+                        }
+
                         if (e.getErrorCode() == mega::MegaError::API_OK)
                         {
                             auto emailFromRequest = request.getEmail();

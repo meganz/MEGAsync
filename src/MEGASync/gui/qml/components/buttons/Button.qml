@@ -181,7 +181,6 @@ Qml.RoundButton {
         id: busyIndicator
 
         MegaBusyIndicator.BusyIndicator {
-            imageSource: Images.loader
             color: icons.colorEnabled
         }
     }

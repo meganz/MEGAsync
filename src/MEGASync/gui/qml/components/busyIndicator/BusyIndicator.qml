@@ -19,6 +19,7 @@ Qml.BusyIndicator {
     contentItem: MegaImages.SvgImage {
         id: iconImage
 
+        source: Images.loader
         anchors.fill: parent
         anchors.centerIn: parent
         visible: root.visible
@@ -29,7 +30,7 @@ Qml.BusyIndicator {
         source: iconImage
         angle: 120
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#303233"; }
+            GradientStop {  position: 0.0; color: "#303233"; }
             GradientStop { position: 1.0; color: "transparent"; }
         }
     }

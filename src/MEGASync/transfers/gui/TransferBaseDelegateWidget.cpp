@@ -167,6 +167,28 @@ int TransferBaseDelegateWidget::getNameAvailableSize(QWidget *nameContainer, QWi
     return nameContainer->contentsRect().width() - syncLabel->contentsRect().width() - nameContainer->layout()->spacing()*2 - spacer->sizeHint().width();
 }
 
+QString TransferBaseDelegateWidget::getErrorInContext()
+{
+    auto context (mega::MegaError::ErrorContexts::API_EC_DEFAULT);
+    switch (getData()->mType)
+    {
+        case TransferData::TRANSFER_DOWNLOAD:
+        case TransferData::TRANSFER_LTCPDOWNLOAD:
+        {
+                context = mega::MegaError::ErrorContexts::API_EC_DOWNLOAD;
+                break;
+        }
+        case TransferData::TRANSFER_UPLOAD:
+        {
+                context = mega::MegaError::ErrorContexts::API_EC_UPLOAD;
+                break;
+        }
+    }
+
+    return QCoreApplication::translate("MegaError",
+                                       mega::MegaError::getErrorString(getData()->mErrorCode, context));
+}
+
 void TransferBaseDelegateWidget::onTransferRemoved(const QModelIndex &parent, int first, int last)
 {
     if(getData())

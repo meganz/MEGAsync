@@ -10,6 +10,7 @@ import Components.CheckBoxes 1.0 as MegaCheckBoxes
 import Components.ToolTips 1.0 as MegaToolTips
 import Components.Buttons 1.0 as MegaButtons
 import Components.TextFields 1.0 as MegaTextFields
+import Components.BusyIndicator 1.0 as MegaBusyIndicator
 
 // Local
 import Onboard 1.0
@@ -85,7 +86,6 @@ Rectangle {
             readonly property int imageTextSpacing: 8
             readonly property int imageWidth: 16
             readonly property int textWidth: 248
-            readonly property int sizeTextWidth: 50
 
             property int checkboxSpacing: !checkbox.visible ? 0 : 12
 
@@ -133,7 +133,6 @@ Rectangle {
             }
 
             MegaTexts.SecondaryText {
-                width: contentRoot.sizeTextWidth
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -141,10 +140,16 @@ Rectangle {
                 font.pixelSize: MegaTexts.Text.Size.Small
                 horizontalAlignment: Qt.AlignRight
                 verticalAlignment: Qt.AlignVCenter
-                maximumLineCount: 1
-                wrapMode: Text.WrapAnywhere
                 color: Styles.textSecondary
-                visible: backupsProxyModel.selectedFilterEnabled
+                visible: backupsProxyModel.selectedFilterEnabled && mSizeReady
+            }
+
+            MegaBusyIndicator.BusyIndicator {
+                visible: backupsProxyModel.selectedFilterEnabled && !mSizeReady
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                color: Styles.textAccent
+                imageSize: Qt.size(12, 12)
             }
 
             MouseArea {
