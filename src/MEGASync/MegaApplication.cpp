@@ -6007,7 +6007,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         // We need to be both logged AND have fetched the nodes to continue
         // Do not continue if there was an error
-        if (mFetchingNodes || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
+        if (preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK
+            || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
         {
             break;
         }
