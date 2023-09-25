@@ -14,6 +14,11 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
 
     connect(MegaSyncApp, &MegaApplication::storageStateChanged, this, &SyncSettingsUI::storageStateChanged);
     storageStateChanged(MegaSyncApp->getAppliedStorageState());
+
+    //There was a problem with the sync height on Windows with large scales
+#ifdef Q_OS_WINDOWS
+    adjustSize();
+#endif
 }
 
 SyncSettingsUI::~SyncSettingsUI()
