@@ -47,6 +47,7 @@ public:
     virtual bool isUserActive() = 0;
     virtual QString getDeviceName() = 0;
     virtual void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true);
+    virtual QString getSizeStringLocalizedOSbased(qint64 bytes);
 
     virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
     virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);

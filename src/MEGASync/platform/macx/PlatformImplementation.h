@@ -31,6 +31,7 @@ public:
     bool isUserActive() override;
     QString getDeviceName() override;
     void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;
+    QString getSizeStringLocalizedOSbased(qint64 bytes) override;
 
     virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
     virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
