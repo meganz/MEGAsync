@@ -5,7 +5,7 @@
 #define VER_FILEVERSION_CODE        4906
 #define VER_PRODUCTVERSION          4, 9, 6, 0
 // Update scrips relying on this value if you move it
-#define VER_PRODUCTVERSION_STR      "4.9.6.0-onboarding.v5\0"
+#define VER_PRODUCTVERSION_STR      "4.9.6.0-onboardingV5\0"
 
 #define VER_BUILD_ID                2
 
