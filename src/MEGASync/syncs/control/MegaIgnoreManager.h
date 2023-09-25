@@ -209,7 +209,7 @@ public:
 class MegaIgnoreManager
 {
 public:
-    MegaIgnoreManager(const QString &syncLocalFolder);
+    MegaIgnoreManager(const QString &syncLocalFolder, bool createIfNotExist);
 
     std::shared_ptr<MegaIgnoreRule> getRuleByOriginalRule(const QString& originalRule);
 
@@ -231,6 +231,8 @@ public:
 
     static MegaIgnoreRule::RuleType getRuleType(const QString& line);
 
+    void setOutputIgnorePath(const QString& outputPath);
+
 private:
     template <class Type>
     static const std::shared_ptr<Type> convert(const std::shared_ptr<MegaIgnoreRule> data)
@@ -239,6 +241,7 @@ private:
     }
 
     QString mMegaIgnoreFile;
+    QString mOutputMegaIgnoreFile;
     QList<std::shared_ptr<MegaIgnoreRule>> mRules;
 
     std::shared_ptr<MegaIgnoreSizeRule> mLowLimitRule;

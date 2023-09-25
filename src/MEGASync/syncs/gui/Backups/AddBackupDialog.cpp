@@ -5,6 +5,7 @@
 #include "Utilities.h"
 #include "Platform.h"
 #include "DialogOpener.h"
+#include "IgnoresEditingDialog.h"
 
 #include "QMegaMessageBox.h"
 
@@ -62,6 +63,7 @@ void AddBackupDialog::on_changeButton_clicked()
                 {
                     mSelectedFolder = candidateDir;
                     mUi->folderLineEdit->setText(folderPath);
+                    mUi->bAddExclusions->setEnabled(true);
                     mUi->addButton->setEnabled(true);
                 }
             };
@@ -136,4 +138,10 @@ void AddBackupDialog::onConflictSolved(QPointer<BackupNameConflictDialog> dialog
         }
         accept();
     }
+}
+
+void AddBackupDialog::on_bAddExclusions_clicked()
+{
+	QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(getSelectedFolder(), true, this);
+	DialogOpener::showDialog(exclusionRules);
 }

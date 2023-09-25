@@ -18,11 +18,13 @@ class IgnoresEditingDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit IgnoresEditingDialog(const QString& syncLocalFolder, QWidget *parent = nullptr);
+    explicit IgnoresEditingDialog(const QString& syncLocalFolder, bool createIfNotExist = false, QWidget *parent = nullptr);
     ~IgnoresEditingDialog();
 
     void applyChanges();
     void refreshUI();
+    void setOutputIgnorePath(const QString& outputPath);
+
 
 public slots:
 	void on_bAddName_clicked();
