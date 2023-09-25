@@ -8,7 +8,8 @@ import Common 1.0
 
 Item {
     id: root
-    property alias color: overColor.color
+
+    property alias color: iconFill.color
     property alias source: image.source
     property alias sourceSize: image.sourceSize
     property alias imageWidth: image.width
@@ -17,14 +18,21 @@ Item {
     width: image.width
     height: image.height
 
+    Rectangle {
+        id: iconFill
+        anchors.fill: parent
+        visible: false
+    }
+
     Image {
         id: image
         anchors.centerIn: parent
+        visible: false
     }
 
-    ColorOverlay {
-        id: overColor
-        source: image
-        anchors.fill: parent
+    OpacityMask {
+        anchors.fill: iconFill
+        source: iconFill
+        maskSource: image
     }
 }
