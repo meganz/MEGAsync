@@ -58,6 +58,7 @@ QtObject {
     readonly property url shield_account_proII: imagesOnboardingPath + "shield_account_proII.svg"
     readonly property url shield_account_proIII: imagesOnboardingPath + "shield_account_proIII.svg"
     readonly property url sync: imagesOnboardingPath + "sync.svg"
+    readonly property url syncIcon: imagesOnboardingPath + "syncb.svg"
     readonly property url okIcon: imagesOnboardingPath + "OKIcon.png"
 
     readonly property url exit: imagesGuestPath + "exit.svg"
