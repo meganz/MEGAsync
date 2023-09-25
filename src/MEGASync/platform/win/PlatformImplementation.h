@@ -51,13 +51,14 @@ public:
     bool registerUpdateJob() override;
     void uninstall() override;
     bool shouldRunHttpServer() override;
-    bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
 
     void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid) override;
     void removeAllSyncsFromLeftPane() override;
     bool makePubliclyReadable(const QString &fileName) override;
+
+    void streamWithApp(const QString& app, const QString& url) override;
 
     static void notify(const std::string& path);
 
@@ -66,6 +67,24 @@ private:
 
     void notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier);
     QString getPreparedPath(std::string *localPath);
+
+    QString findMimeType(const QString& extensionWithDot);
+    QString findAssociatedExecutable(const QString& extensionWithDot);
+    QString findAssociatedModernApp(const QString& extensionWithDot);
+    QString getDefaultVideoPlayer();
+
+    static bool isTraditionalApp(const QString& app);
+    QString buildWindowsModernAppCommand(const QString& app);
+
+    QString findAssociatedData(const ASSOCSTR type, const QString& extensionWithDot);
+    static QString buildAssociatedRegKey(const QString& extensionWithDot);
+    static QString buildEditCommandRegKey(const QString& appId);
+    static QString readEditCommand(const QString& regKey);
+
+    static QString readAppIdFromRegistry(const QString& regKey);
+    static int getRegKeyValuesCount(HKEY regKey);
+    static QString getRegKeyValue(HKEY regKey, const int valueIndex);
+    static bool openRegistry(HKEY baseKey, const QString& regKeyPath, HKEY& openedKey);
 
     WinShellDispatcherTask *shellDispatcherTask = nullptr;
     std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;

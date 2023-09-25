@@ -86,11 +86,6 @@ background-color: rgba(0,120,215,0.8);
 margin-top: 2px;
 }
 
-#lAutoUpdate
-{
-color: #242424;
-}
-
 #wSeparatorGeneralDefaultOptions, #wSeparatorGeneralLanguage, #wSeparatorGeneralLocalDebris, #wSeparatorGeneralRemoteSyncDebris, #wSeparatorGeneralFileVersions
 {
   background-color: rgba(0,0,0,0.1);
@@ -292,7 +287,7 @@ margin-right: 5px;
       </size>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -319,7 +314,7 @@ margin-right: 5px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QGridLayout" name="gridLayout" rowstretch="0,0" columnminimumwidth="200,0,0">
+         <layout class="QGridLayout" name="gridLayout" rowstretch="0,0" columnminimumwidth="200,0,0,0,0,0,0">
           <property name="leftMargin">
            <number>25</number>
           </property>
@@ -338,14 +333,7 @@ margin-right: 5px;
           <property name="verticalSpacing">
            <number>0</number>
           </property>
-          <item row="1" column="0">
-           <widget class="QWidget" name="wEmptyGeneral" native="true">
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2" alignment="Qt::AlignBottom">
+          <item row="1" column="6" alignment="Qt::AlignBottom">
            <widget class="QWidget" name="wCheckUpdatesButton" native="true">
             <property name="maximumSize">
              <size>
@@ -400,7 +388,57 @@ margin-right: 5px;
             </layout>
            </widget>
           </item>
-          <item row="0" column="1" colspan="2">
+          <item row="1" column="0">
+           <widget class="QWidget" name="wEmptyGeneral" native="true">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" alignment="Qt::AlignLeft">
+           <widget class="QWidget" name="wCheckOptions" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <property name="spacing">
+              <number>9</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item alignment="Qt::AlignLeft|Qt::AlignTop">
+              <widget class="QCheckBox" name="cAutoUpdate">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="6">
            <widget class="QWidget" name="wCheckStartupOverlay" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <property name="spacing">
@@ -450,60 +488,23 @@ margin-right: 5px;
             </layout>
            </widget>
           </item>
-          <item row="1" column="1" alignment="Qt::AlignLeft">
-           <widget class="QWidget" name="wCheckOptions" native="true">
+          <item row="1" column="2">
+           <widget class="QLabel" name="lAutoUpdate">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <property name="spacing">
-              <number>9</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item alignment="Qt::AlignLeft|Qt::AlignTop">
-              <widget class="QCheckBox" name="cAutoUpdate">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
-             <item alignment="Qt::AlignLeft|Qt::AlignTop">
-              <widget class="QLabel" name="lAutoUpdate">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Update automatically</string>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <property name="text">
+             <string>Update automatically</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -5069,6 +5070,8 @@ margin-right: 32px;</string>
   <tabstop>bSessionHistory</tabstop>
   <tabstop>bRestart</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources_macx.qrc"/>
+ </resources>
  <connections/>
 </ui>

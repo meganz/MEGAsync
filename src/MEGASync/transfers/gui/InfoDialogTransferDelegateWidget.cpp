@@ -258,7 +258,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                     //Double check that the mFailedTransfer is OK
                     if(getData()->isFailed())
                     {
-                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(QString::fromStdString(getData()->mFailedTransfer->getLastError().getErrorString())));
+                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(getErrorInContext()));
                     }
 
                     if(update)
@@ -338,10 +338,7 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
             MegaSyncApp->removeFinishedBlockedTransfer(getData()->mTag);
         }
 
-        mUi->lElapsedTime->setText(getState(TRANSFER_STATES::STATE_FAILED) + QStringLiteral(": ") + QCoreApplication::translate("MegaError",
-                                                                                                       MegaError::getErrorString(getData()->mErrorCode,
-                                                                                                                                 getData()->mType == TransferData::TransferType::TRANSFER_DOWNLOAD && !blockedTransfer
-                                                                                                                                 ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
+        mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorInContext()));
         updateFinishedIco(getData()->mType, true);
     }
     else

@@ -42,13 +42,11 @@ bool HTTPServer::isFirstWebDownloadDone = false;
 QMultiMap<QString, RequestData*> HTTPServer::webDataRequests;
 QMap<mega::MegaHandle, RequestTransferData*> HTTPServer::webTransferStateRequests;
 
-HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
+HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port)
     : QTcpServer(), disabled(false)
 {
     this->megaApi = megaApi;
-    this->sslEnabled = sslEnabled;
     listen(QHostAddress::LocalHost, port);
-
 
     connect(&mVersionCommandWatcher, &QFutureWatcher<VersionCommandAnswer>::finished,
             this, &HTTPServer::onVersionCommandFinished);
@@ -68,20 +66,7 @@ void HTTPServer::incomingConnection(qintptr socket)
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Incoming webclient connection");
     auto preferences = Preferences::instance();
-    QTcpSocket* s = NULL;
-    QSslSocket *sslSocket = NULL;
-
-    if (sslEnabled)
-    {
-        sslSocket = new QSslSocket(this);;
-        s = sslSocket;
-        connect(sslSocket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrors(QList<QSslError>)));
-        connect(sslSocket, SIGNAL(peerVerifyError(QSslError)), this, SLOT(peerVerifyError(QSslError)));
-    }
-    else
-    {
-        s = new QTcpSocket(this);
-    }
+    QTcpSocket* s = new QTcpSocket(this);
 
     connect(s, SIGNAL(readyRead()), this, SLOT(readClient()));
     connect(s, SIGNAL(disconnected()), this, SLOT(discardClient()));
@@ -89,29 +74,6 @@ void HTTPServer::incomingConnection(qintptr socket)
 
     s->setSocketDescriptor(socket);
     requests.insert(s, new HTTPRequest());
-
-    if (sslSocket)
-    {
-        sslSocket->setPeerVerifyMode(QSslSocket::VerifyNone);
-
-        QSslKey key(preferences->getHttpsKey().toUtf8(), QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
-        if (key.isNull())
-        {
-            s->disconnectFromHost();
-            return;
-        }
-
-        QList<QSslCertificate> certificates;
-        certificates.append(QSslCertificate(preferences->getHttpsCert().toUtf8(), QSsl::Pem));
-        QStringList intermediates = preferences->getHttpsCertIntermediate().split(QString::fromUtf8(";"), QString::SkipEmptyParts);
-        for (int i = 0; i < intermediates.size(); i++)
-        {
-            certificates.append(QSslCertificate(intermediates.at(i).toUtf8(), QSsl::Pem));
-        }
-        sslSocket->setLocalCertificateChain(certificates);
-        sslSocket->setPrivateKey(key);
-        sslSocket->startServerEncryption();
-    }
 }
 
 void HTTPServer::pause()
@@ -221,7 +183,7 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
 
 void HTTPServer::readClient()
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Processing webclient request via %1").arg(QString::fromUtf8(sslEnabled ? "HTTPS" : "HTTP")).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Processing webclient request via HTTP").toUtf8().constData());
     QAbstractSocket *socket = (QAbstractSocket*)sender();
     HTTPRequest *request = requests.value(socket);
     if (disabled || !request)
@@ -386,28 +348,6 @@ void HTTPServer::endProcessRequest(QPointer<QAbstractSocket> socket,const HTTPRe
     }
 }
 
-void HTTPServer::error(QAbstractSocket::SocketError)
-{
-    if (!disabled && sslEnabled)
-    {
-        QAbstractSocket *socket = (QAbstractSocket*)sender();
-        HTTPRequest *request = requests.value(socket);
-        if (request && !request->data.size())
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Webclient failed to connect using HTTPS");
-            emit onConnectionError();
-        }
-    }
-}
-
-void HTTPServer::sslErrors(const QList<QSslError> &)
-{
-}
-
-void HTTPServer::peerVerifyError(const QSslError &)
-{
-}
-
 void HTTPServer::versionCommand(const HTTPRequest& request, QPointer<QAbstractSocket> socket)
 {
     auto future = QtConcurrent::run([this, socket, request]() -> VersionCommandAnswer
@@ -423,8 +363,7 @@ void HTTPServer::versionCommand(const HTTPRequest& request, QPointer<QAbstractSo
         else
         {
             answer.response = QString::fromUtf8("{\"v\":\"%1\",\"u\":\"%2\"}")
-                    .arg(Preferences::VERSION_STRING)
-                    .arg(QString::fromUtf8(myHandle));
+                                  .arg(Preferences::VERSION_STRING, QString::fromUtf8(myHandle));
             delete [] myHandle;
         }
 
@@ -459,7 +398,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
 
     if (handle.size() == 8 && key.size() == 43)
     {
-        QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2").arg(handle).arg(key);
+        QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2").arg(handle, key);
         emit onLinkReceived(link, auth);
         response = QString::fromUtf8("0");
 

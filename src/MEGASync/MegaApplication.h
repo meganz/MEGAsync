@@ -11,6 +11,8 @@
 #include <QDataStream>
 #include <QQueue>
 #include <QNetworkInterface>
+#include <QFutureWatcher>
+
 #include <memory>
 
 #include "gui/TransferManager.h"
@@ -321,8 +323,6 @@ public slots:
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
-    void renewLocalSSLcert();
-    void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
@@ -365,7 +365,6 @@ protected:
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
-    void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
     void manageBusinessStatus(int64_t event);
@@ -441,8 +440,6 @@ protected:
     QString crashReportFilePath;
 
     HTTPServer *httpServer;
-    HTTPServer *httpsServer;
-    long long lastTsConnectionError = 0;
     mega::MegaHandle fileUploadTarget;
     mega::MegaHandle folderUploadTarget;
 
@@ -526,8 +523,6 @@ protected:
     bool completedTabActive;
     int prevVersion;
     bool isPublic;
-    bool updatingSSLcert;
-    long long lastSSLcertUpdate;
     bool nodescurrent;
     int businessStatus = -2;
     int blockState;
@@ -649,10 +644,14 @@ private:
     }
 
     void processUpgradeSecurityEvent();
+    QQueue<QString> createQueue(const QStringList& newUploads) const;
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
+
+private:
+    QFutureWatcher<NodeCount> mWatcher;
 };
 
 class DeferPreferencesSyncForScope
