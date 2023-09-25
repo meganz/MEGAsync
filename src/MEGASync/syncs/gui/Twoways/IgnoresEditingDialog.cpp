@@ -6,12 +6,12 @@
 
 #include <QPointer>
 #include <QDir>
-IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, QWidget *parent) :
+IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool createIfNotExist, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::IgnoresEditingDialog),
     mPreferences(Preferences::instance()),
     mIgnoresFileWatcher(std::make_shared<QFileSystemWatcher>(this)),
-    mManager(syncLocalFolder)
+    mManager(syncLocalFolder, createIfNotExist)
 {
     ui->setupUi(this);
 
@@ -176,13 +176,19 @@ void IgnoresEditingDialog::on_eLowerThan_valueChanged(int i)
 void IgnoresEditingDialog::on_cbExcludeUpperUnit_currentIndexChanged(int i)
 {
     auto highLimit = mManager.getHighLimitRule();
-    highLimit->setUnit(i);
+    if (highLimit)
+    {
+        highLimit->setUnit(i);
+    }
 }
 
 void IgnoresEditingDialog::on_cbExcludeLowerUnit_currentIndexChanged(int i)
 {
     auto lowLimit = mManager.getLowLimitRule();
-    lowLimit->setUnit(i);
+    if (lowLimit)
+    {
+        lowLimit->setUnit(i);
+    }
 }
 
 void IgnoresEditingDialog::onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
@@ -236,4 +242,9 @@ void IgnoresEditingDialog::on_fileChanged(const QString file)
     QMegaMessageBox::warning(msgInfo);
     mManager.parseIgnoresFile();
     refreshUI();
+}
+
+void IgnoresEditingDialog::setOutputIgnorePath(const QString& outputPath)
+{
+    mManager.setOutputIgnorePath(outputPath);
 }

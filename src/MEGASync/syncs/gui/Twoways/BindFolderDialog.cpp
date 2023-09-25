@@ -2,6 +2,8 @@
 #include "ui_BindFolderDialog.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "IgnoresEditingDialog.h"
+#include <DialogOpener.h>
 
 #include <QInputDialog>
 
@@ -15,8 +17,12 @@ BindFolderDialog::BindFolderDialog(MegaApplication* _app, QWidget *parent) :
     ui->setupUi(this);
 
     ui->bOK->setDefault(true);
-
+    ui->bAddExclusions->setEnabled(false);
     connect(ui->wBinder, &FolderBinder::selectionDone, this, &BindFolderDialog::allSelectionsDone);
+    connect(ui->wBinder, &FolderBinder::localPathSelected, this, [this]() 
+        {
+            ui->bAddExclusions->setEnabled(true);
+        });
     setFocusProxy(ui->bOK);
 }
 
@@ -115,6 +121,12 @@ void BindFolderDialog::on_bOK_clicked()
 void BindFolderDialog::allSelectionsDone()
 {
     ui->bOK->setFocus();
+}
+
+void BindFolderDialog::on_bAddExclusions_clicked()
+{
+    QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(ui->wBinder->selectedLocalFolder(), true,  this);
+    DialogOpener::showDialog(exclusionRules);
 }
 
 bool BindFolderDialog::focusNextPrevChild(bool next)

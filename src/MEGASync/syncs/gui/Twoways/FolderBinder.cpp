@@ -104,6 +104,7 @@ void FolderBinder::onLocalFolderSet(const QString& path)
         ui->eLocalFolder->setText(nativePath);
 
         checkSelectedSides();
+        emit localPathSelected();
     }
 }
 

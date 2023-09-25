@@ -1,6 +1,7 @@
 #include "MegaIgnoreManager.h"
 
 #include <Utilities.h>
+#include "Preferences.h"
 
 #include <QDir>
 #include <QChar>
@@ -11,7 +12,6 @@
 
 namespace
 {
-    //constexpr char SIZE_RULE_REG_EX[] = "#*(exclude-(larger|smaller)):[0-9]+[kmgb]?$";
     constexpr char SIZE_RULE_LEFT_SIDE_REG_EX[] = "^#*(exclude-(larger|smaller))$";
     constexpr char SIZE_RULE_RIGHT_SIDE_REG_EX[] = "^[0-9]+[kmg]?$";
     constexpr char LARGE_SIZE_LEFT_SIDE_REG_EX[] = "#*(exclude-larger):*";
@@ -21,10 +21,17 @@ namespace
     constexpr char CAPTURE_EXTENSION_REG_EX[] = "\\.(.*)";
 }
 
-MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder)
+MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder, bool createIfNotExist)
 {
 	const auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
+    mOutputMegaIgnoreFile = ignorePath;
     mMegaIgnoreFile = ignorePath;
+    if (createIfNotExist && !QFile::exists(ignorePath))
+    {
+        mMegaIgnoreFile = Preferences::instance()->getDataPath() + QDir::separator() + QString::fromUtf8(".megaignore.default");
+        std::string s = mMegaIgnoreFile.toStdString();
+        s = "";
+    }
     parseIgnoresFile();
 }
 
@@ -212,7 +219,7 @@ void MegaIgnoreManager::applyChanges()
         }
     }
 
-    QFile ignore(mMegaIgnoreFile);
+    QFile ignore(mOutputMegaIgnoreFile);
     if(ignore.open(QIODevice::WriteOnly))
     {
         QTextStream out(&ignore);
@@ -227,6 +234,11 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addNameRule(MegaIgnoreNam
     auto rule = std::make_shared<MegaIgnoreNameRule>(classType, pattern);
     mRules.append(rule);
     return rule;
+}
+
+void MegaIgnoreManager::setOutputIgnorePath(const QString& outputPath)
+{
+    mOutputMegaIgnoreFile = outputPath;
 }
 
 ////////////////MEGA IGNORE RULE
