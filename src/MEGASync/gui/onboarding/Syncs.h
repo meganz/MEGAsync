@@ -18,7 +18,7 @@ class Syncs : public QObject, public mega::MegaRequestListener
 public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs();
-    Q_INVOKABLE void addSync(ChooseLocalFolder* local, ChooseRemoteFolder* remote = nullptr);
+    Q_INVOKABLE void addSync(const QString& local, ChooseRemoteFolder* remote = nullptr);
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
 
@@ -40,7 +40,7 @@ private:
         QString localWarningMsg = QString::fromUtf8("");
     } mProcessInfo;
 
-    void processLocal(ChooseLocalFolder* local);
+    void processLocal(const QString& local);
     void processRemote(mega::MegaHandle remoteHandle);
 
 private slots:

@@ -26,11 +26,10 @@ Item {
     property alias folderField: folderField
 
     readonly property int textEditMargin: 2
+    readonly property string defaultMegaFolder: "MEGA"
 
     function reset() {
-        if(local) {
-            localFolderChooser.reset();
-        } else {
+        if(!local) {
             remoteFolderChooser.reset();
         }
     }
@@ -48,7 +47,7 @@ Item {
         anchors.top: parent.top
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
-        text: local ? localFolderChooser.folder : remoteFolderChooser.folderName
+        text: local ? localFolderChooser.getDefaultFolder(defaultMegaFolder) : remoteFolderChooser.folderName
         leftIcon.source: local ? Images.pc : Images.megaOutline
         leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true

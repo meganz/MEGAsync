@@ -177,12 +177,19 @@ Rectangle {
                 }
             }
 
+            Connections
+            {
+                id: chooseLocalFolderConnection
+
+                target: folderDialog
+                onFolderChoosen : (folder, folderName) =>
+                {
+                    BackupsModel.insert(folder);
+                }
+            }
+
             ChooseLocalFolder {
                 id: folderDialog
-
-                onFolderChanged: {
-                    BackupsModel.insert(folderDialog.getFolder());
-                }
             }
 
             MouseArea {

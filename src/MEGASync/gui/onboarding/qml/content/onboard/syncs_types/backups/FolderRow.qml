@@ -266,9 +266,15 @@ Rectangle {
 
                     ChooseLocalFolder {
                         id: folderDialog
+                    }
 
-                        onFolderChanged: {
-                            BackupsModel.change(mFolder, folderDialog.getFolder());
+                    Connections
+                    {
+                        id: chooseLocalFolderConnection
+
+                        target: folderDialog
+                        onFolderChoosen : (folder, folderName) => {
+                            BackupsModel.change(mFolder, folder);
                         }
                     }
                 }
