@@ -92,14 +92,19 @@ void AddBackupDialog::on_changeButton_clicked()
         }
     };
 
-    QString defaultPath = mUi->folderLineEdit->text().trimmed();
-    if (!defaultPath.size())
+    SelectorInfo info;
+    info.title = tr("Choose folder");
+    info.parent = this;
+    info.func = processPath;
+
+    info.defaultDir = mUi->folderLineEdit->text().trimmed();
+    if (!info.defaultDir.size())
     {
-        defaultPath = Utilities::getDefaultBasePath();
+        info.defaultDir = Utilities::getDefaultBasePath();
     }
 
-    defaultPath = QDir::toNativeSeparators(defaultPath);
-    Platform::getInstance()->folderSelector(tr("Choose folder"), defaultPath,false, this, processPath);
+    info.defaultDir = QDir::toNativeSeparators(info.defaultDir);
+    Platform::getInstance()->folderSelector(info);
 }
 
 void AddBackupDialog::onDeviceNameSet(const QString &devName)

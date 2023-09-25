@@ -20,7 +20,10 @@ ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
 
 void ChooseLocalFolder::openFolderSelector()
 {
-    Platform::getInstance()->folderSelector(tr("Select local folder"), mFolder, false, nullptr, [this](QStringList selection){
+    SelectorInfo info;
+    info.title = tr("Select local folder");
+    info.defaultDir = mFolder;
+    info.func = [this](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
@@ -31,7 +34,8 @@ void ChooseLocalFolder::openFolderSelector()
                 emit folderChanged();
             }
         }
-    });
+    };
+    Platform::getInstance()->folderSelector(info);
 }
 
 const QString ChooseLocalFolder::getFolder()

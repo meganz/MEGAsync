@@ -120,21 +120,27 @@ void ImportMegaLinksDialog::on_cImport_clicked()
 
 void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 {
-    QString defaultPath = ui->eLocalFolder->text().trimmed();
-    if (!defaultPath.size())
+    SelectorInfo info;
+
+    info.defaultDir = ui->eLocalFolder->text().trimmed();
+    if (!info.defaultDir.size())
     {
-        defaultPath = Utilities::getDefaultBasePath();
+        info.defaultDir = Utilities::getDefaultBasePath();
     }
 
-    defaultPath = QDir::toNativeSeparators(defaultPath);
-
-    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+    info.defaultDir = QDir::toNativeSeparators(info.defaultDir);
+    info.title = tr("Select local folder");
+    info.multiSelection = false;
+    info.parent = this;
+    info.func = [&](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
             onLocalFolderSet(fPath);
         }
-    });
+    };
+
+    Platform::getInstance()->folderSelector(info);
 }
 
 void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
