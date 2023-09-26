@@ -10,6 +10,7 @@ import Components.Buttons 1.0 as MegaButtons
 import Components.TextFields 1.0 as MegaTextFields
 
 // Local
+import Syncs 1.0
 import Onboard 1.0
 import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
@@ -34,6 +35,12 @@ Item {
         }
     }
 
+    function getLocalFolder()
+    {
+        var defaultLocalFolder = localFolderChooser.getDefaultFolder(defaultMegaFolder)
+        return syncs.checkSync(defaultLocalFolder) ? defaultLocalFolder : ""
+    }
+
     Layout.preferredWidth: width
     Layout.preferredHeight: folderField.height
     width: parent.width
@@ -47,7 +54,7 @@ Item {
         anchors.top: parent.top
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
-        text: local ? localFolderChooser.getDefaultFolder(defaultMegaFolder) : remoteFolderChooser.folderName
+        text: local ? getLocalFolder() : remoteFolderChooser.folderName
         leftIcon.source: local ? Images.pc : Images.megaOutline
         leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
@@ -89,4 +96,8 @@ Item {
     ChooseRemoteFolder {
         id: remoteFolderChooser
     }
+
+     Syncs {
+         id: syncs
+     }
 }

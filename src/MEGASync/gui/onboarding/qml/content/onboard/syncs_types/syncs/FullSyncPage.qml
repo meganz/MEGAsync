@@ -15,10 +15,18 @@ FullSyncPageForm {
         }
 
         rightPrimary.onClicked: {
-            root.enabled = false;
-            footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
+            localFolderChooser.folderField.hint.visible = false
+            localFolderChooser.folderField.error = false
 
-            if (localFolder.createFolder(localFolderChooser.localChoosenPath)) {
+            if (localFolderChooser.localChoosenPath.length === 0) {
+                localFolderChooser.folderField.error = true
+                localFolderChooser.folderField.hint.text = qsTr("Invalid directory.")
+                localFolderChooser.folderField.hint.visible = true
+            }
+            else if (localFolder.createFolder(localFolderChooser.localChoosenPath)) {
+                root.enabled = false;
+                footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
+
                 syncsCpp.addSync(localFolderChooser.localChoosenPath)
             }
             else {

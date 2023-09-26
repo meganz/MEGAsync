@@ -50,6 +50,18 @@ void Syncs::addSync(const QString& local, ChooseRemoteFolder* remote)
     processRemote(remoteHandle);
 }
 
+bool Syncs::checkSync(const QString &localPath) const
+{
+    QString message;
+    auto syncability = SyncController::isLocalFolderSyncable(localPath, mega::MegaSync::TYPE_TWOWAY, message);
+
+#if defined DEBUG
+    qDebug() << "localPath : " << localPath << " syncability : " << syncability << " message : " << message;
+#endif
+
+    return (syncability != SyncController::CANT_SYNC);
+}
+
 void Syncs::processLocal(const QString &local)
 {
     mProcessInfo.localPath = local;
