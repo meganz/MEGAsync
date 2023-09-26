@@ -5,6 +5,8 @@
 #include <QApplication>
 #include <QResizeEvent>
 
+#include <Utilities.h>
+
 const int MINIMUM_DOC_HEIGHT = 3;
 const int MINMUM_HEIGHT = 16;
 
@@ -12,19 +14,24 @@ const int MINMUM_HEIGHT = 16;
 const QEvent::Type WordWrapLabel::HeightAdapted = QEvent::WhatsThisClicked;
 
 WordWrapLabel::WordWrapLabel(QWidget* parent)
-    : QTextEdit(parent)
+    : QTextBrowser(parent),
+      mLinkActivated(false)
 {
     setFrameStyle(QFrame::NoFrame);
-    setTextInteractionFlags(Qt::NoTextInteraction);
+    setTextInteractionFlags(Qt::LinksAccessibleByMouse);
     setCursor(parent->cursor());
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    setOpenLinks(false);
 
     parent->installEventFilter(this);
+    viewport()->installEventFilter(this);
 
     document()->setDocumentMargin(0);
     setFixedHeight(MINMUM_HEIGHT);
+
+    connect(this, &WordWrapLabel::anchorClicked, this, &WordWrapLabel::onLinkActivated);
 }
 
 void WordWrapLabel::setText(const QString &text)
@@ -71,9 +78,33 @@ bool WordWrapLabel::eventFilter(QObject* obj, QEvent* event)
 {
     if(event->type() == QEvent::CursorChange)
     {
-        setCursor(dynamic_cast<QWidget*>(obj)->cursor());
+        if(viewport()->cursor().shape() != parentWidget()->cursor().shape())
+        {
+            setCursor(parentWidget()->cursor());
+        }
     }
     return QTextEdit::eventFilter(obj, event);
+}
+
+void WordWrapLabel::mouseReleaseEvent(QMouseEvent *ev)
+{
+    QTextBrowser::mousePressEvent(ev);
+
+    //In order to propagate the mouse release event
+    //Otherwise, the QTextBrowser hijacks it even if you don´t press of the link
+    if(!mLinkActivated)
+    {
+        QWidget::mousePressEvent(ev);
+    }
+
+    //Reset for next click
+    mLinkActivated = false;
+}
+
+void WordWrapLabel::onLinkActivated(const QUrl &link)
+{
+    mLinkActivated = true;
+    Utilities::openUrl(link);
 }
 
 void WordWrapLabel::setCursor(const QCursor& cursor)

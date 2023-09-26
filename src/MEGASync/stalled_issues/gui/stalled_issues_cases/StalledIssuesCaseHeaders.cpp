@@ -273,7 +273,7 @@ CloudNodeUndecryptedHeader::CloudNodeUndecryptedHeader(StalledIssueHeader* heade
 void CloudNodeUndecryptedHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Clode node undecrypted <b>%1</b>").arg(header->displayFileName()));
-    header->setTitleDescriptionText(tr("Decryption process could not be completed. Reload your account on http://mega.io or contact support."));
+    header->setTitleDescriptionText(tr("Decryption process could not be completed. Reload your account on <a href=\"http://mega.io/\">MEGA</a> or contact support."));
 }
 
 //Local folder not scannable
