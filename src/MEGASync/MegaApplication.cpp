@@ -6134,21 +6134,19 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
-    bool previousEnabledState = true;
+    bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
     {
-        mSyncs2waysMenu = new TwoWaySyncsMenu(infoDialog);
+        mSyncs2waysMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_TWOWAY, previousEnabledState, infoDialog);
         connect(mSyncs2waysMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
-        mSyncs2waysMenu->setEnabled(exitAction->isEnabled());
     }
 
     if (!mBackupsMenu)
     {
-        mBackupsMenu = new BackupSyncsMenu(infoDialog);
+        mBackupsMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_BACKUP, previousEnabledState, infoDialog);
         connect(mBackupsMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
-        mBackupsMenu->setEnabled(exitAction->isEnabled());
     }
 
     recreateMenuAction(&importLinksAction, tr("Open links"), "://images/ico_Import_links.png", &MegaApplication::importLinks);

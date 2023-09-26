@@ -197,7 +197,7 @@ private:
     bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
     void showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type);
-    SyncsMenu* createSyncMenu(mega::MegaSync::SyncType type, bool isEnabled);
+    SyncsMenu* initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled);
 
 
     bool mIndexing; //scanning

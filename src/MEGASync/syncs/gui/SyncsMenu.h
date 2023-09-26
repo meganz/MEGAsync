@@ -23,11 +23,11 @@ class SyncsMenu : public QWidget
     Q_OBJECT
 
 public:
-    ~SyncsMenu() override = default;
-
+    static SyncsMenu* newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled, QWidget* parent);
     QPointer<MenuItemAction> getAction();
     void callMenu(const QPoint& p);
     void setEnabled(bool state);
+
 
 signals:
     void addSync(mega::MegaSync::SyncType type);
@@ -40,11 +40,10 @@ protected:
                        const QString& menuActionText,
                        QWidget* parent);
     bool eventFilter(QObject* obj, QEvent* e) override;
-
-    virtual void refresh();
     virtual QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const;
-    QPointer<QMenu> getMenu();
+    virtual void refresh();
 
+    QPointer<QMenu> getMenu();
 
 private slots:
     void onAddSync();
@@ -52,14 +51,13 @@ private slots:
 private:
     void highLightMenuEntry(QAction *action);
 
+    QPointer<QMenu> mMenu;
     QPointer<MenuItemAction> mAddAction;
+    QPointer<MenuItemAction> mMenuAction;
     MenuItemAction* mLastHovered;
     mega::MegaSync::SyncType mType;
-    const int mItemIndent;
+    int mItemIndent;
     QIcon mMenuIcon;
-    QPointer<QMenu> mMenu;
-    QPointer<MenuItemAction> mMenuAction;
-
     QString mAddActionText;
     QString mMenuActionText;
 };
@@ -70,11 +68,11 @@ class TwoWaySyncsMenu : public SyncsMenu
 
 public:
     explicit TwoWaySyncsMenu(QWidget* parent);
-    ~TwoWaySyncsMenu() override = default;
 
 private:
     QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const override;
-    static const int mItemIndent = 0;
+
+    static const int mTwoWaySyncItemIndent = 0;
 };
 
 class BackupSyncsMenu : public SyncsMenu
@@ -83,18 +81,19 @@ class BackupSyncsMenu : public SyncsMenu
 
 public:
     explicit BackupSyncsMenu(QWidget* parent);
-    ~BackupSyncsMenu() override = default;
-
-private:
-    void refresh() override;
-    QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const override;
-    std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
-    std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
-    QPointer<MenuItemAction> mDevNameAction;
-    static const int mItemIndent = 1;
 
 private slots:
     void onDeviceNameSet(QString name);
+
+private:
+    QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const override;
+    void refresh() override;
+
+    static const int mBackupItemIndent = 1;
+    QPointer<MenuItemAction> mDevNameAction;
+    std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
+    std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
 };
+
 
 #endif // SYNCSMENU_H
