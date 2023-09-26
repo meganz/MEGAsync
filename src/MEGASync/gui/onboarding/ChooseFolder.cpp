@@ -44,6 +44,7 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
 bool ChooseLocalFolder::createFolder(const QString& folderPath)
 {
     auto folder = QDir::toNativeSeparators(folderPath);
+
     QDir defaultFolder(folder);
     if (!defaultFolder.exists() && !defaultFolder.mkpath(QString::fromUtf8(".")))
     {
@@ -59,8 +60,11 @@ bool ChooseLocalFolder::createFolder(const QString& folderPath)
 QString ChooseLocalFolder::getDefaultFolder(const QString& folderName)
 {
     auto folder = Utilities::getDefaultBasePath();
-    folder.append(QString::fromLatin1("/"));
-    folder.append(folderName);
+    if (!folderName.isEmpty())
+    {
+        folder.append(QString::fromLatin1("/"));
+        folder.append(folderName);
+    }
 
     return QDir::toNativeSeparators(folder);
 }

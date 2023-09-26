@@ -13,7 +13,7 @@ public:
     ChooseLocalFolder(QObject* parent = nullptr);
     Q_INVOKABLE void openFolderSelector(const QString& folderPath = QString());
     Q_INVOKABLE bool createFolder(const QString& folderPath);
-    Q_INVOKABLE QString getDefaultFolder(const QString& folderName);
+    Q_INVOKABLE QString getDefaultFolder(const QString& folderName = QString());
 
 signals:
     void folderChoosen(QString folder, QString folderName);

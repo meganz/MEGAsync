@@ -16,7 +16,7 @@ import ChooseRemoteFolder 1.0
 
 Item {
 
-    property alias localTest: localFolderChooser
+    property alias localChoosenPath: folderField.text
     property alias remoteTest: remoteFolderChooser
 
     property bool local: true
@@ -69,6 +69,16 @@ Item {
             folderField.hint.visible = false;
             var folderChooser = local ? localFolderChooser : remoteFolderChooser;
             folderChooser.openFolderSelector();
+        }
+    }
+
+    Connections
+    {
+        id: localFolderChooserConnection
+        target: localFolderChooser
+
+        onFolderChoosen: (folder, folderName) => {
+            folderField.text = folder
         }
     }
 
