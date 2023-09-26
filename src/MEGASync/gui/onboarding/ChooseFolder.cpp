@@ -15,7 +15,7 @@ ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
 
 void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
 {
-    QString&& openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
+    auto openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
 
     if (!folderPath.isEmpty())
     {
@@ -43,6 +43,11 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
 
 bool ChooseLocalFolder::createFolder(const QString& folderPath)
 {
+    if (folderPath.isEmpty())
+    {
+        return false;
+    }
+
     auto folder = QDir::toNativeSeparators(folderPath);
 
     QDir defaultFolder(folder);
