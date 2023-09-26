@@ -226,11 +226,11 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     {
         if(localInfo.isFile())
         {
-            msgInfo.informativeText = tr("The <b>local file</b> %1 will be moved to OS %2", "", pluralNumber).arg(localInfo.fileName(), PlatformStrings::bin());
+            msgInfo.informativeText = tr("The <b>local file</b> %1 will be moved to the sync debris folder").arg(localInfo.fileName());
         }
         else
         {
-            msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to OS %2", "", pluralNumber).arg(localInfo.fileName(), PlatformStrings::bin());
+            msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to the sync debris folder").arg(localInfo.fileName());
         }
     }
     else

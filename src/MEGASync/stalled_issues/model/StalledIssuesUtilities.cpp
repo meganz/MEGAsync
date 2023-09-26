@@ -3,6 +3,7 @@
 #include <MegaApplication.h>
 #include <mega/types.h>
 #include <MegaDownloader.h>
+#include <QTMegaRequestListener.h>
 
 #include <QFile>
 #include <QDir>
@@ -82,40 +83,34 @@ void StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
 {
     if(node)
     {
-        mRemoteHandles.append(node->getHandle());
-        auto rubbishNode = MegaSyncApp->getMegaApi()->getRubbishNode();
-        MegaSyncApp->getMegaApi()->moveNode(node,rubbishNode,
-                                            new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this, [=](bool isContextValid,
-                                                                      const mega::MegaRequest& request,const mega::MegaError& e){
-            if(isContextValid)
-            {
-                if (request.getType() == mega::MegaRequest::TYPE_MOVE
-                        || request.getType() == mega::MegaRequest::TYPE_RENAME)
-                {
-                    if (e.getErrorCode() == mega::MegaError::API_OK)
-                    {
-                        auto handle = request.getNodeHandle();
-                        if(mRemoteHandles.contains(handle))
-                        {
-                            emit remoteActionFinished(handle);
-                            mRemoteHandles.removeOne(handle);
-                        }
-                    }
-                }
-            }
-        }));
+        std::unique_ptr<MoveToBinUtilities> utilities(new MoveToBinUtilities());
+        utilities->moveToBin(QList<mega::MegaHandle>() << node->getHandle(), QLatin1String("SyncDebris"), true);
     }
 }
 
-void StalledIssuesUtilities::removeLocalFile(const QString& path)
+void StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::MegaHandle& syncId)
 {
     QFile file(path);
     if(file.exists())
     {
-         if(Utilities::moveFileToTrash(path))
-         {
-             emit actionFinished();
-         }
+        if(syncId != mega::INVALID_HANDLE)
+        {
+            MegaSyncApp->getMegaApi()->moveToDebris(path.toStdString().c_str(),syncId, new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                                           this,
+                                                                                                           [=](bool,
+                                                                                                           const mega::MegaRequest&,
+                                                                                                           const mega::MegaError& e){
+                //In case of error, move to OS trash
+                if (e.getErrorCode() != mega::MegaError::API_OK)
+                {
+                    Utilities::moveFileToTrash(path);
+                }
+            }));
+        }
+        else
+        {
+            Utilities::moveFileToTrash(path);
+        }
     }
 }
 

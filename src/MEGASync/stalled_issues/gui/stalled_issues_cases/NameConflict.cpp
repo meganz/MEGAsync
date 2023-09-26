@@ -504,11 +504,22 @@ void NameConflict::onActionClicked(int actionId)
             {
                 if(isFile)
                 {
-                    msgInfo.informativeText = tr("It will be moved to MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>");
+                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>");
                 }
                 else
                 {
-                    msgInfo.informativeText = tr("It will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>");
+                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>");
+                }
+            }
+            else
+            {
+                if(isFile)
+                {
+                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.<br>You will be able to retrieve the file from there.</br>");
+                }
+                else
+                {
+                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.<br>You will be able to retrieve the folder from there.</br>");
                 }
             }
 
@@ -537,7 +548,8 @@ void NameConflict::onActionClicked(int actionId)
                     else
                     {
                         areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
-                        mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath));
+                        auto syncId = mIssue->syncIds().isEmpty() ? mega::INVALID_HANDLE : mIssue->syncIds().first();
+                        mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath), syncId);
                     }
 
                     if(areAllSolved)

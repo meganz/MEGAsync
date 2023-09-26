@@ -113,7 +113,8 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
 void LocalOrRemoteUserMustChooseStalledIssue::chooseRemoteSide()
 {
     StalledIssuesUtilities utilities;
-    utilities.removeLocalFile(consultLocalData()->getNativeFilePath());
+    auto syncId = syncIds().isEmpty() ? mega::INVALID_HANDLE : syncIds().first();
+    utilities.removeLocalFile(consultLocalData()->getNativeFilePath(), syncId);
 
     mChosenSide = ChosenSide::Remote;
     setIsSolved(false);

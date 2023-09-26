@@ -29,7 +29,7 @@ public:
 
     void removeRemoteFile(const QString& path);
     void removeRemoteFile(mega::MegaNode* node);
-    void removeLocalFile(const QString& path);
+    void removeLocalFile(const QString& path, const mega::MegaHandle &syncId);
 
     static QIcon getLocalFileIcon(const QFileInfo& fileInfo, bool hasProblem);
     static QIcon getRemoteFileIcon(mega::MegaNode* node, const QFileInfo &fileInfo, bool hasProblem);
@@ -37,12 +37,9 @@ public:
 
 signals:
     void actionFinished();
-    void remoteActionFinished(mega::MegaHandle handle);
 
 private:
     mutable QReadWriteLock  mIgnoreMutex;
-
-    QList<mega::MegaHandle> mRemoteHandles;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
