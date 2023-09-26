@@ -18,7 +18,7 @@ SyncsPage {
     footerButtons.rightPrimary {
         enabled: localFolderChooser.isValid && remoteFolderChooser.isValid
         text: OnboardingStrings.sync
-        icons.source: Images.sync
+        icons.source: Images.syncIcon
     }
 
     ColumnLayout {
