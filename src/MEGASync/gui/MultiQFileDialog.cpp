@@ -96,7 +96,7 @@ bool MultiQFileDialog::eventFilter(QObject *obj, QEvent *e)
         {
             // Override the OK button enabled state to respect our own logic.
             // We return to prevent QFileDialog from overriding us.
-            return false;
+            return onEnabledChangeEvent();
         }
         else if (e->type() == QEvent::HoverEnter)
         {
@@ -241,6 +241,17 @@ void MultiQFileDialog::onKeyPressEvent(QKeyEvent *keyEvent)
         }
         mShowHidden = !mShowHidden;
     }
+}
+
+bool MultiQFileDialog::onEnabledChangeEvent()
+{
+    bool handled = false;
+    if (mBOpen->isEnabled() != mEnableOkButton)
+    {
+        mBOpen->setEnabled(mEnableOkButton);
+        handled = true;
+    }
+    return handled;
 }
 
 void MultiQFileDialog::onHoverEnterEvent()
