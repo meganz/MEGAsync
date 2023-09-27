@@ -6019,13 +6019,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        // We need to be both logged AND have fetched the nodes to continue
-        // Do not continue if there was an error
-        if (preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK
-            || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
-        {
-            break;
-        }
 
         auto flags = request->getNumDetails();
         bool storage  = flags & 0x01;
@@ -6037,13 +6030,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (pro)      inflightUserStats[2] = false;
 
         // We need to be both logged AND have fetched the nodes to continue
+        // Do not continue if there was an error
         if (preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK
-            || !preferences->logged())
-        {
-            break;
-        }
-
-        if (e->getErrorCode() != MegaError::API_OK)
+            || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
         {
             break;
         }
