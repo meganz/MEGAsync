@@ -52,6 +52,18 @@ void Syncs::addSync(const QString& local, ChooseRemoteFolder* remote)
 
 bool Syncs::checkSync(const QString &localPath) const
 {
+    if (localPath.isEmpty())
+    {
+        return false;
+    }
+
+    auto localFolderPath = QDir::toNativeSeparators(localPath);
+    QDir openFromFolderDir(localFolderPath);
+    if (!openFromFolderDir.exists())
+    {
+        return true;
+    }
+
     QString message;
     auto syncability = SyncController::isLocalFolderSyncable(localPath, mega::MegaSync::TYPE_TWOWAY, message);
 
