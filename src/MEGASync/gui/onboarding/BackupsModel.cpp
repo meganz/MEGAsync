@@ -157,7 +157,6 @@ bool BackupsModel::setData(const QModelIndex& index, const QVariant& value, int 
                 QFileInfo dirInfo(item->mFolder);
                 if(dirInfo.exists() && !dirInfo.isReadable())
                 {
-                    qDebug()<<"NO READABLE"; //TODO: cosas
                     return false;
                 }
                 item->mSelected = value.toBool();
