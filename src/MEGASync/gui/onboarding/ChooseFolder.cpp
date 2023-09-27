@@ -23,6 +23,7 @@ void ChooseLocalFolder::openFolderSelector()
     SelectorInfo info;
     info.title = tr("Select local folder");
     info.defaultDir = mFolder;
+    info.canCreateDirectoreis = true;
     info.func = [this](QStringList selection){
         if(!selection.isEmpty())
         {
@@ -98,7 +99,7 @@ void ChooseRemoteFolder::openFolderSelector()
     });
 }
 
-const mega::MegaHandle ChooseRemoteFolder::getHandle()
+mega::MegaHandle ChooseRemoteFolder::getHandle()
 {
     return mFolderHandle;
 }

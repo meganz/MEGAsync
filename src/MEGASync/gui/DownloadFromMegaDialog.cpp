@@ -58,6 +58,7 @@ void DownloadFromMegaDialog::on_bChange_clicked()
     info.title = tr("Select local folder");
     info.defaultDir = ui->eFolderPath->text();
     info.multiSelection = false;
+    info.canCreateDirectoreis = true;
     info.parent = this;
     info.func = [&](QStringList selection){
         if(!selection.isEmpty())

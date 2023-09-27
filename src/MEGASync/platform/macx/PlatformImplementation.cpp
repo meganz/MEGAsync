@@ -19,13 +19,13 @@ void PlatformImplementation::initialize(int /*argc*/, char *[] /*argv*/)
 
 void PlatformImplementation::fileSelector(const SelectorInfo& info)
 {
-    SelectorInfo selectorInfo = info;
-    if (selectorInfo.defaultDir.isEmpty())
+    QString defaultDir = info.defaultDir;
+    if (defaultDir.isEmpty())
     {
-        selectorInfo.defaultDir = QLatin1String("/");
+        defaultDir = QLatin1String("/");
     }
 
-    selectorsImpl(info.title ,defaultDir,info.multiSelection, true, false, info.parent, info.func);
+    selectorsImpl(info.title , defaultDir, info.multiSelection, true, false, info.canCreateDirectoreis, info.parent, info.func);
 }
 
 void PlatformImplementation::folderSelector(const SelectorInfo& info)
@@ -36,7 +36,7 @@ void PlatformImplementation::folderSelector(const SelectorInfo& info)
         defaultDir = QLatin1String("/");
     }
 
-    selectorsImpl(info.title,defaultDir, info.multiSelection, false, true, info.parent, info.func);
+    selectorsImpl(info.title,defaultDir, info.multiSelection, false, true, info.canCreateDirectoreis, info.parent, info.func);
 }
 
 void PlatformImplementation::fileAndFolderSelector(const SelectorInfo &info)
@@ -47,7 +47,7 @@ void PlatformImplementation::fileAndFolderSelector(const SelectorInfo &info)
         defaultDir = QLatin1String("/");
     }
 
-    selectorsImpl(info.title, info.defaultDir, info.multiSelection, true, true, info.parent, info.func);
+    selectorsImpl(info.title, info.defaultDir, info.multiSelection, true, true, info.canCreateDirectoreis, info.parent, info.func);
 }
 
 void PlatformImplementation::raiseFileFolderSelectors()
