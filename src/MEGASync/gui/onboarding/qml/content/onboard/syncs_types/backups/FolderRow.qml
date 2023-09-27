@@ -346,16 +346,12 @@ Rectangle {
                         root.height = root.totalHeight;
                         break;
                     case BackupsModel.BackupErrorCode.ExistsRemote:
-                        editTextField.hint.text =
-                            OnboardingStrings.confirmBackupErrorRemote.replace(RegexExpressions.betweenCommas,
-                                                                               '"' + editTextField.text + '"');
+                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;
                         break;
                     case BackupsModel.BackupErrorCode.DuplicatedName:
-                        editTextField.hint.text =
-                            OnboardingStrings.confirmBackupErrorDuplicated.replace(RegexExpressions.betweenCommas,
-                                                                                   '"' + editTextField.text + '"');
+                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;
                         break;
