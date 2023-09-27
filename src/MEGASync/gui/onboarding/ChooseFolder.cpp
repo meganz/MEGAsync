@@ -21,7 +21,11 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
     {
         openFromFolder = QDir::toNativeSeparators(folderPath);
         QDir openFromFolderDir(openFromFolder);
-        if (!openFromFolderDir.exists())
+        if (openFromFolderDir.cdUp())
+        {
+            openFromFolder = openFromFolderDir.path();
+        }
+        else
         {
             openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
         }

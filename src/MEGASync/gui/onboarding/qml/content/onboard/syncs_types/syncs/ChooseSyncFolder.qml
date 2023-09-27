@@ -74,8 +74,15 @@ Item {
         onClicked: {
             folderField.error = false;
             folderField.hint.visible = false;
-            var folderChooser = local ? localFolderChooser : remoteFolderChooser;
-            folderChooser.openFolderSelector();
+
+            if (local)
+            {
+                localFolderChooser.openFolderSelector(folderField.text)
+            }
+            else
+            {
+                remoteFolderChooser.openFolderSelector()
+            }
         }
     }
 
