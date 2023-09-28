@@ -1,4 +1,5 @@
 #include "LocalAndRemoteDifferentWidget.h"
+#include <QDialogButtonBox>
 #include "ui_LocalAndRemoteDifferentWidget.h"
 
 #include "MegaApplication.h"

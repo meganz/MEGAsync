@@ -6,6 +6,7 @@
 #include <MegaApplication.h>
 #include <Preferences.h>
 
+#include <QDialogButtonBox>
 #include "Utilities.h"
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>

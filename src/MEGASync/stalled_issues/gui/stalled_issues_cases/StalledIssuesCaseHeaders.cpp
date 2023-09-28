@@ -1,4 +1,5 @@
 #include "StalledIssuesCaseHeaders.h"
+#include <QDialogButtonBox>
 
 #include <Utilities.h>
 #include <Preferences.h>
