@@ -93,8 +93,6 @@ bool BackupFolder::createFileFolderAttributes()
 }
 
 int BackupsModel::CHECK_DIRS_TIME = 1000;
-const QString BackupsModel::folderUnavailableErrorMsg = tr("Folder can't be backed up as it can't be located. "
-                                                     "It may have been moved or deleted, or you might not have access.");
 
 BackupsModel::BackupsModel(QObject* parent)
     : QAbstractListModel(parent)
@@ -620,7 +618,7 @@ void BackupsModel::reviewConflicts()
     }
     else if(unavailableCount > 0)
     {
-        conflictText = BackupsModel::folderUnavailableErrorMsg;
+        conflictText = getFolderUnavailableErrorMsg();
         setGlobalError(BackupErrorCode::UnavailableDir);
     }
     changeConflictsNotificationText(conflictText);
@@ -714,7 +712,7 @@ void BackupsModel::check()
                 QDir dir(mBackupFolderList[row]->getFolder());
                 if (!dir.exists())
                 {
-                        message = BackupsModel::folderUnavailableErrorMsg;
+                        message = getFolderUnavailableErrorMsg();
                 }
                 changeConflictsNotificationText(message);
             }
@@ -935,6 +933,12 @@ void BackupsModel::clean(bool resetErrors)
             item++;
         }
     }
+}
+
+const QString BackupsModel::getFolderUnavailableErrorMsg()
+{
+    return tr("Folder can't be backed up as it can't be located. "
+       "It may have been moved or deleted, or you might not have access.");
 }
 
 void BackupsModel::setGlobalError(BackupErrorCode error)

@@ -133,7 +133,7 @@ signals:
     void totalSizeReadyChanged();
 
 private:
-    static const QString folderUnavailableErrorMsg;
+    const QString getFolderUnavailableErrorMsg();
     static int CHECK_DIRS_TIME;
 
     QList<BackupFolder*> mBackupFolderList;
