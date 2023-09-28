@@ -7,67 +7,89 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include <DialogOpener.h>
 
-QString ChooseLocalFolder::DEFAULT_FOLDER(QString::fromLatin1("MEGA"));
-QString ChooseLocalFolder::DEFAULT_FOLDER_PATH(QString::fromLatin1("/") + ChooseLocalFolder::DEFAULT_FOLDER);
-
 ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
     : QObject(parent)
-    , mFolderName(DEFAULT_FOLDER)
 {
-    // The default one (MEGA) should be created if it not exists
-    createDefault();
+
 }
 
-void ChooseLocalFolder::openFolderSelector()
+void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
 {
+    auto openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
+
+    if (!folderPath.isEmpty())
+    {
+        openFromFolder = QDir::toNativeSeparators(folderPath);
+        QDir openFromFolderDir(openFromFolder);
+        if (openFromFolderDir.cdUp())
+        {
+            openFromFolder = openFromFolderDir.path();
+        }
+        else
+        {
+            openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
+        }
+    }
+
     SelectorInfo info;
     info.title = tr("Select local folder");
-    info.defaultDir = mFolder;
+    info.defaultDir = openFromFolder;
     info.canCreateDirectoreis = true;
     info.func = [this](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
-            mFolder = (QDir::toNativeSeparators(QDir(fPath).canonicalPath()));
-            mFolderName = QDir::fromNativeSeparators(fPath).split(QString::fromLatin1("/")).last().prepend(QString::fromLatin1("/"));
-            if(!mFolder.isNull() && !mFolder.isEmpty())
+            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
+            if(!folder.isNull() && !folder.isEmpty())
             {
-                emit folderChanged();
+                emit folderChoosen(folder);
             }
         }
     };
+
     Platform::getInstance()->folderSelector(info);
 }
 
-const QString ChooseLocalFolder::getFolder()
+bool ChooseLocalFolder::createFolder(const QString& folderPath)
 {
-    return mFolder;
-}
+    if (folderPath.isEmpty())
+    {
+        return false;
+    }
 
-void ChooseLocalFolder::reset()
-{
-    mFolderName.clear();
-    mFolder.clear();
-    emit folderChanged();
-}
+    auto folder = QDir::toNativeSeparators(folderPath);
 
-void ChooseLocalFolder::createDefault()
-{
-    mFolder = Utilities::getDefaultBasePath();
-    mFolder.append(DEFAULT_FOLDER_PATH);
-    mFolder = QDir::toNativeSeparators(mFolder);
-    QDir defaultFolder(mFolder);
+    QDir defaultFolder(folder);
     if (!defaultFolder.exists() && !defaultFolder.mkpath(QString::fromUtf8(".")))
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
-                           QString::fromUtf8("ChooseFolder: %1 cannot be created.").arg(mFolder).toUtf8().constData());
+                           QString::fromUtf8("ChooseFolder: %1 cannot be created.").arg(folderPath).toUtf8().constData());
+
+        return false;
     }
+
+    return true;
 }
+
+QString ChooseLocalFolder::getDefaultFolder(const QString& folderName)
+{
+    auto folder = Utilities::getDefaultBasePath();
+    if (!folderName.isEmpty())
+    {
+        folder.append(QString::fromLatin1("/"));
+        folder.append(folderName);
+    }
+
+    return QDir::toNativeSeparators(folder);
+}
+
+QString ChooseRemoteFolder::DEFAULT_FOLDER(QString::fromLatin1("MEGA"));
+QString ChooseRemoteFolder::DEFAULT_FOLDER_PATH(QString::fromLatin1("/") + ChooseRemoteFolder::DEFAULT_FOLDER);
 
 ChooseRemoteFolder::ChooseRemoteFolder(QObject *parent)
     : QObject(parent)
-    , mFolderName(ChooseLocalFolder::DEFAULT_FOLDER_PATH)
     , mFolderHandle(mega::INVALID_HANDLE)
+    , mFolderName(ChooseRemoteFolder::DEFAULT_FOLDER_PATH)
 {
 }
 
@@ -107,11 +129,11 @@ mega::MegaHandle ChooseRemoteFolder::getHandle()
 void ChooseRemoteFolder::reset()
 {
     mFolderHandle = mega::INVALID_HANDLE;
-    mFolderName = ChooseLocalFolder::DEFAULT_FOLDER_PATH;
+    mFolderName = ChooseRemoteFolder::DEFAULT_FOLDER_PATH;
     emit folderNameChanged();
 }
 
-const QString ChooseRemoteFolder::getFolderName()
+QString ChooseRemoteFolder::getFolderName()
 {
     return mFolderName;
 }
