@@ -847,14 +847,14 @@ QMenu* MegaTransferView::createContextMenu()
             if (handlesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
             {
                 //Ico not included in transfer manager folder as it is also used by settingsDialog
-                auto openInMEGAAction = new MenuItemAction(tr("Open in MEGA"), QIcon(QLatin1String(":/images/ico_open_MEGA.png")), contextMenu);
+                auto openInMEGAAction = new MenuItemAction(tr("Open in MEGA"), QLatin1String(":/images/ico_open_MEGA.png"), contextMenu);
                 connect(openInMEGAAction, &QAction::triggered, this, &MegaTransferView::openInMEGAClicked);
 
                 contextMenu->addAction(openInMEGAAction);
             }
             if (!containsIncomingShares)
             {
-                auto getLinkAction = new MenuItemAction(tr("Get link"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png")), contextMenu);
+                auto getLinkAction = new MenuItemAction(tr("Get link"), QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png"), contextMenu);
                 connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
 
                 contextMenu->addAction(getLinkAction);
