@@ -38,7 +38,7 @@ void Syncs::addSync(const QString& local, ChooseRemoteFolder* remote)
         if(remoteHandle == mega::INVALID_HANDLE)
         {
             // Relative sync with default folder (MEGA)
-            QString defaultFolder(ChooseRemoteFolder::DEFAULT_LOCAL_FOLDER);
+            QString defaultFolder(ChooseRemoteFolder::DEFAULT_FOLDER);
             mMegaApi->createFolder(defaultFolder.toStdString().c_str(),
                                    MegaSyncApp->getRootNode().get());
             mCreatingDefaultFolder = true;
@@ -167,7 +167,7 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
     {
         case mega::MegaRequest::TYPE_CREATE_FOLDER:
         {
-            QString defaultFolder(ChooseRemoteFolder::DEFAULT_LOCAL_FOLDER);
+            QString defaultFolder(ChooseRemoteFolder::DEFAULT_FOLDER);
             if (!mCreatingDefaultFolder || defaultFolder.compare(QString::fromUtf8(request->getName())))
             {
                 break;
@@ -178,7 +178,7 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
             if (error->getErrorCode() == mega::MegaError::API_OK)
             {
                 mega::MegaNode* node =
-                    mMegaApi->getNodeByPath(ChooseRemoteFolder::DEFAULT_LOCAL_FOLDER_PATH.toStdString().c_str());
+                    mMegaApi->getNodeByPath(ChooseRemoteFolder::DEFAULT_FOLDER_PATH.toStdString().c_str());
                 if (!node)
                 {
                     emit cantSync(tr("MEGA folder doesn't exist"), false);

@@ -83,13 +83,13 @@ QString ChooseLocalFolder::getDefaultFolder(const QString& folderName)
     return QDir::toNativeSeparators(folder);
 }
 
-QString ChooseRemoteFolder::DEFAULT_LOCAL_FOLDER(QString::fromLatin1("MEGA"));
-QString ChooseRemoteFolder::DEFAULT_LOCAL_FOLDER_PATH(QString::fromLatin1("/") + ChooseRemoteFolder::DEFAULT_LOCAL_FOLDER);
+QString ChooseRemoteFolder::DEFAULT_FOLDER(QString::fromLatin1("MEGA"));
+QString ChooseRemoteFolder::DEFAULT_FOLDER_PATH(QString::fromLatin1("/") + ChooseRemoteFolder::DEFAULT_FOLDER);
 
 ChooseRemoteFolder::ChooseRemoteFolder(QObject *parent)
     : QObject(parent)
     , mFolderHandle(mega::INVALID_HANDLE)
-    , mFolderName(ChooseRemoteFolder::DEFAULT_LOCAL_FOLDER_PATH)
+    , mFolderName(ChooseRemoteFolder::DEFAULT_FOLDER_PATH)
 {
 }
 
@@ -129,11 +129,11 @@ mega::MegaHandle ChooseRemoteFolder::getHandle()
 void ChooseRemoteFolder::reset()
 {
     mFolderHandle = mega::INVALID_HANDLE;
-    mFolderName = ChooseRemoteFolder::DEFAULT_LOCAL_FOLDER_PATH;
+    mFolderName = ChooseRemoteFolder::DEFAULT_FOLDER_PATH;
     emit folderNameChanged();
 }
 
-const QString ChooseRemoteFolder::getFolderName()
+QString ChooseRemoteFolder::getFolderName()
 {
     return mFolderName;
 }
