@@ -40,10 +40,9 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
         {
             QString fPath = selection.first();
             auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
-            auto folderName = QDir::fromNativeSeparators(fPath).split(QString::fromLatin1("/")).last().prepend(QString::fromLatin1("/"));
             if(!folder.isNull() && !folder.isEmpty())
             {
-                emit folderChoosen(folder, folderName);
+                emit folderChoosen(folder);
             }
         }
     };

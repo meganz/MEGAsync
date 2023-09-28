@@ -91,7 +91,7 @@ Item {
         id: localFolderChooserConnection
         target: localFolderChooser
 
-        onFolderChoosen: (folder, folderName) => {
+        onFolderChoosen: (folder) => {
             folderField.text = folder
         }
     }

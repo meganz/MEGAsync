@@ -16,7 +16,7 @@ public:
     Q_INVOKABLE QString getDefaultFolder(const QString& folderName = QString());
 
 signals:
-    void folderChoosen(QString folder, QString folderName);
+    void folderChoosen(QString folder);
 };
 
 class ChooseRemoteFolder : public QObject
@@ -33,10 +33,10 @@ public:
     Q_INVOKABLE void openFolderSelector();
     Q_INVOKABLE mega::MegaHandle getHandle();
     Q_INVOKABLE void reset();
-    Q_INVOKABLE const QString getFolderName();
+    Q_INVOKABLE QString getFolderName();
 
-    static QString DEFAULT_LOCAL_FOLDER;
-    static QString DEFAULT_LOCAL_FOLDER_PATH;
+    static QString DEFAULT_FOLDER;
+    static QString DEFAULT_FOLDER_PATH;
 
 private:
     mega::MegaHandle mFolderHandle;
