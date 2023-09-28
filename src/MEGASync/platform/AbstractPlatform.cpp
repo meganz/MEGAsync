@@ -145,14 +145,16 @@ void AbstractPlatform::fileSelector(const SelectorInfo &info)
     {
         fileDialog->setModal(true);
     }
-    DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, &info]()
+
+    auto& func = info.func;
+    DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, func]()
     {
         QStringList files;
         if(fileDialog->result() == QDialog::Accepted)
         {
             files = fileDialog->selectedFiles();
         }
-        info.func(files);
+        func(files);
     });
 }
 
@@ -164,6 +166,8 @@ void AbstractPlatform::folderSelector(const SelectorInfo &info)
     {
         defaultDir = previousFileUploadSelector->getDialog()->directory().path();
     }
+
+    auto& func = info.func;
 
     if(!info.multiSelection)
     {
@@ -180,14 +184,14 @@ void AbstractPlatform::folderSelector(const SelectorInfo &info)
             fileDialog->setModal(true);
         }
 
-        DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, &info]()
+        DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, func]()
         {
             QStringList files;
             if(fileDialog->result() == QDialog::Accepted)
             {
                 files = fileDialog->selectedFiles();
             }
-            info.func(files);
+            func(files);
         });
     }
     else
@@ -198,13 +202,13 @@ void AbstractPlatform::folderSelector(const SelectorInfo &info)
         multiUploadFileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
         multiUploadFileDialog->setOption(QFileDialog::ShowDirsOnly, true);
 
-        DialogOpener::showDialog<MultiQFileDialog>(multiUploadFileDialog, [multiUploadFileDialog, &info](){
+        DialogOpener::showDialog<MultiQFileDialog>(multiUploadFileDialog, [multiUploadFileDialog, func](){
             QStringList files;
             if(multiUploadFileDialog->result() == QDialog::Accepted)
             {
                 files = multiUploadFileDialog->selectedFiles();
             }
-            info.func(files);
+            func(files);
         });
     }
 }
@@ -224,13 +228,14 @@ void AbstractPlatform::fileAndFolderSelector(const SelectorInfo &info)
 
     multiUploadFileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
 
-    DialogOpener::showDialog<MultiQFileDialog>(multiUploadFileDialog, [&info, multiUploadFileDialog](){
+    auto& func = info.func;
+    DialogOpener::showDialog<MultiQFileDialog>(multiUploadFileDialog, [func, multiUploadFileDialog](){
         QStringList files;
         if(multiUploadFileDialog->result() == QDialog::Accepted)
         {
             files = multiUploadFileDialog->selectedFiles();
         }
-        info.func(files);
+        func(files);
     });
 }
 
