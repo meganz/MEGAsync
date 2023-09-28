@@ -54,13 +54,21 @@ QString DownloadFromMegaDialog::getPath()
 
 void DownloadFromMegaDialog::on_bChange_clicked()
 {
-    Platform::getInstance()->folderSelector(tr("Select local folder"),ui->eFolderPath->text(),false,this,[this](QStringList selection){
+    SelectorInfo info;
+    info.title = tr("Select local folder");
+    info.defaultDir = ui->eFolderPath->text();
+    info.multiSelection = false;
+    info.canCreateDirectoreis = true;
+    info.parent = this;
+    info.func = [&](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
             onPathChanged(fPath);
         }
-    });
+    };
+
+    Platform::getInstance()->folderSelector(info);
 }
 
 void DownloadFromMegaDialog::onPathChanged(const QString& path)

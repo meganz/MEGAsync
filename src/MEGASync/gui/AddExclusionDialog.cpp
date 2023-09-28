@@ -59,11 +59,17 @@ void AddExclusionDialog::on_bChoose_clicked()
             setTextToExclusionItem(selection.first());
         }
     };
-
+    SelectorInfo info;
+    info.defaultDir = QDir::home().path();
+    info.multiSelection = false;
+    info.parent = this;
+    info.func = processResult;
 #ifdef __APPLE__
-    Platform::getInstance()->fileAndFolderSelector(tr("Select the file or folder you want to exclude"),QDir::home().path(), false, this, processResult);
+    info.title = tr("Select the file or folder you want to exclude");
+    Platform::getInstance()->fileAndFolderSelector(info);
 #else
-    Platform::getInstance()->folderSelector(tr("Select the folder you want to exclude"),QDir::home().path(), false, this, processResult);
+    info.title = tr("Select the folder you want to exclude");
+    Platform::getInstance()->folderSelector(info);
 #endif
 }
 
@@ -81,13 +87,19 @@ void AddExclusionDialog::setTextToExclusionItem(const QString& path)
 #ifndef __APPLE__
 void AddExclusionDialog::on_bChooseFile_clicked()
 {
-    Platform::getInstance()->fileSelector(tr("Select the file you want to exclude"),QDir::home().path(), false, this,
-                                          [this](QStringList selection){
+
+    SelectorInfo info;
+    info.defaultDir = QDir::home().path();
+    info.multiSelection = false;
+    info.parent = this;
+    info.title = tr("Select the file you want to exclude");
+    info.func = [this](QStringList selection){
         if(!selection.isEmpty())
         {
             ui->eExclusionItem->setText(QDir::toNativeSeparators(selection.first()));
         }
-    });
+    };
+    Platform::getInstance()->fileSelector(info);
 }
 #endif
 

@@ -15,44 +15,81 @@ BackupFolder::BackupFolder(const QString& folder,
                            bool selected, QObject *parent)
     : QObject(parent)
     , mName(displayName)
-    , mFolder(folder)
     , mSize(QString::fromUtf8(""))
     , mSelected(selected)
     , mDone(false)
+    , mFolderSizeReady(false)
     , mError(0)
-    , folderSize(0)
+    , folderSize(FileFolderAttributes::NOT_READY)
     , sdkError(QString())
     , mFolderAttr(nullptr)
+    , mFolder(folder)
 {
 }
 
 void BackupFolder::setSize(qint64 size)
 {
-    if(size > 0)
+    QVector<int> changedRoles;
+
+    if(size == FileFolderAttributes::NOT_READY)
+    {
+        mFolderSizeReady = false;
+        changedRoles.append(BackupsModel::SizeReadyRole);
+    }
+    else if(size != FileFolderAttributes::NOT_READY)
+    {
+        mFolderSizeReady = true;
+        changedRoles.append(BackupsModel::SizeReadyRole);
+    }
+    if(size > FileFolderAttributes::NOT_READY)
     {
         folderSize = size;
-        mSize = Utilities::getSizeString(size);
+        mSize = Utilities::getSizeStringLocalized(size);
+        changedRoles.append(BackupsModel::SizeRole);
+    }
+
+    if(!changedRoles.isEmpty())
+    {
         if(auto model = dynamic_cast<BackupsModel*>(parent()))
         {
             auto changedIndex = model->index(model->getRow(mFolder), 0);
             model->updateSelectedAndTotalSize();
-            emit model->dataChanged(changedIndex, changedIndex, {BackupsModel::SizeRole});
+            emit model->dataChanged(changedIndex, changedIndex, changedRoles);
         }
     }
 }
 
+void BackupFolder::setFolder(const QString &folder)
+{
+    mFolder = folder;
+    if(!createFileFolderAttributes())
+    {
+        mFolderAttr->setPath(mFolder);
+    }
+    mFolderAttr->requestSize(this,[&](qint64 size)
+                             {
+                                 setSize(size);
+                             });
+}
+
 void BackupFolder::calculateFolderSize()
 {
-    if(!mFolderAttr)
-    {
-        mFolderAttr = new LocalFileFolderAttributes(mFolder, this);
-    }
-
+    createFileFolderAttributes();
     mFolderAttr->requestSize(this,[&](qint64 size)
                             {
                                 setSize(size);
                             });
 
+}
+
+bool BackupFolder::createFileFolderAttributes()
+{
+    if(!mFolderAttr)
+    {
+        mFolderAttr = new LocalFileFolderAttributes(mFolder, this);
+        return true;
+    }
+    return false;
 }
 
 int BackupsModel::CHECK_DIRS_TIME = 1000;
@@ -62,6 +99,7 @@ BackupsModel::BackupsModel(QObject* parent)
     , mRoleNames(QAbstractItemModel::roleNames())
     , mSelectedRowsTotal(0)
     , mBackupsTotalSize(0)
+    , mTotalSizeReady(false)
     , mBackupsController(new BackupsController(this))
     , mConflictsSize(0)
     , mConflictsNotificationText(QString::fromUtf8(""))
@@ -71,6 +109,7 @@ BackupsModel::BackupsModel(QObject* parent)
     mRoleNames[NameRole] = "mName";
     mRoleNames[FolderRole] = "mFolder";
     mRoleNames[SizeRole] = "mSize";
+    mRoleNames[SizeReadyRole] = "mSizeReady";
     mRoleNames[SelectedRole] = "mSelected";
     mRoleNames[DoneRole] = "mDone";
     mRoleNames[ErrorRole] = "mError";
@@ -131,13 +170,19 @@ bool BackupsModel::setData(const QModelIndex& index, const QVariant& value, int 
                 item->mName = value.toString();
                 break;
             case FolderRole:
-                item->mFolder = value.toString();
+                item->setFolder(value.toString());
                 break;
             case SizeRole:
                 item->mSize = value.toInt();
                 break;
             case SelectedRole:
             {
+                QDir dir(item->getFolder());
+                dir.isEmpty(); //this triggers permission request on macOS, don´t remove
+                if(dir.exists() && !dir.isReadable())//this didn´t trigger permission request
+                {
+                    return false;
+                }
                 item->mSelected = value.toBool();
                 checkSelectedAll();
                 break;
@@ -175,10 +220,13 @@ QVariant BackupsModel::data(const QModelIndex &index, int role) const
                 field = item->mName;
                 break;
             case FolderRole:
-                field = item->mFolder;
+                field = item->getFolder();
                 break;
             case SizeRole:
                 field = item->mSize;
+                break;
+            case SizeReadyRole:
+                field = item->mFolderSizeReady;
                 break;
             case SelectedRole:
                 field = item->mSelected;
@@ -199,7 +247,12 @@ QVariant BackupsModel::data(const QModelIndex &index, int role) const
 
 QString BackupsModel::getTotalSize() const
 {
-    return Utilities::getSizeString(mBackupsTotalSize);
+    return Utilities::getSizeStringLocalized(mBackupsTotalSize);
+}
+
+bool BackupsModel::getIsTotalSizeReady() const
+{
+    return mTotalSizeReady;
 }
 
 Qt::CheckState BackupsModel::getCheckAllState() const
@@ -327,6 +380,12 @@ void BackupsModel::updateSelectedAndTotalSize()
         {
             mSelectedRowsTotal++;
 
+            if(!(*item)->mFolderSizeReady)
+            {
+                setTotalSizeReady(false);
+                return;
+            }
+
             if((*item)->folderSize > 0)
             {
                 mBackupsTotalSize += (*item)->folderSize;
@@ -344,6 +403,7 @@ void BackupsModel::updateSelectedAndTotalSize()
     {
         emit noneSelected();
     }
+    setTotalSizeReady(true);
 }
 
 void BackupsModel::checkSelectedAll()
@@ -375,7 +435,7 @@ bool BackupsModel::selectIfExistsInsertion(const QString& inputPath)
 
     while (!exists && row < rowCount())
     {
-        QString existingPath(mBackupFolderList[row]->mFolder);
+        QString existingPath(mBackupFolderList[row]->getFolder());
         if ((exists = (inputPath == existingPath)))
         {
             if(!mBackupFolderList[row]->mSelected)
@@ -392,6 +452,10 @@ bool BackupsModel::selectIfExistsInsertion(const QString& inputPath)
 bool BackupsModel::folderContainsOther(const QString& folder,
                                             const QString& other) const
 {
+    if(folder == other)
+    {
+        return true;
+    }
     return folder.startsWith(other) && folder[other.size()] == QDir::separator();
 }
 
@@ -403,8 +467,8 @@ bool BackupsModel::isRelatedFolder(const QString& folder,
 
 QModelIndex BackupsModel::getModelIndex(QList<BackupFolder*>::iterator item)
 {
-    const auto row = std::distance(mBackupFolderList.begin(), item);
-    return QModelIndex(index(row, 0));
+    int row = static_cast<int>(std::distance(mBackupFolderList.begin(), item));
+    return QModelIndex(index(static_cast<int>(row), 0));
 }
 
 void BackupsModel::checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
@@ -554,8 +618,7 @@ void BackupsModel::reviewConflicts()
     }
     else if(unavailableCount > 0)
     {
-        conflictText = tr("Folder can't be backed up as it can't be located. "
-                          "It may have been moved or deleted, or you might not have access.");
+        conflictText = getFolderUnavailableErrorMsg();
         setGlobalError(BackupErrorCode::UnavailableDir);
     }
     changeConflictsNotificationText(conflictText);
@@ -595,24 +658,25 @@ void BackupsModel::checkRemoteDuplicatedBackups(const QSet<QString>& candidateSe
     }
 }
 
-bool BackupsModel::existOtherRelatedFolder(const int currentIndex)
+bool BackupsModel::existOtherRelatedFolder(const int currentRow)
 {
-    int row = currentIndex + 1;
-    if(row >= mBackupFolderList.size())
+    if(currentRow > mBackupFolderList.size())
     {
         return false;
     }
 
     bool found = false;
-    QString folder(mBackupFolderList[currentIndex]->mFolder);
-    while(!found && row < rowCount())
+    QString folder(mBackupFolderList[currentRow]->getFolder());
+    int conflictRow = 1;
+    while(!found && conflictRow < rowCount())
     {
-        if((found = mBackupFolderList[row]->mSelected && isRelatedFolder(folder, mBackupFolderList[row]->mFolder)))
+        if((found = mBackupFolderList[conflictRow]->mSelected
+            && conflictRow!=currentRow &&isRelatedFolder(folder, mBackupFolderList[conflictRow]->getFolder())))
         {
-            mBackupFolderList[currentIndex]->mError = BackupErrorCode::PathRelation;
-            mBackupFolderList[row]->mError = BackupErrorCode::PathRelation;
+            mBackupFolderList[currentRow]->mError = BackupErrorCode::PathRelation;
+            mBackupFolderList[conflictRow]->mError = BackupErrorCode::PathRelation;
         }
-        row++;
+        conflictRow++;
     }
     return found;
 }
@@ -641,11 +705,20 @@ void BackupsModel::check()
             QString message;
             if (mBackupFolderList[row]->mError == BackupErrorCode::None
                     && !existOtherRelatedFolder(row)
-                && SyncController::isLocalFolderSyncable(mBackupFolderList[row]->mFolder, mega::MegaSync::TYPE_BACKUP, message)
+                && SyncController::isLocalFolderSyncable(mBackupFolderList[row]->getFolder(), mega::MegaSync::TYPE_BACKUP, message)
                         != SyncController::CAN_SYNC)
             {
                 mBackupFolderList[row]->mError = BackupErrorCode::SyncConflict;
+                QDir dir(mBackupFolderList[row]->getFolder());
+                if (!dir.exists())
+                {
+                        message = getFolderUnavailableErrorMsg();
+                }
                 changeConflictsNotificationText(message);
+            }
+            else
+            {
+                mBackupFolderList[row]->calculateFolderSize();
             }
         }
     }
@@ -687,7 +760,7 @@ int BackupsModel::getRow(const QString& folder)
     bool found = false;
     while(!found && row < rowCount())
     {
-        found = mBackupFolderList[row]->mFolder == folder;
+        found = mBackupFolderList[row]->getFolder() == folder;
         if (!found)
         {
             row++;
@@ -758,7 +831,7 @@ void BackupsModel::remove(const QString& folder)
     QString name;
     while (!found && item != mBackupFolderList.end())
     {
-        if((found = (*item)->mFolder == folder))
+        if((found = (*item)->getFolder() == folder))
         {
             name = (*item)->mName;
             const auto row = std::distance(mBackupFolderList.begin(), item);
@@ -785,7 +858,7 @@ bool BackupsModel::existsFolder(const QString& inputPath)
     QList<BackupFolder*>::iterator item = mBackupFolderList.begin();
     while (!exists && item != mBackupFolderList.end())
     {
-        exists = (inputPath == (*item)->mFolder);
+        exists = (inputPath == (*item)->getFolder());
         if(!exists)
         {
             item++;
@@ -805,7 +878,7 @@ void BackupsModel::change(const QString& oldFolder, const QString& newFolder)
     bool found = false;
     while (!found && item != mBackupFolderList.end())
     {
-        if((*item)->mSelected && (found = ((*item)->mFolder == oldFolder)))
+        if((*item)->mSelected && (found = ((*item)->getFolder() == oldFolder)))
         {
             if(existsFolder(newFolder))
             {
@@ -850,7 +923,7 @@ void BackupsModel::clean(bool resetErrors)
             {
                 if(resetErrors)
                 {
-                    setData(index(getRow((*item)->mFolder), 0), QVariant(BackupErrorCode::None), ErrorRole);
+                    setData(index(getRow((*item)->getFolder()), 0), QVariant(BackupErrorCode::None), ErrorRole);
                 }
                 item++;
             }
@@ -862,10 +935,25 @@ void BackupsModel::clean(bool resetErrors)
     }
 }
 
+const QString BackupsModel::getFolderUnavailableErrorMsg()
+{
+    return tr("Folder can't be backed up as it can't be located. "
+       "It may have been moved or deleted, or you might not have access.");
+}
+
 void BackupsModel::setGlobalError(BackupErrorCode error)
 {
     mGlobalError = error;
     emit globalErrorChanged();
+}
+
+void BackupsModel::setTotalSizeReady(bool ready)
+{
+    if(mTotalSizeReady != ready)
+    {
+        mTotalSizeReady = ready;
+        emit totalSizeReadyChanged();
+    }
 }
 
 void BackupsModel::onBackupsCreationFinished(bool success)
@@ -907,7 +995,7 @@ bool BackupsModel::checkDirectories()
                 && !mBackupFolderList[row]->mDone
                 && mBackupFolderList[row]->mError != SDKCreation)
         {
-            if(!QDir(mBackupFolderList[row]->mFolder).exists())
+            if(!QDir(mBackupFolderList[row]->getFolder()).exists())
             {
                 setData(index(row, 0), QVariant(BackupErrorCode::UnavailableDir), ErrorRole);
                 success = false;

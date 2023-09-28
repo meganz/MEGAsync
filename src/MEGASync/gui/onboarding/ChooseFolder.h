@@ -41,7 +41,7 @@ signals:
 public:
     ChooseRemoteFolder(QObject* parent = nullptr);
     Q_INVOKABLE void openFolderSelector();
-    Q_INVOKABLE const mega::MegaHandle getHandle();
+    Q_INVOKABLE mega::MegaHandle getHandle();
     Q_INVOKABLE void reset();
     Q_INVOKABLE const QString getFolderName();
 

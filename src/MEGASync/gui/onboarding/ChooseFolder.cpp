@@ -20,7 +20,11 @@ ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
 
 void ChooseLocalFolder::openFolderSelector()
 {
-    Platform::getInstance()->folderSelector(tr("Select local folder"), mFolder, false, nullptr, [this](QStringList selection){
+    SelectorInfo info;
+    info.title = tr("Select local folder");
+    info.defaultDir = mFolder;
+    info.canCreateDirectoreis = true;
+    info.func = [this](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
@@ -31,7 +35,8 @@ void ChooseLocalFolder::openFolderSelector()
                 emit folderChanged();
             }
         }
-    });
+    };
+    Platform::getInstance()->folderSelector(info);
 }
 
 const QString ChooseLocalFolder::getFolder()
@@ -94,7 +99,7 @@ void ChooseRemoteFolder::openFolderSelector()
     });
 }
 
-const mega::MegaHandle ChooseRemoteFolder::getHandle()
+mega::MegaHandle ChooseRemoteFolder::getHandle()
 {
     return mFolderHandle;
 }
