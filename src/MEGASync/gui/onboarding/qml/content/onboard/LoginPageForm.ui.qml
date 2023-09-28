@@ -83,6 +83,7 @@ StackViewPage {
             anchors.left: parent.left
             text: OnboardingStrings.forgotPassword
             url: Links.recovery
+            visible: !LoginControllerAccess.newAccount
         }
     }
 

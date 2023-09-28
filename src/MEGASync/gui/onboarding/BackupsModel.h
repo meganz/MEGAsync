@@ -15,7 +15,6 @@ class BackupFolder : public QObject
     // Front (with role)
 public:
     QString mName;
-    QString mFolder;
     QString mSize;
     bool mSelected;
     bool mDone;
@@ -34,9 +33,15 @@ public:
                  const QString& displayName,
                  bool selected = true, QObject* parent = nullptr);
 
-    FileFolderAttributes* mFolderAttr;
+    LocalFileFolderAttributes* mFolderAttr;
     void setSize(qint64 size);
+    void setFolder(const QString& folder);
+    QString getFolder() const {return mFolder;}
     void calculateFolderSize();
+
+private:
+    bool createFileFolderAttributes();
+    QString mFolder;
 };
 
 class BackupsModel : public QAbstractListModel
@@ -128,6 +133,7 @@ signals:
     void totalSizeReadyChanged();
 
 private:
+    const QString getFolderUnavailableErrorMsg();
     static int CHECK_DIRS_TIME;
 
     QList<BackupFolder*> mBackupFolderList;

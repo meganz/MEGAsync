@@ -9,6 +9,25 @@
 #include <QString>
 #include <string>
 
+struct SelectorInfo
+{
+    std::function<void(QStringList)> func;
+    QWidget* parent;
+    QString title;
+    QString defaultDir;
+    bool multiSelection;
+    bool canCreateDirectoreis;
+
+    SelectorInfo()
+        : func(nullptr)
+        , parent(nullptr)
+        , title(QString())
+        , defaultDir(QString())
+        , multiSelection(false)
+        , canCreateDirectoreis(false)
+    {}
+};
+
 class AbstractPlatform
 {
 public:
@@ -49,9 +68,9 @@ public:
     virtual void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true);
     virtual QString getSizeStringLocalizedOSbased(qint64 bytes);
 
-    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
-    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
-    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
+    virtual void fileSelector(const SelectorInfo& info);
+    virtual void folderSelector(const SelectorInfo& info);
+    virtual void fileAndFolderSelector(const SelectorInfo& info);
     virtual void raiseFileFolderSelectors();
     virtual void closeFileFolderSelectors(QWidget* parent);
 

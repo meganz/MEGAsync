@@ -420,30 +420,46 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
-void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+void PlatformImplementation::fileSelector(const SelectorInfo& info)
 {
-    if (defaultDir.isEmpty())
+    if (info.defaultDir.isEmpty())
     {
-        defaultDir = QLatin1String("/");
+        auto updateInfo = info;
+        updateInfo.defaultDir = QLatin1String("/");
+        AbstractPlatform::fileSelector(updateInfo);
     }
-    AbstractPlatform::fileSelector(title, defaultDir, multiSelection, parent, func);
+    else
+    {
+        AbstractPlatform::fileSelector(info);
+    }
 }
 
-void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+void PlatformImplementation::folderSelector(const SelectorInfo& info)
 {
-    if (defaultDir.isEmpty())
+    if (info.defaultDir.isEmpty())
     {
-        defaultDir = QLatin1String("/");
+        auto updateInfo = info;
+        updateInfo.defaultDir = QLatin1String("/");
+        AbstractPlatform::folderSelector(updateInfo);
     }
-    AbstractPlatform::folderSelector(title, defaultDir, multiSelection, parent, func);
+    else
+    {
+        AbstractPlatform::folderSelector(info);
+    }
 }
-void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+
+void PlatformImplementation::fileAndFolderSelector(const SelectorInfo& info)
 {
-    if (defaultDir.isEmpty())
+    if (info.defaultDir.isEmpty())
     {
-        defaultDir = QLatin1String("/");
+        auto updateInfo = info;
+        updateInfo.defaultDir = QLatin1String("/");
+        AbstractPlatform::fileAndFolderSelector(updateInfo);
     }
-    AbstractPlatform::fileAndFolderSelector(title, defaultDir, multiSelection, parent, func);
+    else
+    {
+        AbstractPlatform::fileAndFolderSelector(info);
+    }
 }
 
 void PlatformImplementation::streamWithApp(const QString &app, const QString &url)

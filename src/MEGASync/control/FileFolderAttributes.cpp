@@ -200,6 +200,10 @@ void LocalFileFolderAttributes::requestSize(QObject* caller,std::function<void(q
                 }
             }
         }
+        else
+        {
+            mSize = Status::NOT_READABLE;
+        }
     }
 
     //We always send the size, even if the request is async...just to show on GUI a "loading size..." or the most recent size while the new is received
@@ -365,7 +369,14 @@ qint64 LocalFileFolderAttributes::calculateSize()
 
 void LocalFileFolderAttributes::setPath(const QString &newPath)
 {
-    mPath = newPath;
+    if(mPath != newPath)
+    {
+        mPath = newPath;
+        mSize = NOT_READY;
+        //initAllAttributes();
+        mRequestTimestamps.clear();
+        mRequests.clear();
+    }
 }
 
 //REMOTE

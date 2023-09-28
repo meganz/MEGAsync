@@ -4308,12 +4308,17 @@ void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
         DialogOpener::closeDialogsByParentClass<TransferManager>();
     }
 
-    Platform::getInstance()->fileAndFolderSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath, true,
-                                 parent,
-                                 [this/*, blocker*/](QStringList files)
+    SelectorInfo info;
+    info.title = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
+    info.defaultDir = defaultFolderPath;
+    info.multiSelection = true;
+    info.parent = parent;
+    info.func = [this/*, blocker*/](QStringList files)
     {
         shellUpload(createQueue(files));
-    });
+    };
+
+    Platform::getInstance()->fileAndFolderSelector(info);
 }
 
 QPointer<OverQuotaDialog> MegaApplication::showSyncOverquotaDialog()
@@ -4859,9 +4864,13 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 #ifdef Q_OS_WIN
     parent = infoDialog;
 #endif
-
-    Platform::getInstance()->fileSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath,
-                                 true, parent, processUpload);
+    SelectorInfo info;
+    info.title = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
+    info.defaultDir = defaultFolderPath;
+    info.multiSelection = true;
+    info.parent = parent;
+    info.func = processUpload;
+    Platform::getInstance()->fileSelector(info);
 }
 
 void MegaApplication::externalFolderUpload(qlonglong targetFolder)
@@ -4907,8 +4916,13 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     parent = infoDialog;
 #endif
 
-    Platform::getInstance()->folderSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath,
-                                 false, parent, processUpload);
+    SelectorInfo info;
+    info.title = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
+    info.defaultDir = defaultFolderPath;
+    info.multiSelection = false;
+    info.parent = parent;
+    info.func = processUpload;
+    Platform::getInstance()->folderSelector(info);
 }
 
 void MegaApplication::externalFolderSync(qlonglong targetFolder)
@@ -6005,13 +6019,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        // We need to be both logged AND have fetched the nodes to continue
-        // Do not continue if there was an error
-        if (preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK
-            || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
-        {
-            break;
-        }
 
         auto flags = request->getNumDetails();
         bool storage  = flags & 0x01;
@@ -6023,13 +6030,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (pro)      inflightUserStats[2] = false;
 
         // We need to be both logged AND have fetched the nodes to continue
+        // Do not continue if there was an error
         if (preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK
-            || !preferences->logged())
-        {
-            break;
-        }
-
-        if (e->getErrorCode() != MegaError::API_OK)
+            || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
         {
             break;
         }
