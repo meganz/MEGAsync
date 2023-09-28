@@ -39,9 +39,9 @@ public:
     bool isUserActive() override;
     QString getDeviceName() override;
 
-    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
-    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
-    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    void fileSelector(const SelectorInfo& info) override;
+    void folderSelector(const SelectorInfo& info) override;
+    void fileAndFolderSelector(const SelectorInfo& info) override;
 
     void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
     void streamWithApp(const QString& app, const QString& url) override;

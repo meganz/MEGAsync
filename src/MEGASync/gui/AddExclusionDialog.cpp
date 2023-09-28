@@ -87,13 +87,19 @@ void AddExclusionDialog::setTextToExclusionItem(const QString& path)
 #ifndef __APPLE__
 void AddExclusionDialog::on_bChooseFile_clicked()
 {
-    Platform::getInstance()->fileSelector(tr("Select the file you want to exclude"),QDir::home().path(), false, this,
-                                          [this](QStringList selection){
+
+    SelectorInfo info;
+    info.defaultDir = QDir::home().path();
+    info.multiSelection = false;
+    info.parent = this;
+    info.title = tr("Select the file you want to exclude");
+    info.func = [this](QStringList selection){
         if(!selection.isEmpty())
         {
             ui->eExclusionItem->setText(QDir::toNativeSeparators(selection.first()));
         }
-    });
+    };
+    Platform::getInstance()->fileSelector(info);
 }
 #endif
 
