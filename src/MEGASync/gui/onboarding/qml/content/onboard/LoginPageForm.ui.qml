@@ -38,7 +38,7 @@ StackViewPage {
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Large
-            text: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED
+            text: LoginControllerAccess.newAccount
                   ? OnboardingStrings.confirmEmailAndPassword
                   : OnboardingStrings.loginTitle
         }
@@ -46,7 +46,7 @@ StackViewPage {
         MegaTexts.RichText {
             id: confirmText
 
-            visible: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED
+            visible: LoginControllerAccess.newAccount
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Medium
@@ -83,6 +83,7 @@ StackViewPage {
             anchors.left: parent.left
             text: OnboardingStrings.forgotPassword
             url: Links.recovery
+            visible: !LoginControllerAccess.newAccount
         }
     }
 
@@ -98,17 +99,17 @@ StackViewPage {
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
             Layout.leftMargin: -signUpButton.sizes.focusBorderWidth
-            visible: LoginControllerAccess.state !== LoginController.EMAIL_CONFIRMED
+            visible: !LoginControllerAccess.newAccount
         }
 
         MegaButtons.PrimaryButton {
             id: loginButton
 
-            text: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED ? OnboardingStrings.next : OnboardingStrings.login
+            text: LoginControllerAccess.newAccount ? OnboardingStrings.next : OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
             progress.value: LoginControllerAccess.progress
             Layout.rightMargin: -loginButton.sizes.focusBorderWidth//TODO: poner flecha
-            icons.source: LoginControllerAccess.state === LoginController.EMAIL_CONFIRMED ? Images.arrowRight : Images.none
+            icons.source: LoginControllerAccess.newAccount ? Images.arrowRight : Images.none
         }
     }
 }

@@ -8,6 +8,9 @@
 #include <cstring>
 #include <map>
 
+#include "DolphinFileManager.h"
+#include "NautilusFileManager.h"
+
 using namespace std;
 using namespace mega;
 
@@ -108,13 +111,22 @@ bool PlatformImplementation::isTilingWindowManager()
 
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
-    QString filebrowser = getDefaultFileBrowserApp();
-    // Nautilus on Gnome, does not open the directory if argument is given without surrounding double-quotes;
-    // Path is passed through QUrl which properly escapes special chars in native platform URIs
-    // which takes care of path names also containing double-quotes withing, which will stop
-    // Nautilus from parsing the argument string all-together
-    return QProcess::startDetached(filebrowser + QString::fromLatin1(" \"")
-                            + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
+    QString fileBrowser = getDefaultFileBrowserApp();
+
+    static const QMap<QString, QStringList> showInFolderCallMap
+    {
+        {QLatin1String("dolphin"), DolphinFileManager::getShowInFolderParams()},
+        {QLatin1String("nautilus"), NautilusFileManager::getShowInFolderParams()}
+    };
+
+    QStringList params;
+    auto itFoundAppParams = showInFolderCallMap.constFind(fileBrowser);
+    if (itFoundAppParams != showInFolderCallMap.constEnd())
+    {
+        params << *itFoundAppParams;
+    }
+
+    return QProcess::startDetached(fileBrowser, params << QUrl::fromLocalFile(pathIn).toString());
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
@@ -252,19 +264,13 @@ QString PlatformImplementation::getDefaultOpenAppByMimeType(QString mimeType)
     }
 
     QString line = contents.first();
-    int index = line.indexOf(QChar::fromAscii('%'));
-    int size = -1;
-    if (index != -1)
+    QRegExp captureRegexCommand(QString::fromUtf8("^Exec=([^' ']*)"));
+    if (captureRegexCommand.indexIn(line) != -1)
     {
-        size = index - 6;
+        return captureRegexCommand.cap(1); // return first group from regular expression.
     }
 
-    if (!size)
-    {
-        return QString();
-    }
-
-    return line.mid(5, size);
+    return QString();
 }
 
 bool PlatformImplementation::getValue(const char * const name, const bool default_value)
@@ -414,30 +420,46 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
-void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+void PlatformImplementation::fileSelector(const SelectorInfo& info)
 {
-    if (defaultDir.isEmpty())
+    if (info.defaultDir.isEmpty())
     {
-        defaultDir = QLatin1String("/");
+        auto updateInfo = info;
+        updateInfo.defaultDir = QLatin1String("/");
+        AbstractPlatform::fileSelector(updateInfo);
     }
-    AbstractPlatform::fileSelector(title, defaultDir, multiSelection, parent, func);
+    else
+    {
+        AbstractPlatform::fileSelector(info);
+    }
 }
 
-void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+void PlatformImplementation::folderSelector(const SelectorInfo& info)
 {
-    if (defaultDir.isEmpty())
+    if (info.defaultDir.isEmpty())
     {
-        defaultDir = QLatin1String("/");
+        auto updateInfo = info;
+        updateInfo.defaultDir = QLatin1String("/");
+        AbstractPlatform::folderSelector(updateInfo);
     }
-    AbstractPlatform::folderSelector(title, defaultDir, multiSelection, parent, func);
+    else
+    {
+        AbstractPlatform::folderSelector(info);
+    }
 }
-void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+
+void PlatformImplementation::fileAndFolderSelector(const SelectorInfo& info)
 {
-    if (defaultDir.isEmpty())
+    if (info.defaultDir.isEmpty())
     {
-        defaultDir = QLatin1String("/");
+        auto updateInfo = info;
+        updateInfo.defaultDir = QLatin1String("/");
+        AbstractPlatform::fileAndFolderSelector(updateInfo);
     }
-    AbstractPlatform::fileAndFolderSelector(title, defaultDir, multiSelection, parent, func);
+    else
+    {
+        AbstractPlatform::fileAndFolderSelector(info);
+    }
 }
 
 void PlatformImplementation::streamWithApp(const QString &app, const QString &url)

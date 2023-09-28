@@ -21,6 +21,7 @@ LoginController::LoginController(QObject *parent)
       , mPasswordErrorMsg(QString())
       , mProgress(0)
       , mState(LOGGED_OUT)
+      , mNewAccount(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
@@ -303,6 +304,7 @@ void LoginController::onEvent(mega::MegaApi *, mega::MegaEvent *event)
 {
     if(event->getType() == mega::MegaEvent::EVENT_CONFIRM_USER_EMAIL)
     {
+        mNewAccount = true;
         setEmail(QString::fromLatin1(event->getText()));
         mPreferences->removeEphemeralCredentials();
         setState(EMAIL_CONFIRMED);
@@ -503,6 +505,7 @@ void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
     Q_UNUSED(e)
     Q_UNUSED(request)
 
+    mNewAccount = false;
     setState(LOGGED_OUT);
 }
 

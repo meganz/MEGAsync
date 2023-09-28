@@ -361,23 +361,11 @@ QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, c
     {
         if (syncType == MegaSync::SyncType::TYPE_BACKUP)
         {
-            message = tr("You can’t backup “%1” as it’s the root folder. "
-                         "The root folder is either; the top-level folder "
-                         "on your device or computer that holds all your "
-                         "folders and files or the folder where the system "
-                         "or program is installed. We don’t allow users to "
-                         "back up root folders as it may cause file conflicts or errors.\n"
-                         "To continue, select a different folder.").arg(inputPath);
+            message = tr("Can't backup “%1” as it's the root folder. To continue, select a different folder").arg(inputPath);
         }
         else
         {
-            message = tr("You can’t sync “%1” as it’s the root folder. "
-                         "The root folder is either; the top-level folder on your "
-                         "device or computer that holds all your folders and files"
-                         " or the folder where the system or program is installed."
-                         " We don’t allow users to sync root folders as it may cause"
-                         " file conflicts or errors.\n"
-                         "To continue, select a different folder.").arg(inputPath);
+            message = tr("Can't sync “%1” as it's the root folder. To continue, select a different folder").arg(inputPath);
         }
     }
     return message;

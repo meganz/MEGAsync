@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.12
 import Common 1.0
 import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
+import Components.BusyIndicator 1.0 as MegaBusyIndicator
 
 // Local
 import Onboard 1.0
@@ -21,7 +22,7 @@ Rectangle {
     readonly property int headerFooterHeight: 40
     readonly property int tableRadius: 8
 
-    Layout.preferredWidth: parent.width
+    Layout.preferredWidth: width
     Layout.preferredHeight: height
     height: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.None
             ? 192 : 192 - headerFooterHeight + listView.footerItem.height
@@ -90,12 +91,24 @@ Rectangle {
                 }
 
                 MegaTexts.Text {
+                    id: totalSizeText
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
                     text: BackupsModel.mTotalSize
                     font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.DemiBold
                     color: Styles.textPrimary
+                    visible: BackupsModel.totalSizeReady
+                }
+
+                MegaBusyIndicator.BusyIndicator {
+                    Layout.rightMargin: headerFooterMargin
+                    Layout.alignment: Qt.AlignRight
+                    visible: !totalSizeText.visible
+                    color: Styles.textAccent
+                    imageSize: Qt.size(16, 16)
+                    Layout.preferredWidth: 16
+                    Layout.preferredHeight: 16
                 }
             }
 

@@ -207,19 +207,15 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString err
 {
     Q_UNUSED(name)
     Q_UNUSED(syncErrorCode)
+
     if (errorCode != mega::MegaError::API_OK)
     {
         Text::Link link(Utilities::SUPPORT_URL);
         Text::Decorator dec(&link);
         QString msg = errorMsg;
         dec.process(msg);
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = tr("Error adding sync");
-        msgInfo.text = msg;
-        msgInfo.textFormat = Qt::RichText;
 
-        QMegaMessageBox::warning(msgInfo);
-        emit cantSync();
+        emit cantSync(msg, false);
     }
     else
     {
