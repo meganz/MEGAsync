@@ -18,21 +18,32 @@ Item {
     width: image.width
     height: image.height
 
+    onColorChanged:
+    {
+        image.visible = false
+        opacityMask.visible = true
+    }
+
     Rectangle {
         id: iconFill
+
         anchors.fill: parent
         visible: false
     }
 
     Image {
         id: image
+
         anchors.centerIn: parent
-        visible: false
+        visible: true
     }
 
     OpacityMask {
+        id: opacityMask
+
         anchors.fill: iconFill
         source: iconFill
         maskSource: image
+        visible: false
     }
 }
