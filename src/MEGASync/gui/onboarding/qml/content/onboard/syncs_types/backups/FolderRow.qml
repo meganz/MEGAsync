@@ -124,7 +124,10 @@ Rectangle {
                         anchors.bottom: parent.bottom
                         anchors.topMargin: 1
                         width: contentRoot.width - checkbox.width - contentRoot.checkboxSpacing
-                               - contentRoot.imageTextSpacing - contentRoot.imageWidth - contentRoot.sizeTextWidth
+                               - contentRoot.imageTextSpacing - contentRoot.imageWidth -
+                               (folderSize.visible ? (folderSize.width + contentRoot.checkboxSpacing) : 0) -
+                               (busyIndicator.visible ? (busyIndicator.width + contentRoot.checkboxSpacing) : 0)
+
                         font.pixelSize: MegaTexts.Text.Size.Small
                         text: mName
                         color: Styles.textPrimary
@@ -133,6 +136,7 @@ Rectangle {
             }
 
             MegaTexts.SecondaryText {
+                id: folderSize
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -145,6 +149,7 @@ Rectangle {
             }
 
             MegaBusyIndicator.BusyIndicator {
+                id: busyIndicator
                 visible: backupsProxyModel.selectedFilterEnabled && !mSizeReady
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
@@ -310,7 +315,7 @@ Rectangle {
                 leftIcon.color: Styles.iconSecondary
                 error: hint.visible
                 sizes: MegaTextFields.SmallSizes {}
-                validator: RegExpValidator { regExp: /^[^*><?"\/\\\|: ]+$/ }
+                validator: RegExpValidator { regExp: /^[^*><?"\/\\\|: ]{1,255}$/ }
 
                 onAccepted: {
                     doneAction()
@@ -341,16 +346,12 @@ Rectangle {
                         root.height = root.totalHeight;
                         break;
                     case BackupsModel.BackupErrorCode.ExistsRemote:
-                        editTextField.hint.text =
-                            OnboardingStrings.confirmBackupErrorRemote.replace(RegexExpressions.betweenCommas,
-                                                                               '"' + editTextField.text + '"');
+                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;
                         break;
                     case BackupsModel.BackupErrorCode.DuplicatedName:
-                        editTextField.hint.text =
-                            OnboardingStrings.confirmBackupErrorDuplicated.replace(RegexExpressions.betweenCommas,
-                                                                                   '"' + editTextField.text + '"');
+                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;
                         break;
