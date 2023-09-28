@@ -747,7 +747,13 @@ void BackupsWizard::on_bMoreFolders_clicked()
             }
         }
     };
-    Platform::getInstance()->folderSelector(tr("Choose directory"),Utilities::getDefaultBasePath(),false,this,processResult);
+    SelectorInfo info;
+    info.title = tr("Choose directory");
+    info.defaultDir = Utilities::getDefaultBasePath();
+    info.parent = this;
+    info.func = processResult;
+    info.canCreateDirectoreis = true;
+    Platform::getInstance()->folderSelector(info);
 }
 
 void BackupsWizard::on_bBack_clicked()

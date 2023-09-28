@@ -15,7 +15,6 @@ BackupFolder::BackupFolder(const QString& folder,
                            bool selected, QObject *parent)
     : QObject(parent)
     , mName(displayName)
-    , mFolder(folder)
     , mSize(QString::fromUtf8(""))
     , mSelected(selected)
     , mDone(false)
@@ -24,6 +23,7 @@ BackupFolder::BackupFolder(const QString& folder,
     , folderSize(FileFolderAttributes::NOT_READY)
     , sdkError(QString())
     , mFolderAttr(nullptr)
+    , mFolder(folder)
 {
 }
 
@@ -31,7 +31,12 @@ void BackupFolder::setSize(qint64 size)
 {
     QVector<int> changedRoles;
 
-    if(size != FileFolderAttributes::NOT_READY)
+    if(size == FileFolderAttributes::NOT_READY)
+    {
+        mFolderSizeReady = false;
+        changedRoles.append(BackupsModel::SizeReadyRole);
+    }
+    else if(size != FileFolderAttributes::NOT_READY)
     {
         mFolderSizeReady = true;
         changedRoles.append(BackupsModel::SizeReadyRole);
@@ -54,13 +59,22 @@ void BackupFolder::setSize(qint64 size)
     }
 }
 
+void BackupFolder::setFolder(const QString &folder)
+{
+    mFolder = folder;
+    if(!createFileFolderAttributes())
+    {
+        mFolderAttr->setPath(mFolder);
+    }
+    mFolderAttr->requestSize(this,[&](qint64 size)
+                             {
+                                 setSize(size);
+                             });
+}
+
 void BackupFolder::calculateFolderSize()
 {
-    if(!mFolderAttr)
-    {
-        mFolderAttr = new LocalFileFolderAttributes(mFolder, this);
-    }
-
+    createFileFolderAttributes();
     mFolderAttr->requestSize(this,[&](qint64 size)
                             {
                                 setSize(size);
@@ -68,7 +82,19 @@ void BackupFolder::calculateFolderSize()
 
 }
 
+bool BackupFolder::createFileFolderAttributes()
+{
+    if(!mFolderAttr)
+    {
+        mFolderAttr = new LocalFileFolderAttributes(mFolder, this);
+        return true;
+    }
+    return false;
+}
+
 int BackupsModel::CHECK_DIRS_TIME = 1000;
+const QString BackupsModel::folderUnavailableErrorMsg = tr("Folder can't be backed up as it can't be located. "
+                                                     "It may have been moved or deleted, or you might not have access.");
 
 BackupsModel::BackupsModel(QObject* parent)
     : QAbstractListModel(parent)
@@ -146,13 +172,19 @@ bool BackupsModel::setData(const QModelIndex& index, const QVariant& value, int 
                 item->mName = value.toString();
                 break;
             case FolderRole:
-                item->mFolder = value.toString();
+                item->setFolder(value.toString());
                 break;
             case SizeRole:
                 item->mSize = value.toInt();
                 break;
             case SelectedRole:
             {
+                QDir dir(item->getFolder());
+                dir.isEmpty(); //this triggers permission request on macOS, don´t remove
+                if(dir.exists() && !dir.isReadable())//this didn´t trigger permission request
+                {
+                    return false;
+                }
                 item->mSelected = value.toBool();
                 checkSelectedAll();
                 break;
@@ -190,7 +222,7 @@ QVariant BackupsModel::data(const QModelIndex &index, int role) const
                 field = item->mName;
                 break;
             case FolderRole:
-                field = item->mFolder;
+                field = item->getFolder();
                 break;
             case SizeRole:
                 field = item->mSize;
@@ -405,7 +437,7 @@ bool BackupsModel::selectIfExistsInsertion(const QString& inputPath)
 
     while (!exists && row < rowCount())
     {
-        QString existingPath(mBackupFolderList[row]->mFolder);
+        QString existingPath(mBackupFolderList[row]->getFolder());
         if ((exists = (inputPath == existingPath)))
         {
             if(!mBackupFolderList[row]->mSelected)
@@ -588,8 +620,7 @@ void BackupsModel::reviewConflicts()
     }
     else if(unavailableCount > 0)
     {
-        conflictText = tr("Folder can't be backed up as it can't be located. "
-                          "It may have been moved or deleted, or you might not have access.");
+        conflictText = BackupsModel::folderUnavailableErrorMsg;
         setGlobalError(BackupErrorCode::UnavailableDir);
     }
     changeConflictsNotificationText(conflictText);
@@ -637,12 +668,12 @@ bool BackupsModel::existOtherRelatedFolder(const int currentRow)
     }
 
     bool found = false;
-    QString folder(mBackupFolderList[currentRow]->mFolder);
+    QString folder(mBackupFolderList[currentRow]->getFolder());
     int conflictRow = 1;
     while(!found && conflictRow < rowCount())
     {
         if((found = mBackupFolderList[conflictRow]->mSelected
-            && conflictRow!=currentRow &&isRelatedFolder(folder, mBackupFolderList[conflictRow]->mFolder)))
+            && conflictRow!=currentRow &&isRelatedFolder(folder, mBackupFolderList[conflictRow]->getFolder())))
         {
             mBackupFolderList[currentRow]->mError = BackupErrorCode::PathRelation;
             mBackupFolderList[conflictRow]->mError = BackupErrorCode::PathRelation;
@@ -676,11 +707,20 @@ void BackupsModel::check()
             QString message;
             if (mBackupFolderList[row]->mError == BackupErrorCode::None
                     && !existOtherRelatedFolder(row)
-                && SyncController::isLocalFolderSyncable(mBackupFolderList[row]->mFolder, mega::MegaSync::TYPE_BACKUP, message)
+                && SyncController::isLocalFolderSyncable(mBackupFolderList[row]->getFolder(), mega::MegaSync::TYPE_BACKUP, message)
                         != SyncController::CAN_SYNC)
             {
                 mBackupFolderList[row]->mError = BackupErrorCode::SyncConflict;
+                QDir dir(mBackupFolderList[row]->getFolder());
+                if (!dir.exists())
+                {
+                        message = BackupsModel::folderUnavailableErrorMsg;
+                }
                 changeConflictsNotificationText(message);
+            }
+            else
+            {
+                mBackupFolderList[row]->calculateFolderSize();
             }
         }
     }
@@ -722,7 +762,7 @@ int BackupsModel::getRow(const QString& folder)
     bool found = false;
     while(!found && row < rowCount())
     {
-        found = mBackupFolderList[row]->mFolder == folder;
+        found = mBackupFolderList[row]->getFolder() == folder;
         if (!found)
         {
             row++;
@@ -793,7 +833,7 @@ void BackupsModel::remove(const QString& folder)
     QString name;
     while (!found && item != mBackupFolderList.end())
     {
-        if((found = (*item)->mFolder == folder))
+        if((found = (*item)->getFolder() == folder))
         {
             name = (*item)->mName;
             const auto row = std::distance(mBackupFolderList.begin(), item);
@@ -820,7 +860,7 @@ bool BackupsModel::existsFolder(const QString& inputPath)
     QList<BackupFolder*>::iterator item = mBackupFolderList.begin();
     while (!exists && item != mBackupFolderList.end())
     {
-        exists = (inputPath == (*item)->mFolder);
+        exists = (inputPath == (*item)->getFolder());
         if(!exists)
         {
             item++;
@@ -840,7 +880,7 @@ void BackupsModel::change(const QString& oldFolder, const QString& newFolder)
     bool found = false;
     while (!found && item != mBackupFolderList.end())
     {
-        if((*item)->mSelected && (found = ((*item)->mFolder == oldFolder)))
+        if((*item)->mSelected && (found = ((*item)->getFolder() == oldFolder)))
         {
             if(existsFolder(newFolder))
             {
@@ -885,7 +925,7 @@ void BackupsModel::clean(bool resetErrors)
             {
                 if(resetErrors)
                 {
-                    setData(index(getRow((*item)->mFolder), 0), QVariant(BackupErrorCode::None), ErrorRole);
+                    setData(index(getRow((*item)->getFolder()), 0), QVariant(BackupErrorCode::None), ErrorRole);
                 }
                 item++;
             }
@@ -951,7 +991,7 @@ bool BackupsModel::checkDirectories()
                 && !mBackupFolderList[row]->mDone
                 && mBackupFolderList[row]->mError != SDKCreation)
         {
-            if(!QDir(mBackupFolderList[row]->mFolder).exists())
+            if(!QDir(mBackupFolderList[row]->getFolder()).exists())
             {
                 setData(index(row, 0), QVariant(BackupErrorCode::UnavailableDir), ErrorRole);
                 success = false;

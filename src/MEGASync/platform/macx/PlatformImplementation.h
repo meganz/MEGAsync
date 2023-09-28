@@ -33,9 +33,9 @@ public:
     void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;
     QString getSizeStringLocalizedOSbased(qint64 bytes) override;
 
-    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
-    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
-    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    virtual void fileSelector(const SelectorInfo& info) override;
+    virtual void folderSelector(const SelectorInfo& info) override;
+    virtual void fileAndFolderSelector(const SelectorInfo& info) override;
     void raiseFileFolderSelectors() override;
     void closeFileFolderSelectors(QWidget* parent) override;
 

@@ -87,13 +87,21 @@ void FolderBinder::on_bLocalFolder_clicked()
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(defaultPath).toUtf8().constData());
 
-    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+    SelectorInfo info;
+    info.title = tr("Select local folder");
+    info.defaultDir = defaultPath;
+    info.multiSelection = false;
+    info.parent = this;
+    info.canCreateDirectoreis= true;
+    info.func = [this](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
             onLocalFolderSet(fPath);
         }
-    });
+    };
+
+    Platform::getInstance()->folderSelector(info);
 }
 
 void FolderBinder::onLocalFolderSet(const QString& path)
