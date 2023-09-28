@@ -620,7 +620,7 @@ QMenu* MegaTransferView::createContextMenu()
     TransferData::TransferTypes overallType;
     bool containsIncomingShares(false);
     long long int movableTransfers(0);
-    bool containsRemovedItems(false);
+    bool containsInvalidNodes(false);
 
     //TODO use these containers to open links, open folder...etc
     QList<MegaHandle> handlesToOpenByContextMenu;
@@ -641,32 +641,28 @@ QMenu* MegaTransferView::createContextMenu()
 
         auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
 
-        if(d->isCompleted() || d->mType & TransferData::TRANSFER_DOWNLOAD)
+        if(!containsInvalidNodes && (d->isCompleted() || d->mType & TransferData::TRANSFER_DOWNLOAD))
         {
-            if(!containsIncomingShares)
-            {                
-                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(d->mNodeHandle));
-                if(Utilities::isIncommingShare(node.get()))
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(d->mNodeHandle));
+            if (node == nullptr || MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
+            {
+                containsInvalidNodes = true;
+            }
+            if (!containsInvalidNodes)
+            {
+                if (!containsIncomingShares && Utilities::isIncommingShare(node.get()))
                 {
                     containsIncomingShares = true;
                 }
-            }
-            if(!containsRemovedItems)
-            {
-                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(d->mNodeHandle));
-                if (node == nullptr || MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
+                //Handles to open
+                if (handlesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
                 {
-                    containsRemovedItems = true;
-                }
-            }
-            //Handles to open
-            if(handlesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
-            {
 
-                auto parentNode = mParentTransferWidget->getModel()->getParentNodeToOpenByRow(index.row());
-                if(parentNode && !handlesToOpenByContextMenu.contains(parentNode->getHandle()))
-                {
-                    handlesToOpenByContextMenu.append(parentNode->getHandle());
+                    auto parentNode = mParentTransferWidget->getModel()->getParentNodeToOpenByRow(index.row());
+                    if (parentNode && !handlesToOpenByContextMenu.contains(parentNode->getHandle()))
+                    {
+                        handlesToOpenByContextMenu.append(parentNode->getHandle());
+                    }
                 }
             }
         }
@@ -846,22 +842,23 @@ QMenu* MegaTransferView::createContextMenu()
 
     if(actionFlag & EnableAction::LINK)
     {
-        if(handlesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
+        if (!containsInvalidNodes)
         {
-            //Ico not included in transfer manager folder as it is also used by settingsDialog
-            auto openInMEGAAction = new MenuItemAction(tr("Open in MEGA"), QLatin1String(":/images/ico_open_MEGA.png"), contextMenu);
-            connect(openInMEGAAction, &QAction::triggered, this, &MegaTransferView::openInMEGAClicked);
+            if (handlesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
+            {
+                //Ico not included in transfer manager folder as it is also used by settingsDialog
+                auto openInMEGAAction = new MenuItemAction(tr("Open in MEGA"), QIcon(QLatin1String(":/images/ico_open_MEGA.png")), contextMenu);
+                connect(openInMEGAAction, &QAction::triggered, this, &MegaTransferView::openInMEGAClicked);
 
-            contextMenu->addAction(openInMEGAAction);
+                contextMenu->addAction(openInMEGAAction);
+            }
+            if (!containsIncomingShares)
+            {
+                auto getLinkAction = new MenuItemAction(tr("Get link"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png")), contextMenu);
+                connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
 
-        }
-
-        if(!containsIncomingShares && !containsRemovedItems)
-        {
-            auto getLinkAction = new MenuItemAction(tr("Get link"), QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png"), contextMenu);
-            connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
-
-            contextMenu->addAction(getLinkAction);
+                contextMenu->addAction(getLinkAction);
+            }
         }
 
         addSeparator = true;

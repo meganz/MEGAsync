@@ -866,7 +866,7 @@ void TransferManager::onTransferQuotaExceededUpdate()
 
 void TransferManager::onSortCriterionChanged(int sortBy, Qt::SortOrder order)
 {
-    mTabSortCriterion.insert(mUi->wTransfers->getCurrentTab(), QPair<int, Qt::SortOrder>{ sortBy ,order });
+    mTabSortCriterion.insert(mUi->wTransfers->getCurrentTab(), qMakePair(sortBy ,order));
 }
 
 void TransferManager::refreshSpeed()
