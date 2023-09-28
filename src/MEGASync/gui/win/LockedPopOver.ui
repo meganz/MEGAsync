@@ -259,7 +259,7 @@ border: 1px solid rgba(0,0,0,0.05);
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>40</height>
+          <height>0</height>
          </size>
         </property>
        </spacer>
