@@ -7,14 +7,14 @@ import Onboarding 1.0
 ResumePageForm {
 
     buttonGroup.onClicked: {
-        syncsPanel.previousTypeSelected = syncsPanel.typeSelected;
+        syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
         switch(button.type) {
             case SyncsType.Sync:
                 syncsPanel.state = syncsPanel.syncsFlow;
                 break;
             case SyncsType.SelectiveSync:
                 syncsPanel.state = syncsPanel.syncsFlow;
-                syncsPanel.typeSelected = SyncsType.Types.SelectiveSync;
+                syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
                 break;
             case SyncsType.Backup:
                 syncsPanel.state = syncsPanel.backupsFlow;
@@ -28,8 +28,8 @@ ResumePageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            Onboarding.openPreferences(syncsPanel.typeSelected === SyncsType.Types.SelectiveSync
-                                       || syncsPanel.typeSelected === SyncsType.Types.FullSync);
+            Onboarding.openPreferences(syncsPanel.navInfo.typeSelected === SyncsType.Types.SelectiveSync
+                                       || syncsPanel.navInfo.typeSelected === SyncsType.Types.FullSync);
         }
 
         rightPrimary.onClicked: {
@@ -38,8 +38,8 @@ ResumePageForm {
     }
 
     Component.onCompleted: {
-        syncsPanel.comesFromResumePage = true;
-        switch(syncsPanel.typeSelected) {
+        syncsPanel.navInfo.comesFromResumePage = true;
+        switch(syncsPanel.navInfo.typeSelected) {
             case SyncsType.Types.SelectiveSync:
                 state = stateSelectiveSync;
                 break;
@@ -51,7 +51,7 @@ ResumePageForm {
                 break;
             default:
                 console.warn("ResumePage: typeSelected does not exist -> "
-                             + syncsPanel.typeSelected);
+                             + syncsPanel.navInfo.typeSelected);
                 break;
         }
     }

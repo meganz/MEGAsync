@@ -6,8 +6,8 @@ SelectFoldersPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            if(syncsPanel.comesFromResumePage) {
-                syncsPanel.typeSelected = syncsPanel.previousTypeSelected;
+            if(syncsPanel.navInfo.comesFromResumePage) {
+                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
                 syncsPanel.state = syncsPanel.finalState;
             } else {
                 syncsPanel.state = syncsPanel.syncType;

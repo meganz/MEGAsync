@@ -47,7 +47,7 @@ FullSyncPageForm {
         onSyncSetupSuccess: {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            syncsPanel.fullSyncDone = true;
+            syncsPanel.navInfo.fullSyncDone = true;
             syncsPanel.state = finalState;
             localFolderChooser.reset();
         }

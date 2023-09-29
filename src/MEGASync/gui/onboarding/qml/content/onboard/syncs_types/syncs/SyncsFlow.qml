@@ -17,7 +17,7 @@ StackView {
     readonly property string fullSync: "full"
     readonly property string selectiveSync: "selective"
 
-    state: syncsPanel.fullSyncDone || syncsPanel.typeSelected === SyncsType.Types.SelectiveSync
+    state: syncsPanel.navInfo.fullSyncDone || syncsPanel.navInfo.typeSelected === SyncsType.Types.SelectiveSync
            ? selectiveSync
            : syncType
 
@@ -38,7 +38,7 @@ StackView {
             name: fullSync
             StateChangeScript {
                 script: {
-                    typeSelected = SyncsType.Types.FullSync;
+                    syncsPanel.navInfo.typeSelected = SyncsType.Types.FullSync;
                     syncsFlow.replace(fullSyncPage);
                 }
             }
@@ -53,7 +53,7 @@ StackView {
             name: selectiveSync
             StateChangeScript {
                 script: {
-                    typeSelected = SyncsType.Types.SelectiveSync;
+                    syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
                     syncsFlow.replace(selectiveSyncPage);
                 }
             }

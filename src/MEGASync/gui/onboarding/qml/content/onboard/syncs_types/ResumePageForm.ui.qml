@@ -56,15 +56,15 @@ SyncsPage {
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
             PropertyChanges {
                 target: syncButton;
-                type: !syncsPanel.fullSyncDone && !syncsPanel.selectiveSyncDone
+                type: !syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone
                       ? SyncsType.Sync
                       : SyncsType.SelectiveSync;
-                visible: (!syncsPanel.fullSyncDone && !syncsPanel.selectiveSyncDone)
-                            || (!syncsPanel.fullSyncDone && syncsPanel.selectiveSyncDone);
-                title: !syncsPanel.fullSyncDone && !syncsPanel.selectiveSyncDone
+                visible: (!syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone)
+                            || (!syncsPanel.navInfo.fullSyncDone && syncsPanel.navInfo.selectiveSyncDone);
+                title: !syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone
                        ? OnboardingStrings.sync
                        : OnboardingStrings.selectiveSync
-                description: !syncsPanel.fullSyncDone && !syncsPanel.selectiveSyncDone
+                description: !syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone
                              ? OnboardingStrings.finalPageButtonSync
                              : OnboardingStrings.finalPageButtonSelectiveSync
             }
