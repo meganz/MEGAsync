@@ -32,6 +32,7 @@ public:
     QString getDeviceName() override;
     void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;
     QString getSizeStringLocalizedOSbased(qint64 bytes) override;
+    quint64 getBaseUnitsSize() const override;
 
     virtual void fileSelector(const SelectorInfo& info) override;
     virtual void folderSelector(const SelectorInfo& info) override;

@@ -118,6 +118,13 @@ QString AbstractPlatform::getSizeStringLocalizedOSbased(qint64 bytes)
     return locale.formattedDataSize(bytes, 2, QLocale::DataSizeFormat::DataSizeTraditionalFormat);
 }
 
+quint64 AbstractPlatform::getBaseUnitsSize() const
+{
+    constexpr quint64 Base = 1024;
+
+    return Base;
+}
+
 void AbstractPlatform::fileSelector(const SelectorInfo &info)
 {
     auto previousFileUploadSelector = DialogOpener::findDialog<QFileDialog>();
