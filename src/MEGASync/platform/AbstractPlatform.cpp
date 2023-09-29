@@ -120,9 +120,9 @@ QString AbstractPlatform::getSizeStringLocalizedOSbased(qint64 bytes)
 
 quint64 AbstractPlatform::getBaseUnitsSize() const
 {
-    constexpr quint64 Base = 1024;
+    constexpr quint64 base = 1024;
 
-    return Base;
+    return base;
 }
 
 void AbstractPlatform::fileSelector(const SelectorInfo &info)

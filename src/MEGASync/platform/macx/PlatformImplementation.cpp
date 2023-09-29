@@ -366,9 +366,9 @@ QString PlatformImplementation::getSizeStringLocalizedOSbased(qint64 bytes)
 
 quint64 PlatformImplementation::getBaseUnitsSize() const
 {
-    constexpr quint64 Base = 1000;
+    constexpr quint64 base = 1000;
 
-    return Base;
+    return base;
 }
 
 void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)
