@@ -132,24 +132,10 @@ void Syncs::processRemote(mega::MegaHandle remoteHandle)
     else if (mProcessInfo.localSyncability == SyncController::WARN_SYNC)
     {
         // Only local WARN_SYNC at this point
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.text =  mProcessInfo.localWarningMsg
-                       + QLatin1Char('\n')
-                       + tr("Do you want to continue?");
-        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-        msgInfo.finishFunc = [this, remoteHandle](QPointer<QMessageBox> msgBox) {
-            if(msgBox->result() == QMessageBox::Yes)
-            {
-                mSyncController->addSync(mProcessInfo.localPath, remoteHandle);
-            }
-            else if(msgBox->result() == QMessageBox::No)
-            {
-                emit cancelSync();
-            }
-        };
-
-        QMegaMessageBox::warning(msgInfo);
+        //local warning write permission needs to be different for this case
+        //on onboarding so we will make up it here
+        QString errorMessage = tr("Folder can't be synced as you don't have write permissions.");
+        emit cantSync(errorMessage, true);
     }
     else if (mProcessInfo.localSyncability == SyncController::CAN_SYNC
                 && remoteSyncability == SyncController::CAN_SYNC)

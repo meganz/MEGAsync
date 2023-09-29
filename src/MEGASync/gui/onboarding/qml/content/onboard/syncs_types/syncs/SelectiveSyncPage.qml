@@ -71,11 +71,6 @@ SelectiveSyncPageForm {
 
             console.log("Selective sync can't sync, message -> " + message);
         }
-
-        onCancelSync: {
-            root.enabled = true;
-            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-        }
     }
 
 }

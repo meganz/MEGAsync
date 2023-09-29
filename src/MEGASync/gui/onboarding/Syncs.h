@@ -26,7 +26,6 @@ public:
 signals:
     void syncSetupSuccess();
     void cantSync(const QString& message = QString(), bool localFolderError = true);
-    void cancelSync();
 
 private:
     mega::MegaApi* mMegaApi;
