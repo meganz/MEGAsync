@@ -187,7 +187,7 @@ mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString &path, bo
         std::unique_ptr<mega::MegaNode> remoteNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
         if(remoteNode)
         {
-            key = remoteNode->getParentHandle();
+            key = QVariant::fromValue(remoteNode->getParentHandle());
 
             if(mSyncIdCache.contains(key))
             {
