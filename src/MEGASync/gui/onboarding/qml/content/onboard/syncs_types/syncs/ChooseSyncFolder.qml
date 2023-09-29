@@ -10,13 +10,14 @@ import Components.Buttons 1.0 as MegaButtons
 import Components.TextFields 1.0 as MegaTextFields
 
 // Local
+import Syncs 1.0
 import Onboard 1.0
 import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
 
 Item {
 
-    property alias localTest: localFolderChooser
+    property alias localChoosenPath: folderField.text
     property alias remoteTest: remoteFolderChooser
 
     property bool local: true
@@ -26,13 +27,18 @@ Item {
     property alias folderField: folderField
 
     readonly property int textEditMargin: 2
+    readonly property string defaultMegaFolder: "MEGA"
 
     function reset() {
-        if(local) {
-            localFolderChooser.reset();
-        } else {
+        if(!local) {
             remoteFolderChooser.reset();
         }
+    }
+
+    function getLocalFolder()
+    {
+        var defaultLocalFolder = localFolderChooser.getDefaultFolder(defaultMegaFolder)
+        return syncs.checkSync(defaultLocalFolder) ? defaultLocalFolder : ""
     }
 
     Layout.preferredWidth: width
@@ -48,7 +54,7 @@ Item {
         anchors.top: parent.top
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
-        text: local ? localFolderChooser.folder : remoteFolderChooser.folderName
+        text: local ? getLocalFolder() : remoteFolderChooser.folderName
         leftIcon.source: local ? Images.pc : Images.megaOutline
         leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
@@ -68,8 +74,25 @@ Item {
         onClicked: {
             folderField.error = false;
             folderField.hint.visible = false;
-            var folderChooser = local ? localFolderChooser : remoteFolderChooser;
-            folderChooser.openFolderSelector();
+
+            if (local)
+            {
+                localFolderChooser.openFolderSelector(folderField.text)
+            }
+            else
+            {
+                remoteFolderChooser.openFolderSelector()
+            }
+        }
+    }
+
+    Connections
+    {
+        id: localFolderChooserConnection
+        target: localFolderChooser
+
+        onFolderChoosen: (folder) => {
+            folderField.text = folder
         }
     }
 
@@ -80,4 +103,8 @@ Item {
     ChooseRemoteFolder {
         id: remoteFolderChooser
     }
+
+     Syncs {
+         id: syncs
+     }
 }

@@ -599,9 +599,9 @@ void BackupsModel::reviewConflicts()
     }
     else if(remoteCount == 1)
     {
-        conflictText = tr("A folder named \"%1\" already exists in your Backups. "
+        conflictText = tr("A folder with the same name already exists in your Backups. "
                           "Rename the new folder to continue with the backup. "
-                          "Folder name will not change on your computer.").arg(firstRemoteNameConflict);
+                          "Folder name will not change on your computer.");
         setGlobalError(BackupErrorCode::ExistsRemote);
     }
     else if(remoteCount > 1)
