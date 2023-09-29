@@ -50,14 +50,14 @@ void Syncs::addSync(const QString& local, ChooseRemoteFolder* remote)
     processRemote(remoteHandle);
 }
 
-bool Syncs::checkSync(const QString &localPath) const
+bool Syncs::checkLocalSync(const QString &path) const
 {
-    if (localPath.isEmpty())
+    if (path.isEmpty())
     {
         return false;
     }
 
-    auto localFolderPath = QDir::toNativeSeparators(localPath);
+    auto localFolderPath = QDir::toNativeSeparators(path);
     QDir openFromFolderDir(localFolderPath);
     if (!openFromFolderDir.exists())
     {
@@ -65,10 +65,32 @@ bool Syncs::checkSync(const QString &localPath) const
     }
 
     QString message;
-    auto syncability = SyncController::isLocalFolderSyncable(localPath, mega::MegaSync::TYPE_TWOWAY, message);
+    auto syncability = SyncController::isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, message);
 
 #if defined DEBUG
-    qDebug() << "localPath : " << localPath << " syncability : " << syncability << " message : " << message;
+    qDebug() << "localPath : " << path << " syncability : " << syncability << " message : " << message;
+#endif
+
+    return (syncability != SyncController::CANT_SYNC);
+}
+
+bool Syncs::checkRemoteSync(const QString &path) const
+{
+    if (path.isEmpty())
+    {
+        return false;
+    }
+
+    QString message;
+    SyncController::Syncability syncability = SyncController::Syncability::CAN_SYNC;
+    auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.toStdString().c_str()));
+    if (megaNode)
+    {
+        syncability = SyncController::isRemoteFolderSyncable(megaNode, message);
+    }
+
+#if defined DEBUG
+    qDebug() << "remotePath : " << path << " syncability : " << syncability << " message : " << message;
 #endif
 
     return (syncability != SyncController::CANT_SYNC);

@@ -35,10 +35,23 @@ Item {
         }
     }
 
-    function getLocalFolder()
+    function getFolder()
     {
-        var defaultLocalFolder = localFolderChooser.getDefaultFolder(defaultMegaFolder)
-        return syncs.checkSync(defaultLocalFolder) ? defaultLocalFolder : ""
+        var defaultFolder = ""
+
+        if (local) {
+            defaultFolder = localFolderChooser.getDefaultFolder(defaultMegaFolder)
+        }
+        else {
+            defaultFolder = "/" + defaultMegaFolder;
+        }
+
+        if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder)))
+        {
+            defaultFolder = ""
+        }
+
+        return defaultFolder
     }
 
     Layout.preferredWidth: width
@@ -54,7 +67,7 @@ Item {
         anchors.top: parent.top
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
-        text: local ? getLocalFolder() : remoteFolderChooser.folderName
+        text: getFolder()
         leftIcon.source: local ? Images.pc : Images.megaOutline
         leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
@@ -104,7 +117,7 @@ Item {
         id: remoteFolderChooser
     }
 
-     Syncs {
-         id: syncs
-     }
+    Syncs {
+        id: syncs
+    }
 }

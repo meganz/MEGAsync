@@ -19,7 +19,8 @@ public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs();
     Q_INVOKABLE void addSync(const QString& local, ChooseRemoteFolder* remote = nullptr);
-    Q_INVOKABLE bool checkSync(const QString& localPath) const;
+    Q_INVOKABLE bool checkLocalSync(const QString& path) const;
+    Q_INVOKABLE bool checkRemoteSync(const QString& path) const;
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
 
