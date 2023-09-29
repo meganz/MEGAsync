@@ -8,100 +8,49 @@ import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 import Common 1.0
 
-Row {
+Item {
     id: root
 
-    property url icon: ""
-    property string title: ""
-    property string text: ""
-
+    property alias icon: hintIcon.source
+    property alias title: hintTitle.text
+    property alias text: hintText.text
     property HintStyle styles: HintStyle {}
     property int textSize: Text.Size.Normal
+    implicitHeight: row.height
 
-    height: visible ? titleLoader.height + textLoader.height : 0
-    visible: false
-    spacing: iconLoader.width > 0 ? 8 : 0
-
-    onIconChanged: {
-        if(icon.length === 0) {
-            return;
-        }
-
-        iconLoader.sourceComponent = iconComponent;
-    }
-
-    onTitleChanged: {
-        if(title.length === 0) {
-            return;
-        }
-
-        titleLoader.sourceComponent = titleComponent;
-    }
-
-    onTextChanged: {
-        if(text.length === 0) {
-            return;
-        }
-
-        textLoader.sourceComponent = textComponent;
-    }
-
-    Loader {
-        id: iconLoader
-    }
-
-    Column {
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        width: parent.width - iconLoader.width - root.spacing
-        spacing: titleLoader.height > 0 && textLoader.height > 0 ? 2 : 0
-
-        Loader {
-            id: titleLoader
-
-            width: parent.width
-        }
-
-        Loader {
-            id: textLoader
-
-            width: parent.width
-        }
-    }
-
-    Component {
-        id: iconComponent
+    Row {
+        id: row
+        height: visible ? col.implicitHeight : 0
+        spacing: root.icon !== "" ? 8 : 0
 
         MegaImages.SvgImage {
-            source: icon
+            id: hintIcon
             color: styles.iconColor
             sourceSize: Qt.size(16, 16)
             opacity: enabled ? 1.0 : 0.2
         }
-    }
 
-    Component {
-        id: titleComponent
+        Column {
+            id: col
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: parent.width - hintIcon.width - root.spacing
+            spacing: (hintTitle.height > 0 && hintText.height > 0) ? 2 : 0
 
-        MegaTexts.Text {
-            text: title
-            color: styles.titleColor
-            opacity: enabled ? 1.0 : 0.2
-            font.bold: true
-            font.pixelSize: textSize
-        }
-    }
+            MegaTexts.Text {
+                id: hintTitle
+                color: styles.titleColor
+                opacity: enabled ? 1.0 : 0.2
+                font.bold: true
+                font.pixelSize: textSize
+            }
 
-    Component {
-        id: textComponent
-
-        MegaTexts.Text {
-            text: root.text
-            color: styles.textColor
-            opacity: enabled ? 1.0 : 0.2
-            font.pixelSize: textSize
+            MegaTexts.Text {
+                id: hintText
+                color: styles.textColor
+                opacity: enabled ? 1.0 : 0.2
+                font.pixelSize: textSize
+            }
         }
     }
 }
-
-
