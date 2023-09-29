@@ -114,6 +114,7 @@ QtObject {
     readonly property string passwordEasilyGuessedError: qsTr("Your password is easily guessed. You need to make it stronger.")
     readonly property string passwordEasilyGuessed: qsTr("Your password could be easily guessed. Try making it stronger.")
     readonly property string finalPageButtonBackup: qsTr("Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can't be modified or deleted from MEGA cloud.")
+    readonly property string finalPageButtonSelectiveSync: qsTr("Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.")
     readonly property string finalPageButtonSync: qsTr("Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.")
     readonly property string letsGetYouSetUp: qsTr("Let's get you set up")
     readonly property string confirmEmailAndPassword: qsTr("Confirm your email and password")

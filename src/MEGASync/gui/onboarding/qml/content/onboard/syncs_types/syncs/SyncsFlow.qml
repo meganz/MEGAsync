@@ -17,7 +17,9 @@ StackView {
     readonly property string fullSync: "full"
     readonly property string selectiveSync: "selective"
 
-    state: syncType
+    state: syncsPanel.fullSyncDone || syncsPanel.typeSelected === SyncsType.Types.SelectiveSync
+           ? selectiveSync
+           : syncType
 
     states: [
         State {

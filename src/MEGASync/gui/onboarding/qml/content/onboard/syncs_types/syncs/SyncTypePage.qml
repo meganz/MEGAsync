@@ -6,7 +6,12 @@ SyncTypePageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsPanel.state = syncType;
+            if(syncsPanel.comesFromResumePage) {
+                syncsPanel.typeSelected = syncsPanel.previousTypeSelected;
+                syncsPanel.state = syncsPanel.finalState;
+            } else {
+                syncsPanel.state = syncsPanel.syncType;
+            }
         }
 
         rightPrimary.onClicked: {
