@@ -15,42 +15,35 @@ Item {
     property alias imageWidth: image.width
     property alias imageHeight: image.height
 
-    property real disabledOpacity: 0.3
-
     width: image.width
     height: image.height
+
+    onColorChanged:
+    {
+        image.visible = false
+        opacityMask.visible = true
+    }
 
     Rectangle {
         id: iconFill
 
         anchors.fill: parent
         visible: false
-        onColorChanged: {
-            opacityLoader.sourceComponent = opacityMask;
-            image.visible = false;
-        }
     }
 
     Image {
         id: image
 
-        opacity: enabled ? 1.0 : root.disabledOpacity
         anchors.centerIn: parent
+        visible: true
     }
 
-    Loader {
-        id: opacityLoader
-
-        anchors.fill: iconFill
-    }
-
-    Component {
+    OpacityMask {
         id: opacityMask
 
-        OpacityMask {
-            anchors.fill: parent
-            source: iconFill
-            maskSource: image
-        }
+        anchors.fill: iconFill
+        source: iconFill
+        maskSource: image
+        visible: false
     }
 }
