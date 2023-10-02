@@ -17,12 +17,10 @@ class Syncs : public QObject, public mega::MegaRequestListener
 
 public:
     Syncs(QObject* parent = nullptr);
-    virtual ~Syncs();
-    Q_INVOKABLE void addSync(const QString& local, ChooseRemoteFolder* remote = nullptr);
+    virtual ~Syncs() = default;
+    Q_INVOKABLE void addSync(const QString& local, const QString& remote = QLatin1String("/"));
     Q_INVOKABLE bool checkLocalSync(const QString& path) const;
     Q_INVOKABLE bool checkRemoteSync(const QString& path) const;
-
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
 
 signals:
     void syncSetupSuccess();
@@ -31,21 +29,18 @@ signals:
 private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    SyncController* mSyncController;
-    bool mCreatingDefaultFolder;
+    std::unique_ptr<SyncController> mSyncController;
+    QString remoteFolder;
+    QString localFolder;
+    bool mCreatingFolder;
 
-    struct SyncProcessInfo
-    {
-        QString localPath = QString::fromUtf8("");
-        SyncController::Syncability localSyncability = SyncController::CANT_SYNC;
-        QString localWarningMsg = QString::fromUtf8("");
-    } mProcessInfo;
-
-    void processLocal(const QString& local);
-    void processRemote(mega::MegaHandle remoteHandle);
+    bool errorOnSyncPaths(const QString& localPath, const QString& remotePath);
+    bool helperCheckLocalSync(const QString& path, QString& errorMessage) const;
+    bool helperCheckRemoteSync(const QString& path, QString& errorMessage) const;
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
 };
 
 #endif // SYNCS_H

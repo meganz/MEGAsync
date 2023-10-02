@@ -16,8 +16,8 @@ import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
 
 Item {
-
-    property alias localChoosenPath: folderField.text
+    id: root
+    property alias choosenPath: folderField.text
     property alias remoteTest: remoteFolderChooser
 
     property bool local: true
@@ -103,6 +103,18 @@ Item {
     {
         id: localFolderChooserConnection
         target: localFolderChooser
+        enabled: root.local
+
+        onFolderChoosen: (folder) => {
+            folderField.text = folder
+        }
+    }
+
+    Connections
+    {
+        id: remoteFolderChooserConnection
+        target: remoteFolderChooser
+        enabled: !root.local
 
         onFolderChoosen: (folder) => {
             folderField.text = folder

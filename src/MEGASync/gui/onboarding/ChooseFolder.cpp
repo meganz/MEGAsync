@@ -6,6 +6,8 @@
 #include <MegaApplication.h>
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include <DialogOpener.h>
+#include "mega/types.h"
+#include "megaapi.h"
 
 ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
     : QObject(parent)
@@ -83,8 +85,7 @@ QString ChooseLocalFolder::getDefaultFolder(const QString& folderName)
     return QDir::toNativeSeparators(folder);
 }
 
-QString ChooseRemoteFolder::DEFAULT_FOLDER(QString::fromLatin1("MEGA"));
-QString ChooseRemoteFolder::DEFAULT_FOLDER_PATH(QString::fromLatin1("/") + ChooseRemoteFolder::DEFAULT_FOLDER);
+QString ChooseRemoteFolder::DEFAULT_FOLDER_PATH = QString::fromLatin1("/");
 
 ChooseRemoteFolder::ChooseRemoteFolder(QObject *parent)
     : QObject(parent)
@@ -108,12 +109,13 @@ void ChooseRemoteFolder::openFolderSelector()
         if (nodeSelector->result() == QDialog::Accepted)
         {
             mFolderHandle = nodeSelector->getSelectedNodeHandle();
-            if(auto node = MegaSyncApp->getMegaApi()->getNodeByHandle(mFolderHandle))
+            auto node = MegaSyncApp->getMegaApi()->getNodeByHandle(mFolderHandle);
+            if(node)
             {
-                mFolderName = QString::fromUtf8(node->getName());
-                mFolderName.prepend(QString::fromLatin1("/"));
+                mFolderName = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(node));
                 if(!mFolderName.isNull() && !mFolderName.isEmpty())
                 {
+                    emit folderChoosen(mFolderName);
                     emit folderNameChanged();
                 }
             }

@@ -18,22 +18,40 @@ SelectiveSyncPageForm {
             localFolderChooser.folderField.hint.visible = false;
             localFolderChooser.folderField.error = false;
 
-            if (localFolderChooser.localChoosenPath.length === 0) {
+            remoteFolderChooser.folderField.hint.visible = false;
+            remoteFolderChooser.folderField.error = false;
+
+            var localFolderError = false
+            if (localFolderChooser.choosenPath.length === 0) {
+                localFolderError = true
                 localFolderChooser.folderField.error = true
                 localFolderChooser.folderField.hint.text = qsTr("Invalid directory.")
                 localFolderChooser.folderField.hint.visible = true
             }
-            else if (localFolder.createFolder(localFolderChooser.localChoosenPath)) {
-                root.enabled = false
-                footerButtons.rightPrimary.icons.busyIndicatorVisible = true
 
-                syncsCpp.addSync(localFolderChooser.localChoosenPath, remoteFolderChooser.remoteTest)
+            var remoteFolderError = false
+            if (remoteFolderChooser.choosenPath.length === 0) {
+                remoteFolderError = true
+                remoteFolderChooser.folderField.error = true
+                remoteFolderChooser.folderField.hint.text = qsTr("Invalid directory.")
+                remoteFolderChooser.folderField.hint.visible = true
             }
-            else {
+
+            if (localFolderError || remoteFolderError) {
+                return
+            }
+
+            if (!localFolder.createFolder(localFolderChooser.choosenPath)) {
                 localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = qsTr("Couldn't create directory : " + localFolderChooser.localChoosenPath)
+                localFolderChooser.folderField.hint.text = qsTr("Couldn't create directory : " + localFolderChooser.choosenPath)
                 localFolderChooser.folderField.hint.visible = true
+
+                return;
             }
+
+            root.enabled = false
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = true
+            syncsCpp.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath)
         }
     }
 
