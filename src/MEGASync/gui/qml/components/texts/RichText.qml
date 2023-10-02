@@ -27,16 +27,19 @@ MegaTexts.Text {
     property bool manageHover: false
     property bool visited: false
     property color urlColor: Styles.linkPrimary
+    property string rawText: ""
 
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     textFormat: Text.RichText
 
-    Component.onCompleted: {
-        control.text = control.text.replace("[B]","<b>")
-        control.text = control.text.replace("[/B]","</b>")
-        control.text = control.text.replace("[A]", "<a style=\"text-decoration:none\"
-                                            style=\"color:" + urlColor + ";\" href=\"" + url + "\">")
-        control.text = control.text.replace("[/A]","</a>")
+    onRawTextChanged: {
+        var copyText = rawText;
+        copyText = copyText.replace("[B]","<b>");
+        copyText = copyText.replace("[/B]","</b>");
+        copyText = copyText.replace("[A]", "<a style=\"text-decoration:none\"
+                                            style=\"color:" + urlColor + ";\" href=\"" + url + "\">");
+        copyText = copyText.replace("[/A]","</a>");
+        control.text = copyText;
     }
 
     onLinkActivated: {
@@ -57,6 +60,7 @@ MegaTexts.Text {
 
     MouseArea {
         id: mouseArea
+
         anchors.fill: parent
         cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
         onPressed: mouse.accepted = false;

@@ -92,6 +92,7 @@ Rectangle {
 
                 MegaTexts.Text {
                     id: totalSizeText
+
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
                     text: BackupsModel.mTotalSize

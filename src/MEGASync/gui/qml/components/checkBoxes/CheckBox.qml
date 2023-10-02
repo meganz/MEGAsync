@@ -102,7 +102,7 @@ Qml.CheckBox {
         id: textComponent
 
         MegaTexts.RichText {
-            text: checkBox.text
+            rawText: checkBox.text
             leftPadding: checkBoxOutRect.width + checkBox.spacing
             wrapMode: Text.WordWrap
             fontSizeMode: Text.Fit

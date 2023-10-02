@@ -34,12 +34,10 @@ StackViewPage {
         spacing: contentSpacing
 
         MegaTexts.RichText {
-            id: title
-
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Large
-            text: OnboardingStrings.signUpTitle
+            rawText: OnboardingStrings.signUpTitle
         }
 
         RegisterContent {

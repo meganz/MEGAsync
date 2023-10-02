@@ -33,24 +33,20 @@ StackViewPage {
         spacing: contentSpacing
 
         MegaTexts.RichText {
-            id: pageTitle
-
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Large
-            text: LoginControllerAccess.newAccount
-                  ? OnboardingStrings.confirmEmailAndPassword
-                  : OnboardingStrings.loginTitle
+            rawText: LoginControllerAccess.newAccount
+                     ? OnboardingStrings.confirmEmailAndPassword
+                     : OnboardingStrings.loginTitle
         }
 
         MegaTexts.RichText {
-            id: confirmText
-
             visible: LoginControllerAccess.newAccount
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Medium
-            text: OnboardingStrings.accountWillBeActivated
+            rawText: OnboardingStrings.accountWillBeActivated
         }
 
         MegaTextFields.EmailTextField {

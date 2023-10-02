@@ -127,8 +127,6 @@ Item {
         id: titleComponent
 
         MegaTexts.Text {
-            id: titleText
-
             text: title
             font.pixelSize: MegaTexts.Text.Size.MediumLarge
             font.bold: true
@@ -141,10 +139,8 @@ Item {
         id: descriptionComponent
 
         MegaTexts.RichText {
-            id: titleText
-
             color: Styles.textSecondary;
-            text: description
+            rawText: description
             url: descriptionUrl
             manageMouse: true
             font.pixelSize: MegaTexts.Text.Size.Small

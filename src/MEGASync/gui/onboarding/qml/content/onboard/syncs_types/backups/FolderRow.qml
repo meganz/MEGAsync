@@ -137,6 +137,7 @@ Rectangle {
 
             MegaTexts.SecondaryText {
                 id: folderSize
+
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -150,6 +151,7 @@ Rectangle {
 
             MegaBusyIndicator.BusyIndicator {
                 id: busyIndicator
+
                 visible: backupsProxyModel.selectedFilterEnabled && !mSizeReady
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter

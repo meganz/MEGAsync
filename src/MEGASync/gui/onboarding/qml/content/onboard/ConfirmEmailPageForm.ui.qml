@@ -34,7 +34,7 @@ StackViewPage {
             Layout.fillWidth: true
             font.pixelSize: MegaTexts.Text.Size.Large
             font.bold: true
-            text: OnboardingStrings.confirmEmailTitle
+            rawText: OnboardingStrings.confirmEmailTitle
             wrapMode: Text.WordWrap
             color: Styles.textPrimary
         }
@@ -47,7 +47,7 @@ StackViewPage {
 
         MegaTexts.RichText {
             Layout.preferredWidth: layout.width
-            text: OnboardingStrings.confirmEmailBodyText2
+            rawText: OnboardingStrings.confirmEmailBodyText2
             font.pixelSize: MegaTexts.Text.Size.Medium
             url: Links.contact
             manageMouse: true;
@@ -85,7 +85,7 @@ StackViewPage {
 
             Layout.preferredWidth: layout.width
             font.pixelSize: MegaTexts.Text.Size.Medium
-            text: OnboardingStrings.confirmEmailChangeText
+            rawText: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
             color: Styles.textPrimary
             manageMouse: true
