@@ -364,6 +364,13 @@ QString PlatformImplementation::getSizeStringLocalizedOSbased(qint64 bytes)
     return locale.formattedDataSize(bytes, 2, QLocale::DataSizeFormat::DataSizeSIFormat);
 }
 
+quint64 PlatformImplementation::getBaseUnitsSize() const
+{
+    constexpr quint64 base = 1000;
+
+    return base;
+}
+
 void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)
 {
     int xSign = 1;

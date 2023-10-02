@@ -67,6 +67,7 @@ public:
     virtual QString getDeviceName() = 0;
     virtual void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true);
     virtual QString getSizeStringLocalizedOSbased(qint64 bytes);
+    virtual quint64 getBaseUnitsSize() const;
 
     virtual void fileSelector(const SelectorInfo& info);
     virtual void folderSelector(const SelectorInfo& info);
