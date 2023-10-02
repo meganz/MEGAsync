@@ -30,8 +30,7 @@ Rectangle {
     readonly property int contentHeight: 464
     readonly property int lineWidth: 2
 
-    property int typeSelected: SyncsType.Types.Backup
-    property bool comesFromResumePage: false
+    property NavigationInfo navInfo: NavigationInfo{}
 
     color: Styles.surface1
     state: deviceName
@@ -60,7 +59,7 @@ Rectangle {
             name: syncsFlow
             StateChangeScript {
                 script: {
-                    typeSelected = SyncsType.Types.Sync;
+                    navInfo.typeSelected = SyncsType.Types.Sync;
                     rightPanel.replace(syncsFlowPage);
                 }
             }
@@ -73,7 +72,7 @@ Rectangle {
             name: backupsFlow
             StateChangeScript {
                 script: {
-                    typeSelected = SyncsType.Types.Backup;
+                    navInfo.typeSelected = SyncsType.Types.Backup;
                     rightPanel.replace(backupsFlowPage);
                 }
             }
@@ -90,10 +89,10 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.stepAllDone;
-                step3Text: typeSelected === SyncsType.Types.Backup
+                step3Text: navInfo.typeSelected === SyncsType.Types.Backup
                            ? OnboardingStrings.backupSelectFolders
                            : OnboardingStrings.syncChooseType;
-                step4Text: typeSelected === SyncsType.Types.Backup
+                step4Text: navInfo.typeSelected === SyncsType.Types.Backup
                            ? OnboardingStrings.backupConfirm
                            : OnboardingStrings.syncSetUp;
             }

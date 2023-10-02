@@ -6,15 +6,18 @@ import Onboarding 1.0
 
 ResumePageForm {
 
-    property bool comesFromSync: true
-
     buttonGroup.onClicked: {
+        syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
         switch(button.type) {
             case SyncsType.Sync:
-                syncsPanel.state = syncsFlow;
+                syncsPanel.state = syncsPanel.syncsFlow;
+                break;
+            case SyncsType.SelectiveSync:
+                syncsPanel.state = syncsPanel.syncsFlow;
+                syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
                 break;
             case SyncsType.Backup:
-                syncsPanel.state = backupsFlow;
+                syncsPanel.state = syncsPanel.backupsFlow;
                 break;
             default:
                 console.error("Button type does not exist -> " + button.type);
@@ -25,8 +28,8 @@ ResumePageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            Onboarding.openPreferences(typeSelected === SyncsType.Types.SelectiveSync
-                                       || typeSelected === SyncsType.Types.FullSync);
+            Onboarding.openPreferences(syncsPanel.navInfo.typeSelected === SyncsType.Types.SelectiveSync
+                                       || syncsPanel.navInfo.typeSelected === SyncsType.Types.FullSync);
         }
 
         rightPrimary.onClicked: {
@@ -35,8 +38,8 @@ ResumePageForm {
     }
 
     Component.onCompleted: {
-        comesFromResumePage = true;
-        switch(typeSelected) {
+        syncsPanel.navInfo.comesFromResumePage = true;
+        switch(syncsPanel.navInfo.typeSelected) {
             case SyncsType.Types.SelectiveSync:
                 state = stateSelectiveSync;
                 break;
@@ -47,7 +50,8 @@ ResumePageForm {
                 state = stateBackup;
                 break;
             default:
-                console.warn("ResumePage: typeSelected does not exist -> " + typeSelected);
+                console.warn("ResumePage: typeSelected does not exist -> "
+                             + syncsPanel.navInfo.typeSelected);
                 break;
         }
     }

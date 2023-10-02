@@ -175,7 +175,7 @@ Item {
         id: titleComponent
 
         MegaTexts.RichText {
-            text: notificationRoot.title
+            rawText: notificationRoot.title
             color: attributes.titleColor
             font.bold: true
         }
@@ -185,7 +185,7 @@ Item {
         id: textComponent
 
         MegaTexts.RichText {
-            text: notificationRoot.text
+            rawText: notificationRoot.text
             color: attributes.textColor
             url: Links.contact
             manageMouse: true

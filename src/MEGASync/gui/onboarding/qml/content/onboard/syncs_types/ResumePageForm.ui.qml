@@ -38,16 +38,36 @@ SyncsPage {
             name: finalPageRoot.stateFullSync
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+            PropertyChanges { target: syncButton; visible: false; }
         },
         State {
             name: finalPageRoot.stateSelectiveSync
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+            PropertyChanges {
+                target: syncButton;
+                type: SyncsType.SelectiveSync;
+                visible: true;
+            }
         },
         State {
             name: finalPageRoot.stateBackup
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepBackupTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
+            PropertyChanges {
+                target: syncButton;
+                type: !syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone
+                      ? SyncsType.Sync
+                      : SyncsType.SelectiveSync;
+                visible: (!syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone)
+                            || (!syncsPanel.navInfo.fullSyncDone && syncsPanel.navInfo.selectiveSyncDone);
+                title: !syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone
+                       ? OnboardingStrings.sync
+                       : OnboardingStrings.selectiveSync
+                description: !syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone
+                             ? OnboardingStrings.finalPageButtonSync
+                             : OnboardingStrings.finalPageButtonSelectiveSync
+            }
         }
     ]
 
@@ -103,18 +123,13 @@ SyncsPage {
                 SyncsVerticalButton {
                     id: syncButton
 
-                    title: OnboardingStrings.sync
+                    title: OnboardingStrings.selectiveSync
                     description: OnboardingStrings.finalPageButtonSync
                     imageSource: Images.sync
                     ButtonGroup.group: buttonGroup
-                    type: SyncsType.Sync
                     checkable: false
-                    width: (finalPageRoot.state === finalPageRoot.stateFullSync)
-                           ? parent.width
-                           : (parent.width - parent.spacing) / 2
-                    height: (finalPageRoot.state === finalPageRoot.stateFullSync)
-                            ? 148
-                            : 195
+                    width: (parent.width - parent.spacing) / 2
+                    height: 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)
@@ -132,12 +147,15 @@ SyncsPage {
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Backup
                     checkable: false
-                    width: (parent.width - parent.spacing) / 2
-                    height: 195
+                    width: !syncButton.visible//(finalPageRoot.state === finalPageRoot.stateFullSync)
+                           ? parent.width
+                           : (parent.width - parent.spacing) / 2
+                    height: !syncButton.visible//(finalPageRoot.state === finalPageRoot.stateFullSync)
+                            ? 148
+                            : 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)
-                    visible: finalPageRoot.state !== finalPageRoot.stateFullSync
                     contentMargin: 24
                     contentSpacing: 8
                 }

@@ -13,10 +13,7 @@ import Onboard.Syncs_types 1.0
 SyncsPage {
     property alias buttonGroup: buttonGroup
 
-    footerButtons {
-        rightPrimary.enabled: false
-        rightSecondary.visible: !comesFromResumePage
-    }
+    footerButtons.rightPrimary.enabled: false
 
     ColumnLayout {
 

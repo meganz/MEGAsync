@@ -8,8 +8,8 @@ import Components.Texts 1.0 as MegaTexts
 
 ColumnLayout {
 
-    property alias title: title.text
-    property alias description: description.text
+    property alias title: title.rawText
+    property alias description: description.rawText
     property alias descriptionWeight: description.font.weight
 
     spacing: 12
