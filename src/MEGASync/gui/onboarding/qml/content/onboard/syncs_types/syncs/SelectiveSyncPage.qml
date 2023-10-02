@@ -18,22 +18,40 @@ SelectiveSyncPageForm {
             localFolderChooser.folderField.hint.visible = false;
             localFolderChooser.folderField.error = false;
 
-            if (localFolderChooser.localChoosenPath.length === 0) {
-                localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = qsTr("Invalid directory.")
-                localFolderChooser.folderField.hint.visible = true
-            }
-            else if (localFolder.createFolder(localFolderChooser.localChoosenPath)) {
-                root.enabled = false
-                footerButtons.rightPrimary.icons.busyIndicatorVisible = true
+            remoteFolderChooser.folderField.hint.visible = false;
+            remoteFolderChooser.folderField.error = false;
 
-                syncsCpp.addSync(localFolderChooser.localChoosenPath, remoteFolderChooser.remoteTest)
-            }
-            else {
+            var localFolderError = false
+            if (localFolderChooser.choosenPath.length === 0) {
+                localFolderError = true
                 localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = qsTr("Couldn't create directory : " + localFolderChooser.localChoosenPath)
+                localFolderChooser.folderField.hint.text = qsTr("The local path is invalid.")
                 localFolderChooser.folderField.hint.visible = true
             }
+
+            var remoteFolderError = false
+            if (remoteFolderChooser.choosenPath.length === 0) {
+                remoteFolderError = true
+                remoteFolderChooser.folderField.error = true
+                remoteFolderChooser.folderField.hint.text = qsTr("The remote path is invalid.")
+                remoteFolderChooser.folderField.hint.visible = true
+            }
+
+            if (localFolderError || remoteFolderError) {
+                return
+            }
+
+            if (!localFolder.createFolder(localFolderChooser.choosenPath)) {
+                localFolderChooser.folderField.error = true
+                localFolderChooser.folderField.hint.text = qsTr("Folder can’t be synced as you don’t have permissions\nto create a new folder. To continue, select an existing\nfolder.")
+                localFolderChooser.folderField.hint.visible = true
+
+                return;
+            }
+
+            root.enabled = false
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = true
+            syncsCpp.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath)
         }
     }
 

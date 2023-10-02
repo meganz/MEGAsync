@@ -1,147 +1,137 @@
 #include "Syncs.h"
+
+#include <memory>
+
 #include "mega/types.h"
 #include "MegaApplication.h"
 #include "TextDecorator.h"
-#include "QMegaMessageBox.h"
 
 Syncs::Syncs(QObject *parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
-    , mSyncController(new SyncController())
-    , mCreatingDefaultFolder(false)
+    , mSyncController(mega::make_unique<SyncController>())
+    , remoteFolder()
+    , localFolder()
+    , mCreatingFolder(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
-    connect(mSyncController, &SyncController::syncAddStatus,
+    connect(mSyncController.get(), &SyncController::syncAddStatus,
             this, &Syncs::onSyncAddRequestStatus);
 }
 
-Syncs::~Syncs()
+void Syncs::addSync(const QString& local, const QString& remote)
 {
-    delete mSyncController;
-}
-
-void Syncs::addSync(const QString& local, ChooseRemoteFolder* remote)
-{
-    processLocal(local);
-
-    // Then, get the remote handle and process remote folder
-    mega::MegaHandle remoteHandle = mega::INVALID_HANDLE;
-    if(!remote)
+    if (errorOnSyncPaths(local, remote))
     {
-        // Full sync
-        remoteHandle = MegaSyncApp->getRootNode()->getHandle();
+        return;
+    }
+
+    auto remoteHandle = mega::INVALID_HANDLE;
+    auto megaNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(remote.toStdString().c_str()));
+    if (megaNode != nullptr)
+    {
+        remoteHandle = megaNode->getHandle();
+    }
+
+    if (remoteHandle == mega::INVALID_HANDLE)
+    {
+        mCreatingFolder = true;
+        remoteFolder = remote;
+        localFolder = local;
+        mMegaApi->createFolder(remote.toStdString().c_str(), MegaSyncApp->getRootNode().get());
     }
     else
     {
-        remoteHandle = remote->getHandle();
-        if(remoteHandle == mega::INVALID_HANDLE)
-        {
-            // Relative sync with default folder (MEGA)
-            QString defaultFolder(ChooseRemoteFolder::DEFAULT_FOLDER);
-            mMegaApi->createFolder(defaultFolder.toStdString().c_str(),
-                                   MegaSyncApp->getRootNode().get());
-            mCreatingDefaultFolder = true;
-            return;
-        }
+        mSyncController->addSync(local, remoteHandle);
     }
-
-    // If OK, check that we can sync the selected remote folder
-    processRemote(remoteHandle);
 }
 
-bool Syncs::checkSync(const QString &localPath) const
+bool Syncs::errorOnSyncPaths(const QString &localPath, const QString &remotePath)
 {
-    if (localPath.isEmpty())
+    bool error = false;
+
+    QString localErrorMessage;
+    if (!helperCheckLocalSync(localPath, localErrorMessage))
     {
+        error = true;
+        emit cantSync(localErrorMessage, true);
+    }
+
+    QString remoteErrorMessage;
+    if (!helperCheckRemoteSync(remotePath, remoteErrorMessage))
+    {
+        error = true;
+        emit cantSync(remoteErrorMessage, false);
+    }
+
+    return error;
+}
+
+bool Syncs::helperCheckLocalSync(const QString& path, QString& errorMessage) const
+{
+    if (path.isEmpty())
+    {
+        errorMessage = QLatin1String("local path is empty");
         return false;
     }
 
-    auto localFolderPath = QDir::toNativeSeparators(localPath);
+    auto localFolderPath = QDir::toNativeSeparators(path);
     QDir openFromFolderDir(localFolderPath);
     if (!openFromFolderDir.exists())
     {
         return true;
     }
 
-    QString message;
-    auto syncability = SyncController::isLocalFolderSyncable(localPath, mega::MegaSync::TYPE_TWOWAY, message);
+    auto syncability = SyncController::isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
+
+    if (syncability == SyncController::WARN_SYNC)
+    {
+        // Only local WARN_SYNC at this point
+        //local warning write permission needs to be different for this case
+        //on onboarding so we will make up it here
+        errorMessage = tr("Folder can't be synced as you don't have write permissions.");
+    }
 
 #if defined DEBUG
-    qDebug() << "localPath : " << localPath << " syncability : " << syncability << " message : " << message;
+    qDebug() << "localPath : " << path << " syncability : " << syncability << " message : " << errorMessage;
 #endif
 
     return (syncability != SyncController::CANT_SYNC);
 }
 
-void Syncs::processLocal(const QString &local)
+bool Syncs::helperCheckRemoteSync(const QString& path, QString& errorMessage) const
 {
-    mProcessInfo.localPath = local;
-    mProcessInfo.localSyncability =
-        SyncController::isLocalFolderSyncable(mProcessInfo.localPath,
-                                              mega::MegaSync::TYPE_TWOWAY,
-                                              mProcessInfo.localWarningMsg);
-
-    if(mProcessInfo.localSyncability == SyncController::CANT_SYNC)
+    if (path.isEmpty())
     {
-        emit cantSync(mProcessInfo.localWarningMsg);
+        errorMessage = QLatin1String("remote path is empty");
+        return false;
     }
+
+    SyncController::Syncability syncability = SyncController::Syncability::CAN_SYNC;
+    auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.toStdString().c_str()));
+    if (megaNode)
+    {
+        syncability = SyncController::isRemoteFolderSyncable(megaNode, errorMessage);
+    }
+
+#if defined DEBUG
+    qDebug() << "remotePath : " << path << " syncability : " << syncability << " message : " << errorMessage;
+#endif
+
+    return (syncability != SyncController::CANT_SYNC);
 }
 
-void Syncs::processRemote(mega::MegaHandle remoteHandle)
+bool Syncs::checkLocalSync(const QString &path) const
 {
-    std::shared_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(remoteHandle));
-    if(node == nullptr)
-    {
-        emit cantSync(tr("Folder can't be synced as it can't be located. "
-                         "It may have been moved or deleted, or you might not have access."),
-                      false);
-        return;
-    }
+    QString error;
+    return helperCheckLocalSync(path, error);
+}
 
-    QString remoteWarningMsg;
-    SyncController::Syncability remoteSyncability =
-        SyncController::isRemoteFolderSyncable(node, remoteWarningMsg);
-    if (remoteSyncability == SyncController::CANT_SYNC)
-    {
-        // Only remote CANT_SYNC at this point
-        // The local CANT_SYNC was processed in the processLocal method
-        if (!node)
-        {
-            auto rootNode = MegaSyncApp->getRootNode();
-            if (!rootNode)
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = QMegaMessageBox::errorTitle();
-                msgInfo.text = tr("Unable to get the filesystem.\n"
-                                  "Please, try again. If the problem persists "
-                                  "please contact bug@mega.co.nz");
-
-                QMegaMessageBox::warning(msgInfo);
-                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
-                                   "Setting isCrashed true: !rootNode (Onboarding)");
-                Preferences::instance()->setCrashed(true);
-                MegaSyncApp->rebootApplication(false);
-            }
-        }
-        else
-        {
-            emit cantSync(remoteWarningMsg, false);
-        }
-    }
-    else if (mProcessInfo.localSyncability == SyncController::WARN_SYNC)
-    {
-        // Only local WARN_SYNC at this point
-        //local warning write permission needs to be different for this case
-        //on onboarding so we will make up it here
-        QString errorMessage = tr("Folder can't be synced as you don't have write permissions.");
-        emit cantSync(errorMessage, true);
-    }
-    else if (mProcessInfo.localSyncability == SyncController::CAN_SYNC
-                && remoteSyncability == SyncController::CAN_SYNC)
-    {
-        mSyncController->addSync(mProcessInfo.localPath, remoteHandle);
-    }
+bool Syncs::checkRemoteSync(const QString &path) const
+{
+    QString error;
+    return helperCheckRemoteSync(path, error);
 }
 
 void Syncs::onRequestFinish(mega::MegaApi* api,
@@ -149,42 +139,28 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
                             mega::MegaError* error)
 {
     Q_UNUSED(api)
-    switch(request->getType())
+
+    if (request->getType() == mega::MegaRequest::TYPE_CREATE_FOLDER
+            && mCreatingFolder && remoteFolder.compare(QString::fromUtf8(request->getName())))
     {
-        case mega::MegaRequest::TYPE_CREATE_FOLDER:
+        mCreatingFolder = false;
+
+        if (error->getErrorCode() == mega::MegaError::API_OK)
         {
-            QString defaultFolder(ChooseRemoteFolder::DEFAULT_FOLDER);
-            if (!mCreatingDefaultFolder || defaultFolder.compare(QString::fromUtf8(request->getName())))
+            auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(remoteFolder.toStdString().c_str()));
+            if (megaNode != nullptr)
             {
-                break;
+                mSyncController->addSync(localFolder, request->getNodeHandle());
             }
-
-            mCreatingDefaultFolder = false;
-
-            if (error->getErrorCode() == mega::MegaError::API_OK)
+            else
             {
-                mega::MegaNode* node =
-                    mMegaApi->getNodeByPath(ChooseRemoteFolder::DEFAULT_FOLDER_PATH.toStdString().c_str());
-                if (!node)
-                {
-                    emit cantSync(tr("MEGA folder doesn't exist"), false);
-                }
-                else
-                {
-                    processRemote(request->getNodeHandle());
-                    delete node;
-                }
+                emit cantSync(tr("%1 folder doesn't exist").arg(remoteFolder), false);
             }
-            else if (error->getErrorCode() != mega::MegaError::API_ESSL
-                    && error->getErrorCode() != mega::MegaError::API_ESID)
-            {
-                emit cantSync(QCoreApplication::translate("MegaError", error->getErrorString()), false);
-            }
-            break;
         }
-        default:
+        else if (error->getErrorCode() != mega::MegaError::API_ESSL
+                && error->getErrorCode() != mega::MegaError::API_ESID)
         {
-            break;
+            emit cantSync(QCoreApplication::translate("MegaError", error->getErrorString()), false);
         }
     }
 }

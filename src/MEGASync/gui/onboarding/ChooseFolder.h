@@ -27,6 +27,7 @@ class ChooseRemoteFolder : public QObject
 
 signals:
     void folderNameChanged();
+    void folderChoosen(QString folder);
 
 public:
     ChooseRemoteFolder(QObject* parent = nullptr);

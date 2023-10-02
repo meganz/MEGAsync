@@ -16,8 +16,8 @@ import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
 
 Item {
-
-    property alias localChoosenPath: folderField.text
+    id: root
+    property alias choosenPath: folderField.text
     property alias remoteTest: remoteFolderChooser
 
     property bool local: true
@@ -35,10 +35,23 @@ Item {
         }
     }
 
-    function getLocalFolder()
+    function getFolder()
     {
-        var defaultLocalFolder = localFolderChooser.getDefaultFolder(defaultMegaFolder)
-        return syncs.checkSync(defaultLocalFolder) ? defaultLocalFolder : ""
+        var defaultFolder = ""
+
+        if (local) {
+            defaultFolder = localFolderChooser.getDefaultFolder(defaultMegaFolder)
+        }
+        else {
+            defaultFolder = "/" + defaultMegaFolder;
+        }
+
+        if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder)))
+        {
+            defaultFolder = ""
+        }
+
+        return defaultFolder
     }
 
     Layout.preferredWidth: width
@@ -54,7 +67,7 @@ Item {
         anchors.top: parent.top
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
-        text: local ? getLocalFolder() : remoteFolderChooser.folderName
+        text: getFolder()
         leftIcon.source: local ? Images.pc : Images.megaOutline
         leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
@@ -90,6 +103,18 @@ Item {
     {
         id: localFolderChooserConnection
         target: localFolderChooser
+        enabled: root.local
+
+        onFolderChoosen: (folder) => {
+            folderField.text = folder
+        }
+    }
+
+    Connections
+    {
+        id: remoteFolderChooserConnection
+        target: remoteFolderChooser
+        enabled: !root.local
 
         onFolderChoosen: (folder) => {
             folderField.text = folder
@@ -104,7 +129,7 @@ Item {
         id: remoteFolderChooser
     }
 
-     Syncs {
-         id: syncs
-     }
+    Syncs {
+        id: syncs
+    }
 }
