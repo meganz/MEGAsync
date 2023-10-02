@@ -52,17 +52,18 @@ bool Syncs::errorOnSyncPaths(const QString &localPath, const QString &remotePath
 {
     bool error = false;
 
-    QString errorMessage;
-    if (!helperCheckLocalSync(localPath, errorMessage))
+    QString localErrorMessage;
+    if (!helperCheckLocalSync(localPath, localErrorMessage))
     {
         error = true;
-        emit cantSync(errorMessage, true);
+        emit cantSync(localErrorMessage, true);
     }
 
-    if (!helperCheckRemoteSync(remotePath, errorMessage))
+    QString remoteErrorMessage;
+    if (!helperCheckRemoteSync(remotePath, remoteErrorMessage))
     {
         error = true;
-        emit cantSync(errorMessage, false);
+        emit cantSync(remoteErrorMessage, false);
     }
 
     return error;
@@ -108,16 +109,15 @@ bool Syncs::helperCheckRemoteSync(const QString& path, QString& errorMessage) co
         return false;
     }
 
-    QString message;
     SyncController::Syncability syncability = SyncController::Syncability::CAN_SYNC;
     auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.toStdString().c_str()));
     if (megaNode)
     {
-        syncability = SyncController::isRemoteFolderSyncable(megaNode, message);
+        syncability = SyncController::isRemoteFolderSyncable(megaNode, errorMessage);
     }
 
 #if defined DEBUG
-    qDebug() << "remotePath : " << path << " syncability : " << syncability << " message : " << message;
+    qDebug() << "remotePath : " << path << " syncability : " << syncability << " message : " << errorMessage;
 #endif
 
     return (syncability != SyncController::CANT_SYNC);

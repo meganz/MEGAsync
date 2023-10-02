@@ -20,7 +20,7 @@ FullSyncPageForm {
 
             if (localFolderChooser.choosenPath.length === 0) {
                 localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = qsTr("Invalid directory.")
+                localFolderChooser.folderField.hint.text = qsTr("The local path is invalid.")
                 localFolderChooser.folderField.hint.visible = true
             }
             else if (localFolder.createFolder(localFolderChooser.choosenPath)) {
