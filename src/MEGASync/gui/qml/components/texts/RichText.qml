@@ -32,6 +32,11 @@ MegaTexts.Text {
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     textFormat: Text.RichText
 
+    // We are using rawText to avoid breaking internal connections in the text property.
+    // If we assign a string directly to the RichText text property and we use the replace
+    // javascript function (we modify the text), then when the text is updated, it is not
+    // refreshed internally. We cannot assign other varaible and change it here at the
+    // same time. For more info, please see SNC-3917.
     onRawTextChanged: {
         var copyText = rawText;
         copyText = copyText.replace("[B]","<b>");
