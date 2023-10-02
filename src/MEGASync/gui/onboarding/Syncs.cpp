@@ -5,13 +5,12 @@
 #include "mega/types.h"
 #include "MegaApplication.h"
 #include "TextDecorator.h"
-#include "QMegaMessageBox.h"
 
 Syncs::Syncs(QObject *parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
-    , mSyncController(mega::make_unique<SyncController>(new SyncController()))
+    , mSyncController(mega::make_unique<SyncController>())
     , remoteFolder()
     , localFolder()
     , mCreatingFolder(false)
