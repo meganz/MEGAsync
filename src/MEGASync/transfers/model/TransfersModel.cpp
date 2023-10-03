@@ -898,9 +898,11 @@ const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeDow
     QExplicitlySharedDataPointer<const TransferData> foundTransfer;
 
     mDataMutex.lockForRead();
-    for(int row = 0; row < rowCount(); ++row)
+    auto transfers = mTransfers;
+    mDataMutex.unlock();
+
+    foreach(auto transfer, transfers)
     {
-        auto transfer = getTransfer(row);
         if(transfer && !transfer->isUpload())
         {
             if(transfer->mNodeHandle == info->nodeHandle &&
@@ -911,7 +913,6 @@ const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeDow
             }
         }
     }
-    mDataMutex.unlock();
 
     return foundTransfer;
 }
@@ -921,9 +922,11 @@ const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeUpl
     QExplicitlySharedDataPointer<const TransferData> foundTransfer;
 
     mDataMutex.lockForRead();
-    for(int row = 0; row < rowCount(); ++row)
+    auto transfers = mTransfers;
+    mDataMutex.unlock();
+
+    foreach(auto transfer, transfers)
     {
-        auto transfer = getTransfer(row);
         if(transfer && transfer->isUpload())
         {
             if(transfer->mFilename.compare(info->filename, Qt::CaseSensitive) == 0 &&
@@ -936,7 +939,6 @@ const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeUpl
             }
         }
     }
-    mDataMutex.unlock();
 
     return foundTransfer;
 }
@@ -2403,14 +2405,6 @@ QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransfer(int row) 
     return transfer;
 }
 
-void TransfersModel::addTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
-{
-    mDataMutex.lockForWrite();
-    mTransfers.append(transfer);
-    mTagByOrder.insert(transfer->mTag, QPersistentModelIndex(index(rowCount(DEFAULT_IDX) - 1,0)));
-    mDataMutex.unlock();
-}
-
 const QExplicitlySharedDataPointer<const TransferData> TransfersModel::getTransferByTag(int tag) const
 {
     return getTransfer(getRowByTransferTag(tag));
@@ -2423,10 +2417,17 @@ QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransferByTag(int 
 
 int TransfersModel::getRowByTransferTag(int tag) const
 {
-    mDataMutex.lockForRead();
     auto result = mTagByOrder.contains(tag) ? mTagByOrder.value(tag).row() : -1;
-    mDataMutex.unlock();
     return result;
+}
+
+void TransfersModel::addTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
+{
+    mDataMutex.lockForWrite();
+    mTransfers.append(transfer);
+    mDataMutex.unlock();
+
+    mTagByOrder.insert(transfer->mTag, QPersistentModelIndex(index(rowCount(DEFAULT_IDX) - 1,0)));
 }
 
 void TransfersModel::removeTransfer(int row)
