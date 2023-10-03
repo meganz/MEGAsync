@@ -171,6 +171,15 @@ void LoginController::setCreateAccountErrorMsg(const QString &msg)
     }
 }
 
+void LoginController::processOnboardingClosed()
+{
+    if(getState() == LoginController::State::FETCH_NODES_FINISHED_ONBOARDING)
+    {
+        setState(LoginController::State::FETCH_NODES_FINISHED);
+        onFetchNodesSuccess();
+    }
+}
+
 bool LoginController::isLoginFinished() const
 {
     return getState() >= LoginController::State::FETCH_NODES_FINISHED;
@@ -376,7 +385,7 @@ void LoginController::onFetchNodesSuccess()
 {
     SyncInfo::instance()->rewriteSyncSettings(); //write sync settings into user's preferences
 
-    MegaSyncApp->loggedIn(true);
+    MegaSyncApp->loggedIn(false);
 }
 
 void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaError *e)
@@ -443,8 +452,6 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
 
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
         mPreferences->setNeedsFetchNodesInGeneral(false);
-
-        onFetchNodesSuccess();
     }
     else
     {
@@ -466,6 +473,7 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         }
         else
         {
+            onFetchNodesSuccess();
             setState(FETCH_NODES_FINISHED);
         }
     }
@@ -632,7 +640,7 @@ void LoginController::loadSyncExclusionRules(const QString& email)
 {
     assert(mPreferences->logged() || !email.isEmpty());
 
-           // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
+    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
     bool temporarilyLoggedPrefs = false;
     if (!mPreferences->logged() && !email.isEmpty())
     {
@@ -848,7 +856,7 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
             QMegaMessageBox::warning(msgInfo);
         }
 
-               //Wrong login -> logout
+        //Wrong login -> logout
         MegaSyncApp->unlink(true);
     }
     MegaSyncApp->onGlobalSyncStateChanged(mMegaApi);
@@ -856,7 +864,7 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
 
 void FastLoginController::onFetchNodesSuccess()
 {
-    MegaSyncApp->loggedIn(false);
+    MegaSyncApp->loggedIn(true);
 }
 
 LogoutController::LogoutController(QObject *parent)

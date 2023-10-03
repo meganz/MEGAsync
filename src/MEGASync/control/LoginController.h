@@ -67,6 +67,9 @@ public:
     Q_INVOKABLE void setPasswordErrorMsg(const QString& msg);
     Q_INVOKABLE QString getCreateAccountErrorMsg() const;
     Q_INVOKABLE void setCreateAccountErrorMsg(const QString& msg);
+
+    void processOnboardingClosed();
+
     bool isLoginFinished() const;
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;

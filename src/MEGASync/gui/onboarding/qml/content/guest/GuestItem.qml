@@ -35,48 +35,35 @@ Rectangle {
     readonly property string stateInProgressWaitingEmailConfirm: "WAITING_EMAIL_CONFIRMATION"
     readonly property string stateFetchNodesFinished: "FETCH_NODES_FINISHED"
     readonly property string stateBlocked: "BLOCKED"
-
+    readonly property string stateInOnboarding: "IN_ONBOARDING"
 
     function getState(){
-        if(AccountStatusControllerAccess.isAccountBlocked())
-        {
+        if(AccountStatusControllerAccess.isAccountBlocked()) {
             return content.stateBlocked;
         }
-        else
-        {
-            switch(LoginControllerAccess.state)
-            {
-            case LoginController.LOGGING_IN:
-            {
-                return content.stateInProgressLoggingIn;
+        else {
+            switch(LoginControllerAccess.state) {
+                case LoginController.LOGGING_IN:
+                    return content.stateInProgressLoggingIn;
+                case LoginController.LOGGING_IN_2FA_REQUIRED:
+                case LoginController.LOGGING_IN_2FA_VALIDATING:
+                case LoginController.LOGGING_IN_2FA_FAILED:
+                    return content.stateInProgress2FA;
+                case LoginController.CREATING_ACCOUNT:
+                    return content.stateInProgressCreatingAccount;
+                case LoginController.WAITING_EMAIL_CONFIRMATION:
+                case LoginController.CHANGING_REGISTER_EMAIL:
+                    return content.stateInProgressWaitingEmailConfirm;
+                case LoginController.FETCHING_NODES:
+                case LoginController.FETCHING_NODES_2FA:
+                    return content.stateInProgressFetchNodes;
+                case LoginController.FETCH_NODES_FINISHED:
+                    return content.stateFetchNodesFinished;
+                case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
+                    return content.stateInOnboarding;
+                default:
+                    return content.stateLoggedOut;
             }
-            case LoginController.LOGGING_IN_2FA_REQUIRED:
-            case LoginController.LOGGING_IN_2FA_VALIDATING:
-            case LoginController.LOGGING_IN_2FA_FAILED:
-            {
-                return content.stateInProgress2FA;
-            }
-            case LoginController.CREATING_ACCOUNT:
-            {
-                return content.stateInProgressCreatingAccount;
-            }
-            case LoginController.WAITING_EMAIL_CONFIRMATION:
-            case LoginController.CHANGING_REGISTER_EMAIL:
-            {
-                return content.stateInProgressWaitingEmailConfirm;
-            }
-            case LoginController.FETCHING_NODES:
-            case LoginController.FETCHING_NODES_2FA:
-            {
-                return content.stateInProgressFetchNodes;
-            }
-            case LoginController.FETCH_NODES_FINISHED:
-            case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
-            {
-                return content.stateFetchNodesFinished;
-            }
-            }
-            return content.stateLoggedOut;
         }
     }
 
@@ -131,6 +118,10 @@ Rectangle {
             StateChangeScript {
                 script: stack.replace(blockedPage);
             }
+        },
+        State {
+            name: content.stateInOnboarding
+            extend: content.stateInProgress
         }
     ]
 
@@ -262,41 +253,29 @@ Rectangle {
             BasePage {
 
                 function getDescription() {
-                    switch(LoginControllerAccess.state)
-                    {
-                    case LoginController.LOGGING_IN:
-                    {
-                        return OnboardingStrings.statusLogin;
+                    switch(LoginControllerAccess.state) {
+                        case LoginController.LOGGING_IN:
+                            return OnboardingStrings.statusLogin;
+                        case LoginController.LOGGING_IN_2FA_REQUIRED:
+                        case LoginController.LOGGING_IN_2FA_VALIDATING:
+                        case LoginController.LOGGING_IN_2FA_FAILED:
+                            return OnboardingStrings.status2FA;
+                        case LoginController.CREATING_ACCOUNT:
+                            return OnboardingStrings.statusSignUp;
+                        case LoginController.WAITING_EMAIL_CONFIRMATION:
+                        case LoginController.CHANGING_REGISTER_EMAIL:
+                            return OnboardingStrings.statusWaitingForEmail;
+                        case LoginController.FETCHING_NODES:
+                        case LoginController.FETCHING_NODES_2FA:
+                            return OnboardingStrings.statusFetchNodes;
+                        case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
+                            return GuestStrings.loggedInOnboarding;
+                        default:
+                            return "";
                     }
-                    case LoginController.LOGGING_IN_2FA_REQUIRED:
-                    case LoginController.LOGGING_IN_2FA_VALIDATING:
-                    case LoginController.LOGGING_IN_2FA_FAILED:
-                    {
-                        return OnboardingStrings.status2FA;
-                    }
-                    case LoginController.CREATING_ACCOUNT:
-                    {
-                        return OnboardingStrings.statusSignUp;
-                    }
-                    case LoginController.WAITING_EMAIL_CONFIRMATION:
-                    case LoginController.CHANGING_REGISTER_EMAIL:
-                    {
-                        return OnboardingStrings.statusWaitingForEmail;
-                    }
-                    case LoginController.FETCHING_NODES:
-                    case LoginController.FETCHING_NODES_2FA:
-                    {
-                        return OnboardingStrings.statusFetchNodes;
-                    }
-                    case LoginController.FETCH_NODES_FINISHED:
-                    case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
-                    {
-                        return "";
-                    }
-                    }
-                    return "";
                 }
-                description: getDescription();
+
+                description: getDescription()
 
                 showProgressBar: true
                 leftButton {
@@ -307,7 +286,7 @@ Rectangle {
                     text: OnboardingStrings.login
                     enabled: false
                 }
-                indeterminate: LoginControllerAccess.progress === 0;
+                indeterminate: LoginControllerAccess.progress === 0
                 progressValue: LoginControllerAccess.progress
             }
         }

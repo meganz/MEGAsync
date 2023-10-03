@@ -188,7 +188,7 @@ public:
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
     void resetRootNodes();
     void initLocalServer();
-    void loggedIn(bool fromWizard);
+    void loggedIn(bool fastLogin);
     void onLogout();
 
     MegaSyncLogger& getLogger() const;
@@ -222,6 +222,7 @@ public:
     bool isShellNotificationProcessingOngoing();
 
     QSystemTrayIcon* getTrayIcon();
+    LoginController* getLoginController();
 
 signals:
     void startUpdaterThread();

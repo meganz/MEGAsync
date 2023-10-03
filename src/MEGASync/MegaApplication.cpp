@@ -1271,7 +1271,7 @@ void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRe
     }
 }
 
-void MegaApplication::loggedIn(bool fromWizard)
+void MegaApplication::loggedIn(bool fastLogin)
 {
     if (appfinished)
     {
@@ -1303,8 +1303,9 @@ void MegaApplication::loggedIn(bool fromWizard)
 
     int cachedStorageState = preferences->getStorageState();
 
-    // ask for storage on first login (fromWizard), or when cached value is invalid
-    updateUserStats(fromWizard || cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN, true, true, true, fromWizard ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
+    // Ask for storage on first login or when cached value is invalid
+    updateUserStats(!fastLogin || cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN,
+                    true, true, true, !fastLogin ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
 
     requestUserData();
 
@@ -2321,7 +2322,8 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
 
 void MegaApplication::raiseInfoDialog()
 {
-    if((preferences && preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK) || mStatusController->isAccountBlocked())
+    if(mStatusController->isAccountBlocked()
+        || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
     {
         if (preferences->getSession().isEmpty())
         {
@@ -3812,6 +3814,11 @@ QSystemTrayIcon *MegaApplication::getTrayIcon()
     return trayIcon;
 }
 
+LoginController *MegaApplication::getLoginController()
+{
+    return mLoginController;
+}
+
 void MegaApplication::openFolderPath(QString localPath)
 {
     if (!localPath.isEmpty())
@@ -3846,12 +3853,18 @@ void MegaApplication::PSAseen(int id)
 
 void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSettings>)
 {
-    createAppMenus();
+    if(mLoginController->getState() == LoginController::FETCH_NODES_FINISHED)
+    {
+        createAppMenus();
+    }
 }
 
 void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSettings>)
 {
-    createAppMenus();
+    if(mLoginController->getState() == LoginController::FETCH_NODES_FINISHED)
+    {
+        createAppMenus();
+    }
 }
 
 void MegaApplication::onBlocked()
@@ -3998,7 +4011,8 @@ void MegaApplication::showTrayMenu(QPoint *point)
 #endif
     QMenu *displayedMenu = nullptr;
     int menuWidthInitialPopup = -1;
-    if (!preferences->logged() || mStatusController->isAccountBlocked()) // if not logged or blocked account
+    if (mLoginController->getState() != LoginController::FETCH_NODES_FINISHED
+            || mStatusController->isAccountBlocked()) // if not logged or blocked account
     {
         if (guestMenu)
         {
@@ -4016,7 +4030,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
             displayedMenu = guestMenu;
         }
     }
-    else // logged in
+    else // Fetching nodes finished and onboading is not shown
     {
         if (infoDialogMenu)
         {
@@ -5324,7 +5338,8 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = !mLoginController->isLoginFinished() || mStatusController->isAccountBlocked();
+        proxyOnly = mLoginController->getState() != LoginController::FETCH_NODES_FINISHED
+                        || mStatusController->isAccountBlocked();
         megaApi->retryPendingConnections();
     }
 
