@@ -11,8 +11,8 @@ Syncs::Syncs(QObject *parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
     , mSyncController(mega::make_unique<SyncController>())
-    , remoteFolder()
-    , localFolder()
+    , mRemoteFolder()
+    , mLocalFolder()
     , mCreatingFolder(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
@@ -37,9 +37,19 @@ void Syncs::addSync(const QString& local, const QString& remote)
     if (remoteHandle == mega::INVALID_HANDLE)
     {
         mCreatingFolder = true;
-        remoteFolder = remote;
-        localFolder = local;
-        mMegaApi->createFolder(remote.toStdString().c_str(), MegaSyncApp->getRootNode().get());
+        mRemoteFolder = remote;
+
+        /*
+         *  need to remove the first / from the remote path,
+         *  we already state in createFolder the origin point.
+         */
+        if (mRemoteFolder.indexOf(QLatin1Char('/')) == 0)
+        {
+            mRemoteFolder.remove(0,1);
+        }
+
+        mLocalFolder = local;
+        mMegaApi->createFolder(mRemoteFolder.toStdString().c_str(), MegaSyncApp->getRootNode().get());
     }
     else
     {
@@ -141,20 +151,20 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
     Q_UNUSED(api)
 
     if (request->getType() == mega::MegaRequest::TYPE_CREATE_FOLDER
-            && mCreatingFolder && remoteFolder.compare(QString::fromUtf8(request->getName())))
+            && mCreatingFolder && (mRemoteFolder.compare(QString::fromUtf8(request->getName()))==0))
     {
         mCreatingFolder = false;
 
         if (error->getErrorCode() == mega::MegaError::API_OK)
         {
-            auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(remoteFolder.toStdString().c_str()));
+            auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(mRemoteFolder.toStdString().c_str(), MegaSyncApp->getRootNode().get()));
             if (megaNode != nullptr)
             {
-                mSyncController->addSync(localFolder, request->getNodeHandle());
+                mSyncController->addSync(mLocalFolder, request->getNodeHandle());
             }
             else
             {
-                emit cantSync(tr("%1 folder doesn't exist").arg(remoteFolder), false);
+                emit cantSync(tr("%1 folder doesn't exist").arg(mRemoteFolder), false);
             }
         }
         else if (error->getErrorCode() != mega::MegaError::API_ESSL
