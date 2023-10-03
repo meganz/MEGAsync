@@ -31,7 +31,7 @@ RowLayout {
     MegaButtons.OutlineButton {
         id: leftSecondary
 
-        text: OnboardingStrings.notNow
+        text: OnboardingStrings.skip
         onClicked: {
             onboardingWindow.close();
         }

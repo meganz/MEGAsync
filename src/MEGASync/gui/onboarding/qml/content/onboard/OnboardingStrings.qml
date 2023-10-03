@@ -61,7 +61,7 @@ QtObject {
     readonly property string login: qsTr("Log in")
     readonly property string loginTitle: qsTr("Log in to your [B]MEGA account[/B]")
     readonly property string next: qsTr("Next")
-    readonly property string notNow: qsTr("Not now")
+    readonly property string skip: qsTr("Skip")
     readonly property string viewInSettings: qsTr("View in Settings")
     readonly property string password: qsTr("Password")
     readonly property string previous: qsTr("Previous")
