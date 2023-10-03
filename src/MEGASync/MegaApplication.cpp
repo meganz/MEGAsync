@@ -1494,6 +1494,10 @@ if (!preferences->lastExecutionTime())
 
 void MegaApplication::onLogout()
 {
+    if (infoDialog && infoDialog->isVisible())
+    {
+        infoDialog->hide();
+    }
     model->reset();
     mTransfersModel->resetModel();
     mStatusController->reset();
