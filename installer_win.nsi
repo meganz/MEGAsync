@@ -41,7 +41,7 @@ VIAddVersionKey "ProductName" "MEGAsync"
 !ifdef BUILD_X64_VERSION
 !define QT_PATH "${MEGA_QTPATH}"
 !else
-!define QT_PATH "${MEGA_QTPATH}\..\msvc2017"
+!define QT_PATH "${MEGA_QTPATH}\..\x86"
  !endif
 
 !ifdef BUILD_X64_VERSION
