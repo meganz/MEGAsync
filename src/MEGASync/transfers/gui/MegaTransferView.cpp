@@ -153,6 +153,8 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     verticalScrollBar()->installEventFilter(this);
 
     connect(&mOpenUrlWatcher, &QFutureWatcher<bool>::finished, this, &MegaTransferView::onOpenUrlFinished);
+
+    loadingView().setDelayTimeToShowInMs(150);
 }
 
 void MegaTransferView::setup()

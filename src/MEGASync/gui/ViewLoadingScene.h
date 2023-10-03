@@ -14,6 +14,7 @@
 #include <QScrollBar>
 #include <QDateTime>
 #include <QEvent>
+#include <QPainter>
 
 namespace Ui {
 class ViewLoadingSceneUI;
@@ -269,6 +270,8 @@ class ViewLoadingSceneBase : public QObject
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
+    virtual void showLoadingScene();
+    virtual void showViewCopy();
 
 signals:
     void sceneVisibilityChange(bool value);
@@ -279,12 +282,11 @@ protected:
     int mDelayTimeToShowInMs;
     QPointer<QTreeView> mLoadingView;
     QWidget* mLoadingSceneUI;
+    Ui::ViewLoadingSceneUI* ui;
+    QPixmap mViewPixmap;
 
 private slots:
-    void onDelayTimerToShowTimeout()
-    {
-        showLoadingScene();
-    }
+    void onDelayTimerToShowTimeout();
 
     void onDelayTimerToHideTimeout()
     {
@@ -292,10 +294,8 @@ private slots:
     }
 
 private:
-    virtual void showLoadingScene() = 0;
     virtual void hideLoadingScene() = 0;
 
-    Ui::ViewLoadingSceneUI* ui;
     LoadingSceneMessageHandler* mMessageHandler;
 };
 
@@ -314,7 +314,7 @@ public:
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
         mViewLayout(nullptr),
-        mLoadingViewSet(false)
+        mLoadingViewSet(LOADING_VIEW_TYPE::NONE)
     {}
 
     ~ViewLoadingScene()
@@ -331,7 +331,7 @@ public:
 
     bool isLoadingViewSet() const
     {
-        return mLoadingViewSet;
+        return mLoadingViewSet != LOADING_VIEW_TYPE::NONE;
     }
 
     inline void setView(LoadingSceneView<DelegateWidget, ViewType>* view)
@@ -392,7 +392,9 @@ public:
             {
                 if(!mDelayTimerToShow.isActive())
                 {
+                    mViewPixmap = mView->grab();
                     mDelayTimerToShow.start(mDelayTimeToShowInMs);
+                    showViewCopy();
                 }
             }
             else
@@ -402,19 +404,31 @@ public:
         }
         else
         {
+            if(mDelayTimerToShow.isActive())
+            {
+                mDelayTimerToShow.stop();
+            }
+
             mView->blockSignals(false);
             mView->header()->blockSignals(false);
             mView->setViewPortEventsBlocked(false);
 
-            auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
-                                                - mStartTime));
-            delay > 0 ? mDelayTimerToHide.start(delay) : hideLoadingScene();
+            if(mLoadingViewSet == LOADING_VIEW_TYPE::LOADING_VIEW)
+            {
+                auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
+                                                                       - mStartTime));
+                delay > 0 ? mDelayTimerToHide.start(delay) : hideLoadingScene();
+            }
+            else
+            {
+                hideLoadingScene();
+            }
         }
     }
 
     inline void hideLoadingScene() override
     {
-        mLoadingViewSet = false;
+        mLoadingViewSet = LOADING_VIEW_TYPE::NONE;
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
@@ -430,9 +444,26 @@ public:
     }
 
 private:
+    void showViewCopy() override
+    {
+        ViewLoadingSceneBase::showViewCopy();
+
+        mLoadingViewSet = LOADING_VIEW_TYPE::COPY_VIEW;
+
+        mView->setViewPortEventsBlocked(true);
+        mViewLayout->replaceWidget(mView, mLoadingSceneUI);
+        show();
+        mView->hide();
+        mView->blockSignals(true);
+        mView->header()->blockSignals(true);
+
+        emit sceneVisibilityChange(true);
+    }
+
     void showLoadingScene() override
     {
-        mLoadingViewSet = true;
+        ViewLoadingSceneBase::showLoadingScene();
+        mLoadingViewSet = LOADING_VIEW_TYPE::LOADING_VIEW;
         int visibleRows(0);
 
         if(mView->isVisible())
@@ -483,7 +514,14 @@ private:
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
     qint64 mStartTime;
-    bool mLoadingViewSet;
+    enum LOADING_VIEW_TYPE
+    {
+        NONE,
+        COPY_VIEW,
+        LOADING_VIEW
+    };
+
+    LOADING_VIEW_TYPE mLoadingViewSet;
     bool mWasFocused;
 };
 

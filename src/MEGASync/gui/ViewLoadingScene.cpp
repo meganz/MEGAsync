@@ -53,6 +53,23 @@ bool ViewLoadingSceneBase::eventFilter(QObject *watched, QEvent *event)
     return QObject::eventFilter(watched, event);
 }
 
+void ViewLoadingSceneBase::onDelayTimerToShowTimeout()
+{
+    ui->LoadingViewContainer->setCurrentIndex(0);
+    showLoadingScene();
+}
+
+void ViewLoadingSceneBase::showViewCopy()
+{
+    ui->LoadingViewContainer->setCurrentIndex(1);
+    ui->ViewCopyLabel->setPixmap(mViewPixmap);
+}
+
+void ViewLoadingSceneBase::showLoadingScene()
+{
+    ui->LoadingViewContainer->setCurrentIndex(0);
+}
+
 LoadingSceneMessageHandler::LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI *viewBaseUI, QWidget* viewBase)
     : ui(viewBaseUI),
       mViewBase(viewBase),

@@ -13,6 +13,7 @@ NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent) :
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
+    loadingView().setDelayTimeToShowInMs(150);
 }
 
 QModelIndex NodeSelectorTreeView::getIndexFromSourceModel(const QModelIndex& index) const
