@@ -56,7 +56,7 @@ QtObject {
     readonly property string canNotSyncPermissionError: qsTr("Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.")
     readonly property string forgotPassword: qsTr("Forgot password?")
     readonly property string invalidLocalPath: qsTr("The local path is invalid.")
-    readonly property string invalidRemotePath: qsTr("The remote path is invalid.")
+    readonly property string invalidRemotePath: qsTr("Select a MEGA folder to sync.")
     readonly property string couldNotCreateDirectory: qsTr("Couldn't create directory");
     readonly property string setUpOptions: qsTr("Setup options")
     readonly property string chooseInstallation: qsTr("Choose:")
