@@ -30,8 +30,8 @@ private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<SyncController> mSyncController;
-    QString remoteFolder;
-    QString localFolder;
+    QString mRemoteFolder;
+    QString mLocalFolder;
     bool mCreatingFolder;
 
     bool errorOnSyncPaths(const QString& localPath, const QString& remotePath);
