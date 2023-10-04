@@ -4,6 +4,7 @@ import QtQml 2.12
 //C++
 import Syncs 1.0
 import ChooseLocalFolder 1.0
+import Onboard 1.0
 
 SelectiveSyncPageForm {
     id: root
@@ -30,7 +31,7 @@ SelectiveSyncPageForm {
             if (localFolderChooser.choosenPath.length === 0) {
                 localFolderError = true
                 localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = qsTr("The local path is invalid.")
+                localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath
                 localFolderChooser.folderField.hint.visible = true
             }
 
@@ -38,7 +39,7 @@ SelectiveSyncPageForm {
             if (remoteFolderChooser.choosenPath.length === 0) {
                 remoteFolderError = true
                 remoteFolderChooser.folderField.error = true
-                remoteFolderChooser.folderField.hint.text = qsTr("The remote path is invalid.")
+                remoteFolderChooser.folderField.hint.text = OnboardingStrings.invalidRemotePath
                 remoteFolderChooser.folderField.hint.visible = true
             }
 
@@ -48,9 +49,8 @@ SelectiveSyncPageForm {
 
             if (!localFolder.createFolder(localFolderChooser.choosenPath)) {
                 localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = qsTr("Folder can’t be synced as you don’t have permissions\nto create a new folder. To continue, select an existing\nfolder.")
+                localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError
                 localFolderChooser.folderField.hint.visible = true
-
                 return;
             }
 

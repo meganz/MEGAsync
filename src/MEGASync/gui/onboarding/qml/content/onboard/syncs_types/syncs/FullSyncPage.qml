@@ -5,6 +5,9 @@ import QtQml 2.12
 import Syncs 1.0
 import ChooseLocalFolder 1.0
 
+//Local
+import Onboard 1.0
+
 FullSyncPageForm {
     id: root
 
@@ -20,7 +23,7 @@ FullSyncPageForm {
 
             if (localFolderChooser.choosenPath.length === 0) {
                 localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = qsTr("The local path is invalid.")
+                localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath
                 localFolderChooser.folderField.hint.visible = true
             }
             else if (localFolder.createFolder(localFolderChooser.choosenPath)) {
@@ -31,7 +34,7 @@ FullSyncPageForm {
             }
             else {
                 localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = qsTr("Couldn't create directory : " + localFolderChooser.choosenPath)
+                localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError
                 localFolderChooser.folderField.hint.visible = true
             }
         }

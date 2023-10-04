@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.12
 import Components.Texts 1.0 as MegaTexts
 import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
+import Onboard 1.0
 
 // C++
 import QmlClipboard 1.0
@@ -96,8 +97,8 @@ ColumnLayout {
 
         visible: hasError
         Layout.leftMargin: 3
-        title: qsTr("Authentication failed")
-        text: qsTr("Try again")
+        title: OnboardingStrings.authFailed
+        text: OnboardingStrings.tryAgain
         Layout.preferredWidth: root.width - 4
         Layout.preferredHeight: notification.height
         attributes.type: MegaTexts.NotificationInfo.Type.Error
