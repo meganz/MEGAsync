@@ -1023,12 +1023,12 @@
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation type="unfinished">Password changed</translation>
+        <translation>Password changed</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation type="unfinished">Your password has been changed.</translation>
+        <translation>Your password has been changed.</translation>
     </message>
 </context>
 <context>
@@ -1072,7 +1072,7 @@
     <message>
         <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</translation>
     </message>
 </context>
 <context>
@@ -1834,27 +1834,27 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
-        <translation type="unfinished">Error adding sync</translation>
+        <translation>Error adding sync</translation>
     </message>
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 can&apos;t be added as your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
     </message>
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account. SNC-3019</translatorcomment>
-        <translation type="unfinished">Pay now</translation>
+        <translation>Pay now</translation>
     </message>
     <message>
         <source>Pay and reactivate</source>
         <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pay and reactivate</translation>
     </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Label of the button used to dismiss the error message the account in case of deactivated account. SNC-3019</translatorcomment>
-        <translation type="unfinished">Dismiss</translation>
+        <translation>Dismiss</translation>
     </message>
 </context>
 <context>
@@ -2921,7 +2921,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Account deactivated</source>
         <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Account deactivated</translation>
     </message>
 </context>
 <context>
@@ -3097,7 +3097,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation type="unfinished">Violated Terms of Service.</translation>
+        <translation>Violated Terms of Service.</translation>
     </message>
 </context>
 <context>
@@ -3304,7 +3304,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your plan has expired</translation>
     </message>
 </context>
 <context>
@@ -3500,17 +3500,17 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>Cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Don’t cancel</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
         <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Don’t clear</translation>
     </message>
 </context>
 <context>
