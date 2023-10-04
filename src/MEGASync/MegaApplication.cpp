@@ -2327,7 +2327,7 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
 void MegaApplication::raiseInfoDialog()
 {
     if(mStatusController->isAccountBlocked()
-        || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
+        || !mLoginController->isLoginFinished())
     {
         if (preferences->getSession().isEmpty())
         {
@@ -3857,7 +3857,7 @@ void MegaApplication::PSAseen(int id)
 
 void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSettings>)
 {
-    if(mLoginController->getState() == LoginController::FETCH_NODES_FINISHED)
+    if(mLoginController->isLoginFinished())
     {
         createAppMenus();
     }
@@ -3865,7 +3865,7 @@ void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSettings>)
 
 void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSettings>)
 {
-    if(mLoginController->getState() == LoginController::FETCH_NODES_FINISHED)
+    if(mLoginController->isLoginFinished())
     {
         createAppMenus();
     }
@@ -4015,8 +4015,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 #endif
     QMenu *displayedMenu = nullptr;
     int menuWidthInitialPopup = -1;
-    if (mLoginController->getState() != LoginController::FETCH_NODES_FINISHED
-            || mStatusController->isAccountBlocked()) // if not logged or blocked account
+    if (!mLoginController->isLoginFinished() || mStatusController->isAccountBlocked()) // if not logged or blocked account
     {
         if (guestMenu)
         {
@@ -5342,8 +5341,7 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = mLoginController->getState() != LoginController::FETCH_NODES_FINISHED
-                        || mStatusController->isAccountBlocked();
+        proxyOnly = !mLoginController->isLoginFinished() || mStatusController->isAccountBlocked();
         megaApi->retryPendingConnections();
     }
 
