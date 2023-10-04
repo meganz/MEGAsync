@@ -2,7 +2,7 @@
 #define NODESELECTORTREEVIEWWIDGET_H
 
 #include "ButtonIconManager.h"
-#include "QTMegaRequestListener.h"
+#include "QTMegaListener.h"
 #include <megaapi.h>
 #include "../model/NodeSelectorModelItem.h"
 #include <ViewLoadingScene.h>
@@ -23,8 +23,7 @@ namespace Ui {
 class NodeSelectorTreeViewWidget;
 }
 
-
-class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaRequestListener
+class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaListener
 {
     Q_OBJECT
 
@@ -59,11 +58,13 @@ public:
     void setSearchText(const QString& text);
     void setTitleText(const QString& nodeName);
     void clearSearchText();
+    void clearSelection();
     void abort();
     NodeSelectorProxyModel* getProxyModel();
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes);
 
 private slots:
     void onbNewFolderClicked();
@@ -80,6 +81,7 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;
     void setTitle(const QString& title);
+    void selectionChanged(const QModelIndexList &selected);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     SelectTypeSPtr getSelectType(){return mSelectType;}
     virtual void modelLoaded();
@@ -102,13 +104,14 @@ private slots:
     void onRowsInserted();
     void onExpandReady();
     void setLoadingSceneVisible(bool visible);
-    void onUiBlocked(bool state);
+    void onUiBlocked(bool state);    
+    void processCachedNodesUpdated();
 
 private:
 
     mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::unique_ptr<mega::QTMegaListener> mDelegateListener;
 
     virtual bool isAllowedToEnterInIndex(const QModelIndex &idx);
     QModelIndex getSelectedIndex();
@@ -127,14 +130,19 @@ private:
     void checkOkButton(const QModelIndexList& selected);
     ButtonIconManager mButtonIconManager;
 
+    void processNodeUpdated(mega::MegaNode* node);
     bool first;
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
     SelectTypeSPtr mSelectType;
+    QMap<QModelIndex, QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> mChangedNodesByHandle;
+    QTimer mNodesUpdateTimer;
+    mega::MegaHandle mNewFolderAdded;
     friend class DownloadType;
     friend class SyncType;
     friend class UploadType;
     friend class StreamType;
+    friend class CloudDriveType;
 };
 
 class SelectType

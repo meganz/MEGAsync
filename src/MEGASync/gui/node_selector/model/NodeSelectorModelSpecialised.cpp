@@ -210,7 +210,7 @@ bool NodeSelectorModelBackups::addToLoadingList(const std::shared_ptr<MegaNode> 
 
 void NodeSelectorModelBackups::loadLevelFinished()
 {
-    if(mIndexesActionInfo.indexesToBeExpanded.size() == 1 && mIndexesActionInfo.indexesToBeExpanded.at(0) == index(0, 0))
+    if(mIndexesActionInfo.indexesToBeExpanded.size() == 1 && mIndexesActionInfo.indexesToBeExpanded.at(0).second == index(0, 0))
     {
         QModelIndex rootIndex(index(0, 0));
         int rowcount = rowCount(rootIndex);
