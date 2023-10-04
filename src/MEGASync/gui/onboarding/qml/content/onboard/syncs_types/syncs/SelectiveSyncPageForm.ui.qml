@@ -48,6 +48,9 @@ SyncsPage {
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
             Layout.topMargin: 28
+            folderField.error: true
+            folderField.hint.text: OnboardingStrings.canNotSyncPermissionError
+            folderField.hint.visible: true
         }
 
         ChooseSyncFolder {

@@ -42,7 +42,7 @@ QtObject {
     readonly property string errorEmptyPassword: qsTr("Enter your password")
     readonly property string errorName: qsTr("Please enter your name")
     readonly property string errorLastName: qsTr("Please enter your last name")
-    readonly property string errorPasswordsMatch: qsTr("Passwords don't match. Check and try again.")
+    readonly property string errorPasswordsMatch: qsTr("Passwords don't match. Check and .")
     readonly property string errorValidEmail: qsTr("Enter a valid email address")
     readonly property string finalStepBackup: qsTr("Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your syncs and their statuses under the Sync tab in Settings.")
     readonly property string finalStepBackupTitle: qsTr("Your backup is set up")
@@ -53,7 +53,11 @@ QtObject {
     readonly property string fullSyncButtonDescription: qsTr("Sync your entire MEGA with your local device.")
     readonly property string fullSync: qsTr("Full sync")
     readonly property string fullSyncDescription: qsTr("Sync your entire MEGA Cloud drive with a local device.")
+    readonly property string canNotSyncPermissionError: qsTr("Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.")
     readonly property string forgotPassword: qsTr("Forgot password?")
+    readonly property string invalidLocalPath: qsTr("The local path is invalid.")
+    readonly property string invalidRemotePath: qsTr("The remote path is invalid.")
+    readonly property string couldNotCreateDirectory: qsTr("Couldn't create directory");
     readonly property string setUpOptions: qsTr("Setup options")
     readonly property string chooseInstallation: qsTr("Choose:")
     readonly property string welcomeToMEGA: qsTr("Welcome to MEGA")
@@ -123,5 +127,6 @@ QtObject {
     readonly property string errorEmptyDeviceName: qsTr("Enter a device name")
     readonly property string errorDeviceNameLimit: qsTr("Names longer that 32 characters are not supported")
     readonly property string storageSpace: qsTr("Storage space:")
-
+    readonly property string authFailed: qsTr("Authentication failed")
+    readonly property string tryAgain: qsTr("Try again")
 }
