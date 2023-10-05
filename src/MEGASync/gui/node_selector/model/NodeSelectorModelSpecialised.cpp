@@ -96,6 +96,52 @@ void NodeSelectorModelIncomingShares::onItemInfoUpdated(int role)
     }
 }
 
+bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
+{
+    if(node->getChanges() & MegaNode::CHANGE_TYPE_INSHARE)
+    {
+        if(node->isInShare())
+        {
+            beginInsertRows(QModelIndex(), 0, 0);
+            emit addIncomingSharesRoot(std::shared_ptr<mega::MegaNode>(node->copy()));
+        }
+
+        return true;
+    }
+    else if(node->getParentHandle() == mega::INVALID_HANDLE && node->isFolder())
+    {
+        if(node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
+        {
+            auto index = findItemByNodeHandle(node->getHandle(), QModelIndex());
+            if(index.isValid())
+            {
+                beginRemoveRows(QModelIndex(), index.row(), index.row());
+                emit deleteIncomingSharesRoot(std::shared_ptr<mega::MegaNode>(node->copy()));
+                return true;
+            }
+        }
+
+        auto folderIndex = findItemByNodeHandle(node->getHandle(), QModelIndex());
+        if(folderIndex.isValid())
+        {
+            updateItemNode(folderIndex, std::shared_ptr<mega::MegaNode>(node->copy()));
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void NodeSelectorModelIncomingShares::onRootItemAdded(mega::MegaHandle handle)
+{
+    endInsertingRows();
+}
+
+void NodeSelectorModelIncomingShares::onRootItemDeleted(mega::MegaHandle handle)
+{
+    endRemoveRows();
+}
+
 void NodeSelectorModelIncomingShares::onRootItemsCreated()
 {
     rootItemsLoaded();
@@ -135,7 +181,11 @@ void NodeSelectorModelIncomingShares::fetchMore(const QModelIndex &parent)
 void NodeSelectorModelIncomingShares::firstLoad()
 {
     connect(this, &NodeSelectorModelIncomingShares::requestIncomingSharesRootCreation, mNodeRequesterWorker, &NodeRequester::createIncomingSharesRootItems);
+    connect(this, &NodeSelectorModelIncomingShares::addIncomingSharesRoot, mNodeRequesterWorker, &NodeRequester::addIncomingSharesRootItem);
+    connect(this, &NodeSelectorModelIncomingShares::deleteIncomingSharesRoot, mNodeRequesterWorker, &NodeRequester::deleteIncomingSharesRootItem);
     connect(mNodeRequesterWorker, &NodeRequester::megaIncomingSharesRootItemsCreated, this, &NodeSelectorModelIncomingShares::onRootItemsCreated, Qt::QueuedConnection);
+    connect(mNodeRequesterWorker, &NodeRequester::megaIncomingSharesRootItemAdded, this, &NodeSelectorModelIncomingShares::onRootItemAdded, Qt::QueuedConnection);
+    connect(mNodeRequesterWorker, &NodeRequester::megaIncomingSharesRootItemDeleted, this, &NodeSelectorModelIncomingShares::onRootItemDeleted, Qt::QueuedConnection);
 
     addRootItems();
 }

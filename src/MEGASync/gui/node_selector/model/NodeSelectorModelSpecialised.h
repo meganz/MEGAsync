@@ -44,15 +44,20 @@ public:
 
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
+    bool rootNodeUpdated(mega::MegaNode*node) override;
 
 public slots:
     void onItemInfoUpdated(int role);
 
 signals:
     void requestIncomingSharesRootCreation(std::shared_ptr<mega::MegaNodeList> nodes);
+    void addIncomingSharesRoot(std::shared_ptr<mega::MegaNode> node);
+    void deleteIncomingSharesRoot(std::shared_ptr<mega::MegaNode> node);
 
 private slots:
     void onRootItemsCreated();
+    void onRootItemAdded(mega::MegaHandle handle);
+    void onRootItemDeleted(mega::MegaHandle handle);
 
 private:
     std::shared_ptr<mega::MegaNodeList> mSharedNodeList;

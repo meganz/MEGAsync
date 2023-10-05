@@ -544,112 +544,196 @@ void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request
             msgInfo.text =   tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString());
             QMegaMessageBox::critical(msgInfo);
         }
-        else
-        {
-
-//            if (e->getErrorCode() == MegaError::API_OK)
-//            {
-//                auto index = mModel->findItemByNodeHandle(request->getNodeHandle(), QModelIndex());
-
-//                if(!index.isValid())
-//                    return;
-
-//                auto parent = mProxyModel->getNode(index.parent());
-//                mNavigationInfo.remove(mProxyModel->getHandle(index));
-//                mProxyModel->removeNode(index);
-//                if(parent)
-//                    setSelectedNodeHandle(parent->getHandle());
-//            }
-
-//            checkBackForwardButtons();
-//            ui->tMegaFolders->setEnabled(true);
-        }
     }
 }
 
-void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes)
+bool NodeSelectorTreeViewWidget::containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *parentNode)
 {
+    if(parentNode)
+    {
+        auto parentIndex = mModel->findItemByNodeHandle(parentNode->getHandle(), QModelIndex());
+        if(parentIndex.isValid())
+        {
+            auto parentItem = mModel->getItemByIndex(parentIndex);
+            if(parentItem->areChildrenInitialized())
+            {
+                if(node)
+                {
+                    auto index = mModel->findItemByNodeHandle(node->getHandle(), parentIndex);
+                    if(index.isValid())
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    else if(node)
+    {
+        auto index = mModel->findItemByNodeHandle(node->getHandle(), QModelIndex());
+        if(index.isValid())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes)
+{
+    QMap<mega::MegaHandle, mega::MegaHandle> updatedVersions;
+    QList<UpdateNodesInfo> updatedNodes;
+
     for (int i = 0; i < nodes->size(); i++)
     {
         MegaNode* node = nodes->get(i);
 
-        if (node->getChanges() & (MegaNode::CHANGE_TYPE_PARENT |
-                                  MegaNode::CHANGE_TYPE_NAME |
-                                  MegaNode::CHANGE_TYPE_NEW))
+        if(!mModel->rootNodeUpdated(node) && node->getParentHandle() != mega::INVALID_HANDLE)
         {
-            std::shared_ptr<MegaNode> node(nodes->get(i)->copy());
-            std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+            if (node->getChanges() & (MegaNode::CHANGE_TYPE_PARENT |
+                                      MegaNode::CHANGE_TYPE_NEW))
+            {
+                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
 
-            auto parentIndex = mModel->findItemByNodeHandle(parentNode->getHandle(), QModelIndex());
-            auto proxyParentIndex(mProxyModel->mapFromSource(parentIndex));
-            auto& addedNodes = mChangedNodesByHandle[proxyParentIndex];
-            addedNodes.insert(node->getHandle(), node);
-            mNodesUpdateTimer.start(1000);
+                if(parentNode->getHandle() == MegaSyncApp->getRubbishNode()->getHandle())
+                {
+                    if(containsIndexToUpdate(node, nullptr))
+                    {
+                        mRemovedNodesByHandle.append(node->getHandle());
+                    }
+                }
+                else
+                {
+                    if(parentNode->isFile() && containsIndexToUpdate(node, nullptr))
+                    {
+                        updatedVersions.insert(parentNode->getHandle(), node->getHandle());
+                    }
+                    else if(containsIndexToUpdate(nullptr, parentNode.get()))
+                    {
+                        UpdateNodesInfo info;
+                        info.parentHandle = parentNode->getHandle();
+                        info.previousHandle = node->getHandle();
+                        info.updateNode = std::shared_ptr<mega::MegaNode>(node->copy());
+                        updatedNodes.append(info);
+                    }
+                }
+            }
+            else if(node->getChanges() & MegaNode::CHANGE_TYPE_NAME)
+            {
+                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                if(containsIndexToUpdate(node, parentNode.get()))
+                {
+                    UpdateNodesInfo info;
+                    info.previousHandle = node->getHandle();
+                    info.updateNode = std::shared_ptr<mega::MegaNode>(node->copy());
+                    mRenamedNodesByHandle.append(info);
+                }
+            }
         }
+    }
+
+    foreach(auto updateNode, updatedNodes)
+    {
+        auto previousHandle = updatedVersions.value(updateNode.previousHandle, mega::INVALID_HANDLE);
+        //Updated node
+        if(previousHandle != mega::INVALID_HANDLE)
+        {
+            updateNode.previousHandle = updatedVersions.value(updateNode.previousHandle);
+            mUpdatedNodesByPreviousHandle.append(updateNode);
+        }
+        //New node
+        else
+        {
+            mAddedNodesByParentHandle.insertMulti(updateNode.parentHandle, updateNode.updateNode);
+        }
+    }
+
+    if(!mUpdatedNodesByPreviousHandle.isEmpty() ||
+       !mRemovedNodesByHandle.isEmpty() ||
+       !mRenamedNodesByHandle.isEmpty() ||
+       !mAddedNodesByParentHandle.isEmpty())
+    {
+        mNodesUpdateTimer.start(1000);
     }
 }
 
-void NodeSelectorTreeViewWidget::processNodeUpdated(mega::MegaNode* node)
+void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
 {
-
+    auto index = mModel->findItemByNodeHandle(handle, QModelIndex());
+    if(index.isValid())
+    {
+        auto proxyIndex(mProxyModel->mapFromSource(index));
+        if(proxyIndex.isValid())
+        {
+            auto goBack(proxyIndex == ui->tMegaFolders->rootIndex());
+            mProxyModel->removeNode(proxyIndex);
+            if(goBack)
+            {
+                onGoBackClicked();
+            }
+            mNavigationInfo.remove(handle);
+        }
+    }
 }
 
 void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 {
     if(!mProxyModel->isModelProcessing() && !mModel->isRequestingNodes())
     {
-        foreach(auto& parentIndex, mChangedNodesByHandle.uniqueKeys())
+        foreach(auto info, mRenamedNodesByHandle)
         {
-            QList<std::shared_ptr<mega::MegaNode>> nodesToInsert;
+            auto index = mModel->findItemByNodeHandle(info.previousHandle, QModelIndex());
 
-            auto nodes = mChangedNodesByHandle.value(parentIndex);
-            foreach(auto& nodeHandle, nodes.keys())
+            auto isSelected(false);
+            auto proxyIndex(mProxyModel->mapFromSource(index));
+            if(proxyIndex.isValid())
             {
-                if(nodeHandle == mNewFolderAdded)
-                {
-                    mNewFolderAdded = mega::INVALID_HANDLE;
-                    continue;
-                }
-
-                auto index = mModel->findItemByNodeHandle(nodeHandle, QModelIndex());
-                if(index.isValid())
-                {
-                    auto proxyIndex(mProxyModel->mapFromSource(index));
-                    if(proxyIndex.isValid())
-                    {
-                        auto goBack(proxyIndex == ui->tMegaFolders->rootIndex());
-                        mProxyModel->removeNode(proxyIndex);
-                        if(goBack)
-                        {
-                            onGoBackClicked();
-                        }
-                        mNavigationInfo.remove(nodeHandle);
-                    }
-                }
-
-                auto node = nodes.value(nodeHandle);
-                if(node)
-                {
-                    std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-                    if(parentNode->getHandle() != MegaSyncApp->getMegaApi()->getRubbishNode()->getHandle())
-                    {
-                        auto item = NodeSelectorModel::getItemByIndex(parentIndex);
-                        if(item && item->areChildrenInitialized())
-                        {
-                            mProxyModel->setExpandMapped(true);
-                            nodesToInsert.append(std::shared_ptr<mega::MegaNode>(node->copy()));
-                        }
-                    }
-                }
+                isSelected = ui->tMegaFolders->selectionModel()->isSelected(proxyIndex);
             }
 
-            if(!nodesToInsert.isEmpty())
+            mModel->updateItemNode(index, info.updateNode);
+
+            if(isSelected)
             {
-                mProxyModel->addNodes(nodesToInsert, parentIndex);
+                //The proxy index may has changed,, update it
+                proxyIndex = mProxyModel->mapFromSource(index);
+                ui->tMegaFolders->scrollTo(proxyIndex, QAbstractItemView::ScrollHint::PositionAtCenter);
             }
         }
 
-        mChangedNodesByHandle.clear();
+        foreach(auto info, mUpdatedNodesByPreviousHandle)
+        {
+            auto index = mModel->findItemByNodeHandle(info.previousHandle, QModelIndex());
+            mModel->updateItemNode(index, info.updateNode);
+        }
+
+        if(!mAddedNodesByParentHandle.isEmpty())
+        {
+            mProxyModel->setExpandMapped(true);
+        }
+
+        foreach(auto& parentHandle, mAddedNodesByParentHandle.uniqueKeys())
+        {
+            auto parentIndex = mModel->findItemByNodeHandle(parentHandle, QModelIndex());
+            mModel->addNodes(mAddedNodesByParentHandle.values(parentHandle), parentIndex);
+        }
+
+        foreach(auto handle, mRemovedNodesByHandle)
+        {
+            removeItemByHandle(handle);
+        }
+
+        mRemovedNodesByHandle.clear();
+        mAddedNodesByParentHandle.clear();
+        mRenamedNodesByHandle.clear();
+        mUpdatedNodesByPreviousHandle.clear();
+
+        checkBackForwardButtons();
     }
 }
 

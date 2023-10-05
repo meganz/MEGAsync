@@ -64,7 +64,7 @@ public:
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes);
+    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes);
 
 private slots:
     void onbNewFolderClicked();
@@ -106,6 +106,8 @@ private slots:
     void setLoadingSceneVisible(bool visible);
     void onUiBlocked(bool state);    
     void processCachedNodesUpdated();
+    bool containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *parentNode);
+    void removeItemByHandle(mega::MegaHandle handle);
 
 private:
 
@@ -130,12 +132,21 @@ private:
     void checkOkButton(const QModelIndexList& selected);
     ButtonIconManager mButtonIconManager;
 
-    void processNodeUpdated(mega::MegaNode* node);
     bool first;
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
     SelectTypeSPtr mSelectType;
-    QMap<QModelIndex, QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> mChangedNodesByHandle;
+    struct UpdateNodesInfo
+    {
+      mega::MegaHandle previousHandle = mega::INVALID_HANDLE;
+      mega::MegaHandle parentHandle = mega::INVALID_HANDLE;
+      std::shared_ptr<mega::MegaNode> updateNode;
+    };
+
+    QList<UpdateNodesInfo> mRenamedNodesByHandle;
+    QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
+    QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
+    QList<mega::MegaHandle> mRemovedNodesByHandle;
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderAdded;
     friend class DownloadType;

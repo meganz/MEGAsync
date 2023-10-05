@@ -75,6 +75,8 @@ public slots:
     void search(const QString& text, NodeSelectorModelItemSearch::Types typesAllowed);
     void createCloudDriveRootItem();
     void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
+    void addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> node);
+    void deleteIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> node);
     void createBackupRootItems(mega::MegaHandle backupsHandle);
 
     void onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem* parentItem);
@@ -87,6 +89,8 @@ signals:
      void nodesReady(NodeSelectorModelItem* parent);
      void megaCloudDriveRootItemCreated();
      void megaIncomingSharesRootItemsCreated();
+     void megaIncomingSharesRootItemAdded(mega::MegaHandle handle);
+     void megaIncomingSharesRootItemDeleted(mega::MegaHandle handle);
      void megaBackupRootItemsCreated();
      void searchItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes);
      void nodeAdded(NodeSelectorModelItem* item);
@@ -166,7 +170,9 @@ public:
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
 
-    static const NodeSelectorModelItem *getItemByIndex(const QModelIndex& index);
+    static NodeSelectorModelItem *getItemByIndex(const QModelIndex& index);
+    void updateItemNode(const QModelIndex& indexToUpdate, std::shared_ptr<mega::MegaNode> node);
+    void updateRow(const QModelIndex &indexToUpdate);
 
     virtual void firstLoad() = 0;
     void rootItemsLoaded();
@@ -178,6 +184,7 @@ public:
     void abort();
 
     virtual bool canBeDeleted() const;
+    virtual bool rootNodeUpdated(mega::MegaNode*){return false;}
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 

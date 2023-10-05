@@ -212,7 +212,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         auto incomingSharesModel = dynamic_cast<NodeSelectorModelIncomingShares*>(mModel);
         if(incomingSharesModel)
         {
-            item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(0,i));
+            item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(i,0));
             connect(item, &NodeSelectorModelItem::infoUpdated, incomingSharesModel, &NodeSelectorModelIncomingShares::onItemInfoUpdated);
             item->setOwner(move(user));
         }
@@ -226,6 +226,87 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
     {
         mRootItems.append(items);
         emit megaIncomingSharesRootItemsCreated();
+    }
+}
+
+void NodeRequester::addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> node)
+{
+    if(isAborted())
+    {
+        return;
+    }
+
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    if(mSyncSetupMode)
+    {
+        if(megaApi->getAccess(node.get()) != mega::MegaShare::ACCESS_FULL)
+        {
+            return;
+        }
+    }
+    else if(!mShowReadOnlyFolders)
+    {
+        if(megaApi->getAccess(node.get()) == mega::MegaShare::ACCESS_READ
+            || !node->isNodeKeyDecrypted())
+        {
+            return;
+        }
+    }
+
+    auto user = std::unique_ptr<mega::MegaUser>(megaApi->getUserFromInShare(node.get()));
+    NodeSelectorModelItem* item = new NodeSelectorModelItemIncomingShare(std::unique_ptr<mega::MegaNode>(node->copy()), mShowFiles);
+
+    auto incomingSharesModel = dynamic_cast<NodeSelectorModelIncomingShares*>(mModel);
+    if(incomingSharesModel)
+    {
+        item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(incomingSharesModel->rowCount(),0));
+        connect(item, &NodeSelectorModelItem::infoUpdated, incomingSharesModel, &NodeSelectorModelIncomingShares::onItemInfoUpdated);
+        item->setOwner(move(user));
+    }
+
+    if(isAborted())
+    {
+        item->deleteLater();
+    }
+    else
+    {
+        mRootItems.append(item);
+        emit megaIncomingSharesRootItemAdded(item->getNode()->getHandle());
+    }
+}
+
+void NodeRequester::deleteIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> node)
+{
+    if(isAborted())
+    {
+        return;
+    }
+
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    if(mSyncSetupMode)
+    {
+        if(megaApi->getAccess(node.get()) != mega::MegaShare::ACCESS_FULL)
+        {
+            return;
+        }
+    }
+    else if(!mShowReadOnlyFolders)
+    {
+        if(megaApi->getAccess(node.get()) == mega::MegaShare::ACCESS_READ
+            || !node->isNodeKeyDecrypted())
+        {
+            return;
+        }
+    }
+
+    auto rootFound = std::find_if(mRootItems.begin(), mRootItems.end(), [node](NodeSelectorModelItem* item){
+        return item->getNode()->getHandle() == node->getHandle();
+    });
+
+    if(rootFound != mRootItems.end())
+    {
+        mRootItems.removeOne(*rootFound);
+        emit megaIncomingSharesRootItemDeleted(node->getHandle());
     }
 }
 
@@ -1084,8 +1165,7 @@ QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& hand
         {
             if(NodeSelectorModelItem* chkItem = static_cast<NodeSelectorModelItem*>(idx.internalPointer()))
             {
-                if(/*chkItem->getNode()->isFolder() && */
-                   chkItem->getNode()->getHandle() == handle)
+                if(chkItem->getNode()->getHandle() == handle)
                 {
                     return idx;
                 }
@@ -1108,9 +1188,27 @@ QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& hand
     return QModelIndex();
 }
 
-const NodeSelectorModelItem* NodeSelectorModel::getItemByIndex(const QModelIndex &index)
+NodeSelectorModelItem* NodeSelectorModel::getItemByIndex(const QModelIndex &index)
 {
     return qvariant_cast<NodeSelectorModelItem*>(index.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
+}
+
+void NodeSelectorModel::updateItemNode(const QModelIndex &indexToUpdate, std::shared_ptr<mega::MegaNode> node)
+{
+    auto item = getItemByIndex(indexToUpdate);
+    if(item)
+    {
+        item->updateNode(node);
+        auto lastColumnIndex = index(indexToUpdate.row(), columnCount()-1, indexToUpdate.parent());
+        emit dataChanged(indexToUpdate, lastColumnIndex);
+    }
+}
+
+void NodeSelectorModel::updateRow(const QModelIndex& indexToUpdate)
+{
+    auto firstColumnIndex = index(indexToUpdate.row(), 0, indexToUpdate.parent());
+    auto lastColumnIndex = index(indexToUpdate.row(), columnCount()-1, indexToUpdate.parent());
+    emit dataChanged(firstColumnIndex, lastColumnIndex);
 }
 
 QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
