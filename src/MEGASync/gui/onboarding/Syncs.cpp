@@ -82,7 +82,7 @@ bool Syncs::helperCheckLocalSync(const QString& path, QString& errorMessage) con
 {
     if (path.isEmpty())
     {
-        errorMessage = tr("local path is empty");
+        errorMessage = tr("Select a local folder to sync.");
         return false;
     }
 

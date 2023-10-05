@@ -55,7 +55,7 @@ QtObject {
     readonly property string fullSyncDescription: qsTr("Sync your entire MEGA Cloud drive with a local device.")
     readonly property string canNotSyncPermissionError: qsTr("Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.")
     readonly property string forgotPassword: qsTr("Forgot password?")
-    readonly property string invalidLocalPath: qsTr("The local path is invalid.")
+    readonly property string invalidLocalPath: qsTr("Select a local folder to sync.")
     readonly property string invalidRemotePath: qsTr("Select a MEGA folder to sync.")
     readonly property string couldNotCreateDirectory: qsTr("Couldn't create directory");
     readonly property string setUpOptions: qsTr("Setup options")
