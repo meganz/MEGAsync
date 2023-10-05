@@ -23,8 +23,8 @@ public:
     Q_INVOKABLE void addSync(const QString& local, const QString& remote = QLatin1String("/"));
     Q_INVOKABLE bool checkLocalSync(const QString& path) const;
     Q_INVOKABLE bool checkRemoteSync(const QString& path) const;
-    Q_INVOKABLE QString getDefaultMegaFolder() const;
-    Q_INVOKABLE QString getDefaultMegaPath() const;
+    QString getDefaultMegaFolder() const;
+    QString getDefaultMegaPath() const;
 
     static const QString DEFAULT_MEGA_FOLDER;
     static const QString DEFAULT_MEGA_PATH;
