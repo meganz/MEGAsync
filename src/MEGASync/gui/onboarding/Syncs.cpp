@@ -82,7 +82,7 @@ bool Syncs::helperCheckLocalSync(const QString& path, QString& errorMessage) con
 {
     if (path.isEmpty())
     {
-        errorMessage = QLatin1String("local path is empty");
+        errorMessage = tr("local path is empty");
         return false;
     }
 
@@ -114,7 +114,7 @@ bool Syncs::helperCheckRemoteSync(const QString& path, QString& errorMessage) co
 {
     if (path.isEmpty())
     {
-        errorMessage = QLatin1String("remote path is empty");
+        errorMessage = tr("Select a MEGA folder to sync.");
         return false;
     }
 
