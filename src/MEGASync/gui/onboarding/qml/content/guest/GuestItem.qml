@@ -38,7 +38,7 @@ Rectangle {
     readonly property string stateInOnboarding: "IN_ONBOARDING"
 
     function getState(){
-        if(AccountStatusControllerAccess.isAccountBlocked()) {
+        if(AccountStatusControllerAccess.blockedState) {
             return content.stateBlocked;
         }
         else {
