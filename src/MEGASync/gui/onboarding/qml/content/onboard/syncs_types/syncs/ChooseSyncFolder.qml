@@ -34,9 +34,8 @@ Item {
         }
     }
 
-    function getFolder()
-    {
-        var defaultFolder = ""
+    function getFolder() {
+        var defaultFolder = "";
 
         if (local) {
             defaultFolder = localFolderChooser.getDefaultFolder(syncsCpp.DEFAULT_MEGA_FOLDER)
@@ -50,7 +49,7 @@ Item {
             defaultFolder = ""
         }
 
-        return defaultFolder
+        return defaultFolder;
     }
 
     Layout.preferredWidth: width
@@ -70,7 +69,6 @@ Item {
         leftIcon.source: local ? Images.pc : Images.megaOutline
         leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
-        hint.icon: Images.alertTriangle
         toolTip.leftIconSource: leftIcon.source
         toolTip.timeout: 5000
     }
@@ -87,20 +85,18 @@ Item {
             folderField.error = false;
             folderField.hint.visible = false;
 
-            if (local)
-            {
-                localFolderChooser.openFolderSelector(folderField.text)
+            if (local) {
+                localFolderChooser.openFolderSelector(folderField.text);
             }
-            else
-            {
-                remoteFolderChooser.openFolderSelector()
+            else {
+                remoteFolderChooser.openFolderSelector();
             }
         }
     }
 
-    Connections
-    {
+    Connections {
         id: localFolderChooserConnection
+
         target: localFolderChooser
         enabled: root.local
 
@@ -109,9 +105,9 @@ Item {
         }
     }
 
-    Connections
-    {
+    Connections {
         id: remoteFolderChooserConnection
+
         target: remoteFolderChooser
         enabled: !root.local
 

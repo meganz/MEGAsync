@@ -27,36 +27,36 @@ SelectiveSyncPageForm {
             remoteFolderChooser.folderField.hint.visible = false;
             remoteFolderChooser.folderField.error = false;
 
-            var localFolderError = false
+            var localFolderError = false;
             if (localFolderChooser.choosenPath.length === 0) {
-                localFolderError = true
-                localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath
-                localFolderChooser.folderField.hint.visible = true
+                localFolderError = true;
+                localFolderChooser.folderField.error = true;
+                localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath;
+                localFolderChooser.folderField.hint.visible = true;
             }
 
             var remoteFolderError = false
             if (remoteFolderChooser.choosenPath.length === 0) {
-                remoteFolderError = true
-                remoteFolderChooser.folderField.error = true
-                remoteFolderChooser.folderField.hint.text = OnboardingStrings.invalidRemotePath
-                remoteFolderChooser.folderField.hint.visible = true
+                remoteFolderError = true;
+                remoteFolderChooser.folderField.error = true;
+                remoteFolderChooser.folderField.hint.text = OnboardingStrings.invalidRemotePath;
+                remoteFolderChooser.folderField.hint.visible = true;
             }
 
             if (localFolderError || remoteFolderError) {
-                return
-            }
-
-            if (!localFolder.createFolder(localFolderChooser.choosenPath)) {
-                localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError
-                localFolderChooser.folderField.hint.visible = true
                 return;
             }
 
-            root.enabled = false
-            footerButtons.rightPrimary.icons.busyIndicatorVisible = true
-            syncsCpp.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath)
+            if (!localFolder.createFolder(localFolderChooser.choosenPath)) {
+                localFolderChooser.folderField.error = true;
+                localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError;
+                localFolderChooser.folderField.hint.visible = true;
+                return;
+            }
+
+            root.enabled = false;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
+            syncsCpp.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
         }
     }
 
