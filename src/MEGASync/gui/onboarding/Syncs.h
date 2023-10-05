@@ -3,7 +3,6 @@
 
 #include "megaapi.h"
 #include "mega/bindings/qt/QTMegaRequestListener.h"
-#include "ChooseFolder.h"
 #include "syncs/control/SyncController.h"
 
 #include <QObject>
@@ -15,12 +14,20 @@ class Syncs : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString DEFAULT_MEGA_FOLDER READ getDefaultMegaFolder CONSTANT FINAL)
+    Q_PROPERTY(QString DEFAULT_MEGA_PATH READ getDefaultMegaPath CONSTANT FINAL)
+
 public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
     Q_INVOKABLE void addSync(const QString& local, const QString& remote = QLatin1String("/"));
     Q_INVOKABLE bool checkLocalSync(const QString& path) const;
     Q_INVOKABLE bool checkRemoteSync(const QString& path) const;
+    QString getDefaultMegaFolder() const;
+    QString getDefaultMegaPath() const;
+
+    static const QString DEFAULT_MEGA_FOLDER;
+    static const QString DEFAULT_MEGA_PATH;
 
 signals:
     void syncSetupSuccess();

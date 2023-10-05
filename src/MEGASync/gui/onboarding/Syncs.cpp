@@ -6,6 +6,9 @@
 #include "MegaApplication.h"
 #include "TextDecorator.h"
 
+const QString Syncs::DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
+const QString Syncs::DEFAULT_MEGA_PATH = QString::fromUtf8("/") + Syncs::DEFAULT_MEGA_FOLDER;
+
 Syncs::Syncs(QObject *parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
@@ -124,6 +127,12 @@ bool Syncs::helperCheckRemoteSync(const QString& path, QString& errorMessage) co
     {
         syncability = SyncController::isRemoteFolderSyncable(megaNode, errorMessage);
     }
+    else if(path != Syncs::DEFAULT_MEGA_PATH)
+    {
+        syncability = SyncController::CANT_SYNC;
+        errorMessage = tr("Folder can't be synced as it can't be located. "
+                          "It may have been moved or deleted, or you might not have access.");
+    }
 
 #if defined DEBUG
     qDebug() << "remotePath : " << path << " syncability : " << syncability << " message : " << errorMessage;
@@ -142,6 +151,16 @@ bool Syncs::checkRemoteSync(const QString &path) const
 {
     QString error;
     return helperCheckRemoteSync(path, error);
+}
+
+QString Syncs::getDefaultMegaFolder() const
+{
+    return DEFAULT_MEGA_FOLDER;
+}
+
+QString Syncs::getDefaultMegaPath() const
+{
+    return DEFAULT_MEGA_PATH;
 }
 
 void Syncs::onRequestFinish(mega::MegaApi* api,
