@@ -27,7 +27,6 @@ Item {
     property alias folderField: folderField
 
     readonly property int textEditMargin: 2
-    readonly property string defaultMegaFolder: "MEGA"
 
     function reset() {
         if(!local) {
@@ -40,13 +39,13 @@ Item {
         var defaultFolder = ""
 
         if (local) {
-            defaultFolder = localFolderChooser.getDefaultFolder(defaultMegaFolder)
+            defaultFolder = localFolderChooser.getDefaultFolder(syncsCpp.DEFAULT_MEGA_FOLDER)
         }
         else {
-            defaultFolder = "/" + defaultMegaFolder;
+            defaultFolder = syncsCpp.DEFAULT_MEGA_PATH;
         }
 
-        if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder)))
+        if ((local && !syncsCpp.checkLocalSync(defaultFolder)) || (!local && !syncsCpp.checkRemoteSync(defaultFolder)))
         {
             defaultFolder = ""
         }
@@ -127,9 +126,5 @@ Item {
 
     ChooseRemoteFolder {
         id: remoteFolderChooser
-    }
-
-    Syncs {
-        id: syncs
     }
 }
