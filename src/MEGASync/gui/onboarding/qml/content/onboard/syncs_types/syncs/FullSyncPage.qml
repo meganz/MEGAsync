@@ -18,24 +18,24 @@ FullSyncPageForm {
         }
 
         rightPrimary.onClicked: {
-            localFolderChooser.folderField.hint.visible = false
-            localFolderChooser.folderField.error = false
+            localFolderChooser.folderField.hint.visible = false;
+            localFolderChooser.folderField.error = false;
 
             if (localFolderChooser.choosenPath.length === 0) {
-                localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath
-                localFolderChooser.folderField.hint.visible = true
+                localFolderChooser.folderField.error = true;
+                localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath;
+                localFolderChooser.folderField.hint.visible = true;
             }
             else if (localFolder.createFolder(localFolderChooser.choosenPath)) {
                 root.enabled = false;
                 footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
 
-                syncsCpp.addSync(localFolderChooser.choosenPath)
+                syncsCpp.addSync(localFolderChooser.choosenPath);
             }
             else {
-                localFolderChooser.folderField.error = true
-                localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError
-                localFolderChooser.folderField.hint.visible = true
+                localFolderChooser.folderField.error = true;
+                localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError;
+                localFolderChooser.folderField.hint.visible = true;
             }
         }
     }
