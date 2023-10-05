@@ -453,6 +453,9 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
 
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
         mPreferences->setNeedsFetchNodesInGeneral(false);
+
+        mProgress = 0; //sets guestdialog progressbar as indeterminate
+        emit progressChanged();
     }
     else
     {
