@@ -70,6 +70,8 @@ public:
 
     const NodeSelectorModelItemSearch::Types &searchedTypes() const;
 
+    bool showFiles() const;
+
 public slots:
     void requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex);
     void search(const QString& text, NodeSelectorModelItemSearch::Types typesAllowed);
@@ -187,6 +189,8 @@ public:
     virtual bool rootNodeUpdated(mega::MegaNode*){return false;}
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
+
+    bool showFiles() const;
 
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);

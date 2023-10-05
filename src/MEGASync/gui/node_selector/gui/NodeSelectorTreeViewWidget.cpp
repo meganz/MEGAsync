@@ -661,7 +661,10 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
         //New node
         else if(mNewFolderAdded != updateNode.node->getHandle())
         {
-            mAddedNodesByParentHandle.insertMulti(updateNode.parentHandle, updateNode.node);
+            if(!updateNode.node->isFile() || mModel->showFiles())
+            {
+                mAddedNodesByParentHandle.insertMulti(updateNode.parentHandle, updateNode.node);
+            }
         }
     }
 

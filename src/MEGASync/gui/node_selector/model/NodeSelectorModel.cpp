@@ -433,6 +433,11 @@ bool NodeRequester::isAborted()
     return mAborted || (mCancelToken && mCancelToken->isCancelled());
 }
 
+bool NodeRequester::showFiles() const
+{
+    return mShowFiles.load();
+}
+
 const NodeSelectorModelItemSearch::Types &NodeRequester::searchedTypes() const
 {
     return mSearchedTypes;
@@ -625,6 +630,11 @@ Qt::ItemFlags NodeSelectorModel::flags(const QModelIndex &index) const
     }
 
     return flags;
+}
+
+bool NodeSelectorModel::showFiles() const
+{
+    return mNodeRequesterWorker->showFiles();
 }
 
 QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &parent) const

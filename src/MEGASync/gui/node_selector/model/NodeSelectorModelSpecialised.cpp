@@ -102,7 +102,8 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
     {
         if(node->isInShare())
         {
-            beginInsertRows(QModelIndex(), 0, 0);
+            auto totalRows = rowCount(QModelIndex());
+            beginInsertRows(QModelIndex(), totalRows, totalRows);
             emit addIncomingSharesRoot(std::shared_ptr<mega::MegaNode>(node->copy()));
         }
 
