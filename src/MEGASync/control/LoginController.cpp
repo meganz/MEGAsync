@@ -334,6 +334,7 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
         }
+        MegaSyncApp->requestUserData(); //query avatar and other user info
     }
     else
     {
