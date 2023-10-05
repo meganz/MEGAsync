@@ -323,7 +323,7 @@ Rectangle {
                 leftIcon.color: Styles.iconSecondary
                 error: hint.visible
                 sizes: MegaTextFields.SmallSizes {}
-                validator: RegExpValidator { regExp: /^[^*><?"\/\\\|: ]{1,255}$/ }
+                validator: RegExpValidator { regExp: RegexExpressions.allowedFolderChars }
 
                 onAccepted: {
                     doneAction()
