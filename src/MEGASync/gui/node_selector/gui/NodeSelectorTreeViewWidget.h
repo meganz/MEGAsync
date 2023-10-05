@@ -140,13 +140,14 @@ private:
     {
       mega::MegaHandle previousHandle = mega::INVALID_HANDLE;
       mega::MegaHandle parentHandle = mega::INVALID_HANDLE;
-      std::shared_ptr<mega::MegaNode> updateNode;
+      std::shared_ptr<mega::MegaNode> node;
     };
 
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
     QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
     QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QList<mega::MegaHandle> mRemovedNodesByHandle;
+    QList<mega::MegaHandle> mMovedNodesByHandle;
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderAdded;
     friend class DownloadType;

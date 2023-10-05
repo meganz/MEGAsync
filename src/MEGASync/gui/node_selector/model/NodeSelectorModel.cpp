@@ -798,31 +798,29 @@ void NodeSelectorModel::setSyncSetupMode(bool value)
 void NodeSelectorModel::addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent)
 {
     NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-    if(parentItem)
+    if(parentItem && parentItem->getNode()->isFolder())
     {
         clearIndexesNodeInfo();
 
-        mNodeRequesterWorker->lockDataMutex(true);
-        mNodeRequesterWorker->lockDataMutex(false);
-
-        beginInsertRows(parent, 0, 0);
+        auto totalRows = rowCount(parent);
+        beginInsertRows(parent, totalRows, totalRows);
         emit requestAddNode(node, parent, parentItem);
     }
 }
 
 void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex &parent)
 {
-    NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-    if(parentItem)
+    if(!nodes.isEmpty())
     {
-        clearIndexesNodeInfo();
+        NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
+        if(parentItem && parentItem->getNode()->isFolder())
+        {
+            clearIndexesNodeInfo();
 
-        mNodeRequesterWorker->lockDataMutex(true);
-        mNodeRequesterWorker->lockDataMutex(false);
-
-        auto totalRows = rowCount(parent);
-        beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
-        emit requestAddNodes(nodes, parent, parentItem);
+            auto totalRows = rowCount(parent);
+            beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
+            emit requestAddNodes(nodes, parent, parentItem);
+        }
     }
 }
 

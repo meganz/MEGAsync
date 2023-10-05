@@ -613,12 +613,12 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                     {
                         updatedVersions.insert(parentNode->getHandle(), node->getHandle());
                     }
-                    else if(containsIndexToUpdate(nullptr, parentNode.get()))
+                    else if(parentNode->isFolder() && containsIndexToUpdate(nullptr, parentNode.get()))
                     {
                         UpdateNodesInfo info;
                         info.parentHandle = parentNode->getHandle();
                         info.previousHandle = node->getHandle();
-                        info.updateNode = std::shared_ptr<mega::MegaNode>(node->copy());
+                        info.node = std::shared_ptr<mega::MegaNode>(node->copy());
                         updatedNodes.append(info);
                     }
                 }
@@ -630,8 +630,20 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                 {
                     UpdateNodesInfo info;
                     info.previousHandle = node->getHandle();
-                    info.updateNode = std::shared_ptr<mega::MegaNode>(node->copy());
+                    info.node = std::shared_ptr<mega::MegaNode>(node->copy());
                     mRenamedNodesByHandle.append(info);
+                }
+            }
+            //Moved or new version added
+            else if(node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
+            {
+                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                if(containsIndexToUpdate(node, parentNode.get()))
+                {
+                    if(!mMovedNodesByHandle.contains(node->getHandle()))
+                    {
+                        mMovedNodesByHandle.append(node->getHandle());
+                    }
                 }
             }
         }
@@ -647,16 +659,17 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             mUpdatedNodesByPreviousHandle.append(updateNode);
         }
         //New node
-        else
+        else if(mNewFolderAdded != updateNode.node->getHandle())
         {
-            mAddedNodesByParentHandle.insertMulti(updateNode.parentHandle, updateNode.updateNode);
+            mAddedNodesByParentHandle.insertMulti(updateNode.parentHandle, updateNode.node);
         }
     }
 
     if(!mUpdatedNodesByPreviousHandle.isEmpty() ||
        !mRemovedNodesByHandle.isEmpty() ||
        !mRenamedNodesByHandle.isEmpty() ||
-       !mAddedNodesByParentHandle.isEmpty())
+       !mAddedNodesByParentHandle.isEmpty() ||
+       !mMovedNodesByHandle.isEmpty())
     {
         mNodesUpdateTimer.start(1000);
     }
@@ -696,7 +709,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
                 isSelected = ui->tMegaFolders->selectionModel()->isSelected(proxyIndex);
             }
 
-            mModel->updateItemNode(index, info.updateNode);
+            mModel->updateItemNode(index, info.node);
 
             if(isSelected)
             {
@@ -709,7 +722,15 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
         foreach(auto info, mUpdatedNodesByPreviousHandle)
         {
             auto index = mModel->findItemByNodeHandle(info.previousHandle, QModelIndex());
-            mModel->updateItemNode(index, info.updateNode);
+            mModel->updateItemNode(index, info.node);
+
+            //If they have been updated, we don´t need to remove them
+            mMovedNodesByHandle.removeOne(info.node->getHandle());
+        }
+
+        foreach(auto handle, mMovedNodesByHandle)
+        {
+            removeItemByHandle(handle);
         }
 
         if(!mAddedNodesByParentHandle.isEmpty())
@@ -732,6 +753,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
         mAddedNodesByParentHandle.clear();
         mRenamedNodesByHandle.clear();
         mUpdatedNodesByPreviousHandle.clear();
+        mMovedNodesByHandle.clear();
 
         checkBackForwardButtons();
     }
