@@ -102,9 +102,26 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
     {
         if(node->isInShare())
         {
-            auto totalRows = rowCount(QModelIndex());
-            beginInsertRows(QModelIndex(), totalRows, totalRows);
-            emit addIncomingSharesRoot(std::shared_ptr<mega::MegaNode>(node->copy()));
+            auto folderIndex = findItemByNodeHandle(node->getHandle(), QModelIndex());
+            if(!folderIndex.isValid())
+            {
+                auto totalRows = rowCount(QModelIndex());
+                beginInsertRows(QModelIndex(), totalRows, totalRows);
+                emit addIncomingSharesRoot(std::shared_ptr<mega::MegaNode>(node->copy()));
+            }
+            else
+            {
+                if(mNodeRequesterWorker->isIncomingShareCompatible(node))
+                {
+                    updateItemNode(folderIndex, std::shared_ptr<mega::MegaNode>(node->copy()));
+                }
+                else
+                {
+                    beginRemoveRows(QModelIndex(), folderIndex.row(), folderIndex.row());
+                    emit deleteIncomingSharesRoot(std::shared_ptr<mega::MegaNode>(node->copy()));
+                    return true;
+                }
+            }
         }
 
         return true;

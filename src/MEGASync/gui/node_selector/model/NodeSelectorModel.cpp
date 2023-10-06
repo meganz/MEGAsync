@@ -212,8 +212,32 @@ void NodeRequester::createCloudDriveRootItem()
     }
 }
 
+bool NodeRequester::isIncomingShareCompatible(mega::MegaNode *node)
+{
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    if(mSyncSetupMode)
+    {
+        if(MegaSyncApp->getMegaApi()->getAccess(node) != mega::MegaShare::ACCESS_FULL)
+        {
+            return false;;
+        }
+    }
+    else if(!mShowReadOnlyFolders)
+    {
+        if(MegaSyncApp->getMegaApi()->getAccess(node) == mega::MegaShare::ACCESS_READ
+            || !node->isNodeKeyDecrypted())
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList)
 {
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
     QList<NodeSelectorModelItem*> items;
     for(int i = 0; i < nodeList->size(); i++)
     {
@@ -222,21 +246,9 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
             break;
         }
 
-        mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-        if(mSyncSetupMode)
+        if(!isIncomingShareCompatible(nodeList->get(i)))
         {
-            if(megaApi->getAccess(nodeList->get(i)) != mega::MegaShare::ACCESS_FULL)
-            {
-                continue;
-            }
-        }
-        else if(!mShowReadOnlyFolders)
-        {
-            if(megaApi->getAccess(nodeList->get(i)) == mega::MegaShare::ACCESS_READ
-               || !nodeList->get(i)->isNodeKeyDecrypted())
-            {
-                continue;
-            }
+            continue;
         }
 
         auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
@@ -272,23 +284,12 @@ void NodeRequester::addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> no
         return;
     }
 
-    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    if(mSyncSetupMode)
+    if(!isIncomingShareCompatible(node.get()))
     {
-        if(megaApi->getAccess(node.get()) != mega::MegaShare::ACCESS_FULL)
-        {
-            return;
-        }
-    }
-    else if(!mShowReadOnlyFolders)
-    {
-        if(megaApi->getAccess(node.get()) == mega::MegaShare::ACCESS_READ
-            || !node->isNodeKeyDecrypted())
-        {
-            return;
-        }
+        return;
     }
 
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
     auto user = std::unique_ptr<mega::MegaUser>(megaApi->getUserFromInShare(node.get()));
     NodeSelectorModelItem* item = new NodeSelectorModelItemIncomingShare(std::unique_ptr<mega::MegaNode>(node->copy()), mShowFiles);
 

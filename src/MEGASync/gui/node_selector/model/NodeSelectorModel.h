@@ -72,6 +72,8 @@ public:
 
     bool showFiles() const;
 
+    bool isIncomingShareCompatible(mega::MegaNode* node);
+
 public slots:
     void requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex);
     void search(const QString& text, NodeSelectorModelItemSearch::Types typesAllowed);
