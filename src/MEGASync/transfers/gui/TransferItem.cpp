@@ -285,6 +285,19 @@ QString TransferData::getFullFormattedFinishedTime() const
     return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime().toString(format);
 }
 
+std::unique_ptr<MegaNode> TransferData::getNodeBasedOnEvaluation(const std::shared_ptr<mega::MegaTransfer> &transfer) const
+{
+    std::unique_ptr<MegaNode> node;
+    node.reset(transfer->getPublicMegaNode());
+
+    if(!node && transfer->getNodeHandle() != mega::INVALID_HANDLE)
+    {
+        node.reset(MegaSyncApp->getMegaApi()->getNodeByHandle(transfer->getNodeHandle()));
+    }
+
+    return node;
+}
+
 QString TransferData::path() const
 {
     QString localPath = mPath;

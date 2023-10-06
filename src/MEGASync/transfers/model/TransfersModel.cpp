@@ -1335,23 +1335,8 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
 std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
 {
     auto d (getTransfer(row));
-
-    std::unique_ptr<MegaNode> node;
-
-    if (d->getState() == TransferData::TRANSFER_FAILED)
-    {
-        if(d->mFailedTransfer)
-        {
-            node.reset(d->mFailedTransfer->getPublicMegaNode());
-        }
-    }
-
-    if(!node && d->mNodeHandle != mega::INVALID_HANDLE)
-    {
-        node.reset(mMegaApi->getNodeByHandle(d->mNodeHandle));
-    }
-
-    return node;
+    auto copiedTransfer = std::shared_ptr<mega::MegaTransfer>(d->mFailedTransfer->copy());
+    return d->getNodeBasedOnEvaluation(copiedTransfer);
 }
 
 //Returns the node if the parent node does not exist
@@ -1476,7 +1461,7 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
 
                 if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
                 {
-                    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(failedTransfer->getNodeHandle()));
+                    std::unique_ptr<mega::MegaNode> node = getTransferByTag(failedTransfer->getTag())->getNodeBasedOnEvaluation(failedTransfer);
                     mMegaApi->startDownload(node.get(), failedTransfer->getPath(),
                                             failedTransfer->getFileName(), appDataRaw,
                                             false, nullptr,
