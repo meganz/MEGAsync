@@ -321,7 +321,7 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
 }
 
 NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
-    : NodeSelectorProxyModel(parent), mMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE)
+    : NodeSelectorProxyModel(parent), mMode(NodeSelectorModelItemSearch::Type::NONE)
 {
 
 }
@@ -350,6 +350,11 @@ bool NodeSelectorProxyModelSearch::canBeDeleted() const
 
 bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
+    if(mMode == static_cast<int>(NodeSelectorModelItemSearch::Type::NONE))
+    {
+        return true;
+    }
+
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     if(index.isValid())

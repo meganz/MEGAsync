@@ -94,60 +94,16 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         mRootItems.clear();
     }
     mSearchCanceled = false;
-    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-    auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8().constData(), mCancelToken.get()));
+    auto nodeList = std::unique_ptr<mega::MegaNodeList>(MegaSyncApp->getMegaApi()->search(text.toUtf8().constData(), mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
-    NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
+    mSearchedTypes = NodeSelectorModelItemSearch::Type::NONE;
 
     for(int i = 0; i < nodeList->size(); i++)
     {
-        auto node = nodeList->get(i);
-        if(isAborted() || mSearchCanceled)
+        auto item = createSearchItem(nodeList->get(i), typesAllowed);
+        if(item)
         {
-            break;
-        }
-        if((node->isFile() && !mShowFiles) || megaApi->isInRubbish(node))
-        {
-            continue;
-        }
-        else if(mSyncSetupMode)
-        {
-            int access = megaApi->getAccess(node);
-            if(access != mega::MegaShare::ACCESS_FULL && access != mega::MegaShare::ACCESS_OWNER)
-            {
-                continue;
-            }
-        }
-        else if(!mShowReadOnlyFolders)
-        {
-            if(megaApi->getAccess(node) == mega::MegaShare::ACCESS_READ
-               || !node->isNodeKeyDecrypted())
-            {
-                continue;
-            }
-        }
-
-        NodeSelectorModelItemSearch::Types type;
-
-        if(megaApi->isInCloud(node))
-        {
-            type = NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
-        }
-        else if(megaApi->isInVault(node))
-        {
-            type = NodeSelectorModelItemSearch::Type::BACKUP;
-        }
-        else
-        {
-            type = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
-        }
-
-        if(typesAllowed & type)
-        {
-            searchedTypes |= type;
-            auto nodeUptr = std::unique_ptr<mega::MegaNode>(node->copy());
-            auto item = new NodeSelectorModelItemSearch(std::move(nodeUptr), type);
             items.append(item);
         }
     }
@@ -160,8 +116,88 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
     {
         QMutexLocker d(&mDataMutex);
         mRootItems.append(items);
-        emit searchItemsCreated(searchedTypes);
+        emit searchItemsCreated();
     }
+}
+
+void NodeRequester::addSearchRootItem(QList<std::shared_ptr<mega::MegaNode>> nodes, NodeSelectorModelItemSearch::Types typesAllowed)
+{
+    QList<NodeSelectorModelItem*> items;
+    foreach(auto node, nodes)
+    {
+        auto item = createSearchItem(node.get(), typesAllowed);
+        if(item)
+        {
+            items.append(item);
+        }
+    }
+
+    if(isAborted())
+    {
+        qDeleteAll(items);
+    }
+    else
+    {
+        if(!items.isEmpty())
+        {
+            QMutexLocker d(&mDataMutex);
+            mRootItems.append(items);
+            emit rootItemsAdded();
+        }
+    }
+}
+
+NodeSelectorModelItem *NodeRequester::createSearchItem(mega::MegaNode *node, NodeSelectorModelItemSearch::Types typesAllowed)
+{
+    if(isAborted() || mSearchCanceled)
+    {
+        return nullptr;
+    }
+    if((node->isFile() && !mShowFiles) || MegaSyncApp->getMegaApi()->isInRubbish(node))
+    {
+        return nullptr;
+    }
+    else if(mSyncSetupMode)
+    {
+        int access = MegaSyncApp->getMegaApi()->getAccess(node);
+        if(access != mega::MegaShare::ACCESS_FULL && access != mega::MegaShare::ACCESS_OWNER)
+        {
+            return nullptr;
+        }
+    }
+    else if(!mShowReadOnlyFolders)
+    {
+        if(MegaSyncApp->getMegaApi()->getAccess(node) == mega::MegaShare::ACCESS_READ
+            || !node->isNodeKeyDecrypted())
+        {
+            return nullptr;
+        }
+    }
+
+    NodeSelectorModelItemSearch::Types type;
+
+    if(MegaSyncApp->getMegaApi()->isInCloud(node))
+    {
+        type = NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
+    }
+    else if(MegaSyncApp->getMegaApi()->isInVault(node))
+    {
+        type = NodeSelectorModelItemSearch::Type::BACKUP;
+    }
+    else
+    {
+        type = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
+    }
+
+    if(typesAllowed & type)
+    {
+        mSearchedTypes |= type;
+        auto nodeUptr = std::unique_ptr<mega::MegaNode>(node->copy());
+        auto item = new NodeSelectorModelItemSearch(std::move(nodeUptr), type);
+        return item;
+    }
+
+    return nullptr;
 }
 
 void NodeRequester::createCloudDriveRootItem()
@@ -271,42 +307,7 @@ void NodeRequester::addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> no
     else
     {
         mRootItems.append(item);
-        emit megaIncomingSharesRootItemAdded(item->getNode()->getHandle());
-    }
-}
-
-void NodeRequester::deleteIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> node)
-{
-    if(isAborted())
-    {
-        return;
-    }
-
-    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    if(mSyncSetupMode)
-    {
-        if(megaApi->getAccess(node.get()) != mega::MegaShare::ACCESS_FULL)
-        {
-            return;
-        }
-    }
-    else if(!mShowReadOnlyFolders)
-    {
-        if(megaApi->getAccess(node.get()) == mega::MegaShare::ACCESS_READ
-            || !node->isNodeKeyDecrypted())
-        {
-            return;
-        }
-    }
-
-    auto rootFound = std::find_if(mRootItems.begin(), mRootItems.end(), [node](NodeSelectorModelItem* item){
-        return item->getNode()->getHandle() == node->getHandle();
-    });
-
-    if(rootFound != mRootItems.end())
-    {
-        mRootItems.removeOne(*rootFound);
-        emit megaIncomingSharesRootItemDeleted(node->getHandle());
+        emit rootItemsAdded();
     }
 }
 
@@ -389,6 +390,24 @@ void NodeRequester::removeRootItem(NodeSelectorModelItem* item)
     QMutexLocker lock(&mDataMutex);
     item->deleteLater();
     mRootItems.removeOne(item);
+}
+
+void NodeRequester::removeRootItem(std::shared_ptr<mega::MegaNode> node)
+{
+    if(isAborted())
+    {
+        return;
+    }
+
+    auto rootFound = std::find_if(mRootItems.begin(), mRootItems.end(), [node](NodeSelectorModelItem* item){
+        return item->getNode()->getHandle() == node->getHandle();
+    });
+
+    if(rootFound != mRootItems.end())
+    {
+        mRootItems.removeOne(*rootFound);
+        emit rootItemsDeleted();
+    }
 }
 
 int NodeRequester::rootIndexSize() const
@@ -486,7 +505,10 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     connect(this, &NodeSelectorModel::requestAddNode, mNodeRequesterWorker, &NodeRequester::onAddNodeRequested, Qt::QueuedConnection);
     connect(this, &NodeSelectorModel::requestAddNodes, mNodeRequesterWorker, &NodeRequester::onAddNodesRequested, Qt::QueuedConnection);
     connect(this, &NodeSelectorModel::removeItem, mNodeRequesterWorker, &NodeRequester::removeItem);
-    connect(this, &NodeSelectorModel::removeRootItem, mNodeRequesterWorker, &NodeRequester::removeRootItem);
+    connect(this, &NodeSelectorModel::removeRootItem, this, [this](NodeSelectorModelItem* item)
+            {
+                mNodeRequesterWorker->removeRootItem(item);
+            });
 
     connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterThread, &QObject::deleteLater, Qt::DirectConnection);
     connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterWorker, &QObject::deleteLater, Qt::DirectConnection);
@@ -494,6 +516,9 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &NodeSelectorModel::onChildNodesReady, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodeAdded, this, &NodeSelectorModel::onNodeAdded, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodesAdded, this, &NodeSelectorModel::onNodesAdded, Qt::QueuedConnection);
+
+    connect(mNodeRequesterWorker, &NodeRequester::rootItemsAdded, this, &NodeSelectorModel::onRootItemAdded, Qt::QueuedConnection);
+    connect(mNodeRequesterWorker, &NodeRequester::rootItemsDeleted, this, &NodeSelectorModel::onRootItemDeleted, Qt::QueuedConnection);
 
     qRegisterMetaType<std::shared_ptr<mega::MegaNodeList>>("std::shared_ptr<mega::MegaNodeList>");
     qRegisterMetaType<std::shared_ptr<mega::MegaNode>>("std::shared_ptr<mega::MegaNode>");
@@ -822,14 +847,16 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
 {
     if(!nodes.isEmpty())
     {
-        NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-        if(parentItem && parentItem->getNode()->isFolder())
+        if(parent.isValid())
         {
-            clearIndexesNodeInfo();
-
-            auto totalRows = rowCount(parent);
-            beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
-            emit requestAddNodes(nodes, parent, parentItem);
+            NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
+            if(parentItem && parentItem->getNode()->isFolder())
+            {
+                clearIndexesNodeInfo();
+                auto totalRows = rowCount(parent);
+                beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
+                emit requestAddNodes(nodes, parent, parentItem);
+            }
         }
     }
 }
@@ -856,9 +883,14 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
     }
 }
 
-void NodeSelectorModel::updateModel(const QModelIndex &indexToUpdate)
+void NodeSelectorModel::onRootItemAdded()
 {
+    endInsertingRows();
+}
 
+void NodeSelectorModel::onRootItemDeleted()
+{
+    endRemoveRows();
 }
 
 bool NodeSelectorModel::addToLoadingList(const std::shared_ptr<mega::MegaNode> node)

@@ -65,10 +65,8 @@ public:
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes);
-
-private slots:
-    void onbNewFolderClicked();
-    void oncbAlwaysUploadToLocationChanged(bool value);
+    void onRowsInserted();
+    void onRowsRemoved();
 
 signals:
     void okBtnClicked();
@@ -86,13 +84,20 @@ protected:
     SelectTypeSPtr getSelectType(){return mSelectType;}
     virtual void modelLoaded();
     virtual bool showEmptyView(){return true;}
+    virtual bool newNodeCanBeAdded(mega::MegaNode*){return true;}
+    virtual QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle);
 
     Ui::NodeSelectorTreeViewWidget *ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
     std::unique_ptr<NodeSelectorModel> mModel;
     Navigation mNavigationInfo;
 
+protected slots:
+    virtual bool containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *parentNode);
+
 private slots:
+    void onbNewFolderClicked();
+    void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onDeleteClicked();
     void onRenameClicked();
@@ -101,12 +106,10 @@ private slots:
     void onGoForwardClicked();
     void onGoBackClicked();
     void onSectionResized();
-    void onRowsInserted();
     void onExpandReady();
     void setLoadingSceneVisible(bool visible);
-    void onUiBlocked(bool state);    
+    void onUiBlocked(bool state);
     void processCachedNodesUpdated();
-    bool containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *parentNode);
     void removeItemByHandle(mega::MegaHandle handle);
 
 private:
@@ -130,6 +133,7 @@ private:
     virtual bool newFolderBtnVisibleInRoot(){return true;}
     virtual bool newFolderBtnCanBeVisisble(){return true;}
     void checkOkButton(const QModelIndexList& selected);
+    int areThereNodesToUpdate();
     ButtonIconManager mButtonIconManager;
 
     bool first;

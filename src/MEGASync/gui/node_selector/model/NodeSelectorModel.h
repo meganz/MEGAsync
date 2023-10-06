@@ -78,28 +78,31 @@ public slots:
     void createCloudDriveRootItem();
     void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
     void addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> node);
-    void deleteIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> node);
+    void addSearchRootItem(QList<std::shared_ptr<mega::MegaNode> > nodes, NodeSelectorModelItemSearch::Types typesAllowed);
     void createBackupRootItems(mega::MegaHandle backupsHandle);
+
+    void removeRootItem(NodeSelectorModelItem* item);
+    void removeRootItem(std::shared_ptr<mega::MegaNode> node);
 
     void onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem* parentItem);
     void onAddNodesRequested(QList<std::shared_ptr<mega::MegaNode>> newNodes, const QModelIndex& parentIndex, NodeSelectorModelItem *parentItem);
     void removeItem(NodeSelectorModelItem *item);
-    void removeRootItem(NodeSelectorModelItem* item);
     void abort();
 
 signals:
      void nodesReady(NodeSelectorModelItem* parent);
      void megaCloudDriveRootItemCreated();
      void megaIncomingSharesRootItemsCreated();
-     void megaIncomingSharesRootItemAdded(mega::MegaHandle handle);
-     void megaIncomingSharesRootItemDeleted(mega::MegaHandle handle);
+     void rootItemsAdded();
+     void rootItemsDeleted();
      void megaBackupRootItemsCreated();
-     void searchItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes);
+     void searchItemsCreated();
      void nodeAdded(NodeSelectorModelItem* item);
      void nodesAdded(QList<QPointer<NodeSelectorModelItem>> item);
 
 private:
      bool isAborted();
+    NodeSelectorModelItem* createSearchItem(mega::MegaNode* node, NodeSelectorModelItemSearch::Types typesAllowed);
 
      std::atomic<bool> mShowFiles{true};
      std::atomic<bool> mShowReadOnlyFolders{true};
@@ -140,8 +143,6 @@ public:
     explicit NodeSelectorModel(QObject *parent = 0);
     virtual ~NodeSelectorModel();
 
-    void updateModel(const QModelIndex& index);
-
     int columnCount(const QModelIndex & parent = QModelIndex()) const override;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const override;
@@ -157,7 +158,7 @@ public:
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
     void addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent);
-    void addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex &parent);
+    virtual void addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &index);
     void showFiles(bool show);
     void showReadOnlyFolders(bool show);
@@ -216,6 +217,10 @@ protected:
     mutable IndexesActionInfo mIndexesActionInfo;
     NodeRequester* mNodeRequesterWorker;
     QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;
+
+protected slots:
+    virtual void onRootItemAdded();
+    virtual void onRootItemDeleted();
 
 private slots:
     void onChildNodesReady(NodeSelectorModelItem *parent);

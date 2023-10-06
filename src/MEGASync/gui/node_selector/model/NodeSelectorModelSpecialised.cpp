@@ -133,16 +133,6 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
     return false;
 }
 
-void NodeSelectorModelIncomingShares::onRootItemAdded(mega::MegaHandle handle)
-{
-    endInsertingRows();
-}
-
-void NodeSelectorModelIncomingShares::onRootItemDeleted(mega::MegaHandle handle)
-{
-    endRemoveRows();
-}
-
 void NodeSelectorModelIncomingShares::onRootItemsCreated()
 {
     rootItemsLoaded();
@@ -183,10 +173,11 @@ void NodeSelectorModelIncomingShares::firstLoad()
 {
     connect(this, &NodeSelectorModelIncomingShares::requestIncomingSharesRootCreation, mNodeRequesterWorker, &NodeRequester::createIncomingSharesRootItems);
     connect(this, &NodeSelectorModelIncomingShares::addIncomingSharesRoot, mNodeRequesterWorker, &NodeRequester::addIncomingSharesRootItem);
-    connect(this, &NodeSelectorModelIncomingShares::deleteIncomingSharesRoot, mNodeRequesterWorker, &NodeRequester::deleteIncomingSharesRootItem);
+    connect(this, &NodeSelectorModelIncomingShares::deleteIncomingSharesRoot, this, [this](std::shared_ptr<mega::MegaNode> node)
+            {
+                mNodeRequesterWorker->removeRootItem(node);
+            });
     connect(mNodeRequesterWorker, &NodeRequester::megaIncomingSharesRootItemsCreated, this, &NodeSelectorModelIncomingShares::onRootItemsCreated, Qt::QueuedConnection);
-    connect(mNodeRequesterWorker, &NodeRequester::megaIncomingSharesRootItemAdded, this, &NodeSelectorModelIncomingShares::onRootItemAdded, Qt::QueuedConnection);
-    connect(mNodeRequesterWorker, &NodeRequester::megaIncomingSharesRootItemDeleted, this, &NodeSelectorModelIncomingShares::onRootItemDeleted, Qt::QueuedConnection);
 
     addRootItems();
 }
@@ -306,7 +297,7 @@ NodeSelectorModelSearch::NodeSelectorModelSearch(NodeSelectorModelItemSearch::Ty
     : NodeSelectorModel(parent),
       mAllowedTypes(allowedTypes)
 {
-
+    qRegisterMetaType<NodeSelectorModelItemSearch::Types>("NodeSelectorModelItemSearch::Types");
 }
 
 NodeSelectorModelSearch::~NodeSelectorModelSearch()
@@ -317,6 +308,11 @@ NodeSelectorModelSearch::~NodeSelectorModelSearch()
 void NodeSelectorModelSearch::firstLoad()
 {
     connect(this, &NodeSelectorModelSearch::searchNodes, mNodeRequesterWorker, &NodeRequester::search);
+    connect(this, &NodeSelectorModelSearch::requestAddSearchRootItem, mNodeRequesterWorker, &NodeRequester::addSearchRootItem);
+    connect(this, &NodeSelectorModelSearch::requestDeleteSearchRootItem, this, [this](std::shared_ptr<mega::MegaNode> node)
+            {
+                mNodeRequesterWorker->removeRootItem(node);
+            });
     connect(mNodeRequesterWorker, &NodeRequester::searchItemsCreated, this, &NodeSelectorModelSearch::onRootItemsCreated, Qt::QueuedConnection);
 }
 
@@ -382,16 +378,61 @@ QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
     return NodeSelectorModel::data(index, role);
 }
 
+void NodeSelectorModelSearch::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex &parent)
+{
+    clearIndexesNodeInfo();
+    auto totalRows = rowCount(parent);
+    beginInsertRows(QModelIndex(), totalRows, totalRows + nodes.size() - 1);
+    emit requestAddSearchRootItem(nodes, mAllowedTypes);
+}
+
+bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode *node)
+{
+    if(node->getChanges() & MegaNode::CHANGE_TYPE_INSHARE)
+    {
+        if(node->isInShare())
+        {
+            auto totalRows = rowCount(QModelIndex());
+            beginInsertRows(QModelIndex(), totalRows, totalRows);
+            QList<std::shared_ptr<mega::MegaNode>> nodes;
+            emit requestAddSearchRootItem(nodes << std::shared_ptr<mega::MegaNode>(node->copy()), mAllowedTypes);
+        }
+
+        return true;
+    }
+    else if(node->getParentHandle() == mega::INVALID_HANDLE && node->isFolder())
+    {
+        if(node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
+        {
+            auto index = findItemByNodeHandle(node->getHandle(), QModelIndex());
+            if(index.isValid())
+            {
+                beginRemoveRows(QModelIndex(), index.row(), index.row());
+                emit requestDeleteSearchRootItem(std::shared_ptr<mega::MegaNode>(node->copy()));
+                return true;
+            }
+        }
+
+        auto folderIndex = findItemByNodeHandle(node->getHandle(), QModelIndex());
+        if(folderIndex.isValid())
+        {
+            updateItemNode(folderIndex, std::shared_ptr<mega::MegaNode>(node->copy()));
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void NodeSelectorModelSearch::proxyInvalidateFinished()
 {
     mNodeRequesterWorker->lockSearchMutex(false);
 }
 
-void NodeSelectorModelSearch::onRootItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes)
+void NodeSelectorModelSearch::onRootItemsCreated()
 {
     if(mNodeRequesterWorker->trySearchLock())
     {
-        mSearchedTypes = searchedTypes;
         rootItemsLoaded();
         emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
     }
@@ -399,5 +440,5 @@ void NodeSelectorModelSearch::onRootItemsCreated(NodeSelectorModelItemSearch::Ty
 
 const NodeSelectorModelItemSearch::Types &NodeSelectorModelSearch::searchedTypes() const
 {
-    return mSearchedTypes;
+    return mNodeRequesterWorker->searchedTypes();
 }

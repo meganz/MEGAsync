@@ -356,8 +356,6 @@ NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::M
     : NodeSelectorModelItem(std::move(node), false, parentItem),
       mType(type)
 {
-    qRegisterMetaType<NodeSelectorModelItemSearch::Types>("NodeSelectorModelItemSearch::Types");
-
     if(mType & NodeSelectorModelItemSearch::Type::INCOMING_SHARE)
     {
         auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(mNode.get(), true));

@@ -56,8 +56,6 @@ signals:
 
 private slots:
     void onRootItemsCreated();
-    void onRootItemAdded(mega::MegaHandle handle);
-    void onRootItemDeleted(mega::MegaHandle handle);
 
 private:
     std::shared_ptr<mega::MegaNodeList> mSharedNodeList;
@@ -108,6 +106,8 @@ public:
     int rootItemsCount() const override;
     bool canFetchMore(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
+    void addNodes(QList<std::shared_ptr<mega::MegaNode> > nodes, const QModelIndex &parent) override;
+    bool rootNodeUpdated(mega::MegaNode*node) override;
 
     const NodeSelectorModelItemSearch::Types &searchedTypes() const;
 
@@ -116,13 +116,14 @@ protected:
 
 signals:
     void searchNodes(const QString& text, NodeSelectorModelItemSearch::Types);
+    void requestAddSearchRootItem(QList<std::shared_ptr<mega::MegaNode>> nodes, NodeSelectorModelItemSearch::Types typesAllowed);
+    void requestDeleteSearchRootItem(std::shared_ptr<mega::MegaNode> node);
 
 private slots:
-    void onRootItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes);
+    void onRootItemsCreated();
 
 private:
     NodeSelectorModelItemSearch::Types mAllowedTypes;
-    NodeSelectorModelItemSearch::Types mSearchedTypes;
 };
 
 #endif // NODESELECTORMODELSPECIALISED_H
