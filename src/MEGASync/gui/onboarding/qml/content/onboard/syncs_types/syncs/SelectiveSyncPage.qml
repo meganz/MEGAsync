@@ -47,7 +47,7 @@ SelectiveSyncPageForm {
                 return;
             }
 
-            if (!localFolder.createFolder(localFolderChooser.choosenPath)) {
+            if (localFolderChooser.choosenPath === localFolder.getDefaultFolder(syncsCpp.DEFAULT_MEGA_FOLDER) && !localFolder.createFolder(localFolderChooser.choosenPath)) {
                 localFolderChooser.folderField.error = true;
                 localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError;
                 localFolderChooser.folderField.hint.visible = true;
