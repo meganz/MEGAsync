@@ -16,6 +16,7 @@ class AccountInfoData : public QObject, public mega::MegaRequestListener
 
 public:
     enum AccountType {
+        ACCOUNT_TYPE_NOT_SET = -1,
         ACCOUNT_TYPE_FREE = 0,
         ACCOUNT_TYPE_PROI = 1,
         ACCOUNT_TYPE_PROII = 2,

@@ -26,7 +26,7 @@ FullSyncPageForm {
                 localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath;
                 localFolderChooser.folderField.hint.visible = true;
             }
-            else if (localFolder.createFolder(localFolderChooser.choosenPath)) {
+            else if (localFolderChooser.choosenPath !== localFolder.getDefaultFolder(syncsCpp.DEFAULT_MEGA_FOLDER) || localFolder.createFolder(localFolderChooser.choosenPath)) {
                 root.enabled = false;
                 footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
 
