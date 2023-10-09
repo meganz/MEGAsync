@@ -93,7 +93,8 @@ bool Syncs::helperCheckLocalSync(const QString& path, QString& errorMessage) con
     QDir openFromFolderDir(localFolderPath);
     if (!openFromFolderDir.exists())
     {
-        return true;
+        errorMessage = tr("The local path is unavaliable.");
+        return false;
     }
 
     auto syncability = SyncController::isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
