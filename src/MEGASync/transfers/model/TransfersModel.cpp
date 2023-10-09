@@ -1335,8 +1335,7 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
 std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
 {
     auto d (getTransfer(row));
-    auto copiedTransfer = std::shared_ptr<mega::MegaTransfer>(d->mFailedTransfer->copy());
-    return d->getNodeBasedOnEvaluation(copiedTransfer);
+    return d->getNode();
 }
 
 //Returns the node if the parent node does not exist
@@ -1461,7 +1460,7 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
 
                 if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
                 {
-                    std::unique_ptr<mega::MegaNode> node = getTransferByTag(failedTransfer->getTag())->getNodeBasedOnEvaluation(failedTransfer);
+                    std::unique_ptr<mega::MegaNode> node = getTransferByTag(failedTransfer->getTag())->getNode();
                     mMegaApi->startDownload(node.get(), failedTransfer->getPath(),
                                             failedTransfer->getFileName(), appDataRaw,
                                             false, nullptr,
