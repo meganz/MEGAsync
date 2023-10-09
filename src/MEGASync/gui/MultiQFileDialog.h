@@ -2,33 +2,24 @@
 #define MULTIQFILEDIALOG_H
 
 #include <QFileDialog>
-#include <QListView>
-#include <QTreeView>
 #include <QLineEdit>
-#include <QLabel>
 #include <QPushButton>
-#include <QDialogButtonBox>
+#include <QKeyEvent>
 
 class MultiQFileDialog : public QFileDialog
 {
     Q_OBJECT
 public:
-    MultiQFileDialog(QWidget* parent = 0, const QString& caption = QString(),
+    MultiQFileDialog(QWidget* parent = nullptr, const QString& caption = QString(),
                   const QString& directory = QString(),
                   bool mMultiSelect = true,
                   const QString& filter = QString());
 
 public slots:
-    void accept();
+    void accept() override;
 
 protected:
-    QLineEdit* mLe;
-    QPushButton* mBOpen;
-    bool mShowHidden;
-    bool mMultiSelect;
-    bool mEnableOkButton;
-
-    bool eventFilter(QObject* obj, QEvent* e);
+    bool eventFilter(QObject* obj, QEvent* e) override;
 
 private:
     void findSelectedFilesAndFoldersCount(int& fileCount, int& folderCount);
@@ -40,6 +31,11 @@ private:
     bool onEnabledChangeEvent();
     void onHoverEnterEvent();
 
+    QLineEdit* mLe;
+    QPushButton* mBOpen;
+    bool mShowHidden;
+    bool mMultiSelect;
+    bool mEnableOkButton;
     bool isSelectionOverLimit = false;
 
 private slots:

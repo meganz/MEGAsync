@@ -15,7 +15,7 @@ LockedPopOver::LockedPopOver(QDialog *) :
 {
     ui->setupUi(this);
     tweakStrings();
-    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 }
 
 

@@ -4749,8 +4749,12 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
         return;
     }
 
-    //Append the list of files to the upload queue
-    uploadQueue.append(newUploadQueue);
+    //Append the list of files to the upload queue, but avoid duplicates
+    std::for_each(newUploadQueue.begin(), newUploadQueue.end(), [&](const QString &str) {
+        if (!uploadQueue.contains(str)) {
+            uploadQueue.enqueue(str);
+        }
+    });
     processUploads();
 }
 
@@ -6036,7 +6040,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-
         auto flags = request->getNumDetails();
         bool storage  = flags & 0x01;
         bool transfer = flags & 0x02;
