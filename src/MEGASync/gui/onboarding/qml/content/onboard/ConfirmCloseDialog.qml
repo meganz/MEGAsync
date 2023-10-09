@@ -27,6 +27,7 @@ Window {
     width: 560
     height: 284
     color: Styles.surface1
+    title: "MEGA"
 
     RowLayout{
         id: rowLayout
