@@ -85,9 +85,8 @@ Item {
                             case AccountInfoData.ACCOUNT_TYPE_LITE:
                                 return OnboardingStrings.accountTypeLite;
                             case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
-                                return OnboardingStrings.accountTypeBusiness;
                             case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
-                                return OnboardingStrings.accountTypeProFlexi;
+                                return "";
                             default:
                                 break;
                         }
