@@ -33,6 +33,7 @@ Item {
         RowLayout {
             anchors.fill: parent
             spacing: 0
+            visible: accountInfo.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
 
             RowLayout {
                 Layout.alignment: Qt.AlignLeft
@@ -62,6 +63,8 @@ Item {
                                 break;
                         }
                     }
+                    height: 16
+                    width: 16
                     sourceSize: Qt.size(16, 16)
                     opacity: enabled ? 1.0 : 0.2
                 }
@@ -85,8 +88,9 @@ Item {
                             case AccountInfoData.ACCOUNT_TYPE_LITE:
                                 return OnboardingStrings.accountTypeLite;
                             case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
+                                return OnboardingStrings.accountTypeBusiness;
                             case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
-                                return "";
+                                return OnboardingStrings.accountTypeProFlexi
                             default:
                                 break;
                         }
@@ -98,6 +102,9 @@ Item {
             RowLayout {
                 Layout.alignment: Qt.AlignRight
                 Layout.rightMargin: 24
+                visible: accountInfo.type !== AccountInfoData.ACCOUNT_TYPE_BUSINESS
+                         && accountInfo.type !== AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI
+                         && accountInfo.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
 
                 MegaTexts.Text {
                     text: accountInfo.newUser
