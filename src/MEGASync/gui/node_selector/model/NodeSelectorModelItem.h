@@ -52,7 +52,7 @@ public:
     virtual bool isVault();
     bool isCloudDrive() const;
     QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
-    QList<QPointer<NodeSelectorModelItem>> NodeSelectorModelItem::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes);
+    QList<QPointer<NodeSelectorModelItem>> addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes);
     QPointer<NodeSelectorModelItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
     void displayFiles(bool enable);
     void setChatFilesFolder();
