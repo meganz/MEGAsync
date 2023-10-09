@@ -18,7 +18,6 @@ NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :
 
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &NodeSelectorProxyModel::onModelSortedFiltered);
-
 }
 
 NodeSelectorProxyModel::~NodeSelectorProxyModel()
@@ -128,6 +127,14 @@ void NodeSelectorProxyModel::addNode(std::unique_ptr<mega::MegaNode> node, const
     }
 }
 
+void NodeSelectorProxyModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex &parent)
+{
+    if(NodeSelectorModel* megaModel = getMegaModel())
+    {
+        megaModel->addNodes(nodes, mapToSource(parent));
+    }
+}
+
 void NodeSelectorProxyModel::removeNode(const QModelIndex& item)
 {
     if(NodeSelectorModel* megaModel = getMegaModel())
@@ -141,37 +148,52 @@ bool NodeSelectorProxyModel::lessThan(const QModelIndex &left, const QModelIndex
     bool lIsFile = left.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
     bool rIsFile = right.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
 
+    auto result(false);
+
     if(lIsFile && !rIsFile)
     {
-        return sortOrder() == Qt::DescendingOrder;
+        result = sortOrder() == Qt::DescendingOrder;
     }
     else if(!lIsFile && rIsFile)
     {
-        return sortOrder() != Qt::DescendingOrder;
+        result = sortOrder() != Qt::DescendingOrder;
+    }
+    else
+    {
+        if(left.column() == NodeSelectorModel::DATE && right.column() == NodeSelectorModel::DATE)
+        {
+            result = left.data(toInt(NodeSelectorModelRoles::DATE_ROLE)) < right.data(toInt(NodeSelectorModelRoles::DATE_ROLE));
+        }
+        else
+        {
+            int lStatus(0);
+            int rStatus(0);
+
+            if(left.column() == NodeSelectorModel::STATUS && right.column() == NodeSelectorModel::STATUS)
+            {
+                lStatus = left.data(toInt(NodeSelectorModelRoles::STATUS_ROLE)).toInt();
+                rStatus = right.data(toInt(NodeSelectorModelRoles::STATUS_ROLE)).toInt();
+            }
+
+            if(lStatus != rStatus)
+            {
+                result = lStatus < rStatus;
+            }
+            else if(left.column() == NodeSelectorModel::USER && right.column() == NodeSelectorModel::USER)
+            {
+                result = mCollator.compare(left.data(Qt::ToolTipRole).toString(),
+                                           right.data(Qt::ToolTipRole).toString()) < 0;
+            }
+            else
+            {
+                result = mCollator.compare(left.data(Qt::DisplayRole).toString(),
+                                           right.data(Qt::DisplayRole).toString())<0;
+            }
+        }
+
     }
 
-    if(left.column() == NodeSelectorModel::DATE && right.column() == NodeSelectorModel::DATE)
-    {
-        return left.data(toInt(NodeSelectorModelRoles::DATE_ROLE)) < right.data(toInt(NodeSelectorModelRoles::DATE_ROLE));
-    }
-    if(left.column() == NodeSelectorModel::STATUS && right.column() == NodeSelectorModel::STATUS)
-    {
-      int lStatus = left.data(toInt(NodeSelectorModelRoles::STATUS_ROLE)).toInt();
-      int rStatus = right.data(toInt(NodeSelectorModelRoles::STATUS_ROLE)).toInt();
-      if(lStatus != rStatus)
-      {
-        return lStatus < rStatus;
-      }
-    }
-    if(left.column() == NodeSelectorModel::USER && right.column() == NodeSelectorModel::USER)
-    {
-        return mCollator.compare(left.data(Qt::ToolTipRole).toString(),
-                                 right.data(Qt::ToolTipRole).toString()) < 0;
-    }
-
-
-    return mCollator.compare(left.data(Qt::DisplayRole).toString(),
-                             right.data(Qt::DisplayRole).toString())<0;
+    return result;
 }
 
 void NodeSelectorProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
@@ -256,9 +278,13 @@ bool NodeSelectorProxyModel::canBeDeleted() const
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
 }
 
-void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents, bool force)
+void NodeSelectorProxyModel::invalidateModel(const QList<QPair<mega::MegaHandle,QModelIndex>>& parents, bool force)
 {
-    mItemsToMap = parents;
+    mItemsToMap.clear();
+    foreach(auto parent, parents)
+    {
+        mItemsToMap.append(parent.second);
+    }
     mForceInvalidate = force;
     sort(mSortColumn, mOrder);
 }
@@ -295,7 +321,7 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
 }
 
 NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
-    : NodeSelectorProxyModel(parent), mMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE)
+    : NodeSelectorProxyModel(parent), mMode(NodeSelectorModelItemSearch::Type::NONE)
 {
 
 }
@@ -324,6 +350,11 @@ bool NodeSelectorProxyModelSearch::canBeDeleted() const
 
 bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
+    if(mMode == static_cast<int>(NodeSelectorModelItemSearch::Type::NONE))
+    {
+        return true;
+    }
+
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     if(index.isValid())

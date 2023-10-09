@@ -2,7 +2,7 @@
 #define NODESELECTORTREEVIEWWIDGET_H
 
 #include "ButtonIconManager.h"
-#include "QTMegaRequestListener.h"
+#include "QTMegaListener.h"
 #include <megaapi.h>
 #include "../model/NodeSelectorModelItem.h"
 #include <ViewLoadingScene.h>
@@ -23,8 +23,7 @@ namespace Ui {
 class NodeSelectorTreeViewWidget;
 }
 
-
-class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaRequestListener
+class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaListener
 {
     Q_OBJECT
 
@@ -59,15 +58,15 @@ public:
     void setSearchText(const QString& text);
     void setTitleText(const QString& nodeName);
     void clearSearchText();
+    void clearSelection();
     void abort();
     NodeSelectorProxyModel* getProxyModel();
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-
-private slots:
-    void onbNewFolderClicked();
-    void oncbAlwaysUploadToLocationChanged(bool value);
+    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes);
+    void onRowsInserted();
+    void onRowsRemoved();
 
 signals:
     void okBtnClicked();
@@ -80,17 +79,25 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;
     void setTitle(const QString& title);
+    void selectionChanged(const QModelIndexList &selected);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     SelectTypeSPtr getSelectType(){return mSelectType;}
     virtual void modelLoaded();
     virtual bool showEmptyView(){return true;}
+    virtual bool newNodeCanBeAdded(mega::MegaNode*){return true;}
+    virtual QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle);
 
     Ui::NodeSelectorTreeViewWidget *ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
     std::unique_ptr<NodeSelectorModel> mModel;
     Navigation mNavigationInfo;
 
+protected slots:
+    virtual bool containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *parentNode);
+
 private slots:
+    void onbNewFolderClicked();
+    void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onDeleteClicked();
     void onRenameClicked();
@@ -99,16 +106,17 @@ private slots:
     void onGoForwardClicked();
     void onGoBackClicked();
     void onSectionResized();
-    void onRowsInserted();
     void onExpandReady();
     void setLoadingSceneVisible(bool visible);
     void onUiBlocked(bool state);
+    void processCachedNodesUpdated();
+    void removeItemByHandle(mega::MegaHandle handle);
 
 private:
 
     mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::unique_ptr<mega::QTMegaListener> mDelegateListener;
 
     virtual bool isAllowedToEnterInIndex(const QModelIndex &idx);
     QModelIndex getSelectedIndex();
@@ -125,16 +133,32 @@ private:
     virtual bool newFolderBtnVisibleInRoot(){return true;}
     virtual bool newFolderBtnCanBeVisisble(){return true;}
     void checkOkButton(const QModelIndexList& selected);
+    int areThereNodesToUpdate();
     ButtonIconManager mButtonIconManager;
 
     bool first;
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
     SelectTypeSPtr mSelectType;
+    struct UpdateNodesInfo
+    {
+      mega::MegaHandle previousHandle = mega::INVALID_HANDLE;
+      mega::MegaHandle parentHandle = mega::INVALID_HANDLE;
+      std::shared_ptr<mega::MegaNode> node;
+    };
+
+    QList<UpdateNodesInfo> mRenamedNodesByHandle;
+    QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
+    QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
+    QList<mega::MegaHandle> mRemovedNodesByHandle;
+    QList<mega::MegaHandle> mMovedNodesByHandle;
+    QTimer mNodesUpdateTimer;
+    mega::MegaHandle mNewFolderAdded;
     friend class DownloadType;
     friend class SyncType;
     friend class UploadType;
     friend class StreamType;
+    friend class CloudDriveType;
 };
 
 class SelectType
