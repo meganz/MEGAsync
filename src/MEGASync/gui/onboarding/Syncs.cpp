@@ -91,7 +91,7 @@ bool Syncs::helperCheckLocalSync(const QString& path, QString& errorMessage) con
 
     auto localFolderPath = QDir::toNativeSeparators(path);
     QDir openFromFolderDir(localFolderPath);
-    if (!openFromFolderDir.exists())
+    if (!openFromFolderDir.exists() )
     {
         errorMessage = tr("The local path is unavaliable.");
         return false;
@@ -144,8 +144,22 @@ bool Syncs::helperCheckRemoteSync(const QString& path, QString& errorMessage) co
 
 bool Syncs::checkLocalSync(const QString &path) const
 {
-    QString error;
-    return helperCheckLocalSync(path, error);
+    if (path.isEmpty())
+    {
+        return false;
+    }
+
+    auto localFolderPath = QDir::toNativeSeparators(path);
+    QDir openFromFolderDir(localFolderPath);
+    if (!openFromFolderDir.exists())
+    {
+        return true;
+    }
+
+    QString errorMessage;
+    auto syncability = SyncController::isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
+
+    return (syncability != SyncController::CANT_SYNC);
 }
 
 bool Syncs::checkRemoteSync(const QString &path) const
