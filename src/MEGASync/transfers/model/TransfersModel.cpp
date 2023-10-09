@@ -897,9 +897,7 @@ const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeDow
 {
     QExplicitlySharedDataPointer<const TransferData> foundTransfer;
 
-    mDataMutex.lockForRead();
-    auto transfers = mTransfers;
-    mDataMutex.unlock();
+    auto transfers = getTransfersToIterate();
 
     foreach(auto transfer, transfers)
     {
@@ -921,9 +919,7 @@ const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeUpl
 {
     QExplicitlySharedDataPointer<const TransferData> foundTransfer;
 
-    mDataMutex.lockForRead();
-    auto transfers = mTransfers;
-    mDataMutex.unlock();
+    auto transfers = getTransfersToIterate();
 
     foreach(auto transfer, transfers)
     {
@@ -2200,9 +2196,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
 
     QMutexLocker lock(&mModelMutex);
 
-    mDataMutex.lockForRead();
-    auto transfersCopied = mTransfers;
-    mDataMutex.unlock();
+    auto transfers = getTransfersToIterate();
 
     if (mAreAllPaused)
     {
@@ -2211,7 +2205,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
 
         EventUpdater updater(activeTransfers, 200);
 
-        std::for_each(transfersCopied.crbegin(), transfersCopied.crend(), [this, &tagsUpdated, updater, useEventUpdater](QExplicitlySharedDataPointer<TransferData> item)
+        std::for_each(transfers.crbegin(), transfers.crend(), [this, &tagsUpdated, updater, useEventUpdater](QExplicitlySharedDataPointer<TransferData> item)
                       mutable {
 
             if(item->getState() & TransferData::PAUSABLE_STATES_MASK)
@@ -2230,7 +2224,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
     {
         EventUpdater updater(activeTransfers, 200);
 
-        std::for_each(transfersCopied.cbegin(), transfersCopied.cend(), [this, &tagsUpdated, updater, useEventUpdater](QExplicitlySharedDataPointer<TransferData> item)
+        std::for_each(transfers.cbegin(), transfers.cend(), [this, &tagsUpdated, updater, useEventUpdater](QExplicitlySharedDataPointer<TransferData> item)
                       mutable {
 
             if(item->getState() & TransferData::TRANSFER_PAUSED)
@@ -2469,6 +2463,14 @@ void TransfersModel::restoreTagsByRow()
             mTagByOrder.insert(transfer->mTag, QPersistentModelIndex(index(row,0)));
         }
     }
+}
+
+QList<QExplicitlySharedDataPointer<TransferData> > TransfersModel::getTransfersToIterate() const
+{
+    mDataMutex.lockForRead();
+    auto transfers = mTransfers;
+    mDataMutex.unlock();
+    return transfers;
 }
 
 bool TransfersModel::isUiBlockedModeActive() const

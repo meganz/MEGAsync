@@ -347,6 +347,7 @@ private:
     void removeTransfer(int row);
     void sendDataChanged(int row);
     void restoreTagsByRow();
+    QList<QExplicitlySharedDataPointer<TransferData>> getTransfersToIterate() const;
 
     void retryTransfers(const QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>>& transfersToRetry);
 
