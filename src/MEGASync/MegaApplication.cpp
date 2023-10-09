@@ -6188,8 +6188,8 @@ void MegaApplication::createInfoDialogMenus()
 
     infoDialogMenu->addAction(myCloudAction);
     infoDialogMenu->addSeparator();
-    infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
-    infoDialogMenu->addAction(mBackupsMenu->getAction());
+    if (mSyncs2waysMenu) infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
+    if (mBackupsMenu) infoDialogMenu->addAction(mBackupsMenu->getAction());
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);

@@ -263,7 +263,7 @@ protected:
  private:
     void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
     static double computeRatio(long long completed, long long remaining);
-    void enableUserActions(bool value);
+    void enableUserActions(bool newState);
     void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
                            bool animate = true);
     void setupSyncController();
