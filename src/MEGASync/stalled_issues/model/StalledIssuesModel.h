@@ -12,8 +12,6 @@
 #include <QAbstractItemModel>
 #include <QTimer>
 #include <QPointer>
-#include <QFileSystemWatcher>
-
 class LoadingSceneMessageHandler;
 class NameConflictedStalledIssue;
 
@@ -157,7 +155,6 @@ protected slots:
 private slots:
     void onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived);
     void onSendEvent();
-    void onLocalFileModified(const QString&);
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
@@ -206,8 +203,6 @@ private:
     std::atomic_bool mSolvingIssues {false};
     std::atomic_bool mIssuesSolved {false};
     std::atomic_bool mSolvingIssuesStopped {false};
-
-    QMap<int, std::shared_ptr<QFileSystemWatcher>> mLocalFileWatchersByRow;
 
     //SyncDisable for backups
     QList<std::shared_ptr<SyncSettings>> mSyncsToDisable;

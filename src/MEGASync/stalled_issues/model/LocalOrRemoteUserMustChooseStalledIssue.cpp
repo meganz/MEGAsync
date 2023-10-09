@@ -12,6 +12,11 @@ LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue
 {
 }
 
+LocalOrRemoteUserMustChooseStalledIssue::~LocalOrRemoteUserMustChooseStalledIssue()
+{
+    mUploader->deleteLater();
+}
+
 bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
     if(isSolvable())
@@ -38,6 +43,11 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
     {
         chooseRemoteSide();
     }
+}
+
+bool LocalOrRemoteUserMustChooseStalledIssue::UIShowFileAttributes() const
+{
+    return true;
 }
 
 bool LocalOrRemoteUserMustChooseStalledIssue::isSolvable() const

@@ -10,6 +10,7 @@ class LocalOrRemoteUserMustChooseStalledIssue : public StalledIssue
 {
 public:
     LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue);
+    ~LocalOrRemoteUserMustChooseStalledIssue();
 
     bool autoSolveIssue() override;
     bool isSolvable() const;
@@ -20,6 +21,8 @@ public:
     void chooseLocalSide();
     void chooseRemoteSide();
     void chooseLastMTimeSide();
+
+    bool UIShowFileAttributes() const override;
 
     enum class ChosenSide
     {

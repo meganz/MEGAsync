@@ -413,9 +413,8 @@ public:
     };
     Q_DECLARE_FLAGS(ActionsSelected, ActionSelected)
 
-    NameConflictedStalledIssue(){}
-    NameConflictedStalledIssue(const NameConflictedStalledIssue& tdr);
     NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue);
+    ~NameConflictedStalledIssue(){}
 
     void fillIssue(const mega::MegaSyncStall *stall) override;
 
@@ -445,6 +444,11 @@ public:
     void updateIssue(const mega::MegaSyncStall *stallIssue) override;
 
     QStringList getLocalFiles() override;
+
+    bool UIShowFileAttributes() const override
+    {
+        return true;
+    }
 
 private:
     bool checkAndSolveConflictedNamesSolved(bool isPotentiallySolved = false);
@@ -481,7 +485,5 @@ private:
     };
     LastNodeModified mLastModifiedNode;
 };
-
-Q_DECLARE_METATYPE(NameConflictedStalledIssue)
 
 #endif // NAMECONFLICTSTALLEDISSUE_H

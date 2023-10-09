@@ -284,23 +284,14 @@ void StalledIssuesModel::onSendEvent()
     }
 }
 
-void StalledIssuesModel::onLocalFileModified(const QString &)
-{
-    if(!mSolvingIssues)
-    {
-        auto row = sender()->property(FILEWATCHER_ROW).toUInt();
-        StalledIssueVariant issue(getStalledIssueByRow(row));
-        if(issue.consultData())
-        {
-            issue.getData()->resetUIUpdated();
-        }
-    }
-}
-
 StalledIssueVariant StalledIssuesModel::getStalledIssueByRow(int row) const
 {
+    StalledIssueVariant issue;
     mModelMutex.lockForRead();
-    auto issue = mStalledIssues.at(row);
+    if(mStalledIssues.size() > row)
+    {
+        issue = mStalledIssues.at(row);
+    }
     mModelMutex.unlock();
     return issue;
 }
@@ -615,40 +606,30 @@ bool StalledIssuesModel::isRawInfoVisible() const
 
 void StalledIssuesModel::UiItemUpdate(const QModelIndex &oldIndex, const QModelIndex &newIndex)
 {
-    if(oldIndex.isValid() && oldIndex != newIndex)
+    if(oldIndex.isValid() &&
+       oldIndex != newIndex)
     {
-        auto oldType = oldIndex.parent().isValid() ? StalledIssue::Type::Body : StalledIssue::Type::Header;
-        auto row(oldType == StalledIssue::Type::Body ?
-                 oldIndex.parent().row() :
-                 oldIndex.row());
+        auto newType = newIndex.parent().isValid() ? StalledIssue::Type::Body : StalledIssue::Type::Header;
+        auto row(newType == StalledIssue::Type::Body ? oldIndex.parent().row() :
+                                                       oldIndex.row());
         auto oldIssue(getStalledIssueByRow(row));
         oldIssue.getData()->resetUIUpdated();
-        mLocalFileWatchersByRow.remove(row);
+
+        oldIssue.getData()->removeFileWatcher();
     }
 
-    auto newType = newIndex.parent().isValid() ? StalledIssue::Type::Body : StalledIssue::Type::Header;
-    auto row(newType == StalledIssue::Type::Body ?
-             newIndex.parent().row() :
-             newIndex.row());
-    auto newIssue(getStalledIssueByRow(row));
-    newIssue.getData()->UIUpdated(newType);
-    auto newIssueFiles = newIssue.getData()->getLocalFiles();
-    if(!newIssueFiles.isEmpty() && !mLocalFileWatchersByRow.contains(row))
+    if(newIndex.parent().isValid())
     {
-        auto deleter = [](QFileSystemWatcher* object){
-            object->deleteLater();
-          };
-        std::shared_ptr<QFileSystemWatcher> fileWatcher(new QFileSystemWatcher(newIssueFiles), deleter);
-        fileWatcher->setProperty(FILEWATCHER_ROW, row);
-        mLocalFileWatchersByRow.insert(row, fileWatcher);
-        connect(fileWatcher.get(), &QFileSystemWatcher::fileChanged, this, &StalledIssuesModel::onLocalFileModified);
+        auto row(newIndex.parent().row());
+        auto newIssue(getStalledIssueByRow(row));
+        auto newType = newIndex.parent().isValid() ? StalledIssue::Type::Body : StalledIssue::Type::Header;
+        newIssue.getData()->UIUpdated(newType);
+        newIssue.getData()->createFileWatcher();
     }
 }
 
 void StalledIssuesModel::reset()
 {
-    mLocalFileWatchersByRow.clear();
-
     beginResetModel();
 
     lockModelMutex(true);

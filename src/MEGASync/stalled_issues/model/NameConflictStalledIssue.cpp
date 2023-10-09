@@ -4,17 +4,9 @@
 #include "Utilities.h"
 #include "AppStatsEvents.h"
 
-//Name conflict Stalled Issue
-NameConflictedStalledIssue::NameConflictedStalledIssue(const NameConflictedStalledIssue &tdr)
-    : StalledIssue(tdr)
-{
-    qRegisterMetaType<NameConflictedStalledIssue>("NameConflictedStalledIssue");
-}
-
 NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue)
-{
-}
+{}
 
 void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {

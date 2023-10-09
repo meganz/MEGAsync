@@ -11,8 +11,6 @@ StalledIssueData::StalledIssueData(std::unique_ptr<mega::MegaSyncStall> original
     qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
     qRegisterMetaType<StalledIssuesDataList>("StalledIssuesDataList");
 
-    qRegisterMetaType<StalledIssue>("StalledIssue");
-
     qRegisterMetaType<StalledIssueVariant>("StalledIssueVariant");
     qRegisterMetaType<StalledIssuesVariantList>("StalledIssuesVariantList");
 }
@@ -192,7 +190,7 @@ void CloudStalledIssueData::setPathHandle(mega::MegaHandle newPathHandle)
 /// \param stallIssue
 ///
 StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
-    //:mHeaderDelegateSize(QSize(60,60))
+    : mFileSystemWatcher(new FileSystemSignalHandler(this))
 {
     originalStall.reset(stallIssue->copy());
 }
@@ -620,14 +618,38 @@ void StalledIssue::UIUpdated(Type type)
             mNeedsUIUpdate.first = false;
             break;
         case Type::Body:
+        {
             mNeedsUIUpdate.second = false;
             break;
+        }
     }
 }
 
 void StalledIssue::resetUIUpdated()
 {
     mNeedsUIUpdate = qMakePair(true, true);
+}
+
+//By default, stalled issues don't show file attributes (size, time modified)...´
+bool StalledIssue::UIShowFileAttributes() const
+{
+    return false;
+}
+
+void StalledIssue::createFileWatcher()
+{
+    if(UIShowFileAttributes())
+    {
+        mFileSystemWatcher->createFileWatcher();
+    }
+}
+
+void StalledIssue::removeFileWatcher()
+{
+    if(UIShowFileAttributes())
+    {
+        mFileSystemWatcher->removeFileWatcher();
+    }
 }
 
 mega::MegaSyncStall::SyncStallReason StalledIssue::getReason() const

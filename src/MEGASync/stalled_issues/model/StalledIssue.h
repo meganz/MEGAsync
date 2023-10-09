@@ -11,6 +11,8 @@
 #include <QSize>
 #include <QDebug>
 
+#include <QFileSystemWatcher>
+
 #include <memory>
 
 enum class StalledIssueFilterCriterion
@@ -238,10 +240,54 @@ class DownloadTransferInfo;
 
 class StalledIssue
 {
+    class FileSystemSignalHandler : public QObject
+    {
+    public:
+        FileSystemSignalHandler(StalledIssue* issue)
+            :mIssue(issue)
+        {}
+
+        ~FileSystemSignalHandler()
+        {}
+
+        void createFileWatcher()
+        {
+            if(!mFileWatcher)
+            {
+                auto deleter = [](QFileSystemWatcher* object){
+                    object->deleteLater();
+                };
+
+                mFileWatcher = std::shared_ptr<QFileSystemWatcher>(new QFileSystemWatcher(mIssue->getLocalFiles()), deleter);
+                connect(mFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, [this](const QString&){
+                    mIssue->resetUIUpdated();
+#ifdef Q_OS_LINUX
+                    auto paths = mIssue->getLocalFiles();
+                    foreach(auto& path, paths)
+                    {
+                        if (QFile::exists(path))
+                        {
+                            mFileWatcher->addPath(path);
+                        }
+                    }
+#endif
+                });
+            }
+        }
+
+        void removeFileWatcher()
+        {
+            mFileWatcher.reset();
+        }
+
+    private:
+        StalledIssue* mIssue;
+        std::shared_ptr<QFileSystemWatcher> mFileWatcher;
+    };
+
 public:
-    StalledIssue(){}
-    //StalledIssue(const StalledIssue& tdr) : mDetectedMEGASide(tdr.mDetectedMEGASide), mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved)  {}
     StalledIssue(const mega::MegaSyncStall *stallIssue);
+    virtual ~StalledIssue(){}
 
     const LocalStalledIssueDataPtr consultLocalData() const;
     const CloudStalledIssueDataPtr consultCloudData() const;
@@ -254,8 +300,6 @@ public:
     virtual void updateName(){}
 
     virtual bool checkForExternalChanges();
-
-    virtual QStringList getLocalFiles();
 
     mega::MegaSyncStall::SyncStallReason getReason() const;
     QString getFileName(bool preferCloud) const;
@@ -282,6 +326,7 @@ public:
     bool isSymLink() const;
     bool missingFingerprint() const;
     bool canBeIgnored() const;
+    virtual QStringList getLocalFiles();
     QStringList getIgnoredFiles() const;
 
     bool isUndecrypted() const;
@@ -318,6 +363,9 @@ public:
     bool needsUIUpdate(Type type) const;
     void UIUpdated(Type type);
     void resetUIUpdated();
+    virtual bool UIShowFileAttributes() const;
+    void createFileWatcher();
+    void removeFileWatcher();
 
     QList<mega::MegaHandle> syncIds() const;
     //In case there are two syncs, use the first one
@@ -344,9 +392,8 @@ protected:
     QSize mHeaderDelegateSize;
     QSize mBodyDelegateSize;
     QPair<bool, bool> mNeedsUIUpdate = qMakePair(false, false);
+    std::shared_ptr<FileSystemSignalHandler> mFileSystemWatcher;
 };
-
-Q_DECLARE_METATYPE(StalledIssue)
 
 class StalledIssueVariant
 {
