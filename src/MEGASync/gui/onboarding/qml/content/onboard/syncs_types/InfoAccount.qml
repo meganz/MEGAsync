@@ -65,7 +65,7 @@ Item {
                     }
                     height: 16
                     width: 16
-                    sourceSize: Qt.size(16, 16)
+                    sourceSize: Qt.size(width, height)
                     opacity: enabled ? 1.0 : 0.2
                 }
 
