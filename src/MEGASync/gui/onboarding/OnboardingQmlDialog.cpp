@@ -1,6 +1,7 @@
 #include "OnboardingQmlDialog.h"
 #include "MegaApplication.h"
 #include "mega/types.h"
+#include "LoginController.h"
 
 #include <QEvent>
 #include <QScreen>
@@ -59,6 +60,10 @@ bool OnboardingQmlDialog::event(QEvent *evnt)
             emit closingButCreatingAccount();
             evnt->ignore();
             return true;
+        }
+        else
+        {
+            MegaSyncApp->getLoginController()->processOnboardingClosed();
         }
     }
     return QmlDialog::event(evnt);
