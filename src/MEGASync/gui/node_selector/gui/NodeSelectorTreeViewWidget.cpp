@@ -427,7 +427,14 @@ bool NodeSelectorTreeViewWidget::isAllowedToEnterInIndex(const QModelIndex &idx)
 void NodeSelectorTreeViewWidget::onItemDoubleClick(const QModelIndex &index)
 {
     if(!isAllowedToEnterInIndex(index))
+    {
+        auto item = mModel->getItemByIndex(index);
+        if(item && item->getNode()->isFile())
+        {
+            MegaSyncApp->downloadACtionClickedWithHandles(QList<mega::MegaHandle>() << item->getNode()->getHandle());
+        }
         return;
+    }
 
     mNavigationInfo.appendToBackward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
     mNavigationInfo.removeFromForward(mProxyModel->getHandle(index));
