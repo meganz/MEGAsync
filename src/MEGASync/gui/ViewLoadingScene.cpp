@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QKeyEvent>
 
+#include <memory>
+
 
 ViewLoadingSceneBase::ViewLoadingSceneBase() :
     mDelayTimeToShowInMs(0),
@@ -57,6 +59,7 @@ void ViewLoadingSceneBase::onDelayTimerToShowTimeout()
 {
     ui->LoadingViewContainer->setCurrentIndex(0);
     showLoadingScene();
+    mMessageHandler->setLoadingViewVisible(true);
 }
 
 void ViewLoadingSceneBase::showViewCopy()
@@ -72,12 +75,13 @@ void ViewLoadingSceneBase::showLoadingScene()
 
 LoadingSceneMessageHandler::LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI *viewBaseUI, QWidget* viewBase)
     : ui(viewBaseUI),
-      mViewBase(viewBase),
-      mTopParent(nullptr),
-      mFadeOutWidget(nullptr),
-      QObject(viewBase)
+    mViewBase(viewBase),
+    mTopParent(nullptr),
+    mFadeOutWidget(nullptr),
+    QObject(viewBase)
 {
     qRegisterMetaType<MessageInfo>("MessageInfo");
+    qRegisterMetaType<std::shared_ptr<MessageInfo>>("std::shared_ptr<MessageInfo>");
 
     mViewBase->installEventFilter(this);
 }
@@ -89,8 +93,9 @@ LoadingSceneMessageHandler::~LoadingSceneMessageHandler()
 
 void LoadingSceneMessageHandler::hideLoadingMessage()
 {
-    updateMessage(MessageInfo());
+    updateMessage(nullptr);
     sendLoadingMessageVisibilityChange(false);
+    mLoadingViewVisible = false;
 }
 
 void LoadingSceneMessageHandler::setTopParent(QWidget *widget)
@@ -100,39 +105,46 @@ void LoadingSceneMessageHandler::setTopParent(QWidget *widget)
     mTopParent->installEventFilter(this);
 }
 
-void LoadingSceneMessageHandler::updateMessage(const MessageInfo &info)
+void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info)
 {
-    if(info.message.isEmpty() && ui->MessageContainer->isVisible())
+    if(!info && ui->MessageContainer->isVisible())
     {
         sendLoadingMessageVisibilityChange(false);
+        mCurrentInfo.reset();
     }
     else
     {
-        if(!info.message.isEmpty() && !ui->MessageLabel->isVisible())
+        if(!mLoadingViewVisible)
+        {
+            mCurrentInfo = info;
+            return;
+        }
+
+        if(!info->message.isEmpty() && !ui->MessageLabel->isVisible())
         {
             sendLoadingMessageVisibilityChange(true);
         }
 
-        ui->MessageLabel->setText(info.message);
+        ui->MessageLabel->setText(info->message);
 
-        ui->ProgressBar->setVisible(info.total != 0);
-        ui->ProgressLabel->setVisible(info.total != 0);
+        ui->ProgressBar->setVisible(info->total != 0);
+        ui->ProgressLabel->setVisible(info->total != 0);
 
-        if(info.total != 0)
+        if(info->total != 0)
         {
-            ui->ProgressLabel->setText(tr("%1 of %2").arg(info.count).arg(info.total));
-            ui->ProgressBar->setMaximum(info.total);
-            ui->ProgressBar->setValue(info.count);
+            ui->ProgressLabel->setText(tr("%1 of %2").arg(info->count).arg(info->total));
+            ui->ProgressBar->setMaximum(info->total);
+            ui->ProgressBar->setValue(info->count);
         }
 
-        if(info.buttonType != MessageInfo::ButtonType::None)
+        if(info->buttonType != MessageInfo::ButtonType::None)
         {
-            if(info.buttonType == MessageInfo::ButtonType::Stop)
+            if(info->buttonType == MessageInfo::ButtonType::Stop)
             {
-                ui->StopButton->setVisible(info.total > 1);
+                ui->StopButton->setVisible(info->total > 1);
                 ui->StopButton->setText(tr("Stop"));
             }
-            else if(info.buttonType == MessageInfo::ButtonType::Ok)
+            else if(info->buttonType == MessageInfo::ButtonType::Ok)
             {
                 ui->StopButton->setVisible(true);
                 ui->StopButton->setText(tr("Ok"));
@@ -219,4 +231,10 @@ void LoadingSceneMessageHandler::updateMessagePos()
     }
     ui->MessageContainer->setGeometry(messageGeo);
     ui->MessageContainer->raise();
+}
+
+void LoadingSceneMessageHandler::setLoadingViewVisible(bool newLoadingViewVisible)
+{
+    mLoadingViewVisible = newLoadingViewVisible;
+    updateMessage(mCurrentInfo);
 }
