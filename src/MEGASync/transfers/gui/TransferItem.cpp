@@ -293,8 +293,7 @@ std::unique_ptr<MegaNode> TransferData::getNode() const
     }
     else
     {
-        std::unique_ptr<MegaNode> node;
-        node.reset(mFailedTransfer->getPublicMegaNode());
+        std::unique_ptr<MegaNode> node(mFailedTransfer->getPublicMegaNode());
 
         if(!node && mNodeHandle != mega::INVALID_HANDLE)
         {
