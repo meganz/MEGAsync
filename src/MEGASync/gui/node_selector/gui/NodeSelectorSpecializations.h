@@ -47,4 +47,18 @@ private:
     void checkSelection() override;
 };
 
+class CloudDriveNodeSelector : public NodeSelector
+{
+    Q_OBJECT
+
+public:
+    explicit CloudDriveNodeSelector(QWidget *parent = 0);
+
+protected slots:
+    void onCustomBottomButtonClicked(uint8_t id) override;
+
+private:
+    void checkSelection(){}
+};
+
 #endif // NODESELECTORSPECIALIZED_H

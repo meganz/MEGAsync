@@ -3,6 +3,7 @@
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
 #include "../model/NodeSelectorModelSpecialised.h"
+#include <MegaApplication.h>
 
 #include "MegaNodeNames.h"
 
@@ -47,6 +48,11 @@ QIcon NodeSelectorTreeViewWidgetCloudDrive::getEmptyIcon()
     return QIcon(QString::fromUtf8("://images/node_selector/view/cloud.png"));
 }
 
+bool NodeSelectorTreeViewWidgetCloudDrive::isCurrentRootIndexReadOnly()
+{
+    return false;
+}
+
 void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex &source_idx)
 {
     Q_UNUSED(source_idx)
@@ -88,6 +94,45 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
     {
         ui->tMegaFolders->header()->showSection(NodeSelectorModel::COLUMN::USER);
     }
+}
+
+bool NodeSelectorTreeViewWidgetIncomingShares::isCurrentRootIndexReadOnly()
+{
+    auto rootIndex(ui->tMegaFolders->rootIndex());
+    if(rootIndex.isValid())
+    {
+        auto rootNode = mProxyModel->getNode(rootIndex);
+        if(rootNode)
+        {
+            return MegaSyncApp->getMegaApi()->getAccess(rootNode.get()) <= mega::MegaShare::ACCESS_READ;
+        }
+    }
+
+    return true;
+}
+
+bool NodeSelectorTreeViewWidgetIncomingShares::isCurrentSelectionReadOnly()
+{
+    auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
+    auto anyReadOnly(selectedRows.isEmpty() ? isCurrentRootIndexReadOnly() : false);
+    foreach(auto index, selectedRows)
+    {
+        auto rootIndex(getRootIndexFromIndex(index));
+        if(rootIndex.isValid())
+        {
+            auto rootNode = mProxyModel->getNode(rootIndex);
+            if(rootNode)
+            {
+                if(MegaSyncApp->getMegaApi()->getAccess(rootNode.get()) <= mega::MegaShare::ACCESS_READ)
+                {
+                    anyReadOnly = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    return anyReadOnly;
 }
 
 QIcon NodeSelectorTreeViewWidgetIncomingShares::getEmptyIcon()

@@ -145,6 +145,20 @@ void NodeSelector::keyPressEvent(QKeyEvent *e)
     }
 }
 
+void NodeSelector::mousePressEvent(QMouseEvent *event)
+{
+    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    {
+        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        if(viewContainer && viewContainer != ui->stackedWidget->currentWidget())
+        {
+            viewContainer->clearSelection();
+        }
+    }
+
+    QDialog::mousePressEvent(event);
+}
+
 void NodeSelector::onbOkClicked()
 {
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
@@ -330,6 +344,7 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
         if(viewContainer)
         {
             viewContainer->init();
+            connect(viewContainer, &NodeSelectorTreeViewWidget::onCustomBottomButtonClicked, this, &NodeSelector::onCustomBottomButtonClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);

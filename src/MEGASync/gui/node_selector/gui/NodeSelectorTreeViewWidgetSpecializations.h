@@ -28,6 +28,7 @@ private:
     void modelLoaded() override;
     QIcon getEmptyIcon() override;
     bool showEmptyView() override {return mShowEmptyView;}
+    bool isCurrentRootIndexReadOnly() override;
 
     bool mShowEmptyView = true;
 };
@@ -43,7 +44,8 @@ private:
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     void onRootIndexChanged(const QModelIndex& idx) override;
-    bool newFolderBtnVisibleInRoot() override {return false;}
+    bool isCurrentRootIndexReadOnly() override;
+    bool isCurrentSelectionReadOnly() override;
     QIcon getEmptyIcon() override;
 };
 
@@ -58,6 +60,8 @@ private:
     QString getRootText() override;
     void onRootIndexChanged(const QModelIndex& idx) override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
+    bool isCurrentRootIndexReadOnly() override {return true;}
+    bool isCurrentSelectionReadOnly() override {return true;}
     QIcon getEmptyIcon() override;
 };
 

@@ -55,6 +55,7 @@ public:
 protected:
     void changeEvent(QEvent * event) override;
     void keyPressEvent(QKeyEvent *e) override;
+    void mousePressEvent(QMouseEvent *event) override;
     void addBackupsView();
     int getNodeAccess(std::shared_ptr<mega::MegaNode> node);
     std::shared_ptr<mega::MegaNode> getSelectedNode();
@@ -67,6 +68,9 @@ protected:
     NodeSelectorTreeViewWidgetSearch* mSearchWidget;
     mega::MegaApi* mMegaApi;
     Ui::NodeSelector *ui;
+
+protected slots:
+    virtual void onCustomBottomButtonClicked(uint8_t id){Q_UNUSED(id)}
 
 private slots:
     void onbShowSearchClicked();

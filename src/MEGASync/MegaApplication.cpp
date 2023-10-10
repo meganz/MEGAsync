@@ -25,6 +25,7 @@
 #include "DialogOpener.h"
 #include "PowerOptions.h"
 #include "DateTimeFormatter.h"
+#include "MegaNodeNames.h"
 
 #include "mega/types.h"
 
@@ -4789,6 +4790,65 @@ void MegaApplication::showChangeLog()
     DialogOpener::showDialog<ChangeLogDialog>(changeLogDialog);
 }
 
+void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFolder, QWidget* parent)
+{
+    if (appfinished)
+    {
+        return;
+    }
+    QString  defaultFolderPath = getDefaultUploadPath();
+
+    auto processUpload = [this, defaultFolderPath, targetFolder, parent]()
+    {
+        Platform::getInstance()->fileAndFolderSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath, true,
+                                     parent,
+                                     [this, targetFolder, defaultFolderPath](QStringList files)
+        {
+            std::unique_ptr<MegaNode> folder(getMegaApi()->getNodeByHandle(targetFolder));
+            if(folder)
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = QMegaMessageBox::warningTitle();
+                msgInfo.text = QCoreApplication::translate("ShellExtension", "Are you sure you want to upload it to %1").arg(QString::fromUtf8(getMegaApi()->getNodePath(folder.get())));
+                msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+                msgInfo.finishFunc = [this, files, targetFolder](QPointer<QMessageBox> msgBox)
+                {
+                    if (msgBox->result() == QDialog::Accepted)
+                    {
+                        uploadQueue.append(createQueue(files));
+                        processUploadQueue(targetFolder);
+                    }
+                };
+                QMegaMessageBox::information(msgInfo);
+            }
+            else
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = QMegaMessageBox::errorTitle();
+                msgInfo.text = QCoreApplication::translate("ShellExtension", "Folder no longer exists. Refresh view");
+                msgInfo.buttons = QMessageBox::Ok;
+                QMegaMessageBox::information(msgInfo);
+            }
+        });
+    };
+
+    const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
+    if(storageIsOverQuota)
+    {
+        auto overQuotaDialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD);
+        if(overQuotaDialog)
+        {
+            overQuotaDialog->setParent(parent);
+            DialogOpener::showDialog<OverQuotaDialog>(overQuotaDialog, [this, processUpload](){
+
+                processUpload();
+            });
+        }
+    }
+
+    processUpload();
+}
+
 void MegaApplication::uploadActionClicked()
 {
     if (appfinished)
@@ -4803,17 +4863,17 @@ void MegaApplication::uploadActionClicked()
         if(overQuotaDialog)
         {
             DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog, false, [this](){
-                uploadActionClickedFromWindowAfterOverQuotaCheck();
+                uploadActionFromWindowAfterOverQuotaCheck();
             });
 
             return;
         }
     }
 
-    uploadActionClickedFromWindowAfterOverQuotaCheck();
+    uploadActionFromWindowAfterOverQuotaCheck();
 }
 
-void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
+void MegaApplication::uploadActionFromWindowAfterOverQuotaCheck()
 {
     QString  defaultFolderPath = getDefaultUploadPath();
 
@@ -4824,17 +4884,20 @@ void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
         return;
     }
 
-    QWidget* parent(nullptr);
+    QWidget* selectorParent(nullptr);
 
-    auto TMDialog = DialogOpener::findDialog<TransferManager>();
-    if(TMDialog && (TMDialog->getDialog()->isActiveWindow() || !TMDialog->getDialog()->isMinimized()))
+    if(!selectorParent)
     {
-        parent = TMDialog->getDialog();
-        DialogOpener::closeDialogsByParentClass<TransferManager>();
+        auto TMDialog = DialogOpener::findDialog<TransferManager>();
+        if(TMDialog && (TMDialog->getDialog()->isActiveWindow() || !TMDialog->getDialog()->isMinimized()))
+        {
+            selectorParent = TMDialog->getDialog();
+            DialogOpener::closeDialogsByParentClass<TransferManager>();
+        }
     }
 
     Platform::getInstance()->fileAndFolderSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath, true,
-                                 parent,
+                                 selectorParent,
                                  [this/*, blocker*/](QStringList files)
     {
         shellUpload(createQueue(files));
@@ -4900,6 +4963,20 @@ void MegaApplication::downloadActionClicked()
             });
         }
     });
+}
+
+void MegaApplication::downloadACtionClickedWithHandles(const QList<MegaHandle> &handles)
+{
+    foreach(auto& selectedMegaFolderHandle, handles)
+    {
+        MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+        if (selectedNode)
+        {
+            downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
+        }
+    }
+
+    processDownloads();
 }
 
 void MegaApplication::streamActionClicked()

@@ -4,6 +4,8 @@
 #include "QMegaMessageBox.h"
 #include "node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h"
 #include "ui_NodeSelector.h"
+#include <DialogOpener.h>
+#include <UploadToMegaDialog.h>
 
 UploadNodeSelector::UploadNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
@@ -202,6 +204,45 @@ void StreamNodeSelector::checkSelection()
     else
     {
         showNotFoundNodeMessageBox();
+    }
+}
+
+CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(parent)
+{
+    SelectTypeSPtr selectType = SelectTypeSPtr(new CloudDriveType);
+    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
+    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    ui->stackedWidget->addWidget(mCloudDriveWidget);
+    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(selectType);
+    mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
+    ui->stackedWidget->addWidget(mIncomingSharesWidget);
+    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(selectType);
+    mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
+    ui->stackedWidget->addWidget(mBackupsWidget);
+    makeConnections(selectType);
+}
+
+void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
+{
+    if(id == CloudDriveType::Upload)
+    {
+        auto selectedNode = getSelectedNode();
+        if(selectedNode)
+        {
+            MegaSyncApp->runUploadActionWithTargetHandle(selectedNode->getHandle(), this);
+        }
+        else
+        {
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("Unexpected error. Target node not found");
+            QMegaMessageBox::warning(msgInfo);
+        }
+    }
+    else
+    {
+        MegaSyncApp->downloadACtionClickedWithHandles(getMultiSelectionNodeHandle());
     }
 }
 

@@ -252,9 +252,11 @@ public slots:
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
-    void uploadActionClickedFromWindowAfterOverQuotaCheck();
+    void uploadActionFromWindowAfterOverQuotaCheck();
+    void runUploadActionWithTargetHandle(const mega::MegaHandle &targetFolder, QWidget *parent);
     void loginActionClicked();
     void downloadActionClicked();
+    void downloadACtionClickedWithHandles(const QList<mega::MegaHandle>& handles);
     void streamActionClicked();
     void transferManagerActionClicked(int tab = 0);
     void logoutActionClicked();

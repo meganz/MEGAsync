@@ -134,6 +134,7 @@ private slots:
     void openFolder(QString path);
     void onOverlayClicked();
     void on_bTransferManager_clicked();
+    void on_bCloudDrive_clicked();
     void on_bAddSync_clicked();
     void on_bAddBackup_clicked();
     void on_bUpload_clicked();

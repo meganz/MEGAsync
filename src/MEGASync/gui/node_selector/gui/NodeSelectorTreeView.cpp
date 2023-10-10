@@ -86,6 +86,14 @@ void NodeSelectorTreeView::mousePressEvent(QMouseEvent *event)
         accept = mousePressorReleaseEvent(event);
     }
 
+    QPoint pos = event->pos();
+    QPersistentModelIndex index = indexAt(pos);
+
+    if(!index.isValid())
+    {
+        selectionModel()->clearSelection();
+    }
+
     if(accept)
     {
         QTreeView::mousePressEvent(event);

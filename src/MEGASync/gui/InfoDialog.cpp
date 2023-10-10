@@ -25,6 +25,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "node_selector/gui/NodeSelectorSpecializations.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -1155,6 +1156,17 @@ void InfoDialog::on_bTransferManager_clicked()
 {
     emit userActivity();
     app->transferManagerActionClicked();
+}
+
+void InfoDialog::on_bCloudDrive_clicked()
+{
+    CloudDriveNodeSelector* nodeSelector = new CloudDriveNodeSelector();
+#ifdef Q_OS_LINUX
+    nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
+#endif
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this](){
+
+    });
 }
 
 void InfoDialog::on_bAddSync_clicked()
