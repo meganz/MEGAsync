@@ -3,7 +3,7 @@ Source: qt-mega
 Binary: qt-mega
 Standards-Version: 3.6.1
 Architecture: any
-Version: 1.0
+Version: 5.15.11
 DEBTRANSFORM-RELEASE: 1
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
