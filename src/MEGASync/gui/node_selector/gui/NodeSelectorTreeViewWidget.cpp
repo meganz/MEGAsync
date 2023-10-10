@@ -11,6 +11,7 @@
 #include "DialogOpener.h"
 #include <MegaNodeNames.h>
 #include "NodeNameSetterDialog/NewFolderDialog.h"
+#include "ViewLoadingScene.h"
 
 const char* NodeSelectorTreeViewWidget::CUSTOM_BOTTOM_BUTTON_ID = "BUTTON_ID";
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
@@ -103,7 +104,7 @@ void NodeSelectorTreeViewWidget::init()
 
 #ifdef __APPLE__
     ui->tMegaFolders->setAnimated(false);
-#endif
+#endif    
 }
 
 void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
@@ -155,6 +156,16 @@ NodeSelectorProxyModel* NodeSelectorTreeViewWidget::getProxyModel()
 bool NodeSelectorTreeViewWidget::isInRootView() const
 {
     return !ui->tMegaFolders->rootIndex().isValid();
+}
+
+void NodeSelectorTreeViewWidget::updateLoadingMessage(std::shared_ptr<MessageInfo> message)
+{
+    ui->tMegaFolders->getLoadingMessageHandler()->updateMessage(message);
+}
+
+void NodeSelectorTreeViewWidget::setTopLevelForLoadingMessage(QWidget *parent)
+{
+    ui->tMegaFolders->setTopParent(parent);
 }
 
 void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
@@ -467,7 +478,6 @@ void NodeSelectorTreeViewWidget::addCustomBottomButtons(NodeSelectorTreeViewWidg
             ui->customBottomButtonsLayout->addWidget(button);
             connect(button, &QPushButton::clicked, this, [this](){
                 uint8_t id = sender()->property(CUSTOM_BOTTOM_BUTTON_ID).toUInt();
-                qDebug() << sender();
                 emit onCustomBottomButtonClicked(id);
             });
         }
@@ -940,7 +950,6 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::COLUMN::NODE);
 
     ui->tMegaFolders->setRootIndex(node_column_idx);
-    qDebug() << "SET INDEX" << ui->tMegaFolders->rootIndex() << node_column_idx;
 
     onRootIndexChanged(node_column_idx);
 

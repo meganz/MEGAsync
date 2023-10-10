@@ -9,6 +9,7 @@
 #include <QItemSelection>
 #include <QTimer>
 #include <QGraphicsDropShadowEffect>
+#include <QFrame>
 
 #include <memory>
 
@@ -19,6 +20,8 @@ class NodeSelectorTreeViewWidgetCloudDrive;
 class NodeSelectorTreeViewWidgetIncomingShares;
 class NodeSelectorTreeViewWidgetBackups;
 class NodeSelectorTreeViewWidgetSearch;
+
+class MessageInfo;
 
 namespace mega {
 class MegaApi;
@@ -79,9 +82,9 @@ private slots:
     void onbShowCloudDriveClicked();
     void onbShowBackupsFolderClicked();
     void onOptionSelected(int index);
-    void updateNodeSelectorTabs();
-    void onSearch(const QString& text);
+    void updateNodeSelectorTabs(); void onSearch(const QString& text);
     void on_tClearSearchResultNS_clicked();
+    void onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);

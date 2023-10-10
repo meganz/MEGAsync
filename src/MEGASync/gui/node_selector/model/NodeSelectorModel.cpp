@@ -67,9 +67,11 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
             mNodesRequested = false;
             if(!isAborted())
             {
+                connect(item, &NodeSelectorModelItem::updateLoadingMessage, this, &NodeRequester::updateLoadingMessage);
                 lockDataMutex(true);
                 item->createChildItems(std::unique_ptr<mega::MegaNodeList>(childNodesFiltered));
                 lockDataMutex(false);
+                disconnect(item, &NodeSelectorModelItem::updateLoadingMessage, this, &NodeRequester::updateLoadingMessage);
                 emit nodesReady(item);
             }
             else
@@ -521,6 +523,8 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     connect(mNodeRequesterWorker, &NodeRequester::rootItemsAdded, this, &NodeSelectorModel::onRootItemAdded, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::rootItemsDeleted, this, &NodeSelectorModel::onRootItemDeleted, Qt::QueuedConnection);
 
+    connect(mNodeRequesterWorker, &NodeRequester::updateLoadingMessage, this, &NodeSelectorModel::updateLoadingMessage, Qt::DirectConnection);
+
     qRegisterMetaType<std::shared_ptr<mega::MegaNodeList>>("std::shared_ptr<mega::MegaNodeList>");
     qRegisterMetaType<std::shared_ptr<mega::MegaNode>>("std::shared_ptr<mega::MegaNode>");
     qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
@@ -570,7 +574,7 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
             {
                 if(index.column() == USER)
                 {
-                    return item->getOwnerName();
+                    return item->getOwnerName() + QLatin1String(" (") + item->getOwnerEmail() + QLatin1String(")");
                 }
                 else if(mSyncSetupMode)
                 {
@@ -1151,6 +1155,9 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
             blockSignals(true);
             beginInsertRows(parent, 0, itemNumChildren-1);
             blockSignals(false);
+            auto info = std::make_shared<MessageInfo>();
+            info->message = QLatin1String("Requesting nodes...");
+            emit updateLoadingMessage(info);
             emit requestChildNodes(item, parent);
         }
         else
@@ -1166,6 +1173,10 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
 
 void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
 {
+    auto info = std::make_shared<MessageInfo>();
+    info->message = QLatin1String("Filtering items...");
+    emit updateLoadingMessage(info);
+
     auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
     mIndexesActionInfo.indexesToBeExpanded.append(qMakePair(parent->getNode()->getHandle(), index));
     continueWithNextItemToLoad(index);

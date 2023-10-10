@@ -5,7 +5,6 @@
 #include "QTMegaListener.h"
 #include <megaapi.h>
 #include "../model/NodeSelectorModelItem.h"
-#include <ViewLoadingScene.h>
 
 #include <QWidget>
 #include <QDebug>
@@ -20,6 +19,8 @@ class NodeSelectorModel;
 class NodeSelectorModelItem;
 class SelectType;
 typedef std::shared_ptr<SelectType> SelectTypeSPtr;
+
+struct MessageInfo;
 
 namespace Ui {
 class NodeSelectorTreeViewWidget;
@@ -66,6 +67,9 @@ public:
     void abort();
     NodeSelectorProxyModel* getProxyModel();
     bool isInRootView() const;
+
+    void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
+    void setTopLevelForLoadingMessage(QWidget* parent);
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
@@ -121,7 +125,6 @@ private slots:
     void removeItemByHandle(mega::MegaHandle handle);
 
 private:
-
     mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;
     std::unique_ptr<mega::QTMegaListener> mDelegateListener;

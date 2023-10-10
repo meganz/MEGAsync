@@ -44,6 +44,7 @@ enum class HeaderRoles
 };
 
 class NodeSelectorModel;
+struct MessageInfo;
 
 class NodeRequester : public QObject
 {
@@ -101,6 +102,7 @@ signals:
      void searchItemsCreated();
      void nodeAdded(NodeSelectorModelItem* item);
      void nodesAdded(QList<QPointer<NodeSelectorModelItem>> item);
+     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 private:
      bool isAborted();
@@ -206,6 +208,7 @@ signals:
     void deleteWorker();
     void blockUi(bool state);
     void forceFilter();
+    void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 protected:
     void fetchItemChildren(const QModelIndex& parent);

@@ -13,6 +13,8 @@ class FullName;
 class Avatar;
 }
 
+struct MessageInfo;
+
 class NodeSelectorModelItem : public QObject
 {
     Q_OBJECT
@@ -64,6 +66,7 @@ public:
 
 signals:
     void infoUpdated(int role);
+    void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 protected:
     void calculateSyncStatus();

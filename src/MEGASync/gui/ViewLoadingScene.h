@@ -16,6 +16,8 @@
 #include <QEvent>
 #include <QPainter>
 
+#include <memory>
+
 namespace Ui {
 class ViewLoadingSceneUI;
 }
@@ -195,6 +197,23 @@ private:
     mutable QVector<DelegateWidget*> mLoadingItems;
 };
 
+struct MessageInfo
+{
+    enum ButtonType
+    {
+        None,
+        Stop,
+        Ok
+    };
+
+    QString message;
+    int count = 0;
+    int total = 0;
+    ButtonType buttonType;
+};
+
+Q_DECLARE_METATYPE(MessageInfo)
+
 class LoadingSceneMessageHandler : public QObject
 {
     Q_OBJECT
@@ -203,26 +222,14 @@ public:
     LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI* viewBaseUI, QWidget* viewBase);
     ~LoadingSceneMessageHandler();
 
-    struct MessageInfo
-    {
-        enum ButtonType
-        {
-            None,
-            Stop,
-            Ok
-        };
-
-        QString message;
-        int count = 0;
-        int total = 0;
-        ButtonType buttonType;
-    };
 
     void hideLoadingMessage();
     void setTopParent(QWidget* widget);
 
+    void setLoadingViewVisible(bool newLoadingViewVisible);
+
 public slots:
-    void updateMessage(const MessageInfo& info);
+    void updateMessage(std::shared_ptr<MessageInfo> info);
 
 signals:
     void onStopPressed();
@@ -239,9 +246,11 @@ private:
     QWidget* mViewBase;
     QWidget* mTopParent;
     QWidget* mFadeOutWidget;
-};
 
-Q_DECLARE_METATYPE(LoadingSceneMessageHandler::MessageInfo)
+    bool mLoadingViewVisible = false;
+
+    std::shared_ptr<MessageInfo> mCurrentInfo;
+};
 
 class ViewLoadingSceneBase : public QObject
 {

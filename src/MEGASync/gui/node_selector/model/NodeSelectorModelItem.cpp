@@ -49,8 +49,19 @@ void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList>
 {
     if(!mNode->isFile())
     {
+        auto info = std::make_shared<MessageInfo>();
+        info->message = QLatin1String("Creating nodes");
+        info->total = nodeList->size();
+
         for(int i = 0; i < nodeList->size(); i++)
         {
+            if(i % 1000 == 0 ||
+               i == (nodeList->size() -1))
+            {
+                info->count = i + 1;
+                emit updateLoadingMessage(info);
+            }
+
             auto node = std::unique_ptr<MegaNode>(nodeList->get(i)->copy());
             mChildItems.append(createModelItem(move(node), mShowFiles, this));
         }

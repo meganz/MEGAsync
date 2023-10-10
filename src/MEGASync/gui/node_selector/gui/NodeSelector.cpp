@@ -185,6 +185,15 @@ void NodeSelector::on_tClearSearchResultNS_clicked()
     }
 }
 
+void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
+{
+    auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
+    if(viewContainer)
+    {
+        viewContainer->updateLoadingMessage(message);
+    }
+}
+
 void NodeSelector::onOptionSelected(int index)
 {
     switch (index)
@@ -334,6 +343,8 @@ void NodeSelector::showNotFoundNodeMessageBox()
 
 void NodeSelector::makeConnections(SelectTypeSPtr selectType)
 {
+    NodeSelectorModel* model(nullptr);
+
     mSearchWidget = new NodeSelectorTreeViewWidgetSearch(selectType);
     mSearchWidget->setObjectName(QString::fromUtf8("Search"));
     connect(mSearchWidget, &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked, this, &NodeSelector::setSelectedNodeHandle);
@@ -348,6 +359,13 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
             connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
+
+            if(!model)
+            {
+                model = viewContainer->getProxyModel()->getMegaModel();
+                connect(model, &NodeSelectorModel::updateLoadingMessage, this, &NodeSelector::onUpdateLoadingMessage);
+                viewContainer->setTopLevelForLoadingMessage(this);
+            }
         }
     }
 }
