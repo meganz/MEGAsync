@@ -225,10 +225,7 @@ bool PlanWidget::eventFilter(QObject* obj, QEvent* event)
         {
             QString url = getProURL();
             Utilities::getPROurlWithParameters(url);
-
-            OpenUrlThread *openUrlThread = new OpenUrlThread(url, this);
-            connect(openUrlThread, &OpenUrlThread::finished, openUrlThread, &QObject::deleteLater);
-            openUrlThread->start(QThread::HighestPriority);
+            Utilities::openUrl(QUrl(url));
 
             return true;
         }

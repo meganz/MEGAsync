@@ -103,7 +103,7 @@ StackViewPage {
 
             text: LoginControllerAccess.newAccount ? OnboardingStrings.next : OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
-            progress.value: LoginControllerAccess.progress
+            progressValue: LoginControllerAccess.progress
             Layout.rightMargin: -loginButton.sizes.focusBorderWidth//TODO: poner flecha
             icons.source: LoginControllerAccess.newAccount ? Images.arrowRight : Images.none
         }

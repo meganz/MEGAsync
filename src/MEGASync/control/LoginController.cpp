@@ -262,6 +262,7 @@ void LoginController::onRequestUpdate(mega::MegaApi *api, mega::MegaRequest *req
             double total = static_cast<double>(request->getTotalBytes());
             double part = static_cast<double>(request->getTransferredBytes());
             double progress = part/total;
+
             mProgress = progress;
             emit progressChanged();
         }
