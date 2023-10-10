@@ -209,6 +209,7 @@ void StreamNodeSelector::checkSelection()
 
 CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
+    setWindowTitle(tr("Cloud Drive"));
     SelectTypeSPtr selectType = SelectTypeSPtr(new CloudDriveType);
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
@@ -220,6 +221,7 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(p
     mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
     ui->stackedWidget->addWidget(mBackupsWidget);
     makeConnections(selectType);
+    resize(1280,800);
 }
 
 void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
