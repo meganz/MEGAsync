@@ -7,6 +7,8 @@
 #include <megaapi.h>
 
 #include <QWidget>
+#include <QThread>
+#include <QUrl>
 
 namespace Ui {
 class PlanWidget;
@@ -57,6 +59,25 @@ class PlanWidget : public QWidget
         QString getProURL();
         QString getTooltipMsg(HelpButton hoverOver = HELP);
         QString toPrice (double value, const QString& currencySymbol);
+};
+
+class OpenUrlThread: public QThread
+{
+    Q_OBJECT
+
+    public:
+        OpenUrlThread(const QString& url, QObject *parent = nullptr) :
+            QThread(parent),
+            mUrl(url)
+        {}
+
+    private:
+        void run() override
+        {
+            QDesktopServices::openUrl(mUrl);
+        }
+
+        QUrl mUrl;
 };
 
 #endif // PLANWIDGET_H
