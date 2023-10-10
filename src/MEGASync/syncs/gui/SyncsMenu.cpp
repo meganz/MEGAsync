@@ -23,8 +23,8 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
     mMyBackupsHandleRequest (nullptr),
     mType (type),
     mMenu (new QMenu()),
-    mAddAction (new MenuItemAction(QString(), QIcon())),
-    mMenuAction (new MenuItemAction(QString(), QIcon())),
+    mAddAction (new MenuItemAction(QString(), QIcon(), true)),
+    mMenuAction (new MenuItemAction(QString(), QIcon(), true)),
     mLastHovered (nullptr),
     mDevNameAction (nullptr)
 {
@@ -115,7 +115,7 @@ void SyncsMenu::refresh()
                 activeFolders++;
                 MenuItemAction* action =
                         new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
-                                           QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")), itemIndent);
+                                           QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")), true, itemIndent);
                 action->setToolTip(createSyncTooltipText(backupSetting));
                 connect(action, &MenuItemAction::triggered,
                         this, [backupSetting](){
@@ -172,7 +172,7 @@ void SyncsMenu::refresh()
             if (!mDevNameAction)
             {
                 // Display device name before folders
-                mDevNameAction.reset(new MenuItemAction(QString(), QIcon(DEVICE_ICON)));
+                mDevNameAction.reset(new MenuItemAction(QString(), QIcon(DEVICE_ICON), true));
                 // Insert the action in the menu to make sure it is here when the
                 // set device name slot is called.
                 mMenu->insertAction(firstBackup, mDevNameAction.get());

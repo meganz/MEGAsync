@@ -620,7 +620,7 @@ private:
             *action = nullptr;
         }
 
-        *action = new MenuItemAction(actionName, QIcon(QString::fromUtf8(iconPath)));
+        *action = new MenuItemAction(actionName, QIcon(QString::fromUtf8(iconPath)), true);
         connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
         (*action)->setEnabled(previousEnabledState);
     }

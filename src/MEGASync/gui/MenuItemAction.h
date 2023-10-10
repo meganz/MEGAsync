@@ -9,10 +9,12 @@
 class MenuItemAction : public QWidgetAction
 {
 public:
-    MenuItemAction(const QString& title, const QString& value, const QIcon& icon, int treeDepth = 0,
+    MenuItemAction(const QString& title, const QString& value, const QIcon& icon,
+                   bool manageHoverStates = false, int treeDepth = 0,
                    const QSize& iconSize = QSize(24, 24), QObject *parent = nullptr);
-    MenuItemAction(const QString& title, const QIcon& icon, int treeDepth = 0,
-                   const QSize& iconSize = QSize(24, 24), QObject* parent = nullptr);
+    MenuItemAction(const QString& title, const QIcon& icon, bool manageHoverStates = false,
+                   int treeDepth = 0, const QSize& iconSize = QSize(24, 24), QObject* parent = nullptr);
+    MenuItemAction(const QString& title, const QIcon& icon, bool manageHoverStates, QObject *parent);
     MenuItemAction(const QString& title, const QIcon& icon, QObject *parent);
 
     void setLabelText(const QString& title);
@@ -21,7 +23,7 @@ public:
     bool getAccent() const;
     void setAccent(bool enabled);
 
-    ~MenuItemAction();
+    ~MenuItemAction() override;
 
 private:
     struct Colors {static const QString Normal; static const QString Highlight; static const QString Accent;};
@@ -35,7 +37,7 @@ private:
     void setupActionWidget(const QIcon& icon, const QSize& iconSize);
 
 protected:
-    bool eventFilter(QObject* obj, QEvent* event);
+    bool eventFilter(QObject* obj, QEvent* event) override;
     const QString& getColor() const; /* return color based on accent value */
 };
 
