@@ -117,6 +117,7 @@ private slots:
     virtual void onItemDoubleClick(const QModelIndex &index);
     void onGoForwardClicked();
     void onGoBackClicked();
+    void onRemoveIndexFromGoBack(const QModelIndex &index);
     void onSectionResized();
     void onExpandReady();
     void setLoadingSceneVisible(bool visible);
