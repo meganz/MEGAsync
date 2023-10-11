@@ -107,7 +107,7 @@ void LoadingSceneMessageHandler::setTopParent(QWidget *widget)
 
 void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info)
 {
-    if(!info && ui->MessageContainer->isVisible())
+    if(!info)
     {
         sendLoadingMessageVisibilityChange(false);
         mCurrentInfo.reset();
