@@ -319,6 +319,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     waiting = false;
     updated = false;
     syncing = false;
+    fetchNodesFinished = false;
     transferring = false;
     checkupdate = false;
     updateAction = nullptr;
@@ -1067,7 +1068,6 @@ void MegaApplication::start()
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
-    eventsPendingLoggedIn.clear();
     receivedStorageSum = 0;
     finishedBlockedTransfers.clear();
     mSyncController.reset();
@@ -1462,14 +1462,6 @@ if (!preferences->lastExecutionTime())
         QString link = it.key();
         megaApi->getPublicNode(link.toUtf8().constData());
     }
-
-    // Apply all pending events that arrived before its time
-    for (auto & event: eventsPendingLoggedIn)
-    {
-        onEvent(megaApi, event.get());
-    }
-    eventsPendingLoggedIn.clear();
-
 
     if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
     {
@@ -5863,14 +5855,14 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE)
     {
-        if (preferences->logged())
+        if (fetchNodesFinished)
         {
             applyStorageState(eventNumber);
+            eventPendingFetchNodesFinished.reset();
         }
         else //event arrived too soon, we will apply it later
         {
-            std::unique_ptr<MegaEvent> eventCopy{event->copy()};
-            eventsPendingLoggedIn.push_back(std::move(eventCopy));
+            eventPendingFetchNodesFinished.reset(event->copy());
         }
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE_SUM_CHANGED)
@@ -6364,6 +6356,21 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 break;
         }
     }
+    case MegaRequest::TYPE_FETCH_NODES:
+    {
+        if (preferences->logged())
+        {
+            fetchNodesFinished = true;
+
+            if (eventPendingFetchNodesFinished)
+            {
+                onEvent(megaApi, eventPendingFetchNodesFinished.get());
+            }
+        }
+
+        break;
+    }
+
     default:
         break;
     }

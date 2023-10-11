@@ -366,7 +366,7 @@ protected:
     void manageBusinessStatus(int64_t event);
     void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
 
-    std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
+    std::unique_ptr<mega::MegaEvent> eventPendingFetchNodesFinished;
 
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
@@ -499,6 +499,7 @@ protected:
     bool indexing;
     bool waiting;
     bool syncing; //if any sync is in syncing state
+    bool fetchNodesFinished;
     bool updated;
     bool transferring; //if there is any regular transfer in progress
     bool checkupdate;
