@@ -235,8 +235,8 @@ using LocalStalledIssueDataList = QList<LocalStalledIssueDataPtr>;
 Q_DECLARE_METATYPE(LocalStalledIssueDataPtr)
 Q_DECLARE_METATYPE(LocalStalledIssueDataList)
 
-class UploadTransferInfo;
-class DownloadTransferInfo;
+struct UploadTransferInfo;
+struct DownloadTransferInfo;
 
 class StalledIssue
 {
