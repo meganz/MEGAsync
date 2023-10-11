@@ -15,7 +15,7 @@ Qml.RoundButton {
 
     property Colors colors: Colors {}
     property Icon icons: Icon {}
-    property Progress progress: Progress {}
+    property alias progressValue: backgroundProgress.value
     property Sizes sizes: Sizes {}
 
     Timer {
@@ -153,8 +153,10 @@ Qml.RoundButton {
                 }
             }
 
-            Loader {
-                id: backgroundLoader
+            Progress
+            {
+                id: backgroundProgress
+                anchors.fill: parent
             }
         }
     }

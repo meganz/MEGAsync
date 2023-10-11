@@ -70,7 +70,7 @@ LoginPageForm {
             PropertyChanges {
                 target: loginButton;
                 icons.busyIndicatorVisible: false;
-                progress.value: 0;
+                progressValue: 0;
             }
             PropertyChanges {
                 target: onboardingWindow

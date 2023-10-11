@@ -226,6 +226,7 @@ bool PlanWidget::eventFilter(QObject* obj, QEvent* event)
             QString url = getProURL();
             Utilities::getPROurlWithParameters(url);
             Utilities::openUrl(QUrl(url));
+
             return true;
         }
         else if (event->type() == QEvent::ToolTip)

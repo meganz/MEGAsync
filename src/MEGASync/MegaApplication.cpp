@@ -1067,7 +1067,6 @@ void MegaApplication::start()
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
-    eventsPendingLoggedIn.clear();
     receivedStorageSum = 0;
     finishedBlockedTransfers.clear();
     mSyncController.reset();
@@ -1271,7 +1270,7 @@ void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRe
     }
 }
 
-void MegaApplication::loggedIn(bool fastLogin)
+void MegaApplication::onboardingFinished(bool fastLogin)
 {
     if (appfinished)
     {
@@ -1462,14 +1461,6 @@ if (!preferences->lastExecutionTime())
         QString link = it.key();
         megaApi->getPublicNode(link.toUtf8().constData());
     }
-
-    // Apply all pending events that arrived before its time
-    for (auto & event: eventsPendingLoggedIn)
-    {
-        onEvent(megaApi, event.get());
-    }
-    eventsPendingLoggedIn.clear();
-
 
     if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
     {
@@ -2327,7 +2318,7 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
 void MegaApplication::raiseInfoDialog()
 {
     if(mStatusController->isAccountBlocked()
-        || !mLoginController->isLoginFinished())
+        || !mLoginController->isFetchNodesFinished())
     {
         if (preferences->getSession().isEmpty())
         {
@@ -3857,7 +3848,7 @@ void MegaApplication::PSAseen(int id)
 
 void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSettings>)
 {
-    if(mLoginController->isLoginFinished())
+    if(mLoginController->isFetchNodesFinished())
     {
         createAppMenus();
     }
@@ -3865,7 +3856,7 @@ void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSettings>)
 
 void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSettings>)
 {
-    if(mLoginController->isLoginFinished())
+    if(mLoginController->isFetchNodesFinished())
     {
         createAppMenus();
     }
@@ -4015,7 +4006,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 #endif
     QMenu *displayedMenu = nullptr;
     int menuWidthInitialPopup = -1;
-    if (!mLoginController->isLoginFinished() || mStatusController->isAccountBlocked()) // if not logged or blocked account
+    if (!mLoginController->isFetchNodesFinished() || mStatusController->isAccountBlocked()) // if not logged or blocked account
     {
         if (guestMenu)
         {
@@ -5345,7 +5336,7 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = !mLoginController->isLoginFinished() || mStatusController->isAccountBlocked();
+        proxyOnly = !mLoginController->isFetchNodesFinished() || mStatusController->isAccountBlocked();
         megaApi->retryPendingConnections();
     }
 
@@ -5863,14 +5854,9 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE)
     {
-        if (preferences->logged())
+        if (mLoginController->isFetchNodesFinished())
         {
             applyStorageState(eventNumber);
-        }
-        else //event arrived too soon, we will apply it later
-        {
-            std::unique_ptr<MegaEvent> eventCopy{event->copy()};
-            eventsPendingLoggedIn.push_back(std::move(eventCopy));
         }
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE_SUM_CHANGED)
@@ -5901,15 +5887,6 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
 //    {
 //        processUpgradeSecurityEvent();
 //    }
-}
-
-//Called when a request is about to start
-void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
-{
-    if (appfinished)
-    {
-        return;
-    }
 }
 
 //Called when a request has finished
