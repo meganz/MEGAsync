@@ -4813,7 +4813,7 @@ void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFo
                 msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
                 msgInfo.finishFunc = [this, files, targetFolder](QPointer<QMessageBox> msgBox)
                 {
-                    if (msgBox->result() == QDialog::Accepted)
+                    if (msgBox->result() == QMessageBox::Ok)
                     {
                         uploadQueue.append(createQueue(files));
                         processUploadQueue(targetFolder);
