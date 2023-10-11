@@ -37,7 +37,7 @@ Rectangle {
     readonly property string stateBlocked: "BLOCKED"
     readonly property string stateInOnboarding: "IN_ONBOARDING"
 
-    function getState(){
+    function getState() {
         if(AccountStatusControllerAccess.blockedState) {
             return content.stateBlocked;
         }
@@ -72,7 +72,7 @@ Rectangle {
     radius: 10
     color: Styles.surface1
 
-    state: getState();
+    state: getState()
     states: [
         State {
             name: content.stateLoggedOut
@@ -121,7 +121,9 @@ Rectangle {
         },
         State {
             name: content.stateInOnboarding
-            extend: content.stateInProgress
+            StateChangeScript {
+                script: stack.replace(settingUpAccountPage);
+            }
         }
     ]
 
@@ -268,15 +270,12 @@ Rectangle {
                         case LoginController.FETCHING_NODES:
                         case LoginController.FETCHING_NODES_2FA:
                             return OnboardingStrings.statusFetchNodes;
-                        case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
-                            return GuestStrings.loggedInOnboarding;
                         default:
                             return "";
                     }
                 }
 
                 description: getDescription()
-
                 showProgressBar: true
                 leftButton {
                     text: OnboardingStrings.signUp
@@ -296,16 +295,18 @@ Rectangle {
 
             BasePage {
 
-                function isEmailBlock()
-                {
-                    return AccountStatusControllerAccess.blockedState === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL;
+                function isEmailBlock() {
+                    return AccountStatusControllerAccess.blockedState
+                            === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL;
                 }
 
                 image.source: Images.warningGuest
                 imageTopMargin: 110
                 title: GuestStrings.accountTempLocked
-                description: isEmailBlock() ? GuestStrings.accountTempLockedEmail : GuestStrings.accountTempLockedSMS;
-                descriptionUrl: isEmailBlock() ? "" : Links.terms;
+                description: isEmailBlock()
+                             ? GuestStrings.accountTempLockedEmail
+                             : GuestStrings.accountTempLockedSMS
+                descriptionUrl: isEmailBlock() ? "" : Links.terms
                 leftButton {
                     text: GuestStrings.logOut
                     onClicked: {
@@ -316,16 +317,27 @@ Rectangle {
                     text: isEmailBlock() ? GuestStrings.resendEmail : GuestStrings.verifyNow;
                     icons.source: isEmailBlock() ? Images.mail : "";
                     onClicked: {
-                        if(isEmailBlock())
-                        {
+                        if(isEmailBlock()) {
                             GuestContent.onVerifyEmailClicked();
                         }
-                        else
-                        {
+                        else {
                             GuestContent.onVerifyPhoneClicked();
                         }
                     }
                 }
+            }
+        }
+
+        Component {
+            id: settingUpAccountPage
+
+            BasePage {
+                title: GuestStrings.loggedInOnboarding
+                image.source: Images.settingUp
+                leftButton.visible: false
+                rightButton.visible: false
+                spacing: 0
+                bottomMargin: 150
             }
         }
     }

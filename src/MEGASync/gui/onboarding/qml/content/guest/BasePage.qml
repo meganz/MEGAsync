@@ -22,6 +22,7 @@ Item {
     property string description: ""
     property string descriptionUrl: ""
     property int spacing: 24
+    property int bottomMargin: 48
 
     onShowProgressBarChanged: {
         if(!showProgressBar) {
@@ -60,7 +61,7 @@ Item {
         width: 304
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: 48
+        anchors.bottomMargin: bottomMargin
         spacing: basePage.spacing
 
         Loader {

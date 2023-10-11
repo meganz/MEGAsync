@@ -66,6 +66,7 @@ QtObject {
     readonly property url menu: imagesGuestPath + "menu.svg"
     readonly property url settings: imagesGuestPath + "settings.svg"
     readonly property url warningGuest: imagesGuestPath + "warning.png"
+    readonly property url settingUp: imagesGuestPath + "setting_up.png"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons
