@@ -12,11 +12,11 @@ SelectiveSyncPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            if(syncsPanel.navInfo.comesFromResumePage) {
+            if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
                 syncsPanel.state = syncsPanel.finalState;
             } else {
-                syncsPanel.state = syncsPanel.syncType;
+                syncsFlow.state = syncsFlow.syncType;
             }
         }
 

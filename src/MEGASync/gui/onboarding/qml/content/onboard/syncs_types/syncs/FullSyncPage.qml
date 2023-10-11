@@ -14,7 +14,12 @@ FullSyncPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsFlow.state = syncType;
+            if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
+                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
+                syncsPanel.state = syncsPanel.finalState;
+            } else {
+                syncsFlow.state = syncsFlow.syncType;
+            }
         }
 
         rightPrimary.onClicked: {
