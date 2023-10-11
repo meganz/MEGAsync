@@ -3020,7 +3020,7 @@ Periksa email anda untuk informasi lebih lanjut tentang cara mengajukan pemberit
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Persyaratan Layanan yang Dilanggar.</translation>
     </message>
 </context>
 <context>

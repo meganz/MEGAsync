@@ -3022,7 +3022,7 @@ U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijg
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Algemene Voorwaarden geschonden</translation>
+        <translation>Algemene Voorwaarden geschonden.</translation>
     </message>
 </context>
 <context>

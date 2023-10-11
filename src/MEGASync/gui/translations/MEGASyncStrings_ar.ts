@@ -3025,7 +3025,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>انتهك شروط الخدمة.</translation>
     </message>
 </context>
 <context>

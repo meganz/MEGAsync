@@ -999,7 +999,7 @@
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Contraseña cambiada</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -1042,7 +1042,7 @@
     <message>
         <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tu cuenta Pro&#xa0;Flexi ha sido desactivada por impago o porque has cancelado la suscripción. No podrás acceder a los datos almacenados en tu cuenta hasta que realices el pago y reactives tu suscripción.</translation>
     </message>
 </context>
 <context>
@@ -1775,12 +1775,12 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Error al añadir la sincronización</translation>
     </message>
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 no se puede añadir porque tu cuenta Pro&#xa0;Flexi se ha desactivado por impago o porque has cancelado la suscripción. Para continuar, realiza el pago y reactiva la suscripción.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1790,7 +1790,7 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message>
         <source>Pay and reactivate</source>
         <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pagar y reactivar</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3017,12 +3017,13 @@ Revisa el correo electrónico que te enviamos para obtener más información sob
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tu cuenta ha sido cerrada debido a un incumplimiento de los Términos de servicio de MEGA.
+No podrás recuperar el acceso a tus datos ni estás autorizado a registrar una nueva cuenta de MEGA.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Infringe los Términos de servicio.</translation>
     </message>
 </context>
 <context>
@@ -3229,7 +3230,7 @@ Revisa el correo electrónico que te enviamos para obtener más información sob
     <message>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tu plan ha caducado</translation>
     </message>
 </context>
 <context>
@@ -3415,12 +3416,12 @@ No se cancelarán las transferencias incompletas de datos sincronizados que has 
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>No cancelar</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
         <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>No limpiar</translation>
     </message>
 </context>
 <context>

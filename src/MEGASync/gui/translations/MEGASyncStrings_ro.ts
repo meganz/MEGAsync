@@ -3023,7 +3023,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Nerespectarea Termenii de utilizare a serviciului</translation>
+        <translation>Nerespectarea Termenii de utilizare a serviciului.</translation>
     </message>
 </context>
 <context>
@@ -4224,17 +4224,17 @@ Introdu un alt nume.</translation>
     <message>
         <source>List View</source>
         <translatorcomment>Button for changing to filesystem list view mode</translatorcomment>
-        <translation>Vizualizare tip listă</translation>
+        <translation>Modul listă</translation>
     </message>
     <message>
         <source>Change to list view mode</source>
         <translatorcomment>Change to list view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Schimbă în modul de vizualizare tip listă</translation>
+        <translation>Schimbă în modul listă</translation>
     </message>
     <message>
         <source>Detail View</source>
         <translatorcomment>Button for changing to filesystem detail view mode</translatorcomment>
-        <translation>Vizualizare detaliată</translation>
+        <translation>Modul detaliat</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>

@@ -475,7 +475,7 @@
     <message>
         <source>Remove backup</source>
         <translatorcomment>Menu action removes the backup</translatorcomment>
-        <translation>Backup anhalten</translation>
+        <translation>Backup beenden</translation>
     </message>
 </context>
 <context>

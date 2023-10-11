@@ -3022,7 +3022,7 @@ Você não poderá recuperar o acesso aos seus dados armazenados, nem estará au
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Termos de serviço infringidos</translation>
+        <translation>Termos de serviço infringidos.</translation>
     </message>
 </context>
 <context>

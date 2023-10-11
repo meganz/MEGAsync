@@ -4235,7 +4235,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Detail View</source>
         <translatorcomment>Button for changing to filesystem detail view mode</translatorcomment>
-        <translation>Vue détaillée</translation>
+        <translation>Mode détaillé</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>
