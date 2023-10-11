@@ -324,11 +324,11 @@ void LoginController::onEvent(mega::MegaApi *, mega::MegaEvent *event)
     {
         if (!isFetchNodesFinished())//event arrived too soon, we will apply it later
         {
-            eventPendingFetchNodesFinished.reset(event->copy());
+            eventPendingStorage.reset(event->copy());
         }
         else
         {
-            eventPendingFetchNodesFinished.reset();
+            eventPendingStorage.reset();
         }
     }
 }
@@ -493,10 +493,10 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
             setState(FETCH_NODES_FINISHED);
         }
 
-        if(eventPendingFetchNodesFinished)
+        if(eventPendingStorage)
         {
-            MegaSyncApp->onEvent(mMegaApi, eventPendingFetchNodesFinished.get());
-            eventPendingFetchNodesFinished = nullptr;
+            MegaSyncApp->onEvent(mMegaApi, eventPendingStorage.get());
+            eventPendingStorage.reset();
         }
     }
 }

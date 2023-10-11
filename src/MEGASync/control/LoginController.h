@@ -122,7 +122,7 @@ private:
 
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
-    std::unique_ptr<mega::MegaEvent> eventPendingFetchNodesFinished;
+    std::unique_ptr<mega::MegaEvent> eventPendingStorage;
 
     QTimer *mConnectivityTimer;
     bool mEmailError;
