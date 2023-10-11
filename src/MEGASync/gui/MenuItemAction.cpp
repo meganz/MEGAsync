@@ -8,7 +8,8 @@ const QString MenuItemAction::Colors::Accent = QLatin1String("#F46265");
 static constexpr int ENTRY_MAX_WIDTH_PX = 240;
 
 MenuItemAction::MenuItemAction(const QString& title, const QString& value,
-                               const QIcon& icon, int treeDepth, const QSize& iconSize, QObject* parent)
+                               const QIcon& icon, bool manageHoverStates,
+                               int treeDepth, const QSize& iconSize, QObject* parent)
     : QWidgetAction (parent),
       mAccent(false),
       mContainer (new QWidget()),
@@ -21,18 +22,28 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& value,
     mContainer->setObjectName(QLatin1String("wContainer"));
     mContainer->installEventFilter(this);
 
+    if (manageHoverStates)
+    {
+        mContainer->setAttribute(Qt::WA_TransparentForMouseEvents);
+    }
+
     setupActionWidget(icon, iconSize);
     setDefaultWidget(mContainer);
 }
 
-MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, int treeDepth,
-                               const QSize& iconSize, QObject *parent)
-    : MenuItemAction (title, QString(), icon, treeDepth, iconSize, parent)
+MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, bool manageHoverStates,
+                               int treeDepth, const QSize& iconSize, QObject *parent)
+    : MenuItemAction (title, QString(), icon, manageHoverStates, treeDepth, iconSize, parent)
+{
+}
+
+MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, bool manageHoverStates, QObject *parent)
+    : MenuItemAction (title, QString(), icon, manageHoverStates, 0, QSize(24, 24), parent)
 {
 }
 
 MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, QObject *parent)
-    : MenuItemAction (title, QString(), icon, 0, QSize(24, 24), parent)
+    : MenuItemAction (title, QString(), icon, false, 0, QSize(24, 24), parent)
 {
 }
 
