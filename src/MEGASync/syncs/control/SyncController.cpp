@@ -296,8 +296,8 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                            tr("You can't sync this folder as it's already synced.")
-                          : tr("You can't sync this folder as it's already backed up.");
+                            tr("Folder can't be synced as it's already synced")
+                          : tr("Folder can't be synced as is already backed up");
             }
         }
         else if (inputPath.startsWith(existingPath)
@@ -312,8 +312,8 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                            tr("You can't sync folders that are inside synced folders.")
-                          : tr("You can't sync folders that are inside backed up folders.");
+                            tr("Folder can't be synced as it's inside a synced folder")
+                          : tr("Folder can't be synced as it's inside a backed up folder");
             }
         }
         else if (existingPath.startsWith(inputPath)
@@ -328,8 +328,8 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                            tr("You can't sync folders that contain synced folders.")
-                          : tr("You can't sync folders that contain backed up folders.");
+                            tr("Folder can't be synced as it contains synced folders")
+                          : tr("Folder can't be synced as it contains backed up folders");
             }
         }
     }
@@ -387,9 +387,7 @@ QString SyncController::getAreLocalFolderAccessRightsOkMsg(const QString& path, 
         QTemporaryFile test (path + QDir::separator());
         if (!QDir(path).mkpath(QString::fromLatin1(".")) && !test.open())
         {
-            message = tr("You don't have write permissions in this local folder.")
-                    + QChar::fromLatin1('\n')
-                    + tr("MEGAsync won't be able to download anything here.");
+            message = tr("Folder can’t be synced as you don’t have write permissions.");
         }
     }
     return message;

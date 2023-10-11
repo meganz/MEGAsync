@@ -334,7 +334,6 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
         }
-        MegaSyncApp->requestUserData(); //query avatar and other user info
     }
     else
     {
@@ -456,6 +455,7 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
 
         mProgress = 0; //sets guestdialog progressbar as indeterminate
         emit progressChanged();
+        MegaSyncApp->requestUserData(); //query avatar and other user info
     }
     else
     {

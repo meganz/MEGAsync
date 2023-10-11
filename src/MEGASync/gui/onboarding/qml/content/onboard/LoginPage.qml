@@ -124,8 +124,10 @@ LoginPageForm {
             name: stateFetchNodesFinished
             extend: stateLoggedOut
             StateChangeScript {
-                script: onboardingWindow.forceClose();
-            }
+                script: {
+                        cancelLogin.close();
+                        onboardingWindow.forceClose();}
+                        }
         },
         State {
             name: stateFetchNodesFinishedOnboarding
@@ -192,6 +194,7 @@ LoginPageForm {
         onBlockedStateChanged: {
             if(blockState >= ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_SMS)
             {
+                cancelLogin.close();
                 onboardingWindow.forceClose();
             }
         }
