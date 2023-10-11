@@ -274,7 +274,7 @@ CloudNodeUndecryptedHeader::CloudNodeUndecryptedHeader(StalledIssueHeader* heade
 void CloudNodeUndecryptedHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Clode node undecrypted <b>%1</b>").arg(header->displayFileName()));
-    header->setTitleDescriptionText(tr("Decryption process could not be completed. Reload your account on <a href=\"http://mega.io/\">MEGA</a> or contact support."));
+    header->setTitleDescriptionText(tr("Decryption process could not be completed. Reload your account on <a href=\"http://mega.io/\">MEGA</a> or contact <a href=mailto:support@mega.nz>Support</a>."));
 }
 
 //Local folder not scannable
@@ -736,7 +736,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         }
         else if(index == NameConflictedStalledIssue::MergeFolders)
         {
-            msgInfo.informativeText = tr("This action will merge all folders into a single one.\We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
+            msgInfo.informativeText = tr("This action will merge all folders into a single one. We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
         }
         else
         {
