@@ -176,13 +176,13 @@ void LoginController::processOnboardingClosed()
     if(getState() == LoginController::State::FETCH_NODES_FINISHED_ONBOARDING)
     {
         setState(LoginController::State::FETCH_NODES_FINISHED);
-        onFetchNodesSuccess();
+        onboardingFinished();
     }
 }
 
-bool LoginController::isLoginFinished() const
+bool LoginController::isFetchNodesFinished() const
 {
-    return getState() >= LoginController::State::FETCH_NODES_FINISHED;
+    return getState() >= LoginController::State::FETCH_NODES_FINISHED_ONBOARDING;
 }
 
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -320,6 +320,17 @@ void LoginController::onEvent(mega::MegaApi *, mega::MegaEvent *event)
         setState(EMAIL_CONFIRMED);
         emit emailConfirmed();
     }
+    else if (event->getType() == mega::MegaEvent::EVENT_STORAGE)
+    {
+        if (!isFetchNodesFinished())//event arrived too soon, we will apply it later
+        {
+            eventPendingFetchNodesFinished.reset(event->copy());
+        }
+        else
+        {
+            eventPendingFetchNodesFinished.reset();
+        }
+    }
 }
 
 void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
@@ -383,11 +394,11 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
     }
 }
 
-void LoginController::onFetchNodesSuccess()
+void LoginController::onboardingFinished()
 {
     SyncInfo::instance()->rewriteSyncSettings(); //write sync settings into user's preferences
 
-    MegaSyncApp->loggedIn(false);
+    MegaSyncApp->onboardingFinished(false);
 }
 
 void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaError *e)
@@ -478,8 +489,14 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         }
         else
         {
-            onFetchNodesSuccess();
+            onboardingFinished();
             setState(FETCH_NODES_FINISHED);
+        }
+
+        if(eventPendingFetchNodesFinished)
+        {
+            MegaSyncApp->onEvent(mMegaApi, eventPendingFetchNodesFinished.get());
+            eventPendingFetchNodesFinished = nullptr;
         }
     }
 }
@@ -867,9 +884,9 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
     MegaSyncApp->onGlobalSyncStateChanged(mMegaApi);
 }
 
-void FastLoginController::onFetchNodesSuccess()
+void FastLoginController::onboardingFinished()
 {
-    MegaSyncApp->loggedIn(true);
+    MegaSyncApp->onboardingFinished(true);
 }
 
 LogoutController::LogoutController(QObject *parent)

@@ -70,7 +70,7 @@ public:
 
     void processOnboardingClosed();
 
-    bool isLoginFinished() const;
+    bool isFetchNodesFinished() const;
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request) override;
@@ -94,7 +94,7 @@ signals:
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);
-    virtual void onFetchNodesSuccess();
+    virtual void onboardingFinished();
     void onAccountCreation(mega::MegaRequest* request, mega::MegaError* e);
     void onAccountCreationResume(mega::MegaRequest* request, mega::MegaError* e);
     void onEmailChanged(mega::MegaRequest* request, mega::MegaError* e);
@@ -122,6 +122,7 @@ private:
 
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
+    std::unique_ptr<mega::MegaEvent> eventPendingFetchNodesFinished;
 
     QTimer *mConnectivityTimer;
     bool mEmailError;
@@ -148,7 +149,7 @@ public:
 
 protected:
     void onLogin(mega::MegaRequest* request, mega::MegaError* e) override;
-    void onFetchNodesSuccess() override;
+    void onboardingFinished() override;
 
 };
 
@@ -165,8 +166,8 @@ signals:
     void logout(bool isLocalLogout);
 
 private:
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     mega::MegaApi * mMegaApi;
+    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 };
 
 #endif // LOGINCONTROLLER_H

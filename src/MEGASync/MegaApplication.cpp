@@ -319,7 +319,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     waiting = false;
     updated = false;
     syncing = false;
-    fetchNodesFinished = false;
     transferring = false;
     checkupdate = false;
     updateAction = nullptr;
@@ -1271,7 +1270,7 @@ void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRe
     }
 }
 
-void MegaApplication::loggedIn(bool fastLogin)
+void MegaApplication::onboardingFinished(bool fastLogin)
 {
     if (appfinished)
     {
@@ -2319,7 +2318,7 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
 void MegaApplication::raiseInfoDialog()
 {
     if(mStatusController->isAccountBlocked()
-        || !mLoginController->isLoginFinished())
+        || !mLoginController->isFetchNodesFinished())
     {
         if (preferences->getSession().isEmpty())
         {
@@ -3849,7 +3848,7 @@ void MegaApplication::PSAseen(int id)
 
 void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSettings>)
 {
-    if(mLoginController->isLoginFinished())
+    if(mLoginController->isFetchNodesFinished())
     {
         createAppMenus();
     }
@@ -3857,7 +3856,7 @@ void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSettings>)
 
 void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSettings>)
 {
-    if(mLoginController->isLoginFinished())
+    if(mLoginController->isFetchNodesFinished())
     {
         createAppMenus();
     }
@@ -4007,7 +4006,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 #endif
     QMenu *displayedMenu = nullptr;
     int menuWidthInitialPopup = -1;
-    if (!mLoginController->isLoginFinished() || mStatusController->isAccountBlocked()) // if not logged or blocked account
+    if (!mLoginController->isFetchNodesFinished() || mStatusController->isAccountBlocked()) // if not logged or blocked account
     {
         if (guestMenu)
         {
@@ -5337,7 +5336,7 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = !mLoginController->isLoginFinished() || mStatusController->isAccountBlocked();
+        proxyOnly = !mLoginController->isFetchNodesFinished() || mStatusController->isAccountBlocked();
         megaApi->retryPendingConnections();
     }
 
@@ -5855,14 +5854,9 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE)
     {
-        if (fetchNodesFinished)
+        if (mLoginController->isFetchNodesFinished())
         {
             applyStorageState(eventNumber);
-            eventPendingFetchNodesFinished.reset();
-        }
-        else //event arrived too soon, we will apply it later
-        {
-            eventPendingFetchNodesFinished.reset(event->copy());
         }
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE_SUM_CHANGED)
@@ -5893,15 +5887,6 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
 //    {
 //        processUpgradeSecurityEvent();
 //    }
-}
-
-//Called when a request is about to start
-void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
-{
-    if (appfinished)
-    {
-        return;
-    }
 }
 
 //Called when a request has finished
@@ -6356,21 +6341,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 break;
         }
     }
-    case MegaRequest::TYPE_FETCH_NODES:
-    {
-        if (preferences->logged())
-        {
-            fetchNodesFinished = true;
-
-            if (eventPendingFetchNodesFinished)
-            {
-                onEvent(megaApi, eventPendingFetchNodesFinished.get());
-            }
-        }
-
-        break;
-    }
-
     default:
         break;
     }

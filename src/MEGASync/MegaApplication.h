@@ -110,7 +110,6 @@ public:
     QString getFormattedDateByCurrentLanguage(const QDateTime& datetime, QLocale::FormatType format = QLocale::FormatType::LongFormat) const;
 
     void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
-    void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
@@ -188,7 +187,7 @@ public:
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
     void resetRootNodes();
     void initLocalServer();
-    void loggedIn(bool fastLogin);
+    void onboardingFinished(bool fastLogin);
     void onLogout();
 
     MegaSyncLogger& getLogger() const;
@@ -366,8 +365,6 @@ protected:
     void manageBusinessStatus(int64_t event);
     void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
 
-    std::unique_ptr<mega::MegaEvent> eventPendingFetchNodesFinished;
-
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
 
@@ -499,7 +496,6 @@ protected:
     bool indexing;
     bool waiting;
     bool syncing; //if any sync is in syncing state
-    bool fetchNodesFinished;
     bool updated;
     bool transferring; //if there is any regular transfer in progress
     bool checkupdate;
