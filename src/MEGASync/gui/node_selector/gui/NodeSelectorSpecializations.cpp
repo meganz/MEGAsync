@@ -222,6 +222,14 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(p
     ui->stackedWidget->addWidget(mBackupsWidget);
     makeConnections(selectType);
     resize(1280,800);
+
+#ifndef Q_OS_MACOS
+    Qt::WindowFlags flags =  Qt::Window;
+    this->setWindowFlags(flags);
+#ifdef Q_OS_LINUX
+    nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
+#endif
+#endif
 }
 
 void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)

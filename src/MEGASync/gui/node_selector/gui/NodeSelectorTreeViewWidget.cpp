@@ -830,11 +830,15 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             {
                 auto index = mModel->findItemByNodeHandle(info.previousHandle, QModelIndex());
 
-                auto isSelected(false);
                 auto proxyIndex(mProxyModel->mapFromSource(index));
-                if(proxyIndex.isValid())
+
+                auto isSelected(false);
+                if(ui->tMegaFolders->selectionModel())
                 {
-                    isSelected = ui->tMegaFolders->selectionModel()->isSelected(proxyIndex);
+                    if(proxyIndex.isValid())
+                    {
+                        isSelected = ui->tMegaFolders->selectionModel()->isSelected(proxyIndex);
+                    }
                 }
 
                 mModel->updateItemNode(index, info.node);

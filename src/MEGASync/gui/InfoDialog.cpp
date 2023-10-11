@@ -1161,12 +1161,7 @@ void InfoDialog::on_bTransferManager_clicked()
 void InfoDialog::on_bCloudDrive_clicked()
 {
     CloudDriveNodeSelector* nodeSelector = new CloudDriveNodeSelector();
-#ifdef Q_OS_LINUX
-    nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
-#endif
-    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this](){
-
-    });
+    DialogOpener::showGeometryRetainerDialog<NodeSelector>(nodeSelector);
 }
 
 void InfoDialog::on_bAddSync_clicked()
