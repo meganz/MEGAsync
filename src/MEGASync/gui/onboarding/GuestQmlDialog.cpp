@@ -5,6 +5,7 @@
 GuestQmlDialog::GuestQmlDialog(QWindow *parent)
     : QmlDialog(parent)
 {
+    setFlags(flags() | Qt::FramelessWindowHint);
     QObject::connect(this, &GuestQmlDialog::activeChanged, [=]() {
         if (!this->isActive()) {
             this->hide();
