@@ -327,7 +327,6 @@ void NodeSelectorTreeViewWidget::onGoBackClicked()
     setRootIndex(indexToGo);
     checkBackForwardButtons();
     checkButtonsVisibility();
-    checkNewFolderButtonVisibility();
 
     if(auto selectionModel = ui->tMegaFolders->selectionModel())
     {
@@ -341,7 +340,7 @@ void NodeSelectorTreeViewWidget::onRemoveIndexFromGoBack(const QModelIndex& curr
 
     setRootIndex(currentRootIndex.parent());
     checkBackForwardButtons();
-    checkNewFolderButtonVisibility();
+    checkButtonsVisibility();
 }
 
 void NodeSelectorTreeViewWidget::onGoForwardClicked()
