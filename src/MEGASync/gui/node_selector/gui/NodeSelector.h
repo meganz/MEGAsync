@@ -21,7 +21,7 @@ class NodeSelectorTreeViewWidgetIncomingShares;
 class NodeSelectorTreeViewWidgetBackups;
 class NodeSelectorTreeViewWidgetSearch;
 
-class MessageInfo;
+struct MessageInfo;
 
 namespace mega {
 class MegaApi;
