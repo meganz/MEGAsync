@@ -303,6 +303,16 @@ void NodeSelectorTreeViewWidget::onGoBackClicked()
     setRootIndex(indexToGo);
     checkBackForwardButtons();
     checkNewFolderButtonVisibility();
+
+}
+
+void NodeSelectorTreeViewWidget::onRemoveIndexFromGoBack(const QModelIndex& currentRootIndex)
+{
+    mNavigationInfo.backwardHandles.removeLast();
+
+    setRootIndex(currentRootIndex.parent());
+    checkBackForwardButtons();
+    checkNewFolderButtonVisibility();
 }
 
 void NodeSelectorTreeViewWidget::onGoForwardClicked()
@@ -721,11 +731,11 @@ void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
         if(proxyIndex.isValid())
         {
             auto goBack(proxyIndex == ui->tMegaFolders->rootIndex());
-            mProxyModel->removeNode(proxyIndex);
             if(goBack)
             {
-                onGoBackClicked();
+                onRemoveIndexFromGoBack(proxyIndex);
             }
+            mProxyModel->removeNode(proxyIndex);
             mNavigationInfo.remove(handle);
         }
     }
