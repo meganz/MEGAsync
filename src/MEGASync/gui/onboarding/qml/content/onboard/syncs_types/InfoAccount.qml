@@ -92,6 +92,7 @@ Item {
                             case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
                                 return OnboardingStrings.accountTypeProFlexi
                             default:
+                                return ""; //avoid warning of undefined assignment to qstring
                                 break;
                         }
                     }
