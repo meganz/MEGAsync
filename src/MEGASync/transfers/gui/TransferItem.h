@@ -138,6 +138,7 @@ public:
     QDateTime getFinishedDateTime() const;
     QString getFormattedFinishedTime() const;
     QString getFullFormattedFinishedTime() const;
+    std::unique_ptr<mega::MegaNode> getNode() const;
 
 private:
     QString         mPath;
