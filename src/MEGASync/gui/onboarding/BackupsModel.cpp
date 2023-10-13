@@ -383,10 +383,8 @@ void BackupsModel::updateSelectedAndTotalSize()
             if(!(*item)->mFolderSizeReady)
             {
                 setTotalSizeReady(false);
-                return;
             }
-
-            if((*item)->folderSize > 0)
+            else if((*item)->folderSize > 0)
             {
                 mBackupsTotalSize += (*item)->folderSize;
             }

@@ -12,8 +12,9 @@
 class BackupFolder : public QObject
 {
     Q_OBJECT
-    // Front (with role)
+
 public:
+    // Front (with role)
     QString mName;
     QString mSize;
     bool mSelected;
@@ -52,8 +53,8 @@ class BackupsModel : public QAbstractListModel
                READ getTotalSize
                NOTIFY totalSizeChanged)
     Q_PROPERTY(bool totalSizeReady
-                   READ getIsTotalSizeReady
-                       NOTIFY totalSizeReadyChanged)
+               READ getIsTotalSizeReady
+               NOTIFY totalSizeReadyChanged)
     Q_PROPERTY(Qt::CheckState mCheckAllState
                READ getCheckAllState
                WRITE setCheckAllState
@@ -112,7 +113,6 @@ public:
     int getRow(const QString& folder);
     void calculateFolderSizes();
     void updateSelectedAndTotalSize();
-    //void updateTotalSize();
 
 public slots:
     void insert(const QString& folder);
