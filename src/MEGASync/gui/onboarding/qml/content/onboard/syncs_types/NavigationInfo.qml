@@ -7,5 +7,6 @@ QtObject {
     property bool comesFromResumePage: false
     property bool fullSyncDone: false
     property bool selectiveSyncDone: false
+    property bool syncDone: fullSyncDone || selectiveSyncDone
 }
 
