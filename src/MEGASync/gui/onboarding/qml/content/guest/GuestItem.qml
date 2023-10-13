@@ -71,6 +71,8 @@ Rectangle {
     height: 560
     radius: 10
     color: Styles.surface1
+    border.color: "#1F000000"
+    border.width: 1
 
     state: getState()
     states: [

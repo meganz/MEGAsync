@@ -14,8 +14,6 @@ GuestQmlDialog {
 
     width: guestItem.width
     height: guestItem.height
-    modality: Qt.NonModal
-    flags: Qt.FramelessWindowHint
     color: "transparent"
 
     GuestItem {
