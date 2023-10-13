@@ -62,8 +62,8 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
                      QWidget *parent) :
     QWidget(parent),
     mMenu (new QMenu(this)),
-    mAddAction (new MenuItemAction(QString(), QIcon(), this)),
-    mMenuAction (new MenuItemAction(QString(), QIcon(), this)),
+    mAddAction (new MenuItemAction(QString(), QIcon(), true, this)),
+    mMenuAction (new MenuItemAction(QString(), QIcon(), true, this)),
     mLastHovered (nullptr),
     mType (type),
     mItemIndent (itemIndent),
@@ -141,7 +141,7 @@ void SyncsMenu::refresh()
             auto* action =
                 new MenuItemAction(SyncController::getSyncNameFromPath(syncSetting->getLocalFolder(true)),
                                    QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
-                                   mItemIndent,
+                                   true, mItemIndent,
                                    this);
             action->setToolTip(createSyncTooltipText(syncSetting));
             connect(action, &MenuItemAction::triggered,
@@ -149,7 +149,6 @@ void SyncsMenu::refresh()
                         Utilities::openUrl(
                             QUrl::fromLocalFile(syncSetting->getLocalFolder()));
                     });
-
             mMenu->addAction(action);
         }
     }
@@ -277,7 +276,7 @@ void BackupSyncsMenu::refresh()
         // Show device name
         mDevNameAction->deleteLater();
         // Display device name before folders
-        mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON), this);
+        mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON), true, this);
         // Insert the action in the menu to make sure it is here when the
         // set device name slot is called.
         menu->insertAction(firstBackup, mDevNameAction);

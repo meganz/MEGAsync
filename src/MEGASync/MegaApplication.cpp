@@ -5312,8 +5312,12 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
         return;
     }
 
-    //Append the list of files to the upload queue
-    uploadQueue.append(newUploadQueue);
+    //Append the list of files to the upload queue, but avoid duplicates
+    std::for_each(newUploadQueue.begin(), newUploadQueue.end(), [&](const QString &str) {
+        if (!uploadQueue.contains(str)) {
+            uploadQueue.enqueue(str);
+        }
+    });
     processUploads();
 }
 
@@ -6171,7 +6175,7 @@ void MegaApplication::createInfoDialogMenus()
 
     if (updateAvailable)
     {
-        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
         updateAction->setEnabled(previousEnabledState);
         connect(updateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked, Qt::QueuedConnection);
 
@@ -6179,7 +6183,7 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        aboutAction = new MenuItemAction(tr("About"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
         connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
 
         infoDialogMenu->addAction(aboutAction);
@@ -6873,13 +6877,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        // We need to be both logged AND have fetched the nodes to continue
-        // Do not continue if there was an error
-        if (mFetchingNodes || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
-        {
-            break;
-        }
-
         auto flags = request->getNumDetails();
         bool storage  = flags & 0x01;
         bool transfer = flags & 0x02;
@@ -6888,6 +6885,13 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (storage)  inflightUserStats[0] = false;
         if (transfer) inflightUserStats[1] = false;
         if (pro)      inflightUserStats[2] = false;
+
+        // We need to be both logged AND have fetched the nodes to continue
+        // Do not continue if there was an error
+        if (mFetchingNodes || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
+        {
+            break;
+        }
 
         //Account details retrieved, update the preferences and the information dialog
         shared_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
