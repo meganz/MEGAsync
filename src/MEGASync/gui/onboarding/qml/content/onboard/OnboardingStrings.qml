@@ -42,7 +42,7 @@ QtObject {
     readonly property string errorEmptyPassword: qsTr("Enter your password")
     readonly property string errorName: qsTr("Please enter your name")
     readonly property string errorLastName: qsTr("Please enter your last name")
-    readonly property string errorPasswordsMatch: qsTr("Passwords don't match. Check and .")
+    readonly property string errorPasswordsMatch: qsTr("Passwords don't match. Check and try again.")
     readonly property string errorValidEmail: qsTr("Enter a valid email address")
     readonly property string finalStepBackup: qsTr("Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your syncs and their statuses under the Sync tab in Settings.")
     readonly property string finalStepBackupTitle: qsTr("Your backup is set up")
