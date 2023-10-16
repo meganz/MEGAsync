@@ -177,12 +177,7 @@ bool BackupsModel::setData(const QModelIndex& index, const QVariant& value, int 
                 break;
             case SelectedRole:
             {
-                QDir dir(item->getFolder());
-                dir.isEmpty(); //this triggers permission request on macOS, don´t remove
-                if(dir.exists() && !dir.isReadable())//this didn´t trigger permission request
-                {
-                    return false;
-                }
+                checkPermissions(item->getFolder());
                 item->mSelected = value.toBool();
                 checkSelectedAll();
                 break;
@@ -327,15 +322,30 @@ void BackupsModel::insert(const QString &folder)
 
 void BackupsModel::setAllSelected(bool selected)
 {
-    QList<BackupFolder*>::iterator item = mBackupFolderList.end()-1;
-    while (item != mBackupFolderList.begin()-1)
+    QListIterator<BackupFolder*> it(mBackupFolderList);
+
+    while(it.hasNext())
     {
-        (*item)->mSelected = selected;
-        emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectedRole } );
-        item--;
+        auto backupFolder = it.next();
+        if(checkPermissions(backupFolder->getFolder()))
+        {
+            backupFolder->mSelected = selected;
+        }
     }
+    emit dataChanged(index(0), index(mBackupFolderList.size() - 1), {SelectedRole});
 
     updateSelectedAndTotalSize();
+}
+
+bool BackupsModel::checkPermissions(const QString &inputPath)
+{
+    QDir dir(inputPath);
+    dir.isEmpty(); //this triggers permission request on macOS, don´t remove
+    if(dir.exists() && !dir.isReadable())//this didn´t trigger permission request
+    {
+        return false;
+    }
+    return true;
 }
 
 void BackupsModel::populateDefaultDirectoryList()

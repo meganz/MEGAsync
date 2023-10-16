@@ -159,6 +159,7 @@ private:
                          const QString& existingPath) const;
     QModelIndex getModelIndex(QList<BackupFolder*>::iterator item);
     void setAllSelected(bool selected);
+    bool checkPermissions(const QString& inputPath);
     void checkRemoteDuplicatedBackups(const QSet<QString>& candidateSet);
     void checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
                                     const QStringList& candidateList);
