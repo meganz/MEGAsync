@@ -32,10 +32,10 @@ Button {
     function getBorderColor() {
         if(button.pressed) {
             return colors.borderPressed;
-        } else if(button.hovered) {
-            return  colors.borderHover;
         } else if(button.checked) {
             return colors.borderSelected;
+        } else if(button.hovered) {
+            return  colors.borderHover;
         } else if(!button.enabled) {
             return colors.borderDisabled;
         }
