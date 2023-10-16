@@ -24,7 +24,7 @@ libmediainfo/19.09
 libzen/0.4.37
 
 # ffmpeg (video preview/thumbnail generation)
-ffmpeg/7f59e0013648f0dd80377330b770b414032233cb all:on ios:off
+ffmpeg/c67a3059bbdb19799d402085e7323f71e7d68656 all:on ios:off osx:ffmpeg-osx-linker.patch
 
 #freeimage and its dependencies (image preview/thumbnail generation)
 freeimage/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46 osx:freeimage-bool-typedef-xcode-compiler.patch
