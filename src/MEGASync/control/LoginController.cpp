@@ -182,7 +182,7 @@ void LoginController::processOnboardingClosed()
 
 bool LoginController::isFetchNodesFinished() const
 {
-    return getState() >= LoginController::State::FETCH_NODES_FINISHED_ONBOARDING;
+    return getState() > LoginController::State::FETCH_NODES_FINISHED_ONBOARDING;
 }
 
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
