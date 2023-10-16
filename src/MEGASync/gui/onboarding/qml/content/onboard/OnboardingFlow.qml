@@ -73,7 +73,7 @@ StackView {
     Connections{
         target: LogoutControllerAccess
 
-        onLogout: {
+        function onLogout() {
             onboarding.state = onboarding.register;
         }
     }

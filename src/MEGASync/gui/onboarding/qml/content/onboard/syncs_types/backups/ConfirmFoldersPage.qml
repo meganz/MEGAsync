@@ -26,11 +26,11 @@ ConfirmFoldersPageForm {
     Connections {
         target: BackupsModel
 
-        onNoneSelected: {
+        function onNoneSelected() {
             footerButtons.rightSecondary.clicked();
         }
 
-        onExistConflictsChanged: {
+        function onExistConflictsChanged() {
             if(BackupsModel.mConflictsNotificationText !== "") {
                 if(BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation) {
                     stepPanel.state = stepPanel.step4Error;
@@ -46,7 +46,7 @@ ConfirmFoldersPageForm {
     Connections {
         target: BackupsController
 
-        onBackupsCreationFinished: (success) => {
+        function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;
             confirmHeader.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;

@@ -191,7 +191,7 @@ LoginPageForm {
     Connections {
         target: AccountStatusControllerAccess
 
-        onBlockedStateChanged: {
+        function onBlockedStateChanged() {
             if(blockState >= ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_SMS)
             {
                 cancelLogin.close();
@@ -203,7 +203,7 @@ LoginPageForm {
     Connections {
         target: LogoutControllerAccess
 
-        onLogout: {
+        function onLogout() {
             password.text = "";
             cancelLogin.close();
             onboardingWindow.forceClose();
