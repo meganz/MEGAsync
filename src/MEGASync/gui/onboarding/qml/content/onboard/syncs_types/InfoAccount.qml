@@ -21,6 +21,48 @@ Item {
     width: parent.width
     height: 48
 
+    function getAccountTypeImage() {
+        switch(accountInfo.type) {
+            case AccountInfoData.ACCOUNT_TYPE_FREE:
+                return Images.shield_account_free;
+            case AccountInfoData.ACCOUNT_TYPE_PROI:
+                return Images.shield_account_proI;
+            case AccountInfoData.ACCOUNT_TYPE_PROII:
+                return Images.shield_account_proII;
+            case AccountInfoData.ACCOUNT_TYPE_PROIII:
+                return Images.shield_account_proIII;
+            case AccountInfoData.ACCOUNT_TYPE_LITE:
+                return Images.shield_account_lite;
+            case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
+                return Images.building;
+            case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
+                return Images.infinity;
+            default:
+                return "";
+        }
+    }
+
+    function getAccountTypeText() {
+        switch(accountInfo.type) {
+            case AccountInfoData.ACCOUNT_TYPE_FREE:
+                return OnboardingStrings.accountTypeFree;
+            case AccountInfoData.ACCOUNT_TYPE_PROI:
+                return OnboardingStrings.accountTypeProI;
+            case AccountInfoData.ACCOUNT_TYPE_PROII:
+                return OnboardingStrings.accountTypeProII;
+            case AccountInfoData.ACCOUNT_TYPE_PROIII:
+                return OnboardingStrings.accountTypeProIII;
+            case AccountInfoData.ACCOUNT_TYPE_LITE:
+                return OnboardingStrings.accountTypeLite;
+            case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
+                return OnboardingStrings.accountTypeBusiness;
+            case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
+                return OnboardingStrings.accountTypeProFlexi
+            default:
+                return "";
+        }
+    }
+
     Rectangle {
         id: background
 
@@ -43,26 +85,7 @@ Item {
                 MegaImages.SvgImage {
                     id: typeImage
 
-                    source: {
-                        switch(accountInfo.type) {
-                            case AccountInfoData.ACCOUNT_TYPE_FREE:
-                                return Images.shield_account_free;
-                            case AccountInfoData.ACCOUNT_TYPE_PROI:
-                                return Images.shield_account_proI;
-                            case AccountInfoData.ACCOUNT_TYPE_PROII:
-                                return Images.shield_account_proII;
-                            case AccountInfoData.ACCOUNT_TYPE_PROIII:
-                                return Images.shield_account_proIII;
-                            case AccountInfoData.ACCOUNT_TYPE_LITE:
-                                return Images.shield_account_lite;
-                            case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
-                                return Images.building;
-                            case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
-                                return Images.infinity;
-                            default:
-                                break;
-                        }
-                    }
+                    source: getAccountTypeImage()
                     height: 16
                     width: 16
                     sourceSize: Qt.size(width, height)
@@ -75,27 +98,7 @@ Item {
                     Layout.alignment: Qt.AlignLeft
                     font.weight: Font.DemiBold
                     font.pixelSize: MegaTexts.Text.Size.Medium
-                    text: {
-                        switch(accountInfo.type) {
-                            case AccountInfoData.ACCOUNT_TYPE_FREE:
-                                return OnboardingStrings.accountTypeFree;
-                            case AccountInfoData.ACCOUNT_TYPE_PROI:
-                                return OnboardingStrings.accountTypeProI;
-                            case AccountInfoData.ACCOUNT_TYPE_PROII:
-                                return OnboardingStrings.accountTypeProII;
-                            case AccountInfoData.ACCOUNT_TYPE_PROIII:
-                                return OnboardingStrings.accountTypeProIII;
-                            case AccountInfoData.ACCOUNT_TYPE_LITE:
-                                return OnboardingStrings.accountTypeLite;
-                            case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
-                                return OnboardingStrings.accountTypeBusiness;
-                            case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
-                                return OnboardingStrings.accountTypeProFlexi
-                            default:
-                                return ""; //avoid warning of undefined assignment to qstring
-                                break;
-                        }
-                    }
+                    text: getAccountTypeText()
                 }
 
             }
