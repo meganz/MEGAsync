@@ -14,7 +14,7 @@ public:
 
     static std::shared_ptr<DeviceName> requestDeviceName();
 
-    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *e) override;
+    void onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError* e) override;
     void requestAttribute() override;
     RequestInfo fillRequestInfo() override;
 
@@ -28,8 +28,8 @@ signals:
     void attributeReady(const QString& deviceName);
 
 private:
-    void processGetDeviceNameCallback(mega::MegaRequest *incoming_request, mega::MegaError *e);
-    void processSetDeviceNameCallback(mega::MegaRequest *incoming_request, mega::MegaError *e);
+    void processGetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e);
+    void processSetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e);
     void setDeviceNameAttribute(bool isRetry = false);
 
 

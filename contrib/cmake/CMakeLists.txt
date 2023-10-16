@@ -660,7 +660,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TextDecorator.cpp
     ${MEGAsyncDir}/control/DialogOpener.cpp
     ${MEGAsyncDir}/control/LoginController.cpp
-	${MEGAsyncDir}/control/AccountStatusController.cpp
+    ${MEGAsyncDir}/control/AccountStatusController.cpp
     ${MEGAsyncDir}/control/FileFolderAttributes.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
