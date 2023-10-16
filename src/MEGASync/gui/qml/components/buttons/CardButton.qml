@@ -11,10 +11,12 @@ Button {
     readonly property int focusBorderWidth: 4
     readonly property int focusBorderRadius: 10
 
+
     property string title
     property string description
     property string imageSource
     property size imageSourceSize
+
     property Component contentComponent
     property Colors colors: Colors {
         background: Styles.pageBackground
@@ -53,6 +55,7 @@ Button {
         return colors.background;
     }
 
+
     checkable: true
     checked: false
     autoExclusive : true
@@ -61,7 +64,7 @@ Button {
         id: focusRect
 
         color: "transparent"
-        border.color: button.enabled ? (button.focus ? Styles.focus : "transparent") : "transparent"
+        border.color: button.enabled ? (button.activeFocus ? Styles.focus : "transparent") : "transparent"
         border.width: button.focusBorderWidth
         radius: button.focusBorderRadius
 
