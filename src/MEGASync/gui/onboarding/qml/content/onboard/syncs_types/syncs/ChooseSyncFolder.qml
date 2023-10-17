@@ -100,7 +100,7 @@ Item {
         target: localFolderChooser
         enabled: root.local
 
-        onFolderChoosen: (folder) => {
+        function onFolderChoosen(folder) {
             folderField.text = folder
         }
     }
@@ -111,7 +111,7 @@ Item {
         target: remoteFolderChooser
         enabled: !root.local
 
-        onFolderChoosen: (folder) => {
+        function onFolderChoosen(folder) {
             folderField.text = folder
         }
     }

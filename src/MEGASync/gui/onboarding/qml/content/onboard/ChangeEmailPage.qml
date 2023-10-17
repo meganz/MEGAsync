@@ -30,7 +30,7 @@ ChangeEmailPageForm {
     Connections {
         target: LoginControllerAccess
 
-        onChangeRegistrationEmailFinished: (success, errorMsg) => {
+        function onChangeRegistrationEmailFinished (success, errorMsg){
             if(success) {
                 LoginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
             } else {

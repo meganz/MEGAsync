@@ -18,7 +18,7 @@ ConfirmEmailPageForm {
     Connections {
         target: LoginControllerAccess
 
-        onEmailConfirmed: {
+        function onEmailConfirmed() {
             // The following four lines are required by Ubuntu to bring the window to the front and
             // move it to the center
             onboardingWindow.hide();

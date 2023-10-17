@@ -107,11 +107,12 @@ Rectangle {
 
     Connections {
         target: onboardingWindow
-        onClosingButLoggingIn: {
+
+        function onClosingButLoggingIn() {
             cancelLogin.visible = true;
         }
 
-        onClosingButCreatingAccount: {
+        function onClosingButCreatingAccount() {
             cancelCreateAccount.visible = true;
         }
     }
@@ -219,7 +220,7 @@ Rectangle {
         Connections {
             target: LoginControllerAccess
 
-            onAccountCreationCancelled: {
+            function onAccountCreationCancelled() {
                 cancelCreateAccount.close();
                 onboardingWindow.forceClose();
             }

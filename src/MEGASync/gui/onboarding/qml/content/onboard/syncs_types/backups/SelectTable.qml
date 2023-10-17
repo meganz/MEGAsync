@@ -98,7 +98,7 @@ Rectangle {
                     Connections {
                         target: BackupsModel
 
-                        onCheckAllStateChanged: {
+                        function onCheckAllStateChanged() {
                             selectAll.fromModel = true;
                             selectAll.checkState = BackupsModel.mCheckAllState;
                         }
@@ -182,8 +182,8 @@ Rectangle {
                 id: chooseLocalFolderConnection
 
                 target: folderDialog
-                onFolderChoosen : (folder) =>
-                {
+
+                function onFolderChoosen(folder) {
                     BackupsModel.insert(folder);
                 }
             }
