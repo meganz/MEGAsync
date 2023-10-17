@@ -23,7 +23,7 @@ QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent
 void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
 {
     int numAlerts = alerts ? alerts->size() : 0;
-    int actualnumberofalertstoinsert = 0;
+    int actualNumberOfAlertsToInsert = 0;
     if (numAlerts)
     {
         for (int i = 0; i < numAlerts; i++)
@@ -31,8 +31,8 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
             MegaUserAlert *alert = alerts->get(i);
             if (alertsMap.find(alert->getId()) == alertsMap.end())
             {
-                actualnumberofalertstoinsert++;
-                if (checkAlertType(alert->getType()) != -1)
+                ++actualNumberOfAlertsToInsert;
+                if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
                 {
                     hasNotificationsOfType[checkAlertType(alert->getType())] = true;
                 }
@@ -41,7 +41,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
 
         int deleted = 0;
         while (copy && !alertOrder.empty()
-               && actualnumberofalertstoinsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
+               && actualNumberOfAlertsToInsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
         {
             MegaUserAlert *alertToDelete = alertsMap[alertOrder.back()];
             assert(alertToDelete && "something went wrong: no alert to delete");
@@ -49,7 +49,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
             {
                 if (!alertToDelete->getSeen())
                 {
-                    if (checkAlertType(alertToDelete->getType()) != -1)
+                    if (checkAlertType(alertToDelete->getType()) != QAlertsModel::ALERT_UNKNOWN)
                     {
                         unSeenNotifications[checkAlertType(alertToDelete->getType())]--;
                     }
@@ -65,9 +65,9 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
             }
         }
 
-        if (actualnumberofalertstoinsert > 0)
+        if (actualNumberOfAlertsToInsert > 0)
         {
-            beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
+            beginInsertRows(QModelIndex(), 0, actualNumberOfAlertsToInsert - 1);
         }
 
         for (int i = qMax(0, numAlerts - (int)Preferences::MAX_COMPLETED_ITEMS) ; i < numAlerts; i++)
@@ -81,7 +81,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     alertsMap.insert(alert->getId(), alert);
                     if (!alert->getSeen())
                     {
-                        if (checkAlertType(alert->getType()) != -1)
+                        if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
                         {
                             unSeenNotifications[checkAlertType(alert->getType())]++;
                         }
@@ -100,7 +100,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         alertsMap[alert->getId()] = alert;
                         if (alert->getSeen() != old->getSeen())
                         {
-                            if (checkAlertType(alert->getType()) != -1)
+                            if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
                             {
                                 unSeenNotifications[checkAlertType(alert->getType())] += alert->getSeen() ? -1 : 1;
                             }
@@ -136,7 +136,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         alertsMap.insert(alert->getId(), alert);
                         if (!alert->getSeen())
                         {
-                            if (checkAlertType(alert->getType()) != -1)
+                            if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
                             {
                                 unSeenNotifications[checkAlertType(alert->getType())]++;
                             }
@@ -146,7 +146,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
             }
         }
 
-        if (actualnumberofalertstoinsert > 0)
+        if (actualNumberOfAlertsToInsert > 0)
         {
             endInsertRows();
         }
@@ -266,10 +266,6 @@ int QAlertsModel::checkAlertType(int alertType) const
             default:
                 return ALERT_UNKNOWN;
     }
-
-#ifndef WIN32
-    return -1; // warning C4702: unreachable code
-#endif
 }
 
 void QAlertsModel::refreshAlertItem(unsigned id)

@@ -28,8 +28,6 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
     mLastHovered (nullptr),
     mDevNameAction (nullptr)
 {
-    QString textAdd;
-    QString textMenu;
     QIcon iconMenu;
 
     switch (mType)
@@ -117,8 +115,7 @@ void SyncsMenu::refresh()
                 activeFolders++;
                 MenuItemAction* action =
                         new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
-                                           QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
-                                           true, itemIndent);
+                                           QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")), true, itemIndent);
                 action->setToolTip(createSyncTooltipText(backupSetting));
                 connect(action, &MenuItemAction::triggered,
                         this, [backupSetting](){

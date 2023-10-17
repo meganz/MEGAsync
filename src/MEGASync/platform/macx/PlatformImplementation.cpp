@@ -136,6 +136,15 @@ void PlatformImplementation::enableFileManagerExtension(bool value)
     QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
 }
 
+void PlatformImplementation::streamWithApp(const QString &app, const QString &url)
+{
+    QString args;
+    args = QString::fromUtf8("-a ");
+    args += QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromUtf8(" \"%1\"").arg(url);
+    QString command = QString::fromLatin1("open ") + args;
+    QProcess::startDetached(command);
+}
+
 bool PlatformImplementation::showInFolder(QString pathIn)
 {
 
@@ -255,11 +264,6 @@ bool PlatformImplementation::registerUpdateJob()
 bool PlatformImplementation::shouldRunHttpServer()
 {
     return runHttpServer();
-}
-
-bool PlatformImplementation::shouldRunHttpsServer()
-{
-    return runHttpsServer();
 }
 
 bool PlatformImplementation::isUserActive()

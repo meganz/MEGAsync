@@ -2,7 +2,6 @@
 #include "ui_DuplicatedNodeDialog.h"
 
 #include "DuplicatedNodeItem.h"
-#include "Utilities.h"
 #include "EventUpdater.h"
 
 #include <QFileInfo>

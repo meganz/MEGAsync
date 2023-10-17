@@ -116,7 +116,11 @@ private:
     void onLocalFolderSet(const QString& path);
     void show2FA(mega::MegaRequest *request, bool invalidCode);
 
+    QString getErrorMessage(mega::MegaError* error) const;
+
     QPropertyAnimation *m_animation;
+    static const QString defaultSyncFolderName;
+    static const QString defaultSyncFolderPath;
 
 };
 

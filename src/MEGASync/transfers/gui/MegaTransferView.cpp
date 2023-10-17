@@ -127,12 +127,12 @@ QString MegaTransferView::cancelAndClearActionText(int count)
 
 QMap<QMessageBox::StandardButton, QString> MegaTransferView::getCancelDialogButtons()
 {
-    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes, tr("Yes, cancel")}, {QMessageBox::No, tr("No, continue")}};
+    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes, tr("Cancel")}, {QMessageBox::No, tr("Don't cancel")}};
 }
 
 QMap<QMessageBox::StandardButton, QString> MegaTransferView::getClearDialogButtons()
 {
-    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes,tr("Yes, clear")}, {QMessageBox::No, tr("No, continue")}};
+    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes,tr("Clear")}, {QMessageBox::No, tr("Don't clear")}};
 }
 
 QString MegaTransferView::errorOpeningFileText()
@@ -620,6 +620,7 @@ QMenu* MegaTransferView::createContextMenu()
     TransferData::TransferTypes overallType;
     bool containsIncomingShares(false);
     long long int movableTransfers(0);
+    bool containsRemovedItems(false);
 
     //TODO use these containers to open links, open folder...etc
     QList<MegaHandle> handlesToOpenByContextMenu;
@@ -651,7 +652,14 @@ QMenu* MegaTransferView::createContextMenu()
                     containsIncomingShares = true;
                 }
             }
-
+            if(!containsRemovedItems)
+            {
+                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(d->mNodeHandle));
+                if (node == nullptr || MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
+                {
+                    containsRemovedItems = true;
+                }
+            }
             //Handles to open
             if(handlesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
             {
@@ -849,7 +857,7 @@ QMenu* MegaTransferView::createContextMenu()
 
         }
 
-        if(!containsIncomingShares)
+        if(!containsIncomingShares && !containsRemovedItems)
         {
             auto getLinkAction = new MenuItemAction(tr("Get link"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png")), contextMenu);
             connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);

@@ -1,7 +1,9 @@
 #include "VerifyLockMessage.h"
+
 #ifdef __APPLE__
-#include "macx/MacXFunctions.h"
+    #include "platform/macx/LockedPopOver.h"
 #endif
+
 #include "ui_VerifyLockMessage.h"
 
 #include <QTimer>
@@ -32,11 +34,6 @@ VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable,
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(unblocked()), this, SLOT(close()));
 
-#ifdef __APPLE__
-    QSize size = m_nativeWidget->size();
-    m_popover = allocatePopOverWithView(m_nativeWidget->nativeView(), size);
-    m_nativeWidget->show();
-#endif
 }
 
 void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
@@ -45,7 +42,8 @@ void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
             m_ui->lWhySeenThis->rect().contains(m_ui->lWhySeenThis->mapFrom(this, event->pos())))
     {
 #ifdef __APPLE__
-        showPopOverRelativeToRect(winId(), m_popover, event->localPos());
+
+        mPopOver.show(this, new LockedPopOver(), event->localPos(), NativeMacPopover::PopOverColor::WHITE, NativeMacPopover::PopOverEdge::EdgeMinY);
 #else
 
         QPoint pos = event->globalPos();
@@ -167,9 +165,6 @@ VerifyLockMessage::~VerifyLockMessage()
 {
     delete delegateListener;
     delete m_ui;
-#ifdef __APPLE__
-    releaseIdObject(m_popover);
-#endif
 }
 
 void VerifyLockMessage::on_bLogout_clicked()

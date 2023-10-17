@@ -183,8 +183,6 @@ protected:
     void closeEvent(QCloseEvent * event);
 #endif
 
-    void restartApp();
-
 private slots:
     void onShellNotificationsProcessed();
 #ifdef Q_OS_MACOS
@@ -210,6 +208,10 @@ private:
     void syncsStateInformation(SyncStateInformation state);
 
     void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
+    void connectAddSyncHandler();
+
+    void setEnabledAllControls(const bool enabled);
+    void setGeneralTabEnabled(const bool enabled);
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();
