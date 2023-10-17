@@ -144,6 +144,7 @@ private:
     bool isRetriedFolder(mega::MegaTransfer* transfer);
     bool isCompletedFromFolderRetry(mega::MegaTransfer* transfer);
     bool isIgnored(mega::MegaTransfer* transfer, bool removeCache = false);
+    bool isTempTransfer(mega::MegaTransfer* transfer, bool removeCache = false);
     void updateFailedTransfer(QExplicitlySharedDataPointer<TransferData> data, mega::MegaTransfer* transfer,
                               mega::MegaError* e);
 

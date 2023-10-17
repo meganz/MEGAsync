@@ -1106,6 +1106,9 @@ void MegaApplication::start()
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromUtf8(" ") + Preferences::VERSION_STRING + QString::fromUtf8("\n") + tr("Logging in"));
     trayIcon->show();
 
+    //In case the previous session did not remove all of them
+    Preferences::instance()->clearTempTransfersPath();
+
     if (!preferences->lastExecutionTime())
     {
         Platform::getInstance()->enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
@@ -2214,6 +2217,7 @@ void MegaApplication::cleanAll()
         Platform::getInstance()->notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
 
+    Preferences::instance()->clearTempTransfersPath();
     PowerOptions::appShutdown();
     mSyncController.reset();
     UserAttributes::UserAttributesManager::instance().reset();

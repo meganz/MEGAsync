@@ -259,7 +259,8 @@ const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
 const long long Preferences::defaultTimeStamp       = 0;
-const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
+//The default appDataId starts from 1, as 0 will be used for invalid appDataId
+const unsigned long long  Preferences::defaultTransferIdentifier   = 1;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
 const long long  Preferences::defaultUpperSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
@@ -2467,6 +2468,21 @@ QString Preferences::getDataPath()
     QString ret = mDataPath;
     mutex.unlock();
     return ret;
+}
+
+QString Preferences::getTempTransfersPath()
+{
+    return getDataPath() + QDir::separator() + QLatin1String("TempTransfers") + QDir::separator();
+}
+
+void Preferences::clearTempTransfersPath()
+{
+    QDir dir(getTempTransfersPath());
+    dir.setFilter(QDir::Hidden | QDir::Files);
+    foreach(QString dirItem, dir.entryList())
+    {
+        dir.remove(dirItem);
+    }
 }
 
 void Preferences::clearTemporalBandwidth()
