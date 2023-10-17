@@ -5336,7 +5336,7 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = !mLoginController->isFetchNodesFinished() || mStatusController->isAccountBlocked();
+        proxyOnly = mLoginController->getState() != LoginController::State::FETCH_NODES_FINISHED || mStatusController->isAccountBlocked();
         megaApi->retryPendingConnections();
     }
 

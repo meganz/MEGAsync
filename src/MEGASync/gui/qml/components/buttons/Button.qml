@@ -18,14 +18,6 @@ Qml.RoundButton {
     property alias progressValue: backgroundProgress.value
     property Sizes sizes: Sizes {}
 
-    Timer {
-        id: busyTimer
-
-        interval: 500;
-        running: false;
-        repeat: false;
-    }
-
     function getBorderColor() {
         if(button.pressed || button.checked) {
             return colors.borderPressed;
@@ -152,6 +144,7 @@ Qml.RoundButton {
                     }
                 }
             }
+
 
             Progress
             {
