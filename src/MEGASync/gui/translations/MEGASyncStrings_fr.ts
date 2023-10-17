@@ -2453,7 +2453,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>L’appli n’arrive pas à se connecter. Veuillez vérifier votre connexion à internet et la configuration de votre pare-feu local. Noter que la plupart des logiciels antivirus comprennent un pare-feu.</translation>
+        <translation>L’appli n’arrive pas à se connecter. Veuillez vérifier votre connexion à Internet et la configuration de votre pare-feu local. Noter que la plupart des logiciels antivirus comprennent un pare-feu.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2538,7 +2538,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>Pas de connexion à Internet</translation>
+        <translation>Il n’y a pas de connexion à Internet</translation>
     </message>
     <message>
         <source>Fetching file list...</source>

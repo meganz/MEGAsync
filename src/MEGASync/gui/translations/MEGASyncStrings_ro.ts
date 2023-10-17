@@ -2453,7 +2453,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>Aplicația nu se poate conecta. Te rugăm să verifici conectivitatea la internet și configurația firewallului local. Reține că majoritatea software-urilor antivirus includ un firewall.</translation>
+        <translation>Aplicația nu se poate conecta. Vă rugăm să verificați conectivitatea la internet și configurația paravanului de protecție local. Rețineți că majoritatea software-urilor antivirus includ un firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>

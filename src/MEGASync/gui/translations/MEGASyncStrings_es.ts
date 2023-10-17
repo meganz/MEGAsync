@@ -2539,7 +2539,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>No hay conexión a Internet</translation>
+        <translation>No hay conexión a internet</translation>
     </message>
     <message>
         <source>Fetching file list...</source>

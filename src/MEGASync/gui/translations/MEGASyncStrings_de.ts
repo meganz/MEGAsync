@@ -1701,7 +1701,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>Abmelden</translation>
+        <translation>Ausloggen</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -2538,7 +2538,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>Keine Verbindung zum Internet</translation>
+        <translation>Keine Internetverbindung</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -4716,7 +4716,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>Abmelden</translation>
+        <translation>Ausloggen</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -5278,7 +5278,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backup</source>
         <translatorcomment>Toolbar button text</translatorcomment>
-        <translation>Datensicherung</translation>
+        <translation>Backups</translation>
     </message>
     <message>
         <source>Backups</source>
@@ -5328,7 +5328,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation>Möchten Sie sich abmelden?</translation>
+        <translation>Möchten Sie sich ausloggen?</translation>
     </message>
     <message>
         <source>Error removing sync</source>
@@ -7262,7 +7262,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Abmelden</translation>
+        <translation>Ausloggen</translation>
     </message>
     <message>
         <source>Verify your email</source>
