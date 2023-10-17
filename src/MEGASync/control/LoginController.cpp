@@ -9,16 +9,14 @@
 
 #include <QQmlContext>
 
-LoginController::LoginController(QObject *parent)
+LoginController::LoginController(QObject* parent)
     : QObject{parent}
       , mMegaApi(MegaSyncApp->getMegaApi())
       , mPreferences(Preferences::instance())
       , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
       , mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
       , mEmailError(false)
-      , mEmailErrorMsg(QString())
       , mPasswordError(false)
-      , mPasswordErrorMsg(QString())
       , mProgress(0)
       , mState(LOGGED_OUT)
       , mNewAccount(false)
@@ -31,7 +29,7 @@ LoginController::LoginController(QObject *parent)
     connect(mConnectivityTimer, &QTimer::timeout, this, &LoginController::runConnectivityCheck);
 
     EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
-    if(credentials.sessionId.size() > 0)
+    if(!credentials.sessionId.isEmpty())
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
     }
@@ -40,34 +38,30 @@ LoginController::LoginController(QObject *parent)
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
 
-LoginController::~LoginController()
-{
-}
-
-void LoginController::login(const QString &email, const QString &password)
+void LoginController::login(const QString& email, const QString& password)
 {
     mMegaApi->login(email.toUtf8().constData(), password.toUtf8().constData());
 }
 
-void LoginController::createAccount(const QString &email, const QString &password,
-                                const QString &name, const QString &lastName)
+void LoginController::createAccount(const QString& email, const QString& password,
+                                const QString& name, const QString& lastName)
 {
     mMegaApi->createAccount(email.toUtf8().constData(), password.toUtf8().constData(),
                              name.toUtf8().constData(), lastName.toUtf8().constData());
 }
 
-void LoginController::changeRegistrationEmail(const QString &email)
+void LoginController::changeRegistrationEmail(const QString& email)
 {
-    QString fullName = mName + QLatin1Char(' ') + mLastName;
+    QString fullName = QLatin1String("%1 %2").arg(mName, mLastName);
     mMegaApi->resendSignupLink(email.toUtf8().constData(), fullName.toUtf8().constData());
 }
 
-void LoginController::login2FA(const QString &pin)
+void LoginController::login2FA(const QString& pin)
 {
     mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(), mPassword.toUtf8().constData(), pin.toUtf8().constData());
 }
 
-QString LoginController::getEmail() const
+const QString& LoginController::getEmail() const
 {
     return mEmail;
 }
@@ -106,7 +100,7 @@ bool LoginController::getEmailError() const
     return mEmailError;
 }
 
-QString LoginController::getEmailErrorMsg() const
+const QString& LoginController::getEmailErrorMsg() const
 {
     return mEmailErrorMsg;
 }
@@ -120,7 +114,7 @@ void LoginController::setEmailError(bool error)
     }
 }
 
-void LoginController::setEmailErrorMsg(const QString &msg)
+void LoginController::setEmailErrorMsg(const QString& msg)
 {
     if(msg != mEmailErrorMsg)
     {
@@ -134,7 +128,7 @@ bool LoginController::getPasswordError() const
     return mPasswordError;
 }
 
-QString LoginController::getPasswordErrorMsg() const
+const QString& LoginController::getPasswordErrorMsg() const
 {
     return mPasswordErrorMsg;
 }
@@ -148,7 +142,7 @@ void LoginController::setPasswordError(bool error)
     }
 }
 
-void LoginController::setPasswordErrorMsg(const QString &msg)
+void LoginController::setPasswordErrorMsg(const QString& msg)
 {
     if(msg != mPasswordErrorMsg)
     {
@@ -157,12 +151,12 @@ void LoginController::setPasswordErrorMsg(const QString &msg)
     }
 }
 
-QString LoginController::getCreateAccountErrorMsg() const
+const QString& LoginController::getCreateAccountErrorMsg() const
 {
     return mCreateAccountErrorMsg;
 }
 
-void LoginController::setCreateAccountErrorMsg(const QString &msg)
+void LoginController::setCreateAccountErrorMsg(const QString& msg)
 {
     if(msg != mCreateAccountErrorMsg)
     {
@@ -182,10 +176,10 @@ void LoginController::processOnboardingClosed()
 
 bool LoginController::isFetchNodesFinished() const
 {
-    return getState() > LoginController::State::FETCH_NODES_FINISHED_ONBOARDING;
+    return getState() >= LoginController::State::FETCH_NODES_FINISHED_ONBOARDING;
 }
 
-void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
+void LoginController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(api)
     switch(request->getType())
@@ -251,7 +245,7 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
     }
 }
 
-void LoginController::onRequestUpdate(mega::MegaApi *api, mega::MegaRequest *request)
+void LoginController::onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request)
 {
     Q_UNUSED(api)
 
@@ -269,7 +263,7 @@ void LoginController::onRequestUpdate(mega::MegaApi *api, mega::MegaRequest *req
     }
 }
 
-void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *request)
+void LoginController::onRequestStart(mega::MegaApi* api, mega::MegaRequest* request)
 {
     Q_UNUSED(api)
     switch(request->getType())
@@ -310,7 +304,7 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     }
 }
 
-void LoginController::onEvent(mega::MegaApi *, mega::MegaEvent *event)
+void LoginController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
 {
     if(event->getType() == mega::MegaEvent::EVENT_CONFIRM_USER_EMAIL)
     {
@@ -333,7 +327,7 @@ void LoginController::onEvent(mega::MegaApi *, mega::MegaEvent *event)
     }
 }
 
-void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
+void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
 {
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
@@ -400,7 +394,7 @@ void LoginController::onboardingFinished()
     MegaSyncApp->onboardingFinished(false);
 }
 
-void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaError *e)
+void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaError* e)
 {
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
@@ -420,7 +414,7 @@ void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaEr
     }
 }
 
-void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::MegaError *e)
+void LoginController::onAccountCreationResume(mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(request)
     if(e->getErrorCode() == mega::MegaError::API_OK)
@@ -436,7 +430,7 @@ void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::
     }
 }
 
-void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError *e)
+void LoginController::onEmailChanged(mega::MegaRequest* request, mega::MegaError* e)
 {
     if(e->getErrorCode() != mega::MegaError::API_OK)
     {
@@ -452,7 +446,7 @@ void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError
     }
 }
 
-void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *e)
+void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(request)
     if (e->getErrorCode() == mega::MegaError::API_OK)
@@ -501,7 +495,7 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
     }
 }
 
-void LoginController::onWhyAmIBlocked(mega::MegaRequest *request, mega::MegaError *e)
+void LoginController::onWhyAmIBlocked(mega::MegaRequest* request, mega::MegaError* e)
 {
     if (e->getErrorCode() == mega::MegaError::API_OK
         && request->getNumber() == mega::MegaApi::ACCOUNT_NOT_BLOCKED)
@@ -516,7 +510,7 @@ void LoginController::onWhyAmIBlocked(mega::MegaRequest *request, mega::MegaErro
     }
 }
 
-void LoginController::onAccountCreationCancel(mega::MegaRequest *request, mega::MegaError *e)
+void LoginController::onAccountCreationCancel(mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(request)
     Q_UNUSED(e)
@@ -530,7 +524,7 @@ void LoginController::onAccountCreationCancel(mega::MegaRequest *request, mega::
     emit accountCreationCancelled();
 }
 
-void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
+void LoginController::onLogout(mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(e)
     Q_UNUSED(request)
@@ -555,7 +549,7 @@ void LoginController::fetchNodes(const QString& email)
            // Fortunately, the SDK can help us get the email of the session
     bool needFindingOutEmail = !mPreferences->logged() && email.isEmpty();
 
-    auto loadMigrateAndFetchNodes = [this](const QString &email)
+    auto loadMigrateAndFetchNodes = [this](const QString& email)
     {
         if (!mPreferences->logged() && email.isEmpty()) // I still couldn't get the the email: won't be able to access user settings
         {
@@ -738,7 +732,7 @@ QString LoginController::getRepeatedEmailMsg()
     return tr("Another user with this email address already exists. Try again.");
 }
 
-void LoginController::setEmail(const QString &email)
+void LoginController::setEmail(const QString& email)
 {
     if(mEmail != email)
     {
@@ -772,7 +766,7 @@ void LoginController::runConnectivityCheck()
         }
 
         proxy.setHostName(mPreferences->proxyServer());
-        proxy.setPort(qint16(mPreferences->proxyPort()));
+        proxy.setPort(quint16(mPreferences->proxyPort()));
         if (mPreferences->proxyRequiresAuth())
         {
             proxy.setUser(mPreferences->getProxyUsername());
@@ -784,8 +778,7 @@ void LoginController::runConnectivityCheck()
         std::unique_ptr<mega::MegaProxy> autoProxy(mMegaApi->getAutoProxySettings());
         if (autoProxy && autoProxy->getProxyType() == mega::MegaProxy::PROXY_CUSTOM)
         {
-            std::string sProxyURL = autoProxy->getProxyURL();
-            QString proxyURL = QString::fromUtf8(sProxyURL.data());
+            QString proxyURL = QString::fromUtf8(autoProxy->getProxyURL());
 
             QStringList parts = proxyURL.split(QString::fromUtf8("://"));
             if (parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
@@ -851,7 +844,7 @@ bool FastLoginController::fastLogin()
     return false;
 }
 
-void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
+void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(request)
     //This prevents to handle logins in the initial setup wizard
@@ -889,7 +882,7 @@ void FastLoginController::onboardingFinished()
     MegaSyncApp->onboardingFinished(true);
 }
 
-LogoutController::LogoutController(QObject *parent)
+LogoutController::LogoutController(QObject* parent)
     : QObject(parent)
       , mMegaApi(MegaSyncApp->getMegaApi())
       , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
@@ -902,7 +895,7 @@ LogoutController::~LogoutController()
 {
 }
 
-void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
+void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(api)
     if(request->getType() != mega::MegaRequest::TYPE_LOGOUT)
@@ -961,7 +954,7 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
 
            //Check for any sync disabled by logout to warn user on next login with user&password
     const auto syncSettings (SyncInfo::instance()->getAllSyncSettings());
-    auto isErrorLoggedOut = [](std::shared_ptr<SyncSettings> s) {return s->getError() == mega::MegaSync::LOGGED_OUT;};
+    auto isErrorLoggedOut = [](const std::shared_ptr<SyncSettings> s) {return s->getError() == mega::MegaSync::LOGGED_OUT;};
     if (std::any_of(syncSettings.cbegin(), syncSettings.cend(), isErrorLoggedOut))
     {
         Preferences::instance()->setNotifyDisabledSyncsOnLogin(true);

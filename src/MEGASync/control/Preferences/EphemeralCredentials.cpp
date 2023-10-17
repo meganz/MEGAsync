@@ -1,8 +1,6 @@
 #include "EphemeralCredentials.h"
 
 EphemeralCredentials::EphemeralCredentials()
-    : email(QString())
-    , sessionId(QString())
 {
 }
 

@@ -84,8 +84,10 @@ QString ChooseLocalFolder::getDefaultFolder(const QString& folderName)
     }
 
     QDir dir(folder);
-    folder = dir.canonicalPath(); //in case there is a folder with the same name MEGA but with different case: Mega
-
+    if(dir.exists())
+    {
+        folder = dir.canonicalPath(); //in case there is a folder with the same name MEGA but with different case: Mega
+    }
     return QDir::toNativeSeparators(folder);
 }
 

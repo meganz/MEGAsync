@@ -106,7 +106,7 @@ bool DeviceName::setDeviceName(const QString &deviceName)
     return true;
 }
 
-void DeviceName::processGetDeviceNameCallback(mega::MegaRequest *incoming_request, mega::MegaError *e)
+void DeviceName::processGetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e)
 {
     auto errorCode (e->getErrorCode());
 
@@ -132,7 +132,7 @@ void DeviceName::processGetDeviceNameCallback(mega::MegaRequest *incoming_reques
     }
 }
 
-void DeviceName::processSetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError *e)
+void DeviceName::processSetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e)
 {
     auto errorCode (e->getErrorCode());
     if  (errorCode == mega::MegaError::API_OK)
@@ -162,13 +162,13 @@ void DeviceName::processSetDeviceNameCallback(mega::MegaRequest* incoming_reques
 void DeviceName::setDeviceNameAttribute(bool isRetry)
 {
     QString deviceNameToSet;
-    if(isRetry)
+    if(isRetry || mUserChoosenDeviceName.isEmpty())
     {
         deviceNameToSet = mDeviceName;
     }
     else
     {
-        deviceNameToSet = mUserChoosenDeviceName.isEmpty() ? mDeviceName : mUserChoosenDeviceName;
+        deviceNameToSet = mUserChoosenDeviceName;
     }
 
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,

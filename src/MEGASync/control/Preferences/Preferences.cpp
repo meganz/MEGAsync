@@ -500,36 +500,31 @@ QString Preferences::getSession()
 
 void Preferences::removeEphemeralCredentials()
 {
-    mutex.lock();
+    QMutexLocker lock(&mutex);
     mSettings->remove(ephemeralSessionKey);
     removeFromCache(ephemeralSessionKey);
     mSettings->sync();
-    mutex.unlock();
 }
 
-void Preferences::setEphemeralCredentials(EphemeralCredentials& cred)
+void Preferences::setEphemeralCredentials(const EphemeralCredentials& cred)
 {
-    mutex.lock();
-
+    QMutexLocker lock(&mutex);
     QByteArray array;
     QDataStream stream(&array, QIODevice::WriteOnly);
     stream << cred;
     mSettings->setValue(ephemeralSessionKey, array.toBase64());
     setCachedValue(ephemeralSessionKey, array.toBase64());
     mSettings->sync();
-    mutex.unlock();
 }
 
 EphemeralCredentials Preferences::getEphemeralCredentials()
 {
-    mutex.lock();
+    QMutexLocker lock(&mutex);
     QByteArray array = getValue<QByteArray>(ephemeralSessionKey);
     QByteArray base64 = QByteArray::fromBase64(array);
     QDataStream stream(&base64, QIODevice::ReadOnly);
     EphemeralCredentials cred;
     stream >> cred;
-
-    mutex.unlock();
     return cred;
 }
 

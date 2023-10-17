@@ -2318,7 +2318,7 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
 void MegaApplication::raiseInfoDialog()
 {
     if(mStatusController->isAccountBlocked()
-        || !mLoginController->isFetchNodesFinished())
+        || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
     {
         if (preferences->getSession().isEmpty())
         {
