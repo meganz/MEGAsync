@@ -18,56 +18,52 @@ AccountStatusController::AccountStatusController(QObject* parent)
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), this);
 }
 
-AccountStatusController::~AccountStatusController()
-{
-}
-
 void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
 {
     if (event->getType() == mega::MegaEvent::EVENT_ACCOUNT_BLOCKED)
     {
         switch (event->getNumber())
         {
-        case mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
-        case mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
-        {
-            mBlockedStateSet = true;
-            int blockState = static_cast<int>(event->getNumber());
-            if(mBlockedState == blockState)
+            case mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
+            case mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
-                return;
+                mBlockedStateSet = true;
+                int blockState = static_cast<int>(event->getNumber());
+                if(mBlockedState == blockState)
+                {
+                    return;
+                }
+
+                mBlockedState = blockState;
+                DialogOpener::closeAllDialogs();
+                showVerifyAccountInfo();
+
+                if (Preferences::instance()->logged())
+                {
+                    Preferences::instance()->setBlockedState(blockState);
+                }
+
+                emit blockedStateChanged(static_cast<int>(event->getNumber()));
+                break;
             }
-
-            mBlockedState = blockState;
-            DialogOpener::closeAllDialogs();
-            showVerifyAccountInfo();
-
-            if (Preferences::instance()->logged())
+            case mega::MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
             {
-                Preferences::instance()->setBlockedState(blockState);
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = MegaSyncApp->getMEGAString();
+                msgInfo.text = tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details.");
+                msgInfo.ignoreCloseAll = true;
+                QMegaMessageBox::warning(msgInfo);
+                break;
             }
-
-            emit blockedStateChanged(static_cast<int>(event->getNumber()));
-            break;
-        }
-        case mega::MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
-        {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text = tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details.");
-            msgInfo.ignoreCloseAll = true;
-            QMegaMessageBox::warning(msgInfo);
-            break;
-        }
-        default:
-        {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text = QCoreApplication::translate("MegaError", event->getText());
-            msgInfo.ignoreCloseAll = true;
-            QMegaMessageBox::critical(msgInfo);
-            break;
-        }
+            default:
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = MegaSyncApp->getMEGAString();
+                msgInfo.text = QCoreApplication::translate("MegaError", event->getText());
+                msgInfo.ignoreCloseAll = true;
+                QMegaMessageBox::critical(msgInfo);
+                break;
+            }
         }
     }
 }
@@ -118,8 +114,8 @@ void AccountStatusController::whyAmIBlocked(bool force)
 {
     if((!mQueringWhyAmIBlocked && isAccountBlocked()) || force)
     {
-        mMegaApi->whyAmIBlocked();
         mQueringWhyAmIBlocked = true;
+        mMegaApi->whyAmIBlocked();
     }
 }
 

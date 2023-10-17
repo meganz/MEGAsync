@@ -16,8 +16,7 @@ class AccountStatusController : public QObject, public mega::MegaListener
 
 public:
     AccountStatusController(QObject* parent = nullptr);
-    virtual ~AccountStatusController();
-
+    virtual ~AccountStatusController() = default;
 
     void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;

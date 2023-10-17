@@ -8,11 +8,9 @@
 #include <QDialog>
 #include <QMessageBox>
 #include <QPointer>
-#include <QMap>
 
 #include <functional>
 #include <memory>
-#include <type_traits>
 
 #include <QMap>
 #include <QQueue>
