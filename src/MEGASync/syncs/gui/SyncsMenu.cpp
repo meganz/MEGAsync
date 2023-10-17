@@ -62,8 +62,8 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
                      QWidget *parent) :
     QWidget(parent),
     mMenu (new QMenu(this)),
-    mAddAction (new MenuItemAction(QString(), QIcon(), true, this)),
-    mMenuAction (new MenuItemAction(QString(), QIcon(), true, this)),
+    mAddAction (new MenuItemAction(QString(), QString(), nullptr)),
+    mMenuAction (new MenuItemAction(QString(), QString(), nullptr)),
     mLastHovered (nullptr),
     mType (type),
     mItemIndent (itemIndent),
@@ -71,10 +71,12 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
     mAddActionText(addActionText),
     mMenuActionText(menuActionText)
 {
+    mAddAction->setManagesHoverStates(true);
     mAddAction->setLabelText(tr(mAddActionText.toUtf8().constData()));
     connect(mAddAction, &MenuItemAction::triggered,
             this, &SyncsMenu::onAddSync);
 
+    mMenuAction->setManagesHoverStates(true);
     mMenuAction->setLabelText(tr(mMenuActionText.toUtf8().constData()));
     mMenuAction->setIcon(mMenuIcon);
 
@@ -140,9 +142,10 @@ void SyncsMenu::refresh()
             activeFolders++;
             auto* action =
                 new MenuItemAction(SyncController::getSyncNameFromPath(syncSetting->getLocalFolder(true)),
-                                   QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
-                                   true, mItemIndent,
-                                   this);
+                                   QLatin1String("://images/icons/folder/folder-mono_24.png"),
+                                   nullptr);
+            action->setManagesHoverStates(true);
+            action->setTreeDepth(mItemIndent);
             action->setToolTip(createSyncTooltipText(syncSetting));
             connect(action, &MenuItemAction::triggered,
                     this, [syncSetting](){
@@ -276,7 +279,8 @@ void BackupSyncsMenu::refresh()
         // Show device name
         mDevNameAction->deleteLater();
         // Display device name before folders
-        mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON), true, this);
+        mDevNameAction = new MenuItemAction(QString(), DEVICE_ICON, this);
+        mDevNameAction->setManagesHoverStates(true);
         // Insert the action in the menu to make sure it is here when the
         // set device name slot is called.
         menu->insertAction(firstBackup, mDevNameAction);

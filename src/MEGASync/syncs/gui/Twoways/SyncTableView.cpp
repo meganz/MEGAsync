@@ -113,7 +113,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 
     // Show in file explorer action
     auto showLocalAction (new MenuItemAction(PlatformStrings::fileExplorer(),
-                                             QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
+                                             QLatin1String("://images/show_in_folder_ico.png")));
     connect(showLocalAction, &MenuItemAction::triggered, this, [index]()
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
@@ -122,7 +122,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 
     // Show in Mega web action
     auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
-                                              QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+                                              QLatin1String("://images/ico_open_MEGA.png")));
     connect(showRemoteAction, &MenuItemAction::triggered, this, [index]()
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
@@ -131,7 +131,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 
     // Remove Sync action
     auto delAction (new MenuItemAction(tr("Remove synced folder"),
-                                       QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
+                                       QLatin1String("://images/ico_Delete.png")));
     delAction->setAccent(true);
     connect(delAction, &MenuItemAction::triggered, this, [this, index]()
     {
