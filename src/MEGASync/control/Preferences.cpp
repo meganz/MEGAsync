@@ -2728,6 +2728,7 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8("desktop.ini"));
         excludedSyncNames.append(QString::fromUtf8("~*"));
         excludedSyncNames.append(QString::fromUtf8(".*"));
+        excludedSyncNames.append(QString::fromLatin1("*.crdownload"));
     }
 
     if (getValue<int>(lastVersionKey) < 3400)

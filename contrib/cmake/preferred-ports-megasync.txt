@@ -24,7 +24,7 @@ libmediainfo/19.09
 libzen/0.4.37
 
 # ffmpeg (video preview/thumbnail generation)
-ffmpeg/7f59e0013648f0dd80377330b770b414032233cb all:on ios:off
+ffmpeg/c67a3059bbdb19799d402085e7323f71e7d68656 all:on ios:off osx:ffmpeg-osx-linker.patch
 
 # freeimage and its dependencies (image preview/thumbnail generation)
 freeimage/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46 osx:freeimage-bool-typedef-xcode-compiler.patch
@@ -47,7 +47,7 @@ opengl/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
 # pdfium libraries, specific version for build stability  (preview/thumbnail generation for pdfs)
 # no v8 (javascript execution) etc
 pdfium/5247
-pdfium-freetype/2-12-1
+freetype[core,bzip2,png,zlib]/6bf5ffffe875f2f824ca68eade4149587357880e
 
 # dependencies of pdfium
 icu/979a5197b3389cfdf91d0ac5d98b6066ce73fd7a all:off osx:on

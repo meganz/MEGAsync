@@ -140,6 +140,7 @@ public:
     QString getFormattedFinishedTime() const;
     QString getFullFormattedFinishedTime() const;
     bool isTempTransfer() const;
+    std::unique_ptr<mega::MegaNode> getNode() const;
 
 private:
     QString         mPath;

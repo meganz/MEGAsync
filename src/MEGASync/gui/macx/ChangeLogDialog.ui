@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string/>
+   <string notr="true">MEGA</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#ChangeLogDialog
@@ -291,19 +291,13 @@ border-bottom: 1px solid #EFEFEC;
    <item>
     <widget class="QWidget" name="wLinks" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
+      <item alignment="Qt::AlignHCenter">
        <widget class="ClickableLabel" name="bTerms">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>135</width>
-          <height>0</height>
-         </size>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -325,7 +319,7 @@ border-bottom: 1px solid #EFEFEC;
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignHCenter">
        <widget class="ClickableLabel" name="bPolicy">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -356,7 +350,7 @@ border-bottom: 1px solid #EFEFEC;
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignHCenter">
        <widget class="ClickableLabel" name="bAck">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">

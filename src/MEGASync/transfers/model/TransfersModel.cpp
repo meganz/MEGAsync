@@ -1440,23 +1440,7 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
 std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
 {
     auto d (getTransfer(row));
-
-    std::unique_ptr<MegaNode> node;
-
-    if (d->getState() == TransferData::TRANSFER_FAILED)
-    {
-        if(d->mFailedTransfer)
-        {
-            node.reset(d->mFailedTransfer->getPublicMegaNode());
-        }
-    }
-
-    if(!node && d->mNodeHandle != mega::INVALID_HANDLE)
-    {
-        node.reset(mMegaApi->getNodeByHandle(d->mNodeHandle));
-    }
-
-    return node;
+    return d->getNode();
 }
 
 //Returns the node if the parent node does not exist
@@ -1528,7 +1512,7 @@ QFileInfo TransfersModel::getFileInfoByIndex(const QModelIndex& index)
     return QFileInfo(path);
 }
 
-void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>>& transfersToRetry)
+void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> &transfersToRetry)
 {
     //This method receives a list of uploads or downloads, never mixed
 
@@ -1536,12 +1520,15 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
     {
         foreach(auto& appData, transfersToRetry.uniqueKeys())
         {
-            auto transfers = transfersToRetry.values(appData);
+            auto transferDatas = transfersToRetry.values(appData);
+
             QByteArray appDataBA = QString::number(appData).toUtf8();
             const char* appDataRaw = appDataBA.constData();
 
-            foreach(auto& failedTransfer, transfers)
+            foreach(auto& failedTransferdata, transferDatas)
             {
+                auto failedTransfer = failedTransferdata->mFailedTransfer;
+
                 std::shared_ptr<TransferMetaData> data(nullptr);
 
                 auto transferAppData(failedTransfer->getAppData());
@@ -1571,7 +1558,7 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
                         data = TransferMetaDataContainer::createTransferMetaDataWithappDataId<DownloadTransferMetaData>(appData, QString::fromUtf8(failedTransfer->getParentPath()));
                     }
 
-                    data->setInitialTransfers(transfers.size());
+                    data->setInitialTransfers(transferDatas.size());
                 }
                 else
                 {
@@ -1580,7 +1567,7 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
 
                 if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
                 {
-                    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(failedTransfer->getNodeHandle()));
+                    std::unique_ptr<mega::MegaNode> node = failedTransferdata->getNode();
                     mMegaApi->startDownload(node.get(), failedTransfer->getPath(),
                                             failedTransfer->getFileName(), appDataRaw,
                                             false, nullptr,
@@ -1609,8 +1596,8 @@ void TransfersModel::retryTransferByIndex(const QModelIndex& index)
     auto d (transferItem.getTransferData());
 
     if(d && d->mFailedTransfer && d->canBeRetried())
-    {
-        QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>> transfersToRetry;
+    {        
+        QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> transfersToRetry;
         auto copiedTransfer = std::shared_ptr<mega::MegaTransfer>(d->mFailedTransfer->copy());
 
         unsigned long long appData(0);
@@ -1632,7 +1619,7 @@ void TransfersModel::retryTransferByIndex(const QModelIndex& index)
             }
         }
 
-        transfersToRetry.insert(appData, copiedTransfer);
+        transfersToRetry.insert(appData, d);
 
         mModelMutex.unlock();
 
@@ -1659,8 +1646,8 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
         return index1.row() > index2.row();
     });
 
-    QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>> uploadTransfersToRetry;
-    QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>> downloadTransfersToRetry;
+    QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> uploadTransfersToRetry;
+    QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> downloadTransfersToRetry;
     QModelIndexList canBeRetriedIndexes;
 
     mModelMutex.lock();
@@ -1701,7 +1688,7 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
                     }
                 }
 
-                uploadTransfersToRetry.insert(appDataId, copiedTransfer);
+                uploadTransfersToRetry.insert(appDataId, d);
             }
             else
             {
@@ -1725,7 +1712,7 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
                     }
                 }
 
-                downloadTransfersToRetry.insert(appDataId, copiedTransfer);
+                downloadTransfersToRetry.insert(appDataId, d);
             }
         }
     }
@@ -1754,7 +1741,7 @@ void TransfersModel::retryTransfersByAppDataId(const std::shared_ptr<TransferMet
 
     data->getFileTransferFailedTags(filesToRetry, foldersToRetry);
 
-    QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>> failedFilesToRetryOutOfTheModel;
+    QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> failedFilesToRetryOutOfTheModel;
 
     foreach(auto item, qAsConst(filesToRetry))
     {
@@ -1765,7 +1752,7 @@ void TransfersModel::retryTransfersByAppDataId(const std::shared_ptr<TransferMet
         }
         else
         {
-           failedFilesToRetryOutOfTheModel.insert(data->getAppId(), item->failedTransfer);
+           failedFilesToRetryOutOfTheModel.insert(data->getAppId(), getTransferByTag(item->failedTransfer->getTag()));
         }
     }
 

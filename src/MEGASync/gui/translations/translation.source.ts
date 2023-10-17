@@ -271,11 +271,6 @@
         <translation>[A] has been deleted or deactivated</translation>
     </message>
     <message>
-        <source>[A] established you as a contact</source>
-        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A] accepted your contact request</translation>
-    </message>
-    <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
         <translation>[A] blocked you as contact</translation>
@@ -297,7 +292,7 @@
     </message>
     <message>
         <source>[A] accepted your contact request</source>
-        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request. (SNC-3341)</translatorcomment>
         <translation>[A] accepted your contact request</translation>
     </message>
     <message>
@@ -3960,18 +3955,13 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>Someone has accepted your contact request</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>Info</translation>
-    </message>
-    <message>
-        <source>Someone accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Someone accepted your contact request</translation>
     </message>
     <message>
         <source>Info:</source>

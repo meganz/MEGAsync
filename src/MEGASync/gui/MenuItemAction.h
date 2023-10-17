@@ -18,7 +18,7 @@ public:
     bool getAccent() const;
     void setAccent(bool enabled);
 
-    ~MenuItemAction();
+    ~MenuItemAction() override;
 
     void setManagesHoverStates(bool managesHoverStates);
 
@@ -37,7 +37,7 @@ private:
     void setupActionWidget(const QSize& iconSize);
 
 protected:
-    bool eventFilter(QObject* obj, QEvent* event);
+    bool eventFilter(QObject* obj, QEvent* event) override;
     const QString& getColor() const; /* return color based on accent value */
 };
 

@@ -5355,8 +5355,12 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
         return;
     }
 
-    //Append the list of files to the upload queue
-    uploadQueue.append(newUploadQueue);
+    //Append the list of files to the upload queue, but avoid duplicates
+    std::for_each(newUploadQueue.begin(), newUploadQueue.end(), [&](const QString &str) {
+        if (!uploadQueue.contains(str)) {
+            uploadQueue.enqueue(str);
+        }
+    });
     processUploads();
 }
 
