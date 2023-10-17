@@ -46,26 +46,26 @@ public:
     Q_ENUM(State)
 
     explicit LoginController(QObject *parent = nullptr);
-    virtual ~LoginController();
+    virtual ~LoginController() = default;
     Q_INVOKABLE void login(const QString& email, const QString& password);
     Q_INVOKABLE void createAccount(const QString& email, const QString& password, const QString& name, const QString& lastName);
     Q_INVOKABLE void changeRegistrationEmail(const QString& email);
     Q_INVOKABLE void login2FA(const QString& pin);
-    Q_INVOKABLE QString getEmail() const;
+    Q_INVOKABLE const QString& getEmail() const;
     Q_INVOKABLE void cancelLogin() const;
     Q_INVOKABLE void cancelCreateAccount() const;
     Q_INVOKABLE double getProgress() const;
     Q_INVOKABLE State getState() const;
     Q_INVOKABLE void setState(State state);
     Q_INVOKABLE bool getEmailError() const;
-    Q_INVOKABLE QString getEmailErrorMsg() const;
+    Q_INVOKABLE const QString& getEmailErrorMsg() const;
     Q_INVOKABLE void setEmailError(bool error);
     Q_INVOKABLE void setEmailErrorMsg(const QString& msg);
     Q_INVOKABLE bool getPasswordError() const;
-    Q_INVOKABLE QString getPasswordErrorMsg() const;
+    Q_INVOKABLE const QString& getPasswordErrorMsg() const;
     Q_INVOKABLE void setPasswordError(bool error);
     Q_INVOKABLE void setPasswordErrorMsg(const QString& msg);
-    Q_INVOKABLE QString getCreateAccountErrorMsg() const;
+    Q_INVOKABLE const QString& getCreateAccountErrorMsg() const;
     Q_INVOKABLE void setCreateAccountErrorMsg(const QString& msg);
 
     void processOnboardingClosed();

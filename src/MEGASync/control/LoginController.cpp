@@ -16,9 +16,7 @@ LoginController::LoginController(QObject* parent)
       , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
       , mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
       , mEmailError(false)
-      , mEmailErrorMsg(QString())
       , mPasswordError(false)
-      , mPasswordErrorMsg(QString())
       , mProgress(0)
       , mState(LOGGED_OUT)
       , mNewAccount(false)
@@ -31,17 +29,13 @@ LoginController::LoginController(QObject* parent)
     connect(mConnectivityTimer, &QTimer::timeout, this, &LoginController::runConnectivityCheck);
 
     EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
-    if(credentials.sessionId.size() > 0)
+    if(!credentials.sessionId.isEmpty())
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
     }
 
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), this);
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
-}
-
-LoginController::~LoginController()
-{
 }
 
 void LoginController::login(const QString& email, const QString& password)
@@ -58,7 +52,7 @@ void LoginController::createAccount(const QString& email, const QString& passwor
 
 void LoginController::changeRegistrationEmail(const QString& email)
 {
-    QString fullName = mName + QLatin1Char(' ') + mLastName;
+    QString fullName = QLatin1String("%1 %2").arg(mName, mLastName);
     mMegaApi->resendSignupLink(email.toUtf8().constData(), fullName.toUtf8().constData());
 }
 
@@ -67,7 +61,7 @@ void LoginController::login2FA(const QString& pin)
     mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(), mPassword.toUtf8().constData(), pin.toUtf8().constData());
 }
 
-QString LoginController::getEmail() const
+const QString& LoginController::getEmail() const
 {
     return mEmail;
 }
@@ -106,7 +100,7 @@ bool LoginController::getEmailError() const
     return mEmailError;
 }
 
-QString LoginController::getEmailErrorMsg() const
+const QString& LoginController::getEmailErrorMsg() const
 {
     return mEmailErrorMsg;
 }
@@ -134,7 +128,7 @@ bool LoginController::getPasswordError() const
     return mPasswordError;
 }
 
-QString LoginController::getPasswordErrorMsg() const
+const QString& LoginController::getPasswordErrorMsg() const
 {
     return mPasswordErrorMsg;
 }
@@ -157,7 +151,7 @@ void LoginController::setPasswordErrorMsg(const QString& msg)
     }
 }
 
-QString LoginController::getCreateAccountErrorMsg() const
+const QString& LoginController::getCreateAccountErrorMsg() const
 {
     return mCreateAccountErrorMsg;
 }
@@ -772,7 +766,7 @@ void LoginController::runConnectivityCheck()
         }
 
         proxy.setHostName(mPreferences->proxyServer());
-        proxy.setPort(qint16(mPreferences->proxyPort()));
+        proxy.setPort(quint16(mPreferences->proxyPort()));
         if (mPreferences->proxyRequiresAuth())
         {
             proxy.setUser(mPreferences->getProxyUsername());
@@ -784,8 +778,7 @@ void LoginController::runConnectivityCheck()
         std::unique_ptr<mega::MegaProxy> autoProxy(mMegaApi->getAutoProxySettings());
         if (autoProxy && autoProxy->getProxyType() == mega::MegaProxy::PROXY_CUSTOM)
         {
-            std::string sProxyURL = autoProxy->getProxyURL();
-            QString proxyURL = QString::fromUtf8(sProxyURL.data());
+            QString proxyURL = QString::fromUtf8(autoProxy->getProxyURL());
 
             QStringList parts = proxyURL.split(QString::fromUtf8("://"));
             if (parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
@@ -961,7 +954,7 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
 
            //Check for any sync disabled by logout to warn user on next login with user&password
     const auto syncSettings (SyncInfo::instance()->getAllSyncSettings());
-    auto isErrorLoggedOut = [](std::shared_ptr<SyncSettings> s) {return s->getError() == mega::MegaSync::LOGGED_OUT;};
+    auto isErrorLoggedOut = [](const std::shared_ptr<SyncSettings> s) {return s->getError() == mega::MegaSync::LOGGED_OUT;};
     if (std::any_of(syncSettings.cbegin(), syncSettings.cend(), isErrorLoggedOut))
     {
         Preferences::instance()->setNotifyDisabledSyncsOnLogin(true);

@@ -177,8 +177,10 @@ bool BackupsModel::setData(const QModelIndex& index, const QVariant& value, int 
                 break;
             case SelectedRole:
             {
-                checkPermissions(item->getFolder());
-                item->mSelected = value.toBool();
+                if(checkPermissions(item->getFolder()))
+                {
+                    item->mSelected = value.toBool();
+                }
                 checkSelectedAll();
                 break;
             }
