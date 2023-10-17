@@ -489,8 +489,8 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
         }
         else
         {
-            onboardingFinished();
             setState(FETCH_NODES_FINISHED);
+            onboardingFinished();
         }
 
         if(eventPendingStorage)
