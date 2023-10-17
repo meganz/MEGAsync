@@ -329,12 +329,11 @@ void SetupWizard::show2FA(MegaRequest *request, bool invalidCode)
 
 QString SetupWizard::getErrorMessage(mega::MegaError *error) const
 {
-    //Uncomment when isProFlexiAccount is available
-//    if (error->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
-//            && megaApi->isProFlexiAccount())
-//    {
-//        return CommonMessages::getExpiredProFlexiMessage();
-//    }
+    if (error->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
+            && megaApi->isProFlexiAccount())
+    {
+        return CommonMessages::getExpiredProFlexiMessage();
+    }
     return QCoreApplication::translate("MegaError", error->getErrorString());
 }
 

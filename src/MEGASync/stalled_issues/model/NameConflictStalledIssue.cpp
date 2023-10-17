@@ -320,7 +320,6 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
         auto conflictName = conflictedNames.at(conflictIndex);
         if(conflictName)
         {
-            conflictName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;
             conflictName->solveByRename(renameTo);
 
             renameLocalSibling(findOtherSideItem(mLocalConflictedNames, conflictName), renameTo);
