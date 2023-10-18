@@ -36,6 +36,6 @@ make -j`sysctl -n hw.ncpu`
 make install
 
 cd "../${MEGA_QT_BUILD_DIR}-x86_64"
-../${MEGA_QT_SOURCES_DIR}/configure QMAKE_APPLE_DEVICE_ARCHS=arm64 --prefix="${PWD}/../${MEGA_QT_VER}/x86_64" -opensource -confirm-license -nomake examples -nomake tests -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard  -force-debug-info -separate-debug-info -debug-and-release
+../${MEGA_QT_SOURCES_DIR}/configure QMAKE_APPLE_DEVICE_ARCHS=x86_64 --prefix="${PWD}/../${MEGA_QT_VER}/x86_64" -opensource -confirm-license -nomake examples -nomake tests -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard  -force-debug-info -separate-debug-info -debug-and-release
 make -j`sysctl -n hw.ncpu`
 make install
