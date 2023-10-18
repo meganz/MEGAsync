@@ -1003,14 +1003,15 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
 NodeSelectorModel::IndexesActionInfo NodeSelectorModel::needsToBeExpandedAndSelected()
 {
     IndexesActionInfo info = mIndexesActionInfo;
-    clearIndexesNodeInfo();
+    clearIndexesNodeInfo(mIndexesActionInfo.needsToBeSelected);
 
     return info;
 }
 
-void NodeSelectorModel::clearIndexesNodeInfo()
+void NodeSelectorModel::clearIndexesNodeInfo(bool select)
 {
     mIndexesActionInfo = IndexesActionInfo();
+    mIndexesActionInfo.needsToBeSelected = select;
 }
 
 void NodeSelectorModel::abort()

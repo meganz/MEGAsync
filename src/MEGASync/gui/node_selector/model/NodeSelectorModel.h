@@ -185,7 +185,7 @@ public:
     virtual void proxyInvalidateFinished(){}
 
     IndexesActionInfo needsToBeExpandedAndSelected();
-    void clearIndexesNodeInfo();
+    void clearIndexesNodeInfo(bool select = false);
     void abort();
 
     virtual bool canBeDeleted() const;
