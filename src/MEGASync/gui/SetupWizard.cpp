@@ -540,10 +540,7 @@ void SetupWizard::on_bNext_clicked()
         QString localFolderPath = ui->eLocalFolder->text();
         QString warningMessage;
         auto syncability (SyncController::isLocalFolderAllowedForSync(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage));
-        if (syncability != SyncController::CANT_SYNC)
-        {
-            syncability = SyncController::areLocalFolderAccessRightsOk(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage);
-        }
+        //We no longer check if the local folder has the correct right, the SDK does it for us
 
         // If OK, check that we can sync the selected remote folder
         QString remoteFolderPath = ui->eMegaFolder->text();

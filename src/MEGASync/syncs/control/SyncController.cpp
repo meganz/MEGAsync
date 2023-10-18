@@ -444,32 +444,6 @@ SyncController::Syncability SyncController::isLocalFolderAllowedForSync(const QS
     return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
 }
 
-QString SyncController::getAreLocalFolderAccessRightsOkMsg(const QString& path, const mega::MegaSync::SyncType& syncType)
-{
-    QString message;
-
-    // We only check rw rights for two-way syncs
-    if (syncType == MegaSync::TYPE_TWOWAY)
-    {
-        QTemporaryFile test;
-        test.setFileName(path + QDir::separator() + QLatin1String("test.xyz"));
-        if (!test.open())
-        {
-            message = tr("You don't have write permissions in this local folder.")
-                    + QChar::fromLatin1('\n')
-                    + tr("MEGAsync won't be able to download anything here.");
-        }
-    }
-
-    return message;
-}
-
-SyncController::Syncability SyncController::areLocalFolderAccessRightsOk(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
-{
-    message = getAreLocalFolderAccessRightsOkMsg(path, syncType);
-    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
-}
-
 // Returns wether the path is syncable.
 // The message to display to the user is stored in <message>.
 // The first error encountered is returned.
@@ -488,11 +462,7 @@ SyncController::Syncability SyncController::isLocalFolderSyncable(const QString&
         syncability = std::max(isLocalFolderAlreadySynced(path, syncType, message), syncability);
     }
 
-    // Then check that we have rw rights for this path
-    if (syncability != Syncability::CANT_SYNC)
-    {
-        syncability = std::max(areLocalFolderAccessRightsOk(path, syncType, message), syncability);
-    }
+    // We no longer check if the local folder has the correct rights, the SDK does.
 
     return (syncability);
 }
