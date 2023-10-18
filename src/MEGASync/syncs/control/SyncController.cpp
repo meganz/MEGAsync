@@ -193,7 +193,7 @@ void SyncController::enableSync(std::shared_ptr<SyncSettings> syncSetting)
                 emit syncEnableError(syncSetting, syncErrorCode);
             }
         }
-        else
+        else if(!syncSetting || errorCode != mega::API_OK)
         {
             QString errorMsg = getSyncAPIErrorMsg(errorCode);
             if (errorMsg.isEmpty())
@@ -245,7 +245,7 @@ void SyncController::disableSync(std::shared_ptr<SyncSettings> syncSetting)
                     emit syncDisableError(syncSetting, syncErrorCode);
                 }
             }
-            else
+            else if(!syncSetting || errorCode != mega::API_OK)
             {
                 QString errorMsg = getSyncAPIErrorMsg(errorCode);
                 if (errorMsg.isEmpty())
