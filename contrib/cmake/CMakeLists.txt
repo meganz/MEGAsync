@@ -547,7 +547,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/Login2FA.cpp
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
     ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
-	${MEGAsyncDir}/gui/ViewLoadingScene.cpp
+    ${MEGAsyncDir}/gui/ViewLoadingScene.cpp
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.cpp
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
     ${MEGAsyncDir}/gui/ProxySettings.cpp
