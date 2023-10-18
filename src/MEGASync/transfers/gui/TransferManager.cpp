@@ -53,6 +53,7 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mTransferQuotaState(QuotaState::OK)
 {
     mUi->setupUi(this);
+    mUi->wTransfers->setTopParent(this);
 
     mDragBackDrop = new QWidget(this);
     mUiDragBackDrop->setupUi(mDragBackDrop);

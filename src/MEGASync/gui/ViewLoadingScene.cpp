@@ -10,6 +10,7 @@
 ViewLoadingSceneBase::ViewLoadingSceneBase() :
     mDelayTimeToShowInMs(0),
     mLoadingView(nullptr),
+    mLoadingViewSet(LoadingViewType::NONE),
     ui(new Ui::ViewLoadingSceneUI())
 {
     mDelayTimerToShow.setSingleShot(true);
@@ -25,6 +26,7 @@ ViewLoadingSceneBase::ViewLoadingSceneBase() :
     ui->setupUi(mLoadingSceneUI);
     mLoadingSceneUI->hide();
     ui->MessageContainer->hide();
+    ui->ParentViewCopy->hide();
 
     connect(ui->StopButton, &QPushButton::clicked, mMessageHandler, &LoadingSceneMessageHandler::onStopPressed);
 }
@@ -50,6 +52,11 @@ bool ViewLoadingSceneBase::eventFilter(QObject *watched, QEvent *event)
     {
         ui->LoadingViewContainer->resize(mLoadingSceneUI->size());
         ui->LoadingViewContainer->move(0,0);
+
+        if(mLoadingViewSet == LoadingViewType::COPY_VIEW)
+        {
+            ui->ParentViewCopy->setGeometry(QRect(QPoint(0,0), mTopParent->size()));
+        }
     }
 
     return QObject::eventFilter(watched, event);
@@ -62,15 +69,29 @@ void ViewLoadingSceneBase::onDelayTimerToShowTimeout()
     mMessageHandler->setLoadingViewVisible(true);
 }
 
+void ViewLoadingSceneBase::hideLoadingScene()
+{
+    if(mLoadingViewSet == LoadingViewType::COPY_VIEW)
+    {
+        ui->ParentViewCopy->hide();
+    }
+}
+
 void ViewLoadingSceneBase::showViewCopy()
 {
-    ui->LoadingViewContainer->setCurrentIndex(1);
-    ui->ViewCopyLabel->setPixmap(mViewPixmap);
+    if(ui->ParentViewCopy->parentWidget() != mTopParent)
+    {
+        ui->ParentViewCopy->setParent(mTopParent);
+    }
+    ui->ParentViewCopy->setGeometry(QRect(QPoint(0,0), mTopParent->size()));
+    ui->ParentViewCopyLabel->setPixmap(mViewPixmap);
+    ui->ParentViewCopy->show();
+    ui->ParentViewCopy->raise();
 }
 
 void ViewLoadingSceneBase::showLoadingScene()
 {
-    ui->LoadingViewContainer->setCurrentIndex(0);
+    ui->ParentViewCopy->hide();
 }
 
 LoadingSceneMessageHandler::LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI *viewBaseUI, QWidget* viewBase)

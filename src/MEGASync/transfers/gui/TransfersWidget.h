@@ -83,6 +83,8 @@ public:
     TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 
+    void setTopParent(QWidget* parent);
+
 public slots:
     void onHeaderItemClicked(int sortBy, Qt::SortOrder order);
     void on_tPauseResumeVisible_toggled(bool state);
