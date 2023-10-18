@@ -11,6 +11,7 @@ ViewLoadingSceneBase::ViewLoadingSceneBase() :
     mDelayTimeToShowInMs(0),
     mLoadingView(nullptr),
     mLoadingViewSet(LoadingViewType::NONE),
+    mTopParent(nullptr),
     ui(new Ui::ViewLoadingSceneUI())
 {
     mDelayTimerToShow.setSingleShot(true);
@@ -55,7 +56,7 @@ bool ViewLoadingSceneBase::eventFilter(QObject *watched, QEvent *event)
 
         if(mLoadingViewSet == LoadingViewType::COPY_VIEW)
         {
-            ui->ParentViewCopy->setGeometry(QRect(QPoint(0,0), mTopParent->size()));
+            ui->ParentViewCopy->setGeometry(QRect(QPoint(0,0), getTopParent()->size()));
         }
     }
 
@@ -77,13 +78,26 @@ void ViewLoadingSceneBase::hideLoadingScene()
     }
 }
 
-void ViewLoadingSceneBase::showViewCopy()
+QWidget *ViewLoadingSceneBase::getTopParent()
 {
+    if(!ui->MessageContainer->parent())
+    {
+        ui->MessageContainer->setParent(mTopParent);
+    }
+
     if(ui->ParentViewCopy->parentWidget() != mTopParent)
     {
         ui->ParentViewCopy->setParent(mTopParent);
     }
-    ui->ParentViewCopy->setGeometry(QRect(QPoint(0,0), mTopParent->size()));
+
+    mMessageHandler->setTopParent(mTopParent);
+
+    return mTopParent;
+}
+
+void ViewLoadingSceneBase::showViewCopy()
+{
+    ui->ParentViewCopy->setGeometry(QRect(QPoint(0,0), getTopParent()->size()));
     ui->ParentViewCopyLabel->setPixmap(mViewPixmap);
     ui->ParentViewCopy->show();
     ui->ParentViewCopy->raise();
@@ -121,9 +135,12 @@ void LoadingSceneMessageHandler::hideLoadingMessage()
 
 void LoadingSceneMessageHandler::setTopParent(QWidget *widget)
 {
-    mTopParent = widget;
-    ui->MessageContainer->setParent(mTopParent);
-    mTopParent->installEventFilter(this);
+    if(!mTopParent)
+    {
+        mTopParent = widget;
+        ui->MessageContainer->setParent(mTopParent);
+        mTopParent->installEventFilter(this);
+    }
 }
 
 void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info)

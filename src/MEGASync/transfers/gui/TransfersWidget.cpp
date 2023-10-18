@@ -73,11 +73,6 @@ TransfersWidget::~TransfersWidget()
     if (mProxyModel) delete mProxyModel;
 }
 
-void TransfersWidget::setTopParent(QWidget *parent)
-{
-    ui->tvTransfers->setTopParent(parent);
-}
-
 void TransfersWidget::configureTransferView()
 {
     if (!mModel)

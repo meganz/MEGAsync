@@ -272,18 +272,13 @@ public:
     void show();
     void hide();
 
-    void setTopParent(QWidget* widget)
-    {
-        mMessageHandler->setTopParent(widget);
-        mTopParent = widget;
-        mTopParent->installEventFilter(this);
-    }
-
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
     virtual void showLoadingScene();
     virtual void showViewCopy();
     virtual void hideLoadingScene();
+
+    virtual QWidget* getTopParent();
 
 signals:
     void sceneVisibilityChange(bool value);
@@ -410,7 +405,7 @@ public:
             {
                 if(!mDelayTimerToShow.isActive())
                 {
-                    mViewPixmap = mTopParent->grab();
+                    mViewPixmap = getTopParent()->grab();
                     mDelayTimerToShow.start(mDelayTimeToShowInMs);
                     showViewCopy();
                 }
@@ -461,6 +456,20 @@ public:
         mView->show();
         mView->viewport()->update();
         mLoadingDelegate->setLoading(false);
+    }
+
+protected:
+    QWidget* getTopParent() override
+    {
+        if(!mTopParent)
+        {
+            mTopParent = mView->window();
+            mTopParent->installEventFilter(this);
+
+
+        }
+
+        return ViewLoadingSceneBase::getTopParent();
     }
 
 private:
@@ -545,11 +554,6 @@ public:
     LoadingSceneView(QWidget* parent): ViewType(parent)
     {
         mLoadingView.setView(this);
-    }
-
-    void setTopParent(QWidget* widget)
-    {
-        mLoadingView.setTopParent(widget);
     }
 
     void setViewPortEventsBlocked(bool newViewPortEventsBlocked)
