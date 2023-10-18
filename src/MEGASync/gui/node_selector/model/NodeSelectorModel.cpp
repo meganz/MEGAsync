@@ -214,7 +214,6 @@ void NodeRequester::createCloudDriveRootItem()
 
 bool NodeRequester::isIncomingShareCompatible(mega::MegaNode *node)
 {
-    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
     if(mSyncSetupMode)
     {
         if(MegaSyncApp->getMegaApi()->getAccess(node) != mega::MegaShare::ACCESS_FULL)
