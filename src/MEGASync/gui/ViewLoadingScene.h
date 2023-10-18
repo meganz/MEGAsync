@@ -323,7 +323,7 @@ public:
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
         mViewLayout(nullptr),
-        mLoadingViewSet(LOADING_VIEW_TYPE::NONE)
+        mLoadingViewSet(LoadingViewType::NONE)
     {}
 
     ~ViewLoadingScene()
@@ -340,7 +340,7 @@ public:
 
     bool isLoadingViewSet() const
     {
-        return mLoadingViewSet != LOADING_VIEW_TYPE::NONE;
+        return mLoadingViewSet != LoadingViewType::NONE;
     }
 
     inline void setView(LoadingSceneView<DelegateWidget, ViewType>* view)
@@ -422,7 +422,7 @@ public:
             mView->header()->blockSignals(false);
             mView->setViewPortEventsBlocked(false);
 
-            if(mLoadingViewSet == LOADING_VIEW_TYPE::LOADING_VIEW)
+            if(mLoadingViewSet == LoadingViewType::LOADING_VIEW)
             {
                 auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
                                                                        - mStartTime));
@@ -437,7 +437,7 @@ public:
 
     inline void hideLoadingScene() override
     {
-        mLoadingViewSet = LOADING_VIEW_TYPE::NONE;
+        mLoadingViewSet = LoadingViewType::NONE;
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
@@ -457,7 +457,7 @@ private:
     {
         ViewLoadingSceneBase::showViewCopy();
 
-        mLoadingViewSet = LOADING_VIEW_TYPE::COPY_VIEW;
+        mLoadingViewSet = LoadingViewType::COPY_VIEW;
 
         mView->setViewPortEventsBlocked(true);
         mViewLayout->replaceWidget(mView, mLoadingSceneUI);
@@ -472,7 +472,7 @@ private:
     void showLoadingScene() override
     {
         ViewLoadingSceneBase::showLoadingScene();
-        mLoadingViewSet = LOADING_VIEW_TYPE::LOADING_VIEW;
+        mLoadingViewSet = LoadingViewType::LOADING_VIEW;
         int visibleRows(0);
 
         if(mView->isVisible())
@@ -523,14 +523,14 @@ private:
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
     qint64 mStartTime;
-    enum LOADING_VIEW_TYPE
+    enum LoadingViewType
     {
         NONE,
         COPY_VIEW,
         LOADING_VIEW
     };
 
-    LOADING_VIEW_TYPE mLoadingViewSet;
+    LoadingViewType mLoadingViewSet;
     bool mWasFocused;
 };
 
