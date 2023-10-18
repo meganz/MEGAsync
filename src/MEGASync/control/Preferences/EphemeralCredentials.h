@@ -8,7 +8,7 @@
 class EphemeralCredentials
 {
 public:
-    EphemeralCredentials();
+    EphemeralCredentials() = default;
     EphemeralCredentials(const EphemeralCredentials& cred);
 
     QString email;

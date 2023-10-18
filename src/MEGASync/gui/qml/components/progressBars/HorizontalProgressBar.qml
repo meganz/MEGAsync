@@ -6,7 +6,7 @@ import QtQuick.Controls 2.12 as Qml
 import Common 1.0
 
 Qml.ProgressBar {
-    id: progressBar
+    id: root
 
     height: 2
     value: 0.0
@@ -19,7 +19,7 @@ Qml.ProgressBar {
 
     contentItem: Item {
         Rectangle {
-            width: progressBar.visualPosition * parent.width
+            width: root.visualPosition * parent.width
             height: parent.height
             radius: height
             color: Styles.buttonPrimary
@@ -35,26 +35,23 @@ Qml.ProgressBar {
             visible: indeterminate
 
             SequentialAnimation {
-
                 running: true
                 loops: Animation.Infinite
 
                 XAnimator {
                     target: indeterminateRect
                     from: 0
-                    to: progressBar.width - indeterminateRect.width
+                    to: root.width - indeterminateRect.width
                     duration: 1500
                 }
 
                 XAnimator {
                     target: indeterminateRect
-                    from: progressBar.width - indeterminateRect.width
+                    from: root.width - indeterminateRect.width
                     to: 0
                     duration: 1500
                 }
-
             }
         }
     }
-
 }

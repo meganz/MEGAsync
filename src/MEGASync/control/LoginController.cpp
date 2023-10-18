@@ -598,8 +598,8 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
     int cachedStorageState = 999;
 
     auto oldCachedSyncs = mPreferences->readOldCachedSyncs(&cachedBusinessState, &cachedBlockedState, &cachedStorageState, email);
-    std::shared_ptr<int>oldCacheSyncsCount(new int(oldCachedSyncs.size()));
-    if (*oldCacheSyncsCount > 0)
+    auto oldCacheSyncsCount = oldCachedSyncs.size();
+    if (oldCacheSyncsCount > 0)
     {
         if (cachedBusinessState == -2)
         {
@@ -625,7 +625,7 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
         mMegaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
                                          osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
                                          osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
-                                         new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e)
+                                         new MegaListenerFuncExecuter(true, [this, osd, &oldCacheSyncsCount, needsMigratingFromOldSession, email](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e)
                                                                        {
                                                                            if (e->getErrorCode() == mega::MegaError::API_OK)
                                                                            {
@@ -638,15 +638,15 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
                                                                                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
                                                                            }
 
-                                                                           --*oldCacheSyncsCount;
-                                                                           if (*oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
+                                                                           --oldCacheSyncsCount;
+                                                                           if (oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
                                                                            {
                                                                                mMegaApi->fetchNodes();
                                                                            }
                                                                        }));
     }
 
-    if (*oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
+    if (oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
     {
         mMegaApi->fetchNodes();
     }

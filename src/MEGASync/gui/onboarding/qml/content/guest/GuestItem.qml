@@ -302,7 +302,7 @@ Rectangle {
                             === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL;
                 }
 
-                image.source: Images.warningGuest
+                imageSource: Images.warningGuest
                 imageTopMargin: 110
                 title: GuestStrings.accountTempLocked
                 description: isEmailBlock()
@@ -335,7 +335,7 @@ Rectangle {
 
             BasePage {
                 title: GuestStrings.loggedInOnboarding
-                image.source: Images.settingUp
+                imageSource: Images.settingUp
                 leftButton.visible: false
                 rightButton.visible: false
                 spacing: 0

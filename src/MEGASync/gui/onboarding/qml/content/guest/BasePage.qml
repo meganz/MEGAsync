@@ -8,49 +8,22 @@ import Components.Buttons 1.0 as MegaButtons
 import Components.ProgressBars 1.0 as MegaProgressBars
 
 Item {
-    id: basePage
-
-    property alias image: image
+    id: root
+    property alias imageSource: image.source
     property alias leftButton: leftButton
     property alias rightButton: rightButton
-
     property double imageTopMargin: 72
-    property bool showProgressBar: false
-    property bool indeterminate: false
+    property alias showProgressBar: progressBar.visible
+    property alias indeterminate: progressBar.indeterminate
     property double progressValue: 15.0
-    property string title: ""
-    property string description: ""
-    property string descriptionUrl: ""
+    property alias title: title.text
+    property alias description: description.rawText
+    property alias descriptionUrl: description.url
     property int spacing: 24
     property int bottomMargin: 48
 
-    onShowProgressBarChanged: {
-        if(!showProgressBar) {
-            return;
-        }
-
-        progressBarLoader.sourceComponent = progressBar;
-    }
-
-    onTitleChanged: {
-        if(title === "") {
-            return;
-        }
-
-        titleLoader.sourceComponent = titleComponent;
-    }
-
-    onDescriptionChanged: {
-        if(description === "") {
-            return;
-        }
-
-        descriptionLoader.sourceComponent = descriptionComponent;
-    }
-
     Image {
         id: image
-
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: imageTopMargin
@@ -62,35 +35,33 @@ Item {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: bottomMargin
-        spacing: basePage.spacing
+        spacing: root.spacing
 
-        Loader {
-            id: progressBarLoader
-
-            anchors.left: parent.left
-            anchors.right: parent.right
-            visible: showProgressBar
+        MegaProgressBars.HorizontalProgressBar {
+            id: progressBar
+            value: root.progressValue
         }
 
         Column {
             anchors.left: parent.left
             anchors.right: parent.right
-            spacing: titleLoader.visible && descriptionLoader.visible ? 12 : 0
+            spacing: title.visible && description.visible ? 12 : 0
 
-            Loader {
-                id: titleLoader
-
-                anchors.left: parent.left
-                anchors.right: parent.right
-                visible: title !== ""
+            MegaTexts.Text {
+                id: title
+                font.pixelSize: MegaTexts.Text.Size.MediumLarge
+                font.bold: true
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
             }
 
-            Loader {
-                id: descriptionLoader
-
-                anchors.left: parent.left
-                anchors.right: parent.right
-                visible: description !== ""
+            MegaTexts.RichText {
+                id: description
+                color: Styles.textSecondary;
+                manageMouse: true
+                font.pixelSize: MegaTexts.Text.Size.Small
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
             }
         }
 
@@ -99,7 +70,6 @@ Item {
 
             MegaButtons.OutlineButton {
                 id: leftButton
-
                 onClicked: {
                     guestWindow.hide();
                 }
@@ -107,46 +77,10 @@ Item {
 
             MegaButtons.PrimaryButton {
                 id: rightButton
-
                 onClicked: {
                     guestWindow.hide();
                 }
             }
-        }
-    }
-
-    Component {
-        id: progressBar
-
-        MegaProgressBars.HorizontalProgressBar {
-            indeterminate: basePage.indeterminate
-            value: progressValue
-        }
-    }
-
-    Component {
-        id: titleComponent
-
-        MegaTexts.Text {
-            text: title
-            font.pixelSize: MegaTexts.Text.Size.MediumLarge
-            font.bold: true
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-        }
-    }
-
-    Component {
-        id: descriptionComponent
-
-        MegaTexts.RichText {
-            color: Styles.textSecondary;
-            rawText: description
-            url: descriptionUrl
-            manageMouse: true
-            font.pixelSize: MegaTexts.Text.Size.Small
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
         }
     }
 }
