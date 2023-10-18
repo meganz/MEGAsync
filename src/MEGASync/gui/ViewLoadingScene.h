@@ -463,15 +463,6 @@ public:
         mLoadingDelegate->setLoading(false);
     }
 
-protected:
-    void changeEvent(QEvent* event)
-    {
-        if(event->type() == QEvent::ParentChange)
-        {
-            mTopParent = window();
-        }
-    }
-
 private:
     void showViewCopy() override
     {
