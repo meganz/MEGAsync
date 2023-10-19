@@ -173,7 +173,7 @@ void SyncsMenu::refresh()
             if (!mDevNameAction)
             {
                 // Display device name before folders
-                mDevNameAction.reset(new MenuItemAction(QString(), QIcon(DEVICE_ICON), true));
+                mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON), true);
                 // Insert the action in the menu to make sure it is here when the
                 // set device name slot is called.
                 mMenu->insertAction(firstBackup, mDevNameAction);
