@@ -391,21 +391,23 @@ QString SyncController::getAreLocalFolderAccessRightsOkMsg(const QString& path, 
     // We only check rw rights for two-way syncs
     if (syncType == MegaSync::TYPE_TWOWAY)
     {
-        QTemporaryFile test (path + QDir::separator());
-        if (!QDir(path).mkpath(QString::fromLatin1(".")) && !test.open())
+        QTemporaryFile test;
+        test.setFileName(path + QDir::separator() + QLatin1String("test.xyz"));
+        if (!test.open())
         {
             message = tr("You don't have write permissions in this local folder.")
                     + QChar::fromLatin1('\n')
                     + tr("MEGAsync won't be able to download anything here.");
         }
     }
+
     return message;
 }
 
 SyncController::Syncability SyncController::areLocalFolderAccessRightsOk(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
 {
     message = getAreLocalFolderAccessRightsOkMsg(path, syncType);
-    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::WARN_SYNC);
+    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
 }
 
 // Returns wether the path is syncable.
