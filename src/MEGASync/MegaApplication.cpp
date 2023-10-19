@@ -444,6 +444,8 @@ void MegaApplication::initialize()
     QDesktopServices::setUrlHandler(QString::fromUtf8("mega"), this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
 
+    registerCommonQMLElements();
+
     qRegisterMetaTypeStreamOperators<EphemeralCredentials>("EphemeralCredentials");
 
     preferences = Preferences::instance();
@@ -1199,8 +1201,6 @@ void MegaApplication::start()
             checkupdate = true;
         }
     }
-
-    registerCommonQMLElements();
 
     if (preferences->getSession().isEmpty())
     {
