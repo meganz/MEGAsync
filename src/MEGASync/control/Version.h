@@ -28,8 +28,9 @@
 //"- item n\n"
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- UI enhancements.\n"                                                                             \
-"- Detected crash fixes on Windows, Linux, and macOS.\n"                                           \
+"- Upgraded to Qt5.15.\n"                                                                          \
+"- Fixed detected crashes on Windows, Linux and macOS.\n"                                                                          \
+"- Updated third-party libraries.\n"                                         \
 )
 
 #endif // VERSION_H
