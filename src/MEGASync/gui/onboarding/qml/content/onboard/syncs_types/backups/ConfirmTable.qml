@@ -95,7 +95,7 @@ Rectangle {
 
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
-                    text: BackupsModel.mTotalSize
+                    text: BackupsModel.totalSize
                     font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.DemiBold
                     color: Styles.textPrimary
@@ -105,7 +105,7 @@ Rectangle {
                 MegaBusyIndicator.BusyIndicator {
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
-                    visible: !totalSizeText.visible
+                    visible: !BackupsModel.totalSizeReady
                     color: Styles.textAccent
                     imageSize: Qt.size(16, 16)
                     Layout.preferredWidth: 16

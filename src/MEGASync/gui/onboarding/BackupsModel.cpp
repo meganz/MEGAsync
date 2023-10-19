@@ -41,10 +41,11 @@ void BackupFolder::setSize(qint64 size)
         mFolderSizeReady = true;
         changedRoles.append(BackupsModel::SizeReadyRole);
     }
+
     if(size > FileFolderAttributes::NOT_READY)
     {
-        folderSize = size;
-        mSize = Utilities::getSizeStringLocalized(size);
+        folderSize = static_cast<quint64>(size);
+        mSize = Utilities::getSizeStringLocalized(folderSize);
         changedRoles.append(BackupsModel::SizeRole);
     }
 
@@ -384,36 +385,45 @@ void BackupsModel::updateSelectedAndTotalSize()
 {
     mSelectedRowsTotal = 0;
     auto lastTotalSize = mBackupsTotalSize;
-    mBackupsTotalSize = 0;
-    QList<BackupFolder*>::iterator item = mBackupFolderList.begin();
-    while (item != mBackupFolderList.end())
-    {
-        if((*item)->mSelected)
-        {
-            mSelectedRowsTotal++;
+    unsigned long long totalSize = 0;
 
-            if(!(*item)->mFolderSizeReady)
+    int selectedAndSizeReadyFolders = 0;
+
+    for(auto backupFolderIt = mBackupFolderList.cbegin(); backupFolderIt != mBackupFolderList.cend(); ++backupFolderIt)
+    {
+        const auto& backupFolder = *backupFolderIt;
+
+        if (backupFolder->mSelected)
+        {
+            ++mSelectedRowsTotal;
+
+            if (backupFolder->mFolderSizeReady)
             {
-                setTotalSizeReady(false);
-            }
-            else if((*item)->folderSize > 0)
-            {
-                mBackupsTotalSize += (*item)->folderSize;
+                ++selectedAndSizeReadyFolders;
+                totalSize += backupFolder->folderSize;
             }
         }
-        item++;
     }
 
-    if(mBackupsTotalSize != lastTotalSize)
+    if (selectedAndSizeReadyFolders == mSelectedRowsTotal)
     {
-        emit totalSizeChanged();
+        if (totalSize != lastTotalSize)
+        {
+            mBackupsTotalSize = totalSize;
+            emit totalSizeChanged();
+        }
+
+        setTotalSizeReady(true);
+    }
+    else
+    {
+        setTotalSizeReady(false);
     }
 
-    if(!mSelectedRowsTotal)
+    if (mSelectedRowsTotal == 0)
     {
         emit noneSelected();
     }
-    setTotalSizeReady(true);
 }
 
 void BackupsModel::checkSelectedAll()
