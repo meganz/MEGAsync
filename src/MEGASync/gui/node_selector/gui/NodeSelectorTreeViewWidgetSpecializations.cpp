@@ -186,6 +186,8 @@ bool NodeSelectorTreeViewWidgetSearch::containsIndexToUpdate(mega::MegaNode *nod
             return true;
         }
     }
+
+    return false;
 }
 
 void NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked()
