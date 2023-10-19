@@ -4759,6 +4759,11 @@ Do you want to delete it anyway?</translation>
             <numerusform>%n files</numerusform>
         </translation>
     </message>
+    <message>
+        <source>Adding transfers</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchLineEdit</name>
