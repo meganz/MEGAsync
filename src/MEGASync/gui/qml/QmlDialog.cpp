@@ -1,6 +1,4 @@
 #include "QmlDialog.h"
-#include "MegaApplication.h"
-#include "mega/types.h"
 
 #include <QEvent>
 

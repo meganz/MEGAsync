@@ -9,6 +9,7 @@ import Components.ProgressBars 1.0 as MegaProgressBars
 
 Item {
     id: root
+
     property alias imageSource: image.source
     property alias leftButton: leftButton
     property alias rightButton: rightButton
@@ -24,6 +25,7 @@ Item {
 
     Image {
         id: image
+
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: imageTopMargin
@@ -39,6 +41,9 @@ Item {
 
         MegaProgressBars.HorizontalProgressBar {
             id: progressBar
+
+            anchors.left: parent.left
+            anchors.right: parent.right
             value: root.progressValue
         }
 
@@ -49,19 +54,25 @@ Item {
 
             MegaTexts.Text {
                 id: title
+
                 font.pixelSize: MegaTexts.Text.Size.MediumLarge
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                anchors.left: parent.left
+                anchors.right: parent.right
             }
 
             MegaTexts.RichText {
                 id: description
+
                 color: Styles.textSecondary;
                 manageMouse: true
                 font.pixelSize: MegaTexts.Text.Size.Small
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                anchors.left: parent.left
+                anchors.right: parent.right
             }
         }
 
@@ -70,6 +81,7 @@ Item {
 
             MegaButtons.OutlineButton {
                 id: leftButton
+
                 onClicked: {
                     guestWindow.hide();
                 }
@@ -77,6 +89,7 @@ Item {
 
             MegaButtons.PrimaryButton {
                 id: rightButton
+
                 onClicked: {
                     guestWindow.hide();
                 }

@@ -8,14 +8,14 @@ class QmlDialog : public QQuickWindow
     Q_OBJECT
 
 public:
-    explicit QmlDialog(QWindow *parent = nullptr);
+    explicit QmlDialog(QWindow* parent = nullptr);
     ~QmlDialog() override;
 
 signals:
     void finished();
 
 protected:
-    bool event(QEvent *) override;
+    bool event(QEvent* ) override;
 
 };
 

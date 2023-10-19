@@ -2,15 +2,12 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 
-// Local
-import Guest 1.0
-
 // C++
 import GuestQmlDialog 1.0
 import LoginController 1.0
 
 GuestQmlDialog {
-    id: guestWindow
+    id: root
 
     width: guestItem.width
     height: guestItem.height
