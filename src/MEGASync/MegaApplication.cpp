@@ -565,6 +565,11 @@ void MegaApplication::initialize()
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
     mStatusController = new AccountStatusController(this);
 
+    if (mStatusController != nullptr)
+    {
+        mEngine->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), this);
+    }
+
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi, mFolderTransferListener);

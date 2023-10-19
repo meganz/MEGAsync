@@ -4,7 +4,6 @@
 #include "ConnectivityChecker.h"
 #include "Platform.h"
 #include "QMegaMessageBox.h"
-#include "DialogOpener.h"
 #include "mega/types.h"
 
 #include <QQmlContext>
