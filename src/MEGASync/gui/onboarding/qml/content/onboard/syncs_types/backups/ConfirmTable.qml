@@ -95,7 +95,7 @@ Rectangle {
 
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
-                    text: BackupsModel.totalSizeReady ? BackupsModel.totalSize : ""
+                    text: BackupsModel.totalSize
                     font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.DemiBold
                     color: Styles.textPrimary
