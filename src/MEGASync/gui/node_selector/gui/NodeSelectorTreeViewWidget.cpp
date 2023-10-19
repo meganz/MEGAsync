@@ -308,9 +308,24 @@ void NodeSelectorTreeViewWidget::onGoBackClicked()
 
 void NodeSelectorTreeViewWidget::onRemoveIndexFromGoBack(const QModelIndex& currentRootIndex)
 {
-    mNavigationInfo.backwardHandles.removeLast();
+    auto parentIndex(currentRootIndex.parent());
+    if(parentIndex.isValid())
+    {
+        auto indexHandle(getHandleByIndex(parentIndex));
+        qDebug() << mNavigationInfo.backwardHandles << indexHandle;
 
-    setRootIndex(currentRootIndex.parent());
+        if(mNavigationInfo.backwardHandles.contains(indexHandle))
+        {
+            mNavigationInfo.backwardHandles.removeLast();
+            setRootIndex(parentIndex);
+        }
+        else
+        {
+            setRootIndex(QModelIndex());
+            mNavigationInfo.backwardHandles.clear();
+        }
+    }
+
     checkBackForwardButtons();
     checkNewFolderButtonVisibility();
 }
@@ -719,7 +734,7 @@ int NodeSelectorTreeViewWidget::areThereNodesToUpdate()
            mRemovedNodesByHandle.size() +
            mRenamedNodesByHandle.size() +
            mAddedNodesByParentHandle.size() +
-           mMovedNodesByHandle.size();
+            mMovedNodesByHandle.size();
 }
 
 void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
@@ -749,34 +764,12 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
         {
             foreach(auto info, mRenamedNodesByHandle)
             {
-                auto index = mModel->findItemByNodeHandle(info.previousHandle, QModelIndex());
-
-                auto proxyIndex(mProxyModel->mapFromSource(index));
-                auto isSelected(false);
-
-                if(ui->tMegaFolders->selectionModel())
-                {
-                    if(proxyIndex.isValid())
-                    {
-                        isSelected = ui->tMegaFolders->selectionModel()->isSelected(proxyIndex);
-                    }
-                }
-
-                mModel->updateItemNode(index, info.node);
-
-                if(isSelected)
-                {
-                    //The proxy index may has changed,, update it
-                    proxyIndex = mProxyModel->mapFromSource(index);
-                    ui->tMegaFolders->scrollTo(proxyIndex, QAbstractItemView::ScrollHint::PositionAtCenter);
-                }
+                updateNode(info, true);
             }
 
             foreach(auto info, mUpdatedNodesByPreviousHandle)
             {
-                auto index = mModel->findItemByNodeHandle(info.previousHandle, QModelIndex());
-                mModel->updateItemNode(index, info.node);
-
+                updateNode(info, false);
                 //If they have been updated, we don´t need to remove them
                 mMovedNodesByHandle.removeOne(info.node->getHandle());
             }
@@ -808,6 +801,43 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             mUpdatedNodesByPreviousHandle.clear();
             mMovedNodesByHandle.clear();
         }
+    }
+}
+
+void NodeSelectorTreeViewWidget::updateNode(const UpdateNodesInfo &info, bool scrollTo)
+{
+    auto index = mModel->findItemByNodeHandle(info.previousHandle, QModelIndex());
+    auto proxyIndex = mProxyModel->mapFromSource(index);
+
+    auto isSelected(false);
+
+    if(scrollTo)
+    {
+        if(ui->tMegaFolders->selectionModel())
+        {
+            if(proxyIndex.isValid())
+            {
+                isSelected = ui->tMegaFolders->selectionModel()->isSelected(proxyIndex);
+            }
+        }
+    }
+
+    mModel->updateItemNode(index, info.node);
+
+    if(info.node)
+    {
+        if(proxyIndex.isValid() &&
+           ui->tMegaFolders->rootIndex() == proxyIndex)
+        {
+            setTitleText(MegaNodeNames::getNodeName(info.node.get()));
+        }
+    }
+
+    if(isSelected)
+    {
+        //The proxy index may has changed,, update it
+        proxyIndex = mProxyModel->mapFromSource(index);
+        ui->tMegaFolders->scrollTo(proxyIndex, QAbstractItemView::ScrollHint::PositionAtCenter);
     }
 }
 

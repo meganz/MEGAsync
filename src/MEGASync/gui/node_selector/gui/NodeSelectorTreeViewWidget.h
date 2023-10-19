@@ -135,8 +135,8 @@ private:
     virtual bool newFolderBtnCanBeVisisble(){return true;}
     void checkOkButton(const QModelIndexList& selected);
     int areThereNodesToUpdate();
-    ButtonIconManager mButtonIconManager;
 
+    ButtonIconManager mButtonIconManager;
     bool first;
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
@@ -147,7 +147,7 @@ private:
       mega::MegaHandle parentHandle = mega::INVALID_HANDLE;
       std::shared_ptr<mega::MegaNode> node;
     };
-
+    void updateNode(const UpdateNodesInfo& info, bool scrollTo = false);
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
     QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
     QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
@@ -155,6 +155,7 @@ private:
     QList<mega::MegaHandle> mMovedNodesByHandle;
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderAdded;
+
     friend class DownloadType;
     friend class SyncType;
     friend class UploadType;
