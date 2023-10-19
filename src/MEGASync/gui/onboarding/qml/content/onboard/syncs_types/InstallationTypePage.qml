@@ -1,18 +1,23 @@
 InstallationTypePageForm {
+    id: root
+
+    signal moveToBack;
+    signal moveToSync;
+    signal moveToBackup;
 
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsPanel.state = deviceName;
+            root.moveToBack()
         }
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
                 case SyncsType.Types.Sync:
-                    syncsPanel.state = syncsFlow;
+                    root.moveToSync()
                     break;
                 case SyncsType.Types.Backup:
-                    syncsPanel.state = backupsFlow;
+                    root.moveToBackup()
                     break;
                 default:
                     console.error("Button type does not exist -> "
@@ -27,5 +32,4 @@ InstallationTypePageForm {
             footerButtons.rightPrimary.enabled = true;
         }
     }
-
 }

@@ -6,8 +6,10 @@ import QmlDeviceName 1.0
 
 import Common 1.0
 
-
 DeviceNamePageForm {
+    id: root
+
+    signal moveToSyncType
 
     footerButtons.rightPrimary.onClicked: {
         var emptyText = deviceNameTextField.text.length === 0;
@@ -24,7 +26,7 @@ DeviceNamePageForm {
         }
 
         if(!deviceName.setDeviceName(deviceNameTextField.text)) {
-            syncsPanel.state = syncType;
+            root.moveToSyncType()
         }
     }
 
@@ -45,7 +47,7 @@ DeviceNamePageForm {
         id: deviceName
 
         onDeviceNameSet: {
-            syncsPanel.state = syncType;
+            root.moveToSyncType()
         }
     }
 }

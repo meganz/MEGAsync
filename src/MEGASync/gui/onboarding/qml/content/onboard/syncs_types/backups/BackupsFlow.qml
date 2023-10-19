@@ -9,18 +9,23 @@ import Onboard.Syncs_types.Left_panel 1.0
 // C++
 import BackupsProxyModel 1.0
 
-StackView {
-    id: backupsFlow
+Item {
+    id: root
 
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
+
+    function replace(page)
+    {
+        view.replace(page)
+    }
 
     state: selectBackup
     states: [
         State {
             name: selectBackup
             StateChangeScript {
-                script: backupsFlow.replace(selectBackupFoldersPage);
+                script: view.replace(selectBackupFoldersPage);
             }
             PropertyChanges {
                 target: stepPanel;
@@ -32,7 +37,7 @@ StackView {
         State {
             name: confirmBackup
             StateChangeScript {
-                script: backupsFlow.replace(confirmBackupFoldersPage);
+                script: view.replace(confirmBackupFoldersPage);
             }
             PropertyChanges {
                 target: stepPanel;
@@ -42,6 +47,30 @@ StackView {
             }
         }
     ]
+
+    StackView {
+        id: view
+        anchors.fill: parent
+
+        replaceEnter: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to:1
+                duration: 100
+                easing.type: Easing.OutQuad
+            }
+        }
+        replaceExit: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to:0
+                duration: 100
+                easing.type: Easing.InQuad
+            }
+        }
+    }
 
     BackupsProxyModel {
         id: backupsProxyModel
@@ -58,24 +87,4 @@ StackView {
 
         ConfirmFoldersPage {}
     }
-
-    replaceEnter: Transition {
-        PropertyAnimation {
-            property: "opacity"
-            from: 0
-            to:1
-            duration: 100
-            easing.type: Easing.OutQuad
-        }
-    }
-    replaceExit: Transition {
-        PropertyAnimation {
-            property: "opacity"
-            from: 1
-            to:0
-            duration: 100
-            easing.type: Easing.InQuad
-        }
-    }
-
 }

@@ -38,7 +38,12 @@ Rectangle {
         State {
             name: deviceName
             StateChangeScript {
-                script: rightPanel.replace(deviceNamePage);
+                script: {
+                    deviceNameNavigationConnection.enabled = true
+                    installationTypeNavigationConnection.enabled = false
+                    syncFlowNavigationConnection.enabled = false
+                    rightPanel.replace(deviceNamePage);
+                }
             }
             PropertyChanges {
                 target: stepPanel;
@@ -48,7 +53,12 @@ Rectangle {
         State {
             name: syncType
             StateChangeScript {
-                script: rightPanel.replace(installationTypePage);
+                script: {
+                    deviceNameNavigationConnection.enabled = false
+                    installationTypeNavigationConnection.enabled = true
+                    syncFlowNavigationConnection.enabled = false
+                    rightPanel.replace(installationTypePage);
+                }
             }
             PropertyChanges {
                 target: stepPanel;
@@ -61,6 +71,10 @@ Rectangle {
                 script: {
                     navInfo.typeSelected = SyncsType.Types.Sync;
                     rightPanel.replace(syncsFlowPage);
+
+                    syncFlowNavigationConnection.enabled = true
+                    deviceNameNavigationConnection.enabled = false
+                    installationTypeNavigationConnection.enabled = false
                 }
             }
             PropertyChanges {
@@ -74,6 +88,10 @@ Rectangle {
                 script: {
                     navInfo.typeSelected = SyncsType.Types.Backup;
                     rightPanel.replace(backupsFlowPage);
+
+                    syncFlowNavigationConnection.enabled = false
+                    deviceNameNavigationConnection.enabled = false
+                    installationTypeNavigationConnection.enabled = false
                 }
             }
             PropertyChanges {
@@ -84,7 +102,14 @@ Rectangle {
         State {
             name: finalState
             StateChangeScript {
-                script: rightPanel.replace(finalPage);
+                script:
+                {
+                    rightPanel.replace(finalPage);
+
+                    syncFlowNavigationConnection.enabled = false
+                    deviceNameNavigationConnection.enabled = false
+                    installationTypeNavigationConnection.enabled = false
+                }
             }
             PropertyChanges {
                 target: stepPanel;
@@ -149,6 +174,7 @@ Rectangle {
                 easing.type: Easing.OutQuad
             }
         }
+
         replaceExit: Transition {
             PropertyAnimation {
                 property: "opacity"
@@ -158,36 +184,36 @@ Rectangle {
                 easing.type: Easing.InQuad
             }
         }
+    }
 
-        Component {
-            id: deviceNamePage
+    Component {
+        id: deviceNamePage
 
-            DeviceNamePage {}
-        }
+        DeviceNamePage {}
+    }
 
-        Component {
-            id: installationTypePage
+    Component {
+        id: installationTypePage
 
-            InstallationTypePage {}
-        }
+        InstallationTypePage {}
+    }
 
-        Component {
-            id: syncsFlowPage
+    Component {
+        id: syncsFlowPage
 
-            SyncsFlow {}
-        }
+        SyncsFlow {}
+    }
 
-        Component {
-            id: backupsFlowPage
+    Component {
+        id: backupsFlowPage
 
-            BackupsFlow {}
-        }
+        BackupsFlow {}
+    }
 
-        Component {
-            id: finalPage
+    Component {
+        id: finalPage
 
-            ResumePage {}
-        }
+        ResumePage {}
     }
 
     Connections {
@@ -195,6 +221,60 @@ Rectangle {
 
         function onLogout() {
             onboardingWindow.forceClose();
+        }
+    }
+
+    /*
+    * Navigation connections
+    */
+    Connections {
+        id: deviceNameNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true
+        enabled: false
+
+        function onMoveToSyncType()
+        {
+            syncsPanel.state = syncType
+        }
+    }
+
+    Connections {
+        id: installationTypeNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true
+        enabled: false
+
+        function onMoveToBack()
+        {
+            syncsPanel.state = deviceName
+        }
+
+        function onMoveToSync()
+        {
+            syncsPanel.state = syncsFlow
+        }
+
+        function onMoveToBackup()
+        {
+            syncsPanel.state = backupsFlow
+        }
+    }
+
+    Connections {
+        id: syncFlowNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true
+        enabled: false
+
+        function onMoveToFinal()
+        {
+            syncsPanel.state = finalState
+        }
+
+        function onMoveToSyncType()
+        {
+            syncsPanel.state = syncType
         }
     }
 }

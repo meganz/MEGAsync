@@ -9,15 +9,14 @@ import Onboard 1.0
 SelectiveSyncPageForm {
     id: root
 
+    signal moveToBack
+    signal moveToSyncType
+    signal moveToFinal
+
     footerButtons {
 
         rightSecondary.onClicked: {
-            if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
-                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                syncsPanel.state = syncsPanel.finalState;
-            } else {
-                syncsFlow.state = syncsFlow.syncType;
-            }
+            root.moveToBack()
         }
 
         rightPrimary.onClicked: {
@@ -71,8 +70,8 @@ SelectiveSyncPageForm {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             syncsPanel.navInfo.selectiveSyncDone = true;
-            syncsPanel.state = finalState;
             remoteFolderChooser.reset();
+            root.moveToFinalState();
         }
 
         onCantSync: (message, localFolderError) => {
@@ -96,5 +95,4 @@ SelectiveSyncPageForm {
             console.log("Selective sync can't sync, message -> " + message);
         }
     }
-
 }

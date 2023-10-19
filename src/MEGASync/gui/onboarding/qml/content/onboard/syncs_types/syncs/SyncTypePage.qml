@@ -2,25 +2,26 @@
 import Onboard.Syncs_types 1.0
 
 SyncTypePageForm {
+    id: root
+
+    signal moveToBack;
+    signal moveToFullSync;
+    signal moveToSelectiveSync;
 
     footerButtons {
 
         rightSecondary.onClicked: {
-            if(syncsPanel.navInfo.comesFromResumePage) {
-                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                syncsPanel.state = syncsPanel.finalState;
-            } else {
-                syncsPanel.state = syncsPanel.syncType;
-            }
+            console.log("rightSecondary clicked")
+            root.moveToBack()
         }
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
                 case SyncsType.Types.FullSync:
-                    syncsFlow.state = fullSync;
+                    root.moveToFullSync()
                     break;
                 case SyncsType.Types.SelectiveSync:
-                    syncsFlow.state = selectiveSync;
+                    root.moveToSelectiveSync()
                     break;
                 default:
                     console.error("Button type does not exist -> "

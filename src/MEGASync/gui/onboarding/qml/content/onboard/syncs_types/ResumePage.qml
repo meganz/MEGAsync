@@ -5,6 +5,9 @@ import QtQuick 2.12
 import Onboarding 1.0
 
 ResumePageForm {
+    id: root
+
+
 
     buttonGroup.onClicked: {
         syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
