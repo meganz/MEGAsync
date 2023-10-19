@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="MessageContainer" native="true">
+  <widget class="QWidget" name="wMessageContainer" native="true">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -109,7 +109,7 @@ QProgressBar::chunk
      </spacer>
     </item>
     <item alignment="Qt::AlignVCenter">
-     <widget class="QLabel" name="MessageLabel">
+     <widget class="QLabel" name="lMessageLabel">
       <property name="text">
        <string/>
       </property>
@@ -119,7 +119,7 @@ QProgressBar::chunk
      </widget>
     </item>
     <item alignment="Qt::AlignVCenter">
-     <widget class="QProgressBar" name="ProgressBar">
+     <widget class="QProgressBar" name="pbProgressBar">
       <property name="minimumSize">
        <size>
         <width>0</width>
@@ -141,7 +141,7 @@ QProgressBar::chunk
      </widget>
     </item>
     <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-     <widget class="QLabel" name="ProgressLabel"/>
+     <widget class="QLabel" name="lProgressLabel"/>
     </item>
     <item>
      <spacer name="verticalSpacer_2">
@@ -157,7 +157,7 @@ QProgressBar::chunk
      </spacer>
     </item>
     <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
-     <widget class="QPushButton" name="StopButton">
+     <widget class="QPushButton" name="bStopButton">
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
@@ -171,7 +171,7 @@ QProgressBar::chunk
     </item>
    </layout>
   </widget>
-  <widget class="QStackedWidget" name="LoadingViewContainer">
+  <widget class="QStackedWidget" name="swLoadingViewContainer">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -192,7 +192,7 @@ QProgressBar::chunk
      <height>0</height>
     </size>
    </property>
-   <widget class="QWidget" name="LoadingView">
+   <widget class="QWidget" name="wLoadingView">
     <layout class="QVBoxLayout" name="viewLayout">
      <property name="spacing">
       <number>0</number>
@@ -211,7 +211,7 @@ QProgressBar::chunk
      </property>
     </layout>
    </widget>
-   <widget class="QWidget" name="ViewCopy">
+   <widget class="QWidget" name="wViewCopy">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
       <number>0</number>
@@ -229,7 +229,7 @@ QProgressBar::chunk
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="ViewCopyLabel">
+      <widget class="QLabel" name="lViewCopyLabel">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -244,7 +244,7 @@ QProgressBar::chunk
     </layout>
    </widget>
   </widget>
-  <widget class="QWidget" name="ParentViewCopy" native="true">
+  <widget class="QWidget" name="wParentViewCopy" native="true">
    <property name="geometry">
     <rect>
      <x>240</x>
@@ -270,7 +270,7 @@ QProgressBar::chunk
      <number>0</number>
     </property>
     <item>
-     <widget class="QLabel" name="ParentViewCopyLabel">
+     <widget class="QLabel" name="lParentViewCopyLabel">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
