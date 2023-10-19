@@ -121,9 +121,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv),
     mSyncs2waysMenu(nullptr),
     mBackupsMenu(nullptr),
-    mLoginController(nullptr),
     mIsFirstFileTwoWaySynced(false),
     mIsFirstFileBackedUp(false),
+    mLoginController(nullptr),
     scanStageController(this),
     mDisableGfx (false),
     mEngine(new QQmlEngine())
@@ -445,6 +445,7 @@ void MegaApplication::initialize()
     QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
 
     registerCommonQMLElements();
+
     qRegisterMetaTypeStreamOperators<EphemeralCredentials>("EphemeralCredentials");
 
     preferences = Preferences::instance();
@@ -727,11 +728,6 @@ void MegaApplication::initialize()
 
     mLogoutController = new LogoutController(mEngine);
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
-
-    if (preferences->getSession().isEmpty())
-    {
-        openOnboardingDialog();
-    }
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1185,7 +1181,6 @@ void MegaApplication::start()
         }
 
         mLoginController = new LoginController(mEngine);
-
         if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(AppStatsEvents::EVENT_1ST_START, "MEGAsync first start", false, nullptr);
@@ -1210,6 +1205,11 @@ void MegaApplication::start()
             megaApi->sendEvent(AppStatsEvents::EVENT_UPDATE, "MEGAsync update", false, nullptr);
             checkupdate = true;
         }
+    }
+
+    if (preferences->getSession().isEmpty())
+    {
+        openOnboardingDialog();
     }
 }
 
