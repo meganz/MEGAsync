@@ -42,8 +42,8 @@ VIAddVersionKey "ProductName" "MEGAsync"
 !define QT_PATH "${MEGA_QTPATH}"
 !define QT_DEPLOY_PATH "qt-deploy-x64"
 !else
-!define QT_PATH "${MEGA_QTPATH}\..\msvc2017"
 !define QT_DEPLOY_PATH "qt-deploy-x86"
+!define QT_PATH "${MEGA_QTPATH}\..\x86"
  !endif
 
 !ifdef BUILD_X64_VERSION
@@ -644,15 +644,10 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\MEGAupdater.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
 
-; Note: keep openssl 1.1 for now as Qt depends on it.
 !ifdef BUILD_X64_VERSION
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1-x64.dll"  "$INSTDIR\libcrypto-1_1-x64.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1-x64.dll"  "$INSTDIR\libssl-1_1-x64.dll"
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3-x64.dll"  "$INSTDIR\libssl-3-x64.dll"
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3-x64.dll"  "$INSTDIR\libcrypto-3-x64.dll"
 !else
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1.dll"  "$INSTDIR\libcrypto-1_1.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1.dll"  "$INSTDIR\libssl-1_1.dll"
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3.dll"  "$INSTDIR\libcrypto-3.dll"
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3.dll"  "$INSTDIR\libssl-3.dll"
 !endif
@@ -703,12 +698,11 @@ modeselected:
   Delete "$INSTDIR\swscale-5.dll"
   Delete "$INSTDIR\swresample-3.dll"
 
-  ; Do not remove openssl 1.1 version yet, as Qt depends on it.
-  ;Delete "$INSTDIR\libcrypto-1_1-x64.dll"
-  ;Delete "$INSTDIR\libssl-1_1-x64.dll"
+  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
+  Delete "$INSTDIR\libssl-1_1-x64.dll"
 
-  ;Delete "$INSTDIR\libcrypto-1_1.dll"
-  ;Delete "$INSTDIR\libssl-1_1.dll"
+  Delete "$INSTDIR\libcrypto-1_1.dll"
+  Delete "$INSTDIR\libssl-1_1.dll"
 
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
@@ -957,10 +951,6 @@ Section Uninstall
   Delete "$INSTDIR\MEGAupdater.exe"
   Delete "$INSTDIR\libeay32.dll"
   Delete "$INSTDIR\ssleay32.dll"
-  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
-  Delete "$INSTDIR\libssl-1_1-x64.dll"
-  Delete "$INSTDIR\libcrypto-1_1.dll"
-  Delete "$INSTDIR\libssl-1_1.dll"
   Delete "$INSTDIR\libcurl.dll"
   Delete "$INSTDIR\cares.dll"
   Delete "$INSTDIR\libuv.dll"
@@ -980,11 +970,10 @@ Section Uninstall
   Delete "$INSTDIR\swresample-2.dll"
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
-  Delete "$INSTDIR\avcodec-58.dll"
-  Delete "$INSTDIR\avformat-58.dll"
-  Delete "$INSTDIR\avutil-56.dll"
-  Delete "$INSTDIR\swscale-5.dll"
-  Delete "$INSTDIR\swresample-3.dll"
+  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
+  Delete "$INSTDIR\libssl-1_1-x64.dll"
+  Delete "$INSTDIR\libcrypto-1_1.dll"
+  Delete "$INSTDIR\libssl-1_1.dll"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION

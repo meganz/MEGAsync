@@ -42,7 +42,7 @@ IF [%MEGA_QTPATH%]==[] (
 	IF NOT [%MEGAQTPATH%]==[] (
 		SET MEGA_QTPATH=%MEGAQTPATH%
 	) ELSE (
-		SET MEGA_QTPATH=C:\Qt\5.12.12\msvc2017_64
+		SET MEGA_QTPATH=C:\Qt\5.15.11\x64
 	)
 )
 
@@ -129,5 +129,5 @@ echo 	- Sign: sign or nosign if the binaries must be signed or not
 echo 	- Cores: the number of cores to build the project, or 0 for default value (4)
 echo 	- Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
-echo MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.12.12\msvc2017_64
+echo MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.15.11\x64
 exit /B

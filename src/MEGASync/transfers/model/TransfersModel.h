@@ -331,7 +331,7 @@ private:
     void sendDataChanged(int row);
     void restoreTagsByRow();
 
-    void retryTransfers(const QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>>& transfersToRetry);
+    void retryTransfers(const QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> &transfersToRetry);
 
     bool isUiBlockedModeActive() const ;
     void setUiBlockedMode(bool state);
