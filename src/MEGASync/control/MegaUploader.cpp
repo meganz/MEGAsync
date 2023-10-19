@@ -49,7 +49,7 @@ void MegaUploader::startUpload(const QString& localPath, const QString &nodeName
         fileName = fileNameArray.constData();
     }
 
-    QByteArray appData = appDataID > 0 ? (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8() : QByteArray();
+    QByteArray appData = appDataID > 0 ? (QString::number(appDataID) + QLatin1Char('*')).toUtf8() : QByteArray();
     const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     const bool isSrcTemporary = false;
     megaApi->startUpload(localPathArray.constData(), parent, fileName, mtime, appData.isEmpty() ? nullptr : appData.constData(), isSrcTemporary, startFirst, cancelToken, mFolderTransferListener.get());
