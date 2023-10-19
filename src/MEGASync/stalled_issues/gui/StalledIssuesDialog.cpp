@@ -84,6 +84,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
             onUiBlocked();
         }
     }
+    selectNewMode();
 }
 
 StalledIssuesDialog::~StalledIssuesDialog()

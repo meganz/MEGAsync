@@ -65,7 +65,7 @@ private:
     StalledIssuesProxyModel* mProxyModel;
     StalledIssueDelegate* mDelegate;
 
-    Preferences::StalledIssuesModeType mModeSelected = Preferences::StalledIssuesModeType::None;
+    Preferences::StalledIssuesModeType mModeSelected = Preferences::StalledIssuesModeType::Smart;
 };
 
 #endif // STALLEDISSUESDIALOG_H
