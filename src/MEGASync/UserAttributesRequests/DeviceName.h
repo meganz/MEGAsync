@@ -30,7 +30,7 @@ signals:
 private:
     void processGetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e);
     void processSetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e);
-    void setDeviceNameAttribute(bool isRetry = false);
+    void setDeviceNameAttribute();
 
 
     QString mDeviceName;

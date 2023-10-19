@@ -1,7 +1,6 @@
 #include "DeviceName.h"
 
 #include "megaapi.h"
-#include "mega/types.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
 
@@ -21,8 +20,8 @@ namespace UserAttributes
 
 DeviceName::DeviceName(const QString& userEmail) : AttributeRequest(userEmail),
     mDeviceName(getDefaultDeviceName()),
-    mNameSuffix(0),
-    mUserChoosenDeviceName(QString())
+    mUserChoosenDeviceName(),
+    mNameSuffix(0)
 {
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                        QString::fromUtf8("Default device name: \"%1\"").arg(mDeviceName)
@@ -41,16 +40,16 @@ void DeviceName::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_req
     {
         switch (incoming_request->getType())
         {
-        case mega::MegaRequest::TYPE_GET_ATTR_USER:
-        {
-            processGetDeviceNameCallback(incoming_request, e);
-            break;
-        }
-        case mega::MegaRequest::TYPE_SET_ATTR_USER:
-        {
-            processSetDeviceNameCallback(incoming_request, e);
-            break;
-        }
+            case mega::MegaRequest::TYPE_GET_ATTR_USER:
+            {
+                processGetDeviceNameCallback(incoming_request, e);
+                break;
+            }
+            case mega::MegaRequest::TYPE_SET_ATTR_USER:
+            {
+                processSetDeviceNameCallback(incoming_request, e);
+                break;
+            }
         }
     }
 }
@@ -94,7 +93,7 @@ QString DeviceName::getDefaultDeviceName()
     return deviceName.isEmpty() ? tr("My computer") : deviceName;
 }
 
-bool DeviceName::setDeviceName(const QString &deviceName)
+bool DeviceName::setDeviceName(const QString& deviceName)
 {
     if(deviceName == mDeviceName)
     {
@@ -102,6 +101,8 @@ bool DeviceName::setDeviceName(const QString &deviceName)
     }
 
     mUserChoosenDeviceName = deviceName;
+    mDeviceName = deviceName;
+
     setDeviceNameAttribute();
     return true;
 }
@@ -154,27 +155,17 @@ void DeviceName::processSetDeviceNameCallback(mega::MegaRequest* incoming_reques
             mNameSuffix++;
             mDeviceName = (mUserChoosenDeviceName.isEmpty() ? getDefaultDeviceName() : mUserChoosenDeviceName)
                                                            + QString::fromLatin1(" - ") + QString::number(mNameSuffix);
-            setDeviceNameAttribute(true);
+            setDeviceNameAttribute();
         }
     }
 }
 
-void DeviceName::setDeviceNameAttribute(bool isRetry)
+void DeviceName::setDeviceNameAttribute()
 {
-    QString deviceNameToSet;
-    if(isRetry || mUserChoosenDeviceName.isEmpty())
-    {
-        deviceNameToSet = mDeviceName;
-    }
-    else
-    {
-        deviceNameToSet = mUserChoosenDeviceName;
-    }
-
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
-                       QString::fromUtf8("Setting Device name to \"%1\"").arg(deviceNameToSet)
+                       QString::fromUtf8("Setting Device name to \"%1\"").arg(mDeviceName)
                        .toUtf8().constData());
     mRequestInfo.mParamInfo[mega::MegaApi::USER_ATTR_DEVICE_NAMES]->setPending(true);
-    MegaSyncApp->getMegaApi()->setDeviceName(nullptr, deviceNameToSet.toUtf8().constData());
+    MegaSyncApp->getMegaApi()->setDeviceName(nullptr, mDeviceName.toUtf8().constData());
 }
 }//end namespace UserAttributes
