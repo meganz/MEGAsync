@@ -32,9 +32,6 @@ LoginController::LoginController(QObject* parent)
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
     }
-
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), this);
-    qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
 
 void LoginController::login(const QString& email, const QString& password)

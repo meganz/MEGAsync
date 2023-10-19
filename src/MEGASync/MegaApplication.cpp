@@ -568,7 +568,7 @@ void MegaApplication::initialize()
 
     if (mStatusController != nullptr)
     {
-        mEngine->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), this);
+        mEngine->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), mStatusController);
     }
 
     delegateListener = new QTMegaListener(megaApi, this);
@@ -1195,7 +1195,7 @@ void MegaApplication::start()
     else //Otherwise, login in the account
     {
         mLoginController = new FastLoginController(mEngine);
-        if (!static_cast<FastLoginController*>(mLoginController)->fastLogin()) //In case preferences are corrupt with empty session, just unlink and remove associated data.
+        if (mLoginController == nullptr || !static_cast<FastLoginController*>(mLoginController)->fastLogin()) //In case preferences are corrupt with empty session, just unlink and remove associated data.
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "MEGAsync preferences logged but empty session. Unlink account and fresh start.");
             unlink();
@@ -1206,6 +1206,9 @@ void MegaApplication::start()
             checkupdate = true;
         }
     }
+
+    mEngine->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), mLoginController);
+    qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 
     if (preferences->getSession().isEmpty())
     {
