@@ -1,5 +1,5 @@
 // System
-import QtQml 2.12
+import QtQml 2.15
 
 //C++
 import Syncs 1.0

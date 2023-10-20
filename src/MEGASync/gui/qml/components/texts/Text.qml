@@ -1,5 +1,5 @@
 // System
-import QtQuick 2.12 as Qml
+import QtQuick 2.15 as Qml
 
 // Local
 import Common 1.0

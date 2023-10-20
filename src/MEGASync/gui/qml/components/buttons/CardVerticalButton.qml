@@ -1,6 +1,6 @@
 // System
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
 
 // QML common
 import Common 1.0

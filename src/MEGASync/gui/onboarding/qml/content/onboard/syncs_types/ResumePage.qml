@@ -1,5 +1,5 @@
 // System
-import QtQuick 2.12
+import QtQuick 2.15
 
 // C++
 import Onboarding 1.0

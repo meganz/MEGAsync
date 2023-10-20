@@ -1,5 +1,5 @@
 // System
-import QtQuick 2.12
+import QtQuick 2.15
 import Qt.labs.folderlistmodel 2.2
 
 QtObject {
@@ -9,7 +9,7 @@ QtObject {
     property string relativeFontDirectory: "fonts"
 
     function loadFont(url) {
-        var fontLoader = Qt.createQmlObject('import QtQuick 2.12; FontLoader { source: "' + url + '"; }',
+        var fontLoader = Qt.createQmlObject('import QtQuick 2.15; FontLoader { source: "' + url + '"; }',
                                             loader,
                                             "dynamicFontLoader");
     }
