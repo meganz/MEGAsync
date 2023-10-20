@@ -4,7 +4,6 @@
 #include "ConnectivityChecker.h"
 #include "Platform.h"
 #include "QMegaMessageBox.h"
-#include "DialogOpener.h"
 #include "mega/types.h"
 
 #include <QQmlContext>
@@ -33,9 +32,6 @@ LoginController::LoginController(QObject* parent)
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
     }
-
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), this);
-    qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
 
 void LoginController::login(const QString& email, const QString& password)
@@ -568,20 +564,24 @@ void LoginController::fetchNodes(const QString& email)
     }
     else // we will ask the SDK the email
     {
-        mMegaApi->getUserEmail(mMegaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
-                                      QString email;
+        mMegaApi->getUserEmail(mMegaApi->getMyUserHandleBinary(), new mega::OnFinishOneShot(mMegaApi,  this, [loadMigrateAndFetchNodes]
+                                (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e) {
+                                    QString email;
 
-                                      if (e->getErrorCode() == mega::MegaError::API_OK)
-                                      {
-                                          auto emailFromRequest = request->getEmail();
-                                          if (emailFromRequest)
-                                          {
-                                              email = QString::fromUtf8(emailFromRequest);
-                                          }
-                                      }
+                                    if (e.getErrorCode() == mega::MegaError::API_OK)
+                                    {
+                                        auto emailFromRequest = request.getEmail();
+                                        if (emailFromRequest)
+                                        {
+                                            email = QString::fromUtf8(emailFromRequest);
+                                        }
+                                    }
 
-                                             // in any case, proceed:
-                                      loadMigrateAndFetchNodes(email);
+                                    // in any case, proceed:
+                                    if(isContextValid)
+                                    {
+                                        loadMigrateAndFetchNodes(email);
+                                    }
                                   }));
 
     }
@@ -598,8 +598,8 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
     int cachedStorageState = 999;
 
     auto oldCachedSyncs = mPreferences->readOldCachedSyncs(&cachedBusinessState, &cachedBlockedState, &cachedStorageState, email);
-    std::shared_ptr<int>oldCacheSyncsCount(new int(oldCachedSyncs.size()));
-    if (*oldCacheSyncsCount > 0)
+    auto oldCacheSyncsCount = oldCachedSyncs.size();
+    if (oldCacheSyncsCount > 0)
     {
         if (cachedBusinessState == -2)
         {
@@ -625,28 +625,28 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
         mMegaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
                                          osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
                                          osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
-                                         new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e)
+                                         new mega::OnFinishOneShot(mMegaApi, this, [this, osd, &oldCacheSyncsCount, needsMigratingFromOldSession, email](bool, const mega::MegaRequest& request, const mega::MegaError& e)
                                                                        {
-                                                                           if (e->getErrorCode() == mega::MegaError::API_OK)
+                                                                           if (e.getErrorCode() == mega::MegaError::API_OK)
                                                                            {
                                                                                //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
-                                                                               SyncInfo::instance()->pickInfoFromOldSync(osd, request->getParentHandle(), needsMigratingFromOldSession);
+                                                                               SyncInfo::instance()->pickInfoFromOldSync(osd, request.getParentHandle(), needsMigratingFromOldSession);
                                                                                mPreferences->removeOldCachedSync(osd.mPos, email);
                                                                            }
                                                                            else
                                                                            {
-                                                                               mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+                                                                               mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e.getErrorString())).toUtf8().constData());
                                                                            }
 
-                                                                           --*oldCacheSyncsCount;
-                                                                           if (*oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
+                                                                           --oldCacheSyncsCount;
+                                                                           if (oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
                                                                            {
                                                                                mMegaApi->fetchNodes();
                                                                            }
                                                                        }));
     }
 
-    if (*oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
+    if (oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
     {
         mMegaApi->fetchNodes();
     }

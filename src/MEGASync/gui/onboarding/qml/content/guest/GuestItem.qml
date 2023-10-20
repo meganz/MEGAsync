@@ -20,7 +20,14 @@ import ApiEnums 1.0
 import LoginController 1.0
 
 Rectangle {
-    id: content
+    id: root
+
+    width: 400
+    height: 560
+    radius: 10
+    color: Styles.surface1
+    border.color: "#1F000000"
+    border.width: 1
 
     property string title: ""
     property bool indeterminate: true
@@ -39,97 +46,92 @@ Rectangle {
 
     function getState() {
         if(AccountStatusControllerAccess.blockedState) {
-            return content.stateBlocked;
+            return root.stateBlocked;
         }
         else {
             switch(LoginControllerAccess.state) {
                 case LoginController.LOGGING_IN:
-                    return content.stateInProgressLoggingIn;
+                    return root.stateInProgressLoggingIn;
                 case LoginController.LOGGING_IN_2FA_REQUIRED:
                 case LoginController.LOGGING_IN_2FA_VALIDATING:
                 case LoginController.LOGGING_IN_2FA_FAILED:
-                    return content.stateInProgress2FA;
+                    return root.stateInProgress2FA;
                 case LoginController.CREATING_ACCOUNT:
-                    return content.stateInProgressCreatingAccount;
+                    return root.stateInProgressCreatingAccount;
                 case LoginController.WAITING_EMAIL_CONFIRMATION:
                 case LoginController.CHANGING_REGISTER_EMAIL:
-                    return content.stateInProgressWaitingEmailConfirm;
+                    return root.stateInProgressWaitingEmailConfirm;
                 case LoginController.FETCHING_NODES:
                 case LoginController.FETCHING_NODES_2FA:
-                    return content.stateInProgressFetchNodes;
+                    return root.stateInProgressFetchNodes;
                 case LoginController.FETCH_NODES_FINISHED:
-                    return content.stateFetchNodesFinished;
+                    return root.stateFetchNodesFinished;
                 case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
-                    return content.stateInOnboarding;
+                    return root.stateInOnboarding;
                 default:
-                    return content.stateLoggedOut;
+                    return root.stateLoggedOut;
             }
         }
     }
 
-    width: 400
-    height: 560
-    radius: 10
-    color: Styles.surface1
-    border.color: "#1F000000"
-    border.width: 1
-
     state: getState()
     states: [
         State {
-            name: content.stateLoggedOut
+            name: root.stateLoggedOut
             StateChangeScript {
-                script: stack.replace(initialPage);
+                script: view.replace(initialPage);
             }
         },
         State {
-            name: content.stateFetchNodesFinished
-            extend: content.stateLoggedOut
+            name: root.stateFetchNodesFinished
+            extend: root.stateLoggedOut
             StateChangeScript {
                 script: guestWindow.hide();
             }
         },
         State {
-            name: content.stateInProgress
+            name: root.stateInProgress
             StateChangeScript {
-                script: stack.replace(progressPage);
+                script: view.replace(progressPage);
             }
         },
         State {
-            name: content.stateInProgressFetchNodes
-            extend: content.stateInProgress
+            name: root.stateInProgressFetchNodes
+            extend: root.stateInProgress
         },
         State {
-            name: content.stateInProgressLoggingIn
-            extend: content.stateInProgress
+            name: root.stateInProgressLoggingIn
+            extend: root.stateInProgress
         },
         State {
-            name: content.stateInProgressCreatingAccount
-            extend: content.stateInProgress
+            name: root.stateInProgressCreatingAccount
+            extend: root.stateInProgress
         },
         State {
-            name: content.stateInProgressWaitingEmailConfirm
-            extend: content.stateInProgress
+            name: root.stateInProgressWaitingEmailConfirm
+            extend: root.stateInProgress
         },
         State {
-            name: content.stateInProgress2FA
-            extend: content.stateInProgress
+            name: root.stateInProgress2FA
+            extend: root.stateInProgress
         },
         State {
-            name: content.stateBlocked
+            name: root.stateBlocked
             StateChangeScript {
-                script: stack.replace(blockedPage);
+                script: view.replace(blockedPage);
             }
         },
         State {
-            name: content.stateInOnboarding
+            name: root.stateInOnboarding
             StateChangeScript {
-                script: stack.replace(settingUpAccountPage);
+                script: view.replace(settingUpAccountPage);
             }
         }
     ]
 
     MegaImages.SvgImage {
+        id: image
+
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: 16
@@ -224,123 +226,126 @@ Rectangle {
     }
 
     Qml.StackView {
-        id: stack
+        id: view
 
         anchors.fill: parent
         replaceEnter: null
         replaceExit: null
+    }
 
-        Component {
-            id: initialPage
+    Component {
+        id: initialPage
 
-            BasePage {
-                title: GuestStrings.logInOrSignUp
-                spacing: 48
-                leftButton {
-                    text: OnboardingStrings.signUp
-                    onClicked: {
-                        LoginControllerAccess.state = LoginController.SIGN_UP;
-                    }
+        BasePage {
+            title: GuestStrings.logInOrSignUp
+            spacing: 48
+            showProgressBar: false
+            leftButton {
+                text: OnboardingStrings.signUp
+                onClicked: {
+                    LoginControllerAccess.state = LoginController.SIGN_UP;
                 }
-                rightButton {
-                    text: OnboardingStrings.login
-                    onClicked: {
-                        LoginControllerAccess.state = LoginController.LOGGED_OUT;
+            }
+            rightButton {
+                text: OnboardingStrings.login
+                onClicked: {
+                    LoginControllerAccess.state = LoginController.LOGGED_OUT;
+                }
+            }
+        }
+    }
+
+    Component {
+        id: progressPage
+
+        BasePage {
+
+            function getDescription() {
+                switch(LoginControllerAccess.state) {
+                    case LoginController.LOGGING_IN:
+                        return OnboardingStrings.statusLogin;
+                    case LoginController.LOGGING_IN_2FA_REQUIRED:
+                    case LoginController.LOGGING_IN_2FA_VALIDATING:
+                    case LoginController.LOGGING_IN_2FA_FAILED:
+                        return OnboardingStrings.status2FA;
+                    case LoginController.CREATING_ACCOUNT:
+                        return OnboardingStrings.statusSignUp;
+                    case LoginController.WAITING_EMAIL_CONFIRMATION:
+                    case LoginController.CHANGING_REGISTER_EMAIL:
+                        return OnboardingStrings.statusWaitingForEmail;
+                    case LoginController.FETCHING_NODES:
+                    case LoginController.FETCHING_NODES_2FA:
+                        return OnboardingStrings.statusFetchNodes;
+                    default:
+                        return "";
+                }
+            }
+
+            description: getDescription()
+            showProgressBar: true
+            leftButton {
+                text: OnboardingStrings.signUp
+                enabled: false
+            }
+            rightButton {
+                text: OnboardingStrings.login
+                enabled: false
+            }
+            indeterminate: LoginControllerAccess.progress === 0
+            progressValue: LoginControllerAccess.progress
+        }
+    }
+
+    Component {
+        id: blockedPage
+
+        BasePage {
+
+            function isEmailBlock() {
+                return AccountStatusControllerAccess.blockedState
+                        === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL;
+            }
+
+            showProgressBar: false
+            imageSource: Images.warningGuest
+            imageTopMargin: 110
+            title: GuestStrings.accountTempLocked
+            description: isEmailBlock()
+                         ? GuestStrings.accountTempLockedEmail
+                         : GuestStrings.accountTempLockedSMS
+            descriptionUrl: isEmailBlock() ? "" : Links.terms
+            leftButton {
+                text: GuestStrings.logOut
+                onClicked: {
+                    GuestContent.onLogoutClicked();
+                }
+            }
+            rightButton {
+                text: isEmailBlock() ? GuestStrings.resendEmail : GuestStrings.verifyNow;
+                icons.source: isEmailBlock() ? Images.mail : "";
+                onClicked: {
+                    if(isEmailBlock()) {
+                        GuestContent.onVerifyEmailClicked();
+                    }
+                    else {
+                        GuestContent.onVerifyPhoneClicked();
                     }
                 }
             }
         }
+    }
 
-        Component {
-            id: progressPage
+    Component {
+        id: settingUpAccountPage
 
-            BasePage {
-
-                function getDescription() {
-                    switch(LoginControllerAccess.state) {
-                        case LoginController.LOGGING_IN:
-                            return OnboardingStrings.statusLogin;
-                        case LoginController.LOGGING_IN_2FA_REQUIRED:
-                        case LoginController.LOGGING_IN_2FA_VALIDATING:
-                        case LoginController.LOGGING_IN_2FA_FAILED:
-                            return OnboardingStrings.status2FA;
-                        case LoginController.CREATING_ACCOUNT:
-                            return OnboardingStrings.statusSignUp;
-                        case LoginController.WAITING_EMAIL_CONFIRMATION:
-                        case LoginController.CHANGING_REGISTER_EMAIL:
-                            return OnboardingStrings.statusWaitingForEmail;
-                        case LoginController.FETCHING_NODES:
-                        case LoginController.FETCHING_NODES_2FA:
-                            return OnboardingStrings.statusFetchNodes;
-                        default:
-                            return "";
-                    }
-                }
-
-                description: getDescription()
-                showProgressBar: true
-                leftButton {
-                    text: OnboardingStrings.signUp
-                    enabled: false
-                }
-                rightButton {
-                    text: OnboardingStrings.login
-                    enabled: false
-                }
-                indeterminate: LoginControllerAccess.progress === 0
-                progressValue: LoginControllerAccess.progress
-            }
-        }
-
-        Component {
-            id: blockedPage
-
-            BasePage {
-
-                function isEmailBlock() {
-                    return AccountStatusControllerAccess.blockedState
-                            === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL;
-                }
-
-                image.source: Images.warningGuest
-                imageTopMargin: 110
-                title: GuestStrings.accountTempLocked
-                description: isEmailBlock()
-                             ? GuestStrings.accountTempLockedEmail
-                             : GuestStrings.accountTempLockedSMS
-                descriptionUrl: isEmailBlock() ? "" : Links.terms
-                leftButton {
-                    text: GuestStrings.logOut
-                    onClicked: {
-                        GuestContent.onLogoutClicked();
-                    }
-                }
-                rightButton {
-                    text: isEmailBlock() ? GuestStrings.resendEmail : GuestStrings.verifyNow;
-                    icons.source: isEmailBlock() ? Images.mail : "";
-                    onClicked: {
-                        if(isEmailBlock()) {
-                            GuestContent.onVerifyEmailClicked();
-                        }
-                        else {
-                            GuestContent.onVerifyPhoneClicked();
-                        }
-                    }
-                }
-            }
-        }
-
-        Component {
-            id: settingUpAccountPage
-
-            BasePage {
-                title: GuestStrings.loggedInOnboarding
-                image.source: Images.settingUp
-                leftButton.visible: false
-                rightButton.visible: false
-                spacing: 0
-                bottomMargin: 150
-            }
+        BasePage {
+            showProgressBar: false
+            title: GuestStrings.loggedInOnboarding
+            imageSource: Images.settingUp
+            leftButton.visible: false
+            rightButton.visible: false
+            spacing: 0
+            bottomMargin: 150
         }
     }
 }

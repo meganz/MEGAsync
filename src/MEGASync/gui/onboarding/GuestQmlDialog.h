@@ -15,7 +15,7 @@ public slots:
     void realocate();
 
 protected:
-    void showEvent(QShowEvent *) override;
+    void showEvent(QShowEvent* ) override;
 
 };
 

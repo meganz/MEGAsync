@@ -1,9 +1,5 @@
 #include "EphemeralCredentials.h"
 
-EphemeralCredentials::EphemeralCredentials()
-{
-}
-
 EphemeralCredentials::EphemeralCredentials(const EphemeralCredentials &cred)
     : email(cred.email)
     , sessionId(cred.sessionId)
@@ -17,7 +13,7 @@ bool EphemeralCredentials::operator==(const EphemeralCredentials& cred) const
 
 QDataStream& operator<<(QDataStream& out, const EphemeralCredentials& cred)
 {
-    out<<cred.email<<cred.sessionId;
+    out << cred.email << cred.sessionId;
     return out;
 }
 

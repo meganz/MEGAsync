@@ -8,7 +8,7 @@ import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Qml.MenuItem {
-    id: menuItem
+    id: root
 
     enum Position {
         First = 0,
@@ -21,11 +21,11 @@ Qml.MenuItem {
     property int position: MenuItem.Position.Inter
 
     function getBackgroundColor(){
-        if(menuItem.pressed)
+        if(root.pressed)
         {
             return Styles.surface2;
         }
-        else if(menuItem.hovered)
+        else if(root.hovered)
         {
             return Styles.textInverse;
         }
@@ -33,17 +33,17 @@ Qml.MenuItem {
     }
 
     width: 200
-    height: position === MenuItem.Position.First || position === MenuItem.Position.Last ? 48 : 40
+    height: root.position === MenuItem.Position.First || position === MenuItem.Position.Last ? 48 : 40
     leftPadding: paddingSize
     rightPadding: paddingSize
-    topPadding: position === MenuItem.Position.First ? paddingSize : 0
-    bottomPadding: position === MenuItem.Position.Last ? paddingSize : 0
+    topPadding: root.position === MenuItem.Position.First ? paddingSize : 0
+    bottomPadding: root.position === MenuItem.Position.Last ? paddingSize : 0
 
     contentItem: Rectangle {
         implicitWidth: 184
         implicitHeight: 40
         color: getBackgroundColor();
-        border.color: menuItem.visualFocus ? Styles.focus : "transparent";
+        border.color: root.visualFocus ? Styles.focus : "transparent";
         border.width: 4
         radius: 4
 
@@ -58,7 +58,7 @@ Qml.MenuItem {
                 anchors.bottom: parent.bottom
                 anchors.topMargin: 12
                 anchors.bottomMargin: 12
-                source: menuItem.icon.source
+                source: root.icon.source
                 sourceSize: Qt.size(16, 16)
                 color: Styles.iconPrimary
             }
@@ -69,7 +69,7 @@ Qml.MenuItem {
                 anchors.topMargin: 10
                 anchors.bottomMargin: 10
                 verticalAlignment: Text.AlignVCenter
-                text: menuItem.text
+                text: root.text
                 font.pixelSize: MegaTexts.Text.Size.Medium
                 color: Styles.textPrimary
             }
@@ -83,9 +83,8 @@ Qml.MenuItem {
     MouseArea {
         id: mouseArea
 
-        anchors.fill: menuItem
+        anchors.fill: root
         cursorShape: Qt.PointingHandCursor
         onPressed: mouse.accepted = false;
     }
-
 }

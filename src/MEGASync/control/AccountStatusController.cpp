@@ -15,7 +15,6 @@ AccountStatusController::AccountStatusController(QObject* parent)
     , mBlockedStateSet(false)
 {
     mMegaApi->addListener(mDelegateListener);
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), this);
 }
 
 void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
