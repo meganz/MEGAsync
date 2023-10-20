@@ -1,4 +1,4 @@
-import QtQml 2.12
+import QtQml 2.15
 
 // QML common
 import Common 1.0

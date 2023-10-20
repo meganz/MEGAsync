@@ -1,5 +1,5 @@
 // System
-import QtQuick 2.12
+import QtQuick 2.15
 import QtQuick.Studio.EventSimulator 1.0
 import QtQuick.Studio.EventSystem 1.0
 

@@ -1,6 +1,6 @@
 // System
-import QtQuick 2.12
-import QtGraphicalEffects 1.0
+import QtQuick 2.15
+import QtGraphicalEffects 1.15
 
 // QML common
 import Common 1.0

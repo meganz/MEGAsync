@@ -1,5 +1,5 @@
 // System
-import QtQuick.Layouts 1.12
+import QtQuick.Layouts 1.15
 
 // QML common
 import Components.Buttons 1.0 as MegaButtons
