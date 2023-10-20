@@ -1281,8 +1281,6 @@ void MegaApplication::onboardingFinished(bool fastLogin)
         return;
     }
 
-    clearUserAttributes();
-
     //Send pending crash report log if neccessary
     if (!crashReportFilePath.isNull() && megaApi)
     {
@@ -1309,13 +1307,6 @@ void MegaApplication::onboardingFinished(bool fastLogin)
     // Ask for storage on first login or when cached value is invalid
     updateUserStats(!fastLogin || cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN,
                     true, true, true, !fastLogin ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
-
-    requestUserData();
-
-    if (mSettingsDialog)
-    {
-        mSettingsDialog->setProxyOnly(false);
-    }
 
     // Apply the "Start on startup" configuration, make sure configuration has the actual value
     // get the requested value
@@ -1485,6 +1476,15 @@ if (!preferences->lastExecutionTime())
     }
     mStatusController->loggedIn();
     preferences->monitorUserAttributes();
+}
+
+void MegaApplication::onLoginFinished()
+{
+    if(mSettingsDialog)
+    {
+        mSettingsDialog->setProxyOnly(false);
+    }
+    requestUserData();
 }
 
 void MegaApplication::onLogout()
@@ -2324,6 +2324,7 @@ void MegaApplication::raiseInfoDialog()
     if(mStatusController->isAccountBlocked()
         || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
     {
+        DialogOpener::raiseAllDialogs();
         if (preferences->getSession().isEmpty())
         {
             openOnboardingDialog();
@@ -5340,7 +5341,7 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = mLoginController->getState() != LoginController::State::FETCH_NODES_FINISHED || mStatusController->isAccountBlocked();
+        proxyOnly = !mLoginController->isFetchNodesFinished() || mStatusController->isAccountBlocked();
         megaApi->retryPendingConnections();
     }
 

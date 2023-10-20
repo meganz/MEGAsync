@@ -457,7 +457,7 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
 
         mProgress = 0; //sets guestdialog progressbar as indeterminate
         emit progressChanged();
-        MegaSyncApp->requestUserData(); //query avatar and other user info
+        MegaSyncApp->onLoginFinished();
     }
     else
     {

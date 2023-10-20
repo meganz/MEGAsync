@@ -188,6 +188,7 @@ public:
     void resetRootNodes();
     void initLocalServer();
     void onboardingFinished(bool fastLogin);
+    void onLoginFinished();
     void onLogout();
 
     MegaSyncLogger& getLogger() const;
