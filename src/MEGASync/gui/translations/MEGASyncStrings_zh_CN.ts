@@ -996,6 +996,16 @@
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
         <translation>您已输入当前密码，请输入一个新密码。</translation>
     </message>
+    <message>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
+        <translation>密码已更改</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
+        <translation>您的密码已更改。</translation>
+    </message>
 </context>
 <context>
     <name>CircularUsageProgressBar</name>
@@ -1028,6 +1038,11 @@
         <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
         <translation>不允许使用以下字符：
 %1</translation>
+    </message>
+    <message>
+        <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
+        <translation>由于付款失败或您已取消订阅，您的Pro&#xa0;Flexi帐户已被停用。在您付款并重新激活您的订阅之前，您将无法访问存储在您帐户中的数据。</translation>
     </message>
 </context>
 <context>
@@ -1237,7 +1252,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>为避免您的企业帐户被暂停，请尽快解决您的付款问题</translation>
+        <translation>请尽快解决您的付款问题，以免您的企业帐户被暂停</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1487,16 +1502,6 @@
         <translation>更新</translation>
     </message>
     <message>
-        <source>loading time…</source>
-        <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>正在加载时间&#8230;</translation>
-    </message>
-    <message>
-        <source>loading size…</source>
-        <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>正在加载大小&#8230;</translation>
-    </message>
-    <message>
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>了解更多</translation>
@@ -1710,7 +1715,7 @@
     </message>
     <message>
         <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
+        <translatorcomment>Informative label during creation of an account using MEGA app</translatorcomment>
         <translation>正在创建帐户⋯</translation>
     </message>
     <message>
@@ -1765,6 +1770,34 @@
     </message>
 </context>
 <context>
+    <name>GuiUtilities</name>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
+        <translation>添加同步时出错</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
+        <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
+        <translation>无法添加%1，因为付款失败或您已取消订阅，您的Pro&#xa0;Flexi帐户已被停用。要继续，请付款并重新激活您的订阅。</translation>
+    </message>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account. SNC-3019</translatorcomment>
+        <translation>立即付款</translation>
+    </message>
+    <message>
+        <source>Pay and reactivate</source>
+        <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>付款并重新激活</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Label of the button used to dismiss the error message the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>忽略</translation>
+    </message>
+</context>
+<context>
     <name>HTTPServer</name>
     <message>
         <source>Your download has started</source>
@@ -1776,7 +1809,7 @@
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
-        <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
+        <translatorcomment>Label to indicate the user that needs to wait until the app fetches link information from the server</translatorcomment>
         <translation>请稍候…</translation>
     </message>
 </context>
@@ -1943,7 +1976,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>暂停/恢复</translation>
+        <translation>暂停或恢复</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2039,11 +2072,6 @@
         <source>Something went wrong while trying to backup your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
         <translation>尝试备份您的文件夹时出现问题。</translation>
-    </message>
-    <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>添加 %1 时发生错误：</translation>
     </message>
     <message>
         <source>Add Backup</source>
@@ -2171,12 +2199,12 @@
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app.</translatorcomment>
         <translation>选择用户</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app. Preserve $(^NameDA) code</translatorcomment>
         <translation>请选择您要为哪些用户安装$(^NameDA)。</translation>
     </message>
     <message>
@@ -2302,11 +2330,6 @@
         <translation>错误：目标文件夹无效。上传已取消</translation>
     </message>
     <message>
-        <source>About MEGAsync</source>
-        <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>关于</translation>
-    </message>
-    <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
         <translation>链接已复制到剪贴板</translation>
@@ -2328,22 +2351,22 @@
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>已是最新</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a paused state.</translatorcomment>
         <translation>已暂停</translation>
     </message>
     <message>
         <source>Scanning</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a scanning state.</translatorcomment>
         <translation>正在扫描</translation>
     </message>
     <message>
         <source>Syncing</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a syncing state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>正在同步</translation>
     </message>
     <message>
@@ -2353,7 +2376,7 @@
     </message>
     <message>
         <source>Waiting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a waiting state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>正在等待</translation>
     </message>
     <message>
@@ -2389,7 +2412,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
+        <translatorcomment>Notification message launched when an update for MEGA is being downloaded.</translatorcomment>
         <translation>有可用的更新。正在下载…</translation>
     </message>
     <message>
@@ -2404,14 +2427,8 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Starting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is starting.</translatorcomment>
         <translation>正在开始</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>无法获取文件系统。请再试一次。如果问题仍然存在，请联系我们bug@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -2425,7 +2442,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Show status</source>
-        <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translatorcomment>Label displayed to let the user displays the Information dialog of the app. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation>显示状态</translation>
     </message>
     <message>
@@ -2574,29 +2591,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>应用程序将会继续运行，但您可能不会收到新的更新。</translation>
     </message>
     <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>密码已更改</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>您的密码已更改。</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>云盘</translation>
-    </message>
-    <message>
-        <source>Pay Now</source>
-        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation>立即付款</translation>
-    </message>
-    <message>
-        <source>Your Business account is expired</source>
-        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>帐户已停用</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2611,7 +2608,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]重要：[/A]请联系您的企业帐户管理员解决此问题并激活您的帐户。</translation>
+        <translation>[A]重要：[/A]请联系您的企业帐户管理员以解决问题并激活您的帐户。</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2674,16 +2671,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>一个或多个同步已被禁用</translation>
     </message>
     <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
-        <translation>添加同步时发生错误</translation>
-    </message>
-    <message>
-        <source>This sync can&apos;t be added: %1. Reason: %2</source>
-        <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
-        <translation>无法添加此同步：%1。原因：%2</translation>
-    </message>
-    <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
         <translation>由于：%2，您的同步“%1”已被禁用。</translation>
@@ -2739,11 +2726,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some backups are disabled</translatorcomment>
         <translation>一个或多个备份已被禁用</translation>
-    </message>
-    <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>添加 %1 时发生错误：</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
@@ -2859,6 +2841,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Warning</source>
         <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
         <translation>注意</translation>
+    </message>
+    <message>
+        <source>Account deactivated</source>
+        <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
+        <translation>帐户已停用</translation>
     </message>
 </context>
 <context>
@@ -3021,12 +3008,20 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>帐户因侵犯版权而被暂停。我们已向您发送了一封电子邮件，其中包含有关此内容的更多信息。</translation>
+        <translation>由于多次被指控侵犯版权，您的MEGA帐户已被暂停。这意味着您无法访问您的帐户或其中的数据。
+
+请查看您的电子邮件，了解更多有关如何提交抗辩通知的信息。</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>帐户因违反MEGA服务条款而被终止，例如滥用他人权利、共享和导入非法数据，或系统滥用行为。</translation>
+        <translation>由于违反MEGA的服务条款，您的帐户已被终止。
+您将无法重新获得您对存储数据的访问权限，也无法获得注册新的MEGA帐户的授权。</translation>
+    </message>
+    <message>
+        <source>File removed as it violated our Terms of Service</source>
+        <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
+        <translation>已违反服务条款。</translation>
     </message>
 </context>
 <context>
@@ -3077,11 +3072,6 @@ Transfer will automatically resume when you re-open the app.</source>
 </context>
 <context>
     <name>MegaProgressCustomDialog</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
@@ -3236,9 +3226,9 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>您无法从这个位置运行此桌面应用程序。请把它移到应用程序文件夹中然后运行。</translation>
     </message>
     <message>
-        <source>Account expired (business or Pro Flexi)</source>
-        <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>帐户已停用</translation>
+        <source>Your plan has expired</source>
+        <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
+        <translation>您的会员方案已过期</translation>
     </message>
 </context>
 <context>
@@ -3417,19 +3407,19 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translation><numerusform>取消并清除传输</numerusform></translation>
     </message>
     <message>
-        <source>Yes, cancel</source>
-        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>是，取消</translation>
+        <source>Cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>取消</translation>
     </message>
     <message>
-        <source>No, continue</source>
-        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
-        <translation>否，继续</translation>
+        <source>Don&apos;t cancel</source>
+        <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>不要取消</translation>
     </message>
     <message>
-        <source>Yes, clear</source>
-        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation>是，清除</translation>
+        <source>Don&apos;t clear</source>
+        <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
+        <translation>不要清除</translation>
     </message>
 </context>
 <context>
@@ -3993,12 +3983,12 @@ Enter a different name</source>
     </message>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
         <translation>额外存储空间按每%2&#xa0;TB%1收费。</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
         <translation>额外传输流量按每%2&#xa0;TB%1收费。</translation>
     </message>
     <message numerus="yes">
@@ -5027,7 +5017,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>移动…</translation>
+        <translation>选择</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -5338,11 +5328,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
         <translation>您确定吗?</translation>
-    </message>
-    <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
-        <translation>添加同步时发生错误</translation>
     </message>
     <message>
         <source>Error removing sync</source>
@@ -7192,32 +7177,32 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n秒前</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n分钟前</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n小时前</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n天前</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n个月前</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n年前</numerusform></translation>
     </message>
     <message>

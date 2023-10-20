@@ -915,17 +915,25 @@ void Preferences::setAndCachedValue(const QString &key, const QVariant &value)
     setCachedValue(key, value);
 }
 
-void Preferences::setValueAndSyncConcurrent(const QString &key, const QVariant &value)
+void Preferences::setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange)
 {
     QMutexLocker locker(&mutex);
     setAndCachedValue(key, value);
     mSettings->sync();
+    if(notifyChange)
+    {
+        emit valueChanged(key);
+    }
 }
 
-void Preferences::setValueConcurrent(const QString &key, const QVariant &value)
+void Preferences::setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange)
 {
     QMutexLocker locker(&mutex);
     setAndCachedValue(key, value);
+    if(notifyChange)
+    {
+        emit valueChanged(key);
+    }
 }
 
 void Preferences::setCachedValue(const QString &key, const QVariant &value)

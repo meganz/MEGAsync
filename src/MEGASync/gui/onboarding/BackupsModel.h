@@ -23,7 +23,7 @@ public:
     int mError;
 
     // Back (without role)
-    qint64 folderSize;
+    quint64 folderSize;
     QString sdkError;
 
     BackupFolder();
@@ -49,7 +49,7 @@ class BackupsModel : public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString mTotalSize
+    Q_PROPERTY(QString totalSize
                READ getTotalSize
                NOTIFY totalSizeChanged)
     Q_PROPERTY(bool totalSizeReady
@@ -139,7 +139,7 @@ private:
     QList<BackupFolder*> mBackupFolderList;
     QHash<int, QByteArray> mRoleNames;
     int mSelectedRowsTotal;
-    long long mBackupsTotalSize;
+    unsigned long long mBackupsTotalSize;
     bool mTotalSizeReady;
     SyncController mSyncController;
     std::unique_ptr<BackupsController> mBackupsController;
