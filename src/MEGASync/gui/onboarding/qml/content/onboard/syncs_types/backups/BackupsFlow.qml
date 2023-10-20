@@ -13,7 +13,7 @@ Item {
     id: root
 
     signal backupFlowMoveToFinal
-    signal backupFlowMoveToSyncType
+    signal backupFlowMoveToBack
 
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
@@ -113,7 +113,7 @@ Item {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
                 root.backupFlowMoveToFinal()
             } else {
-                root.backupFlowMoveToSyncType()
+                root.backupFlowMoveToBack()
             }
         }
 

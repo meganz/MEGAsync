@@ -14,7 +14,7 @@ Item {
     id: root
 
     signal syncsFlowMoveToFinal
-    signal syncsFlowMoveToSyncType
+    signal syncsFlowMoveToBack
 
     readonly property string syncType: "syncType"
     readonly property string fullSync: "full"
@@ -126,7 +126,7 @@ Item {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
                 root.syncsFlowMoveToFinal()
             } else {
-                root.syncsFlowMoveToSyncType()
+                root.syncsFlowMoveToBack()
             }
         }
 

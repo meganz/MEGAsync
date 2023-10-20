@@ -265,7 +265,7 @@ Rectangle {
             syncsPanel.state = resume
         }
 
-        function onSyncsFlowMoveToSyncType()
+        function onSyncsFlowMoveToBack()
         {
             syncsPanel.state = syncType
         }
@@ -281,7 +281,7 @@ Rectangle {
             syncsPanel.state = resume
         }
 
-        function onBackupFlowMoveToSyncType()
+        function onBackupFlowMoveToBack()
         {
             syncsPanel.state = syncType
         }
