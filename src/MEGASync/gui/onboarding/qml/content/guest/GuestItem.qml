@@ -79,7 +79,7 @@ Rectangle {
         State {
             name: root.stateLoggedOut
             StateChangeScript {
-                script: loader.sourceComponent = initialPage;
+                script: view.replace(initialPage);
             }
         },
         State {
@@ -92,7 +92,7 @@ Rectangle {
         State {
             name: root.stateInProgress
             StateChangeScript {
-                script: loader.sourceComponent = progressPage;
+                script: view.replace(progressPage);
             }
         },
         State {
@@ -118,13 +118,13 @@ Rectangle {
         State {
             name: root.stateBlocked
             StateChangeScript {
-                script: loader.sourceComponent = blockedPage;
+                script: view.replace(blockedPage);
             }
         },
         State {
             name: root.stateInOnboarding
             StateChangeScript {
-                script: loader.sourceComponent = settingUpAccountPage;
+                script: view.replace(settingUpAccountPage);
             }
         }
     ]
@@ -225,9 +225,12 @@ Rectangle {
         }
     }
 
-    Loader {
-        id: loader
+    Qml.StackView {
+        id: view
+
         anchors.fill: parent
+        replaceEnter: null
+        replaceExit: null
     }
 
     Component {
