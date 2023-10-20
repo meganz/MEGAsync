@@ -565,11 +565,7 @@ void MegaApplication::initialize()
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
     mStatusController = new AccountStatusController(this);
-
-    if (mStatusController != nullptr)
-    {
-        mEngine->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), mStatusController);
-    }
+    mEngine->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), mStatusController);
 
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
