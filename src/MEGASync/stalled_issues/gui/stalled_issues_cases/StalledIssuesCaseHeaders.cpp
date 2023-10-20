@@ -143,12 +143,12 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
             }
             else
             {
-                MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
+                MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, true);
             }
         }
         else if(msgBox->result() == QDialogButtonBox::Yes)
         {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(allSimilarIssues);
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(allSimilarIssues, true);
         }
     };
 

@@ -3,11 +3,13 @@
 #include "MegaApplication.h"
 #include <StalledIssuesDelegateWidgetsCache.h>
 #include "NameConflictStalledIssue.h"
+#include <IgnoredStalledIssue.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
 #include <AppStatsEvents.h>
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
+#include <syncs/control/MegaIgnoreManager.h>
 
 #include "mega/types.h"
 
@@ -24,6 +26,7 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
     {
         QMutexLocker lock(&mCacheMutex);
         mCacheStalledIssues.clear();
+        IgnoredStalledIssue::clearIgnoredSyncs();
 
         if (auto stalls = request->getMegaSyncStallList())
         {
@@ -39,6 +42,14 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
                 {
                     auto d = std::make_shared<NameConflictedStalledIssue>(stall);
+                    variant = StalledIssueVariant(d);
+                }
+                else if(stall->couldSuggestIgnoreThisPath(false, 0) ||
+                        stall->couldSuggestIgnoreThisPath(false, 1) ||
+                        stall->couldSuggestIgnoreThisPath(true, 0) ||
+                        stall->couldSuggestIgnoreThisPath(true, 1))
+                {
+                    auto d = std::make_shared<IgnoredStalledIssue>(stall);
                     variant = StalledIssueVariant(d);
                 }
                 else if(stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
@@ -282,6 +293,18 @@ void StalledIssuesModel::onSendEvent()
         emit setIsEventRequest();
         mMegaApi->getMegaSyncStallList(nullptr);
     }
+}
+
+void StalledIssuesModel::runMessageBox(QMegaMessageBox::MessageBoxInfo info)
+{
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    info.parent = dialog ? dialog->getDialog() : nullptr;
+
+    //Run the messagebox in the mGUI thread)
+    Utilities::queueFunctionInAppThread([this, info]()
+    {
+        QMegaMessageBox::warning(info);
+    });
 }
 
 StalledIssueVariant StalledIssuesModel::getStalledIssueByRow(int row) const
@@ -714,11 +737,16 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
 }
 
 void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::function<bool (int)> solveFunc,
-                                           std::function<void (void)> finishFunc)
+                                           std::function<void (void)> startFunc, std::function<void (int, bool)> finishFunc)
 {
     startSolvingIssues();
-    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, solveFunc, finishFunc]()
+    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, solveFunc, startFunc, finishFunc]()
     {
+        if(startFunc)
+        {
+            startFunc();
+        }
+
         auto issueCounter(1);
         auto issuesFixed(0);
         auto issuesExternallyChanged(0);
@@ -762,18 +790,16 @@ void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::fun
 
         bool sendMessage(true);
 
-        if(issuesFixed == 0 && issuesExternallyChanged > 0)
+        if(issuesFixed == 0)
         {
             sendMessage = false;
             unBlockUi();
 
-            //Run the messagebox in the mGUI thread)
-            Utilities::queueFunctionInAppThread([this]()
+            if(issuesExternallyChanged > 0)
             {
-                auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+                issuesFixed = issuesExternallyChanged;
 
                 QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
                 msgInfo.title = MegaSyncApp->getMEGAString();
                 msgInfo.textFormat = Qt::RichText;
                 msgInfo.buttons = QMessageBox::Ok;
@@ -785,13 +811,13 @@ void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::fun
                     updateStalledIssues();
                 };
 
-                QMegaMessageBox::warning(msgInfo);
-            });
+                runMessageBox(std::move(msgInfo));
+            }
         }
 
         if(finishFunc)
         {
-            finishFunc();
+            finishFunc(issuesFixed, issuesExternallyChanged > 0);
         }
 
         finishSolvingIssues(issuesFixed, sendMessage);
@@ -876,6 +902,8 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
 
 void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList &list)
 {
+    mSyncsToDisable.clear();
+
     auto resolveIssue = [this](int row) -> bool
     {
         auto item = mStalledIssues.at(row);
@@ -896,18 +924,16 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList &list)
         return false;
     };
 
-    auto finishFunc = [this]()
+    auto finishFunc = [this](int, bool)
     {
         foreach(auto& sync, mSyncsToDisable)
         {
             SyncController controller;
             controller.setSyncToDisabled(sync);
         }
-
-        mSyncsToDisable.clear();
     };
 
-    solveListOfIssues(list, resolveIssue, finishFunc);
+    solveListOfIssues(list, resolveIssue, nullptr, finishFunc);
 }
 
 void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &list)
@@ -933,52 +959,97 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
     solveListOfIssues(list, resolveIssue);
 }
 
-void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
+void StalledIssuesModel::ignoreItems(const QModelIndexList &list, bool isSymLink)
 {
-    auto resolveIssue = [this](int row) -> bool
+    mIgnoredItemsBySync.clear();
+
+    auto resolveIssue = [this, isSymLink](int row) -> bool
     {
         auto item = mStalledIssues.at(row);
-        if(item.getData()->canBeIgnored())
+        if(!item.getData()->syncIds().isEmpty())
         {
-            auto ignoredFiles = item.getData()->getIgnoredFiles();
-
-            foreach(auto file, ignoredFiles)
+            std::shared_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(item.getData()->syncIds().first()));
+            if(sync)
             {
-                if(!ignoredItems.contains(file))
+                auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
+                if(MegaIgnoreManager::isValid(folderPath))
                 {
-                    ignoredItems.append(file);
-                    mUtilities.ignoreFile(file);
+                    auto& items = mIgnoredItemsBySync[item.getData()->syncIds().first()];
+                    auto ignoredItems = item.getData()->getIgnoredFiles();
+                    foreach(auto& ignoredItem, ignoredItems)
+                    {
+                        if(!items.contains(ignoredItem))
+                        {
+                            items.append(ignoredItem);
+                            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
+                                                                 "Issue ignored manually", false, nullptr);
+                        }
+                    }
+
+                    return true;
                 }
             }
-
-            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
-                                                 "Issue ignored manually", false, nullptr);
-
-            return true;
         }
 
         return false;
     };
 
-    ignoredItems.clear();
-    solveListOfIssues(list, resolveIssue);
+    QModelIndexList auxList(list);
+    if(auxList.isEmpty())
+    {
+        auto totalRows(rowCount(QModelIndex()));
+        for(int row = 0; row < totalRows; ++row)
+        {
+            auto item = getStalledIssueByRow(row);
+            auto isCompatible(isSymLink ? item.getData()->isSymLink()
+                                        : (item.getData()->canBeIgnored() && !item.getData()->isSymLink()));
+            if(!item.getData()->isSolved() &&
+               isCompatible)
+            {
+                auxList.append(index(row,0));
+            }
+        }
+    }
+
+    auto issuesToFix(auxList.size());
+
+    auto finishFunc = [this, isSymLink, issuesToFix](int issuesFixed, bool externallyModified)
+    {
+        foreach(auto syncId,  mIgnoredItemsBySync.keys())
+        {
+            std::shared_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(syncId));
+            if(sync)
+            {
+                auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
+                MegaIgnoreManager manager(folderPath, false);
+
+                QDir dir(folderPath);
+
+                auto ignoredFiles(mIgnoredItemsBySync.value(syncId));
+                foreach(auto file, ignoredFiles)
+                {
+                    isSymLink ? manager.addIgnoreSymLinkRule(dir.relativeFilePath(file))
+                              : manager.addNameRule(MegaIgnoreNameRule::Class::Exclude, dir.relativeFilePath(file));
+                }
+
+                manager.applyChanges();
+            }
+        }
+
+        if(!externallyModified && issuesFixed < issuesToFix)
+        {
+            showIgnoreItemsError(issuesFixed == 0);
+        }
+    };
+
+
+    solveListOfIssues(auxList, resolveIssue, nullptr, finishFunc);
 }
 
 void StalledIssuesModel::ignoreSymLinks()
 {
-    std::unique_ptr<mega::MegaSyncList>syncs(MegaSyncApp->getMegaApi()->getSyncs());
-    for (int i = 0; i < syncs->size(); ++i)
-    {
-        auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(syncs->get(i)->getLocalFolder())));
-        mUtilities.ignoreSymLinks(folderPath);
-    }
-    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_ALL_SYMLINK,
-                                         "All symlink ignored", false, nullptr);
-
-    auto resolveIssue = [this](int row) -> bool
-    {
-        return true;
-    };
+    QList<mega::MegaHandle> involvedSyncs;
+    QList<mega::MegaHandle> involvedFailedToIgnoreSyncs;
 
     QModelIndexList list;
     auto totalRows(rowCount(QModelIndex()));
@@ -988,19 +1059,103 @@ void StalledIssuesModel::ignoreSymLinks()
         if(item.getData()->isSymLink() &&
            !item.getData()->isSolved())
         {
+            if(!item.getData()->syncIds().isEmpty())
+            {
+                auto syncId(item.getData()->syncIds().first());
+                if(!involvedSyncs.contains(syncId))
+                {
+                    involvedSyncs.append(syncId);
+
+                    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(syncId));
+                    if(sync)
+                    {
+                        auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
+                        if(!MegaIgnoreManager::isValid(folderPath))
+                        {
+                            involvedFailedToIgnoreSyncs.append(syncId);
+                        }
+                    }
+                    else
+                    {
+                        involvedFailedToIgnoreSyncs.append(syncId);
+                    }
+                }
+            }
+
             list.append(index(row,0));
         }
     }
-    solveListOfIssues(list, resolveIssue);
 
+    auto startIssue = [this, list, involvedSyncs, involvedFailedToIgnoreSyncs]()
+    {
+        std::unique_ptr<mega::MegaSyncList>syncs(MegaSyncApp->getMegaApi()->getSyncs());
+        for (int i = 0; i < syncs->size(); ++i)
+        {
+            auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(syncs->get(i)->getLocalFolder())));
+            if(MegaIgnoreManager::isValid(folderPath))
+            {
+                MegaIgnoreManager manager(folderPath, false);
+                manager.addIgnoreSymLinksRule();
+                manager.applyChanges();
+            }
+        }
+    };
+
+    auto resolveIssue = [this, involvedFailedToIgnoreSyncs](int row) -> bool
+    {
+        auto item = mStalledIssues.at(row);
+        if(!item.getData()->syncIds().isEmpty())
+        {
+            return !involvedFailedToIgnoreSyncs.contains(item.getData()->syncIds().first());
+        }
+
+        return false;
+    };
+
+    auto finishIssue = [this, list](int issuesFixed, bool externallyModified)
+    {
+        if(issuesFixed < list.size())
+        {
+            if(!externallyModified)
+            {
+                showIgnoreItemsError(issuesFixed == 0);
+            }
+
+            if(issuesFixed == 0)
+            {
+                LoadingSceneMessageHandler::MessageInfo info;
+                emit updateLoadingMessage(info);
+            }
+        }
+        else if(issuesFixed > 0)
+        {
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_ALL_SYMLINK,
+                                                 "All symlink ignored", false, nullptr);
+        }
+    };
+
+    solveListOfIssues(list, resolveIssue, startIssue, finishIssue);
+}
+
+void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
+{
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok;
+    msgInfo.text = allFailed ? tr("Some issues can't be fixed.\nVerify the permissions of the .megaignore file on your local sync folder locations.")
+                             : tr("Issues can't be fixed.\nVerify the permissions of the .megaignore on file your local sync folder locations.");
+
+    runMessageBox(std::move(msgInfo));
 }
 
 void StalledIssuesModel::fixFingerprint(const QModelIndexList &list)
 {
-    auto finishIssue = [this]()
+    mFingerprintIssuesToFix.clear();
+
+    auto finishIssue = [this](int issuesFixed, bool)
     {
         mFingerprintIssuesSolver.solveIssues(mFingerprintIssuesToFix);
-        mFingerprintIssuesToFix.clear();
     };
 
     auto resolveIssue = [this](int row) -> bool
@@ -1013,7 +1168,7 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList &list)
         return true;
     };
 
-    solveListOfIssues(list, resolveIssue, finishIssue);
+    solveListOfIssues(list, resolveIssue, nullptr, finishIssue);
 }
 
 void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &list, int option)

@@ -586,6 +586,11 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(bool isPoten
     return mIsSolved;
 }
 
+bool NameConflictedStalledIssue::isSolvable() const
+{
+    return !isSolved();
+}
+
 void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
 {
     solveIssue(option);

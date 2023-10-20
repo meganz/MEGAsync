@@ -320,6 +320,7 @@ public:
     bool isPotentiallySolved() const;
     void setIsSolved(bool potentially);
     virtual bool autoSolveIssue(){return false;}
+    virtual bool isSolvable() const {return false;}
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
@@ -330,8 +331,6 @@ public:
     QStringList getIgnoredFiles() const;
 
     bool isUndecrypted() const;
-
-    bool isSolvable() const;
 
     bool mDetectedMEGASide = false;
 
