@@ -7,20 +7,20 @@ import Onboarding 1.0
 ResumePageForm {
     id: root
 
-
+    signal resumePageMoveToSyncs
+    signal resumePageMoveToSelectiveSyncs
+    signal resumePageMoveToBackup
 
     buttonGroup.onClicked: {
-        syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
         switch(button.type) {
             case SyncsType.Sync:
-                syncsPanel.state = syncsPanel.syncsFlow;
+                root.resumePageMoveToSyncs()
                 break;
             case SyncsType.SelectiveSync:
-                syncsPanel.state = syncsPanel.syncsFlow;
-                syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
+                root.resumePageMoveToSelectiveSyncs()
                 break;
             case SyncsType.Backup:
-                syncsPanel.state = syncsPanel.backupsFlow;
+                root.resumePageMoveToBackup()
                 break;
             default:
                 console.error("Button type does not exist -> " + button.type);
@@ -37,25 +37,6 @@ ResumePageForm {
 
         rightPrimary.onClicked: {
             onboardingWindow.close();
-        }
-    }
-
-    Component.onCompleted: {
-        syncsPanel.navInfo.comesFromResumePage = true;
-        switch(syncsPanel.navInfo.typeSelected) {
-            case SyncsType.Types.SelectiveSync:
-                state = stateSelectiveSync;
-                break;
-            case SyncsType.Types.FullSync:
-                state = stateFullSync;
-                break;
-            case SyncsType.Types.Backup:
-                state = stateBackup;
-                break;
-            default:
-                console.warn("ResumePage: typeSelected does not exist -> "
-                             + syncsPanel.navInfo.typeSelected);
-                break;
         }
     }
 }

@@ -9,14 +9,13 @@ import Onboard 1.0
 SelectiveSyncPageForm {
     id: root
 
-    signal moveToBack
-    signal moveToSyncType
-    signal moveToFinal
+    signal selectiveSyncMoveToBack
+    signal selectiveSyncMoveToSuccess
 
     footerButtons {
 
         rightSecondary.onClicked: {
-            root.moveToBack()
+            root.selectiveSyncMoveToBack()
         }
 
         rightPrimary.onClicked: {
@@ -69,9 +68,8 @@ SelectiveSyncPageForm {
         onSyncSetupSuccess: {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            syncsPanel.navInfo.selectiveSyncDone = true;
             remoteFolderChooser.reset();
-            root.moveToFinalState();
+            root.selectiveSyncMoveToSuccess();
         }
 
         onCantSync: (message, localFolderError) => {

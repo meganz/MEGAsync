@@ -23,7 +23,7 @@ Rectangle {
     readonly property string syncType: "syncType"
     readonly property string syncsFlow: "syncs"
     readonly property string backupsFlow: "backups"
-    readonly property string finalState: "finalState"
+    readonly property string resume: "resume"
 
     readonly property int stepPanelWidth: 304
     readonly property int contentMargin: 48
@@ -38,12 +38,7 @@ Rectangle {
         State {
             name: deviceName
             StateChangeScript {
-                script: {
-                    deviceNameNavigationConnection.enabled = true
-                    installationTypeNavigationConnection.enabled = false
-                    syncFlowNavigationConnection.enabled = false
-                    rightPanel.replace(deviceNamePage);
-                }
+                script: rightPanel.replace(deviceNamePage);
             }
             PropertyChanges {
                 target: stepPanel;
@@ -53,12 +48,7 @@ Rectangle {
         State {
             name: syncType
             StateChangeScript {
-                script: {
-                    deviceNameNavigationConnection.enabled = false
-                    installationTypeNavigationConnection.enabled = true
-                    syncFlowNavigationConnection.enabled = false
-                    rightPanel.replace(installationTypePage);
-                }
+                script: rightPanel.replace(installationTypePage);
             }
             PropertyChanges {
                 target: stepPanel;
@@ -71,10 +61,6 @@ Rectangle {
                 script: {
                     navInfo.typeSelected = SyncsType.Types.Sync;
                     rightPanel.replace(syncsFlowPage);
-
-                    syncFlowNavigationConnection.enabled = true
-                    deviceNameNavigationConnection.enabled = false
-                    installationTypeNavigationConnection.enabled = false
                 }
             }
             PropertyChanges {
@@ -88,10 +74,6 @@ Rectangle {
                 script: {
                     navInfo.typeSelected = SyncsType.Types.Backup;
                     rightPanel.replace(backupsFlowPage);
-
-                    syncFlowNavigationConnection.enabled = false
-                    deviceNameNavigationConnection.enabled = false
-                    installationTypeNavigationConnection.enabled = false
                 }
             }
             PropertyChanges {
@@ -100,15 +82,29 @@ Rectangle {
             }
         },
         State {
-            name: finalState
+            name: resume
             StateChangeScript {
-                script:
-                {
-                    rightPanel.replace(finalPage);
+                script: {
+                    syncsPanel.navInfo.comesFromResumePage = true;
 
-                    syncFlowNavigationConnection.enabled = false
-                    deviceNameNavigationConnection.enabled = false
-                    installationTypeNavigationConnection.enabled = false
+                    var resumePageState = ""
+                    switch(syncsPanel.navInfo.typeSelected) {
+                        case SyncsType.Types.SelectiveSync:
+                            resumePageState = "SELECTIVE";
+                            break;
+                        case SyncsType.Types.FullSync:
+                            resumePageState = "FULL";
+                            break;
+                        case SyncsType.Types.Backup:
+                            resumePageState = "BACKUP";
+                            break;
+                        default:
+                            console.warn("ResumePage: typeSelected does not exist -> "
+                                         + syncsPanel.navInfo.typeSelected);
+                            break;
+                    }
+
+                    rightPanel.replace(resumePage, {"state": resumePageState});
                 }
             }
             PropertyChanges {
@@ -211,7 +207,7 @@ Rectangle {
     }
 
     Component {
-        id: finalPage
+        id: resumePage
 
         ResumePage {}
     }
@@ -231,9 +227,8 @@ Rectangle {
         id: deviceNameNavigationConnection
         target: rightPanel.currentItem
         ignoreUnknownSignals: true
-        enabled: false
 
-        function onMoveToSyncType()
+        function onDeviceNameMoveToSyncType()
         {
             syncsPanel.state = syncType
         }
@@ -243,38 +238,77 @@ Rectangle {
         id: installationTypeNavigationConnection
         target: rightPanel.currentItem
         ignoreUnknownSignals: true
-        enabled: false
 
-        function onMoveToBack()
+        function onInstallationTypeMoveToBack()
         {
             syncsPanel.state = deviceName
         }
 
-        function onMoveToSync()
+        function onInstallationTypeMoveToSync()
         {
             syncsPanel.state = syncsFlow
         }
 
-        function onMoveToBackup()
+        function onInstallationTypeMoveToBackup()
         {
             syncsPanel.state = backupsFlow
         }
     }
 
     Connections {
-        id: syncFlowNavigationConnection
+        id: syncsFlowNavigationConnection
         target: rightPanel.currentItem
-        ignoreUnknownSignals: true
-        enabled: false
+        ignoreUnknownSignals: true        
 
-        function onMoveToFinal()
+        function onSyncsFlowMoveToFinal()
         {
-            syncsPanel.state = finalState
+            syncsPanel.state = resume
         }
 
-        function onMoveToSyncType()
+        function onSyncsFlowMoveToSyncType()
         {
             syncsPanel.state = syncType
+        }
+    }
+
+    Connections {
+        id: backupFlowNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true
+
+        function onBackupFlowMoveToFinal()
+        {
+            syncsPanel.state = resume
+        }
+
+        function onBackupFlowMoveToSyncType()
+        {
+            syncsPanel.state = syncType
+        }
+    }
+
+    Connections {
+        id: resumePageNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true
+
+        function onResumePageMoveToSyncs()
+        {
+            syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
+            syncsPanel.state = syncsFlow
+        }
+
+        function onResumePageMoveToSelectiveSyncs()
+        {
+            syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
+            syncsPanel.state = syncsFlow
+            syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync
+        }
+
+        function onResumePageMoveToBackup()
+        {
+            syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
+            syncsPanel.state = backupsFlow;
         }
     }
 }

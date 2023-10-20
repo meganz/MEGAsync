@@ -9,7 +9,7 @@ import Common 1.0
 DeviceNamePageForm {
     id: root
 
-    signal moveToSyncType
+    signal deviceNameMoveToSyncType
 
     footerButtons.rightPrimary.onClicked: {
         var emptyText = deviceNameTextField.text.length === 0;
@@ -26,7 +26,7 @@ DeviceNamePageForm {
         }
 
         if(!deviceName.setDeviceName(deviceNameTextField.text)) {
-            root.moveToSyncType()
+            root.deviceNameMoveToSyncType()
         }
     }
 
@@ -47,7 +47,7 @@ DeviceNamePageForm {
         id: deviceName
 
         onDeviceNameSet: {
-            root.moveToSyncType()
+            root.deviceNameMoveToSyncType()
         }
     }
 }

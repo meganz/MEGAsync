@@ -6,13 +6,17 @@ import BackupsController 1.0
 import BackupsModel 1.0
 
 ConfirmFoldersPageForm {
+    id: root
+
+    signal confirmFoldersMoveToSelect
+    signal confirmFoldersMoveToSuccess
 
     footerButtons {
 
         rightSecondary.onClicked: {
             BackupsModel.clean(true);
             backupsProxyModel.selectedFilterEnabled = false;
-            backupsFlow.state = backupsFlow.selectBackup;
+            root.confirmFoldersMoveToSelect()
         }
 
         rightPrimary.onClicked: {
@@ -27,7 +31,7 @@ ConfirmFoldersPageForm {
         target: BackupsModel
 
         function onNoneSelected() {
-            footerButtons.rightSecondary.clicked();
+            root.confirmFoldersMoveToSelect()
         }
 
         function onExistConflictsChanged() {
@@ -51,7 +55,7 @@ ConfirmFoldersPageForm {
             confirmHeader.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             if(success) {
-                syncsPanel.state = syncsPanel.finalState;
+                root.confirmFoldersMoveToSuccess()
             } else {
                 stepPanel.state = stepPanel.step4Error;
             }

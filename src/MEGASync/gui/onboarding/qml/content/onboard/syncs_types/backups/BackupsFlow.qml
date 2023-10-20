@@ -12,13 +12,11 @@ import BackupsProxyModel 1.0
 Item {
     id: root
 
+    signal backupFlowMoveToFinal
+    signal backupFlowMoveToSyncType
+
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
-
-    function replace(page)
-    {
-        view.replace(page)
-    }
 
     state: selectBackup
     states: [
@@ -86,5 +84,41 @@ Item {
         id: confirmBackupFoldersPage
 
         ConfirmFoldersPage {}
+    }
+
+    /*
+    * Navigation connections
+    */
+    Connections {
+        id: confirmFolderBackupNavigationConnection
+        target: view.currentItem
+        ignoreUnknownSignals: true
+
+        function onConfirmFoldersMoveToSelect() {
+            root.state = root.selectBackup
+        }
+
+        function onConfirmFoldersMoveToSuccess() {
+            root.backupFlowMoveToFinal()
+        }
+    }
+
+    Connections {
+        id: selectFolderBackupNavigationConnection
+        target: view.currentItem
+        ignoreUnknownSignals: true
+
+        function onSelectFolderMoveToBack() {
+            if(syncsPanel.navInfo.comesFromResumePage) {
+                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
+                root.backupFlowMoveToFinal()
+            } else {
+                root.backupFlowMoveToSyncType()
+            }
+        }
+
+        function onSelectFolderMoveToConfirm() {
+            root.state = root.confirmBackup
+        }
     }
 }

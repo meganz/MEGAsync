@@ -13,8 +13,8 @@ import BackupsProxyModel 1.0
 Item {
     id: root
 
-    signal moveToFinal
-    signal moveToSyncType
+    signal syncsFlowMoveToFinal
+    signal syncsFlowMoveToSyncType
 
     readonly property string syncType: "syncType"
     readonly property string fullSync: "full"
@@ -29,8 +29,6 @@ Item {
             name: syncType
             StateChangeScript {
                 script: {
-                    syncTypeNavigationConnection.enabled = true
-                    selectiveSyncNavigationConnection.enabled = false
                     view.replace(syncPage);
                 }
             }
@@ -45,8 +43,6 @@ Item {
             name: fullSync
             StateChangeScript {
                 script: {
-                    syncTypeNavigationConnection.enabled = false
-                    selectiveSyncNavigationConnection.enabled = false
                     syncsPanel.navInfo.typeSelected = SyncsType.Types.FullSync;
                     view.replace(fullSyncPage);
                 }
@@ -62,8 +58,6 @@ Item {
             name: selectiveSync
             StateChangeScript {
                 script: {
-                    syncTypeNavigationConnection.enabled = false
-                    selectiveSyncNavigationConnection.enabled = true
                     syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
                     view.replace(selectiveSyncPage);
                 }
@@ -126,24 +120,21 @@ Item {
         id: syncTypeNavigationConnection
         target: view.currentItem
         ignoreUnknownSignals: true
-        enabled: false
 
-        function onMoveToBack() {
+        function onSyncTypeMoveToBack() {
             if(syncsPanel.navInfo.comesFromResumePage) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.moveToFinal()
+                root.syncsFlowMoveToFinal()
             } else {
-                root.moveToSyncType()
+                root.syncsFlowMoveToSyncType()
             }
         }
 
-        function onMoveToFullSync()
-        {
+        function onSyncTypeMoveToFullSync() {
             root.state = root.fullSync
         }
 
-        function onMoveToSelectiveSync()
-        {
+        function onSyncTypeMoveToSelectiveSync() {
             root.state = root.selectiveSync
         }
     }
@@ -152,22 +143,41 @@ Item {
         id: selectiveSyncNavigationConnection
         target: view.currentItem
         ignoreUnknownSignals: true
-        enabled: false
 
-        function onMoveToBack()
-        {
+        function onSelectiveSyncMoveToBack() {
             if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.moveToFinal()
+                root.syncsFlowMoveToFinal()
             }
             else {
-                root.state = root.syncType;
+                root.state = root.syncType
             }
         }
 
-        function onMoveToFinal()
-        {
-            root.moveToFinal()
+        function onSelectiveSyncMoveToSuccess() {
+            syncsPanel.navInfo.selectiveSyncDone = true
+            root.syncsFlowMoveToFinal()
+        }
+    }
+
+    Connections {
+        id: fullSyncNavigationConnection
+        target: view.currentItem
+        ignoreUnknownSignals: true
+
+        function onFullSyncMoveToBack() {
+            if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
+                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
+                root.syncsFlowMoveToFinal()
+
+            } else {
+                root.state = root.syncType
+            }
+        }
+
+        function onFullSyncMoveToSuccess() {
+            syncsPanel.navInfo.fullSyncDone = true
+            root.syncsFlowMoveToFinal()
         }
     }
 }

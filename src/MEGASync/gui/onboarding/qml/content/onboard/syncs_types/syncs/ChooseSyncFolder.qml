@@ -17,9 +17,9 @@ import ChooseRemoteFolder 1.0
 
 Item {
     id: root
+
     property alias choosenPath: folderField.text
     property alias remoteTest: remoteFolderChooser
-
     property bool local: true
     property url selectedUrl: selectedUrl
     property double selectedNode: selectedNode

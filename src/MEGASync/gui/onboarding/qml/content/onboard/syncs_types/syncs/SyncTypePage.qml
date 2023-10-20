@@ -4,24 +4,23 @@ import Onboard.Syncs_types 1.0
 SyncTypePageForm {
     id: root
 
-    signal moveToBack;
-    signal moveToFullSync;
-    signal moveToSelectiveSync;
+    signal syncTypeMoveToBack;
+    signal syncTypeMoveToFullSync;
+    signal syncTypeMoveToSelectiveSync;
 
     footerButtons {
 
         rightSecondary.onClicked: {
-            console.log("rightSecondary clicked")
-            root.moveToBack()
+            root.syncTypeMoveToBack()
         }
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
                 case SyncsType.Types.FullSync:
-                    root.moveToFullSync()
+                    root.syncTypeMoveToFullSync()
                     break;
                 case SyncsType.Types.SelectiveSync:
-                    root.moveToSelectiveSync()
+                    root.syncTypeMoveToSelectiveSync()
                     break;
                 default:
                     console.error("Button type does not exist -> "
@@ -36,7 +35,6 @@ SyncTypePageForm {
             footerButtons.rightPrimary.enabled = true;
         }
     }
-
 }
 
 
