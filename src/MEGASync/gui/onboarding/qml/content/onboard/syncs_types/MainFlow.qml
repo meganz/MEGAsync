@@ -23,7 +23,7 @@ Rectangle {
     readonly property string syncType: "syncType"
     readonly property string syncsFlow: "syncs"
     readonly property string backupsFlow: "backups"
-    readonly property string finalState: "finalState"
+    readonly property string resume: "resume"
 
     readonly property int stepPanelWidth: 304
     readonly property int contentMargin: 48
@@ -82,9 +82,30 @@ Rectangle {
             }
         },
         State {
-            name: finalState
+            name: resume
             StateChangeScript {
-                script: rightPanel.replace(finalPage);
+                script: {
+                    syncsPanel.navInfo.comesFromResumePage = true;
+
+                    var resumePageState = ""
+                    switch(syncsPanel.navInfo.typeSelected) {
+                        case SyncsType.Types.SelectiveSync:
+                            resumePageState = "SELECTIVE";
+                            break;
+                        case SyncsType.Types.FullSync:
+                            resumePageState = "FULL";
+                            break;
+                        case SyncsType.Types.Backup:
+                            resumePageState = "BACKUP";
+                            break;
+                        default:
+                            console.warn("ResumePage: typeSelected does not exist -> "
+                                         + syncsPanel.navInfo.typeSelected);
+                            break;
+                    }
+
+                    rightPanel.replace(resumePage, {"state": resumePageState});
+                }
             }
             PropertyChanges {
                 target: stepPanel;
@@ -149,6 +170,7 @@ Rectangle {
                 easing.type: Easing.OutQuad
             }
         }
+
         replaceExit: Transition {
             PropertyAnimation {
                 property: "opacity"
@@ -158,36 +180,36 @@ Rectangle {
                 easing.type: Easing.InQuad
             }
         }
+    }
 
-        Component {
-            id: deviceNamePage
+    Component {
+        id: deviceNamePage
 
-            DeviceNamePage {}
-        }
+        DeviceNamePage {}
+    }
 
-        Component {
-            id: installationTypePage
+    Component {
+        id: installationTypePage
 
-            InstallationTypePage {}
-        }
+        InstallationTypePage {}
+    }
 
-        Component {
-            id: syncsFlowPage
+    Component {
+        id: syncsFlowPage
 
-            SyncsFlow {}
-        }
+        SyncsFlow {}
+    }
 
-        Component {
-            id: backupsFlowPage
+    Component {
+        id: backupsFlowPage
 
-            BackupsFlow {}
-        }
+        BackupsFlow {}
+    }
 
-        Component {
-            id: finalPage
+    Component {
+        id: resumePage
 
-            ResumePage {}
-        }
+        ResumePage {}
     }
 
     Connections {
@@ -195,6 +217,98 @@ Rectangle {
 
         function onLogout() {
             onboardingWindow.forceClose();
+        }
+    }
+
+    /*
+    * Navigation connections
+    */
+    Connections {
+        id: deviceNameNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true
+
+        function onDeviceNameMoveToSyncType()
+        {
+            syncsPanel.state = syncType
+        }
+    }
+
+    Connections {
+        id: installationTypeNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true
+
+        function onInstallationTypeMoveToBack()
+        {
+            syncsPanel.state = deviceName
+        }
+
+        function onInstallationTypeMoveToSync()
+        {
+            syncsPanel.state = syncsFlow
+        }
+
+        function onInstallationTypeMoveToBackup()
+        {
+            syncsPanel.state = backupsFlow
+        }
+    }
+
+    Connections {
+        id: syncsFlowNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true        
+
+        function onSyncsFlowMoveToFinal()
+        {
+            syncsPanel.state = resume
+        }
+
+        function onSyncsFlowMoveToBack()
+        {
+            syncsPanel.state = syncType
+        }
+    }
+
+    Connections {
+        id: backupFlowNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true
+
+        function onBackupFlowMoveToFinal()
+        {
+            syncsPanel.state = resume
+        }
+
+        function onBackupFlowMoveToBack()
+        {
+            syncsPanel.state = syncType
+        }
+    }
+
+    Connections {
+        id: resumePageNavigationConnection
+        target: rightPanel.currentItem
+        ignoreUnknownSignals: true
+
+        function onResumePageMoveToSyncs()
+        {
+            syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
+            syncsPanel.state = syncsFlow
+        }
+
+        function onResumePageMoveToSelectiveSyncs()
+        {
+            syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
+            syncsPanel.state = syncsFlow
+            syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync
+        }
+
+        function onResumePageMoveToBackup()
+        {
+            syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
+            syncsPanel.state = backupsFlow;
         }
     }
 }

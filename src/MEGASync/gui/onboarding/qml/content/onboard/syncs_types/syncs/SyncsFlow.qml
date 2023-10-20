@@ -10,8 +10,11 @@ import Onboard.Syncs_types.Left_panel 1.0
 // C++
 import BackupsProxyModel 1.0
 
-StackView {
-    id: syncsFlow
+Item {
+    id: root
+
+    signal syncsFlowMoveToFinal
+    signal syncsFlowMoveToBack
 
     readonly property string syncType: "syncType"
     readonly property string fullSync: "full"
@@ -25,7 +28,9 @@ StackView {
         State {
             name: syncType
             StateChangeScript {
-                script: syncsFlow.replace(syncPage);
+                script: {
+                    view.replace(syncPage);
+                }
             }
             PropertyChanges {
                 target: stepPanel;
@@ -39,7 +44,7 @@ StackView {
             StateChangeScript {
                 script: {
                     syncsPanel.navInfo.typeSelected = SyncsType.Types.FullSync;
-                    syncsFlow.replace(fullSyncPage);
+                    view.replace(fullSyncPage);
                 }
             }
             PropertyChanges {
@@ -54,7 +59,7 @@ StackView {
             StateChangeScript {
                 script: {
                     syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
-                    syncsFlow.replace(selectiveSyncPage);
+                    view.replace(selectiveSyncPage);
                 }
             }
             PropertyChanges {
@@ -65,6 +70,30 @@ StackView {
             }
         }
     ]
+
+    StackView {
+        id: view
+        anchors.fill: parent
+
+        replaceEnter: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to:1
+                duration: 100
+                easing.type: Easing.OutQuad
+            }
+        }
+        replaceExit: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to:0
+                duration: 100
+                easing.type: Easing.InQuad
+            }
+        }
+    }
 
     Component {
         id: syncPage
@@ -84,23 +113,71 @@ StackView {
         SelectiveSyncPage {}
     }
 
-    replaceEnter: Transition {
-        PropertyAnimation {
-            property: "opacity"
-            from: 0
-            to:1
-            duration: 100
-            easing.type: Easing.OutQuad
+    /*
+    * Navigation connections
+    */
+    Connections {
+        id: syncTypeNavigationConnection
+        target: view.currentItem
+        ignoreUnknownSignals: true
+
+        function onSyncTypeMoveToBack() {
+            if(syncsPanel.navInfo.comesFromResumePage) {
+                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
+                root.syncsFlowMoveToFinal()
+            } else {
+                root.syncsFlowMoveToBack()
+            }
         }
-    }
-    replaceExit: Transition {
-        PropertyAnimation {
-            property: "opacity"
-            from: 1
-            to:0
-            duration: 100
-            easing.type: Easing.InQuad
+
+        function onSyncTypeMoveToFullSync() {
+            root.state = root.fullSync
+        }
+
+        function onSyncTypeMoveToSelectiveSync() {
+            root.state = root.selectiveSync
         }
     }
 
+    Connections {
+        id: selectiveSyncNavigationConnection
+        target: view.currentItem
+        ignoreUnknownSignals: true
+
+        function onSelectiveSyncMoveToBack() {
+            if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
+                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
+                root.syncsFlowMoveToFinal()
+            }
+            else {
+                root.state = root.syncType
+            }
+        }
+
+        function onSelectiveSyncMoveToSuccess() {
+            syncsPanel.navInfo.selectiveSyncDone = true
+            root.syncsFlowMoveToFinal()
+        }
+    }
+
+    Connections {
+        id: fullSyncNavigationConnection
+        target: view.currentItem
+        ignoreUnknownSignals: true
+
+        function onFullSyncMoveToBack() {
+            if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
+                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
+                root.syncsFlowMoveToFinal()
+
+            } else {
+                root.state = root.syncType
+            }
+        }
+
+        function onFullSyncMoveToSuccess() {
+            syncsPanel.navInfo.fullSyncDone = true
+            root.syncsFlowMoveToFinal()
+        }
+    }
 }

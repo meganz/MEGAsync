@@ -2,27 +2,27 @@
 import BackupsModel 1.0
 
 SelectFoldersPageForm {
+    id: root
+
+    signal selectFolderMoveToBack
+    signal selectFolderMoveToConfirm
 
     footerButtons {
 
         rightSecondary.onClicked: {
-            if(syncsPanel.navInfo.comesFromResumePage) {
-                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                syncsPanel.state = syncsPanel.finalState;
-            } else {
-                syncsPanel.state = syncsPanel.syncType;
-            }
+            root.selectFolderMoveToBack()
         }
 
         rightPrimary.onClicked: {
             BackupsModel.check();
             backupsProxyModel.selectedFilterEnabled = true;
-            backupsFlow.state = backupsFlow.confirmBackup;
             if(BackupsModel.mConflictsNotificationText !== "") {
                 stepPanel.state = stepPanel.step4Warning;
             } else {
                 stepPanel.state = stepPanel.step4;
             }
+
+            root.selectFolderMoveToConfirm()
         }
     }
 

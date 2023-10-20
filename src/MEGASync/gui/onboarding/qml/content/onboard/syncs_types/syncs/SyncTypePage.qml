@@ -2,25 +2,25 @@
 import Onboard.Syncs_types 1.0
 
 SyncTypePageForm {
+    id: root
+
+    signal syncTypeMoveToBack;
+    signal syncTypeMoveToFullSync;
+    signal syncTypeMoveToSelectiveSync;
 
     footerButtons {
 
         rightSecondary.onClicked: {
-            if(syncsPanel.navInfo.comesFromResumePage) {
-                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                syncsPanel.state = syncsPanel.finalState;
-            } else {
-                syncsPanel.state = syncsPanel.syncType;
-            }
+            root.syncTypeMoveToBack()
         }
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
                 case SyncsType.Types.FullSync:
-                    syncsFlow.state = fullSync;
+                    root.syncTypeMoveToFullSync()
                     break;
                 case SyncsType.Types.SelectiveSync:
-                    syncsFlow.state = selectiveSync;
+                    root.syncTypeMoveToSelectiveSync()
                     break;
                 default:
                     console.error("Button type does not exist -> "
@@ -35,7 +35,6 @@ SyncTypePageForm {
             footerButtons.rightPrimary.enabled = true;
         }
     }
-
 }
 
 

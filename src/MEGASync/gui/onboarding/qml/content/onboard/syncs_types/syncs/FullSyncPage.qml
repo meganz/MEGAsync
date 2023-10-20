@@ -11,15 +11,13 @@ import Onboard 1.0
 FullSyncPageForm {
     id: root
 
+    signal fullSyncMoveToBack
+    signal fullSyncMoveToSuccess
+
     footerButtons {
 
         rightSecondary.onClicked: {
-            if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
-                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                syncsPanel.state = syncsPanel.finalState;
-            } else {
-                syncsFlow.state = syncsFlow.syncType;
-            }
+            root.fullSyncMoveToBack()
         }
 
         rightPrimary.onClicked: {
@@ -34,7 +32,6 @@ FullSyncPageForm {
             else if (localFolderChooser.choosenPath !== localFolder.getDefaultFolder(syncsCpp.DEFAULT_MEGA_FOLDER) || localFolder.createFolder(localFolderChooser.choosenPath)) {
                 root.enabled = false;
                 footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-
                 syncsCpp.addSync(localFolderChooser.choosenPath);
             }
             else {
@@ -55,8 +52,7 @@ FullSyncPageForm {
         onSyncSetupSuccess: {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            syncsPanel.navInfo.fullSyncDone = true;
-            syncsPanel.state = finalState;
+            root.fullSyncMoveToSuccess();
             localFolderChooser.reset();
         }
 
