@@ -109,7 +109,10 @@ Rectangle {
                             break;
                     }
 
-                    rightPanel.replace(resumePage, {"state": resumePageState, "tabToOpen": toOpenTabIndex});
+                    rightPanel.replace(resumePage, {"state": resumePageState,
+                                            "tabToOpen": toOpenTabIndex,
+                                            "fullSyncDone": syncsPanel.navInfo.fullSyncDone,
+                                            "selectiveSyncDone": syncsPanel.navInfo.selectiveSyncDone});
                 }
             }
             PropertyChanges {
