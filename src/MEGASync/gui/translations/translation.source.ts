@@ -1040,12 +1040,12 @@
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation type="unfinished">Password changed</translation>
+        <translation>Password changed</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation type="unfinished">Your password has been changed.</translation>
+        <translation>Your password has been changed.</translation>
     </message>
 </context>
 <context>
@@ -1089,7 +1089,7 @@
     <message>
         <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</translation>
     </message>
 </context>
 <context>
@@ -1098,6 +1098,16 @@
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
         <translation>Error report</translation>
+    </message>
+    <message>
+        <source>MEGAsync has detected a problem. These are the details:</source>
+        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
+        <translation>The MEGA App has detected a problem. These are the details:</translation>
+    </message>
+    <message>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
+        <translation>You can help us to improve the MEGA App by sending this error report. It doesn’t contain any personal information. If you want to give us more details, please write them below:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1114,16 +1124,6 @@
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
         <translation>Attach diagnostic log files to assist with debugging.
 In some cases they may contain details about your data, such as file or folder names.</translation>
-    </message>
-    <message>
-        <source>MEGAsync has detected a problem. These are the details:</source>
-        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>The MEGA App has detected a problem. These are the details:</translation>
-    </message>
-    <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>You can help us to improve the MEGA App by sending this error report. It doesn’t contain any personal information. If you want to give us more details, please write them below:</translation>
     </message>
 </context>
 <context>
@@ -1332,7 +1332,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Please resolve your payment issue as soon as possible to avoid any suspension of your business account</translation>
+        <translation>Please resolve your payment issue as soon as possible to avoid any suspension of your Business account</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1357,7 +1357,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation>Contact your Business account administrator to resolve the issue and activate your account.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1482,7 +1482,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed.
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation>
             <numerusform>%1 item selected.</numerusform>
@@ -1491,7 +1491,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed.
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation>
             <numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform>
@@ -1910,27 +1910,27 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
-        <translation type="unfinished">Error adding sync</translation>
+        <translation>Error adding sync</translation>
     </message>
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 can&apos;t be added as your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
     </message>
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account. SNC-3019</translatorcomment>
-        <translation type="unfinished">Pay now</translation>
+        <translation>Pay now</translation>
     </message>
     <message>
         <source>Pay and reactivate</source>
         <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pay and reactivate</translation>
     </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Label of the button used to dismiss the error message the account in case of deactivated account. SNC-3019</translatorcomment>
-        <translation type="unfinished">Dismiss</translation>
+        <translation>Dismiss</translation>
     </message>
 </context>
 <context>
@@ -2020,6 +2020,11 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Open transfer manager</translation>
     </message>
     <message>
+        <source>Show MEGAsync options</source>
+        <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
+        <translation>Show options</translation>
+    </message>
+    <message>
         <source>The process is taking longer than expected. Please wait...</source>
         <translatorcomment>Message displayed in the InfoDialog when a process is busy for a longer time than normal due to Mega servers being busy</translatorcomment>
         <translation>This process is taking longer than expected. Please wait.</translation>
@@ -2102,7 +2107,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pause/Resume</translation>
+        <translation>Pause or resume</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2247,11 +2252,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
         <translation>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
-    </message>
-    <message>
-        <source>Show MEGAsync options</source>
-        <translatorcomment>Tooltip for the button that opens MEGA Desktop App options menu</translatorcomment>
-        <translation>Show options</translation>
     </message>
 </context>
 <context>
@@ -2511,6 +2511,11 @@ or click the Folders below to make adjustments in the local filesystem or in MEG
         <translation>Logging in</translation>
     </message>
     <message>
+        <source>MEGAsync is now running. Click here to open the status window.</source>
+        <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
+        <translation>The app is now running. Click here to open the status window.</translation>
+    </message>
+    <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
         <translation>Error: Invalid destination folder. The upload has been cancelled</translation>
@@ -2554,6 +2559,11 @@ or click the Folders below to make adjustments in the local filesystem or in MEG
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Syncing</translation>
+    </message>
+    <message>
+        <source>MEGAsync has been updated</source>
+        <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
+        <translation>The app has been updated</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -2610,6 +2620,16 @@ https://mega.co.nz/#sync</source>
         <source>Starting</source>
         <translatorcomment>Label of tray icon to indicate that the app is starting.</translatorcomment>
         <translation>Starting</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
+        <translation>The app is now running. Click here to open the status window.</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
+        <translation>The app is now running. Click here to open the status window.</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -2692,6 +2712,11 @@ https://mega.co.nz/#sync</source>
         <translation>Debug mode disabled</translation>
     </message>
     <message>
+        <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
+        <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
+        <translation>Debug mode enabled. A log called “MEGAsync.log” is being created on your computer.</translation>
+    </message>
+    <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
         <translation>Error: Invalid destination folder. The download has been cancelled.</translation>
@@ -2727,6 +2752,11 @@ https://mega.co.nz/#sync</source>
         <translation>Transfer manager</translation>
     </message>
     <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
+        <translation>We couldn’t find a system tray to place the app tray icon into. Try launching the app again.</translation>
+    </message>
+    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Upload</translation>
@@ -2747,6 +2777,11 @@ https://mega.co.nz/#sync</source>
         <translation>Stream</translation>
     </message>
     <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation>The app will continue to work, however you may not receive new updates.</translation>
+    </message>
+    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Cloud drive</translation>
@@ -2764,7 +2799,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation>[A]Important:[/A] Contact your Business account administrator to resolve the issue and activate your account.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2809,7 +2844,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Your account has been deactivated by your administrator. Please contact your business account administrator for further details.</translation>
+        <translation>Your account has been deactivated by your administrator. Please contact your Business account administrator for further details.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation>The app will continue to work, however, updates will no longer be supported for versions prior to Windows 7.</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -2837,9 +2877,24 @@ https://mega.co.nz/#sync</source>
         <translation>Your sync “%1” has been enabled</translation>
     </message>
     <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation>The app will continue to work, however updates will no longer be supported for versions prior to macOS Sierra.</translation>
+    </message>
+    <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>Thank you for your collaboration</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available. Click on this message to install it</source>
+        <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
+        <translation>A new version of this app is available. Click on this message to install it.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available</source>
+        <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
+        <translation>A new version of this app is available.</translation>
     </message>
     <message numerus="yes">
         <source>There is an active transfer. Exit the app?
@@ -2983,7 +3038,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your backup “%1” has been temporarily disabled: %2</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2993,62 +3048,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Account deactivated</source>
         <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
-        <translatorcomment>Message shown to the user to inform that Desktop App is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MEGAsync has been updated</source>
-        <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>The app has been updated</translation>
-    </message>
-    <message>
-        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
-        <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>The app is now running. Click here to open the status window.</translation>
-    </message>
-    <message>
-        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translatorcomment>Notification message that the app is actually running.</translatorcomment>
-        <translation>The app is now running. Click here to open the status window.</translation>
-    </message>
-    <message>
-        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>The app will continue to work, however updates will no longer be supported for versions prior to macOS Sierra.</translation>
-    </message>
-    <message>
-        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>The app will continue to work, however, updates will no longer be supported for versions prior to Windows 7.</translation>
-    </message>
-    <message>
-        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
-        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation>The app will continue to work, however you may not receive new updates.</translation>
-    </message>
-    <message>
-        <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
-        <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Debug mode enabled. A log called “MEGAsync.log” is being created on your computer.</translation>
-    </message>
-    <message>
-        <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>The app is now running. Click here to open the status window.</translation>
-    </message>
-    <message>
-        <source>A new version of MEGAsync is available. Click on this message to install it</source>
-        <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation>A new version of this app is available. Click on this message to install it.</translation>
-    </message>
-    <message>
-        <source>A new version of MEGAsync is available</source>
-        <translatorcomment>System notification to inform the user that there is a new version of the app available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
-        <translation>A new version of this app is available.</translation>
+        <translation>Account deactivated</translation>
     </message>
 </context>
 <context>
@@ -3211,17 +3211,20 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Account suspended due to copyright violations. We sent you an email with more information about this.</translation>
+        <translation>Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.
+
+Check your email for more information on how to file a counter-notice.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.</translation>
+        <translation>Your account was terminated due to a breach of MEGA’s Terms of Service.
+You will not be able to regain access to your stored data or be authorised to register a new MEGA account.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation type="unfinished">Violated Terms of Service.</translation>
+        <translation>Violated Terms of Service.</translation>
     </message>
 </context>
 <context>
@@ -3428,7 +3431,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your plan has expired</translation>
     </message>
 </context>
 <context>
@@ -3462,6 +3465,11 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>Show in folder</source>
         <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation>Show in folder</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
+        <translation>Clear</translation>
     </message>
     <message>
         <source>Get link</source>
@@ -3619,22 +3627,17 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>Cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Don’t cancel</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
         <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translatorcomment>Dialog button to do the proposed actions (clear the transfers) or label of context menu option to clear selected transfer item. See CON-188.</translatorcomment>
-        <translation type="unfinished">Clear</translation>
+        <translation>Don’t clear</translation>
     </message>
 </context>
 <context>
@@ -4198,14 +4201,14 @@ Enter a different name.</translation>
         <translation>Files</translation>
     </message>
     <message>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
+        <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
+        <translation>Files and folders have an owner and belong to a group of users. Using this dialog, you can grant different access permissions for new files and folders created by the desktop app to users that belong to the same group and to the rest of the users in the computer. If you don’t need to change them, please leave them on the default settings for security reasons.</translation>
+    </message>
+    <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>Owner permissions:</translation>
-    </message>
-    <message>
-        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
-        <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGA Desktop App</translatorcomment>
-        <translation>Files and folders have an owner and belong to a group of users. Using this dialog, you can grant different access permissions for new files and folders created by the desktop app to users that belong to the same group and to the rest of the users in the computer. If you don’t need to change them, please leave them on the default settings for security reasons.</translation>
     </message>
 </context>
 <context>
@@ -4979,6 +4982,11 @@ Do you want to delete it anyway?</translation>
             <numerusform>%n files</numerusform>
         </translation>
     </message>
+    <message>
+        <source>Adding transfers</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchLineEdit</name>
@@ -5119,6 +5127,11 @@ Do you want to delete it anyway?</translation>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
         <translation>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please check your [A] folder in the Rubbish bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+    </message>
+    <message>
+        <source>Do you want to restart MEGAsync now?</source>
+        <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
+        <translation>Do you want to restart the app now?</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -5303,7 +5316,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Move…</translation>
+        <translation>Choose</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -5454,6 +5467,11 @@ Do you want to delete it anyway?</translation>
         <source>Business</source>
         <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Business</translation>
+    </message>
+    <message>
+        <source>Restart MEGAsync</source>
+        <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
+        <translation>Restart</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -5872,6 +5890,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
+        <source>Set up Assistant - MEGAsync</source>
+        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
+        <translation>Set up assistant</translation>
+    </message>
+    <message>
         <source>Full sync</source>
         <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
         <translation>Full sync</translation>
@@ -6017,6 +6040,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>I agree with the MEGA [A]Terms of Service[/A]</translation>
     </message>
     <message>
+        <source>Enjoy MEGAsync</source>
+        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
+        <translation>Enjoy our app</translation>
+    </message>
+    <message>
         <source>We are all done</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation>We are all done</translation>
@@ -6025,16 +6053,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Creating folder…</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
         <translation>Creating folder…</translation>
-    </message>
-    <message>
-        <source>Set up Assistant - MEGAsync</source>
-        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Set up assistant</translation>
-    </message>
-    <message>
-        <source>Enjoy MEGAsync</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Enjoy our app</translation>
     </message>
 </context>
 <context>

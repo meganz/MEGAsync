@@ -1,6 +1,7 @@
 #pragma once
 
 #include "syncs/control/SyncSettings.h"
+#include "QTMegaListener.h"
 
 #include "megaapi.h"
 
@@ -11,11 +12,11 @@
 #include <QVector>
 #include <QMap>
 #include <QList>
+#include <QTimer>
 
 #include <memory>
 
 class Preferences;
-
 /**
  * @brief The Sync Model class
  *
@@ -31,7 +32,7 @@ class Preferences;
  *
  */
 
-class SyncInfo : public QObject
+class SyncInfo : public QObject, public mega::MegaListener
 {
     Q_OBJECT
     using SyncType = mega::MegaSync::SyncType;
@@ -51,6 +52,10 @@ private:
     bool mIsFirstBackupDone;
 
     void saveUnattendedDisabledSyncs();
+    void checkUnattendedDisabledSyncsForErrors();
+
+    QTimer mShowErrorTimer;
+    int mLastError = mega::MegaSync::NO_SYNC_ERROR;
 
 public:
     // Data for display in Settings dialog Syncs/Backups.
@@ -58,19 +63,19 @@ public:
     std::map<::mega::MegaHandle, std::shared_ptr<::mega::MegaSyncStats>> mSyncStatsMap;
 
 protected:
-    QMutex syncMutex;
+    mutable QMutex syncMutex;
 
     QMap<SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> syncsSettingPickedFromOldConfig;
     QMap<SyncType, QSet<mega::MegaHandle>> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
+    std::unique_ptr<mega::QTMegaListener> delegateListener;
 
 public:
     static const QVector<SyncType> AllHandledSyncTypes;
 
     void reset();
     static SyncInfo *instance();
-
     /**
      * @brief Updates sync model
      * @param sync MegaSync object with the required information
@@ -98,7 +103,7 @@ public:
 
     // Getters
     std::shared_ptr<SyncSettings> getSyncSetting(int num, SyncType type);
-    std::shared_ptr<SyncSettings> getSyncSettingByTag(mega::MegaHandle tag);
+    std::shared_ptr<SyncSettings> getSyncSettingByTag(mega::MegaHandle tag) const;
     QList<std::shared_ptr<SyncSettings>> getSyncSettingsByType(const QVector<SyncType>& types);
     QList<std::shared_ptr<SyncSettings>> getSyncSettingsByType(SyncType type)
         {return getSyncSettingsByType(QVector<SyncType>({type}));}
@@ -144,4 +149,13 @@ public:
     static QSet<QString> getRemoteBackupFolderNames();
 
     void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs);
+
+    void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
+
+protected:
+    void onEvent(mega::MegaApi* api, mega::MegaEvent* event) override;
+    void onSyncStateChanged(mega::MegaApi *, mega::MegaSync *sync) override;
+    void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncFileStateChanged(mega::MegaApi *, mega::MegaSync *, std::string *localPath, int newState) override;
 };

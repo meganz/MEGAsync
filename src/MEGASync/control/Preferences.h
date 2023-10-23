@@ -531,6 +531,7 @@ public:
 
     //Public keys for valueChanged signals
     static const QString stalledIssuesModeKey;
+    //In this section, you need to move the keys to make them accessible from outside
 
 protected:
     QMutex mutex;
@@ -555,6 +556,8 @@ protected:
     template<typename T>
     T getValueConcurrent(const QString &key, const T &defaultValue);
     void setAndCachedValue(const QString &key, const QVariant &value);
+    //For these two methods, use notifyChange = true if someone needs to detect when it changes
+    //Not all prefeerences need this, that´s why by default it is set to false
     void setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
     void setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
     void setCachedValue(const QString &key, const QVariant &value);

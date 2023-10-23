@@ -4,6 +4,7 @@
 #include <QMovie>
 #include "BlurredShadowEffect.h"
 #include "Utilities.h"
+#include "TransferMetaData.h"
 
 ScanningWidget::ScanningWidget(QWidget *parent) :
     QWidget(parent),
@@ -77,8 +78,19 @@ void ScanningWidget::onReceiveStatusUpdate(const FolderTransferUpdateEvent &even
         }
         case mega::MegaTransfer::STAGE_CREATE_TREE:
         {
-            mUi->lStepTitle->setText(tr("Creating folders"));
-            mUi->lStepDescription->setText(tr("%1/%2").arg(event.createdfoldercount).arg(event.foldercount));
+            const auto metaData = TransferMetaDataContainer::getAppDataByAppData(event.appData.c_str());
+            const auto addedTransfers = metaData->getPendingFiles();
+            if (addedTransfers > 0)
+            {
+                static const QChar ellipsis(0x2026);
+                mUi->lStepTitle->setText(tr("Adding transfers") + ellipsis);
+                mUi->lStepDescription->setText(tr("%1/%2").arg(addedTransfers).arg(event.filecount));
+            }
+            else
+            {
+                mUi->lStepTitle->setText(tr("Creating folders"));
+                mUi->lStepDescription->setText(tr("%1/%2").arg(event.createdfoldercount).arg(event.foldercount));
+            }
             break;
         }
     }
