@@ -771,6 +771,11 @@ void MegaApplication::changeLanguage(QString languageCode)
         currentLanguageCode = languageCode;
     }
 
+    if(mEngine)
+    {
+        mEngine->retranslate();
+    }
+
     createTrayIcon();
 }
 
