@@ -37,7 +37,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum TABS{
+    enum Tabs{
         GENERAL_TAB  = 0,
         ACCOUNT_TAB  = 1,
         SYNCS_TAB    = 2,
@@ -47,7 +47,7 @@ public:
         NETWORK_TAB  = 6,
         NOTIFICATIONS_TAB = 7
     };
-    Q_ENUM(TABS)
+    Q_ENUM(Tabs)
 
     explicit SettingsDialog(MegaApplication* app, bool proxyOnly = false, QWidget* parent = nullptr);
     ~SettingsDialog();

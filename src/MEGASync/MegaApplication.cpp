@@ -5360,6 +5360,7 @@ void MegaApplication::openSettings(int tab)
         }
 
         mSettingsDialog->setProxyOnly(proxyOnly);
+        mSettingsDialog->openSettingsTab(tab);
 
         DialogOpener::showDialog(mSettingsDialog);
     }
