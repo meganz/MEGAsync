@@ -49,7 +49,6 @@ public:
     };
     Q_ENUM(TABS)
 
-    SettingsDialog() = default;
     explicit SettingsDialog(MegaApplication* app, bool proxyOnly = false, QWidget* parent = nullptr);
     ~SettingsDialog();
     void openSettingsTab(int tab = -1);
