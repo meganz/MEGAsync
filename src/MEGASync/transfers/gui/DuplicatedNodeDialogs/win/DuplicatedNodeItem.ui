@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>244</width>
-    <height>131</height>
+    <height>156</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -260,7 +260,7 @@
          <item>
           <widget class="QWidget" name="wNode" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>

@@ -34,7 +34,7 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node)
     qRegisterMetaType<QList<std::shared_ptr<DuplicatedNodeInfo>>>("QList<std::shared_ptr<DuplicatedNodeInfo>");
 
     mSizeAdjustTimer.setSingleShot(true);
-    mSizeAdjustTimer.setInterval(10);
+    mSizeAdjustTimer.setInterval(0);
     connect(&mSizeAdjustTimer, &QTimer::timeout, this, [this](){
         adjustSize();
     }, Qt::UniqueConnection);

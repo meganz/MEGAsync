@@ -42,8 +42,6 @@ void WordWrapLabel::setText(const QString &text)
 {
     QTextEdit::setText(text);
     adaptHeight();
-
-    qDebug() << this << text << document()->size().toSize() << size();
 }
 
 void WordWrapLabel::adaptHeight(bool sendEvent)
