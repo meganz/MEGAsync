@@ -15,7 +15,7 @@ public:
 
     QString contextName() override;
 
-    Q_INVOKABLE void openPreferences(bool sync) const;
+    Q_INVOKABLE void openPreferences(int tabIndex) const;
 
 signals:
     void accountBlocked(int errorCode);

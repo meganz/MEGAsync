@@ -1,4 +1,3 @@
-#include "Preferences/Preferences.h"
 #include "Onboarding.h"
 #include "MegaApplication.h"
 
@@ -10,6 +9,7 @@
 #include "QmlDeviceName.h"
 #include "LoginController.h"
 #include "AccountStatusController.h"
+#include "SettingsDialog.h"
 
 #include "OnboardingQmlDialog.h"
 
@@ -28,6 +28,7 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
     qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker", 1, 0, "PasswordStrengthChecker");
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
+    qmlRegisterType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog");
 
     qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
@@ -73,12 +74,14 @@ QString Onboarding::contextName()
     return QString::fromUtf8("Onboarding");
 }
 
-void Onboarding::openPreferences(bool sync) const
+void Onboarding::openPreferences(int tabIndex) const
 {
+    /*
     int tab = SettingsDialog::BACKUP_TAB;
     if(sync)
     {
         tab = SettingsDialog::SYNCS_TAB;
     }
-    MegaSyncApp->openSettings(tab);
+    */
+    MegaSyncApp->openSettings(tabIndex);
 }

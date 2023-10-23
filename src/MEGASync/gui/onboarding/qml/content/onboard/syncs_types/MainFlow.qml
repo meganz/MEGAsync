@@ -15,6 +15,7 @@ import Onboard.Syncs_types.Backups 1.0
 // C++
 import BackupsProxyModel 1.0
 import LoginController 1.0
+import SettingsDialog 1.0
 
 Rectangle {
     id: syncsPanel
@@ -88,15 +89,19 @@ Rectangle {
                     syncsPanel.navInfo.comesFromResumePage = true;
 
                     var resumePageState = ""
+                    var toOpenTabIndex = 0
                     switch(syncsPanel.navInfo.typeSelected) {
                         case SyncsType.Types.SelectiveSync:
                             resumePageState = "SELECTIVE";
+                            toOpenTabIndex = SettingsDialog.SYNCS_TAB
                             break;
                         case SyncsType.Types.FullSync:
                             resumePageState = "FULL";
+                            toOpenTabIndex = SettingsDialog.SYNCS_TAB
                             break;
                         case SyncsType.Types.Backup:
                             resumePageState = "BACKUP";
+                            toOpenTabIndex = SettingsDialog.BACKUP_TAB
                             break;
                         default:
                             console.warn("ResumePage: typeSelected does not exist -> "
@@ -104,7 +109,7 @@ Rectangle {
                             break;
                     }
 
-                    rightPanel.replace(resumePage, {"state": resumePageState});
+                    rightPanel.replace(resumePage, {"state": resumePageState, "tabToOpen": toOpenTabIndex});
                 }
             }
             PropertyChanges {
@@ -180,6 +185,10 @@ Rectangle {
                 easing.type: Easing.InQuad
             }
         }
+    }
+
+    SettingsDialog {
+        id: settings
     }
 
     Component {

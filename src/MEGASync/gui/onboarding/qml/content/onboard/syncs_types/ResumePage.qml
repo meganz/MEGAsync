@@ -6,6 +6,7 @@ import Onboarding 1.0
 
 ResumePageForm {
     id: root
+    property int tabToOpen: 0
 
     signal resumePageMoveToSyncs
     signal resumePageMoveToSelectiveSyncs
@@ -31,8 +32,7 @@ ResumePageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            Onboarding.openPreferences(syncsPanel.navInfo.typeSelected === SyncsType.Types.SelectiveSync
-                                       || syncsPanel.navInfo.typeSelected === SyncsType.Types.FullSync);
+            Onboarding.openPreferences(tabToOpen)
         }
 
         rightPrimary.onClicked: {
