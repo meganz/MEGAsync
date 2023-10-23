@@ -96,6 +96,7 @@ Item {
 
         function onConfirmFoldersMoveToSelect() {
             root.state = root.selectBackup
+            backupsProxyModel.selectedFilterEnabled = false;
         }
 
         function onConfirmFoldersMoveToSuccess() {
