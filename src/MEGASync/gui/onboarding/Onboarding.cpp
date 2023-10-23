@@ -76,12 +76,5 @@ QString Onboarding::contextName()
 
 void Onboarding::openPreferences(int tabIndex) const
 {
-    /*
-    int tab = SettingsDialog::BACKUP_TAB;
-    if(sync)
-    {
-        tab = SettingsDialog::SYNCS_TAB;
-    }
-    */
     MegaSyncApp->openSettings(tabIndex);
 }
