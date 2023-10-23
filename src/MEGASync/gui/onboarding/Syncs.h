@@ -14,8 +14,8 @@ class Syncs : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString DEFAULT_MEGA_FOLDER READ getDefaultMegaFolder CONSTANT FINAL)
-    Q_PROPERTY(QString DEFAULT_MEGA_PATH READ getDefaultMegaPath CONSTANT FINAL)
+    Q_PROPERTY(QString defaultMegaFolder READ getDefaultMegaFolder CONSTANT FINAL)
+    Q_PROPERTY(QString defaultMegaPath READ getDefaultMegaPath CONSTANT FINAL)
 
 public:
     Syncs(QObject* parent = nullptr);

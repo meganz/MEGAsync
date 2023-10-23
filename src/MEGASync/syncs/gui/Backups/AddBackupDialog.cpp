@@ -96,7 +96,7 @@ void AddBackupDialog::on_changeButton_clicked()
     info.title = tr("Choose folder");
     info.parent = this;
     info.func = processPath;
-    info.canCreateDirectoreis = true;
+    info.canCreateDirectories = true;
 
     info.defaultDir = mUi->folderLineEdit->text().trimmed();
     if (!info.defaultDir.size())

@@ -16,7 +16,7 @@ struct SelectorInfo
     QString title;
     QString defaultDir;
     bool multiSelection;
-    bool canCreateDirectoreis;
+    bool canCreateDirectories;
 
     SelectorInfo()
         : func(nullptr)
@@ -24,7 +24,7 @@ struct SelectorInfo
         , title(QString())
         , defaultDir(QString())
         , multiSelection(false)
-        , canCreateDirectoreis(false)
+        , canCreateDirectories(false)
     {}
 };
 

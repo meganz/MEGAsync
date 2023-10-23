@@ -11,7 +11,7 @@ import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Qml.RoundButton {
-    id: button
+    id: root
 
     property Colors colors: Colors {}
     property Icon icons: Icon {}
@@ -19,52 +19,52 @@ Qml.RoundButton {
     property Sizes sizes: Sizes {}
 
     function getBorderColor() {
-        if(button.pressed || button.checked) {
+        if(root.pressed || root.checked) {
             return colors.borderPressed;
         }
-        if(button.hovered) {
+        if(root.hovered) {
             return colors.borderHover;
         }
-        if(!button.enabled && !icons.busyIndicatorVisible) {
+        if(!root.enabled && !icons.busyIndicatorVisible) {
             return colors.borderDisabled;
         }
         return colors.border;
     }
 
     function getBackgroundColor() {
-        if(button.pressed || button.checked) {
+        if(root.pressed || root.checked) {
             return colors.pressed;
         }
-        if(button.hovered) {
+        if(root.hovered) {
             return colors.hover;
         }
-        if(!button.enabled && !icons.busyIndicatorVisible) {
+        if(!root.enabled && !icons.busyIndicatorVisible) {
             return colors.disabled;
         }
         return colors.background;
     }
 
     function getTextColor() {
-        if(button.pressed || button.checked) {
+        if(root.pressed || root.checked) {
             return colors.textPressed;
         }
-        if(button.hovered) {
+        if(root.hovered) {
             return colors.textHover;
         }
-        if(!button.enabled && !icons.busyIndicatorVisible) {
+        if(!root.enabled && !icons.busyIndicatorVisible) {
             return colors.textDisabled;
         }
         return colors.text;
     }
 
     function getIconColor() {
-        if(button.pressed || button.checked) {
+        if(root.pressed || root.checked) {
             return icons.colorPressed;
         }
-        if(button.hovered) {
+        if(root.hovered) {
             return icons.colorHovered;
         }
-        if(!button.enabled && !icons.busyIndicatorVisible) {
+        if(!root.enabled && !icons.busyIndicatorVisible) {
             return icons.colorDisabled;
         }
         return icons.colorEnabled;
@@ -91,7 +91,7 @@ Qml.RoundButton {
             id: buttonText
 
             anchors.verticalCenter: parent.verticalCenter
-            text: button.text
+            text: root.text
             color: getTextColor()
             font {
                 pixelSize: sizes.textFontSize
@@ -110,10 +110,10 @@ Qml.RoundButton {
         id: focusRect
 
         color: "transparent"
-        border.color: button.enabled ? (button.activeFocus ? Styles.focus : "transparent") : "transparent"
+        border.color: root.enabled ? (root.activeFocus ? Styles.focus : "transparent") : "transparent"
         border.width: sizes.focusBorderWidth
         radius: sizes.focusBorderRadius
-        height: button.height
+        height: root.height
 
         Rectangle {
             id: backgroundRect
@@ -123,8 +123,8 @@ Qml.RoundButton {
             anchors.left: focusRect.left
             anchors.topMargin: sizes.focusBorderWidth
             anchors.leftMargin: sizes.focusBorderWidth
-            width: button.width - 2 * sizes.focusBorderWidth
-            height: button.height - 2 * sizes.focusBorderWidth
+            width: root.width - 2 * sizes.focusBorderWidth
+            height: root.height - 2 * sizes.focusBorderWidth
             border.width: sizes.borderWidth
             border.color: getBorderColor()
             radius: sizes.radius
@@ -180,6 +180,6 @@ Qml.RoundButton {
         }
     }
 
-    Keys.onReturnPressed: button.clicked()
-    Keys.onEnterPressed: button.clicked()
+    Keys.onReturnPressed: root.clicked()
+    Keys.onEnterPressed: root.clicked()
 }
