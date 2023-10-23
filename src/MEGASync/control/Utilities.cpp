@@ -1188,10 +1188,10 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
         nodeName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toUtf8().constData()));
     }
 
-    bool nameFound(false);
     int counter(1);
-    while(!nameFound)
+    while(newName.isEmpty())
     {
+        bool nameFound = false;
         QString suggestedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
         if(node)
         {
@@ -1203,13 +1203,20 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
 
         if(!itemsBeingRenamed.contains(suggestedName, Qt::CaseInsensitive))
         {
-            auto foundNode = std::shared_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode, suggestedName.toStdString().c_str(),
-                                                                                                     node->isFile() ? MegaNode::TYPE_FILE : MegaNode::TYPE_FOLDER));
+            std::unique_ptr<MegaNodeList>nodes(MegaSyncApp->getMegaApi()->getChildren(parentNode));
+            for(int index = 0; index < nodes->size(); ++index)
+            {
+                QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
+                if(suggestedName.compare(nodeName, Qt::CaseInsensitive) == 0)
+                {
+                    nameFound = true;
+                }
+            }
 
-            if(!foundNode)
+
+            if(!nameFound)
             {
                 newName = suggestedName;
-                nameFound = true;
             }
         }
 
