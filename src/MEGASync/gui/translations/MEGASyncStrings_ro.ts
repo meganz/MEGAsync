@@ -996,6 +996,16 @@
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
         <translation>Ai introdus parola actuală, te rugăm să introduci o nouă parolă.</translation>
     </message>
+    <message>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
+        <translation>Parola a fost schimbată</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
+        <translation>Parola ți-a fost modificată.</translation>
+    </message>
 </context>
 <context>
     <name>CircularUsageProgressBar</name>
@@ -1028,6 +1038,11 @@
         <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
         <translation>Următoarele caractere nu sunt permise:
 %1</translation>
+    </message>
+    <message>
+        <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
+        <translation>Contul dvs. Pro&#xa0;Flexi a fost dezactivat din cauza nerealizării plății sau v-ați anulat abonamentul. Nu veți putea accesa datele stocate în contul dvs. până când nu ați efectuat o plată și nu ați reactivat abonamentul.</translation>
     </message>
 </context>
 <context>
@@ -1237,7 +1252,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Te rugăm să îți rezolvi problema legată de plată cât mai curând posibil pentru a evita orice suspendare a contului business</translation>
+        <translation>Vă rugăm să rezolvați problema de plată cât mai curând posibil pentru a evita orice suspendare a contului dvs. Business.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1487,16 +1502,6 @@
         <translation>Actualizează</translation>
     </message>
     <message>
-        <source>loading time…</source>
-        <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>Se calculează timpul…</translation>
-    </message>
-    <message>
-        <source>loading size…</source>
-        <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>Se calculează dimensiunea…</translation>
-    </message>
-    <message>
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>Află mai multe</translation>
@@ -1710,7 +1715,7 @@
     </message>
     <message>
         <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
+        <translatorcomment>Informative label during creation of an account using MEGA app</translatorcomment>
         <translation>Se creează contul…</translation>
     </message>
     <message>
@@ -1765,6 +1770,34 @@
     </message>
 </context>
 <context>
+    <name>GuiUtilities</name>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
+        <translation>Eroare la adăugarea sincronizării</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
+        <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
+        <translation>%1 nu poate fi adăugat deoarece contul dvs. Pro&#xa0;Flexi a fost dezactivat din cauza nerealizării plății sau v-ați anulat abonamentul. Pentru a continua, efectuați o plată și reactivați abonamentul.</translation>
+    </message>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account. SNC-3019</translatorcomment>
+        <translation>Plătește acum</translation>
+    </message>
+    <message>
+        <source>Pay and reactivate</source>
+        <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>Plăti și reactiva</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Label of the button used to dismiss the error message the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>Înlătură</translation>
+    </message>
+</context>
+<context>
     <name>HTTPServer</name>
     <message>
         <source>Your download has started</source>
@@ -1776,7 +1809,7 @@
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
-        <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
+        <translatorcomment>Label to indicate the user that needs to wait until the app fetches link information from the server</translatorcomment>
         <translation>Te rugăm să astepți…</translation>
     </message>
 </context>
@@ -1943,7 +1976,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pune pe pauză/Reia</translation>
+        <translation>Pune pe pauză sau reia</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2041,11 +2074,6 @@
         <translation>Ceva a mers prost în timpul încercării de a face backup folderelor.</translation>
     </message>
     <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>Eroare la adăugarea %1:</translation>
-    </message>
-    <message>
         <source>Add Backup</source>
         <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
         <translation>Adaugă un backup</translation>
@@ -2139,7 +2167,7 @@
     <message>
         <source>MEGA Desktop app</source>
         <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>Aplicație desktop MEGA</translation>
+        <translation>Aplicație Desktop MEGA</translation>
     </message>
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
@@ -2171,12 +2199,12 @@
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app.</translatorcomment>
         <translation>Alege utilizatorii</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app. Preserve $(^NameDA) code</translatorcomment>
         <translation>Alege pentru ce utilizatori dorești să instalezi $(^NameDA).</translation>
     </message>
     <message>
@@ -2302,11 +2330,6 @@
         <translation>Eroare: Folderul de destinație nevalid. Încărcarea a fost anulată</translation>
     </message>
     <message>
-        <source>About MEGAsync</source>
-        <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>Despre</translation>
-    </message>
-    <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
         <translation>Linkul a fost copiat în clipboard</translation>
@@ -2328,22 +2351,22 @@
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>La zi</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a paused state.</translatorcomment>
         <translation>Pus pe pauză</translation>
     </message>
     <message>
         <source>Scanning</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a scanning state.</translatorcomment>
         <translation>Scanare în curs</translation>
     </message>
     <message>
         <source>Syncing</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a syncing state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Sincronizare în curs</translation>
     </message>
     <message>
@@ -2353,7 +2376,7 @@
     </message>
     <message>
         <source>Waiting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a waiting state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Se așteaptă</translation>
     </message>
     <message>
@@ -2389,7 +2412,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
+        <translatorcomment>Notification message launched when an update for MEGA is being downloaded.</translatorcomment>
         <translation>Actualizare disponibilă. Se descarcă…</translation>
     </message>
     <message>
@@ -2404,14 +2427,8 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Starting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is starting.</translatorcomment>
         <translation>Pornire</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Nu se poate obține sistemul de fișiere. Te rugăm să încerci din nou. Dacă problema persistă, te rugăm să ne contactezi la adresa bug@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -2425,7 +2442,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Show status</source>
-        <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translatorcomment>Label displayed to let the user displays the Information dialog of the app. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation>Afișează starea</translation>
     </message>
     <message>
@@ -2574,29 +2591,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Aplicația va continua să funcționeze, însă este posibil să nu primești noi actualizări.</translation>
     </message>
     <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>Parolă modificată</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>Parola ta a fost modificată.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Unitate cloud</translation>
-    </message>
-    <message>
-        <source>Pay Now</source>
-        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation>Plătește acum</translation>
-    </message>
-    <message>
-        <source>Your Business account is expired</source>
-        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Cont dezactivat</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2611,7 +2608,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Important:[/A] Contactează administratorul contului business pentru a rezolva problema și a-ți activa contul.</translation>
+        <translation>[A]Important: [/A] Contactați administratorul contului dvs. Business pentru a rezolva problema și a vă activa contul.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2656,7 +2653,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Contul tău a fost dezactivat de administrator. Te rugăm să contactezi administratorul contului business pentru detalii suplimentare.</translation>
+        <translation>Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -2672,16 +2669,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Una sau mai multe sincronizări au fost dezactivate</translation>
-    </message>
-    <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
-        <translation>Eroare la adăugarea sincronizării</translation>
-    </message>
-    <message>
-        <source>This sync can&apos;t be added: %1. Reason: %2</source>
-        <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
-        <translation>Această sincronizare nu poate fi adăugată: %1. Motivul: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
@@ -2741,11 +2728,6 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <source>One or more backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some backups are disabled</translatorcomment>
         <translation>Unul sau mai multe backupuri au fost dezactivate</translation>
-    </message>
-    <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>Eroare la adăugarea %1:</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
@@ -2861,6 +2843,11 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <source>Warning</source>
         <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
         <translation>Avertisment</translation>
+    </message>
+    <message>
+        <source>Account deactivated</source>
+        <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
+        <translation>Cont dezactivat</translation>
     </message>
 </context>
 <context>
@@ -3023,12 +3010,20 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Cont suspendat din cauza încălcărilor drepturilor de autor. Ți-am trimis un e-mail cu mai multe informații despre acest lucru.</translation>
+        <translation>Contul dvs. MEGA a fost suspendat din cauza acuzațiilor repetate de încălcare a drepturilor de autor. Aceasta înseamnă că nu vă puteți accesa contul sau datele din cadrul acestuia.
+
+Verificați-vă e-mailul pentru mai multe informații despre cum să depuneți o contranotificare. </translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Cont desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, cum ar fi abuzul drepturilor celorlalți; partajarea și/sau importarea de date ilegale; ori abuzul de sistem.</translation>
+        <translation>Contul dvs. a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA.
+Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autorizat să înregistrați un nou cont MEGA.</translation>
+    </message>
+    <message>
+        <source>File removed as it violated our Terms of Service</source>
+        <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
+        <translation>Nerespectarea Termenii de utilizare a serviciului.</translation>
     </message>
 </context>
 <context>
@@ -3079,11 +3074,6 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
 </context>
 <context>
     <name>MegaProgressCustomDialog</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
@@ -3238,9 +3228,9 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <translation>Nu poți rula aplicația desktop din această locație. Mut-o în folderul Aplicații, apoi ruleaz-o.</translation>
     </message>
     <message>
-        <source>Account expired (business or Pro Flexi)</source>
-        <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Cont dezactivat</translation>
+        <source>Your plan has expired</source>
+        <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
+        <translation>Planul dvs. a expirat</translation>
     </message>
 </context>
 <context>
@@ -3419,19 +3409,19 @@ Transferurile de sincronizare nefinalizate selectate nu vor fi anulate. Toate ce
         <translation><numerusform>Anulează și șterge transferul</numerusform><numerusform>Anulează și șterge transferurile</numerusform><numerusform>Anulează și șterge transferurile</numerusform></translation>
     </message>
     <message>
-        <source>Yes, cancel</source>
-        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>Da, anulează</translation>
+        <source>Cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>Anulează</translation>
     </message>
     <message>
-        <source>No, continue</source>
-        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
-        <translation>Nu, continuă</translation>
+        <source>Don&apos;t cancel</source>
+        <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>Nu anula</translation>
     </message>
     <message>
-        <source>Yes, clear</source>
-        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation>Da, șterge</translation>
+        <source>Don&apos;t clear</source>
+        <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
+        <translation>Nu şterge</translation>
     </message>
 </context>
 <context>
@@ -3995,12 +3985,12 @@ Introdu un alt nume.</translation>
     </message>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
         <translation>Spațiul de stocare suplimentar este taxat cu %1 per %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
         <translation>Cota de transfer suplimentară este taxată cu %1 per %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
@@ -4234,17 +4224,17 @@ Introdu un alt nume.</translation>
     <message>
         <source>List View</source>
         <translatorcomment>Button for changing to filesystem list view mode</translatorcomment>
-        <translation>Vizualizare tip listă</translation>
+        <translation>Modul listă</translation>
     </message>
     <message>
         <source>Change to list view mode</source>
         <translatorcomment>Change to list view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Schimbă în modul de vizualizare tip listă</translation>
+        <translation>Schimbă în modul listă</translation>
     </message>
     <message>
         <source>Detail View</source>
         <translatorcomment>Button for changing to filesystem detail view mode</translatorcomment>
-        <translation>Vizualizare detaliată</translation>
+        <translation>Modul detaliat</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>
@@ -4580,7 +4570,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>Mută acest folder din backupuri într-o altă locație din unitatea cloud pentru a avea acces deplin la datele tale. Acestui folder nu i se va mai face backup.</translation>
+        <translation>Mută acest folder din backupuri într-o altă locație din Unitatea cloud pentru a avea acces deplin la datele tale. Acestui folder nu i se va mai face backup.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -5029,7 +5019,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Mută…</translation>
+        <translation>Alege</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -5342,11 +5332,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Vrei să te deconectezi?</translation>
     </message>
     <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
-        <translation>Eroare la adăugarea sincronizării</translation>
-    </message>
-    <message>
         <source>Error removing sync</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync.</translatorcomment>
         <translation>Eroarea la eliminarea sincronizării</translation>
@@ -5483,7 +5468,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sincronizează întreaga unitate cloud</translation>
+        <translation>Sincronizează întreaga Unitate cloud</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5624,7 +5609,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Folderul tău local și unitatea ta cloud MEGA vor fi sincronizate automat.</translation>
+        <translation>Folderul tău local și Unitatea ta cloud MEGA vor fi sincronizate automat.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5709,7 +5694,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Sincronizează foldere specifice în unitatea ta cloud</translation>
+        <translation>Sincronizează foldere specifice în Unitatea ta cloud</translation>
     </message>
     <message>
         <source>Selective sync:</source>
@@ -5729,7 +5714,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Foldere specifice din unitatea ta cloud vor fi sincronizate cu un folder local care corespunde.</translation>
+        <translation>Foldere specifice din Unitatea ta cloud vor fi sincronizate cu un folder local care corespunde.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -5749,7 +5734,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Întreaga ta unitate cloud va fi sincronizată cu un folder local.</translation>
+        <translation>Întreaga ta Unitate cloud va fi sincronizată cu un folder local.</translation>
     </message>
     <message>
         <source>Log in</source>
@@ -7194,32 +7179,32 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>acum %n secundă</numerusform><numerusform>acum %n secunde</numerusform><numerusform>acum %n de secunde</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>acum %n minut</numerusform><numerusform>acum %n minute</numerusform><numerusform>acum %n de minute</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>acum %n oră</numerusform><numerusform>acum %n ore</numerusform><numerusform>acum %n de ore</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>acum %n zi</numerusform><numerusform>acum %n zile</numerusform><numerusform>acum %n de zile</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>acum %n lună</numerusform><numerusform>acum %n luni</numerusform><numerusform>acum %n de luni</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>acum %n an</numerusform><numerusform>acum %n ani</numerusform><numerusform>acum %n de ani</numerusform></translation>
     </message>
     <message>

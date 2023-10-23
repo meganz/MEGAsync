@@ -16,7 +16,9 @@
 using namespace mega;
 
 MegaDownloader::MegaDownloader(MegaApi* _megaApi, std::shared_ptr<FolderTransferListener> _listener)
-    : QObject(), megaApi(_megaApi), mFolderTransferListener(_listener), mQueueData(_megaApi, pathMap)
+    : QObject(), megaApi(_megaApi), mFolderTransferListener(_listener), 
+    mFolderTransferListenerDelegate(std::make_shared<QTMegaTransferListener>(megaApi, mFolderTransferListener.get())),
+    mQueueData(_megaApi, pathMap)
 {
     //In case the MegaDownloader is used in a separate thread, we need this method to be direct
     connect(&mQueueData, &DownloadQueueController::finishedAvailableSpaceCheck,
@@ -170,7 +172,7 @@ void MegaDownloader::startDownload(WrappedNode *parent, const QString& appData,
                            appData.toUtf8().constData(), startFirst, cancelToken,
                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
-                           mFolderTransferListener.get());
+                           mFolderTransferListenerDelegate.get());
 }
 
 void MegaDownloader::downloadForeignDir(MegaNode *node, const std::shared_ptr<DownloadTransferMetaData> &data, const QString& currentPathWithSep)
