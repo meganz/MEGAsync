@@ -187,10 +187,6 @@ Rectangle {
         }
     }
 
-    SettingsDialog {
-        id: settings
-    }
-
     Component {
         id: deviceNamePage
 
