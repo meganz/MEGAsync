@@ -15,14 +15,16 @@ import Onboard 1.0
 SyncsPage {
     id: finalPageRoot
 
+    property string title
+    property string description
+    property bool fullSyncDone
+    property bool selectiveSyncDone
     property alias buttonGroup: buttonGroup
 
     readonly property string stateFullSync: "FULL"
     readonly property string stateSelectiveSync: "SELECTIVE"
     readonly property string stateBackup: "BACKUP"
 
-    property string title
-    property string description
 
     footerButtons {
         leftSecondary.visible: false
@@ -56,17 +58,10 @@ SyncsPage {
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
             PropertyChanges {
                 target: syncButton;
-                type: !syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone
-                      ? SyncsType.Sync
-                      : SyncsType.SelectiveSync;
-                visible: (!syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone)
-                            || (!syncsPanel.navInfo.fullSyncDone && syncsPanel.navInfo.selectiveSyncDone);
-                title: !syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone
-                       ? OnboardingStrings.sync
-                       : OnboardingStrings.selectiveSync
-                description: !syncsPanel.navInfo.fullSyncDone && !syncsPanel.navInfo.selectiveSyncDone
-                             ? OnboardingStrings.finalPageButtonSync
-                             : OnboardingStrings.finalPageButtonSelectiveSync
+                type: !fullSyncDone && !selectiveSyncDone ? SyncsType.Sync : SyncsType.SelectiveSync;
+                visible: !fullSyncDone
+                title: !fullSyncDone ? OnboardingStrings.sync : OnboardingStrings.selectiveSync
+                description: !fullSyncDone ? OnboardingStrings.finalPageButtonSync : OnboardingStrings.finalPageButtonSelectiveSync
             }
         }
     ]
@@ -147,10 +142,10 @@ SyncsPage {
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Backup
                     checkable: false
-                    width: !syncButton.visible//(finalPageRoot.state === finalPageRoot.stateFullSync)
+                    width: !syncButton.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
-                    height: !syncButton.visible//(finalPageRoot.state === finalPageRoot.stateFullSync)
+                    height: !syncButton.visible
                             ? 148
                             : 195
                     Layout.preferredWidth: width
@@ -162,5 +157,4 @@ SyncsPage {
             }
         }
     }
-
 }
