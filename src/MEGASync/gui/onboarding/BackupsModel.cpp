@@ -107,13 +107,13 @@ BackupsModel::BackupsModel(QObject* parent)
     , mCheckAllState(Qt::CheckState::Unchecked)
     , mGlobalError(BackupErrorCode::None)
 {
-    mRoleNames[NameRole] = "mName";
-    mRoleNames[FolderRole] = "mFolder";
-    mRoleNames[SizeRole] = "mSize";
-    mRoleNames[SizeReadyRole] = "mSizeReady";
-    mRoleNames[SelectedRole] = "mSelected";
-    mRoleNames[DoneRole] = "mDone";
-    mRoleNames[ErrorRole] = "mError";
+    mRoleNames[NameRole] = "name";
+    mRoleNames[FolderRole] = "folder";
+    mRoleNames[SizeRole] = "size";
+    mRoleNames[SizeReadyRole] = "sizeReady";
+    mRoleNames[SelectedRole] = "selected";
+    mRoleNames[DoneRole] = "done";
+    mRoleNames[ErrorRole] = "error";
 
     // Append mBackupFolderList with the default dirs
     populateDefaultDirectoryList();
@@ -126,8 +126,8 @@ BackupsModel::BackupsModel(QObject* parent)
             this, &BackupsModel::onBackupFinished);
     connect(&mCheckDirsTimer, &QTimer::timeout, this, &BackupsModel::checkDirectories);
 
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsModel"), this);
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsController"),
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsModel"), this);
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsController"),
                                                                 mBackupsController.get());
 
     qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",

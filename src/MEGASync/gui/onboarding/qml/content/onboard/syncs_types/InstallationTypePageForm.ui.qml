@@ -12,7 +12,7 @@ import LoginController 1.0
 
 SyncsPage {
 
-    property alias buttonGroup: buttonGroup
+    property alias buttonGroup: buttonGroupComp
 
     footerButtons.rightPrimary.enabled: false
 
@@ -33,7 +33,7 @@ SyncsPage {
         }
 
         ButtonGroup {
-            id: buttonGroup
+            id: buttonGroupComp
         }
 
         ColumnLayout {
@@ -48,7 +48,7 @@ SyncsPage {
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync
                 type: SyncsType.Types.Sync
-                ButtonGroup.group: buttonGroup
+                ButtonGroup.group: buttonGroupComp
             }
 
             SyncsHorizontalButton {
@@ -60,7 +60,7 @@ SyncsPage {
                 description: OnboardingStrings.backupButtonDescription
                 imageSource: Images.installationTypeBackups
                 type: SyncsType.Backup
-                ButtonGroup.group: buttonGroup
+                ButtonGroup.group: buttonGroupComp
             }
         }
     }

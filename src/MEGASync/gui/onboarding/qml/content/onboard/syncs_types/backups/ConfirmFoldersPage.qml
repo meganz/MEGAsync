@@ -14,7 +14,7 @@ ConfirmFoldersPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            BackupsModel.clean(true);
+            backupsModel.clean(true);
             backupsProxyModel.selectedFilterEnabled = false;
             root.confirmFoldersMoveToSelect()
         }
@@ -28,15 +28,15 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
-        target: BackupsModel
+        target: backupsModel
 
         function onNoneSelected() {
             root.confirmFoldersMoveToSelect()
         }
 
         function onExistConflictsChanged() {
-            if(BackupsModel.mConflictsNotificationText !== "") {
-                if(BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation) {
+            if(backupsModel.conflictsNotificationText !== "") {
+                if(backupsModel.globalError === backupsModel.BackupErrorCode.SDKCreation) {
                     stepPanel.state = stepPanel.step4Error;
                 } else {
                     stepPanel.state = stepPanel.step4Warning;
@@ -61,5 +61,4 @@ ConfirmFoldersPageForm {
             }
         }
     }
-
 }

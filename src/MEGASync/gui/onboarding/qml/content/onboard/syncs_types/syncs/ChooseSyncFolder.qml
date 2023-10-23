@@ -18,13 +18,11 @@ import ChooseRemoteFolder 1.0
 Item {
     id: root
 
-    property alias choosenPath: folderField.text
+    property alias choosenPath: folder.text
     property alias remoteTest: remoteFolderChooser
     property bool local: true
-    property url selectedUrl: selectedUrl
-    property double selectedNode: selectedNode
     property bool isValid: true
-    property alias folderField: folderField
+    property alias folderField: folder
 
     readonly property int textEditMargin: 2
 
@@ -53,12 +51,12 @@ Item {
     }
 
     Layout.preferredWidth: width
-    Layout.preferredHeight: folderField.height
+    Layout.preferredHeight: folder.height
     width: parent.width
-    height: folderField.height
+    height: folder.height
 
     MegaTextFields.TextField {
-        id: folderField
+        id: folder
 
         anchors.left: parent.left
         anchors.right: changeButton.left
@@ -76,17 +74,17 @@ Item {
     MegaButtons.OutlineButton {
         id: changeButton
 
-        height: folderField.textField.height
+        height: folder.textField.height
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: 15
         text: OnboardingStrings.choose
         onClicked: {
-            folderField.error = false;
-            folderField.hint.visible = false;
+            folder.error = false;
+            folder.hint.visible = false;
 
             if (local) {
-                localFolderChooser.openFolderSelector(folderField.text);
+                localFolderChooser.openFolderSelector(folder.text);
             }
             else {
                 remoteFolderChooser.openFolderSelector();
@@ -101,7 +99,7 @@ Item {
         enabled: root.local
 
         function onFolderChoosen(folder) {
-            folderField.text = folder
+            folder.text = folder
         }
     }
 
@@ -112,7 +110,7 @@ Item {
         enabled: !root.local
 
         function onFolderChoosen(folder) {
-            folderField.text = folder
+            folder.text = folder
         }
     }
 

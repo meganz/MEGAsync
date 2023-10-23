@@ -28,8 +28,8 @@ Rectangle {
     readonly property int lineSubStepHeight: 16
     readonly property int lineRadius: 1
 
-    property string step3Text: ""
-    property string step4Text: ""
+    property alias step3Text: step3_content.text
+    property alias step4Text: step4_content.text
 
     color: Styles.surface1
     height: parent.height
@@ -323,7 +323,6 @@ Rectangle {
             SubStep {
                 id: step3_content
 
-                text: step3Text
                 Layout.leftMargin: subStepLeftMargin
             }
 
@@ -340,7 +339,6 @@ Rectangle {
             SubStep {
                 id: step4_content
 
-                text: step4Text
                 Layout.leftMargin: subStepLeftMargin
             }
         }

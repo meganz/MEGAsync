@@ -18,7 +18,7 @@ Item {
     }
 
     property int number: 0
-    property string text: ""
+    property alias text: stepText.text
     property int toState: Step.ToStates.Disabled
 
     onToStateChanged: {
@@ -154,7 +154,6 @@ Item {
             MegaTexts.Text {
                 id: stepText
 
-                text: root.text
                 color: Styles.iconButton
                 font.weight: Font.DemiBold
             }

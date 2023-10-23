@@ -17,7 +17,7 @@ SyncsPage {
     footerButtons.rightPrimary {
         text: OnboardingStrings.backUp
         icons.source: Images.database
-        enabled: BackupsModel.mCheckAllState !== Qt.Unchecked
+        enabled: backupsModel.checkAllState !== Qt.Unchecked
     }
 
     ColumnLayout {

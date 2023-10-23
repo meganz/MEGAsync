@@ -15,16 +15,15 @@ import BackupsModel 1.0
 import QmlDeviceName 1.0
 
 SyncsPage {
-
-    property alias folderField: folderField
+    id: root
     property alias confirmHeader: confirmHeader
 
     footerButtons.rightPrimary {
         text: OnboardingStrings.backUp
         icons.source: Images.database
-        enabled: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.None
-                    || (BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation
-                            && BackupsModel.mExistsOnlyGlobalError)
+        enabled: backupsModel.globalError === backupsModel.BackupErrorCode.None
+                    || (backupsModel.globalError === backupsModel.BackupErrorCode.SDKCreation
+                            && backupsModel.existsOnlyGlobalError)
     }
 
     ColumnLayout {

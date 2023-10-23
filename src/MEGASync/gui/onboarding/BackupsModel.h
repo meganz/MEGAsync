@@ -55,17 +55,17 @@ class BackupsModel : public QAbstractListModel
     Q_PROPERTY(bool totalSizeReady
                READ getIsTotalSizeReady
                NOTIFY totalSizeReadyChanged)
-    Q_PROPERTY(Qt::CheckState mCheckAllState
+    Q_PROPERTY(Qt::CheckState checkAllState
                READ getCheckAllState
                WRITE setCheckAllState
                NOTIFY checkAllStateChanged)
-    Q_PROPERTY(QString mConflictsNotificationText
+    Q_PROPERTY(QString conflictsNotificationText
                READ getConflictsNotificationText
                NOTIFY existConflictsChanged)
-    Q_PROPERTY(int mGlobalError
+    Q_PROPERTY(int globalError
                READ getGlobalError
                NOTIFY globalErrorChanged)
-    Q_PROPERTY(bool mExistsOnlyGlobalError
+    Q_PROPERTY(bool existsOnlyGlobalError
                READ existsOnlyGlobalError
                NOTIFY existsOnlyGlobalErrorChanged)
 

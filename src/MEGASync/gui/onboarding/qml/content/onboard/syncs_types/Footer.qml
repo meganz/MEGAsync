@@ -15,9 +15,9 @@ import Onboarding 1.0
 
 RowLayout {
 
-    property alias leftSecondary: leftSecondary
-    property alias rightSecondary: rightSecondary
-    property alias rightPrimary: rightPrimary
+    property alias leftSecondary: leftSecondaryComp
+    property alias rightSecondary: rightSecondaryComp
+    property alias rightPrimary: rightPrimaryComp
 
     anchors {
         bottom: parent.bottom
@@ -29,7 +29,7 @@ RowLayout {
     }
 
     MegaButtons.OutlineButton {
-        id: leftSecondary
+        id: leftSecondaryComp
 
         text: OnboardingStrings.skip
         onClicked: {
@@ -41,13 +41,13 @@ RowLayout {
         Layout.alignment: Qt.AlignRight
 
         MegaButtons.OutlineButton {
-            id: rightSecondary
+            id: rightSecondaryComp
 
             text: OnboardingStrings.previous
         }
 
         MegaButtons.PrimaryButton {
-            id: rightPrimary
+            id: rightPrimaryComp
 
             text: OnboardingStrings.next
             icons.source: Images.arrowRight
