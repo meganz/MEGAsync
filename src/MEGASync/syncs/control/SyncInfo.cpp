@@ -593,24 +593,18 @@ void SyncInfo::checkUnattendedDisabledSyncsForErrors()
 
 void SyncInfo::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    if(unattendedDisabledSyncs.contains(type))
-    {
-        unattendedDisabledSyncs[type].insert(tag);
-        saveUnattendedDisabledSyncs();
-        emit syncDisabledListUpdated();
+    unattendedDisabledSyncs[type].insert(tag);
+    saveUnattendedDisabledSyncs();
+    emit syncDisabledListUpdated();
 
-        mShowErrorTimer.start();
-    }
+    mShowErrorTimer.start();
 }
 
 void SyncInfo::removeUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    if(unattendedDisabledSyncs.contains(type))
-    {
-        unattendedDisabledSyncs[type].remove(tag);
-        saveUnattendedDisabledSyncs();
-        emit syncDisabledListUpdated();
-    }
+    unattendedDisabledSyncs[type].remove(tag);
+    saveUnattendedDisabledSyncs();
+    emit syncDisabledListUpdated();
 }
 
 void SyncInfo::setUnattendedDisabledSyncs(const QSet<MegaHandle>& tags)
@@ -658,7 +652,8 @@ void SyncInfo::onSyncStateChanged(mega::MegaApi*, mega::MegaSync *sync)
         return;
     }
 
-    if(!syncSettings->isActive() && sync->getRunState() == MegaSync::RUNSTATE_DISABLED)
+    if(!syncSettings->isActive() && (sync->getRunState() == MegaSync::RUNSTATE_DISABLED ||
+                                     sync->getRunState() == MegaSync::RUNSTATE_SUSPENDED))
     {
         return;
     }
@@ -669,7 +664,8 @@ void SyncInfo::onSyncStateChanged(mega::MegaApi*, mega::MegaSync *sync)
     {
         mLastError = sync->getError();
 
-        if (sync->getRunState() == MegaSync::RUNSTATE_DISABLED)
+        if (sync->getRunState() == MegaSync::RUNSTATE_DISABLED ||
+            sync->getRunState() == MegaSync::RUNSTATE_SUSPENDED)
         {
             addUnattendedDisabledSync(sync->getBackupId(),
                                       static_cast<MegaSync::SyncType>(sync->getType()));
@@ -677,7 +673,8 @@ void SyncInfo::onSyncStateChanged(mega::MegaApi*, mega::MegaSync *sync)
     }
     else
     {
-        if (sync->getRunState() != MegaSync::RUNSTATE_DISABLED)
+        if (sync->getRunState() != MegaSync::RUNSTATE_DISABLED &&
+            sync->getRunState() != MegaSync::RUNSTATE_SUSPENDED)
         {
             removeUnattendedDisabledSync(sync->getBackupId(),
                                          static_cast<MegaSync::SyncType>(sync->getType()));
