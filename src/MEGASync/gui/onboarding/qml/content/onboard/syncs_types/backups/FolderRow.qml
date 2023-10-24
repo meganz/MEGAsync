@@ -284,8 +284,8 @@ Rectangle {
                         id: chooseLocalFolderConnection
 
                         target: folderDialog
-                        function onFolderChoosen(folder) {
-                            backupsModel.change(folder, folder);
+                        function onFolderChoosen(folderPath) {
+                            backupsModel.change(folder, folderPath);
                         }
                     }
                 }

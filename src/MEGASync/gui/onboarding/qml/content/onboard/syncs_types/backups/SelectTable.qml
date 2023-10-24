@@ -183,8 +183,8 @@ Rectangle {
 
                 target: folderDialog
 
-                function onFolderChoosen(folder) {
-                    backupsModel.insert(folder);
+                function onFolderChoosen(folderPath) {
+                    backupsModel.insert(folderPath);
                 }
             }
 

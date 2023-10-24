@@ -6,7 +6,6 @@
 #include <MegaApplication.h>
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include <DialogOpener.h>
-#include "mega/types.h"
 #include "megaapi.h"
 #include "Syncs.h"
 
