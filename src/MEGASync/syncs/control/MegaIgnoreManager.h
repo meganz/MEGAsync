@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QFile>
+#include <QMetaEnum>
 
 #include <memory>
 
