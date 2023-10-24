@@ -18,11 +18,9 @@ import ChooseRemoteFolder 1.0
 Item {
     id: root
 
-    property alias choosenPath: folder.text
-    property alias remoteTest: remoteFolderChooser
+    property alias choosenPath: folderItem.text
     property bool local: true
-    property bool isValid: true
-    property alias folderField: folder
+    property alias folderField: folderItem
 
     readonly property int textEditMargin: 2
 
@@ -51,12 +49,12 @@ Item {
     }
 
     Layout.preferredWidth: width
-    Layout.preferredHeight: folder.height
+    Layout.preferredHeight: folderItem.height
     width: parent.width
-    height: folder.height
+    height: folderItem.height
 
     MegaTextFields.TextField {
-        id: folder
+        id: folderItem
 
         anchors.left: parent.left
         anchors.right: changeButton.left
@@ -74,17 +72,17 @@ Item {
     MegaButtons.OutlineButton {
         id: changeButton
 
-        height: folder.textField.height
+        height: folderItem.textField.height
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: 15
         text: OnboardingStrings.choose
         onClicked: {
-            folder.error = false;
-            folder.hint.visible = false;
+            folderItem.error = false;
+            folderItem.hint.visible = false;
 
             if (local) {
-                localFolderChooser.openFolderSelector(folder.text);
+                localFolderChooser.openFolderSelector(folderItem.text);
             }
             else {
                 remoteFolderChooser.openFolderSelector();
@@ -98,8 +96,8 @@ Item {
         target: localFolderChooser
         enabled: root.local
 
-        function onFolderChoosen(folder) {
-            folder.text = folder
+        function onFolderChoosen(folderPath) {
+            folderItem.text = folderPath
         }
     }
 
@@ -109,8 +107,8 @@ Item {
         target: remoteFolderChooser
         enabled: !root.local
 
-        function onFolderChoosen(folder) {
-            folder.text = folder
+        function onFolderChoosen(remoteFolderPath) {
+            folderItem.text = remoteFolderPath
         }
     }
 

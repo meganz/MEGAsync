@@ -15,7 +15,6 @@ SyncsPage {
     property alias localFolderChooser: localFolder
 
     footerButtons.rightPrimary {
-        enabled: localFolder.isValid
         text: OnboardingStrings.sync
         icons.source: Images.syncIcon
     }

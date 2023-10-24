@@ -16,7 +16,6 @@ SyncsPage {
     property alias remoteFolderChooser: remoteFolder
 
     footerButtons.rightPrimary {
-        enabled: localFolder.isValid && remoteFolder.isValid
         text: OnboardingStrings.sync
         icons.source: Images.syncIcon
     }
