@@ -198,7 +198,7 @@ void SyncController::enableSync(std::shared_ptr<SyncSettings> syncSetting)
                 emit syncEnableError(syncSetting, syncErrorCode);
             }
         }
-        else
+        else if(!syncSetting || errorCode != mega::API_OK)
         {
             QString errorMsg = getSyncAPIErrorMsg(errorCode);
             if (errorMsg.isEmpty())
@@ -210,11 +210,6 @@ void SyncController::enableSync(std::shared_ptr<SyncSettings> syncSetting)
                         getSyncTypeString(syncSetting ? syncSetting->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
                         errorMsg);
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-        }
-
-        if (syncErrorCode == MegaSync::NO_SYNC_ERROR && syncSetting)
-        {
-            mSyncInfo->removeUnattendedDisabledSync(syncSetting->backupId(), syncSetting->getType());
         }
     }));
 }
@@ -255,7 +250,7 @@ void SyncController::disableSync(std::shared_ptr<SyncSettings> syncSetting)
                     emit syncDisableError(syncSetting, syncErrorCode);
                 }
             }
-            else
+            else if(!syncSetting || errorCode != mega::API_OK)
             {
                 QString errorMsg = getSyncAPIErrorMsg(errorCode);
                 if (errorMsg.isEmpty())
