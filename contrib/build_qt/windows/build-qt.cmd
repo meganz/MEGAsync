@@ -1,3 +1,6 @@
+@echo off
+setlocal enabledelayedexpansion
+
 SET MEGA_QT_MAJ_VER=5
 SET MEGA_QT_MIN_VER=15
 SET MEGA_QT_DOT_VER=11
@@ -16,7 +19,17 @@ perl init-repository --module-subset=essential,qtwinextras,qtimageformats,qtquic
 
 FOR /D %%M in (%MEGA_PATCHES_DIR%\%MEGA_QT_VER%\*) DO (
 	FOR %%I IN (%%M\*) DO (
-		git apply -v --directory=%%~nM --ignore-whitespace %%I
+		echo %%I|findstr /r /c:".*\\[0-9][0-9]\.all\..*">nul 2>&1
+		IF !ERRORLEVEL! EQU 0 (
+			echo "Applying %%I"
+			git apply --directory=%%~nM --ignore-whitespace %%I
+		) ELSE (
+			echo %%I|findstr /r /c:".*\\[0-9][0-9]\.win\..*">nul 2>&1
+			IF !ERRORLEVEL! EQU 0 (
+				echo "Applying %%I"
+				git apply --directory=%%~nM --ignore-whitespace %%I
+			)	
+		)
 	)
 )
 
