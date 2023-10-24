@@ -31,7 +31,6 @@ Qml.CheckBox {
         }
 
         textLoader.sourceComponent = textComponent;
-        //contentItem = textComponent
     }
 
     Rectangle {
