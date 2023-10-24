@@ -15,13 +15,13 @@ BackupFolder::BackupFolder(const QString& folder,
                            bool selected, QObject *parent)
     : QObject(parent)
     , mName(displayName)
-    , mSize(QString::fromUtf8(""))
+    , mSize()
     , mSelected(selected)
     , mDone(false)
     , mFolderSizeReady(false)
     , mError(0)
     , folderSize(FileFolderAttributes::NOT_READY)
-    , sdkError(QString())
+    , sdkError()
     , mFolderAttr(nullptr)
     , mFolder(folder)
 {
@@ -30,17 +30,9 @@ BackupFolder::BackupFolder(const QString& folder,
 void BackupFolder::setSize(qint64 size)
 {
     QVector<int> changedRoles;
+    changedRoles.append(BackupsModel::SizeReadyRole);
 
-    if(size == FileFolderAttributes::NOT_READY)
-    {
-        mFolderSizeReady = false;
-        changedRoles.append(BackupsModel::SizeReadyRole);
-    }
-    else if(size != FileFolderAttributes::NOT_READY)
-    {
-        mFolderSizeReady = true;
-        changedRoles.append(BackupsModel::SizeReadyRole);
-    }
+    mFolderSizeReady = (size != FileFolderAttributes::NOT_READY);
 
     if(size > FileFolderAttributes::NOT_READY)
     {
@@ -49,14 +41,11 @@ void BackupFolder::setSize(qint64 size)
         changedRoles.append(BackupsModel::SizeRole);
     }
 
-    if(!changedRoles.isEmpty())
+    if(auto model = dynamic_cast<BackupsModel*>(parent()))
     {
-        if(auto model = dynamic_cast<BackupsModel*>(parent()))
-        {
-            auto changedIndex = model->index(model->getRow(mFolder), 0);
-            model->updateSelectedAndTotalSize();
-            emit model->dataChanged(changedIndex, changedIndex, changedRoles);
-        }
+        auto changedIndex = model->index(model->getRow(mFolder), 0);
+        model->updateSelectedAndTotalSize();
+        emit model->dataChanged(changedIndex, changedIndex, changedRoles);
     }
 }
 
@@ -97,7 +86,6 @@ int BackupsModel::CHECK_DIRS_TIME = 1000;
 
 BackupsModel::BackupsModel(QObject* parent)
     : QAbstractListModel(parent)
-    , mRoleNames(QAbstractItemModel::roleNames())
     , mSelectedRowsTotal(0)
     , mBackupsTotalSize(0)
     , mTotalSizeReady(false)
@@ -107,14 +95,6 @@ BackupsModel::BackupsModel(QObject* parent)
     , mCheckAllState(Qt::CheckState::Unchecked)
     , mGlobalError(BackupErrorCode::None)
 {
-    mRoleNames[NameRole] = "name";
-    mRoleNames[FolderRole] = "folder";
-    mRoleNames[SizeRole] = "size";
-    mRoleNames[SizeReadyRole] = "sizeReady";
-    mRoleNames[SelectedRole] = "selected";
-    mRoleNames[DoneRole] = "done";
-    mRoleNames[ErrorRole] = "error";
-
     // Append mBackupFolderList with the default dirs
     populateDefaultDirectoryList();
 
@@ -149,7 +129,17 @@ BackupsModel::~BackupsModel()
 
 QHash<int, QByteArray> BackupsModel::roleNames() const
 {
-    return mRoleNames;
+    static QHash<int, QByteArray> roles {
+        {NameRole, "name"},
+        {FolderRole, "folder"},
+        {SizeRole, "size"},
+        {SizeReadyRole, "sizeReady"},
+        {SelectedRole, "selected"},
+        {DoneRole, "done"},
+        {ErrorRole, "error"}
+    };
+
+    return roles;
 }
 
 int BackupsModel::rowCount(const QModelIndex& parent) const
@@ -354,7 +344,7 @@ bool BackupsModel::checkPermissions(const QString &inputPath)
 void BackupsModel::populateDefaultDirectoryList()
 {
     // Default directories definition
-    QVector<QStandardPaths::StandardLocation> defaultPaths =
+    static QVector<QStandardPaths::StandardLocation> defaultPaths =
     {
         QStandardPaths::DesktopLocation,
         QStandardPaths::DocumentsLocation,
@@ -450,23 +440,22 @@ bool BackupsModel::isLocalFolderSyncable(const QString& inputPath)
 
 bool BackupsModel::selectIfExistsInsertion(const QString& inputPath)
 {
-    bool exists = false;
-    int row = 0;
+    auto foundFolderIt = std::find_if(mBackupFolderList.cbegin(), mBackupFolderList.cend(), [&inputPath](const BackupFolder* const folder)
+                                      {
+                                          return folder->getFolder() == inputPath;
+                                      });
 
-    while (!exists && row < rowCount())
+    if (foundFolderIt != mBackupFolderList.cend())
     {
-        QString existingPath(mBackupFolderList[row]->getFolder());
-        if ((exists = (inputPath == existingPath)))
+        if(!(*foundFolderIt)->mSelected)
         {
-            if(!mBackupFolderList[row]->mSelected)
-            {
-                setData(index(row, 0), QVariant(true), SelectedRole);
-            }
+            setData(index(static_cast<int>(std::distance(mBackupFolderList.cbegin(), foundFolderIt)), 0), QVariant(true), SelectedRole);
         }
-        row++;
+
+        return true;
     }
 
-    return exists;
+    return false;
 }
 
 bool BackupsModel::folderContainsOther(const QString& folder,
@@ -498,28 +487,25 @@ void BackupsModel::checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
     int repeatedStrings = candidateList.count() - candidateSet.count();
     int repeatedCounter = 0;
     int row = -1;
+
     while(repeatedCounter < repeatedStrings && ++row < rowCount())
     {
         if (mBackupFolderList[row]->mSelected && !mBackupFolderList[row]->mDone)
         {
             QString current(mBackupFolderList[row]->mName);
-            int i = row;
-            bool isFirst = true;
-            while(repeatedCounter < repeatedStrings && ++i < rowCount())
+            int index = row;
+            while(repeatedCounter < repeatedStrings && index < rowCount())
             {
-                if (mBackupFolderList[i]->mSelected
-                    && !mBackupFolderList[i]->mDone
-                    && mBackupFolderList[i]->mError == BackupErrorCode::None
-                    && mBackupFolderList[i]->mName == current)
+                if (mBackupFolderList[index]->mSelected
+                    && !mBackupFolderList[index]->mDone
+                    && mBackupFolderList[index]->mError == BackupErrorCode::None
+                    && mBackupFolderList[index]->mName == current)
                 {
-                    if(isFirst)
-                    {
-                        mBackupFolderList[row]->mError = BackupErrorCode::DuplicatedName;
-                        isFirst = false;
-                    }
-                    mBackupFolderList[i]->mError = BackupErrorCode::DuplicatedName;
+                    mBackupFolderList[index]->mError = BackupErrorCode::DuplicatedName;
                     repeatedCounter++;
                 }
+
+                ++index;
             }
         }
     }
@@ -527,9 +513,9 @@ void BackupsModel::checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
 
 void BackupsModel::reviewConflicts()
 {
-    QList<BackupFolder*>::iterator item = mBackupFolderList.begin();
-    QString firstRemoteNameConflict = QString::fromUtf8("");
-    QString conflictText(QString::fromUtf8(""));
+    auto item = mBackupFolderList.cbegin();
+    QString firstRemoteNameConflict;
+    QString conflictText;
     int remoteCount = 0;
     int duplicatedCount = 0;
     int syncConflictCount = 0;
@@ -537,7 +523,7 @@ void BackupsModel::reviewConflicts()
     int unavailableCount = 0;
     int sdkCount = 0;
 
-    while (item != mBackupFolderList.end())
+    while (item != mBackupFolderList.cend())
     {
         if((*item)->mSelected)
         {
@@ -713,7 +699,7 @@ void BackupsModel::check()
         }
     }
 
-    mConflictsNotificationText = QString::fromUtf8("");
+    mConflictsNotificationText.clear();
     mGlobalError = BackupErrorCode::None;
 
     QStringList candidateList;
@@ -721,18 +707,18 @@ void BackupsModel::check()
     {
         if (mBackupFolderList[row]->mSelected && !mBackupFolderList[row]->mDone)
         {
-            candidateList.append(mBackupFolderList[row]->mName);
             QString message;
+            candidateList.append(mBackupFolderList[row]->mName);
             if (mBackupFolderList[row]->mError == BackupErrorCode::None
-                    && !existOtherRelatedFolder(row)
+                && !existOtherRelatedFolder(row)
                 && SyncController::isLocalFolderSyncable(mBackupFolderList[row]->getFolder(), mega::MegaSync::TYPE_BACKUP, message)
-                        != SyncController::CAN_SYNC)
+                != SyncController::CAN_SYNC)
             {
                 mBackupFolderList[row]->mError = BackupErrorCode::SyncConflict;
                 QDir dir(mBackupFolderList[row]->getFolder());
                 if (!dir.exists())
                 {
-                        message = getFolderUnavailableErrorMsg();
+                    message = getFolderUnavailableErrorMsg();
                 }
                 changeConflictsNotificationText(message);
             }
@@ -743,7 +729,12 @@ void BackupsModel::check()
         }
     }
 
-    QSet<QString> candidateSet = QSet<QString>::fromList(candidateList);
+    /**
+     * @brief we are converting a QStringList (candidateList) to QSet, so we are
+     * removing duplicated in source list (candidateList)
+     */
+    QSet<QString> candidateSet{candidateList.cbegin(), candidateList.cend()};
+
     checkRemoteDuplicatedBackups(candidateSet);
 
     if (candidateSet.count() < candidateList.count())

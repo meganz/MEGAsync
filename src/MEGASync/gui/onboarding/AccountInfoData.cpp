@@ -36,7 +36,6 @@ void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
             if(error->getErrorCode() == MegaError::API_OK)
             {
                 qDebug() << "AccountInfoData::onRequestFinish -> TYPE_ACCOUNT_DETAILS API_OK";
-                std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
                 MegaAccountDetails* accountDetails = request->getMegaAccountDetails();
                 mType = static_cast<AccountInfoData::AccountType>(accountDetails->getProLevel());
                 mTotalStorage = Utilities::getSizeString(accountDetails->getStorageMax());

@@ -31,6 +31,7 @@ Qml.CheckBox {
         }
 
         textLoader.sourceComponent = textComponent;
+        //contentItem = textComponent
     }
 
     Rectangle {
@@ -93,9 +94,7 @@ Qml.CheckBox {
                 sourceSize: indeterminate() ? sizes.iconSizeIndeterminate : sizes.iconSize
                 color: Styles.iconInverseAccent
             }
-
         }
-
     }
 
     Component {
@@ -118,5 +117,4 @@ Qml.CheckBox {
         onPressed: mouse.accepted = false
         cursorShape: Qt.PointingHandCursor
     }
-
 }

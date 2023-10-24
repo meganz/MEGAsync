@@ -16,7 +16,7 @@ import QmlDeviceName 1.0
 
 SyncsPage {
     id: root
-    property alias confirmHeader: confirmHeader
+    property alias enableConfirmHeader: confirmHeader.enabled
 
     footerButtons.rightPrimary {
         text: OnboardingStrings.backUp

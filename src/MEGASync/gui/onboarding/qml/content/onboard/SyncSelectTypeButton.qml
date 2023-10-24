@@ -9,11 +9,11 @@ import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 
 Button {
-    id: syncButton
+    id: root
 
-    property string title: ""
-    property string description: ""
-    property string imageSource: ""
+    property alias title: titleItem.text
+    property alias description: descriptionItem.text
+    property alias imageSource: imageItem.source
 
     Layout.preferredWidth: parent.width
     Layout.fillWidth: true
@@ -28,26 +28,28 @@ Button {
         border.width: 2
         radius: 8
         color: Styles.surface1
-        border.color: syncButton.checked ? Styles.borderStrongSelected : Styles.borderStrong
+        border.color: root.checked ? Styles.borderStrongSelected : Styles.borderStrong
 
         ColumnLayout {
             anchors.fill: parent
             spacing: 16
 
             MegaImages.SvgImage {
-                color: syncButton.checked ? Styles.iconAccent : Styles.iconSecondary
+                id: imageItem
+                color: root.checked ? Styles.iconAccent : Styles.iconSecondary
                 Layout.leftMargin: 24
-                source: imageSource
 
                 MegaTexts.Text {
-                    text: title
+                    id: titleItem
+
                     Layout.preferredHeight: 24
                     font.pixelSize: MegaTexts.Text.Size.MediumLarge
                     font.weight: Font.Bold
                 }
 
                 MegaTexts.Text {
-                    text: description
+                    id: descriptionItem
+
                     lineHeightMode: Text.FixedHeight
                     Layout.preferredWidth: 324
                     Layout.preferredHeight: 32
@@ -58,10 +60,10 @@ Button {
     }
 
     MouseArea {
-        anchors.fill: syncButton
+        anchors.fill: root
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: syncButton.checked
+        onClicked: root.checked
     }
 
 }

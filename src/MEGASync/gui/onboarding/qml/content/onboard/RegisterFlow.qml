@@ -25,27 +25,27 @@ Rectangle {
     function getState() {
         switch(LoginControllerAccess.state)
         {
-        case LoginController.WAITING_EMAIL_CONFIRMATION:
-        {
-            return registerFlow.confirmEmail;
-        }
-        case LoginController.SIGN_UP:
-        case LoginController.CREATING_ACCOUNT:
-        case LoginController.CREATING_ACCOUNT_FAILED:
-        {
-            return registerFlow.register;
-        }
-        case LoginController.LOGGING_IN_2FA_REQUIRED:
-        case LoginController.LOGGING_IN_2FA_VALIDATING:
-        case LoginController.LOGGING_IN_2FA_FAILED:
-        case LoginController.FETCHING_NODES_2FA:
-        {
-            return registerFlow.twoFA;
-        }
-        case LoginController.CHANGING_REGISTER_EMAIL:
-        {
-            return registerFlow.changeConfirmEmail;
-        }
+            case LoginController.WAITING_EMAIL_CONFIRMATION:
+            {
+                return registerFlow.confirmEmail;
+            }
+            case LoginController.SIGN_UP:
+            case LoginController.CREATING_ACCOUNT:
+            case LoginController.CREATING_ACCOUNT_FAILED:
+            {
+                return registerFlow.register;
+            }
+            case LoginController.LOGGING_IN_2FA_REQUIRED:
+            case LoginController.LOGGING_IN_2FA_VALIDATING:
+            case LoginController.LOGGING_IN_2FA_FAILED:
+            case LoginController.FETCHING_NODES_2FA:
+            {
+                return registerFlow.twoFA;
+            }
+            case LoginController.CHANGING_REGISTER_EMAIL:
+            {
+                return registerFlow.changeConfirmEmail;
+            }
         }
         return registerFlow.login;
     }

@@ -16,20 +16,20 @@ import Onboarding 1.0
 import LoginController 1.0
 
 StackViewPage {
-    id: rootRegisterPage
+    id: root
 
-    property alias registerContent: registerContent
-    property alias loginButton: loginButton
-    property alias nextButton: nextButton
+    property alias registerContent: registerContentItem
+    property alias loginButton: loginButtonItem
+    property alias nextButton: nextButtonItem
 
     enabled: LoginControllerAccess.state !== LoginController.CREATING_ACCOUNT;
 
     Column {
         id: mainColumn
 
-        anchors.left: rootRegisterPage.left
-        anchors.right: rootRegisterPage.right
-        anchors.top: rootRegisterPage.top
+        anchors.left: root.left
+        anchors.right: root.right
+        anchors.top: root.top
 
         spacing: contentSpacing
 
@@ -41,7 +41,7 @@ StackViewPage {
         }
 
         RegisterContent {
-            id: registerContent
+            id: registerContentItem
 
             anchors.left: parent.left
             anchors.right: parent.right
@@ -50,31 +50,31 @@ StackViewPage {
 
     RowLayout {
         anchors {
-            right: rootRegisterPage.right
-            bottom: rootRegisterPage.bottom
+            right: root.right
+            bottom: root.bottom
             bottomMargin: 29
-            left: rootRegisterPage.left
+            left: root.left
         }
 
         MegaButtons.OutlineButton {
-            id: loginButton
+            id: loginButtonItem
 
             Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: -loginButton.sizes.focusBorderWidth
+            Layout.leftMargin: -loginButtonItem.sizes.focusBorderWidth
             text: OnboardingStrings.login
         }
 
         MegaButtons.PrimaryButton {
-            id: nextButton
+            id: nextButtonItem
 
             Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: -loginButton.sizes.focusBorderWidth
-            enabled: registerContent.firstName.text !== ""
-                        && registerContent.lastName.text !== ""
-                        && registerContent.email.text !== ""
-                        && registerContent.password.validPassword
-                        && registerContent.confirmPassword.text !== ""
-                        && registerContent.termsCheckBox.checked
+            Layout.rightMargin: -loginButtonItem.sizes.focusBorderWidth
+            enabled: registerContentItem.firstName.text !== ""
+                        && registerContentItem.lastName.text !== ""
+                        && registerContentItem.email.text !== ""
+                        && registerContentItem.password.validPassword
+                        && registerContentItem.confirmPassword.text !== ""
+                        && registerContentItem.termsCheckBox.checked
             icons.source: Images.arrowRight
             text: OnboardingStrings.next
             icons.busyIndicatorVisible: LoginControllerAccess.state === LoginController.CREATING_ACCOUNT;

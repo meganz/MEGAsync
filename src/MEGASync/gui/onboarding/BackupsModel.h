@@ -137,7 +137,6 @@ private:
     static int CHECK_DIRS_TIME;
 
     QList<BackupFolder*> mBackupFolderList;
-    QHash<int, QByteArray> mRoleNames;
     int mSelectedRowsTotal;
     unsigned long long mBackupsTotalSize;
     bool mTotalSizeReady;
@@ -204,7 +203,6 @@ protected:
 private:
     bool mSelectedFilterEnabled;
     BackupsModel* backupsModel();
-
 };
 
 #endif // BACKUPFOLDERMODEL_H

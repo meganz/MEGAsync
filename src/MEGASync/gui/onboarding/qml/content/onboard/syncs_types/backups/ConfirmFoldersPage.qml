@@ -21,7 +21,7 @@ ConfirmFoldersPageForm {
 
         rightPrimary.onClicked: {
             footerButtons.enabled = false;
-            confirmHeader.enabled = false;
+            enableConfirmHeader = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             backupsProxyModel.createBackups();
         }
@@ -52,7 +52,7 @@ ConfirmFoldersPageForm {
 
         function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;
-            confirmHeader.enabled = true;
+            enableConfirmHeader = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             if(success) {
                 root.confirmFoldersMoveToSuccess()

@@ -13,18 +13,17 @@ import Components.Buttons 1.0 as MegaButtons
 import Onboard 1.0
 
 SyncsPage {
-    id: finalPageRoot
+    id: root
 
     property string title
     property string description
     property bool fullSyncDone
     property bool selectiveSyncDone
-    property alias buttonGroup: buttonGroup
+    property alias buttonGroup: buttonGroupItem
 
     readonly property string stateFullSync: "FULL"
     readonly property string stateSelectiveSync: "SELECTIVE"
     readonly property string stateBackup: "BACKUP"
-
 
     footerButtons {
         leftSecondary.visible: false
@@ -37,13 +36,13 @@ SyncsPage {
 
     states: [
         State {
-            name: finalPageRoot.stateFullSync
+            name: stateFullSync
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
             PropertyChanges { target: syncButton; visible: false; }
         },
         State {
-            name: finalPageRoot.stateSelectiveSync
+            name: stateSelectiveSync
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
             PropertyChanges {
@@ -53,7 +52,7 @@ SyncsPage {
             }
         },
         State {
-            name: finalPageRoot.stateBackup
+            name: stateBackup
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepBackupTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
             PropertyChanges {
@@ -106,7 +105,7 @@ SyncsPage {
             color: "transparent"
 
             ButtonGroup {
-                id: buttonGroup
+                id: buttonGroupItem
             }
 
             RowLayout {
@@ -121,7 +120,7 @@ SyncsPage {
                     title: OnboardingStrings.selectiveSync
                     description: OnboardingStrings.finalPageButtonSync
                     imageSource: Images.sync
-                    ButtonGroup.group: buttonGroup
+                    ButtonGroup.group: buttonGroupItem
                     checkable: false
                     width: (parent.width - parent.spacing) / 2
                     height: 195
@@ -139,7 +138,7 @@ SyncsPage {
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
-                    ButtonGroup.group: buttonGroup
+                    ButtonGroup.group: buttonGroupItem
                     type: SyncsType.Backup
                     checkable: false
                     width: !syncButton.visible
