@@ -110,6 +110,16 @@ bool QmlDialogWrapperBase::isMinimized()
     return (mWindow->windowState() & Qt::WindowState::WindowMinimized);
 }
 
+bool QmlDialogWrapperBase::isVisible()
+{
+    return mWindow->isVisible();
+}
+
+void QmlDialogWrapperBase::hide()
+{
+    return mWindow->hide();
+}
+
 void QmlDialogWrapperBase::show()
 {
    setWindowState(mWindow->windowState());
