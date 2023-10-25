@@ -37,7 +37,7 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
     SelectorInfo info;
     info.title = tr("Select local folder");
     info.defaultDir = openFromFolder;
-    info.canCreateDirectoreis = true;
+    info.canCreateDirectories = true;
     info.func = [this](QStringList selection){
         if(!selection.isEmpty())
         {

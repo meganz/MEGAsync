@@ -19,8 +19,6 @@ public:
     Q_INVOKABLE QString text();
 
 private:
-    static QmlClipboard* mThis;
-
     explicit QmlClipboard(QObject* parent = nullptr);
 
 };

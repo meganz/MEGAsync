@@ -9,7 +9,7 @@ import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Item {
-    id: notificationRoot
+    id: root
 
     property NotificationInfo attributes: NotificationInfo {}
 
@@ -40,7 +40,7 @@ Item {
     }
 
     onVisibleChanged: {
-        if(visible && notificationRoot.time > 0) {
+        if(visible && root.time > 0) {
             animationToVisible.start();
             visibilityTimer.start();
         } else if(visibilityTimer.running) {
@@ -52,7 +52,7 @@ Item {
         id: animationToVisible
 
         NumberAnimation {
-            target: notificationRoot
+            target: root
             property: "visible"
             from: 0
             to: 1
@@ -60,7 +60,7 @@ Item {
         }
 
         NumberAnimation {
-            target: notificationRoot
+            target: root
             property: "opacity"
             from: 0
             to: 1
@@ -72,7 +72,7 @@ Item {
         id: animationToInvisible
 
         NumberAnimation {
-            target: notificationRoot
+            target: root
             property: "opacity"
             from: 1
             to: 0
@@ -80,7 +80,7 @@ Item {
         }
 
         NumberAnimation {
-            target: notificationRoot
+            target: root
             property: "visible"
             from: 1
             to: 0
@@ -125,10 +125,10 @@ Item {
 
                 height: {
                     var h = 0;
-                    if(notificationRoot.title.length !== 0) {
+                    if(root.title.length !== 0) {
                         h += titleLoader.height;
                     }
-                    if(notificationRoot.text.length !== 0) {
+                    if(root.text.length !== 0) {
                         h += textLoader.height;
                     }
                     return h;
@@ -175,7 +175,7 @@ Item {
         id: titleComponent
 
         MegaTexts.RichText {
-            rawText: notificationRoot.title
+            rawText: root.title
             color: attributes.titleColor
             font.bold: true
         }
@@ -185,7 +185,7 @@ Item {
         id: textComponent
 
         MegaTexts.RichText {
-            rawText: notificationRoot.text
+            rawText: root.text
             color: attributes.textColor
             url: Links.contact
             manageMouse: true
@@ -195,7 +195,7 @@ Item {
     Timer {
         id: visibilityTimer
 
-        interval: notificationRoot.time
+        interval: root.time
         running: false
         repeat: false
         onTriggered: {

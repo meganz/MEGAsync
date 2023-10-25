@@ -132,7 +132,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     info.title = tr("Select local folder");
     info.multiSelection = false;
     info.parent = this;
-    info.canCreateDirectoreis = true;
+    info.canCreateDirectories = true;
     info.func = [&](QStringList selection){
         if(!selection.isEmpty())
         {

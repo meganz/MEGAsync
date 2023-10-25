@@ -3,18 +3,13 @@
 
 #include "QmlClipboard.h"
 
-QmlClipboard* QmlClipboard::mThis = nullptr;
-
 QmlClipboard::QmlClipboard(QObject *parent)
-    : QObject(parent) {;}
+    : QObject(parent) {}
 
 QmlClipboard* QmlClipboard::instance()
 {
-    if (mThis == nullptr)
-    {
-        mThis = new QmlClipboard;
-    }
-    return mThis;
+    static QmlClipboard instance;
+    return &instance;
 }
 
 QObject* QmlClipboard::qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine)
