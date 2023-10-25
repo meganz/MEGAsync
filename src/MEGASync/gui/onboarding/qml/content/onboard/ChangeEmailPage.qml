@@ -10,7 +10,7 @@ import LoginController 1.0
 ChangeEmailPageForm {
 
     cancelButton.onClicked: {
-        LoginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
+        loginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
     }
 
     resendButton.onClicked: {
@@ -22,17 +22,17 @@ ChangeEmailPageForm {
             return;
         }
 
-        LoginControllerAccess.changeRegistrationEmail(emailTextField.text);
+        loginControllerAccess.changeRegistrationEmail(emailTextField.text);
     }
 
-    emailTextField.text: LoginControllerAccess.email
+    emailTextField.text: loginControllerAccess.email
 
     Connections {
-        target: LoginControllerAccess
+        target: loginControllerAccess
 
         function onChangeRegistrationEmailFinished (success, errorMsg){
             if(success) {
-                LoginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
+                loginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
             } else {
                 emailTextField.error = true;
                 emailTextField.hint.text = errorMsg;

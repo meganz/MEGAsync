@@ -71,7 +71,7 @@ QUrl Onboarding::getQmlUrl()
 
 QString Onboarding::contextName()
 {
-    return QString::fromUtf8("Onboarding");
+    return QString::fromUtf8("onboardingAccess");
 }
 
 void Onboarding::openPreferences(int tabIndex) const

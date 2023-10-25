@@ -106,8 +106,8 @@ BackupsModel::BackupsModel(QObject* parent)
             this, &BackupsModel::onBackupFinished);
     connect(&mCheckDirsTimer, &QTimer::timeout, this, &BackupsModel::checkDirectories);
 
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsModel"), this);
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsController"),
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsModelAccess"), this);
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsControllerAccess"),
                                                                 mBackupsController.get());
 
     qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",

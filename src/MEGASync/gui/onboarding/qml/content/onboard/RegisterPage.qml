@@ -16,13 +16,13 @@ RegisterPageForm {
             return;
         }
 
-        LoginControllerAccess.createAccount(registerContent.email.text,
+        loginControllerAccess.createAccount(registerContent.email.text,
                                       registerContent.password.text,
                                       registerContent.firstName.text,
                                       registerContent.lastName.text);
     }
 
     loginButton.onClicked: {
-        LoginControllerAccess.state = LoginController.LOGGED_OUT;
+        loginControllerAccess.state = LoginController.LOGGED_OUT;
     }
 }

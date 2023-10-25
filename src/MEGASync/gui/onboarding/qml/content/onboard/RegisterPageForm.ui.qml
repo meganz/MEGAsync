@@ -22,7 +22,7 @@ StackViewPage {
     property alias loginButton: loginButtonItem
     property alias nextButton: nextButtonItem
 
-    enabled: LoginControllerAccess.state !== LoginController.CREATING_ACCOUNT;
+    enabled: loginControllerAccess.state !== LoginController.CREATING_ACCOUNT;
 
     Column {
         id: mainColumn
@@ -77,7 +77,7 @@ StackViewPage {
                         && registerContentItem.termsCheckBox.checked
             icons.source: Images.arrowRight
             text: OnboardingStrings.next
-            icons.busyIndicatorVisible: LoginControllerAccess.state === LoginController.CREATING_ACCOUNT;
+            icons.busyIndicatorVisible: loginControllerAccess.state === LoginController.CREATING_ACCOUNT;
         }
     }
 }

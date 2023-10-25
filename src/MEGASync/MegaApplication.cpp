@@ -563,7 +563,7 @@ void MegaApplication::initialize()
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
     mStatusController = new AccountStatusController(this);
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("AccountStatusControllerAccess"), mStatusController);
+    mEngine->rootContext()->setContextProperty(QString::fromUtf8("accountStatusControllerAccess"), mStatusController);
 
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
@@ -722,6 +722,7 @@ void MegaApplication::initialize()
 
     mLogoutController = new LogoutController(mEngine);
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
+    mEngine->rootContext()->setContextProperty(QString::fromUtf8("logoutControllerAccess"), mLogoutController);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1206,7 +1207,7 @@ void MegaApplication::start()
         }
     }
 
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("LoginControllerAccess"), mLoginController);
+    mEngine->rootContext()->setContextProperty(QString::fromUtf8("loginControllerAccess"), mLoginController);
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 
     if (preferences->getSession().isEmpty())

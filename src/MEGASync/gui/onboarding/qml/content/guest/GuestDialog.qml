@@ -19,7 +19,7 @@ GuestQmlDialog {
 
     onVisibleChanged:  {
         if(visible) {
-            AccountStatusControllerAccess.whyAmIBlocked();
+            accountStatusControllerAccess.whyAmIBlocked();
         }
     }
 }

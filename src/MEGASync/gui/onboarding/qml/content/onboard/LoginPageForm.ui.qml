@@ -35,13 +35,13 @@ StackViewPage {
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Large
-            rawText: LoginControllerAccess.newAccount
+            rawText: loginControllerAccess.newAccount
                      ? OnboardingStrings.confirmEmailAndPassword
                      : OnboardingStrings.loginTitle
         }
 
         MegaTexts.RichText {
-            visible: LoginControllerAccess.newAccount
+            visible: loginControllerAccess.newAccount
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Medium
@@ -55,10 +55,10 @@ StackViewPage {
             anchors.left: parent.left
             anchors.leftMargin: -emailItem.sizes.focusBorderWidth
             title: OnboardingStrings.email
-            text: LoginControllerAccess.email
-            error: LoginControllerAccess.emailError
-            hint.text: LoginControllerAccess.emailErrorMsg
-            hint.visible: LoginControllerAccess.emailErrorMsg.length !== 0
+            text: loginControllerAccess.email
+            error: loginControllerAccess.emailError
+            hint.text: loginControllerAccess.emailErrorMsg
+            hint.visible: loginControllerAccess.emailErrorMsg.length !== 0
         }
 
         MegaTextFields.PasswordTextField {
@@ -69,16 +69,16 @@ StackViewPage {
             anchors.leftMargin: -passwordItem.sizes.focusBorderWidth
             title: OnboardingStrings.password
             hint.icon: Images.alertTriangle
-            error: LoginControllerAccess.passwordError
-            hint.text: LoginControllerAccess.passwordErrorMsg
-            hint.visible: LoginControllerAccess.passwordErrorMsg.length !== 0
+            error: loginControllerAccess.passwordError
+            hint.text: loginControllerAccess.passwordErrorMsg
+            hint.visible: loginControllerAccess.passwordErrorMsg.length !== 0
         }
 
         MegaButtons.HelpButton {
             anchors.left: parent.left
             text: OnboardingStrings.forgotPassword
             url: Links.recovery
-            visible: !LoginControllerAccess.newAccount
+            visible: !loginControllerAccess.newAccount
         }
     }
 
@@ -94,17 +94,17 @@ StackViewPage {
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
             Layout.leftMargin: -signUpButtonItem.sizes.focusBorderWidth
-            visible: !LoginControllerAccess.newAccount
+            visible: !loginControllerAccess.newAccount
         }
 
         MegaButtons.PrimaryButton {
             id: loginButtonItem
 
-            text: LoginControllerAccess.newAccount ? OnboardingStrings.next : OnboardingStrings.login
+            text: loginControllerAccess.newAccount ? OnboardingStrings.next : OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
-            progressValue: LoginControllerAccess.progress
+            progressValue: loginControllerAccess.progress
             Layout.rightMargin: -loginButtonItem.sizes.focusBorderWidth//TODO: poner flecha
-            icons.source: LoginControllerAccess.newAccount ? Images.arrowRight : Images.none
+            icons.source: loginControllerAccess.newAccount ? Images.arrowRight : Images.none
         }
     }
 }

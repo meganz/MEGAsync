@@ -14,9 +14,9 @@ SelectFoldersPageForm {
         }
 
         rightPrimary.onClicked: {
-            backupsModel.check();
+            backupsModelAccess.check();
             backupsProxyModel.selectedFilterEnabled = true;
-            if(backupsModel.conflictsNotificationText !== "") {
+            if(backupsModelAccess.conflictsNotificationText !== "") {
                 stepPanel.state = stepPanel.step4Warning;
             } else {
                 stepPanel.state = stepPanel.step4;
