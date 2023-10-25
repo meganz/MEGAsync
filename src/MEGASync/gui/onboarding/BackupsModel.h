@@ -131,6 +131,7 @@ signals:
     void globalErrorChanged();
     void existsOnlyGlobalErrorChanged();
     void totalSizeReadyChanged();
+    void backupsCreationFinished(bool succes);
 
 private:
     const QString getFolderUnavailableErrorMsg();
@@ -196,6 +197,7 @@ public slots:
 
 signals:
     void selectedFilterEnabledChanged();
+    void backupsCreationFinished(bool success);
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;

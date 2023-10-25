@@ -48,7 +48,7 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
-        target: backupsController
+        target: backupsProxyModel
 
         function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;

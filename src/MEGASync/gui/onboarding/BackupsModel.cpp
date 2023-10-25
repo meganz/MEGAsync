@@ -978,6 +978,8 @@ void BackupsModel::onBackupsCreationFinished(bool success)
         mConflictsNotificationText.clear();
         reviewConflicts();
     }
+
+    emit backupsCreationFinished(success);
 }
 
 void BackupsModel::onBackupFinished(const QString& folder,
@@ -1046,6 +1048,8 @@ BackupsProxyModel::BackupsProxyModel(QObject* parent)
 {
     setSourceModel(new BackupsModel(this));
     setDynamicSortFilter(true);
+
+    connect(backupsModel(), &BackupsModel::backupsCreationFinished, this, &BackupsProxyModel::backupsCreationFinished);
 }
 
 bool BackupsProxyModel::selectedFilterEnabled() const
