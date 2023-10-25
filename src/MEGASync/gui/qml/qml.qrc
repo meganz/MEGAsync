@@ -29,7 +29,6 @@
         <file>components/checkBoxes/Colors.qml</file>
         <file>components/checkBoxes/Icons.qml</file>
         <file>components/checkBoxes/Sizes.qml</file>
-        <file>components/images/Image.qml</file>
         <file>components/images/SvgImage.qml</file>
         <file>components/scrollBars/ScrollBar.qml</file>
         <file>components/progressBars/HorizontalProgressBar.qml</file>
