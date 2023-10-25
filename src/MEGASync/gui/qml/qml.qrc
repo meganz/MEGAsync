@@ -42,7 +42,6 @@
         <file>components/textFields/images/eye.svg</file>
         <file>components/textFields/images/eye-off.svg</file>
         <file>components/textFields/Hint.qml</file>
-        <file>components/textFields/RightIcon.qml</file>
         <file>components/textFields/Sizes.qml</file>
         <file>components/textFields/SmallSizes.qml</file>
         <file>components/textFields/LargeSizes.qml</file>
