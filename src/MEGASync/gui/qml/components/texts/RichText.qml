@@ -68,7 +68,7 @@ MegaTexts.Text {
 
         anchors.fill: parent
         cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
-        onPressed: mouse.accepted = false;
+        onPressed: { mouse.accepted = false; }
         enabled: control.manageMouse
         hoverEnabled: control.manageHover
     }
