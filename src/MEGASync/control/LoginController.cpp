@@ -888,7 +888,6 @@ LogoutController::LogoutController(QObject* parent)
       , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LogoutControllerAccess"), this);
 }
 
 LogoutController::~LogoutController()

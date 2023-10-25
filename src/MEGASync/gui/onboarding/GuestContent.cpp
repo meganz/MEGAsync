@@ -9,7 +9,7 @@ GuestContent::GuestContent(QObject *parent)
 {
     qmlRegisterModule("Guest", 1, 0);
     qmlRegisterModule("GuestContent", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestItem.qml")), "Guest", 1, 0, "GuestItem");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestFlow.qml")), "Guest", 1, 0, "GuestFlow");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestStrings.qml")), "Guest", 1, 0, "GuestStrings");
     qmlRegisterType<GuestQmlDialog>("GuestQmlDialog", 1, 0, "GuestQmlDialog");
 }
@@ -55,5 +55,5 @@ QUrl GuestContent::getQmlUrl()
 
 QString GuestContent::contextName()
 {
-    return QString::fromUtf8("GuestContent");
+    return QString::fromUtf8("guestContentAccess");
 }

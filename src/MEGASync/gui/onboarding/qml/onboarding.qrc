@@ -61,7 +61,7 @@
         <file>content/onboard/PasswordInfoContentForm.ui.qml</file>
         <file>content/onboard/PasswordInfoPopUp.qml</file>
         <file>content/guest/BasePage.qml</file>
-        <file>content/guest/GuestItem.qml</file>
+        <file>content/guest/GuestFlow.qml</file>
         <file>content/guest/GuestDialog.qml</file>
         <file>content/guest/GuestStrings.qml</file>
         <file>content/guest/MenuItem.qml</file>

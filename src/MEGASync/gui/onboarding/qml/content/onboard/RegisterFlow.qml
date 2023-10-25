@@ -23,7 +23,7 @@ Rectangle {
     color: Styles.surface1
 
     function getState() {
-        switch(LoginControllerAccess.state)
+        switch(loginControllerAccess.state)
         {
             case LoginController.WAITING_EMAIL_CONFIRMATION:
             {
@@ -92,7 +92,7 @@ Rectangle {
 
         visible: false
         onAccepted: {
-            LoginControllerAccess.cancelLogin();
+            loginControllerAccess.cancelLogin();
         }
     }
 
@@ -101,7 +101,7 @@ Rectangle {
 
         visible: false
         onAccepted: {
-            LoginControllerAccess.cancelCreateAccount();
+            loginControllerAccess.cancelCreateAccount();
         }
     }
 
@@ -218,7 +218,7 @@ Rectangle {
         }
 
         Connections {
-            target: LoginControllerAccess
+            target: loginControllerAccess
 
             function onAccountCreationCancelled() {
                 cancelCreateAccount.close();

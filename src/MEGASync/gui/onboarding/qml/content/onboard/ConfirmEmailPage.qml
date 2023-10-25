@@ -12,11 +12,11 @@ ConfirmEmailPageForm {
     id: confirmEmailPage
 
     changeEmailLinkText.onLinkActivated: {
-        LoginControllerAccess.state = LoginController.CHANGING_REGISTER_EMAIL;
+        loginControllerAccess.state = LoginController.CHANGING_REGISTER_EMAIL;
     }
 
     Connections {
-        target: LoginControllerAccess
+        target: loginControllerAccess
 
         function onEmailConfirmed() {
             // The following four lines are required by Ubuntu to bring the window to the front and

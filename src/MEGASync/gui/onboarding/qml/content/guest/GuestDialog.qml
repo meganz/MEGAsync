@@ -7,19 +7,19 @@ import GuestQmlDialog 1.0
 import LoginController 1.0
 
 GuestQmlDialog {
-    id: root
+    id: guestWindow
 
-    width: guestItem.width
-    height: guestItem.height
+    width: guestFlow.width
+    height: guestFlow.height
     color: "transparent"
 
-    GuestItem {
-        id: guestItem
+    GuestFlow {
+        id: guestFlow
     }
 
     onVisibleChanged:  {
         if(visible) {
-            AccountStatusControllerAccess.whyAmIBlocked();
+            accountStatusControllerAccess.whyAmIBlocked();
         }
     }
 }

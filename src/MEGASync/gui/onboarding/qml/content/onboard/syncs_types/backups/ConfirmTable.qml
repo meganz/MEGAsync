@@ -24,7 +24,7 @@ Rectangle {
 
     Layout.preferredWidth: width
     Layout.preferredHeight: height
-    height: backupsModel.globalError === backupsModel.BackupErrorCode.None
+    height: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.None
             ? 192 : 192 - headerFooterHeight + listView.footerItem.height
     width: parent.width
     radius: tableRadius
@@ -95,17 +95,17 @@ Rectangle {
 
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
-                    text: backupsModel.totalSize
+                    text: backupsModelAccess.totalSize
                     font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.DemiBold
                     color: Styles.textPrimary
-                    visible: backupsModel.totalSizeReady
+                    visible: backupsModelAccess.totalSizeReady
                 }
 
                 MegaBusyIndicator.BusyIndicator {
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
-                    visible: !backupsModel.totalSizeReady
+                    visible: !backupsModelAccess.totalSizeReady
                     color: Styles.textAccent
                     imageSize: Qt.size(16, 16)
                     Layout.preferredWidth: 16
@@ -147,20 +147,20 @@ Rectangle {
             radius: tableRadius
             color: Styles.pageBackground
             z: 3
-            visible: backupsModel.globalError !== backupsModel.BackupErrorCode.None
+            visible: backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.None
 
             MegaTexts.NotificationText {
                 id: notificationItem
 
                 width: parent.width
-                attributes.type: backupsModel.globalError === backupsModel.BackupErrorCode.SDKCreation
+                attributes.type: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDKCreation
                                  ? MegaTexts.NotificationInfo.Type.Error
                                  : MegaTexts.NotificationInfo.Type.Warning
                 attributes.icon.source: ""
                 attributes.icon.visible: false
                 attributes.radius: parent.radius
                 attributes.topBorderRect: true
-                text: backupsModel.conflictsNotificationText
+                text: backupsModelAccess.conflictsNotificationText
                 visible: parent.visible
             }
         }

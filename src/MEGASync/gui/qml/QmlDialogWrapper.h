@@ -47,6 +47,8 @@ public:
     QRect geometry();
     bool isMaximized();
     bool isMinimized();
+    bool isVisible();
+    void hide();
     void show();
     void close();
     void activateWindow();

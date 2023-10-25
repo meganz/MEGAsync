@@ -27,7 +27,7 @@ LoginPageForm {
     readonly property string stateFetchNodesFinishedOnboarding: "FETCH_NODES_FINISHED_ONBOARDING"
 
     function getState(){
-            switch(LoginControllerAccess.state)
+            switch(loginControllerAccess.state)
             {
             case LoginController.LOGGING_IN:
             {
@@ -140,14 +140,14 @@ LoginPageForm {
     ]
 
     email.onTextChanged: {
-        LoginControllerAccess.loginError = ApiEnums.API_OK;
-        LoginControllerAccess.loginErrorMsg = "";
+        loginControllerAccess.loginError = ApiEnums.API_OK;
+        loginControllerAccess.loginErrorMsg = "";
     }
 
     password.onTextChanged: {
         if(password.textField.text.length > 0) {
-            LoginControllerAccess.loginError = ApiEnums.API_OK;
-            LoginControllerAccess.loginErrorMsg = "";
+            loginControllerAccess.loginError = ApiEnums.API_OK;
+            loginControllerAccess.loginErrorMsg = "";
         }
     }
 
@@ -163,33 +163,33 @@ LoginPageForm {
 
     loginButton.onClicked: {
         var emailValid = email.valid();
-        LoginControllerAccess.emailError = !emailValid;
+        loginControllerAccess.emailError = !emailValid;
         var emailText = "";
         if(!emailValid) {
             emailText = email.text.length === 0
                         ? OnboardingStrings.errorEmptyEmail
                         : OnboardingStrings.errorValidEmail;
         }
-        LoginControllerAccess.emailErrorMsg = emailText;
+        loginControllerAccess.emailErrorMsg = emailText;
 
         var passwordValid = password.text.length > 0;
-        LoginControllerAccess.passwordError = !passwordValid;
-        LoginControllerAccess.passwordErrorMsg = passwordValid ? "" : OnboardingStrings.errorEmptyPassword;
+        loginControllerAccess.passwordError = !passwordValid;
+        loginControllerAccess.passwordErrorMsg = passwordValid ? "" : OnboardingStrings.errorEmptyPassword;
 
         if(!emailValid || !passwordValid) {
             return;
         }
 
-        LoginControllerAccess.login(email.text, password.text);
+        loginControllerAccess.login(email.text, password.text);
         loginAttempt = true;
     }
 
     signUpButton.onClicked: {
-        LoginControllerAccess.state = LoginController.SIGN_UP;
+        loginControllerAccess.state = LoginController.SIGN_UP;
     }
 
     Connections {
-        target: AccountStatusControllerAccess
+        target: accountStatusControllerAccess
 
         function onBlockedStateChanged(blockState) {
             if(blockState >= ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_SMS)
@@ -201,7 +201,7 @@ LoginPageForm {
     }
 
     Connections {
-        target: LogoutControllerAccess
+        target: logoutControllerAccess
 
         function onLogout() {
             password.text = "";
@@ -222,9 +222,9 @@ LoginPageForm {
 
     function resetLoginControllerStatus()
     {
-        LoginControllerAccess.emailError = false;
-        LoginControllerAccess.emailErrorMsg = "";
-        LoginControllerAccess.passwordError = false;
-        LoginControllerAccess.passwordErrorMsg = "";
+        loginControllerAccess.emailError = false;
+        loginControllerAccess.emailErrorMsg = "";
+        loginControllerAccess.passwordError = false;
+        loginControllerAccess.passwordErrorMsg = "";
     }
 }

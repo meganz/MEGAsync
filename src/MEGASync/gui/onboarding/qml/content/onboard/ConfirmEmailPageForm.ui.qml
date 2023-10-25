@@ -69,7 +69,7 @@ StackViewPage {
             MegaTexts.Text {
                 id: email
 
-                text: LoginControllerAccess.email
+                text: loginControllerAccess.email
                 Layout.preferredWidth: parent.width - mailImage.width - parent.spacing
                 Layout.topMargin: 3
                 font.pixelSize: MegaTexts.Text.Size.Medium

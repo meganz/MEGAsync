@@ -10,12 +10,12 @@ TwoFAPageForm {
     id: twoFAPageId
 
     signUpButton.onClicked: {
-        LoginControllerAccess.state = LoginController.SIGN_UP;
-        LoginControllerAccess.email = "";
+        loginControllerAccess.state = LoginController.SIGN_UP;
+        loginControllerAccess.email = "";
     }
 
     loginButton.onClicked: {
-        LoginControllerAccess.login2FA(twoFAField.key);
+        loginControllerAccess.login2FA(twoFAField.key);
     }
 
     twoFAField.onAllDigitsFilled: {
@@ -29,7 +29,7 @@ TwoFAPageForm {
     readonly property string normal: "normal"
 
     function getState() {
-        switch(LoginControllerAccess.state) {
+        switch(loginControllerAccess.state) {
             case LoginController.LOGGING_IN_2FA_VALIDATING:
                 return validating2FA;
             case LoginController.FETCHING_NODES_2FA:

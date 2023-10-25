@@ -21,11 +21,11 @@ Column {
         var valid = email.valid();
         if(!valid) {
             error = true;
-            LoginControllerAccess.createAccountErrorMsg = OnboardingStrings.errorValidEmail;
+            loginControllerAccess.createAccountErrorMsg = OnboardingStrings.errorValidEmail;
         }
         else
         {
-            LoginControllerAccess.createAccountErrorMsg = "";
+            loginControllerAccess.createAccountErrorMsg = "";
         }
 
         valid = password.text.length >= 8;
@@ -121,8 +121,8 @@ Column {
             width: contentWidth + email.sizes.focusBorderWidth
             title: OnboardingStrings.email
             hint.icon: Images.mail
-            hint.text: LoginControllerAccess.createAccountErrorMsg;
-            error: LoginControllerAccess.createAccountErrorMsg.length !== 0;
+            hint.text: loginControllerAccess.createAccountErrorMsg;
+            error: loginControllerAccess.createAccountErrorMsg.length !== 0;
             hint.visible: error;
         }
 
@@ -195,6 +195,6 @@ Column {
     }
 
     Component.onDestruction: {
-        LoginControllerAccess.createAccountErrorMsg ="";
+        loginControllerAccess.createAccountErrorMsg ="";
     }
 }

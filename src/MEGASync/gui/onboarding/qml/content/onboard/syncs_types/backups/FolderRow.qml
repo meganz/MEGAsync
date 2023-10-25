@@ -54,13 +54,13 @@ Rectangle {
             anchors.fill: parent
             sourceComponent: {
                 if(!backupsProxyModel.selectedFilterEnabled
-                    || error === backupsModel.BackupErrorCode.None) {
+                    || error === backupsModelAccess.BackupErrorCode.None) {
                     return selectContent;
                 } else {
-                    if(error === backupsModel.BackupErrorCode.SyncConflict
-                        || error === backupsModel.BackupErrorCode.PathRelation
-                        || error === backupsModel.BackupErrorCode.UnavailableDir
-                        || error === backupsModel.BackupErrorCode.SDKCreation) {
+                    if(error === backupsModelAccess.BackupErrorCode.SyncConflict
+                        || error === backupsModelAccess.BackupErrorCode.PathRelation
+                        || error === backupsModelAccess.BackupErrorCode.UnavailableDir
+                        || error === backupsModelAccess.BackupErrorCode.SDKCreation) {
                         return conflictContent;
                     } else {
                         // DuplicatedName or ExistsRemote errors
@@ -184,10 +184,10 @@ Rectangle {
             readonly property int textWidth: 248
             readonly property int sizeTextWidth: 50
 
-            property bool showChange: error === backupsModel.BackupErrorCode.SyncConflict
-                                        || error === backupsModel.BackupErrorCode.PathRelation
-                                        || error === backupsModel.BackupErrorCode.UnavailableDir
-                                        || error === backupsModel.BackupErrorCode.SDKCreation
+            property bool showChange: error === backupsModelAccess.BackupErrorCode.SyncConflict
+                                        || error === backupsModelAccess.BackupErrorCode.PathRelation
+                                        || error === backupsModelAccess.BackupErrorCode.UnavailableDir
+                                        || error === backupsModelAccess.BackupErrorCode.SDKCreation
 
             Row {
                 id: imageText
@@ -202,11 +202,11 @@ Rectangle {
 
                 MegaImages.SvgImage {
                     anchors.verticalCenter: parent.verticalCenter
-                    source: error === backupsModel.BackupErrorCode.SDKCreation
+                    source: error === backupsModelAccess.BackupErrorCode.SDKCreation
                             ? Images.alertCircle
                             : Images.alertTriangle
                     sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
-                    color: error === backupsModel.BackupErrorCode.SDKCreation
+                    color: error === backupsModelAccess.BackupErrorCode.SDKCreation
                            ? Styles.textError
                            : Styles.textWarning
                 }
@@ -218,7 +218,7 @@ Rectangle {
                             - buttonRow.width - contentRoot.contentMargin
                     font.pixelSize: MegaTexts.Text.Size.Small
                     text: name
-                    color: error === backupsModel.BackupErrorCode.SDKCreation
+                    color: error === backupsModelAccess.BackupErrorCode.SDKCreation
                            ? Styles.textError
                            : Styles.textWarning
                     showTooltip: false
@@ -285,7 +285,7 @@ Rectangle {
 
                         target: folderDialog
                         function onFolderChoosen(folderPath) {
-                            backupsModel.change(folder, folderPath);
+                            backupsModelAccess.change(folder, folderPath);
                         }
                     }
                 }
@@ -298,7 +298,7 @@ Rectangle {
                     anchors.bottom: parent.bottom
                     icons.source: Images.trash
                     onClicked: {
-                        backupsModel.remove(folder);
+                        backupsModelAccess.remove(folder);
                     }
                     sizes: MegaButtons.SmallSizes {}
                 }
@@ -344,20 +344,20 @@ Rectangle {
             function doneAction()
             {
                 editTextField.hint.visible = false;
-                var error = backupsModel.rename(folder, editTextField.text);
+                var error = backupsModelAccess.rename(folder, editTextField.text);
                 switch(error) {
-                    case backupsModel.BackupErrorCode.None:
-                    case backupsModel.BackupErrorCode.SyncConflict:
-                    case backupsModel.BackupErrorCode.PathRelation:
-                    case backupsModel.BackupErrorCode.SDKCreation:
+                    case backupsModelAccess.BackupErrorCode.None:
+                    case backupsModelAccess.BackupErrorCode.SyncConflict:
+                    case backupsModelAccess.BackupErrorCode.PathRelation:
+                    case backupsModelAccess.BackupErrorCode.SDKCreation:
                         root.height = root.totalHeight;
                         break;
-                    case backupsModel.BackupErrorCode.ExistsRemote:
+                    case backupsModelAccess.BackupErrorCode.ExistsRemote:
                         editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;
                         break;
-                    case backupsModel.BackupErrorCode.DuplicatedName:
+                    case backupsModelAccess.BackupErrorCode.DuplicatedName:
                         editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;

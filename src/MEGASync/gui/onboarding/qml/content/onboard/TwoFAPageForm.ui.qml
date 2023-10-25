@@ -69,7 +69,7 @@ StackViewPage {
             id: loginButtonItem
 
             text: OnboardingStrings.login
-            progressValue: LoginControllerAccess.progress
+            progressValue: loginControllerAccess.progress
             Layout.alignment: Qt.AlignRight
             Layout.rightMargin: -loginButtonItem.sizes.focusBorderWidth
         }

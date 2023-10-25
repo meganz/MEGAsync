@@ -21,9 +21,9 @@ SyncsPage {
     footerButtons.rightPrimary {
         text: OnboardingStrings.backUp
         icons.source: Images.database
-        enabled: backupsModel.globalError === backupsModel.BackupErrorCode.None
-                    || (backupsModel.globalError === backupsModel.BackupErrorCode.SDKCreation
-                            && backupsModel.existsOnlyGlobalError)
+        enabled: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.None
+                    || (backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDKCreation
+                            && backupsModelAccess.existsOnlyGlobalError)
     }
 
     ColumnLayout {
