@@ -752,7 +752,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
     info.defaultDir = Utilities::getDefaultBasePath();
     info.parent = this;
     info.func = processResult;
-    info.canCreateDirectoreis = true;
+    info.canCreateDirectories = true;
     Platform::getInstance()->folderSelector(info);
 }
 

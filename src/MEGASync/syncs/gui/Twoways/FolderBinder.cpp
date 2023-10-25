@@ -100,7 +100,7 @@ void FolderBinder::on_bLocalFolder_clicked()
     info.defaultDir = localPath;
     info.multiSelection = false;
     info.parent = this;
-    info.canCreateDirectoreis= true;
+    info.canCreateDirectories= true;
     info.func = [this](QStringList selection){
 
         if(!selection.isEmpty())

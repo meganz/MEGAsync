@@ -28,7 +28,7 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
     qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker", 1, 0, "PasswordStrengthChecker");
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
-    qmlRegisterType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog");
+    qmlRegisterUncreatableType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog", QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
 
     qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");

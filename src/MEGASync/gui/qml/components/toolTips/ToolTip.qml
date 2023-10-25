@@ -9,7 +9,7 @@ import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 
 Qml.ToolTip {
-    id: tooltipRoot
+    id: root
 
     property url leftIconSource: ""
     property int contentSpacing: 4
@@ -36,7 +36,7 @@ Qml.ToolTip {
 
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            anchors.leftMargin: tooltipRoot.padding
+            anchors.leftMargin: root.padding
         }
     }
 
@@ -53,7 +53,7 @@ Qml.ToolTip {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: leftIconLoader.width + contentSpacing
-            text: tooltipRoot.text
+            text: root.text
             color: Styles.textInverse
             wrapMode: Text.Wrap
             width: Math.min(textMetrics.width + contentSpacing, maxWidth)

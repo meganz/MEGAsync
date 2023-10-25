@@ -34,10 +34,10 @@ Item {
         var defaultFolder = "";
 
         if (local) {
-            defaultFolder = localFolderChooser.getDefaultFolder(syncsCpp.DEFAULT_MEGA_FOLDER)
+            defaultFolder = localFolderChooser.getDefaultFolder(syncsCpp.defaultMegaFolder)
         }
         else {
-            defaultFolder = syncsCpp.DEFAULT_MEGA_PATH;
+            defaultFolder = syncsCpp.defaultMegaPath;
         }
 
         if ((local && !syncsCpp.checkLocalSync(defaultFolder)) || (!local && !syncsCpp.checkRemoteSync(defaultFolder)))
