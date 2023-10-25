@@ -8,7 +8,7 @@
         <file>common/Links.qml</file>
         <file>common/RegexExpressions.qml</file>
         <file>common/Styles.qml</file>
-		<file>common/OS.qml</file>
+        <file>common/OS.qml</file>
         <file>components/busyIndicator/BusyIndicator.qml</file>
         <file>components/buttons/Button.qml</file>
         <file>components/buttons/CardButton.qml</file>
@@ -42,7 +42,6 @@
         <file>components/textFields/images/eye.svg</file>
         <file>components/textFields/images/eye-off.svg</file>
         <file>components/textFields/Hint.qml</file>
-        <file>components/textFields/LeftIcon.qml</file>
         <file>components/textFields/RightIcon.qml</file>
         <file>components/textFields/Sizes.qml</file>
         <file>components/textFields/SmallSizes.qml</file>
@@ -57,7 +56,7 @@
         <file>components/texts/Text.qml</file>
         <file>components/toolTips/ToolTip.qml</file>
         <file>components/views/ScrollPanel.qml</file>
-		<file>components/texts/ElidedText.qml</file>
-		<file>components/textFields/Colors.qml</file>
+        <file>components/texts/ElidedText.qml</file>
+        <file>components/textFields/Colors.qml</file>
     </qresource>
 </RCC>

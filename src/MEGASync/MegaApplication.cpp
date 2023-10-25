@@ -3103,7 +3103,6 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/EmailTextField.qml")), "Components.TextFields", 1, 0, "EmailTextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/Hint.qml")), "Components.TextFields", 1, 0, "Hint");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/IconTextField.qml")), "Components.TextFields", 1, 0, "IconTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/LeftIcon.qml")), "Components.TextFields", 1, 0, "LeftIcon");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components.TextFields", 1, 0, "PasswordTextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/RightIcon.qml")), "Components.TextFields", 1, 0, "RightIcon");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components.TextFields", 1, 0, "TextField");

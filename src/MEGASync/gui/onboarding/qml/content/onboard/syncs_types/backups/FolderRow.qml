@@ -318,8 +318,8 @@ Rectangle {
 
                 width: parent.width - parent.spacing - doneButton.width
                 text: name
-                leftIcon.source: Images.edit
-                leftIcon.color: Styles.iconSecondary
+                leftIconSource: Images.edit
+                leftIconColor: Styles.iconSecondary
                 error: hint.visible
                 sizes: MegaTextFields.SmallSizes {}
                 validator: RegExpValidator { regExp: RegexExpressions.allowedFolderChars }
