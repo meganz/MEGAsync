@@ -164,8 +164,7 @@ private:
     QModelIndex getModelIndex(QList<BackupFolder*>::iterator item);
     void setAllSelected(bool selected);
     bool checkPermissions(const QString& inputPath);
-    void checkRemoteDuplicatedBackups(const QStringList &candidateList);
-    void checkDuplicatedBackupNames(const QStringList& candidateList);
+    void checkDuplicatedBackups(const QStringList &candidateList);
     void reviewConflicts();
     void changeConflictsNotificationText(const QString& text);
     bool existOtherRelatedFolder(const int currentRow);

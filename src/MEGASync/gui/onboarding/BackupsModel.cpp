@@ -494,28 +494,6 @@ QList<BackupFolder*>::const_iterator BackupsModel::getRepeatedNameIt(QList<Backu
                         [&name](const BackupFolder* const folder){return folder->mName == name;});
 }
 
-void BackupsModel::checkDuplicatedBackupNames(const QStringList& candidateList)
-{
-    // Search the repeated strings (backup names)
-    QSet<QString> set;
-    QStringListIterator it(candidateList);
-    while(it.hasNext())
-    {
-        auto name = it.next();
-        int setSize = set.size();
-        set.insert(name); //if it fails means that the name already exist in the QSet
-        if(setSize == set.size())
-        {
-            for(auto foldIt = getRepeatedNameIt(mBackupFolderList.cbegin(), name);
-                 foldIt != mBackupFolderList.cend();
-                 foldIt = getRepeatedNameIt(++foldIt, name))
-            {
-                (*foldIt)->setError(BackupErrorCode::DUPLICATED_NAME);
-            }
-        }
-    }
-}
-
 void BackupsModel::reviewConflicts()
 {
     auto item = mBackupFolderList.cbegin();
@@ -644,22 +622,38 @@ void BackupsModel::changeConflictsNotificationText(const QString& text)
     }
 }
 
-void BackupsModel::checkRemoteDuplicatedBackups(const QStringList& candidateList)
+void BackupsModel::checkDuplicatedBackups(const QStringList& candidateList)
 {
-    QSet<QString> duplicatedSet = mBackupsController->getRemoteFolders();
+    QSet<QString> remoteSet = mBackupsController->getRemoteFolders();
+    QSet<QString> localSet;
     QStringListIterator it(candidateList);
     while(it.hasNext())
     {
         auto name = it.next();
-        int setSize = duplicatedSet.size();
-        duplicatedSet.insert(name); //if it fails means that the name already exist in the QSet
-        if(setSize == duplicatedSet.size())
+
+        BackupErrorCode error = BackupErrorCode::NONE;
+
+        int localSize = localSet.size();
+        localSet.insert(name); //if it fails means that the name already exist in the QSet
+        if(localSize == localSet.size())
+        {
+            error = BackupErrorCode::DUPLICATED_NAME;
+        }
+
+        int remoteSize = remoteSet.size();
+        remoteSet.insert(name); //if it fails means that the name already exist in the QSet
+        if(remoteSize == remoteSet.size())
+        {
+            error = BackupErrorCode::EXISTS_REMOTE;
+        }
+
+        if(error != BackupErrorCode::NONE)
         {
             for(auto foldIt = getRepeatedNameIt(mBackupFolderList.cbegin(), name);
                  foldIt != mBackupFolderList.cend();
                  foldIt = getRepeatedNameIt(++foldIt, name))
             {
-                (*foldIt)->setError(BackupErrorCode::EXISTS_REMOTE);
+                (*foldIt)->setError(error);
             }
         }
     }
@@ -730,8 +724,7 @@ void BackupsModel::check()
         }
     }
 
-    checkRemoteDuplicatedBackups(candidateList);
-    checkDuplicatedBackupNames(candidateList);
+    checkDuplicatedBackups(candidateList);
 
     reviewConflicts();
 
