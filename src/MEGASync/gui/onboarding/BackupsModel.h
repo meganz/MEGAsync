@@ -155,7 +155,7 @@ private:
     void checkSelectedAll();
     bool isLocalFolderSyncable(const QString& inputPath);
     bool selectIfExistsInsertion(const QString& inputPath);
-    QList<BackupFolder*>::const_iterator getRepeatedNameIt(QList<BackupFolder*>::const_iterator beginIt, const QString& name);
+    QList<QList<BackupFolder*>::const_iterator> getRepeatedNameItList(const QString& name);
 
     bool folderContainsOther(const QString& folder,
                              const QString& other) const;

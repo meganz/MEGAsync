@@ -488,10 +488,17 @@ QModelIndex BackupsModel::getModelIndex(QList<BackupFolder*>::iterator item)
     return QModelIndex(index(static_cast<int>(row), 0));
 }
 
-QList<BackupFolder*>::const_iterator BackupsModel::getRepeatedNameIt(QList<BackupFolder*>::const_iterator beginIt, const QString& name)
+QList<QList<BackupFolder*>::const_iterator> BackupsModel::getRepeatedNameItList(const QString& name)
 {
-    return std::find_if(beginIt, mBackupFolderList.cend(),
-                        [&name](const BackupFolder* const folder){return folder->mName == name;});
+    QList<QList<BackupFolder*>::const_iterator> ret;
+    for (auto it = mBackupFolderList.cbegin() ; it != mBackupFolderList.cend(); ++it)
+    {
+        if((*it)->mName == name)
+        {
+            ret.append(it);
+        }
+    }
+    return ret;
 }
 
 void BackupsModel::reviewConflicts()
@@ -633,25 +640,25 @@ void BackupsModel::checkDuplicatedBackups(const QStringList& candidateList)
 
         BackupErrorCode error = BackupErrorCode::NONE;
 
-        int localSize = localSet.size();
-        localSet.insert(name); //if it fails means that the name already exist in the QSet
-        if(localSize == localSet.size())
-        {
-            error = BackupErrorCode::DUPLICATED_NAME;
-        }
-
         int remoteSize = remoteSet.size();
         remoteSet.insert(name); //if it fails means that the name already exist in the QSet
         if(remoteSize == remoteSet.size())
         {
             error = BackupErrorCode::EXISTS_REMOTE;
         }
+        else
+        {
+            int localSize = localSet.size();
+            localSet.insert(name); //if it fails means that the name already exist in the QSet
+            if(localSize == localSet.size())
+            {
+                error = BackupErrorCode::DUPLICATED_NAME;
+            }
+        }
 
         if(error != BackupErrorCode::NONE)
         {
-            for(auto foldIt = getRepeatedNameIt(mBackupFolderList.cbegin(), name);
-                 foldIt != mBackupFolderList.cend();
-                 foldIt = getRepeatedNameIt(++foldIt, name))
+            foreach(auto foldIt, getRepeatedNameItList(name))
             {
                 (*foldIt)->setError(error);
             }
