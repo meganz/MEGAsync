@@ -503,11 +503,11 @@ void BackupsModel::checkDuplicatedBackupNames(const QStringList& candidateList)
     {
         auto name = it.next();
         int setSize = set.size();
-        set.insert(name);
+        set.insert(name); //if it fails means that the name already exist in the QSet
         if(setSize == set.size())
         {
             for(auto foldIt = getRepeatedNameIt(mBackupFolderList.cbegin(), name);
-                 foldIt!=mBackupFolderList.cend();
+                 foldIt != mBackupFolderList.cend();
                  foldIt = getRepeatedNameIt(++foldIt, name))
             {
                 (*foldIt)->setError(BackupErrorCode::DUPLICATED_NAME);
@@ -652,11 +652,11 @@ void BackupsModel::checkRemoteDuplicatedBackups(const QStringList& candidateList
     {
         auto name = it.next();
         int setSize = duplicatedSet.size();
-        duplicatedSet.insert(name);
+        duplicatedSet.insert(name); //if it fails means that the name already exist in the QSet
         if(setSize == duplicatedSet.size())
         {
             for(auto foldIt = getRepeatedNameIt(mBackupFolderList.cbegin(), name);
-                 foldIt!=mBackupFolderList.cend();
+                 foldIt != mBackupFolderList.cend();
                  foldIt = getRepeatedNameIt(++foldIt, name))
             {
                 (*foldIt)->setError(BackupErrorCode::EXISTS_REMOTE);
@@ -729,12 +729,6 @@ void BackupsModel::check()
             }
         }
     }
-
-    /**
-     * @brief we are converting a QStringList (candidateList) to QSet, so we are
-     * removing duplicated in source list (candidateList)
-     */
-    //QSet<QString> candidateSet{candidateList.cbegin(), candidateList.cend()};
 
     checkRemoteDuplicatedBackups(candidateList);
     checkDuplicatedBackupNames(candidateList);
