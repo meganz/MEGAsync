@@ -646,7 +646,8 @@ void BackupsModel::checkDuplicatedBackups(const QStringList& candidateList)
         {
             error = BackupErrorCode::EXISTS_REMOTE;
         }
-        else
+
+        if(error == BackupErrorCode::NONE)
         {
             int localSize = localSet.size();
             localSet.insert(name); //if it fails means that the name already exist in the QSet
