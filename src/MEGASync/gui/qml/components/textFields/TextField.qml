@@ -20,13 +20,13 @@ Rectangle {
     property alias toolTip: toolTip
     property alias acceptableInput: textField.acceptableInput
     property alias validator: textField.validator
+    property alias hint: hintItem
 
     // Component properties
     property bool error: false
     property string title: ""
     property RightIcon rightIcon: RightIcon {}
     property LeftIcon leftIcon: LeftIcon {}
-    property Hint hint: Hint {}
     property Sizes sizes: Sizes {}
     property Colors colors: Colors {}
 
@@ -36,10 +36,10 @@ Rectangle {
     signal accepted()
 
     function getHintHeight() {
-        if(hintLoader.height > 0) {
-            return hintLoader.height + hintLoader.anchors.topMargin;
+        if(hint.height > 0) {
+            return hint.height + hint.anchors.topMargin;
         }
-        return hintLoader.height;
+        return hint.height;
     }
 
     function getTitleHeight() {
@@ -200,8 +200,8 @@ Rectangle {
         }
     }
 
-    Loader {
-        id: hintLoader
+    MegaTexts.HintText {
+        id: hintItem
 
         anchors.left: parent.left
         anchors.right: parent.right
@@ -209,6 +209,8 @@ Rectangle {
         anchors.topMargin: 2
         anchors.leftMargin: sizes.focusBorderWidth
         anchors.rightMargin: sizes.focusBorderWidth
+        type: Constants.MessageType.ERROR
+        visible: false
     }
 
     Component {
@@ -220,21 +222,6 @@ Rectangle {
             text: title
             font.weight: Font.DemiBold
             color: enabled ? colors.title : colors.titleDisabled
-        }
-    }
-
-    Component {
-        id: hintComponent
-
-        MegaTexts.HintText {
-            id: hint
-
-            icon: root.hint.icon
-            title: root.hint.title
-            text: root.hint.text
-            styles: root.hint.styles
-            visible: root.hint.visible
-            textSize: root.sizes.hintTextSize
         }
     }
 

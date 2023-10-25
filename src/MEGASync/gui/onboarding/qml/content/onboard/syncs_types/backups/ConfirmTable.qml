@@ -153,13 +153,10 @@ Rectangle {
                 id: notificationItem
 
                 width: parent.width
-                attributes.type: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation
-                                 ? MegaTexts.NotificationInfo.Type.Error
-                                 : MegaTexts.NotificationInfo.Type.Warning
-                attributes.icon.source: ""
-                attributes.icon.visible: false
-                attributes.radius: parent.radius
-                attributes.topBorderRect: true
+                type: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation
+                        ? Constants.MessageType.ERROR
+                        : Constants.MessageType.WARNING
+                topBorderRect: true
                 text: BackupsModel.mConflictsNotificationText
                 visible: parent.visible
             }

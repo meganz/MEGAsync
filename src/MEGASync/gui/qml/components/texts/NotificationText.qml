@@ -1,43 +1,33 @@
 // System
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 // Local
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Item {
     id: root
 
-    property NotificationInfo attributes: NotificationInfo {}
+    property alias icon: hint.icon
+    property alias title: hint.title
+    property alias text: hint.text
+    property alias iconColor: hint.iconColor
+    property alias titleColor: hint.titleColor
+    property alias textColor: hint.textColor
+    property alias backgroundColor: backgroundRect.color
 
-    property string title: ""
-    property string text: ""
+    property int type: Constants.MessageType.NONE
     property int time: 0
+    property int margin: 12
+    property int radius: 8
+
+    property bool topBorderRect: false
 
     signal visibilityTimerFinished
 
     visible: false
-    height: content.height
-    Layout.preferredHeight: content.height
-
-    onTitleChanged: {
-        if(title.length === 0) {
-            return;
-        }
-
-        titleLoader.sourceComponent = titleComponent;
-    }
-
-    onTextChanged: {
-        if(text.length === 0) {
-            return;
-        }
-
-        textLoader.sourceComponent = textComponent;
-    }
+    height: backgroundRect.height
+    Layout.preferredHeight: backgroundRect.height
 
     onVisibleChanged: {
         if(visible && root.time > 0) {
@@ -46,6 +36,59 @@ Item {
         } else if(visibilityTimer.running) {
             visibilityTimer.stop();
         }
+    }
+
+    onTypeChanged: {
+        switch(type) {
+            case Constants.MessageType.NONE:
+            case Constants.MessageType.SUCCESS:
+            case Constants.MessageType.INFO:
+                console.warn("NotificationText: Constants.MessageType -> " + type + " not defined yet");
+                break;
+            case Constants.MessageType.WARNING:
+                backgroundColor = Styles.notificationWarning;
+                break;
+            case Constants.MessageType.ERROR:
+                backgroundColor = Styles.notificationError;
+                break;
+            default:
+                console.error("NotificationText: Constants.MessageType -> " + type + " does not exist");
+                break;
+        }
+
+        hint.type = type;
+    }
+
+    Rectangle {
+        id: backgroundRect
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: hint.height + 2 * root.margin
+        radius: root.radius
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+        }
+
+        HintText {
+            id: hint
+
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: root.margin
+        }
+    }
+
+    Rectangle {
+        height: root.radius
+        color: backgroundRect.color
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        visible: root.topBorderRect
     }
 
     SequentialAnimation {
@@ -89,106 +132,6 @@ Item {
 
         onFinished: {
             visibilityTimerFinished();
-        }
-    }
-
-    Rectangle {
-        id: content
-
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: mainLayout.height
-        color: attributes.backgroundColor
-        radius: attributes.radius
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-        }
-
-        Row {
-            id: mainLayout
-
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: attributes.margin
-            height: textColumn.height > 0 ? textColumn.height + 2 * attributes.margin : 0
-            spacing: attributes.spacing
-
-            Loader {
-                id: iconLoader
-            }
-
-            Column {
-                id: textColumn
-
-                height: {
-                    var h = 0;
-                    if(root.title.length !== 0) {
-                        h += titleLoader.height;
-                    }
-                    if(root.text.length !== 0) {
-                        h += textLoader.height;
-                    }
-                    return h;
-                }
-                width: mainLayout.width - iconLoader.width - mainLayout.spacing
-
-                Loader {
-                    id: titleLoader
-
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                }
-
-                Loader {
-                    id: textLoader
-
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                }
-            }
-        }
-    }
-
-    Rectangle {
-        height: attributes.radius
-        color: attributes.backgroundColor
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        visible: attributes.topBorderRect
-    }
-
-    Component {
-        id: iconComponent
-
-        MegaImages.SvgImage {
-            color: attributes.iconColor
-            source: attributes.icon.source
-            sourceSize: attributes.icon.size
-        }
-    }
-
-    Component {
-        id: titleComponent
-
-        MegaTexts.RichText {
-            rawText: root.title
-            color: attributes.titleColor
-            font.bold: true
-        }
-    }
-
-    Component {
-        id: textComponent
-
-        MegaTexts.RichText {
-            rawText: root.text
-            color: attributes.textColor
-            url: Links.contact
-            manageMouse: true
         }
     }
 
