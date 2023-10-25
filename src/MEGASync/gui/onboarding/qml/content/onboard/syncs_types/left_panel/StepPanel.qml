@@ -277,70 +277,74 @@ Rectangle {
     ]
 
     ColumnLayout {
-        anchors.fill: parent
+        id: stepsLayout
 
-        ColumnLayout {
-            id: stepsLayout
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.left: parent.left
+        spacing: 4
 
-            width: parent.width
+        Step {
+            id: step1_deviceName
+
+            number: 1
+            text: OnboardingStrings.deviceName
             Layout.alignment: Qt.AlignTop
-            spacing: 4
+        }
 
-            Step {
-                id: step1_deviceName
+        Rectangle {
+            id: step2_line
 
-                number: 1
-                text: OnboardingStrings.deviceName
-            }
+            color: Styles.buttonSecondaryPressed
+            Layout.preferredWidth: lineWidth
+            Layout.preferredHeight: lineMainStepHeight
+            radius: lineRadius
+            Layout.leftMargin: lineLeftMargin
+            Layout.alignment: Qt.AlignTop
+        }
 
-            Rectangle {
-                id: step2_line
+        Step {
+            id: step2_installationType
 
-                color: Styles.buttonSecondaryPressed
-                Layout.preferredWidth: lineWidth
-                Layout.preferredHeight: lineMainStepHeight
-                radius: lineRadius
-                Layout.leftMargin: lineLeftMargin
-            }
+            number: 2
+            text: OnboardingStrings.setUpOptions
+            Layout.alignment: Qt.AlignTop
+        }
 
-            Step {
-                id: step2_installationType
+        Rectangle {
+            id: step3_line
 
-                number: 2
-                text: OnboardingStrings.setUpOptions
-            }
+            color: Styles.buttonSecondaryPressed
+            Layout.preferredWidth: lineWidth
+            Layout.preferredHeight: lineSubStepHeight
+            radius: lineRadius
+            Layout.leftMargin: lineLeftMargin
+            Layout.alignment: Qt.AlignTop
+        }
 
-            Rectangle {
-                id: step3_line
+        SubStep {
+            id: step3_content
 
-                color: Styles.buttonSecondaryPressed
-                Layout.preferredWidth: lineWidth
-                Layout.preferredHeight: lineSubStepHeight
-                radius: lineRadius
-                Layout.leftMargin: lineLeftMargin
-            }
+            Layout.leftMargin: subStepLeftMargin
+            Layout.alignment: Qt.AlignTop
+        }
 
-            SubStep {
-                id: step3_content
+        Rectangle {
+            id: step4_line
 
-                Layout.leftMargin: subStepLeftMargin
-            }
+            color: Styles.buttonSecondaryPressed
+            Layout.preferredWidth: lineWidth
+            Layout.preferredHeight: lineSubStepHeight
+            radius: lineRadius
+            Layout.leftMargin: lineLeftMargin
+            Layout.alignment: Qt.AlignTop
+        }
 
-            Rectangle {
-                id: step4_line
+        SubStep {
+            id: step4_content
 
-                color: Styles.buttonSecondaryPressed
-                Layout.preferredWidth: lineWidth
-                Layout.preferredHeight: lineSubStepHeight
-                radius: lineRadius
-                Layout.leftMargin: lineLeftMargin
-            }
-
-            SubStep {
-                id: step4_content
-
-                Layout.leftMargin: subStepLeftMargin
-            }
+            Layout.leftMargin: subStepLeftMargin
+            Layout.alignment: Qt.AlignTop
         }
     }
 
@@ -353,5 +357,4 @@ Rectangle {
             Qt.openUrlExternally(Links.desktopSyncApp);
         }
     }
-
 }
