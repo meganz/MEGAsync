@@ -11,6 +11,5 @@ QtObject {
         Backup = 4
     }
 
-    property int type: SyncsType.Types.Sync
-
+    property int type: SyncsType.Sync
 }

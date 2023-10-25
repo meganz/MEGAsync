@@ -12,11 +12,10 @@ import Onboard 1.0
 
 SyncsPage {
 
-    property alias localFolderChooser: localFolderChooser
-    property alias remoteFolderChooser: remoteFolderChooser
+    property alias localFolderChooser: localFolder
+    property alias remoteFolderChooser: remoteFolder
 
     footerButtons.rightPrimary {
-        enabled: localFolderChooser.isValid && remoteFolderChooser.isValid
         text: OnboardingStrings.sync
         icons.source: Images.syncIcon
     }
@@ -43,7 +42,7 @@ SyncsPage {
         }
 
         ChooseSyncFolder {
-            id: localFolderChooser
+            id: localFolder
 
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
@@ -51,7 +50,7 @@ SyncsPage {
         }
 
         ChooseSyncFolder {
-            id: remoteFolderChooser
+            id: remoteFolder
 
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4

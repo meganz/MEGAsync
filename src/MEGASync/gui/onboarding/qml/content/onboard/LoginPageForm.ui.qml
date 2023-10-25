@@ -20,11 +20,10 @@ import ApiEnums 1.0
 StackViewPage {
     id: root
 
-    property alias signUpButton: signUpButton
-    property alias loginButton: loginButton
-
-    property alias email: email
-    property alias password: password
+    property alias signUpButton: signUpButtonItem
+    property alias loginButton: loginButtonItem
+    property alias email: emailItem
+    property alias password: passwordItem
 
     Column {
         anchors.verticalCenter: root.verticalCenter
@@ -36,13 +35,13 @@ StackViewPage {
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Large
-            rawText: LoginControllerAccess.newAccount
+            rawText: loginControllerAccess.newAccount
                      ? OnboardingStrings.confirmEmailAndPassword
                      : OnboardingStrings.loginTitle
         }
 
         MegaTexts.RichText {
-            visible: LoginControllerAccess.newAccount
+            visible: loginControllerAccess.newAccount
             anchors.left: parent.left
             anchors.right: parent.right
             font.pixelSize: MegaTexts.Text.Size.Medium
@@ -50,36 +49,36 @@ StackViewPage {
         }
 
         MegaTextFields.EmailTextField {
-            id: email
+            id: emailItem
 
-            width: parent.width + 2 * email.sizes.focusBorderWidth
+            width: parent.width + 2 * emailItem.sizes.focusBorderWidth
             anchors.left: parent.left
-            anchors.leftMargin: -email.sizes.focusBorderWidth
+            anchors.leftMargin: -emailItem.sizes.focusBorderWidth
             title: OnboardingStrings.email
-            text: LoginControllerAccess.email
-            error: LoginControllerAccess.emailError
-            hint.text: LoginControllerAccess.emailErrorMsg
-            hint.visible: LoginControllerAccess.emailErrorMsg.length !== 0
+            text: loginControllerAccess.email
+            error: loginControllerAccess.emailError
+            hint.text: loginControllerAccess.emailErrorMsg
+            hint.visible: loginControllerAccess.emailErrorMsg.length !== 0
         }
 
         MegaTextFields.PasswordTextField {
-            id: password
+            id: passwordItem
 
-            width: parent.width + 2 * password.sizes.focusBorderWidth
+            width: parent.width + 2 * passwordItem.sizes.focusBorderWidth
             anchors.left: parent.left
-            anchors.leftMargin: -password.sizes.focusBorderWidth
+            anchors.leftMargin: -passwordItem.sizes.focusBorderWidth
             title: OnboardingStrings.password
             hint.icon: Images.alertTriangle
-            error: LoginControllerAccess.passwordError
-            hint.text: LoginControllerAccess.passwordErrorMsg
-            hint.visible: LoginControllerAccess.passwordErrorMsg.length !== 0
+            error: loginControllerAccess.passwordError
+            hint.text: loginControllerAccess.passwordErrorMsg
+            hint.visible: loginControllerAccess.passwordErrorMsg.length !== 0
         }
 
         MegaButtons.HelpButton {
             anchors.left: parent.left
             text: OnboardingStrings.forgotPassword
             url: Links.recovery
-            visible: !LoginControllerAccess.newAccount
+            visible: !loginControllerAccess.newAccount
         }
     }
 
@@ -90,22 +89,22 @@ StackViewPage {
         anchors.left: root.left
 
         MegaButtons.OutlineButton {
-            id: signUpButton
+            id: signUpButtonItem
 
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: -signUpButton.sizes.focusBorderWidth
-            visible: !LoginControllerAccess.newAccount
+            Layout.leftMargin: -signUpButtonItem.sizes.focusBorderWidth
+            visible: !loginControllerAccess.newAccount
         }
 
         MegaButtons.PrimaryButton {
-            id: loginButton
+            id: loginButtonItem
 
-            text: LoginControllerAccess.newAccount ? OnboardingStrings.next : OnboardingStrings.login
+            text: loginControllerAccess.newAccount ? OnboardingStrings.next : OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
-            progressValue: LoginControllerAccess.progress
-            Layout.rightMargin: -loginButton.sizes.focusBorderWidth//TODO: poner flecha
-            icons.source: LoginControllerAccess.newAccount ? Images.arrowRight : Images.none
+            progressValue: loginControllerAccess.progress
+            Layout.rightMargin: -loginButtonItem.sizes.focusBorderWidth//TODO: poner flecha
+            icons.source: loginControllerAccess.newAccount ? Images.arrowRight : Images.none
         }
     }
 }

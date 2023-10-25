@@ -221,7 +221,7 @@ Rectangle {
     }
 
     Connections {
-        target: LogoutControllerAccess
+        target: logoutControllerAccess
 
         function onLogout() {
             onboardingWindow.forceClose();

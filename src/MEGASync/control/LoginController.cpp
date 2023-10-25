@@ -27,7 +27,7 @@ LoginController::LoginController(QObject* parent)
     mConnectivityTimer->setInterval(static_cast<int>(Preferences::MAX_LOGIN_TIME_MS));
     connect(mConnectivityTimer, &QTimer::timeout, this, &LoginController::runConnectivityCheck);
 
-    EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
+    EphemeralCredentials credentials{mPreferences->getEphemeralCredentials()};
     if(!credentials.sessionId.isEmpty())
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
@@ -888,7 +888,6 @@ LogoutController::LogoutController(QObject* parent)
       , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("LogoutControllerAccess"), this);
 }
 
 LogoutController::~LogoutController()

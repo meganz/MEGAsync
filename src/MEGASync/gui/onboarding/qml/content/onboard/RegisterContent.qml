@@ -21,11 +21,11 @@ Column {
         var valid = email.valid();
         if(!valid) {
             error = true;
-            LoginControllerAccess.createAccountErrorMsg = OnboardingStrings.errorValidEmail;
+            loginControllerAccess.createAccountErrorMsg = OnboardingStrings.errorValidEmail;
         }
         else
         {
-            LoginControllerAccess.createAccountErrorMsg = "";
+            loginControllerAccess.createAccountErrorMsg = "";
         }
 
         valid = password.text.length >= 8;
@@ -86,36 +86,30 @@ Column {
         anchors.right: parent.right
         spacing: 14
 
-        Column {
+        Row {
+            id: nameLayout
+
             anchors.left: parent.left
-            anchors.right: parent.right
-            spacing: 4
+            anchors.leftMargin: -firstName.sizes.focusBorderWidth
+            width: email.width
+            spacing: 8
 
-            Row {
-                id: nameLayout
+            MegaTextFields.TextField {
+                id: firstName
 
-                anchors.left: parent.left
-                anchors.leftMargin: -firstName.sizes.focusBorderWidth
-                width: email.width
-                spacing: 8
+                width: nameLayout.width / 2 - nameLayout.spacing / 2
+                title: OnboardingStrings.firstName
+                hint.icon: Images.person
+                hint.text: OnboardingStrings.errorName
+            }
 
-                MegaTextFields.TextField {
-                    id: firstName
+            MegaTextFields.TextField {
+                id: lastName
 
-                    width: nameLayout.width / 2 - nameLayout.spacing / 2
-                    title: OnboardingStrings.firstName
-                    hint.icon: Images.person
-                    hint.text: OnboardingStrings.errorName
-                }
-
-                MegaTextFields.TextField {
-                    id: lastName
-
-                    width: nameLayout.width / 2 - nameLayout.spacing / 2
-                    title: OnboardingStrings.lastName
-                    hint.icon: Images.person
-                    hint.text: OnboardingStrings.errorLastName
-                }
+                width: nameLayout.width / 2 - nameLayout.spacing / 2
+                title: OnboardingStrings.lastName
+                hint.icon: Images.person
+                hint.text: OnboardingStrings.errorLastName
             }
         }
 
@@ -127,8 +121,8 @@ Column {
             width: contentWidth + email.sizes.focusBorderWidth
             title: OnboardingStrings.email
             hint.icon: Images.mail
-            hint.text: LoginControllerAccess.createAccountErrorMsg;
-            error: LoginControllerAccess.createAccountErrorMsg.length !== 0;
+            hint.text: loginControllerAccess.createAccountErrorMsg;
+            error: loginControllerAccess.createAccountErrorMsg.length !== 0;
             hint.visible: error;
         }
 
@@ -201,6 +195,6 @@ Column {
     }
 
     Component.onDestruction: {
-        LoginControllerAccess.createAccountErrorMsg ="";
+        loginControllerAccess.createAccountErrorMsg ="";
     }
 }

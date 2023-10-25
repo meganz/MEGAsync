@@ -11,8 +11,8 @@ import Onboard 1.0
 
 Rectangle {
 
-    property alias conditionUpperLowerCase: conditionUpperLowerCase
-    property alias conditionNumberSpecialCharacter: conditionNumberSpecialCharacter
+    property alias conditionUpperLowerCase: conditionUpperLowerCaseItem
+    property alias conditionNumberSpecialCharacter: conditionNumberSpecialCharacterItem
 
     property string password: ""
 
@@ -59,13 +59,13 @@ Rectangle {
             }
 
             PasswordConditionItem {
-                id: conditionUpperLowerCase
+                id: conditionUpperLowerCaseItem
 
                 text: OnboardingStrings.upperAndLowerCase;
             }
 
             PasswordConditionItem {
-                id: conditionNumberSpecialCharacter
+                id: conditionNumberSpecialCharacterItem
 
                 text: OnboardingStrings.numberOrSpecialChar;
             }

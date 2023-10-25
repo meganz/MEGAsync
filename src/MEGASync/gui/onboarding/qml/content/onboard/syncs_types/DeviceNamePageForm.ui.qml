@@ -13,7 +13,7 @@ import Onboard 1.0
 
 SyncsPage {
 
-    property alias deviceNameTextField: deviceNameTextField
+    property alias deviceNameTextField: deviceNameTextFieldComp
 
     footerButtons.rightSecondary.visible: false
 
@@ -40,11 +40,11 @@ SyncsPage {
         }
 
         MegaTextFields.TextField {
-            id: deviceNameTextField
+            id: deviceNameTextFieldComp
 
-            Layout.leftMargin: -deviceNameTextField.sizes.focusBorderWidth
-            Layout.rightMargin: -deviceNameTextField.sizes.focusBorderWidth
-            Layout.preferredWidth: parent.width + 2 * deviceNameTextField.sizes.focusBorderWidth
+            Layout.leftMargin: -sizes.focusBorderWidth
+            Layout.rightMargin: -sizes.focusBorderWidth
+            Layout.preferredWidth: parent.width + 2 * sizes.focusBorderWidth
             title: OnboardingStrings.deviceName
             textField.text: deviceName.name
             textField.maximumLength: 32//32 is non-technical length limit for device name

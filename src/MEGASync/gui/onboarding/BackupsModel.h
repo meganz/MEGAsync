@@ -14,6 +14,7 @@ class BackupFolder : public QObject
     Q_OBJECT
 
 public:
+
     // Front (with role)
     QString mName;
     QString mSize;
@@ -37,6 +38,7 @@ public:
     LocalFileFolderAttributes* mFolderAttr;
     void setSize(qint64 size);
     void setFolder(const QString& folder);
+    void setError(int error);
     QString getFolder() const {return mFolder;}
     void calculateFolderSize();
 
@@ -55,17 +57,17 @@ class BackupsModel : public QAbstractListModel
     Q_PROPERTY(bool totalSizeReady
                READ getIsTotalSizeReady
                NOTIFY totalSizeReadyChanged)
-    Q_PROPERTY(Qt::CheckState mCheckAllState
+    Q_PROPERTY(Qt::CheckState checkAllState
                READ getCheckAllState
                WRITE setCheckAllState
                NOTIFY checkAllStateChanged)
-    Q_PROPERTY(QString mConflictsNotificationText
+    Q_PROPERTY(QString conflictsNotificationText
                READ getConflictsNotificationText
                NOTIFY existConflictsChanged)
-    Q_PROPERTY(int mGlobalError
+    Q_PROPERTY(int globalError
                READ getGlobalError
                NOTIFY globalErrorChanged)
-    Q_PROPERTY(bool mExistsOnlyGlobalError
+    Q_PROPERTY(bool existsOnlyGlobalError
                READ existsOnlyGlobalError
                NOTIFY existsOnlyGlobalErrorChanged)
 
@@ -73,25 +75,25 @@ public:
 
     enum BackupFolderRoles
     {
-        NameRole = Qt::UserRole + 1,
-        FolderRole,
-        SizeRole,
-        SizeReadyRole,
-        SelectedRole,
-        SelectableRole,
-        DoneRole,
-        ErrorRole
+        NAME_ROLE = Qt::UserRole + 1,
+        FOLDER_ROLE,
+        SIZE_ROLE,
+        SIZE_READY_ROLE,
+        SELECTED_ROLE,
+        SELECTABLE_ROLE,
+        DONE_ROLE,
+        ERROR_ROLE
     };
 
     enum BackupErrorCode
     {
-        None = 0,
-        DuplicatedName = 1,
-        ExistsRemote = 2,
-        SyncConflict = 3,
-        PathRelation = 4,
-        UnavailableDir = 5,
-        SDKCreation = 6
+        NONE = 0,
+        DUPLICATED_NAME = 1,
+        EXISTS_REMOTE = 2,
+        SYNC_CONFLICT = 3,
+        PATH_RELATION = 4,
+        UNAVAILABLE_DIR = 5,
+        SDK_CREATION = 6
     };
     Q_ENUM(BackupErrorCode)
 
@@ -100,7 +102,7 @@ public:
     QHash<int,QByteArray> roleNames() const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
-    QVariant data(const QModelIndex & index, int role = NameRole) const override;
+    QVariant data(const QModelIndex & index, int role = NAME_ROLE) const override;
     QString getTotalSize() const;
     bool getIsTotalSizeReady() const;
     Qt::CheckState getCheckAllState() const;
@@ -131,13 +133,13 @@ signals:
     void globalErrorChanged();
     void existsOnlyGlobalErrorChanged();
     void totalSizeReadyChanged();
+    void backupsCreationFinished(bool succes);
 
 private:
     const QString getFolderUnavailableErrorMsg();
     static int CHECK_DIRS_TIME;
 
     QList<BackupFolder*> mBackupFolderList;
-    QHash<int, QByteArray> mRoleNames;
     int mSelectedRowsTotal;
     unsigned long long mBackupsTotalSize;
     bool mTotalSizeReady;
@@ -153,6 +155,8 @@ private:
     void checkSelectedAll();
     bool isLocalFolderSyncable(const QString& inputPath);
     bool selectIfExistsInsertion(const QString& inputPath);
+    QList<QList<BackupFolder*>::const_iterator> getRepeatedNameItList(const QString& name);
+
     bool folderContainsOther(const QString& folder,
                              const QString& other) const;
     bool isRelatedFolder(const QString& folder,
@@ -160,9 +164,7 @@ private:
     QModelIndex getModelIndex(QList<BackupFolder*>::iterator item);
     void setAllSelected(bool selected);
     bool checkPermissions(const QString& inputPath);
-    void checkRemoteDuplicatedBackups(const QSet<QString>& candidateSet);
-    void checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
-                                    const QStringList& candidateList);
+    void checkDuplicatedBackups(const QStringList &candidateList);
     void reviewConflicts();
     void changeConflictsNotificationText(const QString& text);
     bool existOtherRelatedFolder(const int currentRow);
@@ -197,6 +199,7 @@ public slots:
 
 signals:
     void selectedFilterEnabledChanged();
+    void backupsCreationFinished(bool success);
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
@@ -204,7 +207,6 @@ protected:
 private:
     bool mSelectedFilterEnabled;
     BackupsModel* backupsModel();
-
 };
 
 #endif // BACKUPFOLDERMODEL_H

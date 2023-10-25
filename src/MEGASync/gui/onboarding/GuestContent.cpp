@@ -55,5 +55,5 @@ QUrl GuestContent::getQmlUrl()
 
 QString GuestContent::contextName()
 {
-    return QString::fromUtf8("GuestContent");
+    return QString::fromUtf8("guestContentAccess");
 }

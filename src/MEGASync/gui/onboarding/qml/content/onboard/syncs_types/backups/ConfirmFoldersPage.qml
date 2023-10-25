@@ -14,29 +14,29 @@ ConfirmFoldersPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            BackupsModel.clean(true);
+            backupsModelAccess.clean(true);
             backupsProxyModel.selectedFilterEnabled = false;
             root.confirmFoldersMoveToSelect()
         }
 
         rightPrimary.onClicked: {
             footerButtons.enabled = false;
-            confirmHeader.enabled = false;
+            enableConfirmHeader = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             backupsProxyModel.createBackups();
         }
     }
 
     Connections {
-        target: BackupsModel
+        target: backupsModelAccess
 
         function onNoneSelected() {
             root.confirmFoldersMoveToSelect()
         }
 
         function onExistConflictsChanged() {
-            if(BackupsModel.mConflictsNotificationText !== "") {
-                if(BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation) {
+            if(backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE) {
+                if(backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
                     stepPanel.state = stepPanel.step4Error;
                 } else {
                     stepPanel.state = stepPanel.step4Warning;
@@ -48,11 +48,11 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
-        target: BackupsController
+        target: backupsProxyModel
 
         function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;
-            confirmHeader.enabled = true;
+            enableConfirmHeader = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             if(success) {
                 root.confirmFoldersMoveToSuccess()
@@ -61,5 +61,4 @@ ConfirmFoldersPageForm {
             }
         }
     }
-
 }

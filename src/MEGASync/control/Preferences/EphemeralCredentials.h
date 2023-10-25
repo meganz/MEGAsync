@@ -10,6 +10,9 @@ class EphemeralCredentials
 public:
     EphemeralCredentials() = default;
     EphemeralCredentials(const EphemeralCredentials& cred);
+    EphemeralCredentials(EphemeralCredentials&& cred);
+    EphemeralCredentials& operator=(const EphemeralCredentials& cred);
+    EphemeralCredentials& operator=(EphemeralCredentials&& cred);
 
     QString email;
     QString sessionId;

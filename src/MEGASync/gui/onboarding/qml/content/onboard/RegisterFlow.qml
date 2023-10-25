@@ -23,29 +23,29 @@ Rectangle {
     color: Styles.surface1
 
     function getState() {
-        switch(LoginControllerAccess.state)
+        switch(loginControllerAccess.state)
         {
-        case LoginController.WAITING_EMAIL_CONFIRMATION:
-        {
-            return registerFlow.confirmEmail;
-        }
-        case LoginController.SIGN_UP:
-        case LoginController.CREATING_ACCOUNT:
-        case LoginController.CREATING_ACCOUNT_FAILED:
-        {
-            return registerFlow.register;
-        }
-        case LoginController.LOGGING_IN_2FA_REQUIRED:
-        case LoginController.LOGGING_IN_2FA_VALIDATING:
-        case LoginController.LOGGING_IN_2FA_FAILED:
-        case LoginController.FETCHING_NODES_2FA:
-        {
-            return registerFlow.twoFA;
-        }
-        case LoginController.CHANGING_REGISTER_EMAIL:
-        {
-            return registerFlow.changeConfirmEmail;
-        }
+            case LoginController.WAITING_EMAIL_CONFIRMATION:
+            {
+                return registerFlow.confirmEmail;
+            }
+            case LoginController.SIGN_UP:
+            case LoginController.CREATING_ACCOUNT:
+            case LoginController.CREATING_ACCOUNT_FAILED:
+            {
+                return registerFlow.register;
+            }
+            case LoginController.LOGGING_IN_2FA_REQUIRED:
+            case LoginController.LOGGING_IN_2FA_VALIDATING:
+            case LoginController.LOGGING_IN_2FA_FAILED:
+            case LoginController.FETCHING_NODES_2FA:
+            {
+                return registerFlow.twoFA;
+            }
+            case LoginController.CHANGING_REGISTER_EMAIL:
+            {
+                return registerFlow.changeConfirmEmail;
+            }
         }
         return registerFlow.login;
     }
@@ -92,7 +92,7 @@ Rectangle {
 
         visible: false
         onAccepted: {
-            LoginControllerAccess.cancelLogin();
+            loginControllerAccess.cancelLogin();
         }
     }
 
@@ -101,7 +101,7 @@ Rectangle {
 
         visible: false
         onAccepted: {
-            LoginControllerAccess.cancelCreateAccount();
+            loginControllerAccess.cancelCreateAccount();
         }
     }
 
@@ -218,7 +218,7 @@ Rectangle {
         }
 
         Connections {
-            target: LoginControllerAccess
+            target: loginControllerAccess
 
             function onAccountCreationCancelled() {
                 cancelCreateAccount.close();

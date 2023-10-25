@@ -17,9 +17,9 @@ import LoginController 1.0
 StackViewPage {
     id: root
 
-    property alias loginButton: loginButton
-    property alias signUpButton: signUpButton
-    property alias twoFAField: twoFAField
+    property alias loginButton: loginButtonItem
+    property alias signUpButton: signUpButtonItem
+    property alias twoFAField: twoFAItem
 
     ColumnLayout {
 
@@ -37,7 +37,7 @@ StackViewPage {
         }
 
         MegaTextFields.TwoFA {
-            id: twoFAField
+            id: twoFAItem
 
             focus: true
         }
@@ -45,7 +45,7 @@ StackViewPage {
         MegaButtons.HelpButton {
             text: OnboardingStrings.twoFANeedHelp
             url: Links.recovery
-            visible: !twoFAField.hasError
+            visible: !twoFAItem.hasError
         }
     }
 
@@ -58,20 +58,20 @@ StackViewPage {
         }
 
         MegaButtons.OutlineButton {
-            id: signUpButton
+            id: signUpButtonItem
 
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: -signUpButton.sizes.focusBorderWidth
+            Layout.leftMargin: -signUpButtonItem.sizes.focusBorderWidth
         }
 
         MegaButtons.PrimaryButton {
-            id: loginButton
+            id: loginButtonItem
 
             text: OnboardingStrings.login
-            progressValue: LoginControllerAccess.progress
+            progressValue: loginControllerAccess.progress
             Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: -loginButton.sizes.focusBorderWidth
+            Layout.rightMargin: -loginButtonItem.sizes.focusBorderWidth
         }
     }
 

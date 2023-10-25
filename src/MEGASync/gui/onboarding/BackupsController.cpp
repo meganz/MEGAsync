@@ -20,7 +20,7 @@ QSet<QString> BackupsController::getRemoteFolders() const
 
 void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
 {
-    if(backupsInfoList.size() <= 0)
+    if(backupsInfoList.empty())
     {
         emit backupsCreationFinished(true);
         return;
@@ -35,14 +35,12 @@ void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
 
 bool BackupsController::existsName(const QString& name) const
 {
-    bool found = false;
-    auto it = mBackupsToDoList.constBegin();
-    while(!found && it != mBackupsToDoList.constEnd())
-    {
-        found = (it->first == name);
-        it++;
-    }
-    return found;
+    auto foundIt = std::find_if(mBackupsToDoList.constBegin(), mBackupsToDoList.constEnd(),
+                                [&name](const QPair<QString, QString>& backupToDo){
+                                    return (backupToDo.first == name);
+                                });
+
+    return foundIt != mBackupsToDoList.constEnd();
 }
 
 void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name)

@@ -54,16 +54,16 @@ Rectangle {
             anchors.fill: parent
             sourceComponent: {
                 if(!backupsProxyModel.selectedFilterEnabled
-                    || mError === BackupsModel.BackupErrorCode.None) {
+                    || error === backupsModelAccess.BackupErrorCode.NONE) {
                     return selectContent;
                 } else {
-                    if(mError === BackupsModel.BackupErrorCode.SyncConflict
-                        || mError === BackupsModel.BackupErrorCode.PathRelation
-                        || mError === BackupsModel.BackupErrorCode.UnavailableDir
-                        || mError === BackupsModel.BackupErrorCode.SDKCreation) {
+                    if(error === backupsModelAccess.BackupErrorCode.SYNC_CONFLICT
+                        || error === backupsModelAccess.BackupErrorCode.PATH_RELATION
+                        || error === backupsModelAccess.BackupErrorCode.UNAVAILABLE_DIR
+                        || error === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
                         return conflictContent;
                     } else {
-                        // DuplicatedName or ExistsRemote errors
+                        // DUPLICATED_NAME or EXISTS_REMOTE errors
                         if(editMode) {
                             return editContent;
                         } else {
@@ -102,7 +102,7 @@ Rectangle {
                     id: checkbox
 
                     width: backupsProxyModel.selectedFilterEnabled ? 0 : contentRoot.checkboxWidth
-                    checked: mSelected
+                    checked: selected
                     visible: !backupsProxyModel.selectedFilterEnabled
                 }
 
@@ -115,7 +115,7 @@ Rectangle {
                         height: contentRoot.imageWidth
                         width: contentRoot.imageWidth
                         anchors.top: parent.top
-                        source: mDone ? Images.checkCircle : Images.standard_DirIcon
+                        source: done ? Images.checkCircle : Images.standard_DirIcon
                         sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
                     }
 
@@ -129,7 +129,7 @@ Rectangle {
                                (busyIndicator.visible ? (busyIndicator.width + contentRoot.checkboxSpacing) : 0)
 
                         font.pixelSize: MegaTexts.Text.Size.Small
-                        text: mName
+                        text: name
                         color: Styles.textPrimary
                     }
                 }
@@ -141,18 +141,18 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                text: mSize
+                text: size
                 font.pixelSize: MegaTexts.Text.Size.Small
                 horizontalAlignment: Qt.AlignRight
                 verticalAlignment: Qt.AlignVCenter
                 color: Styles.textSecondary
-                visible: backupsProxyModel.selectedFilterEnabled && mSizeReady
+                visible: backupsProxyModel.selectedFilterEnabled && sizeReady
             }
 
             MegaBusyIndicator.BusyIndicator {
                 id: busyIndicator
 
-                visible: backupsProxyModel.selectedFilterEnabled && !mSizeReady
+                visible: backupsProxyModel.selectedFilterEnabled && !sizeReady
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 color: Styles.textAccent
@@ -165,7 +165,7 @@ Rectangle {
                              ? Qt.ArrowCursor
                              : Qt.PointingHandCursor
                 onClicked: {
-                    mSelected = !mSelected;
+                    selected = !selected;
                 }
                 enabled: !backupsProxyModel.selectedFilterEnabled
             }
@@ -184,10 +184,10 @@ Rectangle {
             readonly property int textWidth: 248
             readonly property int sizeTextWidth: 50
 
-            property bool showChange: mError === BackupsModel.BackupErrorCode.SyncConflict
-                                        || mError === BackupsModel.BackupErrorCode.PathRelation
-                                        || mError === BackupsModel.BackupErrorCode.UnavailableDir
-                                        || mError === BackupsModel.BackupErrorCode.SDKCreation
+            property bool showChange: error === backupsModelAccess.BackupErrorCode.SYNC_CONFLICT
+                                        || error === backupsModelAccess.BackupErrorCode.PATH_RELATION
+                                        || error === backupsModelAccess.BackupErrorCode.UNAVAILABLE_DIR
+                                        || error === backupsModelAccess.BackupErrorCode.SDK_CREATION
 
             Row {
                 id: imageText
@@ -202,11 +202,11 @@ Rectangle {
 
                 MegaImages.SvgImage {
                     anchors.verticalCenter: parent.verticalCenter
-                    source: mError === BackupsModel.BackupErrorCode.SDKCreation
+                    source: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                             ? Images.alertCircle
                             : Images.alertTriangle
                     sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
-                    color: mError === BackupsModel.BackupErrorCode.SDKCreation
+                    color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                            ? Styles.textError
                            : Styles.textWarning
                 }
@@ -217,8 +217,8 @@ Rectangle {
                     width: contentRoot.width - contentRoot.imageTextSpacing - contentRoot.imageWidth
                             - buttonRow.width - contentRoot.contentMargin
                     font.pixelSize: MegaTexts.Text.Size.Small
-                    text: mName
-                    color: mError === BackupsModel.BackupErrorCode.SDKCreation
+                    text: name
+                    color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                            ? Styles.textError
                            : Styles.textWarning
                     showTooltip: false
@@ -232,7 +232,7 @@ Rectangle {
                 MegaToolTips.ToolTip {
                     visible: parent.containsMouse
                     leftIconSource: Images.pc
-                    text: mFolder
+                    text: folder
                     delay: 500
                     timeout: 5000
 
@@ -280,13 +280,12 @@ Rectangle {
                         id: folderDialog
                     }
 
-                    Connections
-                    {
+                    Connections {
                         id: chooseLocalFolderConnection
 
                         target: folderDialog
-                        function onFolderChoosen(folder) {
-                            BackupsModel.change(mFolder, folder);
+                        function onFolderChoosen(folderPath) {
+                            backupsModelAccess.change(folder, folderPath);
                         }
                     }
                 }
@@ -299,7 +298,7 @@ Rectangle {
                     anchors.bottom: parent.bottom
                     icons.source: Images.trash
                     onClicked: {
-                        BackupsModel.remove(mFolder);
+                        backupsModelAccess.remove(folder);
                     }
                     sizes: MegaButtons.SmallSizes {}
                 }
@@ -318,7 +317,7 @@ Rectangle {
                 id: editTextField
 
                 width: parent.width - parent.spacing - doneButton.width
-                text: mName
+                text: name
                 leftIcon.source: Images.edit
                 leftIcon.color: Styles.iconSecondary
                 error: hint.visible
@@ -345,20 +344,20 @@ Rectangle {
             function doneAction()
             {
                 editTextField.hint.visible = false;
-                var error = BackupsModel.rename(mFolder, editTextField.text);
+                var error = backupsModelAccess.rename(folder, editTextField.text);
                 switch(error) {
-                    case BackupsModel.BackupErrorCode.None:
-                    case BackupsModel.BackupErrorCode.SyncConflict:
-                    case BackupsModel.BackupErrorCode.PathRelation:
-                    case BackupsModel.BackupErrorCode.SDKCreation:
+                    case backupsModelAccess.BackupErrorCode.NONE:
+                    case backupsModelAccess.BackupErrorCode.SYNC_CONFLICT:
+                    case backupsModelAccess.BackupErrorCode.PATH_RELATION:
+                    case backupsModelAccess.BackupErrorCode.SDK_CREATION:
                         root.height = root.totalHeight;
                         break;
-                    case BackupsModel.BackupErrorCode.ExistsRemote:
+                    case backupsModelAccess.BackupErrorCode.EXISTS_REMOTE:
                         editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;
                         break;
-                    case BackupsModel.BackupErrorCode.DuplicatedName:
+                    case backupsModelAccess.BackupErrorCode.DUPLICATED_NAME:
                         editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;
@@ -371,5 +370,4 @@ Rectangle {
             }
         }
     }
-
 }

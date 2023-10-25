@@ -45,11 +45,11 @@ Rectangle {
     readonly property string stateInOnboarding: "IN_ONBOARDING"
 
     function getState() {
-        if(AccountStatusControllerAccess.blockedState) {
+        if(accountStatusControllerAccess.blockedState) {
             return root.stateBlocked;
         }
         else {
-            switch(LoginControllerAccess.state) {
+            switch(loginControllerAccess.state) {
                 case LoginController.LOGGING_IN:
                     return root.stateInProgressLoggingIn;
                 case LoginController.LOGGING_IN_2FA_REQUIRED:
@@ -196,7 +196,7 @@ Rectangle {
             icon.source: Images.megaOutline
             position: MenuItem.Position.First
             onTriggered: {
-                GuestContent.onAboutMEGAClicked();
+                guestContentAccess.onAboutMEGAClicked();
                 guestWindow.hide();
             }
         }
@@ -207,7 +207,7 @@ Rectangle {
             text: GuestStrings.menuSettings
             icon.source: Images.settings
             onTriggered: {
-                GuestContent.onPreferencesClicked();
+                guestContentAccess.onPreferencesClicked();
                 guestWindow.hide();
             }
         }
@@ -219,7 +219,7 @@ Rectangle {
             icon.source: Images.exit
             position: MenuItem.Position.Last
             onTriggered: {
-                GuestContent.onExitClicked();
+                guestContentAccess.onExitClicked();
                 guestWindow.hide();
             }
         }
@@ -243,13 +243,13 @@ Rectangle {
             leftButton {
                 text: OnboardingStrings.signUp
                 onClicked: {
-                    LoginControllerAccess.state = LoginController.SIGN_UP;
+                    loginControllerAccess.state = LoginController.SIGN_UP;
                 }
             }
             rightButton {
                 text: OnboardingStrings.login
                 onClicked: {
-                    LoginControllerAccess.state = LoginController.LOGGED_OUT;
+                    loginControllerAccess.state = LoginController.LOGGED_OUT;
                 }
             }
         }
@@ -261,7 +261,7 @@ Rectangle {
         BasePage {
 
             function getDescription() {
-                switch(LoginControllerAccess.state) {
+                switch(loginControllerAccess.state) {
                     case LoginController.LOGGING_IN:
                         return OnboardingStrings.statusLogin;
                     case LoginController.LOGGING_IN_2FA_REQUIRED:
@@ -291,8 +291,8 @@ Rectangle {
                 text: OnboardingStrings.login
                 enabled: false
             }
-            indeterminate: LoginControllerAccess.progress === 0
-            progressValue: LoginControllerAccess.progress
+            indeterminate: loginControllerAccess.progress === 0
+            progressValue: loginControllerAccess.progress
         }
     }
 
@@ -302,7 +302,7 @@ Rectangle {
         BasePage {
 
             function isEmailBlock() {
-                return AccountStatusControllerAccess.blockedState
+                return accountStatusControllerAccess.blockedState
                         === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL;
             }
 
@@ -317,7 +317,7 @@ Rectangle {
             leftButton {
                 text: GuestStrings.logOut
                 onClicked: {
-                    GuestContent.onLogoutClicked();
+                    guestContentAccess.onLogoutClicked();
                 }
             }
             rightButton {
@@ -325,10 +325,10 @@ Rectangle {
                 icons.source: isEmailBlock() ? Images.mail : "";
                 onClicked: {
                     if(isEmailBlock()) {
-                        GuestContent.onVerifyEmailClicked();
+                        guestContentAccess.onVerifyEmailClicked();
                     }
                     else {
-                        GuestContent.onVerifyPhoneClicked();
+                        guestContentAccess.onVerifyPhoneClicked();
                     }
                 }
             }

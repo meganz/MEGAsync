@@ -20,7 +20,7 @@ std::shared_ptr<MyBackupsHandle> MyBackupsHandle::requestMyBackupsHandle()
     return UserAttributesManager::instance().requestAttribute<MyBackupsHandle>();
 }
 
-void MyBackupsHandle::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError*error)
+void MyBackupsHandle::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError* error)
 {
     mega::MegaHandle newValue = mega::INVALID_HANDLE;
     if(error->getErrorCode() == mega::MegaError::API_OK)

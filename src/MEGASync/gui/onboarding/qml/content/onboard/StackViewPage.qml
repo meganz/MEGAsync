@@ -21,7 +21,7 @@ Rectangle {
     readonly property int contentSpacing: 24
 
     function getStatusText() {
-            switch(LoginControllerAccess.state)
+            switch(loginControllerAccess.state)
             {
             case LoginController.FETCHING_NODES:
             case LoginController.FETCHING_NODES_2FA:

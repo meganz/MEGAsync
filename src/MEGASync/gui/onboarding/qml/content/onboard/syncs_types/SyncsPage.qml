@@ -8,11 +8,11 @@ import Common 1.0
 
 Rectangle {
 
-    property alias footerButtons: footerButtons
+    property alias footerButtons: footerButtonsItem
 
     color: Styles.surface1
 
     Footer {
-        id: footerButtons
+        id: footerButtonsItem
     }
 }

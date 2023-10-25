@@ -18,13 +18,9 @@ import ChooseRemoteFolder 1.0
 Item {
     id: root
 
-    property alias choosenPath: folderField.text
-    property alias remoteTest: remoteFolderChooser
+    property alias choosenPath: folderItem.text
     property bool local: true
-    property url selectedUrl: selectedUrl
-    property double selectedNode: selectedNode
-    property bool isValid: true
-    property alias folderField: folderField
+    property alias folderField: folderItem
 
     readonly property int textEditMargin: 2
 
@@ -53,12 +49,12 @@ Item {
     }
 
     Layout.preferredWidth: width
-    Layout.preferredHeight: folderField.height
+    Layout.preferredHeight: folderItem.height
     width: parent.width
-    height: folderField.height
+    height: folderItem.height
 
     MegaTextFields.TextField {
-        id: folderField
+        id: folderItem
 
         anchors.left: parent.left
         anchors.right: changeButton.left
@@ -76,17 +72,17 @@ Item {
     MegaButtons.OutlineButton {
         id: changeButton
 
-        height: folderField.textField.height
+        height: folderItem.textField.height
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: 15
         text: OnboardingStrings.choose
         onClicked: {
-            folderField.error = false;
-            folderField.hint.visible = false;
+            folderItem.error = false;
+            folderItem.hint.visible = false;
 
             if (local) {
-                localFolderChooser.openFolderSelector(folderField.text);
+                localFolderChooser.openFolderSelector(folderItem.text);
             }
             else {
                 remoteFolderChooser.openFolderSelector();
@@ -100,8 +96,8 @@ Item {
         target: localFolderChooser
         enabled: root.local
 
-        function onFolderChoosen(folder) {
-            folderField.text = folder
+        function onFolderChoosen(folderPath) {
+            folderItem.text = folderPath
         }
     }
 
@@ -111,8 +107,8 @@ Item {
         target: remoteFolderChooser
         enabled: !root.local
 
-        function onFolderChoosen(folder) {
-            folderField.text = folder
+        function onFolderChoosen(remoteFolderPath) {
+            folderItem.text = remoteFolderPath
         }
     }
 

@@ -17,7 +17,7 @@ Item {
         Error = 4
     }
 
-    property string text: ""
+    property alias text: stepText.text
     property int toState: SubStep.ToStates.Disabled
 
     onToStateChanged: {
@@ -170,7 +170,6 @@ Item {
             MegaTexts.Text {
                 id: stepText
 
-                text: root.text
                 color: Styles.iconButton
                 font.pixelSize: MegaTexts.Text.Size.Small
                 font.weight: Font.DemiBold

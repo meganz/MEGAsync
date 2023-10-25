@@ -44,7 +44,7 @@ Rectangle {
     ListView {
         id: backupsListView
 
-        model: BackupsModel
+        model: backupsModelAccess
         anchors.fill: parent
         headerPositioning: ListView.OverlayHeader
         focus: true
@@ -90,22 +90,22 @@ Rectangle {
 
                     onCheckStateChanged: {
                         if (!selectAll.fromModel) {
-                            BackupsModel.mCheckAllState = checkState;
+                            backupsModelAccess.checkAllState = checkState;
                         }
                         selectAll.fromModel = false;
                     }
 
                     Connections {
-                        target: BackupsModel
+                        target: backupsModelAccess
 
                         function onCheckAllStateChanged() {
                             selectAll.fromModel = true;
-                            selectAll.checkState = BackupsModel.mCheckAllState;
+                            selectAll.checkState = backupsModelAccess.checkAllState;
                         }
                     }
 
                     Component.onCompleted: {
-                        selectAll.checkState = BackupsModel.mCheckAllState;
+                        selectAll.checkState = backupsModelAccess.checkAllState;
                     }
                 }
             }
@@ -183,8 +183,8 @@ Rectangle {
 
                 target: folderDialog
 
-                function onFolderChoosen(folder) {
-                    BackupsModel.insert(folder);
+                function onFolderChoosen(folderPath) {
+                    backupsModelAccess.insert(folderPath);
                 }
             }
 

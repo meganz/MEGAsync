@@ -93,9 +93,7 @@ Qml.CheckBox {
                 sourceSize: indeterminate() ? sizes.iconSizeIndeterminate : sizes.iconSize
                 color: Styles.iconInverseAccent
             }
-
         }
-
     }
 
     Component {
@@ -118,5 +116,4 @@ Qml.CheckBox {
         onPressed: mouse.accepted = false
         cursorShape: Qt.PointingHandCursor
     }
-
 }
