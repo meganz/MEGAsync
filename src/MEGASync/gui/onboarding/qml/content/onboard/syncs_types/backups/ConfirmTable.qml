@@ -153,17 +153,13 @@ Rectangle {
                 id: notificationItem
 
                 width: parent.width
-                attributes.type: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDKCreation
-                                 ? MegaTexts.NotificationInfo.Type.Error
-                                 : MegaTexts.NotificationInfo.Type.Warning
-                attributes.icon.source: ""
-                attributes.icon.visible: false
-                attributes.radius: parent.radius
-                attributes.topBorderRect: true
-                text: backupsModelAccess.conflictsNotificationText
+                type: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.SDKCreation
+                        ? Constants.MessageType.ERROR
+                        : Constants.MessageType.WARNING
+                topBorderRect: true
+                text: BackupsModel.mConflictsNotificationText
                 visible: parent.visible
             }
         }
     }
-
 }

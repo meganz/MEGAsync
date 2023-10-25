@@ -2,6 +2,15 @@ pragma Singleton
 import QtQuick 2.15
 
 QtObject {
+
+    enum MessageType {
+        NONE = 0,
+        ERROR,
+        WARNING,
+        SUCCESS,
+        INFO
+    }
+
     readonly property int width: 1000//640
     readonly property int height: 1000//480
 

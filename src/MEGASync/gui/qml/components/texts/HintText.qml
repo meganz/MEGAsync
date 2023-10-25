@@ -1,7 +1,5 @@
 // System
 import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
 
 // Local
 import Components.Texts 1.0 as MegaTexts
@@ -12,11 +10,43 @@ Item {
     id: root
 
     property alias icon: hintIcon.source
-    property alias title: hintTitle.text
-    property alias text: hintText.text
+    property alias title: hintTitle.rawText
+    property alias text: hintText.rawText
+    property alias iconColor: hintIcon.color
+    property alias titleColor: hintTitle.color
+    property alias textColor: hintText.color
 
-    property HintStyle styles: HintStyle {}
-    property int textSize: Text.Size.Normal
+    property int type: Constants.MessageType.NONE
+    property int textSize: MegaTexts.Text.Size.Normal
+
+    onTypeChanged: {
+        switch(type) {
+            case Constants.MessageType.NONE:
+            case Constants.MessageType.SUCCESS:
+            case Constants.MessageType.INFO:
+                console.warn("HintText: Constants.MessageType -> " + type + " not defined yet");
+                break;
+            case Constants.MessageType.WARNING:
+                if(icon.length === 0) {
+                    icon = Images.alertTriangle;
+                }
+                iconColor = Styles.textWarning;
+                titleColor = Styles.textWarning;
+                textColor = Styles.textWarning;
+                break;
+            case Constants.MessageType.ERROR:
+                if(icon.length === 0) {
+                    icon = Images.xCircle;
+                }
+                iconColor = Styles.textError;
+                titleColor = Styles.textError;
+                textColor = Styles.textError;
+                break;
+            default:
+                console.error("HintText: Constants.MessageType -> " + type + " does not exist");
+                break;
+        }
+    }
 
     implicitHeight: row.height
 
@@ -30,7 +60,6 @@ Item {
         MegaImages.SvgImage {
             id: hintIcon
 
-            color: styles.iconColor
             sourceSize: Qt.size(16, 16)
             opacity: enabled ? 1.0 : 0.2
         }
@@ -42,27 +71,27 @@ Item {
             anchors.bottom: parent.bottom
             width: row.width - hintIcon.width - row.spacing
 
-            MegaTexts.Text {
+            MegaTexts.RichText {
                 id: hintTitle
 
                 width: parent.width
                 height: text !== "" ? implicitHeight : 0
-                color: styles.titleColor
                 opacity: enabled ? 1.0 : 0.2
                 font.bold: true
-                font.pixelSize: textSize
+                font.pixelSize: root.textSize
                 wrapMode: Text.WordWrap
             }
 
-            MegaTexts.Text {
+            MegaTexts.RichText {
                 id: hintText
 
                 width: parent.width
                 height: text !== "" ? implicitHeight : 0
-                color: styles.textColor
                 opacity: enabled ? 1.0 : 0.2
-                font.pixelSize: textSize
+                font.pixelSize: root.textSize
                 wrapMode: Text.WordWrap
+                url: Links.contact
+                manageMouse: true
             }
         }
     }
