@@ -64,7 +64,7 @@ macx {
     DEFINES += _DARWIN_FEATURE_64_BIT_INODE USE_OPENSSL CRYPTOPP_DISABLE_ASM
 
     contains(QT_ARCH, arm64):QMAKE_MACOSX_DEPLOYMENT_TARGET = 11.0
-    else:QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+    else:QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13
 
     !vcpkg:LIBS += -L$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/
     vcpkg:debug:LIBS += -L$$THIRDPARTY_VCPKG_PATH/debug/lib/
@@ -72,6 +72,15 @@ macx {
     LIBS += -framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security
     QMAKE_CXXFLAGS += -g
     LIBS += -lcryptopp
+
+    clang {
+        COMPILER_VERSION = $$system("$$QMAKE_CXX -dumpversion | cut -d'.' -f1")
+        message($$COMPILER_VERSION)
+        greaterThan(COMPILER_VERSION, 14) {
+            message("Using Xcode 15 or above. Switching to ld_classic linking.")
+            LIBS += -Wl,-ld_classic
+        }
+    }
 }
 
 win32 {
