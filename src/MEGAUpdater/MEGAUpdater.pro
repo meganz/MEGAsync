@@ -72,6 +72,15 @@ macx {
     LIBS += -framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security
     QMAKE_CXXFLAGS += -g
     LIBS += -lcryptopp
+
+    clang {
+        COMPILER_VERSION = $$system("$$QMAKE_CXX -dumpversion | cut -d'.' -f1")
+        message($$COMPILER_VERSION)
+        greaterThan(COMPILER_VERSION, 14) {
+            message("Using Xcode 15 or above. Switching to ld_classic linking.")
+            LIBS += -Wl,-ld_classic
+        }
+    }
 }
 
 win32 {
