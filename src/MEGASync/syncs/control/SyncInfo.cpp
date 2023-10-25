@@ -209,14 +209,6 @@ void SyncInfo::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetti
     }
 }
 
-void SyncInfo::updateSyncStats(MegaSyncStats *stats)
-{
-    std::shared_ptr<::mega::MegaSyncStats> sp(stats->copy());
-    mSyncStatsMap[sp->getBackupId()] = sp;
-
-    emit syncStatsUpdated(sp);
-}
-
 std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 {
     if (!sync)
@@ -700,6 +692,14 @@ void SyncInfo::onSyncFileStateChanged(MegaApi*, MegaSync*, std::string *localPat
     }
 
     Platform::getInstance()->notifySyncFileChange(localPath, newState, false);
+}
+
+void SyncInfo::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats *syncStats)
+{
+    std::shared_ptr<::mega::MegaSyncStats> sp(syncStats->copy());
+    mSyncStatsMap[sp->getBackupId()] = sp;
+
+    emit syncStatsUpdated(sp);
 }
 
 void SyncInfo::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting)

@@ -84,8 +84,6 @@ public:
      */
     std::shared_ptr<SyncSettings> updateSyncSettings(mega::MegaSync *sync);
 
-    void updateSyncStats(mega::MegaSyncStats* stats);
-
     // transition sync to active: will trigger platform dependent behaviour
     void activateSync(std::shared_ptr<SyncSettings> cs);
     // transition sync to inactive: will trigger platform dependent behaviour
@@ -158,4 +156,5 @@ protected:
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncFileStateChanged(mega::MegaApi *, mega::MegaSync *, std::string *localPath, int newState) override;
+    void onSyncStatsUpdated(mega::MegaApi *api, mega::MegaSyncStats* syncStats);
 };
