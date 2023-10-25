@@ -57,6 +57,15 @@ macx {
     contains(QT_ARCH, arm64):QMAKE_MACOSX_DEPLOYMENT_TARGET = 11.0
     else:QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13
     QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
+
+    clang {
+        COMPILER_VERSION = $$system("$$QMAKE_CXX -dumpversion | cut -d'.' -f1")
+        message($$COMPILER_VERSION)
+        greaterThan(COMPILER_VERSION, 14) {
+            message("Using Xcode 15 or above. Switching to ld_classic linking.")
+            LIBS += -Wl,-ld_classic
+        }
+    }
 }
 
 vcpkg {
