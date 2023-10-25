@@ -54,16 +54,16 @@ Rectangle {
             anchors.fill: parent
             sourceComponent: {
                 if(!backupsProxyModel.selectedFilterEnabled
-                    || error === backupsModelAccess.BackupErrorCode.None) {
+                    || error === backupsModelAccess.BackupErrorCode.NONE) {
                     return selectContent;
                 } else {
-                    if(error === backupsModelAccess.BackupErrorCode.SyncConflict
-                        || error === backupsModelAccess.BackupErrorCode.PathRelation
-                        || error === backupsModelAccess.BackupErrorCode.UnavailableDir
-                        || error === backupsModelAccess.BackupErrorCode.SDKCreation) {
+                    if(error === backupsModelAccess.BackupErrorCode.SYNC_CONFLICT
+                        || error === backupsModelAccess.BackupErrorCode.PATH_RELATION
+                        || error === backupsModelAccess.BackupErrorCode.UNAVAILABLE_DIR
+                        || error === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
                         return conflictContent;
                     } else {
-                        // DuplicatedName or ExistsRemote errors
+                        // DUPLICATED_NAME or EXISTS_REMOTE errors
                         if(editMode) {
                             return editContent;
                         } else {
@@ -184,10 +184,10 @@ Rectangle {
             readonly property int textWidth: 248
             readonly property int sizeTextWidth: 50
 
-            property bool showChange: error === backupsModelAccess.BackupErrorCode.SyncConflict
-                                        || error === backupsModelAccess.BackupErrorCode.PathRelation
-                                        || error === backupsModelAccess.BackupErrorCode.UnavailableDir
-                                        || error === backupsModelAccess.BackupErrorCode.SDKCreation
+            property bool showChange: error === backupsModelAccess.BackupErrorCode.SYNC_CONFLICT
+                                        || error === backupsModelAccess.BackupErrorCode.PATH_RELATION
+                                        || error === backupsModelAccess.BackupErrorCode.UNAVAILABLE_DIR
+                                        || error === backupsModelAccess.BackupErrorCode.SDK_CREATION
 
             Row {
                 id: imageText
@@ -202,11 +202,11 @@ Rectangle {
 
                 MegaImages.SvgImage {
                     anchors.verticalCenter: parent.verticalCenter
-                    source: error === backupsModelAccess.BackupErrorCode.SDKCreation
+                    source: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                             ? Images.alertCircle
                             : Images.alertTriangle
                     sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
-                    color: error === backupsModelAccess.BackupErrorCode.SDKCreation
+                    color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                            ? Styles.textError
                            : Styles.textWarning
                 }
@@ -218,7 +218,7 @@ Rectangle {
                             - buttonRow.width - contentRoot.contentMargin
                     font.pixelSize: MegaTexts.Text.Size.Small
                     text: name
-                    color: error === backupsModelAccess.BackupErrorCode.SDKCreation
+                    color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                            ? Styles.textError
                            : Styles.textWarning
                     showTooltip: false
@@ -346,18 +346,18 @@ Rectangle {
                 editTextField.hint.visible = false;
                 var error = backupsModelAccess.rename(folder, editTextField.text);
                 switch(error) {
-                    case backupsModelAccess.BackupErrorCode.None:
-                    case backupsModelAccess.BackupErrorCode.SyncConflict:
-                    case backupsModelAccess.BackupErrorCode.PathRelation:
-                    case backupsModelAccess.BackupErrorCode.SDKCreation:
+                    case backupsModelAccess.BackupErrorCode.NONE:
+                    case backupsModelAccess.BackupErrorCode.SYNC_CONFLICT:
+                    case backupsModelAccess.BackupErrorCode.PATH_RELATION:
+                    case backupsModelAccess.BackupErrorCode.SDK_CREATION:
                         root.height = root.totalHeight;
                         break;
-                    case backupsModelAccess.BackupErrorCode.ExistsRemote:
+                    case backupsModelAccess.BackupErrorCode.EXISTS_REMOTE:
                         editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;
                         break;
-                    case backupsModelAccess.BackupErrorCode.DuplicatedName:
+                    case backupsModelAccess.BackupErrorCode.DUPLICATED_NAME:
                         editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
                         editTextField.hint.visible = true;
                         root.height = editTextField.height + root.extraMarginWhenHintShowed;

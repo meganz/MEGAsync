@@ -35,8 +35,8 @@ ConfirmFoldersPageForm {
         }
 
         function onExistConflictsChanged() {
-            if(backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.None) {
-                if(backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDKCreation) {
+            if(backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE) {
+                if(backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
                     stepPanel.state = stepPanel.step4Error;
                 } else {
                     stepPanel.state = stepPanel.step4Warning;

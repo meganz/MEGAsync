@@ -24,7 +24,7 @@ Rectangle {
 
     Layout.preferredWidth: width
     Layout.preferredHeight: height
-    height: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.None
+    height: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.NONE
             ? 192 : 192 - headerFooterHeight + listView.footerItem.height
     width: parent.width
     radius: tableRadius
@@ -147,13 +147,13 @@ Rectangle {
             radius: tableRadius
             color: Styles.pageBackground
             z: 3
-            visible: backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.None
+            visible: backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE
 
             MegaTexts.NotificationText {
                 id: notificationItem
 
                 width: parent.width
-                attributes.type: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDKCreation
+                attributes.type: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
                                  ? MegaTexts.NotificationInfo.Type.Error
                                  : MegaTexts.NotificationInfo.Type.Warning
                 attributes.icon.source: ""
