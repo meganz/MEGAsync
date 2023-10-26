@@ -2458,12 +2458,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Ihr Sync „%1“ wurde deaktiviert, da der Remote-Ordner nicht existiert</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Ihr Sync „%1“ wurde deaktiviert, da der lokale Ordner nicht existiert.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2731,7 +2731,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Ihr Backup „%1“ wurde deaktiviert, da der lokale Ordner nicht existiert</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -3415,7 +3415,7 @@ Die ausgewählten unvollständigen Synchronisierungstransfers werden nicht abgeb
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation>Nicht abbrechen</translation>
+        <translation>Nicht absagen</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
@@ -4039,12 +4039,15 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- Bedienoberfläche verbessert.
-- Erkannte Abstürze unter Windows, Linux und macOS behoben.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Upgrade auf Qt 5.15 durchgeführt.
+- Erkannte Abstürze unter Windows, Linux und macOS behoben.
+- Fremdbibliotheken aktualisiert.
+</translation>
     </message>
 </context>
 <context>

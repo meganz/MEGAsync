@@ -2453,17 +2453,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>應用程式無法連接。請檢查您的網路連線和本地防火牆設定。請注意，大多數防毒軟體都包含防火牆。</translation>
+        <translation>應用程式無法連線。請檢查您的網路連線和本地防火牆設定。請注意，大多數防毒軟體都包含防火牆。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>因遠端資料夾不存在，您的同步「%1」已被停用。</translation>
+        <translation>您的同步「%1」已停用，因為本地資料夾不可用或缺少讀寫權限。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>因本地資料夾不存在，您的同步「%1」已被停用。</translation>
+        <translation>您的同步「%1」已停用，因為本地資料夾不可用或缺少讀寫權限。</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2730,7 +2730,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>因為本地資料夾不存在，您的備份「%1」已停用。</translation>
+        <translation>您的備份「%1」已停用，因為本地資料夾不可用或缺少讀寫權限。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -4038,12 +4038,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- 改善使用者介面。
-- 修復了在Windows、Linux和macOS上檢測到的崩潰問題。</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- 升級到Qt 5.15。
+- 修復在Windows、Linux和macOS上檢測到的崩潰問題。
+- 更新第三方儲存庫。
+</translation>
     </message>
 </context>
 <context>

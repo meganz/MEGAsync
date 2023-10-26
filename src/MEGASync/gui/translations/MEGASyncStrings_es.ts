@@ -2459,12 +2459,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Tu sincronización &#8220;%1&#8221; ha sido desactivada porque la carpeta remota no existe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Tu sincronización &#8220;%1&#8221; ha sido desactivada porque la carpeta local no existe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2732,7 +2732,7 @@ Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la 
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Tu backup &#8220;%1&#8221; se ha desactivado porque la carpeta local no existe.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -4040,12 +4040,15 @@ Introduzca un nombre diferente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- Interfaz de usuario mejorada.
-- Fallos detectados y corregidos en Windows, Linux y macOS.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Actualizado a Qt 5.15.
+- Se han corregido los crashes detectados en Windows, Linux y macOS.
+- Bibliotecas actualizadas.
+</translation>
     </message>
 </context>
 <context>
@@ -5304,7 +5307,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation>No se ha podido hacer el backup de algunas carpetas. Coloca el cursor sobre el ícono de advertencia amarillo para obtener más información.</translation>
+        <translation>No se ha podido hacer el backup de algunas carpetas. Coloca el cursor sobre el icono de advertencia amarillo para obtener más información.</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -5927,7 +5930,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation>¿Confirmas de que quieres detener el streaming?</translation>
+        <translation>¿Confirmas que quieres detener el streaming?</translation>
     </message>
     <message>
         <source>File not found</source>

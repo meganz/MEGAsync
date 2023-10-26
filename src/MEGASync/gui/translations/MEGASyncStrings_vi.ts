@@ -1042,7 +1042,7 @@
     <message>
         <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tài khoản Pro&#xa0;Flexi của bạn đã bị vô&#xa0;hiệu hóa do việc thanh&#xa0;toán đã không thành&#xa0;công hoặc bạn đã hủy gói đăng&#xa0;ký. Bạn sẽ không thể truy&#xa0;cập vào dữ&#xa0;liệu đã được lưu&#xa0;trữ trong tài&#xa0;khoản của mình cho đến khi bạn thanh&#xa0;toán và kích&#xa0;hoạt lại gói đăng&#xa0;ký của bạn.</translation>
     </message>
 </context>
 <context>
@@ -1779,7 +1779,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 không thể thêm vào do tài khoản Pro&#xa0;Flexi của bạn đã bị vô&#xa0;hiệu hóa do việc thanh&#xa0;toán đã không thành&#xa0;công hoặc bạn đã hủy gói đăng&#xa0;ký. Để tiếp&#xa0;tục, hãy thanh&#xa0;toán và kích&#xa0;hoạt lại gói đăng&#xa0;ký của bạn.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2453,17 +2453,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>Ứng dụng không thể kết nối tới mạng. Xin kiểm tra đường kết nối Internet và các cài đặt tường lửa cục bộ của bạn. Lưu ý rằng nhiều phần mềm chống virút cũng có tường lửa.</translation>
+        <translation>Ứng&#xa0;dụng không thể kết&#xa0;nối tới mạng. Xin kiểm&#xa0;tra đường kết&#xa0;nối internet và các cài&#xa0;đặt tường&#xa0;lửa cục&#xa0;bộ của bạn. Lưu&#xa0;ý rằng nhiều phần&#xa0;mềm chống virút cũng có đặt tường&#xa0;lửa.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu do thư&#xa0;mục từ xa bạn đã chọn không&#xa0;có tồn&#xa0;tại</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu vì thư&#xa0;mục cục&#xa0;bộ này không&#xa0;có tồn&#xa0;tại</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2730,7 +2730,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Việc sao&#xa0;lưu “%1” đã bị tắt bởi vì thư&#xa0;mục cục&#xa0;bộ không có tồn&#xa0;tại.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -4037,12 +4037,15 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- Giao&#xa0;diện người dùng được cải&#xa0;tiến.
-- Phát hiện các sự cố và được sửa cho Windows, Linux và macOS.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Nâng&#xa0;cấp lên Qt 5.15.
+- Đã khắc phục sự cố được phát hiện trên Windows, Linux và macOS.
+- Thư viện của bên thứ ba được cập nhật.
+</translation>
     </message>
 </context>
 <context>

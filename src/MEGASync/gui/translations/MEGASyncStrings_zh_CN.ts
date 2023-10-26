@@ -2458,12 +2458,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>因远程文件夹不存在，您的同步&quot;%1&#8221; 已被停用。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>您的同步&quot;%1&quot;未激活因为本机文件夹不存在</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2730,7 +2730,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>由于本地文件夹不存在，您的备份“%1”已被禁用。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -3414,7 +3414,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation>不要取消</translation>
+        <translation>不取消</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
@@ -4038,12 +4038,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>－提升了用户界面。
-－修复了在Windows、Linux和macOS上的崩溃问题。</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>－已升级到Qt 5.15。
+－已修复在Windows、Linux和macOS上检测到的崩溃问题。
+－已更新第三方资源库。
+</translation>
     </message>
 </context>
 <context>
