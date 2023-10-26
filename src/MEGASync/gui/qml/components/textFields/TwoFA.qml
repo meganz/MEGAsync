@@ -101,7 +101,7 @@ ColumnLayout {
         text: OnboardingStrings.tryAgain
         Layout.preferredWidth: root.width - 4
         Layout.preferredHeight: notification.height
-        type: MegaTexts.NotificationInfo.Type.Error
+        type: Constants.MessageType.ERROR
         icon: Images.lock
         time: 2000
 
