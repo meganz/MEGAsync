@@ -24,13 +24,16 @@ Rectangle {
 
     // Component properties
     property bool error: false
-    property string title: ""
+    property alias title: titleItem.text
+
     property alias rightIconColor: rightIcon.color
-    property alias rightIconSource: rightIcon.source
     property alias rightIconVisible: rightIcon.visible
+    property string rightIconSource: ""
+
     property alias leftIconColor: leftIcon.color
-    property alias leftIconSource: leftIcon.source
     property alias leftIconVisible: leftIcon.visible
+    property string leftIconSource: ""
+
     property Sizes sizes: Sizes {}
     property Colors colors: Colors {}
 
@@ -38,6 +41,22 @@ Rectangle {
     signal pastePressed()
     signal returnPressed()
     signal accepted()
+
+    onLeftIconSourceChanged:
+    {
+        if (leftIconSource.length > 0)
+        {
+            leftIcon.source = leftIconSource
+        }
+    }
+
+    onRightIconSourceChanged:
+    {
+        if (rightIconSource.length > 0)
+        {
+            rightIcon.source = rightIconSource
+        }
+    }
 
     function getHintHeight() {
         if(hint.height > 0) {
@@ -47,26 +66,18 @@ Rectangle {
     }
 
     function getTitleHeight() {
-        if(titleLoader.height > 0) {
-            return titleLoader.height + textField.anchors.topMargin;
+        if(titleItem.height > 0) {
+            return titleItem.height + textField.anchors.topMargin;
         }
-        return titleLoader.height;
+        return titleItem.height;
     }
 
     Layout.preferredHeight: height
     height: textField.height + getTitleHeight() + getHintHeight()
     color: "transparent"
 
-    onTitleChanged: {
-        if(title.length === 0) {
-            return;
-        }
-
-        titleLoader.sourceComponent = titleComponent;
-    }
-
-    Loader {
-        id: titleLoader
+    MegaTexts.Text {
+        id: titleItem
 
         anchors {
             left: parent.left
@@ -75,6 +86,8 @@ Rectangle {
             leftMargin: sizes.focusBorderWidth
             bottomMargin: sizes.titleBottomMargin
         }
+        font.weight: Font.DemiBold
+        color: enabled ? colors.title : colors.titleDisabled
     }
 
     Qml.TextField {
@@ -92,7 +105,7 @@ Rectangle {
 
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.top: titleLoader.bottom
+        anchors.top: titleItem.bottom
         anchors.topMargin: sizes.titleSpacing
 
         selectByMouse: true
@@ -217,18 +230,6 @@ Rectangle {
         anchors.rightMargin: sizes.focusBorderWidth
         type: Constants.MessageType.ERROR
         visible: false
-    }
-
-    Component {
-        id: titleComponent
-
-        MegaTexts.Text {
-            id: titleText
-
-            text: title
-            font.weight: Font.DemiBold
-            color: enabled ? colors.title : colors.titleDisabled
-        }
     }
 
     MegaToolTips.ToolTip {
