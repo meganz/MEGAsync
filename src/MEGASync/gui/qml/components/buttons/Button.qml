@@ -14,7 +14,7 @@ Qml.RoundButton {
     id: root
 
     property Colors colors: Colors {}
-    property Icon icons: Icon {}
+    property Icon icons: Icon{}
     property alias progressValue: backgroundProgress.value
     property Sizes sizes: Sizes {}
 
@@ -77,67 +77,17 @@ Qml.RoundButton {
     height: sizes.height + 2 * sizes.focusBorderWidth
     Layout.preferredHeight: sizes.height + 2 * sizes.focusBorderWidth
 
-    Connections
-    {
-        target: root.icons
-
-        function onSourceChanged() {
-
-            console.log("source changed : " + root.icons.source)
-
-            if(icons.busyIndicatorVisible) {
-                return;
-            }
-
-            switch(root.icons.position) {
-                case Icon.Position.LEFT:
-                    leftImage.visible = true
-                    rightImage.visible = false
-                    break;
-                case Icon.Position.RIGHT:
-                    leftImage.visible = false
-                    rightImage.visible = true
-                    break;
-                case Icon.Position.BOTH:
-                    leftImage.visible = true
-                    rightImage.visible = true
-                    break;
-            }
-        }
-
-        function onBusyIndicatorVisibleChanged() {
-            if(root.icons.busyIndicatorVisible) {
-                switch(root.icons.busyIndicatorPosition) {
-                    case Icon.Position.LEFT:
-                        leftBusyIndicator.visible = true
-                        rightBusyIndicator.visible = false
-                        break;
-                    case Icon.Position.RIGHT:
-                        leftBusyIndicator.visible = false
-                        rightBusyIndicator.visible = true
-                        break;
-                    case Icon.Position.BOTH:
-                        leftBusyIndicator.visible = true
-                        rightBusyIndicator.visible = true
-                        break;
-                }
-            } else {
-                root.icons.sourceChanged();
-            }
-        }
-    }
-
     contentItem: Row {
-
         spacing: sizes.spacing
 
         MegaImages.SvgImage {
             id: leftImage
 
+            anchors.verticalCenter: parent.verticalCenter
             source: root.icons.source
             color: getIconColor()
             sourceSize: sizes.iconSize
-            visible: false
+            visible: root.icons.position === Icon.Position.LEFT && !root.icons.busyIndicatorVisible
         }
 
         MegaBusyIndicator.BusyIndicator {
@@ -145,7 +95,7 @@ Qml.RoundButton {
             anchors.verticalCenter: parent.verticalCenter
 
             color: root.icons.colorEnabled
-            visible: false
+            visible: root.icons.position === Icon.Position.LEFT && root.icons.busyIndicatorVisible
         }
 
         MegaTexts.Text {
@@ -163,10 +113,11 @@ Qml.RoundButton {
         MegaImages.SvgImage {
             id: rightImage
 
+            anchors.verticalCenter: parent.verticalCenter
             source: root.icons.source
             color: getIconColor()
             sourceSize: sizes.iconSize
-            visible: false
+            visible: root.icons.position === Icon.Position.RIGHT && !root.icons.busyIndicatorVisible
         }
 
         MegaBusyIndicator.BusyIndicator {
@@ -174,7 +125,7 @@ Qml.RoundButton {
 
             anchors.verticalCenter: parent.verticalCenter
             color: icons.colorEnabled
-            visible: false
+            visible: root.icons.position === Icon.Position.RIGHT && root.icons.busyIndicatorVisible
         }
     }
 
