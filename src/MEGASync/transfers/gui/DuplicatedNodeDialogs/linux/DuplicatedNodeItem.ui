@@ -90,7 +90,7 @@
    color: #333333;
 }
 
-#titleContainer, #titleContainer QLabel
+#titleContainer, #titleContainer QLabel,  #titleContainer WordWrapLabel
 {
    background-color: #F7F8F9;
 }
@@ -141,7 +141,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lDescription">
+          <widget class="WordWrapLabel" name="lDescription">
            <property name="text">
             <string/>
            </property>

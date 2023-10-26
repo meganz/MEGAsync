@@ -16,6 +16,8 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node)
 
 #ifdef Q_OS_WINDOWS
     setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+#elif defined Q_OS_LINUX
+    layout()->setSizeConstraint(QLayout::SetFixedSize);
 #endif
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 

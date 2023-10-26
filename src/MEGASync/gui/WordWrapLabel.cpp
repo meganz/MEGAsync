@@ -50,9 +50,9 @@ void WordWrapLabel::adaptHeight(bool sendEvent)
     QSize docSize = document()->size().toSize();
     if(docSize.isValid() && docSize.height() > MINIMUM_DOC_HEIGHT)
     {
-        if((docSize.height() + 3) != (height()))
+        if((docSize.height() + MINIMUM_DOC_HEIGHT) != (height()))
         {
-            setFixedHeight(docSize.height() + 3);
+            setFixedHeight(docSize.height() + MINIMUM_DOC_HEIGHT);
             if(sendEvent)
             {
                 qApp->postEvent(this, new QEvent(HeightAdapted));
