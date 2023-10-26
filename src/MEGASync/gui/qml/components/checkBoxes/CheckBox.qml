@@ -8,7 +8,7 @@ import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 
 Qml.CheckBox {
-    id: checkBox
+    id: root
 
     function indeterminate() {
         return checkState === Qt.PartiallyChecked;
@@ -20,50 +20,38 @@ Qml.CheckBox {
     property Icons icons: Icons {}
 
     spacing: (text.length === 0) ? 0 : sizes.spacing
-    indicator: checkBoxOutRect
-    contentItem: Loader { id: textLoader }
+    height: Math.max(contentItem.height, indicator.height)
     padding: 0
-    height: (text.length === 0) ? checkBoxOutRect.height : textLoader.height
 
-    onTextChanged: {
-        if(text.length === 0) {
-            return;
+    contentItem: MegaTexts.RichText {
+        anchors.left: indicator.right
+        leftPadding: root.spacing
+        height: Math.max(contentItem.implicitHeight, indicator.height)
+        rawText: root.text
+        wrapMode: Text.WordWrap
+        fontSizeMode: Text.Fit
+        url: root.url
+        verticalAlignment: Text.AlignVCenter
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: { mouse.accepted = false; }
+            cursorShape: Qt.PointingHandCursor
         }
-
-        textLoader.sourceComponent = textComponent;
     }
 
-    Rectangle {
+    indicator: Rectangle {
         id: checkBoxOutRect
 
         function getBorderColor() {
             var color = colors.border;
-            if(!checkBox.enabled) {
+            if(!root.enabled) {
                 color = colors.borderDisabled;
-            } else if(checkBox.pressed) {
+            } else if(root.pressed) {
                 color = colors.borderPressed;
-            } else if(checkBox.hovered) {
+            } else if(root.hovered) {
                 color = colors.borderHover;
             }
-            return color;
-        }
-
-        function getBackgroundColor() {
-            var color = colors.backgroundUnchecked;
-            if(checkState === Qt.Unchecked) {
-                return color;
-            }
-
-            if(!checkBox.enabled) {
-                color = colors.backgroundDisabled;
-            } else if(checkBox.pressed) {
-                color = colors.backgroundPressed;
-            } else if(checkBox.hovered) {
-                color = colors.backgroundHover;
-            } else {
-                color = colors.background;
-            }
-
             return color;
         }
 
@@ -77,8 +65,27 @@ Qml.CheckBox {
         Rectangle {
             id: inside
 
-            visible: checkBox.checked || checkBox.down || indeterminate()
-            color: checkBoxOutRect.getBackgroundColor()
+            function getBackgroundColor() {
+                var color = colors.backgroundUnchecked;
+                if(checkState === Qt.Unchecked) {
+                    return color;
+                }
+
+                if(!root.enabled) {
+                    color = colors.backgroundDisabled;
+                } else if(root.pressed) {
+                    color = colors.backgroundPressed;
+                } else if(root.hovered) {
+                    color = colors.backgroundHover;
+                } else {
+                    color = colors.background;
+                }
+
+                return color;
+            }
+
+            visible: root.checked || root.down || indeterminate()
+            color: getBackgroundColor()
             radius: 1
             width: checkBoxOutRect.width - checkBoxOutRect.border.width
             height: inside.width
@@ -96,24 +103,10 @@ Qml.CheckBox {
         }
     }
 
-    Component {
-        id: textComponent
-
-        MegaTexts.RichText {
-            rawText: checkBox.text
-            leftPadding: checkBoxOutRect.width + checkBox.spacing
-            wrapMode: Text.WordWrap
-            fontSizeMode: Text.Fit
-            url: checkBox.url
-            enabled: checkBox.enabled
-        }
-    }
-
     MouseArea {
-        id: mouseArea
-
         anchors.fill: parent
-        onPressed: mouse.accepted = false
+        onPressed: { mouse.accepted = false; }
         cursorShape: Qt.PointingHandCursor
     }
+
 }

@@ -189,7 +189,6 @@ Column {
         id: termsCheckBox
 
         anchors.left: parent.left
-        anchors.right: parent.right
         url: Links.terms
         text: OnboardingStrings.agreeTerms
     }

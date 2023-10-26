@@ -3,15 +3,16 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 import QtGraphicalEffects 1.15
 
+// Local
 import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Qml.BusyIndicator {
     id: root
+
     property alias color: iconImage.color
     property alias imageSource: iconImage.source
     property alias imageSize: iconImage.sourceSize
-    //property alias disabledOpacity: iconImage.disabledOpacity
 
     width: imageSize.width
     height: imageSize.height
@@ -35,11 +36,11 @@ Qml.BusyIndicator {
         }
     }
 
-
     RotationAnimator on rotation {
         running: root.visible
         loops: Animation.Infinite
         duration: 2000
         from: 0 ; to: 360
     }
+
 }

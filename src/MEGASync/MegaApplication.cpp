@@ -3098,7 +3098,6 @@ void MegaApplication::registerCommonQMLElements()
 
     qmlRegisterModule("Components.TextFields", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/EmailTextField.qml")), "Components.TextFields", 1, 0, "EmailTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/Hint.qml")), "Components.TextFields", 1, 0, "Hint");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/IconTextField.qml")), "Components.TextFields", 1, 0, "IconTextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components.TextFields", 1, 0, "PasswordTextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components.TextFields", 1, 0, "TextField");
@@ -3110,9 +3109,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/Colors.qml")), "Components.TextFields", 1, 0, "Colors");
 
     qmlRegisterModule("Components.Texts", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintStyle.qml")), "Components.Texts", 1, 0, "HintStyle");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintText.qml")), "Components.Texts", 1, 0, "HintText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationInfo.qml")), "Components.Texts", 1, 0, "NotificationInfo");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationText.qml")), "Components.Texts", 1, 0, "NotificationText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components.Texts", 1, 0, "RichText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/SecondaryText.qml")), "Components.Texts", 1, 0, "SecondaryText");
