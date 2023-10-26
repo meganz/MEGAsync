@@ -116,7 +116,7 @@ private:
     template <class EnumType>
     bool detectValue(QString character, EnumType* value, Qt::CaseSensitivity caseSensitive)
     {
-        if(value > 0)
+        if(static_cast<int>((*value)) > 0)
         {
             return false;
         }
