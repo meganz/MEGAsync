@@ -110,7 +110,7 @@ void BackupNameConflictDialog::checkChangedNames()
     const auto conflicts = ui->wConflictZone->findChildren<BackupRenameWidget*>();
 
     // Get the remote names
-    QStringList chosenNames (SyncInfo::getRemoteBackupFolderNames().toList());
+    QStringList chosenNames (SyncInfo::getRemoteBackupFolderNames().values());
 
     // First pass to get all the new names:
     //   - First replace in candidate nams all the changed names

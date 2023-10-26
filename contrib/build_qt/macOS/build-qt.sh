@@ -24,18 +24,19 @@ git checkout v${MEGA_QT_VER}-lts-lgpl
 perl init-repository
 
 for patch_directory in ${MEGA_PATCHES_DIR}/*; do
-    for file in ${patch_directory}/*; do
+    for file in $(find -E ${patch_directory} -type f -regex '.*/[0-9]{2}.(macx|all).*'  | sort); do
+
 		echo "Applying patch ${file}" 
 		git apply -v --directory=`basename "$patch_directory"` --ignore-whitespace $file
     done
 done
 
 cd "../${MEGA_QT_BUILD_DIR}-arm64"
-../${MEGA_QT_SOURCES_DIR}/configure QMAKE_APPLE_DEVICE_ARCHS=arm64 --prefix="${PWD}/../${MEGA_QT_VER}/arm64" -opensource -confirm-license -nomake examples -nomake tests -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard  -force-debug-info -separate-debug-info -debug-and-release
+../${MEGA_QT_SOURCES_DIR}/configure QMAKE_APPLE_DEVICE_ARCHS=arm64 --prefix="${PWD}/../${MEGA_QT_VER}/arm64" -opensource -confirm-license -nomake examples -nomake tests -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard  -force-debug-info -separate-debug-info -debug-and-release QMAKE_LFLAGS="-Wl,-ld_classic"
 make -j`sysctl -n hw.ncpu`
 make install
 
 cd "../${MEGA_QT_BUILD_DIR}-x86_64"
-../${MEGA_QT_SOURCES_DIR}/configure QMAKE_APPLE_DEVICE_ARCHS=x86_64 --prefix="${PWD}/../${MEGA_QT_VER}/x86_64" -opensource -confirm-license -nomake examples -nomake tests -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard  -force-debug-info -separate-debug-info -debug-and-release
+../${MEGA_QT_SOURCES_DIR}/configure QMAKE_APPLE_DEVICE_ARCHS=x86_64 --prefix="${PWD}/../${MEGA_QT_VER}/x86_64" -opensource -confirm-license -nomake examples -nomake tests -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard  -force-debug-info -separate-debug-info -debug-and-release QMAKE_LFLAGS="-Wl,-ld_classic"
 make -j`sysctl -n hw.ncpu`
 make install

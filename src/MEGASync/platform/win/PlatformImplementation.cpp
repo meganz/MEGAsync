@@ -97,7 +97,7 @@ void PlatformImplementation::prepareForSync()
     (void)Preferences::instance();
 
     QProcess p;
-    p.start(QString::fromUtf8("net use"));
+    p.start(QString::fromUtf8("net"), QStringList() << QString::fromUtf8("use"));
     p.waitForFinished(2000);
     QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
     QString e = QString::fromUtf8(p.readAllStandardError().constData());
@@ -113,13 +113,13 @@ void PlatformImplementation::prepareForSync()
         for (int i = 1; i < data.size(); i++)
         {
             QString drive = data.at(i).trimmed();
-            if (drive.size() && drive.contains(QChar::fromAscii(':')))
+            if (drive.size() && drive.contains(QChar::fromLatin1(':')))
             {
                 int index = drive.indexOf(QString::fromUtf8(":"));
-                if (index >= 2 && drive[index - 2] == QChar::fromAscii(' '))
+                if (index >= 2 && drive[index - 2] == QChar::fromLatin1(' '))
                 {
                     drive = drive.mid(index - 1);
-                    QStringList parts = drive.split(QString::fromUtf8(" "), QString::SkipEmptyParts);
+                    QStringList parts = drive.split(QString::fromUtf8(" "), Qt::SkipEmptyParts);
                     if (parts.size() >= 2 && parts.at(1).startsWith(QString::fromUtf8("\\")))
                     {
                         QString driveName = parts.at(0);
@@ -138,8 +138,8 @@ void PlatformImplementation::prepareForSync()
                                              .toUtf8().constData());
 
                                 QProcess p;
-                                QString command = QString::fromUtf8("net use %1 %2").arg(driveName, networkName);
-                                p.start(command);
+                                QString command = QString::fromUtf8("net");
+                                p.start(command, QStringList() << QString::fromUtf8("use") << driveName << networkName);
                                 p.waitForFinished(2000);
                                 QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
                                 QString e = QString::fromUtf8(p.readAllStandardError().constData());
@@ -663,8 +663,7 @@ void PlatformImplementation::streamWithApp(const QString &app, const QString &ur
 {
     if (isTraditionalApp(app))
     {
-        QString command = QString::fromUtf8("\"%1\" \"%2\"").arg(QDir::toNativeSeparators(app)).arg(url);
-        QProcess::startDetached(command);
+        QProcess::startDetached(app, QStringList{ url });
     }
     else
     {
@@ -684,7 +683,7 @@ bool PlatformImplementation::startOnStartup(bool value)
     }
 
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += QString::fromAscii("\\MEGAsync.lnk");
+    startupPath += QString::fromLatin1("\\MEGAsync.lnk");
 
     if (value)
     {
@@ -725,7 +724,7 @@ bool PlatformImplementation::isStartOnStartupActive()
     }
 
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += QString::fromAscii("\\MEGAsync.lnk");
+    startupPath += QString::fromLatin1("\\MEGAsync.lnk");
     if (QFileInfo(startupPath).isSymLink())
     {
         return true;
@@ -742,8 +741,8 @@ bool PlatformImplementation::showInFolder(QString pathIn)
 
     QString param;
     param = QString::fromUtf8("/select,");
-    param += QString::fromAscii("\"\"") + QDir::toNativeSeparators(QDir(pathIn).canonicalPath()) + QString::fromAscii("\"\"");
-    return QProcess::startDetached(QString::fromAscii("explorer ") + param);
+    param += QString::fromLatin1("\"\"") + QDir::toNativeSeparators(QDir(pathIn).canonicalPath()) + QString::fromLatin1("\"\"");
+    return QProcess::startDetached(QString::fromLatin1("explorer"), { param });
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
@@ -769,7 +768,7 @@ void PlatformImplementation::stopShellDispatcher()
 
 void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
 {
-    if (syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (syncPath.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         syncPath = syncPath.mid(4);
     }
@@ -822,14 +821,14 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName,
     }
 
     QString linksPath = QString::fromWCharArray(path);
-    linksPath += QString::fromAscii("\\Links");
+    linksPath += QString::fromLatin1("\\Links");
     QFileInfo info(linksPath);
     if (!info.isDir())
     {
         return;
     }
 
-    QString linkPath = linksPath + QString::fromAscii("\\") + syncName + QString::fromAscii(".lnk");
+    QString linkPath = linksPath + QString::fromLatin1("\\") + syncName + QString::fromLatin1(".lnk");
     if (QFile(linkPath).exists())
     {
         return;
@@ -854,7 +853,7 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName,
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 
     //Hide debris folder
-    QString debrisPath = QDir::toNativeSeparators(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+    QString debrisPath = QDir::toNativeSeparators(syncPath + QDir::separator() + QString::fromLatin1(MEGA_DEBRIS_FOLDER));
     WIN32_FILE_ATTRIBUTE_DATA fad;
     if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
     {
@@ -871,7 +870,7 @@ void PlatformImplementation::syncFolderRemoved(QString syncPath, QString syncNam
 
     removeSyncFromLeftPane(syncPath, syncName, syncID);
 
-    if (syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (syncPath.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         syncPath = syncPath.mid(4);
     }
@@ -889,14 +888,14 @@ void PlatformImplementation::syncFolderRemoved(QString syncPath, QString syncNam
     }
 
     QString linksPath = QString::fromWCharArray(path);
-    linksPath += QString::fromAscii("\\Links");
+    linksPath += QString::fromLatin1("\\Links");
     QFileInfo info(linksPath);
     if (!info.isDir())
     {
         return;
     }
 
-    QString linkPath = linksPath + QString::fromAscii("\\") + syncName + QString::fromAscii(".lnk");
+    QString linkPath = linksPath + QString::fromLatin1("\\") + syncName + QString::fromLatin1(".lnk");
 
     QFile::remove(linkPath);
 
@@ -1404,7 +1403,7 @@ bool PlatformImplementation::isUserActive()
 QString PlatformImplementation::getDeviceName()
 {
     // First, try to read maker and model
-    QSettings settings (QLatin1Literal("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),
+    QSettings settings (QLatin1String("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),
                         QSettings::NativeFormat);
     QString vendor (settings.value(QLatin1Literal("BaseBoardManufacturer"),
                                    QLatin1Literal("0")).toString());
