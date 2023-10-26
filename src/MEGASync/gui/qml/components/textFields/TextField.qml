@@ -20,18 +20,20 @@ Rectangle {
     property alias toolTip: toolTip
     property alias acceptableInput: textField.acceptableInput
     property alias validator: textField.validator
+    property alias hint: hintItem
 
     // Component properties
     property bool error: false
-    property string title: ""
+    property alias title: titleItem.text
 
     property alias rightIconColor: rightIcon.color
-    property alias rightIconSource: rightIcon.source
     property alias rightIconVisible: rightIcon.visible
+    property string rightIconSource: ""
+
     property alias leftIconColor: leftIcon.color
-    property alias leftIconSource: leftIcon.source
     property alias leftIconVisible: leftIcon.visible
-    property Hint hint: Hint {}
+    property string leftIconSource: ""
+
     property Sizes sizes: Sizes {}
     property Colors colors: Colors {}
 
@@ -40,34 +42,42 @@ Rectangle {
     signal returnPressed()
     signal accepted()
 
-    function getHintHeight() {
-        if(hintLoader.height > 0) {
-            return hintLoader.height + hintLoader.anchors.topMargin;
+    onLeftIconSourceChanged:
+    {
+        if (leftIconSource.length > 0)
+        {
+            leftIcon.source = leftIconSource
         }
-        return hintLoader.height;
+    }
+
+    onRightIconSourceChanged:
+    {
+        if (rightIconSource.length > 0)
+        {
+            rightIcon.source = rightIconSource
+        }
+    }
+
+    function getHintHeight() {
+        if(hint.height > 0) {
+            return hint.height + hint.anchors.topMargin;
+        }
+        return hint.height;
     }
 
     function getTitleHeight() {
-        if(titleLoader.height > 0) {
-            return titleLoader.height + textField.anchors.topMargin;
+        if(titleItem.height > 0) {
+            return titleItem.height + textField.anchors.topMargin;
         }
-        return titleLoader.height;
+        return titleItem.height;
     }
 
     Layout.preferredHeight: height
     height: textField.height + getTitleHeight() + getHintHeight()
     color: "transparent"
 
-    onTitleChanged: {
-        if(title.length === 0) {
-            return;
-        }
-
-        titleLoader.sourceComponent = titleComponent;
-    }
-
-    Loader {
-        id: titleLoader
+    MegaTexts.Text {
+        id: titleItem
 
         anchors {
             left: parent.left
@@ -76,6 +86,8 @@ Rectangle {
             leftMargin: sizes.focusBorderWidth
             bottomMargin: sizes.titleBottomMargin
         }
+        font.weight: Font.DemiBold
+        color: enabled ? colors.title : colors.titleDisabled
     }
 
     Qml.TextField {
@@ -93,14 +105,14 @@ Rectangle {
 
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.top: titleLoader.bottom
+        anchors.top: titleItem.bottom
         anchors.topMargin: sizes.titleSpacing
 
         selectByMouse: true
         selectionColor: colors.selection
         height: sizes.height + 2 * sizes.focusBorderWidth
-        leftPadding: calculatePaddingWithIcon(leftIconSource != "")
-        rightPadding: calculatePaddingWithIcon(rightIcon.source != "")
+        leftPadding: calculatePaddingWithIcon(leftIconSource !== "")
+        rightPadding: calculatePaddingWithIcon(rightIcon.source !== "")
         topPadding: sizes.padding
         bottomPadding: sizes.padding
         placeholderTextColor: colors.placeholder
@@ -207,8 +219,8 @@ Rectangle {
         }
     }
 
-    Loader {
-        id: hintLoader
+    MegaTexts.HintText {
+        id: hintItem
 
         anchors.left: parent.left
         anchors.right: parent.right
@@ -216,33 +228,8 @@ Rectangle {
         anchors.topMargin: 2
         anchors.leftMargin: sizes.focusBorderWidth
         anchors.rightMargin: sizes.focusBorderWidth
-    }
-
-    Component {
-        id: titleComponent
-
-        MegaTexts.Text {
-            id: titleText
-
-            text: title
-            font.weight: Font.DemiBold
-            color: enabled ? colors.title : colors.titleDisabled
-        }
-    }
-
-    Component {
-        id: hintComponent
-
-        MegaTexts.HintText {
-            id: hint
-
-            icon: root.hint.icon
-            title: root.hint.title
-            text: root.hint.text
-            styles: root.hint.styles
-            visible: root.hint.visible
-            textSize: root.sizes.hintTextSize
-        }
+        type: Constants.MessageType.ERROR
+        visible: false
     }
 
     MegaToolTips.ToolTip {
@@ -254,5 +241,4 @@ Rectangle {
                     && textField.hovered
         text: textField.text
     }
-
 }

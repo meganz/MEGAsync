@@ -15,7 +15,7 @@ DeviceNamePageForm {
         var emptyText = deviceNameTextField.text.length === 0;
         if(emptyText)
         {
-            deviceNameTextField.hint.styles.textColor = Styles.textError;
+            deviceNameTextField.hint.textColor = Styles.textError;
         }
         deviceNameTextField.error = emptyText;
         deviceNameTextField.hint.text = emptyText ? OnboardingStrings.errorEmptyDeviceName : "";
@@ -37,7 +37,7 @@ DeviceNamePageForm {
 
         if(deviceNameTextField.text.length >= deviceNameTextField.textField.maximumLength)
         {
-            deviceNameTextField.hint.styles.textColor = Styles.textSecondary;
+            deviceNameTextField.hint.textColor = Styles.textSecondary;
             deviceNameTextField.hint.text = OnboardingStrings.errorDeviceNameLimit;
             deviceNameTextField.hint.visible = true;
         }
