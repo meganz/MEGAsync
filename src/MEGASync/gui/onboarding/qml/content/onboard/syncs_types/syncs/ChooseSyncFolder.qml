@@ -62,10 +62,10 @@ Item {
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: getFolder()
-        leftIcon.source: local ? Images.pc : Images.megaOutline
-        leftIcon.color: enabled ? Styles.iconSecondary : Styles.iconDisabled
+        leftIconSource: local ? Images.pc : Images.megaOutline
+        leftIconColor: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
-        toolTip.leftIconSource: leftIcon.source
+        toolTip.leftIconSource: leftIconSource
         toolTip.timeout: 5000
     }
 

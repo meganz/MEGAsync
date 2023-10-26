@@ -57,7 +57,7 @@ SyncsPage {
                 Layout.preferredWidth: parent.width
                 Layout.leftMargin: -folderField.sizes.focusBorderWidth
                 title: OnboardingStrings.backupTo
-                leftIcon.source: Images.database
+                leftIconSource: Images.database
                 textField.readOnly: true
                 textField.text: "/" + deviceName.name
             }

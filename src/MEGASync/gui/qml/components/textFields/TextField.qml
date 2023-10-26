@@ -25,7 +25,9 @@ Rectangle {
     property bool error: false
     property string title: ""
     property RightIcon rightIcon: RightIcon {}
-    property LeftIcon leftIcon: LeftIcon {}
+    property alias leftIconColor: leftIcon.color
+    property alias leftIconSource: leftIcon.source
+    property alias leftIconVisible: leftIcon.visible
     property Hint hint: Hint {}
     property Sizes sizes: Sizes {}
     property Colors colors: Colors {}
@@ -94,7 +96,7 @@ Rectangle {
         selectByMouse: true
         selectionColor: colors.selection
         height: sizes.height + 2 * sizes.focusBorderWidth
-        leftPadding: calculatePaddingWithIcon(leftIcon.source != "")
+        leftPadding: calculatePaddingWithIcon(leftIconSource != "")
         rightPadding: calculatePaddingWithIcon(rightIcon.source != "")
         topPadding: sizes.padding
         bottomPadding: sizes.padding
@@ -126,13 +128,14 @@ Rectangle {
                 bottom: textField.bottom
             }
 
-            Loader {
-                id: leftIconLoader
+            MegaImages.SvgImage {
+                id: leftIcon
 
                 anchors.top: focusBorder.top
                 anchors.left: focusBorder.left
                 anchors.topMargin: sizes.iconMargin
                 anchors.leftMargin: sizes.iconMargin
+                sourceSize: sizes.iconSize
                 z: 2
             }
 
@@ -235,18 +238,6 @@ Rectangle {
             styles: root.hint.styles
             visible: root.hint.visible
             textSize: root.sizes.hintTextSize
-        }
-    }
-
-    Component {
-        id: leftIconComponent
-
-        MegaImages.SvgImage {
-            visible: leftIcon.visible
-            source: leftIcon.source
-            color: leftIcon.color
-            sourceSize: sizes.iconSize
-            z: 2
         }
     }
 
