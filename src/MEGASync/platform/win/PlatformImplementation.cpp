@@ -1494,7 +1494,7 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
             }
         }
 
-        QRect totalGeometry = QApplication::desktop()->screenGeometry();
+        QRect totalGeometry = QGuiApplication::primaryScreen()->geometry();
         APPBARDATA pabd;
         pabd.cbSize = sizeof(APPBARDATA);
         pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
