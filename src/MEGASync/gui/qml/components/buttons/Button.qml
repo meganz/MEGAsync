@@ -77,14 +77,75 @@ Qml.RoundButton {
     height: sizes.height + 2 * sizes.focusBorderWidth
     Layout.preferredHeight: sizes.height + 2 * sizes.focusBorderWidth
 
+    Connections
+    {
+        target: root.icons
+
+        function onSourceChanged() {
+
+            console.log("source changed : " + root.icons.source)
+
+            if(icons.busyIndicatorVisible) {
+                return;
+            }
+
+            switch(root.icons.position) {
+                case Icon.Position.LEFT:
+                    leftImage.visible = true
+                    rightImage.visible = false
+                    break;
+                case Icon.Position.RIGHT:
+                    leftImage.visible = false
+                    rightImage.visible = true
+                    break;
+                case Icon.Position.BOTH:
+                    leftImage.visible = true
+                    rightImage.visible = true
+                    break;
+            }
+        }
+
+        function onBusyIndicatorVisibleChanged() {
+            if(root.icons.busyIndicatorVisible) {
+                switch(root.icons.busyIndicatorPosition) {
+                    case Icon.Position.LEFT:
+                        leftBusyIndicator.visible = true
+                        rightBusyIndicator.visible = false
+                        break;
+                    case Icon.Position.RIGHT:
+                        leftBusyIndicator.visible = false
+                        rightBusyIndicator.visible = true
+                        break;
+                    case Icon.Position.BOTH:
+                        leftBusyIndicator.visible = true
+                        rightBusyIndicator.visible = true
+                        break;
+                }
+            } else {
+                root.icons.sourceChanged();
+            }
+        }
+    }
+
     contentItem: Row {
 
         spacing: sizes.spacing
 
-        Loader {
-            id: leftLoader
+        MegaImages.SvgImage {
+            id: leftImage
 
+            source: root.icons.source
+            color: getIconColor()
+            sourceSize: sizes.iconSize
+            visible: false
+        }
+
+        MegaBusyIndicator.BusyIndicator {
+            id: leftBusyIndicator
             anchors.verticalCenter: parent.verticalCenter
+
+            color: root.icons.colorEnabled
+            visible: false
         }
 
         MegaTexts.Text {
@@ -99,10 +160,21 @@ Qml.RoundButton {
             }
         }
 
-        Loader {
-            id: rightLoader
+        MegaImages.SvgImage {
+            id: rightImage
+
+            source: root.icons.source
+            color: getIconColor()
+            sourceSize: sizes.iconSize
+            visible: false
+        }
+
+        MegaBusyIndicator.BusyIndicator {
+            id: rightBusyIndicator
 
             anchors.verticalCenter: parent.verticalCenter
+            color: icons.colorEnabled
+            visible: false
         }
     }
 
@@ -145,9 +217,7 @@ Qml.RoundButton {
                 }
             }
 
-
-            Progress
-            {
+            Progress {
                 id: backgroundProgress
                 anchors.fill: parent
             }
@@ -162,40 +232,23 @@ Qml.RoundButton {
         cursorShape: Qt.PointingHandCursor
     }
 
-    Component {
-        id: image
-
-        MegaImages.SvgImage {
-            source: icons.source
-            color: getIconColor()
-            sourceSize: sizes.iconSize
-        }
-    }
-
-    Component {
-        id: busyIndicator
-
-        MegaBusyIndicator.BusyIndicator {
-            color: icons.colorEnabled
-        }
-    }
-
     Keys.onReleased: (event)=> {
         if (event.key === Qt.Key_Return) {
             if (checkable) {
-                down = false
-                checked = true
+                down = false;
+                checked = true;
             }
             event.accepted = true;
         }
     }
 
     Keys.onReturnPressed: {
-        down = true
-        root.clicked()
+        down = true;
+        root.clicked();
     }
 
     Keys.onEnterPressed:{
-        root.clicked()
+        root.clicked();
     }
+
 }
