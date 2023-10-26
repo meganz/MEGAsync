@@ -52,7 +52,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
     if (!test.isDir())
     {
         QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads")));
-        defaultFolder.mkpath(QString::fromAscii("."));
+        defaultFolder.mkpath(QString::fromLatin1("."));
         defaultFolderPath = defaultFolder.absolutePath();
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
     }
@@ -150,7 +150,7 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
     {
         auto nativePath = QDir::toNativeSeparators(path);
         QDir dir(nativePath);
-        if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
+        if (!dir.exists() && !dir.mkpath(QString::fromLatin1(".")))
         {
             return;
         }

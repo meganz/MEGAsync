@@ -215,7 +215,7 @@ void BugReportDialog::showErrorMessage()
                     tr("Bug report can't be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]")
                         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                         + QString::fromAscii("\n");
+                         + QString::fromLatin1("\n");
 
         QMegaMessageBox::warning(msgInfo);
     }

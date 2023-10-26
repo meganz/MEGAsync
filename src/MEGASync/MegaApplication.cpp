@@ -2187,10 +2187,7 @@ void MegaApplication::cleanAll()
     CrashHandler::instance()->Disable();
 #endif
 
-    qInstallMsgHandler(0);
-#if QT_VERSION >= 0x050000
     qInstallMessageHandler(0);
-#endif
 
     periodicTasksTimer->stop();
     networkCheckTimer->stop();
@@ -2268,7 +2265,7 @@ void MegaApplication::cleanAll()
     {
 #ifndef __APPLE__
         QString app = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
-        QProcess::startDetached(app);
+        QProcess::startDetached(app, {});
 #else
         QString app = MegaApplication::applicationDirPath();
         QString launchCommand = QString::fromUtf8("open");
@@ -2783,7 +2780,7 @@ QString MegaApplication::obfuscateAddress(const QHostAddress &ipAddress)
 
 QString MegaApplication::obfuscateIpv4Address(const QHostAddress &ipAddress)
 {
-    const QStringList addressParts = ipAddress.toString().split(QChar::fromAscii('.'));
+    const QStringList addressParts = ipAddress.toString().split(QChar::fromLatin1('.'));
     if (addressParts.size() == 4)
     {
         auto itAddressPart = addressParts.begin()+2;
@@ -2812,8 +2809,8 @@ QStringList MegaApplication::explodeIpv6(const QHostAddress &ipAddress)
     auto ipv6 = ipAddress.toIPv6Address();
     for (int i=0; i<8; ++i) {
         const int baseI = i*2;
-        addressParts.push_back(QString::fromUtf8("%1%2").arg(ipv6[baseI], 0, 16, QChar::fromAscii('0'))
-                                                        .arg(ipv6[baseI+1], 0, 16, QChar::fromAscii('0')));
+        addressParts.push_back(QString::fromUtf8("%1%2").arg(ipv6[baseI], 0, 16, QChar::fromLatin1('0'))
+                                                        .arg(ipv6[baseI+1], 0, 16, QChar::fromLatin1('0')));
     }
     return addressParts;
 }
@@ -3023,7 +3020,7 @@ void MegaApplication::processUpgradeSecurityEvent()
     {
         message.append(QLatin1String("<br><br>"));
         message.append(tr("You are currently sharing the following folder: %1", "", outSharesStrings.size())
-                           .arg(outSharesStrings.toList().join(QLatin1String(", "))));
+                  .arg(outSharesStrings.values().join(QLatin1String(", "))));
     }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -3267,7 +3264,7 @@ void MegaApplication::cleanLocalCaches(bool all)
                             continue;
                         }
 
-                        QDateTime creationTime(cacheFolder.created());
+                        QDateTime creationTime(cacheFolder.birthTime());
                         if (all || (creationTime.isValid() && creationTime.daysTo(QDateTime::currentDateTime()) > timeLimitDays) )
                         {
                             Utilities::removeRecursively(cacheFolder.canonicalFilePath());
@@ -3881,6 +3878,10 @@ void MegaApplication::onUnblocked()
 
 void MegaApplication::onTransfersModelUpdate()
 {
+    if (appfinished)
+    {
+        return;
+    }
     //Send updated statics to the information dialog
     if (infoDialog)
     {

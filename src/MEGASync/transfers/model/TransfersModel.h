@@ -380,7 +380,7 @@ private:
 
     QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
     QList<TransferTag> mRowsToCancel;
-    QWidget* mCancelledFrom;
+    QPointer<QWidget> mCancelledFrom;
     bool mSyncsInRowsToCancel;
 
     QList<TransferTag> mFailedTransferToClear;

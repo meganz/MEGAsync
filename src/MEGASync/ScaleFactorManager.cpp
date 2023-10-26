@@ -10,7 +10,7 @@ double getDpiOnLinux()
 {
     //the best cross platform solution found (caveat: screen agnostic)
     QProcess p;
-    p.start(QString::fromUtf8("bash -c \"xrdb -query | grep dpi | awk '{print $2}'\""));
+    p.start(QString::fromUtf8("bash"), QStringList() << QString::fromUtf8("-c") << QString::fromUtf8("xrdb -query | grep dpi | awk '{print $2}'"));
     p.waitForFinished(2000);
     QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
     QString e = QString::fromUtf8(p.readAllStandardError().constData());
@@ -28,7 +28,8 @@ double getWindowScalingFactorOnXcfe()
     // querying xrdb would give 96.0 even when zoom is configured
     auto windowScalingFactor = 1.0;
     QProcess p;
-    p.start(QString::fromUtf8("bash -c \"xfconf-query -c xsettings -p /Gdk/WindowScalingFactor\""));
+    p.start(QString::fromUtf8("bash"), QStringList() << QString::fromUtf8("-c") << QString::fromUtf8("xfconf-query -c xsettings -p /Gdk/WindowScalingFactor"));
+
     p.waitForFinished(2000);
     QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
     QString e = QString::fromUtf8(p.readAllStandardError().constData());

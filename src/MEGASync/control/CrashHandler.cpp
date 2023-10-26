@@ -428,7 +428,7 @@ void CrashHandler::tryReboot()
 
 #ifndef __APPLE__
         QString app = MegaApplication::applicationFilePath();
-        QProcess::startDetached(app);
+        QProcess::startDetached(app, {});
 #else
         QString app = MegaApplication::applicationDirPath();
         QString launchCommand = QString::fromUtf8("open");
@@ -438,7 +438,7 @@ void CrashHandler::tryReboot()
         appPath.cdUp();
         appPath.cdUp();
 
-        args.append(QString::fromAscii("-n"));
+        args.append(QString::fromLatin1("-n"));
         args.append(appPath.absolutePath());
         QProcess::startDetached(launchCommand, args);
 #endif
@@ -503,7 +503,7 @@ QStringList CrashHandler::getPendingCrashReports()
     for (int i = 0; i < fiList.size(); i++)
     {
         QFile file(fiList[i].absoluteFilePath());
-        if (!file.fileName().endsWith(QString::fromAscii(".dmp")))
+        if (!file.fileName().endsWith(QString::fromLatin1(".dmp")))
         {
             continue;
         }
@@ -521,18 +521,18 @@ QStringList CrashHandler::getPendingCrashReports()
         QString crashReport = QString::fromUtf8(file.readAll());
         file.close();
 
-        QStringList lines = crashReport.split(QString::fromAscii("\n"));
+        QStringList lines = crashReport.split(QString::fromLatin1("\n"));
         if ((lines.size()<3)
-                || (lines.at(0) != QString::fromAscii("MEGAprivate ERROR DUMP"))
-                || (!lines.at(1).startsWith(QString::fromAscii("Application: ") + QApplication::applicationName()))
-                || (!lines.at(2).startsWith(QString::fromAscii("Version code: ") + QString::number(Preferences::VERSION_CODE))))
+                || (lines.at(0) != QString::fromLatin1("MEGAprivate ERROR DUMP"))
+                || (!lines.at(1).startsWith(QString::fromLatin1("Application: ") + QApplication::applicationName()))
+                || (!lines.at(2).startsWith(QString::fromLatin1("Version code: ") + QString::number(Preferences::VERSION_CODE))))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Invalid or outdated dump file: %1").arg(file.fileName()).toUtf8().constData());
             file.remove();
             continue;
         }
 
-        QString crashHash = QString::fromAscii(QCryptographicHash::hash(crashReport.toUtf8(),QCryptographicHash::Md5).toHex());
+        QString crashHash = QString::fromLatin1(QCryptographicHash::hash(crashReport.toUtf8(),QCryptographicHash::Md5).toHex());
         if (lastCrashHash.isNull())
         {
             lastCrashHash = crashHash;
@@ -542,7 +542,7 @@ QStringList CrashHandler::getPendingCrashReports()
         {
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New crash file: %1  Hash: %2")
                          .arg(file.fileName()).arg(crashHash).toUtf8().constData());
-            int idx = crashReport.indexOf(QString::fromAscii("Version code: "));
+            int idx = crashReport.indexOf(QString::fromLatin1("Version code: "));
             crashReport.insert(idx, QString::fromUtf8("Hash: %1\n").arg(crashHash));
             result.append(crashReport);
             previousCrashes.append(crashHash);
@@ -570,14 +570,14 @@ void CrashHandler::sendPendingCrashReports(QString userMessage)
     }
 
     crashes.append(userMessage);
-    QString postString = crashes.join(QString::fromAscii("------------------------------\n"));
-    postString.append(QString::fromAscii("\n------------------------------\n"));
+    QString postString = crashes.join(QString::fromLatin1("------------------------------\n"));
+    postString.append(QString::fromLatin1("\n------------------------------\n"));
 
     networkManager = new QNetworkAccessManager();
     connect(networkManager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(onPostFinished(QNetworkReply*)), Qt::UniqueConnection);
     request.setUrl(Preferences::CRASH_REPORT_URL);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, QString::fromAscii("application/x-www-form-urlencoded"));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QString::fromLatin1("application/x-www-form-urlencoded"));
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Sending crash reports");
     networkManager->post(request, postString.toUtf8());
@@ -591,7 +591,7 @@ void CrashHandler::discardPendingCrashReports()
     QStringList previousCrashes = preferences->getPreviousCrashes();
     for (int i = 0; i < crashes.size(); i++)
     {
-        QString crashHash = QString::fromAscii(QCryptographicHash::hash(crashes[i].toUtf8(),QCryptographicHash::Md5).toHex());
+        QString crashHash = QString::fromLatin1(QCryptographicHash::hash(crashes[i].toUtf8(),QCryptographicHash::Md5).toHex());
         if (!previousCrashes.contains(crashHash))
         {
             previousCrashes.append(crashHash);
@@ -642,7 +642,7 @@ void CrashHandler::deletePendingCrashReports()
     for (int i = 0; i < fiList.size(); i++)
     {
         QFileInfo fi = fiList[i];
-        if (fi.fileName().endsWith(QString::fromAscii(".dmp")))
+        if (fi.fileName().endsWith(QString::fromLatin1(".dmp")))
         {
             QFile::remove(fi.absoluteFilePath());
         }
