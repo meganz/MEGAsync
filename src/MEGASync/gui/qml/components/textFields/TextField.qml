@@ -24,7 +24,10 @@ Rectangle {
     // Component properties
     property bool error: false
     property string title: ""
-    property RightIcon rightIcon: RightIcon {}
+
+    property alias rightIconColor: rightIcon.color
+    property alias rightIconSource: rightIcon.source
+    property alias rightIconVisible: rightIcon.visible
     property alias leftIconColor: leftIcon.color
     property alias leftIconSource: leftIcon.source
     property alias leftIconVisible: leftIcon.visible
@@ -169,9 +172,10 @@ Rectangle {
                 radius: sizes.borderRadius
             }
 
-            Loader {
-                id: rightIconLoader
+            MegaImages.SvgImage {
+                id: rightIcon
 
+                sourceSize: sizes.iconSize
                 anchors.top: focusBorder.top
                 anchors.right: focusBorder.right
                 anchors.topMargin: sizes.iconMargin
@@ -238,18 +242,6 @@ Rectangle {
             styles: root.hint.styles
             visible: root.hint.visible
             textSize: root.sizes.hintTextSize
-        }
-    }
-
-    Component {
-        id: rightIconComponent
-
-        MegaImages.SvgImage {
-            visible: rightIcon.visible
-            source: rightIcon.source
-            color: rightIcon.color
-            sourceSize: sizes.iconSize
-            z: 2
         }
     }
 
