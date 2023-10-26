@@ -3883,6 +3883,10 @@ void MegaApplication::onUnblocked()
 
 void MegaApplication::onTransfersModelUpdate()
 {
+    if (appfinished)
+    {
+        return;
+    }
     //Send updated statics to the information dialog
     if (infoDialog)
     {
