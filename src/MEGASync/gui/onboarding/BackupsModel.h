@@ -24,7 +24,7 @@ public:
     int mError;
 
     // Back (without role)
-    quint64 folderSize;
+    qint64 folderSize;
     QString sdkError;
 
     BackupFolder();
