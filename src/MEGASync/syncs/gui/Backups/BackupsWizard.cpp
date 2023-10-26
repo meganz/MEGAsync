@@ -865,7 +865,7 @@ void BackupsWizard::onMyBackupsFolderHandleSet(mega::MegaHandle)
                    + QLatin1Char('/')
                    + mDeviceNameRequest->getDeviceName();
     mUi->leBackupTo->setText(text);
-    if(mUi->leBackupTo->fontMetrics().width(text) > mUi->leBackupTo->width())
+    if(mUi->leBackupTo->fontMetrics().horizontalAdvance(text) > mUi->leBackupTo->width())
     {
         mUi->leBackupTo->setToolTip(text);
     }

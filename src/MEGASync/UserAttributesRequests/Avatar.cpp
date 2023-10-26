@@ -148,6 +148,10 @@ void Avatar::getLetterColor()
     if (mLetterAvatarInfo.colorNeedsRefresh)
     {
         auto api = MegaSyncApp->getMegaApi();
+        if(!api)
+        {
+            return;
+        }
         auto avatarEmail (getEmail());
 
         mega::MegaHandle userHandle (mega::INVALID_HANDLE);
