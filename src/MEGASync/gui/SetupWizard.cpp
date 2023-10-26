@@ -384,7 +384,7 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-        if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
+        if (!email.contains(QChar::fromLatin1('@')) || !email.contains(QChar::fromLatin1('.')))
         {
             showErrorMessage(tr("Please, enter a valid e-mail address"));
             return;
@@ -425,7 +425,7 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-        if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
+        if (!email.contains(QChar::fromLatin1('@')) || !email.contains(QChar::fromLatin1('.')))
         {
             showErrorMessage(tr("Please, enter a valid e-mail address"));
             return;
@@ -472,7 +472,7 @@ void SetupWizard::on_bNext_clicked()
             ui->eMegaFolder->setText(defaultSyncFolderPath);
             ui->lAdvancedSetup->setText(tr("Selective sync:"));
             ui->lHeader->setText(tr("Set up selective sync"));
-            ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_selective_sync.png")));
+            ui->bSyncType->setIcon(QIcon(QString::fromLatin1("://images/step_4_selective_sync.png")));
             ui->bSyncType->setIconSize(QSize(94, 94));
             ui->lSyncType->setText(tr("Selective sync"));
             ui->lSyncTypeDesc->setText(tr("Specific folders in your Cloud Drive will be synchronized with a local folder."));
@@ -489,7 +489,7 @@ void SetupWizard::on_bNext_clicked()
             ui->eMegaFolder->setText(QString::fromUtf8("/"));
             ui->lAdvancedSetup->setText(tr("Select Local folder:"));
             ui->lHeader->setText(tr("Set up full sync"));
-            ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_full_sync.png")));
+            ui->bSyncType->setIcon(QIcon(QString::fromLatin1("://images/step_4_full_sync.png")));
             ui->bSyncType->setIconSize(QSize(94, 94));
             ui->lSyncType->setText(tr("Full Sync"));
             ui->lSyncTypeDesc->setText(tr("Your entire Cloud Drive will be synchronized with a local folder."));
@@ -505,12 +505,12 @@ void SetupWizard::on_bNext_clicked()
 
         if (!loggingStarted) //Logging started at main dialog
         {
-            ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/login_setup_step2.png")));
+            ui->bCurrentStep->setIcon(QIcon(QString::fromLatin1("://images/login_setup_step2.png")));
             ui->bCurrentStep->setIconSize(QSize(512, 44));
         }
         else
         {
-            ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step4.png")));
+            ui->bCurrentStep->setIcon(QIcon(QString::fromLatin1("://images/setup_step4.png")));
             ui->bCurrentStep->setIconSize(QSize(512, 44));
         }
 
@@ -973,7 +973,7 @@ void SetupWizard::page_login()
     ui->bNext->setDefault(true);
 
     ui->lHeader->setText(tr("Log in to your MEGA account"));
-    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step2.png")));
+    ui->bCurrentStep->setIcon(QIcon(QString::fromLatin1("://images/setup_step2.png")));
     ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pLogin);
@@ -1026,14 +1026,14 @@ void SetupWizard::page_mode()
 
     if (!loggingStarted) //Logging started at main dialog
     {
-        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/login_setup_step1.png")));
+        ui->bCurrentStep->setIcon(QIcon(QString::fromLatin1("://images/login_setup_step1.png")));
         ui->bCurrentStep->setIconSize(QSize(512, 44));
         ui->bBack->setVisible(false);
         ui->bBack->setEnabled(false);
     }
     else
     {
-        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step3.png")));
+        ui->bCurrentStep->setIcon(QIcon(QString::fromLatin1("://images/setup_step3.png")));
         ui->bCurrentStep->setIconSize(QSize(512, 44));
         ui->bBack->setVisible(true);
         ui->bBack->setEnabled(true);
@@ -1063,12 +1063,12 @@ void SetupWizard::page_welcome()
 
     if (!loggingStarted) //Logging started at main dialog
     {
-        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/login_setup_step3.png")));
+        ui->bCurrentStep->setIcon(QIcon(QString::fromLatin1("://images/login_setup_step3.png")));
         ui->bCurrentStep->setIconSize(QSize(512, 44));
     }
     else
     {
-        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step5.png")));
+        ui->bCurrentStep->setIcon(QIcon(QString::fromLatin1("://images/setup_step5.png")));
         ui->bCurrentStep->setIconSize(QSize(512, 44));
     }
 
@@ -1106,7 +1106,7 @@ void SetupWizard::page_newaccount()
     ui->cAgreeWithTerms->setChecked(false);
 
     ui->lHeader->setText(tr("Create a new MEGA account"));
-    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step1.png")));
+    ui->bCurrentStep->setIcon(QIcon(QString::fromLatin1("://images/setup_step1.png")));
     ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pNewAccount);
@@ -1197,7 +1197,7 @@ void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 
 void SetupWizard::on_bLearMore_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://help.mega.io/installs-apps/desktop-syncing");
+    QString helpUrl = QString::fromLatin1("https://help.mega.io/installs-apps/desktop-syncing");
     Utilities::openUrl(QUrl(helpUrl));
 }
 

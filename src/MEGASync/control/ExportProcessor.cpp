@@ -51,9 +51,9 @@ void ExportProcessor::requestLinks()
         if (mode == MODE_PATHS)
         {
     #ifdef WIN32
-            if (!fileList[i].startsWith(QString::fromAscii("\\\\")))
+            if (!fileList[i].startsWith(QString::fromLatin1("\\\\")))
             {
-                fileList[i].insert(0, QString::fromAscii("\\\\?\\"));
+                fileList[i].insert(0, QString::fromLatin1("\\\\?\\"));
             }
 
             string tmpPath((const char*)fileList[i].utf16(), fileList[i].size()*sizeof(wchar_t));
@@ -94,8 +94,8 @@ void ExportProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError
     }
     else
     {
-        publicLinks.append(QString::fromAscii(request->getLink()));
-        validPublicLinks.append(QString::fromAscii(request->getLink()));
+        publicLinks.append(QString::fromLatin1(request->getLink()));
+        validPublicLinks.append(QString::fromLatin1(request->getLink()));
         importSuccess++;
     }
 

@@ -310,7 +310,7 @@ QString TransferData::path() const
 {
     QString localPath = mPath;
     #ifdef WIN32
-    if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (localPath.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         localPath = localPath.mid(4);
     }

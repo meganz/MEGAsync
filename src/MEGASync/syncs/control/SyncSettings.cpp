@@ -59,7 +59,7 @@ SyncSettings::SyncSettings(MegaSync *sync)
 QString SyncSettings::name(bool removeUnsupportedChars, bool normalizeDisplay) const
 {
     //Provide name removing ':' to avoid possible issues during communications with shell extension
-    QString toret = removeUnsupportedChars ? QString::fromUtf8(mSync->getName()).remove(QChar::fromAscii(':'))
+    QString toret = removeUnsupportedChars ? QString::fromUtf8(mSync->getName()).remove(QChar::fromLatin1(':'))
                                   : QString::fromUtf8(mSync->getName());
     return normalizeDisplay ? toret.normalized(QString::NormalizationForm_C) : toret;
 }
@@ -134,7 +134,7 @@ QString SyncSettings::getLocalFolder(bool normalizeDisplay) const
     auto toret = QString::fromUtf8(mSync->getLocalFolder());
 
 #ifdef WIN32
-    if (toret.startsWith(QString::fromAscii("\\\\?\\")))
+    if (toret.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         toret = toret.mid(4);
     }
