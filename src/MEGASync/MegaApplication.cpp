@@ -1764,7 +1764,9 @@ void MegaApplication::rebootApplication(bool update)
 
     reboot = true;
     auto transferCount = getTransfersModel()->getTransfersCount();
-    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting() || megaApi->isScanning()))
+    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads
+                   || megaApi->isWaiting() || megaApi->isScanning()
+                   || scanStageController.isInScanningState()))
     {
         if (!updateBlocked)
         {
