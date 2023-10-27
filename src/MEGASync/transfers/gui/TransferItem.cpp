@@ -441,6 +441,11 @@ bool TransferData::isCancelled() const
     return mState & TRANSFER_CANCELLED;
 }
 
+bool TransferData::isTempTransfer() const
+{
+    return mIsTempTransfer;
+}
+
 bool TransferData::isFinished() const
 {
     return mState & FINISHED_STATES_MASK;
