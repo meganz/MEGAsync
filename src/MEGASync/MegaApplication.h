@@ -629,7 +629,7 @@ private:
     }
 
     template <class Func>
-    void recreateAction(QAction** action, const QString& actionName, Func slotFunc)
+    void recreateAction(QAction** action, QMenu* menu, const QString& actionName, Func slotFunc)
     {
         bool previousEnabledState = true;
         if (*action)
@@ -639,7 +639,7 @@ private:
             *action = nullptr;
         }
 
-        *action = new QAction(actionName, this);
+        *action = new QAction(actionName, menu);
         connect(*action, &QAction::triggered, this, slotFunc);
         (*action)->setEnabled(previousEnabledState);
     }
