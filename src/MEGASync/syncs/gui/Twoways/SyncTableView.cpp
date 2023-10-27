@@ -140,9 +140,6 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     });
 
 
-    showLocalAction->setParent(menu);
-    showRemoteAction->setParent(menu);
-    delAction->setParent(menu);
 
     menu->addAction(showLocalAction);
     menu->addAction(showRemoteAction);
