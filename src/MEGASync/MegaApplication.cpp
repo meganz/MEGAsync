@@ -1484,6 +1484,8 @@ if (!preferences->lastExecutionTime())
 
 void MegaApplication::onLoginFinished()
 {
+    onGlobalSyncStateChanged(megaApi);
+
     if(mSettingsDialog)
     {
         mSettingsDialog->setProxyOnly(false);
