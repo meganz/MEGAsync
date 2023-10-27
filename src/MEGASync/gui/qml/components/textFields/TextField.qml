@@ -58,17 +58,20 @@ Rectangle {
     }
 
     function getHintHeight() {
-        if(hint.height > 0) {
+        if(hint.text.length > 0 && hint.height > 0) {
             return hint.height + hint.anchors.topMargin;
         }
-        return hint.height;
+
+        return 0;
     }
 
     function getTitleHeight() {
-        if(titleItem.height > 0) {
+
+        if(titleItem.text.length > 0 && titleItem.height > 0) {
             return titleItem.height + textField.anchors.topMargin;
         }
-        return titleItem.height;
+
+        return 0;
     }
 
     Layout.preferredHeight: height
@@ -104,7 +107,7 @@ Rectangle {
 
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.top: titleItem.bottom
+        anchors.top: titleItem.text.length > 0 ? titleItem.bottom : parent.top
         anchors.topMargin: sizes.titleSpacing
 
         selectByMouse: true

@@ -14,6 +14,7 @@
 #include <QApplication>
 
 #include <memory>
+#include <iostream>
 
 class QMLComponent : public QObject
 {
@@ -135,7 +136,13 @@ public:
         }
         else
         {
-            qDebug() << qmlComponent.errorString();
+#if DEBUG
+            /*
+            * Errors will be printed respecting the original format (with links to source qml that fails).
+            * All errors will be printed, using qDebug() some errors were hidden.
+            */
+            std::cout << qmlComponent.errorString().toStdString() << std::endl;
+#endif
         }
     }
 
