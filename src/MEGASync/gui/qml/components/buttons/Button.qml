@@ -19,7 +19,7 @@ Qml.RoundButton {
     property Sizes sizes: Sizes {}
 
     function getBorderColor() {
-        if(root.pressed || root.checked) {
+        if(root.pressed || root.down || root.checked) {
             return colors.borderPressed;
         }
         if(root.hovered) {
@@ -32,7 +32,7 @@ Qml.RoundButton {
     }
 
     function getBackgroundColor() {
-        if(root.pressed || root.checked) {
+        if(root.pressed || root.down || root.checked) {
             return colors.pressed;
         }
         if(root.hovered) {
@@ -45,7 +45,7 @@ Qml.RoundButton {
     }
 
     function getTextColor() {
-        if(root.pressed || root.checked) {
+        if(root.pressed || root.down || root.checked) {
             return colors.textPressed;
         }
         if(root.hovered) {
@@ -58,7 +58,7 @@ Qml.RoundButton {
     }
 
     function getIconColor() {
-        if(root.pressed || root.checked) {
+        if(root.pressed || root.down || root.checked) {
             return icons.colorPressed;
         }
         if(root.hovered) {
@@ -180,6 +180,22 @@ Qml.RoundButton {
         }
     }
 
-    Keys.onReturnPressed: root.clicked()
-    Keys.onEnterPressed: root.clicked()
+    Keys.onReleased: (event)=> {
+        if (event.key === Qt.Key_Return) {
+            if (checkable) {
+                down = false
+                checked = true
+            }
+            event.accepted = true;
+        }
+    }
+
+    Keys.onReturnPressed: {
+        down = true
+        root.clicked()
+    }
+
+    Keys.onEnterPressed:{
+        root.clicked()
+    }
 }

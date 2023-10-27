@@ -11,7 +11,6 @@ Button {
     readonly property int focusBorderWidth: 4
     readonly property int focusBorderRadius: 10
 
-
     property string title
     property string description
     property string imageSource
@@ -30,7 +29,7 @@ Button {
     }
 
     function getBorderColor() {
-        if(button.pressed) {
+        if(button.pressed || button.down) {
             return colors.borderPressed;
         } else if(button.checked) {
             return colors.borderSelected;
@@ -43,7 +42,7 @@ Button {
     }
 
     function getBackgroundColor() {
-        if(button.pressed) {
+        if(button.pressed || button.down) {
             return colors.pressed;
         } else if(button.hovered) {
             return colors.hover;
@@ -54,7 +53,6 @@ Button {
         }
         return colors.background;
     }
-
 
     checkable: true
     checked: false
@@ -73,7 +71,7 @@ Button {
 
             readonly property int borderRadius: 6
 
-            border.width: (button.pressed || button.hovered || button.checked) ? 2 : 1
+            border.width: (button.pressed || button.down || button.hovered || button.checked) ? 2 : 1
             radius: borderRadius
             color: getBackgroundColor()
             border.color: getBorderColor()
