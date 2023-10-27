@@ -72,7 +72,7 @@ public:
     void setTopLevelForLoadingMessage(QWidget* parent);
 
 public slots:
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes);
     void onRowsInserted();
     void onRowsRemoved();
@@ -94,6 +94,7 @@ protected:
     SelectTypeSPtr getSelectType(){return mSelectType;}
     virtual void modelLoaded();
     virtual bool showEmptyView(){return true;}
+    virtual void makeCustomConnections(){}
     virtual bool newNodeCanBeAdded(mega::MegaNode*){return true;}
     virtual QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle);
     QModelIndex getRootIndexFromIndex(const QModelIndex& index);
@@ -102,6 +103,7 @@ protected:
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
     std::unique_ptr<NodeSelectorModel> mModel;
     Navigation mNavigationInfo;
+    mega::MegaApi* mMegaApi;
 
 protected slots:
     virtual bool containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *parentNode);
@@ -126,7 +128,6 @@ private slots:
     void removeItemByHandle(mega::MegaHandle handle);
 
 private:
-    mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;
     std::unique_ptr<mega::QTMegaListener> mDelegateListener;
 

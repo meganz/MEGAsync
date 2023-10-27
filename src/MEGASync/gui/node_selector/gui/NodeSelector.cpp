@@ -30,6 +30,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
+    connect(ui->bRubbish, &QPushButton::clicked, this, &NodeSelector::onbShowRubbishClicked);
 
     foreach(auto& button, ui->wLeftPaneNS->findChildren<QAbstractButton*>())
     {
@@ -48,8 +49,10 @@ NodeSelector::NodeSelector(QWidget *parent) :
     mTabFramesToggleGroup[BACKUPS] = ui->fBackups;
     mTabFramesToggleGroup[SHARES] = ui->fIncomingShares;
     mTabFramesToggleGroup[CLOUD_DRIVE] = ui->fCloudDrive;
+    mTabFramesToggleGroup[RUBBISH] = ui->fRubbish;
     ui->wSearchNS->hide();
     ui->bSearchNS->hide();
+    ui->fRubbish->hide();
     setAllFramesItsOnProperty();
 
     updateNodeSelectorTabs();
@@ -74,6 +77,7 @@ void NodeSelector::updateNodeSelectorTabs()
     ui->bShowCloudDrive->setText(MegaNodeNames::getCloudDriveName());
     ui->bShowIncomingShares->setText(MegaNodeNames::getIncomingSharesName());
     ui->bShowBackups->setText(MegaNodeNames::getBackupsName());
+    ui->bRubbish->setText(MegaNodeNames::getRubbishName());
 }
 
 void NodeSelector::onSearch(const QString &text)
@@ -194,6 +198,16 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
     }
 }
 
+void NodeSelector::onItemRestored(mega::MegaHandle handle)
+{
+    onbShowCloudDriveClicked();
+    auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
+    if(viewContainer)
+    {
+        viewContainer->setSelectedNodeHandle(handle);
+    }
+}
+
 void NodeSelector::onOptionSelected(int index)
 {
     switch (index)
@@ -216,6 +230,12 @@ void NodeSelector::onbShowCloudDriveClicked()
 {
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
     setToggledStyle(CLOUD_DRIVE);
+}
+
+void NodeSelector::onbShowRubbishClicked()
+{
+    ui->stackedWidget->setCurrentIndex(RUBBISH);
+    setToggledStyle(RUBBISH);
 }
 
 void NodeSelector::onbShowIncomingSharesClicked()
@@ -359,6 +379,10 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
             connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
+            if(auto rubbishWidget = qobject_cast<NodeSelectorTreeViewWidgetRubbish*>(viewContainer))
+            {
+                connect(rubbishWidget, &NodeSelectorTreeViewWidgetRubbish::itemRestored, this, &NodeSelector::onItemRestored, Qt::UniqueConnection);
+            }
 
             if(!model)
             {

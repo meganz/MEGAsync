@@ -20,6 +20,7 @@ class NodeSelectorTreeViewWidgetCloudDrive;
 class NodeSelectorTreeViewWidgetIncomingShares;
 class NodeSelectorTreeViewWidgetBackups;
 class NodeSelectorTreeViewWidgetSearch;
+class NodeSelectorTreeViewWidgetRubbish;
 
 struct MessageInfo;
 
@@ -40,6 +41,7 @@ public:
         CLOUD_DRIVE = 0,
         SHARES,
         BACKUPS,
+        RUBBISH,
         SEARCH
     };
     Q_ENUM(TabItem)
@@ -69,6 +71,7 @@ protected:
     NodeSelectorTreeViewWidgetIncomingShares* mIncomingSharesWidget;
     NodeSelectorTreeViewWidgetBackups* mBackupsWidget;
     NodeSelectorTreeViewWidgetSearch* mSearchWidget;
+    NodeSelectorTreeViewWidgetRubbish* mRubbishWidget;
     mega::MegaApi* mMegaApi;
     Ui::NodeSelector *ui;
 
@@ -80,11 +83,13 @@ private slots:
     void onbOkClicked();
     void onbShowIncomingSharesClicked();
     void onbShowCloudDriveClicked();
+    void onbShowRubbishClicked();
     void onbShowBackupsFolderClicked();
     void onOptionSelected(int index);
     void updateNodeSelectorTabs(); void onSearch(const QString& text);
     void on_tClearSearchResultNS_clicked();
     void onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message);
+    void onItemRestored(mega::MegaHandle handle);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);

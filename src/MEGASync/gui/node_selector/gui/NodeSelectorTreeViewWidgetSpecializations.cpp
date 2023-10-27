@@ -341,3 +341,84 @@ void NodeSelectorTreeViewWidgetSearch::checkAndClick(QToolButton* button)
         emit button->clicked(true);
     }
 }
+
+///////////////////////
+NodeSelectorTreeViewWidgetRubbish::NodeSelectorTreeViewWidgetRubbish(SelectTypeSPtr mode, QWidget *parent)
+    : NodeSelectorTreeViewWidget(mode, parent)
+{
+    setTitle(MegaNodeNames::getCloudDriveName());
+    ui->searchEmptyInfoWidget->hide();
+}
+
+void NodeSelectorTreeViewWidgetRubbish::setShowEmptyView(bool newShowEmptyView)
+{
+    mShowEmptyView = newShowEmptyView;
+}
+
+void NodeSelectorTreeViewWidgetRubbish::makeCustomConnections()
+{
+    connect(ui->tMegaFolders, &NodeSelectorTreeView::restoreClicked, this, &NodeSelectorTreeViewWidgetRubbish::onRestoreClicked);
+}
+
+void NodeSelectorTreeViewWidgetRubbish::onRestoreClicked()
+{
+        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+        if (node)
+        {
+            auto newParent = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
+            mMegaApi->moveNode(node.get(), newParent.get(), new mega::OnFinishOneShot(mMegaApi, this,
+                                                                                              [this, node]
+                                                                                              (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
+                {
+                    if (!isContextValid)
+                    {
+                        return;
+                    }
+
+                    if (e.getErrorCode() == MegaError::API_OK &&
+                        request.getType() == mega::MegaRequest::TYPE_MOVE)
+                    {
+                        emit itemRestored(node->getHandle());
+                    }
+                }));
+        }
+}
+
+QString NodeSelectorTreeViewWidgetRubbish::getRootText()
+{
+    return MegaNodeNames::getRubbishName();
+}
+
+std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetRubbish::createModel()
+{
+    return std::unique_ptr<NodeSelectorModelRubbish>(new NodeSelectorModelRubbish);
+}
+
+void NodeSelectorTreeViewWidgetRubbish::modelLoaded()
+{
+    auto rootIndex = mModel->index(0,0);
+    if(mModel->rowCount(rootIndex) == 0 && showEmptyView())
+    {
+        ui->stackedWidget->setCurrentWidget(ui->emptyPage);
+    }
+    else
+    {
+        ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
+    }
+}
+
+QIcon NodeSelectorTreeViewWidgetRubbish::getEmptyIcon()
+{
+    return QIcon(QString::fromUtf8("://images/node_selector/view/cloud.png"));
+}
+
+bool NodeSelectorTreeViewWidgetRubbish::isCurrentRootIndexReadOnly()
+{
+    return false;
+}
+
+void NodeSelectorTreeViewWidgetRubbish::onRootIndexChanged(const QModelIndex &source_idx)
+{
+    Q_UNUSED(source_idx)
+    ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
+}

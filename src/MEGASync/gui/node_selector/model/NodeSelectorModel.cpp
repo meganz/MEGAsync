@@ -314,6 +314,18 @@ void NodeRequester::addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> no
     }
 }
 
+void NodeRequester::createRubbishRootItems()
+{
+    auto root = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getRubbishNode());
+
+    if(!isAborted())
+    {
+        auto item = new NodeSelectorModelItemRubbish(std::move(root), mShowFiles);
+        mRootItems.append(item);
+        emit megaRubbishRootItemsCreated();
+    }
+}
+
 void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
 {
     if (backupsHandle != mega::INVALID_HANDLE)
@@ -1303,6 +1315,12 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                     return icon;
                 }
                 else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
+                {
+                    QIcon icon;
+                    icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
+                    return icon;
+                }
+                else if(node->getHandle() == MegaSyncApp->getRubbishNode()->getHandle())
                 {
                     QIcon icon;
                     icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));

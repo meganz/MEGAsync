@@ -36,12 +36,14 @@ signals:
     void removeNodeClicked();
     void renameNodeClicked();
     void getMegaLinkClicked();
+    void restoreClicked();
     void nodeSelected();
 
 private slots:
     void removeNode();
     void renameNode();
     void getMegaLink();
+    void restore();
     void onNavigateReady(const QModelIndex& index);
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)

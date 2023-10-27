@@ -274,6 +274,8 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
         connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
 
+        makeCustomConnections();
+
         setRootIndex(QModelIndex());
         checkButtonsVisibility();
     }
@@ -718,7 +720,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             {
                 std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
 
-                if(parentNode->getHandle() == MegaSyncApp->getRubbishNode()->getHandle())
+                if(!mModel->isParentAccepted(parentNode->getHandle()))
                 {
                     if(containsIndexToUpdate(node, nullptr))
                     {

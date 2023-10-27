@@ -358,6 +358,11 @@ bool NodeSelectorModelItem::isCloudDrive() const
     return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
 }
 
+bool NodeSelectorModelItem::isRubbishBin() const
+{
+    return mNode->getHandle() == MegaSyncApp->getRubbishNode()->getHandle();
+}
+
 bool NodeSelectorModelItem::isVault()
 {
     return false;
@@ -455,4 +460,20 @@ NodeSelectorModelItemCloudDrive::~NodeSelectorModelItemCloudDrive()
 NodeSelectorModelItem *NodeSelectorModelItemCloudDrive::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
 {
     return new NodeSelectorModelItemCloudDrive(move(node), showFiles, parentItem);
+}
+
+////////////////
+NodeSelectorModelItemRubbish::NodeSelectorModelItemRubbish(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
+    : NodeSelectorModelItem(std::move(node), showFiles, parentItem)
+{
+}
+
+NodeSelectorModelItemRubbish::~NodeSelectorModelItemRubbish()
+{
+
+}
+
+NodeSelectorModelItem *NodeSelectorModelItemRubbish::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
+{
+    return new NodeSelectorModelItemRubbish(move(node), showFiles, parentItem);
 }

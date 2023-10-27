@@ -53,6 +53,7 @@ public:
     virtual bool isSyncable();
     virtual bool isVault();
     bool isCloudDrive() const;
+    bool isRubbishBin() const;
     QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
     QList<QPointer<NodeSelectorModelItem>> addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes);
     QPointer<NodeSelectorModelItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
@@ -147,6 +148,16 @@ public:
 private:
     NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
     Types mType;
+};
+
+class NodeSelectorModelItemRubbish : public NodeSelectorModelItem
+{
+public:
+    explicit NodeSelectorModelItemRubbish(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
+    ~NodeSelectorModelItemRubbish();
+
+private:
+    NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(NodeSelectorModelItemSearch::Types)

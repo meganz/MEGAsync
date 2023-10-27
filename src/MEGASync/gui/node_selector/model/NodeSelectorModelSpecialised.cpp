@@ -459,3 +459,83 @@ const NodeSelectorModelItemSearch::Types &NodeSelectorModelSearch::searchedTypes
 {
     return mNodeRequesterWorker->searchedTypes();
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////
+NodeSelectorModelRubbish::NodeSelectorModelRubbish(QObject *parent)
+    : NodeSelectorModel(parent)
+{
+    MegaApi* megaApi = MegaSyncApp->getMegaApi();
+}
+
+void NodeSelectorModelRubbish::onItemInfoUpdated(int role)
+{
+    if(NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(sender()))
+    {
+        for(int i = 0; i < rowCount(); ++i)
+        {
+            QModelIndex idx = index(i, COLUMN::USER); //we only update this column because we retrieve the data in async mode
+            if(idx.isValid())                         //so it is possible that we doesn´t have the information from the start
+            {
+                if(NodeSelectorModelItem* chkItem = static_cast<NodeSelectorModelItem*>(idx.internalPointer()))
+                {
+                    if(chkItem == item)
+                    {
+                        QVector<int> roles;
+                        roles.append(role);
+                        emit dataChanged(idx, idx, roles);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void NodeSelectorModelRubbish::onRootItemsCreated()
+{
+    rootItemsLoaded();
+
+    //Add the item of the Cloud Drive
+    auto rootIndex(index(0,0));
+    if(canFetchMore(rootIndex))
+    {
+        fetchItemChildren(rootIndex);
+    }
+    else
+    {
+        //In case the root item is empty (CD empty), let the model know that we have finished
+        loadLevelFinished();
+        emit blockUi(false);
+    }
+}
+
+void NodeSelectorModelRubbish::createRootNodes()
+{
+    emit requestRubbishRootCreation();
+}
+
+int NodeSelectorModelRubbish::rootItemsCount() const
+{
+    return 1;
+}
+
+void NodeSelectorModelRubbish::fetchMore(const QModelIndex &parent)
+{
+    if (parent.isValid())
+    {
+        fetchItemChildren(parent);
+    }
+}
+
+void NodeSelectorModelRubbish::firstLoad()
+{
+    connect(this, &NodeSelectorModelRubbish::requestRubbishRootCreation, mNodeRequesterWorker, &NodeRequester::createRubbishRootItems);
+    //connect(this, &NodeSelectorModelRubbish::addRubbishRoot, mNodeRequesterWorker, &NodeRequester::addRubbishRootItem);
+    connect(this, &NodeSelectorModelRubbish::deleteRubbishRoot, this, [this](std::shared_ptr<mega::MegaNode> node)
+            {
+                mNodeRequesterWorker->removeRootItem(node);
+            });
+    connect(mNodeRequesterWorker, &NodeRequester::megaRubbishRootItemsCreated, this, &NodeSelectorModelRubbish::onRootItemsCreated, Qt::QueuedConnection);
+
+    addRootItems();
+}

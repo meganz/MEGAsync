@@ -60,7 +60,7 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
 {
     auto item = qvariant_cast<NodeSelectorModelItem*>(index.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
-    if(item && (item->isCloudDrive() || item->isVault()))
+    if(item && (item->isCloudDrive() || item->isVault() || item->isRubbishBin()))
     {
         QStyleOptionViewItem opt = viewOptions();
         opt.rect = rect;
@@ -202,17 +202,27 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
         if (parent && node)
         {
-            int access = mMegaApi->getAccess(node.get());
-
-            if (access == MegaShare::ACCESS_OWNER)
+            if(mMegaApi->isInRubbish(node.get()))
             {
-                customMenu.addAction(tr("Get MEGA link"), this, SLOT(getMegaLink()));
+                if(parent->getHandle() == mMegaApi->getRubbishNode()->getHandle())
+                {
+                    customMenu.addAction(tr("Restore"), this, SLOT(restore()));
+                }
             }
-
-            if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted() && node->isNodeKeyDecrypted())
+            else
             {
-                customMenu.addAction(tr("Rename"), this, SLOT(renameNode()));
-                customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
+                int access = mMegaApi->getAccess(node.get());
+
+                if (access == MegaShare::ACCESS_OWNER)
+                {
+                    customMenu.addAction(tr("Get MEGA link"), this, SLOT(getMegaLink()));
+                }
+
+                if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted() && node->isNodeKeyDecrypted())
+                {
+                    customMenu.addAction(tr("Rename"), this, SLOT(renameNode()));
+                    customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
+                }
             }
         }
 
@@ -233,6 +243,11 @@ void NodeSelectorTreeView::renameNode()
 void NodeSelectorTreeView::getMegaLink()
 {
     emit getMegaLinkClicked();
+}
+
+void NodeSelectorTreeView::restore()
+{
+    emit restoreClicked();
 }
 
 void NodeSelectorTreeView::onNavigateReady(const QModelIndex &index)

@@ -220,6 +220,10 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(p
     mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(selectType);
     mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
     ui->stackedWidget->addWidget(mBackupsWidget);
+    mRubbishWidget = new NodeSelectorTreeViewWidgetRubbish(selectType);
+    mRubbishWidget->setObjectName(QString::fromUtf8("Rubbish"));
+    ui->stackedWidget->addWidget(mRubbishWidget);
+    ui->fRubbish->show();
     makeConnections(selectType);
     resize(1280,800);
 

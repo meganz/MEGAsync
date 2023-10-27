@@ -126,4 +126,32 @@ private:
     NodeSelectorModelItemSearch::Types mAllowedTypes;
 };
 
+class NodeSelectorModelRubbish : public NodeSelectorModel
+{
+    Q_OBJECT
+
+public:
+    explicit NodeSelectorModelRubbish(QObject *parent = 0);
+    virtual ~NodeSelectorModelRubbish() = default;
+
+    void createRootNodes() override;
+    int rootItemsCount() const override;
+
+    void fetchMore(const QModelIndex &parent) override;
+    void firstLoad() override;
+
+    bool isParentAccepted(mega::MegaHandle parentHandle) override {return parentHandle == MegaSyncApp->getRubbishNode()->getHandle();}
+
+public slots:
+    void onItemInfoUpdated(int role);
+
+signals:
+    void requestRubbishRootCreation();
+    void addRubbishRoot(std::shared_ptr<mega::MegaNode> node);
+    void deleteRubbishRoot(std::shared_ptr<mega::MegaNode> node);
+
+private slots:
+    void onRootItemsCreated();
+};
+
 #endif // NODESELECTORMODELSPECIALISED_H

@@ -3,6 +3,7 @@
 
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
+#include <MegaApplication.h>
 #include <megaapi.h>
 
 #include <QAbstractItemModel>
@@ -80,6 +81,7 @@ public slots:
     void search(const QString& text, NodeSelectorModelItemSearch::Types typesAllowed);
     void createCloudDriveRootItem();
     void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
+    void createRubbishRootItems();
     void addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> node);
     void addSearchRootItem(QList<std::shared_ptr<mega::MegaNode> > nodes, NodeSelectorModelItemSearch::Types typesAllowed);
     void createBackupRootItems(mega::MegaHandle backupsHandle);
@@ -96,6 +98,7 @@ signals:
      void nodesReady(NodeSelectorModelItem* parent);
      void megaCloudDriveRootItemCreated();
      void megaIncomingSharesRootItemsCreated();
+     void megaRubbishRootItemsCreated();
      void rootItemsAdded();
      void rootItemsDeleted();
      void megaBackupRootItemsCreated();
@@ -192,6 +195,7 @@ public:
 
     virtual bool canBeDeleted() const;
     virtual bool rootNodeUpdated(mega::MegaNode*){return false;}
+    virtual bool isParentAccepted(mega::MegaHandle parentHandle){return parentHandle != MegaSyncApp->getRubbishNode()->getHandle();}
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
