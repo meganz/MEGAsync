@@ -6056,13 +6056,13 @@ void MegaApplication::createInfoDialogMenus()
         }
     }
 
-    recreateAction(&windowsExitAction, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
-    recreateAction(&windowsSettingsAction, tr("Settings"), &MegaApplication::openSettings);
-    recreateAction(&windowsImportLinksAction, tr("Open links"), &MegaApplication::importLinks);
-    recreateAction(&windowsUploadAction, tr("Upload"), &MegaApplication::uploadActionClicked);
-    recreateAction(&windowsDownloadAction, tr("Download"), &MegaApplication::downloadActionClicked);
-    recreateAction(&windowsStreamAction, tr("Stream"), &MegaApplication::streamActionClicked);
-    recreateAction(&windowsTransferManagerAction, tr("Transfer manager"),
+    recreateAction(&windowsExitAction, windowsMenu, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
+    recreateAction(&windowsSettingsAction, windowsMenu, tr("Settings"), &MegaApplication::openSettings);
+    recreateAction(&windowsImportLinksAction, windowsMenu, tr("Open links"), &MegaApplication::importLinks);
+    recreateAction(&windowsUploadAction, windowsMenu, tr("Upload"), &MegaApplication::uploadActionClicked);
+    recreateAction(&windowsDownloadAction, windowsMenu, tr("Download"), &MegaApplication::downloadActionClicked);
+    recreateAction(&windowsStreamAction, windowsMenu, tr("Stream"), &MegaApplication::streamActionClicked);
+    recreateAction(&windowsTransferManagerAction, windowsMenu, tr("Transfer manager"),
                    &MegaApplication::transferManagerActionClicked);
 
     bool windowsUpdateActionEnabled = true;
@@ -6132,11 +6132,11 @@ void MegaApplication::createInfoDialogMenus()
         infoDialogMenu->installEventFilter(this);
     }
 
-    recreateMenuAction(&exitAction, PlatformStrings::exit(),
+    recreateMenuAction(&exitAction, infoDialogMenu, PlatformStrings::exit(),
                        "://images/ico_quit.png", &MegaApplication::tryExitApplication);
-    recreateMenuAction(&settingsAction, tr("Settings"),
+    recreateMenuAction(&settingsAction, infoDialogMenu, tr("Settings"),
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
-    recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
+    recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
     bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
@@ -6153,10 +6153,10 @@ void MegaApplication::createInfoDialogMenus()
                 infoDialog.data(), &InfoDialog::onAddSync);
     }
 
-    recreateMenuAction(&importLinksAction, tr("Open links"), "://images/ico_Import_links.png", &MegaApplication::importLinks);
-    recreateMenuAction(&uploadAction, tr("Upload"), "://images/ico_upload.png", &MegaApplication::uploadActionClicked);
-    recreateMenuAction(&downloadAction, tr("Download"), "://images/ico_download.png", &MegaApplication::downloadActionClicked);
-    recreateMenuAction(&streamAction, tr("Stream"), "://images/ico_stream.png", &MegaApplication::streamActionClicked);
+    recreateMenuAction(&importLinksAction, infoDialogMenu, tr("Open links"), "://images/ico_Import_links.png", &MegaApplication::importLinks);
+    recreateMenuAction(&uploadAction, infoDialogMenu, tr("Upload"), "://images/ico_upload.png", &MegaApplication::uploadActionClicked);
+    recreateMenuAction(&downloadAction, infoDialogMenu, tr("Download"), "://images/ico_download.png", &MegaApplication::downloadActionClicked);
+    recreateMenuAction(&streamAction, infoDialogMenu, tr("Stream"), "://images/ico_stream.png", &MegaApplication::streamActionClicked);
 
 
     previousEnabledState = true;
@@ -6175,7 +6175,7 @@ void MegaApplication::createInfoDialogMenus()
 
     if (updateAvailable)
     {
-        updateAction = new MenuItemAction(tr("Install update"), QLatin1String("://images/ico_about_MEGA.png"), nullptr);
+        updateAction = new MenuItemAction(tr("Install update"), QLatin1String("://images/ico_about_MEGA.png"), infoDialogMenu);
         updateAction->setManagesHoverStates(true);
         updateAction->setEnabled(previousEnabledState);
         connect(updateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked, Qt::QueuedConnection);
@@ -6184,7 +6184,7 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About"), QLatin1String("://images/ico_about_MEGA.png"), nullptr);
+        aboutAction = new MenuItemAction(tr("About"), QLatin1String("://images/ico_about_MEGA.png"), infoDialogMenu);
         aboutAction->setManagesHoverStates(true);
         connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
 
@@ -6235,7 +6235,7 @@ void MegaApplication::createGuestMenu()
         exitActionGuest = nullptr;
     }
 
-    exitActionGuest = new MenuItemAction(PlatformStrings::exit(), QLatin1String("://images/ico_quit.png"));
+    exitActionGuest = new MenuItemAction(PlatformStrings::exit(), QLatin1String("://images/ico_quit.png"), guestMenu);
 
     connect(exitActionGuest, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
@@ -6247,12 +6247,12 @@ void MegaApplication::createGuestMenu()
 
     if (updateAvailable)
     {
-        updateActionGuest = new MenuItemAction(tr("Install update"), QLatin1String("://images/ico_about_MEGA.png"));
+        updateActionGuest = new MenuItemAction(tr("Install update"), QLatin1String("://images/ico_about_MEGA.png"), guestMenu);
         connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked);
     }
     else
     {
-        updateActionGuest = new MenuItemAction(tr("About"), QLatin1String("://images/ico_about_MEGA.png"));
+        updateActionGuest = new MenuItemAction(tr("About"), QLatin1String("://images/ico_about_MEGA.png"), guestMenu);
         connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onAboutClicked);
     }
 
@@ -6262,7 +6262,7 @@ void MegaApplication::createGuestMenu()
         settingsActionGuest->deleteLater();
         settingsActionGuest = nullptr;
     }
-    settingsActionGuest = new MenuItemAction(tr("Settings"), QLatin1String("://images/ico_preferences.png"));
+    settingsActionGuest = new MenuItemAction(tr("Settings"), QLatin1String("://images/ico_preferences.png"), guestMenu);
 
     connect(settingsActionGuest, &QAction::triggered, this, &MegaApplication::openSettings);
 

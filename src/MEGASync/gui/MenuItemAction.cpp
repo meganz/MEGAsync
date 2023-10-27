@@ -8,15 +8,14 @@ const QString MenuItemAction::Colors::Highlight = QLatin1String("#000000");
 const QString MenuItemAction::Colors::Accent = QLatin1String("#F46265");
 static constexpr int ENTRY_MAX_WIDTH_PX = 240;
 
-MenuItemAction::MenuItemAction(const QString& title, const QString& icon,
+MenuItemAction::MenuItemAction(const QString& title, const QString& iconName,
                                QObject *parent)
     : QWidgetAction (parent),
     mAccent(false),
     mContainer (new QWidget()),
     mTitle (new QLabel(mContainer)),
     mValue(nullptr),
-    mIconButton (new QPushButton(mContainer)),
-    mActionLayout(nullptr)
+    mIconButton (new QPushButton(mContainer))
 {
     setLabelText(title);
     mContainer->setObjectName(QLatin1String("wContainer"));
@@ -24,14 +23,15 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& icon,
 
     //Default size
     QSize iconSize(24,24);
+    QIcon icon;
 
-    if(!icon.isEmpty())
+    if(!iconName.isEmpty())
     {
-        QImageReader reader(icon);
+        QImageReader reader(iconName);
         if(reader.canRead())
         {
             iconSize = reader.size();
-            mIcon = QIcon(icon);
+            icon = QIcon(iconName);
         }
     }
     else
@@ -39,7 +39,7 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& icon,
         mIconButton->hide();
     }
 
-    setupActionWidget(iconSize);
+    setupActionWidget(icon, iconSize);
     setDefaultWidget(mContainer);
 }
 
@@ -76,7 +76,7 @@ void MenuItemAction::setManagesHoverStates(bool managesHoverStates)
 
 void MenuItemAction::setTreeDepth(int treeDepth)
 {
-    mActionLayout->setContentsMargins(QMargins(16 + treeDepth * 20, 0, 16, 0));
+    mContainer->layout()->setContentsMargins(QMargins(16 + treeDepth * 20, 0, 16, 0));
 }
 
 void MenuItemAction::setLabelText(const QString& title)
@@ -93,7 +93,7 @@ void MenuItemAction::setLabelText(const QString& title)
     }
 }
 
-void MenuItemAction::setupActionWidget(const QSize& iconSize)
+void MenuItemAction::setupActionWidget(const QIcon& icon, const QSize& iconSize)
 {
     mContainer->setMinimumHeight(32);
     mContainer->setMaximumHeight(32);
@@ -105,23 +105,23 @@ void MenuItemAction::setupActionWidget(const QSize& iconSize)
     mIconButton->setText(QString());
     mIconButton->setFixedSize(iconSize);
     mIconButton->setIconSize(iconSize);
-    mIconButton->setIcon(mIcon);
+    mIconButton->setIcon(icon);
 
     mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
 
-    mActionLayout = new QHBoxLayout();
-    mActionLayout->setContentsMargins(QMargins(16, 0, 16, 0));
-    mActionLayout->setSpacing(12);
-    mActionLayout->addWidget(mIconButton, 0, Qt::AlignVCenter);
-    mActionLayout->addWidget(mTitle, 0, Qt::AlignVCenter);
+    auto containerLayout = new QHBoxLayout();
+    containerLayout->setContentsMargins(QMargins(16, 0, 16, 0));
+    containerLayout->setSpacing(12);
+    containerLayout->addWidget(mIconButton, 0, Qt::AlignVCenter);
+    containerLayout->addWidget(mTitle, 0, Qt::AlignVCenter);
 
     if (mValue)
     {
-        mActionLayout->addItem(new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding));
+        containerLayout->addItem(new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding));
         mValue->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
-        mActionLayout->addWidget(mValue);
+        containerLayout->addWidget(mValue);
     }
-    mContainer->setLayout(mActionLayout);
+    mContainer->setLayout(containerLayout);
 }
 
 bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)

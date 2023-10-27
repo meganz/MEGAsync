@@ -11,8 +11,9 @@ class MenuItemAction : public QWidgetAction
     Q_OBJECT
 
 public:
-    MenuItemAction(const QString& title, const QString& icon,
+    MenuItemAction(const QString& title, const QString& iconName,
                    QObject *parent = nullptr);
+    ~MenuItemAction();
 
     void setLabelText(const QString& title);
     void setIcon(const QIcon& icon);
@@ -20,7 +21,6 @@ public:
     bool getAccent() const;
     void setAccent(bool enabled);
 
-    ~MenuItemAction();
 
     void setManagesHoverStates(bool managesHoverStates);
 
@@ -33,13 +33,11 @@ private:
     QLabel* mTitle;
     QLabel* mValue;
     QPushButton* mIconButton;
-    QHBoxLayout* mActionLayout;
-    QIcon mIcon;
 
-    void setupActionWidget(const QSize& iconSize);
+    void setupActionWidget(const QIcon& icon, const QSize& iconSize);
 
 protected:
-    bool eventFilter(QObject* obj, QEvent* event);
+    bool eventFilter(QObject* obj, QEvent* event) override;
     const QString& getColor() const; /* return color based on accent value */
 };
 

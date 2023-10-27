@@ -62,8 +62,6 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
                      QWidget *parent) :
     QWidget(parent),
     mMenu (new QMenu(this)),
-    mAddAction (new MenuItemAction(QString(), QString(), nullptr)),
-    mMenuAction (new MenuItemAction(QString(), QString(), nullptr)),
     mLastHovered (nullptr),
     mType (type),
     mItemIndent (itemIndent),
@@ -71,11 +69,13 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
     mAddActionText(addActionText),
     mMenuActionText(menuActionText)
 {
+    mAddAction  = new MenuItemAction(QString(), QString(), mMenu);
     mAddAction->setManagesHoverStates(true);
     mAddAction->setLabelText(tr(mAddActionText.toUtf8().constData()));
     connect(mAddAction, &MenuItemAction::triggered,
             this, &SyncsMenu::onAddSync);
 
+    mMenuAction  = new MenuItemAction(QString(), QString(), mMenu);
     mMenuAction->setManagesHoverStates(true);
     mMenuAction->setLabelText(tr(mMenuActionText.toUtf8().constData()));
     mMenuAction->setIcon(mMenuIcon);
@@ -143,7 +143,7 @@ void SyncsMenu::refresh()
             auto* action =
                 new MenuItemAction(SyncController::getSyncNameFromPath(syncSetting->getLocalFolder(true)),
                                    QLatin1String("://images/icons/folder/folder-mono_24.png"),
-                                   nullptr);
+                                   mMenu);
             action->setManagesHoverStates(true);
             action->setTreeDepth(mItemIndent);
             action->setToolTip(createSyncTooltipText(syncSetting));
@@ -279,7 +279,7 @@ void BackupSyncsMenu::refresh()
         // Show device name
         mDevNameAction->deleteLater();
         // Display device name before folders
-        mDevNameAction = new MenuItemAction(QString(), DEVICE_ICON, this);
+        mDevNameAction = new MenuItemAction(QString(), DEVICE_ICON, menu);
         mDevNameAction->setManagesHoverStates(true);
         // Insert the action in the menu to make sure it is here when the
         // set device name slot is called.

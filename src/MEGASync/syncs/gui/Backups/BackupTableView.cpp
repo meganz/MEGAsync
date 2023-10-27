@@ -74,7 +74,7 @@ void BackupTableView::showContextMenu(const QPoint &pos, const QModelIndex index
 
     // Show in system file explorer action
     auto openLocalAction (new MenuItemAction(PlatformStrings::fileExplorer(),
-                                             QLatin1String("://images/show_in_folder_ico.png")));
+                                             QLatin1String("://images/show_in_folder_ico.png"), menu));
     connect(openLocalAction, &MenuItemAction::triggered, this, [sync]()
     {
         Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
@@ -82,7 +82,7 @@ void BackupTableView::showContextMenu(const QPoint &pos, const QModelIndex index
 
     // Show in MEGA Web App action
     auto openRemoteAction (new MenuItemAction(tr("Open in MEGA"),
-                                              QLatin1String("://images/ico_open_MEGA.png")));
+                                              QLatin1String("://images/ico_open_MEGA.png"), menu));
     connect(openRemoteAction, &MenuItemAction::triggered, this, [this, sync]()
     {
         emit openInMEGA(sync->getMegaHandle());
@@ -90,16 +90,12 @@ void BackupTableView::showContextMenu(const QPoint &pos, const QModelIndex index
 
     // Remove Backup action
     auto removeAction (new MenuItemAction(tr("Remove backup"),
-                                       QLatin1String("://images/ico_Delete.png")));
+                                       QLatin1String("://images/ico_Delete.png"), menu));
     removeAction->setAccent(true);
     connect(removeAction, &MenuItemAction::triggered, this, [this, sync]()
     {
         emit removeBackup(sync);
     });
-
-    openLocalAction->setParent(menu);
-    openRemoteAction->setParent(menu);
-    removeAction->setParent(menu);
 
     menu->addAction(openLocalAction);
     menu->addAction(openRemoteAction);
