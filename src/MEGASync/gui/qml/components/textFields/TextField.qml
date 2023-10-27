@@ -26,7 +26,6 @@ Rectangle {
     property bool error: false
     property alias title: titleItem.text
 
-    property alias rightIconColor: rightIcon.color
     property alias rightIconVisible: rightIcon.visible
     property string rightIconSource: ""
 
@@ -187,6 +186,7 @@ Rectangle {
             MegaImages.SvgImage {
                 id: rightIcon
 
+                color: enabled ? colors.icon : colors.iconDisabled
                 sourceSize: sizes.iconSize
                 anchors.top: focusBorder.top
                 anchors.right: focusBorder.right
