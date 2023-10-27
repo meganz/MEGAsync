@@ -10,21 +10,19 @@ AccountInfoData::AccountInfoData(QObject *parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
     , mType(AccountType::ACCOUNT_TYPE_NOT_SET)
-    , mTotalStorage(QString())
-    , mUsedStorage(QString())
+    , mTotalStorage()
+    , mUsedStorage()
     , mNewUser(false)
-{
-    requestAccountInfoData();
-}
+    , mInitialized(false)
+{}
 
 void AccountInfoData::requestAccountInfoData()
 {
-    mMegaApi->getAccountDetails(this->mDelegateListener.get());
-}
-
-void AccountInfoData::aboutToBeDestroyed()
-{
-    mDelegateListener = nullptr;
+    if (!mInitialized)
+    {
+        mMegaApi->getAccountDetails(mDelegateListener.get());
+        mInitialized = true;
+    }
 }
 
 void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)

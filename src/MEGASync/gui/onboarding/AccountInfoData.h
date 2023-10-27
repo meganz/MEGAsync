@@ -35,7 +35,6 @@ public:
 
 public slots:
     void requestAccountInfoData();
-    void aboutToBeDestroyed();
 
 signals:
     void accountDetailsChanged();
@@ -48,6 +47,7 @@ private:
     QString mTotalStorage;
     QString mUsedStorage;
     bool mNewUser;
+    bool mInitialized;
 
     static const long long INITIAL_SPACE;
 

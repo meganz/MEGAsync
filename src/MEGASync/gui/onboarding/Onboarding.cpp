@@ -30,7 +30,6 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
     qmlRegisterUncreatableType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog", QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
 
-    qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
     qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
 
@@ -59,6 +58,9 @@ Onboarding::Onboarding(QObject *parent)
 
     qmlRegisterModule("BackupsModel", 1, 0);
     qmlRegisterModule("BackupsController", 1, 0);
+
+    mAccountInfo.reset(new AccountInfoData());
+    qmlRegisterSingletonInstance("AccountInfoData", 1, 0, "AccountInfoData", mAccountInfo.get());
 
     // Makes the Guest window transparent (macOS)
     QQuickWindow::setDefaultAlphaBuffer(true);
