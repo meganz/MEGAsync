@@ -14,7 +14,10 @@
 #include <QApplication>
 
 #include <memory>
+
+#if DEBUG
 #include <iostream>
+#endif
 
 class QMLComponent : public QObject
 {
