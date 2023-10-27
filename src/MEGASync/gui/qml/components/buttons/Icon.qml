@@ -5,6 +5,7 @@ import QtQuick 2.15
 import Common 1.0
 
 QtObject {
+    id: root
 
     enum Position {
         LEFT = 0,
@@ -20,43 +21,5 @@ QtObject {
     property int position: Icon.Position.RIGHT
     property int busyIndicatorPosition: Icon.Position.RIGHT
     property bool busyIndicatorVisible: false
-
-    onSourceChanged: {
-        if(busyIndicatorVisible)
-        {
-            return;
-        }
-        switch(position) {
-            case Icon.Position.LEFT:
-                leftLoader.sourceComponent = image;
-                break;
-            case Icon.Position.RIGHT:
-                rightLoader.sourceComponent = image;
-                break;
-            case Icon.Position.BOTH:
-                leftLoader.sourceComponent = image;
-                rightLoader.sourceComponent = image;
-                break;
-        }
-    }
-
-    onBusyIndicatorVisibleChanged: {
-        if(busyIndicatorVisible) {
-            switch(busyIndicatorPosition) {
-                case Icon.Position.LEFT:
-                    leftLoader.sourceComponent = busyIndicator;
-                    break;
-                case Icon.Position.RIGHT:
-                    rightLoader.sourceComponent = busyIndicator;
-                    break;
-                case Icon.Position.BOTH:
-                    leftLoader.sourceComponent = busyIndicator;
-                    rightLoader.sourceComponent = busyIndicator;
-                    break;
-            }
-        } else {
-            sourceChanged();
-        }
-    }
 }
 

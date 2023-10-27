@@ -14,7 +14,7 @@ Qml.RoundButton {
     id: root
 
     property Colors colors: Colors {}
-    property Icon icons: Icon {}
+    property Icon icons: Icon{}
     property alias progressValue: backgroundProgress.value
     property Sizes sizes: Sizes {}
 
@@ -78,13 +78,24 @@ Qml.RoundButton {
     Layout.preferredHeight: sizes.height + 2 * sizes.focusBorderWidth
 
     contentItem: Row {
-
         spacing: sizes.spacing
 
-        Loader {
-            id: leftLoader
+        MegaImages.SvgImage {
+            id: leftImage
 
             anchors.verticalCenter: parent.verticalCenter
+            source: root.icons.source
+            color: getIconColor()
+            sourceSize: sizes.iconSize
+            visible: root.icons.position === Icon.Position.LEFT && !root.icons.busyIndicatorVisible
+        }
+
+        MegaBusyIndicator.BusyIndicator {
+            id: leftBusyIndicator
+            anchors.verticalCenter: parent.verticalCenter
+
+            color: root.icons.colorEnabled
+            visible: root.icons.position === Icon.Position.LEFT && root.icons.busyIndicatorVisible
         }
 
         MegaTexts.Text {
@@ -99,10 +110,22 @@ Qml.RoundButton {
             }
         }
 
-        Loader {
-            id: rightLoader
+        MegaImages.SvgImage {
+            id: rightImage
 
             anchors.verticalCenter: parent.verticalCenter
+            source: root.icons.source
+            color: getIconColor()
+            sourceSize: sizes.iconSize
+            visible: root.icons.position === Icon.Position.RIGHT && !root.icons.busyIndicatorVisible
+        }
+
+        MegaBusyIndicator.BusyIndicator {
+            id: rightBusyIndicator
+
+            anchors.verticalCenter: parent.verticalCenter
+            color: icons.colorEnabled
+            visible: root.icons.position === Icon.Position.RIGHT && root.icons.busyIndicatorVisible
         }
     }
 
@@ -145,9 +168,7 @@ Qml.RoundButton {
                 }
             }
 
-
-            Progress
-            {
+            Progress {
                 id: backgroundProgress
                 anchors.fill: parent
             }
@@ -162,40 +183,23 @@ Qml.RoundButton {
         cursorShape: Qt.PointingHandCursor
     }
 
-    Component {
-        id: image
-
-        MegaImages.SvgImage {
-            source: icons.source
-            color: getIconColor()
-            sourceSize: sizes.iconSize
-        }
-    }
-
-    Component {
-        id: busyIndicator
-
-        MegaBusyIndicator.BusyIndicator {
-            color: icons.colorEnabled
-        }
-    }
-
     Keys.onReleased: (event)=> {
         if (event.key === Qt.Key_Return) {
             if (checkable) {
-                down = false
-                checked = true
+                down = false;
+                checked = true;
             }
             event.accepted = true;
         }
     }
 
     Keys.onReturnPressed: {
-        down = true
-        root.clicked()
+        down = true;
+        root.clicked();
     }
 
     Keys.onEnterPressed:{
-        root.clicked()
+        root.clicked();
     }
+
 }
