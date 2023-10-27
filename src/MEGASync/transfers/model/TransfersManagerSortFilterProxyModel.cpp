@@ -260,6 +260,11 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
     if(d && d->mTag >= 0)
     {
+        if(d->isTempTransfer())
+        {
+            return false;
+        }
+
         accept = (d->getState() & mTransferStates)
                  && (d->mType & mTransferTypes)
                  && (toInt(d->mFileType) & mFileTypes);

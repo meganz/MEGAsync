@@ -996,6 +996,16 @@
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
         <translation>You have entered your current password, please enter a new password.</translation>
     </message>
+    <message>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
+        <translation>Password changed</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
+        <translation>Your password has been changed.</translation>
+    </message>
 </context>
 <context>
     <name>CircularUsageProgressBar</name>
@@ -1028,6 +1038,11 @@
         <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
         <translation>The following characters are not allowed:
 %1</translation>
+    </message>
+    <message>
+        <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
+        <translation>Your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</translation>
     </message>
 </context>
 <context>
@@ -1237,7 +1252,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Please resolve your payment issue as soon as possible to avoid any suspension of your business account</translation>
+        <translation>Please resolve your payment issue as soon as possible to avoid any suspension of your Business account</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1262,7 +1277,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation>Contact your Business account administrator to resolve the issue and activate your account.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1487,16 +1502,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Update</translation>
     </message>
     <message>
-        <source>loading time…</source>
-        <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>Calculating time…</translation>
-    </message>
-    <message>
-        <source>loading size…</source>
-        <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>Calculating size…</translation>
-    </message>
-    <message>
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>Learn more</translation>
@@ -1710,7 +1715,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
+        <translatorcomment>Informative label during creation of an account using MEGA app</translatorcomment>
         <translation>Creating account…</translation>
     </message>
     <message>
@@ -1765,6 +1770,34 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>GuiUtilities</name>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
+        <translation>Error adding sync</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
+        <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
+        <translation>%1 can&apos;t be added as your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
+    </message>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account. SNC-3019</translatorcomment>
+        <translation>Pay now</translation>
+    </message>
+    <message>
+        <source>Pay and reactivate</source>
+        <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>Pay and reactivate</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Label of the button used to dismiss the error message the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>Dismiss</translation>
+    </message>
+</context>
+<context>
     <name>HTTPServer</name>
     <message>
         <source>Your download has started</source>
@@ -1776,7 +1809,7 @@ In some cases they may contain details about your data, such as file or folder n
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
-        <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
+        <translatorcomment>Label to indicate the user that needs to wait until the app fetches link information from the server</translatorcomment>
         <translation>Please wait…</translation>
     </message>
 </context>
@@ -1943,7 +1976,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pause/Resume</translation>
+        <translation>Pause or resume</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2039,11 +2072,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Something went wrong while trying to backup your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
         <translation>Something went wrong while trying to back up your folders.</translation>
-    </message>
-    <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>Error adding %1:</translation>
     </message>
     <message>
         <source>Add Backup</source>
@@ -2171,12 +2199,12 @@ In some cases they may contain details about your data, such as file or folder n
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app.</translatorcomment>
         <translation>Choose users</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app. Preserve $(^NameDA) code</translatorcomment>
         <translation>Choose for which users you want to install $(^NameDA).</translation>
     </message>
     <message>
@@ -2302,11 +2330,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Error: Invalid destination folder. The upload has been cancelled</translation>
     </message>
     <message>
-        <source>About MEGAsync</source>
-        <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>About</translation>
-    </message>
-    <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
         <translation>The link has been copied to the clipboard</translation>
@@ -2328,22 +2351,22 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Up to date</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a paused state.</translatorcomment>
         <translation>Paused</translation>
     </message>
     <message>
         <source>Scanning</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a scanning state.</translatorcomment>
         <translation>Scanning</translation>
     </message>
     <message>
         <source>Syncing</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a syncing state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Syncing</translation>
     </message>
     <message>
@@ -2353,7 +2376,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Waiting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a waiting state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Waiting</translation>
     </message>
     <message>
@@ -2389,7 +2412,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
+        <translatorcomment>Notification message launched when an update for MEGA is being downloaded.</translatorcomment>
         <translation>Update available. Downloading…</translation>
     </message>
     <message>
@@ -2404,14 +2427,8 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Starting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is starting.</translatorcomment>
         <translation>Starting</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -2425,7 +2442,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Show status</source>
-        <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translatorcomment>Label displayed to let the user displays the Information dialog of the app. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation>Show status</translation>
     </message>
     <message>
@@ -2574,29 +2591,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>The app will continue to work, however you may not receive new updates.</translation>
     </message>
     <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>Password changed</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>Your password has been changed.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Cloud drive</translation>
-    </message>
-    <message>
-        <source>Pay Now</source>
-        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation>Pay now</translation>
-    </message>
-    <message>
-        <source>Your Business account is expired</source>
-        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Account deactivated</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2611,7 +2608,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation>[A]Important:[/A] Contact your Business account administrator to resolve the issue and activate your account.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2656,7 +2653,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Your account has been deactivated by your administrator. Please contact your business account administrator for further details.</translation>
+        <translation>Your account has been deactivated by your administrator. Please contact your Business account administrator for further details.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -2672,16 +2669,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>One or more syncs have been disabled</translation>
-    </message>
-    <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
-        <translation>Error adding sync</translation>
-    </message>
-    <message>
-        <source>This sync can&apos;t be added: %1. Reason: %2</source>
-        <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
-        <translation>This sync can’t be added: %1. Reason: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
@@ -2740,11 +2727,6 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
         <source>One or more backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some backups are disabled</translatorcomment>
         <translation>One or more backups have been disabled</translation>
-    </message>
-    <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>Error adding %1:</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
@@ -2860,6 +2842,11 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
         <source>Warning</source>
         <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
         <translation>Warning</translation>
+    </message>
+    <message>
+        <source>Account deactivated</source>
+        <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
+        <translation>Account deactivated</translation>
     </message>
 </context>
 <context>
@@ -3022,12 +3009,20 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Account suspended due to copyright violations. We sent you an email with more information about this.</translation>
+        <translation>Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.
+
+Check your email for more information on how to file a counter-notice.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.</translation>
+        <translation>Your account was terminated due to a breach of MEGA’s Terms of Service.
+You will not be able to regain access to your stored data or be authorised to register a new MEGA account.</translation>
+    </message>
+    <message>
+        <source>File removed as it violated our Terms of Service</source>
+        <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
+        <translation>Violated Terms of Service.</translation>
     </message>
 </context>
 <context>
@@ -3078,11 +3073,6 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
 </context>
 <context>
     <name>MegaProgressCustomDialog</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
@@ -3237,9 +3227,9 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
         <translation>You can’t run the desktop app from this location. Move it into the Applications folder then run it.</translation>
     </message>
     <message>
-        <source>Account expired (business or Pro Flexi)</source>
-        <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Account deactivated</translation>
+        <source>Your plan has expired</source>
+        <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
+        <translation>Your plan has expired</translation>
     </message>
 </context>
 <context>
@@ -3418,19 +3408,19 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
         <translation><numerusform>Cancel and clear transfer</numerusform><numerusform>Cancel and clear transfers</numerusform></translation>
     </message>
     <message>
-        <source>Yes, cancel</source>
-        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>Yes, cancel</translation>
+        <source>Cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>Cancel</translation>
     </message>
     <message>
-        <source>No, continue</source>
-        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
-        <translation>No, continue</translation>
+        <source>Don&apos;t cancel</source>
+        <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>Don&#8217;t cancel</translation>
     </message>
     <message>
-        <source>Yes, clear</source>
-        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation>Yes, clear</translation>
+        <source>Don&apos;t clear</source>
+        <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
+        <translation>Don&#8217;t clear</translation>
     </message>
 </context>
 <context>
@@ -3994,12 +3984,12 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
         <translation>Additional storage charged at %1 per %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
         <translation>Additional transfer quota charged at %1 per %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
@@ -5028,7 +5018,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Move…</translation>
+        <translation>Choose</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -5339,11 +5329,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
         <translation>Want to log out?</translation>
-    </message>
-    <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
-        <translation>Error adding sync</translation>
     </message>
     <message>
         <source>Error removing sync</source>
@@ -7193,32 +7178,32 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n second ago</numerusform><numerusform>%n seconds ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n minute ago</numerusform><numerusform>%n minutes ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n hour ago</numerusform><numerusform>%n hours ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n day ago</numerusform><numerusform>%n days ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n month ago</numerusform><numerusform>%n months ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation><numerusform>%n year ago</numerusform><numerusform>%n years ago</numerusform></translation>
     </message>
     <message>
