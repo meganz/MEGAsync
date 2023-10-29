@@ -3,6 +3,8 @@
 
 #include "DuplicatedNodeItem.h"
 #include "EventUpdater.h"
+#include <MegaApplication.h>
+
 
 #include <QFileInfo>
 
@@ -38,18 +40,75 @@ DuplicatedNodeDialog::~DuplicatedNodeDialog()
     delete ui;
 }
 
-void DuplicatedNodeDialog::checkUpload(const QString &nodePath, std::shared_ptr<mega::MegaNode> parentNode)
+void DuplicatedNodeDialog::checkUploads(const QQueue<QString> &nodePaths, std::shared_ptr<mega::MegaNode> parentNode)
 {
-    QFileInfo fileInfo(nodePath);
-    if(fileInfo.isFile())
+    std::unique_ptr<mega::MegaNodeList>nodes(MegaSyncApp->getMegaApi()->getChildren(parentNode.get()));
+    QHash<QString, mega::MegaNode*> nodesOnCloudDrive;
+
+    for(int index = 0; index < nodes->size(); ++index)
     {
-        auto conflict = mFileCheck.checkUpload(nodePath, parentNode);
-        conflict->hasConflict() ? mFileConflicts.append(conflict) : mResolvedUploads.append(conflict);
+        QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
+        nodesOnCloudDrive.insert(nodeName.toLower(), nodes->get(index));
     }
-    else
+
+    QList<std::shared_ptr<DuplicatedNodeInfo>> resolvedInfoList;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> filesConflictedInfoList;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> foldersConflictedInfoList;
+
+    auto counter(0);
+    EventUpdater checkUpdater(nodePaths.size());
+
+    qDebug() << "CHECK";
+    foreach(auto localPath, nodePaths)
     {
-        auto conflict = mFolderCheck.checkUpload(nodePath, parentNode);
-        conflict->hasConflict() ? mFolderConflicts.append(conflict) : mResolvedUploads.append(conflict);
+        QFileInfo localPathInfo(localPath);
+        bool isFile(localPathInfo.isFile());
+        DuplicatedUploadBase* checker(nullptr);
+        if(isFile)
+        {
+            checker = &mFileCheck;
+        }
+        else
+        {
+            checker = &mFolderCheck;
+        }
+
+        auto info = std::make_shared<DuplicatedNodeInfo>(checker);
+        info->setLocalPath(localPath);
+        info->setParentNode(parentNode);
+
+        QString nodeToUploadName(localPathInfo.fileName());
+        auto node(nodesOnCloudDrive.value(nodeToUploadName.toLower()));
+        if(node)
+        {
+            std::shared_ptr<mega::MegaNode> smartNode(node->copy());
+            info->setRemoteConflictNode(smartNode);
+            info->setHasConflict(true);
+
+            isFile ? filesConflictedInfoList.append(info) : foldersConflictedInfoList.append(info);
+        }
+        else
+        {
+            resolvedInfoList.append(info);
+        }
+
+        checkUpdater.update(counter);
+        counter++;
+    }
+
+    if(!resolvedInfoList.isEmpty())
+    {
+        mResolvedUploads.append(resolvedInfoList);
+    }
+
+    if(!filesConflictedInfoList.isEmpty())
+    {
+        mFileConflicts.append(filesConflictedInfoList);
+    }
+
+    if(!foldersConflictedInfoList.isEmpty())
+    {
+        mFolderConflicts.append(foldersConflictedInfoList);
     }
 }
 

@@ -19,7 +19,7 @@ public:
     explicit DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node);
     ~DuplicatedNodeDialog();
 
-    void checkUpload(const QString& nodePath, std::shared_ptr<mega::MegaNode> parentNode);
+    void checkUploads(const QQueue<QString>& nodePath, std::shared_ptr<mega::MegaNode> parentNode);
 
     void addNodeItem(DuplicatedNodeItem* item);
     void setHeader(const QString& baseText, const QString &nodeName);

@@ -53,14 +53,6 @@ NodeItemType DuplicatedNodeInfo::getSolution() const
     return mSolution;
 }
 
-std::shared_ptr<mega::MegaNode> DuplicatedNodeInfo::checkNameNode(const QString &nodeName, std::shared_ptr<mega::MegaNode> parentNode)
-{
-    auto node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode.get(), nodeName.toUtf8().constData(),
-                                                              isLocalFile() ? mega::MegaNode::TYPE_FILE : mega::MegaNode::TYPE_FOLDER));
-
-    return node;
-}
-
 void DuplicatedNodeInfo::setSolution(NodeItemType newSolution)
 {
     mSolution = newSolution;

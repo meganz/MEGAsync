@@ -23,26 +23,6 @@ QStringList &DuplicatedUploadBase::getCheckedNames()
     return checkedNames;
 }
 
-std::shared_ptr<DuplicatedNodeInfo> DuplicatedUploadBase::checkUpload(const QString &localPath, std::shared_ptr<mega::MegaNode> parentNode)
-{
-    QFileInfo fileInfo(localPath);
-
-    auto info = std::make_shared<DuplicatedNodeInfo>(this);
-    info->setLocalPath(localPath);
-    info->setParentNode(parentNode);
-
-    auto conflictNode = info->checkNameNode(fileInfo.fileName(), parentNode);
-    if(conflictNode)
-    {
-        info->setRemoteConflictNode(conflictNode);
-        info->setHasConflict(true);
-    }
-
-    checkedNames.append(fileInfo.fileName());
-
-    return info;
-}
-
 QString DuplicatedUploadBase::getHeader(bool isFile)
 {
     return isFile ? DuplicatedNodeDialog::tr("A file named [A] already exists at this destination")

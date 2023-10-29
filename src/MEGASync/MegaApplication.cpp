@@ -1642,17 +1642,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     noUploadedStarted = true;
 
     auto checkUploadNameDialog = new DuplicatedNodeDialog(node);
-    
-    auto counter(0);
-    EventUpdater checkUpdater(uploadQueue.size());
-    while (!uploadQueue.isEmpty())
-    {
-        QString nodePath = uploadQueue.dequeue();
-        checkUploadNameDialog->checkUpload(nodePath, node);
-
-        checkUpdater.update(counter);
-        counter++;
-    }
+    checkUploadNameDialog->checkUploads(uploadQueue, node);
 
     if(!checkUploadNameDialog->isEmpty())
     {
