@@ -40,7 +40,7 @@ DuplicatedNodeDialog::~DuplicatedNodeDialog()
     delete ui;
 }
 
-void DuplicatedNodeDialog::checkUploads(const QQueue<QString> &nodePaths, std::shared_ptr<mega::MegaNode> parentNode)
+void DuplicatedNodeDialog::checkUploads(QQueue<QString> &nodePaths, std::shared_ptr<mega::MegaNode> parentNode)
 {
     std::unique_ptr<mega::MegaNodeList>nodes(MegaSyncApp->getMegaApi()->getChildren(parentNode.get()));
     QHash<QString, mega::MegaNode*> nodesOnCloudDrive;
@@ -58,9 +58,9 @@ void DuplicatedNodeDialog::checkUploads(const QQueue<QString> &nodePaths, std::s
     auto counter(0);
     EventUpdater checkUpdater(nodePaths.size());
 
-    qDebug() << "CHECK";
-    foreach(auto localPath, nodePaths)
+    while (!nodePaths.isEmpty())
     {
+        auto localPath(nodePaths.dequeue());
         QFileInfo localPathInfo(localPath);
         bool isFile(localPathInfo.isFile());
         DuplicatedUploadBase* checker(nullptr);
