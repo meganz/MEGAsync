@@ -310,7 +310,7 @@ QString TransferData::path() const
 {
     QString localPath = mPath;
     #ifdef WIN32
-    if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (localPath.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         localPath = localPath.mid(4);
     }
@@ -439,6 +439,11 @@ bool TransferData::canBeRetried() const
 bool TransferData::isCancelled() const
 {
     return mState & TRANSFER_CANCELLED;
+}
+
+bool TransferData::isTempTransfer() const
+{
+    return mIsTempTransfer;
 }
 
 bool TransferData::isFinished() const

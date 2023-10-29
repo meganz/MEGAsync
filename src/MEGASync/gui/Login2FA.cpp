@@ -80,7 +80,7 @@ void Login2FA::inputCodeChanged()
 
 void Login2FA::on_bHelp_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/recovery");
+    QString helpUrl = Preferences::BASE_URL + QString::fromLatin1("/recovery");
     Utilities::openUrl(QUrl(helpUrl));
 }
 

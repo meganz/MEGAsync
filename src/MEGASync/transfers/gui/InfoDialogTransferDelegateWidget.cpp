@@ -254,7 +254,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 else
                 {
                     update = setActionTransferIcon(mUi->lActionTransfer,
-                                                   QString::fromAscii("://images/error.png"));
+                                                   QString::fromLatin1("://images/error.png"));
                     //Double check that the mFailedTransfer is OK
                     if(getData()->isFailed())
                     {
@@ -277,7 +277,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     update = setActionTransferIcon(mUi->lActionTransfer,
-                                                   QString::fromAscii("://images/link%1.png").arg(QString::fromAscii(inAction ? "-hover" : "")));
+                                                   QString::fromLatin1("://images/link%1.png").arg(QString::fromLatin1(inAction ? "-hover" : "")));
                     mUi->lActionTransfer->setToolTip(tr("Copy link to file"));
                 }
                 else
@@ -293,7 +293,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 bool fileExists = QFile(getData()->path()).exists();
 
                 const char* baseIconName = (fileExists) ? "://images/file-search%1.png" : "://images/file-question%1.png";
-                update |= setActionTransferIcon(mUi->lShowInFolder, QString::fromAscii(baseIconName).arg(QString::fromAscii(inShowFolder?"-hover":"")));
+                update |= setActionTransferIcon(mUi->lShowInFolder, QString::fromLatin1(baseIconName).arg(QString::fromLatin1(inShowFolder?"-hover":"")));
                 QString tooltipText = (fileExists) ? tr("Show in folder") : tr("Deleted or moved file");
                 mUi->lShowInFolder->setToolTip(tooltipText);
 
@@ -303,7 +303,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
         else
         {
             const char* iconName = (getData()->mErrorCode < 0) ? "://images/error.png" : "://images/success.png";
-            update = setActionTransferIcon(mUi->lActionTransfer, QString::fromAscii(iconName));
+            update = setActionTransferIcon(mUi->lActionTransfer, QString::fromLatin1(iconName));
             mUi->lActionTransfer->setIconSize(QSize(24,24));
 
             if(update)
@@ -327,7 +327,7 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
     mUi->sTransferState->setCurrentWidget(mUi->completedTransfer);
     if (getData()->mErrorCode < 0)
     {
-        mUi->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/error.png")));
+        mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1("://images/error.png")));
         mUi->lActionTransfer->setIconSize(QSize(24,24));
         mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
 
@@ -343,7 +343,7 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
     }
     else
     {
-        mUi->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/success.png")));
+        mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1("://images/success.png")));
         mUi->lActionTransfer->setIconSize(QSize(24,24));
         updateFinishedIco(getData()->mType, false);
     }
