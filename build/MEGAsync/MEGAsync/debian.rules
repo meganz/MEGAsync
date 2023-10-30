@@ -64,7 +64,6 @@ installqt:
 	install /opt/mega/plugins/platforms/libqoffscreen.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
 	install /opt/mega/plugins/platforms/libqminimal.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
 	install /opt/mega/plugins/platforms/libqlinuxfb.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
-	install /opt/mega/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
 	install /opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
 	install /opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
 	install /opt/mega/plugins/imageformats/libqwebp.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
