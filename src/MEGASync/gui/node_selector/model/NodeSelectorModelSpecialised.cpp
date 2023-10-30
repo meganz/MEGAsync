@@ -539,3 +539,9 @@ void NodeSelectorModelRubbish::firstLoad()
 
     addRootItems();
 }
+
+bool NodeSelectorModelRubbish::isParentAccepted(mega::MegaHandle parentHandle)
+{
+    auto rubbishHandle(MegaSyncApp->getRubbishNode()->getHandle());
+    return parentHandle == rubbishHandle;
+}

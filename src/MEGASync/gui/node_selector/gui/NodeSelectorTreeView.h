@@ -19,6 +19,7 @@ class NodeSelectorTreeView : public LoadingSceneView<NodeSelectorLoadingDelegate
 public:
     explicit NodeSelectorTreeView(QWidget *parent = nullptr);
     MegaHandle getSelectedNodeHandle();
+    QList<MegaHandle> getMultiSelectionNodeHandle();
     void setModel(QAbstractItemModel *model) override;
 
 protected:
@@ -33,17 +34,17 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
 
 signals:
-    void removeNodeClicked();
+    void removeNodeClicked(const QList<MegaHandle>& handles, bool permanently);
     void renameNodeClicked();
     void getMegaLinkClicked();
-    void restoreClicked();
+    void restoreClicked(const QList<MegaHandle>& handles);
     void nodeSelected();
 
 private slots:
-    void removeNode();
+    void removeNode(const QList<MegaHandle>& handles, bool permanently);
     void renameNode();
     void getMegaLink();
-    void restore();
+    void restore(const QList<MegaHandle>& handles);
     void onNavigateReady(const QModelIndex& index);
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
@@ -55,6 +56,10 @@ private:
     bool handleStandardMouseEvent(QMouseEvent* event);
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     NodeSelectorProxyModel* proxyModel() const;
+
+    bool areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
+    bool areAllEligibleForRestore(const QList<mega::MegaHandle>& handles) const;
+    int getNodeAccess(mega::MegaHandle handle) const;
 
     MegaApi* mMegaApi;
 };

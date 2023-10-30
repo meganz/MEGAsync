@@ -111,6 +111,7 @@ class NodeSelectorTreeViewWidgetRubbish : public NodeSelectorTreeViewWidget
 public:
     explicit NodeSelectorTreeViewWidgetRubbish(SelectTypeSPtr mode, QWidget *parent = nullptr);
     void setShowEmptyView(bool newShowEmptyView);
+    bool isEmpty() const;
 
 signals:
     void itemsRestored(QSet<mega::MegaHandle>& handles);
@@ -119,7 +120,7 @@ protected:
     void makeCustomConnections() override;
 
 protected slots:
-    void onRestoreClicked();
+    void onRestoreClicked(const QList<mega::MegaHandle>& handles);
 
 private:
     QString getRootText() override;
@@ -128,7 +129,9 @@ private:
     void modelLoaded() override;
     QIcon getEmptyIcon() override;
     bool showEmptyView() override {return mShowEmptyView;}
-    bool isCurrentRootIndexReadOnly() override;
+    bool isCurrentRootIndexReadOnly() override {return true;}
+    bool isCurrentSelectionReadOnly() override {return true;}
+    bool newFolderBtnCanBeVisisble() override {return false;}
 
     bool mShowEmptyView = true;
     QList<mega::MegaHandle> mRestoredItems;

@@ -601,41 +601,117 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
     DialogOpener::showDialog(dialog);
 }
 
-void NodeSelectorTreeViewWidget::onDeleteClicked()
+void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &handles, bool permanently)
 {
-    auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
-    int access = mMegaApi->getAccess(node.get());
-    //This is for an extra protection as we don´t show the rename action if one of this conditions are not met
-    if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
-    {
-        return;
-    }
+    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>{
+        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
+        int access = mMegaApi->getAccess(node.get());
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = ui->tMegaFolders;
-    msgInfo.title =  MegaSyncApp->getMEGAString();
-    msgInfo.text = tr("Are you sure that you want to delete \"%1\"?")
-            .arg(QString::fromUtf8(node->getName()));
-            msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::No;
-    msgInfo.finishFunc = [this, node, access](QPointer<QMessageBox> msg)
-    {
-        if(msg->result() == QMessageBox::Yes)
+        //This is for an extra protection as we don´t show the rename action if one of this conditions are not met
+        if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
         {
-            //Double protection in case the node properties changed while the node is deleted
-            if (access == MegaShare::ACCESS_FULL
-                && node->isNodeKeyDecrypted())
+            return nullptr;
+        }
+
+        return node;
+    };
+
+    auto removeNode = [this, permanently](std::shared_ptr<mega::MegaNode> node)
+    {
+        int access = mMegaApi->getAccess(node.get());
+
+        //Double protection in case the node properties changed while the node is deleted
+        if (permanently || (access == MegaShare::ACCESS_FULL
+                            && node->isNodeKeyDecrypted()))
+        {
+            mMegaApi->remove(node.get());
+        }
+        else
+        {
+            auto rubbish = MegaSyncApp->getRubbishNode();
+            mMegaApi->moveNode(node.get(), rubbish.get());
+        }
+    };
+
+    QPointer<NodeSelectorTreeViewWidget> currentDialog = this;
+
+    if(handles.size() == 1)
+    {
+        auto node = getNode(handles.first());
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = ui->tMegaFolders;
+        msgInfo.title =  MegaSyncApp->getMEGAString();
+        if(permanently)
+        {
+            msgInfo.text = tr("You are about to permanently remove %n file.\nWould you like to proceed?", "", 1);
+            msgInfo.informativeText = tr("You cannot undo this action");
+        }
+        else
+        {
+            msgInfo.text = tr("Are you sure that you want to delete \"%1\"?")
+                               .arg(QString::fromUtf8(node->getName()));
+        }
+        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+        msgInfo.defaultButton = QMessageBox::No;
+        msgInfo.finishFunc = [removeNode, node](QPointer<QMessageBox> msg)
+        {
+            if(msg->result() == QMessageBox::Yes)
             {
-                mMegaApi->remove(node.get());
+                removeNode(node);
             }
             else
             {
-                auto rubbish = MegaSyncApp->getRubbishNode();
-                mMegaApi->moveNode(node.get(), rubbish.get());
+                return;
             }
+        };
+        QMegaMessageBox::warning(msgInfo);
+    }
+    else
+    {
+        auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = ui->tMegaFolders;
+        msgInfo.title =  MegaSyncApp->getMEGAString();
+        if(permanently)
+        {
+            msgInfo.text = tr("You are about to permanently remove %n file.\nWould you like to proceed?", "", selectedRows.size());
+            msgInfo.informativeText = tr("You cannot undo this action");
         }
-    };
-    QMegaMessageBox::question(msgInfo);
+        else
+        {
+            msgInfo.text = tr("Are you sure that you want to delete %1 items?")
+                               .arg(QString::number(selectedRows.size()));
+        }
+        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+        msgInfo.defaultButton = QMessageBox::No;
+        msgInfo.finishFunc = [this, selectedRows, getNode, removeNode](QPointer<QMessageBox> msg)
+        {
+            if(msg->result() == QMessageBox::Yes)
+            {
+                foreach(auto& s_index, selectedRows)
+                {
+                    if(auto savedNode = mProxyModel->getNode(s_index))
+                    {
+                        auto node = getNode(savedNode->getHandle());
+                        removeNode(std::move(node));
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+        };
+
+        QMegaMessageBox::warning(msgInfo);
+    }
+
+    if (!currentDialog)
+    {
+        return;
+    }
 }
 
 void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
@@ -801,11 +877,11 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
 
 int NodeSelectorTreeViewWidget::areThereNodesToUpdate()
 {
-    return mUpdatedNodesByPreviousHandle.size() +
+    return (mUpdatedNodesByPreviousHandle.size() +
            mRemovedNodesByHandle.size() +
            mRenamedNodesByHandle.size() +
            mAddedNodesByParentHandle.size() +
-           mMovedNodesByHandle.size();
+            mMovedNodesByHandle.size());
 }
 
 void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
@@ -882,7 +958,13 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
                 auto parentIndex = getAddedNodeParent(parentHandle);
                 auto addedNodes(mAddedNodesByParentHandle.values(parentHandle));
                 mModel->addNodes(addedNodes, parentIndex);
+                auto proxyParentIndex(mProxyModel->mapFromSource(parentIndex));
                 nodesAddedFromNodesUpdate(addedNodes);
+                //Only for root indexes
+                if(!proxyParentIndex.parent().isValid())
+                {
+                    ui->tMegaFolders->setExpanded(proxyParentIndex, true);
+                }
             }
 
             foreach(auto handle, mRemovedNodesByHandle)
@@ -895,6 +977,8 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             mRenamedNodesByHandle.clear();
             mUpdatedNodesByPreviousHandle.clear();
             mMovedNodesByHandle.clear();
+
+            checkButtonsVisibility();
         }
     }
 }
@@ -918,7 +1002,6 @@ void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selecte
     }
 
     mModel->loadTreeFromNode(node);
-
 }
 
 void NodeSelectorTreeViewWidget::setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle)
@@ -933,13 +1016,7 @@ MegaHandle NodeSelectorTreeViewWidget::getSelectedNodeHandle()
 
 QList<MegaHandle> NodeSelectorTreeViewWidget::getMultiSelectionNodeHandle()
 {
-    QList<MegaHandle> ret;
-    foreach(auto& s_index, ui->tMegaFolders->selectionModel()->selectedRows())
-    {
-        if(auto node = mProxyModel->getNode(s_index))
-            ret.append(node->getHandle());
-    }
-    return ret;
+    return ui->tMegaFolders->getMultiSelectionNodeHandle();
 }
 
 QModelIndex NodeSelectorTreeViewWidget::getSelectedIndex()
@@ -1277,7 +1354,18 @@ void CloudDriveType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
 
 void CloudDriveType::customButtonsVisibility(NodeSelectorTreeViewWidget *wdg)
 {
-    mCustomBottomButtons.value(wdg).value(ButtonId::Upload)->setVisible(!wdg->isCurrentSelectionReadOnly());
+    auto rubbishWidget = dynamic_cast<NodeSelectorTreeViewWidgetRubbish*>(wdg);
+    if(rubbishWidget)
+    {
+        mCustomBottomButtons.value(wdg).value(ButtonId::Upload)->setVisible(false);
+        mCustomBottomButtons.value(wdg).value(ButtonId::Download)->setVisible(false);
+        mCustomBottomButtons.value(wdg).value(ButtonId::ClearRubbish)->setVisible(!rubbishWidget->isEmpty());
+    }
+    else
+    {
+        mCustomBottomButtons.value(wdg).value(ButtonId::ClearRubbish)->setVisible(false);
+        mCustomBottomButtons.value(wdg).value(ButtonId::Upload)->setVisible(!wdg->isCurrentSelectionReadOnly());
+    }
 }
 
 QMap<int, QPushButton *> CloudDriveType::addCustomBottomButtons(NodeSelectorTreeViewWidget *wdg)
@@ -1290,6 +1378,10 @@ QMap<int, QPushButton *> CloudDriveType::addCustomBottomButtons(NodeSelectorTree
 
         auto downloadButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/toolbar/download_toolbar_ico_default.png")), NodeSelectorTreeViewWidget::tr("Download")));
         buttons.insert(ButtonId::Download, downloadButton);
+
+        auto clearRubbishButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/sidebar/cancel_all_ico_hover.png")), NodeSelectorTreeViewWidget::tr("Empty rubbish bin")));
+        buttons.insert(ButtonId::ClearRubbish, clearRubbishButton);
+        clearRubbishButton->hide();
     }
 
     return buttons;
@@ -1298,16 +1390,31 @@ QMap<int, QPushButton *> CloudDriveType::addCustomBottomButtons(NodeSelectorTree
 void CloudDriveType::selectionHasChanged(const QModelIndexList &selected, NodeSelectorTreeViewWidget *wdg)
 {    
     auto buttons = mCustomBottomButtons.value(wdg);
-    buttons.value(ButtonId::Download)->setVisible(!selected.isEmpty() || !wdg->isInRootView());
 
-    bool uploadEnabled(false);
-    if(selected.size() == 1)
+    auto rubbishWidget = dynamic_cast<NodeSelectorTreeViewWidgetRubbish*>(wdg);
+
+    if(rubbishWidget)
     {
-        uploadEnabled = !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool() && !wdg->isCurrentSelectionReadOnly();
+        buttons.value(ButtonId::Download)->setVisible(false);
+        buttons.value(ButtonId::Upload)->setVisible(false);
+        buttons.value(ButtonId::ClearRubbish)->setVisible(!rubbishWidget->isEmpty());
     }
-    else if(selected.size() == 0 && !wdg->isInRootView() && !wdg->isCurrentRootIndexReadOnly())
+    else
     {
-        uploadEnabled = true;
+        buttons.value(ButtonId::ClearRubbish)->setVisible(false);
+
+        buttons.value(ButtonId::Download)->setVisible(!selected.isEmpty() || !wdg->isInRootView());
+
+        bool uploadEnabled(false);
+        if(selected.size() == 1)
+        {
+            uploadEnabled = !selected.first().data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool() && !wdg->isCurrentSelectionReadOnly();
+        }
+        else if(selected.size() == 0 && !wdg->isInRootView() && !wdg->isCurrentRootIndexReadOnly())
+        {
+            uploadEnabled = true;
+        }
+        buttons.value(ButtonId::Upload)->setVisible(uploadEnabled);
     }
-    buttons.value(ButtonId::Upload)->setVisible(uploadEnabled);
+
 }

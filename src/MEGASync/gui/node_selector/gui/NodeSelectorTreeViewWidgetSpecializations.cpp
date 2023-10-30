@@ -42,6 +42,8 @@ void NodeSelectorTreeViewWidgetCloudDrive::itemsRestored(const QSet<mega::MegaHa
                 }
             }
         }
+
+        return;
     }
 }
 
@@ -401,14 +403,20 @@ void NodeSelectorTreeViewWidgetRubbish::setShowEmptyView(bool newShowEmptyView)
     mShowEmptyView = newShowEmptyView;
 }
 
+bool NodeSelectorTreeViewWidgetRubbish::isEmpty() const
+{
+    auto rootIndex = mModel->index(0,0);
+    return mModel->rowCount(rootIndex) == 0;
+}
+
 void NodeSelectorTreeViewWidgetRubbish::makeCustomConnections()
 {
     connect(ui->tMegaFolders, &NodeSelectorTreeView::restoreClicked, this, &NodeSelectorTreeViewWidgetRubbish::onRestoreClicked);
 }
 
-void NodeSelectorTreeViewWidgetRubbish::onRestoreClicked()
+void NodeSelectorTreeViewWidgetRubbish::onRestoreClicked(const QList<mega::MegaHandle>& handles)
 {
-    mRestoredItems = getMultiSelectionNodeHandle();
+    mRestoredItems = handles;
 
     foreach(auto handle, mRestoredItems)
     {
@@ -416,27 +424,29 @@ void NodeSelectorTreeViewWidgetRubbish::onRestoreClicked()
         if (node)
         {
             auto newParent = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
-            mMegaApi->moveNode(node.get(), newParent.get(), new mega::OnFinishOneShot(mMegaApi, this,
-                                                                                      [this, node]
-                                                                                      (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
-                                                                                      {
-                                                                                          if (!isContextValid)
-                                                                                          {
-                                                                                              return;
-                                                                                          }
+            mMegaApi->moveNode(node.get(),
+                               newParent.get(),
+                               new mega::OnFinishOneShot(mMegaApi, this,
+                                                         [this, node]
+                                                         (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
+                                                         {
+                                                             if (!isContextValid)
+                                                             {
+                                                                 return;
+                                                             }
 
-                                                                                          if (e.getErrorCode() == MegaError::API_OK &&
-                                                                                              request.getType() == mega::MegaRequest::TYPE_MOVE)
-                                                                                          {
-                                                                                              mRestoredItems.removeOne(node->getHandle());
-                                                                                              mItemsToSelectAfterRestoration.insert(node->getHandle());
-                                                                                              if(mRestoredItems.isEmpty())
-                                                                                              {
-                                                                                                  emit itemsRestored(mItemsToSelectAfterRestoration);
-                                                                                                  mItemsToSelectAfterRestoration.clear();
-                                                                                              }
-                                                                                          }
-                                                                                      }));
+                                                             if (e.getErrorCode() == MegaError::API_OK &&
+                                                                 request.getType() == mega::MegaRequest::TYPE_MOVE)
+                                                             {
+                                                                 mRestoredItems.removeOne(node->getHandle());
+                                                                 mItemsToSelectAfterRestoration.insert(node->getHandle());
+                                                                 if(mRestoredItems.isEmpty())
+                                                                 {
+                                                                     emit itemsRestored(mItemsToSelectAfterRestoration);
+                                                                     mItemsToSelectAfterRestoration.clear();
+                                                                 }
+                                                             }
+                                                         }));
         }
     }
 }
@@ -467,11 +477,6 @@ void NodeSelectorTreeViewWidgetRubbish::modelLoaded()
 QIcon NodeSelectorTreeViewWidgetRubbish::getEmptyIcon()
 {
     return QIcon(QString::fromUtf8("://images/node_selector/view/cloud.png"));
-}
-
-bool NodeSelectorTreeViewWidgetRubbish::isCurrentRootIndexReadOnly()
-{
-    return false;
 }
 
 void NodeSelectorTreeViewWidgetRubbish::onRootIndexChanged(const QModelIndex &source_idx)

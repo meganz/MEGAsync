@@ -200,11 +200,11 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
 
 void NodeSelector::onItemsRestored(const QSet<mega::MegaHandle>& handles)
 {
-    onbShowCloudDriveClicked();
-    auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidgetCloudDrive*>(ui->stackedWidget->currentWidget());
+    auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidgetCloudDrive*>(ui->stackedWidget->widget(CLOUD_DRIVE));
     if(viewContainer)
     {
         viewContainer->itemsRestored(handles);
+        onbShowCloudDriveClicked();
     }
 }
 

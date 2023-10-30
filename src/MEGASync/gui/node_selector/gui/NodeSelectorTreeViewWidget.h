@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <QDebug>
 #include <QItemSelectionModel>
+#include <QPersistentModelIndex>
 #include <memory>
 #include <QPushButton>
 #include <QTimer>
@@ -112,7 +113,7 @@ private slots:
     void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onModelDataChanged(const QModelIndex& first, const QModelIndex& last, const QVector<int> &roles = QVector<int>());
-    void onDeleteClicked();
+    void onDeleteClicked(const QList<mega::MegaHandle> &handles, bool permanently);
     void onRenameClicked();
     void onGenMEGALinkClicked();
     virtual void onItemDoubleClick(const QModelIndex &index);
@@ -238,7 +239,8 @@ public:
     enum ButtonId
     {
         Upload,
-        Download
+        Download,
+        ClearRubbish
     };
 
     explicit CloudDriveType() = default;

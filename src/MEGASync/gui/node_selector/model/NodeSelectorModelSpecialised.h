@@ -140,7 +140,7 @@ public:
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
 
-    bool isParentAccepted(mega::MegaHandle parentHandle) override {return parentHandle == MegaSyncApp->getRubbishNode()->getHandle();}
+    bool isParentAccepted(mega::MegaHandle parentHandle) override;
 
 public slots:
     void onItemInfoUpdated(int role);

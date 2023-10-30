@@ -207,6 +207,7 @@ void StreamNodeSelector::checkSelection()
     }
 }
 
+/////////////////////////////////////////////////////////////
 CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
     setWindowTitle(tr("Cloud Drive"));
@@ -254,9 +255,29 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
             QMegaMessageBox::warning(msgInfo);
         }
     }
-    else
+    else if(id == CloudDriveType::Download)
     {
         MegaSyncApp->downloadACtionClickedWithHandles(getMultiSelectionNodeHandle());
+    }
+    else if(id == CloudDriveType::ClearRubbish)
+    {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = QMegaMessageBox::errorTitle();
+        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+        QMap<QMessageBox::Button, QString> textsByButton;
+        textsByButton.insert(QMessageBox::Yes, tr("Empty"));
+        textsByButton.insert(QMessageBox::No, tr("Cancel"));
+        msgInfo.buttonsText = textsByButton;
+        msgInfo.text = tr("You are about to permanently remove all items from your Rubbish Bin.");
+        msgInfo.informativeText = tr("You cannot undo this action");
+        msgInfo.finishFunc = [](QPointer<QMessageBox> msg){
+            if (msg->result() == QMessageBox::Yes)
+            {
+                MegaSyncApp->getMegaApi()->cleanRubbishBin();
+            }
+        };
+        QMegaMessageBox::warning(msgInfo);
     }
 }
 
