@@ -295,7 +295,6 @@ void NodeSelectorTreeViewWidget::onExpandReady()
 
             if((*it) == indexesAndSelected.indexesToBeExpanded.last())
             {
-                qDebug() << handle << proxyIndex;
                 if(indexesAndSelected.needsToBeSelected)
                 {
                     ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::Select | QItemSelectionModel::Rows);
