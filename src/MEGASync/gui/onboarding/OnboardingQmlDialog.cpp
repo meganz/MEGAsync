@@ -41,6 +41,24 @@ void OnboardingQmlDialog::forceClose()
     }
 }
 
+void OnboardingQmlDialog::raise()
+{
+    // The following four lines are required by Ubuntu to bring the window to the front and
+    // move it to the center of the current screen, if the screen is a part of a virtual desktop or multiple screen
+    // we will need add the current screen offset(topleft) to the calculated central position.
+    const auto& geometry = QmlDialog::screen()->geometry();
+    int xPos = geometry.x() + static_cast<int>(geometry.width() * 0.5 - width() * 0.5);
+    int yPos = geometry.y() + static_cast<int>(geometry.height() * 0.5 - height() * 0.5);
+
+    hide();
+    QmlDialog::setPosition(xPos, yPos);
+    show();
+
+    // The following two lines are required by Windows (activate) and macOS (raise)
+    QmlDialog::requestActivate();
+    QmlDialog::raise();
+}
+
 bool OnboardingQmlDialog::event(QEvent *evnt)
 {
     if(evnt->type() == QEvent::WindowUnblocked && mForceClose)
