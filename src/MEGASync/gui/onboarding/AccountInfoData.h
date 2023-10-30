@@ -2,10 +2,11 @@
 #define ACCOUNTINFODATA_H
 
 #include "QTMegaRequestListener.h"
+#include "QTMegaGlobalListener.h"
 
 #include <memory>
 
-class AccountInfoData : public QObject, public mega::MegaRequestListener
+class AccountInfoData : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
     Q_OBJECT
 
@@ -29,10 +30,6 @@ public:
 
     explicit AccountInfoData(QObject *parent = 0);
 
-    void onRequestFinish(mega::MegaApi*,
-                         mega::MegaRequest *request,
-                         mega::MegaError* error) override;
-
 public slots:
     void requestAccountInfoData();
 
@@ -42,15 +39,19 @@ signals:
 private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 
     AccountType mType;
     QString mTotalStorage;
     QString mUsedStorage;
     bool mNewUser;
-    bool mInitialized;
 
     static const long long INITIAL_SPACE;
 
+    void onRequestFinish(mega::MegaApi*,
+                         mega::MegaRequest *request,
+                         mega::MegaError* error) override;
+    void onAccountUpdate(mega::MegaApi *api) override;
 };
 
 #endif // ACCOUNTINFODATA_H
