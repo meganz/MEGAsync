@@ -69,7 +69,6 @@ public:
     bool isInRootView() const;
 
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
-    void setTopLevelForLoadingMessage(QWidget* parent);
 
 public slots:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
@@ -148,6 +147,7 @@ private:
     virtual bool isCurrentRootIndexReadOnly(){return false;}
     virtual bool newFolderBtnCanBeVisisble(){return true;}
     virtual bool isCurrentSelectionReadOnly(){return false;}
+    virtual void nodesAddedFromNodesUpdate(const QList<std::shared_ptr<mega::MegaNode>>& nodes){}
     int areThereNodesToUpdate();
     void selectionHasChanged(const QModelIndexList& selected);
     ButtonIconManager mButtonIconManager;

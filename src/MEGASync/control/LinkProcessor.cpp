@@ -139,12 +139,12 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
             QString currentStr = linkList[currentIndex];
             QString splitSeparator;
 
-            if (currentStr.count(QChar::fromAscii('!')) == 3)
+            if (currentStr.count(QChar::fromLatin1('!')) == 3)
             {
                 splitSeparator = QString::fromUtf8("!");
             }
-            else if (currentStr.count(QChar::fromAscii('!')) == 2
-                     && currentStr.count(QChar::fromAscii('?')) == 1)
+            else if (currentStr.count(QChar::fromLatin1('!')) == 2
+                     && currentStr.count(QChar::fromLatin1('?')) == 1)
             {
                 splitSeparator = QString::fromUtf8("?");
             }
@@ -164,7 +164,7 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
             }
             else
             {
-                QStringList linkparts = currentStr.split(splitSeparator, QString::KeepEmptyParts);
+                QStringList linkparts = currentStr.split(splitSeparator, Qt::KeepEmptyParts);
                 MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
                 rootNode.reset(megaApiFolders->getNodeByHandle(handle));
             }

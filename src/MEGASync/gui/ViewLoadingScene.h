@@ -182,8 +182,8 @@ private:
 
         if(row >= mLoadingItems.size())
         {
-           item = new DelegateWidget(getView());
-           mLoadingItems.append(item);
+            item = new DelegateWidget(getView());
+            mLoadingItems.append(item);
         }
         else
         {
@@ -244,7 +244,7 @@ private:
 
     Ui::ViewLoadingSceneUI* ui;
     QWidget* mViewBase;
-    QWidget* mTopParent;
+    QWidget* mTopParent = nullptr;
     QWidget* mFadeOutWidget;
 
     bool mLoadingViewVisible = false;
@@ -256,7 +256,7 @@ class ViewLoadingSceneBase : public QObject
 {
     Q_OBJECT
 
- public:
+public:
     ViewLoadingSceneBase();
 
     inline void setDelayTimeToShowInMs(int newDelayTimeToShowInMs)
@@ -272,15 +272,13 @@ class ViewLoadingSceneBase : public QObject
     void show();
     void hide();
 
-    void setTopParent(QWidget* widget)
-    {
-        mMessageHandler->setTopParent(widget);
-    }
-
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
     virtual void showLoadingScene();
     virtual void showViewCopy();
+    virtual void hideLoadingScene();
+
+    virtual QWidget* getTopParent();
 
 signals:
     void sceneVisibilityChange(bool value);
@@ -293,6 +291,15 @@ protected:
     QWidget* mLoadingSceneUI;
     Ui::ViewLoadingSceneUI* ui;
     QPixmap mViewPixmap;
+    QWidget* mTopParent;
+
+    enum LoadingViewType
+    {
+        NONE,
+        COPY_VIEW,
+        LOADING_VIEW
+    };
+    LoadingViewType mLoadingViewSet;
 
 private slots:
     void onDelayTimerToShowTimeout();
@@ -303,8 +310,6 @@ private slots:
     }
 
 private:
-    virtual void hideLoadingScene() = 0;
-
     LoadingSceneMessageHandler* mMessageHandler;
 };
 
@@ -322,8 +327,7 @@ public:
         mViewModel(nullptr),
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
-        mViewLayout(nullptr),
-        mLoadingViewSet(LOADING_VIEW_TYPE::NONE)
+        mViewLayout(nullptr)
     {}
 
     ~ViewLoadingScene()
@@ -340,7 +344,7 @@ public:
 
     bool isLoadingViewSet() const
     {
-        return mLoadingViewSet != LOADING_VIEW_TYPE::NONE;
+        return mLoadingViewSet != LoadingViewType::NONE;
     }
 
     inline void setView(LoadingSceneView<DelegateWidget, ViewType>* view)
@@ -401,7 +405,7 @@ public:
             {
                 if(!mDelayTimerToShow.isActive())
                 {
-                    mViewPixmap = mView->grab();
+                    mViewPixmap = getTopParent()->grab();
                     mDelayTimerToShow.start(mDelayTimeToShowInMs);
                     showViewCopy();
                 }
@@ -422,7 +426,7 @@ public:
             mView->header()->blockSignals(false);
             mView->setViewPortEventsBlocked(false);
 
-            if(mLoadingViewSet == LOADING_VIEW_TYPE::LOADING_VIEW)
+            if(mLoadingViewSet == LoadingViewType::LOADING_VIEW)
             {
                 auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
                                                                        - mStartTime));
@@ -437,7 +441,9 @@ public:
 
     inline void hideLoadingScene() override
     {
-        mLoadingViewSet = LOADING_VIEW_TYPE::NONE;
+        ViewLoadingSceneBase::hideLoadingScene();
+
+        mLoadingViewSet = LoadingViewType::NONE;
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
@@ -452,12 +458,26 @@ public:
         mLoadingDelegate->setLoading(false);
     }
 
+protected:
+    QWidget* getTopParent() override
+    {
+        if(!mTopParent)
+        {
+            mTopParent = mView->window();
+            mTopParent->installEventFilter(this);
+
+
+        }
+
+        return ViewLoadingSceneBase::getTopParent();
+    }
+
 private:
     void showViewCopy() override
     {
         ViewLoadingSceneBase::showViewCopy();
 
-        mLoadingViewSet = LOADING_VIEW_TYPE::COPY_VIEW;
+        mLoadingViewSet = LoadingViewType::COPY_VIEW;
 
         mView->setViewPortEventsBlocked(true);
         mViewLayout->replaceWidget(mView, mLoadingSceneUI);
@@ -466,13 +486,13 @@ private:
         mView->blockSignals(true);
         mView->header()->blockSignals(true);
 
-        emit sceneVisibilityChange(true);
+        //emit sceneVisibilityChange(true);
     }
 
     void showLoadingScene() override
     {
         ViewLoadingSceneBase::showLoadingScene();
-        mLoadingViewSet = LOADING_VIEW_TYPE::LOADING_VIEW;
+        mLoadingViewSet = LoadingViewType::LOADING_VIEW;
         int visibleRows(0);
 
         if(mView->isVisible())
@@ -523,14 +543,7 @@ private:
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
     qint64 mStartTime;
-    enum LOADING_VIEW_TYPE
-    {
-        NONE,
-        COPY_VIEW,
-        LOADING_VIEW
-    };
 
-    LOADING_VIEW_TYPE mLoadingViewSet;
     bool mWasFocused;
 };
 
@@ -541,11 +554,6 @@ public:
     LoadingSceneView(QWidget* parent): ViewType(parent)
     {
         mLoadingView.setView(this);
-    }
-
-    void setTopParent(QWidget* widget)
-    {
-        mLoadingView.setTopParent(widget);
     }
 
     void setViewPortEventsBlocked(bool newViewPortEventsBlocked)

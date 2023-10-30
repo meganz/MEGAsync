@@ -15,6 +15,7 @@
 #include "Preferences.h"
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
+#include "QTMegaTransferListener.h"
 
 class MegaUploader : public QObject
 {
@@ -34,6 +35,7 @@ private:
 
     mega::MegaApi *megaApi;
     std::shared_ptr<FolderTransferListener> mFolderTransferListener;
+    std::shared_ptr<mega::QTMegaTransferListener> mFolderTransferListenerDelegate;
 };
 
 #endif // MEGAUPLOADER_H

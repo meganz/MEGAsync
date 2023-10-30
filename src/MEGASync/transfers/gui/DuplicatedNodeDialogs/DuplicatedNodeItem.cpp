@@ -88,22 +88,14 @@ void DuplicatedNodeItem::fillUi()
 
 void DuplicatedNodeItem::setModifiedTime(const QDateTime& dateTime)
 {
-    QString timeString;
-
-    if(dateTime.isValid())
-    {
-        timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
-        ui->lDate->setText(timeString);
-    }
+    auto timeString = dateTime.isValid() ? MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat) : tr("loading time…");
+    ui->lDate->setText(timeString);
 }
 
 void DuplicatedNodeItem::setSize(qint64 size)
 {
-    if(size >= 0)
-    {
-        QString nodeSizeText = Utilities::getSizeString(size);
-        ui->lSize->setText(nodeSizeText);
-    }
+    QString nodeSizeText(size < 0 ? tr("loading size…") : Utilities::getSizeString(size));
+    ui->lSize->setText(nodeSizeText);
 }
 
 bool DuplicatedNodeItem::isValid() const

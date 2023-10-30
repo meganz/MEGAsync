@@ -18,6 +18,7 @@ class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
 
 public:
     explicit NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent = nullptr);
+    void itemsRestored(const QSet<mega::MegaHandle> &handles);
 
     void setShowEmptyView(bool newShowEmptyView);
 
@@ -29,8 +30,10 @@ private:
     QIcon getEmptyIcon() override;
     bool showEmptyView() override {return mShowEmptyView;}
     bool isCurrentRootIndexReadOnly() override;
+    void nodesAddedFromNodesUpdate(const QList<std::shared_ptr<mega::MegaNode>>& nodes) override;
 
     bool mShowEmptyView = true;
+    QSet<mega::MegaHandle> mRestoredHandles;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget
@@ -110,7 +113,7 @@ public:
     void setShowEmptyView(bool newShowEmptyView);
 
 signals:
-    void itemRestored(mega::MegaHandle handle);
+    void itemsRestored(QSet<mega::MegaHandle>& handles);
 
 protected:
     void makeCustomConnections() override;
@@ -128,6 +131,8 @@ private:
     bool isCurrentRootIndexReadOnly() override;
 
     bool mShowEmptyView = true;
+    QList<mega::MegaHandle> mRestoredItems;
+    QSet<mega::MegaHandle> mItemsToSelectAfterRestoration;
 };
 
 

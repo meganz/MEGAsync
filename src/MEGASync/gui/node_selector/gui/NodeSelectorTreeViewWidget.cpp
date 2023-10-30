@@ -163,11 +163,6 @@ void NodeSelectorTreeViewWidget::updateLoadingMessage(std::shared_ptr<MessageInf
     ui->tMegaFolders->getLoadingMessageHandler()->updateMessage(message);
 }
 
-void NodeSelectorTreeViewWidget::setTopLevelForLoadingMessage(QWidget *parent)
-{
-    ui->tMegaFolders->setTopParent(parent);
-}
-
 void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
 {
     ui->cbAlwaysUploadToLocation->setChecked(value);
@@ -300,10 +295,11 @@ void NodeSelectorTreeViewWidget::onExpandReady()
 
             if((*it) == indexesAndSelected.indexesToBeExpanded.last())
             {
+                qDebug() << handle << proxyIndex;
                 if(indexesAndSelected.needsToBeSelected)
                 {
-                    ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-                    ui->tMegaFolders->selectionModel()->select(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+                    ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+                    ui->tMegaFolders->selectionModel()->select(proxyIndex, QItemSelectionModel::Select | QItemSelectionModel::Rows);
                     ui->tMegaFolders->scrollTo(proxyIndex, QAbstractItemView::ScrollHint::PositionAtCenter);
                 }
 
@@ -884,7 +880,9 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             foreach(auto& parentHandle, mAddedNodesByParentHandle.uniqueKeys())
             {
                 auto parentIndex = getAddedNodeParent(parentHandle);
-                mModel->addNodes(mAddedNodesByParentHandle.values(parentHandle), parentIndex);
+                auto addedNodes(mAddedNodesByParentHandle.values(parentHandle));
+                mModel->addNodes(addedNodes, parentIndex);
+                nodesAddedFromNodesUpdate(addedNodes);
             }
 
             foreach(auto handle, mRemovedNodesByHandle)

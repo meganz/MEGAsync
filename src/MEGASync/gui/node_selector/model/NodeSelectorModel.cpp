@@ -1238,7 +1238,7 @@ QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& hand
     }
     for(int i = 0; i < rowCount(parent); ++i)
     {
-        QModelIndex child = parent.isValid() ? parent.child(i, COLUMN::NODE) : index(i, COLUMN::NODE);
+        QModelIndex child = index(i, COLUMN::NODE, parent);
         if(child.isValid())
         {
             auto ret = findItemByNodeHandle(handle, child);

@@ -15,6 +15,52 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
     ui->searchEmptyInfoWidget->hide();
 }
 
+void NodeSelectorTreeViewWidgetCloudDrive::itemsRestored(const QSet<mega::MegaHandle>& handles)
+{
+    mRestoredHandles.clear();
+
+    foreach(mega::MegaHandle handle, handles)
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        if(node && node->getParentHandle() != mega::INVALID_HANDLE)
+        {
+            auto parentIndex = mModel->findItemByNodeHandle(node->getParentHandle(), QModelIndex());
+            if(!parentIndex.isValid())
+            {
+                setSelectedNodeHandle(handle);
+            }
+            else
+            {
+                auto parentItem = mModel->getItemByIndex(parentIndex);
+                if(!parentItem || !parentItem->areChildrenInitialized())
+                {
+                    setSelectedNodeHandle(handle);
+                }
+                else
+                {
+                    mRestoredHandles.insert(handle);
+                }
+            }
+        }
+    }
+}
+
+void NodeSelectorTreeViewWidgetCloudDrive::nodesAddedFromNodesUpdate(const QList<std::shared_ptr<mega::MegaNode> > &nodes)
+{
+    if(!mRestoredHandles.isEmpty())
+    {
+        foreach(auto node, nodes)
+        {
+            if(mRestoredHandles.remove(node->getHandle()))
+            {
+                setSelectedNodeHandle(node->getHandle());
+            }
+        }
+
+        mRestoredHandles.clear();
+    }
+}
+
 void NodeSelectorTreeViewWidgetCloudDrive::setShowEmptyView(bool newShowEmptyView)
 {
     mShowEmptyView = newShowEmptyView;
@@ -346,7 +392,7 @@ void NodeSelectorTreeViewWidgetSearch::checkAndClick(QToolButton* button)
 NodeSelectorTreeViewWidgetRubbish::NodeSelectorTreeViewWidgetRubbish(SelectTypeSPtr mode, QWidget *parent)
     : NodeSelectorTreeViewWidget(mode, parent)
 {
-    setTitle(MegaNodeNames::getCloudDriveName());
+    setTitle(MegaNodeNames::getRubbishName());
     ui->searchEmptyInfoWidget->hide();
 }
 
@@ -362,26 +408,37 @@ void NodeSelectorTreeViewWidgetRubbish::makeCustomConnections()
 
 void NodeSelectorTreeViewWidgetRubbish::onRestoreClicked()
 {
-        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+    mRestoredItems = getMultiSelectionNodeHandle();
+
+    foreach(auto handle, mRestoredItems)
+    {
+        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
         if (node)
         {
             auto newParent = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
             mMegaApi->moveNode(node.get(), newParent.get(), new mega::OnFinishOneShot(mMegaApi, this,
-                                                                                              [this, node]
-                                                                                              (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
-                {
-                    if (!isContextValid)
-                    {
-                        return;
-                    }
+                                                                                      [this, node]
+                                                                                      (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
+                                                                                      {
+                                                                                          if (!isContextValid)
+                                                                                          {
+                                                                                              return;
+                                                                                          }
 
-                    if (e.getErrorCode() == MegaError::API_OK &&
-                        request.getType() == mega::MegaRequest::TYPE_MOVE)
-                    {
-                        emit itemRestored(node->getHandle());
-                    }
-                }));
+                                                                                          if (e.getErrorCode() == MegaError::API_OK &&
+                                                                                              request.getType() == mega::MegaRequest::TYPE_MOVE)
+                                                                                          {
+                                                                                              mRestoredItems.removeOne(node->getHandle());
+                                                                                              mItemsToSelectAfterRestoration.insert(node->getHandle());
+                                                                                              if(mRestoredItems.isEmpty())
+                                                                                              {
+                                                                                                  emit itemsRestored(mItemsToSelectAfterRestoration);
+                                                                                                  mItemsToSelectAfterRestoration.clear();
+                                                                                              }
+                                                                                          }
+                                                                                      }));
         }
+    }
 }
 
 QString NodeSelectorTreeViewWidgetRubbish::getRootText()

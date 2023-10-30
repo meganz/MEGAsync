@@ -236,9 +236,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
 #ifdef __APPLE__
     arrow = new QPushButton(this);
-    arrow->setIcon(QIcon(QString::fromAscii("://images/top_arrow.png")));
+    arrow->setIcon(QIcon(QString::fromLatin1("://images/top_arrow.png")));
     arrow->setIconSize(QSize(30,10));
-    arrow->setStyleSheet(QString::fromAscii("border: none;"));
+    arrow->setStyleSheet(QString::fromLatin1("border: none;"));
     arrow->resize(30,10);
     arrow->hide();
 
@@ -247,7 +247,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     //Create the overlay widget with a transparent background
     overlay = new QPushButton(ui->pUpdated);
-    overlay->setStyleSheet(QString::fromAscii("background-color: transparent; "
+    overlay->setStyleSheet(QString::fromLatin1("background-color: transparent; "
                                               "border: none; "));
     overlay->resize(ui->pUpdated->size());
     overlay->setCursor(Qt::PointingHandCursor);
@@ -883,17 +883,17 @@ void InfoDialog::updateDialogState()
         const bool userIsFree{mPreferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
         if(transferIsOverQuota && userIsFree)
         {
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_FREE.png")));
+            ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_transfer_full_FREE.png")));
             ui->bOQIcon->setIconSize(QSize(96,96));
         }
         else if(transferIsOverQuota && !userIsFree)
         {
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_PRO.png")));
+            ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_transfer_full_PRO.png")));
             ui->bOQIcon->setIconSize(QSize(96,96));
         }
         else
         {
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
+            ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_full.png")));
             ui->bOQIcon->setIconSize(QSize(64,64));
         }
         ui->lOQTitle->setText(tr("Your MEGA account is full."));
@@ -924,7 +924,7 @@ void InfoDialog::updateDialogState()
             ui->bBuyQuota->setText(tr("Buy new plan"));
             ui->bDiscard->setText(tr("Dismiss"));
         }
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfer_empty_64.png")));
+        ui->bOQIcon->setIcon(QIcon(QString::fromLatin1(":/images/transfer_empty_64.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
@@ -932,7 +932,7 @@ void InfoDialog::updateDialogState()
     }
     else if(storageState == Preferences::STATE_ALMOST_OVER_STORAGE)
     {
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
+        ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_almost_full.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
         ui->lOQTitle->setText(tr("You're running out of storage space."));
         ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
@@ -944,7 +944,7 @@ void InfoDialog::updateDialogState()
     else if(transferQuotaState == QuotaState::WARNING &&
             transferAlmostOverquotaAlertEnabled)
     {
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfer_empty_64.png")));
+        ui->bOQIcon->setIcon(QIcon(QString::fromLatin1(":/images/transfer_empty_64.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
         ui->lOQTitle->setText(tr("Limited available transfer quota"));
         ui->lOQDesc->setText(tr("Downloading may be interrupted as you have used 90% of your transfer quota on this "
@@ -1086,7 +1086,7 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
     MegaHandle handle = dialog->getMegaFolder();
     QString syncName = dialog->getSyncName();
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
 
     setupSyncController();
     mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);

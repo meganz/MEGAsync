@@ -120,13 +120,13 @@ void InfoWizard::goToPage(int page)
 
 void InfoWizard::selectedBullet(QPushButton *b)
 {
-    ui->bFirstBullet->setIcon(QIcon(QString::fromAscii("://images/icon_slice_dot.png")));
+    ui->bFirstBullet->setIcon(QIcon(QString::fromLatin1("://images/icon_slice_dot.png")));
     ui->bFirstBullet->setIconSize(QSize(6,6));
-    ui->bSecondBullet->setIcon(QIcon(QString::fromAscii("://images/icon_slice_dot.png")));
+    ui->bSecondBullet->setIcon(QIcon(QString::fromLatin1("://images/icon_slice_dot.png")));
     ui->bSecondBullet->setIconSize(QSize(6,6));
-    ui->bThirdBullet->setIcon(QIcon(QString::fromAscii("://images/icon_slice_dot.png")));
+    ui->bThirdBullet->setIcon(QIcon(QString::fromLatin1("://images/icon_slice_dot.png")));
     ui->bThirdBullet->setIconSize(QSize(6,6));
 
-    b->setIcon(QIcon(QString::fromAscii("://images/icon_slice_dot_selected.png")));
+    b->setIcon(QIcon(QString::fromLatin1("://images/icon_slice_dot_selected.png")));
     b->setIconSize(QSize(6,6));
 }

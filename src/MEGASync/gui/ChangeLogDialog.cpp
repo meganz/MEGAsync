@@ -62,7 +62,7 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
     ui->tChangelog->document()->setDocumentMargin(16.0);
     ui->labelArchitecture->setText(getArchitectureString());
     ui->lVersion->setText(version);
-    ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
+    ui->lSDKVersion->setText(QString::fromLatin1(" (") + SDKversion + QString::fromLatin1(")"));
     setChangeLogNotes(changeLog);
 }
 
@@ -84,19 +84,19 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 
 void ChangeLogDialog::on_bTerms_clicked()
 {
-    QString temsUrl = Preferences::BASE_MEGA_IO_URL + QString::fromAscii("/terms");
+    QString temsUrl = Preferences::BASE_MEGA_IO_URL + QString::fromLatin1("/terms");
     Utilities::openUrl(QUrl(temsUrl));
 }
 
 void ChangeLogDialog::on_bPolicy_clicked()
 {
-    QString policyUrl = Preferences::BASE_MEGA_IO_URL + QString::fromAscii("/privacy");
+    QString policyUrl = Preferences::BASE_MEGA_IO_URL + QString::fromLatin1("/privacy");
     Utilities::openUrl(QUrl(policyUrl));
 }
 
 void ChangeLogDialog::on_bAck_clicked()
 {
-    QString ackUrl = QString::fromAscii("https://github.com/meganz/MEGAsync/blob/master/CREDITS.md");
+    QString ackUrl = QString::fromLatin1("https://github.com/meganz/MEGAsync/blob/master/CREDITS.md");
     Utilities::openUrl(QUrl(ackUrl));
 }
 

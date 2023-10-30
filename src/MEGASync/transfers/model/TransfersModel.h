@@ -144,6 +144,7 @@ private:
     bool isRetriedFolder(mega::MegaTransfer* transfer);
     bool isCompletedFromFolderRetry(mega::MegaTransfer* transfer);
     bool isIgnored(mega::MegaTransfer* transfer, bool removeCache = false);
+    bool isTempTransfer(mega::MegaTransfer* transfer, bool removeCache = false);
     void updateFailedTransfer(QExplicitlySharedDataPointer<TransferData> data, mega::MegaTransfer* transfer,
                               mega::MegaError* e);
 
@@ -331,7 +332,7 @@ private:
     void sendDataChanged(int row);
     void restoreTagsByRow();
 
-    void retryTransfers(const QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>>& transfersToRetry);
+    void retryTransfers(const QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> &transfersToRetry);
 
     bool isUiBlockedModeActive() const ;
     void setUiBlockedMode(bool state);
@@ -380,7 +381,7 @@ private:
 
     QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
     QList<TransferTag> mRowsToCancel;
-    QWidget* mCancelledFrom;
+    QPointer<QWidget> mCancelledFrom;
     bool mSyncsInRowsToCancel;
 
     QList<TransferTag> mFailedTransferToClear;

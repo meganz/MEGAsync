@@ -198,13 +198,13 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
     }
 }
 
-void NodeSelector::onItemRestored(mega::MegaHandle handle)
+void NodeSelector::onItemsRestored(const QSet<mega::MegaHandle>& handles)
 {
     onbShowCloudDriveClicked();
-    auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
+    auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidgetCloudDrive*>(ui->stackedWidget->currentWidget());
     if(viewContainer)
     {
-        viewContainer->setSelectedNodeHandle(handle);
+        viewContainer->itemsRestored(handles);
     }
 }
 
@@ -381,14 +381,13 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
             connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
             if(auto rubbishWidget = qobject_cast<NodeSelectorTreeViewWidgetRubbish*>(viewContainer))
             {
-                connect(rubbishWidget, &NodeSelectorTreeViewWidgetRubbish::itemRestored, this, &NodeSelector::onItemRestored, Qt::UniqueConnection);
+                connect(rubbishWidget, &NodeSelectorTreeViewWidgetRubbish::itemsRestored, this, &NodeSelector::onItemsRestored, Qt::UniqueConnection);
             }
 
             if(!model)
             {
                 model = viewContainer->getProxyModel()->getMegaModel();
                 connect(model, &NodeSelectorModel::updateLoadingMessage, this, &NodeSelector::onUpdateLoadingMessage);
-                viewContainer->setTopLevelForLoadingMessage(this);
             }
         }
     }
