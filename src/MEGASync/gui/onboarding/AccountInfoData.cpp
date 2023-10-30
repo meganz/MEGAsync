@@ -16,13 +16,12 @@ AccountInfoData::AccountInfoData(QObject *parent)
     , mUsedStorage()
     , mNewUser(false)
 {
-    mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
 }
 
 void AccountInfoData::requestAccountInfoData()
 {
-    mMegaApi->getAccountDetails();
+    mMegaApi->getAccountDetails(mDelegateListener.get());
 }
 
 void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
