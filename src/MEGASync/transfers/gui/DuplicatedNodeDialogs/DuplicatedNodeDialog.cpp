@@ -3,6 +3,7 @@
 
 #include "DuplicatedNodeItem.h"
 #include "EventUpdater.h"
+#include "WordWrapLabel.h"
 
 #include <QFileInfo>
 
@@ -15,6 +16,8 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node)
 
 #ifdef Q_OS_WINDOWS
     setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+#elif defined Q_OS_LINUX
+    layout()->setSizeConstraint(QLayout::SetFixedSize);
 #endif
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
@@ -31,6 +34,13 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node)
     ui->lDescription->installEventFilter(this);
 
     qRegisterMetaType<QList<std::shared_ptr<DuplicatedNodeInfo>>>("QList<std::shared_ptr<DuplicatedNodeInfo>");
+
+    mSizeAdjustTimer.setSingleShot(true);
+    mSizeAdjustTimer.setInterval(0);
+    connect(&mSizeAdjustTimer, &QTimer::timeout, this, [this](){
+        adjustSize();
+    }, Qt::UniqueConnection);
+
 }
 
 DuplicatedNodeDialog::~DuplicatedNodeDialog()
@@ -102,7 +112,6 @@ void DuplicatedNodeDialog::fillDialog()
 void DuplicatedNodeDialog::processConflict(std::shared_ptr<DuplicatedNodeInfo> conflict)
 {
     mChecker->fillUi(this, conflict);
-    adjustSize();
 }
 
 void DuplicatedNodeDialog::onConflictProcessed()
@@ -258,4 +267,18 @@ bool DuplicatedNodeDialog::eventFilter(QObject* watched, QEvent* event)
     }
 
     return QDialog::eventFilter(watched, event);
+}
+
+bool DuplicatedNodeDialog::event(QEvent *event)
+{
+    if(event->type() == WordWrapLabel::HeightAdapted)
+    {
+        if(sizeHint().height() != size().height())
+        {
+           //Size adjusted
+           mSizeAdjustTimer.start();
+        }
+    }
+
+    return QDialog::event(event);
 }
