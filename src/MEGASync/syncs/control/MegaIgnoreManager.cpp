@@ -72,9 +72,13 @@ void MegaIgnoreManager::parseIgnoresFile()
                     }
                     break;
                 }
-                case MegaIgnoreRule::RuleType::ExtensionRule: 
-                    mRules.append(std::make_shared<MegaIgnoreExtensionRule>(line, isCommented));
+                case MegaIgnoreRule::RuleType::ExtensionRule:
+                {
+                    auto extensionRule = std::make_shared<MegaIgnoreExtensionRule>(line, isCommented);
+                    mRules.append(extensionRule);
+                    mExtensionRules.insert(extensionRule->extension(), extensionRule);
                     break;
+                }
                 case MegaIgnoreRule::RuleType::NameRule:
                     mRules.append(std::make_shared<MegaIgnoreNameRule>(line, isCommented));
                     break;
@@ -204,7 +208,7 @@ void MegaIgnoreManager::enableExtensions(bool state)
     }
 }
 
-void MegaIgnoreManager::applyChanges()
+void MegaIgnoreManager::applyChanges(bool updateExtensionRules, const QStringList& updatedExtensions)
 {
     QStringList rules;
     foreach(auto& rule, mRules)
@@ -215,10 +219,30 @@ void MegaIgnoreManager::applyChanges()
             {
                 rule->setCommented(true);
             }
+            // Skip extension rules when they are updated ( will be managed seperatly)
+            if (rule->ruleType() == MegaIgnoreRule::RuleType::ExtensionRule && updateExtensionRules)
+            {
+                continue;
+            }
             rules.append(rule->getModifiedRule());
         }
     }
-
+    if (updateExtensionRules)
+    {
+        for (const auto& extension : updatedExtensions)
+        {
+            const auto trimmed = extension.trimmed();
+            if (mExtensionRules.contains(trimmed))
+            {
+                rules.append(mExtensionRules.value(trimmed)->getModifiedRule());
+            }
+            else
+            {
+                const MegaIgnoreExtensionRule extensionRule(MegaIgnoreNameRule::Class::Exclude, trimmed);
+                rules.append(extensionRule.getModifiedRule());
+            }
+        }
+    }
     QFile ignore(mOutputMegaIgnoreFile);
     if(ignore.open(QIODevice::WriteOnly))
     {
@@ -317,6 +341,7 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString &rule, bool isCommented)
             }
         }
         mPattern = ruleSplitted.at(1);
+        mAffectedFileType = mPattern.contains(QLatin1String(".")) ? FileSystemType::File : FileSystemType::Folder;
         fillWildCardType(mPattern);
     }
 }
@@ -324,7 +349,8 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString &rule, bool isCommented)
 MegaIgnoreNameRule::MegaIgnoreNameRule(Class classType, const QString& pattern) :
     MegaIgnoreRule(QString(), false),
     mClass(classType),
-    mPattern(pattern)
+    mPattern(pattern),
+    mAffectedFileType(mPattern.contains(QLatin1String(".")) ? FileSystemType::File : FileSystemType::Folder)
 {
     markAsDirty();
     fillWildCardType(pattern);
@@ -399,6 +425,12 @@ MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(const QString &rule, bool isCom
     {
         mExtension = captureExtension.cap(1); // Capture extension
     }
+}
+
+MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(Class classType, const QString& extension) :MegaIgnoreNameRule(classType, QString::fromUtf8(".") + extension)
+{
+    mRuleType = RuleType::ExtensionRule;
+    mExtension = extension;
 }
 
 const QString &MegaIgnoreExtensionRule::extension() const

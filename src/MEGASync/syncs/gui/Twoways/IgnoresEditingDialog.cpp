@@ -6,6 +6,13 @@
 
 #include <QPointer>
 #include <QDir>
+
+namespace
+{
+    constexpr char APPLY_TEXT[] = "Apply";
+    constexpr char DISCARD_TEXT[] = "Discard";
+    constexpr char MEGA_IGNORE_FILE_NAME[] = ".megaignore";
+}
 IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool createIfNotExist, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::IgnoresEditingDialog),
@@ -14,36 +21,38 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
     mManager(syncLocalFolder, createIfNotExist)
 {
     ui->setupUi(this);
-
+    // Fill units in file size comboBoxes
     ui->cbExcludeLowerUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
-    connect(ui->lExcludedNames->model(), &QAbstractItemModel::dataChanged, this, &IgnoresEditingDialog::onlExcludedNamesChanged);
-
     ui->cbExcludeUpperUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
-   
-    connect(ui->cExcludeExtenstions, &QCheckBox::toggled, this, &IgnoresEditingDialog::onCExtensionsChecked);
 
-    QDialogButtonBox *buttonBox = findChild<QDialogButtonBox*>(QString::fromUtf8("buttonBox"));
-    if (buttonBox)
-    {
-        auto okButton = buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setText(QLatin1String("Apply"));
-
-        auto cancelButton = buttonBox->button(QDialogButtonBox::Cancel);
-        cancelButton->setText(QLatin1String("Discard"));
-
-        connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this](){
-            this->mIgnoresFileWatcher->blockSignals(true);
-            applyChanges();
-            accept();
+    // Prepare name rules list
+    connect(ui->lExcludedNames->model(), &QAbstractItemModel::dataChanged, this, &IgnoresEditingDialog::onlExcludedNamesChanged);
+    QObject::connect(ui->lExcludedNames, &QListWidget::itemSelectionChanged, this, [this]()
+        {
+            ui->bDeleteName->setEnabled(!ui->lExcludedNames->selectedItems().isEmpty());
         });
-        connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    }
-    auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
+
+    // Setup dialog buttons
+    auto okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setText(QLatin1String(APPLY_TEXT));
+    auto cancelButton = ui->buttonBox->button(QDialogButtonBox::Cancel);
+    cancelButton->setText(QLatin1String(DISCARD_TEXT));
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this]() {
+        this->mIgnoresFileWatcher->blockSignals(true);
+        applyChanges();
+        accept();
+        });
+    connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+    // Fill Ui from megaignore
+    auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(MEGA_IGNORE_FILE_NAME));
     mIgnoresFileWatcher->addPath(ignorePath);
     QObject::connect(mIgnoresFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, &IgnoresEditingDialog::on_fileChanged);
     refreshUI();
-}
 
+    QObject::connect(ui->bOpenMegaIgnore, &QPushButton::clicked, this, &IgnoresEditingDialog::signalOpenMegaignore);
+    QObject::connect(ui->tExcludeExtensions, &QPlainTextEdit::textChanged, this, [this]() {mExtensionsChanged = true; });
+}
 
 IgnoresEditingDialog::~IgnoresEditingDialog()
 {
@@ -52,28 +61,31 @@ IgnoresEditingDialog::~IgnoresEditingDialog()
 
 void IgnoresEditingDialog::applyChanges()
 {
-    mManager.applyChanges();
+    QStringList updatedExtensions = ui->tExcludeExtensions->toPlainText().split(QLatin1String(","));
+    mManager.applyChanges(mExtensionsChanged, updatedExtensions);
 }
 
 void IgnoresEditingDialog::refreshUI()
 {
     const auto allRules = mManager.getAllRules();
     ui->lExcludedNames->clear();
+    // Step 0: Fill name exclusions
     for(auto rule : allRules)
     {
-        if (rule->ruleType() == MegaIgnoreRule::RuleType::NameRule || rule->ruleType() == MegaIgnoreRule::RuleType::InvalidRule)
+        if (rule->ruleType() == MegaIgnoreRule::RuleType::NameRule && !rule->isCommented())
         {
-            QListWidgetItem* item = new QListWidgetItem(rule->getModifiedRule(), ui->lExcludedNames);
-            item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
-            item->setCheckState(rule->isCommented() ? Qt::Unchecked : Qt::Checked); // AND initialize check state
-            item->setData(Qt::UserRole, QVariant::fromValue(rule));
-            if (!rule->isValid())
+            QListWidgetItem* item = new QListWidgetItem(rule->getDisplayText(), ui->lExcludedNames);
+            const auto castedNameRule = std::dynamic_pointer_cast<MegaIgnoreNameRule>(rule);
+            if (castedNameRule && castedNameRule->affectedFileSystemType() != MegaIgnoreNameRule::FileSystemType::Other)
             {
-                static const auto red = QColor("red").lighter(180);
-                item->setBackgroundColor(red);
+                static  QIcon fileIgnoreIcon{ QLatin1String(":/images/StalledIssues/file-ignore.png") };
+                static  QIcon folderIgnoreIcon{ QLatin1String(":/images/StalledIssues/folder-ignore.png") };
+                item->setIcon(castedNameRule->affectedFileSystemType() == MegaIgnoreNameRule::FileSystemType::File ? fileIgnoreIcon : folderIgnoreIcon);
             }
+            item->setData(Qt::UserRole, QVariant::fromValue(rule));
         }
     }
+    // Step 1: Fill Size  exclusions
     auto lowLimit = mManager.getLowLimitRule();
     if (lowLimit)
     {
@@ -103,12 +115,12 @@ void IgnoresEditingDialog::refreshUI()
         ui->eUpperThan->setValue(0);
         ui->cbExcludeUpperUnit->setCurrentIndex(MegaIgnoreSizeRule::UnitTypes::B);
     }
+    // Step 2: Fill Extension exclusions
     auto extensions(mManager.getExcludedExtensions());
     ui->tExcludeExtensions->clear();
     ui->tExcludeExtensions->document()->setPlainText(extensions.join(QLatin1String(", ")));
-    ui->cExcludeExtenstions->setChecked(!extensions.isEmpty());
-    ui->tExcludeExtensions->setEnabled(!extensions.isEmpty());
 }
+
 void IgnoresEditingDialog::on_bAddName_clicked()
 {
     QPointer<AddExclusionDialog> add = new AddExclusionDialog(this);
@@ -137,8 +149,6 @@ void IgnoresEditingDialog::on_bAddName_clicked()
 
     auto rule = mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text);
     QListWidgetItem* item = new QListWidgetItem(rule->getModifiedRule(), ui->lExcludedNames);
-    item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
-    item->setCheckState(Qt::Checked); // AND initialize check state
     item->setData(Qt::UserRole, QVariant::fromValue(rule));
 }
 
@@ -200,12 +210,6 @@ void IgnoresEditingDialog::onlExcludedNamesChanged(const QModelIndex &topLeft, c
             rule->setCommented(!topLeft.data(Qt::CheckStateRole).toBool());
         }
     }
-}
-
-void IgnoresEditingDialog::onCExtensionsChecked(bool state)
-{
-    ui->tExcludeExtensions->setEnabled(state);
-    mManager.enableExtensions(state);
 }
 
 void IgnoresEditingDialog::on_cExcludeUpperThan_clicked()

@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QFile>
-
+#include <QMap>
 #include <memory>
 
 class MegaIgnoreManager;
@@ -20,7 +20,6 @@ public:
         SizeRule,
         InvalidRule
     };
-
     explicit MegaIgnoreRule(const QString& rule, bool isCommented)
         : mRule(rule),
           mIsDirty(false),
@@ -35,6 +34,8 @@ public:
     bool isCommented() const;
 
     virtual QString getModifiedRule() const {return mRule;}
+    virtual QString getDisplayText() const { return mRule; }
+
     const QString& originalRule() const;
 
     bool isDeleted() const;
@@ -88,6 +89,14 @@ public:
     };
     Q_ENUM(Strategy)
 
+    enum class FileSystemType
+    {
+        File,
+        Folder,
+        Other
+    };
+    Q_ENUM(FileSystemType)
+
     enum class WildCardType
     {
         Equal,
@@ -100,12 +109,14 @@ public:
     explicit MegaIgnoreNameRule(const QString& rule, bool isCommented);
     explicit MegaIgnoreNameRule(Class classType, const QString& pattern);
     QString getModifiedRule() const override;
+    QString getDisplayText() const override { return mPattern; }
     RuleType ruleType() const override { return RuleType::NameRule;}
     WildCardType wildCardType() { return mWildCardType; }
-
+    FileSystemType affectedFileSystemType() { return mAffectedFileType; }
 
 protected:
     QString mPattern;
+    FileSystemType mAffectedFileType = FileSystemType::Other;
 
 private:
     void fillWildCardType(const QString& rightSide);
@@ -141,6 +152,7 @@ class MegaIgnoreExtensionRule : public MegaIgnoreNameRule
 {
 public:
     MegaIgnoreExtensionRule(const QString& rule, bool isCommented);
+    explicit MegaIgnoreExtensionRule(Class classType, const QString& extension);
 
     RuleType ruleType() const override { return RuleType::ExtensionRule;}
     const QString &extension() const;
@@ -223,7 +235,7 @@ public:
     QStringList getExcludedExtensions() const;
     void enableExtensions(bool state);
 
-    void applyChanges();
+    void applyChanges(bool updateExtensions = false, const QStringList& updatedExtensions = {});
     
     void parseIgnoresFile();
 
@@ -243,6 +255,7 @@ private:
     QString mMegaIgnoreFile;
     QString mOutputMegaIgnoreFile;
     QList<std::shared_ptr<MegaIgnoreRule>> mRules;
+    QMap<QString, std::shared_ptr<MegaIgnoreRule> > mExtensionRules;
 
     std::shared_ptr<MegaIgnoreSizeRule> mLowLimitRule;
     std::shared_ptr<MegaIgnoreSizeRule> mHighLimitRule;

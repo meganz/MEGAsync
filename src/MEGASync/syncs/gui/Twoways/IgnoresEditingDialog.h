@@ -36,11 +36,12 @@ public slots:
     void on_cbExcludeLowerUnit_currentIndexChanged(int i);
 
     void onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
-    void onCExtensionsChecked(bool state);
     void on_cExcludeUpperThan_clicked();
     void on_cExcludeLowerThan_clicked();
     void on_fileChanged(const QString file);
-
+protected:
+signals:
+    void signalOpenMegaignore();
 private:
     Ui::IgnoresEditingDialog *ui;
 
@@ -48,6 +49,7 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     std::shared_ptr<QFileSystemWatcher> mIgnoresFileWatcher;
     MegaIgnoreManager mManager;
+    bool mExtensionsChanged = false;
 
 };
 
