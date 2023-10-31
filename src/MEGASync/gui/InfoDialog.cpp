@@ -1053,52 +1053,6 @@ void InfoDialog::addSync(MegaHandle h)
         app->createAppMenus();
     });
     syncManager->addSync(h);
-
-    return;
-
-    auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, h, this]()
-    {
-        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            mAddSyncDialog = new BindFolderDialog(app);
-
-            if (h != mega::INVALID_HANDLE)
-            {
-                mAddSyncDialog->setMegaFolder(h, false);
-            }
-
-            DialogOpener::showDialog(mAddSyncDialog, this, &InfoDialog::onAddSyncDialogFinished);
-        }
-    };
-
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog,addSyncLambda);
-    }
-    else
-    {
-        addSyncLambda();
-    }
-}
-
-void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
-{
-    if (dialog->result() != QDialog::Accepted)
-    {
-        return;
-    }
-
-    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    MegaHandle handle = dialog->getMegaFolder();
-    QString syncName = dialog->getSyncName();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
-
-    setupSyncController();
-    mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
-
-    app->createAppMenus();
 }
 
 void InfoDialog::addBackup()

@@ -207,7 +207,6 @@ private:
 
     void syncsStateInformation(SyncStateInformation state);
 
-    void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
     void connectAddSyncHandler();
 
     void setEnabledAllControls(const bool enabled);
