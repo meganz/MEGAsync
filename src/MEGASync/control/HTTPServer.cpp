@@ -7,6 +7,7 @@
 #include <QtConcurrent/QtConcurrent>
 
 #include <iostream>
+#include <algorithm>
 
 
 using namespace mega;
@@ -156,7 +157,7 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
     }
 
     #ifdef WIN32
-    if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (localPath.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         localPath = localPath.mid(4);
     }
@@ -463,9 +464,9 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
             int end;
             bool firstnode = true;
 
-            while (request.data[start] == QChar::fromAscii('{'))
+            while (request.data[start] == QChar::fromLatin1('{'))
             {
-                end = request.data.indexOf(QChar::fromAscii('}'), start);
+                end = request.data.indexOf(QChar::fromLatin1('}'), start);
                 if (end < 0)
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error parsing webclient request");
@@ -727,7 +728,7 @@ void HTTPServer::externalUploadSelectionStatus(QString &response, const HTTPRequ
         QList<RequestData*> values = webDataRequests.values(bid);
         if (!values.isEmpty())
         {
-            qSort(values.begin(), values.end(), ts_comparator);
+            std::sort(values.begin(), values.end(), ts_comparator);
             for (int i = 0; i < values.size(); ++i)
             {
                 response.append(i == 0 ? QString::fromUtf8("[") : QString::fromUtf8(","));
@@ -1076,5 +1077,5 @@ bool HTTPServer::isPreFlightCorsRequest(const QStringList& headers)
 
 bool HTTPServer::isRequestOfType(const QStringList& headers, const char* typeName)
 {
-    return headers[0].startsWith(QString::fromAscii(typeName));
+    return headers[0].startsWith(QString::fromLatin1(typeName));
 }

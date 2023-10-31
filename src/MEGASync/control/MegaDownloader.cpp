@@ -16,17 +16,32 @@
 using namespace mega;
 
 MegaDownloader::MegaDownloader(MegaApi* _megaApi, std::shared_ptr<FolderTransferListener> _listener)
-    : QObject(), megaApi(_megaApi), mFolderTransferListener(_listener), mQueueData(_megaApi, pathMap)
+    : QObject(), megaApi(_megaApi), mFolderTransferListener(_listener), 
+    mFolderTransferListenerDelegate(std::make_shared<QTMegaTransferListener>(megaApi, mFolderTransferListener.get())),
+    mQueueData(_megaApi, pathMap)
 {
+    //In case the MegaDownloader is used in a separate thread, we need this method to be direct
     connect(&mQueueData, &DownloadQueueController::finishedAvailableSpaceCheck,
-            this, &MegaDownloader::onAvailableSpaceCheckFinished);
+            this, &MegaDownloader::onAvailableSpaceCheckFinished, Qt::DirectConnection);
 }
 
 bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
                                           const QString& path)
 {
-    auto data = TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(path);
+    return processDownloadQueueImpl(downloadQueue, downloadBatches,
+                                    path, true);
+}
 
+bool MegaDownloader::processTempDownloadQueue(QQueue<WrappedNode *> *downloadQueue, const QString &path)
+{
+    BlockingBatch tempBatch;
+    return processDownloadQueueImpl(downloadQueue, tempBatch,
+                                    path.isEmpty() ? Preferences::instance()->getTempTransfersPath() : path,
+                                    false);
+}
+
+bool MegaDownloader::processDownloadQueueImpl(QQueue<WrappedNode *> *downloadQueue, BlockingBatch &downloadBatches, const QString &path, bool createAppDataId)
+{
     mNoTransferStarted = true;
     // If the destination path doesn't exist and we can't create it,
     // empty queue and abort transfer.
@@ -36,15 +51,21 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
         qDeleteAll(*downloadQueue);
         downloadQueue->clear();
 
-        data->remove();
-
         return false;
     }
 
-    mQueueData.initialize(downloadQueue, downloadBatches, data->getAppId(), path);
+    unsigned long long appDataId(0);
+    if(createAppDataId)
+    {
+        auto data = TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(path);
+        appDataId = data->getAppId();
+    }
+
+    mQueueData.initialize(downloadQueue, downloadBatches, appDataId, path);
     mQueueData.startAvailableSpaceChecking();
     return true;
 }
+
 
 void MegaDownloader::download(WrappedNode* parent, QFileInfo info, const std::shared_ptr<DownloadTransferMetaData> &data, MegaCancelToken* cancelToken)
 {
@@ -67,10 +88,13 @@ void MegaDownloader::download(WrappedNode* parent, QFileInfo info, const std::sh
         MegaCancelToken* tokenToUse = (isTransferFromApp) ? cancelToken : nullptr;
         if (mNoTransferStarted && isTransferFromApp)
         {
-            emit startingTransfers();
+            if(data)
+            {
+                emit startingTransfers();
+            }
             mNoTransferStarted = false;
         }
-        startDownload(parent, QString::number(data->getAppId()), currentPathWithSep, tokenToUse);
+        startDownload(parent, QString::number(data ? data->getAppId() : 0), currentPathWithSep, tokenToUse);
     }
     else
     {
@@ -81,12 +105,21 @@ void MegaDownloader::download(WrappedNode* parent, QFileInfo info, const std::sh
 void MegaDownloader::onAvailableSpaceCheckFinished(bool isDownloadPossible)
 {
     if (isDownloadPossible)
-    {
-        auto appData = TransferMetaDataContainer::getAppDataById<DownloadTransferMetaData>(mQueueData.getCurrentAppDataId());
-        appData->setInitialTransfers(mQueueData.getDownloadQueueSize());
+    {        
+        std::shared_ptr<TransferBatch> batch(nullptr);
+        std::shared_ptr<DownloadTransferMetaData> appData(nullptr);
 
-        auto batch = std::shared_ptr<TransferBatch>(new TransferBatch(appData->getAppId()));
-        mQueueData.addTransferBatch(batch);
+        if(mQueueData.getCurrentAppDataId() > 0)
+        {
+            appData = TransferMetaDataContainer::getAppDataById<DownloadTransferMetaData>(mQueueData.getCurrentAppDataId());
+            if(appData)
+            {
+                appData->setInitialTransfers(mQueueData.getDownloadQueueSize());
+                batch.reset(new TransferBatch(appData->getAppId()));
+                mQueueData.addTransferBatch(batch);
+            }
+        }
+
         EventUpdater updater(mQueueData.getDownloadQueueSize());
 
         // Process all nodes in the download queue
@@ -106,19 +139,23 @@ void MegaDownloader::onAvailableSpaceCheckFinished(bool isDownloadPossible)
                 currentPath = mQueueData.getCurrentTargetPath();
             }
 
-            download(wNode, currentPath, appData, batch->getCancelTokenPtr());
+            download(wNode, currentPath, appData, batch ? batch->getCancelTokenPtr() : nullptr);
             delete wNode;
             updater.update(mQueueData.getDownloadQueueSize());
         }
 
-        if (batch->isEmpty())
+        if (batch && batch->isEmpty())
         {
             mQueueData.removeBatch();
         }
     }
     else
     {
-        TransferMetaDataContainer::removeAppData(mQueueData.getCurrentAppDataId());
+        if(mQueueData.getCurrentAppDataId())
+        {
+            TransferMetaDataContainer::removeAppData(mQueueData.getCurrentAppDataId());
+        }
+
         mQueueData.clearDownloadQueue();
     }
 
@@ -135,7 +172,7 @@ void MegaDownloader::startDownload(WrappedNode *parent, const QString& appData,
                            appData.toUtf8().constData(), startFirst, cancelToken,
                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
-                           mFolderTransferListener.get());
+                           mFolderTransferListenerDelegate.get());
 }
 
 void MegaDownloader::downloadForeignDir(MegaNode *node, const std::shared_ptr<DownloadTransferMetaData> &data, const QString& currentPathWithSep)
@@ -207,7 +244,7 @@ bool MegaDownloader::createDirIfNotPresent(const QString& path)
 #ifndef WIN32
         if (!megaApi->createLocalFolder(dir.toNativeSeparators(path).toUtf8().constData()))
 #else
-        if (!dir.mkpath(QString::fromAscii(".")))
+        if (!dir.mkpath(QString::fromLatin1(".")))
 #endif
         {
             return false;

@@ -51,7 +51,7 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
     QMessageBox* msgBox = new QMegaMessageBox(info.parent);
 
     msgBox->setIcon(icon);
-    msgBox->setWindowTitle(info.title);
+    msgBox->setWindowTitle(info.title.isEmpty() ? QString::fromLatin1("MEGA") : info.title);
     msgBox->setText(info.text);
     msgBox->setInformativeText(info.informativeText);
     msgBox->setTextFormat(info.textFormat);

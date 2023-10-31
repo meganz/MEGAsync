@@ -22,7 +22,7 @@ if(CMAKE_HOST_APPLE)
     if(CMAKE_OSX_ARCHITECTURES STREQUAL "arm64" OR (NOT CMAKE_OSX_ARCHITECTURES AND HOST_ARCHITECTURE STREQUAL "arm64"))
         set(CMAKE_OSX_DEPLOYMENT_TARGET "11.1" CACHE STRING "Minimum OS X deployment version")
     else()
-        set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment version")
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment version")
     endif()
 
     message(STATUS "Minimum OS X deployment version is set to ${CMAKE_OSX_DEPLOYMENT_TARGET}")
@@ -205,6 +205,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/LowDiskSpaceDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ViewLoadingScene.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelector.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorLoadingDelegate.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorTreeViewWidget.ui
@@ -347,6 +348,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaNodeNames.h
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.h
     ${MEGAsyncDir}/gui/DateTimeFormatter.h
+    ${MEGAsyncDir}/gui/WordWrapLabel.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
@@ -546,6 +548,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/Login2FA.cpp
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
     ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
+    ${MEGAsyncDir}/gui/ViewLoadingScene.cpp
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.cpp
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
     ${MEGAsyncDir}/gui/ProxySettings.cpp
@@ -560,6 +563,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.cpp
     ${MEGAsyncDir}/gui/DateTimeFormatter.cpp
+    ${MEGAsyncDir}/gui/WordWrapLabel.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp

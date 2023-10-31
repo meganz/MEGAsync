@@ -142,7 +142,7 @@ void AlertItem::setAlertType(int type)
                 ui->bNotificationIcon->setMinimumSize(QSize(10, 8));
                 ui->bNotificationIcon->setMaximumSize(QSize(10, 8));
                 ui->bNotificationIcon->setIconSize(QSize(10, 8));
-                ui->bNotificationIcon->setIcon(QIcon(QString::fromAscii("://images/share_arrow.png")));
+                ui->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/share_arrow.png")));
                 ui->wNotificationIcon->show();
                 notificationTitle = tr("Incoming Shares").toUpper();
                 notificationColor = QString::fromUtf8("#F2C249");
@@ -170,13 +170,13 @@ void AlertItem::setAlertType(int type)
                 ui->bNotificationIcon->setMinimumSize(QSize(16, 16));
                 ui->bNotificationIcon->setMaximumSize(QSize(16, 16));
                 ui->bNotificationIcon->setIconSize(QSize(16, 16));
-                ui->bNotificationIcon->setIcon(QIcon(QString::fromAscii("://images/mega_notifications.png")));
+                ui->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/mega_notifications.png")));
                 ui->wNotificationIcon->show();
             }
                 break;
     }
 
-    ui->lTitle->setStyleSheet(QString::fromAscii("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ").arg(notificationColor));
+    ui->lTitle->setStyleSheet(QString::fromLatin1("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ").arg(notificationColor));
     ui->lTitle->setText(notificationTitle);
 }
 
@@ -324,7 +324,7 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                         .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
-                notificationContent = tr("[A] established you as a contact")
+                notificationContent = tr("[A] accepted your contact request")
                         .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
