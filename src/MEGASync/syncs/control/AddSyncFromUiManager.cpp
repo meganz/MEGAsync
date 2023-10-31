@@ -4,6 +4,14 @@
 #include <DialogOpener.h>
 #include <syncs/gui/Twoways/BindFolderDialog.h>
 
+AddSyncFromUiManager::~AddSyncFromUiManager()
+{
+    if(mSyncController)
+    {
+        mSyncController->deleteLater();
+    }
+}
+
 void AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool disableUi)
 {
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
@@ -36,6 +44,7 @@ void AddSyncFromUiManager::onAddSyncDialogFinished(QPointer<BindFolderDialog> di
 {
     if (dialog->result() != QDialog::Accepted)
     {
+        deleteLater();
         return;
     }
 
@@ -45,9 +54,9 @@ void AddSyncFromUiManager::onAddSyncDialogFinished(QPointer<BindFolderDialog> di
 
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
 
-    std::unique_ptr<SyncController> syncController(new SyncController());
-    GuiUtilities::connectAddSyncDefaultHandler(syncController.get(), Preferences::instance()->accountType());
-    SyncController::connect(syncController.get(), &SyncController::syncAddStatus, this, [this, handle](const int errorCode, const int,
+    mSyncController = new SyncController();
+    GuiUtilities::connectAddSyncDefaultHandler(mSyncController, Preferences::instance()->accountType());
+    SyncController::connect(mSyncController, &SyncController::syncAddStatus, this, [this, handle](const int errorCode, const int,
                                                                                                        const QString, QString localPath)
                             {
                                 if (errorCode == mega::MegaError::API_OK)
@@ -58,5 +67,5 @@ void AddSyncFromUiManager::onAddSyncDialogFinished(QPointer<BindFolderDialog> di
                                 deleteLater();
                             });
 
-    syncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
+    mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
 }

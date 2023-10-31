@@ -24,7 +24,7 @@
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
-#include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "syncs/control/AddSyncFromUiManager.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -85,7 +85,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mTransferring (false),
     mTransferManager(nullptr),
     mAddBackupDialog (nullptr),
-    mAddSyncDialog (nullptr),
     mPreferences (Preferences::instance()),
     mSyncInfo (SyncInfo::instance()),
     mSyncController (nullptr),
@@ -1048,8 +1047,8 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    AddSyncManager* syncManager(new AddSyncManager());
-    connect(syncManager, &AddSyncManager::syncAdded, this, [this](){
+    AddSyncFromUiManager* syncManager(new AddSyncFromUiManager());
+    connect(syncManager, &AddSyncFromUiManager::syncAdded, this, [this](){
         app->createAppMenus();
     });
     syncManager->addSync(h);

@@ -15,6 +15,7 @@ class AddSyncFromUiManager : public QObject
 
 public:
     AddSyncFromUiManager() = default;
+    ~AddSyncFromUiManager();
 
     void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
 
@@ -26,6 +27,7 @@ private slots:
 
 private:
     QPointer<BindFolderDialog> mAddSyncDialog;
+    QPointer<SyncController> mSyncController;
 };
 
 #endif // ADDSYNCFROMUIMANAGER_H

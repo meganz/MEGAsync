@@ -220,7 +220,6 @@ private:
     QPointer<TransferManager> mTransferManager;
 
     QPointer<AddBackupDialog> mAddBackupDialog;
-    QPointer<BindFolderDialog> mAddSyncDialog;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
