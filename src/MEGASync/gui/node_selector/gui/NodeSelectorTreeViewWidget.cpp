@@ -794,7 +794,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             {
                 std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
 
-                if(!mModel->isParentAccepted(parentNode->getHandle()))
+                if(!mModel->isNodeAccepted(node))
                 {
                     if(containsIndexToUpdate(node, nullptr))
                     {

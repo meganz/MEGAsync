@@ -331,8 +331,8 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &han
         {
             std::unique_ptr<mega::MegaNode> parentNode(mMegaApi->getNodeByHandle(node->getParentHandle()));
             auto previousParentNode = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
-            if((parentNode && parentNode->getHandle() == mMegaApi->getRubbishNode()->getHandle()) &&
-                (previousParentNode && !mMegaApi->isInRubbish(previousParentNode.get())))
+
+            if(previousParentNode && !mMegaApi->isInRubbish(previousParentNode.get()))
             {
                 restorableItems--;
             }

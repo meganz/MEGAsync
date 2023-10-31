@@ -140,7 +140,7 @@ public:
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
 
-    bool isParentAccepted(mega::MegaHandle parentHandle) override;
+    bool isNodeAccepted(mega::MegaNode* node) override;
 
 public slots:
     void onItemInfoUpdated(int role);

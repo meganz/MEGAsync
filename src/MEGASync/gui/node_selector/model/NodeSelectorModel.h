@@ -195,7 +195,7 @@ public:
 
     virtual bool canBeDeleted() const;
     virtual bool rootNodeUpdated(mega::MegaNode*){return false;}
-    virtual bool isParentAccepted(mega::MegaHandle parentHandle){return parentHandle != MegaSyncApp->getRubbishNode()->getHandle();}
+    virtual bool isNodeAccepted(mega::MegaNode* node){return !MegaSyncApp->getMegaApi()->isInRubbish(node);}
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
