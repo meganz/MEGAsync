@@ -282,6 +282,8 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         {
             QModelIndex proxyIndex;
             auto handle((*it).first);
+            auto item = mModel->findItemByNodeHandle(handle, QModelIndex());
+
             if(handle != mega::INVALID_HANDLE)
             {
                 proxyIndex = mProxyModel->getIndexFromHandle(handle);
@@ -295,10 +297,11 @@ void NodeSelectorTreeViewWidget::onExpandReady()
 
             if((*it) == indexesAndSelected.indexesToBeExpanded.last())
             {
-                if(indexesAndSelected.needsToBeSelected)
+                if(indexesAndSelected.needsToBeSelected &&
+                    proxyIndex.isValid())
                 {
-                    ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::Select | QItemSelectionModel::Rows);
-                    ui->tMegaFolders->selectionModel()->select(proxyIndex, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+                    ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+                    ui->tMegaFolders->selectionModel()->select(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
                     ui->tMegaFolders->scrollTo(proxyIndex, QAbstractItemView::ScrollHint::PositionAtCenter);
                 }
 
@@ -957,9 +960,9 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
                 auto parentIndex = getAddedNodeParent(parentHandle);
                 auto addedNodes(mAddedNodesByParentHandle.values(parentHandle));
                 mModel->addNodes(addedNodes, parentIndex);
-                auto proxyParentIndex(mProxyModel->mapFromSource(parentIndex));
-                nodesAddedFromNodesUpdate(addedNodes);
+
                 //Only for root indexes
+                auto proxyParentIndex(mProxyModel->mapFromSource(parentIndex));
                 if(!proxyParentIndex.parent().isValid())
                 {
                     ui->tMegaFolders->setExpanded(proxyParentIndex, true);

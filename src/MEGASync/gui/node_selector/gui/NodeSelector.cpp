@@ -198,12 +198,55 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
     }
 }
 
-void NodeSelector::onItemsRestored(const QSet<mega::MegaHandle>& handles)
+void NodeSelector::onItemsRestoreRequested(const QList<mega::MegaHandle>& handles)
 {
-    auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidgetCloudDrive*>(ui->stackedWidget->widget(CLOUD_DRIVE));
-    if(viewContainer)
+    auto cloudDriveViewContainer = dynamic_cast<NodeSelectorTreeViewWidgetCloudDrive*>(ui->stackedWidget->widget(CLOUD_DRIVE));
+    if(cloudDriveViewContainer)
     {
-        viewContainer->itemsRestored(handles);
+        mega::MegaHandle firstRestoredHandle(mega::INVALID_HANDLE);
+        auto cloudDriveModel = cloudDriveViewContainer->getProxyModel()->getMegaModel();
+
+        bool parentLoaded(false);
+        foreach(auto handle, handles)
+        {
+            auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
+            if (node)
+            {
+                firstRestoredHandle = handle;
+
+                auto parentNode = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
+                if (parentNode)
+                {
+                    auto parentIndex = cloudDriveModel->findItemByNodeHandle(node->getRestoreHandle(), QModelIndex());
+                    if(parentIndex.isValid())
+                    {
+                        auto item = cloudDriveModel->getItemByIndex(parentIndex);
+                        if(item && item->areChildrenInitialized())
+                        {
+                            parentLoaded = true;
+                        }
+                    }
+                    else if(parentNode->getHandle() == MegaSyncApp->getRootNode()->getHandle())
+                    {
+                        parentLoaded = true;
+                    }
+                }
+            }
+        }
+        auto rubbishViewContainer = dynamic_cast<NodeSelectorTreeViewWidgetRubbish*>(ui->stackedWidget->widget(RUBBISH));
+        if(rubbishViewContainer)
+        {
+            rubbishViewContainer->restoreItems(handles, parentLoaded, firstRestoredHandle);
+        }
+    }
+}
+
+void NodeSelector::onItemsRestored(mega::MegaHandle restoredHandle, bool parentLoaded)
+{
+    auto cloudDriveViewContainer = dynamic_cast<NodeSelectorTreeViewWidgetCloudDrive*>(ui->stackedWidget->widget(CLOUD_DRIVE));
+    if(cloudDriveViewContainer)
+    {
+        cloudDriveViewContainer->itemsRestored(restoredHandle, parentLoaded);
         onbShowCloudDriveClicked();
     }
 }
@@ -381,6 +424,7 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
             connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
             if(auto rubbishWidget = qobject_cast<NodeSelectorTreeViewWidgetRubbish*>(viewContainer))
             {
+                connect(rubbishWidget, &NodeSelectorTreeViewWidgetRubbish::itemsRestoreRequested, this, &NodeSelector::onItemsRestoreRequested, Qt::UniqueConnection);
                 connect(rubbishWidget, &NodeSelectorTreeViewWidgetRubbish::itemsRestored, this, &NodeSelector::onItemsRestored, Qt::UniqueConnection);
             }
 

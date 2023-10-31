@@ -74,7 +74,7 @@ public:
 public slots:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes);
-    void onRowsInserted();
+    virtual void onRowsInserted();
     void onRowsRemoved();
 
 signals:
@@ -148,7 +148,6 @@ private:
     virtual bool isCurrentRootIndexReadOnly(){return false;}
     virtual bool newFolderBtnCanBeVisisble(){return true;}
     virtual bool isCurrentSelectionReadOnly(){return false;}
-    virtual void nodesAddedFromNodesUpdate(const QList<std::shared_ptr<mega::MegaNode>>& nodes){}
     int areThereNodesToUpdate();
     void selectionHasChanged(const QModelIndexList& selected);
     ButtonIconManager mButtonIconManager;

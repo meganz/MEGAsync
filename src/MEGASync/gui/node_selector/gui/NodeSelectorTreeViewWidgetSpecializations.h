@@ -18,9 +18,12 @@ class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
 
 public:
     explicit NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent = nullptr);
-    void itemsRestored(const QSet<mega::MegaHandle> &handles);
+    void itemsRestored(mega::MegaHandle &handle, bool parentLoaded);
 
     void setShowEmptyView(bool newShowEmptyView);
+
+public slots:
+    void onRowsInserted() override;
 
 private:
     QString getRootText() override;
@@ -30,10 +33,9 @@ private:
     QIcon getEmptyIcon() override;
     bool showEmptyView() override {return mShowEmptyView;}
     bool isCurrentRootIndexReadOnly() override;
-    void nodesAddedFromNodesUpdate(const QList<std::shared_ptr<mega::MegaNode>>& nodes) override;
 
     bool mShowEmptyView = true;
-    QSet<mega::MegaHandle> mRestoredHandles;
+    mega::MegaHandle mRestoredHandle = mega::INVALID_HANDLE;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget
@@ -112,9 +114,11 @@ public:
     explicit NodeSelectorTreeViewWidgetRubbish(SelectTypeSPtr mode, QWidget *parent = nullptr);
     void setShowEmptyView(bool newShowEmptyView);
     bool isEmpty() const;
+    void restoreItems(const QList<mega::MegaHandle> &handles, bool parentLoaded, mega::MegaHandle firstRestoredHandle);
 
 signals:
-    void itemsRestored(QSet<mega::MegaHandle>& handles);
+    void itemsRestoreRequested(const QList<mega::MegaHandle>& handles);
+    void itemsRestored(mega::MegaHandle restoredHandle, bool parentLoaded);
 
 protected:
     void makeCustomConnections() override;
@@ -135,7 +139,8 @@ private:
 
     bool mShowEmptyView = true;
     QList<mega::MegaHandle> mRestoredItems;
-    QSet<mega::MegaHandle> mItemsToSelectAfterRestoration;
+    mega::MegaHandle mFirstRestoredHandle = mega::INVALID_HANDLE;
+    bool mFirstRestoredHandleParentLoaded = false;
 };
 
 

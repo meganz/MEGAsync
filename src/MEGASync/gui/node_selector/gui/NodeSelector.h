@@ -89,7 +89,8 @@ private slots:
     void updateNodeSelectorTabs(); void onSearch(const QString& text);
     void on_tClearSearchResultNS_clicked();
     void onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message);
-    void onItemsRestored(const QSet<mega::MegaHandle>& handles);
+    void onItemsRestoreRequested(const QList<mega::MegaHandle>& handles);
+    void onItemsRestored(mega::MegaHandle restoredHandle, bool parentLoaded);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
