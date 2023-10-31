@@ -27,8 +27,8 @@ public:
 
 
 public slots:
-	void on_bAddName_clicked();
-	void on_bDeleteName_clicked();
+	void onAddNameClicked();
+	void onDeleteNameClicked();
 
     void on_eUpperThan_valueChanged(int i);
     void on_eLowerThan_valueChanged(int i);

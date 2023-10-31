@@ -52,6 +52,14 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
 
     QObject::connect(ui->bOpenMegaIgnore, &QPushButton::clicked, this, &IgnoresEditingDialog::signalOpenMegaignore);
     QObject::connect(ui->tExcludeExtensions, &QPlainTextEdit::textChanged, this, [this]() {mExtensionsChanged = true; });
+
+#ifdef Q_OS_MACOS
+    connect(ui->tableSegementedControl, &QSegmentedControl::addButtonClicked, this, &IgnoresEditingDialog::onAddNameClicked);
+    connect((ui->tableSegementedControl, &QSegmentedControl::removeButtonClicked, this, &IgnoresEditingDialog::onDeleteNameClicked);
+#else
+    connect(ui->bAddName, &QPushButton::clicked, this, &IgnoresEditingDialog::onAddNameClicked);
+    connect(ui->bDeleteName, &QPushButton::clicked, this, &IgnoresEditingDialog::onDeleteNameClicked);
+#endif
 }
 
 IgnoresEditingDialog::~IgnoresEditingDialog()
@@ -121,7 +129,7 @@ void IgnoresEditingDialog::refreshUI()
     ui->tExcludeExtensions->document()->setPlainText(extensions.join(QLatin1String(", ")));
 }
 
-void IgnoresEditingDialog::on_bAddName_clicked()
+void IgnoresEditingDialog::onAddNameClicked()
 {
     QPointer<AddExclusionDialog> add = new AddExclusionDialog(this);
     int result = add->exec();
@@ -152,7 +160,7 @@ void IgnoresEditingDialog::on_bAddName_clicked()
     item->setData(Qt::UserRole, QVariant::fromValue(rule));
 }
 
-void IgnoresEditingDialog::on_bDeleteName_clicked()
+void IgnoresEditingDialog::onDeleteNameClicked()
 {
     QList<QListWidgetItem*> selected = ui->lExcludedNames->selectedItems();
     if (selected.size() == 0)
