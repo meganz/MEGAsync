@@ -117,33 +117,43 @@ Rectangle {
         }
     }
 
-    Image {
-        id: leftImage
+    Item {
+        id: leftItem
 
-        source: registerFlow.state === twoFA ? Images.twofa : Images.login
-        anchors.left: registerFlow.left
-        anchors.leftMargin: 2
-        anchors.verticalCenter: registerFlow.verticalCenter
-        width: 300
-
-        NumberAnimation on opacity {
-            id: imageAnimation
-
-            from: 0
-            to: 1
-            duration: 1000
+        anchors {
+            left: registerFlow.left
+            top: registerFlow.top
+            verticalCenter: registerFlow.verticalCenter
         }
+        height: parent.height
+        width: 304
 
-        onSourceChanged: {
-            imageAnimation.start();
+        Image {
+            id: leftImage
+
+            anchors.centerIn: parent
+            source: registerFlow.state === twoFA ? Images.twofa : Images.login
+
+            NumberAnimation on opacity {
+                id: imageAnimation
+
+                from: 0
+                to: 1
+                duration: 1000
+            }
+
+            onSourceChanged: {
+                imageAnimation.start();
+            }
         }
     }
+
 
     Rectangle {
         id: separatorLine
 
         anchors {
-            left: leftImage.right
+            left: leftItem.right
             top: registerFlow.top
             leftMargin: 2
             topMargin: 48
