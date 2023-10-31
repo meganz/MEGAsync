@@ -141,7 +141,7 @@ ColumnLayout {
     }
 
     Shortcut {
-        sequence: "Ctrl+V"
+        sequence: StandardKey.Paste
         onActivated: {
             pastePin();
         }
