@@ -80,20 +80,12 @@ void IgnoresEditingDialog::refreshUI()
     // Step 0: Fill name exclusions
     for(auto rule : allRules)
     {
-        if (rule->ruleType() == MegaIgnoreRule::RuleType::NameRule && !rule->isCommented())
+        if (rule->ruleType() == MegaIgnoreRule::RuleType::NameRule)
         {
-            QListWidgetItem* item = new QListWidgetItem(rule->getDisplayText(), ui->lExcludedNames);
-            const auto castedNameRule = std::dynamic_pointer_cast<MegaIgnoreNameRule>(rule);
-            if (castedNameRule && castedNameRule->affectedFileSystemType() != MegaIgnoreNameRule::FileSystemType::Other)
-            {
-                static  QIcon fileIgnoreIcon{ QLatin1String(":/images/StalledIssues/file-ignore.png") };
-                static  QIcon folderIgnoreIcon{ QLatin1String(":/images/StalledIssues/folder-ignore.png") };
-                item->setIcon(castedNameRule->affectedFileSystemType() == MegaIgnoreNameRule::FileSystemType::File ? fileIgnoreIcon : folderIgnoreIcon);
-            }
-            item->setData(Qt::UserRole, QVariant::fromValue(rule));
+            addNameRule(rule);
         }
     }
-    // Step 1: Fill Size  exclusions
+    // Step 1: Fill Size exclusions
     auto lowLimit = mManager.getLowLimitRule();
     if (lowLimit)
     {
@@ -156,8 +148,7 @@ void IgnoresEditingDialog::onAddNameClicked()
     }
 
     auto rule = mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text);
-    QListWidgetItem* item = new QListWidgetItem(rule->getModifiedRule(), ui->lExcludedNames);
-    item->setData(Qt::UserRole, QVariant::fromValue(rule));
+    addNameRule(rule);
 }
 
 void IgnoresEditingDialog::onDeleteNameClicked()
@@ -259,4 +250,23 @@ void IgnoresEditingDialog::on_fileChanged(const QString file)
 void IgnoresEditingDialog::setOutputIgnorePath(const QString& outputPath)
 {
     mManager.setOutputIgnorePath(outputPath);
+}
+
+void IgnoresEditingDialog::addNameRule(std::shared_ptr<MegaIgnoreRule> rule)
+{
+    // Sanity check
+    if (rule->ruleType() != MegaIgnoreRule::RuleType::NameRule || rule->isCommented() || rule->getDisplayText().isEmpty())
+    {
+        return;
+    }
+    // Add rule to the list
+    QListWidgetItem* item = new QListWidgetItem(rule->getDisplayText(), ui->lExcludedNames);
+    const auto castedNameRule = std::dynamic_pointer_cast<MegaIgnoreNameRule>(rule);
+    if (castedNameRule)
+    {
+        static  QIcon fileIgnoreIcon{ QLatin1String(":/images/StalledIssues/file-ignore.png") };
+        static  QIcon folderIgnoreIcon{ QLatin1String(":/images/StalledIssues/folder-ignore.png") };
+        item->setIcon(castedNameRule->getDisplayTarget() == MegaIgnoreNameRule::Target::f ? fileIgnoreIcon : folderIgnoreIcon);
+    }
+    item->setData(Qt::UserRole, QVariant::fromValue(rule));
 }

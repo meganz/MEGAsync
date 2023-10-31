@@ -25,6 +25,8 @@ public:
     void refreshUI();
     void setOutputIgnorePath(const QString& outputPath);
 
+    void addNameRule(std::shared_ptr<MegaIgnoreRule> rule);
+
 
 public slots:
 	void onAddNameClicked();
