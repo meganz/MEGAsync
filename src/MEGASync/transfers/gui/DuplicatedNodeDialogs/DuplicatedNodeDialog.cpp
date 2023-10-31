@@ -84,31 +84,26 @@ void DuplicatedNodeDialog::checkUploads(QQueue<QString> &nodePaths, std::shared_
             std::shared_ptr<mega::MegaNode> smartNode(node->copy());
             info->setRemoteConflictNode(smartNode);
             info->setHasConflict(true);
+            info->setName(nodeToUploadName);
 
-            isFile ? filesConflictedInfoList.append(info) : foldersConflictedInfoList.append(info);
+            auto nodeName(QString::fromUtf8(node->getName()));
+            if(nodeName.compare(nodeToUploadName) != 0)
+            {
+                info->setIsNameConflict(true);
+                isFile ? mFileNameConflicts.append(info) : mFolderNameConflicts.append(info);
+            }
+            else
+            {
+                isFile ? mFileConflicts.append(info) : mFolderConflicts.append(info);
+            }
         }
         else
         {
-            resolvedInfoList.append(info);
+            mResolvedUploads.append(info);
         }
 
         checkUpdater.update(counter);
         counter++;
-    }
-
-    if(!resolvedInfoList.isEmpty())
-    {
-        mResolvedUploads.append(resolvedInfoList);
-    }
-
-    if(!filesConflictedInfoList.isEmpty())
-    {
-        mFileConflicts.append(filesConflictedInfoList);
-    }
-
-    if(!foldersConflictedInfoList.isEmpty())
-    {
-        mFolderConflicts.append(foldersConflictedInfoList);
     }
 }
 
@@ -241,6 +236,34 @@ void DuplicatedNodeDialog::processFileConflicts()
     }
 }
 
+void DuplicatedNodeDialog::processFileNameConflicts()
+{
+    //show files conflicts
+    if(!mFileNameConflicts.isEmpty())
+    {
+        cleanUi();
+        setDialogTitle(tr("File already exists"));
+        mConflictsBeingProcessed = mFileNameConflicts;
+        mFileNameConflicts.clear();
+        mChecker = &mFileCheck;
+        fillDialog();
+    }
+}
+
+void DuplicatedNodeDialog::processFolderNameConflicts()
+{
+    //show files conflicts
+    if(!mFolderNameConflicts.isEmpty())
+    {
+        cleanUi();
+        setDialogTitle(tr("Folder already exists"));
+        mConflictsBeingProcessed = mFolderNameConflicts;
+        mFolderNameConflicts.clear();
+        mChecker = &mFolderCheck;
+        fillDialog();
+    }
+}
+
 void DuplicatedNodeDialog::startWithNewCategoryOfConflicts()
 {
     if(!mFolderConflicts.isEmpty())
@@ -250,6 +273,14 @@ void DuplicatedNodeDialog::startWithNewCategoryOfConflicts()
     else if(!mFileConflicts.isEmpty())
     {
         processFileConflicts();
+    }
+    else if(!mFileNameConflicts.isEmpty())
+    {
+        processFileNameConflicts();
+    }
+    else if(!mFolderNameConflicts.isEmpty())
+    {
+        processFolderNameConflicts();
     }
     else
     {
@@ -294,7 +325,10 @@ const QList<std::shared_ptr<DuplicatedNodeInfo> > &DuplicatedNodeDialog::getReso
 
 bool DuplicatedNodeDialog::isEmpty() const
 {
-    return mFileConflicts.isEmpty() && mFolderConflicts.isEmpty();
+    return mFileConflicts.isEmpty() &&
+           mFolderConflicts.isEmpty() &&
+           mFileNameConflicts.isEmpty() &&
+           mFolderNameConflicts.isEmpty();
 }
 
 void DuplicatedNodeDialog::show()

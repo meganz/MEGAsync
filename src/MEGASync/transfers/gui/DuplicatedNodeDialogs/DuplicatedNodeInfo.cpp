@@ -4,7 +4,13 @@
 #include <Utilities.h>
 #include <MegaApplication.h>
 
-DuplicatedNodeInfo::DuplicatedNodeInfo(DuplicatedUploadBase* checker) : mSolution(NodeItemType::DONT_UPLOAD), mIsLocalFile(false), mHasConflict(false), mHaveDifferentType(false), mChecker(checker)
+DuplicatedNodeInfo::DuplicatedNodeInfo(DuplicatedUploadBase* checker)
+    : mSolution(NodeItemType::DONT_UPLOAD),
+    mIsLocalFile(false),
+    mHasConflict(false),
+    mHaveDifferentType(false),
+    mIsNameConflict(false),
+    mChecker(checker)
 {
 }
 
@@ -27,8 +33,6 @@ const std::shared_ptr<mega::MegaNode> &DuplicatedNodeInfo::getRemoteConflictNode
 void DuplicatedNodeInfo::setRemoteConflictNode(const std::shared_ptr<mega::MegaNode> &newRemoteConflictNode)
 {
     mRemoteConflictNode = newRemoteConflictNode;
-
-    mName = QString::fromUtf8(mRemoteConflictNode->getName()).toHtmlEscaped();
 
     auto time = newRemoteConflictNode->isFile() ? mRemoteConflictNode->getModificationTime()
                                                 : mRemoteConflictNode->getCreationTime();
@@ -128,4 +132,24 @@ void DuplicatedNodeInfo::setLocalModifiedTime(const QDateTime &newLocalModifiedT
 bool DuplicatedNodeInfo::haveDifferentType() const
 {
     return mHaveDifferentType;
+}
+
+bool DuplicatedNodeInfo::isNameConflict() const
+{
+    return mIsNameConflict;
+}
+
+void DuplicatedNodeInfo::setIsNameConflict(bool newIsNameConflict)
+{
+    mIsNameConflict = newIsNameConflict;
+}
+
+void DuplicatedNodeInfo::setNewName(const QString &newNewName)
+{
+    mNewName = newNewName;
+}
+
+void DuplicatedNodeInfo::setName(const QString &newName)
+{
+    mName = newName;
 }

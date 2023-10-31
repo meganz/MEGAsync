@@ -1165,7 +1165,7 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
 
     if(node->isFile())
     {
-        QFileInfo fileInfo(QString::fromUtf8(node->getName()));
+        QFileInfo fileInfo(currentName);
 
         auto nameSplitted = Utilities::getFilenameBasenameAndSuffix(fileInfo.fileName());
         if(nameSplitted != QPair<QString, QString>())
