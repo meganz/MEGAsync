@@ -1,17 +1,15 @@
 // System
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 // QML common
+import Common 1.0
 import Components.Buttons 1.0 as MegaButtons
 import Components.TextFields 1.0 as MegaTextFields
-import Common 1.0
 
 // Local
 import Onboard 1.0
 import Onboard.Syncs_types 1.0
-import ApiEnums 1.0
 import LoginController 1.0
 
 StackViewPage {
@@ -22,16 +20,18 @@ StackViewPage {
     property alias twoFAField: twoFAItem
 
     ColumnLayout {
+        id: mainColumn
 
-        spacing: contentSpacing
         anchors {
-            top: root.top
             left: root.left
             right: root.right
-            topMargin: 115
+            verticalCenter: root.verticalCenter
         }
+        spacing: contentSpacing
 
         Header {
+            id: headerItem
+
             title: OnboardingStrings.twoFATitle
             description: OnboardingStrings.twoFASubtitle
         }
@@ -43,6 +43,8 @@ StackViewPage {
         }
 
         MegaButtons.HelpButton {
+            id: helpButtonItem
+
             text: OnboardingStrings.twoFANeedHelp
             url: Links.recovery
             visible: !twoFAItem.hasError
@@ -50,11 +52,15 @@ StackViewPage {
     }
 
     RowLayout {
+        id: buttonLayout
+
         anchors {
+            left: root.left
             right: root.right
             bottom: root.bottom
-            bottomMargin: 29
-            left: root.left
+            leftMargin: -signUpButtonItem.sizes.focusBorderWidth
+            rightMargin: -signUpButtonItem.sizes.focusBorderWidth
+            bottomMargin: buttonsBottomMargin
         }
 
         MegaButtons.OutlineButton {
@@ -62,7 +68,6 @@ StackViewPage {
 
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: -signUpButtonItem.sizes.focusBorderWidth
         }
 
         MegaButtons.PrimaryButton {
@@ -71,7 +76,6 @@ StackViewPage {
             text: OnboardingStrings.login
             progressValue: loginControllerAccess.progress
             Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: -loginButtonItem.sizes.focusBorderWidth
         }
     }
 

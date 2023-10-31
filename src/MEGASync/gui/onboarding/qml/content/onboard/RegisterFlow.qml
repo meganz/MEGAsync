@@ -1,14 +1,11 @@
 // System
-import QtQml 2.15
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
 
 // QML common
 import Common 1.0
 
 // C++
-import Onboarding 1.0
 import LoginController 1.0
 
 Rectangle {
@@ -22,34 +19,25 @@ Rectangle {
 
     color: Styles.surface1
 
-    function getState() {
-        switch(loginControllerAccess.state)
-        {
+    state:  {
+        switch(loginControllerAccess.state) {
             case LoginController.WAITING_EMAIL_CONFIRMATION:
-            {
                 return registerFlow.confirmEmail;
-            }
             case LoginController.SIGN_UP:
             case LoginController.CREATING_ACCOUNT:
             case LoginController.CREATING_ACCOUNT_FAILED:
-            {
                 return registerFlow.register;
-            }
             case LoginController.LOGGING_IN_2FA_REQUIRED:
             case LoginController.LOGGING_IN_2FA_VALIDATING:
             case LoginController.LOGGING_IN_2FA_FAILED:
             case LoginController.FETCHING_NODES_2FA:
-            {
                 return registerFlow.twoFA;
-            }
             case LoginController.CHANGING_REGISTER_EMAIL:
-            {
                 return registerFlow.changeConfirmEmail;
-            }
         }
         return registerFlow.login;
     }
-    state: getState();
+
     states: [
         State {
             name: login
@@ -86,6 +74,9 @@ Rectangle {
             }
         }
     ]
+
+    // DO NOT REMOVE, windows qt bug. Without this line CancelLogin does not close when RegisterFlow is deleted
+    Component.onDestruction: {}
 
     CancelLogin {
         id: cancelLogin
@@ -148,14 +139,12 @@ Rectangle {
         }
     }
 
-
     Rectangle {
         id: separatorLine
 
         anchors {
             left: leftItem.right
             top: registerFlow.top
-            leftMargin: 2
             topMargin: 48
         }
         width: 1
@@ -168,7 +157,7 @@ Rectangle {
         id: stack
 
         anchors {
-            left: separatorLine.right
+            left: leftItem.right
             top: registerFlow.top
             bottom: registerFlow.bottom
             right: registerFlow.right
@@ -182,16 +171,17 @@ Rectangle {
             PropertyAnimation {
                 property: "opacity"
                 from: 0
-                to:1
+                to: 1
                 duration: 100
                 easing.type: Easing.OutQuad
             }
         }
+
         replaceExit: Transition {
             PropertyAnimation {
                 property: "opacity"
                 from: 1
-                to:0
+                to: 0
                 duration: 100
                 easing.type: Easing.InQuad
             }
@@ -242,5 +232,5 @@ Rectangle {
             }
         }
     }
-    Component.onDestruction: {    } //DO NOT REMOVE, windows qt bug. Without this line CancelLogin does not close when RegisterFlow is deleted
+
 }
