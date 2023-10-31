@@ -4,6 +4,9 @@
 #include "../model/NodeSelectorProxyModel.h"
 #include "Platform.h"
 #include "../model/NodeSelectorModel.h"
+#include "DialogOpener.h"
+#include "InfoDialog.h"
+
 
 #include <QPainter>
 #include <QMenu>
@@ -263,6 +266,10 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 
                 if (access >= MegaShare::ACCESS_FULL)
                 {
+                    customMenu.addAction(tr("Sync"), this, [selectionHandle](){
+                        AddSyncManager* syncManager(new AddSyncManager());
+                        syncManager->addSync(selectionHandle.first(), true);
+                    });
                     customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
                     customMenu.addAction(tr("Delete"), this, [this, selectionHandle](){
                         removeNode(selectionHandle, false);
@@ -345,8 +352,7 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &han
 int NodeSelectorTreeView::getNodeAccess(MegaHandle handle) const
 {
     auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-    auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
-    if (parent && node)
+    if (node)
     {
         auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
         auto access(mMegaApi->getAccess(node.get()));

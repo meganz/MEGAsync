@@ -21,7 +21,9 @@ public:
     ~BindFolderDialog();
 
     mega::MegaHandle getMegaFolder();
-    void setMegaFolder(mega::MegaHandle handle);
+    void setMegaFolder(mega::MegaHandle handle, bool disableUi);
+    void setLocalFolder(const QString& localPath, bool disableUi);
+
     QString getLocalFolder();
     QString getSyncName();
 

@@ -1557,7 +1557,7 @@ void SettingsDialog::addSyncFolderAfterOverQuotaCheck(MegaHandle megaFolderHandl
 
     if (megaFolderHandle != mega::INVALID_HANDLE)
     {
-        dialog->setMegaFolder(megaFolderHandle);
+        dialog->setMegaFolder(megaFolderHandle, false);
     }
 
     DialogOpener::showDialog<BindFolderDialog>(dialog, [dialog, this]()

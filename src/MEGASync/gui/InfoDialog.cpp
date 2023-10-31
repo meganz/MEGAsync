@@ -1049,6 +1049,14 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
+    AddSyncManager* syncManager(new AddSyncManager());
+    connect(syncManager, &AddSyncManager::syncAdded, this, [this](){
+        app->createAppMenus();
+    });
+    syncManager->addSync(h);
+
+    return;
+
     auto overQuotaDialog = app->showSyncOverquotaDialog();
     auto addSyncLambda = [overQuotaDialog, h, this]()
     {
@@ -1058,7 +1066,7 @@ void InfoDialog::addSync(MegaHandle h)
 
             if (h != mega::INVALID_HANDLE)
             {
-                mAddSyncDialog->setMegaFolder(h);
+                mAddSyncDialog->setMegaFolder(h, false);
             }
 
             DialogOpener::showDialog(mAddSyncDialog, this, &InfoDialog::onAddSyncDialogFinished);

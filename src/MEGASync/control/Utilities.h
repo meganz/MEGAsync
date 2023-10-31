@@ -14,6 +14,7 @@
 #include <QIcon>
 #include <QLabel>
 #include <QQueue>
+#include <QPointer>
 
 #include <QEasingCurve>
 
@@ -417,8 +418,6 @@ public:
 Q_DECLARE_METATYPE(Utilities::FileType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
 
-
-
 // This class encapsulates a MEGA node and adds useful information, like the origin
 // of the transfer.
 class WrappedNode
@@ -463,5 +462,28 @@ private:
 };
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
+
+class BindFolderDialog;
+class SyncController;
+
+class AddSyncManager : public QObject
+{
+    Q_OBJECT
+
+public:
+    AddSyncManager();
+
+    void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
+
+signals:
+    void syncAdded(mega::MegaHandle remote, const QString& localPath);
+
+private slots:
+    void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
+
+private:
+    QPointer<BindFolderDialog> mAddSyncDialog;
+};
+
 
 #endif // UTILITIES_H
