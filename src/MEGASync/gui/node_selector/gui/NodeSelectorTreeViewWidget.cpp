@@ -645,7 +645,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             {
                 std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
 
-                if(parentNode->getHandle() == MegaSyncApp->getRubbishNode()->getHandle())
+                if(MegaSyncApp->getMegaApi()->isInRubbish(node))
                 {
                     if(containsIndexToUpdate(node, nullptr))
                     {
