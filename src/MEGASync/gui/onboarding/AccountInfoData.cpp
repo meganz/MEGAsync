@@ -15,13 +15,23 @@ AccountInfoData::AccountInfoData(QObject *parent)
     , mTotalStorage()
     , mUsedStorage()
     , mNewUser(false)
+    , mInitialized(false)
 {
     mMegaApi->addGlobalListener(mGlobalListener.get());
 }
 
+AccountInfoData* AccountInfoData::instance(QQmlEngine* qmlEngine, QJSEngine*)
+{
+    static AccountInfoData accountInfoData(qmlEngine);
+
+    return &accountInfoData;
+}
+
 void AccountInfoData::requestAccountInfoData()
 {
-    mMegaApi->getAccountDetails(mDelegateListener.get());
+    if (!mInitialized) {
+        mMegaApi->getAccountDetails(mDelegateListener.get());
+    }
 }
 
 void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
@@ -40,7 +50,10 @@ void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
                             && Preferences::instance()->cloudDriveFiles() <= 1
                             && SyncInfo::instance()->getNumSyncedFolders(SyncInfo::AllHandledSyncTypes) == 0;
 
+                mInitialized = true;
+
                 emit accountDetailsChanged();
+                emit usedStorageChanged();
             }
             else
             {
@@ -48,6 +61,18 @@ void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
                          << error->getErrorCode();
             }
             break;
+        }
+    }
+}
+
+void AccountInfoData::onEvent(MegaApi*, MegaEvent* event)
+{
+    switch(event->getType())
+    {
+        case MegaEvent::EVENT_STORAGE_SUM_CHANGED:
+        {
+            mUsedStorage = Utilities::getSizeString(static_cast<unsigned long long>(event->getNumber()));
+            emit usedStorageChanged();
         }
     }
 }

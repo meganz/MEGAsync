@@ -59,8 +59,7 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterModule("BackupsModel", 1, 0);
     qmlRegisterModule("BackupsController", 1, 0);
 
-    mAccountInfo.reset(new AccountInfoData());
-    qmlRegisterSingletonInstance("AccountInfoData", 1, 0, "AccountInfoData", mAccountInfo.get());
+    qmlRegisterSingletonType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData", AccountInfoData::instance);
 
     // Makes the Guest window transparent (macOS)
     QQuickWindow::setDefaultAlphaBuffer(true);

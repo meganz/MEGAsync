@@ -3,16 +3,19 @@
 
 #include "QTMegaRequestListener.h"
 #include "QTMegaGlobalListener.h"
+#include "qqml.h"
 
 #include <memory>
 
 class AccountInfoData : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     Q_PROPERTY(AccountType type MEMBER mType NOTIFY accountDetailsChanged)
     Q_PROPERTY(QString totalStorage MEMBER mTotalStorage NOTIFY accountDetailsChanged)
-    Q_PROPERTY(QString usedStorage MEMBER mUsedStorage NOTIFY accountDetailsChanged)
+    Q_PROPERTY(QString usedStorage MEMBER mUsedStorage NOTIFY usedStorageChanged)
     Q_PROPERTY(bool newUser MEMBER mNewUser NOTIFY accountDetailsChanged)
 
 public:
@@ -28,13 +31,14 @@ public:
     };
     Q_ENUM(AccountType)
 
-    explicit AccountInfoData(QObject *parent = 0);
+    static AccountInfoData* instance(QQmlEngine* qmlEngine, QJSEngine*);
 
 public slots:
     void requestAccountInfoData();
 
 signals:
     void accountDetailsChanged();
+    void usedStorageChanged();
 
 private:
     mega::MegaApi* mMegaApi;
@@ -45,6 +49,7 @@ private:
     QString mTotalStorage;
     QString mUsedStorage;
     bool mNewUser;
+    bool mInitialized;
 
     static const long long INITIAL_SPACE;
 
@@ -52,6 +57,8 @@ private:
                          mega::MegaRequest *request,
                          mega::MegaError* error) override;
     void onAccountUpdate(mega::MegaApi *api) override;
+    explicit AccountInfoData(QObject* parent = 0);
+    void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
 };
 
 #endif // ACCOUNTINFODATA_H
