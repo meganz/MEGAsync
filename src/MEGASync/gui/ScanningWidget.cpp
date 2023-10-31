@@ -85,7 +85,8 @@ void ScanningWidget::onReceiveStatusUpdate(const FolderTransferUpdateEvent &even
             const auto addedTransfers = metaData->getPendingFiles();
             if (addedTransfers > 0)
             {
-                mUi->lStepTitle->setText(tr("Adding transfers"));
+                static const QChar ellipsis(0x2026);
+                mUi->lStepTitle->setText(tr("Adding transfers") + ellipsis);
                 mUi->lStepDescription->setText(tr("%1/%2").arg(addedTransfers).arg(event.filecount));
             }
             else

@@ -13,7 +13,7 @@ public:
     ~LocalOrRemoteUserMustChooseStalledIssue();
 
     bool autoSolveIssue() override;
-    bool isSolvable() const;
+    bool isSolvable() const override;
 
     void fillIssue(const mega::MegaSyncStall *stall) override;
     void endFillingIssue() override;

@@ -112,15 +112,15 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
     msgInfo.text = tr("Are you sure you want to ignore this issue?");
     msgInfo.informativeText = tr("This action will ignore this issue and it will not be synced.");
 
-    msgInfo.finishFunc = [this, selection](QMessageBox* msgBox)
+    msgInfo.finishFunc = [this, selection, isSymLink](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, isSymLink);
         }
         else if(msgBox->result() == QDialogButtonBox::Yes)
         {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList());
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList(), isSymLink);
         }
     };
 

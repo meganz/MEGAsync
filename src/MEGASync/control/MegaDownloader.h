@@ -7,6 +7,7 @@
 #include "FolderTransferListener.h"
 #include "TransferMetaData.h"
 #include <QTMegaRequestListener.h>
+#include "QTMegaTransferListener.h"
 
 #include "megaapi.h"
 
@@ -56,6 +57,7 @@ private:
 
     bool mNoTransferStarted = true;
     std::shared_ptr<FolderTransferListener> mFolderTransferListener;
+    std::shared_ptr<mega::QTMegaTransferListener> mFolderTransferListenerDelegate;
     DownloadQueueController mQueueData;
 };
 

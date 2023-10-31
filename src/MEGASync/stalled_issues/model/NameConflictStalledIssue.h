@@ -437,6 +437,7 @@ public:
 
     void semiAutoSolveIssue(int option);
     bool autoSolveIssue() override;
+    bool isSolvable() const override;
 
     bool hasDuplicatedNodes() const;
     bool areAllDuplicatedNodes() const;

@@ -6,6 +6,7 @@
 #include "StalledIssue.h"
 #include "StalledIssuesUtilities.h"
 #include "ViewLoadingScene.h"
+#include "QMegaMessageBox.h"
 
 #include <QObject>
 #include <QReadWriteLock>
@@ -124,8 +125,9 @@ public:
     void semiAutoSolveLocalRemoteIssues(const QModelIndexList& list);
 
     //IgnoreConflicts
-    void ignoreItems(const QModelIndexList& list);
+    void ignoreItems(const QModelIndexList& list, bool isSymLink);
     void ignoreSymLinks();
+    void showIgnoreItemsError(bool allFailed);
 
     //Fingerprint missing
     void fixFingerprint(const QModelIndexList& list);
@@ -157,6 +159,8 @@ private slots:
     void onSendEvent();
 
 private:
+    void runMessageBox(QMegaMessageBox::MessageBoxInfo info);
+
     void removeRows(QModelIndexList &indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     void updateStalledIssuedByOrder();
@@ -171,7 +175,7 @@ private:
     void sendFixingIssuesMessage(int issue, int totalIssues);
 
     void solveListOfIssues(const QModelIndexList& list, std::function<bool(int)> solveFunc,
-                           std::function<void ()> finishFunc = nullptr);
+                           std::function<void ()> startFunc = nullptr, std::function<void (int, bool)> finishFunc = nullptr);
     void issueSolved(const StalledIssueVariant &issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
@@ -185,8 +189,6 @@ private:
     mega::MegaApi* mMegaApi;
     bool mUpdateWhenGlobalStateChanges;
     std::atomic_bool mIssuesRequested {false};
-    StalledIssuesUtilities mUtilities;
-    QStringList ignoredItems;
     bool mIsStalled;
 
     mutable QReadWriteLock mModelMutex;
@@ -206,6 +208,9 @@ private:
 
     //SyncDisable for backups
     QList<std::shared_ptr<SyncSettings>> mSyncsToDisable;
+
+    //Ignored items
+    QMap<mega::MegaHandle, QStringList> mIgnoredItemsBySync;
     
     //Fix fingerprint
     QList<StalledIssueVariant> mFingerprintIssuesToFix;

@@ -24,9 +24,6 @@ class StalledIssuesUtilities : public QObject
 public:
     StalledIssuesUtilities();
 
-    void ignoreFile(const QString& path);
-    void ignoreSymLinks(const QString &path);
-
     void removeRemoteFile(const QString& path);
     void removeRemoteFile(mega::MegaNode* node);
     void removeLocalFile(const QString& path, const mega::MegaHandle &syncId);

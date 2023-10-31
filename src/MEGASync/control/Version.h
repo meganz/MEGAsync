@@ -2,7 +2,7 @@
 #define VERSION_H
 
 #define VER_FILEVERSION             5, 0, 22, 0
-#define VER_FILEVERSION_CODE        5022
+#define VER_FILEVERSION_CODE        50022
 #define VER_PRODUCTVERSION          5, 0, 22, 0
 // Update scripts relying on this value if you move it
 #define VER_PRODUCTVERSION_STR      "5.0.22.0\0"

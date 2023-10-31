@@ -474,20 +474,16 @@ bool StalledIssue::isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo>
 
 bool StalledIssue::isSymLink() const
 {
-    return consultLocalData() && consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
+    return getReason() == mega::MegaSyncStall::FileIssue &&
+           consultLocalData() &&
+           consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
 }
 
 bool StalledIssue::missingFingerprint() const
 {
-    return consultCloudData() && consultCloudData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
-}
-
-bool StalledIssue::isSolvable() const
-{
-    return !isSolved() && (mReason == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced ||
-           mReason == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
-           mReason == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose ||
-            canBeIgnored());
+    return getReason() == mega::MegaSyncStall::DownloadIssue &&
+           consultCloudData() &&
+           consultCloudData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
 }
 
 bool StalledIssue::canBeIgnored() const
@@ -502,8 +498,9 @@ QStringList StalledIssue::getIgnoredFiles() const
 
 bool StalledIssue::isUndecrypted() const
 {
-    return consultCloudData() &&
-            consultCloudData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::UndecryptedCloudNode;
+    return getReason() == mega::MegaSyncStall::FileIssue &&
+           consultCloudData() &&
+           consultCloudData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::UndecryptedCloudNode;
 }
 
 bool StalledIssue::isFile() const

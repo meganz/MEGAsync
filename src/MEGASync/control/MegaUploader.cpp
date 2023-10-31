@@ -19,7 +19,8 @@ using namespace mega;
 using namespace std;
 
 MegaUploader::MegaUploader(MegaApi *megaApi, std::shared_ptr<FolderTransferListener> _listener)
-    : mFolderTransferListener(_listener)
+    : mFolderTransferListener(_listener),
+    mFolderTransferListenerDelegate(std::make_shared<QTMegaTransferListener>(megaApi, mFolderTransferListener.get()))
 {
     this->megaApi = megaApi;
 }
@@ -52,5 +53,5 @@ void MegaUploader::startUpload(const QString& localPath, const QString &nodeName
     QByteArray appData = appDataID > 0 ? (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8() : QByteArray();
     const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     const bool isSrcTemporary = false;
-    megaApi->startUpload(localPathArray.constData(), parent, fileName, mtime, appData.isEmpty() ? nullptr : appData.constData(), isSrcTemporary, startFirst, cancelToken, mFolderTransferListener.get());
+    megaApi->startUpload(localPathArray.constData(), parent, fileName, mtime, appData.isEmpty() ? nullptr : appData.constData(), isSrcTemporary, startFirst, cancelToken, mFolderTransferListenerDelegate.get());
 }

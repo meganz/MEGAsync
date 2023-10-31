@@ -456,6 +456,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.h
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.h
     ${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.h
+	${MEGAsyncDir}/stalled_issues/model/IgnoredStalledIssue.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
@@ -657,6 +658,7 @@ set (SRCS
     ${MEGAsyncDir}/stalled_issues/model/StalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.cpp
 	${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.cpp
+	${MEGAsyncDir}/stalled_issues/model/IgnoredStalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.cpp
@@ -737,6 +739,7 @@ set (SRCS
     ${MEGAsyncDir}/syncs/control/MegaIgnoreManager.cpp
     ${MEGAsyncDir}/syncs/control/SyncSettings.cpp
     ${MEGAsyncDir}/syncs/control/SyncInfo.cpp
+    ${MEGAsyncDir}/syncs/control/MegaIgnoreManager.cpp
 
     ${MEGAsyncDir}/platform/ShellNotifier.cpp
     ${MEGAsyncDir}/platform/AbstractPlatform.cpp

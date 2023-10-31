@@ -12,67 +12,6 @@
 StalledIssuesUtilities::StalledIssuesUtilities()
 {}
 
-void StalledIssuesUtilities::ignoreFile(const QString &path)
-{
-    QtConcurrent::run([this, path]()
-    {
-        QFileInfo tempFile(path);
-        QDir ignoreDir(tempFile.path());
-
-        while(ignoreDir.exists())
-        {
-            QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
-            if(ignore.exists())
-            {
-                mIgnoreMutex.lockForWrite();
-                ignore.open(QFile::Append | QFile::Text);
-
-                QTextStream streamIn(&ignore);
-                streamIn.setCodec("UTF-8");
-
-                QString line(QString::fromLatin1("\n-:%1").arg(ignoreDir.relativeFilePath(path)));
-                streamIn << line;
-
-                ignore.close();
-                mIgnoreMutex.unlock();
-
-                break;
-            }
-
-            if(!ignoreDir.cdUp())
-            {
-                break;
-            }
-        }
-
-        emit actionFinished();
-    });
-}
-
-void StalledIssuesUtilities::ignoreSymLinks(const QString& path)
-{
-    QtConcurrent::run([this, path]()
-    {
-        QDir ignoreDir(path);
-        QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
-        if(ignore.exists())
-        {
-            mIgnoreMutex.lockForWrite();
-            ignore.open(QFile::Append | QFile::Text);
-
-            QTextStream streamIn(&ignore);
-            streamIn.setCodec("UTF-8");
-
-            QString line(QString::fromLatin1("\n-s:*"));
-            streamIn << line;
-
-            ignore.close();
-            mIgnoreMutex.unlock();
-            emit actionFinished();
-        }
-    });
-}
-
 void StalledIssuesUtilities::removeRemoteFile(const QString& path)
 {
     std::unique_ptr<mega::MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
