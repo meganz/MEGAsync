@@ -32,7 +32,7 @@ MegaHandle FolderBinder::selectedMegaFolder()
     return selectedMegaFolderHandle;
 }
 
-void FolderBinder::setSelectedMegaFolder(MegaHandle handle)
+void FolderBinder::setSelectedMegaFolder(MegaHandle handle, bool disableUi)
 {
     std::unique_ptr<MegaNode> selectedFolder(megaApi->getNodeByHandle(handle));
     if (!selectedFolder)
@@ -63,6 +63,12 @@ void FolderBinder::setSelectedMegaFolder(MegaHandle handle)
                 ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
 
                 checkSelectedSides();
+            }
+
+            if(disableUi)
+            {
+                ui->eMegaFolder->setDisabled(true);
+                ui->bMegaFolder->setDisabled(true);
             }
         }
     }
@@ -134,7 +140,7 @@ void FolderBinder::on_bMegaFolder_clicked()
         if (nodeSelector->result() == QDialog::Accepted)
         {
             MegaHandle selectedFolder = nodeSelector->getSelectedNodeHandle();
-            setSelectedMegaFolder(selectedFolder);
+            setSelectedMegaFolder(selectedFolder, false);
         }
     });
 }

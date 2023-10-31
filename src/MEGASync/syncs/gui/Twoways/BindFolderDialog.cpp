@@ -30,9 +30,9 @@ MegaHandle BindFolderDialog::getMegaFolder()
     return ui->wBinder->selectedMegaFolder();
 }
 
-void BindFolderDialog::setMegaFolder(MegaHandle handle)
+void BindFolderDialog::setMegaFolder(MegaHandle handle, bool disableUi)
 {
-    ui->wBinder->setSelectedMegaFolder(handle);
+    ui->wBinder->setSelectedMegaFolder(handle, disableUi);
 }
 
 QString BindFolderDialog::getLocalFolder()

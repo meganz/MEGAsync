@@ -4,6 +4,9 @@
 #include "../model/NodeSelectorProxyModel.h"
 #include "Platform.h"
 #include "../model/NodeSelectorModel.h"
+#include "DialogOpener.h"
+#include "InfoDialog.h"
+
 
 #include <QPainter>
 #include <QMenu>

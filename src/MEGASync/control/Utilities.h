@@ -14,6 +14,7 @@
 #include <QIcon>
 #include <QLabel>
 #include <QQueue>
+#include <QPointer>
 
 #include <QEasingCurve>
 
@@ -416,8 +417,6 @@ public:
 
 Q_DECLARE_METATYPE(Utilities::FileType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
-
-
 
 // This class encapsulates a MEGA node and adds useful information, like the origin
 // of the transfer.

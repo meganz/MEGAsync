@@ -380,6 +380,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/control/SyncSettings.h
     ${MEGAsyncDir}/syncs/control/SyncInfo.h
     ${MEGAsyncDir}/syncs/control/SyncController.h
+    ${MEGAsyncDir}/syncs/control/AddSyncFromUiManager.h
 
     ${MEGAsyncDir}/platform/PlatformStrings.h
     ${MEGAsyncDir}/platform/PowerOptions.h
@@ -658,6 +659,7 @@ set (SRCS
     ${MEGAsyncDir}/syncs/control/SyncController.cpp
     ${MEGAsyncDir}/syncs/control/SyncSettings.cpp
     ${MEGAsyncDir}/syncs/control/SyncInfo.cpp
+    ${MEGAsyncDir}/syncs/control/AddSyncFromUiManager.cpp
 
     ${MEGAsyncDir}/platform/ShellNotifier.cpp
     ${MEGAsyncDir}/platform/AbstractPlatform.cpp

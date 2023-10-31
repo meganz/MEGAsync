@@ -2,6 +2,7 @@ INCLUDEPATH += $$PWD/model
 INCLUDEPATH += $$PWD/gui
 
 SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
+           $$PWD/control/AddSyncFromUiManager.cpp \
            $$PWD/gui/Backups/BackupNameConflictDialog.cpp \
            $$PWD/gui/Backups/BackupRenameWidget.cpp \
            $$PWD/gui/Backups/BackupTableView.cpp \
@@ -21,6 +22,7 @@ SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
            $$PWD/control/SyncSettings.cpp
 
 HEADERS += $$PWD/gui/Backups/AddBackupDialog.h \
+           $$PWD/control/AddSyncFromUiManager.h \
            $$PWD/gui/Backups/BackupNameConflictDialog.h \
            $$PWD/gui/Backups/BackupRenameWidget.h \
            $$PWD/gui/Backups/BackupTableView.h \
