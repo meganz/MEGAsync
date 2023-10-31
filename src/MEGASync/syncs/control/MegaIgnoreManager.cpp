@@ -502,7 +502,7 @@ QString MegaIgnoreSizeRule::getModifiedRule() const
         rule.append(QLatin1String(":"));
         rule.append(QString::number(mValue));
         EnumConversions<UnitTypes> convertEnum;
-        rule.append(convertEnum.getString(mUnit));
+        rule.append(mUnit == UnitTypes::B? QString(): convertEnum.getString(mUnit));
         return rule;
     }
     else

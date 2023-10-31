@@ -5,7 +5,7 @@
 #include "Utilities.h"
 #include "Platform.h"
 #include "DialogOpener.h"
-#include "IgnoresEditingDialog.h"
+#include "syncs/gui/Twoways/IgnoresEditingDialog.h"
 
 #include "QMegaMessageBox.h"
 

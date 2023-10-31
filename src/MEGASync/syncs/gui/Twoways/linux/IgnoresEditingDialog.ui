@@ -6,14 +6,159 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
-    <height>434</height>
+    <width>560</width>
+    <height>701</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Edit exclusions</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Manage exclusions</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>subtitle explaining what exclusions are for, ideally not too long with 
+two or 3 lines and including a link to the help center </string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gExcludeBySize">
+     <property name="title">
+      <string>by size</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="leftMargin">
+       <number>10</number>
+      </property>
+      <property name="topMargin">
+       <number>10</number>
+      </property>
+      <property name="rightMargin">
+       <number>10</number>
+      </property>
+      <property name="bottomMargin">
+       <number>10</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="cExcludeLowerThan">
+        <property name="text">
+         <string>Exclude files smaller than</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <spacer name="horizontalSpacer_24">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="2">
+       <widget class="QSpinBox" name="eUpperThan">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>999999999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <spacer name="horizontalSpacer_21">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="2">
+       <widget class="QSpinBox" name="eLowerThan">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>999999999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QComboBox" name="cbExcludeLowerUnit"/>
+      </item>
+      <item row="0" column="1">
+       <spacer name="horizontalSpacer_23">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="3">
+       <widget class="QComboBox" name="cbExcludeUpperUnit"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="cExcludeUpperThan">
+        <property name="text">
+         <string>Exclude files bigger than</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <spacer name="horizontalSpacer_22">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item>
     <widget class="QGroupBox" name="gExcludeByName">
      <property name="sizePolicy">
@@ -23,7 +168,7 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Excluded file and folder names</string>
+      <string>by name</string>
      </property>
      <property name="flat">
       <bool>false</bool>
@@ -50,6 +195,12 @@
       </item>
       <item>
        <widget class="QListWidget" name="lExcludedNames">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -107,6 +258,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="bDeleteName">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Delete</string>
            </property>
@@ -122,128 +276,70 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="gExcludeBySize">
+    <widget class="QGroupBox" name="gExcludeByType">
      <property name="title">
-      <string>Exclude by size</string>
+      <string>by file</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <property name="leftMargin">
-       <number>10</number>
-      </property>
-      <property name="topMargin">
-       <number>10</number>
-      </property>
-      <property name="rightMargin">
-       <number>10</number>
-      </property>
-      <property name="bottomMargin">
-       <number>10</number>
-      </property>
-      <item row="1" column="4">
-       <spacer name="horizontalSpacer_22">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QPlainTextEdit" name="tExcludeExtensions">
+        <property name="maximumSize">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>16777215</width>
+          <height>78</height>
          </size>
         </property>
-       </spacer>
-      </item>
-      <item row="0" column="3">
-       <widget class="QComboBox" name="cbExcludeUpperUnit"/>
-      </item>
-      <item row="0" column="4">
-       <spacer name="horizontalSpacer_21">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="2">
-       <widget class="QSpinBox" name="eLowerThan">
-        <property name="buttonSymbols">
-         <enum>QAbstractSpinBox::NoButtons</enum>
-        </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>9999</number>
-        </property>
        </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QComboBox" name="cbExcludeLowerUnit"/>
-      </item>
-      <item row="0" column="0">
-       <widget class="QCheckBox" name="cExcludeUpperThan">
-        <property name="text">
-         <string>Exclude files bigger than</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QSpinBox" name="eUpperThan">
-        <property name="buttonSymbols">
-         <enum>QAbstractSpinBox::NoButtons</enum>
-        </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>9999</number>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QCheckBox" name="cExcludeLowerThan">
-        <property name="text">
-         <string>Exclude files smaller than</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <spacer name="horizontalSpacer_23">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="1">
-       <spacer name="horizontalSpacer_24">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gExcludeByType_2">
+     <property name="title">
+      <string>Advanced</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>You can change the associated .megaignore file on a text editor.this is a task better
+suited for users who are comfortable with regular expressions</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bOpenMegaIgnore">
+          <property name="text">
+           <string>Open .megaignore</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
     </widget>
    </item>
   </layout>

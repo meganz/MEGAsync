@@ -4,6 +4,7 @@
 #include <QString>
 #include <QFile>
 #include <QMap>
+#include <QMetaEnum>
 #include <memory>
 
 class MegaIgnoreManager;
@@ -123,7 +124,7 @@ private:
     template <class EnumType>
     bool detectValue(QString character, EnumType* value, Qt::CaseSensitivity caseSensitive)
     {
-        if(value > 0)
+        if(value == nullptr)
         {
             return false;
         }
