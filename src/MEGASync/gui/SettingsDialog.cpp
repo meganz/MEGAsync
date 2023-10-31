@@ -18,6 +18,7 @@
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "GuiUtilities.h"
+#include "syncs/control/AddSyncFromUiManager.h"
 
 #include "mega/types.h"
 
@@ -1534,7 +1535,7 @@ void SettingsDialog::loadSyncSettings()
 
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 {
-    AddSyncManager* syncManager(new AddSyncManager());
+    AddSyncFromUiManager* syncManager(new AddSyncFromUiManager());
     syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
     syncManager->addSync(megaFolderHandle, true);
 }

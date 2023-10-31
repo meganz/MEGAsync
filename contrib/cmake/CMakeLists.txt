@@ -348,6 +348,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaNodeNames.h
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.h
     ${MEGAsyncDir}/gui/DateTimeFormatter.h
+    ${MEGAsyncDir}/gui/WordWrapLabel.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
@@ -379,6 +380,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/control/SyncSettings.h
     ${MEGAsyncDir}/syncs/control/SyncInfo.h
     ${MEGAsyncDir}/syncs/control/SyncController.h
+    ${MEGAsyncDir}/syncs/control/AddSyncFromUiManager.h
 
     ${MEGAsyncDir}/platform/PlatformStrings.h
     ${MEGAsyncDir}/platform/PowerOptions.h
@@ -562,6 +564,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.cpp
     ${MEGAsyncDir}/gui/DateTimeFormatter.cpp
+    ${MEGAsyncDir}/gui/WordWrapLabel.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
@@ -656,6 +659,7 @@ set (SRCS
     ${MEGAsyncDir}/syncs/control/SyncController.cpp
     ${MEGAsyncDir}/syncs/control/SyncSettings.cpp
     ${MEGAsyncDir}/syncs/control/SyncInfo.cpp
+    ${MEGAsyncDir}/syncs/control/AddSyncFromUiManager.cpp
 
     ${MEGAsyncDir}/platform/ShellNotifier.cpp
     ${MEGAsyncDir}/platform/AbstractPlatform.cpp

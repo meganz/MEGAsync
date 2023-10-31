@@ -16,7 +16,6 @@ DuplicatedNodeItem::DuplicatedNodeItem(QWidget *parent) :
     ui(new Ui::DuplicatedNodeItem)
 {
     ui->setupUi(this);
-    ui->lNodeName->installEventFilter(this);
     ui->lLearnMore->hide();
 }
 
@@ -79,6 +78,7 @@ void DuplicatedNodeItem::fillUi()
     }
 
     auto nodeName(getNodeName());
+    ui->lNodeName->setText(nodeName);
 
     QIcon icon = isFile() ? QIcon(Utilities::getExtensionPixmapName(nodeName, QLatin1Literal(":/images/drag_")))
                                         : QIcon(QLatin1Literal(":/images/icons/folder/medium-folder.png"));
@@ -107,23 +107,6 @@ void DuplicatedNodeItem::setActionAndTitle(const QString &text)
 {
     ui->bAction->setText(text);
     ui->lTitle->setText(text);
-}
-
-bool DuplicatedNodeItem::eventFilter(QObject *watched, QEvent *event)
-{
-    if(watched == ui->lNodeName && event->type() == QEvent::Resize)
-    {
-        auto nodeName(getNodeName());
-        auto elidedName = ui->lDescription->fontMetrics().elidedText(nodeName, Qt::ElideMiddle, ui->lNodeName->width());
-        ui->lNodeName->setText(elidedName);
-
-        if (elidedName != nodeName)
-        {
-            ui->lNodeName->setToolTip(nodeName);
-        }
-    }
-
-    return QWidget::eventFilter(watched, event);
 }
 
 void DuplicatedNodeItem::on_bAction_clicked()
