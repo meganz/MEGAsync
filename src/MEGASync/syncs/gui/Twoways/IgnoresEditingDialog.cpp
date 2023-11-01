@@ -27,10 +27,6 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
 
     // Prepare name rules list
     connect(ui->lExcludedNames->model(), &QAbstractItemModel::dataChanged, this, &IgnoresEditingDialog::onlExcludedNamesChanged);
-    QObject::connect(ui->lExcludedNames, &QListWidget::itemSelectionChanged, this, [this]()
-        {
-            ui->bDeleteName->setEnabled(!ui->lExcludedNames->selectedItems().isEmpty());
-        });
 
     // Setup dialog buttons
     auto okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
@@ -54,11 +50,15 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
     QObject::connect(ui->tExcludeExtensions, &QPlainTextEdit::textChanged, this, [this]() {mExtensionsChanged = true; });
 
 #ifdef Q_OS_MACOS
-    connect(ui->tableSegementedControl, &QSegmentedControl::addButtonClicked, this, &IgnoresEditingDialog::onAddNameClicked);
-    connect((ui->tableSegementedControl, &QSegmentedControl::removeButtonClicked, this, &IgnoresEditingDialog::onDeleteNameClicked);
+    connect(ui->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &IgnoresEditingDialog::onAddNameClicked);
+    connect((ui->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &IgnoresEditingDialog::onDeleteNameClicked);
 #else
     connect(ui->bAddName, &QPushButton::clicked, this, &IgnoresEditingDialog::onAddNameClicked);
     connect(ui->bDeleteName, &QPushButton::clicked, this, &IgnoresEditingDialog::onDeleteNameClicked);
+    QObject::connect(ui->lExcludedNames, &QListWidget::itemSelectionChanged, this, [this]()
+        {
+            ui->bDeleteName->setEnabled(!ui->lExcludedNames->selectedItems().isEmpty());
+        });
 #endif
 }
 
