@@ -68,9 +68,6 @@ void ScanningWidget::updateAnimation()
 
 void ScanningWidget::onReceiveStatusUpdate(const FolderTransferUpdateEvent &event)
 {
-    static const uint ellipsisUnicode = 0x2026;
-    static const QString ellipsis = QString::fromUcs4(&ellipsisUnicode, 1);
-    static const QString threeDots = ellipsis;
     switch (event.stage)
     {
         case mega::MegaTransfer::STAGE_SCAN:

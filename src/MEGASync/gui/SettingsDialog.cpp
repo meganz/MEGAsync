@@ -1715,66 +1715,6 @@ void SettingsDialog::on_bDownloadFolder_clicked()
     });
 }
 
-//void SettingsDialog::on_eUpperThan_valueChanged(int i)
-//{
-//    if (mLoadingSettings) return;
-//    mPreferences->setUpperSizeLimitValue(i);
-//    mPreferences->setCrashed(true);
-//    mUi->gExcludedFilesInfo->show();
-//    mUi->bRestart->show();
-//}
-//
-//void SettingsDialog::on_eLowerThan_valueChanged(int i)
-//{
-//    if (mLoadingSettings) return;
-//    mPreferences->setLowerSizeLimitValue(i);
-//    mPreferences->setCrashed(true);
-//    mUi->gExcludedFilesInfo->show();
-//    mUi->bRestart->show();
-//}
-//
-//void SettingsDialog::on_cbExcludeUpperUnit_currentIndexChanged(int index)
-//{
-//    if (mLoadingSettings) return;
-//    mPreferences->setUpperSizeLimitUnit(index);
-//    mPreferences->setCrashed(true);
-//    mUi->gExcludedFilesInfo->show();
-//    mUi->bRestart->show();
-//}
-//
-//void SettingsDialog::on_cbExcludeLowerUnit_currentIndexChanged(int index)
-//{
-//    if (mLoadingSettings) return;
-//    mPreferences->setLowerSizeLimitUnit(index);
-//    mPreferences->setCrashed(true);
-//    mUi->gExcludedFilesInfo->show();
-//    mUi->bRestart->show();
-//}
-
-//void SettingsDialog::saveExcludeSyncNames()
-//{
-//    QStringList excludedNames;
-//    QStringList excludedPaths;
-//    for (int i = 0; i < mUi->lExcludedNames->count(); i++)
-//    {
-//        if (mUi->lExcludedNames->item(i)->text().contains(QDir::separator())) // Path exclusion
-//        {
-//            excludedPaths.append(mUi->lExcludedNames->item(i)->text());
-//        }
-//        else // File name exclusion
-//        {
-//            excludedNames.append(mUi->lExcludedNames->item(i)->text());
-//        }
-//    }
-//
-//    mPreferences->setExcludedSyncNames(excludedNames);
-//    mPreferences->setExcludedSyncPaths(excludedPaths);
-//    mPreferences->setCrashed(true);
-//
-//    mUi->gExcludedFilesInfo->show();
-//    mUi->bRestart->show();
-//}
-
 void SettingsDialog::onShellNotificationsProcessed()
 {
     mUi->cOverlayIcons->setEnabled(true);

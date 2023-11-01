@@ -32,8 +32,6 @@ MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder, bool create
     if (createIfNotExist && !QFile::exists(ignorePath))
     {
         mMegaIgnoreFile = Preferences::instance()->getDataPath() + QDir::separator() + QString::fromUtf8(".megaignore.default");
-        std::string s = mMegaIgnoreFile.toStdString();
-        s = "";
     }
     parseIgnoresFile();
 }
@@ -244,8 +242,6 @@ QStringList MegaIgnoreManager::getExcludedExtensions() const
             auto extensionRule = convert<MegaIgnoreExtensionRule>(rule);
             if (extensionRule)
             {
-                std::string  s = extensionRule->extension().toStdString();
-                s = extensionRule->getModifiedRule().toStdString();
                 extensions.append(extensionRule->extension());
             }
         }
@@ -461,7 +457,6 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& pattern, Class classType, 
     mType(type),
     mStrategy(strategy),
     MegaIgnoreRule(QString(), false)
-
 {
     markAsDirty();
     fillWildCardType(pattern);
