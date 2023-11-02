@@ -543,7 +543,7 @@ MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(const QString& rule, bool isCom
     }
 }
 
-MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(Class classType, const QString& extension) :MegaIgnoreNameRule(QString::fromUtf8(".") + extension, classType)
+MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(Class classType, const QString& extension) :MegaIgnoreNameRule(QString::fromUtf8("*.") + extension, classType)
 {
     mRuleType = RuleType::ExtensionRule;
     mExtension = extension;
@@ -598,6 +598,7 @@ MegaIgnoreSizeRule::MegaIgnoreSizeRule(Threshold type)
     :MegaIgnoreRule(QString(), true)
     , mThreshold(type)
 {
+    mRuleType = RuleType::SizeRule;
 }
 
 bool MegaIgnoreSizeRule::isValid()const

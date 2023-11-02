@@ -22,8 +22,12 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
 {
     ui->setupUi(this);
     // Fill units in file size comboBoxes
+    ui->cbExcludeLowerUnit->blockSignals(true);
+    ui->cbExcludeUpperUnit->blockSignals(true);
     ui->cbExcludeLowerUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
     ui->cbExcludeUpperUnit->addItems(MegaIgnoreSizeRule::getUnitsForDisplay());
+    ui->cbExcludeLowerUnit->blockSignals(false);
+    ui->cbExcludeUpperUnit->blockSignals(false);
 
     // Prepare name rules list
     connect(ui->lExcludedNames->model(), &QAbstractItemModel::dataChanged, this, &IgnoresEditingDialog::onlExcludedNamesChanged);
