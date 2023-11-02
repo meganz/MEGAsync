@@ -412,7 +412,7 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& rule, bool isCommented)
     mRuleType = RuleType::NameRule;
 
     auto ruleSplitted = rule.split(QLatin1String(":"));
-    if (ruleSplitted.size() == 2)
+    if (ruleSplitted.size() > 1)
     {
         //First part -> class, target, type, strategy
         QString leftSide(ruleSplitted.at(0));
@@ -445,7 +445,8 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& rule, bool isCommented)
                 }
             }
         }
-        mPattern = ruleSplitted.at(1);
+        ruleSplitted.pop_front();
+        mPattern = ruleSplitted.join(QLatin1String(":"));
         fillWildCardType(mPattern);
     }
 }

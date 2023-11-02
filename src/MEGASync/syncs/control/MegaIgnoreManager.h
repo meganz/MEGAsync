@@ -265,8 +265,9 @@ private:
     template <class Type>
     bool addRule(std::shared_ptr<Type> rule)
     {
-        auto alreadyExists = findRule(rule->getModifiedRule());
-        if (!alreadyExists)
+        const auto ruleText = rule->getModifiedRule();
+        auto alreadyExists = findRule(ruleText);
+        if (!alreadyExists || ruleText.isEmpty())
         {
             mRules.append(rule);
         }
