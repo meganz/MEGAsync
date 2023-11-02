@@ -72,6 +72,12 @@ Rectangle {
         return 0;
     }
 
+    function setFocus()
+    {
+        console.log("******************************setFocus")
+        textField.forceActiveFocus()
+    }
+
     Layout.preferredHeight: height
     height: textField.height + getTitleHeight() + getHintHeight()
     color: "transparent"

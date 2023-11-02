@@ -14,6 +14,22 @@ import QmlClipboard 1.0
 ColumnLayout {
     id: root
 
+    function forceFocus() {
+        console.log("************************ forced focus")
+        digit1.setFocus()
+    }
+
+    Timer {
+        id: visibilityTimer
+
+        interval: 200
+        running: true
+        repeat: false
+        onTriggered: {
+            digit1.textField.forceActiveFocus();
+        }
+    }
+
     function pastePin() {
         const regex = RegexExpressions.digit2FA;
         var pin = QmlClipboard.text().slice(0, 6);

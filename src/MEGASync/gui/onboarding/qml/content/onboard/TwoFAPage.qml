@@ -9,6 +9,25 @@ import LoginController 1.0
 TwoFAPageForm {
     id: twoFAPageId
 
+    onVisibleChanged: {
+        console.log("TwoFAPageForm visible : " + visible)
+    }
+
+    Component.onCompleted: {
+
+        console.log("TwoFAPageForm completed! : " + visible)
+
+        twoFAField.forceFocus();
+
+        /*
+        console.log("1111111111111111111111111111111")
+        if (visible) {
+            console.log("twoFAField.forceFocus();")
+
+        }
+        */
+    }
+
     signUpButton.onClicked: {
         loginControllerAccess.state = LoginController.SIGN_UP;
         loginControllerAccess.email = "";
