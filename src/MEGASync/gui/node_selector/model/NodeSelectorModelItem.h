@@ -61,6 +61,7 @@ public:
     void setChatFilesFolder();
     int row();
     void updateNode(std::shared_ptr<mega::MegaNode> node);
+    void calculateSyncStatus();
 
     bool requestingChildren() const;
     void setRequestingChildren(bool newRequestingChildren);
@@ -70,8 +71,6 @@ signals:
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 protected:
-    void calculateSyncStatus();
-
     QString mOwnerEmail;
     Status mStatus;
     bool mRequestingChildren;

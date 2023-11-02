@@ -482,7 +482,7 @@ QStringList SyncInfo::getLocalFolders(const QVector<SyncType>& types)
     return value;
 }
 
-QMap<QString, SyncInfo::SyncType> SyncInfo::getLocalFoldersAndTypeMap()
+QMap<QString, SyncInfo::SyncType> SyncInfo::getLocalFoldersAndTypeMap(bool onlyActive)
 {
     QMutexLocker qm(&syncMutex);
     QMap<QString, SyncType> ret;
@@ -491,7 +491,10 @@ QMap<QString, SyncInfo::SyncType> SyncInfo::getLocalFoldersAndTypeMap()
     {
         for (auto &cs : configuredSyncs[type])
         {
-            ret.insert(configuredSyncsMap[cs]->getLocalFolder(), type);
+            if(!onlyActive || configuredSyncsMap[cs]->isActive())
+            {
+                ret.insert(configuredSyncsMap[cs]->getLocalFolder(), type);
+            }
         }
     }
     return ret;

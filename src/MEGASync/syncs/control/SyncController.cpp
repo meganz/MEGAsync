@@ -270,7 +270,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
     QString message;
 
     // Gather all synced or backed-up dirs
-    QMap<QString, MegaSync::SyncType> localFolders = SyncInfo::instance()->getLocalFoldersAndTypeMap();
+    QMap<QString, MegaSync::SyncType> localFolders = SyncInfo::instance()->getLocalFoldersAndTypeMap(true);
 
     // Check if the path is already synced or part of a sync
     foreach (auto& existingPath, localFolders.keys())

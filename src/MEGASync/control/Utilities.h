@@ -463,27 +463,4 @@ private:
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
 
-class BindFolderDialog;
-class SyncController;
-
-class AddSyncManager : public QObject
-{
-    Q_OBJECT
-
-public:
-    AddSyncManager();
-
-    void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
-
-signals:
-    void syncAdded(mega::MegaHandle remote, const QString& localPath);
-
-private slots:
-    void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
-
-private:
-    QPointer<BindFolderDialog> mAddSyncDialog;
-};
-
-
 #endif // UTILITIES_H

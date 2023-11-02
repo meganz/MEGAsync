@@ -306,6 +306,13 @@ void NodeSelectorModelItem::updateNode(std::shared_ptr<mega::MegaNode> node)
 
 void NodeSelectorModelItem::calculateSyncStatus()
 {
+    if(mNode->isFile())
+    {
+        return;
+    }
+
+    mStatus = Status::NONE;
+
     //if current item has a parent and the parent is already a sync or a sync_child, current item is also a sync_child
     //if not, continue checking. This avoid to block the mutex in the megaapi call below.
     if(parent())
@@ -318,7 +325,6 @@ void NodeSelectorModelItem::calculateSyncStatus()
             case Status::SYNC_CHILD:
             {
                 mStatus = Status::SYNC_CHILD;
-                return;
             }
             default:
                 break;
@@ -326,31 +332,37 @@ void NodeSelectorModelItem::calculateSyncStatus()
         }
     }
 
-    std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(mNode.get()));
-    switch(err->getSyncError())
+    if(mStatus == Status::NONE)
     {
-    case mega::MegaSync::Error::ACTIVE_SYNC_ABOVE_PATH:
-    {
-        mStatus = Status::SYNC_CHILD;
-        break;
+        std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(mNode.get()));
+        switch(err->getSyncError())
+        {
+        case mega::MegaSync::Error::ACTIVE_SYNC_ABOVE_PATH:
+        {
+            mStatus = Status::SYNC_CHILD;
+            break;
+        }
+        case mega::MegaSync::Error::ACTIVE_SYNC_BELOW_PATH:
+        {
+            mStatus = Status::SYNC_PARENT;
+            break;
+        }
+        case mega::MegaSync::Error::ACTIVE_SYNC_SAME_PATH:
+        {
+            mStatus = Status::SYNC;
+            break;
+        }
+        }
     }
-    case mega::MegaSync::Error::ACTIVE_SYNC_BELOW_PATH:
-    {
-        mStatus = Status::SYNC_PARENT;
-        break;
-    }
-    case mega::MegaSync::Error::ACTIVE_SYNC_SAME_PATH:
-    {
-        mStatus = Status::SYNC;
-        break;
-    }
-    }
-    auto syncedFolders = SyncInfo::instance()->getMegaFolderHandles(SyncInfo::AllHandledSyncTypes);
-    if(syncedFolders.contains(mNode->getHandle()))
-    {
-        mStatus = Status::SYNC;
-        return;
-    }
+
+//    if(mStatus == Status::NONE)
+//    {
+//        auto syncedFolders = SyncInfo::instance()->getMegaFolderHandles(SyncInfo::AllHandledSyncTypes);
+//        if(syncedFolders.contains(mNode->getHandle()))
+//        {
+//            mStatus = Status::SYNC;
+//        }
+//    }
 }
 
 bool NodeSelectorModelItem::isCloudDrive() const

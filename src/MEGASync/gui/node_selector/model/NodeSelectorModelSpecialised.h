@@ -24,6 +24,8 @@ public:
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
 
+    bool showsSyncStates() override {return true;}
+
 signals:
     void requestCloudDriveRootCreation();
 
@@ -45,6 +47,7 @@ public:
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
     bool rootNodeUpdated(mega::MegaNode*node) override;
+    bool showsSyncStates() override {return true;}
 
 public slots:
     void onItemInfoUpdated(int role);

@@ -8,6 +8,7 @@
 
 class BindFolderDialog;
 class SyncController;
+class SyncSettings;
 
 class AddSyncFromUiManager : public QObject
 {
@@ -15,9 +16,10 @@ class AddSyncFromUiManager : public QObject
 
 public:
     AddSyncFromUiManager() = default;
-    ~AddSyncFromUiManager();
+    ~AddSyncFromUiManager() = default;
 
     void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
+    void removeSync(mega::MegaHandle remoteHandle);
 
 signals:
     void syncAdded(mega::MegaHandle remote, const QString& localPath);

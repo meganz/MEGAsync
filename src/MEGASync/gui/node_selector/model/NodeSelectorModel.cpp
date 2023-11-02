@@ -537,6 +537,9 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
 
     connect(mNodeRequesterWorker, &NodeRequester::updateLoadingMessage, this, &NodeSelectorModel::updateLoadingMessage, Qt::DirectConnection);
 
+    connect(SyncInfo::instance(), &SyncInfo::syncStateChanged, this, &NodeSelectorModel::onSyncStateChanged);
+    connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &NodeSelectorModel::onSyncStateChanged);
+
     qRegisterMetaType<std::shared_ptr<mega::MegaNodeList>>("std::shared_ptr<mega::MegaNodeList>");
     qRegisterMetaType<std::shared_ptr<mega::MegaNode>>("std::shared_ptr<mega::MegaNode>");
     qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
@@ -897,6 +900,47 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
     {
         auto index = child->property(INDEX_PROPERTY).toModelIndex();
         emit dataChanged(index, index);
+    }
+}
+
+void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
+{
+    if(showsSyncStates() && sync)
+    {
+        auto syncIndex = findItemByNodeHandle(sync->getMegaHandle(), QModelIndex());
+        auto item = getItemByIndex(syncIndex);
+        if(item)
+        {
+            auto itemStatus = item->getStatus();
+            item->calculateSyncStatus();
+
+            if(itemStatus != item->getStatus())
+            {
+                emit blockUi(true);
+                QFuture<void> filtered = QtConcurrent::run([this, item, sync](){
+
+                    qDebug() << "Update child/parent" << sync->isActive() << sync.get() << this;
+                    //Update its children
+                    if(item->areChildrenInitialized())
+                    {
+                        for(int index = 0; index < item->getNumChildren(); ++index)
+                        {
+                            item->getChild(index)->calculateSyncStatus();
+                        }
+                    }
+
+                    //Update its parent
+                    NodeSelectorModelItem* parent(item->getParent());
+                    while(parent)
+                    {
+                        parent->calculateSyncStatus();
+                        parent = parent->getParent();
+                    }
+
+                    emit blockUi(false);
+                });
+            }
+        }
     }
 }
 

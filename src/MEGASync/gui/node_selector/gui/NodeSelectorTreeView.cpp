@@ -4,8 +4,7 @@
 #include "../model/NodeSelectorProxyModel.h"
 #include "Platform.h"
 #include "../model/NodeSelectorModel.h"
-#include "DialogOpener.h"
-#include "InfoDialog.h"
+#include <syncs/control/AddSyncFromUiManager.h>
 
 
 #include <QPainter>
@@ -266,10 +265,30 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 
                 if (access >= MegaShare::ACCESS_FULL)
                 {
-                    customMenu.addAction(tr("Sync"), this, [selectionHandle](){
-                        AddSyncManager* syncManager(new AddSyncManager());
-                        syncManager->addSync(selectionHandle.first(), true);
-                    });
+                    auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+                    auto sourceModel = proxyModel->getMegaModel();
+                    auto index = proxyModel->mapToSource(selectionModel()->selectedIndexes().first());
+                    auto item = sourceModel->getItemByIndex(index);
+
+                    if(item)
+                    {
+                        auto itemStatus = item->getStatus();
+                        if(itemStatus == NodeSelectorModelItem::Status::NONE)
+                        {
+                            customMenu.addAction(tr("Sync"), this, [selectionHandle](){
+                                AddSyncFromUiManager* syncManager(new AddSyncFromUiManager());
+                                syncManager->addSync(selectionHandle.first(), true);
+                            });
+                        }
+                        else if(itemStatus == NodeSelectorModelItem::Status::SYNC)
+                        {
+                            customMenu.addAction(tr("Unsync"), this, [selectionHandle](){
+                                AddSyncFromUiManager* syncManager(new AddSyncFromUiManager());
+                                syncManager->removeSync(selectionHandle.first());
+                            });
+                        }
+                    }
+
                     customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
                     customMenu.addAction(tr("Delete"), this, [this, selectionHandle](){
                         removeNode(selectionHandle, false);

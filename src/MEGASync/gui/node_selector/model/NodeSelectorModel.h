@@ -196,6 +196,7 @@ public:
     virtual bool canBeDeleted() const;
     virtual bool rootNodeUpdated(mega::MegaNode*){return false;}
     virtual bool isNodeAccepted(mega::MegaNode* node){return !MegaSyncApp->getMegaApi()->isInRubbish(node);}
+    virtual bool showsSyncStates() {return false;}
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
@@ -235,6 +236,7 @@ private slots:
     void onChildNodesReady(NodeSelectorModelItem *parent);
     void onNodeAdded(NodeSelectorModelItem* childItem);
     void onNodesAdded(QList<QPointer<NodeSelectorModelItem> > childrenItem);
+    void onSyncStateChanged(std::shared_ptr<SyncSettings> sync);
 
 private:
     virtual void createRootNodes() = 0;
