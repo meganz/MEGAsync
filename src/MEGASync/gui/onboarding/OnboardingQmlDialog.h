@@ -16,6 +16,7 @@ public:
     Q_INVOKABLE bool getLoggingIn() const;
     Q_INVOKABLE void setLoggingIn(bool value);
     Q_INVOKABLE void forceClose();
+    Q_INVOKABLE void raise();
 
 signals:
     void loggingInChanged();
