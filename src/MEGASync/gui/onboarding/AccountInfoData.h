@@ -16,7 +16,7 @@ class AccountInfoData : public QObject, public mega::MegaRequestListener, public
     Q_PROPERTY(AccountType type MEMBER mType NOTIFY accountDetailsChanged)
     Q_PROPERTY(QString totalStorage MEMBER mTotalStorage NOTIFY accountDetailsChanged)
     Q_PROPERTY(QString usedStorage MEMBER mUsedStorage NOTIFY usedStorageChanged)
-    Q_PROPERTY(bool newUser MEMBER mNewUser NOTIFY accountDetailsChanged)
+    Q_PROPERTY(bool belowMinThreshold MEMBER mBelowMinThreshold NOTIFY accountDetailsChanged)
 
 public:
     enum AccountType {
@@ -41,6 +41,8 @@ signals:
     void usedStorageChanged();
 
 private:
+    static const long long MIN_THRESHOLD;
+
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
@@ -48,16 +50,14 @@ private:
     AccountType mType;
     QString mTotalStorage;
     QString mUsedStorage;
-    bool mNewUser;
+    bool mBelowMinThreshold;
     bool mInitialized;
 
-    static const long long INITIAL_SPACE;
-
+    explicit AccountInfoData(QObject* parent = 0);
     void onRequestFinish(mega::MegaApi*,
                          mega::MegaRequest *request,
                          mega::MegaError* error) override;
     void onAccountUpdate(mega::MegaApi *api) override;
-    explicit AccountInfoData(QObject* parent = 0);
     void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
 };
 
