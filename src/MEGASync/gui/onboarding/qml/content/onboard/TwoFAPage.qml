@@ -19,8 +19,7 @@ TwoFAPageForm {
     }
 
     twoFAField.onAllDigitsFilled: {
-        loginButton.forceActiveFocus();
-        loginButton.clicked();
+        loginControllerAccess.login2FA(twoFAField.key);
     }
 
     readonly property string validating2FA: "validating"

@@ -41,16 +41,14 @@ Rectangle {
     signal returnPressed()
     signal accepted()
 
-    onLeftIconSourceChanged:
-    {
+    onLeftIconSourceChanged: {
         if (leftIconSource.length > 0)
         {
             leftIcon.source = leftIconSource
         }
     }
 
-    onRightIconSourceChanged:
-    {
+    onRightIconSourceChanged: {
         if (rightIconSource.length > 0)
         {
             rightIcon.source = rightIconSource
@@ -113,8 +111,8 @@ Rectangle {
         selectByMouse: true
         selectionColor: colors.selection
         height: sizes.height + 2 * sizes.focusBorderWidth
-        leftPadding: calculatePaddingWithIcon(leftIconSource !== "")
-        rightPadding: calculatePaddingWithIcon(rightIcon.source !== "")
+        leftPadding: calculatePaddingWithIcon(leftIconSource != "")
+        rightPadding: calculatePaddingWithIcon(rightIconSource != "")
         topPadding: sizes.padding
         bottomPadding: sizes.padding
         placeholderTextColor: colors.placeholder
@@ -178,6 +176,7 @@ Rectangle {
                     topMargin: sizes.focusBorderWidth
                     leftMargin: sizes.focusBorderWidth
                 }
+
                 width: textField.width - 2 * sizes.focusBorderWidth
                 height: textField.height - 2 * sizes.focusBorderWidth
                 color: colors.background

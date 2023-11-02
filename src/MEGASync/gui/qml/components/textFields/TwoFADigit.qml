@@ -7,6 +7,7 @@ import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
 MegaTextFields.TextField {
+    id: root
 
     property var next
     property var previous
@@ -17,10 +18,8 @@ MegaTextFields.TextField {
     height: heightWithFocus
     width: widthWidthFocus
 
-    error: hasError
-
     textField.validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
-    textField.height: height + 6 // add the focus border size (3 up + 3 down)
+    textField.height: root.height + 6 // add the focus border size (3 up + 3 down)
     textField.font.pixelSize: 48
     textField.font.weight: Font.DemiBold
     textField.leftPadding: 19
@@ -34,7 +33,7 @@ MegaTextFields.TextField {
         }
     }
 
-    textField.onFocusChanged: {
+    onFocusChanged: {
         if(textField.focus) {
             textField.select(0, 1);
         }
@@ -45,9 +44,4 @@ MegaTextFields.TextField {
             previous.textField.focus = true;
         }
     }
-
-    onPastePressed: {
-        pastePin();
-    }
-
 }
