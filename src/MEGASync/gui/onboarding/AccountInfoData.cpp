@@ -1,6 +1,5 @@
 #include "AccountInfoData.h"
 #include "MegaApplication.h"
-#include <iostream>
 
 using namespace mega;
 

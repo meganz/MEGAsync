@@ -2,7 +2,6 @@
 #define ONBOARDING_H
 
 #include "qml/QmlDialogWrapper.h"
-#include "AccountInfoData.h"
 
 class Onboarding : public QMLComponent
 {
@@ -21,9 +20,6 @@ public:
 signals:
     void accountBlocked(int errorCode);
     void logout();
-
-private:
-    QScopedPointer<AccountInfoData> mAccountInfo;
 };
 
 #endif // ONBOARDING_H

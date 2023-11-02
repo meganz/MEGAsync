@@ -21,11 +21,16 @@ Item {
     height: 48
 
     Component.onCompleted: {
-        AccountInfoData.requestAccountInfoData();
+        accountInfoData.requestAccountInfoData();
+    }
+
+    AccountInfoData
+    {
+        id: accountInfoData
     }
 
     function getAccountTypeImage() {
-        switch(AccountInfoData.type) {
+        switch(accountInfoData.type) {
             case AccountInfoData.ACCOUNT_TYPE_FREE:
                 return Images.shield_account_free;
             case AccountInfoData.ACCOUNT_TYPE_PROI:
@@ -46,7 +51,7 @@ Item {
     }
 
     function getAccountTypeText() {
-        switch(AccountInfoData.type) {
+        switch(accountInfoData.type) {
             case AccountInfoData.ACCOUNT_TYPE_FREE:
                 return OnboardingStrings.accountTypeFree;
             case AccountInfoData.ACCOUNT_TYPE_PROI:
@@ -78,7 +83,7 @@ Item {
         RowLayout {
             anchors.fill: parent
             spacing: 0
-            visible: AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
+            visible: accountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
 
             RowLayout {
                 Layout.alignment: Qt.AlignLeft
@@ -109,14 +114,14 @@ Item {
             RowLayout {
                 Layout.alignment: Qt.AlignRight
                 Layout.rightMargin: 24
-                visible: AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_BUSINESS
-                         && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI
-                         && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
+                visible: accountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_BUSINESS
+                         && accountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI
+                         && accountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
 
                 MegaTexts.Text {
-                    text: AccountInfoData.newUser
-                          ? OnboardingStrings.availableStorage
-                          : OnboardingStrings.storageSpace
+                    text: accountInfoData.newUser
+                          ? accountInfoData.availableStorage
+                          : accountInfoData.storageSpace
                     font.weight: Font.DemiBold
                 }
 
@@ -129,14 +134,14 @@ Item {
                 MegaTexts.SecondaryText {
                     font.weight: Font.DemiBold
                     text: "/"
-                    visible: !AccountInfoData.newUser
+                    visible: !accountInfoData.newUser
                 }
 
                 MegaTexts.SecondaryText {
                     id: totalStorage
 
                     font.weight: Font.DemiBold
-                    text: AccountInfoData.totalStorage
+                    text: accountInfoData.totalStorage
                 }
             }
         }
