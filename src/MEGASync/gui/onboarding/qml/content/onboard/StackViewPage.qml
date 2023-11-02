@@ -25,7 +25,6 @@ Rectangle {
     function setInitialFocusPosition()
     {
         root.initialFocus()
-        console.log("setInitialFocusPosition on base")
     }
 
     function getStatusText() {

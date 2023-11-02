@@ -18,17 +18,6 @@ ColumnLayout {
         digit1.textField.forceActiveFocus();
     }
 
-    Timer {
-        id: visibilityTimer
-
-        interval: 200
-        running: true
-        repeat: false
-        onTriggered: {
-            forceFocus();
-        }
-    }
-
     function pastePin() {
         const regex = RegexExpressions.digit2FA;
         var pin = QmlClipboard.text().slice(0, 6);
