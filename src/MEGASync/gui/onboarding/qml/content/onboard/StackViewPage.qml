@@ -14,11 +14,19 @@ import Onboard 1.0
 import LoginController 1.0
 
 Rectangle {
-    id: baseWindow
+    id: root
     
     property alias statusText: statusText
 
     readonly property int contentSpacing: 24
+
+    signal initialFocus
+
+    function setInitialFocusPosition()
+    {
+        root.initialFocus()
+        console.log("setInitialFocusPosition on base")
+    }
 
     function getStatusText() {
             switch(loginControllerAccess.state)
@@ -51,7 +59,7 @@ Rectangle {
 
         anchors {
             horizontalCenter: parent.horizontalCenter
-            bottom: baseWindow.bottom
+            bottom: root.bottom
         }
         font.pixelSize: MegaTexts.Text.Size.Small
         color: Styles.textSecondary

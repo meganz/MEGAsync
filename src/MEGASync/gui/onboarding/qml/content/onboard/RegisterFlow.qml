@@ -187,6 +187,11 @@ Rectangle {
             }
         }
 
+        onCurrentItemChanged:
+        {
+            currentItem.setInitialFocusPosition()
+        }
+
         Component {
             id: loginPage
 

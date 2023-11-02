@@ -15,8 +15,7 @@ ColumnLayout {
     id: root
 
     function forceFocus() {
-        console.log("************************ forced focus")
-        digit1.setFocus()
+        digit1.textField.forceActiveFocus();
     }
 
     Timer {
@@ -26,7 +25,7 @@ ColumnLayout {
         running: true
         repeat: false
         onTriggered: {
-            digit1.textField.forceActiveFocus();
+            forceFocus();
         }
     }
 
