@@ -114,7 +114,7 @@ Item {
                          && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
 
                 MegaTexts.Text {
-                    text: AccountInfoData.belowMinThreshold
+                    text: AccountInfoData.belowMinUsedStorageThreshold
                           ? OnboardingStrings.availableStorage
                           : OnboardingStrings.storageSpace
                     font.weight: Font.DemiBold
@@ -123,13 +123,13 @@ Item {
                 MegaTexts.Text {
                     font.weight: Font.DemiBold
                     text: AccountInfoData.usedStorage
-                    visible: !AccountInfoData.belowMinThreshold
+                    visible: !AccountInfoData.belowMinUsedStorageThreshold
                 }
 
                 MegaTexts.SecondaryText {
                     font.weight: Font.DemiBold
                     text: "/"
-                    visible: !AccountInfoData.belowMinThreshold
+                    visible: !AccountInfoData.belowMinUsedStorageThreshold
                 }
 
                 MegaTexts.SecondaryText {

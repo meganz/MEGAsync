@@ -3,7 +3,7 @@
 
 using namespace mega;
 
-const long long AccountInfoData::MIN_THRESHOLD = 1000000;
+static const long long MIN_USED_STORAGE_THRESHOLD = 1000000;
 
 AccountInfoData::AccountInfoData(QObject *parent)
     : QObject(parent)
@@ -13,7 +13,7 @@ AccountInfoData::AccountInfoData(QObject *parent)
     , mType(AccountType::ACCOUNT_TYPE_NOT_SET)
     , mTotalStorage()
     , mUsedStorage()
-    , mBelowMinThreshold(false)
+    , mBelowMinUsedStorageThreshold(false)
     , mInitialized(false)
 {
     mMegaApi->addGlobalListener(mGlobalListener.get());
@@ -45,7 +45,7 @@ void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
                 mType = static_cast<AccountInfoData::AccountType>(accountDetails->getProLevel());
                 mTotalStorage = Utilities::getSizeString(accountDetails->getStorageMax());
                 mUsedStorage = Utilities::getSizeString(accountDetails->getStorageUsed());
-                mBelowMinThreshold = accountDetails->getStorageUsed() < MIN_THRESHOLD;
+                mBelowMinUsedStorageThreshold = accountDetails->getStorageUsed() < MIN_USED_STORAGE_THRESHOLD;
 
                 mInitialized = true;
 
@@ -68,9 +68,9 @@ void AccountInfoData::onEvent(MegaApi*, MegaEvent* event)
     {
         case MegaEvent::EVENT_STORAGE_SUM_CHANGED:
         {
-            auto usedStorage = event->getNumber();
+            long long usedStorage = event->getNumber();
             mUsedStorage = Utilities::getSizeString(usedStorage);
-            mBelowMinThreshold = usedStorage < MIN_THRESHOLD;
+            mBelowMinUsedStorageThreshold = usedStorage < MIN_USED_STORAGE_THRESHOLD;
 
             emit accountDetailsChanged();
             emit usedStorageChanged();
