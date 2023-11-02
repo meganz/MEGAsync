@@ -501,6 +501,77 @@ min-height:36px;
            </layout>
           </widget>
          </item>
+         <item>
+          <widget class="QFrame" name="fRubbish">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bRubbish">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Rubbish Bin</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../Resources_linux.qrc">
+                <normaloff>:/images/node_selector/sidebar/rubbish_default.png</normaloff>:/images/node_selector/sidebar/rubbish_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default_icon" stdset="0">
+               <string notr="true">qrc:/images/node_selector/sidebar/rubbish_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -652,8 +723,6 @@ padding-right:1px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../Resources_linux.qrc"/>
-  <include location="../../../Resources_linux.qrc"/>
   <include location="../../../Resources_linux.qrc"/>
  </resources>
  <connections/>

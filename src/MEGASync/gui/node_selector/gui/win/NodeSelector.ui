@@ -502,6 +502,65 @@ min-height:40px;
            </layout>
           </widget>
          </item>
+         <item>
+          <widget class="QFrame" name="fRubbish">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bRubbish">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Rubbish Bin</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../Resources_win.qrc">
+                <normaloff>:/images/node_selector/sidebar/rubbish_default.png</normaloff>:/images/node_selector/sidebar/rubbish_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default_icon" stdset="0">
+               <string notr="true">qrc:/images/node_selector/sidebar/rubbish_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -653,9 +712,7 @@ padding-right:1px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_win.qrc"/>
+  <include location="../../../Resources_win.qrc"/>win.qrc
  </resources>
  <connections/>
  <buttongroups>

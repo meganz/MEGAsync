@@ -529,8 +529,15 @@ min-height:36px;
             </property>
             <item>
              <widget class="QPushButton" name="bRubbish">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Rubbish</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../Resources_macx.qrc">
+                <normaloff>:/images/node_selector/sidebar/rubbish_default.png</normaloff>:/images/node_selector/sidebar/rubbish_default.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -541,6 +548,15 @@ min-height:36px;
               <property name="autoDefault">
                <bool>false</bool>
               </property>
+              <property name="default_icon" stdset="0">
+               <string notr="true">qrc:/images/node_selector/sidebar/rubbish_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
              </widget>
             </item>
            </layout>
@@ -645,7 +661,7 @@ padding-right:1px;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../Resources_linux.qrc">
+               <iconset resource="../../../Resources_macx.qrc">
                 <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
               </property>
               <property name="iconSize">
@@ -697,8 +713,6 @@ padding-right:1px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../Resources_macx.qrc"/>
-  <include location="../../../Resources_macx.qrc"/>
   <include location="../../../Resources_macx.qrc"/>
  </resources>
  <connections/>

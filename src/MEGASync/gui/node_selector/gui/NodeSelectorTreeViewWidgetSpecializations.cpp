@@ -451,7 +451,7 @@ void NodeSelectorTreeViewWidgetRubbish::modelLoaded()
 
 QIcon NodeSelectorTreeViewWidgetRubbish::getEmptyIcon()
 {
-    return QIcon(QString::fromUtf8("://images/node_selector/view/cloud.png"));
+    return QIcon(QString::fromUtf8("://images/node_selector/view/rubbish.png"));
 }
 
 void NodeSelectorTreeViewWidgetRubbish::onRootIndexChanged(const QModelIndex &source_idx)

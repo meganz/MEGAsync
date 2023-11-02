@@ -1228,12 +1228,6 @@
         <file>images/node_selector/sidebar/backup_ico_selected.png</file>
         <file>images/node_selector/sidebar/backup_ico_selected@2x.png</file>
         <file>images/node_selector/sidebar/backup_ico_selected@3x.png</file>
-        <file>images/node_selector/sidebar/backup_ico_hover.png</file>
-        <file>images/node_selector/sidebar/backup_ico_hover@2x.png</file>
-        <file>images/node_selector/sidebar/backup_ico_hover@3x.png</file>
-        <file>images/node_selector/sidebar/cloud_ico_hover.png</file>
-        <file>images/node_selector/sidebar/cloud_ico_hover@2x.png</file>
-        <file>images/node_selector/sidebar/cloud_ico_hover@3x.png</file>
         <file>images/node_selector/view/cloud.png</file>
         <file>images/node_selector/view/cloud@2x.png</file>
         <file>images/node_selector/view/cloud@3x.png</file>
@@ -1267,18 +1261,12 @@
         <file>images/node_selector/sidebar/folder-users_default.png</file>
         <file>images/node_selector/sidebar/folder-users_default@2x.png</file>
         <file>images/node_selector/sidebar/folder-users_default@3x.png</file>
-        <file>images/node_selector/sidebar/folder-users_hover.png</file>
-        <file>images/node_selector/sidebar/folder-users_hover@2x.png</file>
-        <file>images/node_selector/sidebar/folder-users_hover@3x.png</file>
         <file>images/node_selector/sidebar/folder-users_selected.png</file>
         <file>images/node_selector/sidebar/folder-users_selected@2x.png</file>
         <file>images/node_selector/sidebar/folder-users_selected@3x.png</file>
         <file>images/node_selector/sidebar/search_default.png</file>
         <file>images/node_selector/sidebar/search_default@2x.png</file>
         <file>images/node_selector/sidebar/search_default@3x.png</file>
-        <file>images/node_selector/sidebar/search_hover.png</file>
-        <file>images/node_selector/sidebar/search_hover@2x.png</file>
-        <file>images/node_selector/sidebar/search_hover@3x .png</file>
         <file>images/node_selector/sidebar/search_selected.png</file>
         <file>images/node_selector/sidebar/search_selected@2x.png</file>
         <file>images/node_selector/sidebar/search_selected@3x.png</file>
@@ -1343,5 +1331,14 @@
         <file>images/icons/folder/small-folder-outgoing-disabled.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@2x.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@3x.png</file>
+        <file>images/node_selector/sidebar/rubbish_default.png</file>
+        <file>images/node_selector/sidebar/rubbish_default@2x.png</file>
+        <file>images/node_selector/sidebar/rubbish_default@3x.png</file>
+        <file>images/node_selector/sidebar/rubbish_selected.png</file>
+        <file>images/node_selector/sidebar/rubbish_selected@2x.png</file>
+        <file>images/node_selector/sidebar/rubbish_selected@3x.png</file>
+        <file>images/node_selector/view/rubbish.png</file>
+        <file>images/node_selector/view/rubbish@2x.png</file>
+        <file>images/node_selector/view/rubbish@3x.png</file>
     </qresource>
 </RCC>
