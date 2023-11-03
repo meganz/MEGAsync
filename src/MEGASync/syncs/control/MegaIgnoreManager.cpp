@@ -87,13 +87,21 @@ void MegaIgnoreManager::parseIgnoresFile()
                     const static QRegularExpression smallSizeRegEx{ QLatin1String(::SMALL_SIZE_LEFT_SIDE_REG_EX) };
                     if (largeSizeRegEx.match(line).hasMatch())
                     {
-                        mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
-                        addRule(mHighLimitRule);
+                        auto highLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
+                        if (!mHighLimitRule || !highLimitRule->isCommented())
+                        {
+                            mHighLimitRule = highLimitRule;
+                        }
+                        addRule(highLimitRule);
                     }
                     else if (smallSizeRegEx.match(line).hasMatch())
                     {
-                        mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
-                        addRule(mLowLimitRule);
+                        auto lowLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
+                        if (!mLowLimitRule || !lowLimitRule->isCommented())
+                        {
+                            mLowLimitRule = lowLimitRule;
+                        }                      
+                        addRule(lowLimitRule);
                     }
                     break;
                 }
@@ -267,7 +275,6 @@ void MegaIgnoreManager::enableExtensions(bool state)
 MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool updateExtensionRules, const QStringList& updatedExtensions)
 {
     ApplyChangesError result(ApplyChangesError::NoUpdateNeeded);
-
     QStringList rules;
     foreach(auto & rule, mRules)
     {

@@ -22,6 +22,7 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
     mSyncLocalFolder(syncLocalFolder)
 {
     ui->setupUi(this);
+    ui->bOpenMegaIgnore->setEnabled(QFile(syncLocalFolder + QDir::separator() + QString::fromUtf8(MEGA_IGNORE_FILE_NAME)).exists());
     // Fill units in file size comboBoxes
     ui->cbExcludeLowerUnit->blockSignals(true);
     ui->cbExcludeUpperUnit->blockSignals(true);
