@@ -240,17 +240,20 @@ void IgnoresEditingDialog::on_cExcludeLowerThan_clicked()
 }
 //
 
-void IgnoresEditingDialog::on_fileChanged(const QString file)
+void IgnoresEditingDialog::on_fileChanged(const QString)
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = this;
-    msgInfo.title = tr("Reload");
-    msgInfo.text = tr("Current file has been modified by another program. it will be reloaded");
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok;
-    QMegaMessageBox::warning(msgInfo);
-    mManager.parseIgnoresFile();
-    refreshUI();
+    if(mManager.hasChanged())
+    {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = tr("Reload");
+        msgInfo.text = tr("Current file has been modified by another program. it will be reloaded");
+        msgInfo.textFormat = Qt::RichText;
+        msgInfo.buttons = QMessageBox::Ok;
+        QMegaMessageBox::warning(msgInfo);
+        mManager.parseIgnoresFile();
+        refreshUI();
+    }
 }
 
 void IgnoresEditingDialog::setOutputIgnorePath(const QString& outputPath)

@@ -2,6 +2,7 @@
 
 #include <Utilities.h>
 #include "Preferences.h"
+#include "MegaApplication.h"
 
 #include <QDir>
 #include <QChar>
@@ -135,6 +136,9 @@ void MegaIgnoreManager::parseIgnoresFile()
             addRule(mHighLimitRule);
         }
     }
+
+    std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
+    mIgnoreCRC = QString::fromUtf8(crc.get());
 }
 
 std::shared_ptr<MegaIgnoreRule> MegaIgnoreManager::getRuleByOriginalRule(const QString& originalRule)
@@ -357,6 +361,13 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addNameRule(MegaIgnoreNam
 void MegaIgnoreManager::setOutputIgnorePath(const QString& outputPath)
 {
     mOutputMegaIgnoreFile = outputPath;
+}
+
+bool MegaIgnoreManager::hasChanged() const
+{
+    std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
+    auto IgnoreCRC = QString::fromUtf8(crc.get());
+    return mIgnoreCRC.compare(IgnoreCRC) != 0;
 }
 
 ////////////////MEGA IGNORE RULE

@@ -255,6 +255,8 @@ public:
 
     void setOutputIgnorePath(const QString& outputPath);
 
+    bool hasChanged() const;
+
 private:
     template <class Type>
     static const std::shared_ptr<Type> convert(const std::shared_ptr<MegaIgnoreRule> data)
@@ -284,6 +286,9 @@ private:
     std::shared_ptr<MegaIgnoreSizeRule> mHighLimitRule;
 
     std::shared_ptr<MegaIgnoreNameRule> mIgnoreSymLinkRule;
+    
+    QString mIgnoreCRC;
+
 };
 
 #endif // MEGAIGNOREMANAGER_H
