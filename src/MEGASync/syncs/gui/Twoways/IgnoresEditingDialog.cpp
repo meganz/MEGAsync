@@ -18,7 +18,8 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
     ui(new Ui::IgnoresEditingDialog),
     mPreferences(Preferences::instance()),
     mIgnoresFileWatcher(std::make_shared<QFileSystemWatcher>(this)),
-    mManager(syncLocalFolder, createIfNotExist)
+    mManager(syncLocalFolder, createIfNotExist),
+    mSyncLocalFolder(syncLocalFolder)
 {
     ui->setupUi(this);
     // Fill units in file size comboBoxes
@@ -127,7 +128,7 @@ void IgnoresEditingDialog::refreshUI()
 
 void IgnoresEditingDialog::onAddNameClicked()
 {
-    QPointer<AddExclusionDialog> add = new AddExclusionDialog(this);
+    QPointer<AddExclusionDialog> add = new AddExclusionDialog(mSyncLocalFolder, this);
     int result = add->exec();
     if (!add || (result != QDialog::Accepted))
     {
@@ -136,6 +137,7 @@ void IgnoresEditingDialog::onAddNameClicked()
     }
 
     QString text = add->textValue();
+    const auto target = add->getTarget();
     delete add;
 
     if (text.isEmpty())
@@ -151,7 +153,7 @@ void IgnoresEditingDialog::onAddNameClicked()
         }
     }
 
-    auto rule = mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text);
+    auto rule = mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text, target);
     addNameRule(rule);
 }
 

@@ -242,7 +242,7 @@ public:
     void enableExtensions(bool state);
     std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinksRule();
     std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinkRule(const QString& pattern);
-    std::shared_ptr<MegaIgnoreNameRule> addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern);
+    std::shared_ptr<MegaIgnoreNameRule> addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern, MegaIgnoreNameRule::Target targetType = MegaIgnoreNameRule::Target::None);
 
     enum ApplyChangesError
     {

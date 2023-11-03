@@ -20,7 +20,7 @@ namespace
     constexpr char SMALL_SIZE_LEFT_SIDE_REG_EX[] = "#*(exclude-smaller):*";
     constexpr char IGNORE_SYM_LINK[] = "-s:*";
     constexpr char NON_SIZE_LEFT_SIDE_REG_EX[] = "^#*[+-][]adfsNnpGgRr]*$";
-    constexpr char RIGHT_SIDE_TYPE_RULE_REG_EX[] = "^(\\*)?\\..*";
+    constexpr char RIGHT_SIDE_TYPE_RULE_REG_EX[] = "^\\*\\..*";
     constexpr char CAPTURE_EXTENSION_REG_EX[] = "\\.(.*)";
 }
 
@@ -347,9 +347,9 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinkRule(cons
     return rule;
 }
 
-std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern)
+std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern, MegaIgnoreNameRule::Target targetType)
 {
-    auto rule = std::make_shared<MegaIgnoreNameRule>(pattern, classType);
+    auto rule = std::make_shared<MegaIgnoreNameRule>(pattern, classType, targetType);
     addRule(rule);
     return rule;
 }

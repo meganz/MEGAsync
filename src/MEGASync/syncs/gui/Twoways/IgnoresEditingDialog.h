@@ -51,6 +51,7 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     std::shared_ptr<QFileSystemWatcher> mIgnoresFileWatcher;
     MegaIgnoreManager mManager;
+    QString mSyncLocalFolder;
     bool mExtensionsChanged = false;
 
 };
