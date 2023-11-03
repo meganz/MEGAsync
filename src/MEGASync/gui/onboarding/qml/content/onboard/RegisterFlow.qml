@@ -9,7 +9,7 @@ import Common 1.0
 import LoginController 1.0
 
 Rectangle {
-    id: registerFlow
+    id: root
 
     readonly property string login: "login"
     readonly property string twoFA: "twoFA"
@@ -22,20 +22,20 @@ Rectangle {
     state:  {
         switch(loginControllerAccess.state) {
             case LoginController.WAITING_EMAIL_CONFIRMATION:
-                return registerFlow.confirmEmail;
+                return root.confirmEmail;
             case LoginController.SIGN_UP:
             case LoginController.CREATING_ACCOUNT:
             case LoginController.CREATING_ACCOUNT_FAILED:
-                return registerFlow.register;
+                return root.register;
             case LoginController.LOGGING_IN_2FA_REQUIRED:
             case LoginController.LOGGING_IN_2FA_VALIDATING:
             case LoginController.LOGGING_IN_2FA_FAILED:
             case LoginController.FETCHING_NODES_2FA:
-                return registerFlow.twoFA;
+                return root.twoFA;
             case LoginController.CHANGING_REGISTER_EMAIL:
-                return registerFlow.changeConfirmEmail;
+                return root.changeConfirmEmail;
         }
-        return registerFlow.login;
+        return root.login;
     }
 
     states: [
@@ -96,25 +96,13 @@ Rectangle {
         }
     }
 
-    Connections {
-        target: onboardingWindow
-
-        function onClosingButLoggingIn() {
-            cancelLogin.visible = true;
-        }
-
-        function onClosingButCreatingAccount() {
-            cancelCreateAccount.visible = true;
-        }
-    }
-
     Item {
         id: leftItem
 
         anchors {
-            left: registerFlow.left
-            top: registerFlow.top
-            verticalCenter: registerFlow.verticalCenter
+            left: root.left
+            top: root.top
+            verticalCenter: root.verticalCenter
         }
         height: parent.height
         width: 304
@@ -123,7 +111,11 @@ Rectangle {
             id: leftImage
 
             anchors.centerIn: parent
-            source: registerFlow.state === twoFA ? Images.twofa : Images.login
+            source: root.state === twoFA ? Images.twofa : Images.login
+
+            onSourceChanged: {
+                imageAnimation.start();
+            }
 
             NumberAnimation on opacity {
                 id: imageAnimation
@@ -131,10 +123,6 @@ Rectangle {
                 from: 0
                 to: 1
                 duration: 1000
-            }
-
-            onSourceChanged: {
-                imageAnimation.start();
             }
         }
     }
@@ -144,7 +132,7 @@ Rectangle {
 
         anchors {
             left: leftItem.right
-            top: registerFlow.top
+            top: root.top
             topMargin: 48
         }
         width: 1
@@ -158,9 +146,9 @@ Rectangle {
 
         anchors {
             left: leftItem.right
-            top: registerFlow.top
-            bottom: registerFlow.bottom
-            right: registerFlow.right
+            top: root.top
+            bottom: root.bottom
+            right: root.right
             leftMargin: 48
             rightMargin: 48
             topMargin: 48
@@ -230,6 +218,18 @@ Rectangle {
                 cancelCreateAccount.close();
                 onboardingWindow.forceClose();
             }
+        }
+    }
+
+    Connections {
+        target: onboardingWindow
+
+        function onClosingButLoggingIn() {
+            cancelLogin.visible = true;
+        }
+
+        function onClosingButCreatingAccount() {
+            cancelCreateAccount.visible = true;
         }
     }
 
