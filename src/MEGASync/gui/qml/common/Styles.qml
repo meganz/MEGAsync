@@ -64,6 +64,7 @@ QtObject {
     readonly property color textPrimary: lightTheme ? "#303233" : "#F3F4F4"
     readonly property color textSecondary: lightTheme ? "#BF303233" : "#BFF3F4F4"
     readonly property color textAccent: lightTheme ? "#04101E" : "#FAFAFB"
+    readonly property color textFaded: lightTheme ? "#3032337D" : "#F3F4F47D"
     readonly property color textPlaceholder: lightTheme ? "#80303233" : "#80F3F4F4"
     readonly property color textInverseAccent: lightTheme ? "#FAFAFB" : "#04101E"
     readonly property color textOnColor: lightTheme ? "#FAFAFA" : "#FAFAFA"

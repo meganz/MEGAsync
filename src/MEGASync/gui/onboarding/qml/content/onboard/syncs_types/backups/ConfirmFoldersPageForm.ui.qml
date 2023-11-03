@@ -52,10 +52,11 @@ SyncsPage {
             }
 
             MegaTextFields.TextField {
-                id: folderField
+                id: deviceField
 
+                colors.text: Styles.textFaded
                 Layout.preferredWidth: parent.width
-                Layout.leftMargin: -folderField.sizes.focusBorderWidth
+                Layout.leftMargin: -deviceField.sizes.focusBorderWidth
                 title: OnboardingStrings.backupTo
                 leftIconSource: Images.database
                 textField.readOnly: true
@@ -68,3 +69,4 @@ SyncsPage {
         id: deviceName
     }
 }
+

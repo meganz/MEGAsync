@@ -146,6 +146,7 @@ Rectangle {
             MegaImages.SvgImage {
                 id: leftIcon
 
+                color: enabled ? colors.icon : colors.iconDisabled
                 anchors.top: focusBorder.top
                 anchors.left: focusBorder.left
                 anchors.topMargin: sizes.iconMargin
