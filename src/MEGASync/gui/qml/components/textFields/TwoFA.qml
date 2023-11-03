@@ -14,6 +14,10 @@ import QmlClipboard 1.0
 ColumnLayout {
     id: root
 
+    function forceFocus() {
+        digit1.textField.forceActiveFocus();
+    }
+
     function pastePin() {
         const regex = RegexExpressions.digit2FA;
         var pin = QmlClipboard.text().slice(0, 6);
