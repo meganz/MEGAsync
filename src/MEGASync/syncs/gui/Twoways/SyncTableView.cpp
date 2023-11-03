@@ -236,21 +236,9 @@ ElideMiddleDelegate::~ElideMiddleDelegate()
 
 }
 
-void ElideMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-    QStyledItemDelegate::paint(painter, option, index);
-
-    QString elidedText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, option.rect.width());
-
-    QTextOption textAlign;
-    textAlign.setAlignment(Qt::AlignVCenter);
-    QRect textRect = option.rect;
-    textRect.setLeft(option.rect.left() + 6);
-    painter->drawText(textRect, elidedText, textAlign);
-}
-
 void ElideMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
-    option->text = QString();
+    option->features = option->features & ~QStyleOptionViewItem::WrapText;
+    option->textElideMode = Qt::ElideMiddle;
 }
