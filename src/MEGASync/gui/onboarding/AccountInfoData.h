@@ -2,20 +2,25 @@
 #define ACCOUNTINFODATA_H
 
 #include "QTMegaRequestListener.h"
+#include "QTMegaGlobalListener.h"
+#include "qqml.h"
 
 #include <memory>
 
-class AccountInfoData : public QObject, public mega::MegaRequestListener
+class AccountInfoData : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     Q_PROPERTY(AccountType type MEMBER mType NOTIFY accountDetailsChanged)
     Q_PROPERTY(QString totalStorage MEMBER mTotalStorage NOTIFY accountDetailsChanged)
-    Q_PROPERTY(QString usedStorage MEMBER mUsedStorage NOTIFY accountDetailsChanged)
-    Q_PROPERTY(bool newUser MEMBER mNewUser NOTIFY accountDetailsChanged)
+    Q_PROPERTY(QString usedStorage MEMBER mUsedStorage NOTIFY usedStorageChanged)
+    Q_PROPERTY(bool belowMinUsedStorageThreshold MEMBER mBelowMinUsedStorageThreshold NOTIFY accountDetailsChanged)
 
 public:
-    enum AccountType {
+    enum AccountType
+    {
         ACCOUNT_TYPE_NOT_SET = -1,
         ACCOUNT_TYPE_FREE = 0,
         ACCOUNT_TYPE_PROI = 1,
@@ -27,30 +32,32 @@ public:
     };
     Q_ENUM(AccountType)
 
-    explicit AccountInfoData(QObject *parent = 0);
-
-    void onRequestFinish(mega::MegaApi*,
-                         mega::MegaRequest *request,
-                         mega::MegaError* error) override;
+    static AccountInfoData* instance(QQmlEngine* qmlEngine, QJSEngine*);
 
 public slots:
     void requestAccountInfoData();
-    void aboutToBeDestroyed();
 
 signals:
     void accountDetailsChanged();
+    void usedStorageChanged();
 
 private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 
     AccountType mType;
     QString mTotalStorage;
     QString mUsedStorage;
-    bool mNewUser;
+    bool mBelowMinUsedStorageThreshold;
+    bool mInitialized;
 
-    static const long long INITIAL_SPACE;
-
+    explicit AccountInfoData(QObject* parent = 0);
+    void onRequestFinish(mega::MegaApi*,
+                         mega::MegaRequest *request,
+                         mega::MegaError* error) override;
+    void onAccountUpdate(mega::MegaApi *api) override;
+    void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
 };
 
 #endif // ACCOUNTINFODATA_H

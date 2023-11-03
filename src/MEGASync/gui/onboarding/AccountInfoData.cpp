@@ -3,28 +3,34 @@
 
 using namespace mega;
 
-const long long AccountInfoData::INITIAL_SPACE = 1000000;
+static const long long MIN_USED_STORAGE_THRESHOLD = 1000000;
 
 AccountInfoData::AccountInfoData(QObject *parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
+    , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
     , mType(AccountType::ACCOUNT_TYPE_NOT_SET)
-    , mTotalStorage(QString())
-    , mUsedStorage(QString())
-    , mNewUser(false)
+    , mTotalStorage()
+    , mUsedStorage()
+    , mBelowMinUsedStorageThreshold(false)
+    , mInitialized(false)
 {
-    requestAccountInfoData();
+    mMegaApi->addGlobalListener(mGlobalListener.get());
+}
+
+AccountInfoData* AccountInfoData::instance(QQmlEngine* qmlEngine, QJSEngine*)
+{
+    static AccountInfoData accountInfoData(qmlEngine);
+
+    return &accountInfoData;
 }
 
 void AccountInfoData::requestAccountInfoData()
 {
-    mMegaApi->getAccountDetails(this->mDelegateListener.get());
-}
-
-void AccountInfoData::aboutToBeDestroyed()
-{
-    mDelegateListener = nullptr;
+    if (!mInitialized) {
+        mMegaApi->getAccountDetails(mDelegateListener.get());
+    }
 }
 
 void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
@@ -35,19 +41,44 @@ void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
         {
             if(error->getErrorCode() == MegaError::API_OK)
             {
-                qDebug() << "AccountInfoData::onRequestFinish -> TYPE_ACCOUNT_DETAILS API_OK";
                 MegaAccountDetails* accountDetails = request->getMegaAccountDetails();
                 mType = static_cast<AccountInfoData::AccountType>(accountDetails->getProLevel());
                 mTotalStorage = Utilities::getSizeString(accountDetails->getStorageMax());
                 mUsedStorage = Utilities::getSizeString(accountDetails->getStorageUsed());
-                mNewUser = accountDetails->getStorageUsed() < INITIAL_SPACE
-                            && Preferences::instance()->cloudDriveFiles() <= 1
-                            && SyncInfo::instance()->getNumSyncedFolders(SyncInfo::AllHandledSyncTypes) == 0;
+                mBelowMinUsedStorageThreshold = accountDetails->getStorageUsed() < MIN_USED_STORAGE_THRESHOLD;
+
+                mInitialized = true;
+
                 emit accountDetailsChanged();
-            } else {
+                emit usedStorageChanged();
+            }
+            else
+            {
                 qDebug() << "AccountInfoData::onRequestFinish -> TYPE_ACCOUNT_DETAILS Error code -> "
                          << error->getErrorCode();
             }
+            break;
         }
     }
+}
+
+void AccountInfoData::onEvent(MegaApi*, MegaEvent* event)
+{
+    switch(event->getType())
+    {
+        case MegaEvent::EVENT_STORAGE_SUM_CHANGED:
+        {
+            long long usedStorage = event->getNumber();
+            mUsedStorage = Utilities::getSizeString(usedStorage);
+            mBelowMinUsedStorageThreshold = usedStorage < MIN_USED_STORAGE_THRESHOLD;
+
+            emit accountDetailsChanged();
+            emit usedStorageChanged();
+        }
+    }
+}
+
+void AccountInfoData::onAccountUpdate(mega::MegaApi*)
+{
+    requestAccountInfoData();
 }

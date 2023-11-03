@@ -20,7 +20,6 @@ public:
 signals:
     void accountBlocked(int errorCode);
     void logout();
-
 };
 
 #endif // ONBOARDING_H
