@@ -59,8 +59,8 @@ SyncsPage {
                 target: syncButton;
                 type: !fullSyncDone && !selectiveSyncDone ? SyncsType.Sync : SyncsType.SelectiveSync;
                 visible: !fullSyncDone
-                title: !fullSyncDone ? OnboardingStrings.sync : OnboardingStrings.selectiveSync
-                description: !fullSyncDone ? OnboardingStrings.finalPageButtonSync : OnboardingStrings.finalPageButtonSelectiveSync
+                title: !fullSyncDone && !selectiveSyncDone ? OnboardingStrings.sync : OnboardingStrings.selectiveSync
+                description: !fullSyncDone && !selectiveSyncDone ? OnboardingStrings.finalPageButtonSync : OnboardingStrings.finalPageButtonSelectiveSync
             }
         }
     ]
@@ -118,7 +118,7 @@ SyncsPage {
                     id: syncButton
 
                     title: OnboardingStrings.selectiveSync
-                    description: OnboardingStrings.finalPageButtonSync
+                    description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
                     ButtonGroup.group: buttonGroupItem
                     checkable: false
