@@ -620,10 +620,6 @@ MegaIgnoreSizeRule::MegaIgnoreSizeRule(Threshold type)
     mRuleType = RuleType::SizeRule;
 }
 
-bool MegaIgnoreSizeRule::isValid()const
-{
-    return !isCommented() && mValue > 0;
-}
 
 QString MegaIgnoreSizeRule::getModifiedRule() const
 {

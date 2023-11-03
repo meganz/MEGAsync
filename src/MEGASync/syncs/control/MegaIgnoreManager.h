@@ -186,7 +186,6 @@ public:
         explicit MegaIgnoreSizeRule(const QString& rule, bool isCommented);
     explicit MegaIgnoreSizeRule(Threshold type);
 
-    bool isValid() const override;
     RuleType ruleType() const override { return RuleType::SizeRule; }
     QString getModifiedRule() const override;
 

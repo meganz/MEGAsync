@@ -18,6 +18,7 @@
     <widget class="QLabel" name="label_2">
      <property name="font">
       <font>
+       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -81,10 +82,10 @@ two or 3 lines and including a link to the help center </string>
          <enum>QAbstractSpinBox::NoButtons</enum>
         </property>
         <property name="minimum">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="maximum">
-         <number>999999999</number>
+         <number>9999</number>
         </property>
        </widget>
       </item>
@@ -107,10 +108,10 @@ two or 3 lines and including a link to the help center </string>
          <enum>QAbstractSpinBox::NoButtons</enum>
         </property>
         <property name="minimum">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="maximum">
-         <number>999999999</number>
+         <number>9999</number>
         </property>
        </widget>
       </item>
