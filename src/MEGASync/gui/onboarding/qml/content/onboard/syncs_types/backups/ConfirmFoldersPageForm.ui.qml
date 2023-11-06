@@ -54,7 +54,7 @@ SyncsPage {
             MegaTextFields.TextField {
                 id: deviceField
 
-                colors.text: Styles.textFaded
+                colors.text: Styles.textPlaceholder
                 Layout.preferredWidth: parent.width
                 Layout.leftMargin: -deviceField.sizes.focusBorderWidth
                 title: OnboardingStrings.backupTo
