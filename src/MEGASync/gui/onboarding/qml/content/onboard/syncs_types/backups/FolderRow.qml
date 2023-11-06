@@ -367,6 +367,7 @@ Rectangle {
                     case backupsModelAccess.BackupErrorCode.DUPLICATED_NAME:
                         editTextField.hint.visible = true;
                         editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
+
                         break;
                     default:
                         console.error("FolderRow: Unexpected error after rename -> " + error);

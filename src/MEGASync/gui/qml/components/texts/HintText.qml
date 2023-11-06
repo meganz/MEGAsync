@@ -73,7 +73,7 @@ Item {
             MegaTexts.RichText {
                 id: hintTitle
 
-                height: 0
+                height: rawText !== "" ? implicitHeight : 0
                 width: parent.width
                 opacity: enabled ? 1.0 : 0.2
                 font.bold: true
@@ -84,6 +84,7 @@ Item {
             MegaTexts.RichText {
                 id: hintText
 
+                height: rawText !== "" ? implicitHeight : 0
                 width: parent.width
                 opacity: enabled ? 1.0 : 0.2
                 font.pixelSize: root.textSize
