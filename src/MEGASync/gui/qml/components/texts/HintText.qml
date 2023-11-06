@@ -53,7 +53,7 @@ Item {
     Row {
         id: row
 
-        height: visible ? col.implicitHeight : 0
+        height: root.visible ? col.implicitHeight : 0
         spacing: root.icon !== "" ? 8 : 0
         width: root.width
 
@@ -68,14 +68,13 @@ Item {
             id: col
 
             anchors.top: parent.top
-            anchors.bottom: parent.bottom
             width: row.width - hintIcon.width - row.spacing
 
             MegaTexts.RichText {
                 id: hintTitle
 
+                height: rawText !== "" ? implicitHeight : 0
                 width: parent.width
-                height: text !== "" ? implicitHeight : 0
                 opacity: enabled ? 1.0 : 0.2
                 font.bold: true
                 font.pixelSize: root.textSize
@@ -85,8 +84,8 @@ Item {
             MegaTexts.RichText {
                 id: hintText
 
+                height: rawText !== "" ? implicitHeight : 0
                 width: parent.width
-                height: text !== "" ? implicitHeight : 0
                 opacity: enabled ? 1.0 : 0.2
                 font.pixelSize: root.textSize
                 wrapMode: Text.WordWrap
