@@ -15,7 +15,8 @@ IF EXIST %MEGA_QT_DEPLOY_DIR% (
 
 mkdir %MEGA_QT_DEPLOY_DIR%
 %MEGA_QTPATH%\bin\windeployqt.exe --no-translations --no-compiler-runtime ^
- --no-opengl-sw --no-system-d3d-compiler --no-angle --no-webkit2 --no-qmltooling ^
+ --no-system-d3d-compiler ^
+ --no-webkit2 --no-qmltooling ^
  --no-patchqt --no-designercomponents ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
  --qmldir src\MEGASync\gui\onboarding\qml\ ^
@@ -40,7 +41,8 @@ IF EXIST %MEGA_QT_DEPLOY_DIR% (
 
 mkdir %MEGA_QT_DEPLOY_DIR%
 %MEGA_QTPATH%\..\x86\bin\windeployqt.exe --no-translations --no-compiler-runtime ^
- --no-opengl-sw --no-system-d3d-compiler --no-angle --no-webkit2 --no-qmltooling ^
+ --no-system-d3d-compiler ^
+ --no-webkit2 --no-qmltooling ^
  --no-patchqt --no-designercomponents ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
  --qmldir src\MEGASync\gui\onboarding\qml ^
