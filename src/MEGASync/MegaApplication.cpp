@@ -74,6 +74,9 @@ QString MegaApplication::lastNotificationError = QString();
 
 constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
 
+static const QString SCHEME_MEGA_URL = QString::fromUtf8("mega");
+static const QString SCHEME_LOCAL_URL = QString::fromUtf8("local");
+
 void MegaApplication::loadDataPath()
 {
 #ifdef Q_OS_LINUX
@@ -359,6 +362,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
+    // Unregister own url schemes
+    QDesktopServices::unsetUrlHandler(SCHEME_MEGA_URL);
+    QDesktopServices::unsetUrlHandler(SCHEME_LOCAL_URL);
+
     logger.reset();
 
     if (!translator.isEmpty())
@@ -428,9 +435,9 @@ void MegaApplication::initialize()
     isLinux = false;
 #endif
 
-    //Register own url schemes
-    QDesktopServices::setUrlHandler(QString::fromUtf8("mega"), this, "handleMEGAurl");
-    QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
+    // Register own url schemes
+    QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
+    QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
 
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
