@@ -42,38 +42,20 @@ Rectangle {
     signal accepted()
 
     onLeftIconSourceChanged: {
-        if (leftIconSource.length > 0)
-        {
+        if (leftIconSource.length > 0) {
             leftIcon.source = leftIconSource
         }
     }
 
     onRightIconSourceChanged: {
-        if (rightIconSource.length > 0)
-        {
+        if (rightIconSource.length > 0) {
             rightIcon.source = rightIconSource
         }
     }
 
-    function getHintHeight() {
-        if(hint.text.length > 0 && hint.height > 0) {
-            return hint.height + hint.anchors.topMargin;
-        }
-
-        return 0;
-    }
-
-    function getTitleHeight() {
-
-        if(titleItem.text.length > 0 && titleItem.height > 0) {
-            return titleItem.height + textField.anchors.topMargin;
-        }
-
-        return 0;
-    }
-
     Layout.preferredHeight: height
-    height: textField.height + getTitleHeight() + getHintHeight()
+    height: textField.height + (root.title !== "" ? (titleItem.height + textField.anchors.topMargin) : 0) + (root.text !== "" ? hint.height + hint.anchors.topMargin : 0)
+
     color: "transparent"
 
     MegaTexts.Text {
@@ -233,6 +215,11 @@ Rectangle {
         anchors.rightMargin: sizes.focusBorderWidth
         type: Constants.MessageType.ERROR
         visible: false
+
+        onHeightChanged:
+        {
+            console.log("************************** hintText height : " + height)
+        }
     }
 
     MegaToolTips.ToolTip {

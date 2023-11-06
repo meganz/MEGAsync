@@ -38,14 +38,12 @@ Rectangle {
     Rectangle {
         id: background
 
-        anchors.right: root.right
-        anchors.left: root.left
-        anchors.top: root.top
-        anchors.bottom: root.bottom
+        anchors.fill: parent
         anchors.rightMargin: internalMargin
         anchors.leftMargin: internalMargin
         radius: internalMargin
-        color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface1
+        //color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface1
+        color: "lightblue"
 
         Loader {
             id: content
@@ -327,6 +325,17 @@ Rectangle {
                 onAccepted: {
                     doneAction()
                 }
+
+                onHeightChanged: {
+                    console.log("editTextField height changed to :" + height)
+
+                    if (editTextField.hint.visible) {
+                        root.height = editTextField.height + root.extraMarginWhenHintShowed
+                    }
+                    else {
+                        root.height = root.totalHeight
+                    }
+                }
             }
 
             MegaButtons.PrimaryButton {
@@ -350,20 +359,16 @@ Rectangle {
                     case backupsModelAccess.BackupErrorCode.SYNC_CONFLICT:
                     case backupsModelAccess.BackupErrorCode.PATH_RELATION:
                     case backupsModelAccess.BackupErrorCode.SDK_CREATION:
-                        root.height = root.totalHeight;
                         break;
                     case backupsModelAccess.BackupErrorCode.EXISTS_REMOTE:
+                        editTextField.hint.visible = true
                         editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
-                        editTextField.hint.visible = true;
-                        root.height = editTextField.height + root.extraMarginWhenHintShowed;
                         break;
                     case backupsModelAccess.BackupErrorCode.DUPLICATED_NAME:
-                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
                         editTextField.hint.visible = true;
-                        root.height = editTextField.height + root.extraMarginWhenHintShowed;
+                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
                         break;
                     default:
-                        root.height = root.totalHeight;
                         console.error("FolderRow: Unexpected error after rename -> " + error);
                         break;
                 }

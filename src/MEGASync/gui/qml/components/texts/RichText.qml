@@ -6,7 +6,7 @@ import Common 1.0
 import Components.Texts 1.0 as MegaTexts
 
 MegaTexts.Text {
-    id: control
+    id: root
 
     function updateLinkColor() {
         var color = Styles.linkPrimary;
@@ -15,7 +15,7 @@ MegaTexts.Text {
         } else if(visited) {
             color = Styles.linkVisited;
         }
-        control.text = control.text.replace("color:" + urlColor, "color:" + color);
+        root.text = root.text.replace("color:" + urlColor, "color:" + color);
         urlColor = color;
     }
 
@@ -35,7 +35,7 @@ MegaTexts.Text {
     // We are using rawText to avoid breaking internal connections in the text property.
     // If we assign a string directly to the RichText text property and we use the replace
     // javascript function (we modify the text), then when the text is updated, it is not
-    // refreshed internally. We cannot assign other varaible and change it here at the
+    // refreshed internally. We cannot assign other variable and change it here at the
     // same time. For more info, please see SNC-3917.
     onRawTextChanged: {
         var copyText = rawText;
@@ -44,7 +44,7 @@ MegaTexts.Text {
         copyText = copyText.replace("[A]", "<a style=\"text-decoration:none\"
                                             style=\"color:" + urlColor + ";\" href=\"" + url + "\">");
         copyText = copyText.replace("[/A]","</a>");
-        control.text = copyText;
+        root.text = copyText;
     }
 
     onLinkActivated: {
@@ -69,7 +69,7 @@ MegaTexts.Text {
         anchors.fill: parent
         cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
         onPressed: { mouse.accepted = false; }
-        enabled: control.manageMouse
-        hoverEnabled: control.manageHover
+        enabled: root.manageMouse
+        hoverEnabled: root.manageHover
     }
 }
