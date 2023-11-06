@@ -6,18 +6,12 @@
 QmlClipboard::QmlClipboard(QObject *parent)
     : QObject(parent) {}
 
-QmlClipboard* QmlClipboard::instance()
-{
-    static QmlClipboard instance;
-    return &instance;
-}
-
 QObject* QmlClipboard::qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine)
 {
-    Q_UNUSED(engine);
     Q_UNUSED(scriptEngine);
 
-    return QmlClipboard::instance();
+    QmlClipboard* instance = new QmlClipboard(engine);
+    return instance;
 }
 
 void QmlClipboard::setText(const QString& from)
