@@ -21,9 +21,9 @@ AccountInfoData::AccountInfoData(QObject *parent)
 
 AccountInfoData* AccountInfoData::instance(QQmlEngine* qmlEngine, QJSEngine*)
 {
-    static AccountInfoData accountInfoData(qmlEngine);
+    AccountInfoData* accountInfoData = new AccountInfoData(qmlEngine);
 
-    return &accountInfoData;
+    return accountInfoData;
 }
 
 void AccountInfoData::requestAccountInfoData()

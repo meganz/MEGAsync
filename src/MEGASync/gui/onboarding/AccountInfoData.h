@@ -52,7 +52,7 @@ private:
     bool mBelowMinUsedStorageThreshold;
     bool mInitialized;
 
-    explicit AccountInfoData(QObject* parent = 0);
+    explicit AccountInfoData(QObject* parent = nullptr);
     void onRequestFinish(mega::MegaApi*,
                          mega::MegaRequest *request,
                          mega::MegaError* error) override;
