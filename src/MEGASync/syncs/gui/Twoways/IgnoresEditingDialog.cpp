@@ -56,6 +56,7 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
     QObject::connect(ui->tExcludeExtensions, &QPlainTextEdit::textChanged, this, [this]() {mExtensionsChanged = true; });
 
 #ifdef Q_OS_MACOS
+    ui->wExclusionsSegmentedControl->configureTableSegment();
     connect(ui->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &IgnoresEditingDialog::onAddNameClicked);
     connect(ui->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &IgnoresEditingDialog::onDeleteNameClicked);
 #else
@@ -66,6 +67,7 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
             ui->bDeleteName->setEnabled(!ui->lExcludedNames->selectedItems().isEmpty());
         });
 #endif
+
 }
 
 IgnoresEditingDialog::~IgnoresEditingDialog()

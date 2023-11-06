@@ -192,6 +192,9 @@ link to the help center </string>
                 <height>20</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
              </widget>
             </item>
            </layout>
@@ -270,6 +273,9 @@ spacing: 5px;
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Exclude files bigger than</string>
                  </property>
@@ -308,6 +314,9 @@ spacing: 5px;
                    <height>20</height>
                   </size>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
+                 </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
@@ -335,6 +344,9 @@ spacing: 5px;
                    <width>70</width>
                    <height>16777215</height>
                   </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
                  </property>
                  <property name="frame">
                   <bool>true</bool>
@@ -394,6 +406,9 @@ spacing: 5px;
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Exclude files smaller than</string>
                  </property>
@@ -432,6 +447,9 @@ spacing: 5px;
                    <height>20</height>
                   </size>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
+                 </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
@@ -459,6 +477,9 @@ spacing: 5px;
                    <width>70</width>
                    <height>16777215</height>
                   </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
                  </property>
                 </widget>
                </item>
@@ -604,6 +625,9 @@ spacing: 5px;
             </item>
             <item row="2" column="0">
              <widget class="QPushButton" name="bOpenMegaIgnore">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
               <property name="text">
                <string>Edit .megaignore</string>
               </property>
@@ -767,6 +791,16 @@ with regular expressions.</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>cExcludeUpperThan</tabstop>
+  <tabstop>cExcludeLowerThan</tabstop>
+  <tabstop>eUpperThan</tabstop>
+  <tabstop>eLowerThan</tabstop>
+  <tabstop>cbExcludeUpperUnit</tabstop>
+  <tabstop>cbExcludeLowerUnit</tabstop>
+  <tabstop>tExcludeExtensions</tabstop>
+  <tabstop>bOpenMegaIgnore</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
