@@ -169,6 +169,8 @@ void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QStyledItemDelegate::paint(painter, opt, index);
 }
 
+const int ICON_SPACE_SIZE = 60;
+
 IconMiddleDelegate::IconMiddleDelegate(QObject* parent) :
     QStyledItemDelegate(parent)
 {
@@ -185,7 +187,7 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     opt.decorationAlignment = Qt::AlignVCenter | Qt::AlignHCenter;
     opt.decorationPosition = QStyleOptionViewItem::Top;
     QRect rect = option.rect;
-    rect.setRight(60);
+    rect.setRight(ICON_SPACE_SIZE);
     QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
 
     QIcon::Mode iconMode = QIcon::Normal;
@@ -196,7 +198,7 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     icon.paint(painter, rect, Qt::AlignVCenter | Qt::AlignHCenter, iconMode);
     QString text = index.data(Qt::DisplayRole).toString();
     QRect textRect = option.rect;
-    textRect.setLeft(60);
+    textRect.setLeft(rect.right());
     QTextOption textOption;
     textOption.setAlignment(Qt::AlignVCenter);
 
@@ -228,14 +230,14 @@ ElideMiddleDelegate::ElideMiddleDelegate(QObject *parent) :
 
 }
 
-ElideMiddleDelegate::~ElideMiddleDelegate()
-{
-
-}
-
 void ElideMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
+#ifdef Q_OS_MACOS
+    //On the stylesheet, the header is moved 6 pixels to the left, so we use this magical number
+    //To align the header with the cell
+    option->rect.setLeft(option->rect.left() - 2);
+#endif
     option->features = option->features & ~QStyleOptionViewItem::WrapText;
     option->textElideMode = Qt::ElideMiddle;
 }
