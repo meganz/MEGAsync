@@ -64,6 +64,11 @@ bool MegaIgnoreManager::isValid(const QString& syncLocalFolder)
 void MegaIgnoreManager::parseIgnoresFile()
 {
     mRules.clear();
+    mLowLimitRule.reset();
+    mHighLimitRule.reset();
+    mIgnoreSymLinkRule.reset();
+    mExtensionRules.clear();
+
     QFile ignore(mMegaIgnoreFile);
     if (ignore.exists())
     {
@@ -585,6 +590,13 @@ MegaIgnoreSizeRule::MegaIgnoreSizeRule(const QString& rule, bool isCommented)
     auto ruleSplitted = rule.split(QLatin1String(":"));
     if (ruleSplitted.size() == 2)
     {
+        if(isCommented && rule.startsWith(QLatin1String("#")))
+        {
+            auto leftRule = ruleSplitted.at(0);
+            leftRule.remove(0,1);
+            ruleSplitted[0] = leftRule;
+        }
+
         auto type(ruleSplitted.at(0));
         if (type == HIGH_STRING)
         {

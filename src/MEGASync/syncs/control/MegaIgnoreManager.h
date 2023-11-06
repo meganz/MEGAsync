@@ -183,7 +183,7 @@ public:
     };
     Q_ENUM(UnitTypes)
 
-        explicit MegaIgnoreSizeRule(const QString& rule, bool isCommented);
+    explicit MegaIgnoreSizeRule(const QString& rule, bool isCommented);
     explicit MegaIgnoreSizeRule(Threshold type);
 
     RuleType ruleType() const override { return RuleType::SizeRule; }
@@ -198,7 +198,7 @@ public:
     void setUnit(int newUnit);
 
 private:
-    uint64_t mValue = 0;
+    uint64_t mValue = 1;
     UnitTypes mUnit = UnitTypes::B;
     Threshold mThreshold = Low;
 };
