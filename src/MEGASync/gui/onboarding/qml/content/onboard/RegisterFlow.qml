@@ -78,18 +78,26 @@ Rectangle {
     // DO NOT REMOVE, windows qt bug. Without this line CancelLogin does not close when RegisterFlow is deleted
     Component.onDestruction: {}
 
-    CancelLogin {
+    ConfirmCloseDialog {
         id: cancelLogin
 
+        titleText: OnboardingStrings.cancelLoginTitle
+        bodyText: OnboardingStrings.cancelLoginBodyText
+        cancelButtonText: OnboardingStrings.cancelLoginSecondaryButton
+        acceptButtonText: OnboardingStrings.cancelLoginPrimaryButton
         visible: false
         onAccepted: {
             loginControllerAccess.cancelLogin();
         }
     }
 
-    CancelCreateAccount {
+    ConfirmCloseDialog {
         id: cancelCreateAccount
 
+        titleText: OnboardingStrings.cancelAccountCreationTitle
+        bodyText: OnboardingStrings.cancelAccountCreationBody
+        cancelButtonText: OnboardingStrings.cancelAccountCancelButton
+        acceptButtonText: OnboardingStrings.cancelAccountAcceptButton
         visible: false
         onAccepted: {
             loginControllerAccess.cancelCreateAccount();
