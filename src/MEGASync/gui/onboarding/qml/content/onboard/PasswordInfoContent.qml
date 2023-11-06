@@ -8,7 +8,7 @@ import Onboard 1.0
 import PasswordStrengthChecker 1.0
 
 PasswordInfoContentForm {
-    id: passwordInfoContentForm
+    id: root
 
     property bool allChecked: upperLowerCaseChecked && numberSpecialCharacterChecked
     property bool upperLowerCaseChecked: (RegexExpressions.upperCaseLeters).test(password)
@@ -24,7 +24,7 @@ PasswordInfoContentForm {
     PasswordStrengthChecker {
         id: checker
 
-        password: passwordInfoContentForm.password
+        password: root.password
     }
 
 }
