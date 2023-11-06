@@ -14,6 +14,8 @@ SelectFoldersPageForm {
         }
 
         rightPrimary.onClicked: {
+            root.selectFolderMoveToConfirm()
+
             backupsModelAccess.check();
             backupsProxyModel.selectedFilterEnabled = true;
             if(backupsModelAccess.conflictsNotificationText !== "") {
@@ -21,8 +23,6 @@ SelectFoldersPageForm {
             } else {
                 stepPanel.state = stepPanel.step4;
             }
-
-            root.selectFolderMoveToConfirm()
         }
     }
 

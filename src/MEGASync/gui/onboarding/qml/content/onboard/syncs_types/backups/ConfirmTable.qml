@@ -132,6 +132,10 @@ Rectangle {
         id: folderComponent
 
         FolderRow {
+            id: folderRow
+
+            anchors.right: parent.right
+            anchors.left: parent.left
         }
     }
 
