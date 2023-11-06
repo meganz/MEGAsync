@@ -3,6 +3,8 @@ import QtQuick 2.15
 
 QtObject {
 
+    readonly property string mega: "MEGA"
+
     readonly property string accountTypeFree: qsTr("Free")
     readonly property string accountTypeProI: qsTr("Pro I")
     readonly property string accountTypeProII: qsTr("Pro II")
@@ -129,4 +131,5 @@ QtObject {
     readonly property string storageSpace: qsTr("Storage space:")
     readonly property string authFailed: qsTr("Authentication failed")
     readonly property string tryAgain: qsTr("Try again")
+
 }
