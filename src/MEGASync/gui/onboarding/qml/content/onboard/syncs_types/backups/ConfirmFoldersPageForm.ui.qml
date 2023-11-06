@@ -69,4 +69,3 @@ SyncsPage {
         id: deviceName
     }
 }
-

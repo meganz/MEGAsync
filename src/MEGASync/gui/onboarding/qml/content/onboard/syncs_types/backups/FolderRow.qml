@@ -42,8 +42,7 @@ Rectangle {
         anchors.rightMargin: internalMargin
         anchors.leftMargin: internalMargin
         radius: internalMargin
-        //color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface1
-        color: "lightblue"
+        color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface1
 
         Loader {
             id: content
@@ -327,8 +326,6 @@ Rectangle {
                 }
 
                 onHeightChanged: {
-                    console.log("editTextField height changed to :" + height)
-
                     if (editTextField.hint.visible) {
                         root.height = editTextField.height + root.extraMarginWhenHintShowed
                     }

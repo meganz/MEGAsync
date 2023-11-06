@@ -54,7 +54,8 @@ Rectangle {
     }
 
     Layout.preferredHeight: height
-    height: textField.height + (root.title !== "" ? (titleItem.height + textField.anchors.topMargin) : 0) + (root.text !== "" ? hint.height + hint.anchors.topMargin : 0)
+    height: textField.height + (root.title !== "" ? (titleItem.height + textField.anchors.topMargin) : 0) +
+            (root.text !== "" ? hint.height + hint.anchors.topMargin : 0)
 
     color: "transparent"
 
@@ -215,11 +216,6 @@ Rectangle {
         anchors.rightMargin: sizes.focusBorderWidth
         type: Constants.MessageType.ERROR
         visible: false
-
-        onHeightChanged:
-        {
-            console.log("************************** hintText height : " + height)
-        }
     }
 
     MegaToolTips.ToolTip {
