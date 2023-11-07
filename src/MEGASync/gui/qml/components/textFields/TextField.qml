@@ -54,8 +54,8 @@ Rectangle {
     }
 
     Layout.preferredHeight: height
-    height: textField.height + (root.title !== "" ? (titleItem.height + textField.anchors.topMargin) : 0) +
-            (root.text !== "" ? hint.height + hint.anchors.topMargin : 0)
+    height: textField.height + ((titleItem.text !== "" && titleItem.visible) ? (titleItem.height + textField.anchors.topMargin) : 0) +
+            ((hintItem.text !== "" && hintItem.visible) ? hint.height + hint.anchors.topMargin : 0)
 
     color: "transparent"
 
