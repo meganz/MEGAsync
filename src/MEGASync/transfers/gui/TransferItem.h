@@ -134,6 +134,7 @@ public:
     bool isFailed() const;
     bool canBeRetried() const;
     bool isCancelled() const;
+    bool isTempTransfer() const;
     int64_t getRawFinishedTime() const;
     int64_t getSecondsSinceFinished() const;
     QDateTime getFinishedDateTime() const;

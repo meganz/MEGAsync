@@ -161,7 +161,7 @@ void AbstractPlatform::folderSelector(QString title, QString defaultDir, bool mu
         fileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
         fileDialog->setOption(QFileDialog::DontUseNativeDialog, false);
         fileDialog->setOption(QFileDialog::ShowDirsOnly, true);
-        fileDialog->setFileMode(QFileDialog::DirectoryOnly);
+        fileDialog->setFileMode(QFileDialog::Directory);
         //Orphan native dialogs must be modal in Windows and Linux. On macOS this method has its own implementation.
         if(!parent)
         {

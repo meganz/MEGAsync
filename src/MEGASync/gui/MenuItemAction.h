@@ -8,9 +8,12 @@
 
 class MenuItemAction : public QWidgetAction
 {
+    Q_OBJECT
+
 public:
-    MenuItemAction(const QString& title, const QString& icon,
+    MenuItemAction(const QString& title, const QString& iconName,
                    QObject *parent = nullptr);
+    ~MenuItemAction();
 
     void setLabelText(const QString& title);
     void setIcon(const QIcon& icon);
@@ -18,7 +21,10 @@ public:
     bool getAccent() const;
     void setAccent(bool enabled);
 
-    ~MenuItemAction() override;
+
+    void setManagesHoverStates(bool managesHoverStates);
+
+    void setTreeDepth(int treeDepth);
 
     void setManagesHoverStates(bool managesHoverStates);
 

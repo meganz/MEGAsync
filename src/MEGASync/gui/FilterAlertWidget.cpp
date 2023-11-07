@@ -39,7 +39,7 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
     else
     {
         ui->bNumberNotifications->setText(QString::number(allUnseen));
-        ui->bNumberNotifications->setFixedWidth(ui->bNumberNotifications->fontMetrics().width(QString::number(allUnseen)) + RED_BUBBLE_MARGIN);
+        ui->bNumberNotifications->setFixedWidth(ui->bNumberNotifications->fontMetrics().horizontalAdvance(QString::number(allUnseen)) + RED_BUBBLE_MARGIN);
         ui->bNumberNotifications->show();
     }
 
@@ -50,7 +50,7 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
     else
     {
         ui->bNumberNotificationsContacts->setText(QString::number(contactsUnseen));
-        ui->bNumberNotificationsContacts->setFixedWidth(ui->bNumberNotificationsContacts->fontMetrics().width(QString::number(contactsUnseen)) + RED_BUBBLE_MARGIN);
+        ui->bNumberNotificationsContacts->setFixedWidth(ui->bNumberNotificationsContacts->fontMetrics().horizontalAdvance(QString::number(contactsUnseen)) + RED_BUBBLE_MARGIN);
         ui->bNumberNotificationsContacts->show();
     }
 
@@ -61,7 +61,7 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
     else
     {
         ui->bNumberNotificationsShares->setText(QString::number(sharesUnseen));
-        ui->bNumberNotificationsShares->setFixedWidth(ui->bNumberNotificationsShares->fontMetrics().width(QString::number(sharesUnseen)) + RED_BUBBLE_MARGIN);
+        ui->bNumberNotificationsShares->setFixedWidth(ui->bNumberNotificationsShares->fontMetrics().horizontalAdvance(QString::number(sharesUnseen)) + RED_BUBBLE_MARGIN);
         ui->bNumberNotificationsShares->show();
     }
 
@@ -72,7 +72,7 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
     else
     {
         ui->bNumberNotificationsPayments->setText(QString::number(paymentUnseen));
-        ui->bNumberNotificationsPayments->setFixedWidth(ui->bNumberNotificationsPayments->fontMetrics().width(QString::number(paymentUnseen)) + RED_BUBBLE_MARGIN);
+        ui->bNumberNotificationsPayments->setFixedWidth(ui->bNumberNotificationsPayments->fontMetrics().horizontalAdvance(QString::number(paymentUnseen)) + RED_BUBBLE_MARGIN);
         ui->bNumberNotificationsPayments->show();
     }
     adjustSize();
