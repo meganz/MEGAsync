@@ -57,9 +57,15 @@ background-color: rgba(0,0,0,0.1)
       </item>
       <item>
        <widget class="QLabel" name="lDescription">
+        <property name="styleSheet">
+         <string notr="true">QLabel
+{color: rgba(48, 50, 51, 0.75) }</string>
+        </property>
         <property name="text">
-         <string>subtitle explaining what exclusions are for, ideally not too long with two or 3 lines and including a 
-link to the help center </string>
+         <string>Here you can exclude files and folders from being synced with your cloud drive.
+This can be useful for large files, files that you don't need on all of your devices,
+or certain file types that need not be synced.
+</string>
         </property>
        </widget>
       </item>
