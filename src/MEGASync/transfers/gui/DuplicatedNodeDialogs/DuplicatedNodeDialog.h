@@ -6,6 +6,7 @@
 
 #include <QDialog>
 #include <QPointer>
+#include <QTimer>
 
 namespace Ui {
 class DuplicatedNodeDialog;
@@ -33,6 +34,7 @@ public:
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
+    bool event(QEvent *event) override;
 
 private:
     void setConflictItems(int count);
@@ -68,6 +70,8 @@ private:
     QString mCurrentNodeName;
 
     std::shared_ptr<mega::MegaNode> mNode;
+
+    QTimer mSizeAdjustTimer;
 };
 
 #endif // DUPLICATEDNODEDIALOG_H

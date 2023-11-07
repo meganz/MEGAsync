@@ -60,9 +60,7 @@ class ElideMiddleDelegate : public QStyledItemDelegate
 {
 public:
     explicit ElideMiddleDelegate(QObject *parent = nullptr);
-    ~ElideMiddleDelegate();
-    void paint(QPainter* painter, const QStyleOptionViewItem& option,
-               const QModelIndex& index) const override;
+    ~ElideMiddleDelegate() = default;
     void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 

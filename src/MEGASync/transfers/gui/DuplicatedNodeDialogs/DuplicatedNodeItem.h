@@ -54,8 +54,6 @@ protected:
 
     bool isValid() const;
 
-    bool eventFilter(QObject *watched, QEvent *event) override;
-
 protected slots:
     void on_bAction_clicked();
 
