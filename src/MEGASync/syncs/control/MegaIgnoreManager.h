@@ -109,9 +109,6 @@ public:
     RuleType ruleType() const override { return RuleType::NameRule;}
     WildCardType wildCardType() { return mWildCardType; }
     Target getTarget() { return mTarget; }
-    Target getDisplayTarget();
-
-
 
 protected:
     QString mPattern;  

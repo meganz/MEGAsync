@@ -16,7 +16,6 @@ public:
     explicit AddExclusionDialog(const QString& syncLocalFolder,QWidget *parent = 0);
     ~AddExclusionDialog();
     QString textValue();
-    inline MegaIgnoreNameRule::Target getTarget() { return mTarget; }
 
 private slots:
     void on_bOk_clicked();
@@ -35,7 +34,6 @@ private:
 
     Ui::AddExclusionDialog *ui;
     QString mSyncLocalFolder;
-    MegaIgnoreNameRule::Target mTarget = MegaIgnoreNameRule::Target::None;
 };
 
 #endif // ADDEXCLUSIONDIALOG_H

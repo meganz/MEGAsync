@@ -490,16 +490,6 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& pattern, Class classType, 
     fillWildCardType(pattern);
 }
 
-MegaIgnoreNameRule::Target MegaIgnoreNameRule::getDisplayTarget()
-{
-    if (mTarget == MegaIgnoreNameRule::Target::f || mTarget == MegaIgnoreNameRule::Target::d)
-    {
-        return mTarget;
-    }
-    return mPattern.contains(QLatin1String(".")) ? MegaIgnoreNameRule::Target::f : MegaIgnoreNameRule::Target::d;
-}
-
-
 QString MegaIgnoreNameRule::getModifiedRule() const
 {
     if (mIsDirty)
