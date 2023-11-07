@@ -20,7 +20,7 @@ public:
     explicit DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node);
     ~DuplicatedNodeDialog();
 
-    void checkUpload(const QString& nodePath, std::shared_ptr<mega::MegaNode> parentNode);
+    void checkUploads(QQueue<QString> &nodePath, std::shared_ptr<mega::MegaNode> parentNode);
 
     void addNodeItem(DuplicatedNodeItem* item);
     void setHeader(const QString& baseText, const QString &nodeName);
@@ -46,6 +46,8 @@ private:
 
     void processFolderConflicts();
     void processFileConflicts();
+    void processFileNameConflicts();
+    void processFolderNameConflicts();
     void startWithNewCategoryOfConflicts();
 
     void updateHeader();
@@ -60,6 +62,8 @@ private:
     QList<std::shared_ptr<DuplicatedNodeInfo>> mResolvedUploads;
     QList<std::shared_ptr<DuplicatedNodeInfo>> mFileConflicts;
     QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFileNameConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderNameConflicts;
     bool mApplyToAll;
 
     QString mHeaderBaseName;
