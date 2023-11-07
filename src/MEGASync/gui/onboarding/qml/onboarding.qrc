@@ -10,7 +10,6 @@
         <file>content/onboard/RegisterFlow.qml</file>
         <file>content/onboard/RegisterPage.qml</file>
         <file>content/onboard/RegisterPageForm.ui.qml</file>
-        <file>content/onboard/SyncSelectTypeButton.qml</file>
         <file>content/onboard/TwoFAPage.qml</file>
         <file>content/onboard/TwoFAPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/MainFlow.qml</file>
