@@ -310,11 +310,6 @@ void StalledIssuesDialog::onPreferencesValueChanged(QString key)
 
 void StalledIssuesDialog::showView(bool update)
 {
-    if(ui->stackedWidget->currentWidget() == ui->ModeSelector)
-    {
-        ui->stalledIssuesTree->setTopParent(this);
-    }
-
     ui->stackedWidget->setCurrentWidget(ui->View);
 
     if(update)

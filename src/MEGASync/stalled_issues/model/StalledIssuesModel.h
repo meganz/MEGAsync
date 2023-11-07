@@ -146,7 +146,7 @@ signals:
 
     void showRawInfoChanged();
 
-    void updateLoadingMessage(const LoadingSceneMessageHandler::MessageInfo& message);
+    void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
     void refreshFilter();
 

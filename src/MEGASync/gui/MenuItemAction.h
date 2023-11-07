@@ -21,11 +21,6 @@ public:
     bool getAccent() const;
     void setAccent(bool enabled);
 
-
-    void setManagesHoverStates(bool managesHoverStates);
-
-    void setTreeDepth(int treeDepth);
-
     void setManagesHoverStates(bool managesHoverStates);
 
     void setTreeDepth(int treeDepth);
@@ -37,10 +32,8 @@ private:
     QLabel* mTitle;
     QLabel* mValue;
     QPushButton* mIconButton;
-    QHBoxLayout* mActionLayout;
-    QIcon mIcon;
 
-    void setupActionWidget(const QSize& iconSize);
+    void setupActionWidget(const QIcon& icon, const QSize& iconSize);
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;

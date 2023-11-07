@@ -39,7 +39,7 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& iconName,
         mIconButton->hide();
     }
 
-    setupActionWidget(iconSize);
+    setupActionWidget(icon, iconSize);
     setDefaultWidget(mContainer);
 }
 
@@ -93,7 +93,7 @@ void MenuItemAction::setLabelText(const QString& title)
     }
 }
 
-void MenuItemAction::setupActionWidget(const QSize& iconSize)
+void MenuItemAction::setupActionWidget(const QIcon& icon, const QSize& iconSize)
 {
     mContainer->setMinimumHeight(32);
     mContainer->setMaximumHeight(32);
@@ -105,7 +105,7 @@ void MenuItemAction::setupActionWidget(const QSize& iconSize)
     mIconButton->setText(QString());
     mIconButton->setFixedSize(iconSize);
     mIconButton->setIconSize(iconSize);
-    mIconButton->setIcon(mIcon);
+    mIconButton->setIcon(icon);
 
     mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
 

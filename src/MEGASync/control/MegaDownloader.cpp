@@ -26,7 +26,7 @@ MegaDownloader::MegaDownloader(MegaApi* _megaApi, std::shared_ptr<FolderTransfer
 }
 
 bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
-                                          const QString& path, bool createAppDataId)
+                                          const QString& path)
 {
     return processDownloadQueueImpl(downloadQueue, downloadBatches,
                                     path, true);
@@ -55,10 +55,6 @@ bool MegaDownloader::processDownloadQueueImpl(QQueue<WrappedNode *> *downloadQue
     }
 
     unsigned long long appDataId(0);
-<<<<<<< HEAD
-
-=======
->>>>>>> 00c7b442569ad25a7a9376e07ff7668872534144
     if(createAppDataId)
     {
         auto data = TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(path);

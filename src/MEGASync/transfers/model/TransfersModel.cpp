@@ -339,8 +339,6 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
 {
     if (!transfer->isStreamingTransfer())
     { 
-        auto isTemp = isTempTransfer(transfer, true);
-
         if(isIgnored(transfer, true))
         {
             return;

@@ -195,11 +195,6 @@ TransferData::TransferState TransferData::convertState(int state)
     return static_cast<TransferData::TransferState>(1 << state);
 }
 
-bool TransferData::isTempTransfer() const
-{
-    return mIsTempTransfer;
-}
-
 void TransferData::setState(const TransferState &state)
 {
     if(mState != state)

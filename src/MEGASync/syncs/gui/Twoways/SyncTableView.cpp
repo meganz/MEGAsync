@@ -155,7 +155,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 
     // Show in Mega web action
     auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
-                                              QLatin1String("://images/sync_context_menu/MEGA-small.png")), menu);
+                                             QLatin1String("://images/sync_context_menu/MEGA-small.png"), menu));
     connect(showRemoteAction, &MenuItemAction::triggered, this, [sync]()
     {
         Utilities::openInMega(sync->getMegaHandle());
@@ -353,7 +353,7 @@ bool IconMiddleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, c
     if(sync->getError())
     {
         QRect rect = option.rect;
-        rect.setRight(ICON_WIDTH);
+        rect.setRight(ICON_SPACE_SIZE);
         if(rect.contains(event->pos()))
         {
            QToolTip::showText(event->globalPos(), index.data(SyncItemModel::ErrorTooltipRole).toString());

@@ -304,6 +304,7 @@ protected:
         LOADING_VIEW
     };
     LoadingViewType mLoadingViewSet;
+    LoadingSceneMessageHandler* mMessageHandler;
 
 private slots:
     void onDelayTimerToShowTimeout();
@@ -312,9 +313,6 @@ private slots:
     {
         hideLoadingScene();
     }
-
-private:
-    LoadingSceneMessageHandler* mMessageHandler;
 };
 
 template <class DelegateWidget, class ViewType>
@@ -349,6 +347,12 @@ public:
     bool isLoadingViewSet() const
     {
         return mLoadingViewSet != LoadingViewType::NONE;
+    }
+
+    bool setLoadingViewSet(LoadingViewType type)
+    {
+        mLoadingViewSet = type;
+        mMessageHandler->setLoadingViewVisible(type != LoadingViewType::NONE);
     }
 
     inline void setView(LoadingSceneView<DelegateWidget, ViewType>* view)
@@ -447,7 +451,8 @@ public:
     {
         ViewLoadingSceneBase::hideLoadingScene();
 
-        mLoadingViewSet = LoadingViewType::NONE;
+        setLoadingViewSet(LoadingViewType::NONE);
+        //mLoadingViewSet = LoadingViewType::NONE;
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
@@ -481,7 +486,7 @@ private:
     {
         ViewLoadingSceneBase::showViewCopy();
 
-        mLoadingViewSet = LoadingViewType::COPY_VIEW;
+        setLoadingViewSet(LoadingViewType::COPY_VIEW);
 
         mView->setViewPortEventsBlocked(true);
         mViewLayout->replaceWidget(mView, mLoadingSceneUI);
@@ -496,7 +501,8 @@ private:
     void showLoadingScene() override
     {
         ViewLoadingSceneBase::showLoadingScene();
-        mLoadingViewSet = LoadingViewType::LOADING_VIEW;
+        setLoadingViewSet(LoadingViewType::LOADING_VIEW);
+
         int visibleRows(0);
 
         if(mView->isVisible())

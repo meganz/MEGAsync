@@ -72,8 +72,6 @@ public:
 
 class IconMiddleDelegate : public BackgroundColorDelegate
 {
-    static const int ICON_WIDTH;
-
 public:
     explicit IconMiddleDelegate(QObject *parent = nullptr);
     ~IconMiddleDelegate() = default;
