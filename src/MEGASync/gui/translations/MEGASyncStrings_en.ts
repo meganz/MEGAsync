@@ -2458,12 +2458,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the local folder is unavailable or lacks read and write permissions.</translation>
+        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don&#8217;t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the local folder is unavailable or lacks read and write permissions.</translation>
+        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don&#8217;t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2731,7 +2731,7 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the local folder is unavailable or lacks read and write permissions.</translation>
+        <translation>Your backup ”%1“ has been disabled because the local folder is unavailable or you don&#8217;t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>

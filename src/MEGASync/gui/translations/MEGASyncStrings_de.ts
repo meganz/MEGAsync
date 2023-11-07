@@ -2458,12 +2458,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ihre Synchronisierung „%1“ wurde deaktiviert, da der lokale Ordner nicht verfügbar ist oder Sie keine Lese- und Schreibrechte haben.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ihre Synchronisierung „%1“ wurde deaktiviert, da der lokale Ordner nicht verfügbar ist oder Sie keine Lese- und Schreibrechte haben.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2731,7 +2731,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Backup „%1“ wurde deaktiviert, da der lokale Ordner nicht verfügbar ist oder Sie keine Lese- und Schreibrechte haben.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -3851,7 +3851,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Submit</source>
         <translatorcomment>Label for submit button. Keep capital letter.</translatorcomment>
-        <translation>Abschicken</translation>
+        <translation>Absenden</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5913,12 +5913,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation>Standardapplikation</translation>
+        <translation>Standardanwendung</translation>
     </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation>Applikation auswählen</translation>
+        <translation>Anwendung auswählen</translation>
     </message>
     <message>
         <source>Close</source>

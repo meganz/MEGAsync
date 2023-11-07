@@ -1785,7 +1785,7 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account. SNC-3019</translatorcomment>
-        <translation>Pagar Ahora</translation>
+        <translation>Pagar ahora</translation>
     </message>
     <message>
         <source>Pay and reactivate</source>
@@ -2459,12 +2459,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La sincronización “%1” se ha desactivado porque la carpeta local no está disponible o no tienes permisos de lectura y escritura.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La sincronización “%1” se ha desactivado porque la carpeta local no está disponible o no tienes permisos de lectura y escritura.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2732,7 +2732,7 @@ Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la 
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>El backup “%1” se ha desactivado porque la carpeta local no está disponible o no tienes permisos de lectura y escritura.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>

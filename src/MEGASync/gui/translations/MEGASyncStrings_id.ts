@@ -999,7 +999,7 @@
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kata sandi diubah</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -1042,7 +1042,7 @@
     <message>
         <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Akun Pro&#xa0;Flexi anda telah dinonaktifkan karena kegagalan pembayaran atau anda telah membatalkan langganan anda. Anda tidak akan dapat mengakses data yang disimpan di akun anda sampai anda melakukan pembayaran dan mengaktifkan kembali langganan anda.</translation>
     </message>
 </context>
 <context>
@@ -1774,12 +1774,12 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Terjadi kesalahan saat menambahkan sinkronisasi</translation>
     </message>
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 tidak dapat ditambahkan karena akun Pro&#xa0;Flexi anda telah dinonaktifkan karena kegagalan pembayaran atau anda telah membatalkan langganan anda. Untuk melanjutkan, lakukan pembayaran dan aktifkan kembali langganan anda.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1789,7 +1789,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Pay and reactivate</source>
         <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bayar dan aktifkan kembali</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2458,12 +2458,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi “%1” anda telah dinonaktifkan karena folder lokal tidak tersedia atau anda tidak memiliki izin membaca dan menulis.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi “%1” anda telah dinonaktifkan karena folder lokal tidak tersedia atau anda tidak memiliki izin membaca dan menulis.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2730,7 +2730,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cadangan ”%1“ anda telah dinonaktifkan karena folder lokal tidak tersedia atau anda tidak memiliki izin membaca dan menulis.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -3015,7 +3015,8 @@ Periksa email anda untuk informasi lebih lanjut tentang cara mengajukan pemberit
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Akun anda dihentikan karena pelanggaran Ketentuan Layanan MEGA.
+Anda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftarkan akun MEGA baru.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
@@ -3227,7 +3228,7 @@ Periksa email anda untuk informasi lebih lanjut tentang cara mengajukan pemberit
     <message>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Paket anda telah kedaluwarsa</translation>
     </message>
 </context>
 <context>
@@ -3418,7 +3419,7 @@ Transfer sinkronisasi tidak lengkap yang anda pilih tidak akan dibatalkan. Semua
     <message>
         <source>Don&apos;t clear</source>
         <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jangan hapus</translation>
     </message>
 </context>
 <context>
@@ -4042,7 +4043,10 @@ Masukkan nama yang berbeda.</translation>
 - Updated third-party libraries.
 </source>
         <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Ditingkatkan ke Qt 5.15.
+- Memperbaiki kerusakan yang terdeteksi pada Windows, Linux, dan macOS.
+- Perpustakaan pihak ketiga yang diperbarui.
+</translation>
     </message>
 </context>
 <context>

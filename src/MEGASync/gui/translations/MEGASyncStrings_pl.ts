@@ -4046,9 +4046,9 @@ Wprowadź inną nazwę.</translation>
 - Updated third-party libraries.
 </source>
         <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
-        <translation>- Upgraded to Qt 5.15.
-- Fixed detected crashes on Windows, Linux and macOS.
-- Updated third-party libraries.</translation>
+        <translation>- Aktualizacja do wersji Qt 5.15.
+- Naprawiono wykryte awarie w systemach Windows, Linux i macOS.
+- Zaktualizowano biblioteki innych firm.</translation>
     </message>
 </context>
 <context>

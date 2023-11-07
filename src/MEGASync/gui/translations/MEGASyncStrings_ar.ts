@@ -2458,12 +2458,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل مزامنة &#8220;%1&#8221; لأن المجلد المحلي غير متاح أو ليس لديك أذونات القراءة والكتابة.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل مزامنة &#8220;%1&#8221; لأن المجلد المحلي غير متاح أو ليس لديك أذونات القراءة والكتابة.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2735,7 +2735,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل النسخة الاحتياطية &#8220;%1&#8221; لأن المجلد المحلي غير متوفر أو ليس لديك أذونات القراءة والكتابة.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -4048,7 +4048,10 @@ Enter a different name</source>
 - Updated third-party libraries.
 </source>
         <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تمت الترقية إلى كيو تي 5.15.
+- تم إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك او اس macOS.
+- تحديث مكتبات الأطرف الخارجية.
+</translation>
     </message>
 </context>
 <context>
