@@ -40,7 +40,7 @@ public slots:
     void onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &, const QVector<int> &roles = QVector<int>());
     void on_cExcludeUpperThan_clicked();
     void on_cExcludeLowerThan_clicked();
-    void on_fileChanged(const QString file);
+    void on_fileChanged(const QString &file);
 protected:
 signals:
     void signalOpenMegaignore();

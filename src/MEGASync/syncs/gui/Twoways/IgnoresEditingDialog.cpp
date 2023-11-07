@@ -159,11 +159,16 @@ void IgnoresEditingDialog::onAddNameClicked()
             target = localItem.isFile() ? MegaIgnoreNameRule::Target::f : MegaIgnoreNameRule::Target::d;
         }
 
-
         for (int i = 0; i < ui->lExcludedNames->count(); i++)
         {
             if (ui->lExcludedNames->item(i)->text() == text)
             {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+                msgInfo.title = QMegaMessageBox::warningTitle();
+                msgInfo.text = tr("Rule already exists.");
+                msgInfo.buttons = QMessageBox::Ok;
+                QMegaMessageBox::warning(msgInfo);
                 return;
             }
         }
@@ -254,10 +259,13 @@ void IgnoresEditingDialog::on_cExcludeLowerThan_clicked()
     auto lowLimit = mManager.getLowLimitRule();
     lowLimit->setCommented(!enable);
 }
-//
 
-void IgnoresEditingDialog::on_fileChanged(const QString path)
+void IgnoresEditingDialog::on_fileChanged(const QString& path)
 {
+#ifndef Q_OS_LINUX
+    Q_UNUSED(path)
+#endif
+
     if(mManager.hasChanged())
     {
         QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -270,10 +278,15 @@ void IgnoresEditingDialog::on_fileChanged(const QString path)
         mManager.parseIgnoresFile();
         refreshUI();
     }
+
+#ifdef Q_OS_LINUX
+    //files on Linux are removed when modified (remove and create)
+    //So we need to add it again to QFileSystemWatcher
     if (QFile::exists(path))
     {
         mIgnoresFileWatcher->addPath(path);
     }
+#endif
 }
 
 void IgnoresEditingDialog::setOutputIgnorePath(const QString& outputPath)
