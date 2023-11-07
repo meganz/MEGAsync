@@ -85,6 +85,7 @@ void IgnoresEditingDialog::applyChanges()
 {
     QStringList updatedExtensions = ui->tExcludeExtensions->toPlainText().split(QLatin1String(","));
     updatedExtensions.removeAll(QString());
+    updatedExtensions.removeDuplicates();
     mManager.applyChanges(mExtensionsChanged, updatedExtensions);
 }
 
