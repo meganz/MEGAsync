@@ -41,7 +41,7 @@ VIAddVersionKey "ProductName" "MEGAsync"
 !ifdef BUILD_X64_VERSION
 !define QT_PATH "${MEGA_QTPATH}"
 !else
-!define QT_PATH "${MEGA_QTPATH}\..\msvc2017"
+!define QT_PATH "${MEGA_QTPATH}\..\x86"
  !endif
 
 !ifdef BUILD_X64_VERSION
@@ -334,7 +334,7 @@ Function showHiDpi
     ${EndIf}
 
     strCpy $BITMAP_WELCOME "$BANNER_PATH\leftbanner\left_banner$0.bmp"
-
+	
     ${NSD_SetImage} $mui.WelcomePage.Image $BITMAP_WELCOME  $mui.WelcomePage.Image.Bitmap
     ${NSD_SetImage} $mui.FinishPage.Image $BITMAP_WELCOME $mui.FinishPage.Image.Bitmap
 
@@ -362,7 +362,7 @@ Function .onInit
      ;Abort
      ;continue:
   ${EndIf}
-
+  
   !insertmacro MULTIUSER_INIT
   StrCpy $APP_NAME "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 
@@ -395,12 +395,12 @@ Function .onInit
   ${IfNot} ${Silent}
     !insertmacro CheckUserToRunElevated
   ${EndIf}
-
+  
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
   strCpy $BANNER_PATH $1
   #${UAC.CallFunctionAsUser} GetPaths
   StrCpy $BANNER_PATH "$BANNER_PATH\MEGAsync"
-
+  
   strCpy $PREVIOUS_OUTPATH GetOutPath
   SetOutPath "$BANNER_PATH\leftbanner"
   File "installer\leftbanner\*"
@@ -524,47 +524,47 @@ modeselected:
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-stdio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-runtime-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-process-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-private-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-multibyte-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-math-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-locale-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-filesystem-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-environment-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-convert-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-crt-conio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-util-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-util-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-timezone-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-sysinfo-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-synch-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-synch-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-string-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-rtlsupport-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-profile-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-processthreads-l1-1-1.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-processthreads-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-processenvironment-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-namedpipe-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-memory-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-localization-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-libraryloader-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-interlocked-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-handle-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-file-l2-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l2-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-file-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-2-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-file-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-errorhandling-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x64\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-stdio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-runtime-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-process-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-private-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-multibyte-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-math-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-locale-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-filesystem-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-environment-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-convert-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-conio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-util-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-util-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-timezone-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-sysinfo-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-synch-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-synch-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-string-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-rtlsupport-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-profile-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-processthreads-l1-1-1.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-processthreads-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-processenvironment-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-namedpipe-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-memory-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-localization-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-libraryloader-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-interlocked-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-handle-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-file-l2-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l2-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-file-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-file-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-errorhandling-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
   !else
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
@@ -575,47 +575,47 @@ modeselected:
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-stdio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-runtime-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-process-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-private-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-multibyte-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-math-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-locale-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-filesystem-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-environment-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-convert-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-crt-conio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-util-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-util-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-timezone-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-sysinfo-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-synch-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-synch-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-string-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-rtlsupport-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-profile-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-1.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-processenvironment-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-namedpipe-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-memory-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-localization-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-libraryloader-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-interlocked-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-handle-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-file-l2-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l2-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-file-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-2-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-file-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-errorhandling-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\10.0.19041.0\ucrt\DLLs\x86\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-stdio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-runtime-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-process-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-private-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-multibyte-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-math-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-locale-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-filesystem-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-environment-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-convert-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-conio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-util-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-util-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-timezone-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-sysinfo-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-synch-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-synch-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-string-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-rtlsupport-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-profile-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-1.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processenvironment-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-namedpipe-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-memory-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-localization-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-libraryloader-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-interlocked-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-handle-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l2-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l2-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-errorhandling-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
   !endif
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip files below
@@ -724,15 +724,10 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\MEGAupdater.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
 
-; Note: keep openssl 1.1 for now as Qt depends on it.
 !ifdef BUILD_X64_VERSION
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1-x64.dll"  "$INSTDIR\libcrypto-1_1-x64.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1-x64.dll"  "$INSTDIR\libssl-1_1-x64.dll"
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3-x64.dll"  "$INSTDIR\libssl-3-x64.dll"
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3-x64.dll"  "$INSTDIR\libcrypto-3-x64.dll"
 !else
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1.dll"  "$INSTDIR\libcrypto-1_1.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1.dll"  "$INSTDIR\libssl-1_1.dll"
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3.dll"  "$INSTDIR\libcrypto-3.dll"
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3.dll"  "$INSTDIR\libssl-3.dll"
 !endif
@@ -783,12 +778,11 @@ modeselected:
   Delete "$INSTDIR\swscale-5.dll"
   Delete "$INSTDIR\swresample-3.dll"
 
-  ; Do not remove openssl 1.1 version yet, as Qt depends on it.
-  ;Delete "$INSTDIR\libcrypto-1_1-x64.dll"
-  ;Delete "$INSTDIR\libssl-1_1-x64.dll"
+  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
+  Delete "$INSTDIR\libssl-1_1-x64.dll"
 
-  ;Delete "$INSTDIR\libcrypto-1_1.dll"
-  ;Delete "$INSTDIR\libssl-1_1.dll"
+  Delete "$INSTDIR\libcrypto-1_1.dll"
+  Delete "$INSTDIR\libssl-1_1.dll"
 
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
@@ -1037,10 +1031,6 @@ Section Uninstall
   Delete "$INSTDIR\MEGAupdater.exe"
   Delete "$INSTDIR\libeay32.dll"
   Delete "$INSTDIR\ssleay32.dll"
-  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
-  Delete "$INSTDIR\libssl-1_1-x64.dll"
-  Delete "$INSTDIR\libcrypto-1_1.dll"
-  Delete "$INSTDIR\libssl-1_1.dll"
   Delete "$INSTDIR\libcurl.dll"
   Delete "$INSTDIR\cares.dll"
   Delete "$INSTDIR\libuv.dll"
@@ -1060,6 +1050,10 @@ Section Uninstall
   Delete "$INSTDIR\swresample-2.dll"
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
+  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
+  Delete "$INSTDIR\libssl-1_1-x64.dll"
+  Delete "$INSTDIR\libcrypto-1_1.dll"
+  Delete "$INSTDIR\libssl-1_1.dll"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
