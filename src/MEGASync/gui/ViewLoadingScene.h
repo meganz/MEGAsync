@@ -349,7 +349,7 @@ public:
         return mLoadingViewSet != LoadingViewType::NONE;
     }
 
-    bool setLoadingViewSet(LoadingViewType type)
+    void setLoadingViewSet(LoadingViewType type)
     {
         mLoadingViewSet = type;
         mMessageHandler->setLoadingViewVisible(type != LoadingViewType::NONE);
