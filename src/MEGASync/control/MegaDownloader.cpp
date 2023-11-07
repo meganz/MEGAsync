@@ -137,6 +137,7 @@ void MegaDownloader::startDownload(WrappedNode *parent, const QString& appData,
                            appData.toUtf8().constData(), startFirst, cancelToken,
                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
+                           parent->getUndelete(),
                            mFolderTransferListenerDelegate.get());
 }
 
@@ -217,4 +218,3 @@ bool MegaDownloader::createDirIfNotPresent(const QString& path)
     }
     return true;
 }
-
