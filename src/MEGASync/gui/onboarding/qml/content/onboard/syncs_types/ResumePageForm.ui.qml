@@ -145,7 +145,7 @@ SyncsPage {
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
                     height: !syncButton.visible
-                            ? 148
+                            ? 155
                             : 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
