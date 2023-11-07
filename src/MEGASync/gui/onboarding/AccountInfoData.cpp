@@ -74,11 +74,14 @@ void AccountInfoData::onEvent(MegaApi*, MegaEvent* event)
 
             emit accountDetailsChanged();
             emit usedStorageChanged();
+            break;
         }
     }
 }
 
 void AccountInfoData::onAccountUpdate(mega::MegaApi*)
 {
+    mInitialized = false;
+
     requestAccountInfoData();
 }
