@@ -461,7 +461,7 @@ void StalledIssueActionTitle::updateExtraInfoLayout()
             {
                 if(label != childLabels.last())
                 {
-                    auto size = label->fontMetrics().width(label->property(MESSAGE_TEXT).toString());
+                    auto size = label->fontMetrics().horizontalAdvance(label->property(MESSAGE_TEXT).toString());
                     SizeAvailable -= (size + 25);
                 }
                 else
@@ -471,7 +471,7 @@ void StalledIssueActionTitle::updateExtraInfoLayout()
             }
             else
             {
-                auto size = (10 + label->fontMetrics().width(label->text()));
+                auto size = (10 + label->fontMetrics().horizontalAdvance(label->text()));
                 SizeAvailable -= size;
             }
         }

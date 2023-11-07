@@ -73,11 +73,11 @@ void SyncTableView::initTable()
     setItemDelegateForColumn(SyncItemModel::Column::UPLOADS, new ElideMiddleDelegate(this));
 
     setFont(QFont().defaultFamily());
-    auto StateColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::STATE, Qt::Horizontal).toString()) + 6;
-    auto FilesColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::FILES, Qt::Horizontal).toString()) + 6;
-    auto FoldersColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::FOLDERS, Qt::Horizontal).toString()) + 6;
-    auto DownloadsColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::DOWNLOADS, Qt::Horizontal).toString()) + 6;
-    auto UploadsColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::UPLOADS, Qt::Horizontal).toString()) + 6;
+    auto StateColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::STATE, Qt::Horizontal).toString()) + 6;
+    auto FilesColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::FILES, Qt::Horizontal).toString()) + 6;
+    auto FoldersColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::FOLDERS, Qt::Horizontal).toString()) + 6;
+    auto DownloadsColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::DOWNLOADS, Qt::Horizontal).toString()) + 6;
+    auto UploadsColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::UPLOADS, Qt::Horizontal).toString()) + 6;
 
     horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
