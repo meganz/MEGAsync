@@ -208,8 +208,8 @@ MegaIgnoreRule::RuleType MegaIgnoreManager::getRuleType(const QString& line)
     {
         return MegaIgnoreRule::RuleType::InvalidRule;
     }
-    const QString leftSide = lineSplitted[0];
-    const QString rightSide = lineSplitted.mid(1).join(QLatin1String(":"));
+    const QString leftSide = lineSplitted[0].trimmed();
+    const QString rightSide = lineSplitted.mid(1).join(QLatin1String(":")).trimmed();
 
     // Check size rule 
     static const QRegularExpression sizeRuleLeftSide(QLatin1String(::SIZE_RULE_LEFT_SIDE_REG_EX), QRegularExpression::CaseInsensitiveOption);
@@ -316,7 +316,7 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
             {
                 rules.append(mExtensionRules.value(trimmed)->getModifiedRule());
             }
-            else
+            else if(!trimmed.isEmpty())
             {
                 const MegaIgnoreExtensionRule extensionRule(MegaIgnoreNameRule::Class::Exclude, trimmed);
                 rules.append(extensionRule.getModifiedRule());
@@ -609,7 +609,7 @@ MegaIgnoreSizeRule::MegaIgnoreSizeRule(const QString& rule, bool isCommented)
         {
             auto value = match.captured(0);
             mValue = value.toUInt();
-            auto unit = size.remove(value);
+            auto unit = size.remove(value).toUpper().trimmed();
             if (!unit.isEmpty())
             {
                 EnumConversions<UnitTypes> convertEnum;

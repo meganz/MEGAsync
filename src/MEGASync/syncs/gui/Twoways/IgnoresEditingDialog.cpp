@@ -256,7 +256,7 @@ void IgnoresEditingDialog::on_cExcludeLowerThan_clicked()
 }
 //
 
-void IgnoresEditingDialog::on_fileChanged(const QString)
+void IgnoresEditingDialog::on_fileChanged(const QString path)
 {
     if(mManager.hasChanged())
     {
@@ -269,6 +269,10 @@ void IgnoresEditingDialog::on_fileChanged(const QString)
         QMegaMessageBox::warning(msgInfo);
         mManager.parseIgnoresFile();
         refreshUI();
+    }
+    if (QFile::exists(path))
+    {
+        mIgnoresFileWatcher->addPath(path);
     }
 }
 

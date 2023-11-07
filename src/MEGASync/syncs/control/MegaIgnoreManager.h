@@ -210,6 +210,8 @@ public:
 
     bool isValid() const override { return false; }
     RuleType ruleType() const override { return RuleType::InvalidRule; }
+    virtual QString getModifiedRule() const override{ return isCommented() && (!mRule.startsWith(QLatin1String("#")))? QLatin1String("#") + mRule: mRule; }
+
 };
 
 class MegaIgnoreManager
