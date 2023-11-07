@@ -4,7 +4,13 @@
 #include <Utilities.h>
 #include <MegaApplication.h>
 
-DuplicatedNodeInfo::DuplicatedNodeInfo(DuplicatedUploadBase* checker) : mSolution(NodeItemType::DONT_UPLOAD), mIsLocalFile(false), mHasConflict(false), mHaveDifferentType(false), mChecker(checker)
+DuplicatedNodeInfo::DuplicatedNodeInfo(DuplicatedUploadBase* checker)
+    : mSolution(NodeItemType::DONT_UPLOAD),
+    mIsLocalFile(false),
+    mHasConflict(false),
+    mHaveDifferentType(false),
+    mIsNameConflict(false),
+    mChecker(checker)
 {
 }
 
@@ -28,8 +34,6 @@ void DuplicatedNodeInfo::setRemoteConflictNode(const std::shared_ptr<mega::MegaN
 {
     mRemoteConflictNode = newRemoteConflictNode;
 
-    mName = QString::fromUtf8(mRemoteConflictNode->getName()).toHtmlEscaped();
-
     auto time = newRemoteConflictNode->isFile() ? mRemoteConflictNode->getModificationTime()
                                                 : mRemoteConflictNode->getCreationTime();
     mNodeModifiedTime = QDateTime::fromSecsSinceEpoch(time);
@@ -51,14 +55,6 @@ void DuplicatedNodeInfo::setLocalPath(const QString &newLocalPath)
 NodeItemType DuplicatedNodeInfo::getSolution() const
 {
     return mSolution;
-}
-
-std::shared_ptr<mega::MegaNode> DuplicatedNodeInfo::checkNameNode(const QString &nodeName, std::shared_ptr<mega::MegaNode> parentNode)
-{
-    auto node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode.get(), nodeName.toUtf8().constData(),
-                                                              isLocalFile() ? mega::MegaNode::TYPE_FILE : mega::MegaNode::TYPE_FOLDER));
-
-    return node;
 }
 
 void DuplicatedNodeInfo::setSolution(NodeItemType newSolution)
@@ -136,4 +132,24 @@ void DuplicatedNodeInfo::setLocalModifiedTime(const QDateTime &newLocalModifiedT
 bool DuplicatedNodeInfo::haveDifferentType() const
 {
     return mHaveDifferentType;
+}
+
+bool DuplicatedNodeInfo::isNameConflict() const
+{
+    return mIsNameConflict;
+}
+
+void DuplicatedNodeInfo::setIsNameConflict(bool newIsNameConflict)
+{
+    mIsNameConflict = newIsNameConflict;
+}
+
+void DuplicatedNodeInfo::setNewName(const QString &newNewName)
+{
+    mNewName = newNewName;
+}
+
+void DuplicatedNodeInfo::setName(const QString &newName)
+{
+    mName = newName;
 }

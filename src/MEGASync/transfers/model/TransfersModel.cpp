@@ -219,13 +219,12 @@ void TransferThread::updateFailedTransfer(QExplicitlySharedDataPointer<TransferD
 
 void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
-    auto isTemp = isTempTransfer(transfer, false);
-
     if(isIgnored(transfer))
     {
         return;
     }
-
+    auto isTemp = isTempTransfer(transfer, false);
+    //If it is temp, we don´t track it with the TransferMetaData
     if(!isTemp)
     {
         //These type of transfers are not added to TransferMetaData item
@@ -238,7 +237,7 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
     if(!transfer->isStreamingTransfer()
                 && !transfer->isFolderTransfer())
         {
-
+            //If it is temp, we don´t add it to the counters
             if(!isTemp)
             {
                 QMutexLocker counterLock(&mCountersMutex);
@@ -300,14 +299,9 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
+        //If it is temp, we ignore the updates
         auto isTemp = isTempTransfer(transfer, false);
-
-        if(isTemp)
-        {
-            return;
-        }
-
-        if(isIgnored(transfer))
+        if(isTemp || isIgnored(transfer))
         {
             return;
         }
@@ -345,13 +339,14 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
 {
     if (!transfer->isStreamingTransfer())
     { 
-        auto isTemp = isTempTransfer(transfer, true);
-
         if(isIgnored(transfer, true))
         {
             return;
         }
 
+        auto isTemp = isTempTransfer(transfer, true);
+
+        //If it is temp, we don´t add it to the counters
         if(!isTemp)
         {
             //This method is run in other thread, but all the logic related to TransferMetaData should be run in the GUI thread
@@ -496,6 +491,8 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
 
                 data->mIsTempTransfer = isTemp;
             }
+
+            data->mIsTempTransfer = isTemp;
         }
     }
 }
@@ -506,14 +503,9 @@ void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, 
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
+        //If it is temp, we ignore the temporary errors
         auto isTemp = isTempTransfer(transfer, false);
-
-        if(isTemp)
-        {
-            return;
-        }
-
-        if(isIgnored(transfer))
+        if(isTemp || isIgnored(transfer))
         {
             return;
         }

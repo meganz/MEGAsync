@@ -301,7 +301,7 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
 
         int intVersion = 0;
         QDir dataDir(preferences->getDataPath());
-        QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+        QString appVersionPath = dataDir.filePath(QString::fromLatin1("megasync.version"));
         QFile f(appVersionPath);
         if (f.open(QFile::ReadOnly | QFile::Text))
         {
@@ -344,7 +344,7 @@ bool UpdateTask::processFile(QNetworkReply *reply)
     //Create the folder for the new file
     QFile localFile(updateFolder.absoluteFilePath(localPaths[currentFile]));
     QFileInfo info(localFile);
-    info.absoluteDir().mkpath(QString::fromAscii("."));
+    info.absoluteDir().mkpath(QString::fromLatin1("."));
 
     //Delete the file if it exists.
     localFile.remove();
@@ -398,8 +398,8 @@ bool UpdateTask::performUpdate()
 
     //Create backup folder
     QDir basePathDir(basePath);
-    backupFolder = QDir(basePathDir.absoluteFilePath(Preferences::UPDATE_BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString(QString::fromAscii("_dd_MM_yy__hh_mm_ss"))));
-    backupFolder.mkdir(QString::fromAscii("."));
+    backupFolder = QDir(basePathDir.absoluteFilePath(Preferences::UPDATE_BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString(QString::fromLatin1("_dd_MM_yy__hh_mm_ss"))));
+    backupFolder.mkdir(QString::fromLatin1("."));
 
     for (int i = 0; i < localPaths.size(); i++)
     {
@@ -547,12 +547,12 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
     {
         if (!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Downloading file: %1").arg(downloadURLs[currentFile]).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Downloading file: %1").arg(downloadURLs[currentFile]).toUtf8().constData());
             downloadFile(downloadURLs[currentFile]);
             return;
         }
 
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("File already downloaded: %1").arg(localPaths[currentFile]).toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("File already downloaded: %1").arg(localPaths[currentFile]).toUtf8().constData());
         currentFile++;
     }
 

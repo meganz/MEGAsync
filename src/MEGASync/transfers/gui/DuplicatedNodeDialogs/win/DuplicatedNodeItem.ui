@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>244</width>
-    <height>157</height>
+    <height>158</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -78,7 +78,7 @@
    color: #333333;
 }
 
-#titleContainer, #titleContainer QLabel
+#titleContainer, #titleContainer QLabel, #titleContainer WordWrapLabel
 {
    background-color: #F7F8F9;
 }
@@ -129,7 +129,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lDescription">
+          <widget class="WordWrapLabel" name="lDescription">
            <property name="text">
             <string/>
            </property>
@@ -163,7 +163,7 @@
       <item>
        <widget class="QFrame" name="fSelectionBox">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -177,7 +177,7 @@
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>56</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -260,7 +260,7 @@
          <item>
           <widget class="QWidget" name="wNode" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -282,9 +282,9 @@
              <number>4</number>
             </property>
             <item>
-             <widget class="QLabel" name="lNodeName">
+             <widget class="WordWrapLabel" name="lNodeName">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -450,6 +450,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QLabel</extends>
+   <header>WordWrapLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

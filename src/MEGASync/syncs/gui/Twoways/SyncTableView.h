@@ -73,8 +73,6 @@ public:
 
 class IconMiddleDelegate : public BackgroundColorDelegate
 {
-    static const int ICON_WIDTH;
-
 public:
     explicit IconMiddleDelegate(QObject *parent = nullptr);
     ~IconMiddleDelegate() = default;
@@ -91,9 +89,6 @@ class ElideMiddleDelegate : public BackgroundColorDelegate
 public:
     explicit ElideMiddleDelegate(QObject *parent = nullptr);
     ~ElideMiddleDelegate() = default;
-
-    void paint(QPainter* painter, const QStyleOptionViewItem& option,
-               const QModelIndex& index) const override;
     void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 

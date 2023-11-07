@@ -286,7 +286,7 @@ void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pat
         {
             std::shared_ptr<QQueue<WrappedNode*>> nodesToDownload(nodesToDownloadByPath.value(targetFolder));
             BlockingBatch downloadBatches;
-            mDownloader->processDownloadQueue(nodesToDownload.get(), downloadBatches, targetFolder, targetFolder != tempPath);
+            mDownloader->processTempDownloadQueue(nodesToDownload.get(), targetFolder);
             qDeleteAll(*nodesToDownload.get());
         }
     }

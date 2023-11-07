@@ -73,7 +73,7 @@ void EncryptedSettings::remove(const QString &key)
 {
     if (!key.length())
     {
-        QSettings::remove(QString::fromAscii(""));
+        QSettings::remove(QString::fromLatin1(""));
     }
     else
     {
@@ -153,7 +153,7 @@ QString EncryptedSettings::encrypt(const QString key, const QString value) const
     QByteArray xValue = XOR(k, value.toUtf8());
     QByteArray xKey = XOR(k, group().toAscii());
     QByteArray xEncrypted = XOR(k, Platform::getInstance()->encrypt(xValue, xKey));
-    return QString::fromAscii(xEncrypted.toBase64());
+    return QString::fromLatin1(xEncrypted.toBase64());
 }
 
 QString EncryptedSettings::decrypt(const QString key, const QString value) const
@@ -175,5 +175,5 @@ QString EncryptedSettings::hash(const QString key) const
     QByteArray xPath = XOR(encryptionKey, (key+group()).toUtf8());
     QByteArray keyHash = QCryptographicHash::hash(xPath, QCryptographicHash::Sha1);
     QByteArray xKeyHash = XOR(key.toUtf8(), keyHash);
-    return QString::fromAscii(xKeyHash.toHex());
+    return QString::fromLatin1(xKeyHash.toHex());
 }

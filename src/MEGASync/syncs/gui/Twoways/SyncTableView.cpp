@@ -146,7 +146,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     if(localFolder.exists())
     {
         showLocalAction  = new MenuItemAction(PlatformStrings::fileExplorer(),
-                                                 QLatin1String("://images/sync_context_menu/folder-small.png"));
+                                                 QLatin1String("://images/sync_context_menu/folder-small.png"), menu);
         connect(showLocalAction, &MenuItemAction::triggered, this, [sync]()
         {
             Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
@@ -155,7 +155,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 
     // Show in Mega web action
     auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
-                                              QLatin1String("://images/sync_context_menu/MEGA-small.png")));
+                                             QLatin1String("://images/sync_context_menu/MEGA-small.png"), menu));
     connect(showRemoteAction, &MenuItemAction::triggered, this, [sync]()
     {
         Utilities::openInMega(sync->getMegaHandle());
@@ -163,7 +163,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 
     // Remove Sync action
     auto delAction (new MenuItemAction(getRemoveActionString(),
-                                       QLatin1String("://images/sync_context_menu/minus-circle.png")));
+                                       QLatin1String("://images/sync_context_menu/minus-circle.png"), menu));
     connect(delAction, &MenuItemAction::triggered, this, [this, sync]()
     {
         removeActionClicked(sync);
@@ -173,9 +173,6 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     {
         showLocalAction->setParent(menu);
     }
-
-    showRemoteAction->setParent(menu);
-    delAction->setParent(menu);
 
     if(showLocalAction)
     {
@@ -310,7 +307,7 @@ void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     BackgroundColorDelegate::paint(painter, opt, index);
 }
 
-const int IconMiddleDelegate::ICON_WIDTH = 60;
+const int ICON_SPACE_SIZE = 60;
 
 IconMiddleDelegate::IconMiddleDelegate(QObject* parent) :
     BackgroundColorDelegate(parent)
@@ -325,7 +322,7 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     opt.decorationAlignment = Qt::AlignVCenter | Qt::AlignHCenter;
     opt.decorationPosition = QStyleOptionViewItem::Top;
     QRect rect = option.rect;
-    rect.setRight(ICON_WIDTH);
+    rect.setRight(ICON_SPACE_SIZE);
     QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
 
     QIcon::Mode iconMode = QIcon::Normal;
@@ -336,7 +333,7 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     icon.paint(painter, rect, Qt::AlignVCenter | Qt::AlignHCenter, iconMode);
     QString text = index.data(Qt::DisplayRole).toString();
     QRect textRect = option.rect;
-    textRect.setLeft(ICON_WIDTH);
+    textRect.setLeft(rect.right());
     QTextOption textOption;
     textOption.setWrapMode(QTextOption::WrapMode::NoWrap);
     textOption.setAlignment(Qt::AlignVCenter);
@@ -359,7 +356,7 @@ bool IconMiddleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, c
     if(sync->getError())
     {
         QRect rect = option.rect;
-        rect.setRight(ICON_WIDTH);
+        rect.setRight(ICON_SPACE_SIZE);
         if(rect.contains(event->pos()))
         {
            QToolTip::showText(event->globalPos(), index.data(SyncItemModel::ErrorTooltipRole).toString());
@@ -370,28 +367,21 @@ bool IconMiddleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, c
     return QStyledItemDelegate::helpEvent(event, view, option,index);
 }
 
+///////////////////////////////
 ElideMiddleDelegate::ElideMiddleDelegate(QObject *parent) :
     BackgroundColorDelegate(parent)
 {
 
 }
 
-void ElideMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-    BackgroundColorDelegate::paint(painter, option, index);
-
-    QString elidedText = painter->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, option.rect.width() -6);
-
-    QTextOption textAlign;
-    textAlign.setAlignment(Qt::AlignVCenter);
-    textAlign.setWrapMode(QTextOption::WrapMode::NoWrap);
-    QRect textRect = option.rect;
-    textRect.setLeft(option.rect.left() + 6);
-    painter->drawText(textRect, elidedText, textAlign);
-}
-
 void ElideMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
-    option->text = QString();
+#ifdef Q_OS_MACOS
+    //On the stylesheet, the header is moved 6 pixels to the left, so we use this magical number
+    //To align the header with the cell
+    option->rect.setLeft(option->rect.left() - 2);
+#endif
+    option->features = option->features & ~QStyleOptionViewItem::WrapText;
+    option->textElideMode = Qt::ElideMiddle;
 }

@@ -14,13 +14,13 @@ const int TOOLTIP_DELAY = 250;
 
 void MegaProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const
 {
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing, true);
+    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, true);
     QProxyStyle::drawComplexControl(control, option, painter, widget);
 }
 
 void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing, true);
+    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, true);
     switch(element)
     {
     case CE_HeaderLabel:
@@ -68,19 +68,19 @@ void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOpt
 
 void MegaProxyStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment, const QPixmap &pixmap) const
 {
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing, true);
+    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, true);
     QProxyStyle::drawItemPixmap(painter, rect, alignment, pixmap);
 }
 
 void MegaProxyStyle::drawItemText(QPainter *painter, const QRect &rect, int flags, const QPalette &pal, bool enabled, const QString &text, QPalette::ColorRole textRole) const
 {
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing, true);
+    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, true);
     QProxyStyle::drawItemText(painter, rect, flags, pal, enabled, text, textRole);
 }
 
 void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
+    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 
     if (element == QStyle::PE_IndicatorItemViewItemDrop && !option->rect.isNull())
     {
@@ -174,13 +174,13 @@ QIcon MegaProxyStyle::standardIcon(QStyle::StandardPixmap standardIcon, const QS
     switch (standardIcon)
     {
         case SP_MessageBoxInformation:
-            return QIcon(QString::fromAscii("://images/icon_info.png"));
+            return QIcon(QString::fromLatin1("://images/icon_info.png"));
         case SP_MessageBoxQuestion:
-            return QIcon(QString::fromAscii("://images/icon_question.png"));
+            return QIcon(QString::fromLatin1("://images/icon_question.png"));
         case SP_MessageBoxCritical:
-            return QIcon(QString::fromAscii("://images/icon_error.png"));
+            return QIcon(QString::fromLatin1("://images/icon_error.png"));
         case SP_MessageBoxWarning:
-            return QIcon(QString::fromAscii("://images/icon_warning.png"));
+            return QIcon(QString::fromLatin1("://images/icon_warning.png"));
         default:
             break;
     }

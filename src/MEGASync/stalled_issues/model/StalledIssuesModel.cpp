@@ -155,11 +155,11 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
 
     connect(mStalledIssuedReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](int issueCounter, int totalIssues)
     {
-        LoadingSceneMessageHandler::MessageInfo info;
-        info.message = tr("Processing issues");
-        info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::None;
-        info.count = issueCounter;
-        info.total = totalIssues;
+        auto info = std::make_shared<MessageInfo>();
+        info->message = tr("Processing issues");
+        info->buttonType = MessageInfo::ButtonType::None;
+        info->count = issueCounter;
+        info->total = totalIssues;
         emit updateLoadingMessage(info);
     }, Qt::QueuedConnection);
 
@@ -716,9 +716,9 @@ void StalledIssuesModel::finishSolvingIssues(int issuesFixed, bool sendMessage)
 
     if(sendMessage)
     {
-        LoadingSceneMessageHandler::MessageInfo info;
-        info.message = tr("%n issues fixed", "", issuesFixed);
-        info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::Ok;
+        auto info = std::make_shared<MessageInfo>();
+        info->message = tr("%n issues fixed", "", issuesFixed);
+        info->buttonType = MessageInfo::ButtonType::Ok;
         emit updateLoadingMessage(info);
     }
 
@@ -728,11 +728,11 @@ void StalledIssuesModel::finishSolvingIssues(int issuesFixed, bool sendMessage)
 
 void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
 {
-    LoadingSceneMessageHandler::MessageInfo info;
-    info.message = tr("Fixing issues");
-    info.count = issue;
-    info.total = totalIssues;
-    info.buttonType = LoadingSceneMessageHandler::MessageInfo::ButtonType::Stop;
+    auto info = std::make_shared<MessageInfo>();
+    info->message = tr("Fixing issues");
+    info->count = issue;
+    info->total = totalIssues;
+    info->buttonType = MessageInfo::ButtonType::Stop;
     emit updateLoadingMessage(info);
 }
 
@@ -1123,8 +1123,7 @@ void StalledIssuesModel::ignoreSymLinks()
 
             if(issuesFixed == 0)
             {
-                LoadingSceneMessageHandler::MessageInfo info;
-                emit updateLoadingMessage(info);
+                emit updateLoadingMessage(nullptr);
             }
         }
         else if(issuesFixed > 0)
