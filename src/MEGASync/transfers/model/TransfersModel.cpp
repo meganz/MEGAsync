@@ -1512,11 +1512,14 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplici
                 if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
                 {
                     std::unique_ptr<mega::MegaNode> node = failedTransferdata->getNode();
+                    // If node is null, then it was intended to be undeleted
+                    bool undelete = (!node);
                     mMegaApi->startDownload(node.get(), failedTransfer->getPath(),
                                             failedTransfer->getFileName(), appDataRaw,
                                             false, nullptr,
                                             MegaTransfer::COLLISION_CHECK_FINGERPRINT,
                                             MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
+                                            undelete,
                                             nullptr);
                 }
                 else

@@ -432,8 +432,11 @@ public:
     };
 
     // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
+    // @param undelete Indicates a special request for a node that has been completely deleted
+    // (even from Rubbish Bin); allowed only for accounts with PRO level
     WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
-                mega::MegaNode* node = nullptr);
+                mega::MegaNode* node = nullptr,
+                bool undelete = false);
 
     // Destructor
     ~WrappedNode()
@@ -454,12 +457,19 @@ public:
         return mNode;
     }
 
+    bool getUndelete() const
+    {
+        return mUndelete;
+    }
+
 private:
     // Keep track of transfer origin
     WrappedNode::TransferOrigin  mTransfersFrom;
 
     // Wrapped MEGA node
     mega::MegaNode* mNode;
+
+    bool mUndelete;
 };
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
