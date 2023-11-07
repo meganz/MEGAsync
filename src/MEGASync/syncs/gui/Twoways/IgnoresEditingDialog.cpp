@@ -298,7 +298,7 @@ void IgnoresEditingDialog::addNameRule(std::shared_ptr<MegaIgnoreRule> rule)
         else
         {
             QPixmap pixmap(QSize(16,16));
-            pixmap.fill();
+            pixmap.fill(Qt::transparent);
             item->setIcon(QIcon(pixmap));
         }
     }
