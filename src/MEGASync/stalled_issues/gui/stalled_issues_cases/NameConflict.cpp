@@ -30,8 +30,7 @@ void NameDuplicatedContainer::paintEvent(QPaintEvent*)
     QPainter painter(this);
 
     painter.setRenderHints(QPainter::Antialiasing
-                           | QPainter::SmoothPixmapTransform
-                           | QPainter::HighQualityAntialiasing);
+                           | QPainter::SmoothPixmapTransform);
 
     QRect textRect(5,10, width() - 5, 20);
     QFont font = painter.font();
