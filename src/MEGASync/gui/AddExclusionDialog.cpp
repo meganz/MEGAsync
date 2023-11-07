@@ -55,14 +55,7 @@ void AddExclusionDialog::on_bOk_clicked()
 void AddExclusionDialog::on_bChoose_clicked()
 {
     auto processResult = [this](QStringList selection){
-        if(!selection.isEmpty())
-        {
-            // I want to check if the returned path is inside mSyncLocalFolder
-            const auto absolutePath = QDir::toNativeSeparators(selection.first());
-            const auto relativePath = QDir (mSyncLocalFolder).relativeFilePath(absolutePath);
-            mTarget = MegaIgnoreNameRule::Target::d;
-            setTextToExclusionItem(relativePath);
-        }
+        addItem(selection);
     };
 
 #ifdef __APPLE__
@@ -70,6 +63,27 @@ void AddExclusionDialog::on_bChoose_clicked()
 #else
     Platform::getInstance()->folderSelector(tr("Select the folder you want to exclude"), mSyncLocalFolder, false, this, processResult);
 #endif
+}
+
+#ifndef __APPLE__
+void AddExclusionDialog::on_bChooseFile_clicked()
+{
+    auto processResult = [this](QStringList selection){
+        addItem(selection);
+    };
+
+    Platform::getInstance()->fileSelector(tr("Select the file you want to exclude"), mSyncLocalFolder, false, this, processResult);
+}
+#endif
+
+void AddExclusionDialog::addItem(QStringList selection)
+{
+    if (!selection.isEmpty())
+    {
+        const auto absolutePath = QDir::toNativeSeparators(selection.first());
+        const auto relativePath = QDir (mSyncLocalFolder).relativeFilePath(absolutePath);
+        ui->eExclusionItem->setText(relativePath);
+    }
 }
 
 void AddExclusionDialog::setTextToExclusionItem(const QString& path)
@@ -82,22 +96,6 @@ void AddExclusionDialog::setTextToExclusionItem(const QString& path)
 
     ui->eExclusionItem->setText(QDir::toNativeSeparators(path));
 }
-
-#ifndef __APPLE__
-void AddExclusionDialog::on_bChooseFile_clicked()
-{
-    Platform::getInstance()->fileSelector(tr("Select the file you want to exclude"), mSyncLocalFolder, false, this,
-        [this](QStringList selection) {
-            if (!selection.isEmpty())
-            {
-                const auto absolutePath = QDir::toNativeSeparators(selection.first());
-                const auto relativePath = QDir (mSyncLocalFolder).relativeFilePath(absolutePath);
-                ui->eExclusionItem->setText(relativePath);
-                mTarget = MegaIgnoreNameRule::Target::f;
-            }
-        });
-}
-#endif
 
 void AddExclusionDialog::changeEvent(QEvent *event)
 {

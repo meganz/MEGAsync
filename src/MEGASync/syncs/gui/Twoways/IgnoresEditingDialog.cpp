@@ -3,6 +3,7 @@
 
 #include "AddExclusionDialog.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
 
 #include <QPointer>
 #include <QDir>
@@ -10,9 +11,14 @@
 namespace
 {
     constexpr char APPLY_TEXT[] = "Apply";
+#ifdef Q_OS_MACOS
+    constexpr char DISCARD_TEXT[] = "Discard changes";
+#else
     constexpr char DISCARD_TEXT[] = "Discard";
+#endif
     constexpr char MEGA_IGNORE_FILE_NAME[] = ".megaignore";
 }
+
 IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool createIfNotExist, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::IgnoresEditingDialog),
@@ -78,6 +84,7 @@ IgnoresEditingDialog::~IgnoresEditingDialog()
 void IgnoresEditingDialog::applyChanges()
 {
     QStringList updatedExtensions = ui->tExcludeExtensions->toPlainText().split(QLatin1String(","));
+    updatedExtensions.removeAll(QString());
     mManager.applyChanges(mExtensionsChanged, updatedExtensions);
 }
 
@@ -131,33 +138,39 @@ void IgnoresEditingDialog::refreshUI()
 
 void IgnoresEditingDialog::onAddNameClicked()
 {
-    QPointer<AddExclusionDialog> add = new AddExclusionDialog(mSyncLocalFolder, this);
-    int result = add->exec();
-    if (!add || (result != QDialog::Accepted))
+    QPointer<AddExclusionDialog> addDialog = new AddExclusionDialog(mSyncLocalFolder, this);
+    DialogOpener::showDialog<AddExclusionDialog>(addDialog, [addDialog, this]()
     {
-        delete add;
-        return;
-    }
-
-    QString text = add->textValue();
-    const auto target = add->getTarget();
-    delete add;
-
-    if (text.isEmpty())
-    {
-        return;
-    }
-
-    for (int i = 0; i < ui->lExcludedNames->count(); i++)
-    {
-        if (ui->lExcludedNames->item(i)->text() == text)
+        if (addDialog->result() != QDialog::Accepted)
         {
             return;
         }
-    }
 
-    auto rule = mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text, target);
-    addNameRule(rule);
+        QString text = addDialog->textValue();
+        if (text.isEmpty())
+        {
+            return;
+        }
+
+        MegaIgnoreNameRule::Target target(MegaIgnoreNameRule::Target::None);
+        QFileInfo localItem(mSyncLocalFolder + QDir::separator() + text);
+        if(localItem.exists())
+        {
+            target = localItem.isFile() ? MegaIgnoreNameRule::Target::f : MegaIgnoreNameRule::Target::d;
+        }
+
+
+        for (int i = 0; i < ui->lExcludedNames->count(); i++)
+        {
+            if (ui->lExcludedNames->item(i)->text() == text)
+            {
+                return;
+            }
+        }
+
+        auto rule = mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text, target);
+        addNameRule(rule);
+    });
 }
 
 void IgnoresEditingDialog::onDeleteNameClicked()
@@ -209,7 +222,7 @@ void IgnoresEditingDialog::on_cbExcludeLowerUnit_currentIndexChanged(int i)
     }
 }
 
-void IgnoresEditingDialog::onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+void IgnoresEditingDialog::onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex&, const QVector<int> &roles)
 {
     if(roles.size() == 1 && roles.first() == Qt::CheckStateRole)
     {
@@ -278,7 +291,16 @@ void IgnoresEditingDialog::addNameRule(std::shared_ptr<MegaIgnoreRule> rule)
     {
         static  QIcon fileIgnoreIcon{ QLatin1String(":/images/StalledIssues/file-ignore.png") };
         static  QIcon folderIgnoreIcon{ QLatin1String(":/images/StalledIssues/folder-ignore.png") };
-        item->setIcon(castedNameRule->getDisplayTarget() == MegaIgnoreNameRule::Target::f ? fileIgnoreIcon : folderIgnoreIcon);
+        if(castedNameRule->getTarget() != MegaIgnoreNameRule::Target::None)
+        {
+            item->setIcon(castedNameRule->getTarget() == MegaIgnoreNameRule::Target::f ? fileIgnoreIcon : folderIgnoreIcon);
+        }
+        else
+        {
+            QPixmap pixmap(QSize(16,16));
+            pixmap.fill();
+            item->setIcon(QIcon(pixmap));
+        }
     }
     item->setData(Qt::UserRole, QVariant::fromValue(rule));
 }

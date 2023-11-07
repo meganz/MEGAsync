@@ -31,6 +31,7 @@ protected:
 
 private:
     void setTextToExclusionItem(const QString& path);
+    void addItem(QStringList selection);
 
     Ui::AddExclusionDialog *ui;
     QString mSyncLocalFolder;

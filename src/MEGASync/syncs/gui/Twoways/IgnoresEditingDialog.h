@@ -37,7 +37,7 @@ public slots:
     void on_cbExcludeUpperUnit_currentIndexChanged(int i);
     void on_cbExcludeLowerUnit_currentIndexChanged(int i);
 
-    void onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
+    void onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &, const QVector<int> &roles = QVector<int>());
     void on_cExcludeUpperThan_clicked();
     void on_cExcludeLowerThan_clicked();
     void on_fileChanged(const QString file);

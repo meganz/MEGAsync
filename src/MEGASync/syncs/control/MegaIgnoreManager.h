@@ -130,7 +130,7 @@ private:
         for (int i = 0; i < e.keyCount(); i++)
         {
             QString s(QString::fromUtf8(e.key(i))); // enum name as string
-            if (s.compare(character, caseSensitive))
+            if (s.compare(character, caseSensitive) == 0)
             {
                 (*value) = static_cast<EnumType>(i);
                 return true;

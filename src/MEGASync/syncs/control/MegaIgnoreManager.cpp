@@ -300,13 +300,15 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
             }
         }
 
-        if (rule->isDirty() || updateExtensionRules)
+        if (rule->isDirty() || rule->isDeleted())
         {
             result = ApplyChangesError::Ok;
         }
     }
     if (updateExtensionRules)
     {
+        result = ApplyChangesError::Ok;
+
         for (const auto& extension : updatedExtensions)
         {
             const auto trimmed = extension.trimmed();
@@ -466,6 +468,8 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& rule, bool isCommented)
                         continue;
                     }
                 }
+
+                charCounter++;
             }
         }
         ruleSplitted.pop_front();
