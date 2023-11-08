@@ -1,11 +1,11 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION             5, 0, 22, 0
-#define VER_FILEVERSION_CODE        50022
-#define VER_PRODUCTVERSION          5, 0, 22, 0
+#define VER_FILEVERSION             5, 1, 0, 0
+#define VER_FILEVERSION_CODE        50100
+#define VER_PRODUCTVERSION          5, 1, 0, 0
 // Update scripts relying on this value if you move it
-#define VER_PRODUCTVERSION_STR      "5.0.22.0\0"
+#define VER_PRODUCTVERSION_STR      "5.1.0.0\0"
 
 #define VER_BUILD_ID                1
 
@@ -17,7 +17,7 @@
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
-#define VER_SDK_ID                  "dc22792"
+#define VER_SDK_ID                  "8a27335"
 
 // Update scrips relying on this value if you move it
 // Format: 1 item by line, starting from line following the #define
@@ -28,15 +28,13 @@
 //"- item n\n"
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- Sync Rework Extended-ALPHA test version.\n"                                                     \
-"- Fingerprint missing issue can be manually solved.\n"                                            \
-"- Sync and backups can be only paused. Disable and suspend options were removed.\n"               \
-"- Some issues descriptions have been added/changed.\n"                                            \
-"- The list of issues is auto refreshed if all of them are solved.\n"                              \
-"- The removed local items go to the local sync debris folder.\n"                                  \
-"- The removed remote items go to the MEGA SyncDebris bin folder.\n"                               \
-"- Performance improved.\n"                                                                        \
-"- Minor bugs fixed.\n"                                                                            \
+"- Sync Rework Beta test version.\n"                                                               \
+"- New Exclusions dialog for syncs.\n"                                                             \
+"- New header for undecrypted cloud issues.\n"                                                     \
+"- Minor changes in issues description. \n"                                                        \
+"- Auto solve reparse points and hard/sym links in Smart Mode. \n"                                 \
+"- Minor bugs fixed. \n"                                                                           \
+"- Performance improved. \n"                                                                       \
 )
 
 #endif // VERSION_H
