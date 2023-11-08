@@ -153,7 +153,16 @@ or certain file types that need not be synced.
                <enum>Qt::NoFocus</enum>
               </property>
               <property name="styleSheet">
-               <string notr="true">margin:0px;</string>
+               <string notr="true">QListWidget
+{
+margin:0px;
+}
+
+QTableView::item::selected
+{
+background-color: rgba(0,120,215,0.8);
+text-color:white;
+}</string>
               </property>
               <property name="verticalScrollBarPolicy">
                <enum>Qt::ScrollBarAlwaysOn</enum>

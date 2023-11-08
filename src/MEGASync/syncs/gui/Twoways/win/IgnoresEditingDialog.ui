@@ -213,6 +213,13 @@ or certain file types that need not be synced.
           <height>104</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QListWidget::item::selected
+{
+background-color: rgba(0,120,215,0.8);
+color:white;
+}</string>
+        </property>
         <property name="selectionMode">
          <enum>QAbstractItemView::ExtendedSelection</enum>
         </property>
