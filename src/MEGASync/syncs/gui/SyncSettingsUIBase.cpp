@@ -278,12 +278,20 @@ void SyncSettingsUIBase::setSyncToDisabled(std::shared_ptr<SyncSettings> sync)
 
 void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync)
 {
-    QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(sync->getLocalFolder(), false, this);
-    QObject::connect(exclusionRules, &IgnoresEditingDialog::signalOpenMegaignore, this, [this, sync]()
-        {
-            openMegaIgnore(sync);
-        });
-    DialogOpener::showDialog(exclusionRules);
+    QFileInfo syncDir(sync->getLocalFolder());
+    if(syncDir.exists())
+    {
+        QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(sync->getLocalFolder(), false, this);
+        QObject::connect(exclusionRules, &IgnoresEditingDialog::signalOpenMegaignore, this, [this, sync]()
+                         {
+                             openMegaIgnore(sync);
+                         });
+        DialogOpener::showDialog(exclusionRules);
+    }
+    else
+    {
+        showOpenMegaIgnoreError();
+    }
 }
 
 void SyncSettingsUIBase::openMegaIgnore(std::shared_ptr<SyncSettings> sync)

@@ -138,16 +138,17 @@ void MegaIgnoreManager::parseIgnoresFile()
             ignore.close();
         }
 
-        if (!mLowLimitRule)
-        {
-            mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::Low);
-            addRule(mLowLimitRule);
-        }
-        if (!mHighLimitRule)
-        {
-            mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::High);
-            addRule(mHighLimitRule);
-        }
+    }
+
+    if (!mLowLimitRule)
+    {
+        mLowLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::Low);
+        addRule(mLowLimitRule);
+    }
+    if (!mHighLimitRule)
+    {
+        mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::High);
+        addRule(mHighLimitRule);
     }
 
     std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
@@ -309,9 +310,15 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
     {
         result = ApplyChangesError::Ok;
 
-        for (const auto& extension : updatedExtensions)
+        for (auto extension : updatedExtensions)
         {
-            const auto trimmed = extension.trimmed();
+            auto trimmed = extension.trimmed();
+
+            while(trimmed.startsWith(QLatin1String(".")))
+            {
+                trimmed.remove(0,1);
+            }
+
             if (mExtensionRules.contains(trimmed))
             {
                 rules.append(mExtensionRules.value(trimmed)->getModifiedRule());
