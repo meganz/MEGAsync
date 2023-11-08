@@ -4,7 +4,6 @@
 #include "ui_SettingsDialog.h"
 #include "control/Utilities.h"
 #include "platform/Platform.h"
-#include "AddExclusionDialog.h"
 #include "BandwidthSettings.h"
 #include "BugReportDialog.h"
 #include "ProxySettings.h"

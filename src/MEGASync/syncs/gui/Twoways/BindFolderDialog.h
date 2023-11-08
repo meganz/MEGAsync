@@ -32,6 +32,7 @@ public:
 private slots:
     void on_bOK_clicked();
     void allSelectionsDone();
+    void on_bAddExclusions_clicked();
 
 protected:
     bool focusNextPrevChild(bool next) override;

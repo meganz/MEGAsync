@@ -1502,5 +1502,14 @@
         <file>images/StalledIssues/settings-stalled-issues.png</file>
         <file>images/StalledIssues/settings-stalled-issues@2x.png</file>
         <file>images/StalledIssues/settings-stalled-issues@3x.png</file>
+        <file>images/sync_context_menu/slash-circle.png</file>
+        <file>images/sync_context_menu/slash-circle@2x.png</file>
+        <file>images/sync_context_menu/slash-circle@3x.png</file>
+        <file>images/StalledIssues/file-ignore.png</file>
+        <file>images/StalledIssues/file-ignore@2x.png</file>
+        <file>images/StalledIssues/file-ignore@3x.png</file>
+        <file>images/StalledIssues/folder-ignore.png</file>
+        <file>images/StalledIssues/folder-ignore@2x.png</file>
+        <file>images/StalledIssues/folder-ignore@3x.png</file>
     </qresource>
 </RCC>

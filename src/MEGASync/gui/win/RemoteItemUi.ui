@@ -63,7 +63,7 @@ border: 1px solid #D8D8D8;
 QTableView::item
 {
 border: none;
-padding-left:4px;	
+padding-left:4px;
 }
 
 QTableView::item::selected
@@ -83,13 +83,13 @@ background: #FFFFFF;
 color: #4A607A;
 padding-left:6px;
 border-top:0 px;
-border-bottom:0px;		
-border-left:0px;		
-border-right:0px ;						 					 				 					 				 					 				 					 	
+border-bottom:0px;
+border-left:0px;
+border-right:0px ;
 }
 
 QHeaderView::section:last {
-border-right:0px;						 					 				 					 				 					 				 					 	
+border-right:0px;
 }</string>
         </property>
         <property name="frameShape">

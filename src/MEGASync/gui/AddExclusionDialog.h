@@ -1,6 +1,7 @@
 #ifndef ADDEXCLUSIONDIALOG_H
 #define ADDEXCLUSIONDIALOG_H
 
+#include "syncs/control/MegaIgnoreManager.h"
 #include <QDialog>
 
 namespace Ui {
@@ -12,7 +13,7 @@ class AddExclusionDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddExclusionDialog(QWidget *parent = 0);
+    explicit AddExclusionDialog(const QString& syncLocalFolder,QWidget *parent = 0);
     ~AddExclusionDialog();
     QString textValue();
 
@@ -29,8 +30,10 @@ protected:
 
 private:
     void setTextToExclusionItem(const QString& path);
+    void addItem(QStringList selection);
 
     Ui::AddExclusionDialog *ui;
+    QString mSyncLocalFolder;
 };
 
 #endif // ADDEXCLUSIONDIALOG_H
