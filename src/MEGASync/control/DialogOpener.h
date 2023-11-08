@@ -51,9 +51,13 @@ private:
         bool ignoreCloseAllAction() const {return mIgnoreCloseAllAction;}
         void setIgnoreCloseAllAction(bool newIgnoreCloseAllAction){mIgnoreCloseAllAction = newIgnoreCloseAllAction;}
 
+        bool ignoreRaiseAllAction() const {return mIgnoreRaiseAllAction;}
+        void setIgnoreRaiseAllAction(bool newIgnoreRaiseAllAction){mIgnoreRaiseAllAction = newIgnoreRaiseAllAction;}
+
     protected:
         QString mDialogClass;
         bool mIgnoreCloseAllAction = false;
+        bool mIgnoreRaiseAllAction = false;
     };
 
     template <class DialogType>
@@ -393,12 +397,20 @@ public:
 
     static void raiseAllDialogs()
     {
+        bool anyRaised = false;
         foreach(auto dialogInfo, mOpenedDialogs)
         {
-            dialogInfo->raise();
+            if(!dialogInfo->ignoreRaiseAllAction())
+            {
+                dialogInfo->raise();
+                anyRaised = true;
+            }
         }
 
-        qApp->processEvents();
+        if(anyRaised)
+        {
+            qApp->processEvents();
+        }
     }
 
     static void closeAllDialogs()
