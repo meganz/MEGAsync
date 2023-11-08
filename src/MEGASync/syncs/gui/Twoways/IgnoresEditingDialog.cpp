@@ -304,21 +304,5 @@ void IgnoresEditingDialog::addNameRule(std::shared_ptr<MegaIgnoreRule> rule)
     }
     // Add rule to the list
     QListWidgetItem* item = new QListWidgetItem(rule->getDisplayText(), ui->lExcludedNames);
-    const auto castedNameRule = std::dynamic_pointer_cast<MegaIgnoreNameRule>(rule);
-    if (castedNameRule)
-    {
-        static  QIcon fileIgnoreIcon{ QLatin1String(":/images/StalledIssues/file-ignore.png") };
-        static  QIcon folderIgnoreIcon{ QLatin1String(":/images/StalledIssues/folder-ignore.png") };
-        if(castedNameRule->getTarget() != MegaIgnoreNameRule::Target::None)
-        {
-            item->setIcon(castedNameRule->getTarget() == MegaIgnoreNameRule::Target::f ? fileIgnoreIcon : folderIgnoreIcon);
-        }
-        else
-        {
-            QPixmap pixmap(QSize(16,16));
-            pixmap.fill(Qt::transparent);
-            item->setIcon(QIcon(pixmap));
-        }
-    }
     item->setData(Qt::UserRole, QVariant::fromValue(rule));
 }
