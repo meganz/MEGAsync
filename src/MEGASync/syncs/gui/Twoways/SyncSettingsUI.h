@@ -19,8 +19,18 @@ public:
 protected:
     QString getFinishWarningIconString() override;
     QString getFinishIconString() override;
-    QString typeString() override;
     QString disableString() override;
+
+    //Operation failed
+    QString getOperationFailTitle() override;
+    QString getOperationFailText(std::shared_ptr<SyncSettings> sync) override;
+
+    //Error adding
+    QString getErrorAddingTitle() override;
+
+    //Error removing
+    QString getErrorRemovingTitle() override;
+    QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
 
 private slots:
     void storageStateChanged(int newStorageState);

@@ -43,14 +43,38 @@ QString SyncSettingsUI::getFinishIconString()
 #endif
 }
 
-QString SyncSettingsUI::typeString()
-{
-    return tr("sync");
-}
 
 QString SyncSettingsUI::disableString()
 {
     return tr("Some folders have not synchronised. For more information please hover over the red icon.");
+}
+
+QString SyncSettingsUI::getOperationFailTitle()
+{
+    return tr("Sync opeartion failed");
+}
+
+QString SyncSettingsUI::getOperationFailText(std::shared_ptr<SyncSettings> sync)
+{
+    return tr("Operation on sync '%1' failed. Reason: %2")
+        .arg(sync->name(),
+             QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError())));
+}
+
+QString SyncSettingsUI::getErrorAddingTitle()
+{
+    return tr("Error adding sync");
+}
+
+QString SyncSettingsUI::getErrorRemovingTitle()
+{
+    return tr("Error removing backup");
+}
+
+QString SyncSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> err)
+{
+    return tr("Your sync can't be removed. Reason: %1")
+        .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
 }
 
 void SyncSettingsUI::storageStateChanged(int newStorageState)

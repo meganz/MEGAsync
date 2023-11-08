@@ -90,9 +90,32 @@ QString BackupSettingsUI::getFinishIconString()
 #endif
 }
 
-QString BackupSettingsUI::typeString()
+QString BackupSettingsUI::getOperationFailTitle()
 {
-    return tr("backup");
+    return tr("Sync opeartion failed");
+}
+
+QString BackupSettingsUI::getOperationFailText(std::shared_ptr<SyncSettings> sync)
+{
+    return tr("Operation on sync '%1' failed. Reason: %2")
+        .arg(sync->name(),
+             QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError())));
+}
+
+QString BackupSettingsUI::getErrorAddingTitle()
+{
+    return tr("Error adding sync");
+}
+
+QString BackupSettingsUI::getErrorRemovingTitle()
+{
+    return tr("Error removing backup");
+}
+
+QString BackupSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> err)
+{
+    return tr("Your sync can't be removed. Reason: %1")
+        .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
 }
 
 QString BackupSettingsUI::disableString()

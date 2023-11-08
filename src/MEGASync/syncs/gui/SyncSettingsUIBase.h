@@ -93,22 +93,20 @@ public:
 
         connect(mSyncController, &SyncController::signalSyncOperationError, this, [this](std::shared_ptr<SyncSettings> sync)
         {
-            QString messageBoxTitle(tr("%1 operation failed").arg(typeString()));
+            QString messageBoxTitle(getOperationFailTitle());
             auto it = messageBoxTitle.begin();
             (*it) = it->toUpper();
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.parent = this;
             msgInfo.title = messageBoxTitle;
-            msgInfo.text = tr("Operation on %1 '%2' failed. Reason: %3")
-                    .arg(typeString(), sync->name(),
-                         QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError())));
+            msgInfo.text = getOperationFailText(sync);
             msgInfo.textFormat = Qt::RichText;
             QMegaMessageBox::critical(msgInfo);
         });
 
         connect(mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, int syncErrorCode, const QString errorMsg, const QString localPath)
         {
-            const QString title = tr("Error adding %1").arg(typeString());
+            const QString title = getErrorAddingTitle();
 
             if (Preferences::instance()->accountType() == mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI &&
                 syncErrorCode == mega::MegaSync::ACCOUNT_EXPIRED)
@@ -143,9 +141,8 @@ public:
 
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.parent = this;
-            msgInfo.title = tr("Error removing %1").arg(typeString());
-            msgInfo.text =                                       tr("Your %1 can't be removed. Reason: %2")
-                    .arg(typeString(), QCoreApplication::translate("MegaError", err->getErrorString()));
+            msgInfo.title = getErrorRemovingTitle();
+            msgInfo.text =  getErrorRemovingText(err);
             msgInfo.textFormat = Qt::RichText;
             QMegaMessageBox::warning(msgInfo);
         });
@@ -184,8 +181,18 @@ protected:
 
     virtual QString getFinishWarningIconString() = 0;
     virtual QString getFinishIconString() = 0;
-    virtual QString typeString() = 0;
     virtual QString disableString() = 0;
+
+    //Operation failed
+    virtual QString getOperationFailTitle() = 0;
+    virtual QString getOperationFailText(std::shared_ptr<SyncSettings> sync) = 0;
+
+    //Error adding
+    virtual QString getErrorAddingTitle() = 0;
+
+    //Error removing
+    virtual QString getErrorRemovingTitle() = 0;
+    virtual QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) = 0;
 
 protected slots:
     virtual void removeSyncButtonClicked();
