@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>560</width>
-    <height>701</height>
+    <height>709</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -218,7 +218,7 @@ or certain file types that need not be synced.
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">QTableView::item::selected
+         <string notr="true">QListWidget::item::selected
 {
 background-color: rgba(0,120,215,0.8);
 color:white;

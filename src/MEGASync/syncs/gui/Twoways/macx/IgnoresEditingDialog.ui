@@ -158,10 +158,10 @@ or certain file types that need not be synced.
 margin:0px;
 }
 
-QTableView::item::selected
+QListWidget::item::selected
 {
 background-color: rgba(0,120,215,0.8);
-text-color:white;
+color:white;
 }</string>
               </property>
               <property name="verticalScrollBarPolicy">
