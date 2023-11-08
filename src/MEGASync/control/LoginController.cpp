@@ -461,6 +461,7 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
     }
     else
     {
+        setState(LOGGED_OUT);
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
         mPreferences->setNeedsFetchNodesInGeneral(true);
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
