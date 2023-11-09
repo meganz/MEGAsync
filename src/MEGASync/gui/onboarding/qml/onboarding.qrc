@@ -51,7 +51,6 @@
         <file>content/onboard/ConfirmEmailPageForm.ui.qml</file>
         <file>content/onboard/ChangeEmailPage.qml</file>
         <file>content/onboard/ChangeEmailPageForm.ui.qml</file>
-        <file>content/onboard/ConfirmCloseDialog.qml</file>
         <file>content/onboard/StackViewPage.qml</file>
         <file>content/onboard/PasswordConditionItem.qml</file>
         <file>content/onboard/PasswordInfoContent.qml</file>
