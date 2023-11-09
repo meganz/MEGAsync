@@ -65,7 +65,7 @@ set (USE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 1 CACHE STRING "")
 set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
-set (NO_READLINE 1 CACHE STRING "")
+set (NO_READLINE 0 CACHE STRING "")
 set (USE_DRIVE_NOTIFICATIONS 1 CACHE STRING "")
 set (USE_PCRE 0 CACHE STRING "")
 if (WIN32)
@@ -83,13 +83,17 @@ get_filename_component(MEGAsyncDir ${MEGAsyncDir} REALPATH)
 
 ## Use prebuild 3rdparties
 set (USE_PREBUILT_3RDPARTY 1 CACHE STRING "")
-set(prebuilt_dir "${MEGAsyncDir}/mega/bindings/qt/3rdparty")
-#specify where 3rd party libraries are available
-set(Mega3rdPartyDir "${prebuilt_dir}"  CACHE STRING "")
-
 
 ## Use vcpkg 3rdparties
-#set (USE_THIRDPARTY_FROM_VCPKG 1 CACHE STRING "")
+If (WIN32 OR APPLE)
+    set (USE_THIRDPARTY_FROM_VCPKG 1 CACHE STRING "")
+    set (prebuilt_dir "${MEGAsyncDir}/../../../3rdparty_desktop")
+else()
+    set (USE_THIRDPARTY_FROM_VCPKG 0 CACHE STRING "")
+endif()
+
+set(Mega3rdPartyDir "${prebuilt_dir}"  CACHE STRING "")
+
 #set(Mega3rdPartyDir "C:/path/to/vcpkg/parent/folder"  CACHE STRING "")
 
 
@@ -212,11 +216,11 @@ set (FORMS
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorTreeViewWidget.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/SearchLineEdit.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/FolderBinder.ui
-    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/BindFolderDialog.ui
-	    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/IgnoresEditingDialog.ui
+    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/IgnoresEditingDialog.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncAccountFullMessage.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncStallModeSelector.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncSettingsUIBase.ui
+    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/BindFolderDialog.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupsWizard.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/AddBackupDialog.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/RemoveBackupDialog.ui
@@ -248,7 +252,6 @@ set (FORMS
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/OtherSideMissingOrBlocked.ui
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/LocalAndRemoteNameConflicts.ui
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/NameConflict.ui
-
     )
 
 
@@ -387,7 +390,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/SyncSettingsUIBase.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.h
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.h
-	${MEGAsyncDir}/syncs/gui/Twoways/IgnoresEditingDialog.h
+    ${MEGAsyncDir}/syncs/gui/Twoways/IgnoresEditingDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.h
@@ -447,19 +450,20 @@ set (MOC_INPUT
     ${MEGAsyncDir}/UserAttributesRequests/Avatar.h
     ${MEGAsyncDir}/UserAttributesRequests/MyChatFilesFolder.h
     ${MEGAsyncDir}/UserAttributesRequests/CameraUploadFolder.h
+
     ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.h
 
     ${MEGAsyncDir}/stalled_issues/model/StalledIssue.h
     ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.h
-	
+
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.h
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.h
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.h
     ${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.h
-	${MEGAsyncDir}/stalled_issues/model/IgnoredStalledIssue.h
+    ${MEGAsyncDir}/stalled_issues/model/IgnoredStalledIssue.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
-	${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.h
-	${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueHeader.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueLoadingItem.h
@@ -648,17 +652,12 @@ set (SRCS
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransferDelegateWidget.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransferLoadingItem.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.cpp
-
-    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.cpp
-    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.cpp
-    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.cpp
-    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.cpp
     ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.cpp
 
     ${MEGAsyncDir}/stalled_issues/model/StalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.cpp
-	${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.cpp
-	${MEGAsyncDir}/stalled_issues/model/IgnoredStalledIssue.cpp
+    ${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.cpp
+    ${MEGAsyncDir}/stalled_issues/model/IgnoredStalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.cpp
@@ -681,6 +680,11 @@ set (SRCS
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp
+
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
@@ -721,8 +725,8 @@ set (SRCS
     ${MEGAsyncDir}/syncs/gui/SyncSettingsUIBase.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.cpp
-	${MEGAsyncDir}/syncs/gui/Twoways/IgnoresEditingDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.cpp
+    ${MEGAsyncDir}/syncs/gui/Twoways/IgnoresEditingDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.cpp
@@ -736,7 +740,6 @@ set (SRCS
     ${MEGAsyncDir}/syncs/model/BackupItemModel.cpp
     ${MEGAsyncDir}/syncs/model/SyncItemModel.cpp
     ${MEGAsyncDir}/syncs/control/SyncController.cpp
-    ${MEGAsyncDir}/syncs/control/MegaIgnoreManager.cpp
     ${MEGAsyncDir}/syncs/control/SyncSettings.cpp
     ${MEGAsyncDir}/syncs/control/SyncInfo.cpp
     ${MEGAsyncDir}/syncs/control/MegaIgnoreManager.cpp
@@ -766,6 +769,7 @@ if (CMAKE_HOST_WIN32)
         ${MEGAsyncDir}/google_breakpad/client/windows/crash_generation/crash_generation_client.cc
 
         ${MEGAsyncDir}/control/win/Utilities.cpp
+
         ${MEGAsyncDir}/platform/win/RecursiveShellNotifier.cpp
         ${MEGAsyncDir}/platform/win/ThreadedQueueShellNotifier.cpp
         ${MEGAsyncDir}/platform/win/PlatformImplementation.cpp
