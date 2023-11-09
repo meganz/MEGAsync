@@ -101,6 +101,13 @@ Rectangle {
                     width: backupsProxyModel.selectedFilterEnabled ? 0 : contentRoot.checkboxWidth
                     checked: selected
                     visible: !backupsProxyModel.selectedFilterEnabled
+                    manageChecked: true
+
+                    Keys.onPressed: {
+                        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
+                            selected = !selected;
+                        }
+                    }
                 }
 
                 Row {
