@@ -1169,7 +1169,7 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
 
     if(node->isFile())
     {
-        QFileInfo fileInfo(QString::fromUtf8(node->getName()));
+        QFileInfo fileInfo(currentName);
 
         auto nameSplitted = Utilities::getFilenameBasenameAndSuffix(fileInfo.fileName());
         if(nameSplitted != QPair<QString, QString>())
@@ -1192,10 +1192,10 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
         nodeName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toUtf8().constData()));
     }
 
-    bool nameFound(false);
     int counter(1);
-    while(!nameFound)
+    while(newName.isEmpty())
     {
+        bool nameFound = false;
         QString suggestedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
         if(node)
         {
@@ -1207,13 +1207,20 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
 
         if(!itemsBeingRenamed.contains(suggestedName, Qt::CaseInsensitive))
         {
-            auto foundNode = std::shared_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode, suggestedName.toStdString().c_str(),
-                                                                                                     node->isFile() ? MegaNode::TYPE_FILE : MegaNode::TYPE_FOLDER));
+            std::unique_ptr<MegaNodeList>nodes(MegaSyncApp->getMegaApi()->getChildren(parentNode));
+            for(int index = 0; index < nodes->size(); ++index)
+            {
+                QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
+                if(suggestedName.compare(nodeName, Qt::CaseInsensitive) == 0)
+                {
+                    nameFound = true;
+                }
+            }
 
-            if(!foundNode)
+
+            if(!nameFound)
             {
                 newName = suggestedName;
-                nameFound = true;
             }
         }
 
@@ -1519,8 +1526,8 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
     }
 }
 
-WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node)
-    : mTransfersFrom(from), mNode(node)
+WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node, bool undelete)
+    : mTransfersFrom(from), mNode(node), mUndelete(undelete)
 {
     qRegisterMetaType<QQueue<WrappedNode*>>("QQueue<WrappedNode*>");
 }
