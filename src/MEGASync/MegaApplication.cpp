@@ -2335,10 +2335,7 @@ void MegaApplication::raiseInfoDialog()
         }
 #endif
 
-        if (mSettingsDialog)
-        {
-            DialogOpener::showDialog(mSettingsDialog);
-        }
+        DialogOpener::raiseAllDialogs();
         if (preferences->getSession().isEmpty())
         {
             openOnboardingDialog();
