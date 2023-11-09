@@ -149,7 +149,7 @@ Rectangle {
         color: Styles.borderDisabled
     }
 
-    StackView {
+    StackViewBase {
         id: stack
 
         anchors {
@@ -157,35 +157,8 @@ Rectangle {
             top: root.top
             bottom: root.bottom
             right: root.right
-            leftMargin: 48
-            rightMargin: 48
-            topMargin: 48
+            margins: 48
             bottomMargin: 16
-        }
-
-        replaceEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: 100
-                easing.type: Easing.OutQuad
-            }
-        }
-
-        replaceExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to: 0
-                duration: 100
-                easing.type: Easing.InQuad
-            }
-        }
-
-        onCurrentItemChanged:
-        {
-            currentItem.setInitialFocusPosition()
         }
 
         Component {
@@ -217,15 +190,15 @@ Rectangle {
 
             ChangeEmailPage {}
         }
+    }
 
-        Connections {
-            target: loginControllerAccess
+    Connections {
+        target: loginControllerAccess
 
-            function onAccountCreationCancelled() {
-                onboardingWindow.creatingAccount = false;
-                cancelCreateAccount.close();
-                onboardingWindow.forceClose();
-            }
+        function onAccountCreationCancelled() {
+            onboardingWindow.creatingAccount = false;
+            cancelCreateAccount.close();
+            onboardingWindow.forceClose();
         }
     }
 
