@@ -281,6 +281,10 @@ void HTTPServer::processRequest(QPointer<QAbstractSocket> socket, HTTPRequest re
     case EXTERNAL_DOWNLOAD_REQUEST_START:
         externalDownloadRequest(response, request, socket);
         break;
+    case EXTERNAL_REWIND_REQUEST_START:
+        // Set 'undelete' to true
+        externalDownloadRequest(response, request, socket, true);
+        break;
     case EXTERNAL_FILE_UPLOAD_REQUEST_START:
         externalFileUploadRequest(response, request);
         break;
@@ -431,7 +435,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
     }
 }
 
-void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& request, QAbstractSocket* socket)
+void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& request, QAbstractSocket* socket, bool undelete)
 {
     QPointer<QAbstractSocket> safeSocket = socket;
     QPointer<HTTPServer> safeServer = this;
@@ -536,7 +540,7 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                     MegaNode *node = megaApi->createForeignFolderNode(h, nameArray.constData(), p,
                                                                      privateAuthArray.constData(),
                                                                      publicAuthArray.constData());
-                    downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node));
+                    downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node, undelete));
                 }
                 else
                 {
@@ -557,7 +561,7 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                                                          p, privateAuthArray.constData(),
                                                          publicAuthArray.constData(),
                                                          chatAuth.isEmpty() ? nullptr :  chatAuthArray.constData());
-                        downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node));
+                        downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node, undelete));
                         QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(h);
                         if (it != webTransferStateRequests.end())
                         {
@@ -879,6 +883,7 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
 {
     static const QString openLinkRequestStart(QLatin1String("{\"a\":\"l\","));
     static const QString externalDownloadRequestStart(QLatin1String("{\"a\":\"d\","));
+    static const QString externalRewindRequestStart(QLatin1String("{\"a\":\"gd\","));
     static const QString externalFileUploadRequestStart(QLatin1String("{\"a\":\"ufi\","));
     static const QString externalFolderUploadRequestStart(QLatin1String("{\"a\":\"ufo\","));
     static const QString externalFolderSyncRequestStart(QLatin1String("{\"a\":\"s\","));
@@ -937,6 +942,10 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
     else if(request.data.startsWith(externalAddBackup))
     {
         return EXTERNAL_ADD_BACKUP;
+    }
+    else if(request.data.startsWith(externalRewindRequestStart))
+    {
+        return EXTERNAL_REWIND_REQUEST_START;
     }
     return UNKNOWN_REQUEST;
 }

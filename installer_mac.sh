@@ -183,6 +183,9 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
 
     touch ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
 
+    # need to remove .prl leftovers from frameworks after macdeployqt
+    find ${MSYNC_PREFIX}MEGAsync.app/Contents -type f -name "*.prl" -exec rm -f {} +
+
     if [ ${build_cmake} -ne 1 ]; then
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ] && cp -L $CARES_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CURL_VERSION ] && cp -L $CURL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
