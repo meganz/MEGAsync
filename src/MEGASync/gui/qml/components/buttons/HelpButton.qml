@@ -15,12 +15,20 @@ Qml.Button {
     property size iconSize: Qt.size(16, 16)
     property bool visited: false
 
+    property Colors colors: Colors {}
+    property Sizes sizes: Sizes {}
+
     width: icon.width + spacing + textComponent.width
     height: Math.max(textComponent.height, icon.height)
     Layout.preferredWidth: width
     Layout.preferredHeight: height
     spacing: 6
     opacity: enabled ? 1.0 : 0.3
+
+    function openHelpUrl() {
+        Qt.openUrlExternally(url);
+        visited = true;
+    }
 
     contentItem: Row {
         anchors.fill: parent
@@ -48,8 +56,20 @@ Qml.Button {
     }
 
     background: Rectangle {
+        id: background
+
         anchors.fill: parent
+        anchors.margins: -sizes.focusBorderWidth
         color: "transparent"
+        border.color: button.activeFocus ? colors.focus : "transparent"
+        border.width: sizes.focusBorderWidth
+        radius: sizes.focusBorderRadius
+    }
+
+    Keys.onPressed: {
+        if(event.key === Qt.Key_Space || event.key === Qt.Key_Return) {
+            openHelpUrl()
+        }
     }
 
     MouseArea {
@@ -57,8 +77,7 @@ Qml.Button {
         cursorShape: Qt.PointingHandCursor
         hoverEnabled: true
         onClicked: {
-            Qt.openUrlExternally(url);
-            visited = true;
+            openHelpUrl()
         }
     }
 
