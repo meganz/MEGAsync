@@ -226,6 +226,7 @@ Rectangle {
             target: loginControllerAccess
 
             function onAccountCreationCancelled() {
+                onboardingWindow.creatingAccount = false;
                 cancelCreateAccount.close();
                 onboardingWindow.forceClose();
             }

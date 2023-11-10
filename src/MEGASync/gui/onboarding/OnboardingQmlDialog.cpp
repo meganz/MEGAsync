@@ -11,11 +11,26 @@ OnboardingQmlDialog::OnboardingQmlDialog(QWindow *parent)
     , mLoggingIn(false)
     , mCloseClicked(false)
     , mForceClose(false)
+    , mCreatingAccount(false)
 {
 }
 
 OnboardingQmlDialog::~OnboardingQmlDialog()
 {
+}
+
+bool OnboardingQmlDialog::getCreatingAccount() const
+{
+    return mCreatingAccount;
+}
+
+void OnboardingQmlDialog::setCreatingAccount(bool value)
+{
+    if(mCreatingAccount != value)
+    {
+        mCreatingAccount = value;
+        emit creatingAccountChanged();
+    }
 }
 
 bool OnboardingQmlDialog::getLoggingIn() const
@@ -73,7 +88,7 @@ bool OnboardingQmlDialog::event(QEvent *evnt)
             evnt->ignore();
             return true;
         }
-        else if(mega::EPHEMERALACCOUNT == MegaSyncApp->getMegaApi()->isLoggedIn())
+        else if(mCreatingAccount)
         {
             emit closingButCreatingAccount();
             evnt->ignore();

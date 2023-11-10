@@ -20,6 +20,7 @@ RegisterPageForm {
                                       registerContent.password.text,
                                       registerContent.firstName.text,
                                       registerContent.lastName.text);
+        onboardingWindow.creatingAccount = true;
     }
 
     loginButton.onClicked: {

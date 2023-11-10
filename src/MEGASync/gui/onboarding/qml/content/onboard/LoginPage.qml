@@ -75,6 +75,7 @@ LoginPageForm {
             PropertyChanges {
                 target: onboardingWindow
                 loggingIn: false;
+                creatingAccount: false;
             }
             PropertyChanges {
                 target: loginPage;
@@ -90,6 +91,7 @@ LoginPageForm {
             PropertyChanges {
                 target: onboardingWindow
                 loggingIn: true;
+                creatingAccount: false;
             }
             PropertyChanges {
                 target: loginPage;
@@ -110,6 +112,7 @@ LoginPageForm {
             PropertyChanges {
                 target: onboardingWindow
                 loggingIn: false;
+                creatingAccount: true;
             }
         },
         State {
@@ -118,6 +121,7 @@ LoginPageForm {
             PropertyChanges {
                 target: onboardingWindow
                 loggingIn: false;
+                creatingAccount: true;
             }
         },
         State {
