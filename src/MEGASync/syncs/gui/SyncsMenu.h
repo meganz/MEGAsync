@@ -27,7 +27,6 @@ public:
 
     static SyncsMenu* newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled, QWidget* parent);
     QPointer<MenuItemAction> getAction();
-    QMenu* getMenu();
     void callMenu(const QPoint& p);
     void setEnabled(bool state);
 
@@ -101,7 +100,6 @@ private:
     MenuItemAction* mAddAction;
     MenuItemAction* mMenuAction;
     MenuItemAction* mLastHovered;
-    MenuItemAction* mDevNameAction;
 };
 
 

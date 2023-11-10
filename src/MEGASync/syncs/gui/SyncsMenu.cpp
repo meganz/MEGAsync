@@ -44,9 +44,8 @@ QPointer<MenuItemAction> SyncsMenu::getAction()
     return mMenu->actions().isEmpty() ? mAddAction : mMenuAction;
 }
 
-QMenu *SyncsMenu::getMenu()
+QPointer<QMenu> SyncsMenu::getMenu()
 {
-    refresh();
     return mMenu->actions().isEmpty() ? nullptr : mMenu;
 }
 
@@ -190,77 +189,9 @@ QString SyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& sy
     return toolTip;
 }
 
-QPointer<QMenu> SyncsMenu::getMenu()
-{
-    return mMenu->actions().isEmpty() ? nullptr : mMenu;
-}
-
 void SyncsMenu::onAddSync()
 {
     emit addSync(mType);
-}
-
-void SyncsMenu::onDeviceNameSet(QString name)
-{
-    if (mDevNameAction)
-    {
-        mDevNameAction->setLabelText(name);
-        // Get next action to refresh devicename
-        auto actions (mMenu->actions());
-        auto idx (actions.indexOf(mDevNameAction));
-        auto idxNext (idx + 1);
-        if (idx >= 0 && idxNext < actions.size())
-        {
-            mMenu->removeAction(mDevNameAction);
-            mMenu->insertAction(actions.at(idxNext), mDevNameAction);
-        }
-    }
-}
-
-QString SyncsMenu::getAddText()
-{
-    QString textAdd;
-    switch (mType)
-    {
-        case mega::MegaSync::TYPE_TWOWAY:
-        {
-            textAdd = tr("Add Sync");
-            break;
-        }
-        case mega::MegaSync::TYPE_BACKUP:
-        {
-            textAdd = tr("Add Backup");
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-    return textAdd;
-}
-
-QString SyncsMenu::getMenuText()
-{
-    QString textMenu;
-    switch (mType)
-    {
-        case mega::MegaSync::TYPE_TWOWAY:
-        {
-            textMenu = tr("Syncs");
-            break;
-        }
-        case mega::MegaSync::TYPE_BACKUP:
-        {
-            textMenu = tr("Backups");
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-    return textMenu;
 }
 
 void SyncsMenu::highLightMenuEntry(QAction* action)
