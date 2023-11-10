@@ -56,7 +56,7 @@ private:
     QPointer<QMenu> mMenu;
     QPointer<MenuItemAction> mAddAction;
     QPointer<MenuItemAction> mMenuAction;
-    MenuItemAction* mLastHovered;
+    QPointer<MenuItemAction> mLastHovered;
     mega::MegaSync::SyncType mType;
     int mItemIndent;
     QIcon mMenuIcon;
@@ -95,11 +95,6 @@ private:
     QPointer<MenuItemAction> mDevNameAction;
     std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
     std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
-    mega::MegaSync::SyncType mType;
-    QMenu* mMenu;
-    MenuItemAction* mAddAction;
-    MenuItemAction* mMenuAction;
-    MenuItemAction* mLastHovered;
 };
 
 
