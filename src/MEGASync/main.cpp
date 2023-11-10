@@ -597,6 +597,25 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-SemiBold.ttf"));
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Thin.ttf"));
 
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-Black.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-BlackItalic.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-Bold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-BoldItalic.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-ExtraBold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-ExtraBoldItalic.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-ExtraLight.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-ExtraLightItalic.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-Italic.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-Light.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-LightItalic.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-Medium.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-MediumItalic.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-SemiBold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-SemiBoldItalic.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-Thin.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-ThinItalic.ttf"));
+
     app.setWindowIcon(QIcon(QString::fromUtf8(":/images/app_ico.ico")));
 
     app.initialize();

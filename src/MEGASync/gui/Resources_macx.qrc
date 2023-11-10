@@ -1109,5 +1109,6 @@
         <file>fonts/Inter-Regular.ttf</file>
         <file>fonts/Inter-SemiBold.ttf</file>
         <file>fonts/Inter-Thin.ttf</file>
+        <file>fonts/Poppins-SemiBold.ttf</file>
     </qresource>
 </RCC>

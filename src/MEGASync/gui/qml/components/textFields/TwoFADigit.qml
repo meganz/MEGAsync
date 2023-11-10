@@ -16,24 +16,28 @@ MegaTextFields.TextField {
     height: 72 + 2 * sizes.focusBorderWidth
     width: 60 + 2 * sizes.focusBorderWidth
     sizes.focusBorderWidth: 4
-    error: hasError
 
-    textField.height: root.height
-    textField.padding: 0
-    textField.horizontalAlignment: Text.AlignHCenter
-    textField.verticalAlignment: Text.AlignVCenter
-    textField.validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
-    textField.font {
-        pixelSize: MegaTexts.Text.Huge
-        weight: Font.DemiBold
+    textField {
+        height: root.height
+        padding: 0
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignVCenter
+        validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
+        font {
+            pixelSize: MegaTexts.Text.Huge
+            weight: Font.DemiBold
+            family: "Poppins"
+        }
     }
 
     textField.onTextChanged: {
-        if(textField.text.length !== 0 && next !== undefined) {
+        var isCharacterEntered = textField.text.length !== 0;
+        if(isCharacterEntered && next !== undefined) {
             next.textField.focus = true;
         } else {
             textField.focus = false;
         }
+        textField.horizontalAlignment = isCharacterEntered ? TextInput.AlignHCenter : TextInput.AlignLeft;
     }
 
     onFocusChanged: {
