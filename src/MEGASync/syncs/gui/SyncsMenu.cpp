@@ -1,14 +1,12 @@
 #include "SyncsMenu.h"
 #include "Utilities.h"
-#include "InfoDialog.h"
+//#include "InfoDialog.h"
 #include "Preferences/Preferences.h"
 #include "syncs/control/SyncInfo.h"
 #include "Platform.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "SyncTooltipCreator.h"
-
-#include <QtConcurrent/QtConcurrent>
 
 #ifdef Q_OS_WINDOWS
 const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-win_24.png");
@@ -18,177 +16,29 @@ const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-mac_24.png");
 const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-linux_24.png");
 #endif
 
-SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(parent),
-    mDeviceNameRequest (nullptr),
-    mMyBackupsHandleRequest (nullptr),
-    mType (type),
-    mMenu (new QMenu()),
-    mAddAction (new MenuItemAction(QString(), QIcon(), true)),
-    mMenuAction (new MenuItemAction(QString(), QIcon(), true)),
-    mLastHovered (nullptr),
-    mDevNameAction (nullptr)
+// SyncsMenu ----------
+SyncsMenu* SyncsMenu::newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled, QWidget* parent)
 {
-    QIcon iconMenu;
+    SyncsMenu* menu (nullptr);
 
-    switch (mType)
+    switch (type)
     {
-        case mega::MegaSync::TYPE_TWOWAY:
-        {
-            iconMenu = QIcon(QLatin1String("://images/icons/ico_sync.png"));
-            break;
-        }
-        case mega::MegaSync::TYPE_BACKUP:
-        {
-            iconMenu = QIcon(QLatin1String("://images/icons/ico_backup.png"));
-            mDeviceNameRequest = UserAttributes::DeviceName::requestDeviceName();
-            mMyBackupsHandleRequest = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-            connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
-                    this, &SyncsMenu::onDeviceNameSet);
-            break;
-        }
-        default:
-        {
-            break;
-        }
+    case mega::MegaSync::TYPE_TWOWAY:
+        menu = new TwoWaySyncsMenu(parent);
+        break;
+    case mega::MegaSync::TYPE_BACKUP:
+        menu = new BackupSyncsMenu(parent);
+        break;
     }
-    mAddAction->setLabelText(getAddText());
-    mAddAction->setParent(mMenu);
-    connect(mAddAction, &MenuItemAction::triggered,
-            this, &SyncsMenu::onAddSync);
 
-    mMenuAction->setLabelText(getMenuText());
-    mMenuAction->setIcon(iconMenu);
-    mMenuAction->setParent(mMenu);
-
-    Platform::getInstance()->initMenu(mMenu, "SyncsMenu");
-    mMenu->setToolTipsVisible(true);
-
-    //Highlight menu entry on mouse over
-    connect(mMenu, &QMenu::hovered,
-            this, &SyncsMenu::highLightMenuEntry);
-    mMenu->installEventFilter(this);
+    if (menu)
+    {
+        menu->setEnabled(isEnabled);
+    }
+    return menu;
 }
 
-void SyncsMenu::refresh()
-{
-    SyncInfo* model (SyncInfo::instance());
-    MenuItemAction* firstBackup (nullptr);
-
-    // Actions will be deleted, so reset the last hovered pointer
-    mLastHovered = nullptr;
-
-    // Reset menu (leave mAddAction only)
-    const auto actions (mMenu->actions());
-    for (QAction* a : actions)
-    {
-        if (a != mAddAction && a != mDevNameAction)
-        {
-            mMenu->removeAction(a);
-            delete a;
-        }
-    }
-    if (mDevNameAction)
-    {
-        mMenu->removeAction(mDevNameAction);
-    }
-    if (mAddAction)
-    {
-        mMenu->removeAction(mAddAction);
-    }
-
-    int activeFolders (0);
-
-    // Get number of <type>. Show only "Add <type>" button if no items, and whole menu otherwise.
-    int numItems = (Preferences::instance()->logged()) ?
-                       model->getNumSyncedFolders(mType)
-                     : 0;
-    if (numItems > 0)
-    {
-        int itemIndent (mType == mega::MegaSync::TYPE_BACKUP);
-
-        for (int i = 0; i < numItems; ++i)
-        {
-            auto backupSetting = model->getSyncSetting(i, mType);
-
-            if (backupSetting->isActive())
-            {
-                activeFolders++;
-                MenuItemAction* action =
-                        new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
-                                           QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")), true, itemIndent);
-                action->setToolTip(createSyncTooltipText(backupSetting));
-                connect(action, &MenuItemAction::triggered,
-                        this, [backupSetting](){
-                    Utilities::openUrl(
-                                      QUrl::fromLocalFile(backupSetting->getLocalFolder()));
-                });
-
-                mMenu->addAction(action);
-                action->setParent(mMenu);
-                if (!firstBackup)
-                {
-                    firstBackup = action;
-                }
-            }
-        }
-
-        // Display "Add <type>" at the end of the list
-        if (activeFolders)
-        {
-            static const QIcon iconAdd (QLatin1String("://images/icons/ico_add_sync.png"));
-            mAddAction->setIcon(iconAdd);
-            mMenu->addSeparator();
-            mMenu->addAction(mAddAction);
-        }
-    }
-
-    if (!numItems || !activeFolders)
-    {
-        mMenuAction->setMenu(nullptr);
-        switch (mType)
-        {
-            case mega::MegaSync::TYPE_TWOWAY:
-            {
-                static const QIcon iconAdd (QLatin1String("://images/icons/ico_sync.png"));
-                mAddAction->setIcon(iconAdd);
-                break;
-            }
-            case mega::MegaSync::TYPE_BACKUP:
-            {
-                static const QIcon iconAdd (QLatin1String("://images/icons/ico_backup.png"));
-                mAddAction->setIcon(iconAdd);
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
-    }
-    else
-    {
-        // Show device name if Backups
-        if (mType == mega::MegaSync::TYPE_BACKUP)
-        {
-            if (!mDevNameAction)
-            {
-                // Display device name before folders
-                mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON), true);
-                // Insert the action in the menu to make sure it is here when the
-                // set device name slot is called.
-                mMenu->insertAction(firstBackup, mDevNameAction);
-                onDeviceNameSet(mDeviceNameRequest->getDeviceName());
-            }
-            else
-            {
-                mMenu->insertAction(firstBackup, mDevNameAction);
-            }
-        }
-        mMenuAction->setMenu(mMenu);
-    }
-}
-
-MenuItemAction* SyncsMenu::getAction()
+QPointer<MenuItemAction> SyncsMenu::getAction()
 {
     refresh();
     return mMenu->actions().isEmpty() ? mAddAction : mMenuAction;
@@ -203,19 +53,48 @@ QMenu *SyncsMenu::getMenu()
 void SyncsMenu::callMenu(const QPoint& p)
 {
     refresh();
-    if (mMenu->actions().isEmpty())
-    {
-        onAddSync();
-    }
-    else
-    {
-        mMenu->popup(p);
-    }
+    mMenu->actions().isEmpty() ? onAddSync() : mMenu->popup(p);
 }
 
 void SyncsMenu::setEnabled(bool state)
 {
     mAddAction->setEnabled(state);
+}
+
+SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
+                     int itemIndent,
+                     const QIcon& iconMenu,
+                     const QString& addActionText,
+                     const QString& menuActionText,
+                     QWidget *parent) :
+    QWidget(parent),
+    mMenu (new QMenu(this)),
+    mLastHovered (nullptr),
+    mType (type),
+    mItemIndent (itemIndent),
+    mMenuIcon(iconMenu),
+    mAddActionText(addActionText),
+    mMenuActionText(menuActionText)
+{
+    mAddAction  = new MenuItemAction(QString(), QString(), mMenu);
+    mAddAction->setManagesHoverStates(true);
+    mAddAction->setLabelText(tr(mAddActionText.toUtf8().constData()));
+    connect(mAddAction, &MenuItemAction::triggered,
+            this, &SyncsMenu::onAddSync);
+
+    mMenuAction  = new MenuItemAction(QString(), QString(), mMenu);
+    mMenuAction->setManagesHoverStates(true);
+    mMenuAction->setLabelText(tr(mMenuActionText.toUtf8().constData()));
+    mMenuAction->setIcon(mMenuIcon);
+
+    const auto menuName (QString::fromLatin1("SyncsMenu - ").append(mMenuActionText));
+    Platform::getInstance()->initMenu(mMenu, menuName.toUtf8().constData());
+    mMenu->setToolTipsVisible(true);
+
+    //Highlight menu entry on mouse over
+    connect(mMenu, &QMenu::hovered,
+            this, &SyncsMenu::highLightMenuEntry);
+    mMenu->installEventFilter(this);
 }
 
 bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
@@ -231,10 +110,89 @@ bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
     }
     else if(obj == mMenu && e->type() == QEvent::LanguageChange)
     {
-        mMenuAction->setLabelText(getMenuText());
-        mAddAction->setLabelText(getAddText());
+        mMenuAction->setLabelText(tr(mMenuActionText.toUtf8().constData()));
+        mAddAction->setLabelText(tr(mAddActionText.toUtf8().constData()));
     }
     return QObject::eventFilter(obj, e);
+}
+
+void SyncsMenu::refresh()
+{
+    auto* model (SyncInfo::instance());
+
+    // Actions will be deleted, so reset the last hovered pointer
+    mLastHovered = nullptr;
+
+    // Reset menu (leave actionsToKeep)
+    const auto actions (mMenu->actions());
+    for (QAction* a : actions)
+    {
+        mMenu->removeAction(a);
+        if (a != mAddAction)
+        {
+            a->deleteLater();
+        }
+    }
+
+    int activeFolders (0);
+
+    // Get number of <type>. Show only "Add <type>" button if no items, and whole menu otherwise.
+    const int numItems = (Preferences::instance()->logged()) ?
+                             model->getNumSyncedFolders(mType)
+                                                             : 0;
+    for (int i = 0; i < numItems; ++i)
+    {
+        auto syncSetting = model->getSyncSetting(i, mType);
+
+        if (syncSetting->isActive())
+        {
+            activeFolders++;
+            auto* action =
+                new MenuItemAction(SyncController::getSyncNameFromPath(syncSetting->getLocalFolder(true)),
+                                   QLatin1String("://images/icons/folder/folder-mono_24.png"),
+                                   mMenu);
+            action->setManagesHoverStates(true);
+            action->setTreeDepth(mItemIndent);
+            action->setToolTip(createSyncTooltipText(syncSetting));
+            connect(action, &MenuItemAction::triggered,
+                    this, [syncSetting](){
+                        Utilities::openUrl(
+                            QUrl::fromLocalFile(syncSetting->getLocalFolder()));
+                    });
+            mMenu->addAction(action);
+        }
+    }
+
+    // Display "Add <type>" at the end of the list
+    if (activeFolders)
+    {
+        const QIcon iconAdd (QLatin1String("://images/icons/ico_add_sync.png"));
+        mAddAction->setIcon(iconAdd);
+        mMenu->addSeparator();
+        mMenu->addAction(mAddAction);
+    }
+
+    if (!numItems || !activeFolders)
+    {
+        mMenuAction->setMenu(nullptr);
+        mAddAction->setIcon(mMenuIcon);
+    }
+    else
+    {
+        mMenuAction->setMenu(mMenu);
+    }
+}
+
+QString SyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
+{
+    QString toolTip (SyncTooltipCreator::createForLocal(syncSetting->getLocalFolder()));
+    toolTip += QChar::LineSeparator;
+    return toolTip;
+}
+
+QPointer<QMenu> SyncsMenu::getMenu()
+{
+    return mMenu->actions().isEmpty() ? nullptr : mMenu;
 }
 
 void SyncsMenu::onAddSync()
@@ -307,7 +265,7 @@ QString SyncsMenu::getMenuText()
 
 void SyncsMenu::highLightMenuEntry(QAction* action)
 {
-    MenuItemAction* pAction (static_cast<MenuItemAction*>(action));
+    auto* pAction (qobject_cast<MenuItemAction*>(action));
     if (pAction)
     {
         if (mLastHovered)
@@ -319,23 +277,83 @@ void SyncsMenu::highLightMenuEntry(QAction* action)
     }
 }
 
-QString SyncsMenu::createSyncTooltipText(std::shared_ptr<SyncSettings> syncSetting) const
+// TwoWaySyncsMenu ----
+TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent) :
+    SyncsMenu(mega::MegaSync::TYPE_TWOWAY, mTwoWaySyncItemIndent,
+              QIcon(QLatin1String("://images/icons/ico_sync.png")),
+              QLatin1String("Add Sync"),
+              QLatin1String("Syncs"),
+              parent)
 {
-    QString toolTip (SyncTooltipCreator::createForLocal(syncSetting->getLocalFolder()));
-    toolTip += QChar::LineSeparator;
-    switch (mType)
+    QT_TR_NOOP("Add Sync");
+    QT_TR_NOOP("Syncs");
+}
+
+QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
+{
+    return SyncsMenu::createSyncTooltipText(syncSetting)
+           + SyncTooltipCreator::createForRemote(syncSetting->getMegaFolder());
+}
+
+// BackupSyncsMenu ----
+BackupSyncsMenu::BackupSyncsMenu(QWidget* parent) :
+    SyncsMenu(mega::MegaSync::TYPE_BACKUP, mBackupItemIndent,
+                QIcon(QLatin1String("://images/icons/ico_backup.png")),
+                QLatin1String("Add Backup"),
+                QLatin1String("Backups"),
+                parent),
+    mDevNameAction(nullptr),
+    mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName()),
+    mMyBackupsHandleRequest(UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
+{
+    QT_TR_NOOP("Add Backup");
+    QT_TR_NOOP("Backups");
+    connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
+            this, &BackupSyncsMenu::onDeviceNameSet);
+}
+
+void BackupSyncsMenu::onDeviceNameSet(QString name)
+{
+    auto menu (getMenu());
+
+    if (menu && mDevNameAction)
     {
-    case mega::MegaSync::TYPE_TWOWAY:
+        mDevNameAction->setLabelText(name);
+        // Get next action to refresh devicename
+        auto actions (menu->actions());
+        auto idx (actions.indexOf(mDevNameAction));
+        auto idxNext (idx + 1);
+        if (idx >= 0 && idxNext < actions.size())
+        {
+            menu->removeAction(mDevNameAction);
+            menu->insertAction(actions.at(idxNext), mDevNameAction);
+        }
+    }
+}
+
+QString BackupSyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
+{
+    return SyncsMenu::createSyncTooltipText(syncSetting)
+           + SyncTooltipCreator::createForRemote(mMyBackupsHandleRequest->getNodeLocalizedPath(syncSetting->getMegaFolder()));
+}
+
+void BackupSyncsMenu::refresh()
+{
+    SyncsMenu::refresh();
+    auto menu (getMenu());
+    if (menu)
     {
-        toolTip += SyncTooltipCreator::createForRemote(syncSetting->getMegaFolder());
-        break;
+        const auto actions (menu->actions());
+        auto* const firstBackup (actions.isEmpty() ? nullptr : actions.first());
+
+        // Show device name
+        mDevNameAction->deleteLater();
+        // Display device name before folders
+        mDevNameAction = new MenuItemAction(QString(), DEVICE_ICON, menu);
+        mDevNameAction->setManagesHoverStates(true);
+        // Insert the action in the menu to make sure it is here when the
+        // set device name slot is called.
+        menu->insertAction(firstBackup, mDevNameAction);
+        onDeviceNameSet(mDeviceNameRequest->getDeviceName());
     }
-    case mega::MegaSync::TYPE_BACKUP:
-    {
-        toolTip += SyncTooltipCreator::createForRemote(
-                    mMyBackupsHandleRequest->getNodeLocalizedPath(syncSetting->getMegaFolder()));
-        break;
-    }
-    }
-    return toolTip;
 }

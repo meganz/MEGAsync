@@ -290,7 +290,6 @@ make install DESTDIR=%{buildroot}%{_bindir}
     install -D /opt/mega/plugins/platforms/libqoffscreen.so %{buildroot}/opt/mega/plugins/platforms/libqoffscreen.so
     install -D /opt/mega/plugins/platforms/libqminimal.so %{buildroot}/opt/mega/plugins/platforms/libqminimal.so
     install -D /opt/mega/plugins/platforms/libqlinuxfb.so %{buildroot}/opt/mega/plugins/platforms/libqlinuxfb.so
-    install -D /opt/mega/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.so
     install -D /opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so
     install -D /opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so
     install -D /opt/mega/plugins/imageformats/libqwebp.so %{buildroot}/opt/mega/plugins/imageformats/libqwebp.so
@@ -307,7 +306,6 @@ make install DESTDIR=%{buildroot}%{_bindir}
     install -D /opt/mega/plugins/bearer/libqgenericbearer.so %{buildroot}/opt/mega/plugins/bearer/libqgenericbearer.so
     install -D /opt/mega/plugins/bearer/libqconnmanbearer.so %{buildroot}/opt/mega/plugins/bearer/libqconnmanbearer.so
 
-    install -D /opt/mega/lib/libQt5VirtualKeyboard.so.*.*.* %{buildroot}/opt/mega/lib/libQt5VirtualKeyboard.so.5
     install -D /opt/mega/lib/libQt5Qml.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Qml.so.5
     install -D /opt/mega/lib/libQt5Quick.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Quick.so.5
 

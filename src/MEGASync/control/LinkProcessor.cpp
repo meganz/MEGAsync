@@ -364,8 +364,10 @@ void LinkProcessor::startDownload(mega::MegaNode* linkNode, const QString &local
     const char* appData = nullptr;
     MegaCancelToken* cancelToken = nullptr; // No cancellation possible
     MegaTransferListener* listener = nullptr;
+    const bool undelete = false;
     megaApi->startDownload(linkNode, path.constData(), name, appData, startFirst, cancelToken,
                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
+                           undelete,
                            listener);
 }

@@ -89,6 +89,9 @@ QString MegaApplication::lastNotificationError = QString();
 
 constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
 
+static const QString SCHEME_MEGA_URL = QString::fromUtf8("mega");
+static const QString SCHEME_LOCAL_URL = QString::fromUtf8("local");
+
 void MegaApplication::loadDataPath()
 {
 #ifdef Q_OS_LINUX
@@ -371,6 +374,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
+    // Unregister own url schemes
+    QDesktopServices::unsetUrlHandler(SCHEME_MEGA_URL);
+    QDesktopServices::unsetUrlHandler(SCHEME_LOCAL_URL);
+
     logger.reset();
 
     if (!translator.isEmpty())
@@ -440,9 +447,9 @@ void MegaApplication::initialize()
     isLinux = false;
 #endif
 
-    //Register own url schemes
-    QDesktopServices::setUrlHandler(QString::fromUtf8("mega"), this, "handleMEGAurl");
-    QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
+    // Register own url schemes
+    QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
+    QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
 
     registerCommonQMLElements();
 
@@ -1115,6 +1122,9 @@ void MegaApplication::start()
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromUtf8(" ") + Preferences::VERSION_STRING + QString::fromUtf8("\n") + tr("Logging in"));
     trayIcon->show();
 
+    //In case the previous session did not remove all of them
+    Preferences::instance()->clearTempTransfersPath();
+
     if (!preferences->lastExecutionTime())
     {
         Platform::getInstance()->enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
@@ -1643,17 +1653,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     noUploadedStarted = true;
 
     auto checkUploadNameDialog = new DuplicatedNodeDialog(node);
-    
-    auto counter(0);
-    EventUpdater checkUpdater(uploadQueue.size());
-    while (!uploadQueue.isEmpty())
-    {
-        QString nodePath = uploadQueue.dequeue();
-        checkUploadNameDialog->checkUpload(nodePath, node);
-
-        checkUpdater.update(counter);
-        counter++;
-    }
+    checkUploadNameDialog->checkUploads(uploadQueue, node);
 
     if(!checkUploadNameDialog->isEmpty())
     {
@@ -1762,7 +1762,9 @@ void MegaApplication::rebootApplication(bool update)
 
     reboot = true;
     auto transferCount = getTransfersModel()->getTransfersCount();
-    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting() || megaApi->isScanning()))
+    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads
+                   || megaApi->isWaiting() || megaApi->isScanning()
+                   || scanStageController.isInScanningState()))
     {
         if (!updateBlocked)
         {
@@ -2201,6 +2203,7 @@ void MegaApplication::cleanAll()
         Platform::getInstance()->notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
 
+    Preferences::instance()->clearTempTransfersPath();
     PowerOptions::appShutdown();
     mSyncController.reset();
 
@@ -2238,6 +2241,8 @@ void MegaApplication::cleanAll()
     delete notificationsDelegate;
     notificationsDelegate = nullptr;
 
+    infoDialog->deleteLater();
+
     // Delete menus and menu items
     deleteMenu(initialTrayMenu);
     deleteMenu(infoDialogMenu);
@@ -2245,6 +2250,8 @@ void MegaApplication::cleanAll()
 #ifdef _WIN32
     deleteMenu(windowsMenu);
 #endif
+    mSyncs2waysMenu->deleteLater();
+    mBackupsMenu->deleteLater();
 
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after
@@ -3788,7 +3795,12 @@ void MegaApplication::notifyChangeToAllFolders()
     for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
         ++mProcessingShellNotifications;
-        std::string stdLocalFolder = localFolder.toStdString();
+
+#ifdef _WIN32
+        string stdLocalFolder((const char*)localFolder.utf16(), localFolder.size()*sizeof(wchar_t));
+#else
+        string stdLocalFolder = localFolder.toStdString();
+#endif
         Platform::getInstance()->notifyItemChange(localFolder, megaApi->syncPathState(&stdLocalFolder));
     }
 }
@@ -5483,13 +5495,13 @@ void MegaApplication::createInfoDialogMenus()
         }
     }
 
-    recreateAction(&windowsExitAction, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
-    recreateAction(&windowsSettingsAction, tr("Settings"), &MegaApplication::openSettings);
-    recreateAction(&windowsImportLinksAction, tr("Open links"), &MegaApplication::importLinks);
-    recreateAction(&windowsUploadAction, tr("Upload"), &MegaApplication::uploadActionClicked);
-    recreateAction(&windowsDownloadAction, tr("Download"), &MegaApplication::downloadActionClicked);
-    recreateAction(&windowsStreamAction, tr("Stream"), &MegaApplication::streamActionClicked);
-    recreateAction(&windowsTransferManagerAction, tr("Transfer manager"),
+    recreateAction(&windowsExitAction, windowsMenu, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
+    recreateAction(&windowsSettingsAction, windowsMenu, tr("Settings"), &MegaApplication::openSettings);
+    recreateAction(&windowsImportLinksAction, windowsMenu, tr("Open links"), &MegaApplication::importLinks);
+    recreateAction(&windowsUploadAction, windowsMenu, tr("Upload"), &MegaApplication::uploadActionClicked);
+    recreateAction(&windowsDownloadAction, windowsMenu, tr("Download"), &MegaApplication::downloadActionClicked);
+    recreateAction(&windowsStreamAction, windowsMenu, tr("Stream"), &MegaApplication::streamActionClicked);
+    recreateAction(&windowsTransferManagerAction, windowsMenu, tr("Transfer manager"),
                    &MegaApplication::transferManagerActionClicked);
 
     bool windowsUpdateActionEnabled = true;
@@ -5559,33 +5571,31 @@ void MegaApplication::createInfoDialogMenus()
         infoDialogMenu->installEventFilter(this);
     }
 
-    recreateMenuAction(&exitAction, PlatformStrings::exit(),
+    recreateMenuAction(&exitAction, infoDialogMenu, PlatformStrings::exit(),
                        "://images/ico_quit.png", &MegaApplication::tryExitApplication);
-    recreateMenuAction(&settingsAction, tr("Settings"),
+    recreateMenuAction(&settingsAction, infoDialogMenu, tr("Settings"),
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
-    recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
+    recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
-    bool previousEnabledState = true;
+    bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
     {
-        mSyncs2waysMenu = new SyncsMenu(MegaSync::TYPE_TWOWAY, infoDialog);
+        mSyncs2waysMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_TWOWAY, previousEnabledState, infoDialog);
         connect(mSyncs2waysMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
-        mSyncs2waysMenu->setEnabled(exitAction->isEnabled());
     }
 
     if (!mBackupsMenu)
     {
-        mBackupsMenu = new SyncsMenu(MegaSync::TYPE_BACKUP, infoDialog);
+        mBackupsMenu = SyncsMenu::newSyncsMenu(MegaSync::TYPE_BACKUP, previousEnabledState, infoDialog);
         connect(mBackupsMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
-        mBackupsMenu->setEnabled(exitAction->isEnabled());
     }
 
-    recreateMenuAction(&importLinksAction, tr("Open links"), "://images/ico_Import_links.png", &MegaApplication::importLinks);
-    recreateMenuAction(&uploadAction, tr("Upload"), "://images/ico_upload.png", &MegaApplication::uploadActionClicked);
-    recreateMenuAction(&downloadAction, tr("Download"), "://images/ico_download.png", &MegaApplication::downloadActionClicked);
-    recreateMenuAction(&streamAction, tr("Stream"), "://images/ico_stream.png", &MegaApplication::streamActionClicked);
+    recreateMenuAction(&importLinksAction, infoDialogMenu, tr("Open links"), "://images/ico_Import_links.png", &MegaApplication::importLinks);
+    recreateMenuAction(&uploadAction, infoDialogMenu, tr("Upload"), "://images/ico_upload.png", &MegaApplication::uploadActionClicked);
+    recreateMenuAction(&downloadAction, infoDialogMenu, tr("Download"), "://images/ico_download.png", &MegaApplication::downloadActionClicked);
+    recreateMenuAction(&streamAction, infoDialogMenu, tr("Stream"), "://images/ico_stream.png", &MegaApplication::streamActionClicked);
 
 
     previousEnabledState = true;
@@ -5604,7 +5614,8 @@ void MegaApplication::createInfoDialogMenus()
 
     if (updateAvailable)
     {
-        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        updateAction = new MenuItemAction(tr("Install update"), QLatin1String("://images/ico_about_MEGA.png"), infoDialogMenu);
+        updateAction->setManagesHoverStates(true);
         updateAction->setEnabled(previousEnabledState);
         connect(updateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked, Qt::QueuedConnection);
 
@@ -5612,7 +5623,8 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        aboutAction = new MenuItemAction(tr("About"), QLatin1String("://images/ico_about_MEGA.png"), infoDialogMenu);
+        aboutAction->setManagesHoverStates(true);
         connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
 
         infoDialogMenu->addAction(aboutAction);
@@ -5621,8 +5633,8 @@ void MegaApplication::createInfoDialogMenus()
 
     infoDialogMenu->addAction(myCloudAction);
     infoDialogMenu->addSeparator();
-    infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
-    infoDialogMenu->addAction(mBackupsMenu->getAction());
+    if (mSyncs2waysMenu) infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
+    if (mBackupsMenu) infoDialogMenu->addAction(mBackupsMenu->getAction());
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);
@@ -5662,7 +5674,7 @@ void MegaApplication::createGuestMenu()
         exitActionGuest = nullptr;
     }
 
-    exitActionGuest = new MenuItemAction(PlatformStrings::exit(), QIcon(QString::fromUtf8("://images/ico_quit.png")));
+    exitActionGuest = new MenuItemAction(PlatformStrings::exit(), QLatin1String("://images/ico_quit.png"), guestMenu);
 
     connect(exitActionGuest, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
@@ -5674,12 +5686,12 @@ void MegaApplication::createGuestMenu()
 
     if (updateAvailable)
     {
-        updateActionGuest = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        updateActionGuest = new MenuItemAction(tr("Install update"), QLatin1String("://images/ico_about_MEGA.png"), guestMenu);
         connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked);
     }
     else
     {
-        updateActionGuest = new MenuItemAction(tr("About"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        updateActionGuest = new MenuItemAction(tr("About"), QLatin1String("://images/ico_about_MEGA.png"), guestMenu);
         connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onAboutClicked);
     }
 
@@ -5689,7 +5701,7 @@ void MegaApplication::createGuestMenu()
         settingsActionGuest->deleteLater();
         settingsActionGuest = nullptr;
     }
-    settingsActionGuest = new MenuItemAction(tr("Settings"), QIcon(QString::fromUtf8("://images/ico_preferences.png")));
+    settingsActionGuest = new MenuItemAction(tr("Settings"), QLatin1String("://images/ico_preferences.png"), guestMenu);
 
     connect(settingsActionGuest, &QAction::triggered, this, &MegaApplication::openSettings);
 

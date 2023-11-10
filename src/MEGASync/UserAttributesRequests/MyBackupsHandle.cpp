@@ -156,7 +156,7 @@ void CreateMyBackupsListener::onRequestFinish(mega::MegaApi *, mega::MegaRequest
 
 CreateMyBackupsListener::~CreateMyBackupsListener()
 {
-    delete mDelegateListener;
+    mDelegateListener->deleteLater();
 }
 
 }//end namespace UserAttributes
