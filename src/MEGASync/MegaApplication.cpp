@@ -2289,7 +2289,7 @@ void MegaApplication::cleanAll()
     if (reboot)
     {
 #ifndef __APPLE__
-        QString app = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
+        QString app = MegaApplication::applicationFilePath();
         QProcess::startDetached(app, {});
 #else
         QString app = MegaApplication::applicationDirPath();
