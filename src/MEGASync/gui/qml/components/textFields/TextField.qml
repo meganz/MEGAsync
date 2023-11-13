@@ -9,7 +9,7 @@ import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 import Components.ToolTips 1.0 as MegaToolTips
 
-Rectangle {
+FocusScope {
     id: root
 
     // Alias
@@ -57,12 +57,6 @@ Rectangle {
     height: textField.height + ((titleItem.text !== "" && titleItem.visible) ? (titleItem.height + textField.anchors.topMargin) : 0) +
             ((hintItem.text !== "" && hintItem.visible) ? hint.height + hint.anchors.topMargin : 0)
 
-    color: "transparent"
-
-    function setFocus(focus) {
-        textField.focus = focus
-    }
-
     MegaTexts.Text {
         id: titleItem
 
@@ -95,6 +89,7 @@ Rectangle {
         anchors.top: titleItem.text.length > 0 ? titleItem.bottom : parent.top
         anchors.topMargin: sizes.titleSpacing
 
+        focus: true
         selectByMouse: true
         selectionColor: colors.selection
         height: sizes.height + 2 * sizes.focusBorderWidth
@@ -104,7 +99,6 @@ Rectangle {
         bottomPadding: sizes.padding
         placeholderTextColor: colors.placeholder
         color: enabled ? colors.text : colors.textDisabled
-
         onAccepted: {
             root.accepted()
         }
@@ -150,7 +144,7 @@ Rectangle {
                         color = colors.borderDisabled;
                     } else if(error) {
                         color = colors.borderError;
-                    } else if(textField.focus) {
+                    } else if(textField.activeFocus) {
                         color = colors.borderFocus;
                     }
                     return color;

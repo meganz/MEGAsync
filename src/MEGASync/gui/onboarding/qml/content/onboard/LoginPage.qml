@@ -29,39 +29,32 @@ LoginPageForm {
             {
                 case LoginController.LOGGING_IN:
                 {
-                    console.log("LOGGING_IN")
                     return stateInProgressLoggingIn;
                 }
                 case LoginController.LOGGING_IN_2FA_REQUIRED:
                 case LoginController.LOGGING_IN_2FA_VALIDATING:
                 case LoginController.LOGGING_IN_2FA_FAILED:
                 {
-                    console.log("LOGGING_2FA")
                     return state2FARequired;
                 }
                 case LoginController.CREATING_ACCOUNT:
                 {
-                    console.log("CREATING_ACCOUNT")
                     return stateInProgressCreatingAccount;
                 }
                 case LoginController.WAITING_EMAIL_CONFIRMATION:
                 {
-                    console.log("WAITING_EMAIL_CONFIRMATION")
                     return stateInProgressWaitingEmailConfirm;
                 }
                 case LoginController.FETCHING_NODES:
                 {
-                    console.log("FETCHING_NODES")
                     return stateInProgressFetchNodes;
                 }
                 case LoginController.FETCH_NODES_FINISHED:
                 {
-                    console.log("FETCH_NODES_FINISHED")
                     return stateFetchNodesFinished;
                 }
                 case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
                 {
-                    console.log("FETCH_NODES_FINISHED_ONBOARDING")
                     return stateFetchNodesFinishedOnboarding;
                 }
             }
@@ -188,13 +181,13 @@ LoginPageForm {
         loginControllerAccess.passwordErrorMsg = passwordValid ? "" : OnboardingStrings.errorEmptyPassword;
 
         if (!emailValid) {
-            email.setFocus(true)
-            return
+            email.focus = true;
+            return;
         }
 
         if (!passwordValid) {
-            password.setFocus(true)
-            return
+            password.focus = true;
+            return;
         }
 
         loginControllerAccess.login(email.text, password.text);
@@ -230,7 +223,7 @@ LoginPageForm {
 
         function onPasswordErrorChanged() {
             if(loginControllerAccess.passwordError && loginControllerAccess.passwordErrorMsg.length > 0) {
-                password.setFocus(true)
+                password.focus = true
             }
         }
     }
