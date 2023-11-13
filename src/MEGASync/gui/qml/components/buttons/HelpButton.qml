@@ -69,6 +69,7 @@ Qml.Button {
     Keys.onPressed: {
         if(event.key === Qt.Key_Space || event.key === Qt.Key_Return) {
             openHelpUrl()
+            event.accepted = true
         }
     }
 
