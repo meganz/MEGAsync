@@ -74,6 +74,9 @@ QString MegaApplication::lastNotificationError = QString();
 
 constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
 
+static const QString SCHEME_MEGA_URL = QString::fromUtf8("mega");
+static const QString SCHEME_LOCAL_URL = QString::fromUtf8("local");
+
 void MegaApplication::loadDataPath()
 {
 #ifdef Q_OS_LINUX
@@ -359,6 +362,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
+    // Unregister own url schemes
+    QDesktopServices::unsetUrlHandler(SCHEME_MEGA_URL);
+    QDesktopServices::unsetUrlHandler(SCHEME_LOCAL_URL);
+
     logger.reset();
 
     if (!translator.isEmpty())
@@ -428,9 +435,9 @@ void MegaApplication::initialize()
     isLinux = false;
 #endif
 
-    //Register own url schemes
-    QDesktopServices::setUrlHandler(QString::fromUtf8("mega"), this, "handleMEGAurl");
-    QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
+    // Register own url schemes
+    QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
+    QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
 
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
@@ -1645,17 +1652,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     noUploadedStarted = true;
 
     auto checkUploadNameDialog = new DuplicatedNodeDialog(node);
-    
-    auto counter(0);
-    EventUpdater checkUpdater(uploadQueue.size());
-    while (!uploadQueue.isEmpty())
-    {
-        QString nodePath = uploadQueue.dequeue();
-        checkUploadNameDialog->checkUpload(nodePath, node);
-
-        checkUpdater.update(counter);
-        counter++;
-    }
+    checkUploadNameDialog->checkUploads(uploadQueue, node);
 
     if(!checkUploadNameDialog->isEmpty())
     {
@@ -2277,7 +2274,7 @@ void MegaApplication::cleanAll()
     if (reboot)
     {
 #ifndef __APPLE__
-        QString app = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
+        QString app = MegaApplication::applicationFilePath();
         QProcess::startDetached(app, {});
 #else
         QString app = MegaApplication::applicationDirPath();
@@ -4179,7 +4176,12 @@ void MegaApplication::notifyChangeToAllFolders()
     for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
         ++mProcessingShellNotifications;
-        std::string stdLocalFolder = localFolder.toStdString();
+
+#ifdef _WIN32
+        string stdLocalFolder((const char*)localFolder.utf16(), localFolder.size()*sizeof(wchar_t));
+#else
+        string stdLocalFolder = localFolder.toStdString();
+#endif
         Platform::getInstance()->notifyItemChange(localFolder, megaApi->syncPathState(&stdLocalFolder));
     }
 }

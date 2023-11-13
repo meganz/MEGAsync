@@ -77,13 +77,18 @@ void NodeNameSetterDialog::showError(const QString &errorText)
 
 bool NodeNameSetterDialog::checkAlreadyExistingNode(const QString& nodeName, std::shared_ptr<mega::MegaNode> parentNode)
 {
-    auto node = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(nodeName.toUtf8().constData(), parentNode.get()));
-    if(node)
+    std::unique_ptr<mega::MegaNodeList>nodes(MegaSyncApp->getMegaApi()->getChildren(parentNode.get()));
+    for(int index = 0; index < nodes->size(); ++index)
     {
-        showAlreadyExistingNodeError(node->isFile());
+        QString remoteNodeName(QString::fromUtf8(nodes->get(index)->getName()));
+        if(nodeName.compare(remoteNodeName, Qt::CaseInsensitive) == 0)
+        {
+            showAlreadyExistingNodeError(nodes->get(index)->isFile());
+            return true;
+        }
     }
 
-    return node != nullptr;
+    return false;
 }
 
 void NodeNameSetterDialog::showAlreadyExistingNodeError(bool isFile)
