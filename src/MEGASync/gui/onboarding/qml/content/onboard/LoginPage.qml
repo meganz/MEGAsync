@@ -13,8 +13,6 @@ import AccountStatusController 1.0
 LoginPageForm {
     id: loginPage
 
-    property bool loginAttempt: false
-
     readonly property string stateLoggedOut: "LOGGED_OUT"
     readonly property string stateInProgress: "IN_PROGRESS"
     readonly property string stateInProgressLoggingIn: "IN_PROGRESS_LOGGING"
@@ -29,37 +27,45 @@ LoginPageForm {
     function getState(){
             switch(loginControllerAccess.state)
             {
-            case LoginController.LOGGING_IN:
-            {
-                return stateInProgressLoggingIn;
+                case LoginController.LOGGING_IN:
+                {
+                    console.log("LOGGING_IN")
+                    return stateInProgressLoggingIn;
+                }
+                case LoginController.LOGGING_IN_2FA_REQUIRED:
+                case LoginController.LOGGING_IN_2FA_VALIDATING:
+                case LoginController.LOGGING_IN_2FA_FAILED:
+                {
+                    console.log("LOGGING_2FA")
+                    return state2FARequired;
+                }
+                case LoginController.CREATING_ACCOUNT:
+                {
+                    console.log("CREATING_ACCOUNT")
+                    return stateInProgressCreatingAccount;
+                }
+                case LoginController.WAITING_EMAIL_CONFIRMATION:
+                {
+                    console.log("WAITING_EMAIL_CONFIRMATION")
+                    return stateInProgressWaitingEmailConfirm;
+                }
+                case LoginController.FETCHING_NODES:
+                {
+                    console.log("FETCHING_NODES")
+                    return stateInProgressFetchNodes;
+                }
+                case LoginController.FETCH_NODES_FINISHED:
+                {
+                    console.log("FETCH_NODES_FINISHED")
+                    return stateFetchNodesFinished;
+                }
+                case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
+                {
+                    console.log("FETCH_NODES_FINISHED_ONBOARDING")
+                    return stateFetchNodesFinishedOnboarding;
+                }
             }
-            case LoginController.LOGGING_IN_2FA_REQUIRED:
-            case LoginController.LOGGING_IN_2FA_VALIDATING:
-            case LoginController.LOGGING_IN_2FA_FAILED:
-            {
-                return state2FARequired;
-            }
-            case LoginController.CREATING_ACCOUNT:
-            {
-                return stateInProgressCreatingAccount;
-            }
-            case LoginController.WAITING_EMAIL_CONFIRMATION:
-            {
-                return stateInProgressWaitingEmailConfirm;
-            }
-            case LoginController.FETCHING_NODES:
-            {
-                return stateInProgressFetchNodes;
-            }
-            case LoginController.FETCH_NODES_FINISHED:
-            {
-                return stateFetchNodesFinished;
-            }
-            case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
-            {
-                return stateFetchNodesFinishedOnboarding;
-            }
-            }
+
             return stateLoggedOut;
     }
 
@@ -129,9 +135,10 @@ LoginPageForm {
             extend: stateLoggedOut
             StateChangeScript {
                 script: {
-                        cancelLogin.close();
-                        onboardingWindow.forceClose();}
-                        }
+                    cancelLogin.close();
+                    onboardingWindow.forceClose();
+                }
+            }
         },
         State {
             name: stateFetchNodesFinishedOnboarding
@@ -180,12 +187,17 @@ LoginPageForm {
         loginControllerAccess.passwordError = !passwordValid;
         loginControllerAccess.passwordErrorMsg = passwordValid ? "" : OnboardingStrings.errorEmptyPassword;
 
-        if(!emailValid || !passwordValid) {
-            return;
+        if (!emailValid) {
+            email.setFocus(true)
+            return
+        }
+
+        if (!passwordValid) {
+            password.setFocus(true)
+            return
         }
 
         loginControllerAccess.login(email.text, password.text);
-        loginAttempt = true;
     }
 
     signUpButton.onClicked: {
@@ -196,8 +208,7 @@ LoginPageForm {
         target: accountStatusControllerAccess
 
         function onBlockedStateChanged(blockState) {
-            if(blockState >= ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_SMS)
-            {
+            if(blockState >= ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_SMS) {
                 cancelLogin.close();
                 onboardingWindow.forceClose();
             }
@@ -211,6 +222,16 @@ LoginPageForm {
             password.text = "";
             cancelLogin.close();
             onboardingWindow.forceClose();
+        }
+    }
+
+    Connections {
+        target: loginControllerAccess
+
+        function onPasswordErrorChanged() {
+            if(loginControllerAccess.passwordError && loginControllerAccess.passwordErrorMsg.length > 0) {
+                password.setFocus(true)
+            }
         }
     }
 

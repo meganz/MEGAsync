@@ -59,6 +59,10 @@ Rectangle {
 
     color: "transparent"
 
+    function setFocus(focus) {
+        textField.focus = focus
+    }
+
     MegaTexts.Text {
         id: titleItem
 
