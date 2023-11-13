@@ -27,12 +27,14 @@ Rectangle {
         {
             case LoginController.WAITING_EMAIL_CONFIRMATION:
             {
+                console.log("Waiting for email confirmation")
                 return registerFlow.confirmEmail;
             }
             case LoginController.SIGN_UP:
             case LoginController.CREATING_ACCOUNT:
             case LoginController.CREATING_ACCOUNT_FAILED:
             {
+                console.log("Creating account")
                 return registerFlow.register;
             }
             case LoginController.LOGGING_IN_2FA_REQUIRED:
@@ -40,13 +42,17 @@ Rectangle {
             case LoginController.LOGGING_IN_2FA_FAILED:
             case LoginController.FETCHING_NODES_2FA:
             {
+                console.log("Logging in 2FA")
                 return registerFlow.twoFA;
             }
             case LoginController.CHANGING_REGISTER_EMAIL:
             {
+                console.log("CHANGING_REGISTER_EMAIL")
                 return registerFlow.changeConfirmEmail;
             }
         }
+
+        console.log("registerFlow.login")
         return registerFlow.login;
     }
     state: getState();
@@ -187,8 +193,7 @@ Rectangle {
             }
         }
 
-        onCurrentItemChanged:
-        {
+        onCurrentItemChanged: {
             currentItem.setInitialFocusPosition()
         }
 
