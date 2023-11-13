@@ -7,7 +7,7 @@
 // Update scripts relying on this value if you move it
 #define VER_PRODUCTVERSION_STR      "5.1.0.0\0"
 
-#define VER_BUILD_ID                1
+#define VER_BUILD_ID                0
 
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
@@ -28,7 +28,7 @@
 //"- item n\n"
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- Sync Rework Beta V1 version.\n"                                                               \
+"- Sync Rework Beta V1 version.\n"                                                                 \
 "- New Exclusions dialog for syncs.\n"                                                             \
 "- New header for undecrypted cloud issues.\n"                                                     \
 "- Minor changes in issues description. \n"                                                        \
