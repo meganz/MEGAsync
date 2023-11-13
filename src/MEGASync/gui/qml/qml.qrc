@@ -52,5 +52,6 @@
         <file>components/views/ScrollPanel.qml</file>
         <file>components/texts/ElidedText.qml</file>
         <file>components/textFields/Colors.qml</file>
+        <file>components/dialogs/ConfirmCloseDialog.qml</file>
     </qresource>
 </RCC>

@@ -10,7 +10,6 @@
         <file>content/onboard/RegisterFlow.qml</file>
         <file>content/onboard/RegisterPage.qml</file>
         <file>content/onboard/RegisterPageForm.ui.qml</file>
-        <file>content/onboard/SyncSelectTypeButton.qml</file>
         <file>content/onboard/TwoFAPage.qml</file>
         <file>content/onboard/TwoFAPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/MainFlow.qml</file>
@@ -52,14 +51,12 @@
         <file>content/onboard/ConfirmEmailPageForm.ui.qml</file>
         <file>content/onboard/ChangeEmailPage.qml</file>
         <file>content/onboard/ChangeEmailPageForm.ui.qml</file>
-        <file>content/onboard/CancelLogin.qml</file>
-        <file>content/onboard/CancelCreateAccount.qml</file>
-        <file>content/onboard/ConfirmCloseDialog.qml</file>
         <file>content/onboard/StackViewPage.qml</file>
         <file>content/onboard/PasswordConditionItem.qml</file>
         <file>content/onboard/PasswordInfoContent.qml</file>
         <file>content/onboard/PasswordInfoContentForm.ui.qml</file>
         <file>content/onboard/PasswordInfoPopUp.qml</file>
+        <file>content/onboard/StackViewBase.qml</file>
         <file>content/guest/BasePage.qml</file>
         <file>content/guest/GuestFlow.qml</file>
         <file>content/guest/GuestDialog.qml</file>

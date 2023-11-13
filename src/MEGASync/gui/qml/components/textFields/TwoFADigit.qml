@@ -3,8 +3,9 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 
 // Local
-import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
+import Components.TextFields 1.0 as MegaTextFields
+import Components.Texts 1.0 as MegaTexts
 
 MegaTextFields.TextField {
     id: root
@@ -12,25 +13,31 @@ MegaTextFields.TextField {
     property var next
     property var previous
 
-    readonly property int widthWidthFocus: 66
-    readonly property int heightWithFocus: 78
+    height: 72 + 2 * sizes.focusBorderWidth
+    width: 60 + 2 * sizes.focusBorderWidth
+    sizes.focusBorderWidth: 4
 
-    height: heightWithFocus
-    width: widthWidthFocus
-
-    textField.validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
-    textField.height: root.height + 6 // add the focus border size (3 up + 3 down)
-    textField.font.pixelSize: 48
-    textField.font.weight: Font.DemiBold
-    textField.leftPadding: 19
-    textField.bottomPadding: 10
+    textField {
+        height: root.height
+        padding: 0
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignVCenter
+        validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
+        font {
+            pixelSize: MegaTexts.Text.Huge
+            weight: Font.DemiBold
+            family: "Poppins"
+        }
+    }
 
     textField.onTextChanged: {
-        if(textField.text.length !== 0 && next !== undefined) {
+        var isCharacterEntered = textField.text.length !== 0;
+        if(isCharacterEntered && next !== undefined) {
             next.textField.focus = true;
         } else {
             textField.focus = false;
         }
+        textField.horizontalAlignment = isCharacterEntered ? TextInput.AlignHCenter : TextInput.AlignLeft;
     }
 
     onFocusChanged: {

@@ -158,7 +158,7 @@ Rectangle {
         }
     }
 
-    StackView {
+    StackViewBase {
         id: rightPanel
 
         anchors {
@@ -169,55 +169,35 @@ Rectangle {
             margins: contentMargin
         }
 
-        replaceEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to:1
-                duration: 100
-                easing.type: Easing.OutQuad
-            }
+        Component {
+            id: deviceNamePage
+
+            DeviceNamePage {}
         }
 
-        replaceExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to:0
-                duration: 100
-                easing.type: Easing.InQuad
-            }
+        Component {
+            id: installationTypePage
+
+            InstallationTypePage {}
         }
-    }
 
-    Component {
-        id: deviceNamePage
+        Component {
+            id: syncsFlowPage
 
-        DeviceNamePage {}
-    }
+            SyncsFlow {}
+        }
 
-    Component {
-        id: installationTypePage
+        Component {
+            id: backupsFlowPage
 
-        InstallationTypePage {}
-    }
+            BackupsFlow {}
+        }
 
-    Component {
-        id: syncsFlowPage
+        Component {
+            id: resumePage
 
-        SyncsFlow {}
-    }
-
-    Component {
-        id: backupsFlowPage
-
-        BackupsFlow {}
-    }
-
-    Component {
-        id: resumePage
-
-        ResumePage {}
+            ResumePage {}
+        }
     }
 
     Connections {

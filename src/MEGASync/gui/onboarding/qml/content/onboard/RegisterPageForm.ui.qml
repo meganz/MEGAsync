@@ -1,18 +1,16 @@
 // System
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 // QML common
+import Common 1.0
 import Components.Buttons 1.0 as MegaButtons
 import Components.Texts 1.0 as MegaTexts
-import Common 1.0
 
 // Local
 import Onboard 1.0
 
 // C++
-import Onboarding 1.0
 import LoginController 1.0
 
 StackViewPage {
@@ -22,20 +20,23 @@ StackViewPage {
     property alias loginButton: loginButtonItem
     property alias nextButton: nextButtonItem
 
-    enabled: loginControllerAccess.state !== LoginController.CREATING_ACCOUNT;
+    enabled: loginControllerAccess.state !== LoginController.CREATING_ACCOUNT
 
     Column {
         id: mainColumn
 
-        anchors.left: root.left
-        anchors.right: root.right
-        anchors.top: root.top
-
+        anchors {
+            left: root.left
+            right: root.right
+            top: root.top
+        }
         spacing: contentSpacing
 
         MegaTexts.RichText {
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             font.pixelSize: MegaTexts.Text.Size.Large
             rawText: OnboardingStrings.signUpTitle
         }
@@ -43,41 +44,47 @@ StackViewPage {
         RegisterContent {
             id: registerContentItem
 
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
         }
     }
 
     RowLayout {
+        id: buttonsLayout
+
         anchors {
+            left: root.left
             right: root.right
             bottom: root.bottom
-            bottomMargin: 29
-            left: root.left
+            leftMargin: -loginButtonItem.sizes.focusBorderWidth
+            rightMargin: -loginButtonItem.sizes.focusBorderWidth
+            bottomMargin: buttonsBottomMargin
         }
 
         MegaButtons.OutlineButton {
             id: loginButtonItem
 
-            Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: -loginButtonItem.sizes.focusBorderWidth
             text: OnboardingStrings.login
+            Layout.alignment: Qt.AlignLeft
         }
 
         MegaButtons.PrimaryButton {
             id: nextButtonItem
 
-            Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: -loginButtonItem.sizes.focusBorderWidth
             enabled: registerContentItem.firstName.text !== ""
                         && registerContentItem.lastName.text !== ""
                         && registerContentItem.email.text !== ""
                         && registerContentItem.password.validPassword
                         && registerContentItem.confirmPassword.text !== ""
                         && registerContentItem.termsCheckBox.checked
-            icons.source: Images.arrowRight
             text: OnboardingStrings.next
-            icons.busyIndicatorVisible: loginControllerAccess.state === LoginController.CREATING_ACCOUNT;
+            icons {
+                source: Images.arrowRight
+                busyIndicatorVisible: loginControllerAccess.state === LoginController.CREATING_ACCOUNT
+            }
+            Layout.alignment: Qt.AlignRight
         }
     }
 }

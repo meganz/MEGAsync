@@ -5,13 +5,12 @@ import QtQuick 2.15
 import Onboard 1.0
 
 // C++
-import Onboarding 1.0
 import ApiEnums 1.0
 import LoginController 1.0
 import AccountStatusController 1.0
 
 LoginPageForm {
-    id: loginPage
+    id: root
 
     readonly property string stateLoggedOut: "LOGGED_OUT"
     readonly property string stateInProgress: "IN_PROGRESS"
@@ -24,45 +23,36 @@ LoginPageForm {
     readonly property string stateFetchNodesFinished: "FETCH_NODES_FINISHED"
     readonly property string stateFetchNodesFinishedOnboarding: "FETCH_NODES_FINISHED_ONBOARDING"
 
-    function getState(){
-            switch(loginControllerAccess.state)
-            {
-                case LoginController.LOGGING_IN:
-                {
-                    return stateInProgressLoggingIn;
-                }
-                case LoginController.LOGGING_IN_2FA_REQUIRED:
-                case LoginController.LOGGING_IN_2FA_VALIDATING:
-                case LoginController.LOGGING_IN_2FA_FAILED:
-                {
-                    return state2FARequired;
-                }
-                case LoginController.CREATING_ACCOUNT:
-                {
-                    return stateInProgressCreatingAccount;
-                }
-                case LoginController.WAITING_EMAIL_CONFIRMATION:
-                {
-                    return stateInProgressWaitingEmailConfirm;
-                }
-                case LoginController.FETCHING_NODES:
-                {
-                    return stateInProgressFetchNodes;
-                }
-                case LoginController.FETCH_NODES_FINISHED:
-                {
-                    return stateFetchNodesFinished;
-                }
-                case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
-                {
-                    return stateFetchNodesFinishedOnboarding;
-                }
-            }
-
-            return stateLoggedOut;
+    function resetLoginControllerStatus() {
+        loginControllerAccess.emailError = false;
+        loginControllerAccess.emailErrorMsg = "";
+        loginControllerAccess.passwordError = false;
+        loginControllerAccess.passwordErrorMsg = "";
     }
 
-    state: getState();
+    state: {
+        switch(loginControllerAccess.state) {
+            case LoginController.LOGGING_IN:
+                return stateInProgressLoggingIn;
+            case LoginController.LOGGING_IN_2FA_REQUIRED:
+            case LoginController.LOGGING_IN_2FA_VALIDATING:
+            case LoginController.LOGGING_IN_2FA_FAILED:
+                return state2FARequired;
+            case LoginController.CREATING_ACCOUNT:
+                return stateInProgressCreatingAccount;
+            case LoginController.WAITING_EMAIL_CONFIRMATION:
+                return stateInProgressWaitingEmailConfirm;
+            case LoginController.FETCHING_NODES:
+                return stateInProgressFetchNodes;
+            case LoginController.FETCH_NODES_FINISHED:
+                return stateFetchNodesFinished;
+            case LoginController.FETCH_NODES_FINISHED_ONBOARDING:
+                return stateFetchNodesFinishedOnboarding;
+        }
+
+        return stateLoggedOut;
+    }
+
     states: [
         State {
             name: stateLoggedOut
@@ -77,7 +67,7 @@ LoginPageForm {
                 creatingAccount: false;
             }
             PropertyChanges {
-                target: loginPage;
+                target: root;
                 enabled: true;
             }
         },
@@ -93,7 +83,7 @@ LoginPageForm {
                 creatingAccount: false;
             }
             PropertyChanges {
-                target: loginPage;
+                target: root;
                 enabled: false;
             }
         },
@@ -155,16 +145,6 @@ LoginPageForm {
         }
     }
 
-    Keys.onEnterPressed: {
-        loginButton.forceActiveFocus();
-        loginButton.clicked();
-    }
-
-    Keys.onReturnPressed: {
-        loginButton.forceActiveFocus();
-        loginButton.clicked();
-    }
-
     loginButton.onClicked: {
         var emailValid = email.valid();
         loginControllerAccess.emailError = !emailValid;
@@ -197,6 +177,24 @@ LoginPageForm {
         loginControllerAccess.state = LoginController.SIGN_UP;
     }
 
+    Keys.onEnterPressed: {
+        loginButton.forceActiveFocus();
+        loginButton.clicked();
+    }
+
+    Keys.onReturnPressed: {
+        loginButton.forceActiveFocus();
+        loginButton.clicked();
+    }
+
+    Component.onDestruction: {
+        resetLoginControllerStatus();
+    }
+
+    Component.onCompleted: {
+        resetLoginControllerStatus();
+    }
+
     Connections {
         target: accountStatusControllerAccess
 
@@ -223,26 +221,8 @@ LoginPageForm {
 
         function onPasswordErrorChanged() {
             if(loginControllerAccess.passwordError && loginControllerAccess.passwordErrorMsg.length > 0) {
-                password.focus = true
+                password.focus = true;
             }
         }
-    }
-
-    Component.onDestruction:
-    {
-        resetLoginControllerStatus()
-    }
-
-    Component.onCompleted:
-    {
-        resetLoginControllerStatus()
-    }
-
-    function resetLoginControllerStatus()
-    {
-        loginControllerAccess.emailError = false;
-        loginControllerAccess.emailErrorMsg = "";
-        loginControllerAccess.passwordError = false;
-        loginControllerAccess.passwordErrorMsg = "";
     }
 }

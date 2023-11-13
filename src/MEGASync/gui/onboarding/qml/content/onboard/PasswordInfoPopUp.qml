@@ -8,7 +8,7 @@ import Common 1.0
 import Components.Images 1.0 as MegaImages
 
 Popup {
-    id: passwordPopup
+    id: root
 
     property alias allChecked: content.allChecked
     property alias validPassword: content.validPassword
@@ -18,43 +18,37 @@ Popup {
     focus: false
     closePolicy: Popup.NoAutoClose
 
-    background: Rectangle {
-        color: "transparent"
-
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
+    background: Item {
         width: content.width + tip.width
         height: content.height
 
         DropShadow {
+            id: shadow
+
             anchors.fill: parent
             radius: 16.0
             samples: 25
             cached: true
             color: "#44000000"
-            source: theRow
+            source: mainRow
         }
     }
 
-    contentItem: Rectangle {
-        color: "transparent"
-
+    contentItem: Item {
         anchors.top: parent.top
         anchors.left: parent.left
         width: content.width + tip.width
         height: content.height
 
         Row {
-            id: theRow
+            id: mainRow
 
             anchors.fill: parent
 
             PasswordInfoContent {
                 id: content
 
-                password: passwordPopup.password
+                password: root.password
             }
 
             MegaImages.SvgImage {

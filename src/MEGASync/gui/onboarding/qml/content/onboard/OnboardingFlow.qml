@@ -10,7 +10,7 @@ import Onboard.Syncs_types 1.0
 import Onboarding 1.0
 import LoginController 1.0
 
-StackView {
+StackViewBase {
     id: onboardingFlow
 
     readonly property string register: "register"
@@ -32,25 +32,6 @@ StackView {
             }
         }
     ]
-
-    replaceEnter: Transition {
-        PropertyAnimation {
-            property: "opacity"
-            from: 0
-            to:1
-            duration: 100
-            easing.type: Easing.OutQuad
-        }
-    }
-    replaceExit: Transition {
-        PropertyAnimation {
-            property: "opacity"
-            from: 1
-            to:0
-            duration: 100
-            easing.type: Easing.InQuad
-        }
-    }
 
     Component {
         id: registerComponent

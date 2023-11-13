@@ -19,8 +19,6 @@ ColumnLayout {
 
         Layout.fillWidth: true
         Layout.preferredHeight: 20
-        font.family: "Inter"
-        font.styleName: "normal"
         font.weight: Font.DemiBold
         font.pixelSize: MegaTexts.Text.Size.Large
     }
@@ -29,8 +27,6 @@ ColumnLayout {
         id: description
 
         Layout.fillWidth: true
-        font.family: "Inter"
-        font.styleName: "normal"
         font.pixelSize: MegaTexts.Text.Size.Medium
         wrapMode: Text.WordWrap
     }
