@@ -161,12 +161,12 @@ LoginPageForm {
         loginControllerAccess.passwordErrorMsg = passwordValid ? "" : OnboardingStrings.errorEmptyPassword;
 
         if (!emailValid) {
-            email.focus = true;
+            email.setFocus(true);
             return;
         }
 
         if (!passwordValid) {
-            password.focus = true;
+            password.setFocus(true);
             return;
         }
 
