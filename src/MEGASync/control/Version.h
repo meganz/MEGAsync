@@ -17,7 +17,7 @@
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
-#define VER_SDK_ID                  "8a27335"
+#define VER_SDK_ID                  "ff437ae"
 
 // Update scrips relying on this value if you move it
 // Format: 1 item by line, starting from line following the #define
@@ -28,7 +28,7 @@
 //"- item n\n"
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- Sync Rework Beta test version.\n"                                                               \
+"- Sync Rework Beta V1 version.\n"                                                               \
 "- New Exclusions dialog for syncs.\n"                                                             \
 "- New header for undecrypted cloud issues.\n"                                                     \
 "- Minor changes in issues description. \n"                                                        \
