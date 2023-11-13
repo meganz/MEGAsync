@@ -76,21 +76,16 @@ bool ChooseLocalFolder::createFolder(const QString& folderPath)
 QString ChooseLocalFolder::getDefaultFolder(const QString& folderName)
 {
     auto folder = Utilities::getDefaultBasePath();
-    if (!folderName.isEmpty())
-    {
-        folder.append(QString::fromLatin1("/"));
-        folder.append(folderName);
-    }
 
-    QFileInfo fileInfo(folder);
-    if(fileInfo.exists())
+    if(!folderName.isEmpty())
     {
         //in case there is a folder with the same name MEGA but with different case: Mega
-        QDir dir= fileInfo.dir();
-        QStringList realName = dir.entryList(QStringList()<< fileInfo.baseName());
-        folder = dir.canonicalPath();
-        folder.append(QString::fromLatin1("/"));
-        folder.append(realName.first());
+        QStringList realName = QDir(folder).entryList(QStringList() << folderName);
+        if(!realName.isEmpty())
+        {
+            folder.append(QString::fromLatin1("/"));
+            folder.append(realName.first());
+        }
     }
     return QDir::toNativeSeparators(folder);
 }
