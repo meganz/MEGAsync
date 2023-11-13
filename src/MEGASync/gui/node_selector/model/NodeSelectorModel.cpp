@@ -638,7 +638,7 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
             }
             case toInt(NodeRowDelegateRoles::INDENT_ROLE):
             {
-                return item->isCloudDrive() || item->isVault() ? -10 : 0;
+                return item->isCloudDrive() || item->isVault() || item->isRubbishBin()? -10 : 0;
             }
             case toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE):
             {

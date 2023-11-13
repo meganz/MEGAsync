@@ -273,7 +273,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
                     if(item)
                     {
                         auto itemStatus = item->getStatus();
-                        if(itemStatus == NodeSelectorModelItem::Status::NONE)
+                        if(itemStatus == NodeSelectorModelItem::Status::NONE && !(item->getNode()->isFile()))
                         {
                             customMenu.addAction(tr("Sync"), this, [selectionHandle](){
                                 AddSyncFromUiManager* syncManager(new AddSyncFromUiManager());

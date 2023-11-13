@@ -1199,7 +1199,7 @@ bool SelectType::isAllowedToNavigateInside(const QModelIndex &index)
     {
         return false;
     }
-    return !(item->getNode()->isFile() || item->isCloudDrive());
+    return !(item->getNode()->isFile() || item->isCloudDrive() || item->isRubbishBin());
 }
 
 void DownloadType::init(NodeSelectorTreeViewWidget *wdg)
