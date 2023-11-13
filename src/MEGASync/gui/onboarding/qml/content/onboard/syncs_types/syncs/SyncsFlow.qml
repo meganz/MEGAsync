@@ -71,46 +71,27 @@ Item {
         }
     ]
 
-    StackView {
+    StackViewBase {
         id: view
         anchors.fill: parent
 
-        replaceEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to:1
-                duration: 100
-                easing.type: Easing.OutQuad
-            }
+        Component {
+            id: syncPage
+
+            SyncTypePage {}
         }
-        replaceExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to:0
-                duration: 100
-                easing.type: Easing.InQuad
-            }
+
+        Component {
+            id: fullSyncPage
+
+            FullSyncPage {}
         }
-    }
 
-    Component {
-        id: syncPage
+        Component {
+            id: selectiveSyncPage
 
-        SyncTypePage {}
-    }
-
-    Component {
-        id: fullSyncPage
-
-        FullSyncPage {}
-    }
-
-    Component {
-        id: selectiveSyncPage
-
-        SelectiveSyncPage {}
+            SelectiveSyncPage {}
+        }
     }
 
     /*

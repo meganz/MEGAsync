@@ -14,12 +14,13 @@ import QmlClipboard 1.0
 ColumnLayout {
     id: root
 
-    function forceFocus() {
-        digit1.textField.forceActiveFocus();
-    }
+    property string key: digit1.text + digit2.text + digit3.text + digit4.text + digit5.text + digit6.text
+    property bool hasError: false
+
+    signal allDigitsFilled
 
     function pastePin() {
-        const regex = RegexExpressions.digit2FA;
+        const regex = RegexExpressions.allDigits2FA;
         var pin = QmlClipboard.text().slice(0, 6);
         if (!regex.test(pin)) {
             console.warn("Invalid 2FA pin format pasted");
@@ -34,13 +35,11 @@ ColumnLayout {
         digit6.text = pin.charAt(5);
     }
 
-    property string key: digit1.text + digit2.text + digit3.text + digit4.text + digit5.text + digit6.text
-    property bool hasError: false    
-
-    signal allDigitsFilled
+    function forceFocus() {
+        digit1.textField.forceActiveFocus();
+    }
 
     spacing: 15
-    Layout.leftMargin: -digit1.sizes.focusBorderWidth
 
     onKeyChanged: {
         if(key.length === 6) {
@@ -48,11 +47,13 @@ ColumnLayout {
         }
     }
 
+    Layout.leftMargin: -digit1.sizes.focusBorderWidth
+
     RowLayout {
         id: mainLayout
 
-        Layout.preferredHeight: digit1.heightWithFocus
-        spacing: 2
+        Layout.preferredHeight: digit1.height
+        spacing: 0
 
         TwoFADigit {
             id: digit1
@@ -123,14 +124,14 @@ ColumnLayout {
         id: notification
 
         visible: hasError
-        Layout.leftMargin: 3
         title: OnboardingStrings.authFailed
         text: OnboardingStrings.tryAgain
-        Layout.preferredWidth: root.width - 4
-        Layout.preferredHeight: notification.height
         type: Constants.MessageType.ERROR
         icon: Images.lock
         time: 2000
+        Layout.leftMargin: digit1.sizes.focusBorderWidth
+        Layout.preferredWidth: root.width - 2 * digit1.sizes.focusBorderWidth
+        Layout.preferredHeight: notification.height
 
         onVisibilityTimerFinished: {
             hasError = false;
@@ -140,7 +141,7 @@ ColumnLayout {
             digit4.textField.text = "";
             digit5.textField.text = "";
             digit6.textField.text = "";
-            digit1.textField.forceActiveFocus();
+            root.forceFocus();
         }
     }
 

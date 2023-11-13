@@ -8,6 +8,9 @@ import Onboard 1.0
 import LoginController 1.0
 
 ChangeEmailPageForm {
+    id: root
+
+    emailTextField.text: loginControllerAccess.email
 
     cancelButton.onClicked: {
         loginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
@@ -25,15 +28,14 @@ ChangeEmailPageForm {
         loginControllerAccess.changeRegistrationEmail(emailTextField.text);
     }
 
-    emailTextField.text: loginControllerAccess.email
-
     Connections {
         target: loginControllerAccess
 
-        function onChangeRegistrationEmailFinished (success, errorMsg){
+        function onChangeRegistrationEmailFinished(success, errorMsg) {
             if(success) {
                 loginControllerAccess.state = LoginController.WAITING_EMAIL_CONFIRMATION;
-            } else {
+            }
+            else {
                 emailTextField.error = true;
                 emailTextField.hint.text = errorMsg;
                 emailTextField.hint.visible = true;
