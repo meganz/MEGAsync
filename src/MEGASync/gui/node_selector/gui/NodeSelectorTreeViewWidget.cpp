@@ -312,7 +312,6 @@ void NodeSelectorTreeViewWidget::onRemoveIndexFromGoBack(const QModelIndex& curr
     if(parentIndex.isValid())
     {
         auto indexHandle(getHandleByIndex(parentIndex));
-        qDebug() << mNavigationInfo.backwardHandles << indexHandle;
 
         if(mNavigationInfo.backwardHandles.contains(indexHandle))
         {
@@ -325,9 +324,6 @@ void NodeSelectorTreeViewWidget::onRemoveIndexFromGoBack(const QModelIndex& curr
             mNavigationInfo.backwardHandles.clear();
         }
     }
-
-    checkBackForwardButtons();
-    checkNewFolderButtonVisibility();
 }
 
 void NodeSelectorTreeViewWidget::onGoForwardClicked()
@@ -782,6 +778,14 @@ void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
             {
                 onRemoveIndexFromGoBack(proxyIndex);
             }
+            else if(mNavigationInfo.forwardHandles.contains(handle))
+            {
+                mNavigationInfo.forwardHandles.removeLast();
+            }
+
+            checkBackForwardButtons();
+            checkNewFolderButtonVisibility();
+
             mProxyModel->removeNode(proxyIndex);
             mNavigationInfo.remove(handle);
         }
