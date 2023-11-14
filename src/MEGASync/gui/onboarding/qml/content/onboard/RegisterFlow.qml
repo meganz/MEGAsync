@@ -162,6 +162,10 @@ Rectangle {
             bottomMargin: 16
         }
 
+        onCurrentItemChanged: {
+            currentItem.setInitialFocusPosition();
+        }
+
         Component {
             id: loginPage
 

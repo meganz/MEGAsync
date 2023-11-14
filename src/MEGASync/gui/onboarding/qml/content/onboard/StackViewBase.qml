@@ -24,9 +24,4 @@ StackView {
             easing.type: Easing.InQuad
         }
     }
-
-    onCurrentItemChanged: {
-        currentItem.setInitialFocusPosition();
-    }
-
 }

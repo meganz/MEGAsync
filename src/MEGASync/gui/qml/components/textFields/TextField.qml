@@ -59,6 +59,10 @@ Rectangle {
 
     color: "transparent"
 
+    function setFocus(focus) {
+        textField.focus = focus
+    }
+
     MegaTexts.Text {
         id: titleItem
 
@@ -100,7 +104,6 @@ Rectangle {
         bottomPadding: sizes.padding
         placeholderTextColor: colors.placeholder
         color: enabled ? colors.text : colors.textDisabled
-
         onAccepted: {
             root.accepted()
         }
