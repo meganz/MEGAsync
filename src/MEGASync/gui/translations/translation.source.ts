@@ -2517,17 +2517,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>The app is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
+        <translation>The app is unable to connect. Please check your internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the remote folder doesn’t exist</translation>
+        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the local folder doesn’t exist</translation>
+        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2602,7 +2602,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>No Internet connection</translation>
+        <translation>No internet connection</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -2798,7 +2798,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the local folder doesn’t exist.</translation>
+        <translation>Your backup ”%1“ has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -4125,12 +4125,15 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- UI enhanced.
-- Detected crashes fixed on Windows, Linux, and macOS.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Upgraded to Qt 5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
+</translation>
     </message>
 </context>
 <context>
