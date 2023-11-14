@@ -21,30 +21,6 @@ Rectangle {
         onboardingWindow.requestPageFocus();
     }
 
-    function getStatusText() {
-        switch(loginControllerAccess.state)
-        {
-            case LoginController.FETCHING_NODES:
-            case LoginController.FETCHING_NODES_2FA:
-            {
-                return OnboardingStrings.statusFetchNodes;
-            }
-            case LoginController.LOGGING_IN:
-            {
-                return OnboardingStrings.statusLogin;
-            }
-            case LoginController.LOGGING_IN_2FA_VALIDATING:
-            {
-                return OnboardingStrings.status2FA;
-            }
-            case LoginController.CREATING_ACCOUNT:
-            {
-                return OnboardingStrings.statusSignUp;
-            }
-        }
-        return "";
-    }
-
     color: Styles.surface1
 
     MegaTexts.SecondaryText {

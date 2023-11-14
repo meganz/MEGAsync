@@ -23,32 +23,18 @@ Rectangle {
     state:  {
         switch(loginControllerAccess.state) {
             case LoginController.WAITING_EMAIL_CONFIRMATION:
-            {
                 return root.confirmEmail;
-            }
             case LoginController.SIGN_UP:
             case LoginController.CREATING_ACCOUNT:
             case LoginController.CREATING_ACCOUNT_FAILED:
-            {
                 return root.register;
-            }
-            case LoginController.SIGN_UP:
-            case LoginController.CREATING_ACCOUNT:
-            case LoginController.CREATING_ACCOUNT_FAILED:
-            {
-                return root.register;
-            }
             case LoginController.LOGGING_IN_2FA_REQUIRED:
             case LoginController.LOGGING_IN_2FA_VALIDATING:
             case LoginController.LOGGING_IN_2FA_FAILED:
             case LoginController.FETCHING_NODES_2FA:
-            {
                 return root.twoFA;
-            }
             case LoginController.CHANGING_REGISTER_EMAIL:
-            {
                 return root.changeConfirmEmail;
-            }
         }
 
         return root.login;
