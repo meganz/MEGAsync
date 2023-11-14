@@ -2459,12 +2459,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>원격 폴더가 존재하지 않아서 동기화 &#8220;%1&quot;이 비활성화 되었습니다.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>로컬 폴더가 존재하지 않아서 동기화 &#8220;%1&quot;가 해제되었습니다.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2539,7 +2539,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>인터넷 연결 없음</translation>
+        <translation>인터넷 연결이 없습니다</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -2731,7 +2731,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>로컬 폴더가 존재하지 않아서 백업 “%1”이/가 비활성화 되었습니다.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -4041,12 +4041,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- UI 향상됨.
-- Windows, Linux, 그리고 macOS에서 탐지된 충돌 수정됨.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Qt 5.15로 업그레이드.
+- Windows, Linux 그리고 macOS에서 탐지된 충돌 수정.
+- 제3자 라이브러리 업데이트.
+</translation>
     </message>
 </context>
 <context>

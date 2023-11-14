@@ -2453,17 +2453,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>Aplicația nu se poate conecta. Te rugăm să verifici conectivitatea la internet și configurația firewallului local. Reține că majoritatea software-urilor antivirus includ un firewall.</translation>
+        <translation>Aplicația nu se poate conecta. Vă rugăm să verificați conectivitatea la internet și configurația paravanului de protecție local. Rețineți că majoritatea software-urilor antivirus includ un firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sincronizarea „%1” ți-a fost dezactivată deoarece folderul la distanță nu există</translation>
+        <translation>Sincronizarea dvs. „%1” a fost dezactivată deoarece folderul local nu este disponibil sau nu aveți permisiuni de citire și scriere.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sincronizarea „%1” ți-a fost dezactivată deoarece folderul local nu există</translation>
+        <translation>Sincronizarea dvs. „%1” a fost dezactivată deoarece folderul local nu este disponibil sau nu aveți permisiuni de citire și scriere.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2732,7 +2732,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Backupul „%1” ți-a fost dezactivat deoarece folderul local nu există.</translation>
+        <translation>Backup dvs. „%1” a fost dezactivată deoarece folderul local nu este disponibil sau nu aveți permisiuni de citire și scriere.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -3416,12 +3416,12 @@ Transferurile de sincronizare nefinalizate selectate nu vor fi anulate. Toate ce
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation>Nu anula</translation>
+        <translation>Nu o anula</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
         <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
-        <translation>Nu şterge</translation>
+        <translation>Nu șterge</translation>
     </message>
 </context>
 <context>
@@ -4040,12 +4040,15 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- UI îmbunătățită.
-- Au fost remediate defecțiunile detectate pe Windows, Linux și macOS</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Actualizat la Qt 5.15.
+- Au fost remediate defecțiunile detectate pe Windows, Linux și macOS.
+- Bibliotecile terților au fost actualizate.
+</translation>
     </message>
 </context>
 <context>
