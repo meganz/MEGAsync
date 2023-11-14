@@ -2341,6 +2341,7 @@ void MegaApplication::raiseInfoDialog()
             }
         }
 #endif
+
         DialogOpener::raiseAllDialogs();
         if (preferences->getSession().isEmpty())
         {
@@ -2351,9 +2352,7 @@ void MegaApplication::raiseInfoDialog()
             DialogOpener::showDialog(dialog->getDialog());
             dialog->getDialog()->raise();
         }
-
-        openGuestDialog();
-
+        openGuestDialog();        
         return;
     }
 

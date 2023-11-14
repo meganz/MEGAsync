@@ -2,7 +2,6 @@
 #define ONBOARDINGQMLDIALOG_H
 
 #include "qml/QmlDialog.h"
-#include <iostream>
 
 class OnboardingQmlDialog : public QmlDialog
 {
