@@ -221,7 +221,7 @@ LoginPageForm {
 
         function onPasswordErrorChanged() {
             if(loginControllerAccess.passwordError && loginControllerAccess.passwordErrorMsg.length > 0) {
-                password.focus = true;
+                password.setFocus(true);
             }
         }
     }
