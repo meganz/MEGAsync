@@ -31,9 +31,9 @@ VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable,
     QStyle *style = QApplication::style();
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
     m_ui->bWarning->setIcon(tmpIcon);
+    m_ui->bWarning->installEventFilter(this);
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(unblocked()), this, SLOT(close()));
-
 }
 
 void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
@@ -189,5 +189,15 @@ void VerifyLockMessage::on_bResendEmail_clicked()
         {
             static_cast<MegaApplication *>(qApp)->goToMyCloud();
         }
+        }
+}
+
+bool VerifyLockMessage::eventFilter(QObject *obj, QEvent *evnt)
+{
+    if(obj == m_ui->bWarning &&
+            (evnt->type() != QEvent::Paint && evnt->type() != QEvent::Polish))
+    {
+        return true;
     }
+    return QDialog::eventFilter(obj, evnt);
 }
