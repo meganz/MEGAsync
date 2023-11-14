@@ -20,14 +20,14 @@ StackViewPage {
     property alias loginButton: loginButtonItem
     property alias signUpButton: signUpButtonItem
     property alias twoFAField: twoFAItem
-
     ColumnLayout {
         id: mainColumn
 
         anchors {
             left: root.left
             right: root.right
-            verticalCenter: root.verticalCenter
+            top: root.top
+            topMargin: 110
         }
         spacing: contentSpacing
 
@@ -42,14 +42,6 @@ StackViewPage {
             id: twoFAItem
 
             focus: true
-        }
-
-        MegaButtons.HelpButton {
-            id: helpButtonItem
-
-            text: OnboardingStrings.twoFANeedHelp
-            url: Links.recovery
-            visible: !twoFAItem.hasError
         }
     }
 
