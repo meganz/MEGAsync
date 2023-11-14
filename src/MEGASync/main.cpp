@@ -197,8 +197,9 @@ void addFonts()
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Semibold.ttf"));
 
     QFont font(QString::fromUtf8("Open Sans"), 8);
-    app.setFont(font);
+    theapp->setFont(font);
 #endif
+
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Semibold.ttf"));
 
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Light.ttf"));
