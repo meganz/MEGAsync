@@ -1570,10 +1570,12 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>loading time…</source>
+        <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>loading size…</source>
+        <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
