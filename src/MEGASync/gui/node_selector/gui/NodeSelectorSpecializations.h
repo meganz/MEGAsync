@@ -2,6 +2,9 @@
 #define NODESELECTORSPECIALIZED_H
 
 #include "NodeSelector.h"
+namespace Ui {
+    class TransferManagerDragBackDrop;
+}
 
 class UploadNodeSelector : public NodeSelector
 {
@@ -53,12 +56,19 @@ class CloudDriveNodeSelector : public NodeSelector
 
 public:
     explicit CloudDriveNodeSelector(QWidget *parent = 0);
+protected:
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dragLeaveEvent(QDragLeaveEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
 protected slots:
     void onCustomBottomButtonClicked(uint8_t id) override;
 
 private:
     void checkSelection(){}
+
+    Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
+    QWidget* mDragBackDrop;
 };
 
 #endif // NODESELECTORSPECIALIZED_H
