@@ -2,7 +2,7 @@
 
 # macOS instructions
 
-For MEGA Desktop App development we are targeting macOS Big Sur, although we are providing
+For MEGA Desktop App development we are targeting macOS Sonoma, although we are providing
 packages for other versions as well; please check the main README file for a definitive
 list.
 
@@ -18,7 +18,7 @@ For MEGA Desktop development, we have a working headless build system via CMake
 which we are using the build the installer packages, however, for day-to-day
 development we are primarily using QMake as a team, due to having good Qt
 tooling support and a working system for all the supported platforms. That being
-said, we are using CMake right now to build the 3rdParty dependencies required
+said, we are using CMake right now to build the third party dependencies required
 for both SDK and MEGA Desktop and then switching over to QMake + Qt Creator for
 developer convenience.
 
@@ -72,14 +72,20 @@ $ rm -r bin_dest
 
 # Third-Party dependencies
 
-## Qt SDK (5.12.12)
+## Qt SDK (5.15.11)
 
-Install Qt Open Source and Qt Creator using the Qt Online Installer from:
+You can install Qt Creator using the Qt Online Installer from:
 https://www.qt.io/download-qt-installer
 
 You will have to create an account, even if you only install the Community Editions.
-Install Qt 5.12.12 for macOS; only macOS components are needed during installation.
-A good installation path is `~/Qt`.
+
+We are currently using Qt 5.15.11, for which the Qt Company does not provide pre-built
+binaries. You can build Qt using:
+```
+$ cd contrib/build_qt/macOS
+$ ./build-qt.sh
+```
+Installation path is `~/Qt-build/`.
 
 # Get the source
 
@@ -94,30 +100,41 @@ The MEGA SDK is fetched recursively from https://github.com/meganz/sdk.git
 
 # Build everything
 
-This step, will check-out all the 3rdParty dependencies via VCPKG and then
+This step, will check-out all the third party dependencies via VCPKG and then
 proceed to build those, the SDK and MEGA Desktop in that order, via CMake.
+
+You can specify the target architecture to build (x86_64 and/or arm64). Just need to use the commands below. 
 
 ```
 $ cd ~/mega/desktop/contrib/cmake
-$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt/5.12.12/clang_64" -DTARGET=MEGAsync -DTRIPLET=x64-osx-mega -P build_from_scratch.cmake
+$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt-build/5.15.11/5.15.11/x86_64" -DTARGET=MEGAsync -DTRIPLET=x64-osx-mega -P build_from_scratch.cmake
+
+$ cd ~/mega/desktop/contrib/cmake
+$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt-build/5.15.11/5.15.11/arm64" -DTARGET=MEGAsync -DTRIPLET=arm64-osx-mega -P build_from_scratch.cmake
+
 ```
 
 # Development using Qt Creator
 
 Now you can open open `src/MEGASync/MEGASync.pro` to start editing and building. Set it up
-as any other Qt QMake based project, using the Qt 5.12.12 kit you installed and set
+as any other Qt QMake based project, using the Qt 5.15.11 kit you installed and set
 matching target architecture.
 
 When building using the QMake project, both the application and the SDK are
 being rebuilt since the latter has its own QMake project files in the
-sub-project at bindings/qt/sdk.pri. Whereas the 3rdParty libs remain the ones
+sub-project at bindings/qt/sdk.pri. Whereas the third party libs remain the ones
 being already built by CMake.
 
 You might have to generate the initial set of language files so they are found
 by the build system onwards. To do that, in Qt Creator, in the application menu,
 go to Tools -> External -> Linguist and click on Release Translations action.
-You can achieve the same, from the command-line:
+You can achieve the same, from the command-line running the x86_64 binary:
 ```
 $ cd ~/mega/desktop/src
-$ ~/Qt/5.12.12/clang_64/bin/lrelease MEGASync/MEGASync.pro
+$ ~/Qt-build/5.15.11/5.15.11/x86_64/bin/lrelease MEGASync/MEGASync.pro
+```
+or you can run from arm64 bin location:
+```
+$ cd ~/mega/desktop/src
+$ ~/Qt-build/5.15.11/5.15.11/arm64/bin/lrelease MEGASync/MEGASync.pro
 ```
