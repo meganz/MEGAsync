@@ -20,16 +20,13 @@ Rectangle {
 
     readonly property int contentSpacing: 24
 
-    signal initialFocus
-
-    function setInitialFocusPosition()
-    {
-        root.initialFocus()
+    function setInitialFocusPosition() {
+        onboardingWindow.requestPageFocus();
     }
 
     function getStatusText() {
-            switch(loginControllerAccess.state)
-            {
+        switch(loginControllerAccess.state)
+        {
             case LoginController.FETCHING_NODES:
             case LoginController.FETCHING_NODES_2FA:
             {
@@ -47,8 +44,8 @@ Rectangle {
             {
                 return OnboardingStrings.statusSignUp;
             }
-            }
-            return "";
+        }
+        return "";
     }
 
     color: Styles.surface1

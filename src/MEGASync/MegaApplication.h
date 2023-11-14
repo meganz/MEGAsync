@@ -624,6 +624,9 @@ private:
 
     void registerCommonQMLElements();
 
+    template<typename TDialog>
+    void openDialog();
+
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();

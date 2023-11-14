@@ -194,7 +194,7 @@ Rectangle {
         }
 
         onCurrentItemChanged: {
-            currentItem.setInitialFocusPosition()
+            currentItem.setInitialFocusPosition();
         }
 
         Component {
@@ -237,5 +237,8 @@ Rectangle {
             }
         }
     }
-    Component.onDestruction: {    } //DO NOT REMOVE, windows qt bug. Without this line CancelLogin does not close when RegisterFlow is deleted
+
+    //DO NOT REMOVE, windows qt bug. Without this line CancelLogin does not close when RegisterFlow is deleted
+    Component.onDestruction: {
+    }
 }

@@ -2341,7 +2341,6 @@ void MegaApplication::raiseInfoDialog()
             }
         }
 #endif
-
         DialogOpener::raiseAllDialogs();
         if (preferences->getSession().isEmpty())
         {
@@ -2352,7 +2351,9 @@ void MegaApplication::raiseInfoDialog()
             DialogOpener::showDialog(dialog->getDialog());
             dialog->getDialog()->raise();
         }
+
         openGuestDialog();
+
         return;
     }
 
@@ -5301,37 +5302,30 @@ void MegaApplication::onMessageClicked()
 
 void MegaApplication::openGuestDialog()
 {
-    if (appfinished)
-    {
-        return;
-    }
-
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>())
-    {
-        DialogOpener::showDialog(dialog->getDialog());
-        return;
-    }
-
-    QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
-    auto dialogInfo = DialogOpener::showDialog(guest);
-    dialogInfo->setIgnoreRaiseAllAction(true);
+    openDialog<GuestContent>();
 }
 
 void MegaApplication::openOnboardingDialog()
+{
+    openDialog<Onboarding>();
+}
+
+template<typename TDialog>
+void MegaApplication::openDialog()
 {
     if (appfinished)
     {
         return;
     }
 
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<TDialog>>())
     {
         DialogOpener::showDialog(dialog->getDialog());
         return;
     }
 
-    QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-    DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
+    QPointer<QmlDialogWrapper<TDialog>> dialog = new QmlDialogWrapper<TDialog>();
+    DialogOpener::showDialog(dialog)->setIgnoreCloseAllAction(true);
 }
 
 void MegaApplication::openSettings(int tab)

@@ -9,10 +9,6 @@ import LoginController 1.0
 TwoFAPageForm {
     id: twoFAPageId
 
-    onInitialFocus: {
-        twoFAField.forceFocus()
-    }
-
     signUpButton.onClicked: {
         loginControllerAccess.state = LoginController.SIGN_UP;
         loginControllerAccess.email = "";
@@ -81,4 +77,12 @@ TwoFAPageForm {
             extend: validating2FA
         }
     ]
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            twoFAField.forceFocus()
+        }
+    }
 }

@@ -146,7 +146,7 @@ Rectangle {
                         color = colors.borderDisabled;
                     } else if(error) {
                         color = colors.borderError;
-                    } else if(textField.focus) {
+                    } else if(textField.activeFocus) {
                         color = colors.borderFocus;
                     }
                     return color;

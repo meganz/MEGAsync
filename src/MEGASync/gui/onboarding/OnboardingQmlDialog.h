@@ -2,6 +2,7 @@
 #define ONBOARDINGQMLDIALOG_H
 
 #include "qml/QmlDialog.h"
+#include <iostream>
 
 class OnboardingQmlDialog : public QmlDialog
 {
@@ -26,6 +27,8 @@ signals:
     void creatingAccountChanged();
     void closingButLoggingIn();
     void closingButCreatingAccount();
+    void requestPageFocus();
+    void initializePageFocus();
 
 protected:
     bool event(QEvent *) override;
@@ -35,6 +38,11 @@ private:
     bool mCloseClicked;
     bool mForceClose;
     bool mCreatingAccount;
+
+    void onRequestPageFocus()
+    {
+        emit initializePageFocus();
+    }
 };
 
 #endif // ONBOARDINGQMLDIALOG_H
