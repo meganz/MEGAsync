@@ -1,33 +1,18 @@
 // System
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 
 // C++
-import ApiEnums 1.0
 import LoginController 1.0
 
 TwoFAPageForm {
-    id: twoFAPageId
-
-    signUpButton.onClicked: {
-        loginControllerAccess.state = LoginController.SIGN_UP;
-        loginControllerAccess.email = "";
-    }
-
-    loginButton.onClicked: {
-        loginControllerAccess.login2FA(twoFAField.key);
-    }
-
-    twoFAField.onAllDigitsFilled: {
-        loginControllerAccess.login2FA(twoFAField.key);
-    }
+    id: root
 
     readonly property string validating2FA: "validating"
     readonly property string fetchingNodes2FA: "fetchingNodes2FA"
     readonly property string validating2FAFailed: "validating2FAFailed"
     readonly property string normal: "normal"
 
-    function getState() {
+    state: {
         switch(loginControllerAccess.state) {
             case LoginController.LOGGING_IN_2FA_VALIDATING:
                 return validating2FA;
@@ -40,12 +25,11 @@ TwoFAPageForm {
         }
     }
 
-    state: getState()
     states: [
         State {
             name: normal
             PropertyChanges {
-                target: twoFAPageId
+                target: root
                 enabled: true
             }
             PropertyChanges {
@@ -56,7 +40,7 @@ TwoFAPageForm {
         State {
             name: validating2FA
             PropertyChanges {
-                target: twoFAPageId
+                target: root
                 enabled: false
             }
             PropertyChanges {
@@ -77,6 +61,19 @@ TwoFAPageForm {
             extend: validating2FA
         }
     ]
+
+    signUpButton.onClicked: {
+        loginControllerAccess.state = LoginController.SIGN_UP;
+        loginControllerAccess.email = "";
+    }
+
+    loginButton.onClicked: {
+        loginControllerAccess.login2FA(twoFAField.key);
+    }
+
+    twoFAField.onAllDigitsFilled: {
+        loginControllerAccess.login2FA(twoFAField.key);
+    }
 
     Connections {
         target: onboardingWindow

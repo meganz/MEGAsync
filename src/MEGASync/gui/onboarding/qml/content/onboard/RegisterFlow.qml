@@ -1,18 +1,16 @@
 // System
-import QtQml 2.15
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
 
 // QML common
 import Common 1.0
+import Components.Dialogs 1.0 as MegaDialogs
 
 // C++
-import Onboarding 1.0
 import LoginController 1.0
 
 Rectangle {
-    id: registerFlow
+    id: root
 
     readonly property string login: "login"
     readonly property string twoFA: "twoFA"
@@ -22,40 +20,40 @@ Rectangle {
 
     color: Styles.surface1
 
-    function getState() {
-        switch(loginControllerAccess.state)
-        {
+    state:  {
+        switch(loginControllerAccess.state) {
             case LoginController.WAITING_EMAIL_CONFIRMATION:
             {
-                console.log("Waiting for email confirmation")
-                return registerFlow.confirmEmail;
+                return root.confirmEmail;
             }
             case LoginController.SIGN_UP:
             case LoginController.CREATING_ACCOUNT:
             case LoginController.CREATING_ACCOUNT_FAILED:
             {
-                console.log("Creating account")
-                return registerFlow.register;
+                return root.register;
+            }
+            case LoginController.SIGN_UP:
+            case LoginController.CREATING_ACCOUNT:
+            case LoginController.CREATING_ACCOUNT_FAILED:
+            {
+                return root.register;
             }
             case LoginController.LOGGING_IN_2FA_REQUIRED:
             case LoginController.LOGGING_IN_2FA_VALIDATING:
             case LoginController.LOGGING_IN_2FA_FAILED:
             case LoginController.FETCHING_NODES_2FA:
             {
-                console.log("Logging in 2FA")
-                return registerFlow.twoFA;
+                return root.twoFA;
             }
             case LoginController.CHANGING_REGISTER_EMAIL:
             {
-                console.log("CHANGING_REGISTER_EMAIL")
-                return registerFlow.changeConfirmEmail;
+                return root.changeConfirmEmail;
             }
         }
 
-        console.log("registerFlow.login")
-        return registerFlow.login;
+        return root.login;
     }
-    state: getState();
+
     states: [
         State {
             name: login
@@ -93,55 +91,63 @@ Rectangle {
         }
     ]
 
-    CancelLogin {
+    // DO NOT REMOVE, windows qt bug. Without this line CancelLogin does not close when RegisterFlow is deleted
+    Component.onDestruction: {}
+
+    MegaDialogs.ConfirmCloseDialog {
         id: cancelLogin
 
+        titleText: OnboardingStrings.cancelLoginTitle
+        bodyText: OnboardingStrings.cancelLoginBodyText
+        cancelButtonText: OnboardingStrings.cancelLoginSecondaryButton
+        acceptButtonText: OnboardingStrings.cancelLoginPrimaryButton
         visible: false
         onAccepted: {
             loginControllerAccess.cancelLogin();
         }
     }
 
-    CancelCreateAccount {
+    MegaDialogs.ConfirmCloseDialog {
         id: cancelCreateAccount
 
+        titleText: OnboardingStrings.cancelAccountCreationTitle
+        bodyText: OnboardingStrings.cancelAccountCreationBody
+        cancelButtonText: OnboardingStrings.cancelAccountCancelButton
+        acceptButtonText: OnboardingStrings.cancelAccountAcceptButton
         visible: false
         onAccepted: {
             loginControllerAccess.cancelCreateAccount();
         }
     }
 
-    Connections {
-        target: onboardingWindow
+    Item {
+        id: leftItem
 
-        function onClosingButLoggingIn() {
-            cancelLogin.visible = true;
+        anchors {
+            left: root.left
+            top: root.top
+            verticalCenter: root.verticalCenter
         }
+        height: parent.height
+        width: 304
 
-        function onClosingButCreatingAccount() {
-            cancelCreateAccount.visible = true;
-        }
-    }
+        Image {
+            id: leftImage
 
-    Image {
-        id: leftImage
+            anchors.centerIn: parent
+            source: root.state === twoFA ? Images.twofa : Images.login
 
-        source: registerFlow.state === twoFA ? Images.twofa : Images.login
-        anchors.left: registerFlow.left
-        anchors.leftMargin: 2
-        anchors.verticalCenter: registerFlow.verticalCenter
-        width: 300
+            onSourceChanged: {
+                imageAnimation.start();
+            }
 
-        NumberAnimation on opacity {
-            id: imageAnimation
+            NumberAnimation on opacity {
+                id: imageAnimation
 
-            from: 0
-            to: 1
-            duration: 1000
-        }
-
-        onSourceChanged: {
-            imageAnimation.start();
+                from: 0
+                to: 1
+                duration: 1000
+            }
         }
     }
 
@@ -149,9 +155,8 @@ Rectangle {
         id: separatorLine
 
         anchors {
-            left: leftImage.right
-            top: registerFlow.top
-            leftMargin: 2
+            left: leftItem.right
+            top: root.top
             topMargin: 48
         }
         width: 1
@@ -160,37 +165,16 @@ Rectangle {
         color: Styles.borderDisabled
     }
 
-    StackView {
+    StackViewBase {
         id: stack
 
         anchors {
-            left: separatorLine.right
-            top: registerFlow.top
-            bottom: registerFlow.bottom
-            right: registerFlow.right
-            leftMargin: 48
-            rightMargin: 48
-            topMargin: 48
+            left: leftItem.right
+            top: root.top
+            bottom: root.bottom
+            right: root.right
+            margins: 48
             bottomMargin: 16
-        }
-
-        replaceEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to:1
-                duration: 100
-                easing.type: Easing.OutQuad
-            }
-        }
-        replaceExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to:0
-                duration: 100
-                easing.type: Easing.InQuad
-            }
         }
 
         onCurrentItemChanged: {
@@ -226,19 +210,27 @@ Rectangle {
 
             ChangeEmailPage {}
         }
+    }
 
-        Connections {
-            target: loginControllerAccess
+    Connections {
+        target: loginControllerAccess
 
-            function onAccountCreationCancelled() {
-                onboardingWindow.creatingAccount = false;
-                cancelCreateAccount.close();
-                onboardingWindow.forceClose();
-            }
+        function onAccountCreationCancelled() {
+            onboardingWindow.creatingAccount = false;
+            cancelCreateAccount.close();
+            onboardingWindow.forceClose();
         }
     }
 
-    //DO NOT REMOVE, windows qt bug. Without this line CancelLogin does not close when RegisterFlow is deleted
-    Component.onDestruction: {
+    Connections {
+        target: onboardingWindow
+
+        function onClosingButLoggingIn() {
+            cancelLogin.visible = true;
+        }
+
+        function onClosingButCreatingAccount() {
+            cancelCreateAccount.visible = true;
+        }
     }
 }

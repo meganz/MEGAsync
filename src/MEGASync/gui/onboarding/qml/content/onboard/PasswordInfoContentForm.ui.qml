@@ -10,16 +10,17 @@ import Components.Images 1.0 as MegaImages
 import Onboard 1.0
 
 Rectangle {
-
-    property alias conditionUpperLowerCase: conditionUpperLowerCaseItem
-    property alias conditionNumberSpecialCharacter: conditionNumberSpecialCharacterItem
-
-    property string password: ""
+    id: root
 
     readonly property int contentMargin: 24
     readonly property int iconWidth: 24
     readonly property int lineHeight: 2
     readonly property int conditionSpacing: 12
+
+    property alias conditionUpperLowerCase: conditionUpperLowerCaseItem
+    property alias conditionNumberSpecialCharacter: conditionNumberSpecialCharacterItem
+
+    property string password: ""
 
     width: 320
     height: 180
@@ -27,21 +28,29 @@ Rectangle {
     radius: 8
 
     Column {
-        anchors.fill: parent
-        anchors.margins: contentMargin
+        id: mainColumn
+
+        anchors {
+            fill: parent
+            margins: contentMargin
+        }
         spacing: contentMargin
 
         MegaTexts.Text {
             id: strengthTitle
 
             width: parent.width
-            font.bold: true
             verticalAlignment: Text.AlignVCenter
             text: OnboardingStrings.passwordAtleast8Chars
-            font.strikeout: password.length >= 8
+            font {
+                strikeout: password.length >= 8
+                bold: true
+            }
         }
 
         Rectangle {
+            id: dividerLine
+
             width: parent.width
             height: lineHeight
             radius: height
@@ -49,10 +58,14 @@ Rectangle {
         }
 
         Column {
+            id: bottomColumn
+
             width: parent.width
             spacing: conditionSpacing
 
             MegaTexts.SecondaryText {
+                id: upperLine
+
                 width: parent.width
                 text: OnboardingStrings.itsBetterToHave;
                 font.weight: Font.DemiBold

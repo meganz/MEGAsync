@@ -46,44 +46,26 @@ Item {
         }
     ]
 
-    StackView {
+    StackViewBase {
         id: view
+
         anchors.fill: parent
 
-        replaceEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to:1
-                duration: 100
-                easing.type: Easing.OutQuad
-            }
+        Component {
+            id: selectBackupFoldersPage
+
+            SelectFoldersPage {}
         }
-        replaceExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to:0
-                duration: 100
-                easing.type: Easing.InQuad
-            }
+
+        Component {
+            id: confirmBackupFoldersPage
+
+            ConfirmFoldersPage {}
         }
     }
 
     BackupsProxyModel {
         id: backupsProxyModel
-    }
-
-    Component {
-        id: selectBackupFoldersPage
-
-        SelectFoldersPage {}
-    }
-
-    Component {
-        id: confirmBackupFoldersPage
-
-        ConfirmFoldersPage {}
     }
 
     /*

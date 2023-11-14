@@ -3132,6 +3132,9 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterModule("Components.Views", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/views/ScrollPanel.qml")), "Components.Views", 1, 0, "ScrollPanel");
 
+    qmlRegisterModule("Components.Dialogs", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/dialogs/ConfirmCloseDialog.qml")), "Components.Dialogs", 1, 0, "ConfirmCloseDialog");
+
     qmlRegisterModule("Common", 1, 0);
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Constants.qml")), "Common", 1, 0, "Constants");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Images.qml")), "Common", 1, 0, "Images");

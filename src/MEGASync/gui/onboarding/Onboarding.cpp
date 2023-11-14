@@ -22,6 +22,7 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingDialog.qml")), "Onboard", 1, 0, "OnboardingDialog");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/StackViewBase.qml")), "Onboard", 1, 0, "StackViewBase");
 
     qmlRegisterType<LoginController>("LoginController", 1, 0, "LoginController");
     qmlRegisterType<AccountStatusController>("AccountStatusController", 1, 0, "AccountStatusController");
