@@ -160,7 +160,13 @@ LoginPageForm {
         loginControllerAccess.passwordError = !passwordValid;
         loginControllerAccess.passwordErrorMsg = passwordValid ? "" : OnboardingStrings.errorEmptyPassword;
 
-        if(!emailValid || !passwordValid) {
+        if (!emailValid) {
+            email.setFocus(true);
+            return;
+        }
+
+        if (!passwordValid) {
+            password.setFocus(true);
             return;
         }
 
@@ -210,4 +216,13 @@ LoginPageForm {
         }
     }
 
+    Connections {
+        target: loginControllerAccess
+
+        function onPasswordErrorChanged() {
+            if(loginControllerAccess.passwordError) {
+                password.setFocus(true);
+            }
+        }
+    }
 }
