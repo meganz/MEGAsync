@@ -189,15 +189,14 @@ void VerifyLockMessage::on_bResendEmail_clicked()
         {
             static_cast<MegaApplication *>(qApp)->goToMyCloud();
         }
-        }
+    }
 }
 
-bool VerifyLockMessage::eventFilter(QObject *obj, QEvent *evnt)
+bool VerifyLockMessage::eventFilter(QObject *obj, QEvent *event)
 {
-    if(obj == m_ui->bWarning &&
-            (evnt->type() != QEvent::Paint && evnt->type() != QEvent::Polish))
+    if(obj == m_ui->bWarning && event->type() != QEvent::Paint && event->type() != QEvent::Polish)
     {
         return true;
     }
-    return QDialog::eventFilter(obj, evnt);
+    return QDialog::eventFilter(obj, event);
 }
