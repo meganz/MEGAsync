@@ -106,6 +106,7 @@ Window {
                 id: acceptButton
 
                 onClicked: {
+                    icons.busyIndicatorVisible = true;
                     root.accepted();
                 }
             }
