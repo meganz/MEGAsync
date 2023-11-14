@@ -176,7 +176,7 @@ QModelIndex NodeSelectorTreeViewWidgetSearch::getAddedNodeParent(mega::MegaHandl
     return QModelIndex();
 }
 
-bool NodeSelectorTreeViewWidgetSearch::containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode*)
+bool NodeSelectorTreeViewWidgetSearch::containsIndexToUpdate(mega::MegaNode* node, const mega::MegaHandle&)
 {
     if(node)
     {

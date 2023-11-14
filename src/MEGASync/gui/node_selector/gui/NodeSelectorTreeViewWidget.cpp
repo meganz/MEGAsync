@@ -587,11 +587,11 @@ void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request
     }
 }
 
-bool NodeSelectorTreeViewWidget::containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *parentNode)
+bool NodeSelectorTreeViewWidget::containsIndexToUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle)
 {
-    if(parentNode)
+    if(parentHandle != mega::INVALID_HANDLE)
     {
-        auto parentIndex = mModel->findItemByNodeHandle(parentNode->getHandle(), QModelIndex());
+        auto parentIndex = mModel->findItemByNodeHandle(parentHandle, QModelIndex());
         if(parentIndex.isValid())
         {
             auto parentItem = mModel->getItemByIndex(parentIndex);
@@ -626,6 +626,11 @@ bool NodeSelectorTreeViewWidget::containsIndexToUpdate(mega::MegaNode *node, meg
 
 void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes)
 {
+    if(!nodes)
+    {
+        return;
+    }
+
     QMap<mega::MegaHandle, mega::MegaHandle> updatedVersions;
     QList<UpdateNodesInfo> updatedNodes;
 
@@ -643,22 +648,21 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             if (node->getChanges() & (MegaNode::CHANGE_TYPE_PARENT |
                                       MegaNode::CHANGE_TYPE_NEW))
             {
-                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-
                 if(MegaSyncApp->getMegaApi()->isInRubbish(node))
                 {
-                    if(containsIndexToUpdate(node, nullptr))
+                    if(containsIndexToUpdate(node, mega::INVALID_HANDLE))
                     {
                         mRemovedNodesByHandle.append(node->getHandle());
                     }
                 }
                 else
                 {
-                    if(parentNode->isFile() && containsIndexToUpdate(node, nullptr))
+                    std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                    if(parentNode->isFile() && containsIndexToUpdate(node,  mega::INVALID_HANDLE))
                     {
                         updatedVersions.insert(parentNode->getHandle(), node->getHandle());
                     }
-                    else if(parentNode->isFolder() && containsIndexToUpdate(nullptr, parentNode.get()))
+                    else if(parentNode->isFolder() && containsIndexToUpdate(nullptr, node->getParentHandle()))
                     {
                         UpdateNodesInfo info;
                         info.parentHandle = parentNode->getHandle();
@@ -670,8 +674,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             }
             else if(node->getChanges() & MegaNode::CHANGE_TYPE_NAME)
             {
-                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-                if(containsIndexToUpdate(node, parentNode.get()))
+                if(containsIndexToUpdate(node, node->getParentHandle()))
                 {
                     UpdateNodesInfo info;
                     info.previousHandle = node->getHandle();
@@ -682,8 +685,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             //Moved or new version added
             else if(node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
             {
-                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-                if(containsIndexToUpdate(node, parentNode.get()))
+                if(containsIndexToUpdate(node, node->getParentHandle()))
                 {
                     if(!mMovedNodesByHandle.contains(node->getHandle()))
                     {
@@ -714,10 +716,9 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
         }
     }
 
-    auto nodesToUpdate(areThereNodesToUpdate());
-    if(nodesToUpdate > 0)
+    if(areThereNodesToUpdate())
     {
-        if(nodesToUpdate < 200)
+        if(shouldEnableTimer())
         {
             mNodesUpdateTimer.start(1000);
         }
@@ -728,13 +729,44 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
     }
 }
 
-int NodeSelectorTreeViewWidget::areThereNodesToUpdate()
+bool NodeSelectorTreeViewWidget::shouldEnableTimer()
 {
-    return mUpdatedNodesByPreviousHandle.size() +
-           mRemovedNodesByHandle.size() +
-           mRenamedNodesByHandle.size() +
-           mAddedNodesByParentHandle.size() +
-            mMovedNodesByHandle.size();
+    static const int threshold = 200;
+    int totalSize = mUpdatedNodesByPreviousHandle.size();
+    if(totalSize > threshold)
+    {
+        return true;
+    }
+    totalSize += mRemovedNodesByHandle.size();
+    if(totalSize > threshold)
+    {
+        return true;
+    }
+    totalSize += mRenamedNodesByHandle.size();
+    if(totalSize > threshold)
+    {
+        return true;
+    }
+    totalSize += mAddedNodesByParentHandle.size();
+    if(totalSize > threshold)
+    {
+        return true;
+    }
+    totalSize += mMovedNodesByHandle.size();
+    if(totalSize > threshold)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool NodeSelectorTreeViewWidget::areThereNodesToUpdate()
+{
+    return !mUpdatedNodesByPreviousHandle.isEmpty() ||
+        !mRemovedNodesByHandle.isEmpty() ||
+        !mRenamedNodesByHandle.isEmpty() ||
+        !mAddedNodesByParentHandle.isEmpty() ||
+        !mMovedNodesByHandle.isEmpty();
 }
 
 void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
@@ -760,7 +792,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 {
     if(!mProxyModel->isModelProcessing() && !mModel->isRequestingNodes())
     {
-        if(areThereNodesToUpdate() > 0)
+        if(areThereNodesToUpdate())
         {
             foreach(auto info, mRenamedNodesByHandle)
             {

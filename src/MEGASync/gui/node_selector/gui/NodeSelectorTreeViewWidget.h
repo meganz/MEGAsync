@@ -93,7 +93,7 @@ protected:
     Navigation mNavigationInfo;
 
 protected slots:
-    virtual bool containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *parentNode);
+    virtual bool containsIndexToUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle);
 
 private slots:
     void onbNewFolderClicked();
@@ -134,7 +134,8 @@ private:
     virtual bool newFolderBtnVisibleInRoot(){return true;}
     virtual bool newFolderBtnCanBeVisisble(){return true;}
     void checkOkButton(const QModelIndexList& selected);
-    int areThereNodesToUpdate();
+    bool shouldEnableTimer();
+    bool areThereNodesToUpdate();
 
     ButtonIconManager mButtonIconManager;
     bool first;

@@ -79,7 +79,7 @@ protected:
     QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle) override;
 
 protected slots:
-    bool containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *) override;
+    bool containsIndexToUpdate(mega::MegaNode* node, const mega::MegaHandle&) override;
 
 private slots:
     void onBackupsSearchClicked();
