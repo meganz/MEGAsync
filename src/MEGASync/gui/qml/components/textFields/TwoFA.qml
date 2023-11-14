@@ -45,6 +45,9 @@ ColumnLayout {
         if(key.length === 6) {
             allDigitsFilled();
         }
+        else if (key.length === 0) {
+            forceFocus();
+        }
     }
 
     Layout.leftMargin: -digit1.sizes.focusBorderWidth
