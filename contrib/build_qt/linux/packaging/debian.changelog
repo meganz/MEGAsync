@@ -1,0 +1,11 @@
+qt-mega (5.15.11) stable; urgency=low
+  * Upgrade to QT 5.15.11
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 30 Oct 2023 12:50:20 +0100
+ 
+qt-mega (1.0) stable; urgency=low
+
+  * Initial version
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 15 Apr 2019 10:10:10 +0100
+

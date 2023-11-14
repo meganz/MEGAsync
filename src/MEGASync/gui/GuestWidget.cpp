@@ -41,9 +41,9 @@ GuestWidget::GuestWidget(MegaApi *megaApi, QWidget *parent)
     {
         setAttribute(Qt::WA_TranslucentBackground);
     }
-    ui->lEmail->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
-    ui->lPassword->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
-    ui->leCode->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
+    ui->lEmail->setStyleSheet(QString::fromLatin1("QLineEdit {color: black;}"));
+    ui->lPassword->setStyleSheet(QString::fromLatin1("QLineEdit {color: black;}"));
+    ui->leCode->setStyleSheet(QString::fromLatin1("QLineEdit {color: black;}"));
 
     reset_UI_props();
 
@@ -465,7 +465,7 @@ void GuestWidget::on_bLogin_clicked()
         return;
     }
 
-    if (!mEmail.contains(QChar::fromAscii('@')) || !mEmail.contains(QChar::fromAscii('.')))
+    if (!mEmail.contains(QChar::fromLatin1('@')) || !mEmail.contains(QChar::fromLatin1('.')))
     {
         showLoginError(tr("Please, enter a valid e-mail address"));
         return;
@@ -775,6 +775,6 @@ void GuestWidget::on_bLoging2FaCancel_clicked()
 
 void GuestWidget::on_bLogin2FaHelp_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/recovery");
+    QString helpUrl = Preferences::BASE_URL + QString::fromLatin1("/recovery");
     Utilities::openUrl(QUrl(helpUrl));
 }

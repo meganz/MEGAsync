@@ -207,7 +207,7 @@ bool MegaDownloader::createDirIfNotPresent(const QString& path)
 #ifndef WIN32
         if (!megaApi->createLocalFolder(dir.toNativeSeparators(path).toUtf8().constData()))
 #else
-        if (!dir.mkpath(QString::fromAscii(".")))
+        if (!dir.mkpath(QString::fromLatin1(".")))
 #endif
         {
             return false;

@@ -1,5 +1,5 @@
 Name:		qt-mega
-Version:	1.0
+Version:	5.15.11
 Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	TODO
 License:	TODO
@@ -9,7 +9,7 @@ Source0:	qt-mega_%{version}.tar.gz
 Vendor:		TODO
 Packager:	TODO
 
-BuildRequires: autoconf, automake, libtool, gcc-c++, unzip, rsync, wayland-devel, libxkbcommon-devel, libxkbcommon-x11-devel
+BuildRequires: autoconf, automake, libtool, gcc-c++, unzip, rsync, wayland-devel, libxkbcommon-devel, libxkbcommon-x11-devel, wget
 BuildRequires: fontconfig-devel, libxkbcommon-devel, libxkbcommon-x11-devel
 BuildRequires: zlib-devel
 BuildRequires: cmake
