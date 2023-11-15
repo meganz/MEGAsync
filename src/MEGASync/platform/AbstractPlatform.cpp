@@ -108,7 +108,7 @@ void AbstractPlatform::initMenu(QMenu *m, const char *objectName, const bool app
     }
 }
 
-void AbstractPlatform::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(QStringList)> func)
+void AbstractPlatform::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(const QStringList&)> func)
 {
     auto previousFileUploadSelector = DialogOpener::findDialog<QFileDialog>();
     if(previousFileUploadSelector)
@@ -145,7 +145,7 @@ void AbstractPlatform::fileSelector(QString title, QString defaultDir, bool mult
     });
 }
 
-void AbstractPlatform::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(QStringList)> func)
+void AbstractPlatform::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(const QStringList&)> func)
 {
     auto previousFileUploadSelector = DialogOpener::findDialog<QFileDialog>();
     if(previousFileUploadSelector)
@@ -197,7 +197,7 @@ void AbstractPlatform::folderSelector(QString title, QString defaultDir, bool mu
     }
 }
 
-void AbstractPlatform::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(QStringList)> func)
+void AbstractPlatform::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(const QStringList&)> func)
 {
     auto previousFileUploadSelector = DialogOpener::findDialog<MultiQFileDialog>();
      if(previousFileUploadSelector)

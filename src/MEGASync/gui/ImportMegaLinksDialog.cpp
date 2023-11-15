@@ -128,7 +128,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 
     defaultPath = QDir::toNativeSeparators(defaultPath);
 
-    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](const QStringList& selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();

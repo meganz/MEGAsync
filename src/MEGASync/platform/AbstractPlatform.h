@@ -48,9 +48,9 @@ public:
     virtual QString getDeviceName() = 0;
     virtual void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true);
 
-    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
-    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
-    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
+    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func);
+    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func);
+    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func);
     virtual void raiseFileFolderSelectors();
     virtual void closeFileFolderSelectors(QWidget* parent);
 

@@ -4876,7 +4876,7 @@ void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
 
     Platform::getInstance()->fileAndFolderSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath, true,
                                  parent,
-                                 [this/*, blocker*/](QStringList files)
+                                 [this/*, blocker*/](const QStringList& files)
     {
         shellUpload(createQueue(files));
     });
@@ -5506,7 +5506,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     folderUploadTarget = targetFolder;
 
-    auto processUpload = [this](QStringList foldersSelected){
+    auto processUpload = [this](const QStringList& foldersSelected){
         if (!foldersSelected.isEmpty())
         {
             QFuture<NodeCount> future;

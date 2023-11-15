@@ -116,7 +116,7 @@ private:
     void moveEvent(QMoveEvent *) override;
 
 public slots:
-    void showSyncProblems(QString s);
+    void showSyncProblems(const QString& s);
 
     void pauseResumeClicked();
     void generalAreaClicked();

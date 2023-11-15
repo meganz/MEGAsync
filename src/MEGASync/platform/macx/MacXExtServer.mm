@@ -234,7 +234,8 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
 
             addOverlayIconsDisabledToCommand(response);
-            addIsIncomingShareToCommand(&tmpPath, response, false);
+            const bool isIncomingShare = false;
+            addIsIncomingShareToCommand(&tmpPath, response, isIncomingShare);
 
             return true;
         }
@@ -319,7 +320,8 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
         addOverlayIconsDisabledToCommand(&command);
 
         std::string pathString(localPath.toStdString());
-        addIsIncomingShareToCommand(&pathString, &command, false);
+        const bool isIncomingShare = false;
+        addIsIncomingShareToCommand(&pathString, &command, isIncomingShare);
 
         doSendToAll(QByteArray(command.data()));
     }

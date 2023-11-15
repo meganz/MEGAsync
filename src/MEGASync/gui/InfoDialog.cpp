@@ -77,7 +77,7 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
     QToolTip::showText(event->globalPos(), tr("Open Uploads"));
 }
 
-void InfoDialog::showSyncProblems(QString problemText)
+void InfoDialog::showSyncProblems(const QString& problemText)
 {
     QMessageBox qmb;
     qmb.setText(QString::fromUtf8("One or more syncs have encountered issues that need user intervention to resolve.  Please see the details for each one, and adjust either the local or cloud files/folders, or add ignore rules, to resolve these."));
@@ -698,7 +698,7 @@ void InfoDialog::updateState()
 
     if(!checkFailedState())
     {
-        if (mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+        if (mTransferScanCancelUi != nullptr && mTransferScanCancelUi->isActive())
         {
             changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
         }

@@ -54,7 +54,7 @@ void AddExclusionDialog::on_bOk_clicked()
 
 void AddExclusionDialog::on_bChoose_clicked()
 {
-    auto processResult = [this](QStringList selection){
+    auto processResult = [this](const QStringList& selection){
         addItem(selection);
     };
 
@@ -68,7 +68,7 @@ void AddExclusionDialog::on_bChoose_clicked()
 #ifndef __APPLE__
 void AddExclusionDialog::on_bChooseFile_clicked()
 {
-    auto processResult = [this](QStringList selection){
+    auto processResult = [this](const QStringList& selection){
         addItem(selection);
     };
 
@@ -76,7 +76,7 @@ void AddExclusionDialog::on_bChooseFile_clicked()
 }
 #endif
 
-void AddExclusionDialog::addItem(QStringList selection)
+void AddExclusionDialog::addItem(const QStringList& selection)
 {
     if (!selection.isEmpty())
     {

@@ -48,7 +48,7 @@ QString AddBackupDialog::getBackupName()
 
 void AddBackupDialog::on_changeButton_clicked()
 {
-    auto processPath = [this](QStringList folderPaths)
+    auto processPath = [this](const QStringList& folderPaths)
     {
         if (!folderPaths.isEmpty())
         {
