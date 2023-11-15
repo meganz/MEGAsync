@@ -4077,16 +4077,6 @@ Enter a different name.</translation>
         <translation>Proxy settings:</translation>
     </message>
     <message>
-        <source>HTTP</source>
-        <translatorcomment>HTTP proxy type</translatorcomment>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>SOCK5H</source>
-        <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation>SOCK5H</translation>
-    </message>
-    <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Checkbox to indicate if the proxy needs authentication (username and password)</translatorcomment>
         <translation>Proxy server requires a password</translation>
