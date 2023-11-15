@@ -2,15 +2,9 @@
 #include "node_selector/model/NodeSelectorModelSpecialised.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
-#include "Preferences.h"
-#include "syncs/control/SyncInfo.h"
 #include "UserAttributesRequests/CameraUploadFolder.h"
 #include "UserAttributesRequests/MyChatFilesFolder.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
 #include "MegaNodeNames.h"
-#include "EventUpdater.h"
-
-#include "mega/types.h"
 
 #include <QApplication>
 #include <QToolTip>
@@ -261,7 +255,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         {
             item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(i,0));
             connect(item, &NodeSelectorModelItem::infoUpdated, incomingSharesModel, &NodeSelectorModelIncomingShares::onItemInfoUpdated);
-            item->setOwner(move(user));
+            item->setOwner(std::move(user));
         }
     }
 
@@ -297,7 +291,7 @@ void NodeRequester::addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> no
     {
         item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(incomingSharesModel->rowCount(),0));
         connect(item, &NodeSelectorModelItem::infoUpdated, incomingSharesModel, &NodeSelectorModelIncomingShares::onItemInfoUpdated);
-        item->setOwner(move(user));
+        item->setOwner(std::move(user));
     }
 
     if(isAborted())
