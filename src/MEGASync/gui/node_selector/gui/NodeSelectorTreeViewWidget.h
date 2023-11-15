@@ -93,7 +93,7 @@ protected:
     Navigation mNavigationInfo;
 
 protected slots:
-    virtual bool containsIndexToUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle);
+    virtual bool containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle);
 
 private slots:
     void onbNewFolderClicked();

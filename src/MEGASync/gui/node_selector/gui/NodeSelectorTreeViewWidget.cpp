@@ -583,7 +583,7 @@ void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request
     }
 }
 
-bool NodeSelectorTreeViewWidget::containsIndexToUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle)
+bool NodeSelectorTreeViewWidget::containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle)
 {
     if(parentHandle != mega::INVALID_HANDLE)
     {
@@ -646,7 +646,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             {
                 if(MegaSyncApp->getMegaApi()->isInRubbish(node))
                 {
-                    if(containsIndexToUpdate(node, mega::INVALID_HANDLE))
+                    if(containsIndexToAddOrUpdate(node, mega::INVALID_HANDLE))
                     {
                         mRemovedNodesByHandle.append(node->getHandle());
                     }
@@ -654,11 +654,13 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                 else
                 {
                     std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-                    if(parentNode->isFile() && containsIndexToUpdate(node,  mega::INVALID_HANDLE))
+                    if(parentNode->isFile() && containsIndexToAddOrUpdate(node,  mega::INVALID_HANDLE))
                     {
                         updatedVersions.insert(parentNode->getHandle(), node->getHandle());
                     }
-                    else if(parentNode->isFolder() && containsIndexToUpdate(nullptr, node->getParentHandle()))
+                    //Check if the node exists or if we need to add it
+                    else if(parentNode->isFolder() && (containsIndexToAddOrUpdate(node, mega::INVALID_HANDLE) ||
+                                                          containsIndexToAddOrUpdate(nullptr, node->getParentHandle())))
                     {
                         UpdateNodesInfo info;
                         info.parentHandle = parentNode->getHandle();
@@ -670,7 +672,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             }
             else if(node->getChanges() & MegaNode::CHANGE_TYPE_NAME)
             {
-                if(containsIndexToUpdate(node, node->getParentHandle()))
+                if(containsIndexToAddOrUpdate(node, node->getParentHandle()))
                 {
                     UpdateNodesInfo info;
                     info.previousHandle = node->getHandle();
@@ -681,7 +683,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             //Moved or new version added
             else if(node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
             {
-                if(containsIndexToUpdate(node, node->getParentHandle()))
+                if(containsIndexToAddOrUpdate(node, node->getParentHandle()))
                 {
                     if(!mMovedNodesByHandle.contains(node->getHandle()))
                     {
