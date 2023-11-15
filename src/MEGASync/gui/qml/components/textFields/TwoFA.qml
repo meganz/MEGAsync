@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.15
 // Local
 import Components.Texts 1.0 as MegaTexts
 import Components.TextFields 1.0 as MegaTextFields
+import Components.Buttons 1.0 as MegaButtons
 import Common 1.0
 import Onboard 1.0
 
@@ -39,7 +40,7 @@ ColumnLayout {
         digit1.textField.forceActiveFocus();
     }
 
-    spacing: 15
+    spacing: 20
 
     onKeyChanged: {
         if(key.length === 6) {
@@ -143,6 +144,16 @@ ColumnLayout {
             digit6.textField.text = "";
             root.forceFocus();
         }
+    }
+
+    MegaButtons.HelpButton {
+        id: helpButtonItem
+
+        text: OnboardingStrings.twoFANeedHelp
+        url: Links.recovery
+        visible: !twoFAItem.hasError
+        height: notification.height
+
     }
 
     Shortcut {
