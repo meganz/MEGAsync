@@ -49,7 +49,7 @@ QtObject {
     readonly property string errorValidEmail: qsTr("Enter a valid email address")
     readonly property string finalStepBackup: qsTr("Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.")
     readonly property string finalStepBackupTitle: qsTr("Your backup is set up")
-    readonly property string finalStepQuestion: qsTr("What else do you want do?")
+    readonly property string finalStepQuestion: qsTr("What else do you want to do?")
     readonly property string finalStepSync: qsTr("Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.")
     readonly property string finalStepSyncTitle: qsTr("Your sync has been set up")
     readonly property string firstName: qsTr("First name")
