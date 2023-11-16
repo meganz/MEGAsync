@@ -35,14 +35,14 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">#MessageContainer
+    <string notr="true">#wMessageContainer
 {
 border: 1px solid white;
 border-radius: 10px;
 background-color: white;
 }
 
-#MessageLabel
+#lMessageLabel
 {
   font-size:16px;
   line-height: 30px;
@@ -50,7 +50,7 @@ background-color: white;
   color: #666666;
 }
 
-#ProgressLabel
+#lProgressLabel
 {
   font-size:12px;
   line-height: 18px;
