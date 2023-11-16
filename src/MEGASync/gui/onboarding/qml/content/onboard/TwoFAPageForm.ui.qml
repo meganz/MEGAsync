@@ -34,6 +34,7 @@ StackViewPage {
         Header {
             id: headerItem
 
+            spacing: contentSpacing
             title: OnboardingStrings.twoFATitle
             description: OnboardingStrings.twoFASubtitle
         }

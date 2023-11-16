@@ -1,6 +1,5 @@
 #include "OnboardingQmlDialog.h"
 #include "MegaApplication.h"
-#include "mega/types.h"
 #include "LoginController.h"
 
 #include <QEvent>
@@ -13,6 +12,7 @@ OnboardingQmlDialog::OnboardingQmlDialog(QWindow *parent)
     , mForceClose(false)
     , mCreatingAccount(false)
 {
+    connect(this, &OnboardingQmlDialog::requestPageFocus, this, &OnboardingQmlDialog::onRequestPageFocus, Qt::QueuedConnection);
 }
 
 OnboardingQmlDialog::~OnboardingQmlDialog()

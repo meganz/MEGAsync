@@ -2352,7 +2352,7 @@ void MegaApplication::raiseInfoDialog()
             DialogOpener::showDialog(dialog->getDialog());
             dialog->getDialog()->raise();
         }
-        openGuestDialog();
+        openGuestDialog();        
         return;
     }
 
@@ -5316,8 +5316,7 @@ void MegaApplication::openGuestDialog()
     }
 
     QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
-    auto dialogInfo = DialogOpener::showDialog(guest);
-    dialogInfo->setIgnoreRaiseAllAction(true);
+    DialogOpener::showDialog(guest)->setIgnoreRaiseAllAction(true);
 }
 
 void MegaApplication::openOnboardingDialog()

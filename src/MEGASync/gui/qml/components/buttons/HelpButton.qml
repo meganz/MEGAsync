@@ -59,7 +59,12 @@ Qml.Button {
         id: background
 
         anchors.fill: parent
-        anchors.margins: -sizes.focusBorderWidth
+        anchors {
+            topMargin: -sizes.focusBorderWidth
+            bottomMargin: -sizes.focusBorderWidth
+            rightMargin: -sizes.focusBorderWidth * 2
+            leftMargin: -sizes.focusBorderWidth * 2
+        }
         color: "transparent"
         border.color: button.activeFocus ? colors.focus : "transparent"
         border.width: sizes.focusBorderWidth

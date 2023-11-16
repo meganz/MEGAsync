@@ -36,6 +36,7 @@ Rectangle {
             case LoginController.CHANGING_REGISTER_EMAIL:
                 return root.changeConfirmEmail;
         }
+
         return root.login;
     }
 
@@ -218,5 +219,4 @@ Rectangle {
             cancelCreateAccount.visible = true;
         }
     }
-
 }

@@ -17,10 +17,8 @@ Rectangle {
     readonly property int contentSpacing: 24
     readonly property int buttonsBottomMargin: 28
 
-    signal initialFocus
-
     function setInitialFocusPosition() {
-        root.initialFocus();
+        onboardingWindow.requestPageFocus();
     }
 
     color: Styles.surface1

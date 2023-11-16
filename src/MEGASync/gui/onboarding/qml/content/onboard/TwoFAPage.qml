@@ -75,8 +75,11 @@ TwoFAPageForm {
         loginControllerAccess.login2FA(twoFAField.key);
     }
 
-    onInitialFocus: {
-        twoFAField.forceFocus();
-    }
+    Connections {
+        target: onboardingWindow
 
+        function onInitializePageFocus() {
+            twoFAField.forceFocus()
+        }
+    }
 }
