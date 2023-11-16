@@ -79,7 +79,7 @@ Qml.CheckBox {
             function getBorderColor() {
                 if(!root.enabled) {
                     return colors.borderDisabled;
-                } else if(root.pressed) {
+                } else if(rootMouseArea.pressed) {
                     return colors.borderPressed;
                 } else if(root.hovered) {
                     return colors.borderHover;
@@ -93,7 +93,7 @@ Qml.CheckBox {
                 }
                 if(!root.enabled) {
                     return colors.backgroundDisabled;
-                } else if(root.pressed) {
+                } else if(rootMouseArea.pressed) {
                     return colors.backgroundPressed;
                 } else if(root.hovered) {
                     return colors.backgroundHover;
