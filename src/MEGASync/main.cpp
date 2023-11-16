@@ -597,8 +597,6 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-SemiBold.ttf"));
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Thin.ttf"));
 
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Poppins-SemiBold.ttf"));
-
     app.setWindowIcon(QIcon(QString::fromUtf8(":/images/app_ico.ico")));
 
     app.initialize();
