@@ -36,7 +36,7 @@ class InfoDialog;
 class MegaApplication;
 class TransferManager;
 class BindFolderDialog;
-class InfoDialog : public QDialog, public mega::MegaTransferListener, ::mega::MegaRequestListener
+class InfoDialog : public QDialog
 {
     Q_OBJECT
 
@@ -242,7 +242,7 @@ private:
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
 
-    bool shownSomeIssuesOccurred = false;
+    bool mShownSomeIssuesOccurred = false;
     QPropertyAnimation *minHeightAnimationSomeIssues;
     QPropertyAnimation *maxHeightAnimationSomeIssues;
     QParallelAnimationGroup animationGroupSomeIssues;

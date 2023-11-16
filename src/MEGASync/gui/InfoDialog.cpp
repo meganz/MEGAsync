@@ -707,28 +707,25 @@ void InfoDialog::updateState()
             mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
             animateStates(mWaiting || mIndexing || mSyncing);
         }
+        else if (mIndexing)
+        {
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
+        }
+        else if (mSyncing)
+        {
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_SYNCING);
+        }
+        else if (mWaiting)
+        {
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_WAITING);
+        }
+        else if (mTransferring)
+        {
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING);
+        }
         else
         {
-            if (mIndexing)
-            {
-                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
-            }
-            else if (mSyncing)
-            {
-                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_SYNCING);
-            }
-            else if (mWaiting)
-            {
-                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_WAITING);
-            }
-            else if (mTransferring)
-            {
-                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING);
-            }
-            else
-            {
-                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED, false);
-            }
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED, false);
         }
     }
 
@@ -750,13 +747,7 @@ bool InfoDialog::checkFailedState()
     if((app->getTransfersModel() && app->getTransfersModel()->failedTransfers()) 
     || (app->getStalledIssuesModel() && !app->getStalledIssuesModel()->isEmpty()))
     {
-        if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
-        {
-            mState = StatusInfo::TRANSFERS_STATES::STATE_FAILED;
-            animateStates(false);
-            changeStatusState(mState);
-        }
-
+        changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_FAILED);
         isFailed = true;
     }
 
@@ -1190,7 +1181,7 @@ void InfoDialog::reset()
     ui->bTransferManager->reset();
 
     hideSomeIssues();
-    shownSomeIssuesOccurred = false;
+    mShownSomeIssuesOccurred = false;
 
     setUnseenNotifications(0);
     if (filterMenu)
@@ -1668,20 +1659,20 @@ void InfoDialog::sTabsChanged(int tab)
 
 void InfoDialog::hideSomeIssues()
 {
-    shownSomeIssuesOccurred = false;
+    mShownSomeIssuesOccurred = false;
     ui->wSomeIssuesOccurred->hide();
 }
 
 void InfoDialog::showSomeIssues()
 {
-    if (shownSomeIssuesOccurred)
+    if (mShownSomeIssuesOccurred)
     {
         return;
     }
 
     ui->wSomeIssuesOccurred->show();
     animationGroupSomeIssues.start();
-    shownSomeIssuesOccurred = true;
+    mShownSomeIssuesOccurred = true;
 }
 
 void InfoDialog::on_bDismissSyncSettings_clicked()
