@@ -619,7 +619,7 @@ private:
 
     QQmlEngine* mEngine;
 
-    void processUpgradeSeczurityEvent();
+    void processUpgradeSecurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;
 
     void registerCommonQMLElements();
