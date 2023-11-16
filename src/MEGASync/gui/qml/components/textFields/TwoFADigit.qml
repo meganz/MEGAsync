@@ -24,9 +24,8 @@ MegaTextFields.TextField {
         verticalAlignment: Text.AlignVCenter
         validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
         font {
-            pixelSize: MegaTexts.Text.Huge
-            weight: Font.DemiBold
-            family: "Poppins"
+            pixelSize: MegaTexts.Text.Size.Huge
+            weight: Font.Bold
         }
     }
 
