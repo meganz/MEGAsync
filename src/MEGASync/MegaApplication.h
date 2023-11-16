@@ -619,13 +619,10 @@ private:
 
     QQmlEngine* mEngine;
 
-    void processUpgradeSecurityEvent();
+    void processUpgradeSeczurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;
 
     void registerCommonQMLElements();
-
-    template<typename TDialog>
-    void openDialog();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

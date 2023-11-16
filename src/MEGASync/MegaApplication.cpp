@@ -5304,30 +5304,36 @@ void MegaApplication::onMessageClicked()
 
 void MegaApplication::openGuestDialog()
 {
-    openDialog<GuestContent>();
+    if (appfinished)
+    {
+        return;
+    }
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>())
+    {
+        DialogOpener::showDialog(dialog->getDialog());
+        return;
+    }
+
+    QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
+    DialogOpener::showDialog(guest)->setIgnoreRaiseAllAction(true);
 }
 
 void MegaApplication::openOnboardingDialog()
-{
-    openDialog<Onboarding>();
-}
-
-template<typename TDialog>
-void MegaApplication::openDialog()
 {
     if (appfinished)
     {
         return;
     }
 
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<TDialog>>())
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
     {
         DialogOpener::showDialog(dialog->getDialog());
         return;
     }
 
-    QPointer<QmlDialogWrapper<TDialog>> dialog = new QmlDialogWrapper<TDialog>();
-    DialogOpener::showDialog(dialog)->setIgnoreCloseAllAction(true);
+    QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
+    DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
 }
 
 void MegaApplication::openSettings(int tab)
