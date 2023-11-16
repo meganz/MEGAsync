@@ -149,7 +149,7 @@ Rectangle {
                         color = colors.borderDisabled;
                     } else if(error) {
                         color = colors.borderError;
-                    } else if(textField.activeFocus) {
+                    } else if(textField.focus) {
                         color = colors.borderFocus;
                     }
                     return color;
