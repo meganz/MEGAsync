@@ -84,7 +84,7 @@ Rectangle {
             readonly property int imageWidth: 16
             readonly property int textWidth: 248
 
-            property int checkboxSpacing: !checkbox.visible ? 0 : 12
+            property int checkboxSpacing: checkbox.visible ? 16 : 0
 
             anchors.fill: parent
             anchors.margins: contentMargin
@@ -93,11 +93,14 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                spacing: checkboxSpacing
+                spacing: contentRoot.checkboxSpacing
 
                 MegaCheckBoxes.CheckBox {
                     id: checkbox
 
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.topMargin: -checkbox.sizes.focusBorderWidth + 1
                     width: backupsProxyModel.selectedFilterEnabled ? 0 : contentRoot.checkboxWidth
                     checked: selected
                     visible: !backupsProxyModel.selectedFilterEnabled

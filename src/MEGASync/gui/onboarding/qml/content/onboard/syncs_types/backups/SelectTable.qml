@@ -85,7 +85,7 @@ Rectangle {
                     Layout.leftMargin: headerFooterMargin
                     text: OnboardingStrings.selectAll
                     tristate: true
-                    sizes.spacing: 12
+                    sizes.spacing: 8
                     enabled: backupsListView.count > 0
 
                     onCheckStateChanged: {

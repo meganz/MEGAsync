@@ -81,7 +81,7 @@ Column {
     }
 
     width: contentWidth
-    spacing: contentMargin / 2
+    spacing: contentMargin / 2 - termsCheckBoxItem.sizes.focusBorderWidth
 
     Component.onDestruction: {
         loginControllerAccess.createAccountErrorMsg = "";
@@ -196,6 +196,7 @@ Column {
         id: termsCheckBoxItem
 
         anchors.left: root.left
+        anchors.leftMargin: -termsCheckBoxItem.sizes.focusBorderWidth
         url: Links.terms
         text: OnboardingStrings.agreeTerms
     }
