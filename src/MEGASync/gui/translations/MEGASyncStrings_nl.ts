@@ -2453,17 +2453,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>De applicatie kan geen verbinding maken. Controleer uw Internetverbinding en lokale firewallconfiguratie. Noteer dat de meeste antivirussoftware een firewall bevatten.</translation>
+        <translation>De app kan geen verbinding maken. Controleer uw internetverbinding en lokale firewallconfiguratie. Houd er rekening mee dat de meeste antivirussoftware een firewall bevat.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw synchronisatie &#8220;%1&#8221; is gestopt omdat de externe map niet bestaat</translation>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de lokale map niet beschikbaar is of geen lees- en schrijfrechten heeft.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw sync &#8220;%1&#8221; is uitgeschakeld omdat de lokale map niet bestaat</translation>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de lokale map niet beschikbaar is of geen lees- en schrijfrechten heeft.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2538,7 +2538,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>Geen internetverbinding</translation>
+        <translation>Geen internet verbinding</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -2731,7 +2731,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up ”%1“ is uitgeschakeld omdat de lokale map niet bestaat.</translation>
+        <translation>Uw backup “%1” is uitgeschakeld omdat de lokale map niet beschikbaar is of geen lees- en schrijfrechten heeft.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -4039,12 +4039,15 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- Gebruikersinterface verbeterd. 
-- Gedetecteerde crashes verholpen op Windows, Linux en macOS.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Opgewaardeerd naar Qt 5.15.
+-Gedetecteerde crashes op Windows, Linux en macOS opgelost.
+- Bibliotheken van derden bijgewerkt.
+</translation>
     </message>
 </context>
 <context>

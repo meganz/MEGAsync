@@ -1124,7 +1124,8 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (mLoadingSettings) return;
-    mUi->cOverlayIcons->setEnabled(false);
+
+    mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
     mPreferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
     Platform::getInstance()->notifyRestartSyncFolders();

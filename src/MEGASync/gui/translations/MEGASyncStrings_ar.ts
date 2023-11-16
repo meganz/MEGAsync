@@ -999,7 +999,7 @@
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تغيير كلمة السر</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -1042,7 +1042,7 @@
     <message>
         <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم إلغاء تفعيل حساب Pro&#xa0;Flexi الخاص بك بسبب فشل الدفع أو بسبب إلغاء اشتراكك. لن تتمكن من الوصول إلى البيانات المخزنة في حسابك حتى تقوم بالدفع وإعادة تفعيل اشتراكك.</translation>
     </message>
 </context>
 <context>
@@ -1774,12 +1774,12 @@
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>حدث خطأ أثناء إضافة المزامنة</translation>
     </message>
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إضافة %1 بسبب إلغاء تفعيل حساب Pro&#xa0;Flexi الخاص بك بسبب فشل الدفع أو أنك ألغيت اشتراكك. للمتابعة، قم بالدفع وأعد تفعيل اشتراكك.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2458,12 +2458,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>تم تعطيل مزامنتك ”%1“ لعدم وجود المجلد المتحكم به عن بُعد</translation>
+        <translation>تم تعطيل مزامنة &#8220;%1&#8221; لأن المجلد المحلي غير متاح أو ليس لديك أذونات القراءة والكتابة.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>تم تعطيل مزامنتك ”%1“ لعدم وجود المجلد المحلي</translation>
+        <translation>تم تعطيل مزامنة &#8220;%1&#8221; لأن المجلد المحلي غير متاح أو ليس لديك أذونات القراءة والكتابة.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2538,7 +2538,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>لا يوجد اتصال</translation>
+        <translation>لا يوجد اتصال بالإنترنت</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -2735,7 +2735,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>تم تعطيل نسخك الاحتياطي “%1” لأن المجلد المحلي غير موجود.</translation>
+        <translation>تم تعطيل النسخة الاحتياطية &#8220;%1&#8221; لأن المجلد المحلي غير متوفر أو ليس لديك أذونات القراءة والكتابة.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -3020,7 +3020,8 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم إنهاء حسابك بسبب خرق شروط خدمة ميغا MEGA.
+لن تتمكن من استعادة الوصول إلى بياناتك المخزنة و لن يُسمح لك بتسجيل حساب ميغا MEGA جديد.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
@@ -3232,7 +3233,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>انتهت صلاحية باقتك</translation>
     </message>
 </context>
 <context>
@@ -3418,12 +3419,12 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا تلغي</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
         <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا تقم بالمسح</translation>
     </message>
 </context>
 <context>
@@ -4042,12 +4043,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- تحسين واجهة المستخدم UI.
-- إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك او اس macOS.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>تمت الترقية إلى كيو تي 5.15.
+- تم إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك او اس macOS.
+- تحديث مكتبات الأطرف الخارجية.
+</translation>
     </message>
 </context>
 <context>

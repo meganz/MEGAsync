@@ -1729,6 +1729,8 @@ void InfoDialog::enableUserActions(bool newState)
             syncMenu->setEnabled(newState);
             buttonIt.key()->setEnabled(syncMenu->getAction()->isEnabled());
         }
+
+        *buttonIt++;
     }
 }
 
