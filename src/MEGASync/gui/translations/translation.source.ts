@@ -50,6 +50,14 @@
     </message>
 </context>
 <context>
+    <name>AccountStatusController</name>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
+        <translation type="unfinished">Your account has been deactivated by your administrator. Please contact your Business account administrator for further details.</translation>
+    </message>
+</context>
+<context>
     <name>AddBackupDialog</name>
     <message>
         <source>Add backup folder</source>
@@ -511,6 +519,40 @@
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
         <translation>Click on the three-dot menu for more backup actions</translation>
+    </message>
+</context>
+<context>
+    <name>BackupsModel</name>
+    <message numerus="yes">
+        <source>Folder wasn&apos;t backed up. Try again.</source>
+        <translatorcomment>Warning message indicating that the folder was not backed up.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names.</translatorcomment>
+        <translation type="unfinished">You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
+    </message>
+    <message numerus="yes">
+        <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
+        <translatorcomment>Warning message stating that the user already has a backup created with that name.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
+        <translatorcomment>Warning message stating that a backup can´t contain another backup</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Warning message stating that the selected folder can´t be reached.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1037,6 +1079,14 @@
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
         <translation>Your password has been changed.</translation>
+    </message>
+</context>
+<context>
+    <name>ChooseLocalFolder</name>
+    <message>
+        <source>Select local folder</source>
+        <translatorcomment>Label indicating the user that he has to select a local folder</translatorcomment>
+        <translation type="unfinished">Select local folder</translation>
     </message>
 </context>
 <context>
@@ -1580,6 +1630,14 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>FastLoginController</name>
+    <message>
+        <source>Login error: %1</source>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
+        <translation type="unfinished">Login error: %1</translation>
+    </message>
+</context>
+<context>
     <name>FilterAlertWidget</name>
     <message>
         <source>All notifications</source>
@@ -1680,171 +1738,66 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-    <name>GuestWidget</name>
+    <name>GuestStrings</name>
     <message>
-        <source>Login</source>
-        <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Log&#xa0;in</translation>
+        <source>About MEGA</source>
+        <translatorcomment>Menu entry that opens the about MEGA dialog</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation>Create account</translation>
+        <source>Quit</source>
+        <translatorcomment>Menu entry that quits the application for mac</translatorcomment>
+        <translation type="unfinished">Quit</translation>
     </message>
     <message>
-        <source>Email address</source>
-        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation>Email address</translation>
+        <source>Exit</source>
+        <translatorcomment>Menu entry that quits the application for linux and windows</translatorcomment>
+        <translation type="unfinished">Exit</translation>
     </message>
     <message>
-        <source>Password</source>
-        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation>Password</translation>
+        <source>Settings</source>
+        <translatorcomment>Menu entry that opens the settings dialog</translatorcomment>
+        <translation type="unfinished">Settings</translation>
     </message>
     <message>
-        <source>Forgot password?</source>
-        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation>Forgot password?</translation>
+        <source>Log in or sign up to MEGA</source>
+        <translatorcomment>Label that indicates to the user that he should login or register in order to proceed</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation>Cancel</translation>
+        <source>Account temporarily locked</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Setting up your account...</source>
-        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>Setting up your account…</translation>
+        <source>Your account has been temporarily locked due to a potential breach of our [A]Terms of Service[/A]. To unlock your account, verify your phone number.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>Logging in…</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Fetching file list…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Invalid email or password.</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation>Please check your email and click the link to confirm your account.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation>Your account has been blocked. Please contact support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>Please enter your email address</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>Please enter a valid email address</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation>Please enter your password</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Logging out…</translation>
-    </message>
-    <message>
-        <source>Locked Account</source>
-        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>Locked account</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>Log&#xa0;out</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation>Your account has been temporarily locked due to potential abuse. Please verify your phone number to unlock your account.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation>Verify now</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGA app</translatorcomment>
-        <translation>Creating account…</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Why am I seeing this?</translation>
+        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>Resend email</translation>
+        <translatorcomment>Button text, on click the email to verify the account is resent</translatorcomment>
+        <translation type="unfinished">Resend email</translation>
     </message>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>Email sent</translation>
+        <source>Log out</source>
+        <translatorcomment>Button text to logout</translatorcomment>
+        <translation type="unfinished">Log&#xa0;out</translation>
     </message>
     <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Please enter the code generated by your authentication app</translation>
+        <source>Verify now</source>
+        <translatorcomment>Button text to verify the account</translatorcomment>
+        <translation type="unfinished">Verify now</translation>
     </message>
     <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6-digit code:</translation>
-    </message>
-    <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Invalid code</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation>Next</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Lost your authenticator device?[/A]</translation>
-    </message>
-    <message>
-        <source>Log into MEGA</source>
-        <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
-        <translation>Log in to MEGA</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
+        <source>Setting up your account...</source>
+        <translatorcomment>Label that indicates that the account is being setting up</translatorcomment>
+        <translation type="unfinished">Setting up your account…</translation>
     </message>
 </context>
 <context>
@@ -2235,54 +2188,6 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-    <name>InfoWizard</name>
-    <message>
-        <source>You are not logged in</source>
-        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
-        <translation>You are not logged in</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>Log&#xa0;in</translation>
-    </message>
-    <message>
-        <source>Create Account</source>
-        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
-        <translation>Create account</translation>
-    </message>
-    <message>
-        <source>MEGA Desktop app</source>
-        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>MEGA Desktop App</translation>
-    </message>
-    <message>
-        <source>Login or create an account to start using MEGA Desktop app.</source>
-        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Log in or create an account to start using our app.</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>Log in to your MEGA account to use our app.</translation>
-    </message>
-    <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
-        <translation>Create account</translation>
-    </message>
-    <message>
-        <source>Create account to join MEGA collaboration platform.</source>
-        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>Create an account to join the MEGA collaboration platform.</translation>
-    </message>
-    <message>
-        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
-        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Learn more about our app. [A]Read more[/A]</translation>
-    </message>
-</context>
-<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -2367,6 +2272,48 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>LoginController</name>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Please check your email and click the link to confirm your account.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+    </message>
+    <message>
+        <source>Invalid email or password. Please try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Another user with this email address already exists. Try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translation type="unfinished">The app is unable to connect. Please check your internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
+    </message>
+</context>
+<context>
+    <name>LogoutController</name>
+    <message>
+        <source>MEGAsync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translation type="unfinished">You have been logged out on this computer from another location</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translation type="unfinished">Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translation type="unfinished">You have been logged out because of this error: %1</translation>
+    </message>
+</context>
+<context>
     <name>LowDiskSpaceDialog</name>
     <message>
         <source>Low disk space</source>
@@ -2425,11 +2372,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
         <translation>The links have been copied to the clipboard</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Logging in…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2538,31 +2480,6 @@ https://mega.co.nz/#sync</source>
         <translation>Your config is corrupted, please start over</translation>
     </message>
     <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>The app is unable to connect. Please check your internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>Your account has been blocked. Please contact support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Login error: %1</source>
-        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation>Login error: %1</translation>
-    </message>
-    <message>
-        <source>You have been logged out on this computer from another location</source>
-        <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation>You have been logged out on this computer from another location</translation>
-    </message>
-    <message>
-        <source>You have been logged out because of this error: %1</source>
-        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation>You have been logged out because of this error: %1</translation>
-    </message>
-    <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation>Over quota</translation>
@@ -2586,11 +2503,6 @@ https://mega.co.nz/#sync</source>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
         <translation>Error: Invalid destination folder. The download has been cancelled.</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -2706,11 +2618,6 @@ https://mega.co.nz/#sync</source>
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Open links</translation>
-    </message>
-    <message>
-        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
-        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Your account has been deactivated by your administrator. Please contact your Business account administrator for further details.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -2840,6 +2747,14 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>Account deactivated</source>
         <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
         <translation>Account deactivated</translation>
+    </message>
+    <message>
+        <source>Password changed</source>
+        <translation type="unfinished">Password changed</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translation type="unfinished">Your password has been changed.</translation>
     </message>
 </context>
 <context>
@@ -3029,21 +2944,6 @@ You will not be able to regain access to your stored data or be authorised to re
         <source>Close</source>
         <translatorcomment>Button label to close current message box</translatorcomment>
         <translation>Close</translation>
-    </message>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>Locked accounts</translation>
-    </message>
-    <message>
-        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</translation>
-    </message>
-    <message>
-        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>Your password leaked and is now being used by bad actors to log in to your accounts, including, but not limited to, your MEGA account.</translation>
     </message>
 </context>
 <context>
@@ -3717,6 +3617,513 @@ Enter a different name.</translation>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
         <translation>Uploads and downloads:</translation>
+    </message>
+</context>
+<context>
+    <name>OnboardingStrings</name>
+    <message>
+        <source>Free</source>
+        <translation type="unfinished">Free</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translation type="unfinished">Pro&#xa0;I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translation type="unfinished">Pro&#xa0;II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translation type="unfinished">Pro&#xa0;III</translation>
+    </message>
+    <message>
+        <source>Pro Lite</source>
+        <translation type="unfinished">Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translation type="unfinished">Business</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translation type="unfinished">Pro&#xa0;Flexi</translation>
+    </message>
+    <message>
+        <source>Add folder</source>
+        <translation type="unfinished">Add folder</translation>
+    </message>
+    <message>
+        <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation type="unfinished">Backup</translation>
+    </message>
+    <message>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup: Confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup Folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup: Select folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translation type="unfinished">Back up to:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation type="unfinished">Choose</translation>
+    </message>
+    <message>
+        <source>Change folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change your email address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add the name of your device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add device name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation type="unfinished">Confirm</translation>
+    </message>
+    <message>
+        <source>There is already a folder with the same name in this backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A folder with the same name already exists on your backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm folders to back up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Account created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please confirm your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter your name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter your last name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passwords don&apos;t match. Check and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a valid email address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup is set up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>What else do you want to do?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync has been set up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA with your local device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation type="unfinished">Full sync</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with a local device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translation type="unfinished">Forgot password?</translation>
+    </message>
+    <message>
+        <source>Select a local folder to sync.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder to sync.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t create directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setup options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Welcome to MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log in</source>
+        <translation type="unfinished">Log&#xa0;in</translation>
+    </message>
+    <message>
+        <source>Log in to your [B]MEGA account[/B]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished">Next</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished">Skip</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished">Password</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished">Rename</translation>
+    </message>
+    <message>
+        <source>Resend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Select all[/B]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select folders to back up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a local folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder</source>
+        <translation type="unfinished">Select a MEGA folder</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA with a local device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selective sync</source>
+        <translation type="unfinished">Selective sync</translation>
+    </message>
+    <message>
+        <source>Set up MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sign up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create your [B]MEGA account[/B]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available storage:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync your device with MEGA and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose sync type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation type="unfinished">Sync</translation>
+    </message>
+    <message>
+        <source>Sync: Choose type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync set up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Problem with two-factor authentication?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the 6-digit code generated by your authenticator app.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Continue with [B]two factor authentication[/B]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logging in...</source>
+        <translation type="unfinished">Logging in…</translation>
+    </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Fetching file list…</translation>
+    </message>
+    <message>
+        <source>Creating account...</source>
+        <translation type="unfinished">Creating account…</translation>
+    </message>
+    <message>
+        <source>Validating 2FA code...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for email confirmation...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop logging in?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing this window will stop you logging in.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop Loggin in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don’t stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Abort account creation?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing this window will cancel the sign up process.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Abort account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don’t abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password needs to be at least 8 characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password easily guessed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Good password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strong password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It’s better to have:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper and lower case letters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least one number or special character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A longer password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a minimum of 8 characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your password is easily guessed. You need to make it stronger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your password could be easily guessed. Try making it stronger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Let&apos;s get you set up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm your email and password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once confirmed, your account will be activated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter your email address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Names longer than 32 characters are not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage space:</source>
+        <translation type="unfinished">Storage space:</translation>
+    </message>
+    <message>
+        <source>Authentication failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation type="unfinished">Try again</translation>
     </message>
 </context>
 <context>
@@ -5469,19 +5876,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Repeat password:</translation>
     </message>
     <message>
-        <source>Log in to your MEGA account</source>
-        <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Log in to your MEGA account</translation>
-    </message>
-    <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
         <translation>Please verify your account using the confirmation link that we have sent to your email account</translation>
-    </message>
-    <message>
-        <source>Choose install type</source>
-        <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>Choose install type</translation>
     </message>
     <message>
         <source> Sync your entire cloud drive</source>
@@ -5524,95 +5921,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <source>User already exists</source>
-        <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>User already exists</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Fetching file list…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Invalid email or password.</translation>
-    </message>
-    <message>
-        <source>MEGA folder doesn&apos;t exist</source>
-        <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>MEGA folder doesn’t exist</translation>
-    </message>
-    <message>
         <source>Finish</source>
         <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
         <translation>Finish</translation>
     </message>
     <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Please enter your email address</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Please enter a valid email address</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Please enter your password</translation>
-    </message>
-    <message>
-        <source>Please, enter your name</source>
-        <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Please enter your name</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Please enter a stronger password</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>The entered passwords don’t match</translation>
-    </message>
-    <message>
-        <source>You have to accept our terms of service</source>
-        <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>You have to accept our Terms of Service</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Creating account…</translation>
-    </message>
-    <message>
-        <source>Please, select a local folder</source>
-        <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Please select a local folder</translation>
-    </message>
-    <message>
-        <source>Please, select a MEGA folder</source>
-        <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Please select a MEGA folder</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Select local folder</translation>
-    </message>
-    <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
         <translation>Logging in…</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Set up Assistant - MEGAsync</source>
@@ -5630,64 +5946,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Your local folder and your MEGA Cloud drive will be automatically synchronized.</translation>
     </message>
     <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>Do you want to continue?</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation>Your account has been blocked. Please contact support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Want to cancel this wizard and undo all changes?</translation>
-    </message>
-    <message>
         <source>Skip</source>
         <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
         <translation>Skip</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Logging out…</translation>
-    </message>
-    <message>
-        <source>Very Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation>Very weak</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation>Weak</translation>
-    </message>
-    <message>
-        <source>Medium</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation>Medium</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation>Good</translation>
-    </message>
-    <message>
-        <source>Strong</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation>Strong</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
-        <translation>Please check your email and click the link to confirm your account.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
-        <translation>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
@@ -5720,46 +5981,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Selective sync</translation>
     </message>
     <message>
-        <source>Please, enter your last name</source>
-        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation>Please enter your last name</translation>
-    </message>
-    <message>
-        <source>Set up selective sync</source>
-        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Set up selective sync</translation>
-    </message>
-    <message>
-        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Specific folders in your Cloud drive will be synchronised with a matching local folder.</translation>
-    </message>
-    <message>
-        <source>Select Local folder:</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Select local folder</translation>
-    </message>
-    <message>
-        <source>Set up full sync</source>
-        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Set up full sync</translation>
-    </message>
-    <message>
-        <source>Full Sync</source>
-        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation>Full sync</translation>
-    </message>
-    <message>
-        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Your entire Cloud drive will be synchronized with a local folder.</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Log&#xa0;in</translation>
-    </message>
-    <message>
         <source>I agree with the MEGA [A]Terms of Service[/A]</source>
         <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
         <translation>I agree with the MEGA [A]Terms of Service[/A]</translation>
@@ -5768,16 +5989,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Enjoy MEGAsync</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
         <translation>Enjoy our app</translation>
-    </message>
-    <message>
-        <source>We are all done</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>We are all done</translation>
-    </message>
-    <message>
-        <source>Creating folder…</source>
-        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Creating folder…</translation>
     </message>
 </context>
 <context>
@@ -6024,54 +6235,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Folder is already backed up. Select a different one.</translation>
     </message>
     <message>
-        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation>You can’t sync this folder as it’s already synced.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation>You can’t sync this folder as it’s already backed up.</translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
         <translation>You can’t back up this folder as it’s inside a synced folder.</translation>
     </message>
     <message>
-        <source>You can&apos;t sync folders that are inside synced folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>You can’t sync folders that are inside synced folders.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that are inside backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation>You can’t sync folders that are inside backed up folders.</translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
         <translation>You can’t back up this folder as it contains synced folders.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain synced folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>You can’t sync folders that contain synced folders.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation>You can’t sync folders that contain backed up folders.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>The app won’t be able to download anything here.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6104,20 +6275,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Unable to create backup. For further information, contact [A]Support[/A].</translation>
     </message>
     <message>
-        <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation>You can’t back up “%1” as it’s the root folder. The root folder is either the top-level folder on your computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</translation>
-    </message>
-    <message>
-        <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation>You can’t sync “%1” as it’s the root folder. The root folder is either the top-level folder on your computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</translation>
-    </message>
-    <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
         <translation>You don’t have full access permission to this shared folder and can’t sync it. </translation>
@@ -6141,6 +6298,54 @@ To continue, select a different folder.</translation>
         <source>Folder already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
         <translation>Folder has already been synced.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s already synced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as is already backed up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains synced folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains backed up folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have write permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The local path is unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This selection can&apos;t be synced as it’s a file.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6330,6 +6535,33 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>MEGA path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the remote path of the sync.</translatorcomment>
         <translation>MEGA path:</translation>
+    </message>
+</context>
+<context>
+    <name>Syncs</name>
+    <message>
+        <source>Select a local folder to sync.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The local path is unavaliable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder to sync.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
