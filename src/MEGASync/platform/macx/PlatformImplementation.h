@@ -32,9 +32,9 @@ public:
     QString getDeviceName() override;
     void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;
 
-    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
-    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
-    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func) override;
+    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func) override;
+    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func) override;
     void raiseFileFolderSelectors() override;
     void closeFileFolderSelectors(QWidget* parent) override;
 

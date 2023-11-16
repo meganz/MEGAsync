@@ -419,7 +419,7 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
-void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func)
 {
     if (defaultDir.isEmpty())
     {
@@ -428,7 +428,7 @@ void PlatformImplementation::fileSelector(QString title, QString defaultDir, boo
     AbstractPlatform::fileSelector(title, defaultDir, multiSelection, parent, func);
 }
 
-void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func)
 {
     if (defaultDir.isEmpty())
     {
@@ -436,7 +436,7 @@ void PlatformImplementation::folderSelector(QString title, QString defaultDir, b
     }
     AbstractPlatform::folderSelector(title, defaultDir, multiSelection, parent, func);
 }
-void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func)
 {
     if (defaultDir.isEmpty())
     {
