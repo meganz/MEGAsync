@@ -16,9 +16,9 @@
 #include <QMessageBox>
 #include <QFile>
 
-LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(std::shared_ptr<mega::MegaSyncStall> originalstall, QWidget *parent) :
+LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(std::shared_ptr<mega::MegaSyncStall> originalStall, QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
-    originalStall(originalstall),
+    originalStall(originalStall),
     ui(new Ui::LocalAndRemoteDifferentWidget)
 {
     ui->setupUi(this);
@@ -97,7 +97,6 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     auto selection = dialog->getDialog()->getSelection(reasons);
     auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
-    auto pluralNumber(1);
     if(selection.size() <= 1)
     {
         if(allSimilarIssues.size() != selection.size())
@@ -113,12 +112,11 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     }
     else
     {
-        pluralNumber = selection.size();
         textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
     }
-
     msgInfo.buttonsText = textsByButton;
 
+    const auto pluralNumber = selection.size() <= 1 ? 1 : selection.size();
     if(localInfo.isFile())
     {
         msgInfo.text = tr("Are you sure you want to keep the <b>local file</b> %1?", "", pluralNumber).arg(ui->chooseLocalCopy->data()->getFileName());

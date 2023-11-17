@@ -1181,7 +1181,6 @@ void InfoDialog::reset()
     ui->bTransferManager->reset();
 
     hideSomeIssues();
-    mShownSomeIssuesOccurred = false;
 
     setUnseenNotifications(0);
     if (filterMenu)

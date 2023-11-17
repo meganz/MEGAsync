@@ -612,7 +612,7 @@ void NameConflictedStalledIssue::solveIssue(int option)
 {
     auto result(false);
 
-    if(option & ActionSelected::MergeFolders && hasFolders() > 1)
+    if(option & ActionSelected::MergeFolders && foldersCount() > 1)
     {
         mCloudConflictedNames.mergeFolders();
         result = checkAndSolveConflictedNamesSolved();

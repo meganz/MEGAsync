@@ -285,11 +285,11 @@ FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
 void FileIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
-    if(header->getData().consultData()->hasFiles() > 0)
+    if(header->getData().consultData()->filesCount() > 0)
     {
         header->setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
     }
-    else if(header->getData().consultData()->hasFolders() > 0)
+    else if(header->getData().consultData()->foldersCount() > 0)
     {
         header->setTitleDescriptionText(tr("A single folder had an issue that needs a user decision to solve."));
     }
@@ -581,7 +581,7 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
         {
             QList<StalledIssueHeader::ActionInfo> actions;
 
-            if(header->getData().consultData()->hasFiles() > 0)
+            if(header->getData().consultData()->filesCount() > 0)
             {
                 if(nameConflict->areAllDuplicatedNodes())
                 {
@@ -591,7 +591,7 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
                 {
                     NameConflictedStalledIssue::ActionsSelected selection(NameConflictedStalledIssue::RemoveDuplicated | NameConflictedStalledIssue::Rename);
                     QString actionMessage;
-                    if(header->getData().consultData()->hasFolders() > 1)
+                    if(header->getData().consultData()->foldersCount() > 1)
                     {
                         selection |= NameConflictedStalledIssue::MergeFolders;
                         actionMessage = tr("Remove duplicates, merge folders and rename the rest");
@@ -602,14 +602,14 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
                     }
                     actions << StalledIssueHeader::ActionInfo(actionMessage, selection);
                 }
-                else if(header->getData().consultData()->hasFolders() > 1)
+                else if(header->getData().consultData()->foldersCount() > 1)
                 {
                      actions << StalledIssueHeader::ActionInfo(tr("Merge folders and rename the rest"), NameConflictedStalledIssue::Rename | NameConflictedStalledIssue::MergeFolders);
                 }
 
                 actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::Rename);
             }
-            else if(header->getData().consultData()->hasFolders() > 1)
+            else if(header->getData().consultData()->foldersCount() > 1)
             {
                 actions << StalledIssueHeader::ActionInfo(tr("Merge folders"), NameConflictedStalledIssue::MergeFolders);
             }
@@ -641,17 +641,17 @@ void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
 
         header->setText(text);
 
-        if(header->getData().consultData()->hasFiles() > 0 && header->getData().consultData()->hasFolders() > 0)
+        if(header->getData().consultData()->filesCount() > 0 && header->getData().consultData()->foldersCount() > 0)
         {
             header->setTitleDescriptionText(tr("These items contain multiple names on one side, that would all become the same single name on the other side."
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
         }
-        else if(header->getData().consultData()->hasFiles() > 0)
+        else if(header->getData().consultData()->filesCount() > 0)
         {
             header->setTitleDescriptionText(tr("These files contain multiple names on one side, that would all become the same single name on the other side."
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
         }
-        else if(header->getData().consultData()->hasFolders() > 0)
+        else if(header->getData().consultData()->foldersCount() > 0)
         {
             header->setTitleDescriptionText(tr("These folders contain multiple names on one side, that would all become the same single name on the other side."
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
@@ -671,20 +671,20 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
                 {
                     if(index == NameConflictedStalledIssue::RemoveDuplicated)
                     {
-                        result = nameIssue->hasFiles() > 0 && nameIssue->areAllDuplicatedNodes();
+                        result = nameIssue->filesCount() > 0 && nameIssue->areAllDuplicatedNodes();
                     }
 
                     if(result && (index & NameConflictedStalledIssue::RemoveDuplicated &&
                                   index & NameConflictedStalledIssue::Rename))
                     {
-                        result = nameIssue->hasFiles() > 0 &&
+                        result = nameIssue->filesCount() > 0 &&
                                  nameIssue->hasDuplicatedNodes() &&
                                  !nameIssue->areAllDuplicatedNodes();
                     }
 
                     if(result && (index & NameConflictedStalledIssue::MergeFolders))
                     {
-                        result = nameIssue->hasFolders() > 0;
+                        result = nameIssue->foldersCount() > 0;
                     }
                 }
             }

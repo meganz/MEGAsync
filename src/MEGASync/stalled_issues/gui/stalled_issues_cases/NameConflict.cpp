@@ -79,7 +79,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     //Reset widgets
     bool allSolved(true);
 
-    auto totalSize(0);
     for(int index = conflictedNames.size()-1; index >= 0; index--)
     {
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(index));
@@ -154,7 +153,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         title->setIsFile(info->mIsFile);
         title->showIcon();
 
-        if(title && info->isSolved() != title->isSolved())
+        if(info->isSolved() != title->isSolved())
         {
             bool isSolved(info->isSolved());
             title->setSolved(isSolved);
@@ -204,7 +203,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         title->setTitle(conflictedName);
         updateTitleExtraInfo(title, info);
 
-        totalSize += title->size().height();
     }
 
     if(nameData)
@@ -216,8 +214,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     {
         ui->path->hide();
     }
-
-    totalSize += ui->pathContainer->size().height();
 
     if(allSolved)
     {
@@ -251,10 +247,10 @@ void NameConflict::initTitle(StalledIssueActionTitle* title, int index, const QS
 
 void NameConflict::onRawInfoChecked()
 {
+    const auto conflictedNames = getConflictedNames(mIssue);
     foreach(auto title, mTitlesByIndex)
     {
         //Fill conflict names
-        auto conflictedNames = getConflictedNames(mIssue);
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(title->property(TITLE_INDEX).toInt()));
         updateTitleExtraInfo(title, info);
     }
@@ -359,7 +355,7 @@ void NameConflict::onActionClicked(int actionId)
             buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
             msgInfo.buttonsText = buttonsText;
             msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-            msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+            msgInfo.finishFunc = [](QPointer<QMessageBox>){
                 MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
             };
 

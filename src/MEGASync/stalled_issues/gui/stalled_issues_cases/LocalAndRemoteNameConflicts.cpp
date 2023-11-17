@@ -4,11 +4,11 @@
 #include <StalledIssueHeader.h>
 #include <NameConflictStalledIssue.h>
 
-const QString LocalAndRemoteNameConflicts::FILES_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files can resolve this issue,"
+const QString FILES_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files can resolve this issue,"
                                                                                                      "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
-const QString LocalAndRemoteNameConflicts::FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing folders can resolve this issue,"
+const QString FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing folders can resolve this issue,"
                                                                                                        "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
-const QString LocalAndRemoteNameConflicts::FILES_AND_FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files or folders can resolve this issue,"
+const QString FILES_AND_FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files or folders can resolve this issue,"
                                                                                                        "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
 
 LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
@@ -62,15 +62,15 @@ void LocalAndRemoteNameConflicts::refreshUi()
             ui->localConflictNames->show();
         }
 
-        if(getData().consultData()->hasFiles() > 0 && getData().consultData()->hasFolders() > 0)
+        if(getData().consultData()->filesCount() > 0 && getData().consultData()->foldersCount() > 0)
         {
             ui->selectLabel->setText(FILES_AND_FOLDERS_DESCRIPTION);
         }
-        else if(getData().consultData()->hasFiles() > 0)
+        else if(getData().consultData()->filesCount() > 0)
         {
             ui->selectLabel->setText(FILES_DESCRIPTION);
         }
-        else if(getData().consultData()->hasFolders() > 0)
+        else if(getData().consultData()->foldersCount() > 0)
         {
             ui->selectLabel->setText(FOLDERS_DESCRIPTION);
         }

@@ -335,8 +335,8 @@ public:
     bool mDetectedMEGASide = false;
 
     bool isFile() const;
-    uint8_t hasFiles() const;
-    uint8_t hasFolders() const;
+    uint8_t filesCount() const;
+    uint8_t foldersCount() const;
 
     enum Type
     {

@@ -42,13 +42,13 @@ void StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
                 //In case of error, move to OS trash
                 if (e.getErrorCode() != mega::MegaError::API_OK)
                 {
-                    Utilities::moveFileToTrash(path);
+                    QFile::moveToTrash(path);
                 }
             }));
         }
         else
         {
-            Utilities::moveFileToTrash(path);
+            QFile::moveToTrash(path);
         }
     }
 }

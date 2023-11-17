@@ -2,7 +2,6 @@
 #define LOCALANDREMOTEDIFFERENTWIDGET_H
 
 #include "StalledIssueBaseDelegateWidget.h"
-#include "QTMegaRequestListener.h"
 
 #include <QWidget>
 #include <memory>
@@ -16,7 +15,7 @@ class LocalAndRemoteDifferentWidget : public StalledIssueBaseDelegateWidget
     Q_OBJECT
 
 public:
-    explicit LocalAndRemoteDifferentWidget(std::shared_ptr<mega::MegaSyncStall> orignalstall, QWidget *parent = nullptr);
+    explicit LocalAndRemoteDifferentWidget(std::shared_ptr<mega::MegaSyncStall> originalStall, QWidget *parent = nullptr);
     ~LocalAndRemoteDifferentWidget();
 
     void refreshUi() override;

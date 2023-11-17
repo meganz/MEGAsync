@@ -371,12 +371,12 @@ const std::shared_ptr<mega::MegaSyncStall> &StalledIssue::getOriginalStall() con
     return originalStall;
 }
 
-uint8_t StalledIssue::hasFiles() const
+uint8_t StalledIssue::filesCount() const
 {
     return mFiles;
 }
 
-uint8_t StalledIssue::hasFolders() const
+uint8_t StalledIssue::foldersCount() const
 {
     return mFolders;
 }

@@ -359,7 +359,7 @@ void StalledIssueHeader::refreshUi()
         fileInfo.setFile(getData().consultData()->consultCloudData()->getNativeFilePath());
     }
 
-    if(getData().consultData()->hasFiles() > 0)
+    if(getData().consultData()->filesCount() > 0)
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
                                                       getData().consultData()->getFileName(false), QLatin1Literal(":/images/drag_")));

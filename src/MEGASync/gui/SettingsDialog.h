@@ -131,15 +131,6 @@ private slots:
     void on_bFolders_clicked();
     void on_bUploadFolder_clicked();
     void on_bDownloadFolder_clicked();
-    //void on_bAddName_clicked();
-    //void on_bDeleteName_clicked();
-    //void on_cExcludeUpperThan_clicked();
-    //void on_cExcludeLowerThan_clicked();
-    //void on_eUpperThan_valueChanged(int i);
-    //void on_eLowerThan_valueChanged(int i);
-    //void on_cbExcludeUpperUnit_currentIndexChanged(int index);
-    //void on_cbExcludeLowerUnit_currentIndexChanged(int index);
-    //void on_bRestart_clicked();
 
     // Network
     void on_bNetwork_clicked();

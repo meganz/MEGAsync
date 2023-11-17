@@ -351,8 +351,11 @@ public:
 
     void setLoadingViewSet(LoadingViewType type)
     {
-        mLoadingViewSet = type;
-        mMessageHandler->setLoadingViewVisible(type != LoadingViewType::NONE);
+        if (mLoadingViewSet != type)
+        {
+            mLoadingViewSet = type;
+            mMessageHandler->setLoadingViewVisible(type != LoadingViewType::NONE);
+        }
     }
 
     inline void setView(LoadingSceneView<DelegateWidget, ViewType>* view)
@@ -452,7 +455,6 @@ public:
         ViewLoadingSceneBase::hideLoadingScene();
 
         setLoadingViewSet(LoadingViewType::NONE);
-        //mLoadingViewSet = LoadingViewType::NONE;
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
