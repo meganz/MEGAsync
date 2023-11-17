@@ -922,6 +922,11 @@ void PlatformImplementation::notifyAllSyncFoldersRemoved()
 
 }
 
+void PlatformImplementation::processSymLinks()
+{
+
+}
+
 QByteArray PlatformImplementation::encrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;

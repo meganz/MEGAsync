@@ -1,5 +1,6 @@
 #include "MegaApplication.h"
 #include "gui/MegaProxyStyle.h"
+#include "macx/MacXFunctions.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 #include "control/AppStatsEvents.h"
@@ -198,6 +199,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationVersion(QString::number(Preferences::VERSION_CODE));
 
     Platform::create();
+    Platform::getInstance()->processSymLinks();
 
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
