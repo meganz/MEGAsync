@@ -1795,9 +1795,14 @@ In some cases they may contain details about your data, such as file or folder n
         <translation type="unfinished">Verify now</translation>
     </message>
     <message>
-        <source>Setting up your account...</source>
+        <source>Setting up your account…</source>
         <translatorcomment>Label that indicates that the account is being setting up</translatorcomment>
-        <translation type="unfinished">Setting up your account…</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for email confirmation…</source>
+        <translatorcomment>Label that indicates that the email confirmation is pending</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1890,6 +1895,54 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Open links</source>
         <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
         <translation>Open links</translation>
+    </message>
+</context>
+<context>
+    <name>InfoAccount</name>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Label to refer Free tier [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished">Free</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished">Pro&#xa0;I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II tier [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished">Pro&#xa0;II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III tier [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished">Pro&#xa0;III</translation>
+    </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Label to refer Pro Lite tier [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished">Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Label to refer Business tier [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished">Business</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Label to refer Pro Flexi tier [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished">Pro&#xa0;Flexi</translation>
+    </message>
+    <message>
+        <source>Available storage:</source>
+        <translatorcomment>Label indicating that the number in the right is the available storage [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage space:</source>
+        <translatorcomment>Label indicating that the number in the right is the storage space [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished">Storage space:</translation>
     </message>
 </context>
 <context>
@@ -2275,41 +2328,45 @@ In some cases they may contain details about your data, such as file or folder n
     <name>LoginController</name>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label text saying the user that he has to go to the email to confirm the account [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Please check your email and click the link to confirm your account.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Another user with this email address already exists. Try again.</source>
+        <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs. [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">The app is unable to connect. Please check your internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
 </context>
 <context>
     <name>LogoutController</name>
     <message>
-        <source>MEGAsync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You have been logged out on this computer from another location</source>
+        <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">You have been logged out on this computer from another location</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Notification message shown when SSL checks fails. [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">You have been logged out because of this error: %1</translation>
     </message>
 </context>
@@ -2750,10 +2807,12 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful. [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Password changed</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Your password has been changed.</translation>
     </message>
 </context>
@@ -3622,508 +3681,579 @@ Enter a different name.</translation>
 <context>
     <name>OnboardingStrings</name>
     <message>
-        <source>Free</source>
-        <translation type="unfinished">Free</translation>
-    </message>
-    <message>
-        <source>Pro I</source>
-        <translation type="unfinished">Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translation type="unfinished">Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translation type="unfinished">Pro&#xa0;III</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translation type="unfinished">Pro&#xa0;Lite</translation>
-    </message>
-    <message>
-        <source>Business</source>
-        <translation type="unfinished">Business</translation>
-    </message>
-    <message>
-        <source>Pro Flexi</source>
-        <translation type="unfinished">Pro&#xa0;Flexi</translation>
-    </message>
-    <message>
         <source>Add folder</source>
+        <translatorcomment>Button text to add a new folder to the backups table [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Add folder</translation>
     </message>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
+        <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back up</source>
+        <translatorcomment>Button text to configure the selected backups [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Backup</source>
+        <translatorcomment>Button title, on click it goes to the backups section [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Backup</translation>
     </message>
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
+        <translatorcomment>Button description, on click it goes to the backups section [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Backup: Confirm</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup confirm step [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Backup Folders</source>
+        <translatorcomment>Backup folders table title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Backup: Select folders</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Backup to:</source>
+        <translatorcomment>Text indicating where the selected folders are going to be backed up [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Back up to:</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Cancel button text, cancels the current action [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Choose</translation>
     </message>
     <message>
         <source>Change folder</source>
+        <translatorcomment>Button text to change the selected folder [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
+        <translatorcomment>Text indicating the user what he has to do in order to change the email addres [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Change your email address</source>
+        <translatorcomment>Change email window title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Device name</source>
+        <translatorcomment>Device name window title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add the name of your device.</source>
+        <translatorcomment>Device name window secondary title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add device name</source>
+        <translatorcomment>Device name text input box title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Confirm</source>
+        <translatorcomment>Button text to confirm the current action [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Confirm</translation>
     </message>
     <message>
         <source>There is already a folder with the same name in this backup</source>
+        <translatorcomment>Error text indicating that it can´t create a backup with duplicated names [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A folder with the same name already exists on your backups</source>
+        <translatorcomment>Error text indicating that a backup with the same name already exists [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Confirm folders to back up</source>
+        <translatorcomment>Confirm backups table title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account created</source>
+        <translatorcomment>Label indicating that the account has been created [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
+        <translatorcomment>Text that describes how to confirm the account. [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
+        <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
+        <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Confirm password</source>
+        <translatorcomment>Label indicating that the password should be confirmed [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Done</source>
+        <translatorcomment>Button text that closes onboarding [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Email</source>
+        <translatorcomment>Email text input title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please confirm your password</source>
+        <translatorcomment>Confirm password text input title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter your password</source>
+        <translatorcomment>Password text input title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please enter your name</source>
+        <translatorcomment>Name text input title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please enter your last name</source>
+        <translatorcomment>Last name text input title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Passwords don&apos;t match. Check and try again.</source>
+        <translatorcomment>Error label indicating that password and confirm password content is not the same [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter a valid email address</source>
+        <translatorcomment>Error label indicating that the email is not valid [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup is set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>What else do you want to do?</source>
+        <translatorcomment>Text suggesting the user to create another backup or sync [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
+        <translatorcomment>Text indicating that the sync was successfully configured [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync has been set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>First name</source>
+        <translatorcomment>First name text input title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your entire MEGA with your local device.</source>
+        <translatorcomment>Full sync button description [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Full sync</source>
+        <translatorcomment>Full sync button title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Full sync</translation>
     </message>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Full sync page title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
+        <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Forgot password?</source>
+        <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Forgot password?</translation>
     </message>
     <message>
         <source>Select a local folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a local folder [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t create directory</source>
+        <translatorcomment>Text input title indicating the user to select a MEGA folder [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Setup options</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the Setup options step [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose:</source>
+        <translatorcomment>Label that indicates the user to choose between different options [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
+        <translatorcomment>Label wellcoming the user to MEGA [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Last name</source>
+        <translatorcomment>Last name text input title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Log in</source>
+        <translatorcomment>Log in button text [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Log&#xa0;in</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
+        <translatorcomment>Login window title [B] is for bold [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Next</source>
+        <translatorcomment>Button text, forwards the user to the next window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Next</translation>
     </message>
     <message>
         <source>Skip</source>
+        <translatorcomment>Skips the onboarding by closing the window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Skip</translation>
     </message>
     <message>
         <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password</source>
+        <translatorcomment>Password input field title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Password</translation>
     </message>
     <message>
         <source>Previous</source>
+        <translatorcomment>Button text, backwards the user to the previous page [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rename</source>
+        <translatorcomment>Button to rename a backup [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Rename</translation>
     </message>
     <message>
         <source>Resend</source>
+        <translatorcomment>Button text to resend the email for account confirmation [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[B]Select all[/B]</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select folders to back up</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
+        <translatorcomment>Descriptive text in backups  [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a local folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a local folder  [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a MEGA folder  [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Select a MEGA folder</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA with a local device.</source>
+        <translatorcomment>Selective sync button text description [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Selective sync window title text [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Selective sync</source>
+        <translatorcomment>Selective sync button title text [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Selective sync</translation>
     </message>
     <message>
         <source>Set up MEGA</source>
+        <translatorcomment>Onboarding window title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sign up</source>
+        <translatorcomment>Sign up button text [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available storage:</source>
+        <translatorcomment>Sign up page title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your device with MEGA and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translatorcomment>Sync button description [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose sync type</source>
+        <translatorcomment>Text indicating the user to choose between different available sync types [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync</source>
+        <translatorcomment>Button title that forwards the user to the syncs flow [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Sync</translation>
     </message>
     <message>
         <source>Sync: Choose type</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the choose sync type step [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync set up</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Problem with two-factor authentication?</source>
+        <translatorcomment>Text that the user has to click in case he has problems with 2FA [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter the 6-digit code generated by your authenticator app.</source>
+        <translatorcomment>2FA page secondary title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Continue with [B]two factor authentication[/B]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translation type="unfinished">Logging in…</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translation type="unfinished">Fetching file list…</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translation type="unfinished">Creating account…</translation>
-    </message>
-    <message>
-        <source>Validating 2FA code...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Waiting for email confirmation...</source>
+        <translatorcomment>2FA page title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Stop logging in?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Closing this window will stop you logging in.</source>
+        <translatorcomment>Dialog body text. This dialog appears if the user is being logged and he wants to close the window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Stop Loggin in</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Don’t stop</source>
+        <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Abort account creation?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Closing this window will cancel the sign up process.</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Abort account</source>
+        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Don’t abort</source>
+        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password needs to be at least 8 characters</source>
+        <translatorcomment>Hint text that tells the user minimum requirement for the passwords [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password easily guessed</source>
+        <translatorcomment>Password strength indicator [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Weak password</source>
+        <translatorcomment>Password strength indicator [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Average password</source>
+        <translatorcomment>Password strength indicator [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Good password</source>
+        <translatorcomment>Password strength indicator [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Strong password</source>
+        <translatorcomment>Password strength indicator [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>It’s better to have:</source>
+        <translatorcomment>Title of the popup indicating suggestions to have a stronger password [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Upper and lower case letters</source>
+        <translatorcomment>Suggestions to have a stronger password [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>At least one number or special character</source>
+        <translatorcomment>Suggestions to have a stronger password [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A longer password</source>
+        <translatorcomment>Suggestions to have a stronger password [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter a minimum of 8 characters.</source>
+        <translatorcomment>Error text to force the user to fill minimum character requirement [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your password is easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your password could be easily guessed. Try making it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
+        <translatorcomment>Final page go to backup button description [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to selective sync button description [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to choose sync type button description [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
+        <translatorcomment>Page title for new accounts in set device name page [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Confirm your email and password</source>
+        <translatorcomment>Page title for new accounts in login page [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Once confirmed, your account will be activated.</source>
+        <translatorcomment>Page secondary title for new accounts in login page [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter your email address</source>
+        <translatorcomment>Login error if user didn´t enter the email [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter a device name</source>
+        <translatorcomment>Device name text input field title [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
+        <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Storage space:</source>
-        <translation type="unfinished">Storage space:</translation>
-    </message>
-    <message>
         <source>Authentication failed</source>
+        <translatorcomment>Error shown in case the 2FA fails [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Try again</source>
+        <translatorcomment>Error shown in case the 2FA fails [CONTENT TICKET PLACEHOLDER]</translatorcomment>
         <translation type="unfinished">Try again</translation>
+    </message>
+    <message>
+        <source>Logging in…</source>
+        <translatorcomment>Status text displayed in the footer of the page [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fetching file list…</source>
+        <translatorcomment>Status text displayed in the footer of the page [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating account…</source>
+        <translatorcomment>Status text displayed in the footer of the page [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Validating 2FA code…</source>
+        <translatorcomment>Status text displayed in the footer of the page [CONTENT TICKET PLACEHOLDER]</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

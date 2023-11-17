@@ -566,14 +566,7 @@ void BackupsModel::reviewConflicts()
         setGlobalError(BackupErrorCode::SDK_CREATION);
         if(conflictText.isEmpty())
         {
-            if(sdkCount == 1)
-            {
-                conflictText = tr("Folder wasn't backed up. Try again.");
-            }
-            else
-            {
-                conflictText = tr("These folders weren't backed up. Try again.");
-            }
+            conflictText = tr("Folder wasn't backed up. Try again.", "", sdkCount);
         }
         changeConflictsNotificationText(conflictText);
         return;
@@ -593,18 +586,11 @@ void BackupsModel::reviewConflicts()
                           "Folder names won't change on your computer.");
         setGlobalError(BackupErrorCode::DUPLICATED_NAME);
     }
-    else if(remoteCount == 1)
+    else if(remoteCount > 0)
     {
         conflictText = tr("A folder with the same name already exists in your Backups. "
                           "Rename the new folder to continue with the backup. "
-                          "Folder name will not change on your computer.");
-        setGlobalError(BackupErrorCode::EXISTS_REMOTE);
-    }
-    else if(remoteCount > 1)
-    {
-        conflictText = tr("Some folders with the same name already exist in your Backups. "
-                          "Rename the new folders to continue with the backup. "
-                          "Folder names will not change on your computer.");
+                          "Folder name will not change on your computer." , "", remoteCount);
         setGlobalError(BackupErrorCode::EXISTS_REMOTE);
     }
     else if(pathRelationCount > 0)

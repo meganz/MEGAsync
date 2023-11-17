@@ -19,6 +19,7 @@ QtObject {
     readonly property string resendEmail: qsTr("Resend email")
     readonly property string logOut: qsTr("Log out")
     readonly property string verifyNow: qsTr("Verify now")
-    readonly property string loggedInOnboarding: qsTr("Setting up your account...")
+    readonly property string loggedInOnboarding: qsTr("Setting up your account…")
+    readonly property string statusWaitingForEmail: qsTr("Waiting for email confirmation…")
 
 }

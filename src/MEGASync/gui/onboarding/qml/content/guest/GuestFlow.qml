@@ -272,7 +272,7 @@ Rectangle {
                         return OnboardingStrings.statusSignUp;
                     case LoginController.WAITING_EMAIL_CONFIRMATION:
                     case LoginController.CHANGING_REGISTER_EMAIL:
-                        return OnboardingStrings.statusWaitingForEmail;
+                        return GuestStrings.statusWaitingForEmail;
                     case LoginController.FETCHING_NODES:
                     case LoginController.FETCHING_NODES_2FA:
                         return OnboardingStrings.statusFetchNodes;
