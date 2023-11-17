@@ -1171,21 +1171,20 @@ void InfoDialog::showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type)
 {
     if (mPreferences->logged())
     {
-        auto menu (mSyncsMenus[b]);
+        auto* menu (mSyncsMenus.value(b, nullptr));
         if (!menu)
         {
-            menu = createSyncMenu(type, ui->bUpload->isEnabled());
-            mSyncsMenus[b] = menu;
+            menu = initSyncsMenu(type, ui->bUpload->isEnabled());
+            mSyncsMenus.insert(b, menu);
         }
-        menu->callMenu(b->mapToGlobal(QPoint(b->width() - 100, b->height() + 3)));
+        if (menu) menu->callMenu(b->mapToGlobal(QPoint(b->width() - 100, b->height() + 3)));
     }
 }
 
-SyncsMenu* InfoDialog::createSyncMenu(mega::MegaSync::SyncType type, bool isEnabled)
+SyncsMenu* InfoDialog::initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled)
 {
-    SyncsMenu* menu = new SyncsMenu(type, this);
+    SyncsMenu* menu (SyncsMenu::newSyncsMenu(type, isEnabled, this));
     connect(menu, &SyncsMenu::addSync, this, &InfoDialog::onAddSync);
-    menu->setEnabled(isEnabled);
     return menu;
 }
 
@@ -1853,25 +1852,31 @@ double InfoDialog::computeRatio(long long completed, long long remaining)
     return static_cast<double>(completed) / static_cast<double>(remaining);
 }
 
-void InfoDialog::enableUserActions(bool value)
+void InfoDialog::enableUserActions(bool newState)
 {
-    ui->bAvatar->setEnabled(value);
-    ui->bUpgrade->setEnabled(value);
-    ui->bUpload->setEnabled(value);
+    ui->bAvatar->setEnabled(newState);
+    ui->bUpgrade->setEnabled(newState);
+    ui->bUpload->setEnabled(newState);
 
     // To set the state of the Syncs and Backups button,
     // we have to first create them if they don't exist
-    for (auto button : mSyncsMenus.keys())
+    auto buttonIt (mSyncsMenus.begin());
+    while (buttonIt != mSyncsMenus.end())
     {
-        auto syncMenu (mSyncsMenus[button]);
+        auto* syncMenu (buttonIt.value());
         if (!syncMenu)
         {
-            auto type (button == ui->bAddSync ? MegaSync::TYPE_TWOWAY : MegaSync::TYPE_BACKUP);
-            syncMenu = createSyncMenu(type, value);
-            mSyncsMenus[button] = syncMenu;
+            auto type (buttonIt.key() == ui->bAddSync ? MegaSync::TYPE_TWOWAY : MegaSync::TYPE_BACKUP);
+            syncMenu = initSyncsMenu(type, newState);
+            *buttonIt = syncMenu;
         }
-        syncMenu->setEnabled(value);
-        button->setEnabled(syncMenu->getAction()->isEnabled());
+        if (syncMenu)
+        {
+            syncMenu->setEnabled(newState);
+            buttonIt.key()->setEnabled(syncMenu->getAction()->isEnabled());
+        }
+
+        *buttonIt++;
     }
 }
 

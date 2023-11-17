@@ -11,6 +11,8 @@
 #include <QDataStream>
 #include <QQueue>
 #include <QNetworkInterface>
+#include <QFutureWatcher>
+
 #include <memory>
 
 #include "gui/TransferManager.h"
@@ -120,11 +122,6 @@ public:
     void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes) override;
     void onReloadNeeded(mega::MegaApi* api) override;
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
-    void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync) override;
-    void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState) override;
-
-    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
-    void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
     void onGlobalSyncStateChangedImpl(mega::MegaApi* api, bool timeout);
@@ -331,11 +328,7 @@ private slots:
     void openFolderPath(QString path);
     void registerUserActivity();
     void PSAseen(int id);
-    void onSyncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
-    void onSyncDeleted(std::shared_ptr<SyncSettings> syncSettings);
-    void onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting);
-    void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
-    void onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting);
+    void onSyncModelUpdated(std::shared_ptr<SyncSettings> syncSettings);
     void onBlocked();
     void onUnblocked();
     void onTransfersModelUpdate();
@@ -609,7 +602,7 @@ private:
     void updateMetadata(TransferMetaData* data, const QString& filePath);
 
     template <class Func>
-    void recreateMenuAction(MenuItemAction** action, const QString& actionName,
+    void recreateMenuAction(MenuItemAction** action, QMenu* menu, const QString& actionName,
                             const char* iconPath, Func slotFunc)
     {
         bool previousEnabledState = true;
@@ -620,13 +613,14 @@ private:
             *action = nullptr;
         }
 
-        *action = new MenuItemAction(actionName, QIcon(QString::fromUtf8(iconPath)), true);
+        *action = new MenuItemAction(actionName, QLatin1String(iconPath), menu);
+        (*action)->setManagesHoverStates(true);
         connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
         (*action)->setEnabled(previousEnabledState);
     }
 
     template <class Func>
-    void recreateAction(QAction** action, const QString& actionName, Func slotFunc)
+    void recreateAction(QAction** action, QMenu* menu, const QString& actionName, Func slotFunc)
     {
         bool previousEnabledState = true;
         if (*action)
@@ -636,7 +630,7 @@ private:
             *action = nullptr;
         }
 
-        *action = new QAction(actionName, this);
+        *action = new QAction(actionName, menu);
         connect(*action, &QAction::triggered, this, slotFunc);
         (*action)->setEnabled(previousEnabledState);
     }
@@ -647,6 +641,9 @@ private:
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
+
+private:
+    QFutureWatcher<NodeCount> mWatcher;
 };
 
 class DeferPreferencesSyncForScope

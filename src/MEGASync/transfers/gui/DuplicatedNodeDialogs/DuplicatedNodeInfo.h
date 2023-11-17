@@ -28,8 +28,6 @@ class DuplicatedNodeInfo : public QObject
 public:
     DuplicatedNodeInfo(DuplicatedUploadBase* checker);
 
-    std::shared_ptr<mega::MegaNode> checkNameNode(const QString& nodeName, std::shared_ptr<mega::MegaNode> parentNode);
-
     const std::shared_ptr<mega::MegaNode> &getParentNode() const;
     void setParentNode(const std::shared_ptr<mega::MegaNode> &newParentNode);
 
@@ -45,6 +43,8 @@ public:
     const QString& getNewName();
     const QString& getDisplayNewName();
     const QString& getName() const;
+    void setName(const QString &newName);
+    void setNewName(const QString &newNewName);
 
     bool hasConflict() const;
     void setHasConflict(bool newHasConflict);
@@ -58,6 +58,9 @@ public:
     void setLocalModifiedTime(const QDateTime &newLocalModifiedTime);
 
     bool haveDifferentType() const;
+
+    bool isNameConflict() const;
+    void setIsNameConflict(bool newIsNameConflict);
 
 signals:
     void localModifiedDateUpdated();
@@ -73,6 +76,7 @@ private:
     bool mIsLocalFile;
     bool mHasConflict;
     bool mHaveDifferentType;
+    bool mIsNameConflict;
     QDateTime mNodeModifiedTime;
     QDateTime mLocalModifiedTime;
     DuplicatedUploadBase* mChecker;

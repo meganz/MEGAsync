@@ -53,12 +53,14 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BugReportDialog.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
+    $$PWD/ViewLoadingScene.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
     $$PWD/ProxySettings.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp \
     $$PWD/CancelConfirmWidget.cpp \
+    $$PWD/WordWrapLabel.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \   
@@ -138,6 +140,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SwitchButton.h \
     $$PWD/GuiUtilities.h \
     $$PWD/CancelConfirmWidget.h \
+    $$PWD/WordWrapLabel.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.h \
@@ -202,6 +205,7 @@ win32 {
                 $$PWD/win/NodeNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui \
                 $$PWD/win/LowDiskSpaceDialog.ui \
+                $$PWD/win/ViewLoadingScene.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/win/NodeSelector.ui \
@@ -251,6 +255,7 @@ macx {
                 $$PWD/macx/NodeNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui \
                 $$PWD/macx/LowDiskSpaceDialog.ui \
+                $$PWD/macx/ViewLoadingScene.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/macx/NodeSelector.ui \
@@ -323,6 +328,7 @@ unix:!macx {
                 $$PWD/linux/NodeNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui \
                 $$PWD/linux/LowDiskSpaceDialog.ui \
+                $$PWD/linux/ViewLoadingScene.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/linux/NodeSelector.ui \

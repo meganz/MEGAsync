@@ -26,6 +26,7 @@ class Preferences : public QObject
 signals:
     void stateChanged();
     void updated(int lastVersion);
+    void valueChanged(QString key);
 
 private:
     Preferences();
@@ -377,6 +378,8 @@ public:
     bool error();
 
     QString getDataPath();
+    QString getTempTransfersPath();
+    void clearTempTransfersPath();
     void clearTemporalBandwidth();
     void clearAll();
     void sync();
@@ -510,6 +513,9 @@ public:
     static void overridePreference(const QSettings &settings, QString &&name, T &value);
     static void overridePreferences(const QSettings &settings);
 
+    //Public keys for valueChanged signals
+    //In this section, you need to move the keys to make them accessible from outside
+
 protected:
     QMutex mutex;
     void login(QString account);
@@ -533,8 +539,10 @@ protected:
     template<typename T>
     T getValueConcurrent(const QString &key, const T &defaultValue);
     void setAndCachedValue(const QString &key, const QVariant &value);
-    void setValueAndSyncConcurrent(const QString &key, const QVariant &value);
-    void setValueConcurrent(const QString &key, const QVariant &value);
+    //For these two methods, use notifyChange = true if someone needs to detect when it changes
+    //Not all prefeerences need this, that´s why by default it is set to false
+    void setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
+    void setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
     void setCachedValue(const QString &key, const QVariant &value);
     void cleanCache();
     void removeFromCache(const QString &key);

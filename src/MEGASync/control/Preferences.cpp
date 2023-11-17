@@ -259,7 +259,8 @@ const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
 const long long Preferences::defaultTimeStamp       = 0;
-const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
+//The default appDataId starts from 1, as 0 will be used for invalid appDataId
+const unsigned long long  Preferences::defaultTransferIdentifier   = 1;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
 const long long  Preferences::defaultUpperSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
@@ -883,17 +884,25 @@ void Preferences::setAndCachedValue(const QString &key, const QVariant &value)
     setCachedValue(key, value);
 }
 
-void Preferences::setValueAndSyncConcurrent(const QString &key, const QVariant &value)
+void Preferences::setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange)
 {
     QMutexLocker locker(&mutex);
     setAndCachedValue(key, value);
     mSettings->sync();
+    if(notifyChange)
+    {
+        emit valueChanged(key);
+    }
 }
 
-void Preferences::setValueConcurrent(const QString &key, const QVariant &value)
+void Preferences::setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange)
 {
     QMutexLocker locker(&mutex);
     setAndCachedValue(key, value);
+    if(notifyChange)
+    {
+        emit valueChanged(key);
+    }
 }
 
 void Preferences::setCachedValue(const QString &key, const QVariant &value)
@@ -2469,6 +2478,21 @@ QString Preferences::getDataPath()
     return ret;
 }
 
+QString Preferences::getTempTransfersPath()
+{
+    return getDataPath() + QDir::separator() + QLatin1String("TempTransfers") + QDir::separator();
+}
+
+void Preferences::clearTempTransfersPath()
+{
+    QDir dir(getTempTransfersPath());
+    dir.setFilter(QDir::Hidden | QDir::Files);
+    foreach(QString dirItem, dir.entryList())
+    {
+        dir.remove(dirItem);
+    }
+}
+
 void Preferences::clearTemporalBandwidth()
 {
     isTempBandwidthValid = false;
@@ -2634,6 +2658,7 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8("desktop.ini"));
         excludedSyncNames.append(QString::fromUtf8("~*"));
         excludedSyncNames.append(QString::fromUtf8(".*"));
+        excludedSyncNames.append(QString::fromLatin1("*.crdownload"));
     }
 
     if (getValue<int>(lastVersionKey) < 3400)

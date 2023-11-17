@@ -271,11 +271,6 @@
         <translation>[A] has been deleted or deactivated</translation>
     </message>
     <message>
-        <source>[A] established you as a contact</source>
-        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A] accepted your contact request</translation>
-    </message>
-    <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
         <translation>[A] blocked you as contact</translation>
@@ -297,7 +292,7 @@
     </message>
     <message>
         <source>[A] accepted your contact request</source>
-        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request. (SNC-3341)</translatorcomment>
         <translation>[A] accepted your contact request</translation>
     </message>
     <message>
@@ -472,6 +467,19 @@
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
         <translation>A folder named “%1” already exists in your Backups. Rename the new folder to continue with the backup.</translation>
+    </message>
+</context>
+<context>
+    <name>BackupSyncsMenu</name>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups;SNC-3654</translatorcomment>
+        <translation type="unfinished">Add backup</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Menu option that shows backups menu;SNC-3654</translatorcomment>
+        <translation type="unfinished">Backups</translation>
     </message>
 </context>
 <context>
@@ -1560,6 +1568,16 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>Learn more</translation>
     </message>
+    <message>
+        <source>loading time…</source>
+        <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loading size…</source>
+        <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilterAlertWidget</name>
@@ -2525,16 +2543,6 @@ https://mega.co.nz/#sync</source>
         <translation>The app is unable to connect. Please check your internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
-    </message>
-    <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
         <translation>Your account has been blocked. Please contact support@mega.nz</translation>
@@ -2555,29 +2563,9 @@ https://mega.co.nz/#sync</source>
         <translation>You have been logged out because of this error: %1</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the remote folder is in the Rubbish bin</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the local folder has changed</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Your sync “%1” has been disabled. The remote folder (or part of it) doesn’t have full access</translation>
-    </message>
-    <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation>Over quota</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2740,16 +2728,6 @@ https://mega.co.nz/#sync</source>
         <translation>One or more syncs have been disabled</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Your sync “%1” has been disabled. Reason: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been enabled</source>
-        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been enabled</translation>
-    </message>
-    <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation>The app will continue to work, however updates will no longer be supported for versions prior to macOS Sierra.</translation>
@@ -2801,41 +2779,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>One or more backups have been disabled</translation>
     </message>
     <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup “%1” has been disabled because backing up VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the MEGA folder is in the Rubbish bin.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup “%1” has been disabled. You don’t have full access to the MEGA folder (or to part of it).</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the local folder has changed.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the MEGA folder has changed.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled. Reason: %2</translation>
-    </message>
-    <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>Security upgrade</translation>
@@ -2884,34 +2827,9 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Settings</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Your syncs and backups have been disabled: %1</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Your backups have been disabled: %1</translation>
-    </message>
-    <message>
-        <source>Your syncs have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Your syncs have been disabled: %1</translation>
-    </message>
-    <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
         <translation>Error getting link: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Your sync “%1” has been temporarily disabled: %2</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Your backup “%1” has been temporarily disabled: %2</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3752,18 +3670,13 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>Someone has accepted your contact request</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>Info</translation>
-    </message>
-    <message>
-        <source>Someone accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Someone accepted your contact request</translation>
     </message>
     <message>
         <source>Info:</source>
@@ -4162,16 +4075,6 @@ Enter a different name.</translation>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
         <translation>Proxy settings:</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translatorcomment>HTTP proxy type</translatorcomment>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>SOCK5H</source>
-        <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -4771,6 +4674,11 @@ Do you want to delete it anyway?</translation>
             <numerusform>%n file</numerusform>
             <numerusform>%n files</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Adding transfers</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6247,6 +6155,96 @@ To continue, select a different folder.</translation>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
         <translation>You’re syncing a local folder shared with VMWare. This folder doesn’t support file system notifications, so to detect changes and sync, the app will have to continuously scan the folder and the files within it. If possible, use a different folder to reduce CPU usage.</translation>
     </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation type="unfinished">Your syncs and backups have been disabled: %1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation type="unfinished">Your backups have been disabled: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation type="unfinished">Your syncs have been disabled: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &amp;quot;%1&amp;quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your sync “%1” has been disabled because the local folder doesn’t exist</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &amp;quot;%1&amp;quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your sync “%1” has been disabled because the remote folder doesn’t exist</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &amp;quot;%1&amp;quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &amp;quot;%1&amp;quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your sync “%1” has been disabled because the remote folder is in the Rubbish bin</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &amp;quot;%1&amp;quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your sync “%1” has been disabled. The remote folder (or part of it) doesn’t have full access</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &amp;quot;%1&amp;quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your sync “%1” has been disabled because the local folder has changed</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your sync “%1” has been disabled. Reason: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your backup “%1” has been temporarily disabled: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your backup ”%1“ has been disabled because the local folder doesn’t exist.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your backup “%1” has been disabled because backing up VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation type="unfinished">Your backup ”%1“ has been disabled because the MEGA folder is in the Rubbish bin.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation type="unfinished">Your backup “%1” has been disabled. You don’t have full access to the MEGA folder (or to part of it).</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation type="unfinished">Your backup ”%1“ has been disabled because the local folder has changed.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation type="unfinished">Your backup ”%1“ has been disabled because the MEGA folder has changed.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation type="unfinished">Your backup ”%1“ has been disabled. Reason: %2</translation>
+    </message>
 </context>
 <context>
     <name>SyncItemModel</name>
@@ -6332,29 +6330,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>MEGA path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the remote path of the sync.</translatorcomment>
         <translation>MEGA path:</translation>
-    </message>
-</context>
-<context>
-    <name>SyncsMenu</name>
-    <message>
-        <source>Add Sync</source>
-        <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>Add sync</translation>
-    </message>
-    <message>
-        <source>Syncs</source>
-        <translatorcomment>Menu option that shows syncs menu</translatorcomment>
-        <translation>Syncs</translation>
-    </message>
-    <message>
-        <source>Backups</source>
-        <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation>Backups</translation>
-    </message>
-    <message>
-        <source>Add Backup</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>Add backup</translation>
     </message>
 </context>
 <context>
@@ -7148,6 +7123,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
         <translation>Pause all transfers</translation>
+    </message>
+</context>
+<context>
+    <name>TwoWaySyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu option used to add sync;SNC-3654</translatorcomment>
+        <translation type="unfinished">Add sync</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu option that shows syncs menu;SNC-3654</translatorcomment>
+        <translation type="unfinished">Syncs</translation>
     </message>
 </context>
 <context>
