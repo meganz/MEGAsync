@@ -28,7 +28,9 @@ StackViewPage {
         anchors {
             left: root.left
             right: root.right
-            verticalCenter: root.verticalCenter
+            bottom: buttonsLayout.top
+            top: root.top
+            topMargin: 110
         }
         spacing: contentSpacing
 
