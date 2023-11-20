@@ -172,6 +172,7 @@ private slots:
 
     void refreshSpeed();
     void refreshView();
+    void disableTransferManager(bool state);
 
     void updateTransferWidget(QWidget* widgetToShow);
     void onScanningAnimationUpdate();
