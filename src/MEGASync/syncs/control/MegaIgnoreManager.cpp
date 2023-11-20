@@ -54,8 +54,8 @@ bool MegaIgnoreManager::isValid(const QString& syncLocalFolder)
     else
     {
         QDir megaIgnorePath(ignorePath);
-        QTemporaryFile* test = new QTemporaryFile(megaIgnorePath.absolutePath() + QDir::separator());
-        return test->open();
+        QTemporaryFile test (megaIgnorePath.absolutePath() + QDir::separator());
+        return test.open();
     }
 
     return true;
@@ -105,7 +105,7 @@ void MegaIgnoreManager::parseIgnoresFile()
                         if (!mLowLimitRule || !lowLimitRule->isCommented())
                         {
                             mLowLimitRule = lowLimitRule;
-                        }                      
+                        }
                         addRule(lowLimitRule);
                     }
                     break;
@@ -137,7 +137,8 @@ void MegaIgnoreManager::parseIgnoresFile()
             }
             ignore.close();
         }
-
+        std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
+        mIgnoreCRC = QString::fromUtf8(crc.get());
     }
 
     if (!mLowLimitRule)
@@ -150,14 +151,11 @@ void MegaIgnoreManager::parseIgnoresFile()
         mHighLimitRule = std::make_shared<MegaIgnoreSizeRule>(MegaIgnoreSizeRule::Threshold::High);
         addRule(mHighLimitRule);
     }
-
-    std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
-    mIgnoreCRC = QString::fromUtf8(crc.get());
 }
 
 std::shared_ptr<MegaIgnoreRule> MegaIgnoreManager::getRuleByOriginalRule(const QString& originalRule)
 {
-    foreach(auto & rule, mRules)
+    foreach(const auto & rule, mRules)
     {
         if (rule->originalRule() == originalRule)
         {
@@ -238,7 +236,7 @@ MegaIgnoreRule::RuleType MegaIgnoreManager::getRuleType(const QString& line)
 QList<std::shared_ptr<MegaIgnoreNameRule> > MegaIgnoreManager::getNameRules() const
 {
     QList<std::shared_ptr<MegaIgnoreNameRule>> rules;
-    foreach(auto & rule, mRules)
+    foreach(const auto & rule, mRules)
     {
         if (rule->isValid() && rule->ruleType() == MegaIgnoreRule::RuleType::NameRule)
         {
@@ -253,7 +251,7 @@ QList<std::shared_ptr<MegaIgnoreNameRule> > MegaIgnoreManager::getNameRules() co
 QStringList MegaIgnoreManager::getExcludedExtensions() const
 {
     QStringList extensions;
-    foreach(auto & rule, mRules)
+    foreach(const auto & rule, mRules)
     {
         if (rule->isValid() && rule->ruleType() == MegaIgnoreRule::RuleType::ExtensionRule)
         {
@@ -310,22 +308,22 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
     {
         result = ApplyChangesError::Ok;
 
-        for (auto extension : updatedExtensions)
+        for (const auto extension : updatedExtensions)
         {
-            auto trimmed = extension.trimmed();
+            auto trimmedExtension = extension.trimmed();
 
-            while(trimmed.startsWith(QLatin1String(".")))
+            while(trimmedExtension.startsWith(QLatin1String(".")))
             {
-                trimmed.remove(0,1);
+                trimmedExtension.remove(0,1);
             }
 
-            if (mExtensionRules.contains(trimmed))
+            if (mExtensionRules.contains(trimmedExtension))
             {
-                rules.append(mExtensionRules.value(trimmed)->getModifiedRule());
+                rules.append(mExtensionRules.value(trimmedExtension)->getModifiedRule());
             }
-            else if(!trimmed.isEmpty())
+            else if(!trimmedExtension.isEmpty())
             {
-                const MegaIgnoreExtensionRule extensionRule(MegaIgnoreNameRule::Class::Exclude, trimmed);
+                const MegaIgnoreExtensionRule extensionRule(MegaIgnoreNameRule::Class::Exclude, trimmedExtension);
                 rules.append(extensionRule.getModifiedRule());
             }
         }
