@@ -7,7 +7,6 @@
 #include <QString>
 #include <QHash>
 #include <QPixmap>
-#include <QLabel>
 #include <QProgressDialog>
 #include <QDesktopServices>
 #include <QFuture>
@@ -502,10 +501,10 @@ private:
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
 
 //This class is used to move a handle to the MEGA bin
-class MoveToBinUtilities : public QObject
+class MoveToCloudBinUtilities : public QObject
 {
 public:
-    MoveToBinUtilities(){}
+    MoveToCloudBinUtilities(){}
 
     bool moveToBin(const QList<mega::MegaHandle>& handles, const QString& binFolderName, bool addDateFolder);
 
@@ -516,12 +515,12 @@ private:
 };
 
 //This class is use to merge two remote folders
-class FoldersMerge : public QObject
+class CloudFoldersMerge : public QObject
 {
     Q_OBJECT
 
 public:
-    FoldersMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge)
+    CloudFoldersMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge)
         : mFolderTarget(folderTarget),
           mFolderToMerge(folderToMerge)
     {}
@@ -530,7 +529,7 @@ public:
     {
         Rename,
         IgnoreAndRemove,
-        IgnoreAndMoveToBin
+        IgnoreAndMoveToBin,
     };
     void merge(ActionForDuplicates action);
 

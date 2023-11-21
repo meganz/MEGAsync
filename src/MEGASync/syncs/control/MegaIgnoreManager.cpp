@@ -352,8 +352,8 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinksRule()
 {
     if (!mIgnoreSymLinkRule)
     {
-        auto rule = std::make_shared<MegaIgnoreNameRule>(QLatin1String("*"), MegaIgnoreNameRule::Class::EXCLUDE, MegaIgnoreNameRule::Target::s);
-        addRule(rule);
+        mIgnoreSymLinkRule = std::make_shared<MegaIgnoreNameRule>(QLatin1String("*"), MegaIgnoreNameRule::Class::EXCLUDE, MegaIgnoreNameRule::Target::s);
+        addRule(mIgnoreSymLinkRule);
     }
     else if (mIgnoreSymLinkRule->isCommented())
     {

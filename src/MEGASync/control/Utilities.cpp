@@ -1560,13 +1560,15 @@ TimeInterval::TimeInterval(long long secs, bool secondPrecision)
 
 //Move to BIN
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \brief StalledIssuesSyncDebrisUtilities::moveToSyncDebris
+/// \brief MoveToCloudBinUtilities::moveToBin
 /// \param handles
+/// \param binFolderName
+/// \param addDateFolder
 /// This method is run synchronously. So, it waits for the SDK to create the folders, and only then we move the files
 /// As the SDK createFolder is async, we need to use QEventLoop to stop the thread (which is not the main thread, so UI will not be frozen)
 /// When the createFolder returns we continue or stop the eventloop.
 /// When all files are moved, we stop the eventloop and we continue
-bool MoveToBinUtilities::moveToBin(const QList<MegaHandle>& handles, const QString& binFolderName, bool addDateFolder)
+bool MoveToCloudBinUtilities::moveToBin(const QList<MegaHandle>& handles, const QString& binFolderName, bool addDateFolder)
 {
     mHandles = handles;
 
@@ -1690,7 +1692,7 @@ bool MoveToBinUtilities::moveToBin(const QList<MegaHandle>& handles, const QStri
 
 
 //FOLDER MERGE LOGIC
-void FoldersMerge::merge(ActionForDuplicates action)
+void CloudFoldersMerge::merge(ActionForDuplicates action)
 {
     static int depth(0);
 
@@ -1731,7 +1733,7 @@ void FoldersMerge::merge(ActionForDuplicates action)
                 else if(node->isFolder() && targetNode->isFolder())
                 {
                     depth++;
-                    FoldersMerge folderMerge(targetNode, node);
+                    CloudFoldersMerge folderMerge(targetNode, node);
                     folderMerge.merge(action);
                     depth--;
                     std::unique_ptr<MegaNodeList>folderChild(MegaSyncApp->getMegaApi()->getChildren(node));
@@ -1782,7 +1784,7 @@ void FoldersMerge::merge(ActionForDuplicates action)
         std::unique_ptr<MegaNodeList>folderChild(MegaSyncApp->getMegaApi()->getChildren(mFolderToMerge));
         if(folderChild->size() != 0)
         {
-            MoveToBinUtilities toBin;
+            MoveToCloudBinUtilities toBin;
             toBin.moveToBin(QList<MegaHandle>() << mFolderToMerge->getHandle(), QLatin1String("FoldersMerge"), true);
         }
         else

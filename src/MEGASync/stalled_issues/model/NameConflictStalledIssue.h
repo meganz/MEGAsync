@@ -330,7 +330,7 @@ public:
 
         void removeDuplicatedNodes()
         {
-            std::unique_ptr<MoveToBinUtilities> utilities(new MoveToBinUtilities());
+            std::unique_ptr<MoveToCloudBinUtilities> utilities(new MoveToCloudBinUtilities());
             QList<mega::MegaHandle> nodesToMove;
 
             for(int index = 0; index < mConflictedNames.size(); ++index)
@@ -390,8 +390,8 @@ public:
                     std::unique_ptr<mega::MegaNode> folderToMerge(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedFolder->mHandle));
                     if(folderToMerge && folderToMerge->isFolder())
                     {
-                        FoldersMerge mergeItem(targetFolder.get(), folderToMerge.get());
-                        mergeItem.merge(FoldersMerge::ActionForDuplicates::IgnoreAndMoveToBin);
+                        CloudFoldersMerge mergeItem(targetFolder.get(), folderToMerge.get());
+                        mergeItem.merge(CloudFoldersMerge::ActionForDuplicates::IgnoreAndMoveToBin);
                         conflictedFolder->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::MERGED;
                     }
                 }

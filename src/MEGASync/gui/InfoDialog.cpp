@@ -77,19 +77,6 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
     QToolTip::showText(event->globalPos(), tr("Open Uploads"));
 }
 
-void InfoDialog::showSyncProblems(const QString& problemText)
-{
-    QMessageBox qmb;
-    qmb.setText(QString::fromUtf8("One or more syncs have encountered issues that need user intervention to resolve.  Please see the details for each one, and adjust either the local or cloud files/folders, or add ignore rules, to resolve these."));
-    qmb.setDetailedText(problemText);
-    qmb.setMaximumHeight(3000);
-    qmb.setMaximumWidth(3000);
-    qmb.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    qmb.setSizeGripEnabled(true);
-    qmb.exec();
-}
-
-
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog),
@@ -112,8 +99,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     filterMenu = new FilterAlertWidget(this);
     connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
-
-    connect(this, SIGNAL(triggerShowSyncProblems(QString)),this, SLOT(showSyncProblems(QString)), Qt::QueuedConnection);
 
     setUnseenNotifications(0);
 

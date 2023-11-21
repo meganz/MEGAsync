@@ -116,7 +116,6 @@ private:
     void moveEvent(QMoveEvent *) override;
 
 public slots:
-    void showSyncProblems(const QString& s);
 
     void pauseResumeClicked();
     void generalAreaClicked();
@@ -178,7 +177,6 @@ private slots:
     void onStalledIssuesChanged();
 
 signals:
-    void triggerShowSyncProblems(QString s);
 
     void openTransferManager(int tab);
     void dismissStorageOverquota(bool oq);

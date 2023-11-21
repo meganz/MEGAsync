@@ -22,7 +22,7 @@ void StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
 {
     if(node)
     {
-        std::unique_ptr<MoveToBinUtilities> utilities(new MoveToBinUtilities());
+        std::unique_ptr<MoveToCloudBinUtilities> utilities(new MoveToCloudBinUtilities());
         utilities->moveToBin(QList<mega::MegaHandle>() << node->getHandle(), QLatin1String("SyncDebris"), true);
     }
 }
