@@ -3063,19 +3063,6 @@ void MegaApplication::processUpgradeSecurityEvent()
 void MegaApplication::registerCommonQMLElements()
 {
     mEngine->addImportPath(QString::fromUtf8("qrc:/"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/common"));
-
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/busyIndicator"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/buttons"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/checkBoxes"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/dialogs"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/images"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/progressBars"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/scrollBars"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/textFields"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/texts"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/toolTips"));
-    //mEngine->addImportPath(QString::fromUtf8("qrc:/components/views"));
 
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 

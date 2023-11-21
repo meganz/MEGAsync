@@ -19,7 +19,6 @@ mkdir %MEGA_QT_DEPLOY_DIR%
  --no-webkit2 --no-qmltooling ^
  --no-patchqt --no-designercomponents ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
- --qmldir src\MEGASync\gui\onboarding\qml\ ^
  --qmldir src\MEGASync\gui\qml\ ^
  build-x64-windows-mega\Release\MEGAsync.exe ^
  build-x64-windows-mega\Release\MEGAupdater.exe ^
@@ -45,7 +44,6 @@ mkdir %MEGA_QT_DEPLOY_DIR%
  --no-webkit2 --no-qmltooling ^
  --no-patchqt --no-designercomponents ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
- --qmldir src\MEGASync\gui\onboarding\qml ^
  --qmldir src\MEGASync\gui\qml\ ^
  build-x86-windows-mega\Release\MEGAsync.exe ^
  build-x86-windows-mega\Release\MEGAShellExt.dll

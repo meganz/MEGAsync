@@ -18,12 +18,6 @@ using namespace mega;
 Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
 {
-    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard"));
-    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard/syncs_types"));
-    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard/syncs_types/left_panel"));
-    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard/syncs_types/syncs"));
-    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard/syncs_types/backups"));
-
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterModule("BackupsModel", 1, 0);
     qmlRegisterModule("BackupsController", 1, 0);
