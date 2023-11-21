@@ -7,6 +7,7 @@
 GuestContent::GuestContent(QObject *parent)
     : QMLComponent(parent)
 {
+    qmlRegisterModule("GuestContent", 1, 0);
     qmlRegisterType<GuestQmlDialog>("GuestQmlDialog", 1, 0, "GuestQmlDialog");
 }
 
