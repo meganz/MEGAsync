@@ -768,8 +768,6 @@ if (CMAKE_HOST_WIN32)
         ${MEGAsyncDir}/google_breakpad/common/windows/guid_string.cc
         ${MEGAsyncDir}/google_breakpad/client/windows/crash_generation/crash_generation_client.cc
 
-        ${MEGAsyncDir}/control/win/Utilities.cpp
-
         ${MEGAsyncDir}/platform/win/RecursiveShellNotifier.cpp
         ${MEGAsyncDir}/platform/win/ThreadedQueueShellNotifier.cpp
         ${MEGAsyncDir}/platform/win/PlatformImplementation.cpp
@@ -806,8 +804,6 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/google_breakpad/common/linux/elfutils.cc
         ${MEGAsyncDir}/google_breakpad/common/string_conversion.cc
         ${MEGAsyncDir}/google_breakpad/common/convert_UTF.c
-
-        ${MEGAsyncDir}/control/linux/Utilities.cpp
 
         ${MEGAsyncDir}/platform/linux/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/linux/ExtServer.cpp
@@ -857,8 +853,6 @@ else()
         ${MEGAsyncDir}/google_breakpad/common/convert_UTF.c
 
         ${MEGAsyncDir}/google_breakpad/common/mac/MachIPC.mm
-
-        ${MEGAsyncDir}/control/macx/Utilities.mm
 
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
         ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h

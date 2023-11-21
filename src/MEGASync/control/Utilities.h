@@ -348,11 +348,6 @@ public:
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
     static void getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
-    static bool moveFileToTrash(const QString& filePath);
-#ifdef Q_OS_LINUX
-    static QDir linuxTrashLocation(const QString& sourcePath);
-#endif
-
     static QString getNonDuplicatedNodeName(mega::MegaNode* node, mega::MegaNode* parentNode, const QString& currentName, bool unescapeName, const QStringList &itemsBeingRenamed);
     static QString getNonDuplicatedLocalName(const QFileInfo& currentFile, bool unescapeName, const QStringList &itemsBeingRenamed);
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
