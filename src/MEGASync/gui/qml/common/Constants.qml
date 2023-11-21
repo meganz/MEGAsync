@@ -11,4 +11,6 @@ QtObject {
         INFO
     }
 
+    readonly property string mega: "MEGA"
+
 }

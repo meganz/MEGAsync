@@ -4,8 +4,6 @@ import QtQuick 2.15
 QtObject {
     id: root
 
-    readonly property string mega: "MEGA"
-
     readonly property string accountTypeFree: qsTr("Free")
     readonly property string accountTypeProI: qsTr("Pro I")
     readonly property string accountTypeProII: qsTr("Pro II")

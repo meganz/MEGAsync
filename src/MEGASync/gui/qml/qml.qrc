@@ -63,7 +63,6 @@
 		<file>components/dialogs/qmldir</file>
         <file>components/dialogs/ConfirmCloseDialog.qml</file>
 		<file>onboard/qmldir</file>
-		<file>onboard/main.qml</file>
         <file>onboard/LoginPage.qml</file>
         <file>onboard/LoginPageForm.ui.qml</file>
         <file>onboard/OnboardingDialog.qml</file>
