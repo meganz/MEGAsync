@@ -1,11 +1,10 @@
-// System
 import QtQuick 2.15
 
-// QML common
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
-import Components.Buttons 1.0 as MegaButtons
-import Components.ProgressBars 1.0 as MegaProgressBars
+import common 1.0
+
+import components.texts 1.0
+import components.buttons 1.0
+import components.progressBars 1.0
 
 Item {
     id: root
@@ -39,7 +38,7 @@ Item {
         anchors.bottomMargin: bottomMargin
         spacing: root.spacing
 
-        MegaProgressBars.HorizontalProgressBar {
+        HorizontalProgressBar {
             id: progressBar
 
             anchors.left: parent.left
@@ -52,10 +51,10 @@ Item {
             anchors.right: parent.right
             spacing: title.visible && description.visible ? 12 : 0
 
-            MegaTexts.Text {
+            Text {
                 id: title
 
-                font.pixelSize: MegaTexts.Text.Size.MediumLarge
+                font.pixelSize: Text.Size.MediumLarge
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -63,12 +62,12 @@ Item {
                 anchors.right: parent.right
             }
 
-            MegaTexts.RichText {
+            RichText {
                 id: description
 
                 color: Styles.textSecondary;
                 manageMouse: true
-                font.pixelSize: MegaTexts.Text.Size.Small
+                font.pixelSize: Text.Size.Small
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: parent.left
@@ -79,7 +78,7 @@ Item {
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
 
-            MegaButtons.OutlineButton {
+            OutlineButton {
                 id: leftButton
 
                 onClicked: {
@@ -87,7 +86,7 @@ Item {
                 }
             }
 
-            MegaButtons.PrimaryButton {
+            PrimaryButton {
                 id: rightButton
 
                 onClicked: {

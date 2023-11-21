@@ -1,4 +1,4 @@
-module Components.TextFields
+module components.textFields
 EmailTextField 1.0 EmailTextField.qml
 Hint 1.0 Hint.qml
 IconTextField 1.0 IconTextField.qml

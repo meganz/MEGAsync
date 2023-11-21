@@ -1,7 +1,5 @@
-// System
 import QtQuick 2.15
 
-// C++
 import BackupsController 1.0
 import BackupsModel 1.0
 

@@ -1,8 +1,6 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// Local
 import onboard.syncs_types 1.0
 
 SyncsVerticalButton {

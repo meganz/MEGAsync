@@ -1,4 +1,3 @@
-// C++
 import BackupsModel 1.0
 
 SelectFoldersPageForm {

@@ -1,15 +1,13 @@
-// System
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
 
-// QML common
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
-import Components.Buttons 1.0 as MegaButtons
+import common 1.0
 
-// Local
-import Onboard 1.0
+import components.texts 1.0
+import components.buttons 1.0
+
+//import onboard 1.0
 
 Window {
     id: root
@@ -29,12 +27,12 @@ Window {
 
     width: root.dialogWidth
     height: root.dialogHeight
-    minimumWidth: root.dialogWidth
-    minimumHeight: root.dialogHeight
-    flags: Qt.Dialog
-    modality: Qt.WindowModal
+    //minimumWidth: root.dialogWidth
+    //minimumHeight: root.dialogHeight
+    //flags: Qt.Dialog
+    //modality: Qt.WindowModal
     color: Styles.surface1
-    title: OnboardingStrings.mega
+    //title: OnboardingStrings.mega
 
     Column {
         id: mainColumn
@@ -64,19 +62,19 @@ Window {
 
                 spacing: dialogContentSpacing
 
-                MegaTexts.Text {
+                Text {
                     id: title
 
-                    font.pixelSize: MegaTexts.Text.Size.MediumLarge
+                    font.pixelSize: Text.Size.MediumLarge
                     font.weight: Font.DemiBold
                     lineHeightMode: Text.FixedHeight
                     lineHeight: 24
                 }
 
-                MegaTexts.Text {
+                Text {
                     id: body
 
-                    font.pixelSize: MegaTexts.Text.Size.Normal
+                    font.pixelSize: Text.Size.Normal
                     Layout.preferredWidth: 340
                     lineHeightMode: Text.FixedHeight
                     lineHeight: 18
@@ -94,7 +92,7 @@ Window {
             }
             spacing: 0
 
-            MegaButtons.OutlineButton {
+            OutlineButton {
                 id: cancelButton
 
                 onClicked: {
@@ -102,7 +100,7 @@ Window {
                 }
             }
 
-            MegaButtons.PrimaryButton {
+            PrimaryButton {
                 id: acceptButton
 
                 onClicked: {

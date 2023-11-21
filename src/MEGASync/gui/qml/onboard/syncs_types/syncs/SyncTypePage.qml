@@ -1,4 +1,3 @@
-// Local
 import onboard.syncs_types 1.0
 
 SyncTypePageForm {

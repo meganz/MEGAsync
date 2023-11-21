@@ -1,3 +1,2 @@
-module Components.Images
-Image 1.0 Image.qml
+module components.images
 SvgImage 1.0 SvgImage.qml

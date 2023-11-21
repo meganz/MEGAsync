@@ -1,12 +1,9 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-// Local
 import onboard 1.0
-import Onboard.Syncs_types.Left_panel 1.0
+import onboard.syncs_types.left_panel 1.0
 
-// C++
 import BackupsProxyModel 1.0
 
 Item {

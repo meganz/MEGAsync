@@ -1,14 +1,10 @@
-// System
 import QtQuick 2.15
 
-// QML common
 import common 1.0
-import Components.CheckBoxes 1.0 as MegaCheckBoxes
+
+import components.checkBoxes 1.0
 import components.textFields 1.0
 import components.texts 1.0
-
-//Local
-import onboard 1.0
 
 Column {
     id: root
@@ -122,7 +118,7 @@ Column {
             }
         }
 
-        MegaTextFields.EmailTextField {
+        EmailTextField {
             id: emailItem
 
             width: contentWidth + emailItem.sizes.focusBorderWidth
@@ -133,7 +129,7 @@ Column {
             hint.visible: error;
         }
 
-        MegaTextFields.PasswordTextField {
+        PasswordTextField {
             id: passwordItem
 
             property bool validPassword: passwordItem.textField.text.length >= 8
@@ -182,7 +178,7 @@ Column {
 
         }
 
-        MegaTextFields.PasswordTextField {
+        PasswordTextField {
             id: confirmPasswordItem
 
             width: emailItem.width
@@ -192,7 +188,7 @@ Column {
         }
     }
 
-    MegaCheckBoxes.CheckBox {
+    CheckBox {
         id: termsCheckBoxItem
 
         anchors.left: root.left

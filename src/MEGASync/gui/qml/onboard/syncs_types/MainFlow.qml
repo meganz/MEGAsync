@@ -1,18 +1,14 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
-// QML common
 import common 1.0
 
-// Local
 import onboard 1.0
-import Onboard.Syncs_types.Left_panel 1.0
-import Onboard.Syncs_types.Syncs 1.0
-import Onboard.Syncs_types.Backups 1.0
+import onboard.syncs_types.left_panel 1.0
+import onboard.syncs_types.syncs 1.0
+import onboard.syncs_types.backups 1.0
 
-// C++
 import BackupsProxyModel 1.0
 import LoginController 1.0
 import SettingsDialog 1.0

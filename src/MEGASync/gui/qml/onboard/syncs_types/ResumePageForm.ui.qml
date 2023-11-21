@@ -1,15 +1,13 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 
-// QML common
 import common 1.0
+
 import components.texts 1.0
 import components.images 1.0
 import components.buttons 1.0
 
-// C++
 import onboard 1.0
 
 SyncsPage {
@@ -30,7 +28,7 @@ SyncsPage {
         rightSecondary.text: OnboardingStrings.viewInSettings
         rightPrimary {
             text: OnboardingStrings.done
-            icons: MegaButtons.Icon {}
+            icons: Icon {}
         }
     }
 

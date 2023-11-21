@@ -1,2 +1,2 @@
-module Components.BusyIndicator
+module components.busyIndicator
 BusyIndicator 1.0 BusyIndicator.qml

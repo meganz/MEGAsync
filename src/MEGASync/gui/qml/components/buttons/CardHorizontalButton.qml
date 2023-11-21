@@ -1,11 +1,10 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// QML common
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
+import common 1.0
+
+import components.texts 1.0
+import components.images 1.0
 
 CardButton {
     id: button
@@ -35,7 +34,7 @@ CardButton {
             anchors.bottomMargin: verticalMargin
             spacing: 20
 
-            MegaImages.SvgImage {
+            SvgImage {
                 source: imageSource
                 sourceSize: imageSourceSize
                 anchors.verticalCenter: parent.verticalCenter
@@ -45,24 +44,24 @@ CardButton {
                 width: parent.width - x
                 spacing: main.textSpacing
 
-                MegaTexts.Text {
+                Text {
                     text: title
                     height: main.textTopHeight
                     lineHeightMode: Text.FixedHeight
                     lineHeight: titleLineHeight
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    font.pixelSize: MegaTexts.Text.Size.MediumLarge
+                    font.pixelSize: Text.Size.MediumLarge
                     font.weight: Font.Bold
                 }
 
-                MegaTexts.Text {
+                Text {
                     text: description
                     height: main.textBottomHeight
                     anchors.left: parent.left
                     anchors.right: parent.right
                     color: Styles.textSecondary
-                    font.pixelSize: MegaTexts.Text.Size.Small
+                    font.pixelSize: Text.Size.Small
                     lineHeightMode: Text.FixedHeight
                     lineHeight: descriptionLineHeight
                     width: 314

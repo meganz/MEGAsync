@@ -1,13 +1,9 @@
-// System
 import QtQuick 2.15
 
-// QML common
 import common 1.0
+
 import components.texts 1.0
 import components.images 1.0
-
-// Local
-import onboard 1.0
 
 Rectangle {
     id: root
@@ -63,7 +59,7 @@ Rectangle {
             width: parent.width
             spacing: conditionSpacing
 
-            MegaTexts.SecondaryText {
+            SecondaryText {
                 id: upperLine
 
                 width: parent.width

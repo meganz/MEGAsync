@@ -1,4 +1,3 @@
-// C++
 import LoginController 1.0
 
 RegisterPageForm {

@@ -1,17 +1,14 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// QML common
 import common 1.0
+
 import components.texts 1.0
 import components.images 1.0
 import components.busyIndicator 1.0
 
-// Local
 import onboard 1.0
 
-// C++
 import BackupsProxyModel 1.0
 import BackupsModel 1.0
 
@@ -153,7 +150,7 @@ Rectangle {
             z: 3
             visible: backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE
 
-            MegaTexts.NotificationText {
+            NotificationText {
                 id: notificationItem
 
                 width: parent.width

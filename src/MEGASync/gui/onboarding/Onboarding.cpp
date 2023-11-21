@@ -18,49 +18,26 @@ using namespace mega;
 Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
 {
-    qmlRegisterModule("Onboard", 1, 0);
-    qmlRegisterModule("Onboarding", 1, 0);
-    qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingDialog.qml")), "Onboard", 1, 0, "OnboardingDialog");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/StackViewBase.qml")), "Onboard", 1, 0, "StackViewBase");
+    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard"));
+    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard/syncs_types"));
+    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard/syncs_types/left_panel"));
+    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard/syncs_types/syncs"));
+    //getEngine()->addImportPath(QString::fromUtf8("qrc:/onboard/syncs_types/backups"));
 
-    qmlRegisterType<LoginController>("LoginController", 1, 0, "LoginController");
+    qmlRegisterModule("Onboarding", 1, 0);
+    qmlRegisterModule("BackupsModel", 1, 0);
+    qmlRegisterModule("BackupsController", 1, 0);
+
+    qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
     qmlRegisterType<AccountStatusController>("AccountStatusController", 1, 0, "AccountStatusController");
     qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
     qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker", 1, 0, "PasswordStrengthChecker");
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
-    qmlRegisterUncreatableType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog", QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
-
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
     qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
-
-    qmlRegisterModule("Onboard.Syncs_types", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/MainFlow.qml")), "Onboard.Syncs_types", 1, 0, "MainFlow");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsFlow.qml")), "Onboard.Syncs_types", 1, 0, "SyncsFlow");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/Header.qml")), "Onboard.Syncs_types", 1, 0, "Header");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/Footer.qml")), "Onboard.Syncs_types", 1, 0, "Footer");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/InfoAccount.qml")), "Onboard.Syncs_types", 1, 0, "InfoAccount");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/ResumePage.qml")), "Onboard.Syncs_types", 1, 0, "ResumePage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsPage.qml")), "Onboard.Syncs_types", 1, 0, "SyncsPage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsType.qml")), "Onboard.Syncs_types", 1, 0, "SyncsType");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsVerticalButton.qml")), "Onboard.Syncs_types", 1, 0, "SyncsVerticalButton");
-
-    qmlRegisterModule("Onboard.Syncs_types.Syncs", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/syncs/SyncsFlow.qml")), "Onboard.Syncs_types.Syncs", 1, 0, "SyncsFlow");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/syncs/SyncTypePage.qml")), "Onboard.Syncs_types.Syncs", 1, 0, "SyncTypePage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/syncs/FullSyncPage.qml")), "Onboard.Syncs_types.Syncs", 1, 0, "FullSyncPage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/syncs/SelectiveSyncPage.qml")), "Onboard.Syncs_types.Syncs", 1, 0, "SelectiveSyncPage");
-
-    qmlRegisterModule("Onboard.Syncs_types.Left_panel", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/left_panel/StepPanel.qml")), "Onboard.Syncs_types.Left_panel", 1, 0, "StepPanel");
-
-    qmlRegisterModule("Onboard.Syncs_types.Backups", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/BackupsFlow.qml")), "Onboard.Syncs_types.Backups", 1, 0, "BackupsFlow");
-
-    qmlRegisterModule("BackupsModel", 1, 0);
-    qmlRegisterModule("BackupsController", 1, 0);
-
     qmlRegisterSingletonType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData", AccountInfoData::instance);
+    qmlRegisterUncreatableType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog",
+                                               QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
 
     // Makes the Guest window transparent (macOS)
     QQuickWindow::setDefaultAlphaBuffer(true);
@@ -68,7 +45,7 @@ Onboarding::Onboarding(QObject *parent)
 
 QUrl Onboarding::getQmlUrl()
 {
-    return QUrl(QString::fromUtf8("qrc:/main.qml"));
+    return QUrl(QString::fromUtf8("qrc:/onboard/OnboardingDialog.qml"));
 }
 
 QString Onboarding::contextName()

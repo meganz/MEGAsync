@@ -1,17 +1,16 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 import QtQuick.Dialogs 1.3
 
-// QML common
 import common 1.0
+
 import components.buttons 1.0
 import components.textFields 1.0
 
-// Local
-import Syncs 1.0
 import onboard 1.0
+
+import Syncs 1.0
 import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
 

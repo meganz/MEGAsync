@@ -1,12 +1,9 @@
-// System
-import QtQml 2.15
+import QtQuick 2.15
 
-//C++
+import onboard 1.0
+
 import Syncs 1.0
 import ChooseLocalFolder 1.0
-
-//Local
-import onboard 1.0
 
 FullSyncPageForm {
     id: root

@@ -1,17 +1,14 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// QML common
 import common 1.0
-import Components.CheckBoxes 1.0 as MegaCheckBoxes
+
+import components.checkBoxes 1.0
 import components.texts 1.0
 import components.images 1.0
 
-// Local
 import onboard 1.0
 
-// C++
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
@@ -76,7 +73,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 0
 
-                MegaCheckBoxes.CheckBox {
+                CheckBox {
                     id: selectAll
 
                     property bool fromModel: false

@@ -15,3 +15,4 @@ CancelLogin 1.0 CancelLogin.qml
 PasswordInfoPopUp 1.0 PasswordInfoPopUp.qml
 PasswordConditionItem 1.0 PasswordConditionItem.qml
 PasswordInfoContentForm 1.0 PasswordInfoContentForm.ui.qml
+StackViewBase 1.0 StackViewBase.qml

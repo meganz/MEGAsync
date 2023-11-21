@@ -1,14 +1,9 @@
-// System
 import QtQuick 2.15
 
-// QML common
 import common 1.0
+
 import components.texts 1.0
 
-//Local
-import onboard 1.0
-
-// C++
 import LoginController 1.0
 
 Rectangle {
@@ -23,7 +18,7 @@ Rectangle {
 
     color: Styles.surface1
 
-    MegaTexts.SecondaryText {
+    Text {
         id: statusText
 
         anchors {

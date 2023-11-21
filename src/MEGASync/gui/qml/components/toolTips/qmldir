@@ -1,2 +1,2 @@
-module Components.ToolTips
+module components.toolTips
 ToolTip 1.0 ToolTip.qml

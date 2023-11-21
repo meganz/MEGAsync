@@ -1,20 +1,16 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 import QtGraphicalEffects 1.15
 
-// QML common
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
-import Components.Buttons 1.0 as MegaButtons
-import Components.ProgressBars 1.0 as MegaProgressBars
+import common 1.0
 
-// Local
-import Onboard 1.0
-import Guest 1.0
+import components.texts 1.0
+import components.images 1.0
+import components.buttons 1.0
+import components.progressBars 1.0
 
-// C++
+import onboard 1.0
+
 import GuestContent 1.0
 import ApiEnums 1.0
 import LoginController 1.0
@@ -129,7 +125,7 @@ Rectangle {
         }
     ]
 
-    MegaImages.SvgImage {
+    SvgImage {
         id: image
 
         anchors.top: parent.top
@@ -140,7 +136,7 @@ Rectangle {
         sourceSize: Qt.size(24, 24)
     }
 
-    MegaButtons.IconButton {
+    IconButton {
         id: menuButton
 
         anchors.top: parent.top

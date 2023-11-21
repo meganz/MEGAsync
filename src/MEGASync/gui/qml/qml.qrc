@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="">
 	    <file>common/qmldir</file>
         <file>common/Constants.qml</file>
         <file>common/Images.qml</file>
@@ -62,68 +62,68 @@
         <file>components/views/ScrollPanel.qml</file>
 		<file>components/dialogs/qmldir</file>
         <file>components/dialogs/ConfirmCloseDialog.qml</file>
-		<file>onboarding/qmldir</file>
-		<file>onboarding/main.qml</file>
-        <file>onboarding/LoginPage.qml</file>
-        <file>onboarding/LoginPageForm.ui.qml</file>
-        <file>onboarding/OnboardingDialog.qml</file>
-        <file>onboarding/OnboardingFlow.qml</file>
-        <file>onboarding/OnboardingStrings.qml</file>
-        <file>onboarding/RegisterContent.qml</file>
-        <file>onboarding/RegisterFlow.qml</file>
-        <file>onboarding/RegisterPage.qml</file>
-        <file>onboarding/RegisterPageForm.ui.qml</file>
-        <file>onboarding/TwoFAPage.qml</file>
-        <file>onboarding/TwoFAPageForm.ui.qml</file>
-		<file>onboarding/ConfirmEmailPage.qml</file>
-        <file>onboarding/ConfirmEmailPageForm.ui.qml</file>
-        <file>onboarding/ChangeEmailPage.qml</file>
-        <file>onboarding/ChangeEmailPageForm.ui.qml</file>
-        <file>onboarding/StackViewPage.qml</file>
-        <file>onboarding/PasswordConditionItem.qml</file>
-        <file>onboarding/PasswordInfoContent.qml</file>
-        <file>onboarding/PasswordInfoContentForm.ui.qml</file>
-        <file>onboarding/PasswordInfoPopUp.qml</file>
-        <file>onboarding/StackViewBase.qml</file>
-		<file>onboarding/syncs_types/qmldir</file>
-        <file>onboarding/syncs_types/MainFlow.qml</file>
-        <file>onboarding/syncs_types/NavigationInfo.qml</file>
-        <file>onboarding/syncs_types/DeviceNamePage.qml</file>
-        <file>onboarding/syncs_types/DeviceNamePageForm.ui.qml</file>
-        <file>onboarding/syncs_types/Footer.qml</file>
-        <file>onboarding/syncs_types/Header.qml</file>
-        <file>onboarding/syncs_types/InfoAccount.qml</file>
-        <file>onboarding/syncs_types/InstallationTypePage.qml</file>
-        <file>onboarding/syncs_types/InstallationTypePageForm.ui.qml</file>
-        <file>onboarding/syncs_types/ResumePage.qml</file>
-        <file>onboarding/syncs_types/ResumePageForm.ui.qml</file>
-        <file>onboarding/syncs_types/SyncsHorizontalButton.qml</file>
-        <file>onboarding/syncs_types/SyncsPage.qml</file>
-        <file>onboarding/syncs_types/SyncsType.qml</file>
-        <file>onboarding/syncs_types/SyncsVerticalButton.qml</file>
-		<file>onboarding/syncs_types/backups/qmldir</file>
-        <file>onboarding/syncs_types/backups/BackupsFlow.qml</file>
-        <file>onboarding/syncs_types/backups/ConfirmFoldersPage.qml</file>
-        <file>onboarding/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
-        <file>onboarding/syncs_types/backups/ConfirmTable.qml</file>
-        <file>onboarding/syncs_types/backups/FolderRow.qml</file>
-        <file>onboarding/syncs_types/backups/SelectFoldersPage.qml</file>
-        <file>onboarding/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
-        <file>onboarding/syncs_types/backups/SelectTable.qml</file>
-		<file>onboarding/syncs_types/left_panel/qmldir</file>
-        <file>onboarding/syncs_types/left_panel/Step.qml</file>
-        <file>onboarding/syncs_types/left_panel/StepPanel.qml</file>
-        <file>onboarding/syncs_types/left_panel/SubStep.qml</file>
-		<file>onboarding/syncs_types/syncs/qmldir</file>
-        <file>onboarding/syncs_types/syncs/ChooseSyncFolder.qml</file>
-        <file>onboarding/syncs_types/syncs/FullSyncPage.qml</file>
-        <file>onboarding/syncs_types/syncs/FullSyncPageForm.ui.qml</file>
-        <file>onboarding/syncs_types/syncs/SelectiveSyncPage.qml</file>
-        <file>onboarding/syncs_types/syncs/SelectiveSyncPageForm.ui.qml</file>
-        <file>onboarding/syncs_types/syncs/SyncTypeButton.qml</file>
-        <file>onboarding/syncs_types/syncs/SyncTypePage.qml</file>
-        <file>onboarding/syncs_types/syncs/SyncTypePageForm.ui.qml</file>
-        <file>onboarding/syncs_types/syncs/SyncsFlow.qml</file>
+		<file>onboard/qmldir</file>
+		<file>onboard/main.qml</file>
+        <file>onboard/LoginPage.qml</file>
+        <file>onboard/LoginPageForm.ui.qml</file>
+        <file>onboard/OnboardingDialog.qml</file>
+        <file>onboard/OnboardingFlow.qml</file>
+        <file>onboard/OnboardingStrings.qml</file>
+        <file>onboard/RegisterContent.qml</file>
+        <file>onboard/RegisterFlow.qml</file>
+        <file>onboard/RegisterPage.qml</file>
+        <file>onboard/RegisterPageForm.ui.qml</file>
+        <file>onboard/TwoFAPage.qml</file>
+        <file>onboard/TwoFAPageForm.ui.qml</file>
+		<file>onboard/ConfirmEmailPage.qml</file>
+        <file>onboard/ConfirmEmailPageForm.ui.qml</file>
+        <file>onboard/ChangeEmailPage.qml</file>
+        <file>onboard/ChangeEmailPageForm.ui.qml</file>
+        <file>onboard/StackViewPage.qml</file>
+        <file>onboard/PasswordConditionItem.qml</file>
+        <file>onboard/PasswordInfoContent.qml</file>
+        <file>onboard/PasswordInfoContentForm.ui.qml</file>
+        <file>onboard/PasswordInfoPopUp.qml</file>
+        <file>onboard/StackViewBase.qml</file>
+		<file>onboard/syncs_types/qmldir</file>
+        <file>onboard/syncs_types/MainFlow.qml</file>
+        <file>onboard/syncs_types/NavigationInfo.qml</file>
+        <file>onboard/syncs_types/DeviceNamePage.qml</file>
+        <file>onboard/syncs_types/DeviceNamePageForm.ui.qml</file>
+        <file>onboard/syncs_types/Footer.qml</file>
+        <file>onboard/syncs_types/Header.qml</file>
+        <file>onboard/syncs_types/InfoAccount.qml</file>
+        <file>onboard/syncs_types/InstallationTypePage.qml</file>
+        <file>onboard/syncs_types/InstallationTypePageForm.ui.qml</file>
+        <file>onboard/syncs_types/ResumePage.qml</file>
+        <file>onboard/syncs_types/ResumePageForm.ui.qml</file>
+        <file>onboard/syncs_types/SyncsHorizontalButton.qml</file>
+        <file>onboard/syncs_types/SyncsPage.qml</file>
+        <file>onboard/syncs_types/SyncsType.qml</file>
+        <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
+		<file>onboard/syncs_types/backups/qmldir</file>
+        <file>onboard/syncs_types/backups/BackupsFlow.qml</file>
+        <file>onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
+        <file>onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
+        <file>onboard/syncs_types/backups/ConfirmTable.qml</file>
+        <file>onboard/syncs_types/backups/FolderRow.qml</file>
+        <file>onboard/syncs_types/backups/SelectFoldersPage.qml</file>
+        <file>onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
+        <file>onboard/syncs_types/backups/SelectTable.qml</file>
+		<file>onboard/syncs_types/left_panel/qmldir</file>
+        <file>onboard/syncs_types/left_panel/Step.qml</file>
+        <file>onboard/syncs_types/left_panel/StepPanel.qml</file>
+        <file>onboard/syncs_types/left_panel/SubStep.qml</file>
+		<file>onboard/syncs_types/syncs/qmldir</file>
+        <file>onboard/syncs_types/syncs/ChooseSyncFolder.qml</file>
+        <file>onboard/syncs_types/syncs/FullSyncPage.qml</file>
+        <file>onboard/syncs_types/syncs/FullSyncPageForm.ui.qml</file>
+        <file>onboard/syncs_types/syncs/SelectiveSyncPage.qml</file>
+        <file>onboard/syncs_types/syncs/SelectiveSyncPageForm.ui.qml</file>
+        <file>onboard/syncs_types/syncs/SyncTypeButton.qml</file>
+        <file>onboard/syncs_types/syncs/SyncTypePage.qml</file>
+        <file>onboard/syncs_types/syncs/SyncTypePageForm.ui.qml</file>
+        <file>onboard/syncs_types/syncs/SyncsFlow.qml</file>
 		<file>guest/qmldir</file>
         <file>guest/BasePage.qml</file>
         <file>guest/GuestFlow.qml</file>

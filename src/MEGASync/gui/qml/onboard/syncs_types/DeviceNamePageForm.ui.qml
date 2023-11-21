@@ -1,14 +1,12 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 
-// QML common
-import components.textFields 1.0
-import components.images 1.0
 import common 1.0
 
-// Local
+import components.textFields 1.0
+import components.images 1.0
+
 import onboard 1.0
 
 SyncsPage {
@@ -50,7 +48,7 @@ SyncsPage {
             textField.maximumLength: 32//32 is non-technical length limit for device name
                                        //UX choice
             hint.icon: ""
-            sizes: MegaTextFields.LargeSizes {}
+            sizes: LargeSizes {}
         }
     }
 }

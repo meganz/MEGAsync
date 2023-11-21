@@ -1,11 +1,10 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 
-// QML common
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
-import Common 1.0
+import common 1.0
+
+import components.texts 1.0
+import components.images 1.0
 
 Qml.MenuItem {
     id: root
@@ -53,7 +52,7 @@ Qml.MenuItem {
             anchors.rightMargin: 16
             spacing: 12
 
-            MegaImages.SvgImage {
+            SvgImage {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.topMargin: 12
@@ -63,14 +62,14 @@ Qml.MenuItem {
                 color: Styles.iconPrimary
             }
 
-            MegaTexts.Text {
+            Text {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.topMargin: 10
                 anchors.bottomMargin: 10
                 verticalAlignment: Text.AlignVCenter
                 text: root.text
-                font.pixelSize: MegaTexts.Text.Size.Medium
+                font.pixelSize: Text.Size.Medium
                 color: Styles.textPrimary
             }
         }

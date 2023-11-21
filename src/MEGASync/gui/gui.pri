@@ -1,7 +1,6 @@
 QT += network qml quick quickwidgets
 
-QML_IMPORT_PATH += $$PWD/qml \
-    $$PWD/onboarding/qml
+QML_IMPORT_PATH += $$PWD/qml
 
 RESOURCES += \
     $$PWD/Resources_qml.qrc \
@@ -362,4 +361,5 @@ unix:!macx {
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
+
 

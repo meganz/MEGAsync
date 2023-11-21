@@ -1,4 +1,4 @@
-module Guest
+module guest
 singleton GuestStrings 1.0 GuestStrings.qml
 GuestItem 1.0 GuestItem.qml
 MenuItem 1.0 MenuItem.qml

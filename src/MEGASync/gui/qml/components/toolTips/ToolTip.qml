@@ -1,11 +1,10 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 
-// Local
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
+import common 1.0
+
+import components.texts 1.0
+import components.images 1.0
 
 Qml.ToolTip {
     id: root
@@ -20,7 +19,7 @@ Qml.ToolTip {
         color: Styles.buttonPrimary
         radius: 4
 
-        MegaImages.SvgImage {
+        SvgImage {
             id: leftIcon
 
             anchors.left: parent.left
@@ -36,7 +35,7 @@ Qml.ToolTip {
         implicitWidth: textToolTip.width + leftIcon.width + root.padding
         implicitHeight: Math.max(leftIcon.width, textToolTip.height)
 
-        MegaTexts.Text {
+        Text {
             id: textToolTip
 
             property int maxWidth: 778 - leftIcon.width - root.padding

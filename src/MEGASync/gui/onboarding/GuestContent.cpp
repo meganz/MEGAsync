@@ -7,10 +7,7 @@
 GuestContent::GuestContent(QObject *parent)
     : QMLComponent(parent)
 {
-    qmlRegisterModule("Guest", 1, 0);
-    qmlRegisterModule("GuestContent", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestFlow.qml")), "Guest", 1, 0, "GuestFlow");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestStrings.qml")), "Guest", 1, 0, "GuestStrings");
+    //getEngine()->addImportPath(QString::fromUtf8("qrc:/guest"));
     qmlRegisterType<GuestQmlDialog>("GuestQmlDialog", 1, 0, "GuestQmlDialog");
 }
 
@@ -50,7 +47,7 @@ void GuestContent::onLogoutClicked()
 
 QUrl GuestContent::getQmlUrl()
 {
-    return QUrl(QString::fromUtf8("qrc:/content/guest/GuestDialog.qml"));
+    return QUrl(QString::fromUtf8("qrc:guest/GuestDialog.qml"));
 }
 
 QString GuestContent::contextName()

@@ -1,4 +1,4 @@
-module Components.CheckBoxes
+module components.checkBoxes
 CheckBox 1.0 CheckBox.qml
 Colors 1.0 Colors.qml
 Icons 1.0 Icons.qml

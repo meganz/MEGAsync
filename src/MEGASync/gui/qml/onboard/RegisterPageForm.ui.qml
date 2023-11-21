@@ -1,16 +1,11 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// QML common
 import common 1.0
+
 import components.buttons 1.0
 import components.texts 1.0
 
-// Local
-import onboard 1.0
-
-// C++
 import LoginController 1.0
 
 StackViewPage {

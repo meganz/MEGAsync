@@ -1,7 +1,5 @@
-// System
 import QtQuick 2.15
 
-// C++
 import LoginController 1.0
 
 TwoFAPageForm {

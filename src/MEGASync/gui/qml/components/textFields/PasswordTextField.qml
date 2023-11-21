@@ -1,12 +1,11 @@
-// System
 import QtQuick 2.15
 
-// Local
-import Components.TextFields 1.0 as MegaTextFields
+import components.textFields 1.0
 
-MegaTextFields.TextField {
+TextField {
 
     property bool cleanWhenError: true
+
     rightIconVisible: false
     rightIconSource: "images/eye.svg"
 

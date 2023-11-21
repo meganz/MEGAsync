@@ -1,12 +1,11 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 import QtQuick.Layouts 1.15
 
-// Local
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
-import Common 1.0
+import common 1.0
+
+import components.texts 1.0
+import components.images 1.0
 
 Qml.Button {
     id: button
@@ -34,7 +33,7 @@ Qml.Button {
         anchors.fill: parent
         spacing: button.spacing
 
-        MegaImages.SvgImage {
+        SvgImage {
             id: icon
 
             anchors.verticalCenter: parent.verticalCenter
@@ -43,13 +42,13 @@ Qml.Button {
             sourceSize: button.iconSize
         }
 
-        MegaTexts.Text {
+        Text {
             id: textComponent
 
             color: icon.color
             text: button.text
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: MegaTexts.Text.Size.Medium
+            font.pixelSize: Text.Size.Medium
             lineHeight: 20
             lineHeightMode: Text.FixedHeight
         }

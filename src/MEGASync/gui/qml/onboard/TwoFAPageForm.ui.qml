@@ -1,17 +1,13 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// QML common
 import common 1.0
+
 import components.buttons 1.0
 import components.textFields 1.0
 
-// Local
-import onboard 1.0
 import onboard.syncs_types 1.0
 
-// C++
 import LoginController 1.0
 
 StackViewPage {
@@ -39,7 +35,7 @@ StackViewPage {
             description: OnboardingStrings.twoFASubtitle
         }
 
-        MegaTextFields.TwoFA {
+        TwoFA {
             id: twoFAItem
 
             focus: true

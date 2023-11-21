@@ -1,12 +1,10 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-// QML common
 import common 1.0
-import Components.Dialogs 1.0 as MegaDialogs
 
-// C++
+import components.dialogs 1.0
+
 import LoginController 1.0
 
 Rectangle {
@@ -80,7 +78,7 @@ Rectangle {
     // DO NOT REMOVE, windows qt bug. Without this line CancelLogin does not close when RegisterFlow is deleted
     Component.onDestruction: {}
 
-    MegaDialogs.ConfirmCloseDialog {
+    ConfirmCloseDialog {
         id: cancelLogin
 
         titleText: OnboardingStrings.cancelLoginTitle
@@ -93,7 +91,7 @@ Rectangle {
         }
     }
 
-    MegaDialogs.ConfirmCloseDialog {
+    ConfirmCloseDialog {
         id: cancelCreateAccount
 
         titleText: OnboardingStrings.cancelAccountCreationTitle

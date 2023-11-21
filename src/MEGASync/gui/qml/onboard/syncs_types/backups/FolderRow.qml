@@ -1,21 +1,18 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// QML common
 import common 1.0
+
 import components.texts 1.0
 import components.images 1.0
-import Components.CheckBoxes 1.0 as MegaCheckBoxes
+import components.checkBoxes 1.0
 import components.toolTips 1.0
-import components.buttons 1.0
+import components.buttons 1.0 as Buttons
 import components.textFields 1.0
 import components.busyIndicator 1.0
 
-// Local
 import onboard 1.0
 
-// C++
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
@@ -95,7 +92,7 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 spacing: contentRoot.checkboxSpacing
 
-                MegaCheckBoxes.CheckBox {
+                CheckBox {
                     id: checkbox
 
                     anchors.top: parent.top
@@ -126,7 +123,7 @@ Rectangle {
                         sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
                     }
 
-                    MegaTexts.ElidedText {
+                    ElidedText {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.topMargin: 1
@@ -142,7 +139,7 @@ Rectangle {
                 }
             }
 
-            MegaTexts.SecondaryText {
+            SecondaryText {
                 id: folderSize
 
                 anchors.right: parent.right
@@ -218,7 +215,7 @@ Rectangle {
                            : Styles.textWarning
                 }
 
-                MegaTexts.ElidedText {
+                ElidedText {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     width: contentRoot.width - contentRoot.imageTextSpacing - contentRoot.imageWidth
@@ -264,7 +261,7 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 width: leftButton.width + removeButton.width - leftButton.sizes.focusBorderWidth
 
-                MegaButtons.SecondaryButton {
+                Buttons.SecondaryButton {
                     id: leftButton
 
                     anchors.right: removeButton.left
@@ -281,7 +278,7 @@ Rectangle {
                             editMode = true;
                         }
                     }
-                    sizes: MegaButtons.SmallSizes {}
+                    sizes: Buttons.SmallSizes {}
 
                     ChooseLocalFolder {
                         id: folderDialog
@@ -297,7 +294,7 @@ Rectangle {
                     }
                 }
 
-                MegaButtons.SecondaryButton {
+                Buttons.SecondaryButton {
                     id: removeButton
 
                     anchors.right: parent.right
@@ -307,7 +304,7 @@ Rectangle {
                     onClicked: {
                         backupsModelAccess.remove(folder);
                     }
-                    sizes: MegaButtons.SmallSizes {}
+                    sizes: Buttons.SmallSizes {}
                 }
             }
 
@@ -328,7 +325,7 @@ Rectangle {
                 leftIconSource: Images.edit
                 leftIconColor: Styles.iconSecondary
                 error: hint.visible
-                sizes: MegaTextFields.SmallSizes {}
+                sizes: SmallSizes {}
                 validator: RegExpValidator { regExp: RegexExpressions.allowedFolderChars }
 
                 onAccepted: {
@@ -345,11 +342,11 @@ Rectangle {
                 }
             }
 
-            PrimaryButton {
+            Buttons.PrimaryButton {
                 id: doneButton
 
                 text: OnboardingStrings.done
-                sizes: MegaButtons.SmallSizes {}
+                sizes: Buttons.SmallSizes {}
                 onClicked: {
                     if (editTextField.acceptableInput){
                         doneAction()

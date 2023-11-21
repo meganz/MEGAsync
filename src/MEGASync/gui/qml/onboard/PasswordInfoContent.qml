@@ -1,10 +1,5 @@
-// QML common
 import common 1.0
 
-// Local
-import onboard 1.0
-
-// C++
 import PasswordStrengthChecker 1.0
 
 PasswordInfoContentForm {

@@ -1,19 +1,16 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtGraphicalEffects 1.15
 
-// QML common
 import common 1.0
+
 import components.texts 1.0
 import components.images 1.0
 
-// Local
-import AccountInfoData 1.0
 import onboard 1.0
 
-// C++
+import AccountInfoData 1.0
 import Onboarding 1.0
 
 Item {
@@ -126,13 +123,13 @@ Item {
                     visible: !AccountInfoData.belowMinUsedStorageThreshold
                 }
 
-                MegaTexts.SecondaryText {
+                SecondaryText {
                     font.weight: Font.DemiBold
                     text: "/"
                     visible: !AccountInfoData.belowMinUsedStorageThreshold
                 }
 
-                MegaTexts.SecondaryText {
+                SecondaryText {
                     id: totalStorage
 
                     font.weight: Font.DemiBold

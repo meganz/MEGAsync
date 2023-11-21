@@ -3,11 +3,9 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import Components.Buttons 1.0
+import components.buttons 1.0
 import components.texts 1.0
 import components.textFields 1.0
-
-import onboard 1.0
 
 import LoginController 1.0
 
@@ -66,7 +64,7 @@ StackViewPage {
             width: parent.width + 2 * emailItem.sizes.focusBorderWidth
             spacing: contentSpacing / 2
 
-            MegaTextFields.EmailTextField {
+            EmailTextField {
                 id: emailItem
 
                 width: parent.width
@@ -79,7 +77,7 @@ StackViewPage {
                 }
             }
 
-            MegaTextFields.PasswordTextField {
+            PasswordTextField {
                 id: passwordItem
 
                 width: parent.width
