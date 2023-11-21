@@ -1761,47 +1761,47 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Log in or sign up to MEGA</source>
-        <translatorcomment>Label that indicates to the user that he should login or register in order to proceed</translatorcomment>
+        <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account temporarily locked</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked</translatorcomment>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been temporarily locked due to a potential breach of our [A]Terms of Service[/A]. To unlock your account, verify your phone number.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked</translatorcomment>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked</translatorcomment>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>
-        <translatorcomment>Button text, on click the email to verify the account is resent</translatorcomment>
+        <translatorcomment>Button text, on click the email to verify the account is resent CON-465</translatorcomment>
         <translation type="unfinished">Resend email</translation>
     </message>
     <message>
         <source>Log out</source>
-        <translatorcomment>Button text to logout</translatorcomment>
+        <translatorcomment>Button text to logout CON-465</translatorcomment>
         <translation type="unfinished">Log&#xa0;out</translation>
     </message>
     <message>
         <source>Verify now</source>
-        <translatorcomment>Button text to verify the account</translatorcomment>
+        <translatorcomment>Button text to verify the account CON-465</translatorcomment>
         <translation type="unfinished">Verify now</translation>
     </message>
     <message>
         <source>Setting up your account…</source>
-        <translatorcomment>Label that indicates that the account is being setting up</translatorcomment>
+        <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Waiting for email confirmation…</source>
-        <translatorcomment>Label that indicates that the email confirmation is pending</translatorcomment>
+        <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
