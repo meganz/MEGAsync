@@ -19,6 +19,7 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.preferredHeight: 30
         font.pixelSize: Text.Size.Large
+        font.weight: Font.DemiBold
     }
 
     SecondaryText {
