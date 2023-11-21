@@ -6309,14 +6309,15 @@ void MegaApplication::manageBusinessStatus(int64_t event)
         }
         case MegaApi::BUSINESS_STATUS_EXPIRED:
         {
-            const QString title = tr("Account deactivated");
             if (megaApi->isProFlexiAccount())
             {
+                const QString title = tr("Pro Flexi Account deactivated");
                 const QString message = CommonMessages::getExpiredProFlexiMessage();
                 GuiUtilities::showPayReactivateOrDismiss(title, message);
             }
             else if (megaApi->isMasterBusinessAccount())
             {
+                const QString title = tr("Account deactivated");
                 const QString message = tr("It seems the payment for your business account has failed. "
                                            "Your account is suspended as read only until you proceed with the needed payments.");
                 GuiUtilities::showPayNowOrDismiss(title, message);
