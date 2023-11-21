@@ -68,30 +68,31 @@ void ScanningWidget::updateAnimation()
 
 void ScanningWidget::onReceiveStatusUpdate(const FolderTransferUpdateEvent &event)
 {
-    switch (event.stage)
+    const auto metaData = TransferMetaDataContainer::getAppDataByAppData(event.appData.c_str());
+    const auto addedTransfers = metaData->getPendingFiles() + metaData->getFileTransfersOK();
+
+    if (addedTransfers > 0)
     {
-        case mega::MegaTransfer::STAGE_SCAN:
+        static const QChar ellipsis(0x2026);
+        mUi->lStepTitle->setText(tr("Adding transfers") + ellipsis);
+        mUi->lStepDescription->setText(tr("%1/%2").arg(addedTransfers).arg(event.filecount));
+    }
+    else
+    {
+        switch (event.stage)
         {
-            mUi->lStepTitle->setText(tr("Scanning"));
-            mUi->lStepDescription->setText(buildScanDescription(event.foldercount, event.filecount));
-            break;
-        }
-        case mega::MegaTransfer::STAGE_CREATE_TREE:
-        {
-            const auto metaData = TransferMetaDataContainer::getAppDataByAppData(event.appData.c_str());
-            const auto addedTransfers = metaData->getPendingFiles();
-            if (addedTransfers > 0)
+            case mega::MegaTransfer::STAGE_SCAN:
             {
-                static const QChar ellipsis(0x2026);
-                mUi->lStepTitle->setText(tr("Adding transfers") + ellipsis);
-                mUi->lStepDescription->setText(tr("%1/%2").arg(addedTransfers).arg(event.filecount));
+                mUi->lStepTitle->setText(tr("Scanning"));
+                mUi->lStepDescription->setText(buildScanDescription(event.foldercount, event.filecount));
+                break;
             }
-            else
+            case mega::MegaTransfer::STAGE_CREATE_TREE:
             {
                 mUi->lStepTitle->setText(tr("Creating folders"));
                 mUi->lStepDescription->setText(tr("%1/%2").arg(event.createdfoldercount).arg(event.foldercount));
+                break;
             }
-            break;
         }
     }
     mPreviousStage = event.stage;
