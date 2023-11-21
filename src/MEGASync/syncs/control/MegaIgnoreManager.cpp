@@ -25,12 +25,12 @@ namespace
     constexpr char CAPTURE_EXTENSION_REG_EX[] = "\\.(.*)";
 }
 
-MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder, bool createIfNotExist)
+MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder, bool createDefaultIfNotExist)
 {
     const auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
     mOutputMegaIgnoreFile = ignorePath;
     mMegaIgnoreFile = ignorePath;
-    if (createIfNotExist && !QFile::exists(ignorePath))
+    if (createDefaultIfNotExist && !QFile::exists(ignorePath))
     {
         mMegaIgnoreFile = Preferences::instance()->getDataPath() + QDir::separator() + QString::fromUtf8(".megaignore.default");
     }
@@ -189,7 +189,7 @@ QList<std::shared_ptr<MegaIgnoreRule>> MegaIgnoreManager::getAllRules() const
 std::shared_ptr<MegaIgnoreRule> MegaIgnoreManager::findRule(const QString& ruleToCompare)
 {
     auto allRules(getAllRules());
-    foreach(auto rule, allRules)
+    foreach(const auto rule, allRules)
     {
         if (rule->isEqual(ruleToCompare))
         {
