@@ -527,8 +527,8 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up.</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Folder wasn't backed up. Try again.</numerusform>
+            <numerusform>These folders weren't backed up. Try again.</numerusform>
         </translation>
     </message>
     <message>
@@ -540,8 +540,8 @@
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name.</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</numerusform>
+            <numerusform>Some folders with the same name already exist in your Backups. Rename the new folders to continue with the backup. Folder names will not change on your computer.</numerusform>
         </translation>
     </message>
     <message>
