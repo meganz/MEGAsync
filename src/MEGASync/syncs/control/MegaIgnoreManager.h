@@ -16,10 +16,10 @@ class MegaIgnoreRule : public QObject
 public:
     enum RuleType
     {
-        NameRule,
-        ExtensionRule,
-        SizeRule,
-        InvalidRule
+        NAMERULE,
+        EXTENSIONRULE,
+        SIZERULE,
+        INVALIDRULE
     };
     explicit MegaIgnoreRule(const QString& rule, bool isCommented)
         : mRule(rule),
@@ -62,13 +62,13 @@ class MegaIgnoreNameRule : public MegaIgnoreRule
 public:
     enum class Class
     {
-        Exclude,
-        Include
+        EXCLUDE,
+        INCLUDE
     };
 
     enum class Target
     {
-        None,
+        NONE,
         a,
         d,
         f,
@@ -76,37 +76,37 @@ public:
     };
     Q_ENUM(Target)
 
-        enum class Type
+    enum class Type
     {
-        None,
+        NONE,
         N,
         n,
         p
     };
     Q_ENUM(Type)
 
-        enum class Strategy
+    enum class Strategy
     {
-        None,
+        NONE,
         g,
         r
     };
     Q_ENUM(Strategy)
 
-        enum class WildCardType
+    enum class WildCardType
     {
-        Equal,
-        StartsWith,
-        EndsWith,
-        Conatains
+        EQUAL,
+        STARTSWITH,
+        ENDSWITH,
+        CONTAINS
     };
     Q_ENUM(WildCardType)
 
     explicit MegaIgnoreNameRule(const QString& rule, bool isCommented);
-    explicit MegaIgnoreNameRule(const QString& pattern, Class classType, Target target = Target::None, Type type = Type::None, Strategy strategy = Strategy::None);
+    explicit MegaIgnoreNameRule(const QString& pattern, Class classType, Target target = Target::NONE, Type type = Type::NONE, Strategy strategy = Strategy::NONE);
     QString getModifiedRule() const override;
     QString getDisplayText() const override { return mPattern; }
-    RuleType ruleType() const override { return RuleType::NameRule;}
+    RuleType ruleType() const override { return RuleType::NAMERULE;}
     WildCardType wildCardType() { return mWildCardType; }
     Target getTarget() { return mTarget; }
 
@@ -137,10 +137,10 @@ private:
     }
 
     Class mClass;
-    Target mTarget = Target::None;
-    Type mType = Type::None;
-    Strategy mStrategy = Strategy::None;
-    WildCardType mWildCardType = WildCardType::Equal;
+    Target mTarget = Target::NONE;
+    Type mType = Type::NONE;
+    Strategy mStrategy = Strategy::NONE;
+    WildCardType mWildCardType = WildCardType::EQUAL;
 };
 
 class MegaIgnoreExtensionRule : public MegaIgnoreNameRule
@@ -149,7 +149,7 @@ public:
     MegaIgnoreExtensionRule(const QString& rule, bool isCommented);
     explicit MegaIgnoreExtensionRule(Class classType, const QString& extension);
 
-    RuleType ruleType() const override { return RuleType::ExtensionRule; }
+    RuleType ruleType() const override { return RuleType::EXTENSIONRULE; }
     const QString& extension() const;
 
 private:
@@ -167,8 +167,8 @@ public:
 
     enum Threshold
     {
-        Low,
-        High
+        LOW,
+        HIGH
     };
 
     enum UnitTypes
@@ -183,7 +183,7 @@ public:
     explicit MegaIgnoreSizeRule(const QString& rule, bool isCommented);
     explicit MegaIgnoreSizeRule(Threshold type);
 
-    RuleType ruleType() const override { return RuleType::SizeRule; }
+    RuleType ruleType() const override { return RuleType::SIZERULE; }
     QString getModifiedRule() const override;
 
     int value() const;
@@ -197,7 +197,7 @@ public:
 private:
     uint64_t mValue = 1;
     UnitTypes mUnit = UnitTypes::B;
-    Threshold mThreshold = Low;
+    Threshold mThreshold = LOW;
 };
 
 class MegaIgnoreInvalidRule : public MegaIgnoreRule
@@ -209,7 +209,7 @@ public:
         :MegaIgnoreRule(rule, isCommented) {}
 
     bool isValid() const override { return false; }
-    RuleType ruleType() const override { return RuleType::InvalidRule; }
+    RuleType ruleType() const override { return RuleType::INVALIDRULE; }
     virtual QString getModifiedRule() const override{ return isCommented() && (!mRule.startsWith(QLatin1String("#")))? QLatin1String("#") + mRule: mRule; }
 
 };
@@ -240,7 +240,7 @@ public:
     void enableExtensions(bool state);
     std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinksRule();
     std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinkRule(const QString& pattern);
-    std::shared_ptr<MegaIgnoreNameRule> addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern, MegaIgnoreNameRule::Target targetType = MegaIgnoreNameRule::Target::None);
+    std::shared_ptr<MegaIgnoreNameRule> addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern, MegaIgnoreNameRule::Target targetType = MegaIgnoreNameRule::Target::NONE);
 
     enum ApplyChangesError
     {
