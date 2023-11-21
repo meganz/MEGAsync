@@ -81,7 +81,6 @@ public:
 
     void finishStalledIssues(const QModelIndexList& indexes);
     void updateStalledIssues();
-    void updateStalledIssuesWhenReady();
 
     void lockModelMutex(bool lock);
 
@@ -187,7 +186,6 @@ private:
     mega::QTMegaRequestListener* mRequestListener;
     mega::QTMegaGlobalListener* mGlobalListener;
     mega::MegaApi* mMegaApi;
-    bool mUpdateWhenGlobalStateChanges;
     std::atomic_bool mIssuesRequested {false};
     bool mIsStalled;
 

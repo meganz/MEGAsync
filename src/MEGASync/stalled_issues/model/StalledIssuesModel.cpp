@@ -138,7 +138,6 @@ const char* FILEWATCHER_ROW = "FILEWATCHER_ROW";
 StalledIssuesModel::StalledIssuesModel(QObject *parent)
     : QAbstractItemModel(parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
-    mUpdateWhenGlobalStateChanges(false),
     mRawInfoVisible(false),
     mIsStalled(false)
 {
@@ -301,7 +300,7 @@ void StalledIssuesModel::runMessageBox(QMegaMessageBox::MessageBoxInfo info)
     info.parent = dialog ? dialog->getDialog() : nullptr;
 
     //Run the messagebox in the mGUI thread)
-    Utilities::queueFunctionInAppThread([this, info]()
+    Utilities::queueFunctionInAppThread([info]()
     {
         QMegaMessageBox::warning(info);
     });
@@ -327,11 +326,6 @@ void StalledIssuesModel::updateStalledIssues()
         mIssuesRequested = true;
         mMegaApi->getMegaSyncStallList(nullptr);
     }
-}
-
-void StalledIssuesModel::updateStalledIssuesWhenReady()
-{
-    mUpdateWhenGlobalStateChanges = true;
 }
 
 void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes)

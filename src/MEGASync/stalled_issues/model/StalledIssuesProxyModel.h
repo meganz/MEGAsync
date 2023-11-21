@@ -20,7 +20,6 @@ public:
 
     void setSourceModel(QAbstractItemModel *sourceModel) override;
     void updateStalledIssues();
-    void updateStalledIssuesWhenReady();
 
 public slots:
     void updateFilter();
