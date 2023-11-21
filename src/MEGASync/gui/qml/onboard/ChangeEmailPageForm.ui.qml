@@ -32,7 +32,6 @@ StackViewPage {
             Layout.fillWidth: true
             text: OnboardingStrings.changeEmailTitle
             font.pixelSize: Text.Size.Large
-
         }
 
         Text {

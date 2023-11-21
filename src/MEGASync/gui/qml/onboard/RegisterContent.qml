@@ -4,7 +4,6 @@ import common 1.0
 
 import components.checkBoxes 1.0
 import components.textFields 1.0
-import components.texts 1.0
 
 Column {
     id: root

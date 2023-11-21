@@ -155,7 +155,6 @@ ColumnLayout {
         url: Links.recovery
         visible: !twoFAItem.hasError
         height: notification.height
-
     }
 
     Shortcut {

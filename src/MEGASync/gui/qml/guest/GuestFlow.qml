@@ -4,7 +4,6 @@ import QtGraphicalEffects 1.15
 
 import common 1.0
 
-import components.texts 1.0
 import components.images 1.0
 import components.buttons 1.0
 import components.progressBars 1.0

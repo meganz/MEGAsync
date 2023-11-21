@@ -7,7 +7,7 @@ import common 1.0
 import components.texts 1.0
 import components.buttons 1.0
 
-//import onboard 1.0
+import onboard 1.0
 
 Window {
     id: root
@@ -27,12 +27,12 @@ Window {
 
     width: root.dialogWidth
     height: root.dialogHeight
-    //minimumWidth: root.dialogWidth
-    //minimumHeight: root.dialogHeight
-    //flags: Qt.Dialog
-    //modality: Qt.WindowModal
+    minimumWidth: root.dialogWidth
+    minimumHeight: root.dialogHeight
+    flags: Qt.Dialog
+    modality: Qt.WindowModal
     color: Styles.surface1
-    //title: OnboardingStrings.mega
+    title: OnboardingStrings.mega
 
     Column {
         id: mainColumn
