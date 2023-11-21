@@ -13,7 +13,7 @@ void PlatformImplementation::initialize(int /*argc*/, char *[] /*argv*/)
     mShellNotifier = std::make_shared<SignalShellNotifier>();
 }
 
-void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void (QStringList)> func)
+void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(const QStringList&)> func)
 {
     if (defaultDir.isEmpty())
     {
@@ -23,7 +23,7 @@ void PlatformImplementation::fileSelector(QString title, QString defaultDir, boo
     selectorsImpl(title,defaultDir,multiSelection, true, false, parent, func);
 }
 
-void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void (QStringList)> func)
+void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(const QStringList&)> func)
 {
     if (defaultDir.isEmpty())
     {
@@ -33,7 +33,7 @@ void PlatformImplementation::folderSelector(QString title, QString defaultDir, b
     selectorsImpl(title,defaultDir, multiSelection, false, true, parent, func);
 }
 
-void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void (QStringList)> func)
+void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(const QStringList&)> func)
 {
     if (defaultDir.isEmpty())
     {

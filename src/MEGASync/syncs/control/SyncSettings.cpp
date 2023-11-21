@@ -142,11 +142,6 @@ QString SyncSettings::getLocalFolder(bool normalizeDisplay) const
     return normalizeDisplay ? toret.normalized(QString::NormalizationForm_C) : toret;
 }
 
-long long SyncSettings::getLocalFingerprint()  const
-{
-    return mSync->getLocalFingerprint();
-}
-
 QString SyncSettings::getMegaFolder()  const
 {
     if (mMegaFolder.isEmpty())

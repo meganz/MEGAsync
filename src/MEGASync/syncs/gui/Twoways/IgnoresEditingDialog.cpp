@@ -96,7 +96,7 @@ void IgnoresEditingDialog::refreshUI()
     // Step 0: Fill name exclusions
     for(auto rule : allRules)
     {
-        if (rule->ruleType() == MegaIgnoreRule::RuleType::NameRule)
+        if (rule->ruleType() == MegaIgnoreRule::RuleType::NAMERULE)
         {
             addNameRule(rule);
         }
@@ -153,7 +153,7 @@ void IgnoresEditingDialog::onAddNameClicked()
             return;
         }
 
-        MegaIgnoreNameRule::Target target(MegaIgnoreNameRule::Target::None);
+        MegaIgnoreNameRule::Target target(MegaIgnoreNameRule::Target::NONE);
         QFileInfo localItem(mSyncLocalFolder + QDir::separator() + text);
         if(localItem.exists())
         {
@@ -174,7 +174,7 @@ void IgnoresEditingDialog::onAddNameClicked()
             }
         }
 
-        auto rule = mManager.addNameRule(MegaIgnoreNameRule::Class::Exclude, text, target);
+        auto rule = mManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE, text, target);
         addNameRule(rule);
     });
 }
@@ -298,7 +298,7 @@ void IgnoresEditingDialog::setOutputIgnorePath(const QString& outputPath)
 void IgnoresEditingDialog::addNameRule(std::shared_ptr<MegaIgnoreRule> rule)
 {
     // Sanity check
-    if (rule->ruleType() != MegaIgnoreRule::RuleType::NameRule || rule->isCommented() || rule->getDisplayText().isEmpty())
+    if (rule->ruleType() != MegaIgnoreRule::RuleType::NAMERULE || rule->isCommented() || rule->getDisplayText().isEmpty())
     {
         return;
     }
