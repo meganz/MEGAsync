@@ -5,7 +5,6 @@ QML_IMPORT_PATH += $$PWD/qml \
 
 RESOURCES += \
     $$PWD/Resources_qml.qrc \
-    $$PWD/onboarding/qml/onboarding.qrc \
     $$PWD/qml/qml.qrc
 
 SOURCES += $$PWD/SettingsDialog.cpp \

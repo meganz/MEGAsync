@@ -1,15 +1,15 @@
 <RCC>
     <qresource prefix="/">
+	    <file>common/qmldir</file>
         <file>common/Constants.qml</file>
-        <file>common/DirectoryFontLoader.qml</file>
-        <file>common/EventListModel.qml</file>
-        <file>common/EventListSimulator.qml</file>
         <file>common/Images.qml</file>
         <file>common/Links.qml</file>
         <file>common/RegexExpressions.qml</file>
         <file>common/Styles.qml</file>
         <file>common/OS.qml</file>
+		<file>components/busyIndicator/qmldir</file>
         <file>components/busyIndicator/BusyIndicator.qml</file>
+		<file>components/buttons/qmldir</file>
         <file>components/buttons/Button.qml</file>
         <file>components/buttons/CardButton.qml</file>
         <file>components/buttons/CardHorizontalButton.qml</file>
@@ -25,13 +25,18 @@
         <file>components/buttons/Sizes.qml</file>
         <file>components/buttons/SmallSizes.qml</file>
         <file>components/buttons/LargeSizes.qml</file>
+		<file>components/checkBoxes/qmldir</file>
         <file>components/checkBoxes/CheckBox.qml</file>
         <file>components/checkBoxes/Colors.qml</file>
         <file>components/checkBoxes/Icons.qml</file>
         <file>components/checkBoxes/Sizes.qml</file>
+		<file>components/images/qmldir</file>
         <file>components/images/SvgImage.qml</file>
+		<file>components/scrollBars/qmldir</file>
         <file>components/scrollBars/ScrollBar.qml</file>
+		<file>components/progressBars/qmldir</file>
         <file>components/progressBars/HorizontalProgressBar.qml</file>
+		<file>components/textFields/qmldir</file>
         <file>components/textFields/EmailTextField.qml</file>
         <file>components/textFields/IconTextField.qml</file>
         <file>components/textFields/PasswordTextField.qml</file>
@@ -43,15 +48,87 @@
         <file>components/textFields/Sizes.qml</file>
         <file>components/textFields/SmallSizes.qml</file>
         <file>components/textFields/LargeSizes.qml</file>
+		<file>components/textFields/Colors.qml</file>
+		<file>components/texts/qmldir</file>
         <file>components/texts/HintText.qml</file>
         <file>components/texts/NotificationText.qml</file>
         <file>components/texts/RichText.qml</file>
         <file>components/texts/SecondaryText.qml</file>
         <file>components/texts/Text.qml</file>
+		<file>components/texts/ElidedText.qml</file>
+		<file>components/toolTips/qmldir</file>
         <file>components/toolTips/ToolTip.qml</file>
+		<file>components/views/qmldir</file>
         <file>components/views/ScrollPanel.qml</file>
-        <file>components/texts/ElidedText.qml</file>
-        <file>components/textFields/Colors.qml</file>
+		<file>components/dialogs/qmldir</file>
         <file>components/dialogs/ConfirmCloseDialog.qml</file>
+		<file>onboarding/qmldir</file>
+		<file>onboarding/main.qml</file>
+        <file>onboarding/LoginPage.qml</file>
+        <file>onboarding/LoginPageForm.ui.qml</file>
+        <file>onboarding/OnboardingDialog.qml</file>
+        <file>onboarding/OnboardingFlow.qml</file>
+        <file>onboarding/OnboardingStrings.qml</file>
+        <file>onboarding/RegisterContent.qml</file>
+        <file>onboarding/RegisterFlow.qml</file>
+        <file>onboarding/RegisterPage.qml</file>
+        <file>onboarding/RegisterPageForm.ui.qml</file>
+        <file>onboarding/TwoFAPage.qml</file>
+        <file>onboarding/TwoFAPageForm.ui.qml</file>
+		<file>onboarding/ConfirmEmailPage.qml</file>
+        <file>onboarding/ConfirmEmailPageForm.ui.qml</file>
+        <file>onboarding/ChangeEmailPage.qml</file>
+        <file>onboarding/ChangeEmailPageForm.ui.qml</file>
+        <file>onboarding/StackViewPage.qml</file>
+        <file>onboarding/PasswordConditionItem.qml</file>
+        <file>onboarding/PasswordInfoContent.qml</file>
+        <file>onboarding/PasswordInfoContentForm.ui.qml</file>
+        <file>onboarding/PasswordInfoPopUp.qml</file>
+        <file>onboarding/StackViewBase.qml</file>
+		<file>onboarding/syncs_types/qmldir</file>
+        <file>onboarding/syncs_types/MainFlow.qml</file>
+        <file>onboarding/syncs_types/NavigationInfo.qml</file>
+        <file>onboarding/syncs_types/DeviceNamePage.qml</file>
+        <file>onboarding/syncs_types/DeviceNamePageForm.ui.qml</file>
+        <file>onboarding/syncs_types/Footer.qml</file>
+        <file>onboarding/syncs_types/Header.qml</file>
+        <file>onboarding/syncs_types/InfoAccount.qml</file>
+        <file>onboarding/syncs_types/InstallationTypePage.qml</file>
+        <file>onboarding/syncs_types/InstallationTypePageForm.ui.qml</file>
+        <file>onboarding/syncs_types/ResumePage.qml</file>
+        <file>onboarding/syncs_types/ResumePageForm.ui.qml</file>
+        <file>onboarding/syncs_types/SyncsHorizontalButton.qml</file>
+        <file>onboarding/syncs_types/SyncsPage.qml</file>
+        <file>onboarding/syncs_types/SyncsType.qml</file>
+        <file>onboarding/syncs_types/SyncsVerticalButton.qml</file>
+		<file>onboarding/syncs_types/backups/qmldir</file>
+        <file>onboarding/syncs_types/backups/BackupsFlow.qml</file>
+        <file>onboarding/syncs_types/backups/ConfirmFoldersPage.qml</file>
+        <file>onboarding/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
+        <file>onboarding/syncs_types/backups/ConfirmTable.qml</file>
+        <file>onboarding/syncs_types/backups/FolderRow.qml</file>
+        <file>onboarding/syncs_types/backups/SelectFoldersPage.qml</file>
+        <file>onboarding/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
+        <file>onboarding/syncs_types/backups/SelectTable.qml</file>
+		<file>onboarding/syncs_types/left_panel/qmldir</file>
+        <file>onboarding/syncs_types/left_panel/Step.qml</file>
+        <file>onboarding/syncs_types/left_panel/StepPanel.qml</file>
+        <file>onboarding/syncs_types/left_panel/SubStep.qml</file>
+		<file>onboarding/syncs_types/syncs/qmldir</file>
+        <file>onboarding/syncs_types/syncs/ChooseSyncFolder.qml</file>
+        <file>onboarding/syncs_types/syncs/FullSyncPage.qml</file>
+        <file>onboarding/syncs_types/syncs/FullSyncPageForm.ui.qml</file>
+        <file>onboarding/syncs_types/syncs/SelectiveSyncPage.qml</file>
+        <file>onboarding/syncs_types/syncs/SelectiveSyncPageForm.ui.qml</file>
+        <file>onboarding/syncs_types/syncs/SyncTypeButton.qml</file>
+        <file>onboarding/syncs_types/syncs/SyncTypePage.qml</file>
+        <file>onboarding/syncs_types/syncs/SyncTypePageForm.ui.qml</file>
+        <file>onboarding/syncs_types/syncs/SyncsFlow.qml</file>
+		<file>guest/qmldir</file>
+        <file>guest/BasePage.qml</file>
+        <file>guest/GuestFlow.qml</file>
+        <file>guest/GuestDialog.qml</file>
+        <file>guest/GuestStrings.qml</file>
+        <file>guest/MenuItem.qml</file>
     </qresource>
 </RCC>
