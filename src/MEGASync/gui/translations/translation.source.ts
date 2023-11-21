@@ -525,7 +525,7 @@
     <name>BackupsModel</name>
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
-        <translatorcomment>Warning message indicating that the folder was not backed up.</translatorcomment>
+        <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation type="unfinished">
             <numerusform>Folder wasn't backed up. Try again.</numerusform>
             <numerusform>These folders weren't backed up. Try again.</numerusform>
@@ -533,12 +533,12 @@
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names.</translatorcomment>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
         <translation type="unfinished">You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
     </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
-        <translatorcomment>Warning message stating that the user already has a backup created with that name.</translatorcomment>
+        <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
         <translation type="unfinished">
             <numerusform>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</numerusform>
             <numerusform>Some folders with the same name already exist in your Backups. Rename the new folders to continue with the backup. Folder names will not change on your computer.</numerusform>
@@ -546,12 +546,12 @@
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
-        <translatorcomment>Warning message stating that a backup can´t contain another backup</translatorcomment>
+        <translatorcomment>Warning message stating that a backup can´t contain another backup CON-468</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
-        <translatorcomment>Warning message stating that the selected folder can´t be reached.</translatorcomment>
+        <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1085,7 +1085,7 @@
     <name>ChooseLocalFolder</name>
     <message>
         <source>Select local folder</source>
-        <translatorcomment>Label indicating the user that he has to select a local folder</translatorcomment>
+        <translatorcomment>Label indicating the user that he has to select a local folder. CON-467</translatorcomment>
         <translation type="unfinished">Select local folder</translation>
     </message>
 </context>
@@ -6431,50 +6431,62 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s already synced</source>
+        <translatorcomment>Warning message indicating that the folder is already synced. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as is already backed up</source>
+        <translatorcomment>Warning message indicating that the selected folder is a backup. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a sync folder. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it contains synced folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains synced folders. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it contains backed up folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains backed up folders. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have write permissions.</source>
+        <translatorcomment>Warning message indicating that there is no write Permissions. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The local path is unavailable</source>
+        <translatorcomment>Warning message indicating that the local path is not available. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
+        <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This selection can&apos;t be synced as it’s a file.</source>
+        <translatorcomment>Warning message indicating that the selection is a file and files can´t be synced. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
