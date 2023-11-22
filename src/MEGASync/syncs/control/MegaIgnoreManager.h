@@ -191,11 +191,11 @@ public:
 
     static QStringList getUnitsForDisplay();
 
-    void setValue(uint64_t newValue);
+    void setValue(int newValue);
     void setUnit(int newUnit);
 
 private:
-    uint64_t mValue = 1;
+    int mValue = 1;
     UnitTypes mUnit = UnitTypes::B;
     Threshold mThreshold = LOW;
 };

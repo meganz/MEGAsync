@@ -86,53 +86,53 @@ void MegaIgnoreManager::parseIgnoresFile()
                 const auto ruleType = getRuleType(line);
                 switch (ruleType)
                 {
-                case MegaIgnoreRule::RuleType::SIZERULE:
-                {
-                    const static QRegularExpression largeSizeRegEx{ QLatin1String(::LARGE_SIZE_LEFT_SIDE_REG_EX) };
-                    const static QRegularExpression smallSizeRegEx{ QLatin1String(::SMALL_SIZE_LEFT_SIDE_REG_EX) };
-                    if (largeSizeRegEx.match(line).hasMatch())
+                    case MegaIgnoreRule::RuleType::SIZERULE:
                     {
-                        auto highLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
-                        if (!mHighLimitRule || !highLimitRule->isCommented())
+                        const static QRegularExpression largeSizeRegEx{ QLatin1String(::LARGE_SIZE_LEFT_SIDE_REG_EX) };
+                        const static QRegularExpression smallSizeRegEx{ QLatin1String(::SMALL_SIZE_LEFT_SIDE_REG_EX) };
+                        if (largeSizeRegEx.match(line).hasMatch())
                         {
-                            mHighLimitRule = highLimitRule;
+                            auto highLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
+                            if (!mHighLimitRule || !highLimitRule->isCommented())
+                            {
+                                mHighLimitRule = highLimitRule;
+                            }
+                            addRule(highLimitRule);
                         }
-                        addRule(highLimitRule);
-                    }
-                    else if (smallSizeRegEx.match(line).hasMatch())
-                    {
-                        auto lowLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
-                        if (!mLowLimitRule || !lowLimitRule->isCommented())
+                        else if (smallSizeRegEx.match(line).hasMatch())
                         {
-                            mLowLimitRule = lowLimitRule;
+                            auto lowLimitRule = std::make_shared<MegaIgnoreSizeRule>(line, isCommented);
+                            if (!mLowLimitRule || !lowLimitRule->isCommented())
+                            {
+                                mLowLimitRule = lowLimitRule;
+                            }
+                            addRule(lowLimitRule);
                         }
-                        addRule(lowLimitRule);
+                        break;
                     }
-                    break;
-                }
-                case MegaIgnoreRule::RuleType::EXTENSIONRULE:
-                {
-                    auto extensionRule(std::make_shared<MegaIgnoreExtensionRule>(line, isCommented));
-                    addRule(extensionRule);
-                    mExtensionRules.insert(extensionRule->extension(), extensionRule);
-                    break;
-                }
-                case MegaIgnoreRule::RuleType::NAMERULE:
-                {
-                    std::shared_ptr<MegaIgnoreNameRule> rule = std::make_shared<MegaIgnoreNameRule>(line, isCommented);
-
-                    if (line.compare(QLatin1String(::IGNORE_SYM_LINK)) == 0)
+                    case MegaIgnoreRule::RuleType::EXTENSIONRULE:
                     {
-                        mIgnoreSymLinkRule = rule;
+                        auto extensionRule(std::make_shared<MegaIgnoreExtensionRule>(line, isCommented));
+                        addRule(extensionRule);
+                        mExtensionRules.insert(extensionRule->extension(), extensionRule);
+                        break;
                     }
+                    case MegaIgnoreRule::RuleType::NAMERULE:
+                    {
+                        std::shared_ptr<MegaIgnoreNameRule> rule = std::make_shared<MegaIgnoreNameRule>(line, isCommented);
 
-                    addRule(rule);
+                        if (line.compare(QLatin1String(::IGNORE_SYM_LINK)) == 0)
+                        {
+                            mIgnoreSymLinkRule = rule;
+                        }
 
-                    break;
-                }
-                default:
-                    addRule(std::make_shared<MegaIgnoreInvalidRule>(line, isCommented));
-                    break;
+                        addRule(rule);
+
+                        break;
+                    }
+                    default:
+                        addRule(std::make_shared<MegaIgnoreInvalidRule>(line, isCommented));
+                        break;
                 }
             }
             ignore.close();
@@ -155,15 +155,12 @@ void MegaIgnoreManager::parseIgnoresFile()
 
 std::shared_ptr<MegaIgnoreRule> MegaIgnoreManager::getRuleByOriginalRule(const QString& originalRule)
 {
-    foreach(const auto & rule, mRules)
+    auto finder = [&originalRule](const std::shared_ptr<MegaIgnoreRule>& rule)
     {
-        if (rule->originalRule() == originalRule)
-        {
-            return rule;
-        }
-    }
-
-    return nullptr;
+        return rule->originalRule() == originalRule;
+    };
+    auto it = std::find_if(mRules.begin(), mRules.end(), finder);
+    return (it != mRules.end()) ? *it : nullptr;
 }
 
 std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getLowLimitRule() const
@@ -188,16 +185,12 @@ QList<std::shared_ptr<MegaIgnoreRule>> MegaIgnoreManager::getAllRules() const
 
 std::shared_ptr<MegaIgnoreRule> MegaIgnoreManager::findRule(const QString& ruleToCompare)
 {
-    auto allRules(getAllRules());
-    foreach(const auto rule, allRules)
+    auto finder = [&ruleToCompare](const std::shared_ptr<MegaIgnoreRule>& rule)
     {
-        if (rule->isEqual(ruleToCompare))
-        {
-            return rule;
-        }
-    }
-
-    return nullptr;
+        return rule->isEqual(ruleToCompare);
+    };
+    auto it = std::find_if(mRules.begin(), mRules.end(), finder);
+    return (it != mRules.end()) ? *it : nullptr;
 }
 
 MegaIgnoreRule::RuleType MegaIgnoreManager::getRuleType(const QString& line)
@@ -672,7 +665,7 @@ QStringList MegaIgnoreSizeRule::getUnitsForDisplay()
         << QApplication::translate("Sizes", "GB");
 }
 
-void MegaIgnoreSizeRule::setValue(uint64_t newValue)
+void MegaIgnoreSizeRule::setValue(int newValue)
 {
     if (mValue != newValue)
     {

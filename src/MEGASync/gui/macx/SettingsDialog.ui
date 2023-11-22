@@ -2460,7 +2460,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -2571,7 +2571,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3448,7 +3448,7 @@ margin-right: 7px;
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_win.qrc">
+                   <iconset resource="../Resources_macx.qrc">
                     <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
                   </property>
                   <property name="iconSize">

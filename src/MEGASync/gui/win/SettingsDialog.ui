@@ -189,7 +189,7 @@ margin-top: 4px;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-general.png</normaloff>:/images/settings-general.png</iconset>
         </property>
         <property name="iconSize">
@@ -238,7 +238,7 @@ margin-top: 4px;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-account.png</normaloff>:/images/settings-account.png</iconset>
         </property>
         <property name="iconSize">
@@ -284,7 +284,7 @@ margin-top: 4px;
          <string>Sync</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-syncs.png</normaloff>:/images/settings-syncs.png</iconset>
         </property>
         <property name="iconSize">
@@ -330,7 +330,7 @@ margin-top: 4px;
          <string>Backup</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-backup.png</normaloff>:/images/settings-backup.png</iconset>
         </property>
         <property name="iconSize">
@@ -376,7 +376,7 @@ margin-top: 4px;
          <string>Security</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-security.png</normaloff>:/images/settings-security.png</iconset>
         </property>
         <property name="iconSize">
@@ -422,7 +422,7 @@ margin-top: 4px;
          <string>Folders</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-folders.png</normaloff>:/images/settings-folders.png</iconset>
         </property>
         <property name="iconSize">
@@ -468,7 +468,7 @@ margin-top: 4px;
          <string>Network</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/Icon_Win_Network.png</normaloff>:/images/Icon_Win_Network.png</iconset>
         </property>
         <property name="iconSize">
@@ -509,7 +509,7 @@ margin-top: 4px;
          <string>Notifications</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/Icon_Win_Notifications.png</normaloff>:/images/Icon_Win_Notifications.png</iconset>
         </property>
         <property name="iconSize">
@@ -548,7 +548,7 @@ margin-top: 4px;
    <item>
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="pGeneralLayout">
@@ -1222,7 +1222,7 @@ margin-top: 4px;
                 </sizepolicy>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
@@ -2119,7 +2119,7 @@ min-height: 72px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
             </property>
             <property name="iconSize">
@@ -2441,7 +2441,7 @@ color: grey;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -2638,13 +2638,13 @@ color: grey;
   <customwidget>
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
-   <header>notificationssettings.h</header>
+   <header>NotificationsSettings.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SyncSettingsUI</class>
    <extends>QWidget</extends>
-   <header>syncs/gui/TwoWays/SyncSettingsUI.h</header>
+   <header>syncs/gui/Twoways/SyncSettingsUI.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -2655,16 +2655,7 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
