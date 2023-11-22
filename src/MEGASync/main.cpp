@@ -1,6 +1,5 @@
 #include "MegaApplication.h"
 #include "gui/MegaProxyStyle.h"
-#include "macx/MacXFunctions.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 #include "control/AppStatsEvents.h"

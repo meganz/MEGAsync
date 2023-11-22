@@ -597,7 +597,6 @@ bool UpdateTask::performUpdate()
             {
                 symlinksPath = origFile;
             }
-
         }
 
         LOG(LOG_LEVEL_INFO, "File correctly installed: %s",  localPaths[i].c_str());
@@ -637,6 +636,7 @@ void UpdateTask::finalCleanup()
 
 void UpdateTask::processSymLinks(string symlinksPath)
 {
+#ifndef _WIN32
     FILE * pFile;
     pFile = mega_fopen(symlinksPath.c_str(), "r");
     if (!pFile)
@@ -658,6 +658,7 @@ bool UpdateTask::processSymLinksFile(FILE *fd)
 {
     LOG(LOG_LEVEL_INFO, "Reading symlinks update info");
 
+    bool success = true;
     string version = readNextLine(fd);
     if (version.empty())
     {
@@ -680,15 +681,16 @@ bool UpdateTask::processSymLinksFile(FILE *fd)
         LOG(LOG_LEVEL_INFO,"First origin link %s", origin.c_str());
         LOG(LOG_LEVEL_INFO,"Second target link %s", linkPath.c_str());
 
-        if (symlink(origin.c_str(), linkPath.c_str()) != 0)
+        if (symlink(origin.c_str(), linkPath.c_str()) != 0 && errno != EEXIST)
         {
-            LOG(LOG_LEVEL_ERROR,"Error creating symlinks");
-            perror("Error");
-            return false;
+            LOG(LOG_LEVEL_ERROR, "Error creating symlinks");
+            std::cerr << "Failed to create symlink " << linkPath << " -> " << origin << ": " << strerror(errno) << std::endl;
+            success = false;
         }
-
     }
-    return true;
+
+    return success;
+#endif
 }
 
 bool UpdateTask::setPermissions(const char *path)

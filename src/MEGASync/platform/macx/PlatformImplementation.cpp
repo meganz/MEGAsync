@@ -168,61 +168,61 @@ void PlatformImplementation::processSymLinks()
         // Read version code to check if need to apply symlink regeneration
         if (std::getline(infile, linksVersion))
         {
+            QDir dataDir(MegaApplication::applicationDataPath());
+            QString versionfile = dataDir.filePath(QLatin1String("megasync.version"));
+            QFile file(versionfile);
 
-                QDir dataDir(MegaApplication::applicationDataPath());
-                QString versionfile = dataDir.filePath(QString::fromUtf8("megasync.version"));
-                QFile file(versionfile);
-
-                if (file.open(QFile::ReadOnly | QFile::Text))
+            if (file.open(QFile::ReadOnly | QFile::Text))
+            {
+                try
                 {
-                    try
+                    int num = std::stoi(linksVersion);
+                    int appVersion = 0;
+
+                    QTextStream in(&file);
+                    QString versionIn = in.readAll();
+                    appVersion = versionIn.toInt();
+
+                    if (num > appVersion)
                     {
-                        int num = std::stoi(linksVersion);
-                        int appVersion = 0;
+                        std::cout << "Recreating symlinks structure" << std::endl;
+                        bool error = false;
+                        appBundle.append("/");
 
-                        QTextStream in(&file);
-                        QString versionIn = in.readAll();
-                        appVersion = versionIn.toInt();
-
-                        if (num > appVersion)
+                        while (std::getline(infile, targetPath) && std::getline(infile, tempLinkPath))
                         {
-                            std::cout << "Recreating symlinks structure" << std::endl;
-                            bool error = false;
-                            appBundle.append("/");
+                            std::string linkPath = appBundle + tempLinkPath;
+                            if (symlink(targetPath.c_str(), linkPath.c_str()) != 0 && errno != EEXIST)
+                            {
+                                error = true;
+                                std::cerr << "Failed to create symlink " << linkPath << " -> " << targetPath << ": " << strerror(errno) << std::endl;
+                            }
+                        }
 
-                            while (std::getline(infile, targetPath) && std::getline(infile, tempLinkPath))
-                            {
-                                std::string linkPath = appBundle + tempLinkPath;
-                                if (symlink(targetPath.c_str(), linkPath.c_str()) != 0)
-                                {
-                                    error = true;
-                                }
-                            }
-
-                            if (error)
-                            {
-                                std::cerr << "Error fixing app symlinks" << std::endl;
-                            }
-                            else
-                            {
-                                std::cerr << "Symlinks structure successfully recreated" << std::endl;
-                            }
+                        if (error)
+                        {
+                            std::cerr << "Error fixing app symlinks" << std::endl;
                         }
                         else
                         {
-                            std::cout << "Recreation of symlink structure not needed. symlink ver:"<< num << "app ver:" << appVersion << std::endl;
+                            std::cerr << "Symlinks structure successfully recreated" << std::endl;
                         }
                     }
-                    catch (const std::exception& e)
+                    else
                     {
-                        std::cerr << "Undefined error: " << e.what() << std::endl;
+                        std::cout << "Recreation of symlink structure not needed. symlink ver:" << num << " app ver:" << appVersion << std::endl;
                     }
                 }
+                catch (const std::exception& e)
+                {
+                    std::cerr << "Undefined error: " << e.what() << std::endl;
+                }
+            }
         }        
     }
     else
     {
-        std::cout << "Failed to opening symlinks file "<< strerror(errno) << std::endl;
+        std::cout << "Failed to opening symlinks file " << strerror(errno) << std::endl;
     }
 }
 
