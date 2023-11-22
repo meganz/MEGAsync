@@ -163,14 +163,9 @@ MegaHandle SyncSettings::getMegaHandle()  const
     return mSync->getMegaHandle();
 }
 
-bool SyncSettings::isEnabled()  const
-{
-    return getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING;
-}
-
 bool SyncSettings::isActive()  const
 {
-    return getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING;
+    return getSync()->getRunState() <= ::mega::MegaSync::RUNSTATE_RUNNING;
 }
 
 int SyncSettings::getError() const
