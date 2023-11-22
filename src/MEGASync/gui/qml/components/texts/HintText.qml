@@ -1,10 +1,9 @@
-// System
 import QtQuick 2.15
 
-// Local
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
-import Common 1.0
+import common 1.0
+
+import components.images 1.0
+import components.texts 1.0 as Texts
 
 Item {
     id: root
@@ -17,7 +16,7 @@ Item {
     property alias textColor: hintText.color
 
     property int type: Constants.MessageType.NONE
-    property int textSize: MegaTexts.Text.Size.Normal
+    property int textSize: Texts.Text.Size.Normal
 
     onTypeChanged: {
         switch(type) {
@@ -57,7 +56,7 @@ Item {
         spacing: root.icon !== "" ? 8 : 0
         width: root.width
 
-        MegaImages.SvgImage {
+        SvgImage {
             id: hintIcon
 
             sourceSize: Qt.size(16, 16)
@@ -70,7 +69,7 @@ Item {
             anchors.top: parent.top
             width: row.width - hintIcon.width - row.spacing
 
-            MegaTexts.RichText {
+            Texts.RichText {
                 id: hintTitle
 
                 height: rawText !== "" ? implicitHeight : 0
@@ -81,7 +80,7 @@ Item {
                 wrapMode: Text.WordWrap
             }
 
-            MegaTexts.RichText {
+            Texts.RichText {
                 id: hintText
 
                 height: rawText !== "" ? implicitHeight : 0

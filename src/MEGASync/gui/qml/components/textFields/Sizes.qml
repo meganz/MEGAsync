@@ -1,8 +1,6 @@
-// System
 import QtQuick 2.15
 
-// Local
-import Components.Texts 1.0 as MegaTexts
+import components.texts 1.0 as Texts
 
 QtObject {
 
@@ -18,7 +16,7 @@ QtObject {
     property int focusBorderWidth: 3
     property int borderRadius: 8
     property int borderWidth: 1
-    property int hintTextSize: MegaTexts.Text.Size.Normal
+    property int hintTextSize: Texts.Text.Size.Normal
     property int titleSpacing: 1
 
 }

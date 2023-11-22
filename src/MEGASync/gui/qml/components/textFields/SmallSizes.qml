@@ -1,9 +1,8 @@
-// Local
-import Components.Texts 1.0 as MegaTexts
+import components.texts 1.0 as Texts
 
 Sizes {
     padding: 3
     height: 26
     iconMargin: 8
-    hintTextSize: MegaTexts.Text.Size.Small
+    hintTextSize: Texts.Text.Size.Small
 }

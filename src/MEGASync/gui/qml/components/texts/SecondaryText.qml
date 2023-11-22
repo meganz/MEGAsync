@@ -1,7 +1,7 @@
-// Local
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
+import common 1.0
 
-MegaTexts.Text {
+import components.texts 1.0 as Texts
+
+Texts.Text {
     color: enabled ? Styles.textSecondary : Styles.textDisabled
 }

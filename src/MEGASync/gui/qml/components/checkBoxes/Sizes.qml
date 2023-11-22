@@ -1,4 +1,3 @@
-// System
 import QtQuick 2.15
 
 QtObject {
@@ -8,6 +7,8 @@ QtObject {
     property int indicatorBorderWidth: 2
     property size iconSize: Qt.size(8, 8)
     property size iconSizeIndeterminate: Qt.size(8, 2)
-    property int spacing: 8
+    property int spacing: 4
+    property int focusBorderWidth: 4
+    property int focusBorderRadius: 8
 
 }

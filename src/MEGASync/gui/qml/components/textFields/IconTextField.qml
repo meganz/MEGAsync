@@ -1,24 +1,22 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-// Local
-import Components.TextFields 1.0 as MegaTextFields
-import Components.Images 1.0 as MegaImages
-import Common 1.0
+import common 1.0
 
-MegaTextFields.TextField {
+import components.textFields 1.0
+import components.images 1.0
+
+TextField {
     id: control
+
     property url imageSource: imageSource
     property bool readOnly: true
-    /*
-     * Components
-     */
 
     height: outRect.height
     textField.leftPadding: 16 + image.width
     textField.readOnly: readOnly
-    MegaImages.SvgImage {
+
+    SvgImage {
         id: image
 
         source: imageSource

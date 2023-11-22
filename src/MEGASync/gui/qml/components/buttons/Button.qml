@@ -1,14 +1,13 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 import QtQuick.Layouts 1.15
 import QtGraphicalEffects 1.15
 
-// Local
-import Components.Texts 1.0 as MegaTexts
-import Components.BusyIndicator 1.0 as MegaBusyIndicator
-import Components.Images 1.0 as MegaImages
-import Common 1.0
+import common 1.0
+
+import components.texts 1.0 as Texts
+import components.busyIndicator 1.0
+import components.images 1.0
 
 Qml.RoundButton {
     id: root
@@ -80,7 +79,7 @@ Qml.RoundButton {
     contentItem: Row {
         spacing: sizes.spacing
 
-        MegaImages.SvgImage {
+        SvgImage {
             id: leftImage
 
             anchors.verticalCenter: parent.verticalCenter
@@ -90,7 +89,7 @@ Qml.RoundButton {
             visible: root.icons.position === Icon.Position.LEFT && !root.icons.busyIndicatorVisible
         }
 
-        MegaBusyIndicator.BusyIndicator {
+        BusyIndicator {
             id: leftBusyIndicator
             anchors.verticalCenter: parent.verticalCenter
 
@@ -98,7 +97,7 @@ Qml.RoundButton {
             visible: root.icons.position === Icon.Position.LEFT && root.icons.busyIndicatorVisible
         }
 
-        MegaTexts.Text {
+        Texts.Text {
             id: buttonText
 
             anchors.verticalCenter: parent.verticalCenter
@@ -110,7 +109,7 @@ Qml.RoundButton {
             }
         }
 
-        MegaImages.SvgImage {
+        SvgImage {
             id: rightImage
 
             anchors.verticalCenter: parent.verticalCenter
@@ -120,7 +119,7 @@ Qml.RoundButton {
             visible: root.icons.position === Icon.Position.RIGHT && !root.icons.busyIndicatorVisible
         }
 
-        MegaBusyIndicator.BusyIndicator {
+        BusyIndicator {
             id: rightBusyIndicator
 
             anchors.verticalCenter: parent.verticalCenter

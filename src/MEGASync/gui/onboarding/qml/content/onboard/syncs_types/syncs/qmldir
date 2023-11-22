@@ -1,6 +1,0 @@
-module Onboard.Syncs_types.Syncs
-SyncTypePage 1.0 SyncTypePage.qml
-FullSyncPage 1.0 FullSyncPage.qml
-SelectiveSyncPage 1.0 SelectiveSyncPage.qml
-SyncsFlow 1.0 SyncsFlow.qml
-

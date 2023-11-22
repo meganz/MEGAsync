@@ -35,6 +35,8 @@ QtObject {
     readonly property url checkCircle: imagesPath + "check_circle.svg"
     readonly property url warning: imagesPath + "warning.png"
     readonly property url twofa: imagesPath + "lock.png"
+    readonly property url eye: imagesPath + "eye.svg"
+    readonly property url eyeOff: imagesPath + "eye-off.svg"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"

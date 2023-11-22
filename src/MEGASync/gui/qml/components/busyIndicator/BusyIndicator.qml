@@ -1,11 +1,10 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 import QtGraphicalEffects 1.15
 
-// Local
-import Components.Images 1.0 as MegaImages
-import Common 1.0
+import common 1.0
+
+import components.images 1.0
 
 Qml.BusyIndicator {
     id: root
@@ -17,7 +16,7 @@ Qml.BusyIndicator {
     width: imageSize.width
     height: imageSize.height
 
-    contentItem: MegaImages.SvgImage {
+    contentItem: SvgImage {
         id: iconImage
 
         source: Images.loader

@@ -1,8 +1,6 @@
-// Local
-import Components.Buttons 1.0 as MegaButtons
-import Common 1.0
+import common 1.0
 
-MegaButtons.Button {
+Button {
 
     icons {
         colorEnabled: Styles.iconSecondary
