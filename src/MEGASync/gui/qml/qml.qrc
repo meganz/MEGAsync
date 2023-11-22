@@ -1,15 +1,15 @@
 <RCC>
     <qresource prefix="">
-	    <file>common/qmldir</file>
+        <file>common/qmldir</file>
         <file>common/Constants.qml</file>
         <file>common/Images.qml</file>
         <file>common/Links.qml</file>
         <file>common/RegexExpressions.qml</file>
         <file>common/Styles.qml</file>
         <file>common/OS.qml</file>
-		<file>components/busyIndicator/qmldir</file>
+        <file>components/busyIndicator/qmldir</file>
         <file>components/busyIndicator/BusyIndicator.qml</file>
-		<file>components/buttons/qmldir</file>
+        <file>components/buttons/qmldir</file>
         <file>components/buttons/Button.qml</file>
         <file>components/buttons/CardButton.qml</file>
         <file>components/buttons/CardHorizontalButton.qml</file>
@@ -25,18 +25,18 @@
         <file>components/buttons/Sizes.qml</file>
         <file>components/buttons/SmallSizes.qml</file>
         <file>components/buttons/LargeSizes.qml</file>
-		<file>components/checkBoxes/qmldir</file>
+        <file>components/checkBoxes/qmldir</file>
         <file>components/checkBoxes/CheckBox.qml</file>
         <file>components/checkBoxes/Colors.qml</file>
         <file>components/checkBoxes/Icons.qml</file>
         <file>components/checkBoxes/Sizes.qml</file>
-		<file>components/images/qmldir</file>
+        <file>components/images/qmldir</file>
         <file>components/images/SvgImage.qml</file>
-		<file>components/scrollBars/qmldir</file>
+        <file>components/scrollBars/qmldir</file>
         <file>components/scrollBars/ScrollBar.qml</file>
-		<file>components/progressBars/qmldir</file>
+        <file>components/progressBars/qmldir</file>
         <file>components/progressBars/HorizontalProgressBar.qml</file>
-		<file>components/textFields/qmldir</file>
+        <file>components/textFields/qmldir</file>
         <file>components/textFields/EmailTextField.qml</file>
         <file>components/textFields/IconTextField.qml</file>
         <file>components/textFields/PasswordTextField.qml</file>
@@ -46,21 +46,21 @@
         <file>components/textFields/Sizes.qml</file>
         <file>components/textFields/SmallSizes.qml</file>
         <file>components/textFields/LargeSizes.qml</file>
-		<file>components/textFields/Colors.qml</file>
-		<file>components/texts/qmldir</file>
+        <file>components/textFields/Colors.qml</file>
+        <file>components/texts/qmldir</file>
         <file>components/texts/HintText.qml</file>
         <file>components/texts/NotificationText.qml</file>
         <file>components/texts/RichText.qml</file>
         <file>components/texts/SecondaryText.qml</file>
         <file>components/texts/Text.qml</file>
-		<file>components/texts/ElidedText.qml</file>
-		<file>components/toolTips/qmldir</file>
+        <file>components/texts/ElidedText.qml</file>
+        <file>components/toolTips/qmldir</file>
         <file>components/toolTips/ToolTip.qml</file>
-		<file>components/views/qmldir</file>
+        <file>components/views/qmldir</file>
         <file>components/views/ScrollPanel.qml</file>
-		<file>components/dialogs/qmldir</file>
+        <file>components/dialogs/qmldir</file>
         <file>components/dialogs/ConfirmCloseDialog.qml</file>
-		<file>onboard/qmldir</file>
+        <file>onboard/qmldir</file>
         <file>onboard/LoginPage.qml</file>
         <file>onboard/LoginPageForm.ui.qml</file>
         <file>onboard/OnboardingDialog.qml</file>
@@ -72,7 +72,7 @@
         <file>onboard/RegisterPageForm.ui.qml</file>
         <file>onboard/TwoFAPage.qml</file>
         <file>onboard/TwoFAPageForm.ui.qml</file>
-		<file>onboard/ConfirmEmailPage.qml</file>
+        <file>onboard/ConfirmEmailPage.qml</file>
         <file>onboard/ConfirmEmailPageForm.ui.qml</file>
         <file>onboard/ChangeEmailPage.qml</file>
         <file>onboard/ChangeEmailPageForm.ui.qml</file>
@@ -82,7 +82,7 @@
         <file>onboard/PasswordInfoContentForm.ui.qml</file>
         <file>onboard/PasswordInfoPopUp.qml</file>
         <file>onboard/StackViewBase.qml</file>
-		<file>onboard/syncs_types/qmldir</file>
+        <file>onboard/syncs_types/qmldir</file>
         <file>onboard/syncs_types/MainFlow.qml</file>
         <file>onboard/syncs_types/NavigationInfo.qml</file>
         <file>onboard/syncs_types/DeviceNamePage.qml</file>
@@ -98,7 +98,7 @@
         <file>onboard/syncs_types/SyncsPage.qml</file>
         <file>onboard/syncs_types/SyncsType.qml</file>
         <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
-		<file>onboard/syncs_types/backups/qmldir</file>
+        <file>onboard/syncs_types/backups/qmldir</file>
         <file>onboard/syncs_types/backups/BackupsFlow.qml</file>
         <file>onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
         <file>onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
@@ -107,11 +107,11 @@
         <file>onboard/syncs_types/backups/SelectFoldersPage.qml</file>
         <file>onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
         <file>onboard/syncs_types/backups/SelectTable.qml</file>
-		<file>onboard/syncs_types/left_panel/qmldir</file>
+        <file>onboard/syncs_types/left_panel/qmldir</file>
         <file>onboard/syncs_types/left_panel/Step.qml</file>
         <file>onboard/syncs_types/left_panel/StepPanel.qml</file>
         <file>onboard/syncs_types/left_panel/SubStep.qml</file>
-		<file>onboard/syncs_types/syncs/qmldir</file>
+        <file>onboard/syncs_types/syncs/qmldir</file>
         <file>onboard/syncs_types/syncs/ChooseSyncFolder.qml</file>
         <file>onboard/syncs_types/syncs/FullSyncPage.qml</file>
         <file>onboard/syncs_types/syncs/FullSyncPageForm.ui.qml</file>
@@ -121,7 +121,7 @@
         <file>onboard/syncs_types/syncs/SyncTypePage.qml</file>
         <file>onboard/syncs_types/syncs/SyncTypePageForm.ui.qml</file>
         <file>onboard/syncs_types/syncs/SyncsFlow.qml</file>
-		<file>guest/qmldir</file>
+        <file>guest/qmldir</file>
         <file>guest/BasePage.qml</file>
         <file>guest/GuestFlow.qml</file>
         <file>guest/GuestDialog.qml</file>
