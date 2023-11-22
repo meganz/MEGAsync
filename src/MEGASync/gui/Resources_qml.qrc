@@ -64,5 +64,7 @@
         <file>images/qml/guest/setting_up.png</file>
         <file>images/qml/guest/setting_up@2x.png</file>
         <file>images/qml/guest/setting_up@3x.png</file>
+        <file>images/qml/eye.svg</file>
+        <file>images/qml/eye-off.svg</file>
     </qresource>
 </RCC>

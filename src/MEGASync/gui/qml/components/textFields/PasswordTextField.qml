@@ -1,5 +1,7 @@
 import QtQuick 2.15
 
+import common 1.0
+
 import components.textFields 1.0
 
 TextField {
@@ -7,7 +9,7 @@ TextField {
     property bool cleanWhenError: true
 
     rightIconVisible: false
-    rightIconSource: "images/eye.svg"
+    rightIconSource: Images.eye
 
     textField {
         echoMode: TextInput.Password
@@ -19,10 +21,10 @@ TextField {
     rightIconMouseArea.onClicked: {
         if(textField.echoMode === TextInput.Password) {
             textField.echoMode = TextInput.Normal;
-            rightIconSource = "images/eye-off.svg";
+            rightIconSource = Images.eyeOff;
         } else if(textField.echoMode === TextInput.Normal) {
             textField.echoMode = TextInput.Password;
-            rightIconSource = "images/eye.svg";
+            rightIconSource = Images.eye;
         }
     }
 
