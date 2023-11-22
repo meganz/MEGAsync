@@ -25,7 +25,7 @@ StackViewPage {
             right: root.right
             bottom: buttonsLayout.top
             top: root.top
-            topMargin: 110
+            topMargin: 120
         }
         spacing: contentSpacing
 
