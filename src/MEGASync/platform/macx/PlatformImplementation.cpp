@@ -148,11 +148,11 @@ void PlatformImplementation::enableFileManagerExtension(bool value)
 
 void PlatformImplementation::streamWithApp(const QString &app, const QString &url)
 {
-    QStringList args;
-    args.append(QString::fromUtf8("-a "));
-    args.append(QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromUtf8(" \"%1\"").arg(url));
-    QString command = QString::fromLatin1("open");
-    QProcess::startDetached(command, args);
+    QString args;
+    args = QString::fromUtf8("-a ");
+    args += QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromUtf8(" \"%1\"").arg(url);
+    QString command = QString::fromLatin1("open ") + args;
+    QProcess::startDetached(command);
 }
 
 void PlatformImplementation::processSymLinks()
@@ -218,7 +218,7 @@ void PlatformImplementation::processSymLinks()
                     std::cerr << "Undefined error: " << e.what() << std::endl;
                 }
             }
-        }        
+        }
     }
     else
     {
