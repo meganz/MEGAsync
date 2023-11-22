@@ -52,7 +52,6 @@ public:
     void setSync(mega::MegaSync *sync);
 
     QString getLocalFolder(bool normalizeDisplay = false) const;
-    long long getLocalFingerprint() const;
     QString getMegaFolder() const;
     mega::MegaHandle getMegaHandle() const;
     int getError() const;
