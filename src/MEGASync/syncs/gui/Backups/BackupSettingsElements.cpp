@@ -46,13 +46,5 @@ void BackupSettingsElements::onOpenBackupFolderClicked()
 void BackupSettingsElements::onMyBackupsFolderHandleSet(mega::MegaHandle h)
 {
     updateUI();
-
-    if (h == mega::INVALID_HANDLE)
-    {
-        openFolderUi->bOpenBackupFolder->setEnabled(false);
-    }
-    else
-    {
-        openFolderUi->bOpenBackupFolder->setEnabled(true);
-    }
+    openFolderUi->bOpenBackupFolder->setEnabled(h != mega::INVALID_HANDLE);
 }

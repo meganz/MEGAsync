@@ -32,15 +32,15 @@ public slots:
 	void onAddNameClicked();
 	void onDeleteNameClicked();
 
-    void on_eUpperThan_valueChanged(int i);
-    void on_eLowerThan_valueChanged(int i);
-    void on_cbExcludeUpperUnit_currentIndexChanged(int i);
-    void on_cbExcludeLowerUnit_currentIndexChanged(int i);
+    void onUpperThanValueChanged(int i);
+    void onLowerThanValueChanged(int i);
+    void onExcludeUpperUnitCurrentIndexChanged(int i);
+    void onExcludeLowerUnitCurrentIndexChanged(int i);
 
     void onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &, const QVector<int> &roles = QVector<int>());
-    void on_cExcludeUpperThan_clicked();
-    void on_cExcludeLowerThan_clicked();
-    void on_fileChanged(const QString &file);
+    void onExcludeUpperThanClicked();
+    void onExcludeLowerThanClicked();
+    void onFileChanged(const QString &file);
 protected:
 signals:
     void signalOpenMegaignore();

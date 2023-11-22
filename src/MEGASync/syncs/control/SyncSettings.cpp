@@ -182,14 +182,14 @@ QString SyncSettings::getRunStateAsString() const
 {
     switch (mSync->getRunState())
     {
-    case MegaSync::RUNSTATE_PENDING: return QString::fromUtf8("Pending");
-    case MegaSync::RUNSTATE_LOADING: return QString::fromUtf8("Loading");
-    case MegaSync::RUNSTATE_RUNNING: return QString::fromUtf8("Running");
-    case MegaSync::RUNSTATE_PAUSED: return QString::fromUtf8("Paused");
-    case MegaSync::RUNSTATE_SUSPENDED: return QString::fromUtf8("Suspended");
-    case MegaSync::RUNSTATE_DISABLED: return QString::fromUtf8("Disabled");
+    case MegaSync::RUNSTATE_PENDING:   return QApplication::translate("Sync states", "Pending");
+    case MegaSync::RUNSTATE_LOADING:   return QApplication::translate("Sync states", "Loading");
+    case MegaSync::RUNSTATE_RUNNING:   return QApplication::translate("Sync states", "Running");
+    case MegaSync::RUNSTATE_PAUSED:    return QApplication::translate("Sync states", "Paused");
+    case MegaSync::RUNSTATE_SUSPENDED: return QApplication::translate("Sync states", "Suspended");
+    case MegaSync::RUNSTATE_DISABLED:  return QApplication::translate("Sync states", "Disabled");
     }
-    return QString::fromUtf8("<unknown state>");
+    return QApplication::translate("Sync states", "Unkown state");;
 }
 
 int SyncSettings::getRunState() const

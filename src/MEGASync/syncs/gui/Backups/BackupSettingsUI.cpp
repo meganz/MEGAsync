@@ -92,7 +92,7 @@ QString BackupSettingsUI::getFinishIconString()
 
 QString BackupSettingsUI::getOperationFailTitle()
 {
-    return tr("Sync opeartion failed");
+    return tr("Sync operation failed");
 }
 
 QString BackupSettingsUI::getOperationFailText(std::shared_ptr<SyncSettings> sync)

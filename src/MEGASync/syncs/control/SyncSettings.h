@@ -73,6 +73,6 @@ public:
     mega::MegaSync::SyncType getType();
 };
 
-Q_DECLARE_METATYPE(SyncSettings);
+Q_DECLARE_METATYPE(SyncSettings)
 Q_DECLARE_SMART_POINTER_METATYPE(std::shared_ptr)
 Q_DECLARE_METATYPE(std::shared_ptr<SyncSettings>)

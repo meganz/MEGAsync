@@ -23,6 +23,8 @@ BindFolderDialog::BindFolderDialog(MegaApplication* _app, QWidget *parent) :
         {
             ui->bAddExclusions->setEnabled(true);
         });
+    connect(ui->bAddExclusions, &QPushButton::clicked, this, &BindFolderDialog::onAddExclusionsClicked);
+
     setFocusProxy(ui->bOK);
 }
 
@@ -123,7 +125,7 @@ void BindFolderDialog::allSelectionsDone()
     ui->bOK->setFocus();
 }
 
-void BindFolderDialog::on_bAddExclusions_clicked()
+void BindFolderDialog::onAddExclusionsClicked()
 {
     QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(ui->wBinder->selectedLocalFolder(), true,  this);
     DialogOpener::showDialog(exclusionRules);

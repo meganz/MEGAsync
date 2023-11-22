@@ -21,6 +21,7 @@ SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
            $$PWD/model/BackupItemModel.cpp \
            $$PWD/model/SyncItemModel.cpp \
            $$PWD/control/MegaIgnoreManager.cpp \
+           $$PWD/control/MegaIgnoreRules.cpp \
            $$PWD/control/SyncInfo.cpp \
            $$PWD/control/SyncController.cpp \
            $$PWD/control/SyncSettings.cpp
@@ -45,6 +46,7 @@ HEADERS += $$PWD/gui/Backups/AddBackupDialog.h \
            $$PWD/model/BackupItemModel.h \
            $$PWD/model/SyncItemModel.h \
            $$PWD/control/MegaIgnoreManager.h \
+           $$PWD/control/MegaIgnoreRules.h \
            $$PWD/control/SyncController.h \
            $$PWD/control/SyncInfo.h \
            $$PWD/control/SyncSettings.h

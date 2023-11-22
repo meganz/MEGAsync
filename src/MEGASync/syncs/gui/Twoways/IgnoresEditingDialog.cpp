@@ -7,6 +7,7 @@
 
 #include <QPointer>
 #include <QDir>
+#include <QtGlobal>
 
 namespace
 {
@@ -55,11 +56,17 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
     // Fill Ui from megaignore
     auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(MEGA_IGNORE_FILE_NAME));
     mIgnoresFileWatcher->addPath(ignorePath);
-    QObject::connect(mIgnoresFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, &IgnoresEditingDialog::on_fileChanged);
+    connect(mIgnoresFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, &IgnoresEditingDialog::onFileChanged);
     refreshUI();
 
-    QObject::connect(ui->bOpenMegaIgnore, &QPushButton::clicked, this, &IgnoresEditingDialog::signalOpenMegaignore);
-    QObject::connect(ui->tExcludeExtensions, &QPlainTextEdit::textChanged, this, [this]() {mExtensionsChanged = true; });
+    connect(ui->bOpenMegaIgnore, &QPushButton::clicked, this, &IgnoresEditingDialog::signalOpenMegaignore);
+    connect(ui->eUpperThan, QOverload<int>::of(&QSpinBox::valueChanged), this, &IgnoresEditingDialog::onUpperThanValueChanged);
+    connect(ui->eLowerThan, QOverload<int>::of(&QSpinBox::valueChanged), this, &IgnoresEditingDialog::onLowerThanValueChanged);
+    connect(ui->cbExcludeUpperUnit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &IgnoresEditingDialog::onExcludeUpperUnitCurrentIndexChanged);
+    connect(ui->cbExcludeLowerUnit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &IgnoresEditingDialog::onExcludeLowerUnitCurrentIndexChanged);
+    connect(ui->cExcludeUpperThan, &QCheckBox::clicked, this, &IgnoresEditingDialog::onExcludeUpperThanClicked);
+    connect(ui->cExcludeLowerThan, &QCheckBox::clicked, this, &IgnoresEditingDialog::onExcludeLowerThanClicked);
+    connect(ui->tExcludeExtensions, &QPlainTextEdit::textChanged, this, [this]() {mExtensionsChanged = true; });
 
 #ifdef Q_OS_MACOS
     ui->wExclusionsSegmentedControl->configureTableSegment();
@@ -68,7 +75,7 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
 #else
     connect(ui->bAddName, &QPushButton::clicked, this, &IgnoresEditingDialog::onAddNameClicked);
     connect(ui->bDeleteName, &QPushButton::clicked, this, &IgnoresEditingDialog::onDeleteNameClicked);
-    QObject::connect(ui->lExcludedNames, &QListWidget::itemSelectionChanged, this, [this]()
+    connect(ui->lExcludedNames, &QListWidget::itemSelectionChanged, this, [this]()
         {
             ui->bDeleteName->setEnabled(!ui->lExcludedNames->selectedItems().isEmpty());
         });
@@ -198,19 +205,19 @@ void IgnoresEditingDialog::onDeleteNameClicked()
     }
 }
 
-void IgnoresEditingDialog::on_eUpperThan_valueChanged(int i)
+void IgnoresEditingDialog::onUpperThanValueChanged(int i)
 {
     auto highLimit = mManager.getHighLimitRule();
     highLimit->setValue(i);
 }
 
-void IgnoresEditingDialog::on_eLowerThan_valueChanged(int i)
+void IgnoresEditingDialog::onLowerThanValueChanged(int i)
 {
     auto lowLimit = mManager.getLowLimitRule();
     lowLimit->setValue(i);
 }
 
-void IgnoresEditingDialog::on_cbExcludeUpperUnit_currentIndexChanged(int i)
+void IgnoresEditingDialog::onExcludeUpperUnitCurrentIndexChanged(int i)
 {
     auto highLimit = mManager.getHighLimitRule();
     if (highLimit)
@@ -219,7 +226,7 @@ void IgnoresEditingDialog::on_cbExcludeUpperUnit_currentIndexChanged(int i)
     }
 }
 
-void IgnoresEditingDialog::on_cbExcludeLowerUnit_currentIndexChanged(int i)
+void IgnoresEditingDialog::onExcludeLowerUnitCurrentIndexChanged(int i)
 {
     auto lowLimit = mManager.getLowLimitRule();
     if (lowLimit)
@@ -239,7 +246,7 @@ void IgnoresEditingDialog::onlExcludedNamesChanged(const QModelIndex &topLeft, c
     }
 }
 
-void IgnoresEditingDialog::on_cExcludeUpperThan_clicked()
+void IgnoresEditingDialog::onExcludeUpperThanClicked()
 {
     bool enable (ui->cExcludeUpperThan->isChecked());
 
@@ -250,7 +257,7 @@ void IgnoresEditingDialog::on_cExcludeUpperThan_clicked()
     highLimit->setCommented(!enable);
 }
 
-void IgnoresEditingDialog::on_cExcludeLowerThan_clicked()
+void IgnoresEditingDialog::onExcludeLowerThanClicked()
 {
     bool enable (ui->cExcludeLowerThan->isChecked());
 
@@ -261,7 +268,7 @@ void IgnoresEditingDialog::on_cExcludeLowerThan_clicked()
     lowLimit->setCommented(!enable);
 }
 
-void IgnoresEditingDialog::on_fileChanged(const QString& path)
+void IgnoresEditingDialog::onFileChanged(const QString& path)
 {
 #ifndef Q_OS_LINUX
     Q_UNUSED(path)
