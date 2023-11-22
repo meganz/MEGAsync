@@ -7,6 +7,7 @@ import common 1.0
 import components.images 1.0
 import components.buttons 1.0
 import components.progressBars 1.0
+import components.texts 1.0 as Texts
 
 import onboard 1.0
 
@@ -288,6 +289,7 @@ Rectangle {
             }
             indeterminate: loginControllerAccess.progress === 0
             progressValue: loginControllerAccess.progress
+            horizontalMargin: 48
         }
     }
 
@@ -309,6 +311,9 @@ Rectangle {
                          ? GuestStrings.accountTempLockedEmail
                          : GuestStrings.accountTempLockedSMS
             descriptionUrl: isEmailBlock() ? "" : Links.terms
+            descriptionFontSize: Texts.Text.Size.Normal
+            descriptionColor: Styles.textPrimary
+            descriptionLineHeight: 18
             leftButton {
                 text: GuestStrings.logOut
                 onClicked: {
@@ -316,8 +321,11 @@ Rectangle {
                 }
             }
             rightButton {
-                text: isEmailBlock() ? GuestStrings.resendEmail : GuestStrings.verifyNow;
-                icons.source: isEmailBlock() ? Images.mail : "";
+                text: isEmailBlock() ? GuestStrings.resendEmail : GuestStrings.verifyNow
+                icons {
+                    source: isEmailBlock() ? Images.mail : ""
+                    position: Icon.Position.LEFT
+                }
                 onClicked: {
                     if(isEmailBlock()) {
                         guestContentAccess.onVerifyEmailClicked();
