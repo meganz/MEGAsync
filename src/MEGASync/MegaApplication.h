@@ -105,7 +105,6 @@ public:
     static QString applicationDataPath();
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
-    void updateTrayIcon();
     void repositionInfoDialog();
 
     QString getFormattedDateByCurrentLanguage(const QDateTime& datetime, QLocale::FormatType format = QLocale::FormatType::LongFormat) const;
@@ -235,6 +234,7 @@ signals:
     void shellNotificationsProcessed();
 
 public slots:
+    void updateTrayIcon();
     void unlink(bool keepLogs = false);
     void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
