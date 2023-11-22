@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 CardButton {
@@ -37,7 +37,7 @@ CardButton {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Text {
+                Texts.Text {
                     text: title
                     height: main.textTopHeight
                     anchors.left: parent.left
@@ -45,17 +45,17 @@ CardButton {
                     anchors.topMargin: main.textTopMargin
                     anchors.leftMargin: button.textHorizontalExtraMargin
                     anchors.rightMargin: button.textHorizontalExtraMargin
-                    font.pixelSize: Text.Size.MediumLarge
+                    font.pixelSize: Texts.Text.Size.MediumLarge
                     font.weight: Font.Bold
                 }
 
-                Text {
+                Texts.Text {
                     text: description
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.leftMargin: button.textHorizontalExtraMargin
                     anchors.rightMargin: button.textHorizontalExtraMargin
-                    font.pixelSize: Text.Size.Small
+                    font.pixelSize: Texts.Text.Size.Small
                     color: Styles.textSecondary
                     lineHeight: main.textLineHeight
                     lineHeightMode: Text.FixedHeight

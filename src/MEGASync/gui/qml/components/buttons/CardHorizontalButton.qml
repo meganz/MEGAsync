@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 CardButton {
@@ -44,25 +44,25 @@ CardButton {
                 width: parent.width - x
                 spacing: main.textSpacing
 
-                Text {
+                Texts.Text {
                     text: title
                     height: main.textTopHeight
                     lineHeightMode: Text.FixedHeight
                     lineHeight: titleLineHeight
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    font.pixelSize: Text.Size.MediumLarge
+                    font.pixelSize: Texts.Text.Size.MediumLarge
                     font.weight: Font.Bold
                 }
 
-                Text {
+                Texts.Text {
                     text: description
                     height: main.textBottomHeight
                     anchors.left: parent.left
                     anchors.right: parent.right
                     color: Styles.textSecondary
-                    font.pixelSize: Text.Size.Small
-                    lineHeightMode: Text.FixedHeight
+                    font.pixelSize: Texts.Text.Size.Small
+                    lineHeightMode: Texts.Text.FixedHeight
                     lineHeight: descriptionLineHeight
                     width: 314
                 }

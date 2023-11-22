@@ -2,7 +2,7 @@ import QtQuick 2.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 
 import LoginController 1.0
 
@@ -18,14 +18,14 @@ Rectangle {
 
     color: Styles.surface1
 
-    Text {
+    Texts.Text {
         id: statusText
 
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: root.bottom
         }
-        font.pixelSize: Text.Size.Small
+        font.pixelSize: Texts.Text.Size.Small
         color: Styles.textSecondary
         text: {
             switch(loginControllerAccess.state) {

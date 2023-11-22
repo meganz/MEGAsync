@@ -5,7 +5,7 @@ import QtGraphicalEffects 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 import onboard 1.0
@@ -92,12 +92,12 @@ Item {
                     opacity: enabled ? 1.0 : 0.2
                 }
 
-                Text {
+                Texts.Text {
                     id: typeText
 
                     Layout.alignment: Qt.AlignLeft
                     font.weight: Font.DemiBold
-                    font.pixelSize: Text.Size.Medium
+                    font.pixelSize: Texts.Text.Size.Medium
                     text: getAccountTypeText()
                 }
 
@@ -110,26 +110,26 @@ Item {
                          && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI
                          && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
 
-                Text {
+                Texts.Text {
                     text: AccountInfoData.belowMinUsedStorageThreshold
                           ? OnboardingStrings.availableStorage
                           : OnboardingStrings.storageSpace
                     font.weight: Font.DemiBold
                 }
 
-                Text {
+                Texts.Text {
                     font.weight: Font.DemiBold
                     text: AccountInfoData.usedStorage
                     visible: !AccountInfoData.belowMinUsedStorageThreshold
                 }
 
-                SecondaryText {
+                Texts.SecondaryText {
                     font.weight: Font.DemiBold
                     text: "/"
                     visible: !AccountInfoData.belowMinUsedStorageThreshold
                 }
 
-                SecondaryText {
+                Texts.SecondaryText {
                     id: totalStorage
 
                     font.weight: Font.DemiBold

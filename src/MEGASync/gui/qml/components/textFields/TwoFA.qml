@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.textFields 1.0
 import components.buttons 1.0
 
@@ -123,7 +123,7 @@ ColumnLayout {
         }
     }
 
-    NotificationText {
+    Texts.NotificationText {
         id: notification
 
         visible: hasError

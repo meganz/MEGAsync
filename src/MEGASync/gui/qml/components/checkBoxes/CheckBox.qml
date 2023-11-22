@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15 as Qml
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 Qml.CheckBox {
@@ -45,7 +45,7 @@ Qml.CheckBox {
     padding: 0
     activeFocusOnTab: true
 
-    contentItem: RichText {
+    contentItem: Texts.RichText {
         anchors.left: indicator.right
         leftPadding: root.spacing
         height: Math.max(contentItem.implicitHeight, indicator.height)

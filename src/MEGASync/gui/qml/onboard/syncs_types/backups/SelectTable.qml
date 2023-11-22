@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 import common 1.0
 
 import components.checkBoxes 1.0
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 import onboard 1.0
@@ -151,7 +151,7 @@ Rectangle {
                     sourceSize: Qt.size(16, 16)
                 }
 
-                Text {
+                Texts.Text {
                     text: OnboardingStrings.addFolder
                     font.weight: Font.DemiBold
                 }

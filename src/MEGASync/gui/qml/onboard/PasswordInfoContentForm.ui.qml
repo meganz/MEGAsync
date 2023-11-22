@@ -2,7 +2,7 @@ import QtQuick 2.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 Rectangle {
@@ -32,7 +32,7 @@ Rectangle {
         }
         spacing: contentMargin
 
-        Text {
+        Texts.Text {
             id: strengthTitle
 
             width: parent.width
@@ -59,7 +59,7 @@ Rectangle {
             width: parent.width
             spacing: conditionSpacing
 
-            SecondaryText {
+            Texts.SecondaryText {
                 id: upperLine
 
                 width: parent.width

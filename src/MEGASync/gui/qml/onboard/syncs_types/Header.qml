@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 
 ColumnLayout {
 
@@ -13,20 +13,20 @@ ColumnLayout {
 
     spacing: 12
 
-    RichText {
+    Texts.RichText {
         id: title
 
         Layout.fillWidth: true
         Layout.preferredHeight: 30
-        font.pixelSize: Text.Size.Large
+        font.pixelSize: Texts.Text.Size.Large
         font.weight: Font.DemiBold
     }
 
-    SecondaryText {
+    Texts.SecondaryText {
         id: description
 
         Layout.fillWidth: true
-        font.pixelSize: Text.Size.Normal
+        font.pixelSize: Texts.Text.Size.Normal
         wrapMode: Text.WordWrap
         Layout.preferredHeight: 17
     }

@@ -2,7 +2,9 @@ import QtQuick 2.15 as Qml
 
 import common 1.0
 
-Text {
+import components.texts 1.0 as Texts
+
+Texts.Text {
     id: root
 
     function updateLinkColor() {

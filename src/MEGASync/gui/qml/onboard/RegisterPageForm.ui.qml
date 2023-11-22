@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 import common 1.0
 
 import components.buttons 1.0
-import components.texts 1.0
+import components.texts 1.0 as Texts
 
 import LoginController 1.0
 
@@ -27,12 +27,12 @@ StackViewPage {
         }
         spacing: contentSpacing
 
-        RichText {
+        Texts.RichText {
             anchors {
                 left: parent.left
                 right: parent.right
             }
-            font.pixelSize: Text.Size.Large
+            font.pixelSize: Texts.Text.Size.Large
             rawText: OnboardingStrings.signUpTitle
         }
 

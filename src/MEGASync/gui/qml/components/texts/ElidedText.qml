@@ -1,8 +1,9 @@
 import QtQuick 2.15
 
 import components.toolTips 1.0
+import components.texts 1.0 as Texts
 
-Text {
+Texts.Text {
     id: elidedText
 
     property bool showTooltip: true

@@ -2,7 +2,7 @@ import QtQuick 2.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 Row {
@@ -25,7 +25,7 @@ Row {
         sourceSize: Qt.size(iconWidth, iconWidth)
     }
 
-    SecondaryText {
+    Texts.SecondaryText {
         id: condition
 
         width: parent.width - iconWidth

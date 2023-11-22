@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 Qml.Button {
@@ -42,13 +42,13 @@ Qml.Button {
             sourceSize: button.iconSize
         }
 
-        Text {
+        Texts.Text {
             id: textComponent
 
             color: icon.color
             text: button.text
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.Medium
             lineHeight: 20
             lineHeightMode: Text.FixedHeight
         }

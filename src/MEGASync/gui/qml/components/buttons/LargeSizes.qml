@@ -1,4 +1,4 @@
-import components.texts 1.0
+import components.texts 1.0 as Texts
 
 Sizes {
     horizontalPadding: 24
@@ -6,5 +6,5 @@ Sizes {
     spacing: 12
     radius: 8
     iconWidth: 22
-    textFontSize: Text.Size.MediumLarge
+    textFontSize: Texts.Text.Size.MediumLarge
 }

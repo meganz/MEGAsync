@@ -2,7 +2,7 @@ import QtQuick 2.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.buttons 1.0
 import components.progressBars 1.0
 
@@ -51,10 +51,10 @@ Item {
             anchors.right: parent.right
             spacing: title.visible && description.visible ? 12 : 0
 
-            Text {
+            Texts.Text {
                 id: title
 
-                font.pixelSize: Text.Size.MediumLarge
+                font.pixelSize: Texts.Text.Size.MediumLarge
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -62,12 +62,12 @@ Item {
                 anchors.right: parent.right
             }
 
-            RichText {
+            Texts.RichText {
                 id: description
 
                 color: Styles.textSecondary;
                 manageMouse: true
-                font.pixelSize: Text.Size.Small
+                font.pixelSize: Texts.Text.Size.Small
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: parent.left

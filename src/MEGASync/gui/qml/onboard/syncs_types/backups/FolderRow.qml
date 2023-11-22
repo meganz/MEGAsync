@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 import components.checkBoxes 1.0
 import components.toolTips 1.0
@@ -123,7 +123,7 @@ Rectangle {
                         sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
                     }
 
-                    ElidedText {
+                    Texts.ElidedText {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.topMargin: 1
@@ -132,21 +132,21 @@ Rectangle {
                                (folderSize.visible ? (folderSize.width + contentRoot.checkboxSpacing) : 0) -
                                (busyIndicator.visible ? (busyIndicator.width + contentRoot.checkboxSpacing) : 0)
 
-                        font.pixelSize: Text.Size.Small
+                        font.pixelSize: Texts.Text.Size.Small
                         text: name
                         color: Styles.textPrimary
                     }
                 }
             }
 
-            SecondaryText {
+            Texts.SecondaryText {
                 id: folderSize
 
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 text: size
-                font.pixelSize: Text.Size.Small
+                font.pixelSize: Texts.Text.Size.Small
                 horizontalAlignment: Qt.AlignRight
                 verticalAlignment: Qt.AlignVCenter
                 color: Styles.textSecondary
@@ -215,12 +215,12 @@ Rectangle {
                            : Styles.textWarning
                 }
 
-                ElidedText {
+                Texts.ElidedText {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     width: contentRoot.width - contentRoot.imageTextSpacing - contentRoot.imageWidth
                             - buttonRow.width - contentRoot.contentMargin
-                    font.pixelSize: Text.Size.Small
+                    font.pixelSize: Texts.Text.Size.Small
                     text: name
                     color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                            ? Styles.textError

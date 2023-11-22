@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 import components.toolTips 1.0
 
@@ -62,7 +62,7 @@ Rectangle {
         textField.focus = focus
     }
 
-    Text {
+    Texts.Text {
         id: titleItem
 
         anchors {
@@ -108,7 +108,7 @@ Rectangle {
         }
 
         font {
-            pixelSize: Text.Medium
+            pixelSize: Texts.Text.Size.Medium
             family: Styles.fontFamily
             styleName: Styles.fontStyleName
         }
@@ -207,7 +207,7 @@ Rectangle {
         }
     }
 
-    HintText {
+    Texts.HintText {
         id: hintItem
 
         anchors.left: parent.left

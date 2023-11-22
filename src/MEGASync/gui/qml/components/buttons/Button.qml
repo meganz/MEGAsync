@@ -5,7 +5,7 @@ import QtGraphicalEffects 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.busyIndicator 1.0
 import components.images 1.0
 
@@ -97,7 +97,7 @@ Qml.RoundButton {
             visible: root.icons.position === Icon.Position.LEFT && root.icons.busyIndicatorVisible
         }
 
-        Text {
+        Texts.Text {
             id: buttonText
 
             anchors.verticalCenter: parent.verticalCenter

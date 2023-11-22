@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 import onboard 1.0
@@ -23,32 +23,32 @@ StackViewPage {
         }
         spacing: contentSpacing
 
-        RichText {
+        Texts.RichText {
             id: title
 
             rawText: OnboardingStrings.confirmEmailTitle
             wrapMode: Text.WordWrap
             color: Styles.textPrimary
             font {
-                pixelSize: Text.Size.Large
+                pixelSize: Texts.Text.Size.Large
                 bold: true
             }
             Layout.fillWidth: true
         }
 
-        Text {
+        Texts.Text {
             id: bodyText
 
             Layout.preferredWidth: layout.width
             text: OnboardingStrings.confirmEmailBodyText
-            font.pixelSize: Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.Medium
         }
 
-        RichText {
+        Texts.RichText {
             id: bodyText2
 
             rawText: OnboardingStrings.confirmEmailBodyText2
-            font.pixelSize: Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.Medium
             url: Links.contact
             manageMouse: true
             Layout.preferredWidth: layout.width
@@ -69,7 +69,7 @@ StackViewPage {
                 Layout.alignment: Qt.AlignTop
             }
 
-            Text {
+            Texts.Text {
                 id: email
 
                 text: loginControllerAccess.email
@@ -77,7 +77,7 @@ StackViewPage {
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 20
                 font {
-                    pixelSize: Text.Size.Medium
+                    pixelSize: Texts.Text.Size.Medium
                     bold: true
                 }
                 Layout.preferredWidth: parent.width - mailImage.width - parent.spacing
@@ -85,10 +85,10 @@ StackViewPage {
             }
         }
 
-        RichText {
+        Texts.RichText {
             id: changeEmailLinkTextItem
 
-            font.pixelSize: Text.Size.Medium
+            font.pixelSize: Text.Text.Size.Medium
             rawText: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
             color: Styles.textPrimary

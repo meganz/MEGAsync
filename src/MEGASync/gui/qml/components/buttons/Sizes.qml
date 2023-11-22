@@ -1,6 +1,6 @@
 import QtQuick 2.15
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 
 QtObject {
 
@@ -16,6 +16,6 @@ QtObject {
     property int borderWidth: 2
     property int iconWidth: 16
     property size iconSize: Qt.size(iconWidth, iconWidth)
-    property int textFontSize: Text.Size.Medium
+    property int textFontSize: Texts.Text.Size.Medium
 
 }

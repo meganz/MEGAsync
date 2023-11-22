@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 import components.busyIndicator 1.0
 
@@ -80,20 +80,20 @@ Rectangle {
                         sourceSize: Qt.size(16, 16)
                     }
 
-                    Text {
+                    Texts.Text {
                         text: OnboardingStrings.backupFolders
                         font.weight: Font.DemiBold
                         color: Styles.textPrimary
                     }
                 }
 
-                Text {
+                Texts.Text {
                     id: totalSizeText
 
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
                     text: backupsModelAccess.totalSize
-                    font.pixelSize: Text.Size.Small
+                    font.pixelSize: Texts.Text.Size.Small
                     font.weight: Font.DemiBold
                     color: Styles.textPrimary
                     visible: backupsModelAccess.totalSizeReady
@@ -150,7 +150,7 @@ Rectangle {
             z: 3
             visible: backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE
 
-            NotificationText {
+            Texts.NotificationText {
                 id: notificationItem
 
                 width: parent.width

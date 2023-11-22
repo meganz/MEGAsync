@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 
 Item {
     id: root
@@ -166,11 +166,11 @@ Item {
                 }
             }
 
-            Text {
+            Texts.Text {
                 id: stepText
 
                 color: Styles.iconButton
-                font.pixelSize: Text.Size.Small
+                font.pixelSize: Texts.Text.Size.Small
                 font.weight: Font.DemiBold
             }
         }

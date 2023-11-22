@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.buttons 1.0
 
 Window {
@@ -60,19 +60,19 @@ Window {
 
                 spacing: dialogContentSpacing
 
-                Text {
+                Texts.Text {
                     id: title
 
-                    font.pixelSize: Text.Size.MediumLarge
+                    font.pixelSize: Texts.Text.Size.MediumLarge
                     font.weight: Font.DemiBold
                     lineHeightMode: Text.FixedHeight
                     lineHeight: 24
                 }
 
-                Text {
+                Texts.Text {
                     id: body
 
-                    font.pixelSize: Text.Size.Normal
+                    font.pixelSize: Texts.Text.Size.Normal
                     Layout.preferredWidth: 340
                     lineHeightMode: Text.FixedHeight
                     lineHeight: 18

@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15 as Qml
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 Qml.ToolTip {
@@ -35,7 +35,7 @@ Qml.ToolTip {
         implicitWidth: textToolTip.width + leftIcon.width + root.padding
         implicitHeight: Math.max(leftIcon.width, textToolTip.height)
 
-        Text {
+        Texts.Text {
             id: textToolTip
 
             property int maxWidth: 778 - leftIcon.width - root.padding

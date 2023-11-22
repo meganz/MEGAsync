@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 import common 1.0
 
 import components.buttons 1.0
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.textFields 1.0
 
 StackViewPage {
@@ -26,20 +26,20 @@ StackViewPage {
         }
         spacing: contentSpacing
 
-        Text {
+        Texts.Text {
             id: title
 
             Layout.fillWidth: true
             text: OnboardingStrings.changeEmailTitle
-            font.pixelSize: Text.Size.Large
+            font.pixelSize: Texts.Text.Size.Large
         }
 
-        Text {
+        Texts.Text {
             id: bodyText
 
             Layout.preferredWidth: layout.width
             text: OnboardingStrings.changeEmailBodyText
-            font.pixelSize: Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.Medium
         }
 
         EmailTextField {

@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 import common 1.0
 
 import components.buttons 1.0
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.textFields 1.0
 
 import LoginController 1.0
@@ -29,20 +29,20 @@ StackViewPage {
         }
         spacing: contentSpacing
 
-        RichText {
+        Texts.RichText {
             id: mainTitle
 
             anchors {
                 left: parent.left
                 right: parent.right
             }
-            font.pixelSize: Text.Size.Large
+            font.pixelSize: Texts.Text.Size.Large
             rawText: loginControllerAccess.newAccount
                      ? OnboardingStrings.confirmEmailAndPassword
                      : OnboardingStrings.loginTitle
         }
 
-        RichText {
+        Texts.RichText {
             id: accountWillBeActivatedText
 
             anchors {
@@ -50,7 +50,7 @@ StackViewPage {
                 right: parent.right
             }
             visible: loginControllerAccess.newAccount
-            font.pixelSize: Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.Medium
             rawText: OnboardingStrings.accountWillBeActivated
         }
 

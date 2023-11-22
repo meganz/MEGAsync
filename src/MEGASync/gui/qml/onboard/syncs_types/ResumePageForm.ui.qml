@@ -4,7 +4,7 @@ import QtQuick.Controls 2.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0
 
@@ -71,29 +71,29 @@ SyncsPage {
             right: parent.right
         }
 
-        Text {
+        Texts.Text {
             id: titleItem
 
             Layout.preferredWidth: parent.width
             text: title
-            font.pixelSize: Text.Size.Large
+            font.pixelSize: Texts.Text.Size.Large
             font.weight: Font.Bold
         }
 
-        Text {
+        Texts.Text {
             id: descriptionItem
 
             Layout.preferredWidth: parent.width
             Layout.topMargin: 8
             text: description
-            font.pixelSize: Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.Medium
         }
 
-        Text {
+        Texts.Text {
             Layout.preferredWidth: parent.width
             Layout.topMargin: 36
             text: OnboardingStrings.finalStepQuestion
-            font.pixelSize: Text.Size.MediumLarge
+            font.pixelSize: Texts.Text.Size.MediumLarge
             font.weight: Font.DemiBold
         }
 

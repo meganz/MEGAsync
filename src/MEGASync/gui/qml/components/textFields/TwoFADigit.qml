@@ -4,7 +4,7 @@ import QtQuick.Controls 2.15
 import common 1.0
 
 import components.textFields 1.0
-import components.texts 1.0
+import components.texts 1.0 as Texts
 
 TextField {
     id: root
@@ -23,7 +23,7 @@ TextField {
         verticalAlignment: Text.AlignVCenter
         validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
         font {
-            pixelSize: Text.Size.Huge
+            pixelSize: Texts.Text.Size.Huge
             weight: Font.Bold
         }
     }

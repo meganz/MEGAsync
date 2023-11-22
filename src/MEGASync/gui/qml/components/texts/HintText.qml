@@ -3,7 +3,7 @@ import QtQuick 2.15
 import common 1.0
 
 import components.images 1.0
-import components.texts 1.0
+import components.texts 1.0 as Texts
 
 Item {
     id: root
@@ -16,7 +16,7 @@ Item {
     property alias textColor: hintText.color
 
     property int type: Constants.MessageType.NONE
-    property int textSize: Text.Size.Normal
+    property int textSize: Texts.Text.Size.Normal
 
     onTypeChanged: {
         switch(type) {
@@ -69,7 +69,7 @@ Item {
             anchors.top: parent.top
             width: row.width - hintIcon.width - row.spacing
 
-            RichText {
+            Texts.RichText {
                 id: hintTitle
 
                 height: rawText !== "" ? implicitHeight : 0
@@ -80,7 +80,7 @@ Item {
                 wrapMode: Text.WordWrap
             }
 
-            RichText {
+            Texts.RichText {
                 id: hintText
 
                 height: rawText !== "" ? implicitHeight : 0

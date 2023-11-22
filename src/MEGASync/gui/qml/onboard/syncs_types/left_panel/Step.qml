@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.texts 1.0
+import components.texts 1.0 as Texts
 import components.images 1.0
 
 Item {
@@ -128,7 +128,7 @@ Item {
                 height: width
                 color: Styles.iconButton
 
-                Text {
+                Texts.Text {
                     id: stepCircleText
 
                     anchors.centerIn: parent
@@ -150,7 +150,7 @@ Item {
                 }
             }
 
-            Text {
+            Texts.Text {
                 id: stepText
 
                 color: Styles.iconButton
