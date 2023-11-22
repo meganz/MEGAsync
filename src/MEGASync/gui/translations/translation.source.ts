@@ -1418,6 +1418,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2821,6 +2822,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
