@@ -4,8 +4,8 @@
 
 using namespace std;
 
-static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
-static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
+static const QString kFinderSyncBundleId = QString::fromLatin1("mega.mac.MEGAShellExtFinder");
+static const QString kFinderSyncPath = QString::fromLatin1("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
 
 void PlatformImplementation::initialize(int /*argc*/, char *[] /*argv*/)
 {
@@ -66,27 +66,27 @@ bool PlatformImplementation::isStartOnStartupActive()
 void PlatformImplementation::addFileManagerExtensionToSystem()
 {
     QStringList scriptArgs;
-    scriptArgs << QString::fromUtf8("-a")
+    scriptArgs << QString::fromLatin1("-a")
                << kFinderSyncPath;
 
-    QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
+    QProcess::startDetached(QString::fromLatin1("pluginkit"), scriptArgs);
 }
 
 bool PlatformImplementation::isFileManagerExtensionEnabled()
 {
     QStringList scriptArgs;
-    scriptArgs << QString::fromUtf8("-m")
-               << QString::fromUtf8("-i")
+    scriptArgs << QString::fromLatin1("-m")
+               << QString::fromLatin1("-i")
                << kFinderSyncBundleId;
 
     QProcess p;
-    p.start(QString::fromAscii("pluginkit"), scriptArgs);
+    p.start(QString::fromLatin1("pluginkit"), scriptArgs);
     if (!p.waitForFinished(2000))
     {
         return false;
     }
 
-    QString out = QString::fromUtf8(p.readAllStandardOutput().trimmed());
+    QString out = QString::fromLatin1(p.readAllStandardOutput().trimmed());
     if (out.isEmpty())
     {
         return false;
@@ -109,40 +109,40 @@ void PlatformImplementation::reloadFileManagerExtension()
     }
 
     QStringList scriptArgs;
-    scriptArgs << QString::fromUtf8("-e")
-               << QString::fromUtf8("tell application \"MEGAShellExtFinder\" to quit");
+    scriptArgs << QString::fromLatin1("-e")
+               << QString::fromLatin1("tell application \"MEGAShellExtFinder\" to quit");
 
     QProcess p;
-    p.start(QString::fromAscii("osascript"), scriptArgs);
+    p.start(QString::fromLatin1("osascript"), scriptArgs);
     if (!p.waitForFinished(2000))
     {
         return;
     }
 
     scriptArgs.clear();
-    scriptArgs << QString::fromUtf8("-c")
-               << QString::fromUtf8("pluginkit -e ignore -i mega.mac.MEGAShellExtFinder && sleep 1 && pluginkit -e use -i mega.mac.MEGAShellExtFinder");
-    QProcess::startDetached(QString::fromUtf8("bash"), scriptArgs);
+    scriptArgs << QString::fromLatin1("-c")
+               << QString::fromLatin1("pluginkit -e ignore -i mega.mac.MEGAShellExtFinder && sleep 1 && pluginkit -e use -i mega.mac.MEGAShellExtFinder");
+    QProcess::startDetached(QString::fromLatin1("bash"), scriptArgs);
 }
 
 void PlatformImplementation::enableFileManagerExtension(bool value)
 {
     QStringList scriptArgs;
-    scriptArgs << QString::fromUtf8("-e")
-               << (value ? QString::fromUtf8("use") : QString::fromUtf8("ignore")) //Enable or disable extension plugin
-               << QString::fromUtf8("-i")
+    scriptArgs << QString::fromLatin1("-e")
+               << (value ? QString::fromLatin1("use") : QString::fromLatin1("ignore")) //Enable or disable extension plugin
+               << QString::fromLatin1("-i")
                << kFinderSyncBundleId;
 
-    QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
+    QProcess::startDetached(QString::fromLatin1("pluginkit"), scriptArgs);
 }
 
 void PlatformImplementation::streamWithApp(const QString &app, const QString &url)
 {
-    QString args;
-    args = QString::fromUtf8("-a ");
-    args += QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromUtf8(" \"%1\"").arg(url);
-    QString command = QString::fromLatin1("open ") + args;
-    QProcess::startDetached(command);
+    QStringList scriptArgs;
+    scriptArgs << QString::fromLatin1("-a")
+               << app
+               << url;
+    QProcess::startDetached(QString::fromLatin1("open"), scriptArgs);
 }
 
 bool PlatformImplementation::showInFolder(QString pathIn)
@@ -152,13 +152,13 @@ bool PlatformImplementation::showInFolder(QString pathIn)
     pathIn.replace(QString::fromLatin1("\""), QString::fromLatin1("\\\""));
 
     QStringList scriptArgs;
-    scriptArgs << QString::fromUtf8("-e")
-               << QString::fromUtf8("tell application \"Finder\" to reveal POSIX file \"%1\"").arg(pathIn);
-    QProcess::startDetached(QString::fromUtf8("osascript"), scriptArgs);
+    scriptArgs << QString::fromLatin1("-e")
+               << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"").arg(pathIn);
+    QProcess::startDetached(QString::fromLatin1("osascript"), scriptArgs);
     scriptArgs.clear();
-    scriptArgs << QString::fromUtf8("-e")
-               << QString::fromUtf8("tell application \"Finder\" to activate");
-    return QProcess::startDetached(QString::fromAscii("osascript"), scriptArgs);
+    scriptArgs << QString::fromLatin1("-e")
+               << QString::fromLatin1("tell application \"Finder\" to activate");
+    return QProcess::startDetached(QString::fromLatin1("osascript"), scriptArgs);
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
