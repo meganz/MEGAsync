@@ -2326,10 +2326,11 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
     return DateTimeFormatter::create(currentLanguageCode, datetime, format);
 }
 
-void MegaApplication::raiseInfoDialog()
+bool MegaApplication::raiseGuestDialog()
 {
-    if(mStatusController->isAccountBlocked()
-        || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
+    bool raisedGuestDialog = false;
+
+    if(mStatusController->isAccountBlocked() || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
     {
 #ifdef __APPLE__
         if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>())
@@ -2341,18 +2342,18 @@ void MegaApplication::raiseInfoDialog()
             }
         }
 #endif
+        openGuestDialog();
 
-        DialogOpener::raiseAllDialogs();
-        if (preferences->getSession().isEmpty())
-        {
-            openOnboardingDialog();
-        }
-        else if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-        {
-            DialogOpener::showDialog(dialog->getDialog());
-            dialog->getDialog()->raise();
-        }
-        openGuestDialog();        
+        raisedGuestDialog = true;
+    }
+
+    return raisedGuestDialog;
+}
+
+void MegaApplication::raiseInfoDialog()
+{
+    if (raiseGuestDialog())
+    {
         return;
     }
 
@@ -2369,6 +2370,24 @@ void MegaApplication::raiseInfoDialog()
         infoDialog->raise();
         infoDialog->activateWindow();
         infoDialog->highDpiResize.queueRedraw();
+    }
+}
+
+void MegaApplication::raiseOnboardingDialog()
+{
+    if(mStatusController->isAccountBlocked()
+        || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
+    {
+        DialogOpener::raiseAllDialogs();
+        if (preferences->getSession().isEmpty())
+        {
+            openOnboardingDialog();
+        }
+        else if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+            DialogOpener::showDialog(dialog->getDialog());
+            dialog->getDialog()->raise();
+        }
     }
 }
 
@@ -2452,7 +2471,7 @@ void MegaApplication::showInfoDialog()
 
     if(!mStatusController->isAccountBlocked())
     {
-      updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+        updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
     }
 }
 
@@ -5252,7 +5271,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         DialogOpener::raiseAllDialogs();
 #endif
         {
-            infoDialogTimer->start(200);
+            raiseOnboardingDialog();
+            raiseOrHideInfoGuestDialog();
         }
 #else
         showInfoDialog();
@@ -5285,6 +5305,21 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #endif
 }
 
+void MegaApplication::raiseOrHideInfoGuestDialog()
+{
+    auto guestDialogWrapper = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>();
+    bool isGuestDialogVisible = guestDialogWrapper != nullptr && guestDialogWrapper->getDialog()->isVisible();
+
+    if (isGuestDialogVisible)
+    {
+        guestDialogWrapper->getDialog()->hide();
+    }
+    else
+    {
+        infoDialogTimer->start(200);
+    }
+}
+
 void MegaApplication::onMessageClicked()
 {
     if (appfinished)
@@ -5309,14 +5344,15 @@ void MegaApplication::openGuestDialog()
         return;
     }
 
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>())
+    auto dialogWrapper = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>();
+    if(dialogWrapper == nullptr)
     {
-        DialogOpener::showDialog(dialog->getDialog());
-        return;
+        QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
+        DialogOpener::addDialog(guest)->setIgnoreRaiseAllAction(true);
+        dialogWrapper = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>();
     }
 
-    QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
-    DialogOpener::showDialog(guest)->setIgnoreRaiseAllAction(true);
+    DialogOpener::showDialog(dialogWrapper->getDialog());
 }
 
 void MegaApplication::openOnboardingDialog()
@@ -5468,7 +5504,10 @@ void MegaApplication::createTrayIconMenus()
             showStatusAction = nullptr;
         }
         showStatusAction = new QAction(tr("Show status"), this);
-        connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
+        connect(showStatusAction, &QAction::triggered, this, [this](){
+            raiseOnboardingDialog();
+            infoDialogTimer->start(200);
+        });
 
         initialTrayMenu->insertAction(guestSettingsAction, showStatusAction);
     }
