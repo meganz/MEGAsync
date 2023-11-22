@@ -5,6 +5,7 @@ import common 1.0
 
 import components.buttons 1.0
 import components.textFields 1.0
+import components.texts 1.0 as Texts
 
 import onboard.syncs_types 1.0
 
@@ -16,6 +17,7 @@ StackViewPage {
     property alias loginButton: loginButtonItem
     property alias signUpButton: signUpButtonItem
     property alias twoFAField: twoFAItem
+
     ColumnLayout {
         id: mainColumn
 
@@ -30,9 +32,11 @@ StackViewPage {
         Header {
             id: headerItem
 
-            spacing: contentSpacing
+            spacing: contentSpacing / 2
             title: OnboardingStrings.twoFATitle
             description: OnboardingStrings.twoFASubtitle
+            titleWeight: Font.Normal
+            descriptionFontSize: Texts.Text.Size.Normal
         }
 
         TwoFA {
