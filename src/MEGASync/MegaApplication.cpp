@@ -305,11 +305,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     downloadAction = nullptr;
     streamAction = nullptr;
     myCloudAction = nullptr;
-    waiting = false;
+    mWaiting = false;
     updated = false;
-    syncing = false;
-    syncStalled = false;
-    transferring = false;
+    mSyncing = false;
+    mSyncStalled = false;
+    mTransferring = false;
     checkupdate = false;
     updateAction = nullptr;
     aboutAction = nullptr;
@@ -429,7 +429,7 @@ void MegaApplication::initialize()
     }
 
     paused = false;
-    indexing = false;
+    mIndexing = false;
 
 #ifdef Q_OS_LINUX
     isLinux = true;
@@ -918,7 +918,7 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
-    else if (syncStalled && !mStalledIssuesModel->isEmpty())
+    else if (mSyncStalled && !mStalledIssuesModel->isEmpty())
     {
         tooltipState = tr("Stalled");
         icon = icons["alert"];
@@ -945,17 +945,17 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
-    else if (indexing || waiting || syncing || transferring)
+    else if (mIndexing || mWaiting || mSyncing || mTransferring)
     {
-        if (indexing)
+        if (mIndexing)
         {
             tooltipState = tr("Scanning");
         }
-        else if (syncing)
+        else if (mSyncing)
         {
             tooltipState = tr("Syncing");
         }
-        else if (waiting)
+        else if (mWaiting)
         {
             tooltipState = tr("Waiting");
         }
@@ -1061,7 +1061,7 @@ void MegaApplication::start()
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
     blockStateSet = false;
 
-    indexing = false;
+    mIndexing = false;
     paused = false;
     nodescurrent = false;
     getUserDataRequestReady = false;
@@ -3630,7 +3630,7 @@ void MegaApplication::unlink(bool keepLogs)
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
-    syncStalled = false;
+    mSyncStalled = false;
 
     // Any running sync/backup will be disabled by logout, so warn user if they log in again
     unique_ptr<MegaSyncList> syncList(megaApi->getSyncs());
@@ -7661,56 +7661,38 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         return;
     }
 
-    if (megaApi && infoDialog)
+    if (megaApi && infoDialog && mTransfersModel)
     {
-        mThreadPool->push([this]() {
+        mIndexing = megaApi->isScanning();
+        mSyncStalled = megaApi->isSyncStalled();
+        mWaiting = megaApi->isWaiting() || mSyncStalled;
+        mSyncing = megaApi->isSyncing();
 
-        auto model = getTransfersModel();
-        if (!megaApi || !model)
+        auto transferCount = mTransfersModel->getTransfersCount();
+        mTransferring = transferCount.pendingUploads || transferCount.pendingDownloads;
+
+        int pendingUploads = transferCount.pendingUploads;
+        int pendingDownloads = transferCount.pendingDownloads;
+
+        if (pendingUploads)
         {
-            return;
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
         }
 
-        indexing = megaApi->isScanning();
-        waiting = megaApi->isWaiting() || megaApi->isSyncStalled();
-        syncing = megaApi->isSyncing();
-        syncStalled = megaApi->isSyncStalled();
+        if (pendingDownloads)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
+        }
 
-        auto transferCount = model->getTransfersCount();
-        transferring = transferCount.pendingUploads || transferCount.pendingDownloads;
+        infoDialog->setIndexing(mIndexing);
+        infoDialog->setWaiting(mWaiting);
+        infoDialog->setSyncing(mSyncing);
+        infoDialog->setTransferring(mTransferring);
+        infoDialog->updateDialogState();
 
-        Utilities::queueFunctionInAppThread([=](){
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4 Stalled = %5")
+                                                  .arg(paused).arg(mIndexing).arg(mWaiting).arg(mSyncing).arg(mSyncStalled).toUtf8().constData());
 
-            if (!infoDialog)
-            {
-                return;
-            }
-
-            int pendingUploads = transferCount.pendingUploads;
-            int pendingDownloads = transferCount.pendingDownloads;
-
-            if (pendingUploads)
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
-            }
-
-            if (pendingDownloads)
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
-            }
-
-            infoDialog->setIndexing(indexing);
-            infoDialog->setWaiting(waiting);
-            infoDialog->setSyncing(syncing);
-            infoDialog->setTransferring(transferring);
-            infoDialog->updateDialogState();
-            });
-
-       });
+        updateTrayIcon();
     }
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4 Stalled = %5")
-                 .arg(paused).arg(indexing).arg(waiting).arg(syncing).arg(syncStalled).toUtf8().constData());
-
-    updateTrayIcon();
 }
