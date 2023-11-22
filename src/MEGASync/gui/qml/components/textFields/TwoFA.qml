@@ -151,9 +151,10 @@ ColumnLayout {
     HelpButton {
         id: helpButtonItem
 
+        Layout.leftMargin: helpButtonItem.sizes.focusBorderWidth
         text: OnboardingStrings.twoFANeedHelp
         url: Links.recovery
-        visible: !twoFAItem.hasError
+        visible: !root.hasError
         height: notification.height
     }
 
