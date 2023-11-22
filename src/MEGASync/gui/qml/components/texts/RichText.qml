@@ -1,11 +1,10 @@
-// System
-import QtQuick 2.15
+import QtQuick 2.15 as Qml
 
-// Local
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
+import common 1.0
 
-MegaTexts.Text {
+import components.texts 1.0 as Texts
+
+Texts.Text {
     id: root
 
     function updateLinkColor() {
@@ -30,7 +29,7 @@ MegaTexts.Text {
     property string rawText: ""
 
     color: enabled ? Styles.textPrimary : Styles.textDisabled
-    textFormat: Text.RichText
+    textFormat: Qml.Text.RichText
 
     // We are using rawText to avoid breaking internal connections in the text property.
     // If we assign a string directly to the RichText text property and we use the replace
@@ -63,7 +62,7 @@ MegaTexts.Text {
         updateLinkColor();
     }
 
-    MouseArea {
+    Qml.MouseArea {
         id: mouseArea
 
         anchors.fill: parent

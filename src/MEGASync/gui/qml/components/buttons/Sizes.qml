@@ -1,8 +1,6 @@
-// System
 import QtQuick 2.15
 
-// Local
-import Components.Texts 1.0 as MegaTexts
+import components.texts 1.0 as Texts
 
 QtObject {
 
@@ -18,6 +16,6 @@ QtObject {
     property int borderWidth: 2
     property int iconWidth: 16
     property size iconSize: Qt.size(iconWidth, iconWidth)
-    property int textFontSize: MegaTexts.Text.Size.Medium
+    property int textFontSize: Texts.Text.Size.Medium
 
 }

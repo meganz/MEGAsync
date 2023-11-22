@@ -53,7 +53,7 @@ endif()
 set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools Quick Qml ${QTCOMPONENS_REQUIRED_PLATFORM})
 set (MEGA_QT_LINK_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network Qt5::Quick Qt5::Qml ${TARGET_LINK_LIBRARIES_PLATFORM})
 
-list(APPEND QML_DIRS "${MEGAsyncDir}/gui/" "${MEGAsyncDir}/gui/qml" "${MEGAsyncDir}/gui/onboarding/qml")
+list(APPEND QML_DIRS "${MEGAsyncDir}/gui/qml")
 set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Qt Creator extra qml import paths")
 
 set (UNCHECKED_ITERATORS 0 CACHE STRING "")
@@ -521,7 +521,6 @@ set (SRCS
     ${MOC_INPUT}
     ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
     ${MEGAsyncDir}/gui/Resources_qml.qrc
-    ${MEGAsyncDir}/gui/onboarding/qml/onboarding.qrc
     ${MEGAsyncDir}/gui/qml/qml.qrc
 
     ${MEGAsyncDir}/gui/AlertItem.cpp

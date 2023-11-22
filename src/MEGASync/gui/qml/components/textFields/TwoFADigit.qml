@@ -1,13 +1,12 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-// Local
-import Common 1.0
-import Components.TextFields 1.0 as MegaTextFields
-import Components.Texts 1.0 as MegaTexts
+import common 1.0
 
-MegaTextFields.TextField {
+import components.textFields 1.0
+import components.texts 1.0 as Texts
+
+TextField {
     id: root
 
     property var next
@@ -24,7 +23,7 @@ MegaTextFields.TextField {
         verticalAlignment: Text.AlignVCenter
         validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
         font {
-            pixelSize: MegaTexts.Text.Size.Huge
+            pixelSize: Texts.Text.Size.Huge
             weight: Font.Bold
         }
     }

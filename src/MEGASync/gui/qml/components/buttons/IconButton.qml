@@ -1,11 +1,8 @@
-// System
 import QtQuick.Layouts 1.15
 
-// Local
-import Components.Buttons 1.0 as MegaButtons
-import Common 1.0
+import common 1.0
 
-MegaButtons.Button {
+Button {
     sizes.borderWidth: 0
     height: 32 + 2 * sizes.focusBorderWidth
     width: height

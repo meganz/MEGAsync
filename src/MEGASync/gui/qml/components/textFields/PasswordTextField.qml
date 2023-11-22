@@ -1,14 +1,15 @@
-// System
 import QtQuick 2.15
 
-// Local
-import Components.TextFields 1.0 as MegaTextFields
+import common 1.0
 
-MegaTextFields.TextField {
+import components.textFields 1.0
+
+TextField {
 
     property bool cleanWhenError: true
+
     rightIconVisible: false
-    rightIconSource: "images/eye.svg"
+    rightIconSource: Images.eye
 
     textField {
         echoMode: TextInput.Password
@@ -20,10 +21,10 @@ MegaTextFields.TextField {
     rightIconMouseArea.onClicked: {
         if(textField.echoMode === TextInput.Password) {
             textField.echoMode = TextInput.Normal;
-            rightIconSource = "images/eye-off.svg";
+            rightIconSource = Images.eyeOff;
         } else if(textField.echoMode === TextInput.Normal) {
             textField.echoMode = TextInput.Password;
-            rightIconSource = "images/eye.svg";
+            rightIconSource = Images.eye;
         }
     }
 

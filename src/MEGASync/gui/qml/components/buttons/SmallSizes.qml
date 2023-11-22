@@ -1,9 +1,8 @@
-// Local
-import Components.Texts 1.0 as MegaTexts
+import components.texts 1.0 as Texts
 
 Sizes {
     horizontalPadding: 8
     height: 26
-    textFontSize: MegaTexts.Text.Size.Normal
+    textFontSize: Texts.Text.Size.Normal
     radius: 5
 }
