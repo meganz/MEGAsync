@@ -498,12 +498,12 @@ protected:
     bool reboot;
     bool syncActive;
     bool paused;
-    bool indexing;
-    bool waiting;
-    bool syncing; //if any sync is in syncing state
-    bool syncStalled = false;
+    bool mIndexing;
+    bool mWaiting;
+    bool mSyncing; //if any sync is in syncing state
+    bool mSyncStalled = false;
     bool updated;
-    bool transferring; //if there is any regular transfer in progress
+    bool mTransferring; //if there is any regular transfer in progress
     bool checkupdate;
     bool updateBlocked;
     long long lastExit;

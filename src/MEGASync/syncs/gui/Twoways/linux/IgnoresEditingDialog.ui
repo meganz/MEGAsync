@@ -295,7 +295,7 @@ color:white;
    <item>
     <widget class="QGroupBox" name="gExcludeByType">
      <property name="title">
-      <string>by file</string>
+      <string>by file type</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
