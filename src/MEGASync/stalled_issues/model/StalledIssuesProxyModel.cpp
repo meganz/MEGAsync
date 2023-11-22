@@ -40,7 +40,6 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
         {
             blockSignals(true);
             sourceM->blockSignals(true);
-            sourceM->lockModelMutex(true);
 
             invalidate();
             for (auto row = 0; row < rowCount(QModelIndex()); ++row)
@@ -50,7 +49,6 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
             }
             QSortFilterProxyModel::sort(0, sortOrder());
 
-            sourceM->lockModelMutex(false);
             blockSignals(false);
             sourceM->blockSignals(false);
         });

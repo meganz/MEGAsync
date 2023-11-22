@@ -82,8 +82,6 @@ public:
     void finishStalledIssues(const QModelIndexList& indexes);
     void updateStalledIssues();
 
-    void lockModelMutex(bool lock);
-
     void blockUi();
     void unBlockUi();
 

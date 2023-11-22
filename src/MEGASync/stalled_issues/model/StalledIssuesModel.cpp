@@ -11,8 +11,6 @@
 #include <StalledIssuesDialog.h>
 #include <syncs/control/MegaIgnoreManager.h>
 
-#include "mega/types.h"
-
 #include <QSortFilterProxyModel>
 
 StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent), mega::MegaRequestListener()
@@ -566,10 +564,6 @@ void StalledIssuesModel::updateStalledIssuedByOrder()
     emit stalledIssuesCountChanged();
 }
 
-void StalledIssuesModel::lockModelMutex(bool lock)
-{
-}
-
 void StalledIssuesModel::blockUi()
 {
     emit uiBlocked();
@@ -649,13 +643,9 @@ void StalledIssuesModel::reset()
 {
     beginResetModel();
 
-    lockModelMutex(true);
-
     mStalledIssues.clear();
     mStalledIssuesByOrder.clear();
     mCountByFilterCriterion.clear();
-
-    lockModelMutex(false);
 
     endResetModel();
 
