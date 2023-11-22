@@ -4368,9 +4368,10 @@ void MegaApplication::onTransfersModelUpdate()
     }
 
     auto TransfersStats = mTransfersModel->getTransfersCount();
-    //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!TransfersStats.pendingDownloads
-            && !TransfersStats.pendingUploads)
+    //If there are no pending transfers or we have the first ones, reset the statics and update the state of the tray icon
+    if ((!TransfersStats.pendingDownloads
+         && !TransfersStats.pendingUploads) ||
+        !mTransferring)
     {
         onGlobalSyncStateChanged(megaApi);
     }
