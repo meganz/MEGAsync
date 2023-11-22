@@ -1128,9 +1128,9 @@
 %1</translation>
     </message>
     <message>
-        <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
-        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation>Your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</translation>
+        <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1415,6 +1415,10 @@ In some cases they may contain details about your data, such as file or folder n
             <numerusform>[A] updated %n item</numerusform>
             <numerusform>[A] updated %n items</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2814,6 +2818,10 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed.</translatorcomment>
         <translation type="unfinished">Your password has been changed.</translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
