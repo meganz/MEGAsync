@@ -10,19 +10,20 @@ CardButton {
     id: button
 
     property int textHorizontalExtraMargin: 0
-    property int contentMargin: 12
+    property int contentMargin: 13
     property int contentSpacing: 24
 
-    readonly property int textSpacing: 8
+    readonly property int textSpacing: 5
     readonly property int textTopHeight: 24
     readonly property int textTopMargin: 24
     readonly property int textLineHeight: 16
 
     height: imageButton.height + titleText.height + descriptionText.height + textSpacing + contentSpacing + contentMargin * 2
-
+    //4= border with
     Column {
         anchors.fill: parent
         anchors.margins: contentMargin
+        anchors.bottomMargin: 50
         spacing: contentSpacing
 
         SvgImage {
@@ -41,10 +42,10 @@ CardButton {
                 id: titleText
 
                 text: title
-                height: main.textTopHeight
+                height: textTopHeight
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.topMargin: main.textTopMargin
+                anchors.topMargin: textTopMargin
                 anchors.leftMargin: button.textHorizontalExtraMargin
                 anchors.rightMargin: button.textHorizontalExtraMargin
                 font.pixelSize: Texts.Text.Size.MediumLarge

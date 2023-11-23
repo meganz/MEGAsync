@@ -16,7 +16,7 @@ CardButton {
     readonly property int descriptionLineHeight: 16
 
     Layout.preferredWidth: 408
-    Layout.preferredHeight: 88
+    Layout.preferredHeight: height
     Layout.fillWidth: true
     width: 400
     height: titleText.height + descriptionText.height + textSpacing + verticalMargin * 2
@@ -44,7 +44,6 @@ CardButton {
                 id: titleText
 
                 text: title
-                height: textTopHeight
                 lineHeightMode: Text.FixedHeight
                 lineHeight: titleLineHeight
                 anchors.left: parent.left
@@ -57,7 +56,6 @@ CardButton {
                 id: descriptionText
 
                 text: description
-                height: textBottomHeight
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Styles.textSecondary
