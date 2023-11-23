@@ -7,10 +7,11 @@
 #include "ChooseFolder.h"
 #include "PasswordStrengthChecker.h"
 #include "QmlDeviceName.h"
-#include "LoginController.h"
 #include "AccountStatusController.h"
 #include "SettingsDialog.h"
-
+#include "BackupsModel.h"
+#include "qml/QmlClipboard.h"
+#include "qml/ApiEnums.h"
 #include "OnboardingQmlDialog.h"
 
 using namespace mega;
@@ -19,9 +20,15 @@ Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
 {
     qmlRegisterModule("Onboarding", 1, 0);
-    qmlRegisterModule("BackupsModel", 1, 0);
-    qmlRegisterModule("BackupsController", 1, 0);
 
+
+    qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
+    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
+    qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
+                                     QString::fromUtf8("Cannot create ApiEnums in QML"));
+
+    qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",
+                                             QString::fromUtf8("Cannot create WarningLevel in QML"));
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
     qmlRegisterType<AccountStatusController>("AccountStatusController", 1, 0, "AccountStatusController");
     qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");

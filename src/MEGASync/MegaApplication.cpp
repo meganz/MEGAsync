@@ -28,12 +28,8 @@
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
 
-#include "qml/QmlDialog.h"
 #include "qml/QmlDialogWrapper.h"
-#include "qml/QmlClipboard.h"
-#include "qml/ApiEnums.h"
 #include "onboarding/Onboarding.h"
-#include "onboarding/BackupsModel.h"
 #include "onboarding/GuestContent.h"
 
 #include <QQmlApplicationEngine>
@@ -3065,11 +3061,6 @@ void MegaApplication::registerCommonQMLElements()
     mEngine->addImportPath(QString::fromUtf8("qrc:/"));
 
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
-
-    qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
-    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
-    qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
-                                     QString::fromUtf8("Cannot create ApiEnums in QML"));
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
