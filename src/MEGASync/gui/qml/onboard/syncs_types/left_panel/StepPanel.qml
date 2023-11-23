@@ -347,8 +347,12 @@ Rectangle {
     }
 
     IconButton {
+        id: helpButton
+
         anchors.bottom: parent.bottom
         anchors.left: parent.left
+        anchors.leftMargin: -helpButton.sizes.horizontalAlignWidth
+        anchors.bottomMargin: -helpButton.sizes.verticalAlignWidth
         icons.source: Images.helpCircle
         sizes.iconSize: Qt.size(24, 24)
         onClicked: {

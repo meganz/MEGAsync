@@ -3,11 +3,6 @@ import QtQuick.Layouts 1.15
 import common 1.0
 
 Button {
-    sizes.borderWidth: 0
-    height: 32 + 2 * sizes.focusBorderWidth
-    width: height
-    Layout.preferredHeight: height
-    Layout.preferredWidth: width
 
     icons {
         colorEnabled: Styles.iconButton
@@ -25,6 +20,7 @@ Button {
         borderHover: "transparent"
         borderSelected: "transparent"
         borderPressed: "transparent"
+        disabled: "transparent"
     }
 
     sizes {
