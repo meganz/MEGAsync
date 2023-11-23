@@ -14,7 +14,6 @@ Button {
     property string imageSource
     property size imageSourceSize
 
-    property Component contentComponent
     property Colors colors: Colors {
         background: Styles.pageBackground
         hover: Styles.buttonOutlineBackgroundHover
@@ -93,16 +92,6 @@ Button {
             source: buttonBackground
             visible: !button.hovered
         }
-
-        Loader {
-            id: contentLoader
-
-            anchors.fill: parent
-        }
-    }
-
-    onContentComponentChanged: {
-        contentLoader.sourceComponent = contentComponent;
     }
 
     MouseArea {
