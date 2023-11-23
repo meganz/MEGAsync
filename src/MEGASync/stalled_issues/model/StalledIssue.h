@@ -36,8 +36,6 @@ public:
         bool isEmpty() const {return path.isEmpty() && mPathProblem == mega::MegaSyncStall::SyncPathProblem::NoProblem;}
     };
 
-    StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall);
-    StalledIssueData(const StalledIssueData&);
     StalledIssueData();
     virtual ~StalledIssueData() = default;
 
@@ -62,8 +60,6 @@ public:
     std::shared_ptr<FileFolderAttributes> getAttributes() {return mAttributes;}
 
     void checkTrailingSpaces(QString& name) const;
-
-    std::shared_ptr<mega::MegaSyncStall> original;
 
     template <class Type>
     QExplicitlySharedDataPointer<const Type> convert() const
@@ -98,17 +94,7 @@ class CloudStalledIssueData : public StalledIssueData
 {
 public:
 
-    CloudStalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
-        :StalledIssueData(std::move(originalstall)),
-          mPathHandle(mega::INVALID_HANDLE),
-          mMovePathHandle(mega::INVALID_HANDLE)
-    {}
 
-    CloudStalledIssueData(const CloudStalledIssueData& data)
-        :StalledIssueData(data),
-         mPathHandle(data.mPathHandle),
-         mMovePathHandle(data.mMovePathHandle)
-    {}
 
     CloudStalledIssueData()
         : StalledIssueData(),
@@ -182,16 +168,6 @@ class LocalStalledIssueData : public StalledIssueData
 {
 public:
 
-    LocalStalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
-        :StalledIssueData(std::move(originalstall))
-    {
-
-    }
-    LocalStalledIssueData(const CloudStalledIssueData& data)
-        :StalledIssueData(data)
-    {
-
-    }
     LocalStalledIssueData()
         : StalledIssueData()
     {
