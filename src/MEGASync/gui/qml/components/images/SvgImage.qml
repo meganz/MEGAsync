@@ -16,8 +16,7 @@ Item {
     width: image.width
     height: image.height
 
-    onColorChanged:
-    {
+    onColorChanged: {
         image.visible = false
         opacityMask.visible = true
     }

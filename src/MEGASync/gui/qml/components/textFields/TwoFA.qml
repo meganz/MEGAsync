@@ -163,7 +163,7 @@ ColumnLayout {
     }
 
     Shortcut {
-        sequence: StandardKey.Paste
+        sequence: [ StandardKey.Paste ]
         onActivated: {
             pastePin();
         }
