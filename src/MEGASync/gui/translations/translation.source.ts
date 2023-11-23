@@ -1746,22 +1746,22 @@ In some cases they may contain details about your data, such as file or folder n
     <name>GuestStrings</name>
     <message>
         <source>About MEGA</source>
-        <translatorcomment>Menu entry that opens the about MEGA dialog</translatorcomment>
+        <translatorcomment>Menu entry that opens the about MEGA dialog. CON-472</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Quit</source>
-        <translatorcomment>Menu entry that quits the application for mac</translatorcomment>
+        <translatorcomment>Menu entry that quits the application for mac. CON-472</translatorcomment>
         <translation type="unfinished">Quit</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translatorcomment>Menu entry that quits the application for linux and windows</translatorcomment>
+        <translatorcomment>Menu entry that quits the application for linux and windows. CON-472</translatorcomment>
         <translation type="unfinished">Exit</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Menu entry that opens the settings dialog</translatorcomment>
+        <translatorcomment>Menu entry that opens the settings dialog. CON-472</translatorcomment>
         <translation type="unfinished">Settings</translation>
     </message>
     <message>
