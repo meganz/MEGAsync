@@ -203,8 +203,8 @@ const QString& MegaIgnoreExtensionRule::extension() const
 }
 
 ////////////////MEGA IGNORE SIZE RULE
-const QString MegaIgnoreSizeRule::LOW_STRING = QLatin1String("exclude-smaller");
-const QString MegaIgnoreSizeRule::HIGH_STRING = QLatin1String("exclude-larger");
+static const QLatin1String LOW_STRING = QLatin1String("exclude-smaller");
+static const QLatin1String HIGH_STRING = QLatin1String("exclude-larger");
 
 MegaIgnoreSizeRule::MegaIgnoreSizeRule(const QString& rule, bool isCommented)
     :MegaIgnoreRule(rule, isCommented)

@@ -166,11 +166,7 @@ class MegaIgnoreSizeRule : public MegaIgnoreRule
 {
     Q_OBJECT
 
-
 public:
-    static const QString LOW_STRING;
-    static const QString HIGH_STRING;
-
     enum Threshold
     {
         LOW,
