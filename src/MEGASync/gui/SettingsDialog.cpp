@@ -127,30 +127,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->wUpdateSection->hide();
 #endif
 
-    mUi->gExcludedFilesInfo->hide();
-
-    // No more viewing/editing of the old set of exclusions.  .megaingore is taking over
-#ifdef Q_OS_MACOS
-    mUi->wContainerExclusions->hide();
-#else // Q_OS_MACOS
-    mUi->bAddName->hide();
-    mUi->bDeleteName->hide();
-    mUi->excludeButtonsContainer->hide();
-    mUi->gExcludeByName->hide();
-#endif // ! Q_OS_MACOS
-    mUi->lExcludedNames->hide();
-    mUi->gExcludeBySize->hide();
-    mUi->cbExcludeUpperUnit->hide();
-    mUi->eLowerThan->hide();
-    mUi->cbExcludeLowerUnit->hide();
-    mUi->cExcludeUpperThan->hide();
-    mUi->eUpperThan->hide();
-    mUi->cExcludeLowerThan->hide();
-    mUi->gExcludedFilesInfo->hide();
-    mUi->pWarningRestart->hide();
-    mUi->lExcludedFilesInfo->hide();
-
-
 #ifdef Q_OS_WINDOWS
     mUi->cFinderIcons->hide();
 
@@ -585,44 +561,6 @@ void SettingsDialog::loadSettings()
     updateNetworkTab();
 
     // Folders tab
-    mUi->lExcludedNames->clear();
-    QStringList excludedNames = mPreferences->getExcludedSyncNames();
-    for (int i = 0; i < excludedNames.size(); i++)
-    {
-        mUi->lExcludedNames->addItem(excludedNames[i]);
-    }
-
-    QStringList excludedPaths = mPreferences->getExcludedSyncPaths();
-    for (int i = 0; i < excludedPaths.size(); i++)
-    {
-        mUi->lExcludedNames->addItem(excludedPaths[i]);
-    }
-
-    for (auto cb : {mUi->cbExcludeUpperUnit, mUi->cbExcludeLowerUnit})
-    {
-        cb->clear();
-        cb->addItem(tr("B"));
-        cb->addItem(tr("KB"));
-        cb->addItem(tr("MB"));
-        cb->addItem(tr("GB"));
-    }
-
-    bool upperSizeLimit (mPreferences->upperSizeLimit());
-    mUi->eLowerThan->setMaximum(NETWORK_LIMITS_MAX);
-    mUi->cExcludeUpperThan->setChecked(upperSizeLimit);
-    mUi->eUpperThan->setEnabled(upperSizeLimit);
-    mUi->cbExcludeUpperUnit->setEnabled(upperSizeLimit);
-    mUi->eUpperThan->setValue(static_cast<int>(mPreferences->upperSizeLimitValue()));
-    mUi->cbExcludeUpperUnit->setCurrentIndex(mPreferences->upperSizeLimitUnit());
-
-    bool lowerSizeLimit (mPreferences->lowerSizeLimit());
-    mUi->eUpperThan->setMaximum(NETWORK_LIMITS_MAX);
-    mUi->cExcludeLowerThan->setChecked(lowerSizeLimit);
-    mUi->eLowerThan->setEnabled(lowerSizeLimit);
-    mUi->cbExcludeLowerUnit->setEnabled(lowerSizeLimit);
-    mUi->eLowerThan->setValue(static_cast<int>(mPreferences->lowerSizeLimitValue()));
-    mUi->cbExcludeLowerUnit->setCurrentIndex(mPreferences->lowerSizeLimitUnit());
-
     mUi->syncSettings->setParentDialog(this);
     mUi->backupSettings->setParentDialog(this);
 
@@ -756,10 +694,6 @@ void SettingsDialog::closeEvent(QCloseEvent *event)
 
 void SettingsDialog::macOSretainSizeWhenHidden()
 {
-    QSizePolicy spExcludedFiles = mUi->gExcludedFilesInfo->sizePolicy();
-    spExcludedFiles.setRetainSizeWhenHidden(true);
-    mUi->gExcludedFilesInfo->setSizePolicy(spExcludedFiles);
-
     QSizePolicy spStorageQuota = mUi->pStorageQuota->sizePolicy();
     spStorageQuota.setRetainSizeWhenHidden(true);
     mUi->pStorageQuota->setSizePolicy(spStorageQuota);
