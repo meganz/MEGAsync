@@ -8,10 +8,13 @@ import components.texts 1.0 as Texts
 ColumnLayout {
 
     property alias title: title.rawText
+    property alias titleWeight: title.font.weight
     property alias description: description.text
     property alias descriptionWeight: description.font.weight
+    property alias descriptionColor: description.color
+    property alias descriptionFontSize: description.font.pixelSize
 
-    spacing: 12
+    spacing: 8
 
     Texts.RichText {
         id: title
@@ -26,9 +29,9 @@ ColumnLayout {
         id: description
 
         Layout.fillWidth: true
-        font.pixelSize: Texts.Text.Size.Normal
+        Layout.preferredHeight: 20
+        font.pixelSize: Texts.Text.Size.Medium
         wrapMode: Text.WordWrap
-        Layout.preferredHeight: 17
     }
 
 }

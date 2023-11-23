@@ -12,15 +12,20 @@ Item {
     property alias imageSource: image.source
     property alias leftButton: leftButton
     property alias rightButton: rightButton
-    property double imageTopMargin: 72
     property alias showProgressBar: progressBar.visible
     property alias indeterminate: progressBar.indeterminate
-    property double progressValue: 15.0
     property alias title: title.text
     property alias description: description.rawText
     property alias descriptionUrl: description.url
+    property alias descriptionFontSize: description.font.pixelSize
+    property alias descriptionColor: description.color
+    property alias descriptionLineHeight: description.lineHeight
+
+    property double imageTopMargin: 72
+    property double progressValue: 15.0
     property int spacing: 24
     property int bottomMargin: 48
+    property int horizontalMargin: 24
 
     Image {
         id: image
@@ -32,10 +37,14 @@ Item {
     }
 
     Column {
-        width: 304
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: bottomMargin
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            leftMargin: horizontalMargin
+            rightMargin: horizontalMargin
+            bottomMargin: bottomMargin
+        }
         spacing: root.spacing
 
         HorizontalProgressBar {
@@ -47,6 +56,8 @@ Item {
         }
 
         Column {
+            id: textColumn
+
             anchors.left: parent.left
             anchors.right: parent.right
             spacing: title.visible && description.visible ? 12 : 0
@@ -54,28 +65,36 @@ Item {
             Texts.Text {
                 id: title
 
-                font.pixelSize: Texts.Text.Size.MediumLarge
-                font.bold: true
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
                 anchors.left: parent.left
                 anchors.right: parent.right
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: Texts.Text.Size.MediumLarge
+                font.weight: Font.DemiBold
+                lineHeight: 24
+                lineHeightMode: Text.FixedHeight
+                visible: title.text !== ""
             }
 
             Texts.RichText {
                 id: description
 
-                color: Styles.textSecondary;
-                manageMouse: true
-                font.pixelSize: Texts.Text.Size.Small
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
                 anchors.left: parent.left
                 anchors.right: parent.right
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: Styles.textSecondary
+                manageMouse: true
+                font.pixelSize: Texts.Text.Size.Small
+                lineHeight: 16
+                lineHeightMode: Text.FixedHeight
+                visible: description.text !== ""
             }
         }
 
         Row {
+            id: buttonsRow
+
             anchors.horizontalCenter: parent.horizontalCenter
 
             OutlineButton {

@@ -45,6 +45,7 @@ Qml.Button {
         Texts.Text {
             id: textComponent
 
+            anchors.verticalCenter: parent.verticalCenter
             color: icon.color
             text: button.text
             verticalAlignment: Text.AlignVCenter
