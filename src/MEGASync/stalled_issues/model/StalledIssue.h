@@ -45,7 +45,7 @@ public:
     const Path& getMovePath() const;
     virtual bool isCloud() const {return false;}
 
-    virtual bool isFile() const {return false;}
+    virtual bool isFile() const {return false; }
 
     QString getFilePath() const;
     QString getMoveFilePath() const;
@@ -123,7 +123,7 @@ public:
         return true;
     }
 
-    bool isFile() const
+    bool isFile() const override
     {
         auto node(getNode());
         if(node)

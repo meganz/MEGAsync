@@ -18,7 +18,7 @@ StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent),
     qRegisterMetaType<StalledIssuesReceived>("StalledIssuesReceived");
 }
 
-void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *request, mega::MegaError*)
+void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError*)
 {
     if (request->getType() == ::mega::MegaRequest::TYPE_GET_SYNC_STALL_LIST)
     {
@@ -179,7 +179,7 @@ bool StalledIssuesModel::issuesRequested() const
     return mIssuesRequested.load();
 }
 
-void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi *api)
+void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 {
     auto isSyncStalled(api->isSyncStalled());
     if(isSyncStalled &&
@@ -326,7 +326,7 @@ void StalledIssuesModel::updateStalledIssues()
     }
 }
 
-void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes)
+void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes)
 {
     if(nodes)
     {
@@ -376,7 +376,7 @@ Qt::DropActions StalledIssuesModel::supportedDropActions() const
     return Qt::IgnoreAction;
 }
 
-bool StalledIssuesModel::hasChildren(const QModelIndex &parent) const
+bool StalledIssuesModel::hasChildren(const QModelIndex& parent) const
 {
     auto stalledIssueItem = static_cast<StalledIssue*>(parent.internalPointer());
     if (stalledIssueItem)
@@ -387,7 +387,7 @@ bool StalledIssuesModel::hasChildren(const QModelIndex &parent) const
     return true;
 }
 
-int StalledIssuesModel::rowCount(const QModelIndex &parent) const
+int StalledIssuesModel::rowCount(const QModelIndex& parent) const
 {
    if(!parent.isValid())
    {
@@ -399,12 +399,12 @@ int StalledIssuesModel::rowCount(const QModelIndex &parent) const
    }
 }
 
-int StalledIssuesModel::columnCount(const QModelIndex &) const
+int StalledIssuesModel::columnCount(const QModelIndex&) const
 {
    return 1;
 }
 
-QVariant StalledIssuesModel::data(const QModelIndex &index, int role) const
+QVariant StalledIssuesModel::data(const QModelIndex& index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
@@ -427,7 +427,7 @@ QVariant StalledIssuesModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QModelIndex StalledIssuesModel::parent(const QModelIndex &index) const
+QModelIndex StalledIssuesModel::parent(const QModelIndex& index) const
 {
     if(!index.isValid())
     {
@@ -449,7 +449,7 @@ QModelIndex StalledIssuesModel::parent(const QModelIndex &index) const
     return QModelIndex();
 }
 
-QModelIndex StalledIssuesModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex StalledIssuesModel::index(int row, int column, const QModelIndex& parent) const
 {
     if(parent.isValid() && mStalledIssues.size() > parent.row())
     {
@@ -462,7 +462,7 @@ QModelIndex StalledIssuesModel::index(int row, int column, const QModelIndex &pa
     }
 }
 
-Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex &index) const
+Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex& index) const
 {
     return QAbstractItemModel::flags(index) | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 }
@@ -480,13 +480,13 @@ bool StalledIssuesModel::isEmpty() const
            (mSolvedStalledIssues.size() > 0 && rowCount(QModelIndex()) == mSolvedStalledIssues.size());
 }
 
-void StalledIssuesModel::finishStalledIssues(const QModelIndexList &indexes)
+void StalledIssuesModel::finishStalledIssues(const QModelIndexList& indexes)
 {
     auto indexesToFinish(indexes);
     removeRows(indexesToFinish);
 }
 
-void StalledIssuesModel::removeRows(QModelIndexList &indexesToRemove)
+void StalledIssuesModel::removeRows(QModelIndexList& indexesToRemove)
 {
     std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
         return check1.row() > check2.row();
@@ -526,7 +526,7 @@ void StalledIssuesModel::removeRows(QModelIndexList &indexesToRemove)
     updateStalledIssuedByOrder();
 }
 
-bool StalledIssuesModel::removeRows(int row, int count, const QModelIndex &parent)
+bool StalledIssuesModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     if (parent == QModelIndex() && count > 0 && row >= 0)
     {
@@ -574,7 +574,7 @@ void StalledIssuesModel::unBlockUi()
     emit uiUnblocked();
 }
 
-void StalledIssuesModel::updateIndex(const QModelIndex &index)
+void StalledIssuesModel::updateIndex(const QModelIndex& index)
 {
     emit dataChanged(index, index);
 }
@@ -615,7 +615,7 @@ bool StalledIssuesModel::isRawInfoVisible() const
     return mRawInfoVisible;
 }
 
-void StalledIssuesModel::UiItemUpdate(const QModelIndex &oldIndex, const QModelIndex &newIndex)
+void StalledIssuesModel::UiItemUpdate(const QModelIndex& oldIndex, const QModelIndex& newIndex)
 {
     if(oldIndex.isValid() &&
        oldIndex != newIndex)
@@ -652,7 +652,7 @@ void StalledIssuesModel::reset()
     emit stalledIssuesCountChanged();
 }
 
-QModelIndex StalledIssuesModel::getSolveIssueIndex(const QModelIndex &index)
+QModelIndex StalledIssuesModel::getSolveIssueIndex(const QModelIndex& index)
 {
     auto indexParent(index.parent());
     return indexParent.isValid() ? indexParent : index;
@@ -720,7 +720,7 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
     emit updateLoadingMessage(info);
 }
 
-void StalledIssuesModel::solveListOfIssues(const QModelIndexList &list, std::function<bool (int)> solveFunc,
+void StalledIssuesModel::solveListOfIssues(const QModelIndexList& list, std::function<bool(int)> solveFunc,
                                            std::function<void (void)> startFunc, std::function<void (int, bool)> finishFunc)
 {
     startSolvingIssues();
@@ -856,7 +856,7 @@ void StalledIssuesModel::solveAllIssues()
     solveListOfIssues(list, resolveIssue);
 }
 
-void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &list)
+void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList& list)
 {
     auto resolveIssue = [this, remote](int row) -> bool
     {
@@ -884,7 +884,7 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
 }
 
 
-void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList &list)
+void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList& list)
 {
     mSyncsToDisable.clear();
 
@@ -920,7 +920,7 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList &list)
     solveListOfIssues(list, resolveIssue, nullptr, finishFunc);
 }
 
-void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &list)
+void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList& list)
 {
     auto resolveIssue = [this](int row) -> bool
     {
@@ -943,11 +943,11 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
     solveListOfIssues(list, resolveIssue);
 }
 
-void StalledIssuesModel::ignoreItems(const QModelIndexList &list, bool isSymLink)
+void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink)
 {
     mIgnoredItemsBySync.clear();
 
-    auto resolveIssue = [this, isSymLink](int row) -> bool
+    auto resolveIssue = [this](int row) -> bool
     {
         auto item = mStalledIssues.at(row);
         if(!item.getData()->syncIds().isEmpty())
@@ -1070,7 +1070,7 @@ void StalledIssuesModel::ignoreSymLinks()
         }
     }
 
-    auto startIssue = [this, list, involvedSyncs, involvedFailedToIgnoreSyncs]()
+    auto startIssue = [list, involvedSyncs, involvedFailedToIgnoreSyncs]()
     {
         std::unique_ptr<mega::MegaSyncList>syncs(MegaSyncApp->getMegaApi()->getSyncs());
         for (int i = 0; i < syncs->size(); ++i)
@@ -1132,11 +1132,11 @@ void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
     runMessageBox(std::move(msgInfo));
 }
 
-void StalledIssuesModel::fixFingerprint(const QModelIndexList &list)
+void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
 {
     mFingerprintIssuesToFix.clear();
 
-    auto finishIssue = [this](int issuesFixed, bool)
+    auto finishIssue = [this](int, bool)
     {
         mFingerprintIssuesSolver.solveIssues(mFingerprintIssuesToFix);
     };
@@ -1154,7 +1154,7 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList &list)
     solveListOfIssues(list, resolveIssue, nullptr, finishIssue);
 }
 
-void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &list, int option)
+void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option)
 {
     auto resolveIssue = [this, option](int row) -> bool
     {
@@ -1182,7 +1182,7 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &
     solveListOfIssues(list, resolveIssue);
 }
 
-bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex &index)
+bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index)
 {
     auto result(false);
 
@@ -1206,7 +1206,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, con
     return result;
 }
 
-bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString &renameTo, int conflictIndex, const QModelIndex &index)
+bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index)
 {
     auto result(false);
 
@@ -1230,7 +1230,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString &renameT
     return result;
 }
 
-bool StalledIssuesModel::checkForExternalChanges(const QModelIndex &index)
+bool StalledIssuesModel::checkForExternalChanges(const QModelIndex& index)
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
@@ -1238,7 +1238,7 @@ bool StalledIssuesModel::checkForExternalChanges(const QModelIndex &index)
     return issue.getData()->checkForExternalChanges();
 }
 
-bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex &index)
+bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index)
 {
     auto result(false);
 
@@ -1262,7 +1262,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, con
     return result;
 }
 
-bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex &index)
+bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index)
 {
     auto result(false);
 

@@ -1,7 +1,6 @@
 #include "StalledIssuesProxyModel.h"
 
-#include "StalledIssueHeader.h"
-#include "StalledIssueChooseWidget.h"
+
 #include "StalledIssuesModel.h"
 
 #include <QElapsedTimer>
