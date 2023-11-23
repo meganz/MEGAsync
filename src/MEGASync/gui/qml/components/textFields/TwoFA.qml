@@ -148,14 +148,18 @@ ColumnLayout {
         }
     }
 
-    HelpButton {
+    LinkButton {
         id: helpButtonItem
 
-        Layout.leftMargin: helpButtonItem.sizes.focusBorderWidth
+        Layout.leftMargin: -sizes.horizontalPadding
         text: OnboardingStrings.twoFANeedHelp
         url: Links.recovery
+        icons {
+            source: Images.helpCircle
+            position: Icon.Position.LEFT
+        }
         visible: !root.hasError
-        height: notification.height
+        sizes: SmallSizes { isLinkOrTextButton: true }
     }
 
     Shortcut {

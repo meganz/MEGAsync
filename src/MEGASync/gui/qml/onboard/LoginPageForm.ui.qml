@@ -5,7 +5,7 @@ import common 1.0
 
 import components.buttons 1.0
 import components.texts 1.0 as Texts
-import components.textFields 1.0
+import components.textFields 1.0 as TextFields
 
 import LoginController 1.0
 
@@ -23,7 +23,6 @@ StackViewPage {
         anchors {
             left: root.left
             right: root.right
-            bottom: buttonsLayout.top
             top: root.top
             topMargin: 120
         }
@@ -64,7 +63,7 @@ StackViewPage {
             width: parent.width + 2 * emailItem.sizes.focusBorderWidth
             spacing: contentSpacing / 2
 
-            EmailTextField {
+            TextFields.EmailTextField {
                 id: emailItem
 
                 width: parent.width
@@ -77,7 +76,7 @@ StackViewPage {
                 }
             }
 
-            PasswordTextField {
+            TextFields.PasswordTextField {
                 id: passwordItem
 
                 width: parent.width
@@ -90,15 +89,23 @@ StackViewPage {
                 }
             }
         }
+    }
 
-        HelpButton {
-            id: helpButtonItem
+    LinkButton {
+        id: helpButtonItem
 
-            anchors.left: parent.left
-            text: OnboardingStrings.forgotPassword
-            url: Links.recovery
-            visible: !loginControllerAccess.newAccount
+        anchors.top: mainColumn.bottom
+        anchors.left: root.left
+        anchors.leftMargin: -sizes.horizontalAlignWidth
+        anchors.topMargin: contentSpacing - sizes.verticalAlignWidth
+        text: OnboardingStrings.forgotPassword
+        url: Links.recovery
+        icons {
+            source: Images.helpCircle
+            position: Icon.Position.LEFT
         }
+        visible: !loginControllerAccess.newAccount
+        sizes: SmallSizes { isLinkOrTextButton: true }
     }
 
     RowLayout {
