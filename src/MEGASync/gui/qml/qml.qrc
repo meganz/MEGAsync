@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="">
+    <qresource prefix="/">
         <file>common/qmldir</file>
         <file>common/Constants.qml</file>
         <file>common/Images.qml</file>
@@ -25,6 +25,8 @@
         <file>components/buttons/Sizes.qml</file>
         <file>components/buttons/SmallSizes.qml</file>
         <file>components/buttons/LargeSizes.qml</file>
+        <file>components/buttons/LinkButton.qml</file>
+        <file>components/buttons/TextButton.qml</file>
         <file>components/checkBoxes/qmldir</file>
         <file>components/checkBoxes/CheckBox.qml</file>
         <file>components/checkBoxes/Colors.qml</file>

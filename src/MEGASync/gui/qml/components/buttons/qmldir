@@ -14,3 +14,5 @@ Progress 1.0 Progress.qml
 Sizes 1.0 Sizes.qml
 SmallSizes 1.0 SmallSizes.qml
 LargeSizes 1.0 LargeSizes.qml
+LinkButton 1.0 LinkButton.qml
+TextButton 1.0 TextButton.qml
