@@ -5,8 +5,7 @@
 #include "StalledIssuesUtilities.h"
 #include "TransfersModel.h"
 
-StalledIssueData::StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
-    : original(std::move(originalstall))
+StalledIssueData::StalledIssueData()
 {
     qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
     qRegisterMetaType<StalledIssuesDataList>("StalledIssuesDataList");
@@ -199,7 +198,7 @@ bool StalledIssue::initLocalIssue(const mega::MegaSyncStall *stallIssue)
 {
     if(!mLocalData)
     {
-        mLocalData = QExplicitlySharedDataPointer<LocalStalledIssueData>(new LocalStalledIssueData(std::unique_ptr<mega::MegaSyncStall>(stallIssue->copy())));
+        mLocalData = QExplicitlySharedDataPointer<LocalStalledIssueData>(new LocalStalledIssueData());
         return true;
     }
 
@@ -210,7 +209,7 @@ bool StalledIssue::initCloudIssue(const mega::MegaSyncStall *stallIssue)
 {
     if(!mCloudData)
     {
-        mCloudData = QExplicitlySharedDataPointer<CloudStalledIssueData>(new CloudStalledIssueData(std::unique_ptr<mega::MegaSyncStall>(stallIssue->copy())));
+        mCloudData = QExplicitlySharedDataPointer<CloudStalledIssueData>(new CloudStalledIssueData());
 
         return true;
     }
