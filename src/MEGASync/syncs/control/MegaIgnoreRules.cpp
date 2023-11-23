@@ -288,12 +288,13 @@ MegaIgnoreSizeRule::UnitTypes MegaIgnoreSizeRule::unit() const
     return mUnit;
 }
 
-QStringList MegaIgnoreSizeRule::getUnitsForDisplay()
+const QStringList& MegaIgnoreSizeRule::getUnitsForDisplay()
 {
-    return QStringList() << QApplication::translate("Sizes", "B")
-                         << QApplication::translate("Sizes", "KB")
-                         << QApplication::translate("Sizes", "MB")
-                         << QApplication::translate("Sizes", "GB");
+    static const auto units =  QStringList() << QApplication::translate("Sizes", "B")
+                                            << QApplication::translate("Sizes", "KB")
+                                            << QApplication::translate("Sizes", "MB")
+                                            << QApplication::translate("Sizes", "GB");
+    return units;
 }
 
 void MegaIgnoreSizeRule::setValue(int newValue)

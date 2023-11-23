@@ -138,184 +138,191 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
 
     switch(index.column())
     {
-    case Column::ENABLED:
-        if(role == Qt::CheckStateRole)
+        case Column::ENABLED:
         {
-            return sync->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING ? Qt::Checked : Qt::Unchecked;
+            if(role == Qt::CheckStateRole)
+            {
+                return sync->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING ? Qt::Checked : Qt::Unchecked;
+            }
+                break;
         }
-            break;
-    case Column::LNAME:
-        if(role == Qt::DecorationRole)
+        case Column::LNAME:
         {
-            QIcon syncIcon;
+            if(role == Qt::DecorationRole)
+            {
+                QIcon syncIcon;
 
-            if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING
-                    || (sync->getRunState() == mega::MegaSync::RUNSTATE_LOADING || sync->getRunState() == mega::MegaSync::RUNSTATE_PENDING))
-            {
-                syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
-                syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
-            }
-            else if(sync->getRunState() == mega::MegaSync::RUNSTATE_PAUSED)
-            {
-                syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
-                syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
-            }
-            else if(sync->getRunState() == mega::MegaSync::RUNSTATE_DISABLED)
-            {
-                if(sync->getError())
+                if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING
+                        || (sync->getRunState() == mega::MegaSync::RUNSTATE_LOADING || sync->getRunState() == mega::MegaSync::RUNSTATE_PENDING))
                 {
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle-error.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                    syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                    syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
                 }
-                else
-                {
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
-                }
-
-                syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
-            }
-            else if(sync->getRunState() == mega::MegaSync::RUNSTATE_SUSPENDED)
-            {
-                if(sync->getError())
-                {
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/hand-error.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/hand-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
-                }
-                else
+                else if(sync->getRunState() == mega::MegaSync::RUNSTATE_PAUSED)
                 {
                     syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
                     syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
                 }
-            }
-
-            return syncIcon;
-        }
-        else if(role == Qt::DisplayRole)
-        {
-            return sync->name(false, true);
-        }
-        else if(role == Qt::ToolTipRole)
-        {
-            QString toolTip;
-            toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
-            toolTip += QChar::LineSeparator;
-            toolTip += SyncTooltipCreator::createForRemote(sync->getMegaFolder());
-            return toolTip;
-        }
-        else if(role == ErrorTooltipRole)
-        {
-            QString toolTip;
-            toolTip += QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()));
-            return toolTip;
-        }
-        break;
-    case Column::STATE:
-        if(role == Qt::DisplayRole)
-        {
-            std::string s;
-            switch (sync->getRunState())
-            {
-            case ::mega::MegaSync::RUNSTATE_PENDING:
-            case ::mega::MegaSync::RUNSTATE_LOADING: s = "Loading"; break;
-            case ::mega::MegaSync::RUNSTATE_PAUSED: s = "Paused"; break;
-            case ::mega::MegaSync::RUNSTATE_SUSPENDED:
+                else if(sync->getRunState() == mega::MegaSync::RUNSTATE_DISABLED)
                 {
                     if(sync->getError())
                     {
-                        s = "Suspended";
+                        syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle-error.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
                     }
                     else
                     {
-                        s = "Paused";
+                        syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
                     }
-                    break;
+
+                    syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
                 }
-            case ::mega::MegaSync::RUNSTATE_DISABLED: s = "Disabled"; break;
-            case ::mega::MegaSync::RUNSTATE_RUNNING:
+                else if(sync->getRunState() == mega::MegaSync::RUNSTATE_SUSPENDED)
                 {
-                    auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
-                    if (it != mSyncInfo->mSyncStatsMap.end())
+                    if(sync->getError())
                     {
-                        ::mega::MegaSyncStats& stats = *it->second;
-                        if (stats.isScanning())
+                        syncIcon.addFile(QLatin1String(":/images/sync_states/hand-error.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                        syncIcon.addFile(QLatin1String(":/images/sync_states/hand-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
+                    }
+                    else
+                    {
+                        syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                        syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
+                    }
+                }
+
+                return syncIcon;
+            }
+            else if(role == Qt::DisplayRole)
+            {
+                return sync->name(false, true);
+            }
+            else if(role == Qt::ToolTipRole)
+            {
+                QString toolTip;
+                toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
+                toolTip += QChar::LineSeparator;
+                toolTip += SyncTooltipCreator::createForRemote(sync->getMegaFolder());
+                return toolTip;
+            }
+            else if(role == ErrorTooltipRole)
+            {
+                QString toolTip;
+                toolTip += QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()));
+                return toolTip;
+            }
+            break;
+        }
+        case Column::STATE:
+        {
+            if(role == Qt::DisplayRole)
+            {
+                std::string s;
+                switch (sync->getRunState())
+                {
+                case ::mega::MegaSync::RUNSTATE_PENDING:
+                case ::mega::MegaSync::RUNSTATE_LOADING: s = "Loading"; break;
+                case ::mega::MegaSync::RUNSTATE_PAUSED: s = "Paused"; break;
+                case ::mega::MegaSync::RUNSTATE_SUSPENDED:
+                    {
+                        if(sync->getError())
                         {
-                            s = "Scanning";
-                        }
-                        else if (stats.isSyncing())
-                        {
-                            s = "Syncing";
+                            s = "Suspended";
                         }
                         else
                         {
-                            s = "Monitoring";
+                            s = "Paused";
+                        }
+                        break;
+                    }
+                case ::mega::MegaSync::RUNSTATE_DISABLED: s = "Disabled"; break;
+                case ::mega::MegaSync::RUNSTATE_RUNNING:
+                    {
+                        auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+                        if (it != mSyncInfo->mSyncStatsMap.end())
+                        {
+                            ::mega::MegaSyncStats& stats = *it->second;
+                            if (stats.isScanning())
+                            {
+                                s = "Scanning";
+                            }
+                            else if (stats.isSyncing())
+                            {
+                                s = "Syncing";
+                            }
+                            else
+                            {
+                                s = "Monitoring";
+                            }
                         }
                     }
                 }
+                return QString::fromStdString(s);
             }
-            return QString::fromStdString(s);
+            break;
         }
-        break;
-    case Column::FILES:
-        if(role == Qt::DisplayRole)
+        case Column::FILES:
         {
-            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
-            if (it != mSyncInfo->mSyncStatsMap.end())
+            auto statsGetter = [](const ::mega::MegaSyncStats& stats){
+                return stats.getFileCount();
+            };
+            return getColumnStats(role, sync->backupId(), statsGetter);
+        }
+        case Column::FOLDERS:
+        {
+            auto statsGetter = [](const ::mega::MegaSyncStats& stats){
+                return stats.getFolderCount();
+            };
+            return getColumnStats(role, sync->backupId(), statsGetter);
+        }
+        case Column::DOWNLOADS:
+        {
+            auto statsGetter = [](const ::mega::MegaSyncStats& stats){
+                return stats.getDownloadCount();
+            };
+            return getColumnStats(role, sync->backupId(), statsGetter);
+        }
+        case Column::UPLOADS:
+        {
+            auto statsGetter = [](const ::mega::MegaSyncStats& stats) -> int{
+                return stats.getUploadCount();
+            };
+            return getColumnStats(role, sync->backupId(), statsGetter);
+        }
+        case Column::MENU:
+        {
+            if(role == Qt::DecorationRole)
             {
-                ::mega::MegaSyncStats& stats = *it->second;
-                return QString::fromStdString(std::to_string(stats.getFileCount()));
+                QIcon dotsMenu;
+                dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
+                dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-press.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
+                dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Active);
+                return dotsMenu;
             }
-        }
-        break;
-    case Column::FOLDERS:
-        if(role == Qt::DisplayRole)
-        {
-            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
-            if (it != mSyncInfo->mSyncStatsMap.end())
+            else if(role == Qt::TextAlignmentRole)
             {
-                ::mega::MegaSyncStats& stats = *it->second;
-                return QString::fromStdString(std::to_string(stats.getFolderCount()));
+                return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter);
             }
-        }
-        break;
-    case Column::DOWNLOADS:
-        if(role == Qt::DisplayRole)
-        {
-            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
-            if (it != mSyncInfo->mSyncStatsMap.end())
+            else if(role == Qt::ToolTipRole)
             {
-                ::mega::MegaSyncStats& stats = *it->second;
-                return QString::fromStdString(std::to_string(stats.getDownloadCount()));
+                return tr("Click menu for more Sync actions");
             }
+            break;
         }
-        break;
-    case Column::UPLOADS:
-        if(role == Qt::DisplayRole)
+    }
+
+    return QVariant();
+}
+
+QVariant SyncItemModel::getColumnStats(int role, mega::MegaHandle backupId, std::function<int (const ::mega::MegaSyncStats &)> statsGetter) const
+{
+    if(role == Qt::DisplayRole)
+    {
+        auto it = mSyncInfo->mSyncStatsMap.find(backupId);
+        if (it != mSyncInfo->mSyncStatsMap.end())
         {
-            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
-            if (it != mSyncInfo->mSyncStatsMap.end())
-            {
-                ::mega::MegaSyncStats& stats = *it->second;
-                return QString::fromStdString(std::to_string(stats.getUploadCount()));
-            }
+            const ::mega::MegaSyncStats& stats = *it->second;
+            return statsGetter(stats);
         }
-        break;
-    case Column::MENU:
-        if(role == Qt::DecorationRole)
-        {
-            QIcon dotsMenu;
-            dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
-            dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-press.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
-            dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Active);
-            return dotsMenu;
-        }
-        else if(role == Qt::TextAlignmentRole)
-        {
-            return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter);
-        }
-        else if(role == Qt::ToolTipRole)
-        {
-            return tr("Click menu for more Sync actions");
-        }
-        break;
     }
 
     return QVariant();
@@ -423,7 +430,6 @@ void SyncItemModel::sendDataChanged(int row)
                      index(row, Column::MENU, QModelIndex()),
                      QVector<int>()<< Qt::CheckStateRole << Qt::DecorationRole << Qt::ToolTipRole);
 }
-
 
 QList<std::shared_ptr<SyncSettings> > SyncItemModel::getList() const
 {

@@ -50,16 +50,18 @@ public:
 
     std::shared_ptr<SyncSettings> getSyncSettings(const QModelIndex &index) const;
 
+signals:
+    void signalSyncCheckboxOn(std::shared_ptr<SyncSettings> syncSetting);
+    void signalSyncCheckboxOff(std::shared_ptr<SyncSettings> syncSetting);
+    void syncUpdateFinished(std::shared_ptr<SyncSettings> syncSetting);
+
 protected:
     QList<std::shared_ptr<SyncSettings>> getList() const;
     void setList(QList<std::shared_ptr<SyncSettings>> list);
     mega::MegaSync::SyncType getMode();
     void setMode(mega::MegaSync::SyncType syncType);
 
-signals:
-    void signalSyncCheckboxOn(std::shared_ptr<SyncSettings> syncSetting);
-    void signalSyncCheckboxOff(std::shared_ptr<SyncSettings> syncSetting);
-    void syncUpdateFinished(std::shared_ptr<SyncSettings> syncSetting);
+    SyncInfo* mSyncInfo;
 
 private slots:
     //void resetModel();
@@ -67,13 +69,12 @@ private slots:
     void updateSyncStats(std::shared_ptr<::mega::MegaSyncStats> stats);
     void removeSync(std::shared_ptr<SyncSettings> sync);
 
-protected:
-    SyncInfo* mSyncInfo;
 private:
     QList<std::shared_ptr<SyncSettings>> mList;
     mega::MegaSync::SyncType mSyncType;
 
     virtual void sendDataChanged(int row);
+    QVariant getColumnStats(int role, mega::MegaHandle backupId, std::function<int (const::mega::MegaSyncStats &)> statsGetter) const;
 };
 
 
