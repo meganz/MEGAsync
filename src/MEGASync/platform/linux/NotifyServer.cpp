@@ -59,7 +59,7 @@ void NotifyServer::acceptConnection()
         for (auto syncSetting : model->getAllSyncSettings())
         {
             QString c = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
-            if (!c.isEmpty() && syncSetting->getRunState() != MegaSync::RUNSTATE_RUNNING)
+            if (!c.isEmpty() && syncSetting->isActive())
             {
                 localFolders++;
                 client->write("A");

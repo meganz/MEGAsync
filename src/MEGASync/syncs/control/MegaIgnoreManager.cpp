@@ -54,8 +54,8 @@ bool MegaIgnoreManager::isValid(const QString& syncLocalFolder)
     else
     {
         QDir megaIgnorePath(ignorePath);
-        QTemporaryFile* test = new QTemporaryFile(megaIgnorePath.absolutePath() + QDir::separator());
-        return test->open();
+        QTemporaryFile test(megaIgnorePath.absolutePath() + QDir::separator());
+        return test.open();
     }
 
     return true;
