@@ -14,7 +14,6 @@
         <file>components/buttons/CardButton.qml</file>
         <file>components/buttons/CardHorizontalButton.qml</file>
         <file>components/buttons/CardVerticalButton.qml</file>
-        <file>components/buttons/HelpButton.qml</file>
         <file>components/buttons/IconButton.qml</file>
         <file>components/buttons/OutlineButton.qml</file>
         <file>components/buttons/PrimaryButton.qml</file>
