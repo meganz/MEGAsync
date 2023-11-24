@@ -10,8 +10,6 @@
 #include "AccountStatusController.h"
 #include "SettingsDialog.h"
 #include "BackupsModel.h"
-#include "qml/QmlClipboard.h"
-#include "qml/ApiEnums.h"
 #include "OnboardingQmlDialog.h"
 
 using namespace mega;
