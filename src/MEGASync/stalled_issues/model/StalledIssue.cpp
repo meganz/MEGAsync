@@ -14,12 +14,12 @@ StalledIssueData::StalledIssueData()
     qRegisterMetaType<StalledIssuesVariantList>("StalledIssuesVariantList");
 }
 
-const StalledIssueData::Path &StalledIssueData::getPath() const
+const StalledIssueData::Path& StalledIssueData::getPath() const
 {
     return mPath;
 }
 
-const StalledIssueData::Path &StalledIssueData::getMovePath() const
+const StalledIssueData::Path& StalledIssueData::getMovePath() const
 {
     return mMovePath;
 }
@@ -126,7 +126,7 @@ QString StalledIssueData::getFileName() const
     return fileName;
 }
 
-void StalledIssueData::checkTrailingSpaces(QString &name) const
+void StalledIssueData::checkTrailingSpaces(QString& name) const
 {
     auto trimmedPath = name.trimmed();
     if(trimmedPath != name)
@@ -188,13 +188,13 @@ void CloudStalledIssueData::setPathHandle(mega::MegaHandle newPathHandle)
 /// \brief StalledIssue::StalledIssue
 /// \param stallIssue
 ///
-StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
+StalledIssue::StalledIssue(const mega::MegaSyncStall* stallIssue)
     : mFileSystemWatcher(new FileSystemSignalHandler(this))
 {
     originalStall.reset(stallIssue->copy());
 }
 
-bool StalledIssue::initLocalIssue(const mega::MegaSyncStall *stallIssue)
+bool StalledIssue::initLocalIssue(const mega::MegaSyncStall* stallIssue)
 {
     if(!mLocalData)
     {
@@ -205,7 +205,7 @@ bool StalledIssue::initLocalIssue(const mega::MegaSyncStall *stallIssue)
     return false;
 }
 
-bool StalledIssue::initCloudIssue(const mega::MegaSyncStall *stallIssue)
+bool StalledIssue::initCloudIssue(const mega::MegaSyncStall* stallIssue)
 {
     if(!mCloudData)
     {
@@ -217,7 +217,7 @@ bool StalledIssue::initCloudIssue(const mega::MegaSyncStall *stallIssue)
     return false;
 }
 
-void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
+void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
     mReason = stall->reason();
     mDetectedMEGASide = stall->detectedCloudSide();
@@ -258,8 +258,8 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         setIsFile(localTargetPath, true);
     }
 
-    auto cloudSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,0));
-    auto cloudTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,1));
+    auto cloudSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true, 0));
+    auto cloudTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true, 1));
 
     auto cloudSourcePath = QString::fromUtf8(stall->path(true,0));
     fillSyncId(cloudSourcePath, true);
@@ -365,7 +365,7 @@ void StalledIssue::fillSyncId(const QString& path, bool cloud)
     }
 }
 
-const std::shared_ptr<mega::MegaSyncStall> &StalledIssue::getOriginalStall() const
+const std::shared_ptr<mega::MegaSyncStall>& StalledIssue::getOriginalStall() const
 {
     return originalStall;
 }
@@ -392,7 +392,7 @@ QSize StalledIssue::getDelegateSize(Type type) const
     return QSize(0, 0);
 }
 
-void StalledIssue::setDelegateSize(const QSize &newDelegateSize, Type type)
+void StalledIssue::setDelegateSize(const QSize& newDelegateSize, Type type)
 {
     switch(type)
     {
@@ -517,12 +517,12 @@ const CloudStalledIssueDataPtr StalledIssue::consultCloudData() const
     return mCloudData;
 }
 
-const QExplicitlySharedDataPointer<LocalStalledIssueData> &StalledIssue::getLocalData()
+const QExplicitlySharedDataPointer<LocalStalledIssueData>& StalledIssue::getLocalData()
 {
     return mLocalData;
 }
 
-const QExplicitlySharedDataPointer<CloudStalledIssueData> &StalledIssue::getCloudData()
+const QExplicitlySharedDataPointer<CloudStalledIssueData>& StalledIssue::getCloudData()
 {
     return mCloudData;
 }
@@ -576,7 +576,7 @@ QStringList StalledIssue::getLocalFiles()
     return files;
 }
 
-void StalledIssue::setIsFile(const QString &path, bool isLocal)
+void StalledIssue::setIsFile(const QString& path, bool isLocal)
 {
     if(isLocal)
     {
@@ -684,7 +684,7 @@ QString StalledIssue::getFileName(bool preferCloud) const
     return fileName;
 }
 
-bool StalledIssue::operator==(const StalledIssue &data)
+bool StalledIssue::operator==(const StalledIssue& data)
 {
     bool equal(true);
 
@@ -694,7 +694,7 @@ bool StalledIssue::operator==(const StalledIssue &data)
     return equal;
 }
 
-void StalledIssue::updateIssue(const mega::MegaSyncStall *stallIssue)
+void StalledIssue::updateIssue(const mega::MegaSyncStall* stallIssue)
 {
     mLocalData.reset();
     mCloudData.reset();

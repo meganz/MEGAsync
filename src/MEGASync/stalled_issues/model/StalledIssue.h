@@ -262,7 +262,7 @@ class StalledIssue
     };
 
 public:
-    StalledIssue(const mega::MegaSyncStall *stallIssue);
+    StalledIssue(const mega::MegaSyncStall* stallIssue);
     virtual ~StalledIssue(){}
 
     const LocalStalledIssueDataPtr consultLocalData() const;
@@ -283,7 +283,7 @@ public:
 
     bool operator==(const StalledIssue &data);
 
-    virtual void updateIssue(const mega::MegaSyncStall *stallIssue);
+    virtual void updateIssue(const mega::MegaSyncStall* stallIssue);
 
     enum SolveType
     {
@@ -321,12 +321,12 @@ public:
     };
 
     QSize getDelegateSize(Type type) const;
-    void setDelegateSize(const QSize &newDelegateSize, Type type);
+    void setDelegateSize(const QSize& newDelegateSize, Type type);
     void removeDelegateSize(Type type);
 
-    const std::shared_ptr<mega::MegaSyncStall> &getOriginalStall() const;
+    const std::shared_ptr<mega::MegaSyncStall>& getOriginalStall() const;
 
-    virtual void fillIssue(const mega::MegaSyncStall *stall);
+    virtual void fillIssue(const mega::MegaSyncStall* stall);
     virtual void endFillingIssue();
 
     template <class Type>
@@ -347,10 +347,10 @@ public:
     mega::MegaSync::SyncType getSyncType() const;
 
 protected:
-    bool initLocalIssue(const mega::MegaSyncStall *stallIssue);
+    bool initLocalIssue(const mega::MegaSyncStall* stallIssue);
     QExplicitlySharedDataPointer<LocalStalledIssueData> mLocalData;
 
-    bool initCloudIssue(const mega::MegaSyncStall *stallIssue);
+    bool initCloudIssue(const mega::MegaSyncStall* stallIssue);
     QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
     void fillSyncId(const QString &path, bool cloud);
@@ -384,7 +384,7 @@ public:
         return mData;
     }
 
-    void updateData(const mega::MegaSyncStall *stallIssue)
+    void updateData(const mega::MegaSyncStall* stallIssue)
     {
         mData->updateIssue(stallIssue);
     }
@@ -394,7 +394,7 @@ public:
         mData.reset();
     }
 
-    bool operator==(const StalledIssueVariant &issue)
+    bool operator==(const StalledIssueVariant& issue)
     {
         return issue.mData == this->mData;
     }

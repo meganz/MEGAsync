@@ -13,7 +13,7 @@
 
 #include <QSortFilterProxyModel>
 
-StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent), mega::MegaRequestListener()
+StalledIssuesReceiver::StalledIssuesReceiver(QObject* parent) : QObject(parent), mega::MegaRequestListener()
 {
     qRegisterMetaType<StalledIssuesReceived>("StalledIssuesReceived");
 }

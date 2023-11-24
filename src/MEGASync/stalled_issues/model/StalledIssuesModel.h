@@ -31,7 +31,7 @@ public:
         }
     };
 
-    explicit StalledIssuesReceiver(QObject *parent = nullptr);
+    explicit StalledIssuesReceiver(QObject* parent = nullptr);
     ~StalledIssuesReceiver(){}
 
 public slots:
@@ -42,7 +42,7 @@ signals:
     void solvingIssues(int issueCount, int total);
 
 protected:
-    void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest *request, ::mega::MegaError*);
+    void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest* request, ::mega::MegaError*);
 
 private:
     QMutex mCacheMutex;
@@ -103,14 +103,14 @@ public:
     //Solve all issues
     void solveAllIssues();
 
-    bool checkForExternalChanges(const QModelIndex &index);
+    bool checkForExternalChanges(const QModelIndex& index);
 
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
 
     bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
-    bool solveCloudConflictedNameByRename(const QString &renameTo, int conflictIndex, const QModelIndex& index);
+    bool solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
 
     void finishConflictManually();
 
@@ -149,7 +149,7 @@ signals:
 
 protected slots:
     void onGlobalSyncStateChanged(mega::MegaApi* api) override;
-    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes) override;
+    void onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes) override;
 
 private slots:
     void onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived);
@@ -158,7 +158,7 @@ private slots:
 private:
     void runMessageBox(QMegaMessageBox::MessageBoxInfo info);
 
-    void removeRows(QModelIndexList &indexesToRemove);
+    void removeRows(QModelIndexList& indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     void updateStalledIssuedByOrder();
     void reset();
@@ -173,7 +173,7 @@ private:
 
     void solveListOfIssues(const QModelIndexList& list, std::function<bool(int)> solveFunc,
                            std::function<void ()> startFunc = nullptr, std::function<void (int, bool)> finishFunc = nullptr);
-    void issueSolved(const StalledIssueVariant &issue);
+    void issueSolved(const StalledIssueVariant& issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
     void operator=(const StalledIssuesModel&) = delete;
