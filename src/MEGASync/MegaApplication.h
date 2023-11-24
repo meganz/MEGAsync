@@ -277,7 +277,6 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
-    void deleteSdkCache();
     void tryExitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);

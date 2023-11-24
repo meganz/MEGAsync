@@ -81,7 +81,6 @@ public slots:
 private slots:
     void on_bBackupCenter_clicked();
     void on_bHelp_clicked();
-    void on_bRestart_clicked();
 #ifdef Q_OS_MACOS
     void onAnimationFinished();
     void initializeNativeUIComponents();

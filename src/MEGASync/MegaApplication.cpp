@@ -479,19 +479,6 @@ void MegaApplication::initialize()
         toggleLogging();
     }
 
-    // TODO: This is legacy behavior and should be deleted when SRW is merged
-    // We also handle here the case where the user changed the exclusions with a
-    // version not using the mustDeleteSdkCacheAtStartup flag, did not restart
-    // from the settings dialog to activate the new exclusions, and the app got (auto) updated.
-    if (preferences->mustDeleteSdkCacheAtStartup()
-        || (updated && prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
-            && preferences->isCrashed()))
-    {
-        preferences->setDeleteSdkCacheAtStartup(false);
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "deleteSdkCacheAtStartup is true: force reload");
-        deleteSdkCache();
-    }
-
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
     megaApi->disableGfxFeatures(mDisableGfx);
@@ -1787,26 +1774,6 @@ void MegaApplication::rebootApplication(bool update)
 
     trayIcon->hide();
     QApplication::exit();
-}
-
-// TODO: This is legacy behavior and should be deleted when SRW is merged
-void MegaApplication::deleteSdkCache()
-{
-    QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
-    while (di.hasNext())
-    {
-        di.next();
-        const QFileInfo& fi = di.fileInfo();
-        if (!fi.fileName().contains(QString::fromUtf8("transfers_"))
-            && !fi.fileName().contains(QString::fromUtf8("syncconfigsv2_"))
-            && (fi.fileName().endsWith(QString::fromUtf8(".db"))
-                || fi.fileName().endsWith(QString::fromUtf8(".db-wal"))
-                || fi.fileName().endsWith(QString::fromUtf8(".db-shm"))))
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Deleting local cache: %1").arg(di.filePath()).toUtf8().constData());
-            QFile::remove(di.filePath());
-        }
-    }
 }
 
 int* testCrashPtr = nullptr;
