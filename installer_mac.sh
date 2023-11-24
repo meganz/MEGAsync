@@ -295,7 +295,7 @@ if [ "$notarize" = "1" ]; then
     mkdir $MOUNTDIR || :
     hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
     spctl --assess -vv -a $MOUNTDIR/$VOLUME_NAME/$APP_NAME.app
-    hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
+    hdiutil detach $MOUNTDIR/$VOLUME_NAME >/dev/null
     rmdir $MOUNTDIR
 
 	cd ..
