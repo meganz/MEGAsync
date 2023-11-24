@@ -369,6 +369,25 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
             delete copiedNodes;
         });
     }
+    else
+    {
+        auto stalledIssuesDialog = DialogOpener::findDialog<StalledIssuesDialog>();
+        if (stalledIssuesDialog && stalledIssuesDialog->getDialog()->isActiveWindow())
+        {
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = MegaSyncApp->getMEGAString();
+            msgInfo.textFormat = Qt::RichText;
+            msgInfo.buttons = QMessageBox::Ok;
+            QMap<QMessageBox::StandardButton, QString> buttonsText;
+            buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
+            msgInfo.buttonsText = buttonsText;
+            msgInfo.text = tr("Some external changes were detected. Please, refresh the view.");
+            msgInfo.finishFunc = [this](QPointer<QMessageBox>) {
+                updateStalledIssues();
+            };
+            runMessageBox(std::move(msgInfo));
+        }
+    }
 }
 
 Qt::DropActions StalledIssuesModel::supportedDropActions() const
