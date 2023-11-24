@@ -424,7 +424,7 @@ private:
     friend class StalledIssuesModel;
     friend class StalledIssuesReceiver;
 
-    std::shared_ptr<StalledIssue> &getData()
+    std::shared_ptr<StalledIssue>& getData()
     {
         return mData;
     }
