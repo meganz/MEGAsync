@@ -6693,26 +6693,32 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>Syncs</name>
     <message>
         <source>Select a local folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The local path is unavaliable.</source>
+        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
+        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 folder doesn&apos;t exist</source>
+        <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
