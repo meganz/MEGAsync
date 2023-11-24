@@ -2158,6 +2158,8 @@ void MegaApplication::periodicTasks()
             });// end of thread pool function
         }
 
+        onGlobalSyncStateChanged(megaApi);
+
 #ifdef Q_OS_LINUX
         updateTrayIcon();
 #endif
