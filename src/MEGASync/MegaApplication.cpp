@@ -2159,10 +2159,6 @@ void MegaApplication::periodicTasks()
         }
 
         onGlobalSyncStateChanged(megaApi);
-
-#ifdef Q_OS_LINUX
-        updateTrayIcon();
-#endif
     }
 
     if (trayIcon)
