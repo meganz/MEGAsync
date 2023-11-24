@@ -4462,12 +4462,6 @@ void MegaApplication::createTrayIcon()
 
     updateTrayIconMenu();
 
-    if (isLinux)
-    {
-        return;
-    }
-
-
     trayIcon->setToolTip(QCoreApplication::applicationName()
                      + QString::fromUtf8(" ")
                      + Preferences::VERSION_STRING
