@@ -347,13 +347,13 @@ public:
     mega::MegaSync::SyncType getSyncType() const;
 
 protected:
-    bool initLocalIssue(const mega::MegaSyncStall* stallIssue);
+    bool initLocalIssue();
     QExplicitlySharedDataPointer<LocalStalledIssueData> mLocalData;
 
-    bool initCloudIssue(const mega::MegaSyncStall* stallIssue);
+    bool initCloudIssue();
     QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
-    void fillSyncId(const QString &path, bool cloud);
+    void fillSyncId(const QString& path, bool cloud);
 
     void setIsFile(const QString& path, bool isLocal);
 

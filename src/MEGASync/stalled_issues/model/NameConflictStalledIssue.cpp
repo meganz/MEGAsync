@@ -15,7 +15,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
     if(localConflictNames > 0)
     {
-        initLocalIssue(stall);
+        initLocalIssue();
 
         for(unsigned int index = 0; index < localConflictNames; ++index)
         {
@@ -41,7 +41,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
     if(cloudConflictNames > 0)
     {
-        initCloudIssue(stall);
+        initCloudIssue();
 
         auto firstCloudPath(stall->path(true,0));
         if(consultCloudData()->mPath.isEmpty())
@@ -55,7 +55,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         for(unsigned int index = 0; index < cloudConflictNames; ++index)
         {
             auto cloudHandle(stall->cloudNodeHandle(index));
-            auto cloudPath = QString::fromUtf8(stall->path(true,index));
+            auto cloudPath = QString::fromUtf8(stall->path(true, index));
             if(cloudPath.startsWith(QLatin1String("//")))
             {
                 cloudPath = cloudPath.remove(0,1);

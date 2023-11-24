@@ -133,7 +133,7 @@ const int StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE = Qt::UserRole;
 const int EVENT_REQUEST_DELAY = 600000; /*10 minutes*/
 const char* FILEWATCHER_ROW = "FILEWATCHER_ROW";
 
-StalledIssuesModel::StalledIssuesModel(QObject *parent)
+StalledIssuesModel::StalledIssuesModel(QObject* parent)
     : QAbstractItemModel(parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
     mRawInfoVisible(false),

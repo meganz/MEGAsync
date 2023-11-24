@@ -24,7 +24,7 @@ const char* EXTRAINFO_SIZE = "extrainfo_size";
 
 #include <QGraphicsOpacityEffect>
 
-StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
+StalledIssueActionTitle::StalledIssueActionTitle(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::StalledIssueActionTitle),
     mIsCloud(false),
@@ -65,7 +65,7 @@ QString StalledIssueActionTitle::title() const
     return ui->titleLabel->toPlainText();
 }
 
-void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &text, int id, bool mainButton)
+void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& text, int id, bool mainButton)
 {
     auto button = new QPushButton(icon, text, this);
 
@@ -132,7 +132,7 @@ void StalledIssueActionTitle::showIcon()
     }
 }
 
-void StalledIssueActionTitle::setMessage(const QString &message, const QPixmap& pixmap)
+void StalledIssueActionTitle::setMessage(const QString& message, const QPixmap& pixmap)
 {
     updateSizeHints();
     ui->messageContainer->show();
@@ -147,7 +147,7 @@ void StalledIssueActionTitle::setMessage(const QString &message, const QPixmap& 
     ui->messageLabel->setProperty(MESSAGE_TEXT, message);
 }
 
-QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QString &info, int level)
+QLabel* StalledIssueActionTitle::addExtraInfo(const QString& title, const QString& info, int level)
 {
     ui->extraInfoContainer->show();
 
@@ -198,7 +198,7 @@ void StalledIssueActionTitle::setIsCloud(bool state)
     mIsCloud = state;
 }
 
-bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
+bool StalledIssueActionTitle::eventFilter(QObject* watched, QEvent* event)
 {
     if(event->type() == QEvent::Resize)
     {
@@ -218,7 +218,7 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
-bool StalledIssueActionTitle::updateUser(const QString &user, bool show)
+bool StalledIssueActionTitle::updateUser(const QString& user, bool show)
 {
     auto& userLabel = mUpdateLabels[AttributeType::User];
     bool visible(userLabel && !userLabel->text().isEmpty());

@@ -19,7 +19,7 @@ class StalledIssueActionTitle : public QWidget
     Q_OBJECT
 
 public:
-    explicit StalledIssueActionTitle(QWidget *parent = nullptr);
+    explicit StalledIssueActionTitle(QWidget* parent = nullptr);
     ~StalledIssueActionTitle();
 
     void removeBackgroundColor();
@@ -31,7 +31,7 @@ public:
     void hideActionButton(int id);
 
     virtual void showIcon();
-    void setMessage(const QString& message, const QPixmap &pixmap = QPixmap());
+    void setMessage(const QString& message, const QPixmap& pixmap = QPixmap());
 
     QLabel* addExtraInfo(const QString& title, const QString& info, int level);
 
@@ -40,7 +40,7 @@ public:
 
     void setIsCloud(bool state);
 
-    void setInfo(const QString &newPath, mega::MegaHandle handle);
+    void setInfo(const QString& newPath, mega::MegaHandle handle);
     void setHandle(mega::MegaHandle handle);
 
     void updateLastTimeModified(const QDateTime &time);
@@ -48,7 +48,7 @@ public:
     bool updateUser(const QString& user, bool show);
     bool updateVersionsCount(int versions);
     void updateSize(int64_t size);
-    void updateCRC(const QString &fp);
+    void updateCRC(const QString& fp);
 
     enum class AttributeType
     {
@@ -71,13 +71,13 @@ signals:
     void actionClicked(int id);
 
 protected:
-    Ui::StalledIssueActionTitle *ui;
+    Ui::StalledIssueActionTitle* ui;
     bool mIsCloud;
     QString mPath;
     bool mIsFile;
     std::unique_ptr<mega::MegaNode> mNode;
 
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 private:
     bool isRawInfoVisible() const;

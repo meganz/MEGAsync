@@ -194,7 +194,7 @@ StalledIssue::StalledIssue(const mega::MegaSyncStall* stallIssue)
     originalStall.reset(stallIssue->copy());
 }
 
-bool StalledIssue::initLocalIssue(const mega::MegaSyncStall* stallIssue)
+bool StalledIssue::initLocalIssue()
 {
     if(!mLocalData)
     {
@@ -205,7 +205,7 @@ bool StalledIssue::initLocalIssue(const mega::MegaSyncStall* stallIssue)
     return false;
 }
 
-bool StalledIssue::initCloudIssue(const mega::MegaSyncStall* stallIssue)
+bool StalledIssue::initCloudIssue()
 {
     if(!mCloudData)
     {
@@ -232,7 +232,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
 
     if(localSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localSourcePath.isEmpty())
     {
-        initLocalIssue(stall);
+        initLocalIssue();
         getLocalData()->mPath.path = localSourcePath;
         getLocalData()->mPath.mPathProblem = localSourcePathProblem;
 
@@ -246,7 +246,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
 
     if(localTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localTargetPath.isEmpty())
     {
-        initLocalIssue(stall);
+        initLocalIssue();
         getLocalData()->mMovePath.path = localTargetPath;
         getLocalData()->mMovePath.mPathProblem = localTargetPathProblem;
 
@@ -268,7 +268,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
 
     if(cloudSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudSourcePath.isEmpty())
     {
-        initCloudIssue(stall);
+        initCloudIssue();
         getCloudData()->mPath.path = cloudSourcePath;
         getCloudData()->mPathHandle = stall->cloudNodeHandle(0);
         getCloudData()->mPath.mPathProblem = cloudSourcePathProblem;
@@ -283,7 +283,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
 
     if(cloudTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudTargetPath.isEmpty())
     {
-        initCloudIssue(stall);
+        initCloudIssue();
         getCloudData()->mMovePath.path = cloudTargetPath;
         getCloudData()->mMovePathHandle = stall->cloudNodeHandle(1);
         getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
