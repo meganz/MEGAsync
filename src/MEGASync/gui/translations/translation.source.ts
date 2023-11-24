@@ -527,8 +527,8 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation type="unfinished">
-            <numerusform>Folder wasn't backed up. Try again.</numerusform>
-            <numerusform>These folders weren't backed up. Try again.</numerusform>
+            <numerusform>Folder wasn&apos;t backed up. Try again.</numerusform>
+            <numerusform>These folders weren&apos;t backed up. Try again.</numerusform>
         </translation>
     </message>
     <message>
