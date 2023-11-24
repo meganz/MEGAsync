@@ -23,12 +23,12 @@
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
-#include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
-#include "TextDecorator.h"
 
 #include "qml/QmlDialogWrapper.h"
+#include "qml/ApiEnums.h"
+#include "qml/QmlClipboard.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
 
@@ -55,10 +55,6 @@
     #include <signal.h>
     #include <condition_variable>
     #include <QSvgRenderer>
-#endif
-
-#ifdef Q_OS_MACX
-    #include "platform/macx/PlatformImplementation.h"
 #endif
 
 #if QT_VERSION >= 0x050000
@@ -3061,6 +3057,9 @@ void MegaApplication::registerCommonQMLElements()
     mEngine->addImportPath(QString::fromUtf8("qrc:/"));
 
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
+    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
+    qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
+                                     QString::fromUtf8("Cannot create ApiEnums in QML"));
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
