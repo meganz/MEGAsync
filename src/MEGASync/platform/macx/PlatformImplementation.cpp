@@ -223,7 +223,7 @@ void PlatformImplementation::processSymLinks()
     }
     else
     {
-        std::cerr << "Failed to opening symlinks file " << strerror(errno) << std::endl;
+        std::cerr << "Failed to open symlinks file: " << strerror(errno) << std::endl;
     }
 }
 
