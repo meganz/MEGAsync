@@ -7,6 +7,7 @@ import common 1.0
 import components.checkBoxes 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
+import components.buttons 1.0
 
 import onboard 1.0
 
@@ -139,23 +140,20 @@ Rectangle {
             color: Styles.pageBackground
             z: 3
 
-            RowLayout {
+            TextButton {
                 id: addFoldersButton
 
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: headerFooterMargin
-                spacing: headerFooterMargin / 2
-
-                SvgImage {
+                anchors.leftMargin: 20
+                text: OnboardingStrings.addFolder
+                sizes: SmallSizes { borderLess: true }
+                icons {
                     source: Images.plus
-                    color: Styles.buttonPrimary
-                    sourceSize: Qt.size(16, 16)
+                    position: Icon.Position.LEFT
                 }
-
-                Texts.Text {
-                    text: OnboardingStrings.addFolder
-                    font.weight: Font.DemiBold
+                onClicked: {
+                    folderDialog.openFolderSelector();
                 }
             }
 
@@ -167,17 +165,11 @@ Rectangle {
                 anchors.right: parent.right
             }
 
-            MouseArea {
-                anchors.fill: addFoldersButton
-                cursorShape: Qt.PointingHandCursor
-                z: 3
-                onClicked: {
-                    folderDialog.openFolderSelector();
-                }
+            ChooseLocalFolder {
+                id: folderDialog
             }
 
-            Connections
-            {
+            Connections {
                 id: chooseLocalFolderConnection
 
                 target: folderDialog
@@ -187,14 +179,6 @@ Rectangle {
                 }
             }
 
-            ChooseLocalFolder {
-                id: folderDialog
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-            }
         }
     }
 

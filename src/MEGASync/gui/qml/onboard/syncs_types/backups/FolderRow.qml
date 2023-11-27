@@ -269,7 +269,7 @@ Rectangle {
                     anchors.bottom: parent.bottom
                     anchors.rightMargin: -sizes.focusBorderWidth
                     text: contentRoot.showChange ? OnboardingStrings.changeFolder : OnboardingStrings.rename
-                    icons.position: MegaButtons.Icon.Position.LEFT
+                    icons.position: Buttons.Icon.Position.LEFT
                     icons.source: contentRoot.showChange ? "" : Images.edit
                     onClicked: {
                         if(contentRoot.showChange) {

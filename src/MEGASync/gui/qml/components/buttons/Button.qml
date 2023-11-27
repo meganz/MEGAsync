@@ -12,9 +12,10 @@ import components.images 1.0
 Qml.RoundButton {
     id: root
 
-    property Colors colors: Colors {}
-    property Icon icons: Icon{}
     property alias progressValue: backgroundProgress.value
+
+    property Colors colors: Colors {}
+    property Icon icons: Icon {}
     property Sizes sizes: Sizes {}
 
     function getBorderColor() {
@@ -73,10 +74,14 @@ Qml.RoundButton {
     topPadding: sizes.verticalPadding + sizes.focusBorderWidth
     leftPadding: sizes.horizontalPadding + sizes.focusBorderWidth
     rightPadding: sizes.horizontalPadding + sizes.focusBorderWidth
-    height: sizes.height + 2 * sizes.focusBorderWidth
-    Layout.preferredHeight: sizes.height + 2 * sizes.focusBorderWidth
+    height: 2 * sizes.verticalPadding + 2 * sizes.focusBorderWidth + contentRow.implicitHeight
+    width: 2 * sizes.horizontalPadding + 2 * sizes.focusBorderWidth + contentRow.implicitWidth
+    Layout.preferredHeight: height
+    Layout.preferredWidth: width
 
     contentItem: Row {
+        id: contentRow
+
         spacing: sizes.spacing
 
         SvgImage {
@@ -86,15 +91,19 @@ Qml.RoundButton {
             source: root.icons.source
             color: getIconColor()
             sourceSize: sizes.iconSize
-            visible: root.icons.position === Icon.Position.LEFT && !root.icons.busyIndicatorVisible
+            visible: !root.icons.busyIndicatorVisible
+                        && (root.icons.position === Icon.Position.LEFT
+                            || root.icons.position === Icon.Position.BOTH)
         }
 
         BusyIndicator {
             id: leftBusyIndicator
+
             anchors.verticalCenter: parent.verticalCenter
 
             color: root.icons.colorEnabled
-            visible: root.icons.position === Icon.Position.LEFT && root.icons.busyIndicatorVisible
+            visible: root.icons.busyIndicatorVisible
+                        && root.icons.position === Icon.Position.LEFT
         }
 
         Texts.Text {
@@ -107,6 +116,9 @@ Qml.RoundButton {
                 pixelSize: sizes.textFontSize
                 weight: Font.DemiBold
             }
+            lineHeight: sizes.textLineHeight
+            lineHeightMode: Text.FixedHeight
+            verticalAlignment: Text.AlignVCenter
         }
 
         SvgImage {
@@ -116,7 +128,9 @@ Qml.RoundButton {
             source: root.icons.source
             color: getIconColor()
             sourceSize: sizes.iconSize
-            visible: root.icons.position === Icon.Position.RIGHT && !root.icons.busyIndicatorVisible
+            visible: !root.icons.busyIndicatorVisible
+                        && (root.icons.position === Icon.Position.RIGHT
+                            || root.icons.position === Icon.Position.BOTH)
         }
 
         BusyIndicator {
@@ -124,7 +138,8 @@ Qml.RoundButton {
 
             anchors.verticalCenter: parent.verticalCenter
             color: icons.colorEnabled
-            visible: root.icons.position === Icon.Position.RIGHT && root.icons.busyIndicatorVisible
+            visible: root.icons.busyIndicatorVisible
+                        && root.icons.position === Icon.Position.RIGHT
         }
     }
 
@@ -132,21 +147,20 @@ Qml.RoundButton {
         id: focusRect
 
         color: "transparent"
-        border.color: root.enabled ? (root.activeFocus ? Styles.focus : "transparent") : "transparent"
+        border.color: root.enabled
+                      ? (root.activeFocus ? Styles.focus : "transparent")
+                      : "transparent"
         border.width: sizes.focusBorderWidth
         radius: sizes.focusBorderRadius
+        width: root.width
         height: root.height
 
         Rectangle {
             id: backgroundRect
 
             color: getBackgroundColor()
-            anchors.top: focusRect.top
-            anchors.left: focusRect.left
-            anchors.topMargin: sizes.focusBorderWidth
-            anchors.leftMargin: sizes.focusBorderWidth
-            width: root.width - 2 * sizes.focusBorderWidth
-            height: root.height - 2 * sizes.focusBorderWidth
+            anchors.fill: focusRect
+            anchors.margins: sizes.focusBorderWidth
             border.width: sizes.borderWidth
             border.color: getBorderColor()
             radius: sizes.radius
@@ -169,6 +183,7 @@ Qml.RoundButton {
 
             Progress {
                 id: backgroundProgress
+
                 anchors.fill: parent
             }
         }

@@ -1,7 +1,11 @@
+import QtQuick 2.15
+
 import common 1.0
 
 Button {
     id: root
+
+    sizes.borderLess: true
 
     icons {
         colorEnabled: Styles.buttonOutline
@@ -12,15 +16,14 @@ Button {
     colors {
         background: "transparent"
         disabled: "transparent"
-        hover: Styles.buttonOutlineBackgroundHover
-        border: Styles.buttonOutline
-        borderHover: Styles.buttonOutlineHover
-        borderDisabled: Styles.buttonDisabled
+        hover: "transparent"
+        border: "transparent"
+        borderHover: "transparent"
+        borderDisabled: "transparent"
         text: Styles.buttonOutline
         textHover: Styles.buttonOutlineHover
         textPressed: Styles.buttonOutlinePressed
         pressed: "transparent"
-        borderPressed: Styles.buttonOutlinePressed
+        borderPressed: "transparent"
     }
 }
-
