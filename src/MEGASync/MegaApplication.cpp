@@ -2332,16 +2332,6 @@ bool MegaApplication::raiseGuestDialog()
 
     if(mStatusController->isAccountBlocked() || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
     {
-#ifdef __APPLE__
-        if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>())
-        {
-            if(dialog->getDialog()->isVisible())
-            {
-                dialog->getDialog()->hide();
-                return;
-            }
-        }
-#endif
         openGuestDialog();
 
         raisedGuestDialog = true;
