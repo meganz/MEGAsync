@@ -134,7 +134,7 @@ private:
     virtual bool newFolderBtnVisibleInRoot(){return true;}
     virtual bool newFolderBtnCanBeVisisble(){return true;}
     void checkOkButton(const QModelIndexList& selected);
-    bool shouldEnableTimer();
+    bool shouldUpdateImmediately();
     bool areThereNodesToUpdate();
 
     ButtonIconManager mButtonIconManager;

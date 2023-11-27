@@ -15,6 +15,8 @@
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
 const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 250;
 const char* NodeSelectorTreeViewWidget::FULL_NAME_PROPERTY = "full_name";
+const int CHECK_UPDATED_NODES_INTERVAL = 1000;
+const int IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD = 200;
 
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent) :
     QWidget(parent),
@@ -57,7 +59,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
 
 
     connect(&mNodesUpdateTimer, &QTimer::timeout, this, &NodeSelectorTreeViewWidget::processCachedNodesUpdated);
-    mNodesUpdateTimer.start(1000);
+    mNodesUpdateTimer.start(CHECK_UPDATED_NODES_INTERVAL);
 }
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
@@ -716,42 +718,41 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
 
     if(areThereNodesToUpdate())
     {
-        if(shouldEnableTimer())
+        if(shouldUpdateImmediately())
         {
-            mNodesUpdateTimer.start(1000);
+            mNodesUpdateTimer.setInterval(0);
         }
         else
         {
-            mNodesUpdateTimer.start(0);
+            mNodesUpdateTimer.setInterval(CHECK_UPDATED_NODES_INTERVAL);
         }
     }
 }
 
-bool NodeSelectorTreeViewWidget::shouldEnableTimer()
+bool NodeSelectorTreeViewWidget::shouldUpdateImmediately()
 {
-    static const int threshold = 200;
     int totalSize = mUpdatedNodesByPreviousHandle.size();
-    if(totalSize > threshold)
+    if(totalSize > IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD)
     {
         return true;
     }
     totalSize += mRemovedNodesByHandle.size();
-    if(totalSize > threshold)
+    if(totalSize > IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD)
     {
         return true;
     }
     totalSize += mRenamedNodesByHandle.size();
-    if(totalSize > threshold)
+    if(totalSize > IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD)
     {
         return true;
     }
     totalSize += mAddedNodesByParentHandle.size();
-    if(totalSize > threshold)
+    if(totalSize > IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD)
     {
         return true;
     }
     totalSize += mMovedNodesByHandle.size();
-    if(totalSize > threshold)
+    if(totalSize > IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD)
     {
         return true;
     }
