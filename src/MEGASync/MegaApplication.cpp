@@ -2368,7 +2368,6 @@ void MegaApplication::raiseOnboardingDialog()
     if(mStatusController->isAccountBlocked()
         || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
     {
-        DialogOpener::raiseAllDialogs();
         if (preferences->getSession().isEmpty())
         {
             openOnboardingDialog();
@@ -5245,28 +5244,17 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         }
 #endif /* ! __APPLE__ */
 
-#ifndef __APPLE__
-        if (isLinux)
+#ifdef Q_OS_LINUX
+        if (infoDialogMenu && infoDialogMenu->isVisible())
         {
-            if (infoDialogMenu && infoDialogMenu->isVisible())
-            {
-                infoDialogMenu->close();
-            }
+            infoDialogMenu->close();
         }
-#ifdef _WIN32
-        // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.
-        // This statement prevents us opening it again, so that we have one-click to open the infoDialog, and a second closes it.
-        if (!infoDialog || (chrono::steady_clock::now() - infoDialog->lastWindowHideTime > 100ms))
-#else
+#endif
+
         DialogOpener::raiseAllDialogs();
-#endif
-        {
-            raiseOnboardingDialog();
-            raiseOrHideInfoGuestDialog();
-        }
-#else
-        showInfoDialog();
-#endif
+        raiseOnboardingDialog();
+        raiseOrHideInfoGuestDialog();
+
     }
 #ifndef __APPLE__
     else if (reason == QSystemTrayIcon::DoubleClick)
@@ -5495,6 +5483,7 @@ void MegaApplication::createTrayIconMenus()
         }
         showStatusAction = new QAction(tr("Show status"), this);
         connect(showStatusAction, &QAction::triggered, this, [this](){
+            DialogOpener::raiseAllDialogs();
             raiseOnboardingDialog();
             infoDialogTimer->start(200);
         });
