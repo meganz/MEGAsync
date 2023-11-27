@@ -20,7 +20,7 @@ GuestQmlDialog::~GuestQmlDialog()
 
 bool GuestQmlDialog::isHiddenForLongTime() const
 {
-    return QDateTime::currentMSecsSinceEpoch() - mLastHideTime > 200;
+    return QDateTime::currentMSecsSinceEpoch() - mLastHideTime > 500;
 }
 
 void GuestQmlDialog::realocate()
