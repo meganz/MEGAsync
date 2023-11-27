@@ -213,6 +213,7 @@ private:
 
     void setEnabledAllControls(const bool enabled);
     void setGeneralTabEnabled(const bool enabled);
+    void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();

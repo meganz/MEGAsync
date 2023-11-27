@@ -148,17 +148,22 @@ ColumnLayout {
         }
     }
 
-    HelpButton {
+    LinkButton {
         id: helpButtonItem
 
+        Layout.leftMargin: -sizes.horizontalPadding
         text: OnboardingStrings.twoFANeedHelp
         url: Links.recovery
-        visible: !twoFAItem.hasError
-        height: notification.height
+        icons {
+            source: Images.helpCircle
+            position: Icon.Position.LEFT
+        }
+        visible: !root.hasError
+        sizes: SmallSizes { borderLess: true }
     }
 
     Shortcut {
-        sequence: StandardKey.Paste
+        sequence: [ StandardKey.Paste ]
         onActivated: {
             pastePin();
         }

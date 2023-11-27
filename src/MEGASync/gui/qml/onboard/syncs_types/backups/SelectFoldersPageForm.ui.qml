@@ -23,7 +23,7 @@ SyncsPage {
             left: parent.left
             right: parent.right
         }
-        spacing: 24
+        spacing: 34
 
         Header {
             title: OnboardingStrings.selectBackupFoldersTitle

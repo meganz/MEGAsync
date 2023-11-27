@@ -4,18 +4,22 @@ import components.texts 1.0 as Texts
 
 QtObject {
 
+    property bool borderLess: false
+
     // Medium sizes
-    property int horizontalPadding: 16
+    property int horizontalPadding: borderLess ? 8 : 16
     property int verticalPadding: horizontalPadding/2
-    property int height: 36
     property int spacing: 8
-    property int radius: 6
+    property real radius: 6
     property int maskBorderRadius: 8
-    property int focusBorderRadius: 10
+    property real focusBorderRadius: 10.5
     property int focusBorderWidth: 4
     property int borderWidth: 2
     property int iconWidth: 16
     property size iconSize: Qt.size(iconWidth, iconWidth)
     property int textFontSize: Texts.Text.Size.Medium
+    property int textLineHeight: 20
+    property int horizontalAlignWidth: focusBorderWidth + horizontalPadding
+    property int verticalAlignWidth: focusBorderWidth + verticalPadding
 
 }

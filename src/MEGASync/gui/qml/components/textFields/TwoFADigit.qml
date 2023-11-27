@@ -26,6 +26,12 @@ TextField {
             pixelSize: Texts.Text.Size.Huge
             weight: Font.Bold
         }
+
+        onFocusChanged: {
+            if(textField.focus) {
+                textField.select(0, 1);
+            }
+        }
     }
 
     textField.onTextChanged: {
@@ -36,12 +42,6 @@ TextField {
             textField.focus = false;
         }
         textField.horizontalAlignment = isCharacterEntered ? TextInput.AlignHCenter : TextInput.AlignLeft;
-    }
-
-    onFocusChanged: {
-        if(textField.focus) {
-            textField.select(0, 1);
-        }
     }
 
     onBackPressed: {

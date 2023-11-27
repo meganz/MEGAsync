@@ -188,6 +188,15 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     # need to remove .prl leftovers from frameworks after macdeployqt
     find ${MSYNC_PREFIX}MEGAsync.app/Contents -type f -name "*.prl" -exec rm -f {} +
 
+    # Generate symlinks file to recreate after update
+    MEGASYNC_VERSION_CODE=`grep -o -E '#define VER_FILEVERSION_CODE\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+'`
+    echo  ${MEGASYNC_VERSION_CODE} > ${MSYNC_PREFIX}MEGAsync.app/Contents/Resources/mega.links
+
+    cd ${MSYNC_PREFIX}/MEGAsync.app
+    find . -type l -exec bash -c 'echo $(readlink "$0") ; echo "$0";' {} \; >> ./Contents/Resources/mega.links
+    cd ../..
+
+
     if [ ${build_cmake} -ne 1 ]; then
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ] && cp -L $CARES_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CURL_VERSION ] && cp -L $CURL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
@@ -296,8 +305,8 @@ if [ "$notarize" = "1" ]; then
     echo "Checking signature and notarization (3/3)"
     mkdir $MOUNTDIR || :
     hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
-    spctl --assess -vv -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
-    hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
+    spctl --assess -vv -a $MOUNTDIR/$VOLUME_NAME/$APP_NAME.app
+    hdiutil detach $MOUNTDIR/$VOLUME_NAME >/dev/null
     rmdir $MOUNTDIR
 
 	cd ..

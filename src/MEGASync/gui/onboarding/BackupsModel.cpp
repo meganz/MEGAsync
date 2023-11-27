@@ -118,9 +118,6 @@ BackupsModel::BackupsModel(QObject* parent)
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsControllerAccess"),
                                                                 mBackupsController.get());
 
-    qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",
-                                             QString::fromUtf8("Cannot create WarningLevel in QML"));
-
     MegaSyncApp->qmlEngine()->addImageProvider(QLatin1String("standardicons"), new StandardIconProvider);
 
     mCheckDirsTimer.setInterval(CHECK_DIRS_TIME);

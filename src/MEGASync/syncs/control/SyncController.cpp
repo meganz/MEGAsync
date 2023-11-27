@@ -272,15 +272,17 @@ void SyncController::disableSync(std::shared_ptr<SyncSettings> syncSetting)
 QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, const MegaSync::SyncType& syncType)
 {
     QString inputPath (QDir::toNativeSeparators(QDir(path).absolutePath()));
+    inputPath = inputPath.normalized(QString::NormalizationForm_C);
+
     QString message;
 
     // Gather all synced or backed-up dirs
-    QMap<QString, MegaSync::SyncType> localFolders = SyncInfo::instance()->getLocalFoldersAndTypeMap();
+    QMap<QString, MegaSync::SyncType> localFolders = SyncInfo::instance()->getLocalFoldersAndTypeMap(true);
 
     // Check if the path is already synced or part of a sync
-    foreach (auto& existingPath, localFolders.keys())
+    foreach (const QString& existingPath, localFolders.keys())
     {
-        if (inputPath == existingPath)
+        if (existingPath == inputPath)
         {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {

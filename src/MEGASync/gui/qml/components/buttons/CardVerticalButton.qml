@@ -10,56 +10,60 @@ CardButton {
     id: button
 
     property int textHorizontalExtraMargin: 0
-    property int contentMargin: 12
+    property int contentMargin: 13
     property int contentSpacing: 24
 
-    contentComponent: Component {
+    readonly property int textSpacing: 5
+    readonly property int textTopHeight: 24
+    readonly property int textTopMargin: 24
+    readonly property int textLineHeight: 16
+
+    height: imageButton.height + titleText.height + descriptionText.height + textSpacing + contentSpacing + contentMargin * 2
+    //4= border with
+    Column {
+        anchors.fill: parent
+        anchors.margins: contentMargin
+        anchors.bottomMargin: 50
+        spacing: contentSpacing
+
+        SvgImage {
+            id: imageButton
+
+            source: imageSource
+            sourceSize: imageSourceSize
+        }
 
         Column {
-            id: main
+            spacing: textSpacing
+            anchors.left: parent.left
+            anchors.right: parent.right
 
-            readonly property int textSpacing: 8
-            readonly property int textTopHeight: 24
-            readonly property int textTopMargin: 24
-            readonly property int textLineHeight: 16
+            Texts.Text {
+                id: titleText
 
-            anchors.fill: parent
-            anchors.margins: contentMargin
-            spacing: contentSpacing
-
-            SvgImage {
-                source: imageSource
-                sourceSize: imageSourceSize
-            }
-
-            Column {
-                spacing: textSpacing
+                text: title
+                height: textTopHeight
                 anchors.left: parent.left
                 anchors.right: parent.right
+                anchors.topMargin: textTopMargin
+                anchors.leftMargin: button.textHorizontalExtraMargin
+                anchors.rightMargin: button.textHorizontalExtraMargin
+                font.pixelSize: Texts.Text.Size.MediumLarge
+                font.weight: Font.Bold
+            }
 
-                Texts.Text {
-                    text: title
-                    height: main.textTopHeight
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.topMargin: main.textTopMargin
-                    anchors.leftMargin: button.textHorizontalExtraMargin
-                    anchors.rightMargin: button.textHorizontalExtraMargin
-                    font.pixelSize: Texts.Text.Size.MediumLarge
-                    font.weight: Font.Bold
-                }
+            Texts.Text {
+                id: descriptionText
 
-                Texts.Text {
-                    text: description
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.leftMargin: button.textHorizontalExtraMargin
-                    anchors.rightMargin: button.textHorizontalExtraMargin
-                    font.pixelSize: Texts.Text.Size.Small
-                    color: Styles.textSecondary
-                    lineHeight: main.textLineHeight
-                    lineHeightMode: Text.FixedHeight
-                }
+                text: description
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: button.textHorizontalExtraMargin
+                anchors.rightMargin: button.textHorizontalExtraMargin
+                font.pixelSize: Texts.Text.Size.Small
+                color: Styles.textSecondary
+                lineHeight: textLineHeight
+                lineHeightMode: Text.FixedHeight
             }
         }
     }

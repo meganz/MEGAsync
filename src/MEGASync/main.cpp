@@ -199,6 +199,12 @@ int main(int argc, char *argv[])
 
     Platform::create();
 
+    // This call is responsible for rebuilding the Qt symlinks in platforms where it applies.
+    // This needs to be done when starting the first time after an update.
+    // For this to work, the call needs to know the version of the app BEFORE updating,
+    // so needs to be made before the file megasync.version is updated.
+    Platform::getInstance()->processSymLinks();
+
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         auto preferences = Preferences::instance();
@@ -554,6 +560,8 @@ int main(int argc, char *argv[])
         #endif
     }
 
+    // The megasync.version file update needs to be done AFTER Platform::getInstance()->processSymLinks(),
+    // because it needs the old version number.
     QString appVersionPath = dataDir.filePath(QString::fromUtf8("megasync.version"));
     QFile fappVersionPath(appVersionPath);
     if (fappVersionPath.open(QIODevice::WriteOnly))

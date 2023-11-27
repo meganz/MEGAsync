@@ -4,6 +4,8 @@ import QtQuick.Controls 2.15
 
 import common 1.0
 
+import components.texts 1.0 as Texts
+
 import onboard 1.0
 
 import LoginController 1.0
@@ -24,10 +26,13 @@ SyncsPage {
         spacing: 24
 
         Header {
-            title: loginControllerAccess.newAccount ? OnboardingStrings.welcomeToMEGA : OnboardingStrings.letsGetYouSetUp
+            title: loginControllerAccess.newAccount
+                   ? OnboardingStrings.welcomeToMEGA
+                   : OnboardingStrings.letsGetYouSetUp
             description: OnboardingStrings.chooseInstallation
             spacing: 36
             descriptionWeight: Font.DemiBold
+            descriptionColor: Styles.textPrimary
         }
 
         ButtonGroup {

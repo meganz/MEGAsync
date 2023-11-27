@@ -88,7 +88,7 @@ StackViewPage {
         Texts.RichText {
             id: changeEmailLinkTextItem
 
-            font.pixelSize: Text.Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.Medium
             rawText: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
             color: Styles.textPrimary
