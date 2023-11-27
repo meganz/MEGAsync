@@ -14,6 +14,17 @@ import AccountInfoData 1.0
 import Onboarding 1.0
 
 Item {
+
+    readonly property string accountTypeFree: qsTr("Free")
+    readonly property string accountTypeProI: qsTr("Pro I")
+    readonly property string accountTypeProII: qsTr("Pro II")
+    readonly property string accountTypeProIII: qsTr("Pro III")
+    readonly property string accountTypeLite: qsTr("Pro Lite")
+    readonly property string accountTypeBusiness: qsTr("Business")
+    readonly property string accountTypeProFlexi: qsTr("Pro Flexi")
+    readonly property string availableStorage: qsTr("Available storage:")
+    readonly property string storageSpace: qsTr("Storage space:")
+
     width: parent.width
     height: 48
 
@@ -45,19 +56,19 @@ Item {
     function getAccountTypeText() {
         switch(AccountInfoData.type) {
             case AccountInfoData.ACCOUNT_TYPE_FREE:
-                return OnboardingStrings.accountTypeFree;
+                return accountTypeFree;
             case AccountInfoData.ACCOUNT_TYPE_PROI:
-                return OnboardingStrings.accountTypeProI;
+                return accountTypeProI;
             case AccountInfoData.ACCOUNT_TYPE_PROII:
-                return OnboardingStrings.accountTypeProII;
+                return accountTypeProII;
             case AccountInfoData.ACCOUNT_TYPE_PROIII:
-                return OnboardingStrings.accountTypeProIII;
+                return accountTypeProIII;
             case AccountInfoData.ACCOUNT_TYPE_LITE:
-                return OnboardingStrings.accountTypeLite;
+                return accountTypeLite;
             case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
-                return OnboardingStrings.accountTypeBusiness;
+                return accountTypeBusiness;
             case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
-                return OnboardingStrings.accountTypeProFlexi
+                return accountTypeProFlexi
             default:
                 return "";
         }
@@ -112,8 +123,8 @@ Item {
 
                 Texts.Text {
                     text: AccountInfoData.belowMinUsedStorageThreshold
-                          ? OnboardingStrings.availableStorage
-                          : OnboardingStrings.storageSpace
+                          ? availableStorage
+                          : storageSpace
                     font.weight: Font.DemiBold
                 }
 
