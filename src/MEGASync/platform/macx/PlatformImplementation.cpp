@@ -159,9 +159,10 @@ void PlatformImplementation::processSymLinks()
 {
     string appBundle = appBundlePath().toStdString();
     string symlinksPath = appBundle + "/Contents/Resources/mega.links";
-    ifstream infile(symlinksPath.c_str());
 
     std::cout << "Opening file to recreate symlinks." << std::endl;
+    ifstream infile(symlinksPath.c_str());
+
     if (infile.is_open())
     {
         string linksVersion, targetPath, tempLinkPath;
@@ -169,17 +170,17 @@ void PlatformImplementation::processSymLinks()
         if (std::getline(infile, linksVersion))
         {
             QDir dataDir(MegaApplication::applicationDataPath());
-            QString versionfile = dataDir.filePath(QLatin1String("megasync.version"));
-            QFile file(versionfile);
+            QString versionFilePath = dataDir.filePath(QLatin1String("megasync.version"));
+            QFile versionFile(versionFilePath);
 
-            if (file.open(QFile::ReadOnly | QFile::Text))
+            if (versionFile.open(QFile::ReadOnly | QFile::Text))
             {
                 try
                 {
                     int num = std::stoi(linksVersion);
                     int appVersion = 0;
 
-                    QTextStream in(&file);
+                    QTextStream in(&versionFile);
                     QString versionIn = in.readAll();
                     appVersion = versionIn.toInt();
 
@@ -210,7 +211,7 @@ void PlatformImplementation::processSymLinks()
                     }
                     else
                     {
-                        std::cout << "Recreation of symlink structure not needed. symlink ver:" << num << " app ver:" << appVersion << std::endl;
+                        std::cout << "Recreation of symlink structure not needed. symlink ver: " << num << " app ver: " << appVersion << std::endl;
                     }
                 }
                 catch (const std::exception& e)
@@ -222,7 +223,7 @@ void PlatformImplementation::processSymLinks()
     }
     else
     {
-        std::cout << "Failed to opening symlinks file " << strerror(errno) << std::endl;
+        std::cerr << "Failed to opening symlinks file " << strerror(errno) << std::endl;
     }
 }
 

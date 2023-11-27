@@ -642,7 +642,6 @@ void UpdateTask::processSymLinks(string symlinksPath)
     if (!pFile)
     {
         LOG(LOG_LEVEL_ERROR, "Error opening sym links file %s", symlinksPath.c_str());
-        mega_remove(symlinksPath.c_str());
         return;
     }
 
@@ -670,21 +669,21 @@ bool UpdateTask::processSymLinksFile(FILE *fd)
 
     while (true)
     {
-        string origin = readNextLine(fd);
         string target = readNextLine(fd);
-        if (origin.empty() && target.empty())
+        string symLinkRelativePath = readNextLine(fd);
+        if (target.empty() || symLinkRelativePath.empty())
         {
             break;
         }
 
-        std::string linkPath = appFolder + target;
-        LOG(LOG_LEVEL_INFO,"First origin link %s", origin.c_str());
+        std::string linkPath = appFolder + symLinkRelativePath;
+        LOG(LOG_LEVEL_INFO,"First origin link %s", target.c_str());
         LOG(LOG_LEVEL_INFO,"Second target link %s", linkPath.c_str());
 
-        if (symlink(origin.c_str(), linkPath.c_str()) != 0 && errno != EEXIST)
+        if (symlink(target.c_str(), linkPath.c_str()) != 0 && errno != EEXIST)
         {
             LOG(LOG_LEVEL_ERROR, "Error creating symlinks");
-            std::cerr << "Failed to create symlink " << linkPath << " -> " << origin << ": " << strerror(errno) << std::endl;
+            std::cerr << "Failed to create symlink " << linkPath << " -> " << target << ": " << strerror(errno) << std::endl;
             success = false;
         }
     }
