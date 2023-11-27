@@ -12,7 +12,7 @@ Button {
         visited = true;
     }
 
-    sizes.isLinkOrTextButton: true
+    sizes.borderLess: true
 
     icons {
         colorEnabled: visited ? Styles.linkVisited : Styles.linkPrimary

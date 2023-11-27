@@ -4,10 +4,10 @@ import components.texts 1.0 as Texts
 
 QtObject {
 
-    property bool isLinkOrTextButton: false
+    property bool borderLess: false
 
     // Medium sizes
-    property int horizontalPadding: isLinkOrTextButton ? 8 : 16
+    property int horizontalPadding: borderLess ? 8 : 16
     property int verticalPadding: horizontalPadding/2
     property int spacing: 8
     property real radius: 6

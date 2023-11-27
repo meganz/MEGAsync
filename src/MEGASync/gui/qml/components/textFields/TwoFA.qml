@@ -159,7 +159,7 @@ ColumnLayout {
             position: Icon.Position.LEFT
         }
         visible: !root.hasError
-        sizes: SmallSizes { isLinkOrTextButton: true }
+        sizes: SmallSizes { borderLess: true }
     }
 
     Shortcut {

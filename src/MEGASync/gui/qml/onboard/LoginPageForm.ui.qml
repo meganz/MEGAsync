@@ -105,7 +105,7 @@ StackViewPage {
             position: Icon.Position.LEFT
         }
         visible: !loginControllerAccess.newAccount
-        sizes: SmallSizes { isLinkOrTextButton: true }
+        sizes: SmallSizes { borderLess: true }
     }
 
     RowLayout {

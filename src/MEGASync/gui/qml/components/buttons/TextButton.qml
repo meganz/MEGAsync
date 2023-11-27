@@ -5,7 +5,7 @@ import common 1.0
 Button {
     id: root
 
-    sizes.isLinkOrTextButton: true
+    sizes.borderLess: true
 
     icons {
         colorEnabled: Styles.buttonOutline

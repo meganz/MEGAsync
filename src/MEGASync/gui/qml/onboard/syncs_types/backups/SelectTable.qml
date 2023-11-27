@@ -147,7 +147,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 20
                 text: OnboardingStrings.addFolder
-                sizes: SmallSizes { isLinkOrTextButton: true }
+                sizes: SmallSizes { borderLess: true }
                 icons {
                     source: Images.plus
                     position: Icons.Position.Left
