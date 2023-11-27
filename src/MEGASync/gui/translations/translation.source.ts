@@ -53,7 +53,7 @@
     <name>AccountStatusController</name>
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
-        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
         <translation type="unfinished">Your account has been deactivated by your administrator. Please contact your Business account administrator for further details.</translation>
     </message>
 </context>
@@ -1638,7 +1638,7 @@ In some cases they may contain details about your data, such as file or folder n
     <name>FastLoginController</name>
     <message>
         <source>Login error: %1</source>
-        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message. SNC-4122</translatorcomment>
         <translation type="unfinished">Login error: %1</translation>
     </message>
 </context>
@@ -2361,17 +2361,17 @@ In some cases they may contain details about your data, such as file or folder n
     <name>LogoutController</name>
     <message>
         <source>You have been logged out on this computer from another location</source>
-        <translatorcomment>Error message indicating that the loggin session has been clossed from another computer.</translatorcomment>
+        <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
         <translation type="unfinished">You have been logged out on this computer from another location</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
+        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
         <translation type="unfinished">Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
-        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
         <translation type="unfinished">You have been logged out because of this error: %1</translation>
     </message>
 </context>
@@ -2809,16 +2809,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>Account deactivated</source>
         <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
         <translation>Account deactivated</translation>
-    </message>
-    <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation type="unfinished">Password changed</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed.</translatorcomment>
-        <translation type="unfinished">Your password has been changed.</translation>
     </message>
     <message>
         <source>Pro Flexi Account deactivated</source>
