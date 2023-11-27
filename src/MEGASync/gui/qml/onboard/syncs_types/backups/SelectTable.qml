@@ -150,7 +150,7 @@ Rectangle {
                 sizes: SmallSizes { borderLess: true }
                 icons {
                     source: Images.plus
-                    position: Icons.Position.Left
+                    position: Icon.Position.LEFT
                 }
                 onClicked: {
                     folderDialog.openFolderSelector();
