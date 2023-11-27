@@ -214,6 +214,9 @@ public:
     void reloadSyncsInSettings();
 
     void raiseInfoDialog();
+    bool raiseGuestDialog();
+    void raiseOnboardingDialog();
+    void raiseOrHideInfoGuestDialog();
     bool isShellNotificationProcessingOngoing();
 
     QSystemTrayIcon* getTrayIcon();
