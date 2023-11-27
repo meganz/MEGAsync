@@ -2,6 +2,7 @@
 #define GUESTQMLDIALOG_H
 
 #include "qml/QmlDialog.h"
+#include "qtimer.h"
 
 class GuestQmlDialog : public QmlDialog
 {
@@ -17,6 +18,8 @@ public slots:
 protected:
     void showEvent(QShowEvent* ) override;
 
+private:
+    QTimer mHideTimer;
 };
 
 #endif // GUESTQMLDIALOG_H

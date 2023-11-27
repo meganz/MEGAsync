@@ -6,9 +6,15 @@ GuestQmlDialog::GuestQmlDialog(QWindow *parent)
     : QmlDialog(parent)
 {
     setFlags(flags() | Qt::FramelessWindowHint);
+    mHideTimer.setSingleShot(true);
+
+    QObject::connect(&mHideTimer, &QTimer::timeout, this, [this](){
+        this->hide();
+    });
+
     QObject::connect(this, &GuestQmlDialog::activeChanged, [=]() {
         if (!this->isActive()) {
-            this->hide();
+            mHideTimer.start(200);
         }
     });
 }
