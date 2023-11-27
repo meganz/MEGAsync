@@ -2156,9 +2156,7 @@ void MegaApplication::periodicTasks()
             });// end of thread pool function
         }
 
-#ifdef Q_OS_LINUX
-        updateTrayIcon();
-#endif
+        onGlobalSyncStateChanged(megaApi);
     }
 
     if (trayIcon)
@@ -4472,12 +4470,6 @@ void MegaApplication::createTrayIcon()
     }
 
     updateTrayIconMenu();
-
-    if (isLinux)
-    {
-        return;
-    }
-
 
     trayIcon->setToolTip(QCoreApplication::applicationName()
                      + QString::fromUtf8(" ")
