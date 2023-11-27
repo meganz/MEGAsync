@@ -1,7 +1,7 @@
+import QtQuick 2.15
+
 import common 1.0
-
 import onboard 1.0
-
 import QmlDeviceName 1.0
 
 DeviceNamePageForm {
@@ -46,6 +46,14 @@ DeviceNamePageForm {
 
         onDeviceNameSet: {
             root.deviceNameMoveToSyncType()
+        }
+    }
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            deviceNameTextField.setFocus(true)
         }
     }
 }

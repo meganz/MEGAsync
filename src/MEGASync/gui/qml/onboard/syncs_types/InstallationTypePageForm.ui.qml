@@ -13,6 +13,7 @@ import LoginController 1.0
 SyncsPage {
 
     property alias buttonGroup: buttonGroupComp
+    property alias syncButton: syncButtonItem
 
     footerButtons.rightPrimary.enabled: false
 
@@ -43,10 +44,10 @@ SyncsPage {
             spacing: 12
 
             SyncsHorizontalButton {
-                id: syncButton
+                id: syncButtonItem
 
-                Layout.leftMargin: -syncButton.focusBorderWidth
-                Layout.rightMargin: -syncButton.focusBorderWidth
+                Layout.leftMargin: -syncButtonItem.focusBorderWidth
+                Layout.rightMargin: -syncButtonItem.focusBorderWidth
                 title: OnboardingStrings.sync
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync

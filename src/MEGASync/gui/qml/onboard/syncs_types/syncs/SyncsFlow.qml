@@ -17,6 +17,10 @@ Item {
     readonly property string fullSync: "full"
     readonly property string selectiveSync: "selective"
 
+    // added to avoid qml warning.
+    function setInitialFocusPosition() {
+    }
+
     state: syncsPanel.navInfo.fullSyncDone || syncsPanel.navInfo.typeSelected === SyncsType.Types.SelectiveSync
            ? selectiveSync
            : syncType
@@ -71,6 +75,10 @@ Item {
     StackViewBase {
         id: view
         anchors.fill: parent
+
+        onCurrentItemChanged: {
+            currentItem.setInitialFocusPosition();
+        }
 
         Component {
             id: syncPage

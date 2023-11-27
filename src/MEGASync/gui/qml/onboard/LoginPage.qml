@@ -222,4 +222,17 @@ LoginPageForm {
             }
         }
     }
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            if (loginControllerAccess.newAccount) {
+                password.setFocus(true)
+            }
+            else {
+                email.setFocus(true)
+            }
+        }
+    }
 }

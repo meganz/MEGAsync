@@ -1,3 +1,5 @@
+import QtQuick 2.15
+
 InstallationTypePageForm {
     id: root
 
@@ -30,6 +32,15 @@ InstallationTypePageForm {
     buttonGroup.onCheckStateChanged: {
         if(buttonGroup.checkedButton != null) {
             footerButtons.rightPrimary.enabled = true;
+        }
+    }
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            syncButton.checked = true;
+            syncButton.setFocus(true);
         }
     }
 }

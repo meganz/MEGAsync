@@ -60,6 +60,10 @@ Rectangle {
 
     function setFocus(focus) {
         textField.focus = focus
+
+        if (focus) {
+            textField.forceActiveFocus()
+        }
     }
 
     Texts.Text {
