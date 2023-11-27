@@ -85,6 +85,7 @@ public:
 
     virtual void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) = 0;
     virtual void streamWithApp(const QString& app, const QString& url) = 0;
+    virtual void processSymLinks() = 0;
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 

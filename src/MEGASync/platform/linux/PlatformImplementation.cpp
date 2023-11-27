@@ -206,6 +206,11 @@ void PlatformImplementation::notifyAllSyncFoldersRemoved()
 
 }
 
+void PlatformImplementation::processSymLinks()
+{
+
+}
+
 QString PlatformImplementation::getDefaultFileBrowserApp()
 {
     return getDefaultOpenAppByMimeType(QString::fromUtf8("inode/directory"));

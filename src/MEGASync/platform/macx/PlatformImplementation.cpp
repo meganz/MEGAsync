@@ -4,6 +4,9 @@
 
 #include <unistd.h>
 #include <pwd.h>
+#include <cstdlib>
+#include <filesystem>
+#include <fstream>
 
 using namespace std;
 using namespace mega;
@@ -150,6 +153,78 @@ void PlatformImplementation::streamWithApp(const QString &app, const QString &ur
     args += QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromUtf8(" \"%1\"").arg(url);
     QString command = QString::fromLatin1("open ") + args;
     QProcess::startDetached(command);
+}
+
+void PlatformImplementation::processSymLinks()
+{
+    string appBundle = appBundlePath().toStdString();
+    string symlinksPath = appBundle + "/Contents/Resources/mega.links";
+
+    std::cout << "Opening file to recreate symlinks." << std::endl;
+    ifstream infile(symlinksPath.c_str());
+
+    if (infile.is_open())
+    {
+        string linksVersion, targetPath, tempLinkPath;
+        // Read version code to check if need to apply symlink regeneration
+        if (std::getline(infile, linksVersion))
+        {
+            QDir dataDir(MegaApplication::applicationDataPath());
+            QString versionFilePath = dataDir.filePath(QLatin1String("megasync.version"));
+            QFile versionFile(versionFilePath);
+
+            if (versionFile.open(QFile::ReadOnly | QFile::Text))
+            {
+                try
+                {
+                    int num = std::stoi(linksVersion);
+                    int appVersion = 0;
+
+                    QTextStream in(&versionFile);
+                    QString versionIn = in.readAll();
+                    appVersion = versionIn.toInt();
+
+                    if (num > appVersion)
+                    {
+                        std::cout << "Recreating symlinks structure" << std::endl;
+                        bool error = false;
+                        appBundle.append("/");
+
+                        while (std::getline(infile, targetPath) && std::getline(infile, tempLinkPath))
+                        {
+                            std::string linkPath = appBundle + tempLinkPath;
+                            if (symlink(targetPath.c_str(), linkPath.c_str()) != 0 && errno != EEXIST)
+                            {
+                                error = true;
+                                std::cerr << "Failed to create symlink " << linkPath << " -> " << targetPath << ": " << strerror(errno) << std::endl;
+                            }
+                        }
+
+                        if (error)
+                        {
+                            std::cerr << "Error fixing app symlinks" << std::endl;
+                        }
+                        else
+                        {
+                            std::cerr << "Symlinks structure successfully recreated" << std::endl;
+                        }
+                    }
+                    else
+                    {
+                        std::cout << "Recreation of symlink structure not needed. symlink ver: " << num << " app ver: " << appVersion << std::endl;
+                    }
+                }
+                catch (const std::exception& e)
+                {
+                    std::cerr << "Undefined error: " << e.what() << std::endl;
+                }
+            }
+        }
+    }
+    else
+    {
+        std::cerr << "Failed to open symlinks file: " << strerror(errno) << std::endl;
+    }
 }
 
 bool PlatformImplementation::showInFolder(QString pathIn)
