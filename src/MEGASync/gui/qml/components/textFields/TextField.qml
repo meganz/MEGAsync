@@ -1,13 +1,12 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 import QtQuick.Layouts 1.15
 
-// Local
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
-import Components.ToolTips 1.0 as MegaToolTips
+import common 1.0
+
+import components.texts 1.0 as Texts
+import components.images 1.0
+import components.toolTips 1.0
 
 Rectangle {
     id: root
@@ -63,7 +62,7 @@ Rectangle {
         textField.focus = focus
     }
 
-    MegaTexts.Text {
+    Texts.Text {
         id: titleItem
 
         anchors {
@@ -109,7 +108,7 @@ Rectangle {
         }
 
         font {
-            pixelSize: MegaTexts.Text.Medium
+            pixelSize: Texts.Text.Size.Medium
             family: Styles.fontFamily
             styleName: Styles.fontStyleName
         }
@@ -129,7 +128,7 @@ Rectangle {
                 bottom: textField.bottom
             }
 
-            MegaImages.SvgImage {
+            SvgImage {
                 id: leftIcon
 
                 color: enabled ? colors.icon : colors.iconDisabled
@@ -172,7 +171,7 @@ Rectangle {
                 radius: sizes.borderRadius
             }
 
-            MegaImages.SvgImage {
+            SvgImage {
                 id: rightIcon
 
                 color: enabled ? colors.icon : colors.iconDisabled
@@ -208,7 +207,7 @@ Rectangle {
         }
     }
 
-    MegaTexts.HintText {
+    Texts.HintText {
         id: hintItem
 
         anchors.left: parent.left
@@ -221,7 +220,7 @@ Rectangle {
         visible: false
     }
 
-    MegaToolTips.ToolTip {
+    ToolTip {
         id: toolTip
 
         visible: textField.text

@@ -1,9 +1,7 @@
-// System
 import QtQuick 2.15
 import QtGraphicalEffects 1.15
 
-// QML common
-import Common 1.0
+import common 1.0
 
 Button {
     id: button
@@ -16,7 +14,6 @@ Button {
     property string imageSource
     property size imageSourceSize
 
-    property Component contentComponent
     property Colors colors: Colors {
         background: Styles.pageBackground
         hover: Styles.buttonOutlineBackgroundHover
@@ -95,16 +92,6 @@ Button {
             source: buttonBackground
             visible: !button.hovered
         }
-
-        Loader {
-            id: contentLoader
-
-            anchors.fill: parent
-        }
-    }
-
-    onContentComponentChanged: {
-        contentLoader.sourceComponent = contentComponent;
     }
 
     MouseArea {

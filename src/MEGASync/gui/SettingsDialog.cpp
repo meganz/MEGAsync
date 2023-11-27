@@ -20,7 +20,6 @@
 #include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "GuiUtilities.h"
 
-#include "mega/types.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -233,7 +232,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
-    mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
+    setOverlayCheckboxEnabled(!mApp->isShellNotificationProcessingOngoing(),
+                              mUi->cOverlayIcons->isChecked());
 
     mUi->syncTableView->installEventFilter(mSyncTableEventFilter.get());
     mUi->backupTableView->installEventFilter(mBackupTableEventFilter.get());
@@ -1125,7 +1125,11 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (mLoadingSettings) return;
 
-    mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
+    const int configuredSyncCount = mModel->getNumSyncedFolders(SyncInfo::AllHandledSyncTypes);
+    if (configuredSyncCount <= 0)
+        return;
+
+    setOverlayCheckboxEnabled(false, checked);
     mPreferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
     Platform::getInstance()->notifyRestartSyncFolders();
@@ -1636,6 +1640,24 @@ void SettingsDialog::setGeneralTabEnabled(const bool enabled)
     mUi->gSleepMode->setEnabled(enabled);
 #endif
 #endif
+}
+
+void SettingsDialog::setOverlayCheckboxEnabled(const bool enabled, const bool checked)
+{
+    const int emptyIndex = 0;
+    const int processingIndex = 1;
+    mUi->cOverlayIcons->setEnabled(enabled);
+    mUi->sOverlayMessageWidget->setCurrentIndex(enabled ? emptyIndex : processingIndex);
+    if (enabled)
+    {
+        mUi->wWaitingSpinner->stop();
+    }
+    else
+    {
+        QString message = checked ? tr("Enabling sync status icons") : tr("Disabling sync status icons");
+        mUi->lOverlayProcessing->setText(message);
+        mUi->wWaitingSpinner->start();
+    }
 }
 
 void SettingsDialog::on_bSyncs_clicked()
@@ -2328,7 +2350,7 @@ void SettingsDialog::saveExcludeSyncNames()
 
 void SettingsDialog::onShellNotificationsProcessed()
 {
-    mUi->cOverlayIcons->setEnabled(true);
+    setOverlayCheckboxEnabled(true, mUi->cOverlayIcons->isChecked());
 }
 
 void SettingsDialog::on_bRestart_clicked()

@@ -1,15 +1,14 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// Local
-import Components.Texts 1.0 as MegaTexts
-import Components.TextFields 1.0 as MegaTextFields
-import Components.Buttons 1.0 as MegaButtons
-import Common 1.0
-import Onboard 1.0
+import common 1.0
 
-// C++
+import components.texts 1.0 as Texts
+import components.textFields 1.0
+import components.buttons 1.0
+
+import onboard 1.0
+
 import QmlClipboard 1.0
 
 ColumnLayout {
@@ -124,7 +123,7 @@ ColumnLayout {
         }
     }
 
-    MegaTexts.NotificationText {
+    Texts.NotificationText {
         id: notification
 
         visible: hasError
@@ -149,18 +148,22 @@ ColumnLayout {
         }
     }
 
-    MegaButtons.HelpButton {
+    LinkButton {
         id: helpButtonItem
 
+        Layout.leftMargin: -sizes.horizontalPadding
         text: OnboardingStrings.twoFANeedHelp
         url: Links.recovery
-        visible: !twoFAItem.hasError
-        height: notification.height
-
+        icons {
+            source: Images.helpCircle
+            position: Icon.Position.LEFT
+        }
+        visible: !root.hasError
+        sizes: SmallSizes { borderLess: true }
     }
 
     Shortcut {
-        sequence: StandardKey.Paste
+        sequence: [ StandardKey.Paste ]
         onActivated: {
             pastePin();
         }

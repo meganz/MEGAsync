@@ -23,18 +23,15 @@
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
-#include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
-#include "TextDecorator.h"
 
 #include "qml/QmlDialog.h"
 #include "onboarding/GuestQmlDialog.h"
 #include "qml/QmlDialogWrapper.h"
-#include "qml/QmlClipboard.h"
 #include "qml/ApiEnums.h"
+#include "qml/QmlClipboard.h"
 #include "onboarding/Onboarding.h"
-#include "onboarding/BackupsModel.h"
 #include "onboarding/GuestContent.h"
 
 #include <QQmlApplicationEngine>
@@ -60,10 +57,6 @@
     #include <signal.h>
     #include <condition_variable>
     #include <QSvgRenderer>
-#endif
-
-#ifdef Q_OS_MACX
-    #include "platform/macx/PlatformImplementation.h"
 #endif
 
 #if QT_VERSION >= 0x050000
@@ -3071,88 +3064,12 @@ void MegaApplication::processUpgradeSecurityEvent()
 
 void MegaApplication::registerCommonQMLElements()
 {
+    mEngine->addImportPath(QString::fromUtf8("qrc:/"));
+
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
-
-    qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
-
-    qmlRegisterModule("Onboard", 1, 0);
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingStrings.qml")), "Onboard", 1, 0, "OnboardingStrings");
-
-    qmlRegisterModule("Components.BusyIndicator", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components.BusyIndicator", 1, 0, "BusyIndicator");
-    qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums", QString::fromUtf8("Cannot create ApiEnums in QML"));
-
-    qmlRegisterModule("Components.Buttons", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components.Buttons", 1, 0, "Button");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardHorizontalButton.qml")), "Components.Buttons", 1, 0, "CardHorizontalButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardVerticalButton.qml")), "Components.Buttons", 1, 0, "CardVerticalButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/HelpButton.qml")), "Components.Buttons", 1, 0, "HelpButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/IconButton.qml")), "Components.Buttons", 1, 0, "IconButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/OutlineButton.qml")), "Components.Buttons", 1, 0, "OutlineButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/PrimaryButton.qml")), "Components.Buttons", 1, 0, "PrimaryButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SecondaryButton.qml")), "Components.Buttons", 1, 0, "SecondaryButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Colors.qml")), "Components.Buttons", 1, 0, "Colors");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Icon.qml")), "Components.Buttons", 1, 0, "Icon");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Progress.qml")), "Components.Buttons", 1, 0, "Progress");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Sizes.qml")), "Components.Buttons", 1, 0, "Sizes");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SmallSizes.qml")), "Components.Buttons", 1, 0, "SmallSizes");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/LargeSizes.qml")), "Components.Buttons", 1, 0, "LargeSizes");
-
-    qmlRegisterModule("Components.CheckBoxes", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components.CheckBoxes", 1, 0, "CheckBox");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/Colors.qml")), "Components.CheckBoxes", 1, 0, "Colors");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/Icons.qml")), "Components.CheckBoxes", 1, 0, "Icons");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/Sizes.qml")), "Components.CheckBoxes", 1, 0, "Sizes");
-
-    qmlRegisterModule("Components.Images", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components.Images", 1, 0, "SvgImage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/Image.qml")), "Components.Images", 1, 0, "Image");
-
-    qmlRegisterModule("Components.ProgressBars", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/progressBars/HorizontalProgressBar.qml")), "Components.ProgressBars", 1, 0, "HorizontalProgressBar");
-
-    qmlRegisterModule("Components.ScrollBars", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/scrollBars/ScrollBar.qml")), "Components.ScrollBars", 1, 0, "ScrollBar");
-
-    qmlRegisterModule("Components.TextFields", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/EmailTextField.qml")), "Components.TextFields", 1, 0, "EmailTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/IconTextField.qml")), "Components.TextFields", 1, 0, "IconTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components.TextFields", 1, 0, "PasswordTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components.TextFields", 1, 0, "TextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFA.qml")), "Components.TextFields", 1, 0, "TwoFA");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFADigit.qml")), "Components.TextFields", 1, 0, "TwoFADigit");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/Sizes.qml")), "Components.TextFields", 1, 0, "Sizes");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/SmallSizes.qml")), "Components.TextFields", 1, 0, "SmallSizes");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/LargeSizes.qml")), "Components.TextFields", 1, 0, "LargeSizes");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/Colors.qml")), "Components.TextFields", 1, 0, "Colors");
-
-    qmlRegisterModule("Components.Texts", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintText.qml")), "Components.Texts", 1, 0, "HintText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationText.qml")), "Components.Texts", 1, 0, "NotificationText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components.Texts", 1, 0, "RichText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/SecondaryText.qml")), "Components.Texts", 1, 0, "SecondaryText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/Text.qml")), "Components.Texts", 1, 0, "Text");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/ElidedText.qml")), "Components.Texts", 1, 0, "ElidedText");
-
-    qmlRegisterModule("Components.ToolTips", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/toolTips/ToolTip.qml")), "Components.ToolTips", 1, 0, "ToolTip");
-
-    qmlRegisterModule("Components.Views", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/views/ScrollPanel.qml")), "Components.Views", 1, 0, "ScrollPanel");
-
-    qmlRegisterModule("Components.Dialogs", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/dialogs/ConfirmCloseDialog.qml")), "Components.Dialogs", 1, 0, "ConfirmCloseDialog");
-
-    qmlRegisterModule("Common", 1, 0);
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Constants.qml")), "Common", 1, 0, "Constants");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Images.qml")), "Common", 1, 0, "Images");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Links.qml")), "Common", 1, 0, "Links");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/RegexExpressions.qml")), "Common", 1, 0, "RegexExpressions");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Styles.qml")), "Common", 1, 0, "Styles");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/OS.qml")), "Common", 1, 0, "OS");
-
-    qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
+    qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
+                                     QString::fromUtf8("Cannot create ApiEnums in QML"));
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
@@ -5775,14 +5692,15 @@ void MegaApplication::manageBusinessStatus(int64_t event)
         }
         case MegaApi::BUSINESS_STATUS_EXPIRED:
         {
-            const QString title = tr("Account deactivated");
             if (megaApi->isProFlexiAccount())
             {
+                const QString title = tr("Pro Flexi Account deactivated");
                 const QString message = CommonMessages::getExpiredProFlexiMessage();
                 GuiUtilities::showPayReactivateOrDismiss(title, message);
             }
             else if (megaApi->isMasterBusinessAccount())
             {
+                const QString title = tr("Account deactivated");
                 const QString message = tr("It seems the payment for your business account has failed. "
                                            "Your account is suspended as read only until you proceed with the needed payments.");
                 GuiUtilities::showPayNowOrDismiss(title, message);
@@ -5992,17 +5910,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 // API_ENOENT is expected when the user has never disabled versioning
                 preferences->disableFileVersioning(request->getFlag());
             }
-        }
-        break;
-    }
-    case MegaRequest::TYPE_CHANGE_PW:
-    {
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title =  tr("Password changed");
-            msgInfo.text =   tr("Your password has been changed.");
-            QMegaMessageBox::information(msgInfo);
         }
         break;
     }

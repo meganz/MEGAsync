@@ -1,11 +1,10 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 
-// Local
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
+import common 1.0
+
+import components.texts 1.0 as Texts
+import components.images 1.0
 
 Qml.CheckBox {
     id: root
@@ -46,7 +45,7 @@ Qml.CheckBox {
     padding: 0
     activeFocusOnTab: true
 
-    contentItem: MegaTexts.RichText {
+    contentItem: Texts.RichText {
         anchors.left: indicator.right
         leftPadding: root.spacing
         height: Math.max(contentItem.implicitHeight, indicator.height)
@@ -112,7 +111,7 @@ Qml.CheckBox {
                    ? checkBoxOutRect.getBackgroundColor()
                    : "transparent"
 
-            MegaImages.SvgImage {
+            SvgImage {
                 id: image
 
                 visible: indeterminate() || checked

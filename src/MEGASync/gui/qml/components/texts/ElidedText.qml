@@ -1,11 +1,9 @@
-// System
 import QtQuick 2.15
 
-// Local
-import Components.Texts 1.0 as MegaTexts
-import Components.ToolTips 1.0 as MegaToolTips
+import components.toolTips 1.0
+import components.texts 1.0 as Texts
 
-MegaTexts.Text {
+Texts.Text {
     id: elidedText
 
     property bool showTooltip: true
@@ -22,7 +20,7 @@ MegaTexts.Text {
         anchors.fill: parent
         enabled: showTooltip
 
-        MegaToolTips.ToolTip {
+        ToolTip {
             id: tooltip
 
             visible: showTooltip && elidedText.truncated && parent.containsMouse
@@ -30,6 +28,5 @@ MegaTexts.Text {
             delay: 500
             timeout: 5000
         }
-
     }
 }

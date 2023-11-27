@@ -1,9 +1,6 @@
-// System
 import QtQuick 2.15
-import QtQml 2.15
 
-//Local
-import Common 1.0
+import common 1.0
 
 Item {
     id: root

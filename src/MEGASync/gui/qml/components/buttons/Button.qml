@@ -1,25 +1,25 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 import QtQuick.Layouts 1.15
 import QtGraphicalEffects 1.15
 
-// Local
-import Components.Texts 1.0 as MegaTexts
-import Components.BusyIndicator 1.0 as MegaBusyIndicator
-import Components.Images 1.0 as MegaImages
-import Common 1.0
+import common 1.0
+
+import components.texts 1.0 as Texts
+import components.busyIndicator 1.0
+import components.images 1.0
 
 Qml.RoundButton {
     id: root
 
-    property Colors colors: Colors {}
-    property Icon icons: Icon{}
     property alias progressValue: backgroundProgress.value
+
+    property Colors colors: Colors {}
+    property Icon icons: Icon {}
     property Sizes sizes: Sizes {}
 
     function getBorderColor() {
-        if(root.pressed || root.down || root.checked) {
+        if(root.pressed || root.checked) {
             return colors.borderPressed;
         }
         if(root.hovered) {
@@ -32,7 +32,7 @@ Qml.RoundButton {
     }
 
     function getBackgroundColor() {
-        if(root.pressed || root.down || root.checked) {
+        if(root.pressed || root.checked) {
             return colors.pressed;
         }
         if(root.hovered) {
@@ -45,7 +45,7 @@ Qml.RoundButton {
     }
 
     function getTextColor() {
-        if(root.pressed || root.down || root.checked) {
+        if(root.pressed || root.checked) {
             return colors.textPressed;
         }
         if(root.hovered) {
@@ -58,7 +58,7 @@ Qml.RoundButton {
     }
 
     function getIconColor() {
-        if(root.pressed || root.down || root.checked) {
+        if(root.pressed || root.checked) {
             return icons.colorPressed;
         }
         if(root.hovered) {
@@ -74,31 +74,39 @@ Qml.RoundButton {
     topPadding: sizes.verticalPadding + sizes.focusBorderWidth
     leftPadding: sizes.horizontalPadding + sizes.focusBorderWidth
     rightPadding: sizes.horizontalPadding + sizes.focusBorderWidth
-    height: sizes.height + 2 * sizes.focusBorderWidth
-    Layout.preferredHeight: sizes.height + 2 * sizes.focusBorderWidth
+    height: 2 * sizes.verticalPadding + 2 * sizes.focusBorderWidth + contentRow.implicitHeight
+    width: 2 * sizes.horizontalPadding + 2 * sizes.focusBorderWidth + contentRow.implicitWidth
+    Layout.preferredHeight: height
+    Layout.preferredWidth: width
 
     contentItem: Row {
+        id: contentRow
+
         spacing: sizes.spacing
 
-        MegaImages.SvgImage {
+        SvgImage {
             id: leftImage
 
             anchors.verticalCenter: parent.verticalCenter
             source: root.icons.source
             color: getIconColor()
             sourceSize: sizes.iconSize
-            visible: root.icons.position === Icon.Position.LEFT && !root.icons.busyIndicatorVisible
+            visible: !root.icons.busyIndicatorVisible
+                        && (root.icons.position === Icon.Position.LEFT
+                            || root.icons.position === Icon.Position.BOTH)
         }
 
-        MegaBusyIndicator.BusyIndicator {
+        BusyIndicator {
             id: leftBusyIndicator
+
             anchors.verticalCenter: parent.verticalCenter
 
             color: root.icons.colorEnabled
-            visible: root.icons.position === Icon.Position.LEFT && root.icons.busyIndicatorVisible
+            visible: root.icons.busyIndicatorVisible
+                        && root.icons.position === Icon.Position.LEFT
         }
 
-        MegaTexts.Text {
+        Texts.Text {
             id: buttonText
 
             anchors.verticalCenter: parent.verticalCenter
@@ -108,24 +116,30 @@ Qml.RoundButton {
                 pixelSize: sizes.textFontSize
                 weight: Font.DemiBold
             }
+            lineHeight: sizes.textLineHeight
+            lineHeightMode: Text.FixedHeight
+            verticalAlignment: Text.AlignVCenter
         }
 
-        MegaImages.SvgImage {
+        SvgImage {
             id: rightImage
 
             anchors.verticalCenter: parent.verticalCenter
             source: root.icons.source
             color: getIconColor()
             sourceSize: sizes.iconSize
-            visible: root.icons.position === Icon.Position.RIGHT && !root.icons.busyIndicatorVisible
+            visible: !root.icons.busyIndicatorVisible
+                        && (root.icons.position === Icon.Position.RIGHT
+                            || root.icons.position === Icon.Position.BOTH)
         }
 
-        MegaBusyIndicator.BusyIndicator {
+        BusyIndicator {
             id: rightBusyIndicator
 
             anchors.verticalCenter: parent.verticalCenter
             color: icons.colorEnabled
-            visible: root.icons.position === Icon.Position.RIGHT && root.icons.busyIndicatorVisible
+            visible: root.icons.busyIndicatorVisible
+                        && root.icons.position === Icon.Position.RIGHT
         }
     }
 
@@ -133,21 +147,20 @@ Qml.RoundButton {
         id: focusRect
 
         color: "transparent"
-        border.color: root.enabled ? (root.activeFocus ? Styles.focus : "transparent") : "transparent"
+        border.color: root.enabled
+                      ? (root.activeFocus ? Styles.focus : "transparent")
+                      : "transparent"
         border.width: sizes.focusBorderWidth
         radius: sizes.focusBorderRadius
+        width: root.width
         height: root.height
 
         Rectangle {
             id: backgroundRect
 
             color: getBackgroundColor()
-            anchors.top: focusRect.top
-            anchors.left: focusRect.left
-            anchors.topMargin: sizes.focusBorderWidth
-            anchors.leftMargin: sizes.focusBorderWidth
-            width: root.width - 2 * sizes.focusBorderWidth
-            height: root.height - 2 * sizes.focusBorderWidth
+            anchors.fill: focusRect
+            anchors.margins: sizes.focusBorderWidth
             border.width: sizes.borderWidth
             border.color: getBorderColor()
             radius: sizes.radius
@@ -170,6 +183,7 @@ Qml.RoundButton {
 
             Progress {
                 id: backgroundProgress
+
                 anchors.fill: parent
             }
         }
@@ -186,7 +200,6 @@ Qml.RoundButton {
     Keys.onReleased: (event)=> {
         if (event.key === Qt.Key_Return) {
             if (checkable) {
-                down = false;
                 checked = true;
             }
             event.accepted = true;
@@ -194,7 +207,6 @@ Qml.RoundButton {
     }
 
     Keys.onReturnPressed: {
-        down = true;
         root.clicked();
     }
 

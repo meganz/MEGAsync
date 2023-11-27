@@ -1,24 +1,22 @@
-// Local
-import Components.Buttons 1.0 as MegaButtons
-import Common 1.0
+import common 1.0
 
-MegaButtons.Button {
+Button {
+    id: root
 
     icons {
-        colorEnabled: Styles.buttonPrimary
-        colorHovered: Styles.buttonPrimary
-        colorPressed: Styles.buttonPrimary
+        colorEnabled: Styles.buttonOutline
+        colorHovered: Styles.buttonOutlineHover
+        colorPressed: Styles.buttonOutlinePressed
     }
 
     colors {
         background: "transparent"
         disabled: "transparent"
         hover: Styles.buttonOutlineBackgroundHover
-        border: Styles.buttonPrimary
+        border: Styles.buttonOutline
         borderHover: Styles.buttonOutlineHover
         borderDisabled: Styles.buttonDisabled
-        text: Styles.buttonPrimary
-        textDisabled: Styles.textDisabled
+        text: Styles.buttonOutline
         textHover: Styles.buttonOutlineHover
         textPressed: Styles.buttonOutlinePressed
         pressed: "transparent"

@@ -47,6 +47,8 @@ public:
     void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
     void streamWithApp(const QString& app, const QString& url) override;
 
+    void processSymLinks() override;
+
 private:
     void disableSignalHandler();
     bool isFileManagerExtensionEnabled();

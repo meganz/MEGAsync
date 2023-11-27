@@ -1,10 +1,9 @@
-// System
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Qml
 
-// Local
-import Common 1.0
-import Components.Images 1.0 as MegaImages
+import common 1.0
+
+import components.images 1.0
 
 Qml.ScrollBar {
     id: scrollbar
@@ -238,7 +237,7 @@ Qml.ScrollBar {
 
             activeFocusOnTab: true
 
-            MegaImages.SvgImage {
+            SvgImage {
                 source: Images.arrowRight
                 sourceSize: Qt.size(iconSize, iconSize)
                 color: enabled ? Styles.iconButton : Styles.iconButtonDisabled

@@ -1,9 +1,0 @@
-module Onboard.Syncs_types
-MainFlow 1.0 MainFlow.qml
-Header 1.0 Header.qml
-Footer 1.0 Footer.qml
-InfoAccount 1.0 InfoAccount.qml
-SyncsPage 1.0 SyncsPage.qml
-SyncsType 1.0 SyncsType.qml
-SyncsVerticalButton 1.0 SyncsVerticalButton.qml
-ResumePage 1.0 ResumePage.qml

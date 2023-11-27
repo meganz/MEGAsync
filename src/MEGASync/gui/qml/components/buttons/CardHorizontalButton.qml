@@ -1,72 +1,68 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// QML common
-import Common 1.0
-import Components.Texts 1.0 as MegaTexts
-import Components.Images 1.0 as MegaImages
+import common 1.0
+
+import components.texts 1.0 as Texts
+import components.images 1.0
 
 CardButton {
     id: button
 
+    readonly property int horizontalMargin: 24
+    readonly property int verticalMargin: 14
+    readonly property int textSpacing: 4
+    readonly property int titleLineHeight: 24
+    readonly property int descriptionLineHeight: 16
+
     Layout.preferredWidth: 408
-    Layout.preferredHeight: 88
+    Layout.preferredHeight: height
     Layout.fillWidth: true
     width: 400
-    height: 88
+    height: titleText.height + descriptionText.height + textSpacing + verticalMargin * 2
     imageSourceSize: Qt.size(48, 48)
 
-    contentComponent: Component {
+    Row {
+        anchors.fill: parent
+        anchors.leftMargin: horizontalMargin
+        anchors.rightMargin: horizontalMargin
+        anchors.topMargin: verticalMargin
+        anchors.bottomMargin: verticalMargin
+        spacing: 20
 
-        Row {
-            id: main
+        SvgImage {
+            source: imageSource
+            sourceSize: imageSourceSize
+            anchors.verticalCenter: parent.verticalCenter
+        }
 
-            readonly property int horizontalMargin: 24
-            readonly property int verticalMargin: 14
-            readonly property int textSpacing: 4
-            readonly property int titleLineHeight: 24
-            readonly property int descriptionLineHeight: 16
+        Column {
+            width: parent.width - x
+            spacing: textSpacing
 
-            anchors.fill: parent
-            anchors.leftMargin: horizontalMargin
-            anchors.rightMargin: horizontalMargin
-            anchors.topMargin: verticalMargin
-            anchors.bottomMargin: verticalMargin
-            spacing: 20
+            Texts.Text {
+                id: titleText
 
-            MegaImages.SvgImage {
-                source: imageSource
-                sourceSize: imageSourceSize
-                anchors.verticalCenter: parent.verticalCenter
+                text: title
+                lineHeightMode: Text.FixedHeight
+                lineHeight: titleLineHeight
+                anchors.left: parent.left
+                anchors.right: parent.right
+                font.pixelSize: Texts.Text.Size.MediumLarge
+                font.weight: Font.Bold
             }
 
-            Column {
-                width: parent.width - x
-                spacing: main.textSpacing
+            Texts.Text {
+                id: descriptionText
 
-                MegaTexts.Text {
-                    text: title
-                    height: main.textTopHeight
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: titleLineHeight
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    font.pixelSize: MegaTexts.Text.Size.MediumLarge
-                    font.weight: Font.Bold
-                }
-
-                MegaTexts.Text {
-                    text: description
-                    height: main.textBottomHeight
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: Styles.textSecondary
-                    font.pixelSize: MegaTexts.Text.Size.Small
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: descriptionLineHeight
-                    width: 314
-                }
+                text: description
+                anchors.left: parent.left
+                anchors.right: parent.right
+                color: Styles.textSecondary
+                font.pixelSize: Texts.Text.Size.Small
+                lineHeightMode: Texts.Text.FixedHeight
+                lineHeight: descriptionLineHeight
+                width: 314
             }
         }
     }

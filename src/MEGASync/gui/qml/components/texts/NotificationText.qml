@@ -1,9 +1,9 @@
-// System
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-// Local
-import Common 1.0
+import common 1.0
+
+import components.texts 1.0 as Texts
 
 Item {
     id: root
@@ -72,7 +72,7 @@ Item {
             hoverEnabled: true
         }
 
-        HintText {
+        Texts.HintText {
             id: hint
 
             anchors.top: parent.top

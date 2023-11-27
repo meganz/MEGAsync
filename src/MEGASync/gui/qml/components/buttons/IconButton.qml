@@ -1,16 +1,8 @@
-// System
 import QtQuick.Layouts 1.15
 
-// Local
-import Components.Buttons 1.0 as MegaButtons
-import Common 1.0
+import common 1.0
 
-MegaButtons.Button {
-    sizes.borderWidth: 0
-    height: 32 + 2 * sizes.focusBorderWidth
-    width: height
-    Layout.preferredHeight: height
-    Layout.preferredWidth: width
+Button {
 
     icons {
         colorEnabled: Styles.iconButton
@@ -28,6 +20,7 @@ MegaButtons.Button {
         borderHover: "transparent"
         borderSelected: "transparent"
         borderPressed: "transparent"
+        disabled: "transparent"
     }
 
     sizes {
