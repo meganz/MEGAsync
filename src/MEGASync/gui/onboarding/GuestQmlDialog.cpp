@@ -6,21 +6,21 @@ GuestQmlDialog::GuestQmlDialog(QWindow *parent)
     : QmlDialog(parent)
 {
     setFlags(flags() | Qt::FramelessWindowHint);
-    mHideTimer.setSingleShot(true);
-
-    QObject::connect(&mHideTimer, &QTimer::timeout, this, [this](){
-        this->hide();
-    });
 
     QObject::connect(this, &GuestQmlDialog::activeChanged, [=]() {
         if (!this->isActive()) {
-            mHideTimer.start(200);
+            this->hide();
         }
     });
 }
 
 GuestQmlDialog::~GuestQmlDialog()
 {
+}
+
+bool GuestQmlDialog::isHiddenForLongTime() const
+{
+    return QDateTime::currentMSecsSinceEpoch() - mLastHideTime > 200;
 }
 
 void GuestQmlDialog::realocate()
@@ -35,4 +35,10 @@ void GuestQmlDialog::showEvent(QShowEvent *event)
 {
     realocate();
     QmlDialog::showEvent(event);
+}
+
+void GuestQmlDialog::hideEvent(QHideEvent *event)
+{
+    mLastHideTime = QDateTime::currentMSecsSinceEpoch();
+    QmlDialog::hideEvent(event);
 }

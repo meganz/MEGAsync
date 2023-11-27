@@ -29,6 +29,7 @@
 #include "TextDecorator.h"
 
 #include "qml/QmlDialog.h"
+#include "onboarding/GuestQmlDialog.h"
 #include "qml/QmlDialogWrapper.h"
 #include "qml/QmlClipboard.h"
 #include "qml/ApiEnums.h"
@@ -5286,13 +5287,15 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 void MegaApplication::raiseOrHideInfoGuestDialog()
 {
     auto guestDialogWrapper = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>();
-    bool isGuestDialogVisible = guestDialogWrapper != nullptr && guestDialogWrapper->getDialog()->isVisible();
 
-    if (isGuestDialogVisible)
+    if(guestDialogWrapper == nullptr) //dialog still not built
     {
-        guestDialogWrapper->getDialog()->hide();
+        infoDialogTimer->start(200);
+        return;
     }
-    else
+
+    auto dialog = dynamic_cast<GuestQmlDialog*>(guestDialogWrapper->getDialog()->window());
+    if(dialog && dialog->isHiddenForLongTime())
     {
         infoDialogTimer->start(200);
     }
