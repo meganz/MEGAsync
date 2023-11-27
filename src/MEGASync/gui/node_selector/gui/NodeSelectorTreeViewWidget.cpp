@@ -720,9 +720,12 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
     {
         if(shouldUpdateImmediately())
         {
-            mNodesUpdateTimer.setInterval(0);
+            if(mNodesUpdateTimer.interval() != 0)
+            {
+                mNodesUpdateTimer.setInterval(0);
+            }
         }
-        else
+        else if(mNodesUpdateTimer.interval() != CHECK_UPDATED_NODES_INTERVAL)
         {
             mNodesUpdateTimer.setInterval(CHECK_UPDATED_NODES_INTERVAL);
         }
