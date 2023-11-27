@@ -739,10 +739,9 @@ bool PlatformImplementation::showInFolder(QString pathIn)
         return false;
     }
 
-    QString param;
-    param = QString::fromUtf8("/select,");
-    param += QString::fromLatin1("\"\"") + QDir::toNativeSeparators(QDir(pathIn).canonicalPath()) + QString::fromLatin1("\"\"");
-    return QProcess::startDetached(QString::fromLatin1("explorer"), { param });
+    return QProcess::startDetached(QString::fromLatin1("explorer.exe"), QStringList{QString::fromLatin1("/select"),
+                                                                                    QString::fromLatin1(","),
+                                                                                    QDir::toNativeSeparators(QDir(pathIn).canonicalPath())});
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)

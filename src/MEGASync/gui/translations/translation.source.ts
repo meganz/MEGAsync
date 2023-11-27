@@ -4937,11 +4937,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Network</translation>
     </message>
     <message>
-        <source>Enable overlay icons</source>
-        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>Enable overlay icons</translation>
-    </message>
-    <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
         <translation>Check for updates</translation>
@@ -5436,6 +5431,21 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.</translation>
+    </message>
+    <message>
+        <source>Enable sync status icons</source>
+        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

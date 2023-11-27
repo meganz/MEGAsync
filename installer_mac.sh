@@ -305,8 +305,8 @@ if [ "$notarize" = "1" ]; then
     echo "Checking signature and notarization (3/3)"
     mkdir $MOUNTDIR || :
     hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
-    spctl --assess -vv -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
-    hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
+    spctl --assess -vv -a $MOUNTDIR/$VOLUME_NAME/$APP_NAME.app
+    hdiutil detach $MOUNTDIR/$VOLUME_NAME >/dev/null
     rmdir $MOUNTDIR
 
 	cd ..
