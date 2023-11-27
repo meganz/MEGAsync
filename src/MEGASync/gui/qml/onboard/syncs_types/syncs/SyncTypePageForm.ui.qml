@@ -9,6 +9,7 @@ import onboard.syncs_types 1.0
 
 SyncsPage {
     property alias buttonGroup: buttonGroup
+    property alias fullSyncButton: fullSyncButtonItem
 
     footerButtons.rightPrimary.enabled: false
 
@@ -40,9 +41,9 @@ SyncsPage {
                 anchors.fill: parent
 
                 SyncTypeButton {
-                    id: fullSyncButton
+                    id: fullSyncButtonItem
 
-                    Layout.leftMargin: -fullSyncButton.focusBorderWidth
+                    Layout.leftMargin: -fullSyncButtonItem.focusBorderWidth
                     title: OnboardingStrings.fullSync
                     type: SyncsType.Types.FullSync
                     description: OnboardingStrings.fullSyncButtonDescription

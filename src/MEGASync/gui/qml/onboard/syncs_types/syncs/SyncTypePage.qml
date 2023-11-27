@@ -1,3 +1,5 @@
+import QtQuick 2.15
+
 import onboard.syncs_types 1.0
 
 SyncTypePageForm {
@@ -32,6 +34,15 @@ SyncTypePageForm {
     buttonGroup.onCheckStateChanged: {
         if(buttonGroup.checkedButton != null) {
             footerButtons.rightPrimary.enabled = true;
+        }
+    }
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            fullSyncButton.checked = true;
+            fullSyncButton.setFocus(true);
         }
     }
 }
