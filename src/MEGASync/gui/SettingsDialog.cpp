@@ -202,8 +202,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     macOSretainSizeWhenHidden();
 #endif
 
-    mUi->bRestart->hide();
-
     mApp->attachStorageObserver(*this);
     mApp->attachBandwidthObserver(*this);
     mApp->attachAccountObserver(*this);
@@ -1632,24 +1630,6 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 void SettingsDialog::onShellNotificationsProcessed()
 {
     mUi->cOverlayIcons->setEnabled(true);
-}
-
-void SettingsDialog::on_bRestart_clicked()
-{
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = this;
-    msgInfo.title =  tr("Restart MEGAsync");
-    msgInfo.text =   tr("Do you want to restart MEGAsync now?");
-    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::No;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
-        if(msg->result() == QMessageBox::Yes)
-        {
-            mPreferences->setDeleteSdkCacheAtStartup(true);
-            MegaSyncApp->rebootApplication(false);
-        }
-    };
-    QMegaMessageBox::warning(msgInfo);
 }
 
 // Network -----------------------------------------------------------------------------------------

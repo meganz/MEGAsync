@@ -3442,44 +3442,7 @@ margin-right: 32px;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="wFoldersFooter">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_30">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>12</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>12</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="bRestart">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Restart</string>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
+          <widget class="QWidget" name="wFoldersFooter"/>
           <widget class="QWidget" name="wNetworkFooter"/>
           <widget class="QWidget" name="wNotificationsFooter"/>
          </widget>
@@ -3543,7 +3506,6 @@ margin-right: 32px;</string>
   <tabstop>bOpenProxySettings</tabstop>
   <tabstop>bFullCheck</tabstop>
   <tabstop>bSessionHistory</tabstop>
-  <tabstop>bRestart</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources_macx.qrc"/>
