@@ -75,6 +75,7 @@ private:
 
     virtual void sendDataChanged(int row);
     QVariant getColumnStats(int role, mega::MegaHandle backupId, std::function<int (const::mega::MegaSyncStats &)> statsGetter) const;
+    QIcon getStateIcon(const std::shared_ptr<SyncSettings>& sync) const;
 };
 
 
