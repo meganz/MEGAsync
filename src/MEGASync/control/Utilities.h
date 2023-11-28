@@ -522,7 +522,8 @@ class CloudFoldersMerge : public QObject
 public:
     CloudFoldersMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge)
         : mFolderTarget(folderTarget),
-          mFolderToMerge(folderToMerge)
+          mFolderToMerge(folderToMerge),
+          mDepth(0)
     {}
 
     enum ActionForDuplicates
@@ -539,6 +540,7 @@ signals:
 private:
     mega::MegaNode* mFolderTarget;
     mega::MegaNode* mFolderToMerge;
+    int mDepth;
 };
 
 #endif // UTILITIES_H
