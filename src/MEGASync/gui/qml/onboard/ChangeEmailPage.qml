@@ -37,4 +37,12 @@ ChangeEmailPageForm {
             }
         }
     }
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            emailTextField.setFocus(true);
+        }
+    }
 }
