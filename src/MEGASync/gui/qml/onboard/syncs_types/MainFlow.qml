@@ -165,6 +165,10 @@ Rectangle {
             margins: contentMargin
         }
 
+        onCurrentItemChanged: {
+            currentItem.setInitialFocusPosition();
+        }
+
         Component {
             id: deviceNamePage
 

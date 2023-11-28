@@ -20,6 +20,7 @@ Item {
     property alias choosenPath: folderItem.text
     property bool local: true
     property alias folderField: folderItem
+    property alias changeButton: changeButtonItem
 
     readonly property int textEditMargin: 2
 
@@ -56,7 +57,7 @@ Item {
         id: folderItem
 
         anchors.left: parent.left
-        anchors.right: changeButton.left
+        anchors.right: changeButtonItem.left
         anchors.top: parent.top
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
@@ -69,7 +70,7 @@ Item {
     }
 
     OutlineButton {
-        id: changeButton
+        id: changeButtonItem
 
         height: folderItem.textField.height
         anchors.right: parent.right

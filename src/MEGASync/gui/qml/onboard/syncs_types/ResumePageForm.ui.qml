@@ -18,6 +18,7 @@ SyncsPage {
     property bool fullSyncDone
     property bool selectiveSyncDone
     property alias buttonGroup: buttonGroupItem
+    property alias syncButton: syncButtonItem
 
     readonly property string stateFullSync: "FULL"
     readonly property string stateSelectiveSync: "SELECTIVE"
@@ -37,14 +38,14 @@ SyncsPage {
             name: stateFullSync
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
-            PropertyChanges { target: syncButton; visible: false; }
+            PropertyChanges { target: syncButtonItem; visible: false; }
         },
         State {
             name: stateSelectiveSync
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
             PropertyChanges {
-                target: syncButton;
+                target: syncButtonItem;
                 type: SyncsType.SelectiveSync;
                 visible: true;
             }
@@ -54,7 +55,7 @@ SyncsPage {
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepBackupTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
             PropertyChanges {
-                target: syncButton;
+                target: syncButtonItem;
                 type: !fullSyncDone && !selectiveSyncDone ? SyncsType.Sync : SyncsType.SelectiveSync;
                 visible: !fullSyncDone
                 title: !fullSyncDone && !selectiveSyncDone ? OnboardingStrings.sync : OnboardingStrings.selectiveSync
@@ -109,11 +110,11 @@ SyncsPage {
             RowLayout {
                 spacing: 12
                 anchors.fill: parent
-                anchors.leftMargin: -syncButton.focusBorderWidth
+                anchors.leftMargin: -syncButtonItem.focusBorderWidth
                 anchors.rightMargin: backupsButton.focusBorderWidth
 
                 SyncsVerticalButton {
-                    id: syncButton
+                    id: syncButtonItem
 
                     title: OnboardingStrings.selectiveSync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
@@ -139,10 +140,10 @@ SyncsPage {
                     ButtonGroup.group: buttonGroupItem
                     type: SyncsType.Backup
                     checkable: false
-                    width: !syncButton.visible
+                    width: !syncButtonItem.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
-                    height: !syncButton.visible
+                    height: !syncButtonItem.visible
                             ? 155
                             : 195
                     Layout.preferredWidth: width

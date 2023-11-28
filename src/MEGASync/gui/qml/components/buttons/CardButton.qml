@@ -51,6 +51,14 @@ Button {
         return colors.background;
     }
 
+    function setFocus(focus)    {
+        button.focus = focus;
+
+        if(focus) {
+            button.forceActiveFocus();
+        }
+    }
+
     checkable: true
     checked: false
     autoExclusive : true

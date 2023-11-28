@@ -1,3 +1,5 @@
+import QtQuick 2.15
+
 import LoginController 1.0
 
 RegisterPageForm {
@@ -17,6 +19,14 @@ RegisterPageForm {
 
     loginButton.onClicked: {
         loginControllerAccess.state = LoginController.LOGGED_OUT;
+    }
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            registerContent.firstName.setFocus(true);
+        }
     }
 
 }

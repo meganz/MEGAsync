@@ -68,4 +68,12 @@ FullSyncPageForm {
             console.log("Full sync can't sync, message -> " + message);
         }
     }
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            localFolderChooser.changeButton.setFocus(true);
+        }
+    }
 }

@@ -47,6 +47,9 @@ Item {
         id: view
 
         anchors.fill: parent
+        onCurrentItemChanged: {
+            currentItem.setInitialFocusPosition();
+        }
 
         Component {
             id: selectBackupFoldersPage

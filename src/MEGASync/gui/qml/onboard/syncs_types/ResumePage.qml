@@ -37,4 +37,13 @@ ResumePageForm {
             onboardingWindow.close();
         }
     }
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            syncButton.checked = true;
+            syncButton.setFocus(true);
+        }
+    }
 }
