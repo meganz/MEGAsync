@@ -333,6 +333,56 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
     }
 }
 
+void NodeSelectorTreeView::dragEnterEvent(QDragEnterEvent* event)
+{
+    if (event->mimeData()->hasUrls())
+    {
+        event->acceptProposedAction();
+    }
+}
+
+void NodeSelectorTreeView::dragMoveEvent(QDragMoveEvent* event)
+{
+    if (event->mimeData()->hasUrls())
+    {
+        event->acceptProposedAction();
+    }
+}
+
+void NodeSelectorTreeView::dropEvent(QDropEvent* event)
+{
+    // Get the list of URLs
+    QList<QUrl> urlList = event->mimeData()->urls();
+    if (urlList.isEmpty())
+    {
+        return;
+    }
+    // get drop index
+    QModelIndex dropIndex = indexAt(event->pos());
+
+    // get the node handle of the drop index from the proxy model
+    auto node = getDropNode(dropIndex);
+    if(node)
+    {
+        MegaSyncApp->uploadFilesToNode(urlList, node->getHandle());
+    }
+    QTreeView::dropEvent(event);
+}
+
+std::shared_ptr<MegaNode> NodeSelectorTreeView::getDropNode(const QModelIndex& dropIndex)
+{
+    if(!dropIndex.isValid())
+    {
+        return std::shared_ptr<MegaNode>(mMegaApi->getRootNode());
+    }
+    auto node = proxyModel()->getNode(dropIndex);
+    if(!node || node->isFolder())
+    {
+        return node;
+    }
+    return std::shared_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
+}
+
 bool NodeSelectorTreeView::areAllEligibleForDeletion(const QList<MegaHandle> &handles) const
 {
     auto removableItems(handles.size());

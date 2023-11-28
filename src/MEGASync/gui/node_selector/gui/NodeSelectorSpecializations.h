@@ -56,10 +56,8 @@ class CloudDriveNodeSelector : public NodeSelector
 
 public:
     explicit CloudDriveNodeSelector(QWidget *parent = 0);
-protected:
-    void dragEnterEvent(QDragEnterEvent* event) override;
-    void dragLeaveEvent(QDragLeaveEvent* event) override;
-    void dropEvent(QDropEvent* event) override;
+
+    void enableDragAndDrop(bool enable);
 
 protected slots:
     void onCustomBottomButtonClicked(uint8_t id) override;

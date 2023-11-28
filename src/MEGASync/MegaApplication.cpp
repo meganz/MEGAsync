@@ -5467,6 +5467,22 @@ void MegaApplication::externalDownload(QQueue<WrappedNode *> newDownloadQueue)
     downloadQueue.append(newDownloadQueue);
 }
 
+void MegaApplication::uploadFilesToNode(const QList<QUrl>& files,  MegaHandle targetNode)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    //Append the list of files to the upload queue, but avoid duplicates
+    std::for_each(files.begin(), files.end(), [&](const QUrl &file) {
+        if (!uploadQueue.contains(file.toLocalFile())) {
+            uploadQueue.enqueue(file.toLocalFile());
+        }
+    });
+    processUploadQueue(targetNode);
+}
+
 void MegaApplication::externalLinkDownload(QString megaLink, QString auth)
 {
     if (appfinished)

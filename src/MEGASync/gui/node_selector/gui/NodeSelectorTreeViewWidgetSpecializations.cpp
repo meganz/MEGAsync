@@ -15,8 +15,19 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
     ui->searchEmptyInfoWidget->hide();
 }
 
+void NodeSelectorTreeViewWidgetCloudDrive::enableDragAndDrop(bool enable)
+{
+    ui->tMegaFolders->setAcceptDrops(enable);
+    ui->tMegaFolders->setDragEnabled(enable);
+    ui->tMegaFolders->setAcceptDrops(enable);
+    ui->tMegaFolders->setDropIndicatorShown(enable);
+    ui->tMegaFolders->setDragDropMode(QAbstractItemView::DragDrop);
+}
+
 void NodeSelectorTreeViewWidgetCloudDrive::itemsRestored(mega::MegaHandle& handle, bool parentLoaded)
 {
+    this->setAcceptDrops(true);
+    ui->tMegaFolders->setAcceptDrops(true);
     if(!parentLoaded)
     {
         setSelectedNodeHandle(handle);

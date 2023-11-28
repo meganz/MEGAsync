@@ -31,7 +31,10 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
-    void contextMenuEvent(QContextMenuEvent *event) override;
+    void contextMenuEvent(QContextMenuEvent* event) override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dragMoveEvent(QDragMoveEvent* event) override;
+    void dropEvent(QDropEvent *event) override;
 
 signals:
     void removeNodeClicked(const QList<MegaHandle>& handles, bool permanently);
@@ -56,6 +59,7 @@ private:
     bool handleStandardMouseEvent(QMouseEvent* event);
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     NodeSelectorProxyModel* proxyModel() const;
+    std::shared_ptr<MegaNode> getDropNode(const QModelIndex& dropIndex);
 
     bool areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
     bool areAllEligibleForRestore(const QList<mega::MegaHandle>& handles) const;

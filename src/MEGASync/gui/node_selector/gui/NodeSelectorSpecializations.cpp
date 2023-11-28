@@ -240,9 +240,14 @@ mUiDragBackDrop(new Ui::TransferManagerDragBackDrop)
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
 #ifdef Q_OS_LINUX
-    nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
+    this->setWindowFlags(this->windowFlags() | (Qt::Tool));
 #endif
 #endif
+}
+
+void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
+{
+    mCloudDriveWidget->enableDragAndDrop(enable);
 }
 
 void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
