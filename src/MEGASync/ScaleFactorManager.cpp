@@ -240,11 +240,11 @@ double adjustScaleValueToSuitableIncrement(double scale, double maxScale, double
 
 double calculateMaxScale(const ScreenInfo& screenInfo)
 {
-    constexpr auto minTitleBarHeight = 20; // give some pixels to the tittle bar
-    constexpr auto maxDialogHeight = 740; //This is the height of the biggest dialog in megassync (Settings)
+    constexpr auto minTitleBarHeight = 20; // give some pixels to the tit le bar
+    constexpr auto maxDialogHeight = 740;  //This is the height of the biggest dialog in megassync (Settings)
 
     constexpr auto biggestDialogHeight = minTitleBarHeight + maxDialogHeight;
-    return screenInfo.availableHeightPixels / static_cast<double>(biggestDialogHeight);
+    return screenInfo.availableHeightPixels * screenInfo.devicePixelRatio / static_cast<double>(biggestDialogHeight);
 }
 
 bool ScaleFactorManager::computeScales()
@@ -252,7 +252,7 @@ bool ScaleFactorManager::computeScales()
     bool needsRescaling = false;
     for(auto& screenInfo : mScreensInfo)
     {
-        auto scale = 1.;
+        auto scale = screenInfo.devicePixelRatio;
         if(mOsType == OsType::LINUX)
         {
             scale = computeScaleLinux(screenInfo);
