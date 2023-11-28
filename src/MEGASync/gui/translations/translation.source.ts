@@ -4071,11 +4071,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Continue with [B]two factor authentication[/B]</source>
-        <translatorcomment>2FA page title CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Stop logging in?</source>
         <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4253,6 +4248,11 @@ Enter a different name.</translation>
     <message>
         <source>Validating 2FA code…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Continue with [B]two-factor authentication[/B]</source>
+        <translatorcomment>2FA page title CON-465</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
