@@ -302,15 +302,15 @@ void StreamingFromMegaDialog::updateStreamingState()
     }
 }
 
-void StreamingFromMegaDialog::generateStreamURL()
+bool StreamingFromMegaDialog::generateStreamURL()
 {
     if (!mSelectedMegaNode)
     {
-        return;
+        return false;
     }
 
     std::unique_ptr<char[]> link(megaApi->httpServerGetLocalLink(mSelectedMegaNode.get()));
-    if (!link)
+    if (link)
     {
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.title = QMegaMessageBox::errorTitle();
@@ -319,10 +319,13 @@ void StreamingFromMegaDialog::generateStreamURL()
         msgInfo.parent = this;
 
         QMegaMessageBox::warning(msgInfo);
+
+        return false;
     }
     else
     {
         streamURL = QString::fromUtf8(link.get());
+        return true;
     }
 }
 
@@ -363,11 +366,14 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
     }
     else
     {
-        lastStreamSelection = LastStreamingSelection::FROM_LOCAL_NODE;
         mSelectedMegaNode = std::shared_ptr<MegaNode>(node);
-        updateFileInfo(MegaNodeNames::getNodeName(node), LinkStatus::CORRECT);
-        generateStreamURL();
-        hideStreamingError();
+
+        if(generateStreamURL())
+        {
+            lastStreamSelection = LastStreamingSelection::FROM_LOCAL_NODE;
+            updateFileInfo(MegaNodeNames::getNodeName(node), LinkStatus::CORRECT);
+            hideStreamingError();
+        }
     }
 }
 
