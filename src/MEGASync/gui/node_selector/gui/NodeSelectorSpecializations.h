@@ -2,9 +2,6 @@
 #define NODESELECTORSPECIALIZED_H
 
 #include "NodeSelector.h"
-namespace Ui {
-    class TransferManagerDragBackDrop;
-}
 
 class UploadNodeSelector : public NodeSelector
 {
@@ -65,7 +62,6 @@ protected slots:
 private:
     void checkSelection(){}
 
-    Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
     QWidget* mDragBackDrop;
 };
 

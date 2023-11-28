@@ -4,7 +4,6 @@
 #include "QMegaMessageBox.h"
 #include "node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h"
 #include "ui_NodeSelector.h"
-#include "ui_TransferManagerDragBackDrop.h"
 #include <DialogOpener.h>
 #include <UploadToMegaDialog.h>
 
@@ -209,11 +208,9 @@ void StreamNodeSelector::checkSelection()
 }
 
 /////////////////////////////////////////////////////////////
-CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(parent),
-mUiDragBackDrop(new Ui::TransferManagerDragBackDrop)
+CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
     mDragBackDrop = new QWidget(this);
-    mUiDragBackDrop->setupUi(mDragBackDrop);
     mDragBackDrop->hide();
 
     setWindowTitle(tr("Cloud Drive"));
@@ -292,50 +289,4 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
         };
         QMegaMessageBox::warning(msgInfo);
     }
-}
-
-void CloudDriveNodeSelector::dragEnterEvent(QDragEnterEvent* event)
-{
-    if (event->mimeData()->hasUrls())
-    {
-        event->acceptProposedAction();
-        event->accept();
-        mDragBackDrop->show();
-        mDragBackDrop->resize(size());
-    }
-
-    NodeSelector::dragEnterEvent(event);
-}
-
-void CloudDriveNodeSelector::dropEvent(QDropEvent* event)
-{
-    mDragBackDrop->hide();
-
-    event->acceptProposedAction();
-    NodeSelector::dropEvent(event);
-
-    QQueue<QString> pathsToAdd;
-    QList<QUrl> urlsToAdd = event->mimeData()->urls();
-    foreach(auto & urlToAdd, urlsToAdd)
-    {
-        auto file = urlToAdd.toLocalFile();
-#ifdef __APPLE__
-        QFileInfo fileInfo(file);
-        if (fileInfo.isDir())
-        {
-            file.remove(file.length() - 1, 1);
-        }
-#endif
-
-        pathsToAdd.append(file);
-    }
-
-    MegaSyncApp->shellUpload(pathsToAdd);
-}
-
-void CloudDriveNodeSelector::dragLeaveEvent(QDragLeaveEvent* event)
-{
-    mDragBackDrop->hide();
-
-    NodeSelector::dragLeaveEvent(event);
 }
