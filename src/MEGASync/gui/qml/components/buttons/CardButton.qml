@@ -51,12 +51,11 @@ Button {
         return colors.background;
     }
 
-    function setFocus(focus)
-    {
-        button.focus = focus
+    function setFocus(focus)    {
+        button.focus = focus;
 
         if(focus) {
-            button.forceActiveFocus()
+            button.forceActiveFocus();
         }
     }
 

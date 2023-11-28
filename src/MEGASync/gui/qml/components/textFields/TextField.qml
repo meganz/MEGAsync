@@ -59,10 +59,10 @@ Rectangle {
     color: "transparent"
 
     function setFocus(focus) {
-        textField.focus = focus
+        textField.focus = focus;
 
         if (focus) {
-            textField.forceActiveFocus()
+            textField.forceActiveFocus();
         }
     }
 

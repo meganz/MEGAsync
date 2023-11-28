@@ -228,10 +228,10 @@ LoginPageForm {
 
         function onInitializePageFocus() {
             if (loginControllerAccess.newAccount) {
-                password.setFocus(true)
+                password.setFocus(true);
             }
             else {
-                email.setFocus(true)
+                email.setFocus(true);
             }
         }
     }

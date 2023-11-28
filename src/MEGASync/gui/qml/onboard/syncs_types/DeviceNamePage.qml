@@ -53,7 +53,7 @@ DeviceNamePageForm {
         target: onboardingWindow
 
         function onInitializePageFocus() {
-            deviceNameTextField.setFocus(true)
+            deviceNameTextField.setFocus(true);
         }
     }
 }

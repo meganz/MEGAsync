@@ -70,12 +70,11 @@ Qml.RoundButton {
         return icons.colorEnabled;
     }
 
-    function setFocus(focus)
-    {
-        root.focus = focus
+    function setFocus(focus) {
+        root.focus = focus;
 
         if(focus) {
-            root.forceActiveFocus()
+            root.forceActiveFocus();
         }
     }
 
