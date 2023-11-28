@@ -59,6 +59,10 @@
     #include <QSvgRenderer>
 #endif
 
+#ifdef Q_OS_MACX
+    #include "platform/macx/PlatformImplementation.h"
+#endif
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
