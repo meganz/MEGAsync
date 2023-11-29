@@ -29,13 +29,13 @@ public:
 
 
 public slots:
-	void onAddNameClicked();
-	void onDeleteNameClicked();
+    void onAddNameClicked();
+    void onDeleteNameClicked();
 
-    void onUpperThanValueChanged(int i);
-    void onLowerThanValueChanged(int i);
-    void onExcludeUpperUnitCurrentIndexChanged(int i);
-    void onExcludeLowerUnitCurrentIndexChanged(int i);
+    void onUpperThanValueChanged(int index);
+    void onLowerThanValueChanged(int index);
+    void onExcludeUpperUnitCurrentIndexChanged(int index);
+    void onExcludeLowerUnitCurrentIndexChanged(int index);
 
     void onlExcludedNamesChanged(const QModelIndex &topLeft, const QModelIndex &, const QVector<int> &roles = QVector<int>());
     void onExcludeUpperThanClicked();

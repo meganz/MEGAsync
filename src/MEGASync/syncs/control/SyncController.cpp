@@ -76,13 +76,15 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
         {
             errorMsg = getSyncAPIErrorMsg(errorCode);
             if(errorMsg.isEmpty())
+            {
                 errorMsg = QCoreApplication::translate("MegaError", e.getErrorString());
+            }
             error = true;
         }
 
         if(error)
         {
-            std::shared_ptr<MegaNode> remoteNode(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
+            std::unique_ptr<MegaNode> remoteNode(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
             QString logMsg = QString::fromUtf8("Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5").arg(
                         getSyncTypeString(type),
                         QString::fromUtf8(request.getName()),

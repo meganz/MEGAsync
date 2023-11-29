@@ -101,7 +101,7 @@ void IgnoresEditingDialog::refreshUI()
     const auto allRules = mManager.getAllRules();
     ui->lExcludedNames->clear();
     // Step 0: Fill name exclusions
-    for(auto rule : allRules)
+    for(const auto& rule : allRules)
     {
         if (rule->ruleType() == MegaIgnoreRule::RuleType::NAMERULE)
         {

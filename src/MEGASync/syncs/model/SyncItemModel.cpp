@@ -176,25 +176,25 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
         {
             if(role == Qt::DisplayRole)
             {
-                std::string s;
+                QString s;
                 switch (sync->getRunState())
                 {
                 case ::mega::MegaSync::RUNSTATE_PENDING:
-                case ::mega::MegaSync::RUNSTATE_LOADING: s = "Loading"; break;
-                case ::mega::MegaSync::RUNSTATE_PAUSED: s = "Paused"; break;
+                case ::mega::MegaSync::RUNSTATE_LOADING: s = tr("Loading"); break;
+                case ::mega::MegaSync::RUNSTATE_PAUSED: s = tr("Paused"); break;
                 case ::mega::MegaSync::RUNSTATE_SUSPENDED:
                     {
                         if(sync->getError())
                         {
-                            s = "Suspended";
+                            s = tr("Suspended");
                         }
                         else
                         {
-                            s = "Paused";
+                            s = tr("Paused");
                         }
                         break;
                     }
-                case ::mega::MegaSync::RUNSTATE_DISABLED: s = "Disabled"; break;
+                case ::mega::MegaSync::RUNSTATE_DISABLED: s = tr("Disabled"); break;
                 case ::mega::MegaSync::RUNSTATE_RUNNING:
                     {
                         auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
@@ -203,20 +203,20 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
                             ::mega::MegaSyncStats& stats = *it->second;
                             if (stats.isScanning())
                             {
-                                s = "Scanning";
+                                s = tr("Scanning");
                             }
                             else if (stats.isSyncing())
                             {
-                                s = "Syncing";
+                                s = tr("Syncing");
                             }
                             else
                             {
-                                s = "Monitoring";
+                                s = tr("Monitoring");
                             }
                         }
                     }
                 }
-                return QString::fromStdString(s);
+                return s;
             }
             break;
         }
@@ -418,7 +418,7 @@ void SyncItemModel::removeSync(std::shared_ptr<SyncSettings> sync)
         {
             if((*it) == sync)
             {
-                int pos = it - mList.cbegin();
+                int pos = std::distance(mList.cbegin(), it);
                 beginRemoveRows(QModelIndex(), pos, pos);
                 mList.removeOne((*it));
                 endRemoveRows();
