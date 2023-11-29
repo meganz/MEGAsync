@@ -1820,7 +1820,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation>%1 can&apos;t be added as your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
+        <translation>%1 can’t be added as your Pro&#xa0;Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -3881,6 +3881,11 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Sync your entire MEGA account with your local device.</source>
+        <translatorcomment>Full sync button description CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Full sync</source>
         <translatorcomment>Full sync button title CON-467</translatorcomment>
         <translation type="unfinished">Full sync</translation>
@@ -4001,6 +4006,11 @@ Enter a different name.</translation>
         <translation type="unfinished">Select a MEGA folder</translation>
     </message>
     <message>
+        <source>Sync selected folders in your MEGA account with your local device.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4023,6 +4033,11 @@ Enter a different name.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4056,6 +4071,31 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Continue with [B]two-factor authentication[/B]</source>
+        <translatorcomment>2FA page title CON-465</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logging in…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fetching file list…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating account…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Validating 2FA code…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Stop logging in?</source>
         <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4076,8 +4116,23 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Cancel account creation?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Closing this window will cancel the sign up process.</source>
         <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel account</source>
+        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don’t cancel</source>
+        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4136,6 +4191,11 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Your password is too easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Your password is easily guessed. You need to make it stronger.</source>
         <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4188,66 +4248,6 @@ Enter a different name.</translation>
     <message>
         <source>Authentication failed</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logging in…</source>
-        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fetching file list…</source>
-        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating account…</source>
-        <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Validating 2FA code…</source>
-        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Continue with [B]two-factor authentication[/B]</source>
-        <translatorcomment>2FA page title CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA account with your local device.</source>
-        <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sync selected folders in your MEGA account with your local device.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
-        <translatorcomment>Sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel account creation?</source>
-        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel account</source>
-        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don’t cancel</source>
-        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your password is too easily guessed. You need to make it stronger.</source>
-        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4585,15 +4585,13 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Upgraded to Qt5.15.
-- Fixed detected crashes on Windows, Linux and macOS.
-- Updated third-party libraries.
+        <source>- A new onboarding wizard is introduced when a new sync or backup process is initiated for the first time.
+- Revamped the user interface of the macOS installer.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Application performance improved.
 </source>
-        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
-        <translation>- Upgraded to Qt 5.15.
-- Fixed detected crashes on Windows, Linux and macOS.
-- Updated third-party libraries.
-</translation>
+        <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6430,6 +6428,11 @@ Do you want to restart MEGAsync now?</source>
         <translation>Folder has already been synced.</translation>
     </message>
     <message>
+        <source>Folder can&apos;t be backed up as it is already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Folder can&apos;t be synced as it&apos;s already synced</source>
         <translatorcomment>Warning message indicating that the folder is already synced. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6490,11 +6493,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Folder can&apos;t be backed up as it is already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This folder is already being synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6530,12 +6528,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &amp;quot;%1&amp;quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the local folder doesn’t exist</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &amp;quot;%1&amp;quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the remote folder doesn’t exist</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -6570,7 +6568,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backup ”%1“ has been disabled because the local folder doesn’t exist.</translation>
+        <translation type="unfinished">Your backup ”%1“ has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>

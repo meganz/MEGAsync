@@ -3268,7 +3268,7 @@ Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autor
     <message>
         <source>Clear</source>
         <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation>Les effacer</translation>
+        <translation>Effacer</translation>
     </message>
     <message>
         <source>Get link</source>

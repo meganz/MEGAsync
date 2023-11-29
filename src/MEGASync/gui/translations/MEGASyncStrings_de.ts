@@ -3817,7 +3817,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to redirect user to upgrade current account.</translatorcomment>
-        <translation>Pro-Status</translation>
+        <translation>Upgrade</translation>
     </message>
 </context>
 <context>
@@ -4724,7 +4724,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Pro-Status</translation>
+        <translation>Upgrade</translation>
     </message>
     <message>
         <source>Delete</source>
