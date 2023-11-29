@@ -337,15 +337,18 @@ mega::MegaSync::SyncType StalledIssue::getSyncType() const
         foreach(auto& syncId, syncIds())
         {
             auto sync = SyncInfo::instance()->getSyncSettingByTag(syncId);
-            auto syncType = sync->getType();
-            if(type != mega::MegaSync::SyncType::TYPE_UNKNOWN &&
-               type != syncType)
+            if(sync)
             {
-                type = mega::MegaSync::SyncType::TYPE_UNKNOWN;
-                break;
-            }
+                auto syncType = sync->getType();
+                if(type != mega::MegaSync::SyncType::TYPE_UNKNOWN &&
+                   type != syncType)
+                {
+                    type = mega::MegaSync::SyncType::TYPE_UNKNOWN;
+                    break;
+                }
 
-            type = syncType;
+                type = syncType;
+            }
         }
     }
 
