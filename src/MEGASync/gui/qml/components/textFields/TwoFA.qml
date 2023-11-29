@@ -127,7 +127,7 @@ ColumnLayout {
         id: notification
 
         visible: hasError
-        title: OnboardingStrings.authFailed
+        title: OnboardingStrings.auth2AFailed
         text: OnboardingStrings.tryAgain
         type: Constants.MessageType.ERROR
         icon: Images.lock

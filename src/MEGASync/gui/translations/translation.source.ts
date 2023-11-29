@@ -2347,14 +2347,14 @@ In some cases they may contain details about your data, such as file or folder n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Another user with this email address already exists. Try again.</source>
-        <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
         <translation type="unfinished">The app is unable to connect. Please check your internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
+    </message>
+    <message>
+        <source>Email address already in use.</source>
+        <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. CON-465</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3881,11 +3881,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sync your entire MEGA with your local device.</source>
-        <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Full sync</source>
         <translatorcomment>Full sync button title CON-467</translatorcomment>
         <translation type="unfinished">Full sync</translation>
@@ -4006,11 +4001,6 @@ Enter a different name.</translation>
         <translation type="unfinished">Select a MEGA folder</translation>
     </message>
     <message>
-        <source>Sync selected folders in your MEGA with a local device.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4033,11 +4023,6 @@ Enter a different name.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sync your device with MEGA and any changes will automatically and instantly apply to MEGA and vice versa.</source>
-        <translatorcomment>Sync button description CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4091,23 +4076,8 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Abort account creation?</source>
-        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Closing this window will cancel the sign up process.</source>
         <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Abort account</source>
-        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don’t abort</source>
-        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4171,11 +4141,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your password could be easily guessed. Try making it stronger.</source>
-        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4226,11 +4191,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Try again</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation type="unfinished">Try again</translation>
-    </message>
-    <message>
         <source>Logging in…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4253,6 +4213,46 @@ Enter a different name.</translation>
     <message>
         <source>Continue with [B]two-factor authentication[/B]</source>
         <translatorcomment>2FA page title CON-465</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA account with your local device.</source>
+        <translatorcomment>Full sync button description CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA account with your local device.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translatorcomment>Sync button description CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel account creation?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel account</source>
+        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don’t cancel</source>
+        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your password is too easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incorrect 2FA code</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6365,11 +6365,6 @@ Do you want to restart MEGAsync now?</source>
 <context>
     <name>SyncController</name>
     <message>
-        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation>You can’t back up this folder as it’s already synced.</translation>
-    </message>
-    <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
         <translation>Folder is already backed up. Select a different one.</translation>
@@ -6423,11 +6418,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
         <translation>This MEGA folder can’t be synced. </translation>
-    </message>
-    <message>
-        <source>The selected MEGA folder is already synced.</source>
-        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation>The selected MEGA folder has already been synced.</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
@@ -6497,6 +6487,16 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This selection can&apos;t be synced as it’s a file.</source>
         <translatorcomment>Warning message indicating that the selection is a file and files can´t be synced. CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it is already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This folder is already being synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
