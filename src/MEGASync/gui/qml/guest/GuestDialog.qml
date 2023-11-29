@@ -19,4 +19,26 @@ GuestQmlDialog {
             accountStatusControllerAccess.whyAmIBlocked();
         }
     }
+
+    onGuestActiveChanged: (active) => {
+        if (!active) {
+            fadeOut.start();
+        }
+    }
+
+    PropertyAnimation {
+        id: fadeOut;
+
+        target: guestWindow;
+        property: "opacity";
+        to: 0;
+        duration: 100
+
+        onRunningChanged: {
+            if (!running) {
+                guestWindow.hide()
+                guestWindow.opacity = 1;
+            }
+        }
+    }
 }
