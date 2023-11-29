@@ -730,7 +730,7 @@ void LoginController::dumpSession()
 
 QString LoginController::getRepeatedEmailMsg()
 {
-    return tr("Another user with this email address already exists. Try again.");
+    return tr("Email address already in use.");
 }
 
 void LoginController::setEmail(const QString& email)

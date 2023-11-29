@@ -287,7 +287,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                            tr("You can't backup this folder as it's already synced.")
+                            tr("Folder can't be backed up as it is already synced.")
                           : tr("Folder is already backed up. Select a different one.");
             }
             else
@@ -473,7 +473,7 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
             {
                 case SyncError::ACTIVE_SYNC_SAME_PATH:
                 {
-                    message = tr("The selected MEGA folder is already synced.");
+                    message = tr("This folder is already being synced.");
                     break;
                 }
                 case SyncError::ACTIVE_SYNC_BELOW_PATH:
