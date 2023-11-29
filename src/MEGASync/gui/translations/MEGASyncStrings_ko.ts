@@ -2459,12 +2459,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로컬 폴더를 이용할 수 없거나 읽기와 쓰기 권한이 없어서 “%1” 동기화가 해제되었습니다.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로컬 폴더를 이용할 수 없거나 읽기와 쓰기 권한이 없어서 “%1” 동기화가 해제되었습니다.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2731,7 +2731,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로컬 폴더를 이용할 수 없거나 읽기와 쓰기 권한이 없어서 “%1” 백업이 해제되었습니다.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -4373,7 +4373,7 @@ Enter a different name</source>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>알 수 없음</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Open</source>

@@ -1041,7 +1041,7 @@
     <message>
         <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation>Il tuo account Pro&#xa0;Flexi è stato disattivato a causa del fallimento del pagamento oppure perché hai disattivato il tuo abbonamento. Non potrai accedere ai dati archiviati nel tuo account finché non avrai effettuato un pagamento e riattivato il tuo abbonamento.</translation>
+        <translation>Il tuo account Pro&#xa0;Flexi è stato disattivato a causa del fallimento del pagamento oppure perché hai annullato il tuo abbonamento. Non potrai accedere ai dati archiviati nel tuo account finché non avrai effettuato un pagamento e riattivato il tuo abbonamento.</translation>
     </message>
 </context>
 <context>
@@ -1778,7 +1778,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation>%1 non può essere aggiunta perché il tuo account Pro&#xa0;Flexi è stato disattivato a causa del fallimento del pagamento oppure perché hai disattivato il tuo abbonamento. Per continuare, effettua un pagamento e riattiva il tuo abbonamento.</translation>
+        <translation>%1 non può essere aggiunta perché il tuo account Pro&#xa0;Flexi è stato disattivato a causa del fallimento del pagamento oppure perché hai annullato il tuo abbonamento. Per continuare, effettua un pagamento e riattiva il tuo abbonamento.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2457,12 +2457,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2730,7 +2730,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
