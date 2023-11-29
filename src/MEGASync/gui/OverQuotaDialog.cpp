@@ -2,7 +2,7 @@
 #include "ui_OverQuotaDialog.h"
 #include "mega/types.h"
 #include "Utilities.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 
 #include <QtConcurrent/QtConcurrent>
 #include <QDesktopServices>

@@ -5,7 +5,7 @@
 #include "TransferItem.h"
 #include "TransferMetaData.h"
 #include "TransferRemainingTime.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 
 #include <megaapi.h>
 

@@ -307,6 +307,7 @@ public:
 
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
+    static QString getSizeStringLocalized(quint64 bytes);
     static int toNearestUnit(long long bytes);
     struct ProgressSize
     {

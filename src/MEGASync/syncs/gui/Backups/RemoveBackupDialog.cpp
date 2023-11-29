@@ -1,7 +1,7 @@
 #include "RemoveBackupDialog.h"
 #include "ui_RemoveBackupDialog.h"
 #include "MegaApplication.h"
-#include "node_selector/gui/NodeSelector.h"
+#include "node_selector/gui/NodeSelectorSpecializations.h"
 #include "MegaNodeNames.h"
 #include "Utilities.h"
 #include "DialogOpener.h"

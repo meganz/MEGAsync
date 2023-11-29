@@ -1,6 +1,6 @@
 
 #include "Utilities.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 
 #include <QApplication>
 #include <QImageReader>
@@ -30,6 +30,7 @@ QHash<QString, QString> Utilities::languageNames;
 
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
+const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
 
 const unsigned long long KB = 1024;
@@ -701,6 +702,37 @@ QString Utilities::getSizeString(unsigned long long bytes)
 
     return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ")
                     + QCoreApplication::translate("Utilities", "Bytes");
+}
+
+QString Utilities::getSizeStringLocalized(quint64 bytes)
+{
+    auto baseUnitSize = Platform::getInstance()->getBaseUnitsSize();
+
+    static const QVector<QPair<QString, quint64>> unitsSize{
+        {QLatin1String("TB"), static_cast<quint64>(std::pow(baseUnitSize, 4))},
+        {QLatin1String("GB"), static_cast<quint64>(std::pow(baseUnitSize, 3))},
+        {QLatin1String("MB"), static_cast<quint64>(std::pow(baseUnitSize, 2))},
+        {QLatin1String("KB"), baseUnitSize},
+        {QLatin1String("Bytes"), 1}
+    };
+
+    auto foundIt = std::find_if(unitsSize.constBegin(), unitsSize.constEnd(), [&bytes](const QPair<QString, quint64>& pair){
+        return bytes >= pair.second;
+    });
+
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+
+    if (foundIt != unitsSize.constEnd())
+    {
+        return locale.toString(toDoubleInUnit(bytes, foundIt->second)) + QString::fromLatin1(" ")
+                + QCoreApplication::translate("Utilities", foundIt->first.toStdString().c_str());
+    }
+    else
+    {
+        return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ")
+                + QCoreApplication::translate("Utilities", "Bytes");
+    }
 }
 
 QString Utilities::getSizeString(long long bytes)

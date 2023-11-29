@@ -10,6 +10,7 @@
 #include "ProxySettings.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
 #include "syncs/gui/Backups/BackupsWizard.h"
 #include "syncs/gui/Backups/AddBackupDialog.h"

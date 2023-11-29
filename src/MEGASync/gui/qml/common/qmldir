@@ -1,0 +1,7 @@
+module common
+singleton Constants 1.0 Constants.qml
+singleton Images 1.0 Images.qml
+singleton Styles 1.0 Styles.qml
+singleton Links 1.0 Links.qml
+singleton RegexExpressions 1.0 RegexExpressions.qml
+singleton OS 1.0 OS.qml

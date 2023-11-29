@@ -56,9 +56,14 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync (%1) \"%2\" for path \"%3\"")
                                               .arg(getSyncTypeString(type), syncName, localFolder).toUtf8().constData());
     QString syncCleanName = syncName;
+    if(syncCleanName.isEmpty())
+    {
+        syncCleanName = SyncController::getSyncNameFromPath(localFolder);
+    }
     syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
+
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
-                     syncName.isEmpty() ? nullptr : syncCleanName.toUtf8().constData(),
+                     syncCleanName.isEmpty() ? nullptr : syncCleanName.toUtf8().constData(),
                      remoteHandle, nullptr,
                      new OnFinishOneShot(mApi, this, [=](bool isContextValid, const mega::MegaRequest& request, const MegaError& e){
 
@@ -267,27 +272,29 @@ void SyncController::disableSync(std::shared_ptr<SyncSettings> syncSetting)
 QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, const MegaSync::SyncType& syncType)
 {
     QString inputPath (QDir::toNativeSeparators(QDir(path).absolutePath()));
+    inputPath = inputPath.normalized(QString::NormalizationForm_C);
+
     QString message;
 
     // Gather all synced or backed-up dirs
-    QMap<QString, MegaSync::SyncType> localFolders = SyncInfo::instance()->getLocalFoldersAndTypeMap();
+    QMap<QString, MegaSync::SyncType> localFolders = SyncInfo::instance()->getLocalFoldersAndTypeMap(true);
 
     // Check if the path is already synced or part of a sync
-    foreach (auto& existingPath, localFolders.keys())
+    foreach (const QString& existingPath, localFolders.keys())
     {
-        if (inputPath == existingPath)
+        if (existingPath == inputPath)
         {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                            tr("You can't backup this folder as it's already synced.")
+                            tr("Folder can't be backed up as it is already synced.")
                           : tr("Folder is already backed up. Select a different one.");
             }
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                            tr("You can't sync this folder as it's already synced.")
-                          : tr("You can't sync this folder as it's already backed up.");
+                            tr("Folder can't be synced as it's already synced")
+                          : tr("Folder can't be synced as is already backed up");
             }
         }
         else if (inputPath.startsWith(existingPath)
@@ -302,8 +309,8 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                            tr("You can't sync folders that are inside synced folders.")
-                          : tr("You can't sync folders that are inside backed up folders.");
+                            tr("Folder can't be synced as it's inside a synced folder")
+                          : tr("Folder can't be synced as it's inside a backed up folder");
             }
         }
         else if (existingPath.startsWith(inputPath)
@@ -318,8 +325,8 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                            tr("You can't sync folders that contain synced folders.")
-                          : tr("You can't sync folders that contain backed up folders.");
+                            tr("Folder can't be synced as it contains synced folders")
+                          : tr("Folder can't be synced as it contains backed up folders");
             }
         }
     }
@@ -351,23 +358,11 @@ QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, c
     {
         if (syncType == MegaSync::SyncType::TYPE_BACKUP)
         {
-            message = tr("You can’t backup “%1” as it’s the root folder. "
-                         "The root folder is either; the top-level folder "
-                         "on your device or computer that holds all your "
-                         "folders and files or the folder where the system "
-                         "or program is installed. We don’t allow users to "
-                         "back up root folders as it may cause file conflicts or errors.\n"
-                         "To continue, select a different folder.").arg(inputPath);
+            message = tr("Can't backup “%1” as it's the root folder. To continue, select a different folder").arg(inputPath);
         }
         else
         {
-            message = tr("You can’t sync “%1” as it’s the root folder. "
-                         "The root folder is either; the top-level folder on your "
-                         "device or computer that holds all your folders and files"
-                         " or the folder where the system or program is installed."
-                         " We don’t allow users to sync root folders as it may cause"
-                         " file conflicts or errors.\n"
-                         "To continue, select a different folder.").arg(inputPath);
+            message = tr("Can't sync “%1” as it's the root folder. To continue, select a different folder").arg(inputPath);
         }
     }
     return message;
@@ -390,9 +385,7 @@ QString SyncController::getAreLocalFolderAccessRightsOkMsg(const QString& path, 
         test.setFileName(path + QDir::separator() + QLatin1String("test.xyz"));
         if (!test.open())
         {
-            message = tr("You don't have write permissions in this local folder.")
-                    + QChar::fromLatin1('\n')
-                    + tr("MEGAsync won't be able to download anything here.");
+            message = tr("Folder can’t be synced as you don’t have write permissions.");
         }
     }
 
@@ -412,6 +405,13 @@ SyncController::Syncability SyncController::areLocalFolderAccessRightsOk(const Q
 // In case of several warnings, only the last one is returned.
 SyncController::Syncability SyncController::isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
 {
+    // Check if the directory exists
+    QDir dir(path);
+    if (!dir.exists()) {
+        message = tr("The local path is unavailable");
+        return Syncability::CANT_SYNC;
+    }
+
     Syncability syncability (Syncability::CAN_SYNC);
 
     // First check if the path is allowed
@@ -440,58 +440,62 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
     std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
     switch (err->getErrorCode())
     {
-    case MegaError::API_OK:
-    {
-        syncability = Syncability::CAN_SYNC;
-        break;
-    }
-    case MegaError::API_EACCESS:
-    {
-        switch (err->getSyncError())
+        case MegaError::API_OK:
         {
-        case SyncError::SHARE_NON_FULL_ACCESS:
-        {
-            message = tr("You don't have enough permissions for this remote folder.");
+            syncability = Syncability::CAN_SYNC;
             break;
         }
-        case SyncError::REMOTE_NODE_INSIDE_RUBBISH:
-        case SyncError::INVALID_REMOTE_TYPE:
+        case MegaError::API_EACCESS:
+        {
+            switch (err->getSyncError())
+            {
+                case SyncError::SHARE_NON_FULL_ACCESS:
+                {
+                    message = tr("You don't have enough permissions for this remote folder.");
+                    break;
+                }
+                case SyncError::REMOTE_NODE_INSIDE_RUBBISH:
+                {
+                    message = tr("Folder can't be synced as it's in the MEGA Rubbish bin.");
+                    break;
+                }
+                case SyncError::INVALID_REMOTE_TYPE:
+                {
+                    message = tr("This selection can't be synced as it’s a file.");
+                    break;
+                }
+            }
+            break;
+        }
+        case MegaError::API_EEXIST:
+        {
+            switch (err->getSyncError())
+            {
+                case SyncError::ACTIVE_SYNC_SAME_PATH:
+                {
+                    message = tr("This folder is already being synced.");
+                    break;
+                }
+                case SyncError::ACTIVE_SYNC_BELOW_PATH:
+                {
+                    message = tr("Folder contents already synced.");
+                    break;
+                }
+                case SyncError::ACTIVE_SYNC_ABOVE_PATH:
+                {
+                    message = tr("Folder already synced.");
+                    break;
+                }
+            }
+            break;
+        }
+        case MegaError::API_ENOENT:
+        case MegaError::API_EARGS:
+        default:
         {
             message = tr("Invalid remote path.");
             break;
         }
-        }
-        break;
-    }
-    case MegaError::API_EEXIST:
-    {
-        switch (err->getSyncError())
-        {
-        case SyncError::ACTIVE_SYNC_SAME_PATH:
-        {
-            message = tr("The selected MEGA folder is already synced.");
-            break;
-        }
-        case SyncError::ACTIVE_SYNC_BELOW_PATH:
-        {
-            message = tr("Folder contents already synced.");
-            break;
-        }
-        case SyncError::ACTIVE_SYNC_ABOVE_PATH:
-        {
-            message = tr("Folder already synced.");
-            break;
-        }
-        }
-        break;
-    }
-    case MegaError::API_ENOENT:
-    case MegaError::API_EARGS:
-    default:
-    {
-        message = tr("Invalid remote path.");
-        break;
-    }
     }
     return (syncability);
 }

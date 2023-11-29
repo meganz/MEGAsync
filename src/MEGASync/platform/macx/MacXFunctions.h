@@ -30,7 +30,7 @@ bool userActive();
 double uptime();
 QString appBundlePath();
 QString fromNSString(const NSString *str);
-void selectorsImpl(QString uploadTitle, QString defaultDir, bool multiSelection, bool showFiles, bool showFolders, QWidget* parent, std::function<void (QStringList)> func);
+void selectorsImpl(QString uploadTitle, QString defaultDir, bool multiSelection, bool showFiles, bool showFolders, bool createDirectories, QWidget* parent, std::function<void (QStringList)> func);
 void raiseFileSelectionPanels();
 void closeFileSelectionPanels(QWidget* parent);
 

@@ -66,6 +66,8 @@ public:
 protected:
     bool downloadFile(std::string url, std::string dstPath);
     bool processUpdateFile(FILE *fd);
+    void processSymLinks(std::string symLinksPath);
+    bool processSymLinksFile(FILE *fd);
     bool fileExist(const char* path);
     void initSignature();
     void addToSignature(const char *bytes, size_t length);
