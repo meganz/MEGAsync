@@ -4585,15 +4585,13 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Upgraded to Qt5.15.
-- Fixed detected crashes on Windows, Linux and macOS.
-- Updated third-party libraries.
+        <source>- A new onboarding wizard is introduced when a new sync or backup process is initiated for the first time.
+- Revamped the user interface of the macOS installer.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Application performance improved.
 </source>
-        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
-        <translation>- Upgraded to Qt 5.15.
-- Fixed detected crashes on Windows, Linux and macOS.
-- Updated third-party libraries.
-</translation>
+        <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
