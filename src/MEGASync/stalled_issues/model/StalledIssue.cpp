@@ -324,7 +324,7 @@ void StalledIssue::endFillingIssue()
     mNeedsUIUpdate = qMakePair(true, true);
 }
 
-QList<mega::MegaHandle> StalledIssue::syncIds() const
+const QList<mega::MegaHandle>& StalledIssue::syncIds() const
 {
     return mSyncIds;
 }
@@ -473,13 +473,6 @@ bool StalledIssue::isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo>
     }
 
     return result;
-}
-
-bool StalledIssue::isSymLink() const
-{
-    return getReason() == mega::MegaSyncStall::FileIssue &&
-           consultLocalData() &&
-           consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
 }
 
 bool StalledIssue::missingFingerprint() const
@@ -676,13 +669,16 @@ QString StalledIssue::getFileName(bool preferCloud) const
         }
     }
 
-    if(mLocalData)
+    if(fileName.isEmpty())
     {
-        fileName = mLocalData->getFileName();
-    }
-    else if(mCloudData)
-    {
-        fileName = mCloudData->getFileName();
+        if(mLocalData)
+        {
+            fileName = mLocalData->getFileName();
+        }
+        else if(mCloudData)
+        {
+            fileName = mCloudData->getFileName();
+        }
     }
 
     return fileName;

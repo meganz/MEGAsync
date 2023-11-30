@@ -923,6 +923,13 @@ void MegaApplication::updateTrayIcon()
     {
         tooltipState = tr("Stalled");
         icon = icons["alert"];
+
+#ifdef __APPLE__
+        if (scanningTimer->isActive())
+        {
+            scanningTimer->stop();
+        }
+#endif
     }
     else if (paused)
     {
