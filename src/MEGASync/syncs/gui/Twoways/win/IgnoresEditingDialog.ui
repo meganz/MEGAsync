@@ -291,7 +291,7 @@ color:white;
    <item>
     <widget class="QGroupBox" name="gExcludeByType">
      <property name="title">
-      <string>by file</string>
+      <string>by file type</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
@@ -316,8 +316,8 @@ color:white;
       <item>
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>You can change the associated .megaignore file on a text editor.this is a task better
-suited for users who are comfortable with regular expressions</string>
+         <string>You can change the associated .megaignore file on a text editor. This is a task better
+suited for users who are comfortable with regular expressions.</string>
         </property>
        </widget>
       </item>

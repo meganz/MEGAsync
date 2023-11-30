@@ -310,7 +310,7 @@ bool StreamingFromMegaDialog::generateStreamURL()
     }
 
     std::unique_ptr<char[]> link(megaApi->httpServerGetLocalLink(mSelectedMegaNode.get()));
-    if (!link)
+    if (link)
     {
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.title = QMegaMessageBox::errorTitle();
@@ -325,7 +325,6 @@ bool StreamingFromMegaDialog::generateStreamURL()
     else
     {
         streamURL = QString::fromUtf8(link.get());
-
         return true;
     }
 }

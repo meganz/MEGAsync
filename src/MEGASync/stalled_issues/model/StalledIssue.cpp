@@ -323,7 +323,7 @@ void StalledIssue::endFillingIssue()
     mNeedsUIUpdate = qMakePair(true, true);
 }
 
-QList<mega::MegaHandle> StalledIssue::syncIds() const
+const QList<mega::MegaHandle>& StalledIssue::syncIds() const
 {
     return mSyncIds;
 }
@@ -336,15 +336,18 @@ mega::MegaSync::SyncType StalledIssue::getSyncType() const
         foreach(auto& syncId, syncIds())
         {
             auto sync = SyncInfo::instance()->getSyncSettingByTag(syncId);
-            auto syncType = sync->getType();
-            if(type != mega::MegaSync::SyncType::TYPE_UNKNOWN &&
-               type != syncType)
+            if(sync)
             {
-                type = mega::MegaSync::SyncType::TYPE_UNKNOWN;
-                break;
-            }
+                auto syncType = sync->getType();
+                if(type != mega::MegaSync::SyncType::TYPE_UNKNOWN &&
+                   type != syncType)
+                {
+                    type = mega::MegaSync::SyncType::TYPE_UNKNOWN;
+                    break;
+                }
 
-            type = syncType;
+                type = syncType;
+            }
         }
     }
 
@@ -469,13 +472,6 @@ bool StalledIssue::isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo>
     }
 
     return result;
-}
-
-bool StalledIssue::isSymLink() const
-{
-    return getReason() == mega::MegaSyncStall::FileIssue &&
-           consultLocalData() &&
-           consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
 }
 
 bool StalledIssue::missingFingerprint() const
@@ -672,13 +668,16 @@ QString StalledIssue::getFileName(bool preferCloud) const
         }
     }
 
-    if(mLocalData)
+    if(fileName.isEmpty())
     {
-        fileName = mLocalData->getFileName();
-    }
-    else if(mCloudData)
-    {
-        fileName = mCloudData->getFileName();
+        if(mLocalData)
+        {
+            fileName = mLocalData->getFileName();
+        }
+        else if(mCloudData)
+        {
+            fileName = mCloudData->getFileName();
+        }
     }
 
     return fileName;

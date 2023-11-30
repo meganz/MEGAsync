@@ -187,23 +187,8 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     connect(mUi->wTransfers, &TransfersWidget::sortCriterionChanged,
         this, &TransferManager::onSortCriterionChanged);
 
-    connect(mUi->wTransfers,
-            &TransfersWidget::loadingViewVisibilityChanged,[this](bool state)
-    {
-        refreshView();
-    });
-
-    connect(mUi->wTransfers,
-            &TransfersWidget::disableTransferManager,[this](bool state)
-    {
-        setDisabled(state);
-
-        if(!state && mSearchFieldReturnPressed)
-        {
-            mUi->leSearchField->setFocus();
-            mSearchFieldReturnPressed = false;
-        }
-    });
+    connect(mUi->wTransfers, &TransfersWidget::loadingViewVisibilityChanged, this, &TransferManager::refreshView);
+    connect(mUi->wTransfers,&TransfersWidget::disableTransferManager,this, &TransferManager::disableTransferManager);
 
     connect(MegaSyncApp->getStalledIssuesModel(),
             &StalledIssuesModel::stalledIssuesChanged,
@@ -1285,6 +1270,17 @@ void TransferManager::refreshView()
 
         //In case the media group // actions buttons must be hidden
         checkActionAndMediaVisibility();
+    }
+}
+
+void TransferManager::disableTransferManager(bool state)
+{
+    setDisabled(state);
+
+    if(!state && mSearchFieldReturnPressed)
+    {
+        mUi->leSearchField->setFocus();
+        mSearchFieldReturnPressed = false;
     }
 }
 

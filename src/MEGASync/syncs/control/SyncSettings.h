@@ -56,7 +56,6 @@ public:
     mega::MegaHandle getMegaHandle() const;
     int getError() const;
     int getWarning() const;
-    bool isEnabled() const;
     bool isActive() const;
     QString getRunStateAsString() const;
 

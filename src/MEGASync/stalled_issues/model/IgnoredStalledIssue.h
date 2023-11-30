@@ -13,10 +13,13 @@ public:
     bool autoSolveIssue() override;
     bool isSolvable() const override;
 
+    bool isSymLink() const override;
+    bool isSpecialLink() const;
+
     static void clearIgnoredSyncs();
 
 private:
-    static QMap<mega::MegaHandle, bool> mIgnoredSyncs;
+    static QMap<mega::MegaHandle, bool> mSymLinksIgnoredInSyncs;
 };
 
 #endif // SYMLINKSTALLEDISSUE_H

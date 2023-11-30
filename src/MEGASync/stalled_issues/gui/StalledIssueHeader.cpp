@@ -72,9 +72,9 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
-    auto isSymLink(getData().consultData()->isSymLink());
-    auto canBeIgnoredChecker = [isSymLink](const std::shared_ptr<const StalledIssue> issue){
-        return isSymLink == issue->isSymLink() && issue->canBeIgnored();
+    auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
+        //Symlinks are treated differently
+        return !issue->isSymLink() && issue->canBeIgnored();
     };
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -112,19 +112,20 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
     msgInfo.text = tr("Are you sure you want to ignore this issue?");
     msgInfo.informativeText = tr("This action will ignore this issue and it will not be synced.");
 
-    msgInfo.finishFunc = [this, selection, isSymLink](QMessageBox* msgBox)
+    msgInfo.finishFunc = [this, selection](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, isSymLink);
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, false);
         }
         else if(msgBox->result() == QDialogButtonBox::Yes)
         {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList(), isSymLink);
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList(), false);
         }
     };
 
     QMegaMessageBox::warning(msgInfo);
+
 }
 
 void StalledIssueHeader::showIgnoreFile()

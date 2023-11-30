@@ -71,7 +71,7 @@ QVariant BackupItemModel::data(const QModelIndex& index, int role) const
         case Column::ENABLED:
             if(role == Qt::ToolTipRole)
             {
-                return sync->isEnabled() ? tr("Backup is enabled") : tr("Backup is disabled");
+                return sync->isActive() ? tr("Backup is enabled") : tr("Backup is disabled");
             }
             break;
     case Column::LNAME:

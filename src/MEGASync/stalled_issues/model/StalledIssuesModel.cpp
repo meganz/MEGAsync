@@ -1032,7 +1032,7 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink
                 foreach(auto file, ignoredFiles)
                 {
                     isSymLink ? manager.addIgnoreSymLinkRule(dir.relativeFilePath(file))
-                              : manager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE, dir.relativeFilePath(file), MegaIgnoreNameRule::Target::f);
+                              : manager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE, dir.relativeFilePath(file));
                 }
 
                 manager.applyChanges();

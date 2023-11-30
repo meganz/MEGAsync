@@ -777,7 +777,7 @@ void SyncInfo::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> 
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
                 QString::fromUtf8("Backup \"%1\" Path: %2 disabled: %3")
                 .arg(syncName, syncSetting->getLocalFolder(), QString::number(errorCode)).toUtf8().constData());
-            if (!syncSetting->isEnabled()
+            if (!syncSetting->isActive()
                 && errorCode != MegaSync::Error::LOGGED_OUT)
             {
                 QString errMsg(tr("Your backup \"%1\" has been temporarily disabled: %2")

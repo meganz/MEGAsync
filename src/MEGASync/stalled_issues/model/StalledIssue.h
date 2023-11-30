@@ -300,7 +300,7 @@ public:
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
-    bool isSymLink() const;
+    virtual bool isSymLink() const {return false;}
     bool missingFingerprint() const;
     bool canBeIgnored() const;
     virtual QStringList getLocalFiles();
@@ -342,7 +342,7 @@ public:
     void createFileWatcher();
     void removeFileWatcher();
 
-    QList<mega::MegaHandle> syncIds() const;
+    const QList<mega::MegaHandle> &syncIds() const;
     //In case there are two syncs, use the first one
     mega::MegaSync::SyncType getSyncType() const;
 

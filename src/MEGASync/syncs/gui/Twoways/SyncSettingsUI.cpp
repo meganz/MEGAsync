@@ -51,7 +51,7 @@ QString SyncSettingsUI::disableString() const
 
 QString SyncSettingsUI::getOperationFailTitle() const
 {
-    return tr("Sync opeartion failed");
+    return tr("Sync operation failed");
 }
 
 QString SyncSettingsUI::getOperationFailText(std::shared_ptr<SyncSettings> sync)

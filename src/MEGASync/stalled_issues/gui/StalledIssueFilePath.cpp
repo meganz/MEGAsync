@@ -20,13 +20,6 @@ StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->lines->installEventFilter(this);
-    ui->moveLines->installEventFilter(this);
-    ui->movePathProblemLines->installEventFilter(this);
-
-    ui->filePathContainer->installEventFilter(this);
-    ui->moveFilePathContainer->installEventFilter(this);
-
     mOpenIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ic-open-outside.png"));
 
     connect(ui->helpIcon, &QPushButton::clicked, this, &StalledIssueFilePath::onHelpIconClicked);
@@ -45,6 +38,25 @@ void StalledIssueFilePath::setIndent(int indent)
 
 void StalledIssueFilePath::updateUi(StalledIssueDataPtr newData)
 {
+    if(!mData && newData)
+    {
+        ui->lines->installEventFilter(this);
+        ui->moveLines->installEventFilter(this);
+        ui->movePathProblemLines->installEventFilter(this);
+
+        ui->filePathContainer->installEventFilter(this);
+        ui->moveFilePathContainer->installEventFilter(this);
+    }
+    else if(!newData)
+    {
+        ui->lines->removeEventFilter(this);
+        ui->moveLines->removeEventFilter(this);
+        ui->movePathProblemLines->removeEventFilter(this);
+
+        ui->filePathContainer->removeEventFilter(this);
+        ui->moveFilePathContainer->removeEventFilter(this);
+    }
+
     mData = newData;
 
     if(mData->isCloud())
@@ -84,7 +96,6 @@ void StalledIssueFilePath::fillFilePath()
     if(!mData->getPath().isEmpty())
     {
         ui->file->show();
-
 
         auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
 
@@ -274,44 +285,23 @@ void StalledIssueFilePath::updateMoveFileIcons()
 
 bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
 {
-    if(event->type() == QEvent::Enter || event->type() == QEvent::Leave || event->type() == QEvent::MouseButtonRelease)
+    //Not needed but used as extra protection
+    if(mData)
     {
-        if(watched == ui->filePathContainer && !ui->filePathContainer->property(HAS_PROBLEM).toBool())
+        if(event->type() == QEvent::Enter || event->type() == QEvent::Leave || event->type() == QEvent::MouseButtonRelease)
         {
-            showHoverAction(event->type(), ui->filePathAction, getFilePath());
-        }
-        else if(watched == ui->moveFilePathContainer && !ui->moveFilePathContainer->property(HAS_PROBLEM).toBool())
-        {
-            showHoverAction(event->type(), ui->moveFilePathAction,  getMoveFilePath());
-        }
-    }
-    else if(event->type() == QEvent::Resize)
-    {
-        if(mData)
-        {
-            /*if(watched == ui->filePath || watched == ui->moveFilePath)
+            if(watched == ui->filePathContainer && !ui->filePathContainer->property(HAS_PROBLEM).toBool())
             {
-                auto label = dynamic_cast<QLabel*>(watched);
-                if(label)
-                {
-                    QString fullPath;
-
-                    if(watched == ui->filePath)
-                    {
-                        fullPath = getFilePath();
-                    }
-                    else if(watched == ui->moveFilePath)
-                    {
-                        fullPath = getMoveFilePath();
-                    }
-
-                    if(!fullPath.isEmpty())
-                    {
-                        label->setText(label->fontMetrics().elidedText(fullPath, Qt::ElideMiddle,label->width()));
-                    }
-                }
+                showHoverAction(event->type(), ui->filePathAction, getFilePath());
             }
-            else*/ if(watched == ui->lines)
+            else if(watched == ui->moveFilePathContainer && !ui->moveFilePathContainer->property(HAS_PROBLEM).toBool())
+            {
+                showHoverAction(event->type(), ui->moveFilePathAction,  getMoveFilePath());
+            }
+        }
+        else if(event->type() == QEvent::Resize)
+        {
+            if(watched == ui->lines)
             {
                 auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
                 if(hasProblem)
