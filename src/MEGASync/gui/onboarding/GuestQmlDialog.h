@@ -12,6 +12,9 @@ public:
     ~GuestQmlDialog() override;
     bool isHiddenForLongTime() const;
 
+signals:
+    void guestActiveChanged(bool active);
+
 public slots:
     void realocate();
 
