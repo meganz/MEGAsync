@@ -93,7 +93,7 @@ bool Syncs::helperCheckLocalSync(const QString& path, QString& errorMessage) con
     QDir openFromFolderDir(localFolderPath);
     if (!openFromFolderDir.exists() )
     {
-        errorMessage = tr("The local path is unavaliable.");
+        errorMessage = tr("The local path is unavailable.");
         return false;
     }
 
