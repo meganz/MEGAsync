@@ -597,7 +597,7 @@ spacing: 5px;
                <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
               </property>
               <property name="wordWrap">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="indent">
                <number>0</number>
