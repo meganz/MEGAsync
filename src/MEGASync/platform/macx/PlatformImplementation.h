@@ -31,10 +31,12 @@ public:
     bool isUserActive() override;
     QString getDeviceName() override;
     void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;
+    QString getSizeStringLocalizedOSbased(qint64 bytes) override;
+    quint64 getBaseUnitsSize() const override;
 
-    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func) override;
-    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func) override;
-    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func) override;
+    virtual void fileSelector(const SelectorInfo& info) override;
+    virtual void folderSelector(const SelectorInfo& info) override;
+    virtual void fileAndFolderSelector(const SelectorInfo& info) override;
     void raiseFileFolderSelectors() override;
     void closeFileFolderSelectors(QWidget* parent) override;
 
@@ -42,7 +44,10 @@ public:
     void reloadFileManagerExtension() override;
     void enableFileManagerExtension(bool value) override;
 
+    void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
     void streamWithApp(const QString& app, const QString& url) override;
+
+    void processSymLinks() override;
 
 private:
     void disableSignalHandler();

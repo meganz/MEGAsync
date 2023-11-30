@@ -4,7 +4,7 @@
 #include "AccountDetailsDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "control/Utilities.h"
 
 #include "syncs/control/SyncInfo.h"
@@ -32,7 +32,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum {
+    enum Tabs{
         GENERAL_TAB  = 0,
         ACCOUNT_TAB  = 1,
         SYNCS_TAB    = 2,
@@ -41,7 +41,8 @@ public:
         FOLDERS_TAB  = 5,
         NETWORK_TAB  = 6,
         NOTIFICATIONS_TAB = 7
-        };
+    };
+    Q_ENUM(Tabs)
 
     explicit SettingsDialog(MegaApplication* app, bool proxyOnly = false, QWidget* parent = nullptr);
     ~SettingsDialog();
@@ -164,6 +165,7 @@ private:
     void updateCacheSchedulerDaysLabel();
 
     void setGeneralTabEnabled(const bool enabled);
+    void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();

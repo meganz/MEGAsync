@@ -16,7 +16,7 @@ IF NOT "%1" == "" (
 	SET MEGA_ARCH=%1
 	SET MEGA_SIGN=%2
 	SET MEGA_CORES=%3
-	SET VERSION_SUFFIX=%4
+	SET MEGA_VERSION_SUFFIX=%4
 	
 	IF [%MEGA_VCPKGPATH%]==[] (
 		echo "Error: VCPKGPATH environment variable is not set. Please set it."
@@ -111,6 +111,7 @@ IF EXIST build-x86-windows-mega (
 )
 
 call production_build.cmd
+call deploy_qt.cmd
 call gather_built_products.cmd
 call make_uninstallers.cmd
 call make_installers.cmd

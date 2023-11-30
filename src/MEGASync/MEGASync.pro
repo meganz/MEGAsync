@@ -66,7 +66,11 @@ unix:!macx {
 #    target.path = $$PREFIX/bin
 #    INSTALLS += target
 }
+else:win32 {
+    TARGET = MEGAsync
+}
 else {
+    QT += svg #macOS SVG support
     TARGET = MEGAsync
 }
 

@@ -4,7 +4,7 @@
 #include "MegaTransferView.h"
 #include "megaapi.h"
 #include "control/Utilities.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 

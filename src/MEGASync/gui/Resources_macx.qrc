@@ -386,8 +386,6 @@
         <file>images/success@2x.png</file>
         <file>images/sync_item_ico.png</file>
         <file>images/sync_item_ico@2x.png</file>
-        <file>images/top_arrow.png</file>
-        <file>images/top_arrow@2x.png</file>
         <file>images/transfer_empty_100.png</file>
         <file>images/transfer_empty_100@2x.png</file>
         <file>images/transfer_empty_64.png</file>
@@ -1250,5 +1248,14 @@
         <file>images/StalledIssues/rotate_cw_default.png</file>
         <file>images/StalledIssues/rotate_cw_default@2x.png</file>
         <file>images/StalledIssues/rotate_cw_default@3x.png</file>
+        <file>fonts/Inter-Black.ttf</file>
+        <file>fonts/Inter-Bold.ttf</file>
+        <file>fonts/Inter-ExtraBold.ttf</file>
+        <file>fonts/Inter-ExtraLight.ttf</file>
+        <file>fonts/Inter-Light.ttf</file>
+        <file>fonts/Inter-Medium.ttf</file>
+        <file>fonts/Inter-Regular.ttf</file>
+        <file>fonts/Inter-SemiBold.ttf</file>
+        <file>fonts/Inter-Thin.ttf</file>
     </qresource>
 </RCC>

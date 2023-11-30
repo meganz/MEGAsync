@@ -1,7 +1,7 @@
 #include "DuplicatedUploadChecker.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 
-#include <Preferences.h>
+#include "Preferences/Preferences.h"
 #include <MegaApplication.h>
 
 #include <QDir>

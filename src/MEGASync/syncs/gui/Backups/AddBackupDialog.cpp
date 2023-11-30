@@ -94,21 +94,33 @@ void AddBackupDialog::on_changeButton_clicked()
         }
     };
 
-    QString defaultPath = mUi->folderLineEdit->text().trimmed();
-    if (!defaultPath.size())
+    SelectorInfo info;
+    info.title = tr("Choose folder");
+    info.parent = this;
+    info.func = processPath;
+    info.canCreateDirectories = true;
+
+    info.defaultDir = mUi->folderLineEdit->text().trimmed();
+    if (!info.defaultDir.size())
     {
-        defaultPath = Utilities::getDefaultBasePath();
+        info.defaultDir = Utilities::getDefaultBasePath();
     }
 
-    defaultPath = QDir::toNativeSeparators(defaultPath);
-    Platform::getInstance()->folderSelector(tr("Choose folder"), defaultPath,false, this, processPath);
+    info.defaultDir = QDir::toNativeSeparators(info.defaultDir);
+    Platform::getInstance()->folderSelector(info);
 }
 
 void AddBackupDialog::onDeviceNameSet(const QString &devName)
 {
-    mUi->backupToLabel->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
-                                + QLatin1Char('/')
-                                + devName);
+    QString textToElide = UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
+                          + QLatin1Char('/')
+                          + devName;
+    QString text = mUi->backupToLabel->fontMetrics().elidedText(textToElide, Qt::ElideMiddle, mUi->folderLineEdit->width() + mUi->changeButton->width());
+    mUi->backupToLabel->setText(text);
+    if(textToElide != text)
+    {
+        mUi->backupToLabel->setToolTip(textToElide);
+    }
 }
 
 void AddBackupDialog::checkNameConflict()

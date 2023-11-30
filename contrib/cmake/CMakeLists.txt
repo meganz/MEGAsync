@@ -41,8 +41,8 @@ if (CMAKE_HOST_WIN32)
     set(CMAKE_AUTOMOC_MOC_OPTIONS -DWIN32)
 elseif (CMAKE_HOST_APPLE)
     set (UiDir "macx")
-    set (QTCOMPONENS_REQUIRED_PLATFORM MacExtras)
-    set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::MacExtras)
+    set (QTCOMPONENS_REQUIRED_PLATFORM MacExtras Svg)
+    set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::MacExtras Qt5::Svg)
     set(CMAKE_AUTOMOC_MOC_OPTIONS -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__)
 else()
     set (UiDir "linux")
@@ -50,8 +50,11 @@ else()
     set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::Svg Qt5::X11Extras xcb)
 endif()
 
-set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools ${QTCOMPONENS_REQUIRED_PLATFORM})
-set (MEGA_QT_LINK_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
+set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools Quick Qml ${QTCOMPONENS_REQUIRED_PLATFORM})
+set (MEGA_QT_LINK_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network Qt5::Quick Qt5::Qml ${TARGET_LINK_LIBRARIES_PLATFORM})
+
+list(APPEND QML_DIRS "${MEGAsyncDir}/gui/qml")
+set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Qt Creator extra qml import paths")
 
 set (UNCHECKED_ITERATORS 0 CACHE STRING "")
 
@@ -182,18 +185,15 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ImportMegaLinksDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ImportListWidgetItem.ui
     ${MEGAsyncDir}/gui/${UiDir}/CrashReportDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/SetupWizard.ui
     ${MEGAsyncDir}/gui/${UiDir}/SettingsDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/NotificationsSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/AccountDetailsDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/DownloadFromMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangeLogDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/GuestWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StreamingFromMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaProgressCustomDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/PlanWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/InfoWizard.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
@@ -288,7 +288,6 @@ set (MOC_INPUT
 
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
-    ${MEGAsyncDir}/control/EncryptedSettings.h
     ${MEGAsyncDir}/control/ExportProcessor.h
     ${MEGAsyncDir}/control/HTTPServer.h
     ${MEGAsyncDir}/control/LinkProcessor.h
@@ -296,7 +295,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/DownloadQueueController.h
     ${MEGAsyncDir}/control/MegaSyncLogger.h
     ${MEGAsyncDir}/control/MegaUploader.h
-    ${MEGAsyncDir}/control/Preferences.h
+    ${MEGAsyncDir}/control/Preferences/Preferences.h
+    ${MEGAsyncDir}/control/Preferences/EncryptedSettings.h
+    ${MEGAsyncDir}/control/Preferences/EphemeralCredentials.h
     ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
@@ -306,6 +307,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/DialogOpener.h
     ${MEGAsyncDir}/control/FileFolderAttributes.h
     ${MEGAsyncDir}/control/Version.h
+    ${MEGAsyncDir}/control/LoginController.h
+    ${MEGAsyncDir}/control/AccountStatusController.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -325,14 +328,12 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/CrashReportDialog.h
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.h
     ${MEGAsyncDir}/gui/ElidedLabel.h
-    ${MEGAsyncDir}/gui/GuestWidget.h
     ${MEGAsyncDir}/gui/HighDpiResize.h
     ${MEGAsyncDir}/gui/ImportListWidgetItem.h
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.h
     ${MEGAsyncDir}/gui/BalloonToolTip.h
     ${MEGAsyncDir}/gui/InfoDialog.h
     ${MEGAsyncDir}/gui/QtPositioningBugFixer.h
-    ${MEGAsyncDir}/gui/InfoWizard.h
     ${MEGAsyncDir}/gui/Login2FA.h
     ${MEGAsyncDir}/gui/MegaProxyStyle.h
     ${MEGAsyncDir}/gui/MultiQFileDialog.h
@@ -342,7 +343,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/PSAwidget.h
     ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
-    ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/StatusInfo.h
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.h
@@ -379,6 +379,23 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.h
     ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorSpecializations.h
+    ${MEGAsyncDir}/gui/qml/QmlClipboard.h
+    ${MEGAsyncDir}/gui/qml/QmlDialog.h
+    ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.h
+    ${MEGAsyncDir}/gui/qml/StandardIconProvider.h
+    ${MEGAsyncDir}/gui/qml/ApiEnums.h
+    ${MEGAsyncDir}/gui/onboarding/ChooseFolder.h
+    ${MEGAsyncDir}/gui/onboarding/Onboarding.h
+    ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.h
+    ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.h
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.h
+    ${MEGAsyncDir}/gui/onboarding/AccountInfoData.h
+    ${MEGAsyncDir}/gui/onboarding/BackupsModel.h
+    ${MEGAsyncDir}/gui/onboarding/Syncs.h
+    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.h
+    ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.h
+    ${MEGAsyncDir}/gui/onboarding/BackupsController.h
+
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.h
@@ -556,6 +573,8 @@ set (SRCS
     ${FORMS}
     ${MOC_INPUT}
     ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
+    ${MEGAsyncDir}/gui/Resources_qml.qrc
+    ${MEGAsyncDir}/gui/qml/qml.qrc
 
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
@@ -570,7 +589,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/BalloonToolTip.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
     ${MEGAsyncDir}/gui/QtPositioningBugFixer.cpp
-    ${MEGAsyncDir}/gui/SetupWizard.cpp
     ${MEGAsyncDir}/gui/UploadToMegaDialog.cpp
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.cpp
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.cpp
@@ -581,13 +599,10 @@ set (SRCS
     ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
-    ${MEGAsyncDir}/gui/GuestWidget.cpp
-    ${MEGAsyncDir}/gui/HighDpiResize.cpp
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.cpp
     ${MEGAsyncDir}/gui/UpgradeDialog.cpp
     ${MEGAsyncDir}/gui/PlanWidget.cpp
-    ${MEGAsyncDir}/gui/InfoWizard.cpp
     ${MEGAsyncDir}/gui/QMegaMessageBox.cpp
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
@@ -633,6 +648,21 @@ set (SRCS
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
+    ${MEGAsyncDir}/gui/qml/QmlClipboard.cpp
+    ${MEGAsyncDir}/gui/qml/QmlDialog.cpp
+    ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.cpp
+    ${MEGAsyncDir}/gui/qml/StandardIconProvider.cpp
+    ${MEGAsyncDir}/gui/onboarding/ChooseFolder.cpp
+    ${MEGAsyncDir}/gui/onboarding/Onboarding.cpp
+    ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.cpp
+    ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.cpp
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.cpp
+    ${MEGAsyncDir}/gui/onboarding/AccountInfoData.cpp
+    ${MEGAsyncDir}/gui/onboarding/BackupsModel.cpp
+    ${MEGAsyncDir}/gui/onboarding/Syncs.cpp
+    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.cpp
+    ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.cpp
+    ${MEGAsyncDir}/gui/onboarding/BackupsController.cpp
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
@@ -693,13 +723,14 @@ set (SRCS
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaEvent.cpp
 
+    ${MEGAsyncDir}/control/Preferences/EncryptedSettings.cpp
+    ${MEGAsyncDir}/control/Preferences/EphemeralCredentials.cpp
+    ${MEGAsyncDir}/control/Preferences/Preferences.cpp
     ${MEGAsyncDir}/control/HTTPServer.cpp
-    ${MEGAsyncDir}/control/Preferences.cpp
     ${MEGAsyncDir}/control/LinkProcessor.cpp
     ${MEGAsyncDir}/control/MegaUploader.cpp
     ${MEGAsyncDir}/control/UpdateTask.cpp
     ${MEGAsyncDir}/control/ThreadPool.cpp
-    ${MEGAsyncDir}/control/EncryptedSettings.cpp
     ${MEGAsyncDir}/control/CrashHandler.cpp
     ${MEGAsyncDir}/control/ExportProcessor.cpp
     ${MEGAsyncDir}/control/Utilities.cpp
@@ -712,6 +743,8 @@ set (SRCS
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/control/TextDecorator.cpp
     ${MEGAsyncDir}/control/DialogOpener.cpp
+    ${MEGAsyncDir}/control/LoginController.cpp
+    ${MEGAsyncDir}/control/AccountStatusController.cpp
     ${MEGAsyncDir}/control/FileFolderAttributes.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
@@ -956,7 +989,7 @@ if (CMAKE_HOST_APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 
-target_link_libraries(MEGAsync Mega Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
+target_link_libraries(MEGAsync Mega Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network Qt5::Quick Qt5::Qml ${TARGET_LINK_LIBRARIES_PLATFORM})
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)
@@ -1090,7 +1123,6 @@ target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloei
 
 set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
 set(UNIT_TEST_FILES
-    ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
     ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
     ${MEGASyncUnitTestsDir}/Utilities.test.cpp
     ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp

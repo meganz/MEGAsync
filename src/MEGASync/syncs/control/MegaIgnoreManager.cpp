@@ -1,7 +1,8 @@
 #include "MegaIgnoreManager.h"
 
 #include <Utilities.h>
-#include "Preferences.h"
+
+#include "control/Preferences/Preferences.h"
 #include "MegaApplication.h"
 
 #include <QDir>

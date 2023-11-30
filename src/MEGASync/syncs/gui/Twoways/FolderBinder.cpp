@@ -1,5 +1,6 @@
 #include "FolderBinder.h"
 #include "ui_FolderBinder.h"
+#include "node_selector/gui/NodeSelectorSpecializations.h"
 
 #include "MegaApplication.h"
 #include "control/Utilities.h"
@@ -75,24 +76,40 @@ QString FolderBinder::selectedLocalFolder()
 
 void FolderBinder::on_bLocalFolder_clicked()
 {
-    QString defaultPath = ui->eLocalFolder->text().trimmed();
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Default path: %1").arg(defaultPath).toUtf8().constData());
-    if (!defaultPath.size())
+    QString localPath = ui->eLocalFolder->text().trimmed();
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Default path: %1").arg(localPath).toUtf8().constData());
+    if (!localPath.size())
     {
-        defaultPath = Utilities::getDefaultBasePath();
+        localPath = Utilities::getDefaultBasePath();
+        localPath = QDir::toNativeSeparators(localPath);
+    }
+    else
+    {
+        localPath = QDir::toNativeSeparators(localPath);
+        QDir dirLocalPath(localPath);
+        if (dirLocalPath.cdUp())
+        {
+            localPath = dirLocalPath.path();
+        }
     }
 
-    defaultPath = QDir::toNativeSeparators(defaultPath);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(localPath).toUtf8().constData());
 
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(defaultPath).toUtf8().constData());
-
-    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](const QStringList& selection){
+    SelectorInfo info;
+    info.title = tr("Select local folder");
+    info.defaultDir = localPath;
+    info.multiSelection = false;
+    info.parent = this;
+    info.canCreateDirectories= true;
+    info.func = [this](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
             onLocalFolderSet(fPath);
         }
-    });
+    };
+
+    Platform::getInstance()->folderSelector(info);
 }
 
 void FolderBinder::onLocalFolderSet(const QString& path)

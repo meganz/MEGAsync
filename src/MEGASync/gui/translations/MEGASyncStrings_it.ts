@@ -999,7 +999,7 @@
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Password cambiata</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -1041,7 +1041,7 @@
     <message>
         <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo account Pro&#xa0;Flexi è stato disattivato a causa del fallimento del pagamento oppure perché hai annullato il tuo abbonamento. Non potrai accedere ai dati archiviati nel tuo account finché non avrai effettuato un pagamento e riattivato il tuo abbonamento.</translation>
     </message>
 </context>
 <context>
@@ -1773,12 +1773,12 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Errore nell&#8217;aggiunta della sincronizzazione</translation>
     </message>
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non può essere aggiunta perché il tuo account Pro&#xa0;Flexi è stato disattivato a causa del fallimento del pagamento oppure perché hai annullato il tuo abbonamento. Per continuare, effettua un pagamento e riattiva il tuo abbonamento.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1788,7 +1788,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Pay and reactivate</source>
         <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Paga e riattiva</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2457,12 +2457,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disabilitata in quanto la cartella remota non esiste</translation>
+        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disabilitata in quanto la cartella locale non esiste</translation>
+        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2730,7 +2730,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale non esiste.</translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -3015,7 +3015,8 @@ Controlla la tua email per maggiori informazioni su come puoi inviare una contro
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo account è stato chiuso a causa di una violazione dei Termini di Servizio di MEGA.
+Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo account MEGA.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
@@ -3227,7 +3228,7 @@ Controlla la tua email per maggiori informazioni su come puoi inviare una contro
     <message>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo piano è scaduto</translation>
     </message>
 </context>
 <context>
@@ -3413,12 +3414,12 @@ Le sincronizzazioni incomplete che hai selezionato non saranno annullate. Tutti 
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Non annullare</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
         <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Non pulire</translation>
     </message>
 </context>
 <context>
@@ -4036,12 +4037,15 @@ Inserisci un nome differente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- Interfaccia utente migliorata.
-- Alcuni crash sistemati su Windows, Linux, e macOS.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Aggiornato a Qt 5.15.
+- Crash sistemati su Windows, Linux e macOS.
+- Librerie di terze parti aggiornate.
+</translation>
     </message>
 </context>
 <context>

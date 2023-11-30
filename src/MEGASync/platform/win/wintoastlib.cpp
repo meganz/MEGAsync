@@ -1,5 +1,5 @@
 #include "wintoastlib.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include <VersionHelpers.h>
 #include <memory>
 #include <assert.h>

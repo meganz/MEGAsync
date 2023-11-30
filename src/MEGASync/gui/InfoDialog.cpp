@@ -10,8 +10,10 @@
 #include <QFileInfo>
 #include <QEvent>
 #include <QScrollBar>
+#include "qml/QmlDialogWrapper.h"
 
 #include "InfoDialog.h"
+#include "AccountDetailsDialog.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
 #include "GuiUtilities.h"
@@ -26,6 +28,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "onboarding/Onboarding.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -172,7 +175,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     cloudItem = NULL;
     sharesItem = NULL;
     rubbishItem = NULL;
-    gWidget = NULL;
     opacityEffect = NULL;
     animation = NULL;
 
@@ -233,17 +235,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     ui->wListTransfers->setupTransfers();
 
-#ifdef __APPLE__
-    arrow = new QPushButton(this);
-    arrow->setIcon(QIcon(QString::fromLatin1("://images/top_arrow.png")));
-    arrow->setIconSize(QSize(30,10));
-    arrow->setStyleSheet(QString::fromLatin1("border: none;"));
-    arrow->resize(30,10);
-    arrow->hide();
-
-    dummy = NULL;
-#endif
-
     //Create the overlay widget with a transparent background
     overlay = new QPushButton(ui->pUpdated);
     overlay->setStyleSheet(QString::fromLatin1("background-color: transparent; "
@@ -261,10 +252,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     {
         setAvatar();
         setUsage();
-    }
-    else
-    {
-        regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED, olddialog);
     }
     highDpiResize.init(this);
 
@@ -299,7 +286,6 @@ InfoDialog::~InfoDialog()
 {
     removeEventFilter(this);
     delete ui;
-    delete gWidget;
     delete animation;
     delete filterMenu;
 }
@@ -322,10 +308,11 @@ void InfoDialog::showEvent(QShowEvent *event)
     {
         ui->bTransferManager->showAnimated();
     }
-
     isShown = true;
-    QDialog::showEvent(event);
     mTransferScanCancelUi->update();
+
+    repositionInfoDialog();
+    QDialog::showEvent(event);
 }
 
 void InfoDialog::moveEvent(QMoveEvent*)
@@ -361,10 +348,6 @@ void InfoDialog::enableTransferAlmostOverquotaAlert()
 
 void InfoDialog::hideEvent(QHideEvent *event)
 {
-#ifdef __APPLE__
-    arrow->hide();
-#endif
-
     if (filterMenu && filterMenu->isVisible())
     {
         filterMenu->hide();
@@ -388,6 +371,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
 #ifdef _WIN32
     lastWindowHideTime = std::chrono::steady_clock::now();
 #endif
+
 }
 
 void InfoDialog::setAvatar()
@@ -668,14 +652,6 @@ void InfoDialog::updateBlockedState()
 
 void InfoDialog::updateState()
 {
-    if (!mPreferences->logged())
-    {
-        if (gWidget)
-        {
-            gWidget->resetFocus();
-        }
-    }
-
     if (!mPreferences->logged())
     {
         return;
@@ -1078,14 +1054,6 @@ void InfoDialog::addBackup()
     }
 }
 
-#ifdef __APPLE__
-void InfoDialog::moveArrow(QPoint p)
-{
-    arrow->move(p.x()-(arrow->width()/2+1), 2);
-    arrow->show();
-}
-#endif
-
 void InfoDialog::onOverlayClicked()
 {
     app->uploadActionClicked();
@@ -1224,12 +1192,12 @@ void InfoDialog::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
 
-        if (mPreferences->logged())
-        {
-            setUsage();
-            mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
-            updateDialogState();
-        }
+//        if (mPreferences->logged())
+//        {
+//            setUsage();
+//            mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
+//            updateDialogState();
+//        }
     }
     QDialog::changeEvent(event);
 }
@@ -1300,107 +1268,9 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 void InfoDialog::on_bStorageDetails_clicked()
 {
-    QPointer<AccountDetailsDialog> accountDetailsDialog = new AccountDetailsDialog();
-    app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    DialogOpener::showNonModalDialog(accountDetailsDialog);
-}
-
-void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
-{
-    int actualAccountState;
-
-    blockState ? actualAccountState = blockState
-                  : mPreferences->logged() ? actualAccountState = STATE_LOGGEDIN
-                                          : actualAccountState = STATE_LOGOUT;
-
-    if (actualAccountState == loggedInMode)
-    {
-        return;
-    }
-
-    loggedInMode = actualAccountState;
-
-    QLayout *dialogLayout = layout();
-    switch(loggedInMode)
-    {
-        case STATE_LOGOUT:
-        case STATE_LOCKED_EMAIL:
-        case STATE_LOCKED_SMS:
-        {
-            if (!gWidget)
-            {
-                gWidget = new GuestWidget();
-
-                connect(gWidget, SIGNAL(onPageLogin()), this, SLOT(resetLoggedInMode()));
-                connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
-                if (olddialog)
-                {
-                    auto t = olddialog->gWidget->getTexts();
-                    gWidget->setTexts(t.first, t.second);
-                }
-            }
-            else
-            {
-                gWidget->enableListener();
-            }
-
-            gWidget->setBlockState(blockState);
-
-            updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
-            setOverQuotaMode(false);
-            ui->wPSA->removeAnnounce();
-
-            dialogLayout->removeWidget(ui->wInfoDialogIn);
-            ui->wInfoDialogIn->setVisible(false);
-            dialogLayout->addWidget(gWidget);
-            gWidget->setVisible(true);
-
-            #ifdef __APPLE__
-                if (!dummy)
-                {
-                    dummy = new QWidget();
-                }
-
-                dummy->resize(1,1);
-                dummy->setWindowFlags(Qt::FramelessWindowHint);
-                dummy->setAttribute(Qt::WA_NoSystemBackground);
-                dummy->setAttribute(Qt::WA_TranslucentBackground);
-                dummy->show();
-            #endif
-
-            adjustSize();
-            break;
-        }
-
-        case STATE_LOGGEDIN:
-        {
-            if (gWidget)
-            {
-                gWidget->disableListener();
-                gWidget->initialize();
-
-                dialogLayout->removeWidget(gWidget);
-                gWidget->setVisible(false);
-            }
-            dialogLayout->addWidget(ui->wInfoDialogIn);
-            ui->wInfoDialogIn->setVisible(true);
-
-            #ifdef __APPLE__
-                if (dummy)
-                {
-                    dummy->hide();
-                    delete dummy;
-                    dummy = NULL;
-                }
-            #endif
-
-            adjustSize();
-            break;
-        }
-    }
-    app->repositionInfoDialog();
-
-    app->onGlobalSyncStateChanged(NULL);
+    auto dialog = new AccountDetailsDialog();
+    dialog->setAttribute(Qt::WA_DeleteOnClose, true);
+    dialog->show();
 }
 
 void InfoDialog::animateStates(bool opt)
@@ -1452,11 +1322,6 @@ void InfoDialog::animateStates(bool opt)
             }
         }
     }
-}
-
-void InfoDialog::onUserAction(int action)
-{
-    app->userAction(action);
 }
 
 void InfoDialog::resetLoggedInMode()
@@ -1731,17 +1596,6 @@ void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, l
     filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
 
-void InfoDialog::paintEvent(QPaintEvent * e)
-{
-    QDialog::paintEvent(e);
-
-#ifdef __APPLE__
-    QPainter p(this);
-    p.setCompositionMode(QPainter::CompositionMode_Clear);
-    p.fillRect(ui->wArrow->rect(), Qt::transparent);
-#endif
-}
-
 double InfoDialog::computeRatio(long long completed, long long remaining)
 {
     return static_cast<double>(completed) / static_cast<double>(remaining);
@@ -1796,5 +1650,67 @@ void InfoDialog::setupSyncController()
     if (!mSyncController)
     {
         mSyncController.reset(new SyncController());
+    }
+}
+
+void InfoDialog::fixMultiscreenResizeBug(int& posX, int& posY)
+{
+    // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
+    // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
+    // it is reverted to the correct size.
+
+    ensurePolished();
+    auto initialDialogWidth  = width();
+    auto initialDialogHeight = height();
+    QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posX, posY](){
+        if (width() > initialDialogWidth || height() > initialDialogHeight) //miss scaling detected
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
+                         .arg(width()).arg(height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                         .toUtf8().constData());
+
+            resize(initialDialogWidth,initialDialogHeight);
+
+            auto iDPos = pos();
+            if (iDPos.x() != posX || iDPos.y() != posY )
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                             QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
+                             .arg(iDPos.x()).arg(iDPos.y()).arg(posX).arg(posY)
+                             .toUtf8().constData());
+                move(posX, posY);
+
+                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
+                    if (width() > initialDialogWidth || height() > initialDialogHeight) //miss scaling detected
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                     QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
+                                     .arg(width()).arg(height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                                     .toUtf8().constData());
+
+                        resize(initialDialogWidth,initialDialogHeight);
+                    }
+                });
+            }
+        }
+    });
+}
+
+void InfoDialog::repositionInfoDialog()
+{
+    int posx, posy;
+    Platform::getInstance()->calculateInfoDialogCoordinates(rect(), &posx, &posy);
+
+    fixMultiscreenResizeBug(posx, posy);
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Moving Info Dialog to posx = %1, posy = %2")
+                 .arg(posx)
+                 .arg(posy)
+                 .toUtf8().constData());
+
+    if(posx != this->x() || posy != this->y())
+    {
+        move(posx, posy);
     }
 }

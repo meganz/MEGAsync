@@ -1701,7 +1701,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>Abmelden</translation>
+        <translation>Ausloggen</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -2458,12 +2458,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Ihr Sync „%1“ wurde deaktiviert, da der Remote-Ordner nicht existiert</translation>
+        <translation>Ihre Synchronisierung „%1“ wurde deaktiviert, da der lokale Ordner nicht verfügbar ist oder Sie keine Lese- und Schreibrechte haben.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Ihr Sync „%1“ wurde deaktiviert, da der lokale Ordner nicht existiert.</translation>
+        <translation>Ihre Synchronisierung „%1“ wurde deaktiviert, da der lokale Ordner nicht verfügbar ist oder Sie keine Lese- und Schreibrechte haben.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2538,7 +2538,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>Keine Verbindung zum Internet</translation>
+        <translation>Keine Internetverbindung</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -2731,7 +2731,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Ihr Backup „%1“ wurde deaktiviert, da der lokale Ordner nicht existiert</translation>
+        <translation>Ihr Backup „%1“ wurde deaktiviert, da der lokale Ordner nicht verfügbar ist oder Sie keine Lese- und Schreibrechte haben.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -3415,7 +3415,7 @@ Die ausgewählten unvollständigen Synchronisierungstransfers werden nicht abgeb
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation>Nicht abbrechen</translation>
+        <translation>Nicht absagen</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
@@ -3817,7 +3817,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to redirect user to upgrade current account.</translatorcomment>
-        <translation>Pro-Status</translation>
+        <translation>Upgrade</translation>
     </message>
 </context>
 <context>
@@ -3851,7 +3851,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Submit</source>
         <translatorcomment>Label for submit button. Keep capital letter.</translatorcomment>
-        <translation>Abschicken</translation>
+        <translation>Absenden</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4039,12 +4039,15 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- Bedienoberfläche verbessert.
-- Erkannte Abstürze unter Windows, Linux und macOS behoben.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Upgrade auf Qt 5.15 durchgeführt.
+- Erkannte Abstürze unter Windows, Linux und macOS behoben.
+- Fremdbibliotheken aktualisiert.
+</translation>
     </message>
 </context>
 <context>
@@ -4716,12 +4719,12 @@ Trotzdem löschen?</translation>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>Abmelden</translation>
+        <translation>Ausloggen</translation>
     </message>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Pro-Status</translation>
+        <translation>Upgrade</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5278,7 +5281,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backup</source>
         <translatorcomment>Toolbar button text</translatorcomment>
-        <translation>Datensicherung</translation>
+        <translation>Backups</translation>
     </message>
     <message>
         <source>Backups</source>
@@ -5328,7 +5331,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation>Möchten Sie sich abmelden?</translation>
+        <translation>Möchten Sie sich ausloggen?</translation>
     </message>
     <message>
         <source>Error removing sync</source>
@@ -5910,12 +5913,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation>Standardapplikation</translation>
+        <translation>Standardanwendung</translation>
     </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation>Applikation auswählen</translation>
+        <translation>Anwendung auswählen</translation>
     </message>
     <message>
         <source>Close</source>
@@ -7262,7 +7265,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Abmelden</translation>
+        <translation>Ausloggen</translation>
     </message>
     <message>
         <source>Verify your email</source>

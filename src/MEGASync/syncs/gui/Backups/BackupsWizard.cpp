@@ -747,7 +747,13 @@ void BackupsWizard::on_bMoreFolders_clicked()
             }
         }
     };
-    Platform::getInstance()->folderSelector(tr("Choose directory"),Utilities::getDefaultBasePath(),false,this,processResult);
+    SelectorInfo info;
+    info.title = tr("Choose directory");
+    info.defaultDir = Utilities::getDefaultBasePath();
+    info.parent = this;
+    info.func = processResult;
+    info.canCreateDirectories = true;
+    Platform::getInstance()->folderSelector(info);
 }
 
 void BackupsWizard::on_bBack_clicked()
@@ -831,8 +837,23 @@ void BackupsWizard::onItemChanged(QStandardItem *item)
 
 void BackupsWizard::onDeviceNameSet(QString deviceName)
 {
-    mUi->lDeviceNameStep1->setText(deviceName);
-    mUi->lDeviceNameStep2->setText(deviceName);
+
+    QString elidedTextStep1 = mUi->lDeviceNameStep1->fontMetrics().elidedText(deviceName, Qt::ElideMiddle, 400);
+    QString elidedTextStep2 = mUi->lDeviceNameStep1->fontMetrics().elidedText(deviceName, Qt::ElideMiddle, 375);
+
+    if(elidedTextStep1 != deviceName)
+    {
+        mUi->lDeviceNameStep1->setToolTip(deviceName);
+    }
+
+    if(elidedTextStep2 != deviceName)
+    {
+        mUi->lDeviceNameStep2->setToolTip(deviceName);
+    }
+
+    mUi->lDeviceNameStep1->setText(elidedTextStep1);
+    mUi->lDeviceNameStep2->setText(elidedTextStep2);
+
     onMyBackupsFolderHandleSet();
     onItemChanged();
 }
@@ -840,9 +861,18 @@ void BackupsWizard::onDeviceNameSet(QString deviceName)
 void BackupsWizard::onMyBackupsFolderHandleSet(mega::MegaHandle)
 {
     // Update path display
-    mUi->leBackupTo->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
-                             + QLatin1Char('/')
-                             + mDeviceNameRequest->getDeviceName());
+    QString text = UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
+                   + QLatin1Char('/')
+                   + mDeviceNameRequest->getDeviceName();
+    mUi->leBackupTo->setText(text);
+    if(mUi->leBackupTo->fontMetrics().horizontalAdvance(text) > mUi->leBackupTo->width())
+    {
+        mUi->leBackupTo->setToolTip(text);
+    }
+    else
+    {
+        mUi->leBackupTo->setToolTip(QString());
+    }
 }
 
 void BackupsWizard::onSyncAddRequestStatus(int errorCode, int, const QString& errorMsg, const QString& name)

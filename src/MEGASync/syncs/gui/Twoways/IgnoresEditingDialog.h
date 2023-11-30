@@ -1,7 +1,7 @@
 #ifndef IGNORESEDITINGDIALOG_H
 #define IGNORESEDITINGDIALOG_H
 
-#include "Preferences.h"
+#include "control/Preferences/Preferences.h"
 #include "syncs/control/MegaIgnoreManager.h"
 
 #include <QDialog>

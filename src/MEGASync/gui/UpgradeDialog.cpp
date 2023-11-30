@@ -4,7 +4,7 @@
 #endif
 #include "ui_UpgradeDialog.h"
 #include "Utilities.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "gui/PlanWidget.h"
 
 #include <QDateTime>

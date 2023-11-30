@@ -2746,6 +2746,7 @@ void TransfersModel::resetModel()
     beginResetModel();
 
     mTransfersCount.clear();
+    mActiveTransfers.clear();
     mTransferEventWorker->clear();
     mTransfersToProcess.clear();
     mTransfersProcessChanged = 0;

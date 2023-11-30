@@ -15,7 +15,7 @@
 #include <QDateTime>
 
 #include "megaapi.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 
 class UpdateTask : public QObject
 {

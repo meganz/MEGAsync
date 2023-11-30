@@ -138,7 +138,7 @@ public:
     QStringList getLocalFolders(const QVector<SyncType>& types);
     QStringList getLocalFolders(SyncType type)
         {return getLocalFolders(QVector<SyncType>({type}));}
-    QMap<QString, SyncType> getLocalFoldersAndTypeMap();
+    QMap<QString, SyncType> getLocalFoldersAndTypeMap(bool normalized = false);
     QList<mega::MegaHandle> getMegaFolderHandles(const QVector<SyncType>& types);
     QList<mega::MegaHandle> getMegaFolderHandles(SyncType type)
         {return getMegaFolderHandles(QVector<SyncType>({type}));}

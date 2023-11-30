@@ -2,7 +2,7 @@
 #define MEGAUPLOADER_H
 
 #include <TransferBatch.h>
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "megaapi.h"
 #include <ThreadPool.h>
 
@@ -12,7 +12,7 @@
 #include <QDir>
 #include <QQueue>
 #include "FolderTransferListener.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include "QTMegaTransferListener.h"

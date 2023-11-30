@@ -9,6 +9,25 @@
 #include <QString>
 #include <string>
 
+struct SelectorInfo
+{
+    std::function<void(QStringList)> func;
+    QWidget* parent;
+    QString title;
+    QString defaultDir;
+    bool multiSelection;
+    bool canCreateDirectories;
+
+    SelectorInfo()
+        : func(nullptr)
+        , parent(nullptr)
+        , title(QString())
+        , defaultDir(QString())
+        , multiSelection(false)
+        , canCreateDirectories(false)
+    {}
+};
+
 class AbstractPlatform
 {
 public:
@@ -47,10 +66,12 @@ public:
     virtual bool isUserActive() = 0;
     virtual QString getDeviceName() = 0;
     virtual void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true);
+    virtual QString getSizeStringLocalizedOSbased(qint64 bytes);
+    virtual quint64 getBaseUnitsSize() const;
 
-    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func);
-    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func);
-    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(const QStringList&)> func);
+    virtual void fileSelector(const SelectorInfo& info);
+    virtual void folderSelector(const SelectorInfo& info);
+    virtual void fileAndFolderSelector(const SelectorInfo& info);
     virtual void raiseFileFolderSelectors();
     virtual void closeFileFolderSelectors(QWidget* parent);
 
@@ -62,12 +83,18 @@ public:
     virtual void reloadFileManagerExtension() {};
     virtual void enableFileManagerExtension(bool) {};
 
+    virtual void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) = 0;
     virtual void streamWithApp(const QString& app, const QString& url) = 0;
+    virtual void processSymLinks() = 0;
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
+
+    void logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation);
+    QString rectToString(const QRect &rect);
+
 };
 
 #endif // ABSTRACTPLATFORM_H

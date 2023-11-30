@@ -2,7 +2,7 @@
 #include <QDialogButtonBox>
 
 #include <Utilities.h>
-#include <Preferences.h>
+#include "control/Preferences/Preferences.h"
 #include <MegaApplication.h>
 
 #include <StalledIssuesModel.h>

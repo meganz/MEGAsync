@@ -12,7 +12,7 @@
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
 #define VER_INTERNALNAME_STR        "MEGAsync.exe\0"
-#define VER_LEGALCOPYRIGHT_STR      "Mega Limited 2023\0"
+#define VER_LEGALCOPYRIGHT_STR      "Mega Limited 2024\0"
 #define VER_LEGALTRADEMARKS1_STR    "All Rights Reserved"
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
@@ -25,7 +25,7 @@
 //"- item 1\n"               \
 //"- item 2\n\"              \
 // [...]
-//"- item n\n"
+//"- item n\n"              \
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
 "- Sync Rework Beta V1 version.\n"                                                                 \

@@ -627,7 +627,7 @@ margin-top: 4px;
           <item>
            <widget class="QCheckBox" name="cOverlayIcons">
             <property name="text">
-             <string>Enable overlay icons</string>
+             <string>Enable sync status icons</string>
             </property>
            </widget>
           </item>
@@ -2106,6 +2106,54 @@ color: grey;
         <property name="flat">
          <bool>true</bool>
         </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QStackedWidget" name="sOverlayMessageWidget">
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="pEmpty"/>
+        <widget class="QWidget" name="pProcessing">
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <spacer name="horizontalSpacer_10">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>178</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="WaitingSpinnerWidget" name="wWaitingSpinner" native="true"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="lOverlayProcessing">
+            <property name="text">
+             <string notr="true">Enable Overlay Icon Message</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_15">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>177</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
       <item alignment="Qt::AlignRight">

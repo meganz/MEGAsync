@@ -199,6 +199,12 @@ int main(int argc, char *argv[])
 
     Platform::create();
 
+    // This call is responsible for rebuilding the Qt symlinks in platforms where it applies.
+    // This needs to be done when starting the first time after an update.
+    // For this to work, the call needs to know the version of the app BEFORE updating,
+    // so needs to be made before the file megasync.version is updated.
+    Platform::getInstance()->processSymLinks();
+
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         auto preferences = Preferences::instance();
@@ -429,6 +435,15 @@ int main(int argc, char *argv[])
         MegaApi::log(message.logLevel, message.message.toStdString().c_str());
     }
 
+#ifdef Q_OS_LINUX
+    auto megaLibGL = getenv("MEGA_LIBGL_ALWAYS_SOFTWARE");
+    if (megaLibGL && !strcmp(megaLibGL, "1"))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting LIBGL_ALWAYS_SOFTWARE to 1");
+        qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
+    }
+#endif
+
 #ifndef Q_OS_MACX
     const auto scaleFactorLogMessages = scaleFactorManager.getLogMessages();
     for(const auto& message : scaleFactorLogMessages)
@@ -545,6 +560,8 @@ int main(int argc, char *argv[])
         #endif
     }
 
+    // The megasync.version file update needs to be done AFTER Platform::getInstance()->processSymLinks(),
+    // because it needs the old version number.
     QString appVersionPath = dataDir.filePath(QString::fromUtf8("megasync.version"));
     QFile fappVersionPath(appVersionPath);
     if (fappVersionPath.open(QIODevice::WriteOnly))
@@ -577,6 +594,18 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Bold.ttf"));
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Regular.ttf"));
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Semibold.ttf"));
+
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Bold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Black.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-ExtraBold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-ExtraLight.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Light.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Medium.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-SemiBold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Thin.ttf"));
+
+    app.setWindowIcon(QIcon(QString::fromUtf8(":/images/app_ico.ico")));
 
     app.initialize();
     app.start();
