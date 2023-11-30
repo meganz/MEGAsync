@@ -2182,6 +2182,8 @@ void MegaApplication::periodicTasks()
             });// end of thread pool function
         }
 
+        onGlobalSyncStateChanged(megaApi);
+
         if (isLinux)
         {
             updateTrayIcon();
