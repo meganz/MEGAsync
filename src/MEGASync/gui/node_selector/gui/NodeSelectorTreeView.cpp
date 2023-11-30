@@ -346,6 +346,9 @@ void NodeSelectorTreeView::dragMoveEvent(QDragMoveEvent* event)
     if (event->mimeData()->hasUrls())
     {
         event->acceptProposedAction();
+        // clear selection and select only the drop index
+        selectionModel()->clearSelection();
+        selectionModel()->select(indexAt(event->pos()), QItemSelectionModel::Select);
     }
 }
 
@@ -373,7 +376,9 @@ std::shared_ptr<MegaNode> NodeSelectorTreeView::getDropNode(const QModelIndex& d
 {
     if(!dropIndex.isValid())
     {
-        return std::shared_ptr<MegaNode>(mMegaApi->getRootNode());
+        const auto root = rootIndex();
+        const auto item = NodeSelectorModel::getItemByIndex(root);
+        return item->getNode();
     }
     auto node = proxyModel()->getNode(dropIndex);
     if(!node || node->isFolder())
