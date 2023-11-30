@@ -43,7 +43,7 @@ bool IgnoredStalledIssue::autoSolveIssue()
                 MegaIgnoreManager ignoreManager(folderPath, false);
                 ignoreManager.addIgnoreSymLinksRule();
                 auto changesApplied(ignoreManager.applyChanges());
-                if(changesApplied < MegaIgnoreManager::ApplyChangesError::NoWritePermission)
+                if(changesApplied < MegaIgnoreManager::ApplyChangesError::NO_WRITE_PERMISSION)
                 {
                     setIsSolved(false);
                     mIgnoredSyncs.insert(syncId, true);

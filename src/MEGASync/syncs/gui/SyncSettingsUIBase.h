@@ -55,9 +55,7 @@ public:
         initTable();
 
         connect(table, &TableType::signalRunSync, this, &SyncSettingsUIBase::setSyncToRun);
-        connect(table, &TableType::signalPauseSync, this, &SyncSettingsUIBase::setSyncToPause);
         connect(table, &TableType::signalSuspendSync, this, &SyncSettingsUIBase::setSyncToSuspend);
-        connect(table, &TableType::signalDisableSync, this, &SyncSettingsUIBase::setSyncToDisabled);
         connect(table, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::removeSync);
         connect(table, &TableType::signaladdExclusions, this, &SyncSettingsUIBase::openExclusionsDialog);
         connect(table, &TableType::signalOpenMegaignore, this, &SyncSettingsUIBase::openMegaIgnore);
@@ -180,19 +178,19 @@ protected:
     SyncController* mSyncController;
     QDialog* mParentDialog;
 
-    virtual QString getFinishWarningIconString() = 0;
-    virtual QString getFinishIconString() = 0;
-    virtual QString disableString() = 0;
+    virtual QString getFinishWarningIconString() const = 0;
+    virtual QString getFinishIconString() const = 0;
+    virtual QString disableString() const = 0;
 
     //Operation failed
-    virtual QString getOperationFailTitle() = 0;
+    virtual QString getOperationFailTitle() const = 0;
     virtual QString getOperationFailText(std::shared_ptr<SyncSettings> sync) = 0;
 
     //Error adding
-    virtual QString getErrorAddingTitle() = 0;
+    virtual QString getErrorAddingTitle() const = 0;
 
     //Error removing
-    virtual QString getErrorRemovingTitle() = 0;
+    virtual QString getErrorRemovingTitle() const = 0;
     virtual QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) = 0;
 
 protected slots:
@@ -213,7 +211,6 @@ protected slots:
 
 private:
     void initTable();
-    void setModel(SyncItemModel* model);
     void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
     void setDisabledSyncsText();
 

@@ -4,9 +4,9 @@
 #include <syncs/gui/SyncSettingsUIBase.h>
 #include "UserAttributesRequests/MyBackupsHandle.h"
 
-BackupSettingsElements::BackupSettingsElements(QObject *parent) :
-    QObject(parent),
-    openFolderUi(new Ui::OpenBackupsFolder)
+BackupSettingsElements::BackupSettingsElements(QObject *parent)
+    :QObject(parent)
+    ,openFolderUi(new Ui::OpenBackupsFolder)
 {
 }
 

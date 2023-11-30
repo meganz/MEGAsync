@@ -140,16 +140,6 @@ void MegaIgnoreManager::parseIgnoresFile()
     }
 }
 
-std::shared_ptr<MegaIgnoreRule> MegaIgnoreManager::getRuleByOriginalRule(const QString& originalRule)
-{
-    auto finder = [&originalRule](const std::shared_ptr<MegaIgnoreRule>& rule)
-    {
-        return rule->originalRule() == originalRule;
-    };
-    auto it = std::find_if(mRules.begin(), mRules.end(), finder);
-    return (it != mRules.end()) ? *it : nullptr;
-}
-
 std::shared_ptr<MegaIgnoreSizeRule> MegaIgnoreManager::getLowLimitRule() const
 {
     return mLowLimitRule;
@@ -213,21 +203,6 @@ MegaIgnoreRule::RuleType MegaIgnoreManager::getRuleType(const QString& line)
     return MegaIgnoreRule::NAMERULE;
 }
 
-QList<std::shared_ptr<MegaIgnoreNameRule> > MegaIgnoreManager::getNameRules() const
-{
-    QList<std::shared_ptr<MegaIgnoreNameRule>> rules;
-    foreach(const auto & rule, mRules)
-    {
-        if (rule->isValid() && rule->ruleType() == MegaIgnoreRule::RuleType::NAMERULE)
-        {
-            auto nameRule = convert<MegaIgnoreNameRule>(rule);
-            rules.append(nameRule);
-        }
-    }
-
-    return rules;
-}
-
 QStringList MegaIgnoreManager::getExcludedExtensions() const
 {
     QStringList extensions;
@@ -245,20 +220,9 @@ QStringList MegaIgnoreManager::getExcludedExtensions() const
     return extensions;
 }
 
-void MegaIgnoreManager::enableExtensions(bool state)
-{
-    foreach(auto & rule, mRules)
-    {
-        if (rule->isValid() && rule->ruleType() == MegaIgnoreRule::RuleType::EXTENSIONRULE)
-        {
-            rule->setCommented(!state);
-        }
-    }
-}
-
 MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool updateExtensionRules, const QStringList& updatedExtensions)
 {
-    ApplyChangesError result(ApplyChangesError::NoUpdateNeeded);
+    ApplyChangesError result(ApplyChangesError::NO_UPDATE_NEEDED);
     QStringList rules;
     foreach(auto & rule, mRules)
     {
@@ -281,12 +245,12 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
 
         if (rule->isDirty() || rule->isDeleted())
         {
-            result = ApplyChangesError::Ok;
+            result = ApplyChangesError::OK;
         }
     }
     if (updateExtensionRules)
     {
-        result = ApplyChangesError::Ok;
+        result = ApplyChangesError::OK;
 
         for (const auto extension : updatedExtensions)
         {
@@ -308,7 +272,7 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
             }
         }
     }
-    if (result == ApplyChangesError::Ok)
+    if (result == ApplyChangesError::OK)
     {
         QFile ignore(mOutputMegaIgnoreFile);
 
@@ -321,7 +285,7 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
         }
         else
         {
-            result = ApplyChangesError::NoWritePermission;
+            result = ApplyChangesError::NO_WRITE_PERMISSION;
         }
     }
 

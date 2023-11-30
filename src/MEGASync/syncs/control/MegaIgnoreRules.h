@@ -109,11 +109,14 @@ public:
     Q_ENUM(WildCardType)
 
     explicit MegaIgnoreNameRule(const QString& rule, bool isCommented);
-    explicit MegaIgnoreNameRule(const QString& pattern, Class classType, Target target = Target::NONE, Type type = Type::NONE, Strategy strategy = Strategy::NONE);
+    explicit MegaIgnoreNameRule(const QString& pattern
+                                ,Class classType
+                                ,Target target = Target::NONE
+                                ,Type type = Type::NONE
+                                ,Strategy strategy = Strategy::NONE);
     QString getModifiedRule() const override;
     QString getDisplayText() const override { return mPattern; }
     RuleType ruleType() const override { return RuleType::NAMERULE;}
-    WildCardType wildCardType() { return mWildCardType; }
     Target getTarget() { return mTarget; }
 
 protected:
@@ -191,7 +194,7 @@ public:
     int value() const;
     UnitTypes unit() const;
 
-    static const QStringList &getUnitsForDisplay();
+    static const QStringList& getUnitsForDisplay();
 
     void setValue(int newValue);
     void setUnit(int newUnit);

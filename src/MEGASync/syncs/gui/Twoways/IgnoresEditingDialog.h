@@ -41,14 +41,12 @@ public slots:
     void onExcludeUpperThanClicked();
     void onExcludeLowerThanClicked();
     void onFileChanged(const QString &file);
-protected:
 signals:
     void signalOpenMegaignore();
 private:
     Ui::IgnoresEditingDialog *ui;
 
 private:
-    std::shared_ptr<Preferences> mPreferences;
     std::shared_ptr<QFileSystemWatcher> mIgnoresFileWatcher;
     MegaIgnoreManager mManager;
     QString mSyncLocalFolder;

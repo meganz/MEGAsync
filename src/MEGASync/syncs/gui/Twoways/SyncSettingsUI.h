@@ -2,10 +2,8 @@
 #define SYNCSETTINGSUI_H
 
 #include <QWidget>
-#include <QPointer>
 
 #include <syncs/gui/SyncSettingsUIBase.h>
-#include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/gui/Twoways/SyncSettingsElements.h>
 
 class SyncSettingsUI : public SyncSettingsUIBase
@@ -17,19 +15,19 @@ public:
     ~SyncSettingsUI() override;
 
 protected:
-    QString getFinishWarningIconString() override;
-    QString getFinishIconString() override;
-    QString disableString() override;
+    QString getFinishWarningIconString() const override;
+    QString getFinishIconString() const override;
+    QString disableString() const override;
 
     //Operation failed
-    QString getOperationFailTitle() override;
+    QString getOperationFailTitle() const override;
     QString getOperationFailText(std::shared_ptr<SyncSettings> sync) override;
 
     //Error adding
-    QString getErrorAddingTitle() override;
+    QString getErrorAddingTitle() const override;
 
     //Error removing
-    QString getErrorRemovingTitle() override;
+    QString getErrorRemovingTitle() const override;
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
 
 private slots:

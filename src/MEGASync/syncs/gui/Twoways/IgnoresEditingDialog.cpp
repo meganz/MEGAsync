@@ -23,7 +23,6 @@ namespace
 IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool createIfNotExist, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::IgnoresEditingDialog),
-    mPreferences(Preferences::instance()),
     mIgnoresFileWatcher(std::make_shared<QFileSystemWatcher>(this)),
     mManager(syncLocalFolder, createIfNotExist),
     mSyncLocalFolder(syncLocalFolder)
@@ -43,9 +42,9 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
 
     // Setup dialog buttons
     auto okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
-    okButton->setText(QLatin1String(APPLY_TEXT));
+    okButton->setText(tr(APPLY_TEXT));
     auto cancelButton = ui->buttonBox->button(QDialogButtonBox::Cancel);
-    cancelButton->setText(QLatin1String(DISCARD_TEXT));
+    cancelButton->setText(tr(DISCARD_TEXT));
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this]() {
         this->mIgnoresFileWatcher->blockSignals(true);
         applyChanges();

@@ -16,14 +16,11 @@ public:
 
     static bool isValid(const QString& syncLocalFolder);
 
-    std::shared_ptr<MegaIgnoreRule> getRuleByOriginalRule(const QString& originalRule);
-
     std::shared_ptr<MegaIgnoreSizeRule> getLowLimitRule() const;
+
     std::shared_ptr<MegaIgnoreSizeRule> getHighLimitRule() const;
 
     std::shared_ptr<MegaIgnoreNameRule> getIgnoreSymLink() const;
-
-    QList<std::shared_ptr<MegaIgnoreNameRule>> getNameRules() const;
 
     QList<std::shared_ptr<MegaIgnoreRule>> getAllRules() const;
     std::shared_ptr<MegaIgnoreRule> findRule(const QString& ruleToCompare);
@@ -32,16 +29,17 @@ public:
 
     void parseIgnoresFile();
 
-    void enableExtensions(bool state);
     std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinksRule();
     std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinkRule(const QString& pattern);
-    std::shared_ptr<MegaIgnoreNameRule> addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern, MegaIgnoreNameRule::Target targetType = MegaIgnoreNameRule::Target::NONE);
+    std::shared_ptr<MegaIgnoreNameRule> addNameRule(MegaIgnoreNameRule::Class classType
+                                                    ,const QString& pattern
+                                                    ,MegaIgnoreNameRule::Target targetType = MegaIgnoreNameRule::Target::NONE);
 
     enum ApplyChangesError
     {
-        Ok,
-        NoUpdateNeeded,
-        NoWritePermission
+        OK,
+        NO_UPDATE_NEEDED,
+        NO_WRITE_PERMISSION
     };
 
     MegaIgnoreManager::ApplyChangesError applyChanges(bool updateExtensions = false, const QStringList& updatedExtensions = {});

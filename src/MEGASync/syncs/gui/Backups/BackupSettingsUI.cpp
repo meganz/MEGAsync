@@ -72,7 +72,7 @@ void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
     });
 }
 
-QString BackupSettingsUI::getFinishWarningIconString()
+QString BackupSettingsUI::getFinishWarningIconString() const
 {
 #ifdef Q_OS_MACOS
     return QString::fromUtf8("settings-backups-error");
@@ -81,7 +81,7 @@ QString BackupSettingsUI::getFinishWarningIconString()
 #endif
 }
 
-QString BackupSettingsUI::getFinishIconString()
+QString BackupSettingsUI::getFinishIconString() const
 {
 #ifdef Q_OS_MACOS
     return QString::fromUtf8("settings-backup");
@@ -90,7 +90,7 @@ QString BackupSettingsUI::getFinishIconString()
 #endif
 }
 
-QString BackupSettingsUI::getOperationFailTitle()
+QString BackupSettingsUI::getOperationFailTitle() const
 {
     return tr("Sync operation failed");
 }
@@ -102,12 +102,12 @@ QString BackupSettingsUI::getOperationFailText(std::shared_ptr<SyncSettings> syn
              QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError())));
 }
 
-QString BackupSettingsUI::getErrorAddingTitle()
+QString BackupSettingsUI::getErrorAddingTitle() const
 {
     return tr("Error adding sync");
 }
 
-QString BackupSettingsUI::getErrorRemovingTitle()
+QString BackupSettingsUI::getErrorRemovingTitle()const
 {
     return tr("Error removing backup");
 }
@@ -118,7 +118,7 @@ QString BackupSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> 
         .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
 }
 
-QString BackupSettingsUI::disableString()
+QString BackupSettingsUI::disableString() const
 {
     return tr("Some folders haven't been backed up. For more information, hover over the red icon.");
 }

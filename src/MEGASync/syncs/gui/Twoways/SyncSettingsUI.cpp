@@ -25,7 +25,7 @@ SyncSettingsUI::~SyncSettingsUI()
 {
 }
 
-QString SyncSettingsUI::getFinishWarningIconString()
+QString SyncSettingsUI::getFinishWarningIconString() const
 {
 #ifdef Q_OS_MACOS
     return QString::fromUtf8("settings-syncs-error");
@@ -34,7 +34,7 @@ QString SyncSettingsUI::getFinishWarningIconString()
 #endif
 }
 
-QString SyncSettingsUI::getFinishIconString()
+QString SyncSettingsUI::getFinishIconString() const
 {
 #ifdef Q_OS_MACOS
     return QString::fromUtf8("settings-syncs");
@@ -44,12 +44,12 @@ QString SyncSettingsUI::getFinishIconString()
 }
 
 
-QString SyncSettingsUI::disableString()
+QString SyncSettingsUI::disableString() const
 {
     return tr("Some folders have not synchronised. For more information please hover over the red icon.");
 }
 
-QString SyncSettingsUI::getOperationFailTitle()
+QString SyncSettingsUI::getOperationFailTitle() const
 {
     return tr("Sync opeartion failed");
 }
@@ -61,12 +61,12 @@ QString SyncSettingsUI::getOperationFailText(std::shared_ptr<SyncSettings> sync)
              QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError())));
 }
 
-QString SyncSettingsUI::getErrorAddingTitle()
+QString SyncSettingsUI::getErrorAddingTitle() const
 {
     return tr("Error adding sync");
 }
 
-QString SyncSettingsUI::getErrorRemovingTitle()
+QString SyncSettingsUI::getErrorRemovingTitle() const
 {
     return tr("Error removing backup");
 }
