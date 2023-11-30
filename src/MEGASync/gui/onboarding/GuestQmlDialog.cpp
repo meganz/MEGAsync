@@ -8,9 +8,7 @@ GuestQmlDialog::GuestQmlDialog(QWindow *parent)
     setFlags(flags() | Qt::FramelessWindowHint);
 
     QObject::connect(this, &GuestQmlDialog::activeChanged, [=]() {
-        if (!this->isActive()) {
-            this->hide();
-        }
+        emit guestActiveChanged(this->isActive());
     });
 }
 
