@@ -27,16 +27,16 @@ GuestQmlDialog {
     }
 
     PropertyAnimation {
-        id: fadeOut;
+        id: fadeOut
 
-        target: guestWindow;
-        property: "opacity";
-        to: 0;
+        target: guestWindow
+        property: "opacity"
+        to: 0
         duration: 100
 
         onRunningChanged: {
             if (!running) {
-                guestWindow.hide()
+                guestWindow.hide();
                 guestWindow.opacity = 1;
             }
         }
