@@ -6310,11 +6310,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The local path is unavailable</source>
-        <translatorcomment>Warning message indicating that the local path is not available. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
         <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6544,11 +6539,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The local path is unavailable.</source>
-        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
