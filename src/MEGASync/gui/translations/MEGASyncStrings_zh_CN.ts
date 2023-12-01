@@ -5675,7 +5675,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>完成后，您将可以通过设置窗口添加额外的文件夹用以同步</translation>
     </message>
     <message>
         <source>First name:</source>
