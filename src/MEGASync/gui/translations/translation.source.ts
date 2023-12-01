@@ -4141,31 +4141,6 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Password easily guessed</source>
-        <translatorcomment>Password strength indicator CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weak password</source>
-        <translatorcomment>Password strength indicator CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Average password</source>
-        <translatorcomment>Password strength indicator CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Good password</source>
-        <translatorcomment>Password strength indicator CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Strong password</source>
-        <translatorcomment>Password strength indicator CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>It’s better to have:</source>
         <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4177,11 +4152,6 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>At least one number or special character</source>
-        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A longer password</source>
         <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
@@ -6695,11 +6665,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The local path is unavaliable.</source>
-        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
         <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6717,6 +6682,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The local path is unavailable.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
