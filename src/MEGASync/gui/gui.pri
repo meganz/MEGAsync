@@ -201,7 +201,6 @@ win32 {
                 $$PWD/win/ImportMegaLinksDialog.ui \
                 $$PWD/win/ImportListWidgetItem.ui \
                 $$PWD/win/CrashReportDialog.ui \
-                $$PWD/win/SetupWizard.ui \
                 $$PWD/win/SettingsDialog.ui \
                 $$PWD/win/AccountDetailsDialog.ui \
                 $$PWD/win/DownloadFromMegaDialog.ui \
@@ -247,7 +246,6 @@ macx {
                 $$PWD/macx/ImportMegaLinksDialog.ui \
                 $$PWD/macx/ImportListWidgetItem.ui \
                 $$PWD/macx/CrashReportDialog.ui \
-                $$PWD/macx/SetupWizard.ui \
                 $$PWD/macx/SettingsDialog.ui \
                 $$PWD/macx/AccountDetailsDialog.ui \
                 $$PWD/macx/DownloadFromMegaDialog.ui \
@@ -318,7 +316,6 @@ unix:!macx {
                 $$PWD/linux/ImportMegaLinksDialog.ui \
                 $$PWD/linux/ImportListWidgetItem.ui \
                 $$PWD/linux/CrashReportDialog.ui \
-                $$PWD/linux/SetupWizard.ui \
                 $$PWD/linux/SettingsDialog.ui \
                 $$PWD/linux/AccountDetailsDialog.ui \
                 $$PWD/linux/DownloadFromMegaDialog.ui \
