@@ -6686,6 +6686,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>The local path is unavailable.</source>
+        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
