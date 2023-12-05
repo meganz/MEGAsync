@@ -1,4 +1,4 @@
-module components
+module components.texts
 ElidedText 1.0 ElidedText.qml
 HintText 1.0 HintText.qml
 NotificationText 1.0 NotificationText.qml
