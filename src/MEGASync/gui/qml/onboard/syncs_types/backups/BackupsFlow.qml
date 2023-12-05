@@ -15,6 +15,10 @@ Item {
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
 
+    // added to avoid qml warning.
+    function setInitialFocusPosition() {
+    }
+
     state: selectBackup
     states: [
         State {

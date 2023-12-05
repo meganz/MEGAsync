@@ -1,2 +1,9 @@
 module onboard.syncs_types.backups
 BackupsFlow 1.0 BackupsFlow.qml
+ConfirmFoldersPage 1.0 ConfirmFoldersPage.qml
+ConfirmFoldersPageForm 1.0 ConfirmFoldersPageForm.ui.qml
+ConfirmTable 1.0 ConfirmTable.qml
+FolderRow 1.0 FolderRow.qml
+SelectFolderPage 1.0 SelectFolderPage.qml
+SelectFolderPageForm 1.0 SelectFolderPageForm.ui.qml
+SelectTable 1.0 SelectTable.qml
