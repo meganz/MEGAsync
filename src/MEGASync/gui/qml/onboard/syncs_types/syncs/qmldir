@@ -1,6 +1,11 @@
 module onboard.syncs_types.syncs
-SyncTypePage 1.0 SyncTypePage.qml
-FullSyncPage 1.0 FullSyncPage.qml
-SelectiveSyncPage 1.0 SelectiveSyncPage.qml
 SyncsFlow 1.0 SyncsFlow.qml
+SyncTypePage 1.0 SyncTypePage.qml
+SyncTypePageForm 1.0 SyncTypePageForm.ui.qml
+FullSyncPage 1.0 FullSyncPage.qml
+FullSyncPageForm 1.0 FullSyncPageForm.ui.qml
+SelectiveSyncPage 1.0 SelectiveSyncPage.qml
+SelectiveSyncPageForm 1.0 SelectiveSyncPageForm.ui.qml
+ChooseSyncFolder 1.0 ChooseSyncFolder.qml
+SyncTypeButton 1.0 SyncTypeButton.qml
 

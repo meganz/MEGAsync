@@ -13,6 +13,7 @@ import QmlDeviceName 1.0
 
 SyncsPage {
     id: root
+
     property alias enableConfirmHeader: confirmHeader.enabled
 
     footerButtons.rightPrimary {
