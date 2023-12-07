@@ -8,6 +8,7 @@
 #include "DialogOpener.h"
 #include <MegaNodeNames.h>
 #include "Platform.h"
+#include "CommonMessages.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -51,7 +52,8 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
     QFileInfo test(downloadFolder);
     if (!test.isDir())
     {
-        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads")));
+        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QLatin1Char('/')
+                                                    + CommonMessages::getDefaultDownloadFolderName()));
         defaultFolder.mkpath(QString::fromLatin1("."));
         defaultFolderPath = defaultFolder.absolutePath();
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
