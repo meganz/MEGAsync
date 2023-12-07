@@ -20,7 +20,6 @@
 #include "gui/InfoDialog.h"
 #include "gui/UpgradeOverStorage.h"
 #include "gui/SettingsDialog.h"
-#include "gui/UploadToMegaDialog.h"
 #include "gui/DownloadFromMegaDialog.h"
 #include "gui/StreamingFromMegaDialog.h"
 #include "gui/ImportMegaLinksDialog.h"

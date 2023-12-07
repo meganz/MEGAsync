@@ -19,6 +19,7 @@
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "GuiUtilities.h"
+#include "CommonMessages.h"
 
 
 #include <QApplication>
@@ -852,6 +853,9 @@ void SettingsDialog::changeEvent(QEvent* event)
         updateStorageElements();
         updateBandwidthElements();
         updateAccountElements();
+
+        updateUploadFolder();
+        updateDownloadFolder();
     }
 
     QDialog::changeEvent(event);
@@ -2088,11 +2092,12 @@ void SettingsDialog::on_bSessionHistory_clicked()
 // Folders -----------------------------------------------------------------------------------------
 void SettingsDialog::updateUploadFolder()
 {
+    const QString defaultFolderName = QLatin1Char('/') + CommonMessages::getDefaultUploadFolderName();
     std::unique_ptr<MegaNode> node (mMegaApi->getNodeByHandle(static_cast<uint64_t>(mPreferences->uploadFolder())));
     if (!node)
     {
         mHasDefaultUploadOption = false;
-        mUi->eUploadFolder->setText(QString::fromUtf8("/MEGA Uploads"));
+        mUi->eUploadFolder->setText(defaultFolderName);
     }
     else
     {
@@ -2100,7 +2105,7 @@ void SettingsDialog::updateUploadFolder()
         if (!nPath)
         {
             mHasDefaultUploadOption = false;
-            mUi->eUploadFolder->setText(QString::fromUtf8("/MEGA Uploads"));
+            mUi->eUploadFolder->setText(defaultFolderName);
         }
         else
         {
@@ -2115,7 +2120,7 @@ void SettingsDialog::updateDownloadFolder()
     QString downloadPath = mPreferences->downloadFolder();
     if (!downloadPath.size())
     {
-        downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads");
+        downloadPath = Utilities::getDefaultBasePath() + QLatin1Char('/') + CommonMessages::getDefaultDownloadFolderName();
     }
     downloadPath = QDir::toNativeSeparators(downloadPath);
     mUi->eDownloadFolder->setText(downloadPath);

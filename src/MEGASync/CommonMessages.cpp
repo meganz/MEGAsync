@@ -57,6 +57,16 @@ QString CommonMessages::getExpiredProFlexiMessage()
                                                          "Please pay and reactivate now to access your data.");
 }
 
+QString CommonMessages::getDefaultUploadFolderName()
+{
+    return QCoreApplication::translate("CommonMessages", "MEGA Uploads");
+}
+
+QString CommonMessages::getDefaultDownloadFolderName()
+{
+    return QCoreApplication::translate("CommonMessages", "MEGA Downloads");
+}
+
 int CommonMessages::computeDaysToExpiration(int64_t expirationTimeStampInSecs)
 {
     QDateTime expiredDate;
