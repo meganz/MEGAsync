@@ -15,12 +15,13 @@ public:
 
     void fillIssue(const mega::MegaSyncStall *stall) override;
 
-    bool isSolvable() const;
+    bool isSolvable() const override;
     void solveIssue();
 
     bool checkForExternalChanges() override;
 
-    const QString& pathToCreate() const;
+    const QString &currentPath() const;
+    const QString& previousPath() const;
 
 signals:
     void issueSolved(bool isSolved);
@@ -29,15 +30,20 @@ private slots:
     void onSyncPausedEnds(std::shared_ptr<SyncSettings> syncSettings);
 
 private:
-    struct PathToCreateInfo
+    struct PathToSolveInfo
     {
         bool isCloud;
-        QString path;
+
+        QString currentPath;
+        QString previousPath;
+        mega::MegaHandle currentHandle = mega::INVALID_HANDLE;
+        mega::MegaHandle previousHandle = mega::INVALID_HANDLE;
     };
-    PathToCreateInfo mPathToCreate;
+    PathToSolveInfo mPathToSolve;
 
     bool mSolvingStarted;
     std::shared_ptr<SyncController> mSyncController;
+    bool mIsSolvable;
 };
 
 #endif // MOVEORRENAMECANNOTOCCURISSUE_H

@@ -97,13 +97,13 @@ void StalledIssueFilePath::fillFilePath()
     {
         ui->file->show();
 
-        auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        auto hasProblem(mData->getPath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
 
         if(hasProblem)
         {
-            ui->pathProblemMessage->setText(getSyncPathProblemString(mData->getPath().mPathProblem));
+            ui->pathProblemMessage->setText(getSyncPathProblemString(mData->getPath().pathProblem));
             ui->filePathContainer->setCursor(Qt::ArrowCursor);
-            auto helpLink = getHelpLink(mData->getPath().mPathProblem);
+            auto helpLink = getHelpLink(mData->getPath().pathProblem);
             helpLink.isEmpty() ? ui->helpIcon->hide() : ui->helpIcon->show();
         }
         else
@@ -147,8 +147,8 @@ void StalledIssueFilePath::fillMoveFilePath()
 {
     if(!mData->getMovePath().isEmpty())
     {
-        auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
-        hasProblem ?  ui->movePathProblemMessage->setText(getSyncPathProblemString(mData->getMovePath().mPathProblem)) : ui->movePathProblemContainer->hide();
+        auto hasProblem(mData->getMovePath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        hasProblem ?  ui->movePathProblemMessage->setText(getSyncPathProblemString(mData->getMovePath().pathProblem)) : ui->movePathProblemContainer->hide();
         hasProblem ? ui->moveFilePathContainer->setCursor(Qt::ArrowCursor) : ui->moveFilePathContainer->setCursor(Qt::PointingHandCursor);
         ui->moveFilePathContainer->setProperty(HAS_PROBLEM,hasProblem);
         setStyleSheet(styleSheet());
@@ -240,7 +240,7 @@ void StalledIssueFilePath::updateFileIcons()
     QSize iconSize(ui->filePathIcon->size());
 
     QFileInfo fileInfo(getFilePath());
-    auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+    auto hasProblem(mData->getPath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
     if(mData->isCloud())
     {
         auto node(getNode());
@@ -264,7 +264,7 @@ void StalledIssueFilePath::updateMoveFileIcons()
     QSize iconSize(ui->moveFilePathIcon->size());
 
     QFileInfo fileInfo(getMoveFilePath());
-    auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+    auto hasProblem(mData->getMovePath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
 
     if(mData->isCloud())
     {
@@ -303,7 +303,7 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
         {
             if(watched == ui->lines)
             {
-                auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+                auto hasProblem(mData->getPath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
                 if(hasProblem)
                 {
                     auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_link_end_default.png"));
@@ -317,7 +317,7 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
             }
             else if(watched == ui->movePathProblemLines)
             {
-                auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+                auto hasProblem(mData->getMovePath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
                 if(hasProblem)
                 {
                     auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_double_link_default.png"));
@@ -347,7 +347,7 @@ void StalledIssueFilePath::resizeEvent(QResizeEvent *event)
 
 void StalledIssueFilePath::onHelpIconClicked()
 {
-    auto helpLink = QUrl(getHelpLink(mData->getPath().mPathProblem));
+    auto helpLink = QUrl(getHelpLink(mData->getPath().pathProblem));
     Utilities::openUrl(helpLink);
 }
 

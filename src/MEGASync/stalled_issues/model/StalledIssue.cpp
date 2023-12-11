@@ -234,7 +234,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
     {
         initLocalIssue();
         getLocalData()->mPath.path = localSourcePath;
-        getLocalData()->mPath.mPathProblem = localSourcePathProblem;
+        getLocalData()->mPath.pathProblem = localSourcePathProblem;
 
         if(stall->couldSuggestIgnoreThisPath(false, 0))
         {
@@ -248,7 +248,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
     {
         initLocalIssue();
         getLocalData()->mMovePath.path = localTargetPath;
-        getLocalData()->mMovePath.mPathProblem = localTargetPathProblem;
+        getLocalData()->mMovePath.pathProblem = localTargetPathProblem;
 
         if(stall->couldSuggestIgnoreThisPath(false, 1))
         {
@@ -271,7 +271,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         initCloudIssue();
         getCloudData()->mPath.path = cloudSourcePath;
         getCloudData()->mPathHandle = stall->cloudNodeHandle(0);
-        getCloudData()->mPath.mPathProblem = cloudSourcePathProblem;
+        getCloudData()->mPath.pathProblem = cloudSourcePathProblem;
 
         if(stall->couldSuggestIgnoreThisPath(true, 0))
         {
@@ -286,7 +286,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         initCloudIssue();
         getCloudData()->mMovePath.path = cloudTargetPath;
         getCloudData()->mMovePathHandle = stall->cloudNodeHandle(1);
-        getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
+        getCloudData()->mMovePath.pathProblem = cloudTargetPathProblem;
 
         if(stall->couldSuggestIgnoreThisPath(true, 1))
         {
@@ -478,7 +478,7 @@ bool StalledIssue::missingFingerprint() const
 {
     return getReason() == mega::MegaSyncStall::DownloadIssue &&
            consultCloudData() &&
-           consultCloudData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
+           consultCloudData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
 }
 
 bool StalledIssue::canBeIgnored() const
@@ -495,7 +495,7 @@ bool StalledIssue::isUndecrypted() const
 {
     return getReason() == mega::MegaSyncStall::FileIssue &&
            consultCloudData() &&
-           consultCloudData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::UndecryptedCloudNode;
+           consultCloudData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::UndecryptedCloudNode;
 }
 
 bool StalledIssue::isFile() const

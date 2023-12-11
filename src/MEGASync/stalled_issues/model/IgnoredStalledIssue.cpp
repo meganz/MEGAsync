@@ -31,16 +31,16 @@ bool IgnoredStalledIssue::isSymLink() const
 {
     return getReason() == mega::MegaSyncStall::FileIssue &&
            consultLocalData() &&
-           consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
+           consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
 }
 
 bool IgnoredStalledIssue::isSpecialLink() const
 {
     return getReason() == mega::MegaSyncStall::FileIssue &&
            consultLocalData() &&
-           (consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink ||
-            consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedHardLink ||
-            consultLocalData()->getPath().mPathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSpecialFile);
+           (consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink ||
+            consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedHardLink ||
+            consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSpecialFile);
 }
 
 bool IgnoredStalledIssue::autoSolveIssue()

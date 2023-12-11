@@ -30,10 +30,10 @@ public:
     struct Path
     {
         QString path;
-        mega::MegaSyncStall::SyncPathProblem mPathProblem = mega::MegaSyncStall::SyncPathProblem::NoProblem;
+        mega::MegaSyncStall::SyncPathProblem pathProblem = mega::MegaSyncStall::SyncPathProblem::NoProblem;
 
         Path(){}
-        bool isEmpty() const {return path.isEmpty() && mPathProblem == mega::MegaSyncStall::SyncPathProblem::NoProblem;}
+        bool isEmpty() const {return path.isEmpty() && pathProblem == mega::MegaSyncStall::SyncPathProblem::NoProblem;}
     };
 
     StalledIssueData();

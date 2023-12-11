@@ -10,12 +10,13 @@
 #include <QDir>
 
 MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncStall* stall)
-    : StalledIssue(stall),
-    QObject(nullptr),
+    : QObject(nullptr),
+    StalledIssue(stall),
     mSolvingStarted(false),
-    mSyncController(new SyncController())
+    mSyncController(new SyncController()),
+    mIsSolvable(false)
 {
-    qDebug() << connect(SyncInfo::instance(), &SyncInfo::syncStateChanged,
+    connect(SyncInfo::instance(), &SyncInfo::syncStateChanged,
             this, &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
 }
 
@@ -23,28 +24,56 @@ void MoveOrRenameCannotOccurIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
     StalledIssue::fillIssue(stall);
 
-    auto localMovePath = getLocalData()->getMovePath();
-    if(localMovePath.mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
+    QFileInfo currentPath(getLocalData()->getMoveFilePath());
+
+    //First check if we can undo the local movement or rename
+    if(currentPath.exists())
     {
-        QFileInfo info(localMovePath.path);
-        mPathToCreate.path = info.absolutePath();
-        mPathToCreate.isCloud = false;
+        mPathToSolve.previousPath = getLocalData()->getFilePath();
+        mPathToSolve.currentPath = getLocalData()->getMoveFilePath();
+
+        mPathToSolve.isCloud = false;
     }
     else
     {
-        auto cloudMovePath = getCloudData()->getMovePath();
-        if(cloudMovePath.mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem)
+        QFileInfo previousPath(getLocalData()->getFilePath());
+        currentPath = QFile(getCloudData()->getMoveFilePath());
+
+        std::unique_ptr<mega::MegaNode> currentNode(MegaSyncApp->getMegaApi()->getNodeByPath(currentPath.absoluteFilePath().toUtf8()));
+        if(currentNode)
         {
-            QFileInfo info(cloudMovePath.path);
-            mPathToCreate.path = info.absolutePath();
-            mPathToCreate.isCloud = true;
+            previousPath = QFile(getCloudData()->getFilePath());
+            std::unique_ptr<mega::MegaNode> previousParentNode(MegaSyncApp->getMegaApi()->getNodeByPath(previousPath.absolutePath().toUtf8()));
+            if(previousParentNode)
+            {
+                mPathToSolve.previousHandle = previousParentNode->getHandle();
+            }
+            mPathToSolve.currentHandle = currentNode->getHandle();
+
+            mPathToSolve.previousPath = getCloudData()->getFilePath();
+            mPathToSolve.currentPath = getCloudData()->getMoveFilePath();
+
+            mPathToSolve.isCloud = true;
         }
     }
 }
 
 bool MoveOrRenameCannotOccurIssue::isSolvable() const
 {
-    return true;
+    if(mPathToSolve.isCloud &&
+       mPathToSolve.previousHandle != mega::INVALID_HANDLE &&
+        mPathToSolve.currentHandle != mega::INVALID_HANDLE)
+    {
+        return !isSolved();
+    }
+    else if(!mPathToSolve.isCloud &&
+            !mPathToSolve.currentPath.isEmpty() &&
+            !mPathToSolve.previousPath.isEmpty())
+    {
+        return !isSolved();
+    }
+
+    return false;
 }
 
 void MoveOrRenameCannotOccurIssue::solveIssue()
@@ -65,18 +94,18 @@ bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
 {
     if(!isSolved())
     {
-        if(mPathToCreate.isCloud)
+        if(mPathToSolve.isCloud)
         {
-            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mPathToCreate.path.toUtf8()));
-            if(node)
+            QFileInfo fileInfo(getLocalData()->getFilePath());
+            if(!fileInfo.exists())
             {
                 setIsSolved(true);
             }
         }
         else
         {
-            QFileInfo fileInfo(mPathToCreate.path);
-            if(fileInfo.exists())
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(getCloudData()->getFilePath().toUtf8()));
+            if(!node)
             {
                 setIsSolved(true);
             }
@@ -86,9 +115,14 @@ bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
     return isPotentiallySolved();
 }
 
-const QString &MoveOrRenameCannotOccurIssue::pathToCreate() const
+const QString& MoveOrRenameCannotOccurIssue::currentPath() const
 {
-    return mPathToCreate.path;
+    return mPathToSolve.currentPath;
+}
+
+const QString &MoveOrRenameCannotOccurIssue::previousPath() const
+{
+    return mPathToSolve.previousPath;
 }
 
 void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings> syncSettings)
@@ -102,14 +136,26 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
     {
         bool created(false);
 
-        if(mPathToCreate.isCloud)
-        {
-            CreateDirectory dirCreator;
-            created = dirCreator.mkDir(QString(), mPathToCreate.path);
+        if(mPathToSolve.isCloud)
+        {            
+            std::unique_ptr<mega::MegaNode> nodeToMove(MegaSyncApp->getMegaApi()->getNodeByHandle(mPathToSolve.currentHandle));
+            std::unique_ptr<mega::MegaNode> newParent(MegaSyncApp->getMegaApi()->getNodeByHandle(mPathToSolve.previousHandle));
+            if(nodeToMove && newParent)
+            {
+                MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(), newParent.get());
+                created = true;
+            }
         }
         else
         {
-            created = QDir().mkdir(mPathToCreate.path);
+            QFileInfo previousPath(mPathToSolve.previousPath);
+            QFileInfo previousDirectory(previousPath.absolutePath());
+            if(!previousDirectory.exists())
+            {
+                QDir().mkdir(previousDirectory.absoluteFilePath());
+            }
+            QFile file(mPathToSolve.currentPath);
+            created = file.rename(mPathToSolve.previousPath);
         }
 
         if(created)

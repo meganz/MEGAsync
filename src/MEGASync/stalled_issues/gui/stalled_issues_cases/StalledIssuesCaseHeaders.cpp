@@ -316,82 +316,48 @@ void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header
 
 void MoveOrRenameCannotOccurHeader::refreshCaseActions(StalledIssueHeader *header)
 {
-    if(!header->getData().consultData()->isSolved())
+    if(header->getData().consultData()->isSolvable())
     {
         header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
     }
 }
 
-void MoveOrRenameCannotOccurHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int index)
-{
+void MoveOrRenameCannotOccurHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int)
+{    
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
-    auto isMoveOrRenameChecker = [](const std::shared_ptr<const StalledIssue> issue){
-        return issue->getReason() == mega::MegaSyncStall::MoveOrRenameCannotOccur;
-    };
-
-    auto fixIssue = [this, header, dialog](const QModelIndex& index)
+    if(HeaderCaseIssueChecker::checkIssue(header, true))
     {
-        if(HeaderCaseIssueChecker::checkIssue(header, true))
-        {
-            return;
-        }
+        return;
+    }
 
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-        QMap<QMessageBox::Button, QString> textsByButton;
-        textsByButton.insert(QMessageBox::No, tr("Cancel"));
-        textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-        msgInfo.buttonsText = textsByButton;
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+    textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+    msgInfo.buttonsText = textsByButton;
 
-        if(auto moveOrRenameIssue = std::dynamic_pointer_cast<const MoveOrRenameCannotOccurIssue>(header->getData().consultData()))
-        {
-            msgInfo.text = tr("Are you sure you want to fix this issue?");
-            msgInfo.informativeText = tr("This action will create the missing path: %1.").arg(moveOrRenameIssue->pathToCreate());
-
-            msgInfo.finishFunc = [this, moveOrRenameIssue, index](QMessageBox* msgBox)
-            {
-                if(msgBox->result() == QDialogButtonBox::Ok)
-                {
-                    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(index);
-                }
-            };
-
-            QMegaMessageBox::warning(msgInfo);
-        }
-    };
-
-
-    auto selection = dialog->getDialog()->getSelection(isMoveOrRenameChecker);
-
-    if(selection.size() > 1)
+    if(auto moveOrRenameIssue = std::dynamic_pointer_cast<const MoveOrRenameCannotOccurIssue>(header->getData().consultData()))
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        QMap<QMessageBox::Button, QString> textsByButton;
-        textsByButton.insert(QMessageBox::No, tr("Cancel"));
-        textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-        msgInfo.buttonsText = textsByButton;
-        msgInfo.text = tr("You can only fix this kind of issue one by one.");
-        msgInfo.informativeText = tr("Would you like to fix the first one?");
-        msgInfo.finishFunc = [selection, fixIssue](QMessageBox* msgBox)
+        msgInfo.text = tr("Are you sure you want to fix this issue?");
+        msgInfo.informativeText = tr("This action will undo the action: [A]%1[/A] to [A]%2[/A].").arg(moveOrRenameIssue->previousPath(), moveOrRenameIssue->currentPath());
+        msgInfo.informativeText = msgInfo.informativeText.replace(QLatin1String("[A]"), QLatin1String("<br><b>"));
+        msgInfo.informativeText = msgInfo.informativeText.replace(QLatin1String("[/A]"), QLatin1String("</b></br>"));
+
+        msgInfo.finishFunc = [moveOrRenameIssue, header](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                fixIssue(selection.first());
+                MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(header->getCurrentIndex());
             }
         };
-    }
-    else
-    {
-        fixIssue(selection.first());
-    }
 
+        QMegaMessageBox::warning(msgInfo);
+    }
 }
 
 //Delete or Move Waiting onScanning
