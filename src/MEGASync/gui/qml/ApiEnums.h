@@ -60,6 +60,7 @@ namespace ApiEnums
         ACCOUNT_BLOCKED_TOS_NON_COPYRIGHT = 300,        // suspended due to multiple breaches of MEGA ToS
         ACCOUNT_BLOCKED_SUBUSER_DISABLED = 400,         // subuser disabled by business administrator
         ACCOUNT_BLOCKED_SUBUSER_REMOVED = 401,          // subuser removed by business administrator
+        ACCOUNT_BLOCKED_VERIFICATION_SMS = 500,         // temporary blocked, require SMS verification
         ACCOUNT_BLOCKED_VERIFICATION_EMAIL = 700       // temporary blocked, require email verification
     };
     Q_ENUM_NS(BlockedAccountError)

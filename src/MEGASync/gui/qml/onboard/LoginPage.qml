@@ -196,7 +196,7 @@ LoginPageForm {
         target: accountStatusControllerAccess
 
         function onBlockedStateChanged(blockState) {
-            if(blockState >= ApiEnum.ACCOUNT_BLOCKED_VERIFICATION_EMAIL) {
+            if(blockState >= ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_SMS) {
                 cancelLogin.close();
                 onboardingWindow.forceClose();
             }

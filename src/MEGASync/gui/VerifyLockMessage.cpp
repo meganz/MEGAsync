@@ -107,6 +107,18 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
 
             break;
         }
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
+        {
+            QString title = m_haveMainDialog ? tr("Verify your account") : tr("Locked account");
+            setWindowTitle(title);
+            m_ui->lVerifyEmailTitle->setText(title);
+            m_ui->lVerifyEmailDesc->setText(tr("Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."));
+            m_ui->lWhySeenThis->setVisible(false);
+            m_ui->lEmailSent->setVisible(false);
+            m_ui->bResendEmail->setText(tr("Verify now"));
+            break;
+        }
+
     }
 }
 
@@ -172,6 +184,10 @@ void VerifyLockMessage::on_bResendEmail_clicked()
             m_ui->bResendEmail->setEnabled(false);
             megaApi->resendVerificationEmail(delegateListener);
             break;
+        }
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
+        {
+            static_cast<MegaApplication *>(qApp)->goToMyCloud();
         }
     }
 }
