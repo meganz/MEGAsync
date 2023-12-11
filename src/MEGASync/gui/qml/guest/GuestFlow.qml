@@ -298,19 +298,11 @@ Rectangle {
 
         BasePage {
 
-            function isEmailBlock() {
-                return accountStatusControllerAccess.blockedState
-                        === ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL;
-            }
-
             showProgressBar: false
             imageSource: Images.warningGuest
             imageTopMargin: 110
             title: GuestStrings.accountTempLocked
-            description: isEmailBlock()
-                         ? GuestStrings.accountTempLockedEmail
-                         : GuestStrings.accountTempLockedSMS
-            descriptionUrl: isEmailBlock() ? "" : Links.terms
+            description: GuestStrings.accountTempLockedEmail
             descriptionFontSize: Texts.Text.Size.Normal
             descriptionColor: Styles.textPrimary
             descriptionLineHeight: 18
@@ -321,22 +313,18 @@ Rectangle {
                 }
             }
             rightButton {
-                text: isEmailBlock() ? GuestStrings.resendEmail : GuestStrings.verifyNow
+                text: GuestStrings.resendEmail
                 icons {
-                    source: isEmailBlock() ? Images.mail : ""
+                    source: Images.mail
                     position: Icon.Position.LEFT
                 }
                 onClicked: {
-                    if(isEmailBlock()) {
                         guestContentAccess.onVerifyEmailClicked();
-                    }
-                    else {
-                        guestContentAccess.onVerifyPhoneClicked();
-                    }
                 }
             }
         }
     }
+
 
     Component {
         id: settingUpAccountPage
