@@ -24,7 +24,6 @@ void AccountStatusController::onEvent(mega::MegaApi*, mega::MegaEvent* event)
         switch (event->getNumber())
         {
             case mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
-            case mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
                 mBlockedStateSet = true;
                 int blockState = static_cast<int>(event->getNumber());
