@@ -1,0 +1,7 @@
+module components.texts
+ElidedText 1.0 ElidedText.qml
+HintText 1.0 HintText.qml
+NotificationText 1.0 NotificationText.qml
+RichText 1.0 RichText.qml
+SecondaryText 1.0 SecondaryText.qml
+Text 1.0 Text.qml

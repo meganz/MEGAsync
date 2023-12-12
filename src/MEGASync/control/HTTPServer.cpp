@@ -1,5 +1,5 @@
 #include "HTTPServer.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "AppStatsEvents.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
@@ -71,7 +71,6 @@ void HTTPServer::incomingConnection(qintptr socket)
 
     connect(s, SIGNAL(readyRead()), this, SLOT(readClient()));
     connect(s, SIGNAL(disconnected()), this, SLOT(discardClient()));
-    connect(s, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 
     s->setSocketDescriptor(socket);
     requests.insert(s, new HTTPRequest());

@@ -4,7 +4,7 @@
 #include <QCoreApplication>
 #include <QWidget>
 #include <QProcess>
-#include <Preferences.h>
+#include <Preferences/Preferences.h>
 #include <QOperatingSystemVersion>
 
 #import <objc/runtime.h>
@@ -75,7 +75,7 @@ QStringList qt_mac_NSArrayToQStringList(void *nsarray)
 }
 
 
-void selectorsImpl(QString title, QString defaultDir, bool multiSelection, bool showFiles, bool showFolders, QWidget *parent, std::function<void (QStringList)> func)
+void selectorsImpl(QString title, QString defaultDir, bool multiSelection, bool showFiles, bool showFolders, bool createDirectories, QWidget *parent, std::function<void (QStringList)> func)
 {
     QStringList uploads;
 
@@ -103,6 +103,8 @@ void selectorsImpl(QString title, QString defaultDir, bool multiSelection, bool 
         [panel setCanChooseFiles: showFiles ? YES : NO];
         [panel setCanChooseDirectories:showFolders ? YES : NO];
         [panel setAllowsMultipleSelection:multiSelection ? YES : NO];
+        [panel setCanCreateDirectories: createDirectories ? YES : NO];
+
         if(!defaultDir.isEmpty())
         {
             NSURL *baseURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:defaultDir.toUtf8().constData()]];

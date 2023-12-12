@@ -1,13 +1,14 @@
 #include "ImportMegaLinksDialog.h"
 #include "ui_ImportMegaLinksDialog.h"
 #include "gui/ImportListWidgetItem.h"
-#include "gui/node_selector/gui/NodeSelector.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
 #include <MegaNodeNames.h>
 #include "Platform.h"
+#include "CommonMessages.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -51,7 +52,8 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
     QFileInfo test(downloadFolder);
     if (!test.isDir())
     {
-        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads")));
+        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QLatin1Char('/')
+                                                    + CommonMessages::getDefaultDownloadFolderName()));
         defaultFolder.mkpath(QString::fromLatin1("."));
         defaultFolderPath = defaultFolder.absolutePath();
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
@@ -120,21 +122,28 @@ void ImportMegaLinksDialog::on_cImport_clicked()
 
 void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 {
-    QString defaultPath = ui->eLocalFolder->text().trimmed();
-    if (!defaultPath.size())
+    SelectorInfo info;
+
+    info.defaultDir = ui->eLocalFolder->text().trimmed();
+    if (!info.defaultDir.size())
     {
-        defaultPath = Utilities::getDefaultBasePath();
+        info.defaultDir = Utilities::getDefaultBasePath();
     }
 
-    defaultPath = QDir::toNativeSeparators(defaultPath);
-
-    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+    info.defaultDir = QDir::toNativeSeparators(info.defaultDir);
+    info.title = tr("Select local folder");
+    info.multiSelection = false;
+    info.parent = this;
+    info.canCreateDirectories = true;
+    info.func = [&](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
             onLocalFolderSet(fPath);
         }
-    });
+    };
+
+    Platform::getInstance()->folderSelector(info);
 }
 
 void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)

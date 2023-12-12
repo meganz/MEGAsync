@@ -4,7 +4,7 @@
 #include "mega/types.h"
 #include "AvatarWidget.h"
 #include "MegaApplication.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 
 namespace UserAttributes
 {
@@ -148,6 +148,10 @@ void Avatar::getLetterColor()
     if (mLetterAvatarInfo.colorNeedsRefresh)
     {
         auto api = MegaSyncApp->getMegaApi();
+        if(!api)
+        {
+            return;
+        }
         auto avatarEmail (getEmail());
 
         mega::MegaHandle userHandle (mega::INVALID_HANDLE);

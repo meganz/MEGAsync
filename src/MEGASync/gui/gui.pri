@@ -1,4 +1,10 @@
-QT       += network
+QT += network qml quick quickwidgets
+
+QML_IMPORT_PATH += $$PWD/qml
+
+RESOURCES += \
+    $$PWD/Resources_qml.qrc \
+    $$PWD/qml/qml.qrc
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
@@ -14,7 +20,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ScanningWidget.cpp \
     $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
-    $$PWD/SetupWizard.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -25,12 +30,10 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
     $$PWD/ChangeLogDialog.cpp \
-    $$PWD/GuestWidget.cpp \
     $$PWD/StreamingFromMegaDialog.cpp \
     $$PWD/MegaProgressCustomDialog.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
-    $$PWD/InfoWizard.cpp \
     $$PWD/QMegaMessageBox.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
@@ -43,7 +46,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/QRWidget.cpp \
     $$PWD/CircularUsageProgressBar.cpp \
-    $$PWD/HighDpiResize.cpp \
     $$PWD/AlertItem.cpp \
     $$PWD/QAlertsModel.cpp \
     $$PWD/MegaAlertDelegate.cpp \
@@ -63,7 +65,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/WordWrapLabel.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \   
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \
     $$PWD/node_selector/model/NodeSelectorDelegates.cpp \
     $$PWD/node_selector/model/NodeSelectorProxyModel.cpp \
     $$PWD/node_selector/model/NodeSelectorModel.cpp \
@@ -75,8 +77,22 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/node_selector/gui/NodeSelector.cpp \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp \
     $$PWD/node_selector/gui/SearchLineEdit.cpp \
-    $$PWD/node_selector/gui/NodeSelectorSpecializations.cpp
-
+    $$PWD/node_selector/gui/NodeSelectorSpecializations.cpp \
+    $$PWD/qml/QmlClipboard.cpp \
+    $$PWD/qml/QmlDialog.cpp \
+    $$PWD/qml/QmlDialogWrapper.cpp \
+    $$PWD/qml/StandardIconProvider.cpp \
+    $$PWD/onboarding/ChooseFolder.cpp \
+    $$PWD/onboarding/Onboarding.cpp \
+    $$PWD/onboarding/AccountInfoData.cpp \
+    $$PWD/onboarding/BackupsModel.cpp \
+    $$PWD/onboarding/Syncs.cpp \
+    $$PWD/onboarding/QmlDeviceName.cpp \
+    $$PWD/onboarding/PasswordStrengthChecker.cpp \
+    $$PWD/onboarding/BackupsController.cpp \
+    $$PWD/onboarding/GuestQmlDialog.cpp \
+    $$PWD/onboarding/OnboardingQmlDialog.cpp \
+    $$PWD/onboarding/GuestContent.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -94,7 +110,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ScanningWidget.h \
     $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \
-    $$PWD/SetupWizard.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -105,12 +120,10 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
     $$PWD/ChangeLogDialog.h \
-    $$PWD/GuestWidget.h \
     $$PWD/StreamingFromMegaDialog.h \
     $$PWD/MegaProgressCustomDialog.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
-    $$PWD/InfoWizard.h \
     $$PWD/QMegaMessageBox.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
@@ -155,8 +168,23 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/node_selector/gui/NodeSelector.h \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h \
     $$PWD/node_selector/gui/SearchLineEdit.h \
-    $$PWD/node_selector/gui/NodeSelectorSpecializations.h
-
+    $$PWD/node_selector/gui/NodeSelectorSpecializations.h \
+    $$PWD/qml/QmlClipboard.h \
+    $$PWD/qml/QmlDialog.h \
+    $$PWD/qml/QmlDialogWrapper.h \
+    $$PWD/qml/ApiEnums.h \
+    $$PWD/qml/StandardIconProvider.h \
+    $$PWD/onboarding/ChooseFolder.h \
+    $$PWD/onboarding/Onboarding.h \
+    $$PWD/onboarding/AccountInfoData.h \
+    $$PWD/onboarding/BackupsModel.h \
+    $$PWD/onboarding/Syncs.h \
+    $$PWD/onboarding/QmlDeviceName.h \
+    $$PWD/onboarding/PasswordStrengthChecker.h \
+    $$PWD/onboarding/BackupsController.h \
+    $$PWD/onboarding/GuestQmlDialog.h \
+    $$PWD/onboarding/OnboardingQmlDialog.h \
+    $$PWD/onboarding/GuestContent.h \
 
 INCLUDEPATH += $$PWD
 
@@ -173,17 +201,14 @@ win32 {
                 $$PWD/win/ImportMegaLinksDialog.ui \
                 $$PWD/win/ImportListWidgetItem.ui \
                 $$PWD/win/CrashReportDialog.ui \
-                $$PWD/win/SetupWizard.ui \
                 $$PWD/win/SettingsDialog.ui \
                 $$PWD/win/AccountDetailsDialog.ui \
                 $$PWD/win/DownloadFromMegaDialog.ui \
                 $$PWD/win/ChangeLogDialog.ui \
-                $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
                 $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
-                $$PWD/win/InfoWizard.ui \
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
@@ -221,19 +246,16 @@ macx {
                 $$PWD/macx/ImportMegaLinksDialog.ui \
                 $$PWD/macx/ImportListWidgetItem.ui \
                 $$PWD/macx/CrashReportDialog.ui \
-                $$PWD/macx/SetupWizard.ui \
                 $$PWD/macx/SettingsDialog.ui \
                 $$PWD/macx/AccountDetailsDialog.ui \
                 $$PWD/macx/DownloadFromMegaDialog.ui \
                 $$PWD/macx/ChangeLogDialog.ui \
-                $$PWD/macx/GuestWidget.ui \
                 $$PWD/macx/StreamingFromMegaDialog.ui \
                 $$PWD/macx/PermissionsDialog.ui \
                 $$PWD/macx/PermissionsWidget.ui \
                 $$PWD/macx/MegaProgressCustomDialog.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
-                $$PWD/macx/InfoWizard.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/PSAwidget.ui \
@@ -294,19 +316,16 @@ unix:!macx {
                 $$PWD/linux/ImportMegaLinksDialog.ui \
                 $$PWD/linux/ImportListWidgetItem.ui \
                 $$PWD/linux/CrashReportDialog.ui \
-                $$PWD/linux/SetupWizard.ui \
                 $$PWD/linux/SettingsDialog.ui \
                 $$PWD/linux/AccountDetailsDialog.ui \
                 $$PWD/linux/DownloadFromMegaDialog.ui \
                 $$PWD/linux/ChangeLogDialog.ui \
-                $$PWD/linux/GuestWidget.ui \
                 $$PWD/linux/StreamingFromMegaDialog.ui \
                 $$PWD/linux/PermissionsDialog.ui \
                 $$PWD/linux/PermissionsWidget.ui \
                 $$PWD/linux/MegaProgressCustomDialog.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
-                $$PWD/linux/InfoWizard.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
                 $$PWD/linux/StatusInfo.ui \
                 $$PWD/linux/PSAwidget.ui \
@@ -339,4 +358,5 @@ unix:!macx {
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
+
 

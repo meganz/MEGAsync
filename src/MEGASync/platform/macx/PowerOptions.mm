@@ -1,7 +1,7 @@
 #include <platform/PowerOptions.h>
 
 #include "mega/types.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "megaapi.h"
 
 #include <IOKit/pwr_mgt/IOPMLib.h>

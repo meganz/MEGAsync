@@ -197,61 +197,6 @@ private:
     mutable QVector<DelegateWidget*> mLoadingItems;
 };
 
-struct MessageInfo
-{
-    enum ButtonType
-    {
-        None,
-        Stop,
-        Ok
-    };
-
-    QString message;
-    int count = 0;
-    int total = 0;
-    ButtonType buttonType;
-};
-
-Q_DECLARE_METATYPE(MessageInfo)
-
-class LoadingSceneMessageHandler : public QObject
-{
-    Q_OBJECT
-
-public:
-    LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI* viewBaseUI, QWidget* viewBase);
-    ~LoadingSceneMessageHandler();
-
-
-    void hideLoadingMessage();
-    void setTopParent(QWidget* widget);
-
-    void setLoadingViewVisible(bool newLoadingViewVisible);
-
-public slots:
-    void updateMessage(std::shared_ptr<MessageInfo> info);
-
-signals:
-    void onStopPressed();
-    void loadingMessageVisibilityChange(bool value);
-
-protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
-
-private:
-    void sendLoadingMessageVisibilityChange(bool value);
-    void updateMessagePos();
-
-    Ui::ViewLoadingSceneUI* ui;
-    QWidget* mViewBase;
-    QWidget* mTopParent = nullptr;
-    QWidget* mFadeOutWidget;
-
-    bool mLoadingViewVisible = false;
-
-    std::shared_ptr<MessageInfo> mCurrentInfo;
-};
-
 class ViewLoadingSceneBase : public QObject
 {
     Q_OBJECT
@@ -262,11 +207,6 @@ public:
     inline void setDelayTimeToShowInMs(int newDelayTimeToShowInMs)
     {
         mDelayTimeToShowInMs = newDelayTimeToShowInMs;
-    }
-
-    LoadingSceneMessageHandler* getLoadingMessageHandler()
-    {
-        return mMessageHandler;
     }
 
     void show();
@@ -308,9 +248,6 @@ private slots:
     {
         hideLoadingScene();
     }
-
-private:
-    LoadingSceneMessageHandler* mMessageHandler;
 };
 
 template <class DelegateWidget, class ViewType>
@@ -564,11 +501,6 @@ public:
     ViewLoadingScene<DelegateWidget, ViewType>& loadingView()
     {
         return mLoadingView;
-    }
-
-    LoadingSceneMessageHandler* getLoadingMessageHandler()
-    {
-        return mLoadingView.getLoadingMessageHandler();
     }
 
 protected:

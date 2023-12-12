@@ -23,6 +23,8 @@ class SyncsMenu : public QWidget
     Q_OBJECT
 
 public:
+    explicit SyncsMenu(mega::MegaSync::SyncType type, QObject* parent);
+
     static SyncsMenu* newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled, QWidget* parent);
     QPointer<MenuItemAction> getAction();
     void callMenu(const QPoint& p);
@@ -54,7 +56,7 @@ private:
     QPointer<QMenu> mMenu;
     QPointer<MenuItemAction> mAddAction;
     QPointer<MenuItemAction> mMenuAction;
-    MenuItemAction* mLastHovered;
+    QPointer<MenuItemAction> mLastHovered;
     mega::MegaSync::SyncType mType;
     int mItemIndent;
     QIcon mMenuIcon;

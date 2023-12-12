@@ -1,6 +1,7 @@
 #include "SyncsMenu.h"
 #include "Utilities.h"
-#include "Preferences.h"
+//#include "InfoDialog.h"
+#include "Preferences/Preferences.h"
 #include "syncs/control/SyncInfo.h"
 #include "Platform.h"
 #include "UserAttributesRequests/DeviceName.h"
@@ -41,6 +42,11 @@ QPointer<MenuItemAction> SyncsMenu::getAction()
 {
     refresh();
     return mMenu->actions().isEmpty() ? mAddAction : mMenuAction;
+}
+
+QPointer<QMenu> SyncsMenu::getMenu()
+{
+    return mMenu->actions().isEmpty() ? nullptr : mMenu;
 }
 
 void SyncsMenu::callMenu(const QPoint& p)
@@ -181,11 +187,6 @@ QString SyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& sy
     QString toolTip (SyncTooltipCreator::createForLocal(syncSetting->getLocalFolder()));
     toolTip += QChar::LineSeparator;
     return toolTip;
-}
-
-QPointer<QMenu> SyncsMenu::getMenu()
-{
-    return mMenu->actions().isEmpty() ? nullptr : mMenu;
 }
 
 void SyncsMenu::onAddSync()

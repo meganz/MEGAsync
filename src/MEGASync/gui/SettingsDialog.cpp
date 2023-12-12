@@ -10,6 +10,7 @@
 #include "ProxySettings.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
 #include "syncs/gui/Backups/BackupsWizard.h"
 #include "syncs/gui/Backups/AddBackupDialog.h"
@@ -18,8 +19,8 @@
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "GuiUtilities.h"
+#include "CommonMessages.h"
 
-#include "mega/types.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -232,7 +233,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
-    mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
+    setOverlayCheckboxEnabled(!mApp->isShellNotificationProcessingOngoing(),
+                              mUi->cOverlayIcons->isChecked());
 
     mUi->syncTableView->installEventFilter(mSyncTableEventFilter.get());
     mUi->backupTableView->installEventFilter(mBackupTableEventFilter.get());
@@ -851,6 +853,9 @@ void SettingsDialog::changeEvent(QEvent* event)
         updateStorageElements();
         updateBandwidthElements();
         updateAccountElements();
+
+        updateUploadFolder();
+        updateDownloadFolder();
     }
 
     QDialog::changeEvent(event);
@@ -1123,7 +1128,12 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (mLoadingSettings) return;
-    mUi->cOverlayIcons->setEnabled(false);
+
+    const int configuredSyncCount = mModel->getNumSyncedFolders(SyncInfo::AllHandledSyncTypes);
+    if (configuredSyncCount <= 0)
+        return;
+
+    setOverlayCheckboxEnabled(false, checked);
     mPreferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
     Platform::getInstance()->notifyRestartSyncFolders();
@@ -1636,6 +1646,24 @@ void SettingsDialog::setGeneralTabEnabled(const bool enabled)
 #endif
 }
 
+void SettingsDialog::setOverlayCheckboxEnabled(const bool enabled, const bool checked)
+{
+    const int emptyIndex = 0;
+    const int processingIndex = 1;
+    mUi->cOverlayIcons->setEnabled(enabled);
+    mUi->sOverlayMessageWidget->setCurrentIndex(enabled ? emptyIndex : processingIndex);
+    if (enabled)
+    {
+        mUi->wWaitingSpinner->stop();
+    }
+    else
+    {
+        QString message = checked ? tr("Enabling sync status icons") : tr("Disabling sync status icons");
+        mUi->lOverlayProcessing->setText(message);
+        mUi->wWaitingSpinner->start();
+    }
+}
+
 void SettingsDialog::on_bSyncs_clicked()
 {
     emit userActivity();
@@ -2064,11 +2092,12 @@ void SettingsDialog::on_bSessionHistory_clicked()
 // Folders -----------------------------------------------------------------------------------------
 void SettingsDialog::updateUploadFolder()
 {
+    const QString defaultFolderName = QLatin1Char('/') + CommonMessages::getDefaultUploadFolderName();
     std::unique_ptr<MegaNode> node (mMegaApi->getNodeByHandle(static_cast<uint64_t>(mPreferences->uploadFolder())));
     if (!node)
     {
         mHasDefaultUploadOption = false;
-        mUi->eUploadFolder->setText(QString::fromUtf8("/MEGA Uploads"));
+        mUi->eUploadFolder->setText(defaultFolderName);
     }
     else
     {
@@ -2076,7 +2105,7 @@ void SettingsDialog::updateUploadFolder()
         if (!nPath)
         {
             mHasDefaultUploadOption = false;
-            mUi->eUploadFolder->setText(QString::fromUtf8("/MEGA Uploads"));
+            mUi->eUploadFolder->setText(defaultFolderName);
         }
         else
         {
@@ -2091,7 +2120,7 @@ void SettingsDialog::updateDownloadFolder()
     QString downloadPath = mPreferences->downloadFolder();
     if (!downloadPath.size())
     {
-        downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads");
+        downloadPath = Utilities::getDefaultBasePath() + QLatin1Char('/') + CommonMessages::getDefaultDownloadFolderName();
     }
     downloadPath = QDir::toNativeSeparators(downloadPath);
     mUi->eDownloadFolder->setText(downloadPath);
@@ -2326,7 +2355,7 @@ void SettingsDialog::saveExcludeSyncNames()
 
 void SettingsDialog::onShellNotificationsProcessed()
 {
-    mUi->cOverlayIcons->setEnabled(true);
+    setOverlayCheckboxEnabled(true, mUi->cOverlayIcons->isChecked());
 }
 
 void SettingsDialog::on_bRestart_clicked()

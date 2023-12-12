@@ -6,10 +6,9 @@
 #include <QProcess>
 #include <QDateTime>
 #include <QPainter>
-#include "GuestWidget.h"
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 #include "syncs/control/SyncInfo.h"
 #include <QGraphicsOpacityEffect>
 #include "TransferScanCancelUi.h"
@@ -47,8 +46,7 @@ public:
         STATE_NONE = -1,
         STATE_LOGOUT = 0,
         STATE_LOGGEDIN = 1,
-        STATE_LOCKED_EMAIL = mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL,
-        STATE_LOCKED_SMS = mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS
+        STATE_LOCKED_EMAIL = mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL
     };
 
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0, InfoDialog* olddialog = nullptr);
@@ -78,13 +76,8 @@ public:
     void setUiInCancellingStage();
     void updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 
-#ifdef __APPLE__
-    void moveArrow(QPoint p);
-#endif
-
     void on_bStorageDetails_clicked();
-    void regenerateLayout(int blockState = mega::MegaApi::ACCOUNT_NOT_BLOCKED, InfoDialog* olddialog = nullptr);
-    HighDpiResize highDpiResize;
+    HighDpiResize<QDialog> highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
 #endif
@@ -137,7 +130,6 @@ private slots:
     void on_bAddSync_clicked();
     void on_bAddBackup_clicked();
     void on_bUpload_clicked();
-    void onUserAction(int action);
     void resetLoggedInMode();
 
     void on_tTransfers_clicked();
@@ -181,10 +173,6 @@ signals:
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
-#ifdef __APPLE__
-    QPushButton *arrow;
-    QWidget *dummy; // Patch to let text input on line edits of GuestWidget
-#endif
 
     FilterAlertWidget *filterMenu;
 
@@ -204,7 +192,6 @@ private:
     bool mWaiting;
     bool mSyncing; //if any sync is in syncing state
     bool mTransferring; // if there are ongoing regular transfers
-    GuestWidget *gWidget;
     StatusInfo::TRANSFERS_STATES mState;
     bool overQuotaState;
     bool transferOverquotaAlertEnabled;
@@ -244,7 +231,6 @@ protected:
     bool checkFailedState();
     void changeEvent(QEvent * event) override;
     bool eventFilter(QObject *obj, QEvent *e) override;
-    void paintEvent( QPaintEvent * e) override;
 
 protected:
     QDateTime lastPopupUpdate;
@@ -267,6 +253,8 @@ protected:
     void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
                            bool animate = true);
     void setupSyncController();
+    void fixMultiscreenResizeBug(int& posX, int& posY);
+    void repositionInfoDialog();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

@@ -12,6 +12,9 @@ public:
     static QString errorInvalidChars();
 
     static QString getExpiredProFlexiMessage();
+
+    static QString getDefaultUploadFolderName();
+    static QString getDefaultDownloadFolderName();
 private:
     static int computeDaysToExpiration(int64_t expirationTimeStampInSecs);
 };

@@ -20,6 +20,13 @@ class FileFolderAttributes : public QObject
     Q_OBJECT
 
 public:
+
+    enum Status
+    {
+        NOT_READY = -1,
+        NOT_READABLE = -2
+    };
+
     FileFolderAttributes(QObject* parent);
     virtual ~FileFolderAttributes();
 

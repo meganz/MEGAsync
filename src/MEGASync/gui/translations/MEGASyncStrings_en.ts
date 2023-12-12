@@ -1042,7 +1042,7 @@
     <message>
         <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation>Your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</translation>
+        <translation>Your Pro&#xa0;Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account until you’ve made a payment and reactivated your subscription.</translation>
     </message>
 </context>
 <context>
@@ -1779,7 +1779,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation>%1 can&apos;t be added as your Pro&#xa0;Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
+        <translation>%1 can’t be added as your Pro&#xa0;Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2453,17 +2453,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>The app is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
+        <translation>The app is unable to connect. Please check your internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the remote folder doesn’t exist</translation>
+        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the local folder doesn’t exist</translation>
+        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2538,7 +2538,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>No Internet connection</translation>
+        <translation>No internet connection</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -2731,7 +2731,7 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the local folder doesn’t exist.</translation>
+        <translation>Your backup ”%1“ has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -3415,12 +3415,12 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>Don&apos;t cancel</source>
         <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
-        <translation>Don&#8217;t cancel</translation>
+        <translation>Don’t cancel</translation>
     </message>
     <message>
         <source>Don&apos;t clear</source>
         <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
-        <translation>Don&#8217;t clear</translation>
+        <translation>Don’t clear</translation>
     </message>
 </context>
 <context>
@@ -4039,12 +4039,15 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.
+        <source>- Upgraded to Qt5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
 </source>
-        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation>- UI enhanced.
-- Detected crashes fixed on Windows, Linux, and macOS.</translation>
+        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
+        <translation>- Upgraded to Qt 5.15.
+- Fixed detected crashes on Windows, Linux and macOS.
+- Updated third-party libraries.
+</translation>
     </message>
 </context>
 <context>
