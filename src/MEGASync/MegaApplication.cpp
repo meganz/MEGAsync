@@ -26,6 +26,7 @@
 #include "UserAttributesRequests/Avatar.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
+#include "gui/UploadToMegaDialog.h"
 
 #include "qml/QmlDialog.h"
 #include "onboarding/GuestQmlDialog.h"

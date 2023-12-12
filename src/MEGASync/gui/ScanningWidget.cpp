@@ -69,12 +69,10 @@ void ScanningWidget::updateAnimation()
 void ScanningWidget::onReceiveStatusUpdate(const FolderTransferUpdateEvent &event)
 {
     const auto metaData = TransferMetaDataContainer::getAppDataByAppData(event.appData.c_str());
-    const auto addedTransfers = metaData->getPendingFiles() + metaData->getFileTransfersOK();
-
-    if (addedTransfers > 0)
+    if (metaData && (metaData->getPendingFiles() + metaData->getFileTransfersOK()) > 0)
     {
-        static const QChar ellipsis(0x2026);
-        mUi->lStepTitle->setText(tr("Adding transfers") + ellipsis);
+        const auto addedTransfers = metaData->getPendingFiles() + metaData->getFileTransfersOK();
+        mUi->lStepTitle->setText(tr("Adding transfers…"));
         mUi->lStepDescription->setText(tr("%1/%2").arg(addedTransfers).arg(event.filecount));
     }
     else

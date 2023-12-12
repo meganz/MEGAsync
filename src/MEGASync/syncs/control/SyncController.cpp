@@ -448,7 +448,7 @@ SyncController::Syncability SyncController::isLocalFolderSyncable(const QString&
     // Check if the directory exists
     QDir dir(path);
     if (!dir.exists()) {
-        message = tr("The local path is unavailable");
+        message = QCoreApplication::translate("MegaSyncError", "Local path not available");
         return Syncability::CANT_SYNC;
     }
 
