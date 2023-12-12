@@ -73,7 +73,7 @@ FullSyncPageForm {
         target: onboardingWindow
 
         function onInitializePageFocus() {
-            localFolderChooser.changeButton.setFocus(true);
+            localFolderChooser.forceActiveFocus();
         }
     }
 }

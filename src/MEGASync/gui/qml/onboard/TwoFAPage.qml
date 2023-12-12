@@ -77,7 +77,7 @@ TwoFAPageForm {
         target: onboardingWindow
 
         function onInitializePageFocus() {
-            twoFAField.forceFocus()
+            twoFAField.forceActiveFocus();
         }
     }
 }

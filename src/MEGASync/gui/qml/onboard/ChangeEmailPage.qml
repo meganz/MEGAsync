@@ -42,7 +42,7 @@ ChangeEmailPageForm {
         target: onboardingWindow
 
         function onInitializePageFocus() {
-            emailTextField.setFocus(true);
+            emailTextField.forceActiveFocus();
         }
     }
 }

@@ -37,16 +37,16 @@ TextField {
     textField.onTextChanged: {
         var isCharacterEntered = textField.text.length !== 0;
         if(isCharacterEntered && next !== undefined) {
-            next.textField.focus = true;
+            next.focus = true;
         } else {
-            textField.focus = false;
+            focus = false;
         }
         textField.horizontalAlignment = isCharacterEntered ? TextInput.AlignHCenter : TextInput.AlignLeft;
     }
 
     onBackPressed: {
         if(previous !== undefined) {
-            previous.textField.focus = true;
+            previous.focus = true;
         }
     }
 }
