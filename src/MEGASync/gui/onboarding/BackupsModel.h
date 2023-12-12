@@ -134,6 +134,7 @@ signals:
     void existsOnlyGlobalErrorChanged();
     void totalSizeReadyChanged();
     void backupsCreationFinished(bool succes);
+    void newFolderAdded(int newFolderIndex);
 
 private:
     const QString getFolderUnavailableErrorMsg();
