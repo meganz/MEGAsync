@@ -8,7 +8,7 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.toolTips 1.0
 
-Rectangle {
+FocusScope {
     id: root
 
     // Alias
@@ -56,16 +56,6 @@ Rectangle {
     height: textField.height + ((titleItem.text !== "" && titleItem.visible) ? (titleItem.height + textField.anchors.topMargin) : 0) +
             ((hintItem.text !== "" && hintItem.visible) ? hint.height + hint.anchors.topMargin : 0)
 
-    color: "transparent"
-
-    function setFocus(focus) {
-        textField.focus = focus;
-
-        if (focus) {
-            textField.forceActiveFocus();
-        }
-    }
-
     Texts.Text {
         id: titleItem
 
@@ -97,7 +87,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: titleItem.text.length > 0 ? titleItem.bottom : parent.top
         anchors.topMargin: sizes.titleSpacing
-
+        focus: true
         selectByMouse: true
         selectionColor: colors.selection
         height: sizes.height + 2 * sizes.focusBorderWidth
@@ -152,7 +142,7 @@ Rectangle {
                         color = colors.borderDisabled;
                     } else if(error) {
                         color = colors.borderError;
-                    } else if(textField.focus) {
+                    } else if(root.focus) {
                         color = colors.borderFocus;
                     }
                     return color;

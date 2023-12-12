@@ -25,7 +25,7 @@ RegisterPageForm {
         target: onboardingWindow
 
         function onInitializePageFocus() {
-            registerContent.firstName.setFocus(true);
+            registerContent.firstName.forceActiveFocus();
         }
     }
 

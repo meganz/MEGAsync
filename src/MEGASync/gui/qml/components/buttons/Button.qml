@@ -70,14 +70,6 @@ Qml.RoundButton {
         return icons.colorEnabled;
     }
 
-    function setFocus(focus) {
-        root.focus = focus;
-
-        if(focus) {
-            root.forceActiveFocus();
-        }
-    }
-
     bottomPadding: sizes.verticalPadding + sizes.focusBorderWidth
     topPadding: sizes.verticalPadding + sizes.focusBorderWidth
     leftPadding: sizes.horizontalPadding + sizes.focusBorderWidth

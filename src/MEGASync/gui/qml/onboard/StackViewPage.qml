@@ -6,7 +6,7 @@ import components.texts 1.0 as Texts
 
 import LoginController 1.0
 
-Rectangle {
+Item {
     id: root
     
     readonly property int contentSpacing: 24
@@ -15,8 +15,6 @@ Rectangle {
     function setInitialFocusPosition() {
         onboardingWindow.requestPageFocus();
     }
-
-    color: Styles.surface1
 
     Texts.Text {
         id: statusText
