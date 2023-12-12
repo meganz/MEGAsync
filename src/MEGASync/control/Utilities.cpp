@@ -636,38 +636,38 @@ QString Utilities::getFinishedTimeString(long long secs)
 
     if (secs < 2)
     {
-        return QCoreApplication::translate("Utilities", "just now");
+        return QCoreApplication::translate("Utilities", "Added just now");
     }
     else if (secs < SECS_IN_1_MINUTE)
     {
         const int secsAsInt = static_cast<int>(secs);
-        return QCoreApplication::translate("Utilities", "%n second ago", "", secsAsInt);
+        return QCoreApplication::translate("Utilities", "Added %n second ago", "", secsAsInt);
     }
     else if (secs < SECS_IN_1_HOUR)
     {
         const int minutes = static_cast<int>(secs/SECS_IN_1_MINUTE);
-        return QCoreApplication::translate("Utilities", "%n minute ago", "", minutes);
+        return QCoreApplication::translate("Utilities", "Added %n minute ago", "", minutes);
     }
     else if (secs < SECS_IN_1_DAY)
     {
         const int hours = static_cast<int>(secs/SECS_IN_1_HOUR);
-        return QCoreApplication::translate("Utilities", "%n hour ago", "", hours);
+        return QCoreApplication::translate("Utilities", "Added %n hour ago", "", hours);
     }
     else if (secs < SECS_IN_1_MONTH)
     {
         const int days = static_cast<int>(secs/SECS_IN_1_DAY);
-        return QCoreApplication::translate("Utilities", "%n day ago", "", days);
+        return QCoreApplication::translate("Utilities", "Added %n day ago", "", days);
     }
     else if (secs < SECS_IN_1_YEAR)
     {
         const int months = static_cast<int>(secs/SECS_IN_1_MONTH);
-        return QCoreApplication::translate("Utilities", "%n month ago", "", months);
+        return QCoreApplication::translate("Utilities", "Added %n month ago", "", months);
     }
     // We might not need century precision... give years.
     else
     {
         const int years = static_cast<int>(secs/SECS_IN_1_YEAR);
-        return QCoreApplication::translate("Utilities", "%n year ago", "", years);
+        return QCoreApplication::translate("Utilities", "Added %n year ago", "", years);
     }
 }
 
