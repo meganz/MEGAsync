@@ -130,6 +130,9 @@ public:
     //Fingerprint missing
     void fixFingerprint(const QModelIndexList& list);
 
+    //MoveOrRename issue
+    void fixMoveOrRenameCannotOccur(const QModelIndex& index);
+
     bool issuesRequested() const;
 
 signals:
@@ -172,9 +175,13 @@ private:
 
     void sendFixingIssuesMessage(int issue, int totalIssues);
 
-    void solveListOfIssues(const QModelIndexList& list, std::function<bool(int)> solveFunc,
+    void solveListOfIssuesSync(const QModelIndexList& list, std::function<bool(int)> solveFunc,
                            std::function<void ()> startFunc = nullptr, std::function<void (int, bool)> finishFunc = nullptr);
-    void issueSolved(const StalledIssueVariant& issue);
+    void solveListOfIssuesAsync(const QModelIndexList& list, std::function<bool(int)> solveFunc,
+                                std::function<void ()> startFunc = nullptr);
+    void solveListOfIssues(bool isAsync, const QModelIndexList& list, std::function<bool(int)> solveFunc,
+                               std::function<void ()> startFunc = nullptr, std::function<void (int, bool)> finishFunc = nullptr);
+    void issueSolved(const StalledIssueVariant &issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
     void operator=(const StalledIssuesModel&) = delete;

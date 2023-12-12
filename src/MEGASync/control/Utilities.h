@@ -501,6 +501,21 @@ private:
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
 
+//This class is used to create complex paths in MEGA
+class CreateDirectory : public QObject
+{
+public:
+    CreateDirectory() = default;
+    bool mkDir(const QString& root, const QString& path);
+
+private:
+    bool createFolder(mega::MegaNode *parentNode, const QString& folderName);
+
+    QStringList mPathCreated;
+    QEventLoop mEventLoop;
+    bool mResult = false;
+};
+
 //This class is used to move a handle to the MEGA bin
 class MoveToCloudBinUtilities : public QObject
 {

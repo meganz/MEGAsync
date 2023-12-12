@@ -66,6 +66,7 @@ signals:
     void backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> err);
 
 private:
+    void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
     void createPendingBackups();
     static QString getSyncAPIErrorMsg(int megaError);
     static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);

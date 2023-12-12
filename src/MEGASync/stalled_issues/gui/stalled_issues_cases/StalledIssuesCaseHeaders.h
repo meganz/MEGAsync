@@ -104,6 +104,8 @@ public:
 
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
+    void refreshCaseActions(StalledIssueHeader *header) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader*header, int index) override;
 };
 
 //Delete or Move Waiting onScanning

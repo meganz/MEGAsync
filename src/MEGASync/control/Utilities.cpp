@@ -1590,6 +1590,62 @@ TimeInterval::TimeInterval(long long secs, bool secondPrecision)
     seconds = static_cast<int>(secs % 60);
 }
 
+//Create Folders
+bool CreateDirectory::createFolder(MegaNode* parentNode, const QString &folderName)
+{
+    auto result(false);
+
+    std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getChildNode(parentNode, folderName.toUtf8().constData()));
+    if(!node)
+    {
+        MegaSyncApp->getMegaApi()->createFolder(folderName.toUtf8().constData(), parentNode,
+                                                new OnFinishOneShot(MegaSyncApp->getMegaApi(), this,[this, &result]
+                                                                    (bool, const MegaRequest&,const MegaError& e)
+                                                                    {
+                                                                        result = e.getErrorCode() == MegaError::API_OK;
+                                                                        mEventLoop.quit();
+                                                                    }));
+        //In order to execute in synchronously
+        mEventLoop.exec();
+    }
+    else
+    {
+        result = true;
+    }
+
+    return result;
+}
+
+
+bool CreateDirectory::mkDir(const QString& root, const QString &path)
+{
+    std::unique_ptr<MegaNode> rootNode(root.isEmpty() ? MegaSyncApp->getMegaApi()->getRootNode() :
+                                           MegaSyncApp->getMegaApi()->getNodeByPath(root.toUtf8().constData()));
+    auto auxPath(path);
+
+    mPathCreated = auxPath.split(QLatin1String("/"));
+
+    while(!mPathCreated.isEmpty())
+    {
+        auto followingPath(mPathCreated.takeFirst());
+        if(followingPath.isEmpty())
+        {
+            continue;
+        }
+
+
+        if(!createFolder(rootNode.get(), followingPath))
+        {
+            return false;
+        }
+
+        rootNode.reset(MegaSyncApp->getMegaApi()->getChildNode(rootNode.get(), followingPath.toUtf8().constData()));
+    }
+
+    return true;
+}
+
+
 //Move to BIN
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \brief MoveToCloudBinUtilities::moveToBin
@@ -1721,7 +1777,6 @@ bool MoveToCloudBinUtilities::moveToBin(const QList<MegaHandle>& handles, const 
 
     return mResult;
 }
-
 
 //FOLDER MERGE LOGIC
 /*

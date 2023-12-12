@@ -20,6 +20,7 @@ SyncSettings::SyncSettings(const SyncSettings& a) :
     mSyncID(a.getSyncID()),
     mMegaFolder(a.mMegaFolder)
 {
+    qRegisterMetaType<std::shared_ptr<SyncSettings>>("std::shared_ptr<SyncSettings>");
 }
 
 SyncSettings& SyncSettings::operator=(const SyncSettings& a)

@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include <StalledIssuesDelegateWidgetsCache.h>
 #include "NameConflictStalledIssue.h"
+#include "MoveOrRenameCannotOccurIssue.h"
 #include <IgnoredStalledIssue.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
 #include <AppStatsEvents.h>
@@ -54,6 +55,11 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
                         || stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
                 {
                     auto d = std::make_shared<LocalOrRemoteUserMustChooseStalledIssue>(stall);
+                    variant = StalledIssueVariant(d);
+                }
+                else if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
+                {
+                    auto d = std::make_shared<MoveOrRenameCannotOccurIssue>(stall);
                     variant = StalledIssueVariant(d);
                 }
                 else
@@ -749,92 +755,106 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
     emit updateLoadingMessage(info);
 }
 
-void StalledIssuesModel::solveListOfIssues(const QModelIndexList& list, std::function<bool(int)> solveFunc,
+void StalledIssuesModel::solveListOfIssues(bool isAsync, const QModelIndexList &list, std::function<bool (int)> solveFunc,
                                            std::function<void (void)> startFunc, std::function<void (int, bool)> finishFunc)
 {
     startSolvingIssues();
-    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, solveFunc, startFunc, finishFunc]()
-    {
-        if(startFunc)
-        {
-            startFunc();
-        }
+    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, isAsync, list, solveFunc, startFunc, finishFunc]()
+   {
+       if(startFunc)
+       {
+           startFunc();
+       }
 
-        auto issueCounter(1);
-        auto issuesFixed(0);
-        auto issuesExternallyChanged(0);
-        auto totalRows(list.size());
-        foreach(auto index, list)
-        {
-            if(checkIfUserStopSolving())
-            {
-                break;
-            }
+       auto issueCounter(1);
+       auto issuesFixed(0);
+       auto issuesExternallyChanged(0);
+       auto totalRows(list.size());
+       foreach(auto index, list)
+       {
+           if(checkIfUserStopSolving())
+           {
+               break;
+           }
 
-            mModelMutex.lockForWrite();
+           mModelMutex.lockForWrite();
 
-            sendFixingIssuesMessage(issueCounter, totalRows);
+           sendFixingIssuesMessage(issueCounter, totalRows);
 
-            auto potentialIndex = getSolveIssueIndex(index);
-            auto issue(mStalledIssues.at(potentialIndex.row()));
-            if(issue.getData())
-            {
-                if(issue.getData()->checkForExternalChanges())
-                {
-                    issuesExternallyChanged++;
-                }
-                else
-                {
-                    if(solveFunc(potentialIndex.row()))
-                    {
-                        if(!issue.getData()->isSolved())
-                        {
-                            issue.getData()->setIsSolved(false);
-                        }
-                        issuesFixed++;
-                        issueSolved(issue);
-                    }
-                }
-            }
-            issueCounter++;
+           auto potentialIndex = getSolveIssueIndex(index);
+           auto issue(mStalledIssues.at(potentialIndex.row()));
+           if(issue.getData())
+           {
+               if(issue.getData()->checkForExternalChanges())
+               {
+                   issuesExternallyChanged++;
+               }
+               else
+               {
+                   if(solveFunc(potentialIndex.row()))
+                   {
+                       if(!issue.getData()->isSolved())
+                       {
+                           issue.getData()->setIsSolved(false);
+                       }
+                       issuesFixed++;
+                       issueSolved(issue);
+                   }
+               }
+           }
+           issueCounter++;
 
-            mModelMutex.unlock();
-        }
+           mModelMutex.unlock();
+       }
 
-        bool sendMessage(true);
+       if(!isAsync)
+       {
+           bool sendMessage(true);
 
-        if(issuesFixed == 0)
-        {
-            sendMessage = false;
-            unBlockUi();
+           if(issuesFixed == 0)
+           {
+               sendMessage = false;
+               unBlockUi();
 
-            if(issuesExternallyChanged > 0)
-            {
-                issuesFixed = issuesExternallyChanged;
+               if(issuesExternallyChanged > 0)
+               {
+                   issuesFixed = issuesExternallyChanged;
 
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = MegaSyncApp->getMEGAString();
-                msgInfo.textFormat = Qt::RichText;
-                msgInfo.buttons = QMessageBox::Ok;
-                QMap<QMessageBox::StandardButton, QString> buttonsText;
-                buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
-                msgInfo.buttonsText = buttonsText;
-                msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-                msgInfo.finishFunc = [this](QPointer<QMessageBox>){
-                    updateStalledIssues();
-                };
+                   QMegaMessageBox::MessageBoxInfo msgInfo;
+                   msgInfo.title = MegaSyncApp->getMEGAString();
+                   msgInfo.textFormat = Qt::RichText;
+                   msgInfo.buttons = QMessageBox::Ok;
+                   QMap<QMessageBox::StandardButton, QString> buttonsText;
+                   buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
+                   msgInfo.buttonsText = buttonsText;
+                   msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
+                   msgInfo.finishFunc = [this](QPointer<QMessageBox>){
+                       updateStalledIssues();
+                   };
 
-                runMessageBox(std::move(msgInfo));
-            }
-        }
+                   runMessageBox(std::move(msgInfo));
+               }
+           }
 
-        if(finishFunc)
-        {
-            finishFunc(issuesFixed, issuesExternallyChanged > 0);
-        }
+           if(finishFunc)
+           {
+               finishFunc(issuesFixed, issuesExternallyChanged > 0);
+           }
 
-        finishSolvingIssues(issuesFixed, sendMessage);
-    });
+           finishSolvingIssues(issuesFixed, sendMessage);
+       }
+   });
+}
+
+void StalledIssuesModel::solveListOfIssuesSync(const QModelIndexList &list, std::function<bool (int)> solveFunc,
+                                           std::function<void (void)> startFunc, std::function<void (int, bool)> finishFunc)
+{
+    solveListOfIssues(false, list, solveFunc, startFunc, finishFunc);
+}
+
+void StalledIssuesModel::solveListOfIssuesAsync(const QModelIndexList &list, std::function<bool (int)> solveFunc, std::function<void ()> startFunc)
+{
+    solveListOfIssues(true, list, solveFunc, startFunc);
 }
 
 int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion criterion)
@@ -882,7 +902,7 @@ void StalledIssuesModel::solveAllIssues()
     {
         list.append(index(row,0));
     }
-    solveListOfIssues(list, resolveIssue);
+    solveListOfIssuesSync(list, resolveIssue);
 }
 
 void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList& list)
@@ -909,7 +929,7 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList& 
         return false;
     };
 
-    solveListOfIssues(list, resolveIssue);
+    solveListOfIssuesSync(list, resolveIssue);
 }
 
 void StalledIssuesModel::chooseBothSides(const QModelIndexList& list)
@@ -975,7 +995,7 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList& list)
         }
     };
 
-    solveListOfIssues(list, resolveIssue, nullptr, finishFunc);
+    solveListOfIssuesSync(list, resolveIssue, nullptr, finishFunc);
 }
 
 void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList& list)
@@ -998,7 +1018,7 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList& l
         return false;
     };
 
-    solveListOfIssues(list, resolveIssue);
+    solveListOfIssuesSync(list, resolveIssue);
 }
 
 void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink)
@@ -1085,7 +1105,7 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink
     };
 
 
-    solveListOfIssues(auxList, resolveIssue, nullptr, finishFunc);
+    solveListOfIssuesSync(auxList, resolveIssue, nullptr, finishFunc);
 }
 
 void StalledIssuesModel::ignoreSymLinks()
@@ -1175,7 +1195,7 @@ void StalledIssuesModel::ignoreSymLinks()
         }
     };
 
-    solveListOfIssues(list, resolveIssue, startIssue, finishIssue);
+    solveListOfIssuesSync(list, resolveIssue, startIssue, finishIssue);
 }
 
 void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
@@ -1209,7 +1229,26 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
         return true;
     };
 
-    solveListOfIssues(list, resolveIssue, nullptr, finishIssue);
+    solveListOfIssuesSync(list, resolveIssue, nullptr, finishIssue);
+}
+
+void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index)
+{
+    auto resolveIssue = [this](int row) -> bool
+    {
+        auto issue(mStalledIssues.at(row));
+        if(auto moveOrRemoveIssue = std::dynamic_pointer_cast<MoveOrRenameCannotOccurIssue>(issue.getData()))
+        {
+            connect(moveOrRemoveIssue.get(), &MoveOrRenameCannotOccurIssue::issueSolved, [this](bool isSolved){
+                finishSolvingIssues(isSolved ? 1 : 0, true);
+            });
+            moveOrRemoveIssue->solveIssue();
+
+            return true;
+        }
+    };
+
+    solveListOfIssuesAsync(QModelIndexList() << index, resolveIssue);
 }
 
 void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option)
@@ -1237,7 +1276,7 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& 
         return false;
     };
 
-    solveListOfIssues(list, resolveIssue);
+    solveListOfIssuesSync(list, resolveIssue);
 }
 
 bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index)

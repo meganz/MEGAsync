@@ -184,12 +184,11 @@ void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
         auto syncErrorCode (static_cast<MegaSync::Error>(e.getSyncError()));
         auto errorCode(e.getErrorCode());
 
+        updateSyncSettings(e, syncSetting);
+
         if (syncSetting &&
             syncErrorCode != MegaSync::NO_SYNC_ERROR)
         {
-            //If the sync state change has failed, update the sync object to get the latest errors
-            syncSetting->setSync(MegaSyncApp->getMegaApi()->getSyncByBackupId(syncSetting->backupId()));
-
             QString errorMsg = QString::fromUtf8("Error enabling sync (%1) \"%2\" for \"%3\" to \"%4\": %5").arg(
                 getSyncTypeString(syncSetting->getType()),
                 syncSetting->name(),
@@ -234,11 +233,14 @@ void SyncController::setSyncToPause(std::shared_ptr<SyncSettings> syncSetting)
 
     emit signalSyncOperationBegins(syncSetting);
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_PAUSED, new OnFinishOneShot(mApi, this, [=](bool isContextValid,
-                                                                                                  const MegaRequest&,const MegaError& e){
+                                                                                                  const MegaRequest&,const MegaError& e)
+    {
         if(!isContextValid)
         {
             return;
         }
+
+        updateSyncSettings(e, syncSetting);
 
         emit signalSyncOperationEnds(syncSetting);
         if (e.getErrorCode() != MegaError::API_OK)
@@ -268,6 +270,8 @@ void SyncController::setSyncToSuspend(std::shared_ptr<SyncSettings> syncSetting)
             return;
         }
 
+        updateSyncSettings(e, syncSetting);
+
         emit signalSyncOperationEnds(syncSetting);
         if (e.getErrorCode() != MegaError::API_OK)
         {
@@ -294,6 +298,8 @@ void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting
         {
             return;
         }
+
+        updateSyncSettings(e, syncSetting);
 
         // NOTE: As of sdk commit 94e2b9dd1db6a886e21cc1ee826bda58c8c33f99, this never fails
         // and errorCode is always MegaError::API_OK.
@@ -329,6 +335,20 @@ void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting
             }
         }
     }));
+}
+
+void SyncController::updateSyncSettings(const MegaError& e, std::shared_ptr<SyncSettings> syncSetting)
+{
+    if (syncSetting &&
+        (e.getSyncError() != MegaSync::NO_SYNC_ERROR ||
+         e.getErrorCode() != mega::API_OK))
+    {
+        if(syncSetting)
+        {
+            //If the sync state change has failed, update the sync object to get the latest errors
+            syncSetting->setSync(MegaSyncApp->getMegaApi()->getSyncByBackupId(syncSetting->backupId()));
+        }
+    }
 }
 
 // Checks if a path belongs is in an existing sync or backup tree; and if the selected

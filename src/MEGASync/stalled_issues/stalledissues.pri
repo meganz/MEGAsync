@@ -23,6 +23,7 @@ SOURCES +=  \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp \
     $$PWD/model/IgnoredStalledIssue.cpp \
     $$PWD/model/LocalOrRemoteUserMustChooseStalledIssue.cpp \
+    $$PWD/model/MoveOrRenameCannotOccurIssue.cpp \
     $$PWD/model/NameConflictStalledIssue.cpp \
     $$PWD/model/StalledIssuesUtilities.cpp \
     $$PWD/model/StalledIssue.cpp \
@@ -49,6 +50,7 @@ HEADERS  +=   \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h \
     $$PWD/model/IgnoredStalledIssue.h \
     $$PWD/model/LocalOrRemoteUserMustChooseStalledIssue.h \
+    $$PWD/model/MoveOrRenameCannotOccurIssue.h \
     $$PWD/model/NameConflictStalledIssue.h \
     $$PWD/model/StalledIssuesUtilities.h \
     $$PWD/model/StalledIssuesModel.h \
