@@ -311,14 +311,9 @@ void BackupsModel::insert(const QString &folder)
 
     BackupFolder* data = new BackupFolder(inputPath, mSyncController.getSyncNameFromPath(inputPath), true, this);
 
-    auto itFirstFolderNotSelected = std::find_if(mBackupFolderList.cbegin(), mBackupFolderList.cend(), [](const BackupFolder* folder){
-        return !folder->mSelected;
-    });
-
-    auto newBackupFolderModelIndex = static_cast<int>(std::distance(mBackupFolderList.cbegin(), itFirstFolderNotSelected));
-
+    auto newBackupFolderModelIndex = mBackupFolderList.size();
     beginInsertRows(QModelIndex(), newBackupFolderModelIndex, newBackupFolderModelIndex);
-    mBackupFolderList.insert(newBackupFolderModelIndex, data);
+    mBackupFolderList.append(data);
     endInsertRows();
 
     emit newFolderAdded(newBackupFolderModelIndex);
