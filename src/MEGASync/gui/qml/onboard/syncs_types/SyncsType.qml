@@ -1,6 +1,7 @@
 import QtQuick 2.15
 
 QtObject {
+    id: root
 
     enum Types {
         None = 0,
@@ -11,4 +12,5 @@ QtObject {
     }
 
     property int type: SyncsType.Sync
+
 }

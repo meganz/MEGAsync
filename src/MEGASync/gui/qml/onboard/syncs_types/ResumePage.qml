@@ -4,6 +4,7 @@ import Onboarding 1.0
 
 ResumePageForm {
     id: root
+
     property int tabToOpen: 0
 
     signal resumePageMoveToSyncs
@@ -13,13 +14,13 @@ ResumePageForm {
     buttonGroup.onClicked: {
         switch(button.type) {
             case SyncsType.Sync:
-                root.resumePageMoveToSyncs()
+                root.resumePageMoveToSyncs();
                 break;
             case SyncsType.SelectiveSync:
-                root.resumePageMoveToSelectiveSyncs()
+                root.resumePageMoveToSelectiveSyncs();
                 break;
             case SyncsType.Backup:
-                root.resumePageMoveToBackup()
+                root.resumePageMoveToBackup();
                 break;
             default:
                 console.error("Button type does not exist -> " + button.type);

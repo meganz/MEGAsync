@@ -13,16 +13,17 @@ import onboard 1.0
 SyncsPage {
     id: root
 
+    readonly property string stateFullSync: "FULL"
+    readonly property string stateSelectiveSync: "SELECTIVE"
+    readonly property string stateBackup: "BACKUP"
+
+    property alias buttonGroup: buttonGroupItem
+    property alias syncButton: syncButtonItem
+
     property string title
     property string description
     property bool fullSyncDone
     property bool selectiveSyncDone
-    property alias buttonGroup: buttonGroupItem
-    property alias syncButton: syncButtonItem
-
-    readonly property string stateFullSync: "FULL"
-    readonly property string stateSelectiveSync: "SELECTIVE"
-    readonly property string stateBackup: "BACKUP"
 
     footerButtons {
         leftSecondary.visible: false
@@ -56,15 +57,22 @@ SyncsPage {
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
             PropertyChanges {
                 target: syncButtonItem;
-                type: !fullSyncDone && !selectiveSyncDone ? SyncsType.Sync : SyncsType.SelectiveSync;
-                visible: !fullSyncDone
-                title: !fullSyncDone && !selectiveSyncDone ? OnboardingStrings.sync : OnboardingStrings.selectiveSync
-                description: !fullSyncDone && !selectiveSyncDone ? OnboardingStrings.finalPageButtonSync : OnboardingStrings.finalPageButtonSelectiveSync
+                type: !fullSyncDone && !selectiveSyncDone
+                      ? SyncsType.Sync
+                      : SyncsType.SelectiveSync;
+                visible: !fullSyncDone;
+                title: !fullSyncDone && !selectiveSyncDone
+                       ? OnboardingStrings.sync
+                       : OnboardingStrings.selectiveSync;
+                description: !fullSyncDone && !selectiveSyncDone
+                             ? OnboardingStrings.finalPageButtonSync
+                             : OnboardingStrings.finalPageButtonSelectiveSync;
             }
         }
     ]
 
     ColumnLayout {
+        id: mainLayout
 
         anchors {
             top: parent.top
@@ -77,8 +85,10 @@ SyncsPage {
 
             Layout.preferredWidth: parent.width
             text: title
-            font.pixelSize: Texts.Text.Size.Large
-            font.weight: Font.Bold
+            font {
+                pixelSize: Texts.Text.Size.Large
+                weight: Font.Bold
+            }
         }
 
         Texts.Text {
@@ -91,56 +101,59 @@ SyncsPage {
         }
 
         Texts.Text {
+            id: finalStepQuestionText
+
             Layout.preferredWidth: parent.width
             Layout.topMargin: 36
             text: OnboardingStrings.finalStepQuestion
-            font.pixelSize: Texts.Text.Size.MediumLarge
-            font.weight: Font.DemiBold
+            font {
+                pixelSize: Texts.Text.Size.MediumLarge
+                weight: Font.DemiBold
+            }
         }
 
-        Rectangle {
+        Item {
+            id: buttons
+
             Layout.preferredWidth: parent.width + 8
             Layout.topMargin: 24
-            color: "transparent"
 
             ButtonGroup {
                 id: buttonGroupItem
             }
 
             RowLayout {
+                id: buttonsLayout
+
+                anchors {
+                    fill: parent
+                    leftMargin: -syncButtonItem.focusBorderWidth
+                    rightMargin: backupsButton.focusBorderWidth
+                }
                 spacing: 12
-                anchors.fill: parent
-                anchors.leftMargin: -syncButtonItem.focusBorderWidth
-                anchors.rightMargin: backupsButton.focusBorderWidth
 
                 SyncsVerticalButton {
                     id: syncButtonItem
 
-                    title: OnboardingStrings.selectiveSync
-                    description: OnboardingStrings.finalPageButtonSelectiveSync
-                    imageSource: Images.sync
-                    ButtonGroup.group: buttonGroupItem
-                    checkable: false
                     width: (parent.width - parent.spacing) / 2
                     height: 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
-                    imageSourceSize: Qt.size(32, 32)
                     contentMargin: 24
                     contentSpacing: 8
+                    imageSourceSize: Qt.size(32, 32)
+                    title: OnboardingStrings.selectiveSync
+                    description: OnboardingStrings.finalPageButtonSelectiveSync
+                    imageSource: Images.sync
+                    checkable: false
                     focus: true
                     useMaxSiblingHeight: true
+                    ButtonGroup.group: buttonGroupItem
                 }
 
                 SyncsVerticalButton {
                     id: backupsButton
 
-                    title: OnboardingStrings.backup
-                    description: OnboardingStrings.finalPageButtonBackup
-                    imageSource: Images.installationTypeBackups
-                    ButtonGroup.group: buttonGroupItem
-                    type: SyncsType.Backup
-                    checkable: false
                     width: !syncButtonItem.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
@@ -149,12 +162,22 @@ SyncsPage {
                             : 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
-                    imageSourceSize: Qt.size(32, 32)
                     contentMargin: 24
                     contentSpacing: 8
+                    imageSourceSize: Qt.size(32, 32)
+                    title: OnboardingStrings.backup
+                    description: OnboardingStrings.finalPageButtonBackup
+                    imageSource: Images.installationTypeBackups
+                    type: SyncsType.Backup
+                    checkable: false
                     useMaxSiblingHeight: true
+                    ButtonGroup.group: buttonGroupItem
                 }
-            }
-        }
-    }
+
+            } // RowLayout: buttonsLayout
+
+        } // Item: buttons
+
+    } // ColumnLayout: mainLayout
+
 }
