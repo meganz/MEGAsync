@@ -9,17 +9,17 @@ SelectFoldersPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            root.selectFolderMoveToBack()
+            root.selectFolderMoveToBack();
         }
 
         rightPrimary.onClicked: {
-            root.selectFolderMoveToConfirm()
-
+            root.selectFolderMoveToConfirm();
             backupsModelAccess.check();
             backupsProxyModel.selectedFilterEnabled = true;
             if(backupsModelAccess.conflictsNotificationText !== "") {
                 stepPanel.state = stepPanel.step4Warning;
-            } else {
+            }
+            else {
                 stepPanel.state = stepPanel.step4;
             }
         }

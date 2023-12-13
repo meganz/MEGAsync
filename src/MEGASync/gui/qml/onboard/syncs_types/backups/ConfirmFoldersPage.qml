@@ -13,7 +13,7 @@ ConfirmFoldersPageForm {
         rightSecondary.onClicked: {
             backupsModelAccess.clean(true);
             backupsProxyModel.selectedFilterEnabled = false;
-            root.confirmFoldersMoveToSelect()
+            root.confirmFoldersMoveToSelect();
         }
 
         rightPrimary.onClicked: {
@@ -28,17 +28,19 @@ ConfirmFoldersPageForm {
         target: backupsModelAccess
 
         function onNoneSelected() {
-            root.confirmFoldersMoveToSelect()
+            root.confirmFoldersMoveToSelect();
         }
 
         function onExistConflictsChanged() {
             if(backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE) {
                 if(backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
                     stepPanel.state = stepPanel.step4Error;
-                } else {
+                }
+                else {
                     stepPanel.state = stepPanel.step4Warning;
                 }
-            } else {
+            }
+            else {
                 stepPanel.state = stepPanel.step4;
             }
         }
@@ -52,8 +54,9 @@ ConfirmFoldersPageForm {
             enableConfirmHeader = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             if(success) {
-                root.confirmFoldersMoveToSuccess()
-            } else {
+                root.confirmFoldersMoveToSuccess();
+            }
+            else {
                 stepPanel.state = stepPanel.step4Error;
             }
         }
