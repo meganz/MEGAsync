@@ -14,7 +14,8 @@ import onboard 1.0
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
-Rectangle {
+Item {
+    id: root
 
     readonly property int headerFooterMargin: 24
     readonly property int headerFooterHeight: 40
@@ -22,22 +23,26 @@ Rectangle {
 
     Layout.preferredWidth: parent.width
     Layout.preferredHeight: height
-    height: 224
+    height: 240
     width: parent.width
-    radius: tableRadius
-
-    color: Styles.pageBackground
 
     Rectangle {
         id: borderRectangle
 
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         color: "transparent"
         border.color: Styles.borderStrong
         border.width: 1
-        radius: 8
-        z: 5
+        radius: tableRadius
+        z: 2
+    }
+
+    Rectangle {
+        id: backgroundRectangle
+
+        anchors.fill: parent
+        color: Styles.pageBackground
+        radius: tableRadius
     }
 
     ListView {
@@ -55,6 +60,16 @@ Rectangle {
         ScrollBar.vertical: ScrollBar {}
     }
 
+    Connections {
+        id: backupsModelAccessConnection
+
+        target: backupsModelAccess
+
+        function onNewFolderAdded(newFolderIndex) {
+            backupsListView.positionViewAtIndex(newFolderIndex, ListView.Center)
+        }
+    }
+
     Component {
         id: headerComponent
 
@@ -64,7 +79,7 @@ Rectangle {
             anchors.right: parent.right
             color: Styles.pageBackground
             radius: tableRadius
-            z: 3
+            z: 2
 
             MouseArea {
                 anchors.fill: parent
@@ -126,6 +141,10 @@ Rectangle {
         FolderRow {
             anchors.right: parent.right
             anchors.left: parent.left
+
+            onFocusActivated: {
+                backupsListView.positionViewAtIndex(index, ListView.Center)
+            }
         }
     }
 
@@ -138,7 +157,7 @@ Rectangle {
             height: headerFooterHeight
             radius: tableRadius
             color: Styles.pageBackground
-            z: 3
+            z: 2
 
             TextButton {
                 id: addFoldersButton
@@ -178,7 +197,6 @@ Rectangle {
                     backupsModelAccess.insert(folderPath);
                 }
             }
-
         }
     }
 

@@ -26,6 +26,8 @@ Rectangle {
 
     property bool editMode: false
 
+    signal focusActivated
+
     height: totalHeight
     anchors.right: parent.right
     anchors.left: parent.left
@@ -106,6 +108,13 @@ Rectangle {
                     Keys.onPressed: {
                         if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
                             selected = !selected;
+                        }
+                    }
+
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            focusActivated(index);
                         }
                     }
                 }

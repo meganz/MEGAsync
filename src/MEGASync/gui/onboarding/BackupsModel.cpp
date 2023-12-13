@@ -115,8 +115,6 @@ BackupsModel::BackupsModel(QObject* parent)
     connect(&mCheckDirsTimer, &QTimer::timeout, this, &BackupsModel::checkDirectories);
 
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsModelAccess"), this);
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsControllerAccess"),
-                                                                mBackupsController.get());
 
     MegaSyncApp->qmlEngine()->addImageProvider(QLatin1String("standardicons"), new StandardIconProvider);
 
@@ -312,9 +310,14 @@ void BackupsModel::insert(const QString &folder)
     }
 
     BackupFolder* data = new BackupFolder(inputPath, mSyncController.getSyncNameFromPath(inputPath), true, this);
-    beginInsertRows(QModelIndex(), 0, 0);
-    mBackupFolderList.prepend(data);
+
+    auto newBackupFolderModelIndex = mBackupFolderList.size();
+    beginInsertRows(QModelIndex(), newBackupFolderModelIndex, newBackupFolderModelIndex);
+    mBackupFolderList.append(data);
     endInsertRows();
+
+    emit newFolderAdded(newBackupFolderModelIndex);
+
     checkSelectedAll();
 }
 
