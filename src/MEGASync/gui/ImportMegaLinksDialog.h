@@ -31,12 +31,12 @@ private slots:
     void on_cImport_clicked();
     void on_bLocalFolder_clicked();
     void on_bMegaFolder_clicked();
+    void on_bOk_clicked();
 
 public slots:
     void onLinkInfoAvailable(int id);
     void onLinkInfoRequestFinish();
     void onLinkStateChanged(int id, int state);
-    void accept() override;
 
 protected:
     void changeEvent(QEvent * event) override;
@@ -47,6 +47,9 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     LinkProcessor* mLinkProcessor;
     bool mFinished;
+
+    bool mUseDefaultDownloadPath;
+    bool mDownloadPathChangedByUser;
 
     void initUiAsLogged();
     void initUiAsUnlogged();
@@ -59,6 +62,8 @@ private:
     void checkLinkValidAndSelected();
 
     void onLocalFolderSet(const QString& path);
+
+    void updateDownloadPath();
 };
 
 #endif // IMPORTMEGALINKSDIALOG_H
