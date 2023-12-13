@@ -11,20 +11,13 @@ import components.texts 1.0 as Texts
 
 import onboard 1.0
 
-import GuestContent 1.0
 import ApiEnums 1.0
 import LoginController 1.0
 
-Rectangle {
+Item {
     id: root
 
-    width: 400
-    height: 560
-    radius: 10
-    color: Styles.surface1
-    border.color: "#1F000000"
-    border.width: 1
-
+    anchors.fill: parent
     property string title: ""
     property bool indeterminate: true
     property double progressValue: 0.0
@@ -39,6 +32,8 @@ Rectangle {
     readonly property string stateFetchNodesFinished: "FETCH_NODES_FINISHED"
     readonly property string stateBlocked: "BLOCKED"
     readonly property string stateInOnboarding: "IN_ONBOARDING"
+
+    signal hide
 
     function getState() {
         if(accountStatusControllerAccess.blockedState) {
@@ -75,20 +70,20 @@ Rectangle {
         State {
             name: root.stateLoggedOut
             StateChangeScript {
-                script: view.replace(initialPage);
+                script: view.replace(initialPageComponent);
             }
         },
         State {
             name: root.stateFetchNodesFinished
             extend: root.stateLoggedOut
             StateChangeScript {
-                script: guestWindow.hide();
+                script: root.hide();
             }
         },
         State {
             name: root.stateInProgress
             StateChangeScript {
-                script: view.replace(progressPage);
+                script: view.replace(progressPageComponent);
             }
         },
         State {
@@ -114,13 +109,13 @@ Rectangle {
         State {
             name: root.stateBlocked
             StateChangeScript {
-                script: view.replace(blockedPage);
+                script: view.replace(blockedPageComponent);
             }
         },
         State {
             name: root.stateInOnboarding
             StateChangeScript {
-                script: view.replace(settingUpAccountPage);
+                script: view.replace(settingUpAccountPageComponent);
             }
         }
     ]
@@ -139,10 +134,13 @@ Rectangle {
     IconButton {
         id: menuButton
 
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.topMargin: 9
-        anchors.rightMargin: 9
+        anchors{
+            top: parent.top
+            right: parent.right
+            topMargin: 9
+            rightMargin: 9
+        }
+
         icons.source: Images.menu
         z: 3
 
@@ -193,7 +191,7 @@ Rectangle {
             position: MenuItem.Position.First
             onTriggered: {
                 guestContentAccess.onAboutMEGAClicked();
-                guestWindow.hide();
+                root.hide();
             }
         }
 
@@ -204,7 +202,7 @@ Rectangle {
             icon.source: Images.settings
             onTriggered: {
                 guestContentAccess.onPreferencesClicked();
-                guestWindow.hide();
+                root.hide();
             }
         }
 
@@ -216,7 +214,7 @@ Rectangle {
             position: MenuItem.Position.Last
             onTriggered: {
                 guestContentAccess.onExitClicked();
-                guestWindow.hide();
+                root.hide();
             }
         }
     }
@@ -230,9 +228,11 @@ Rectangle {
     }
 
     Component {
-        id: initialPage
+        id: initialPageComponent
 
         BasePage {
+            id: initialPage
+
             title: GuestStrings.logInOrSignUp
             spacing: 48
             showProgressBar: false
@@ -252,9 +252,10 @@ Rectangle {
     }
 
     Component {
-        id: progressPage
+        id: progressPageComponent
 
         BasePage {
+            id: progressPage
 
             function getDescription() {
                 switch(loginControllerAccess.state) {
@@ -294,9 +295,10 @@ Rectangle {
     }
 
     Component {
-        id: blockedPage
+        id: blockedPageComponent
 
         BasePage {
+            id: blockedPage
 
             showProgressBar: false
             imageSource: Images.warningGuest
@@ -319,17 +321,18 @@ Rectangle {
                     position: Icon.Position.LEFT
                 }
                 onClicked: {
-                        guestContentAccess.onVerifyEmailClicked();
+                    guestContentAccess.onVerifyEmailClicked();
                 }
             }
         }
     }
 
-
     Component {
-        id: settingUpAccountPage
+        id: settingUpAccountPageComponent
 
         BasePage {
+            id: settingUpAccountPage
+
             showProgressBar: false
             title: GuestStrings.loggedInOnboarding
             imageSource: Images.settingUp
@@ -337,6 +340,17 @@ Rectangle {
             rightButton.visible: false
             spacing: 0
             bottomMargin: 150
+        }
+    }
+
+    Connections {
+        id: basePageConnection
+
+        target: view.currentItem
+        ignoreUnknownSignals: true
+
+        function onHide() {
+            root.hide();
         }
     }
 }

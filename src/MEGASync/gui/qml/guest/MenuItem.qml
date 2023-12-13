@@ -19,24 +19,23 @@ Qml.MenuItem {
 
     property int position: MenuItem.Position.Inter
 
-    function getBackgroundColor(){
-        if(root.pressed)
-        {
-            return Styles.surface2;
-        }
-        else if(root.hovered)
-        {
-            return Styles.textInverse;
-        }
-        return "transparent";
-    }
-
     width: 200
     height: root.position === MenuItem.Position.First || position === MenuItem.Position.Last ? 48 : 40
     leftPadding: paddingSize
     rightPadding: paddingSize
     topPadding: root.position === MenuItem.Position.First ? paddingSize : 0
     bottomPadding: root.position === MenuItem.Position.Last ? paddingSize : 0
+
+    function getBackgroundColor(){
+        if(root.pressed) {
+            return Styles.surface2;
+        }
+        else if(root.hovered) {
+            return Styles.textInverse;
+        }
+
+        return "transparent";
+    }
 
     contentItem: Rectangle {
         implicitWidth: 184
