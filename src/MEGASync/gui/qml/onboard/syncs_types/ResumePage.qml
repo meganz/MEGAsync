@@ -43,7 +43,7 @@ ResumePageForm {
 
         function onInitializePageFocus() {
             syncButton.checked = true;
-            syncButton.setFocus(true);
+            syncButton.forceActiveFocus();
         }
     }
 }

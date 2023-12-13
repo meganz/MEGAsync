@@ -42,7 +42,7 @@ SyncTypePageForm {
 
         function onInitializePageFocus() {
             fullSyncButton.checked = true;
-            fullSyncButton.setFocus(true);
+            fullSyncButton.forceActiveFocus();
         }
     }
 }
