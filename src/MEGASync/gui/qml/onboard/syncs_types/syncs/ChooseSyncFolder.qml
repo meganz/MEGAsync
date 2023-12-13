@@ -14,13 +14,12 @@ import Syncs 1.0
 import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
 
-Item {
+FocusScope {
     id: root
 
     property alias choosenPath: folderItem.text
     property bool local: true
     property alias folderField: folderItem
-    property alias changeButton: changeButtonItem
 
     readonly property int textEditMargin: 2
 
@@ -76,6 +75,7 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: 15
+        focus: true
         text: OnboardingStrings.choose
         onClicked: {
             folderItem.error = false;

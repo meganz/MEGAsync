@@ -158,12 +158,12 @@ LoginPageForm {
         loginControllerAccess.passwordErrorMsg = passwordValid ? "" : OnboardingStrings.errorEmptyPassword;
 
         if (!emailValid) {
-            email.setFocus(true);
+            email.forceActiveFocus();
             return;
         }
 
         if (!passwordValid) {
-            password.setFocus(true);
+            password.forceActiveFocus();
             return;
         }
 
@@ -218,7 +218,7 @@ LoginPageForm {
 
         function onPasswordErrorChanged() {
             if(loginControllerAccess.passwordError) {
-                password.setFocus(true);
+                password.focus  = true;
             }
         }
     }
@@ -228,10 +228,10 @@ LoginPageForm {
 
         function onInitializePageFocus() {
             if (loginControllerAccess.newAccount) {
-                password.setFocus(true);
+                password.forceActiveFocus();
             }
             else {
-                email.setFocus(true);
+                email.forceActiveFocus();
             }
         }
     }
