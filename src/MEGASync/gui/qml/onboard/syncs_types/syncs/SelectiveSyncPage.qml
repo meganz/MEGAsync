@@ -44,7 +44,7 @@ SelectiveSyncPageForm {
                 return;
             }
 
-            if (localFolderChooser.choosenPath === localFolder.getDefaultFolder(syncsCpp.defaultMegaFolder) && !localFolder.createFolder(localFolderChooser.choosenPath)) {
+            if (localFolderChooser.choosenPath === localFolder.getDefaultFolder(syncs.defaultMegaFolder) && !localFolder.createFolder(localFolderChooser.choosenPath)) {
                 localFolderChooser.folderField.error = true;
                 localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError;
                 localFolderChooser.folderField.hint.visible = true;
@@ -53,7 +53,7 @@ SelectiveSyncPageForm {
 
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncsCpp.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
+            syncs.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
         }
     }
 
@@ -62,7 +62,7 @@ SelectiveSyncPageForm {
     }
 
     Syncs {
-        id: syncsCpp
+        id: syncs
 
         onSyncSetupSuccess: {
             root.enabled = true;

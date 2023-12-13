@@ -23,6 +23,11 @@ FocusScope {
 
     readonly property int textEditMargin: 2
 
+    width: parent.width
+    height: folderItem.height
+    Layout.preferredWidth: width
+    Layout.preferredHeight: folderItem.height
+
     function reset() {
         if(!local) {
             remoteFolderChooser.reset();
@@ -33,32 +38,32 @@ FocusScope {
         var defaultFolder = "";
 
         if (local) {
-            defaultFolder = localFolderChooser.getDefaultFolder(syncsCpp.defaultMegaFolder)
+            defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
         }
         else {
-            defaultFolder = syncsCpp.defaultMegaPath;
+            defaultFolder = syncs.defaultMegaPath;
         }
 
-        if ((local && !syncsCpp.checkLocalSync(defaultFolder)) || (!local && !syncsCpp.checkRemoteSync(defaultFolder)))
-        {
-            defaultFolder = ""
+        if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder))) {
+            defaultFolder = "";
         }
 
         return defaultFolder;
     }
 
-    Layout.preferredWidth: width
-    Layout.preferredHeight: folderItem.height
-    width: parent.width
-    height: folderItem.height
+    Syncs {
+        id: syncs
+    }
 
     TextField {
         id: folderItem
 
-        anchors.left: parent.left
-        anchors.right: changeButtonItem.left
-        anchors.top: parent.top
-        anchors.rightMargin: textEditMargin
+        anchors {
+            left: parent.left
+            right: changeButtonItem.left
+            top: parent.top
+            rightMargin: textEditMargin
+        }
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: getFolder()
         leftIconSource: local ? Images.pc : Images.megaOutline
@@ -97,7 +102,7 @@ FocusScope {
         enabled: root.local
 
         function onFolderChoosen(folderPath) {
-            folderItem.text = folderPath
+            folderItem.text = folderPath;
         }
     }
 
@@ -108,7 +113,7 @@ FocusScope {
         enabled: !root.local
 
         function onFolderChoosen(remoteFolderPath) {
-            folderItem.text = remoteFolderPath
+            folderItem.text = remoteFolderPath;
         }
     }
 

@@ -18,8 +18,7 @@ Item {
     readonly property string selectiveSync: "selective"
 
     // added to avoid qml warning.
-    function setInitialFocusPosition() {
-    }
+    function setInitialFocusPosition() { }
 
     state: syncsPanel.navInfo.fullSyncDone || syncsPanel.navInfo.typeSelected === SyncsType.Types.SelectiveSync
            ? selectiveSync
@@ -30,7 +29,7 @@ Item {
             name: syncType
             StateChangeScript {
                 script: {
-                    view.replace(syncPage);
+                    view.replace(syncPageComponent);
                 }
             }
             PropertyChanges {
@@ -45,7 +44,7 @@ Item {
             StateChangeScript {
                 script: {
                     syncsPanel.navInfo.typeSelected = SyncsType.Types.FullSync;
-                    view.replace(fullSyncPage);
+                    view.replace(fullSyncPageComponent);
                 }
             }
             PropertyChanges {
@@ -60,7 +59,7 @@ Item {
             StateChangeScript {
                 script: {
                     syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
-                    view.replace(selectiveSyncPage);
+                    view.replace(selectiveSyncPageComponent);
                 }
             }
             PropertyChanges {
@@ -74,28 +73,34 @@ Item {
 
     StackViewBase {
         id: view
-        anchors.fill: parent
 
+        anchors.fill: parent
         onCurrentItemChanged: {
             currentItem.setInitialFocusPosition();
         }
 
         Component {
-            id: syncPage
+            id: syncPageComponent
 
-            SyncTypePage {}
+            SyncTypePage {
+                id: syncPage
+            }
         }
 
         Component {
-            id: fullSyncPage
+            id: fullSyncPageComponent
 
-            FullSyncPage {}
+            FullSyncPage {
+                id: fullSyncPage
+            }
         }
 
         Component {
-            id: selectiveSyncPage
+            id: selectiveSyncPageComponent
 
-            SelectiveSyncPage {}
+            SelectiveSyncPage {
+                id: selectiveSyncPage
+            }
         }
     }
 
