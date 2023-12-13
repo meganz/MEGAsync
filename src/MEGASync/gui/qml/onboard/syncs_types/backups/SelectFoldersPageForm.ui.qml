@@ -36,10 +36,14 @@ SyncsPage {
             spacing: 12
 
             InfoAccount {
+                id: infoAccount
+
                 Layout.preferredWidth: parent.width
             }
 
-            SelectTable {}
+            SelectTable {
+                id: backupsTable
+            }
         }
     }
 }
