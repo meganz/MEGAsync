@@ -51,6 +51,7 @@ SyncsPage {
                     imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
                     textHorizontalExtraMargin: 4
+                    useMaxSiblingHeight: true
                 }
 
                 SyncTypeButton {
@@ -64,6 +65,7 @@ SyncsPage {
                     imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
                     textHorizontalExtraMargin: 4
+                    useMaxSiblingHeight: true
                 }
             }
         }
