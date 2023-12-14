@@ -4,13 +4,13 @@ QtObject {
     id: root
 
     enum Types {
-        None = 0,
-        Sync = 1,
-        SelectiveSync = 2,
-        FullSync = 3,
-        Backup = 4
+        NONE = 0,
+        SYNC,
+        SELECTIVE_SYNC,
+        FULL_SYNC,
+        BACKUP
     }
 
-    property int type: SyncsType.Sync
+    property int type: SyncsType.Types.Sync
 
 }

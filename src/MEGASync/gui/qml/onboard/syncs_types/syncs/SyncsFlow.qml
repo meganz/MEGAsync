@@ -21,7 +21,8 @@ Item {
     function setInitialFocusPosition() {
     }
 
-    state: syncsPanel.navInfo.fullSyncDone || syncsPanel.navInfo.typeSelected === SyncsType.Types.SelectiveSync
+    state: syncsPanel.navInfo.fullSyncDone
+                || syncsPanel.navInfo.typeSelected === SyncsType.Types.SELECTIVE_SYNC
            ? selectiveSync
            : syncType
 
@@ -44,7 +45,7 @@ Item {
             name: fullSync
             StateChangeScript {
                 script: {
-                    syncsPanel.navInfo.typeSelected = SyncsType.Types.FullSync;
+                    syncsPanel.navInfo.typeSelected = SyncsType.Types.FULL_SYNC;
                     view.replace(fullSyncPage);
                 }
             }
@@ -59,7 +60,7 @@ Item {
             name: selectiveSync
             StateChangeScript {
                 script: {
-                    syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
+                    syncsPanel.navInfo.typeSelected = SyncsType.Types.SELECTIVE_SYNC;
                     view.replace(selectiveSyncPage);
                 }
             }

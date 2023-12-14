@@ -56,7 +56,7 @@ Rectangle {
             name: syncsFlow
             StateChangeScript {
                 script: {
-                    navInfo.typeSelected = SyncsType.Types.Sync;
+                    navInfo.typeSelected = SyncsType.Types.SYNC;
                     rightPanel.replace(syncsFlowPage);
                 }
             }
@@ -69,7 +69,7 @@ Rectangle {
             name: backupsFlow
             StateChangeScript {
                 script: {
-                    navInfo.typeSelected = SyncsType.Types.Backup;
+                    navInfo.typeSelected = SyncsType.Types.BACKUP;
                     rightPanel.replace(backupsFlowPage);
                 }
             }
@@ -87,15 +87,15 @@ Rectangle {
                     var resumePageState = "";
                     var toOpenTabIndex = 0;
                     switch(syncsPanel.navInfo.typeSelected) {
-                        case SyncsType.Types.SelectiveSync:
+                        case SyncsType.Types.SELECTIVE_SYNC:
                             resumePageState = "SELECTIVE";
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
-                        case SyncsType.Types.FullSync:
+                        case SyncsType.Types.FULL_SYNC:
                             resumePageState = "FULL";
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
-                        case SyncsType.Types.Backup:
+                        case SyncsType.Types.BACKUP:
                             resumePageState = "BACKUP";
                             toOpenTabIndex = SettingsDialog.BACKUP_TAB;
                             break;
@@ -116,10 +116,10 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.stepAllDone;
-                step3Text: navInfo.typeSelected === SyncsType.Types.Backup
+                step3Text: navInfo.typeSelected === SyncsType.Types.BACKUP
                            ? OnboardingStrings.backupSelectFolders
                            : OnboardingStrings.syncChooseType;
-                step4Text: navInfo.typeSelected === SyncsType.Types.Backup
+                step4Text: navInfo.typeSelected === SyncsType.Types.BACKUP
                            ? OnboardingStrings.backupConfirm
                            : OnboardingStrings.syncSetUp;
             }
@@ -292,7 +292,7 @@ Rectangle {
         function onResumePageMoveToSelectiveSyncs() {
             syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
             syncsPanel.state = syncsFlow;
-            syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
+            syncsPanel.navInfo.typeSelected = SyncsType.Types.SELECTIVE_SYNC;
         }
 
         function onResumePageMoveToBackup() {

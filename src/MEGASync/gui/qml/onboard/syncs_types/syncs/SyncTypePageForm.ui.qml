@@ -45,7 +45,7 @@ SyncsPage {
 
                     Layout.leftMargin: -fullSyncButtonItem.focusBorderWidth
                     title: OnboardingStrings.fullSync
-                    type: SyncsType.Types.FullSync
+                    type: SyncsType.Types.FULL_SYNC
                     description: OnboardingStrings.fullSyncButtonDescription
                     imageSource: Images.fullSync
                     imageSourceSize: Qt.size(172, 100)
@@ -59,7 +59,7 @@ SyncsPage {
 
                     Layout.rightMargin: -backupsButton.focusBorderWidth
                     title: OnboardingStrings.selectiveSync
-                    type: SyncsType.Types.SelectiveSync
+                    type: SyncsType.Types.SELECTIVE_SYNC
                     description: OnboardingStrings.selectiveSyncButtonDescription
                     imageSource: Images.selectiveSync
                     imageSourceSize: Qt.size(172, 100)

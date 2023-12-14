@@ -57,7 +57,7 @@ SyncsPage {
                 title: OnboardingStrings.sync
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync
-                type: SyncsType.Types.Sync
+                type: SyncsType.Types.SYNC
                 ButtonGroup.group: buttonGroupComp
             }
 

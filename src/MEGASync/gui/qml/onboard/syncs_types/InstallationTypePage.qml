@@ -15,10 +15,10 @@ InstallationTypePageForm {
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
-                case SyncsType.Types.Sync:
+                case SyncsType.Types.SYNC:
                     root.installationTypeMoveToSync();
                     break;
-                case SyncsType.Types.Backup:
+                case SyncsType.Types.BACKUP:
                     root.installationTypeMoveToBackup();
                     break;
                 default:
