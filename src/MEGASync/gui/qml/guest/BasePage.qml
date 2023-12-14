@@ -27,8 +27,6 @@ Item {
     property int bottomMargin: 48
     property int horizontalMargin: 24
 
-    signal hide
-
     Image {
         id: image
 
@@ -118,7 +116,7 @@ Item {
                 id: leftButton
 
                 onClicked: {
-                    root.hide();
+                    window.hide();
                 }
             }
 
@@ -126,7 +124,7 @@ Item {
                 id: rightButton
 
                 onClicked: {
-                    root.hide();
+                    window.hide();
                 }
             }
         }

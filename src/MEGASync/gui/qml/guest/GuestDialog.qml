@@ -6,7 +6,7 @@ import GuestQmlDialog 1.0
 import LoginController 1.0
 
 GuestQmlDialog {
-    id: root
+    id: window
 
     width: 400
     height: 560
@@ -25,15 +25,6 @@ GuestQmlDialog {
         id: guestFlow
     }
 
-    Connections {
-        id: guestFlowConnections
-        target: guestFlow
-
-        function onHide() {
-            root.hide();
-        }
-    }
-
     onVisibleChanged:  {
         if(visible) {
             accountStatusControllerAccess.whyAmIBlocked();
@@ -49,15 +40,15 @@ GuestQmlDialog {
     PropertyAnimation {
         id: fadeOut
 
-        target: root
+        target: window
         property: "opacity"
         to: 0
         duration: 100
 
         onRunningChanged: {
             if (!running) {
-                root.hide();
-                root.opacity = 1;
+                window.hide();
+                window.opacity = 1;
             }
         }
     }

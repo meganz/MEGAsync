@@ -33,8 +33,6 @@ Item {
     readonly property string stateBlocked: "BLOCKED"
     readonly property string stateInOnboarding: "IN_ONBOARDING"
 
-    signal hide
-
     function getState() {
         if(accountStatusControllerAccess.blockedState) {
             return root.stateBlocked;
@@ -77,7 +75,7 @@ Item {
             name: root.stateFetchNodesFinished
             extend: root.stateLoggedOut
             StateChangeScript {
-                script: root.hide();
+                script: window.hide();
             }
         },
         State {
@@ -191,7 +189,7 @@ Item {
             position: MenuItem.Position.First
             onTriggered: {
                 guestContentAccess.onAboutMEGAClicked();
-                root.hide();
+                window.hide();
             }
         }
 
@@ -202,7 +200,7 @@ Item {
             icon.source: Images.settings
             onTriggered: {
                 guestContentAccess.onPreferencesClicked();
-                root.hide();
+                window.hide();
             }
         }
 
@@ -214,7 +212,7 @@ Item {
             position: MenuItem.Position.Last
             onTriggered: {
                 guestContentAccess.onExitClicked();
-                root.hide();
+                window.hide();
             }
         }
     }
@@ -340,17 +338,6 @@ Item {
             rightButton.visible: false
             spacing: 0
             bottomMargin: 150
-        }
-    }
-
-    Connections {
-        id: basePageConnection
-
-        target: view.currentItem
-        ignoreUnknownSignals: true
-
-        function onHide() {
-            root.hide();
         }
     }
 }
