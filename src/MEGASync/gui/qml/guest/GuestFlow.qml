@@ -187,7 +187,7 @@ Item {
 
             text: GuestStrings.menuAboutMEGA
             icon.source: Images.megaOutline
-            position: MenuItem.Position.First
+            position: MenuItem.Position.FIRST
             onTriggered: {
                 guestContentAccess.onAboutMEGAClicked();
                 window.hide();
@@ -210,7 +210,7 @@ Item {
 
             text: GuestStrings.menuExit
             icon.source: Images.exit
-            position: MenuItem.Position.Last
+            position: MenuItem.Position.LAST
             onTriggered: {
                 guestContentAccess.onExitClicked();
                 window.hide();
