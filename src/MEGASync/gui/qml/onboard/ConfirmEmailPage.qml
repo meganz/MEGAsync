@@ -16,4 +16,12 @@ ConfirmEmailPageForm {
             onboardingWindow.raise();
         }
     }
+
+    Connections {
+        target: onboardingWindow
+
+        function onInitializePageFocus() {
+            bodyText2.forceActiveFocus();
+        }
+    }
 }

@@ -12,6 +12,7 @@ StackViewPage {
     id: root
 
     property alias changeEmailLinkText: changeEmailLinkTextItem
+    property alias bodyText2 : bodyText2Item
 
     ColumnLayout {
         id: layout
@@ -45,13 +46,14 @@ StackViewPage {
         }
 
         Texts.RichText {
-            id: bodyText2
+            id: bodyText2Item
 
             rawText: OnboardingStrings.confirmEmailBodyText2
             font.pixelSize: Texts.Text.Size.Medium
             url: Links.contact
             manageMouse: true
             Layout.preferredWidth: layout.width
+            KeyNavigation.tab: changeEmailLinkTextItem
         }
 
         RowLayout {
@@ -94,6 +96,7 @@ StackViewPage {
             color: Styles.textPrimary
             manageMouse: true
             Layout.preferredWidth: layout.width
+            KeyNavigation.tab: bodyText2Item
         }
     }
 }
