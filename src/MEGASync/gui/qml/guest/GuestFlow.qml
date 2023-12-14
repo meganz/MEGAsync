@@ -17,11 +17,6 @@ import LoginController 1.0
 Item {
     id: root
 
-    anchors.fill: parent
-    property string title: ""
-    property bool indeterminate: true
-    property double progressValue: 0.0
-
     readonly property string stateLoggedOut: "LOGGED_OUT"
     readonly property string stateInProgress: "IN_PROGRESS"
     readonly property string stateInProgressFetchNodes: "IN_PROGRESS_FETCH_NODES"
@@ -32,6 +27,12 @@ Item {
     readonly property string stateFetchNodesFinished: "FETCH_NODES_FINISHED"
     readonly property string stateBlocked: "BLOCKED"
     readonly property string stateInOnboarding: "IN_ONBOARDING"
+
+    property string title: ""
+    property bool indeterminate: true
+    property double progressValue: 0.0
+
+    anchors.fill: parent
 
     function getState() {
         if(accountStatusControllerAccess.blockedState) {

@@ -10,6 +10,19 @@ GuestQmlDialog {
 
     width: 400
     height: 560
+    color: "transparent"
+
+    onVisibleChanged:  {
+        if(visible) {
+            accountStatusControllerAccess.whyAmIBlocked();
+        }
+    }
+
+    onGuestActiveChanged: (active) => {
+        if (!active) {
+            fadeOut.start();
+        }
+    }
 
     Rectangle {
         id: borderItem
@@ -23,18 +36,6 @@ GuestQmlDialog {
 
     GuestFlow {
         id: guestFlow
-    }
-
-    onVisibleChanged:  {
-        if(visible) {
-            accountStatusControllerAccess.whyAmIBlocked();
-        }
-    }
-
-    onGuestActiveChanged: (active) => {
-        if (!active) {
-            fadeOut.start();
-        }
     }
 
     PropertyAnimation {
