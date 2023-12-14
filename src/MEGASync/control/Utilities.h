@@ -322,7 +322,7 @@ public:
     static QString createCompleteUsedString(long long usedData, long long totalData, int percentage);
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
-    static QString getFinishedTimeString(long long secs);
+    static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
