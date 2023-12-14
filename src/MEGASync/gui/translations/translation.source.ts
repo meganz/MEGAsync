@@ -1142,6 +1142,11 @@
         <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MEGA Imports</source>
+        <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CrashReportDialog</name>

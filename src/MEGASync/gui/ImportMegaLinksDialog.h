@@ -50,6 +50,9 @@ private:
 
     bool mDownloadPathChangedByUser;
 
+    bool mUseDefaultImportPath;
+    bool mImportPathChangedByUser;
+
     void initUiAsLogged();
     void initUiAsUnlogged();
     void initImportFolderControl();
@@ -63,6 +66,7 @@ private:
     void onLocalFolderSet(const QString& path);
 
     void updateDownloadPath();
+    void updateImportPath(const QString& path = QString());
 };
 
 #endif // IMPORTMEGALINKSDIALOG_H
