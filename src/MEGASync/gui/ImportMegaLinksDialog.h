@@ -48,7 +48,6 @@ private:
     LinkProcessor* mLinkProcessor;
     bool mFinished;
 
-    bool mUseDefaultDownloadPath;
     bool mDownloadPathChangedByUser;
 
     void initUiAsLogged();
