@@ -9,7 +9,6 @@ class QmlDialog : public QQuickWindow
 
 public:
     explicit QmlDialog(QWindow* parent = nullptr);
-    ~QmlDialog() override;
 
 signals:
     void finished();
