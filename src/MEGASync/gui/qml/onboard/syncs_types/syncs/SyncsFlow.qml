@@ -10,12 +10,12 @@ import BackupsProxyModel 1.0
 Item {
     id: root
 
-    signal syncsFlowMoveToFinal
-    signal syncsFlowMoveToBack
-
     readonly property string syncType: "syncType"
     readonly property string fullSync: "full"
     readonly property string selectiveSync: "selective"
+
+    signal syncsFlowMoveToFinal
+    signal syncsFlowMoveToBack
 
     // added to avoid qml warning.
     function setInitialFocusPosition() { }

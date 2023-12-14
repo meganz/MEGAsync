@@ -17,16 +17,11 @@ import ChooseRemoteFolder 1.0
 FocusScope {
     id: root
 
+    readonly property int textEditMargin: 2
+
     property alias choosenPath: folderItem.text
     property bool local: true
     property alias folderField: folderItem
-
-    readonly property int textEditMargin: 2
-
-    width: parent.width
-    height: folderItem.height
-    Layout.preferredWidth: width
-    Layout.preferredHeight: folderItem.height
 
     function reset() {
         if(!local) {
@@ -50,6 +45,11 @@ FocusScope {
 
         return defaultFolder;
     }
+
+    width: parent.width
+    height: folderItem.height
+    Layout.preferredWidth: width
+    Layout.preferredHeight: folderItem.height
 
     Syncs {
         id: syncs
@@ -106,6 +106,14 @@ FocusScope {
         }
     }
 
+    ChooseLocalFolder {
+        id: localFolderChooser
+    }
+
+    ChooseRemoteFolder {
+        id: remoteFolderChooser
+    }
+
     Connections {
         id: remoteFolderChooserConnection
 
@@ -115,13 +123,5 @@ FocusScope {
         function onFolderChoosen(remoteFolderPath) {
             folderItem.text = remoteFolderPath;
         }
-    }
-
-    ChooseLocalFolder {
-        id: localFolderChooser
-    }
-
-    ChooseRemoteFolder {
-        id: remoteFolderChooser
     }
 }
