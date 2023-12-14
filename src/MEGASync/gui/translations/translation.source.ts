@@ -7601,8 +7601,8 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
         <translation type="unfinished">
-            <numerusform>Added %n hours ago</numerusform>
             <numerusform>Added %n hour ago</numerusform>
+            <numerusform>Added %n hours ago</numerusform>
         </translation>
     </message>
     <message numerus="yes">
