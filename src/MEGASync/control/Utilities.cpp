@@ -626,7 +626,7 @@ QString Utilities::getQuantityString(unsigned long long quantity)
     return QString::number(quantity);
 }
 
-QString Utilities::getFinishedTimeString(long long secs)
+QString Utilities::getAddedTimeString(long long secs)
 {
     const int SECS_IN_1_MINUTE = 60;
     const int SECS_IN_1_HOUR = 3600;
