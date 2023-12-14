@@ -12,14 +12,31 @@ CardButton {
     property int textHorizontalExtraMargin: 0
     property int contentMargin: 13
     property int contentSpacing: 24
+    property bool useMaxSiblingHeight: false
 
     readonly property int textSpacing: 5
-    readonly property int textTopHeight: 24
     readonly property int textTopMargin: 24
     readonly property int textLineHeight: 16
 
-    height: imageButton.height + titleText.height + descriptionText.height + textSpacing + contentSpacing + contentMargin * 2
-    //4= border with
+    property int calculatedHeight: imageButton.height + titleText.height + descriptionText.height + textSpacing + contentSpacing + contentMargin * 2;
+
+    function getHeight()
+    {
+        let myHeight = calculatedHeight;
+        if(useMaxSiblingHeight)
+        {
+            for(var i = 0; i < parent.children.length; i++) {
+                if(parent.children[i] !== button && parent.children[i].calculatedHeight > myHeight)
+                {
+                    myHeight = parent.children[i].height;
+                }
+            }
+        }
+        return myHeight;
+    }
+
+    height: getHeight();
+
     Column {
         anchors.fill: parent
         anchors.margins: contentMargin
@@ -42,7 +59,6 @@ CardButton {
                 id: titleText
 
                 text: title
-                height: textTopHeight
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.topMargin: textTopMargin
@@ -67,4 +83,13 @@ CardButton {
             }
         }
     }
+
+//    Component.onCompleted: {
+//        for(var i = 0; i < parent.children.length; i++) {
+//            if(parent.children[i].height > height)
+//            {
+//                height = parent.children[i].height;
+//            }
+//        }
+//    }
 }
