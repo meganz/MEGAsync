@@ -15,6 +15,8 @@ public:
 
     static QString getDefaultUploadFolderName();
     static QString getDefaultDownloadFolderName();
+    static QString getDefaultImportFolderName();
+
 private:
     static int computeDaysToExpiration(int64_t expirationTimeStampInSecs);
 };
