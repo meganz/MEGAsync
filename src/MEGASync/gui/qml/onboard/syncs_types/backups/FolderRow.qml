@@ -16,7 +16,7 @@ import onboard 1.0
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
-Rectangle {
+Item {
     id: root
 
     readonly property int totalHeight: 34
@@ -109,8 +109,7 @@ Rectangle {
                     id: checkbox
 
                     anchors {
-                        top: parent.top
-                        bottom: parent.bottom
+                        verticalCenter: parent.verticalCenter
                         topMargin: -checkbox.sizes.focusBorderWidth + 1
                     }
                     width: backupsProxyModel.selectedFilterEnabled ? 0 : selectRoot.checkboxWidth

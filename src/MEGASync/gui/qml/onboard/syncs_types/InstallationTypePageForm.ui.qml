@@ -69,7 +69,7 @@ SyncsPage {
                 title: OnboardingStrings.backup
                 description: OnboardingStrings.backupButtonDescription
                 imageSource: Images.installationTypeBackups
-                type: SyncsType.Backup
+                type: SyncsType.Types.BACKUP
                 ButtonGroup.group: buttonGroupComp
             }
         }

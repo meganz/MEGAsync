@@ -11,6 +11,6 @@ QtObject {
         BACKUP
     }
 
-    property int type: SyncsType.Types.Sync
+    property int type: SyncsType.Types.SYNC
 
 }

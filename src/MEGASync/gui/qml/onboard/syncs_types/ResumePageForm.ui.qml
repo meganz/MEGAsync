@@ -47,7 +47,7 @@ SyncsPage {
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
             PropertyChanges {
                 target: syncButtonItem;
-                type: SyncsType.SelectiveSync;
+                type: SyncsType.Types.SELECTIVE_SYNC;
                 visible: true;
             }
         },
@@ -58,8 +58,8 @@ SyncsPage {
             PropertyChanges {
                 target: syncButtonItem;
                 type: !fullSyncDone && !selectiveSyncDone
-                      ? SyncsType.Sync
-                      : SyncsType.SelectiveSync;
+                      ? SyncsType.Types.SYNC
+                      : SyncsType.Types.SELECTIVE_SYNC;
                 visible: !fullSyncDone;
                 title: !fullSyncDone && !selectiveSyncDone
                        ? OnboardingStrings.sync
@@ -168,7 +168,7 @@ SyncsPage {
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
-                    type: SyncsType.Backup
+                    type: SyncsType.Types.BACKUP
                     checkable: false
                     useMaxSiblingHeight: true
                     ButtonGroup.group: buttonGroupItem

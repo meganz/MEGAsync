@@ -157,11 +157,6 @@ Rectangle {
 
         FolderRow {
             id: folderRow
-
-            anchors {
-                right: parent.right
-                left: parent.left
-            }
         }
     }
 

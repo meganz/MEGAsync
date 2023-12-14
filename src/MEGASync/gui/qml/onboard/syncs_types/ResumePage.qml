@@ -13,13 +13,13 @@ ResumePageForm {
 
     buttonGroup.onClicked: {
         switch(button.type) {
-            case SyncsType.Sync:
+            case SyncsType.Types.SYNC:
                 root.resumePageMoveToSyncs();
                 break;
-            case SyncsType.SelectiveSync:
+            case SyncsType.Types.SELECTIVE_SYNC:
                 root.resumePageMoveToSelectiveSyncs();
                 break;
-            case SyncsType.Backup:
+            case SyncsType.Types.BACKUP:
                 root.resumePageMoveToBackup();
                 break;
             default:
