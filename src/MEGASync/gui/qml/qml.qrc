@@ -128,5 +128,6 @@
         <file>guest/GuestDialog.qml</file>
         <file>guest/GuestStrings.qml</file>
         <file>guest/MenuItem.qml</file>
+        <file>components/texts/Sizes.qml</file>
     </qresource>
 </RCC>
