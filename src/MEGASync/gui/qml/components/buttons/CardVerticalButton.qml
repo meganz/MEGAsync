@@ -20,8 +20,7 @@ CardButton {
 
     property int calculatedHeight: imageButton.height + titleText.height + descriptionText.height + textSpacing + contentSpacing + contentMargin * 2;
 
-    function getHeight()
-    {
+    function getHeight() {
         let myHeight = calculatedHeight;
         if(useMaxSiblingHeight)
         {
@@ -83,13 +82,4 @@ CardButton {
             }
         }
     }
-
-//    Component.onCompleted: {
-//        for(var i = 0; i < parent.children.length; i++) {
-//            if(parent.children[i].height > height)
-//            {
-//                height = parent.children[i].height;
-//            }
-//        }
-//    }
 }
