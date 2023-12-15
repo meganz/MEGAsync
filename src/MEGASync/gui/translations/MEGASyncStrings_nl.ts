@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="nl" sourcelanguage="en">
 <context>
@@ -47,6 +47,14 @@
         <source>Backups</source>
         <translatorcomment>Label for Backups storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
         <translation>Back-ups</translation>
+    </message>
+</context>
+<context>
+    <name>AccountStatusController</name>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
+        <translation>Uw account is gedeactiveerd door uw beheerder. Neem contact op met uw zakelijke accountbeheerder voor meer informatie.</translation>
     </message>
 </context>
 <context>
@@ -102,7 +110,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Een naam invoeren, een absoluut pad (tekens * en ? zijn toegestaan) of kies welk bestand of map u wilt laten uitsluiten van de synchronisatie.</translation>
+        <translation>Voer een naam in, een absoluut pad (jokertekens * en ? zijn toegestaan) of kies welk bestand of map u wilt uitsluiten van de synchronisatie.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -271,11 +279,6 @@
         <translation>[A] is verwijderd of gedeactiveerd</translation>
     </message>
     <message>
-        <source>[A] established you as a contact</source>
-        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A]heeft uw contact verzoek geaccepteerd</translation>
-    </message>
-    <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
         <translation>[A] heeft u als een contact geblokkeerd</translation>
@@ -297,7 +300,7 @@
     </message>
     <message>
         <source>[A] accepted your contact request</source>
-        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request. (SNC-3341)</translatorcomment>
         <translation>[A] uw contact verzoek geaccepteerd</translation>
     </message>
     <message>
@@ -466,6 +469,19 @@
     </message>
 </context>
 <context>
+    <name>BackupSyncsMenu</name>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups;SNC-3654</translatorcomment>
+        <translation>Back-up toevoegen</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Menu option that shows backups menu;SNC-3654</translatorcomment>
+        <translation>Back-ups</translation>
+    </message>
+</context>
+<context>
     <name>BackupTableView</name>
     <message>
         <source>Open in MEGA</source>
@@ -494,6 +510,35 @@
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
         <translation>Klik op het 3 punten menu voor meer back-up acties</translation>
+    </message>
+</context>
+<context>
+    <name>BackupsModel</name>
+    <message numerus="yes">
+        <source>Folder wasn&apos;t backed up. Try again.</source>
+        <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
+        <translation><numerusform>Er is geen back-up gemaakt van deze map. Probeer het nog eens.</numerusform><numerusform>Er is geen back-up gemaakt van deze mappen. Probeer het nog eens.</numerusform></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>U kunt geen back-up maken van mappen met dezelfde naam. Hernoem ze om door te gaan met de back-up. Mapnamen veranderen niet op uw computer.</translation>
+    </message>
+    <message numerus="yes">
+        <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
+        <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
+        <translation><numerusform>Een map met dezelfde naam bestaat al in uw Backups. Hernoem de nieuwe map om door te gaan met de back-up. Map naam wordt niet gewijzigd op uw computer.</numerusform><numerusform>Sommige mappen met dezelfde naam bestaan al in uw Back-ups. Hernoem de nieuwe mappen om door te gaan met de back-up. 
+Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
+    </message>
+    <message>
+        <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
+        <translatorcomment>Warning message stating that a backup can´t contain another backup CON-468</translatorcomment>
+        <translation>Back-upmappen kunnen geen andere back-upmappen bevatten of daarin worden opgenomen.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
+        <translation>Er kan geen back-up van de map worden gemaakt, omdat deze niet kan worden gelokaliseerd. Het kan zijn dat het is verplaatst of verwijderd, of dat u geen toegang heeft.</translation>
     </message>
 </context>
 <context>
@@ -908,7 +953,7 @@
     <message>
         <source>Cancelling…</source>
         <translatorcomment>Message displayed while transfers cancelling is in progress</translatorcomment>
-        <translation>Annuleren&#8230;</translation>
+        <translation>Annuleren…</translation>
     </message>
 </context>
 <context>
@@ -984,7 +1029,7 @@
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>Gebruik een sterker wachtwoord</translation>
+        <translation>Voer een sterker wachtwoord in</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1005,6 +1050,14 @@
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
         <translation>Uw wachtwoord is gewijzigd.</translation>
+    </message>
+</context>
+<context>
+    <name>ChooseLocalFolder</name>
+    <message>
+        <source>Select local folder</source>
+        <translatorcomment>Label indicating the user that he has to select a local folder. CON-467</translatorcomment>
+        <translation>Selecteer lokale map</translation>
     </message>
 </context>
 <context>
@@ -1040,9 +1093,19 @@
 %1</translation>
     </message>
     <message>
-        <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
-        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation>Uw Pro&#xa0;Flexi account is gedeactiveerd vanwege een mislukte betaling of u heeft uw abonnement geannuleerd. U heeft geen toegang tot de gegevens die in uw account zijn opgeslagen totdat u een betaling doet en uw abonnement reactiveert.</translation>
+        <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
+        <translation>Uw account is gedeactiveerd vanwege een mislukte betaling of een geannuleerd abonnement. Betaal en activeer nu opnieuw om toegang te krijgen tot uw gegevens.</translation>
+    </message>
+    <message>
+        <source>MEGA Uploads</source>
+        <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
+        <translation>MEGA uploads</translation>
+    </message>
+    <message>
+        <source>MEGA Downloads</source>
+        <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
+        <translation>MEGA downloads</translation>
     </message>
 </context>
 <context>
@@ -1319,6 +1382,11 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
         <translation><numerusform>[A] heeft  %n item bijgewerkt</numerusform><numerusform>[A] heeft %n items bijgewerkt</numerusform></translation>
     </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Pro Flexi account gedeactiveerd</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -1330,7 +1398,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Selecteer de download locatie voor uw bestanden:</translation>
+        <translation>Selecteer de downloadmap voor uw bestanden:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1506,6 +1574,24 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>Meer leren</translation>
     </message>
+    <message>
+        <source>loading time…</source>
+        <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
+        <translation>Datum ophalen…</translation>
+    </message>
+    <message>
+        <source>loading size…</source>
+        <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
+        <translation>grootte berekenen…</translation>
+    </message>
+</context>
+<context>
+    <name>FastLoginController</name>
+    <message>
+        <source>Login error: %1</source>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message. SNC-4122</translatorcomment>
+        <translation>Login fout: %1</translation>
+    </message>
 </context>
 <context>
     <name>FilterAlertWidget</name>
@@ -1602,171 +1688,71 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
 </context>
 <context>
-    <name>GuestWidget</name>
+    <name>GuestStrings</name>
     <message>
-        <source>Login</source>
-        <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Inloggen</translation>
+        <source>About MEGA</source>
+        <translatorcomment>Menu entry that opens the about MEGA dialog. CON-472</translatorcomment>
+        <translation>Over MEGA</translation>
     </message>
     <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation>Creëer een account</translation>
+        <source>Quit</source>
+        <translatorcomment>Menu entry that quits the application for mac. CON-472</translatorcomment>
+        <translation>Stoppen</translation>
     </message>
     <message>
-        <source>Email address</source>
-        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation>E-mailadres</translation>
+        <source>Exit</source>
+        <translatorcomment>Menu entry that quits the application for linux and windows. CON-472</translatorcomment>
+        <translation>Sluiten</translation>
     </message>
     <message>
-        <source>Password</source>
-        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation>Wachtwoord</translation>
+        <source>Settings</source>
+        <translatorcomment>Menu entry that opens the settings dialog. CON-472</translatorcomment>
+        <translation>Instellingen</translation>
     </message>
     <message>
-        <source>Forgot password?</source>
-        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation>Wachtwoord vergeten?</translation>
+        <source>Log in or sign up to MEGA</source>
+        <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
+        <translation>Log in of meld u aan bij MEGA</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation>Annuleren</translation>
+        <source>Account temporarily locked</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>Account tijdelijk geblokkeerd</translation>
     </message>
     <message>
-        <source>Setting up your account...</source>
-        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>Uw account instellen…</translation>
+        <source>Your account has been temporarily locked due to a potential breach of our [A]Terms of Service[/A]. To unlock your account, verify your phone number.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>Inloggen…</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Bestandslijst ophalen…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Ongeldig e-mailadres of wachtwoord.</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation>Controleer alstublieft uw e-mail en klik op de link om uw account te bevestigen.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>U heeft te vaak geprobeerd om in te loggen.[BR] Wacht alstublieft tot%1 en probeer het opnieuw.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation>Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>Vul uw e-mailadres in</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>Voer een geldig e-mailadres in</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation>Voer uw wachtwoord in</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Uitloggen…</translation>
-    </message>
-    <message>
-        <source>Locked Account</source>
-        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>Gesloten account</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>Uw account is voor uw veiligheid tijdelijk vergrendeld. Verifieer uw e-mailadres en volg de stappen om uw account te ontgrendelen.</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>Uitloggen</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation>Uw account is tijdelijk vergrendeld vanwege mogelijk misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation>Verifieer nu</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGA app</translatorcomment>
-        <translation>Account creëren…</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Waarom zie ik dit?</translation>
+        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>Voor uw veiligheid is uw account tijdelijk vergrendeld. Dit vanwege een mogelijk datalek. Om uw account te ontgrendelen, volgt u de stappen in de e-mail die we u hebben gestuurd.</translation>
     </message>
     <message>
         <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>Email opnieuw versturen</translation>
+        <translatorcomment>Button text, on click the email to verify the account is resent CON-465</translatorcomment>
+        <translation>E-mail opnieuw verzenden</translation>
     </message>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>Email verstuurd</translation>
+        <source>Log out</source>
+        <translatorcomment>Button text to logout CON-465</translatorcomment>
+        <translation>Uitloggen</translation>
     </message>
     <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Voer de code in die is gegenereerd door uw authenticatie-applicatie</translation>
+        <source>Verify now</source>
+        <translatorcomment>Button text to verify the account CON-465</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6-cijferige code:</translation>
+        <source>Setting up your account…</source>
+        <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
+        <translation>Uw account instellen…</translation>
     </message>
     <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Ongeldige code</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation>Volgende</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Bent u uw authenticatieapparaat kwijt?[/A]</translation>
-    </message>
-    <message>
-        <source>Log into MEGA</source>
-        <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
-        <translation>Inloggen in MEGA</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>Onze SSL-sleutel kan niet worden geverifieerd. U kunt worden getroffen door een man-in-the-middle-aanval of uw antivirussoftware kan uw communicatie onderscheppen en dit probleem veroorzaken. Schakel het uit en probeer het opnieuw.</translation>
+        <source>Waiting for email confirmation…</source>
+        <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
+        <translation>Wachten voor email bevestiging…</translation>
     </message>
 </context>
 <context>
@@ -1859,6 +1845,54 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <source>Open links</source>
         <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
         <translation>Links openen</translation>
+    </message>
+</context>
+<context>
+    <name>InfoAccount</name>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Label to refer Free tier CON-467</translatorcomment>
+        <translation>Gratis</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
+        <translation>Pro&#xa0;I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;III</translation>
+    </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
+        <translation>Zakelijk</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Flexi</translation>
+    </message>
+    <message>
+        <source>Available storage:</source>
+        <translatorcomment>Label indicating that the number in the right is the available storage CON-467</translatorcomment>
+        <translation>Beschikbare opslag…</translation>
+    </message>
+    <message>
+        <source>Storage space:</source>
+        <translatorcomment>Label indicating that the number in the right is the storage space CON-467</translatorcomment>
+        <translation>Opslag ruimte:</translation>
     </message>
 </context>
 <context>
@@ -2148,54 +2182,6 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
 </context>
 <context>
-    <name>InfoWizard</name>
-    <message>
-        <source>You are not logged in</source>
-        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
-        <translation>U bent niet ingelogd</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>Inloggen</translation>
-    </message>
-    <message>
-        <source>Create Account</source>
-        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
-        <translation>Account creëren</translation>
-    </message>
-    <message>
-        <source>MEGA Desktop app</source>
-        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>MEGA Desktop Applicatie</translation>
-    </message>
-    <message>
-        <source>Login or create an account to start using MEGA Desktop app.</source>
-        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Inloggen of creëer een account om onze applicatie te gaan gebruiken.</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>U zult moeten inloggen op uw MEGA-account om onze applicatie te gebruiken.</translation>
-    </message>
-    <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
-        <translation>Account creëren</translation>
-    </message>
-    <message>
-        <source>Create account to join MEGA collaboration platform.</source>
-        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>Creëer een account om mee te doen met de MEGA samenwerkingsplatform.</translation>
-    </message>
-    <message>
-        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
-        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Meer informatie over onze applicatie. [A]Lees meer[/A]</translation>
-    </message>
-</context>
-<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -2280,6 +2266,52 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
 </context>
 <context>
+    <name>LoginController</name>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
+        <translation>Check uw email en klik op de link in het bericht om uw account te bevestigen.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
+        <translation>U heeft te vaak geprobeerd om in te loggen.[BR] Wacht alstublieft tot %1 en probeer het opnieuw.</translation>
+    </message>
+    <message>
+        <source>Invalid email or password. Please try again.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
+        <translation>Ongeldig e-mail adres of wachtwoord. Probeer het opnieuw.</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
+        <translation>De app kan geen verbinding maken. Controleer uw internetverbinding en lokale firewallconfiguratie. Houd er rekening mee dat de meeste antivirussoftware een firewall bevat.</translation>
+    </message>
+    <message>
+        <source>Email address already in use.</source>
+        <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. CON-465</translatorcomment>
+        <translation>E-mailadres is reeds in gebruik.</translation>
+    </message>
+</context>
+<context>
+    <name>LogoutController</name>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
+        <translation>U bent vanaf een andere locatie op deze computer uitgelogd</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
+        <translation>Onze SSL-sleutel kan niet worden geverifieerd. U kunt worden getroffen door een man-in-the-middle-aanval of uw antivirussoftware kan uw communicatie onderscheppen en dit probleem veroorzaken. Schakel het uit en probeer het opnieuw.</translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
+        <translation>U bent afgemeld vanwege deze fout: %1</translation>
+    </message>
+</context>
+<context>
     <name>LowDiskSpaceDialog</name>
     <message>
         <source>Low disk space</source>
@@ -2338,11 +2370,6 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
         <translation>De links zijn gekopieerd naar het klembord</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Inloggen…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2451,64 +2478,9 @@ https://mega.co.nz/#sync</source>
         <translation>Uw configuratie is corrupt, begin opnieuw</translation>
     </message>
     <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>De app kan geen verbinding maken. Controleer uw internetverbinding en lokale firewallconfiguratie. Houd er rekening mee dat de meeste antivirussoftware een firewall bevat.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de lokale map niet beschikbaar is of geen lees- en schrijfrechten heeft.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de lokale map niet beschikbaar is of geen lees- en schrijfrechten heeft.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Login error: %1</source>
-        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation>Fout bij inloggen: %1</translation>
-    </message>
-    <message>
-        <source>You have been logged out on this computer from another location</source>
-        <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation>U bent afgemeld op deze computer vanaf een andere locatie</translation>
-    </message>
-    <message>
-        <source>You have been logged out because of this error: %1</source>
-        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation>U bent afgemeld vanwege deze fout: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de externe map zich in de Prullenbak bevindt</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de lokale map is veranderd</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw synchronisatie “%1”  is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
-    </message>
-    <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation>Tegoed over</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de synchronisatie van VirtualBox gedeelde mappen niet wordt ondersteund vanwege gebreken in dat bestandssysteem.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2529,11 +2501,6 @@ https://mega.co.nz/#sync</source>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
         <translation>Fout: Ongeldige doelmap. Het downloaden is geannuleerd.</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>Onze SSL-sleutel kan niet worden geverifieerd. U kunt worden getroffen door een man-in-the-middle-aanval of uw antivirussoftware kan uw communicatie onderscheppen en dit probleem veroorzaken. Schakel het uit en probeer het opnieuw.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -2578,7 +2545,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Please consider updating your operating system.</source>
         <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
-        <translation>Overweeg het updaten van uw besturingssysteem.</translation>
+        <translation>Overweeg een update van uw besturingssysteem.</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -2651,11 +2618,6 @@ https://mega.co.nz/#sync</source>
         <translation>Links openen</translation>
     </message>
     <message>
-        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
-        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Uw account is gedeactiveerd door uw beheerder. Neem contact op met uw zakelijke accountbeheerder voor meer informatie.</translation>
-    </message>
-    <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation>De applicatie blijft werken, maar updates worden binnenkort niet meer ondersteund voor versies vóór Windows 7.</translation>
@@ -2669,16 +2631,6 @@ https://mega.co.nz/#sync</source>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Een of meer synchronisaties zijn uitgeschakeld</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld. Reden: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been enabled</source>
-        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is ingeschakeld</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -2729,41 +2681,6 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <translation>Één of meer back-ups zijn uitgeschakeld</translation>
     </message>
     <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw backup “%1” is uitgeschakeld omdat de lokale map niet beschikbaar is of geen lees- en schrijfrechten heeft.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up “%1” is uitgeschakeld omdat de synchronisatie van VirtualBox gedeelde mappen niet wordt ondersteund vanwege gebreken in dat bestandssysteem.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &#8220;%1&#8221; was uitgeschakeld omdat de MEGA map in de Prullenbak is.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up “%1” was uitgeschakeld. U heeft geen volledige toegang tot de MEGA map (of een deel ervan).</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &#8220;%1&#8221; is uitgeschakeld omdat de lokale map is gewijzigd.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &#8220;%1&#8221; is uitgeschakeld omdat de MEGA map is gewijzigd.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Uw back-up &#8220;%1&#8221; is uitgeschakeld. Reden: %2</translation>
-    </message>
-    <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>Beveiligingsupgrade</translation>
@@ -2809,34 +2726,9 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <translation>Instellingen</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Uw synchronisaties en back-ups zijn uitgeschakeld: %1</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Uw back-ups zijn uitgeschakeld: %1</translation>
-    </message>
-    <message>
-        <source>Your syncs have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Uw synchronisaties zijn uitgeschakeld: %1</translation>
-    </message>
-    <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
         <translation>Fout bij ophalen van link: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Uw synchronisatie “%1” was tijdelijk uitgeschakeld: %2</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Uw back-up “%1” is tijdelijk uitgeschakeld: %2</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2847,6 +2739,11 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <source>Account deactivated</source>
         <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
         <translation>Account gedeactiveerd</translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>ProFlexi-account gedeactiveerd</translation>
     </message>
 </context>
 <context>
@@ -3036,21 +2933,6 @@ U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijg
         <source>Close</source>
         <translatorcomment>Button label to close current message box</translatorcomment>
         <translation>Sluiten</translation>
-    </message>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>Gesloten accounts</translation>
-    </message>
-    <message>
-        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>Het is mogelijk dat u hetzelfde wachtwoord gebruikt voor uw MEGA-account als voor andere diensten en dat ten minste één van deze andere diensten een gegevenslek heeft geleden.</translation>
-    </message>
-    <message>
-        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>Uw wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief, maar niet beperkt tot, uw MEGA-account.</translation>
     </message>
 </context>
 <context>
@@ -3662,18 +3544,13 @@ Voer een andere naam in.</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>Iemand heeft uw contactverzoek geaccepteerd</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>Informatie</translation>
-    </message>
-    <message>
-        <source>Someone accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Iemand heeft uw contactverzoek geaccepteerd</translation>
     </message>
     <message>
         <source>Info:</source>
@@ -3714,6 +3591,554 @@ Voer een andere naam in.</translation>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
         <translation>Uploads en downloads:</translation>
+    </message>
+</context>
+<context>
+    <name>OnboardingStrings</name>
+    <message>
+        <source>Add folder</source>
+        <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
+        <translation>Map toevoegen</translation>
+    </message>
+    <message>
+        <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
+        <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
+        <translation>Ik heb de [B][A]Algemene Voorwaarden[/A][/B] van MEGA gelezen en ga hiermee akkoord</translation>
+    </message>
+    <message>
+        <source>Back up</source>
+        <translatorcomment>Button text to configure the selected backups CON-468</translatorcomment>
+        <translation>Back-up maken</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Button title, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>Back-up</translation>
+    </message>
+    <message>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>Er wordt automatisch en consistent een back-up van uw gegevens van uw apparaat in realtime naar MEGA gemaakt.</translation>
+    </message>
+    <message>
+        <source>Backup: Confirm</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup confirm step CON-468</translatorcomment>
+        <translation>Back-up: Bevestigen</translation>
+    </message>
+    <message>
+        <source>Backup Folders</source>
+        <translatorcomment>Backup folders table title CON-468</translatorcomment>
+        <translation>Back-upmappen</translation>
+    </message>
+    <message>
+        <source>Backup: Select folders</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
+        <translation>Back-up: Selecteer mappen</translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
+        <translation>Back-up naar:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>Kiezen</translation>
+    </message>
+    <message>
+        <source>Change folder</source>
+        <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
+        <translation>Map wijzigen</translation>
+    </message>
+    <message>
+        <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
+        <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
+        <translation>Voer het nieuwe e-mailadres in en klik op Opnieuw verzenden. Vervolgens sturen wij de verificatie-e-mail naar dit nieuwe e-mailadres, zodat u uw account kunt activeren.</translation>
+    </message>
+    <message>
+        <source>Change your email address</source>
+        <translatorcomment>Change email window title CON-466</translatorcomment>
+        <translation>Wijzig uw email-adres</translation>
+    </message>
+    <message>
+        <source>Device name</source>
+        <translatorcomment>Device name window title CON-467</translatorcomment>
+        <translation>Apparaat naam</translation>
+    </message>
+    <message>
+        <source>Add the name of your device.</source>
+        <translatorcomment>Device name window secondary title CON-467</translatorcomment>
+        <translation>Voeg de naam van uw apparaat toe.</translation>
+    </message>
+    <message>
+        <source>Add device name</source>
+        <translatorcomment>Device name text input box title CON-467</translatorcomment>
+        <translation>Apparaat naam toevoegen</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translatorcomment>Button text to confirm the current action CON-467</translatorcomment>
+        <translation>Bevestigen</translation>
+    </message>
+    <message>
+        <source>There is already a folder with the same name in this backup</source>
+        <translatorcomment>Error text indicating that it can´t create a backup with duplicated names CON-468</translatorcomment>
+        <translation>Er is al een map met dezelfde naam in deze back-up</translation>
+    </message>
+    <message>
+        <source>A folder with the same name already exists on your backups</source>
+        <translatorcomment>Error text indicating that a backup with the same name already exists CON-468</translatorcomment>
+        <translation>Er bestaat al een map met dezelfde naam in uw back-ups</translation>
+    </message>
+    <message>
+        <source>Confirm folders to back up</source>
+        <translatorcomment>Confirm backups table title CON-468</translatorcomment>
+        <translation>Bevestig de mappen waarvan u een back-up wilt maken</translation>
+    </message>
+    <message>
+        <source>Account created</source>
+        <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
+        <translation>Account gecreëerd</translation>
+    </message>
+    <message>
+        <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
+        <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
+        <translation>Om uw account te activeren, moet u uw e-mailadres verifiëren. We hebben u een e-mail gestuurd met een bevestigingslink. Klik op de link om uw e-mailadres te verifiëren, waarna u kunt inloggen.</translation>
+    </message>
+    <message>
+        <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
+        <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>Als u de e-mail niet binnen 1 uur ontvangt, neem dan [B][A]contact op met de ondersteuning[/A][/B].</translation>
+    </message>
+    <message>
+        <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
+        <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>Als u uw e-mailadres verkeerd heeft gespeld, [B][A]kunt u dit hier wijzigen.[/A][/B].</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
+        <translation>Wachtwoord bevestigen</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
+        <translation>Klaar</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translatorcomment>Email text input title CON-466</translatorcomment>
+        <translation>E-mailadres</translation>
+    </message>
+    <message>
+        <source>Please confirm your password</source>
+        <translatorcomment>Confirm password text input title CON-466</translatorcomment>
+        <translation>Bevestig uw wachtwoord</translation>
+    </message>
+    <message>
+        <source>Enter your password</source>
+        <translatorcomment>Password text input title CON-466</translatorcomment>
+        <translation>Voer uw wachtwoord in</translation>
+    </message>
+    <message>
+        <source>Please enter your name</source>
+        <translatorcomment>Name text input title CON-466</translatorcomment>
+        <translation>Voer uw voornaam in</translation>
+    </message>
+    <message>
+        <source>Please enter your last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>Voer uw achternaam in</translation>
+    </message>
+    <message>
+        <source>Passwords don&apos;t match. Check and try again.</source>
+        <translatorcomment>Error label indicating that password and confirm password content is not the same CON-466</translatorcomment>
+        <translation>Wachtwoorden komen niet overeen. Controleer en probeer het opnieuw.</translation>
+    </message>
+    <message>
+        <source>Enter a valid email address</source>
+        <translatorcomment>Error label indicating that the email is not valid CON-466</translatorcomment>
+        <translation>Voer een geldig email-adres in</translation>
+    </message>
+    <message>
+        <source>Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Uw back-up is ingesteld en van geselecteerde gegevens wordt automatisch een back-up gemaakt wanneer de desktop-applicatie actief is. U kunt uw back-ups en hun status bekijken op het tabblad Back-up in Instellingen.</translation>
+    </message>
+    <message>
+        <source>Your backup is set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Uw back-up is ingesteld</translation>
+    </message>
+    <message>
+        <source>What else do you want to do?</source>
+        <translatorcomment>Text suggesting the user to create another backup or sync CON-468</translatorcomment>
+        <translation>Wat wilt u nog meer doen?</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
+        <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
+        <translation>Uw synchronisatie is ingesteld en synchroniseert automatisch geselecteerde gegevens wanneer de desktop-applicatie actief is.</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-467</translatorcomment>
+        <translation>Uw synchronisatie is ingesteld</translation>
+    </message>
+    <message>
+        <source>First name</source>
+        <translatorcomment>First name text input title CON-466</translatorcomment>
+        <translation>Voornaam</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA account with your local device.</source>
+        <translatorcomment>Full sync button description CON-467</translatorcomment>
+        <translation>Synchroniseer uw gehele MEGA account met uw lokale apparaat.</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translatorcomment>Full sync button title CON-467</translatorcomment>
+        <translation>Volledige synchronisatie</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Full sync page title CON-467</translatorcomment>
+        <translation>Synchroniseer uw gehele MEGA Cloud schijf met een lokaal apparaat.</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
+        <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat u geen rechten heeft om een ​​nieuwe map te maken. Selecteer een bestaande map om door te gaan.</translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
+        <translation>Wachtwoord vergeten?</translation>
+    </message>
+    <message>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a local folder CON-467</translatorcomment>
+        <translation>Selecteer een lokale map om te synchroniseren</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a MEGA folder CON-467</translatorcomment>
+        <translation>Selecteer een MEGA map om te synchroniseren</translation>
+    </message>
+    <message>
+        <source>Setup options</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the Setup options step CON-467</translatorcomment>
+        <translation>Instel opties</translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
+        <translation>Kiezen:</translation>
+    </message>
+    <message>
+        <source>Welcome to MEGA</source>
+        <translatorcomment>Label wellcoming the user to MEGA CON-467</translatorcomment>
+        <translation>Welkom bij MEGA</translation>
+    </message>
+    <message>
+        <source>Last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>Achternaam</translation>
+    </message>
+    <message>
+        <source>Log in</source>
+        <translatorcomment>Log in button text CON-465</translatorcomment>
+        <translation>Inloggen</translation>
+    </message>
+    <message>
+        <source>Log in to your [B]MEGA account[/B]</source>
+        <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
+        <translation>Log in op uw[B] MEGA-account[/B]</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
+        <translation>Volgende</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
+        <translation>Overslaan</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>Weergeven in Instellingen</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Password input field title CON-465</translatorcomment>
+        <translation>Wachtwoord</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
+        <translation>Vorige</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Button to rename a backup CON-468</translatorcomment>
+        <translation>Hernoemen</translation>
+    </message>
+    <message>
+        <source>Resend</source>
+        <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
+        <translation>Opnieuw versturen</translation>
+    </message>
+    <message>
+        <source>[B]Select all[/B]</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>[B]Alles selecteren[/B]</translation>
+    </message>
+    <message>
+        <source>Select folders to back up</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>Selecteer mappen waarvan u een back-up wilt maken</translation>
+    </message>
+    <message>
+        <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
+        <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
+        <translation>Van geselecteerde mappen wordt automatisch een back-up gemaakt naar MEGA wanneer de desktop-applicatie actief is.</translation>
+    </message>
+    <message>
+        <source>Select a local folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a local folder CON-467</translatorcomment>
+        <translation>Selecteer een lokale map</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
+        <translation>Selecteer een MEGA map</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA account with your local device.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>Synchroniseer geselecteerde mappen in uw MEGA-account met uw lokale apparaat.</translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
+        <translation>Synchroniseer specifieke mappen op uw MEGA Cloud-schijf met uw lokale apparaat.</translation>
+    </message>
+    <message>
+        <source>Selective sync</source>
+        <translatorcomment>Selective sync button title text CON-467</translatorcomment>
+        <translation>Selectieve synchronisatie</translation>
+    </message>
+    <message>
+        <source>Set up MEGA</source>
+        <translatorcomment>Onboarding window title CON-467</translatorcomment>
+        <translation>MEGA Instellen</translation>
+    </message>
+    <message>
+        <source>Sign up</source>
+        <translatorcomment>Sign up button text CON-465</translatorcomment>
+        <translation>Aanmelden</translation>
+    </message>
+    <message>
+        <source>Create your [B]MEGA account[/B]</source>
+        <translatorcomment>Sign up page title CON-466</translatorcomment>
+        <translation>Creëer uw [B]MEGA account[/B]</translation>
+    </message>
+    <message>
+        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>Synchroniseer uw apparaat met MEGA en eventuele lokale wijzigingen worden automatisch en onmiddellijk toegepast op MEGA en omgekeerd.</translation>
+    </message>
+    <message>
+        <source>Choose sync type</source>
+        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
+        <translation>Kies het synchronisatietype</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Button title that forwards the user to the syncs flow CON-467</translatorcomment>
+        <translation>Synchroniseren</translation>
+    </message>
+    <message>
+        <source>Sync: Choose type</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the choose sync type step CON-467</translatorcomment>
+        <translation>Sync: Kies type</translation>
+    </message>
+    <message>
+        <source>Sync set up</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
+        <translation>Synchronisatie instelling</translation>
+    </message>
+    <message>
+        <source>Problem with two-factor authentication?</source>
+        <translatorcomment>Text that the user has to click in case he has problems with 2FA CON-465</translatorcomment>
+        <translation>Probleem met twee-stap authenticatie?</translation>
+    </message>
+    <message>
+        <source>Enter the 6-digit code generated by your authenticator app.</source>
+        <translatorcomment>2FA page secondary title CON-465</translatorcomment>
+        <translation>Voer de 6-cijferige code in die door uw authenticator-applicatie is gegenereerd.</translation>
+    </message>
+    <message>
+        <source>Continue with [B]two-factor authentication[/B]</source>
+        <translatorcomment>2FA page title CON-465</translatorcomment>
+        <translation>Doorgaan met [B]twee-stap authenticatie[/B]</translation>
+    </message>
+    <message>
+        <source>Logging in…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Inloggen…</translation>
+    </message>
+    <message>
+        <source>Fetching file list…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Bestandslijst ophalen…</translation>
+    </message>
+    <message>
+        <source>Creating account…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
+        <translation>Account creëren</translation>
+    </message>
+    <message>
+        <source>Validating 2FA code…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>2FA code valideren…</translation>
+    </message>
+    <message>
+        <source>Stop logging in?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Stoppen met inloggen?</translation>
+    </message>
+    <message>
+        <source>Closing this window will stop you logging in.</source>
+        <translatorcomment>Dialog body text. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Als u dit venster sluit, kunt u niet meer inloggen.</translation>
+    </message>
+    <message>
+        <source>Stop Loggin in</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Stop met inloggen</translation>
+    </message>
+    <message>
+        <source>Don’t stop</source>
+        <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Niet stoppen</translation>
+    </message>
+    <message>
+        <source>Cancel account creation?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Account creatie annuleren?</translation>
+    </message>
+    <message>
+        <source>Closing this window will cancel the sign up process.</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Als u dit venster sluit, wordt het aanmeldingsproces geannuleerd.</translation>
+    </message>
+    <message>
+        <source>Cancel account</source>
+        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Creatie annuleren</translation>
+    </message>
+    <message>
+        <source>Don’t cancel</source>
+        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Niet annuleren</translation>
+    </message>
+    <message>
+        <source>Password needs to be at least 8 characters</source>
+        <translatorcomment>Hint text that tells the user minimum requirement for the passwords CON-466</translatorcomment>
+        <translation>Het wachtwoord moet minimaal 8 tekens lang zijn</translation>
+    </message>
+    <message>
+        <source>It’s better to have:</source>
+        <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Het is beter om:</translation>
+    </message>
+    <message>
+        <source>Upper and lower case letters</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Hoofdletters en kleine letters</translation>
+    </message>
+    <message>
+        <source>At least one number or special character</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Tenminste één nummer of speciaal teken</translation>
+    </message>
+    <message>
+        <source>Enter a minimum of 8 characters.</source>
+        <translatorcomment>Error text to force the user to fill minimum character requirement CON-466</translatorcomment>
+        <translation>Voer minimaal 8 tekens in.</translation>
+    </message>
+    <message>
+        <source>Your password is too easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>Uw wachtwoord is te gemakkelijk om te raden. U heeft een sterker wachtwoord nodig.</translation>
+    </message>
+    <message>
+        <source>Your password is easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>Uw wachtwoord is te gemakkelijk om te raden. U heeft een sterker wachtwoord nodig.</translation>
+    </message>
+    <message>
+        <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
+        <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
+        <translation>Update uw bestanden automatisch van uw computers naar MEGA. Back-upitems in MEGA kunnen niet worden gewijzigd of verwijderd uit MEGA.</translation>
+    </message>
+    <message>
+        <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
+        <translation>Synchroniseer geselecteerde mappen tussen uw computer met MEGA; elke verandering aan de ene kant zal van toepassing zijn op de andere kant.</translation>
+    </message>
+    <message>
+        <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
+        <translation>Synchroniseer uw bestanden tussen uw computers met MEGA; elke verandering aan de ene kant zal van toepassing zijn op de andere kant.</translation>
+    </message>
+    <message>
+        <source>Let&apos;s get you set up</source>
+        <translatorcomment>Page title for new accounts in set device name page CON-467</translatorcomment>
+        <translation>Laten we u voorbereiden</translation>
+    </message>
+    <message>
+        <source>Confirm your email and password</source>
+        <translatorcomment>Page title for new accounts in login page CON-465</translatorcomment>
+        <translation>Bevestig uw e-mailadres en wachtwoord</translation>
+    </message>
+    <message>
+        <source>Once confirmed, your account will be activated.</source>
+        <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
+        <translation>Na bevestiging wordt uw account geactiveerd.</translation>
+    </message>
+    <message>
+        <source>Enter your email address</source>
+        <translatorcomment>Login error if user didn´t enter the email CON-465</translatorcomment>
+        <translation>Voer uw e-mailadres in</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Device name text input field title CON-467</translatorcomment>
+        <translation>Voer een apparaat naam in</translation>
+    </message>
+    <message>
+        <source>Names longer than 32 characters are not supported</source>
+        <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
+        <translation>Namen die langer zijn dan 32 tekens worden niet ondersteund</translation>
+    </message>
+    <message>
+        <source>Authentication failed</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>Authenticatie mislukt</translation>
+    </message>
+    <message>
+        <source>Incorrect 2FA code</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>Onjuiste 2FA code</translation>
     </message>
 </context>
 <context>
@@ -4039,14 +4464,16 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Upgraded to Qt5.15.
-- Fixed detected crashes on Windows, Linux and macOS.
-- Updated third-party libraries.
+        <source>- A new onboarding wizard is introduced when a new sync or backup process is initiated for the first time.
+- Revamped the user interface of the macOS installer.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Application performance improved.
 </source>
-        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
-        <translation>- Opgewaardeerd naar Qt 5.15.
--Gedetecteerde crashes op Windows, Linux en macOS opgelost.
-- Bibliotheken van derden bijgewerkt.
+        <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
+        <translation>- Er wordt een nieuwe onboarding-wizard geïntroduceerd wanneer voor de eerste keer een nieuw synchronisatie- of back-upproces wordt gestart.
+- Vernieuwde gebruikersinterface van het macOS-installatieprogramma.
+ - Vaste gedetecteerde crashes op Windows, Linux en macOS opgelost.
+- Applicatieprestaties verbeterd.
 </translation>
     </message>
 </context>
@@ -4066,16 +4493,6 @@ Voer een andere naam in.</translation>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
         <translation>Proxy instellingen:</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translatorcomment>HTTP proxy type</translatorcomment>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>SOCK5H</source>
-        <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -4371,7 +4788,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>Onbekend</translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -4643,7 +5060,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Scannen&#8230;</translation>
+        <translation>Scannen…</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -4669,6 +5086,11 @@ Wilt u deze toch verwijderen?</translation>
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
         <translation><numerusform>%n bestand</numerusform><numerusform>%n bestanden</numerusform></translation>
+    </message>
+    <message>
+        <source>Adding transfers…</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
+        <translation>Overdrachten toevoegen…</translation>
     </message>
 </context>
 <context>
@@ -4919,11 +5341,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Netwerk</translation>
     </message>
     <message>
-        <source>Enable overlay icons</source>
-        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>Overlay-pictogrammen inschakelen</translation>
-    </message>
-    <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
         <translation>Updates controleren</translation>
@@ -5131,7 +5548,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Windows File Explorer integratie inschakelen</translation>
+        <translation>Schakel File Explorer-integratie in</translation>
     </message>
     <message>
         <source>B</source>
@@ -5351,7 +5768,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>Uw synchronisatie ”%11“ kan niet worden uitgeschakeld. Reden: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5386,7 +5803,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Uw back-up ”%11“ kan niet ingeschakeld worden. Reden: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5401,7 +5818,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Uw back-up ”%1“ kan niet uitgeschakeld worden. Reden: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5412,6 +5829,21 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Voorkomt dat de computer op slaap modus gaat terwijl overdrachten of synchronisatie in behandeling is.</translation>
+    </message>
+    <message>
+        <source>Enable sync status icons</source>
+        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
+        <translation>Synchronisatiestatuspictogrammen inschakelen</translation>
+    </message>
+    <message>
+        <source>Enabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>Synchronisatiestatuspictogrammen inschakelen</translation>
+    </message>
+    <message>
+        <source>Disabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>Synchronisatiestatuspictogrammen uitschakelen</translation>
     </message>
 </context>
 <context>
@@ -5428,340 +5860,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Auto</source>
         <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
         <translation>Automatisch</translation>
-    </message>
-</context>
-<context>
-    <name>SetupWizard</name>
-    <message>
-        <source>Create a new MEGA account</source>
-        <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>Creëer een nieuw MEGA-account aan</translation>
-    </message>
-    <message>
-        <source>Email:</source>
-        <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>E-mail:</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>Wachtwoord:</translation>
-    </message>
-    <message>
-        <source>Repeat password:</source>
-        <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>Herhaal wachtwoord:</translation>
-    </message>
-    <message>
-        <source>Log in to your MEGA account</source>
-        <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Inloggen op uw MEGA-account</translation>
-    </message>
-    <message>
-        <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Verifieer uw account door te klikken op de bevestigingslink die we naar uw e-mailadres hebben gestuurd</translation>
-    </message>
-    <message>
-        <source>Choose install type</source>
-        <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>Kies installeringstype</translation>
-    </message>
-    <message>
-        <source> Sync your entire cloud drive</source>
-        <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Synchroniseer uw volledige Cloud schijf</translation>
-    </message>
-    <message>
-        <source>Selective sync</source>
-        <translatorcomment>Label displayed to show Selective sync mode. Max 18 characters.</translatorcomment>
-        <translation>Selectieve synchronisatie</translation>
-    </message>
-    <message>
-        <source>Local folder:</source>
-        <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>Lokale map:</translation>
-    </message>
-    <message>
-        <source>MEGA folder:</source>
-        <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>MEGA map:</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>Wijzigen</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>Terug</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Volgende</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Annuleren</translation>
-    </message>
-    <message>
-        <source>User already exists</source>
-        <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>Gebruiker bestaat al</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Bestandslijst ophalen…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Ongeldig e-mailadres of wachtwoord.</translation>
-    </message>
-    <message>
-        <source>MEGA folder doesn&apos;t exist</source>
-        <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>MEGA map bestaat niet</translation>
-    </message>
-    <message>
-        <source>Finish</source>
-        <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>Voltooien</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Voer uw e-mailadres in</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Voer een geldig e-mailadres in</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Voer uw wachtwoord in</translation>
-    </message>
-    <message>
-        <source>Please, enter your name</source>
-        <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Voer uw naam in</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Gebruik een sterker wachtwoord</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>De ingevoerde wachtwoorden komen niet overeen</translation>
-    </message>
-    <message>
-        <source>You have to accept our terms of service</source>
-        <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>U moet onze Algemene Voorwaarden accepteren</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Account creëren…</translation>
-    </message>
-    <message>
-        <source>Please, select a local folder</source>
-        <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Selecteer een lokale map</translation>
-    </message>
-    <message>
-        <source>Please, select a MEGA folder</source>
-        <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Selecteer een MEGA map</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Selecteer lokale map</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Inloggen…</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Kan het bestandssysteem niet ophalen. Probeer het nogmaals. Als het probleem aanhoudt, neem dan contact met ons op via bug@mega.nz</translation>
-    </message>
-    <message>
-        <source>Set up Assistant - MEGAsync</source>
-        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Assistent instellen</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
-        <translation>Volledige synchronisatie</translation>
-    </message>
-    <message>
-        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Uw lokale map en uw MEGA cloud schijf zullen automatisch worden gesynchroniseerd.</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>Wilt u doorgaan?</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation>Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Weet u zeker dat u deze wizard wilt annuleren en alle wijzigingen ongedaan wilt maken?</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
-        <translation>Overslaan</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Uitloggen…</translation>
-    </message>
-    <message>
-        <source>Very Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation>Heel zwak</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation>Zwak</translation>
-    </message>
-    <message>
-        <source>Medium</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation>Gemiddeld</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation>Goed</translation>
-    </message>
-    <message>
-        <source>Strong</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation>Sterk</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
-        <translation>Check uw email en klik op de link in het bericht om uw account te bevestigen.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
-        <translation>U heeft te vaak geprobeerd om in te loggen.[BR] Wacht alstublieft tot %1 en probeer het opnieuw.</translation>
-    </message>
-    <message>
-        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
-        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>First name:</source>
-        <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation>Voornaam:</translation>
-    </message>
-    <message>
-        <source>Last name:</source>
-        <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation>Achternaam:</translation>
-    </message>
-    <message>
-        <source>Check your inbox</source>
-        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation>Controleer uw postvak-in</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your cloud drive</source>
-        <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Synchroniseer specifieke mappen in uw Cloud schijf</translation>
-    </message>
-    <message>
-        <source>Selective sync:</source>
-        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
-        <translation>Selectieve synchronisatie</translation>
-    </message>
-    <message>
-        <source>Please, enter your last name</source>
-        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation>Voer uw achternaam in</translation>
-    </message>
-    <message>
-        <source>Set up selective sync</source>
-        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Selectieve synchronisatie instellen</translation>
-    </message>
-    <message>
-        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Specifieke mappen in uw cloud schijf worden gesynchroniseerd met een overeenkomende lokale map.</translation>
-    </message>
-    <message>
-        <source>Select Local folder:</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Selecteer lokale map</translation>
-    </message>
-    <message>
-        <source>Set up full sync</source>
-        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Volledige synchronisatie instellen</translation>
-    </message>
-    <message>
-        <source>Full Sync</source>
-        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation>Volledige synchronisatie</translation>
-    </message>
-    <message>
-        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Uw volledige cloud schijf wordt gesynchroniseerd met een lokale map.</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Inloggen</translation>
-    </message>
-    <message>
-        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
-        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
-        <translation>Ik ga akkoord met de MEGA [A]Algemene Voorwaarden[/A]</translation>
-    </message>
-    <message>
-        <source>Enjoy MEGAsync</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Geniet van onze applicatie</translation>
-    </message>
-    <message>
-        <source>We are all done</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>We zijn allemaal klaar</translation>
-    </message>
-    <message>
-        <source>Creating folder…</source>
-        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Map creëren…</translation>
     </message>
 </context>
 <context>
@@ -5992,24 +6090,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>SyncController</name>
     <message>
-        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation>U kunt geen back-up van deze map maken omdat deze al is gesynchroniseerd.</translation>
-    </message>
-    <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
         <translation>Er is al een back-up gemaakt van de map. Selecteer een andere.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation>U kunt geen synchronisatie van deze map maken omdat deze al is gesynchroniseerd.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation>U kunt geen synchronisatie van deze map maken omdat er al een back-up van is gemaakt.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
@@ -6017,39 +6100,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>U kunt geen back-up van deze map maken omdat deze zich al in een gesynchroniseerde map bevindt.</translation>
     </message>
     <message>
-        <source>You can&apos;t sync folders that are inside synced folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>U kunt geen mappen synchroniseren die binnenin een gesynchroniseerde map zijn.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that are inside backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation>U kunt geen mappen synchroniseren die zich in mappen bevinden waarvan een back-up is gemaakt.</translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
         <translation>U kunt geen back-up van deze map maken omdat deze gesynchroniseerde mappen bevat.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain synced folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>U kunt geen mappen synchroniseren die gesynchroniseerde map bevatten.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation>U kunt geen mappen synchroniseren die mappen bevatten waarvan een back-up is gemaakt.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>U heeft geen schrijf rechten voor deze lokale map.</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>De applicatie is niet in staat hier te downloaden.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6082,21 +6135,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Kan geen back-up creëren. Neem voor meer informatie contact op met [A]Ondersteuning[/A].</translation>
     </message>
     <message>
-        <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation>U kunt geen back-up creëren van “%1”  omdat dit de hoofdmap is. De hoofdmap is ofwel; de map op het hoogste niveau op uw apparaat of computer die al uw mappen en bestanden bevat of de map waarin het systeem of programma is geïnstalleerd. We staan ​​niet toe dat gebruikers een back-up creëren van hoofdmappen, omdat dit bestandsconflicten of fouten kan veroorzaken.
-Selecteer een andere map om door te gaan.</translation>
-    </message>
-    <message>
-        <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation>U kunt “%1”  niet synchroniseren omdat dit de hoofdmap is. De hoofdmap is ofwel; de map op het hoogste niveau op uw apparaat of computer die al uw mappen en bestanden bevat of de map waarin het systeem of programma is geïnstalleerd. We staan ​​niet toe dat gebruikers hoofdmappen synchroniseren, omdat dit bestandsconflicten of fouten kan veroorzaken.
-Selecteer een andere map om door te gaan.
- </translation>
-    </message>
-    <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
         <translation>U heeft geen volledige toegang tot deze gedeelde map en kunt deze niet synchroniseren.</translation>
@@ -6105,11 +6143,6 @@ Selecteer een andere map om door te gaan.
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
         <translation>Deze MEGA-map kan niet worden gesynchroniseerd.</translation>
-    </message>
-    <message>
-        <source>The selected MEGA folder is already synced.</source>
-        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation>De geselecteerde MEGA map is al gesynchroniseerd.</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
@@ -6121,18 +6154,173 @@ Selecteer een andere map om door te gaan.
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
         <translation>Map is al gesynchroniseerd.</translation>
     </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it is already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
+        <translation>Er kan geen back-up van de map worden gemaakt, omdat deze al is gesynchroniseerd</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s already synced</source>
+        <translatorcomment>Warning message indicating that the folder is already synced. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat deze al is gesynchroniseerd</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as is already backed up</source>
+        <translatorcomment>Warning message indicating that the selected folder is a backup. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat er al een back-up van is gemaakt</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a sync folder. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat deze zich in een gesynchroniseerde map bevindt</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat deze zich in een map bevindt waarvan een back-up is gemaakt</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains synced folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains synced folders. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat deze gesynchroniseerde mappen bevat</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains backed up folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains backed up folders. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat deze mappen bevat waarvan een back-up is gemaakt</translation>
+    </message>
+    <message>
+        <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
+        <translation>Kan geen back-up maken van “%1” omdat dit de hoofdmap is. Selecteer een andere map om door te gaan.</translation>
+    </message>
+    <message>
+        <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
+        <translation>Kan “%1” niet synchroniseren omdat dit de hoofdmap is. Selecteer een andere map om door te gaan.</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have write permissions.</source>
+        <translatorcomment>Warning message indicating that there is no write Permissions. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat u geen schrijfrechten heeft</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
+        <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat deze zich in de MEGA-Prullenbak bevindt</translation>
+    </message>
+    <message>
+        <source>This selection can&apos;t be synced as it’s a file.</source>
+        <translatorcomment>Warning message indicating that the selection is a file and files can´t be synced. CON-467</translatorcomment>
+        <translation>De kaart kan niet tijdelijk worden omdat deze zich in de MEGA-prullenbak bevindt</translation>
+    </message>
+    <message>
+        <source>This folder is already being synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
+        <translation>Deze map wordt al gesynchroniseerd</translation>
+    </message>
 </context>
 <context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>U synchroniseert een lokale map die is geformatteerd met een FAT-bestandssysteem. Dat bestandssysteem heeft tekortkomingen bij het beheren van grote bestanden en wijzigingstijden die synchronisatieproblemen kunnen veroorzaken (bijvoorbeeld wanneer de zomertijd verandert), dus het wordt sterk aanbevolen om alleen mappen te synchroniseren die zijn geformatteerd met betrouwbaardere bestandssystemen zoals NTFS (meer informatie [A]hier[/A]).</translation>
+        <translation>U synchroniseert een lokale map die is geformatteerd met een FAT-bestandssysteem. Het FAT-bestandssysteem heeft tekortkomingen bij het beheren van grote bestanden en wijzigingstijden die synchronisatieproblemen kunnen veroorzaken (bijvoorbeeld wanneer de zomertijd verandert), dus het wordt ten zeerste aanbevolen dat u alleen mappen synchroniseert die zijn geformatteerd met betrouwbaardere bestandssystemen zoals NTFS (meer informatie [A]hier[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
         <translation>U bent een lokale map aan het synchroniseren met VMWare. Deze map ondersteund geen bestandssysteem meldingen dus de applicatie moet steeds worden gescand om wijzigingen te detecteren in uw bestanden en mappen. Gebruik een andere map mits mogelijk om het CPU verbruik te verminderen.</translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Uw synchronisaties en back-ups zijn uitgeschakeld: %1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Uw back-ups zijn uitgeschakeld: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Uw synchronisaties zijn uitgeschakeld: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de lokale map niet beschikbaar is of geen lees- en schrijfrechten heeft.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de lokale map niet beschikbaar is of geen lees- en schrijfrechten heeft.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat MEGA VirtualBox-mappen niet kan synchroniseren of er geen back-up van kan maken.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de externe map zich in de Prullenbak bevindt</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Uw synchronisatie “%1”  is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de lokale map is gewijzigd</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld. Reden: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason.SNC-3654</translatorcomment>
+        <translation>Uw back-up “%1” is tijdelijk uitgeschakeld: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>Uw back-up “%1” is uitgeschakeld omdat de synchronisatie van VirtualBox gedeelde mappen niet wordt ondersteund vanwege gebreken in dat bestandssysteem.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Uw back-up “%1” was uitgeschakeld. U heeft geen volledige toegang tot de MEGA map (of een deel ervan).</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6222,26 +6410,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
-    <name>SyncsMenu</name>
+    <name>Syncs</name>
     <message>
-        <source>Add Sync</source>
-        <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>Synchronisatie toevoegen</translation>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
+        <translation>Selecteer een lokale map om te synchroniseren</translation>
     </message>
     <message>
-        <source>Syncs</source>
-        <translatorcomment>Menu option that shows syncs menu</translatorcomment>
-        <translation>Synchronisaties</translation>
+        <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
+        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat u geen schrijfrechten heeft</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation>Back-ups</translation>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
+        <translation>Selecteer een MEGA map om te synchroniseren</translation>
     </message>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>Back-up toevoegen</translation>
+        <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat deze niet kan worden gelokaliseerd. Het kan zijn dat het is verplaatst of verwijderd, of dat u geen toegang heeft.</translation>
+    </message>
+    <message>
+        <source>%1 folder doesn&apos;t exist</source>
+        <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
+        <translation>De map “%1”  bestaat niet</translation>
     </message>
 </context>
 <context>
@@ -6254,7 +6447,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>Opnieuw proberen&#8230;</translation>
+        <translation>Opnieuw proberen…</translation>
     </message>
     <message>
         <source>Uploading…</source>
@@ -6264,12 +6457,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Downloading…</source>
         <translatorcomment>Transfer is being downloaded</translatorcomment>
-        <translation>Downloaden&#8230;</translation>
+        <translation>Downloaden…</translation>
     </message>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation>Synchroniseren&#8230;</translation>
+        <translation>Synchroniseren…</translation>
     </message>
     <message>
         <source>Completing</source>
@@ -6422,7 +6615,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Scannen&#8230;</translation>
+        <translation>Scannen…</translation>
     </message>
     <message>
         <source>All paused</source>
@@ -6999,6 +7192,19 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
+    <name>TwoWaySyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu option used to add sync;SNC-3654</translatorcomment>
+        <translation>Synchronisatie toevoegen</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu option that shows syncs menu;SNC-3654</translatorcomment>
+        <translation>Synchronisaties</translation>
+    </message>
+</context>
+<context>
     <name>UpgradeDialog</name>
     <message>
         <source>Depleted transfer quota</source>
@@ -7092,7 +7298,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Selecteer de upload map voor uw bestanden:</translation>
+        <translation>Selecteer de uploadmap voor uw bestanden:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
