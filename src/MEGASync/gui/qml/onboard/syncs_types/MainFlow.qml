@@ -225,7 +225,7 @@ Rectangle {
         ignoreUnknownSignals: true
 
         function onDeviceNameMoveToSyncType() {
-            syncsPanel.state = syncType
+            syncsPanel.state = syncType;
         }
     }
 
@@ -236,7 +236,7 @@ Rectangle {
         ignoreUnknownSignals: true
 
         function onInstallationTypeMoveToBack() {
-            syncsPanel.state = deviceName
+            syncsPanel.state = deviceName;
         }
 
         function onInstallationTypeMoveToSync() {
