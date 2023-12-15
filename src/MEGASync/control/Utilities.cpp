@@ -1591,35 +1591,32 @@ TimeInterval::TimeInterval(long long secs, bool secondPrecision)
 }
 
 //Create Folders
-bool CreateDirectory::createFolder(MegaNode* parentNode, const QString &folderName)
+std::shared_ptr<MegaNode> CreateDirectory::createFolder(MegaNode* parentNode, const QString &folderName)
 {
-    auto result(false);
-
-    std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getChildNode(parentNode, folderName.toUtf8().constData()));
+    std::shared_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getChildNode(parentNode, folderName.toUtf8().constData()));
     if(!node)
     {
         MegaSyncApp->getMegaApi()->createFolder(folderName.toUtf8().constData(), parentNode,
-                                                new OnFinishOneShot(MegaSyncApp->getMegaApi(), this,[this, &result]
-                                                                    (bool, const MegaRequest&,const MegaError& e)
+                                                new OnFinishOneShot(MegaSyncApp->getMegaApi(), this,[this, &node]
+                                                                    (bool, const MegaRequest& request,const MegaError& e)
                                                                     {
-                                                                        result = e.getErrorCode() == MegaError::API_OK;
+                                                                        if(e.getErrorCode() == MegaError::API_OK)
+                                                                        {
+                                                                            node.reset(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
+                                                                        }
                                                                         mEventLoop.quit();
                                                                     }));
         //In order to execute in synchronously
         mEventLoop.exec();
     }
-    else
-    {
-        result = true;
-    }
 
-    return result;
+    return node;
 }
 
 
-bool CreateDirectory::mkDir(const QString& root, const QString &path)
+std::shared_ptr<MegaNode> CreateDirectory::mkDir(const QString& root, const QString &path)
 {
-    std::unique_ptr<MegaNode> rootNode(root.isEmpty() ? MegaSyncApp->getMegaApi()->getRootNode() :
+    std::shared_ptr<MegaNode> nodeCreated(root.isEmpty() ? MegaSyncApp->getMegaApi()->getRootNode() :
                                            MegaSyncApp->getMegaApi()->getNodeByPath(root.toUtf8().constData()));
     auto auxPath(path);
 
@@ -1633,16 +1630,14 @@ bool CreateDirectory::mkDir(const QString& root, const QString &path)
             continue;
         }
 
-
-        if(!createFolder(rootNode.get(), followingPath))
+        nodeCreated = createFolder(nodeCreated.get(), followingPath);
+        if(!nodeCreated)
         {
-            return false;
+            mPathCreated.clear();
         }
-
-        rootNode.reset(MegaSyncApp->getMegaApi()->getChildNode(rootNode.get(), followingPath.toUtf8().constData()));
     }
 
-    return true;
+    return nodeCreated;
 }
 
 

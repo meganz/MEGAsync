@@ -506,10 +506,10 @@ class CreateDirectory : public QObject
 {
 public:
     CreateDirectory() = default;
-    bool mkDir(const QString& root, const QString& path);
+    std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path);
 
 private:
-    bool createFolder(mega::MegaNode *parentNode, const QString& folderName);
+    std::shared_ptr<mega::MegaNode> createFolder(mega::MegaNode *parentNode, const QString& folderName);
 
     QStringList mPathCreated;
     QEventLoop mEventLoop;

@@ -297,6 +297,7 @@ public:
     void setIsSolved(bool potentially);
     virtual bool autoSolveIssue(){return false;}
     virtual bool isSolvable() const {return false;}
+    virtual bool refreshListAfterSolving() const {return false;}
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 

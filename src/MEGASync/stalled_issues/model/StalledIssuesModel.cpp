@@ -505,6 +505,7 @@ Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex& index) const
 void StalledIssuesModel::fullReset()
 {
     mSolvedStalledIssues.clear();
+    mLastSolvedStalledIssue = StalledIssueVariant();
     reset();
 }
 
@@ -714,7 +715,16 @@ void StalledIssuesModel::stopSolvingIssues()
     if(mIssuesSolved)
     {
         mIssuesSolved = false;
-        refreshFilter();
+
+        if(mLastSolvedStalledIssue.consultData() &&
+            mLastSolvedStalledIssue.consultData()->refreshListAfterSolving())
+        {
+            updateStalledIssues();
+        }
+        else
+        {
+            emit refreshFilter();
+        }
     }
     else
     {
@@ -728,7 +738,7 @@ void StalledIssuesModel::startSolvingIssues()
     blockUi();
 }
 
-void StalledIssuesModel::finishSolvingIssues(int issuesFixed, bool sendMessage)
+void StalledIssuesModel::finishSolvingIssues(int issuesFixed, bool sendMessage, const QString& message)
 {
     mSolvingIssues = false;
     mIssuesSolved = true;
@@ -736,7 +746,7 @@ void StalledIssuesModel::finishSolvingIssues(int issuesFixed, bool sendMessage)
     if(sendMessage)
     {
         auto info = std::make_shared<MessageInfo>();
-        info->message = tr("%n issues fixed", "", issuesFixed);
+        info->message = message.isEmpty() ? tr("%n issues fixed", "", issuesFixed) : message;
         info->buttonType = MessageInfo::ButtonType::Ok;
         emit updateLoadingMessage(info);
     }
@@ -755,22 +765,21 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
     emit updateLoadingMessage(info);
 }
 
-void StalledIssuesModel::solveListOfIssues(bool isAsync, const QModelIndexList &list, std::function<bool (int)> solveFunc,
-                                           std::function<void (void)> startFunc, std::function<void (int, bool)> finishFunc)
+void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 {
     startSolvingIssues();
-    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, isAsync, list, solveFunc, startFunc, finishFunc]()
-   {
-       if(startFunc)
+    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, info]()
+    {
+       if(info.startFunc)
        {
-           startFunc();
+           info.startFunc();
        }
 
        auto issueCounter(1);
        auto issuesFixed(0);
        auto issuesExternallyChanged(0);
-       auto totalRows(list.size());
-       foreach(auto index, list)
+       auto totalRows(info.indexes.size());
+       foreach(auto index, info.indexes)
        {
            if(checkIfUserStopSolving())
            {
@@ -791,7 +800,7 @@ void StalledIssuesModel::solveListOfIssues(bool isAsync, const QModelIndexList &
                }
                else
                {
-                   if(solveFunc(potentialIndex.row()))
+                   if(info.solveFunc && info.solveFunc(potentialIndex.row()))
                    {
                        if(!issue.getData()->isSolved())
                        {
@@ -807,7 +816,7 @@ void StalledIssuesModel::solveListOfIssues(bool isAsync, const QModelIndexList &
            mModelMutex.unlock();
        }
 
-       if(!isAsync)
+       if(!info.async)
        {
            bool sendMessage(true);
 
@@ -836,25 +845,14 @@ void StalledIssuesModel::solveListOfIssues(bool isAsync, const QModelIndexList &
                }
            }
 
-           if(finishFunc)
+           if(info.finishFunc)
            {
-               finishFunc(issuesFixed, issuesExternallyChanged > 0);
+               info.finishFunc(issuesFixed, issuesExternallyChanged > 0);
            }
 
-           finishSolvingIssues(issuesFixed, sendMessage);
+           finishSolvingIssues(issuesFixed, sendMessage, info.solveMessage);
        }
    });
-}
-
-void StalledIssuesModel::solveListOfIssuesSync(const QModelIndexList &list, std::function<bool (int)> solveFunc,
-                                           std::function<void (void)> startFunc, std::function<void (int, bool)> finishFunc)
-{
-    solveListOfIssues(false, list, solveFunc, startFunc, finishFunc);
-}
-
-void StalledIssuesModel::solveListOfIssuesAsync(const QModelIndexList &list, std::function<bool (int)> solveFunc, std::function<void ()> startFunc)
-{
-    solveListOfIssues(true, list, solveFunc, startFunc);
 }
 
 int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion criterion)
@@ -874,6 +872,7 @@ void StalledIssuesModel::issueSolved(const StalledIssueVariant& issue)
 {
     if(issue.consultData()->isSolved() && !issue.consultData()->isPotentiallySolved())
     {
+        mLastSolvedStalledIssue = issue;
         mSolvedStalledIssues.append(issue);
         mCountByFilterCriterion[static_cast<int>(StalledIssueFilterCriterion::SOLVED_CONFLICTS)]++;
         auto& counter = mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason(issue.consultData()->getReason()))];
@@ -902,7 +901,9 @@ void StalledIssuesModel::solveAllIssues()
     {
         list.append(index(row,0));
     }
-    solveListOfIssuesSync(list, resolveIssue);
+
+    SolveListInfo info(list, resolveIssue);
+    solveListOfIssues(info);
 }
 
 void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList& list)
@@ -929,7 +930,8 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList& 
         return false;
     };
 
-    solveListOfIssuesSync(list, resolveIssue);
+    SolveListInfo info(list, resolveIssue);
+    solveListOfIssues(info);
 }
 
 void StalledIssuesModel::chooseBothSides(const QModelIndexList& list)
@@ -995,7 +997,9 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList& list)
         }
     };
 
-    solveListOfIssuesSync(list, resolveIssue, nullptr, finishFunc);
+    SolveListInfo info(list, resolveIssue);
+    info.finishFunc = finishFunc;
+    solveListOfIssues(info);
 }
 
 void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList& list)
@@ -1018,7 +1022,8 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList& l
         return false;
     };
 
-    solveListOfIssuesSync(list, resolveIssue);
+    SolveListInfo info(list, resolveIssue);
+    solveListOfIssues(info);
 }
 
 void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink)
@@ -1105,7 +1110,9 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink
     };
 
 
-    solveListOfIssuesSync(auxList, resolveIssue, nullptr, finishFunc);
+    SolveListInfo info(auxList, resolveIssue);
+    info.finishFunc = finishFunc;
+    solveListOfIssues(info);
 }
 
 void StalledIssuesModel::ignoreSymLinks()
@@ -1195,7 +1202,10 @@ void StalledIssuesModel::ignoreSymLinks()
         }
     };
 
-    solveListOfIssuesSync(list, resolveIssue, startIssue, finishIssue);
+    SolveListInfo info(list, resolveIssue);
+    info.startFunc = startIssue;
+    info.finishFunc = finishIssue;
+    solveListOfIssues(info);
 }
 
 void StalledIssuesModel::showIgnoreItemsError(bool allFailed)
@@ -1229,7 +1239,10 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
         return true;
     };
 
-    solveListOfIssuesSync(list, resolveIssue, nullptr, finishIssue);
+    SolveListInfo info(list, resolveIssue);
+    info.finishFunc = finishIssue;
+    solveListOfIssues(info);
+    solveListOfIssues(info);
 }
 
 void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index)
@@ -1239,8 +1252,18 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index)
         auto issue(mStalledIssues.at(row));
         if(auto moveOrRemoveIssue = std::dynamic_pointer_cast<MoveOrRenameCannotOccurIssue>(issue.getData()))
         {
-            connect(moveOrRemoveIssue.get(), &MoveOrRenameCannotOccurIssue::issueSolved, [this](bool isSolved){
-                finishSolvingIssues(isSolved ? 1 : 0, true);
+            connect(moveOrRemoveIssue.get(), &MoveOrRenameCannotOccurIssue::issueSolved, this, [this, moveOrRemoveIssue](bool isSolved)
+            {
+                QString solveMessage;
+                if(moveOrRemoveIssue->isFile())
+                {
+                    solveMessage = tr("File \"%1\" was moved to \"%2\".").arg(moveOrRemoveIssue->currentPath(), moveOrRemoveIssue->previousPath());
+                }
+                else
+                {
+                    solveMessage = tr("Folder \"%1\" was moved to \"%2\".").arg(moveOrRemoveIssue->currentPath(), moveOrRemoveIssue->previousPath());
+                }
+                finishSolvingIssues(isSolved ? 1 : 0, true, solveMessage);
             });
             moveOrRemoveIssue->solveIssue();
 
@@ -1248,7 +1271,9 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index)
         }
     };
 
-    solveListOfIssuesAsync(QModelIndexList() << index, resolveIssue);
+    SolveListInfo info(QModelIndexList() << index, resolveIssue);
+    info.async = true;
+    solveListOfIssues(info);
 }
 
 void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option)
@@ -1276,7 +1301,8 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& 
         return false;
     };
 
-    solveListOfIssuesSync(list, resolveIssue);
+    SolveListInfo info(list, resolveIssue);
+    solveListOfIssues(info);
 }
 
 bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index)

@@ -192,6 +192,7 @@ void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info
         }
 
         ui->wMessageContainer->adjustSize();
+        updateMessagePos();
     }
 }
 

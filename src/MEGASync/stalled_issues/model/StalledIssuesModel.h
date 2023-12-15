@@ -171,16 +171,28 @@ private:
 
     bool checkIfUserStopSolving();
     void startSolvingIssues();
-    void finishSolvingIssues(int issuesFixed, bool sendMessage = true);
+    void finishSolvingIssues(int issuesFixed, bool sendMessage = true, const QString& message = QString());
 
     void sendFixingIssuesMessage(int issue, int totalIssues);
 
-    void solveListOfIssuesSync(const QModelIndexList& list, std::function<bool(int)> solveFunc,
-                           std::function<void ()> startFunc = nullptr, std::function<void (int, bool)> finishFunc = nullptr);
-    void solveListOfIssuesAsync(const QModelIndexList& list, std::function<bool(int)> solveFunc,
-                                std::function<void ()> startFunc = nullptr);
-    void solveListOfIssues(bool isAsync, const QModelIndexList& list, std::function<bool(int)> solveFunc,
-                               std::function<void ()> startFunc = nullptr, std::function<void (int, bool)> finishFunc = nullptr);
+    struct SolveListInfo
+    {
+        SolveListInfo(const QModelIndexList& uIndexes, std::function<bool(int)> uSolveFunc)
+            : indexes(uIndexes),
+            solveFunc(uSolveFunc)
+        {
+            Q_ASSERT(solveFunc);
+        }
+
+        bool async = false;
+        QModelIndexList indexes;
+        std::function<bool(int)> solveFunc = nullptr;
+        std::function<void ()> startFunc = nullptr;
+        std::function<void (int, bool)> finishFunc = nullptr;
+        QString solveMessage;
+    };
+
+    void solveListOfIssues(const SolveListInfo& info);
     void issueSolved(const StalledIssueVariant &issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
@@ -199,6 +211,7 @@ private:
 
     mutable StalledIssuesVariantList mStalledIssues;
     mutable StalledIssuesVariantList mSolvedStalledIssues;
+    mutable StalledIssueVariant mLastSolvedStalledIssue;
     mutable QHash<const StalledIssue*, int> mStalledIssuesByOrder;
 
     QHash<int, int> mCountByFilterCriterion;
