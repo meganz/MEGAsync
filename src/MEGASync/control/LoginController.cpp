@@ -944,6 +944,7 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
             msgInfo.ignoreCloseAll = true;
 
             QMegaMessageBox::critical(msgInfo);
+            mMegaApi->localLogout();
         }
         else if (paramType != mega::MegaError::API_EACCESS && paramType != mega::MegaError::API_EBLOCKED)
         {
