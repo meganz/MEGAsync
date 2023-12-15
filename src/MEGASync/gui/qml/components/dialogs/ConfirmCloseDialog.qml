@@ -63,23 +63,25 @@ Window {
                 Texts.Text {
                     id: title
 
-                    font.pixelSize: Texts.Text.Size.MediumLarge
-                    font.weight: Font.DemiBold
                     lineHeightMode: Text.FixedHeight
                     lineHeight: 24
+                    font {
+                        pixelSize: Texts.Text.Size.MediumLarge
+                        weight: Font.DemiBold
+                    }
                 }
 
                 Texts.Text {
                     id: body
 
-                    font.pixelSize: Texts.Text.Size.Normal
                     Layout.preferredWidth: 340
                     lineHeightMode: Text.FixedHeight
                     lineHeight: 18
+                    font.pixelSize: Texts.Text.Size.Normal
                 }
-
             }
-        }
+
+        } // RowLayout: rowLayout
 
         RowLayout {
             id: buttonsLayout
@@ -107,5 +109,7 @@ Window {
                 }
             }
         }
-    }
+
+    } // Column: mainColumn
+
 }

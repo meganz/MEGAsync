@@ -3,6 +3,7 @@ import QtQuick 2.15
 import components.texts 1.0 as Texts
 
 QtObject {
+    id: root
 
     property bool borderLess: false
 

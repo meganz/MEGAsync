@@ -38,10 +38,12 @@ TextField {
         var isCharacterEntered = textField.text.length !== 0;
         if(isCharacterEntered && next !== undefined) {
             next.focus = true;
-        } else {
+        }
+        else {
             focus = false;
         }
-        textField.horizontalAlignment = isCharacterEntered ? TextInput.AlignHCenter : TextInput.AlignLeft;
+        textField.horizontalAlignment =
+            isCharacterEntered ? TextInput.AlignHCenter : TextInput.AlignLeft;
     }
 
     onBackPressed: {

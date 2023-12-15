@@ -15,27 +15,6 @@ Item {
     property int scrollBarVerticalMargin: 8
     property int scrollBarHorizontalMargin: 8
 
-    Flickable {
-        id: flickable
-
-        anchors.left: parent.left
-        anchors.top: parent.top
-        height: root.height
-        width: root.width
-        clip: true
-        interactive: false
-
-        MouseArea {
-            anchors.fill: parent
-            onWheel: if(scrollbarVertical.visible) {
-                        flickable.flick(0, wheel.angleDelta.y * 5);
-                    }
-        }
-
-        Qml.ScrollBar.vertical: scrollbarVertical
-        Qml.ScrollBar.horizontal: scrollbarHorizontal
-    }
-
     Keys.onUpPressed: {
         scrollbarVertical.decrease();
     }
@@ -52,6 +31,33 @@ Item {
         scrollbarHorizontal.increase();
     }
 
+    Flickable {
+        id: flickable
+
+        anchors {
+            left: parent.left
+            top: parent.top
+        }
+        height: root.height
+        width: root.width
+        clip: true
+        interactive: false
+
+        MouseArea {
+            id: flickableMouseArea
+
+            anchors.fill: parent
+            onWheel: {
+                if(scrollbarVertical.visible) {
+                    flickable.flick(0, wheel.angleDelta.y * 5);
+                }
+            }
+        }
+
+        Qml.ScrollBar.vertical: scrollbarVertical
+        Qml.ScrollBar.horizontal: scrollbarHorizontal
+    }
+
     ScrollBar {
         id: scrollbarVertical
 
@@ -61,7 +67,7 @@ Item {
             bottom: flickable.bottom
             leftMargin: scrollBarVerticalMargin
         }
-        direction: ScrollBar.Direction.Vertical
+        direction: ScrollBar.Direction.VERTICAL
     }
 
     ScrollBar {
@@ -73,7 +79,7 @@ Item {
             top: flickable.bottom
             topMargin: scrollBarHorizontalMargin
         }
-        direction: ScrollBar.Direction.Horizontal
+        direction: ScrollBar.Direction.HORIZONTAL
     }
 
 }

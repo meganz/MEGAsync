@@ -7,7 +7,7 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 
 CardButton {
-    id: button
+    id: root
 
     readonly property int horizontalMargin: 24
     readonly property int verticalMargin: 14
@@ -15,55 +15,71 @@ CardButton {
     readonly property int titleLineHeight: 24
     readonly property int descriptionLineHeight: 16
 
+    width: 400
+    height: titleText.height + descriptionText.height + textSpacing + verticalMargin * 2
     Layout.preferredWidth: 408
     Layout.preferredHeight: height
     Layout.fillWidth: true
-    width: 400
-    height: titleText.height + descriptionText.height + textSpacing + verticalMargin * 2
     imageSourceSize: Qt.size(48, 48)
 
     Row {
-        anchors.fill: parent
-        anchors.leftMargin: horizontalMargin
-        anchors.rightMargin: horizontalMargin
-        anchors.topMargin: verticalMargin
-        anchors.bottomMargin: verticalMargin
+        id: mainRow
+
+        anchors {
+            fill: parent
+            leftMargin: horizontalMargin
+            rightMargin: horizontalMargin
+            topMargin: verticalMargin
+            bottomMargin: verticalMargin
+        }
         spacing: 20
 
         SvgImage {
+            id: icon
+
+            anchors.verticalCenter: parent.verticalCenter
             source: imageSource
             sourceSize: imageSourceSize
-            anchors.verticalCenter: parent.verticalCenter
         }
 
         Column {
+            id: textsColumn
+
             width: parent.width - x
             spacing: textSpacing
 
             Texts.Text {
                 id: titleText
 
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
                 text: title
                 lineHeightMode: Text.FixedHeight
                 lineHeight: titleLineHeight
-                anchors.left: parent.left
-                anchors.right: parent.right
-                font.pixelSize: Texts.Text.Size.MediumLarge
-                font.weight: Font.Bold
+                font {
+                    pixelSize: Texts.Text.Size.MediumLarge
+                    weight: Font.Bold
+                }
             }
 
             Texts.Text {
                 id: descriptionText
 
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                width: 314
                 text: description
-                anchors.left: parent.left
-                anchors.right: parent.right
                 color: Styles.textSecondary
                 font.pixelSize: Texts.Text.Size.Small
                 lineHeightMode: Texts.Text.FixedHeight
                 lineHeight: descriptionLineHeight
-                width: 314
             }
         }
-    }
+
+    } // Row: mainRow
+
 }

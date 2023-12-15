@@ -100,7 +100,6 @@ Qml.RoundButton {
             id: leftBusyIndicator
 
             anchors.verticalCenter: parent.verticalCenter
-
             color: root.icons.colorEnabled
             visible: root.icons.busyIndicatorVisible
                         && root.icons.position === Icon.Position.LEFT
@@ -112,13 +111,13 @@ Qml.RoundButton {
             anchors.verticalCenter: parent.verticalCenter
             text: root.text
             color: getTextColor()
+            lineHeight: sizes.textLineHeight
+            lineHeightMode: Text.FixedHeight
+            verticalAlignment: Text.AlignVCenter
             font {
                 pixelSize: sizes.textFontSize
                 weight: Font.DemiBold
             }
-            lineHeight: sizes.textLineHeight
-            lineHeightMode: Text.FixedHeight
-            verticalAlignment: Text.AlignVCenter
         }
 
         SvgImage {
@@ -158,25 +157,33 @@ Qml.RoundButton {
         Rectangle {
             id: backgroundRect
 
-            color: getBackgroundColor()
-            anchors.fill: focusRect
-            anchors.margins: sizes.focusBorderWidth
-            border.width: sizes.borderWidth
-            border.color: getBorderColor()
+            anchors {
+                fill: focusRect
+                margins: sizes.focusBorderWidth
+            }
+            border {
+                width: sizes.borderWidth
+                color: getBorderColor()
+            }
             radius: sizes.radius
-            layer.enabled: true
+            color: getBackgroundColor()
+            layer {
+                enabled: true
+                effect: OpacityMask {
+                    id: mask
 
-            layer.effect: OpacityMask {
-
-                maskSource: Item {
-                    width: backgroundRect.width
-                    height: backgroundRect.height
-
-                    Rectangle {
-                        anchors.centerIn: parent
-                        width:  backgroundRect.width
+                    maskSource: Item {
+                        width: backgroundRect.width
                         height: backgroundRect.height
-                        radius: sizes.radius
+
+                        Rectangle {
+                            id: maskRect
+
+                            anchors.centerIn: parent
+                            width:  backgroundRect.width
+                            height: backgroundRect.height
+                            radius: sizes.radius
+                        }
                     }
                 }
             }
@@ -186,18 +193,12 @@ Qml.RoundButton {
 
                 anchors.fill: parent
             }
-        }
-    }
 
-    MouseArea {
-        id: mouseArea
+        } // Rectangle: backgroundRect
 
-        anchors.fill: parent
-        onPressed: { mouse.accepted = false; }
-        cursorShape: Qt.PointingHandCursor
-    }
+    } // Rectangle: focusRect
 
-    Keys.onReleased: (event)=> {
+    Keys.onReleased: (event) => {
         if (event.key === Qt.Key_Return) {
             if (checkable) {
                 checked = true;
@@ -210,8 +211,16 @@ Qml.RoundButton {
         root.clicked();
     }
 
-    Keys.onEnterPressed:{
+    Keys.onEnterPressed: {
         root.clicked();
+    }
+
+    MouseArea {
+        id: mouseArea
+
+        anchors.fill: parent
+        onPressed: { mouse.accepted = false; }
+        cursorShape: Qt.PointingHandCursor
     }
 
 }
