@@ -359,7 +359,7 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
     }
 
     mUi->lElapsedTime->setStyleSheet(QLatin1String("color: #999999"));
-    mUi->lElapsedTime->setText(tr("Added [A]").replace(QLatin1String("[A]"), Utilities::getFinishedTimeString(finishedTime)));
+    mUi->lElapsedTime->setText(Utilities::getAddedTimeString(finishedTime));
 }
 
 QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const
