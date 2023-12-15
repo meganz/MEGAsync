@@ -2,10 +2,7 @@ import QtQuick 2.15 as Qml
 
 import common 1.0
 
-import components.texts 1.0 as Texts
-import components.buttons 1.0
-
-Texts.Text {
+Text {
     id: root
 
     readonly property url defaultUrl: "default"
@@ -32,15 +29,17 @@ Texts.Text {
 
     function placeFocusBorder() {
         if (root.activeFocus && root.text.length > 0) {
+
+            // We are scanning the pixels of the link to look for coordinates with hyperlink.
             var xiFocus = -1;
             var xfFocus = -1;
             var yiFocus = -1;
-            var yfFocus = -1;
-
             var found = false;
             var exit = false;
-            for (var x = 0; x < root.width && !exit; ++x) {
-                for (var y = 0; y < root.height && !exit; y+=root.font.pixelSize) {
+
+            // we are starting with y to allow multiline text.
+            for (var y = 0; y < root.height && !exit; ++y) {
+                for (var x = 0; x < root.width && !exit; ++x) {
                     var result  = root.linkAt(x, y)
                     if (result.length > 0 && !found) {
                         found = true;
@@ -49,21 +48,29 @@ Texts.Text {
                     }
                     else if (result.length === 0 && found) {
                         exit = true;
-                        xfFocus = x;
+                        if (yiFocus != y) { // we detected the lose of link in the next line
+                            xfFocus = root.width;
+                        }
+                        else {
+                            xfFocus = x;
+                        }
                     }
                 }
             }
 
-            // truly corner case : link is placed on the edge of the text.
+            // truly corner case :-) link is located on the edge of the text.
             if (found && !exit) {
                 xfFocus = text.width;
             }
 
-            focusBorder.x = xiFocus-focusMargin;
-            focusBorder.y = yiFocus-focusMargin/2;
-            focusBorder.width = xfFocus - xiFocus + focusMargin * 2;
-            focusBorder.height = root.font.pixelSize + focusMargin * 2;
-            focusBorder.visible = true;
+            // if found link on text, make focus border visible
+            if(found) {
+                focusBorder.x = xiFocus-focusMargin;
+                focusBorder.y = yiFocus-focusMargin/2;
+                focusBorder.width = xfFocus - xiFocus + focusMargin * 2;
+                focusBorder.height = root.font.pixelSize + focusMargin * 2;
+                focusBorder.visible = true;
+            }
         }
         else {
             focusBorder.visible = false;
@@ -112,15 +119,21 @@ Texts.Text {
         placeFocusBorder();
     }
 
+    Qml.Keys.onPressed: {
+        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
+            linkActivated("");
+        }
+    }
+
     Qml.Rectangle {
         id: focusBorder
 
         color: "transparent"
-        radius: 7
+        radius: Sizes.focusBorderRadius
         visible: false
         border {
             color: Styles.focus
-            width: 3
+            width: Sizes.focusBorderWidth
         }
     }
 
