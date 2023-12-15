@@ -194,6 +194,8 @@ Column {
         anchors.leftMargin: -termsCheckBoxItem.sizes.focusBorderWidth
         url: Links.terms
         text: OnboardingStrings.agreeTerms
+        KeyNavigation.tab: contentItem
+        nextTabItem: loginButton
     }
 
 }
