@@ -29,295 +29,129 @@ Rectangle {
     property alias step3Text: step3_content.text
     property alias step4Text: step4_content.text
 
-    color: Styles.surface1
     height: parent.height
+    color: Styles.surface1
 
     state: step1DeviceName
-
     states: [
         State {
             name: step1DeviceName
-            PropertyChanges {
-                target: step1_deviceName;
-                toState: Step.ToStates.Current;
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.iconButtonDisabled;
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.Disabled;
-            }
-            PropertyChanges {
-                target: step3_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_content;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step4_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step4_content;
-                visible: false;
-            }
+            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.CURRENT; }
+            PropertyChanges { target: step2_line; color: Styles.iconButtonDisabled; }
+            PropertyChanges { target: step2_installationType; toState: Step.ToStates.DISABLED; }
+            PropertyChanges { target: step3_line; visible: false; }
+            PropertyChanges { target: step3_content; visible: false; }
+            PropertyChanges { target: step4_line; visible: false; }
+            PropertyChanges { target: step4_content; visible: false; }
         },
         State {
             name: step2InstallationType
-            PropertyChanges {
-                target: step1_deviceName;
-                toState: Step.ToStates.Done;
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.iconButton;
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.Current;
-            }
-            PropertyChanges {
-                target: step3_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_content;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step4_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step4_content;
-                visible: false;
-            }
+            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
+            PropertyChanges { target: step2_line; color: Styles.iconButton; }
+            PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT; }
+            PropertyChanges { target: step3_line; visible: false; }
+            PropertyChanges { target: step3_content; visible: false; }
+            PropertyChanges { target: step4_line; visible: false; }
+            PropertyChanges { target: step4_content; visible: false; }
         },
         State {
             name: step3
-            PropertyChanges {
-                target: step1_deviceName;
-                toState: Step.ToStates.Done;
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.iconButton;
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.CurrentSubstep;
-            }
-            PropertyChanges {
-                target: step3_line;
-                color: Styles.iconButton;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_content;
-                toState: SubStep.ToStates.Current;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_line;
-                color: Styles.iconButtonDisabled;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_content;
-                toState: SubStep.ToStates.Disabled;
-                visible: true;
-            }
+            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
+            PropertyChanges { target: step2_line; color: Styles.iconButton; }
+            PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
+            PropertyChanges { target: step3_line; color: Styles.iconButton; visible: true; }
+            PropertyChanges { target: step3_content; toState: SubStep.ToStates.CURRENT; visible: true; }
+            PropertyChanges { target: step4_line; color: Styles.iconButtonDisabled; visible: true; }
+            PropertyChanges { target: step4_content; toState: SubStep.ToStates.DISABLED; visible: true; }
         },
         State {
             name: step4
-            PropertyChanges {
-                target: step1_deviceName;
-                toState: Step.ToStates.Done;
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.iconButton;
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.CurrentSubstep;
-            }
-            PropertyChanges {
-                target: step3_line;
-                color: Styles.iconButton;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_content;
-                toState: SubStep.ToStates.Done;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_line;
-                color: Styles.iconButton;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_content;
-                toState: SubStep.ToStates.Current;
-                visible: true;
-            }
+            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
+            PropertyChanges { target: step2_line; color: Styles.iconButton; }
+            PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
+            PropertyChanges { target: step3_line; color: Styles.iconButton; visible: true; }
+            PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; visible: true; }
+            PropertyChanges { target: step4_line; color: Styles.iconButton; visible: true; }
+            PropertyChanges { target: step4_content; toState: SubStep.ToStates.CURRENT; visible: true; }
         },
         State {
             name: step4Warning
-            PropertyChanges {
-                target: step1_deviceName;
-                toState: Step.ToStates.Done;
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.iconButton;
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.CurrentSubstep;
-            }
-            PropertyChanges {
-                target: step3_line;
-                color: Styles.iconButton;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_content;
-                toState: SubStep.ToStates.Done;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_line;
-                color: Styles.iconButton;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_content;
-                toState: SubStep.ToStates.Warning;
-                visible: true;
-            }
+            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
+            PropertyChanges { target: step2_line; color: Styles.iconButton; }
+            PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
+            PropertyChanges { target: step3_line; color: Styles.iconButton; visible: true; }
+            PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; visible: true; }
+            PropertyChanges { target: step4_line; color: Styles.iconButton; visible: true; }
+            PropertyChanges { target: step4_content; toState: SubStep.ToStates.WARNING; visible: true; }
         },
         State {
             name: step4Error
-            PropertyChanges {
-                target: step1_deviceName;
-                toState: Step.ToStates.Done;
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.iconButton;
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.CurrentSubstep;
-            }
-            PropertyChanges {
-                target: step3_line;
-                color: Styles.iconButton;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_content;
-                toState: SubStep.ToStates.Done;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_line;
-                color: Styles.iconButton;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_content;
-                toState: SubStep.ToStates.Error;
-                visible: true;
-            }
+            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
+            PropertyChanges { target: step2_line; color: Styles.iconButton; }
+            PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
+            PropertyChanges { target: step3_line; color: Styles.iconButton; visible: true; }
+            PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; visible: true; }
+            PropertyChanges { target: step4_line; color: Styles.iconButton; visible: true; }
+            PropertyChanges { target: step4_content; toState: SubStep.ToStates.ERROR; visible: true; }
         },
         State {
             name: stepAllDone
-            PropertyChanges {
-                target: step1_deviceName;
-                toState: Step.ToStates.Done;
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.iconButton;
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.Done;
-            }
-            PropertyChanges {
-                target: step3_line;
-                color: Styles.iconButton;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_content;
-                toState: SubStep.ToStates.Done;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_line;
-                color: Styles.iconButton;
-                visible: true;
-            }
-            PropertyChanges {
-                target: step4_content;
-                toState: SubStep.ToStates.Done;
-                visible: true;
-            }
+            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
+            PropertyChanges { target: step2_line; color: Styles.iconButton; }
+            PropertyChanges { target: step2_installationType; toState: Step.ToStates.DONE; }
+            PropertyChanges { target: step3_line; color: Styles.iconButton; visible: true; }
+            PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; visible: true; }
+            PropertyChanges { target: step4_line; color: Styles.iconButton; visible: true; }
+            PropertyChanges { target: step4_content; toState: SubStep.ToStates.DONE; visible: true; }
         }
     ]
 
     ColumnLayout {
         id: stepsLayout
 
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.left: parent.left
+        anchors {
+            top: parent.top
+            right: parent.right
+            left: parent.left
+        }
         spacing: 4
 
         Step {
             id: step1_deviceName
 
+            Layout.alignment: Qt.AlignTop
             number: 1
             text: OnboardingStrings.deviceName
-            Layout.alignment: Qt.AlignTop
         }
 
         Rectangle {
             id: step2_line
 
-            color: Styles.buttonSecondaryPressed
             Layout.preferredWidth: lineWidth
             Layout.preferredHeight: lineMainStepHeight
-            radius: lineRadius
             Layout.leftMargin: lineLeftMargin
             Layout.alignment: Qt.AlignTop
+            color: Styles.buttonSecondaryPressed
+            radius: lineRadius
         }
 
         Step {
             id: step2_installationType
 
+            Layout.alignment: Qt.AlignTop
             number: 2
             text: OnboardingStrings.setUpOptions
-            Layout.alignment: Qt.AlignTop
         }
 
         Rectangle {
             id: step3_line
 
-            color: Styles.buttonSecondaryPressed
             Layout.preferredWidth: lineWidth
             Layout.preferredHeight: lineSubStepHeight
-            radius: lineRadius
             Layout.leftMargin: lineLeftMargin
             Layout.alignment: Qt.AlignTop
+            color: Styles.buttonSecondaryPressed
+            radius: lineRadius
         }
 
         SubStep {
@@ -330,12 +164,12 @@ Rectangle {
         Rectangle {
             id: step4_line
 
-            color: Styles.buttonSecondaryPressed
             Layout.preferredWidth: lineWidth
             Layout.preferredHeight: lineSubStepHeight
-            radius: lineRadius
             Layout.leftMargin: lineLeftMargin
             Layout.alignment: Qt.AlignTop
+            color: Styles.buttonSecondaryPressed
+            radius: lineRadius
         }
 
         SubStep {
@@ -344,15 +178,18 @@ Rectangle {
             Layout.leftMargin: subStepLeftMargin
             Layout.alignment: Qt.AlignTop
         }
-    }
+
+    } // ColumnLayout: stepsLayout
 
     IconButton {
         id: helpButton
 
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.leftMargin: -helpButton.sizes.horizontalAlignWidth
-        anchors.bottomMargin: -helpButton.sizes.verticalAlignWidth
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            leftMargin: -helpButton.sizes.horizontalAlignWidth
+            bottomMargin: -helpButton.sizes.verticalAlignWidth
+        }
         icons.source: Images.helpCircle
         sizes.iconSize: Qt.size(24, 24)
         onClicked: {

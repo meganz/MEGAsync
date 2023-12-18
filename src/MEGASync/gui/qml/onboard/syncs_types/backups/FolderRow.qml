@@ -16,7 +16,7 @@ import onboard 1.0
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
-Rectangle {
+Item {
     id: root
 
     readonly property int totalHeight: 34
@@ -28,11 +28,13 @@ Rectangle {
 
     signal focusActivated
 
+    anchors {
+        right: parent.right
+        left: parent.left
+        rightMargin: horizontalMargin
+        leftMargin: horizontalMargin
+    }
     height: totalHeight
-    anchors.right: parent.right
-    anchors.left: parent.left
-    anchors.rightMargin: horizontalMargin
-    anchors.leftMargin: horizontalMargin
 
     Rectangle {
         id: background
@@ -50,19 +52,22 @@ Rectangle {
             anchors.fill: parent
             sourceComponent: {
                 if(!backupsProxyModel.selectedFilterEnabled
-                    || error === backupsModelAccess.BackupErrorCode.NONE) {
+                        || error === backupsModelAccess.BackupErrorCode.NONE) {
                     return selectContent;
-                } else {
+                }
+                else {
                     if(error === backupsModelAccess.BackupErrorCode.SYNC_CONFLICT
                         || error === backupsModelAccess.BackupErrorCode.PATH_RELATION
                         || error === backupsModelAccess.BackupErrorCode.UNAVAILABLE_DIR
                         || error === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
                         return conflictContent;
-                    } else {
+                    }
+                    else {
                         // DUPLICATED_NAME or EXISTS_REMOTE errors
                         if(editMode) {
                             return editContent;
-                        } else {
+                        }
+                        else {
                             return conflictContent;
                         }
                     }
@@ -75,7 +80,7 @@ Rectangle {
         id: selectContent
 
         Item {
-            id: contentRoot
+            id: selectRoot
 
             readonly property int contentMargin: 8
             readonly property int checkboxWidth: 16
@@ -85,28 +90,37 @@ Rectangle {
 
             property int checkboxSpacing: checkbox.visible ? 16 : 0
 
-            anchors.fill: parent
-            anchors.margins: contentMargin
+            anchors {
+                fill: parent
+                margins: contentMargin
+            }
 
             Row {
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                spacing: contentRoot.checkboxSpacing
+                id: leftSelectRow
+
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                    bottom: parent.bottom
+                }
+                spacing: selectRoot.checkboxSpacing
 
                 CheckBox {
                     id: checkbox
 
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    anchors.topMargin: -checkbox.sizes.focusBorderWidth + 1
-                    width: backupsProxyModel.selectedFilterEnabled ? 0 : contentRoot.checkboxWidth
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        topMargin: -checkbox.sizes.focusBorderWidth + 1
+                    }
+                    width: backupsProxyModel.selectedFilterEnabled ? 0 : selectRoot.checkboxWidth
                     checked: selected
                     visible: !backupsProxyModel.selectedFilterEnabled
                     manageChecked: true
 
                     Keys.onPressed: {
-                        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
+                        if (event.key === Qt.Key_Return
+                                || event.key === Qt.Key_Enter
+                                || event.key === Qt.Key_Space) {
                             selected = !selected;
                         }
                     }
@@ -120,44 +134,56 @@ Rectangle {
                 }
 
                 Row {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    spacing: contentRoot.imageTextSpacing
+                    id: leftSelectInternalRow
+
+                    anchors {
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
+                    spacing: selectRoot.imageTextSpacing
 
                     Image {
-                        height: contentRoot.imageWidth
-                        width: contentRoot.imageWidth
+                        id: selectImage
+
                         anchors.top: parent.top
+                        height: selectRoot.imageWidth
+                        width: selectRoot.imageWidth
                         source: done ? Images.checkCircle : Images.standard_DirIcon
-                        sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
+                        sourceSize: Qt.size(selectRoot.imageWidth, selectRoot.imageWidth)
                     }
 
                     Texts.ElidedText {
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        anchors.topMargin: 1
-                        width: contentRoot.width - checkbox.width - contentRoot.checkboxSpacing
-                               - contentRoot.imageTextSpacing - contentRoot.imageWidth -
-                               (folderSize.visible ? (folderSize.width + contentRoot.checkboxSpacing) : 0) -
-                               (busyIndicator.visible ? (busyIndicator.width + contentRoot.checkboxSpacing) : 0)
+                        id: selectText
 
+                        anchors {
+                            top: parent.top
+                            bottom: parent.bottom
+                            topMargin: 1
+                        }
+                        width: selectRoot.width - checkbox.width - selectRoot.checkboxSpacing
+                               - selectRoot.imageTextSpacing - selectRoot.imageWidth -
+                               (folderSize.visible ? (folderSize.width + selectRoot.checkboxSpacing) : 0) -
+                               (busyIndicator.visible ? (busyIndicator.width + selectRoot.checkboxSpacing) : 0)
                         font.pixelSize: Texts.Text.Size.Small
                         text: name
                         color: Styles.textPrimary
                     }
                 }
-            }
+
+            } // Row: leftSelectRow
 
             Texts.SecondaryText {
                 id: folderSize
 
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                text: size
-                font.pixelSize: Texts.Text.Size.Small
+                anchors {
+                    right: parent.right
+                    top: parent.top
+                    bottom: parent.bottom
+                }
                 horizontalAlignment: Qt.AlignRight
                 verticalAlignment: Qt.AlignVCenter
+                text: size
+                font.pixelSize: Texts.Text.Size.Small
                 color: Styles.textSecondary
                 visible: backupsProxyModel.selectedFilterEnabled && sizeReady
             }
@@ -165,11 +191,13 @@ Rectangle {
             BusyIndicator {
                 id: busyIndicator
 
-                visible: backupsProxyModel.selectedFilterEnabled && !sizeReady
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                color: Styles.textAccent
+                anchors {
+                    right: parent.right
+                    verticalCenter: parent.verticalCenter
+                }
                 imageSize: Qt.size(12, 12)
+                color: Styles.textAccent
+                visible: backupsProxyModel.selectedFilterEnabled && !sizeReady
             }
 
             MouseArea {
@@ -182,14 +210,16 @@ Rectangle {
                 }
                 enabled: !backupsProxyModel.selectedFilterEnabled
             }
-        }
-    }
+
+        } // Item: selectRoot
+
+    } // Component: selectContent
 
     Component {
         id: conflictContent
 
         Item {
-            id: contentRoot
+            id: conflictRoot
 
             readonly property int contentMargin: 8
             readonly property int imageTextSpacing: 8
@@ -205,30 +235,38 @@ Rectangle {
             Row {
                 id: imageText
 
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: contentRoot.contentMargin
-                anchors.topMargin: contentRoot.contentMargin
-                anchors.bottomMargin: contentRoot.contentMargin
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                    bottom: parent.bottom
+                    leftMargin: conflictRoot.contentMargin
+                    topMargin: conflictRoot.contentMargin
+                    bottomMargin: conflictRoot.contentMargin
+                }
                 spacing: imageTextSpacing
 
                 SvgImage {
+                    id: conflictImage
+
                     anchors.verticalCenter: parent.verticalCenter
                     source: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                             ? Images.alertCircle
                             : Images.alertTriangle
-                    sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
+                    sourceSize: Qt.size(conflictRoot.imageWidth, conflictRoot.imageWidth)
                     color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                            ? Styles.textError
                            : Styles.textWarning
                 }
 
                 Texts.ElidedText {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: contentRoot.width - contentRoot.imageTextSpacing - contentRoot.imageWidth
-                            - buttonRow.width - contentRoot.contentMargin
+                    id: conflictText
+
+                    anchors {
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
+                    width: conflictRoot.width - conflictRoot.imageTextSpacing - conflictRoot.imageWidth
+                            - buttonRow.width - conflictRoot.contentMargin
                     font.pixelSize: Texts.Text.Size.Small
                     text: name
                     color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
@@ -239,10 +277,14 @@ Rectangle {
             }
 
             MouseArea {
+                id: conflictMouseArea
+
                 hoverEnabled: true
                 anchors.fill: imageText
 
                 ToolTip {
+                    id: conflictTooltip
+
                     visible: parent.containsMouse
                     leftIconSource: Images.pc
                     text: folder
@@ -253,7 +295,8 @@ Rectangle {
                         if(visible) {
                             if((parent.mouseX + width) > 363) {
                                 x = 363 - width;
-                            } else {
+                            }
+                            else {
                                 x = parent.mouseX;
                             }
                             y = parent.mouseY - height - 2;
@@ -265,29 +308,36 @@ Rectangle {
             Item {
                 id: buttonRow
 
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+                anchors {
+                    right: parent.right
+                    top: parent.top
+                    bottom: parent.bottom
+                }
                 width: leftButton.width + removeButton.width - leftButton.sizes.focusBorderWidth
 
                 Buttons.SecondaryButton {
                     id: leftButton
 
-                    anchors.right: removeButton.left
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    anchors.rightMargin: -sizes.focusBorderWidth
-                    text: contentRoot.showChange ? OnboardingStrings.changeFolder : OnboardingStrings.rename
-                    icons.position: Buttons.Icon.Position.LEFT
-                    icons.source: contentRoot.showChange ? "" : Images.edit
+                    anchors {
+                        right: removeButton.left
+                        top: parent.top
+                        bottom: parent.bottom
+                        rightMargin: -sizes.focusBorderWidth
+                    }
+                    text: conflictRoot.showChange ? OnboardingStrings.changeFolder : OnboardingStrings.rename
+                    sizes: Buttons.SmallSizes {}
+                    icons {
+                        position: Buttons.Icon.Position.LEFT
+                        source: conflictRoot.showChange ? "" : Images.edit
+                    }
+
                     onClicked: {
-                        if(contentRoot.showChange) {
+                        if(conflictRoot.showChange) {
                             folderDialog.openFolderSelector();
                         } else {
                             editMode = true;
                         }
                     }
-                    sizes: Buttons.SmallSizes {}
 
                     ChooseLocalFolder {
                         id: folderDialog
@@ -297,6 +347,7 @@ Rectangle {
                         id: chooseLocalFolderConnection
 
                         target: folderDialog
+
                         function onFolderChoosen(folderPath) {
                             backupsModelAccess.change(folder, folderPath);
                         }
@@ -306,24 +357,54 @@ Rectangle {
                 Buttons.SecondaryButton {
                     id: removeButton
 
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
+                    anchors {
+                        right: parent.right
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
                     icons.source: Images.trash
+                    sizes: Buttons.SmallSizes {}
+
                     onClicked: {
                         backupsModelAccess.remove(folder);
                     }
-                    sizes: Buttons.SmallSizes {}
                 }
-            }
 
-        }
-    }
+            } // Item: buttonRow
+
+        } // Item: conflictRoot
+
+    } // Component: conflictContent
 
     Component {
         id: editContent
 
         Row {
+            id: editRow
+
+            function doneAction() {
+                editTextField.hint.visible = false;
+                var error = backupsModelAccess.rename(folder, editTextField.text);
+                switch(error) {
+                    case backupsModelAccess.BackupErrorCode.NONE:
+                    case backupsModelAccess.BackupErrorCode.SYNC_CONFLICT:
+                    case backupsModelAccess.BackupErrorCode.PATH_RELATION:
+                    case backupsModelAccess.BackupErrorCode.SDK_CREATION:
+                        break;
+                    case backupsModelAccess.BackupErrorCode.EXISTS_REMOTE:
+                        editTextField.hint.visible = true;
+                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
+                        break;
+                    case backupsModelAccess.BackupErrorCode.DUPLICATED_NAME:
+                        editTextField.hint.visible = true;
+                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
+                        break;
+                    default:
+                        console.error("FolderRow: Unexpected error after rename -> " + error);
+                        break;
+                }
+            }
+
             spacing: 2
 
             TextField {
@@ -343,10 +424,10 @@ Rectangle {
 
                 onHeightChanged: {
                     if (editTextField.hint.visible) {
-                        root.height = editTextField.height + root.extraMarginWhenHintShowed
+                        root.height = editTextField.height + root.extraMarginWhenHintShowed;
                     }
                     else {
-                        root.height = root.totalHeight
+                        root.height = root.totalHeight;
                     }
                 }
             }
@@ -356,6 +437,7 @@ Rectangle {
 
                 text: OnboardingStrings.done
                 sizes: Buttons.SmallSizes {}
+
                 onClicked: {
                     if (editTextField.acceptableInput){
                         doneAction()
@@ -363,30 +445,8 @@ Rectangle {
                 }
             }
 
-            function doneAction()
-            {
-                editTextField.hint.visible = false;
-                var error = backupsModelAccess.rename(folder, editTextField.text);
-                switch(error) {
-                    case backupsModelAccess.BackupErrorCode.NONE:
-                    case backupsModelAccess.BackupErrorCode.SYNC_CONFLICT:
-                    case backupsModelAccess.BackupErrorCode.PATH_RELATION:
-                    case backupsModelAccess.BackupErrorCode.SDK_CREATION:
-                        break;
-                    case backupsModelAccess.BackupErrorCode.EXISTS_REMOTE:
-                        editTextField.hint.visible = true
-                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
-                        break;
-                    case backupsModelAccess.BackupErrorCode.DUPLICATED_NAME:
-                        editTextField.hint.visible = true;
-                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
+        } // Row: editRow
 
-                        break;
-                    default:
-                        console.error("FolderRow: Unexpected error after rename -> " + error);
-                        break;
-                }
-            }
-        }
-    }
+    } // Component: editContent
+
 }

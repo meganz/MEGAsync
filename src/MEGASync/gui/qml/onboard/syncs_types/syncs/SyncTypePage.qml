@@ -17,10 +17,10 @@ SyncTypePageForm {
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
-                case SyncsType.Types.FullSync:
+                case SyncsType.Types.FULL_SYNC:
                     root.syncTypeMoveToFullSync()
                     break;
-                case SyncsType.Types.SelectiveSync:
+                case SyncsType.Types.SELECTIVE_SYNC:
                     root.syncTypeMoveToSelectiveSync()
                     break;
                 default:

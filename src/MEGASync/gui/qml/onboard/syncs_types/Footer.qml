@@ -11,6 +11,7 @@ import onboard 1.0
 import Onboarding 1.0
 
 RowLayout {
+    id: root
 
     property alias leftSecondary: leftSecondaryComp
     property alias rightSecondary: rightSecondaryComp
@@ -35,6 +36,8 @@ RowLayout {
     }
 
     RowLayout {
+        id: buttonsLayout
+
         Layout.alignment: Qt.AlignRight
 
         OutlineButton {
@@ -49,6 +52,5 @@ RowLayout {
             text: OnboardingStrings.next
             icons.source: Images.arrowRight
         }
-
     }
 }

@@ -9,6 +9,7 @@ import onboard.syncs_types 1.0
 import BackupsModel 1.0
 
 SyncsPage {
+    id: root
 
     footerButtons.rightPrimary {
         text: OnboardingStrings.backUp
@@ -17,6 +18,7 @@ SyncsPage {
     }
 
     ColumnLayout {
+        id: selectFolderLayout
 
         anchors {
             top: parent.top
@@ -26,11 +28,14 @@ SyncsPage {
         spacing: 34
 
         Header {
+            id: headerItem
+
             title: OnboardingStrings.selectBackupFoldersTitle
             description: OnboardingStrings.selectBackupFoldersDescription
         }
 
         ColumnLayout {
+            id: contentLayout
 
             Layout.preferredWidth: parent.width
             spacing: 12

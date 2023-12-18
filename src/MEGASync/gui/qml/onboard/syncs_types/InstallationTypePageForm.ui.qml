@@ -11,6 +11,7 @@ import onboard 1.0
 import LoginController 1.0
 
 SyncsPage {
+    id: root
 
     property alias buttonGroup: buttonGroupComp
     property alias syncButton: syncButtonItem
@@ -18,6 +19,7 @@ SyncsPage {
     footerButtons.rightPrimary.enabled: false
 
     ColumnLayout {
+        id: mainLayout
 
         anchors {
             top: parent.top
@@ -27,6 +29,8 @@ SyncsPage {
         spacing: 24
 
         Header {
+            id: headerItem
+
             title: loginControllerAccess.newAccount
                    ? OnboardingStrings.welcomeToMEGA
                    : OnboardingStrings.letsGetYouSetUp
@@ -41,6 +45,8 @@ SyncsPage {
         }
 
         ColumnLayout {
+            id: buttonsLayout
+
             spacing: 12
 
             SyncsHorizontalButton {
@@ -51,7 +57,7 @@ SyncsPage {
                 title: OnboardingStrings.sync
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync
-                type: SyncsType.Types.Sync
+                type: SyncsType.Types.SYNC
                 ButtonGroup.group: buttonGroupComp
             }
 
@@ -63,7 +69,7 @@ SyncsPage {
                 title: OnboardingStrings.backup
                 description: OnboardingStrings.backupButtonDescription
                 imageSource: Images.installationTypeBackups
-                type: SyncsType.Backup
+                type: SyncsType.Types.BACKUP
                 ButtonGroup.group: buttonGroupComp
             }
         }
