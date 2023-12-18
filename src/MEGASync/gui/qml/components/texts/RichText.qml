@@ -27,17 +27,30 @@ Text {
         urlColor = color;
     }
 
-    function placeFocusBorder() {
-        if (root.activeFocus && root.text.length > 0) {
+    function hasLink() {
+        return root.rawText.search("[A]") != -1;
+    }
 
-            // We are scanning the pixels of the link to look for coordinates with hyperlink.
+    function placeFocusBorder() {
+        if (root.activeFocus && hasLink()) {
+
+            // we are scanning the pixels of the link to look for coordinates with hyperlink.
             var found = false;
             var closed = false;
             var exit = false;
             var link = "";
-            var linkCoords = new Object;
+
             var linkCoordsList = [];
             const verticalLineOffset = 3;
+
+            const linkCoord = {
+                xi: 0,
+                yi: 0,
+                xf: 0,
+                width: 0
+            }
+
+            var linkCoords = Object.create(linkCoord);
 
             // we are starting with y to allow multiline text.
             for (var y = 0; y < root.height && !exit; ++y) {
@@ -54,24 +67,24 @@ Text {
                         closed = false;
 
                         link = currentLink;
-                        linkCoords.xiFocus = x;
-                        linkCoords.yiFocus = y;
+                        linkCoords.xi = x;
+                        linkCoords.yi = y;
                     }
-                    else if (currentLink.length > 0 && found && closed && linkCoords.yiFocus !== y
-                             && (linkCoords.yiFocus + font.pixelSize + verticalLineOffset) < y) // link continues in the next line.
+                    else if (currentLink.length > 0 && found && closed && linkCoords.yi !== y
+                             && (linkCoords.yi + font.pixelSize + verticalLineOffset) < y) // link continues in the next line.
                     {
                         linkCoords = new Object;
-                        linkCoords.xiFocus = x;
-                        linkCoords.yiFocus = y;
+                        linkCoords.xi = x;
+                        linkCoords.yi = y;
 
                         closed = false;
                     }
                     else if (currentLink.length === 0 && found && !closed) {
-                        if (linkCoords.yiFocus !== y) { // we detected the lose of link in the next line
-                            linkCoords.xfFocus = root.width;
+                        if (linkCoords.yi !== y) { // we detected the lose of link in the next line
+                            linkCoords.width = root.width - linkCoords.xi
                         }
                         else {
-                            linkCoords.xfFocus = x; // detect the lose of link in current line.
+                            linkCoords.width = x - linkCoords.xi
                         }
 
                         linkCoordsList.push(linkCoords);
@@ -82,7 +95,7 @@ Text {
 
             // truly corner case :-) link is located on the edge of the text.
             if (found && !closed) {
-                linkCoords.xfFocus = root.width;
+                linkCoords.width = root.width - linkCoords.xi;
                 linkCoordsList.push(linkCoords);
             }
 
@@ -93,16 +106,11 @@ Text {
                 for(var coordsIndex = 0; coordsIndex < linkCoordsList.length; ++coordsIndex) {
                     var coords = linkCoordsList[coordsIndex];
 
-                    var focusX = coords.xiFocus-focusMargin;
-                    var focusY = coords.yiFocus-(focusMargin/2);
-                    var focusWidth = coords.xfFocus - coords.xiFocus + focusMargin * 2;
-                    var focusHeight = root.font.pixelSize + focusMargin + (focusMargin * (3/5));
-
                     var focusRect = focusRepeater.itemAt(coordsIndex);
-                    focusRect.x = focusX;
-                    focusRect.y = focusY;
-                    focusRect.width = focusWidth;
-                    focusRect.height = focusHeight;
+                    focusRect.x = coords.xi-focusMargin;;
+                    focusRect.y = coords.yi-(focusMargin/2);
+                    focusRect.width = coords.width + focusMargin * 2;;
+                    focusRect.height = root.font.pixelSize + focusMargin + (focusMargin * (3/5));;
                     focusRect.visible = true;
                 }
             }
