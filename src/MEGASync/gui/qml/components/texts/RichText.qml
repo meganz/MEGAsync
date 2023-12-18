@@ -34,7 +34,7 @@ Text {
             var found = false;
             var closed = false;
             var exit = false;
-            var link = ""
+            var link = "";
             var linkCoords = new Object;
             var linkCoordsList = [];
             const verticalLineOffset = 3;
@@ -74,7 +74,7 @@ Text {
                             linkCoords.xfFocus = x; // detect the lose of link in current line.
                         }
 
-                        linkCoordsList.push(linkCoords)
+                        linkCoordsList.push(linkCoords);
                         closed = true;
                     }
                 }
@@ -83,7 +83,7 @@ Text {
             // truly corner case :-) link is located on the edge of the text.
             if (found && !closed) {
                 linkCoords.xfFocus = root.width;
-                linkCoordsList.push(linkCoords)
+                linkCoordsList.push(linkCoords);
             }
 
             // if found link on text, make focus border visible
