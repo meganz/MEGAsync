@@ -86,7 +86,7 @@ SyncsPage {
             Layout.preferredWidth: parent.width
             text: title
             font {
-                pixelSize: Texts.Text.Size.Large
+                pixelSize: Texts.Text.Size.LARGE
                 weight: Font.Bold
             }
         }
@@ -97,7 +97,7 @@ SyncsPage {
             Layout.preferredWidth: parent.width
             Layout.topMargin: 8
             text: description
-            font.pixelSize: Texts.Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.MEDIUM
         }
 
         Texts.Text {
@@ -107,7 +107,7 @@ SyncsPage {
             Layout.topMargin: 36
             text: OnboardingStrings.finalStepQuestion
             font {
-                pixelSize: Texts.Text.Size.MediumLarge
+                pixelSize: Texts.Text.Size.MEDIUM_LARGE
                 weight: Font.DemiBold
             }
         }

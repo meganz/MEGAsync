@@ -16,7 +16,7 @@ Item {
     property alias textColor: hintText.color
 
     property int type: Constants.MessageType.NONE
-    property int textSize: Texts.Text.Size.Normal
+    property int textSize: Texts.Text.Size.NORMAL
 
     implicitHeight: mainRow.height
 

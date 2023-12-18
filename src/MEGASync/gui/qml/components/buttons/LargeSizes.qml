@@ -7,7 +7,7 @@ Sizes {
     spacing: 12
     radius: 8
     iconWidth: 22
-    textFontSize: Texts.Text.Size.MediumLarge
+    textFontSize: Texts.Text.Size.MEDIUM_LARGE
     textLineHeight: 24
     focusBorderRadius: 12.5
 }

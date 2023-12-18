@@ -23,7 +23,7 @@ TextField {
         verticalAlignment: Text.AlignVCenter
         validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
         font {
-            pixelSize: Texts.Text.Size.Huge
+            pixelSize: Texts.Text.Size.HUGE
             weight: Font.Bold
         }
 

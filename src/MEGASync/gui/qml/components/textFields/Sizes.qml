@@ -17,7 +17,7 @@ QtObject {
     property int focusBorderWidth: 3
     property int borderRadius: 8
     property int borderWidth: 1
-    property int hintTextSize: Texts.Text.Size.Normal
+    property int hintTextSize: Texts.Text.Size.NORMAL
     property int titleSpacing: 1
 
 }

@@ -18,7 +18,7 @@ QtObject {
     property int borderWidth: 2
     property int iconWidth: 16
     property size iconSize: Qt.size(iconWidth, iconWidth)
-    property int textFontSize: Texts.Text.Size.Medium
+    property int textFontSize: Texts.Text.Size.MEDIUM
     property int textLineHeight: 20
     property int horizontalAlignWidth: focusBorderWidth + horizontalPadding
     property int verticalAlignWidth: focusBorderWidth + verticalPadding

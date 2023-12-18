@@ -102,7 +102,7 @@ FocusScope {
         placeholderTextColor: colors.placeholder
         color: enabled ? colors.text : colors.textDisabled
         font {
-            pixelSize: Texts.Text.Size.Medium
+            pixelSize: Texts.Text.Size.MEDIUM
             family: Styles.fontFamily
             styleName: Styles.fontStyleName
         }

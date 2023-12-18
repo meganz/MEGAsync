@@ -71,7 +71,7 @@ CardButton {
                     rightMargin: root.textHorizontalExtraMargin
                 }
                 font {
-                    pixelSize: Texts.Text.Size.MediumLarge
+                    pixelSize: Texts.Text.Size.MEDIUM_LARGE
                     weight: Font.Bold
                 }
                 text: title
@@ -86,7 +86,7 @@ CardButton {
                     leftMargin: root.textHorizontalExtraMargin
                     rightMargin: root.textHorizontalExtraMargin
                 }
-                font.pixelSize: Texts.Text.Size.Small
+                font.pixelSize: Texts.Text.Size.SMALL
                 color: Styles.textSecondary
                 lineHeight: textLineHeight
                 lineHeightMode: Text.FixedHeight

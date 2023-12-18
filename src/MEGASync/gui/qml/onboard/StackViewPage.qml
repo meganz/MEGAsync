@@ -23,7 +23,7 @@ Item {
             horizontalCenter: parent.horizontalCenter
             bottom: root.bottom
         }
-        font.pixelSize: Texts.Text.Size.Small
+        font.pixelSize: Texts.Text.Size.SMALL
         color: Styles.textSecondary
         text: {
             switch(loginControllerAccess.state) {

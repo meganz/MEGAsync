@@ -110,7 +110,7 @@ Rectangle {
                     color: Styles.textPrimary
                     visible: backupsModelAccess.totalSizeReady
                     font {
-                        pixelSize: Texts.Text.Size.Small
+                        pixelSize: Texts.Text.Size.SMALL
                         weight: Font.DemiBold
                     }
                 }

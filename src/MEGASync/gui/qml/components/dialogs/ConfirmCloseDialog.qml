@@ -66,7 +66,7 @@ Window {
                     lineHeightMode: Text.FixedHeight
                     lineHeight: 24
                     font {
-                        pixelSize: Texts.Text.Size.MediumLarge
+                        pixelSize: Texts.Text.Size.MEDIUM_LARGE
                         weight: Font.DemiBold
                     }
                 }
@@ -77,7 +77,7 @@ Window {
                     Layout.preferredWidth: 340
                     lineHeightMode: Text.FixedHeight
                     lineHeight: 18
-                    font.pixelSize: Texts.Text.Size.Normal
+                    font.pixelSize: Texts.Text.Size.NORMAL
                 }
             }
 

@@ -4,7 +4,7 @@ Sizes {
     id: root
 
     horizontalPadding: borderLess ? 4 : 8
-    textFontSize: Texts.Text.Size.Normal
+    textFontSize: Texts.Text.Size.NORMAL
     radius: 6
     textLineHeight: 18
     spacing: horizontalPadding

@@ -59,7 +59,7 @@ CardButton {
                 lineHeightMode: Text.FixedHeight
                 lineHeight: titleLineHeight
                 font {
-                    pixelSize: Texts.Text.Size.MediumLarge
+                    pixelSize: Texts.Text.Size.MEDIUM_LARGE
                     weight: Font.Bold
                 }
             }
@@ -74,7 +74,7 @@ CardButton {
                 width: 314
                 text: description
                 color: Styles.textSecondary
-                font.pixelSize: Texts.Text.Size.Small
+                font.pixelSize: Texts.Text.Size.SMALL
                 lineHeightMode: Texts.Text.FixedHeight
                 lineHeight: descriptionLineHeight
             }

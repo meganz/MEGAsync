@@ -31,7 +31,7 @@ StackViewPage {
 
             Layout.fillWidth: true
             text: OnboardingStrings.changeEmailTitle
-            font.pixelSize: Texts.Text.Size.Large
+            font.pixelSize: Texts.Text.Size.LARGE
         }
 
         Texts.Text {
@@ -39,7 +39,7 @@ StackViewPage {
 
             Layout.preferredWidth: layout.width
             text: OnboardingStrings.changeEmailBodyText
-            font.pixelSize: Texts.Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.MEDIUM
         }
 
         EmailTextField {
