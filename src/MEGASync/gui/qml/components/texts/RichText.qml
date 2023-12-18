@@ -41,13 +41,13 @@ Text {
             var link = "";
 
             var linkCoordsList = [];
-            const verticalLineOffset = 3;
+            const verticalLineOffset = 3;  // margin need to detect pixels from the next line that could be a part (still) of the same link.
 
             const linkCoord = {
                 x: 0,
                 y: 0,
                 width: 0
-            }
+            };
 
             var linkCoords = Object.create(linkCoord);
 
