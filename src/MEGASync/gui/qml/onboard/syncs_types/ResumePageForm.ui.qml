@@ -129,6 +129,7 @@ SyncsPage {
                     contentMargin: 24
                     contentSpacing: 8
                     focus: true
+                    useMaxSiblingHeight: true
                 }
 
                 SyncsVerticalButton {
@@ -151,6 +152,7 @@ SyncsPage {
                     imageSourceSize: Qt.size(32, 32)
                     contentMargin: 24
                     contentSpacing: 8
+                    useMaxSiblingHeight: true
                 }
             }
         }
