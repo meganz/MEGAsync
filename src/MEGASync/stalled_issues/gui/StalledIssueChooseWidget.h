@@ -32,7 +32,7 @@ protected slots:
     virtual void onRawInfoToggled(){}
 
 protected:
-    virtual QString movedToBinText() const = 0;
+    virtual QString solvedString() const = 0;
     bool eventFilter(QObject *watched, QEvent *event) override;
     Ui::StalledIssueChooseWidget *ui;
     StalledIssueDataPtr mData;
@@ -57,7 +57,7 @@ public:
 
     ~LocalStalledIssueChooseWidget() = default;
 
-    QString movedToBinText() const override;
+    QString solvedString() const override;
     void updateUi(LocalStalledIssueDataPtr localData, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
 
 protected slots:
@@ -78,7 +78,7 @@ public:
 
     ~CloudStalledIssueChooseWidget() = default;
 
-    QString movedToBinText() const override;
+    QString solvedString() const override;
     void updateUi(CloudStalledIssueDataPtr cloudData, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
 
 protected slots:
@@ -86,6 +86,33 @@ protected slots:
 
 private:
     void updateExtraInfo(CloudStalledIssueDataPtr data);
+};
+
+class GenericChooseWidget : public StalledIssueChooseWidget
+{
+    Q_OBJECT
+
+public:
+    explicit GenericChooseWidget(QWidget *parent = nullptr)
+        : StalledIssueChooseWidget(parent)
+    {}
+
+    QString solvedString() const override;
+
+    void setChosen(bool state);
+
+    struct GenericInfo
+    {
+        QString icon;
+        QString title;
+        QString buttonText;
+        QString solvedText;
+    };
+
+    void setInfo(const GenericInfo& info);
+
+private:
+    GenericInfo mInfo;
 };
 
 #endif // STALLEDISSUECHOOSEWIDGET_H

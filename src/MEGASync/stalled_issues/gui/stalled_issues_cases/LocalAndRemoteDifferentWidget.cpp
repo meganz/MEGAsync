@@ -25,6 +25,8 @@ LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(std::shared_ptr<meg
 
     connect(ui->chooseLocalCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemoteDifferentWidget::onLocalButtonClicked);
     connect(ui->chooseRemoteCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemoteDifferentWidget::onRemoteButtonClicked);
+    connect(ui->keepBothOption, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemoteDifferentWidget::onKeepBothButtonClicked);
+    connect(ui->keepLastModifiedOption, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked);
 
     auto margins = ui->chooseLayout->contentsMargins();
     margins.setLeft(StalledIssueHeader::GROUPBOX_INDENT);
@@ -64,160 +66,117 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         ui->chooseRemoteCopy->hide();
     }
 
-    if(issue->isPotentiallySolved())
+    GenericChooseWidget::GenericInfo bothInfo;
+    bothInfo.buttonText = tr("Choose both");
+    bothInfo.title = tr("Keep both");
+    bothInfo.icon = QLatin1String(":/images/copy.png");
+    bothInfo.solvedText = tr("Chosen");
+    ui->keepBothOption->setInfo(bothInfo);
+
+    ui->keepLastModifiedOption->setVisible(issue->isSolvable());
+
+    if(issue->isSolvable())
     {
-        ui->chooseLocalCopy->hideActionButton();
-        ui->chooseRemoteCopy->hideActionButton();
+        GenericChooseWidget::GenericInfo lastModifiedInfo;
+        lastModifiedInfo.buttonText = tr("Choose");
+        lastModifiedInfo.title = tr("Keep last modified: ");
+        lastModifiedInfo.title.append(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local ?
+                                             tr("Local") : tr("Remote"));
+        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
+        lastModifiedInfo.solvedText = tr("Chosen");
+        ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
+    }
+
+    if(issue->isSolved())
+    {
+        ui->keepBothOption->setChosen(false);
+        ui->keepLastModifiedOption->setChosen(false);
+
+        if(issue->isPotentiallySolved())
+        {
+            ui->chooseLocalCopy->hideActionButton();
+            ui->chooseRemoteCopy->hideActionButton();
+        }
+        else
+        {
+            if(issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Both)
+            {
+                ui->keepBothOption->setChosen(true);
+            }
+            else if(issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LastMtime)
+            {
+                ui->keepLastModifiedOption->setChosen(true);
+            }
+        }
     }
 }
 
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 {
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-    if(checkIssue(dialog ? dialog->getDialog() : nullptr))
-    {
-        return;
-    }
+    SelectionInfo info;
+    checkSelection(info);
 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
-
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-
-    auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
-                 << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
-
-    auto selection = dialog->getDialog()->getSelection(reasons);
-    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
-
-    if(selection.size() <= 1)
-    {
-        if(allSimilarIssues.size() != selection.size())
-        {
-            msgInfo.buttons |= QMessageBox::Yes;
-            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
-        }
-        else
-        {
-            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-        }
-    }
-    else
-    {
-        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
-    }
-    msgInfo.buttonsText = textsByButton;
-
-    const auto pluralNumber = selection.size() <= 1 ? 1 : selection.size();
     if(localInfo.isFile())
     {
-        msgInfo.text = tr("Are you sure you want to keep the <b>local file</b> %1?", "", pluralNumber).arg(ui->chooseLocalCopy->data()->getFileName());
+        info.msgInfo.text = tr("Are you sure you want to keep the <b>local file</b> %1?", "", info.selection.size()).arg(ui->chooseLocalCopy->data()->getFileName());
     }
     else
     {
-        msgInfo.text = tr("Are you sure you want to keep the <b>local folder</b> %1?", "", pluralNumber).arg(ui->chooseLocalCopy->data()->getFileName());
+        info.msgInfo.text = tr("Are you sure you want to keep the <b>local folder</b> %1?", "", info.selection.size()).arg(ui->chooseLocalCopy->data()->getFileName());
     }
 
     if(node->isFile())
     {
-        msgInfo.informativeText = tr("The <b>local file</b> %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease wait for the upload to complete.</br>", "", pluralNumber).arg(localInfo.fileName());
+        info.msgInfo.informativeText = tr("The <b>local file</b> %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease wait for the upload to complete.</br>", "", info.selection.size()).arg(localInfo.fileName());
     }
     else
     {
-        msgInfo.informativeText = tr("The <b>remote folder</b> %1 will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>", "", pluralNumber).arg(localInfo.fileName());
+        info.msgInfo.informativeText = tr("The <b>remote folder</b> %1 will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>", "", info.selection.size()).arg(localInfo.fileName());
     }
 
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        msgInfo.informativeText.append(tr("<br><b>Please, resume your transfers to fix the issue</b></br>", "", pluralNumber));
+        info.msgInfo.informativeText.append(tr("<br><b>Please, resume your transfers to fix the issue</b></br>", "", info.selection.size()));
     }
 
-    msgInfo.finishFunc = [this, selection, allSimilarIssues, dialog](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, selection);
+            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, info.selection);
         }
         else if(msgBox->result() == QDialogButtonBox::Yes)
         {
-            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, allSimilarIssues);
+            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, info.similarSelection);
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    QMegaMessageBox::warning(info.msgInfo);
 }
 
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 {
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-    if(checkIssue(dialog ? dialog->getDialog() : nullptr))
-    {
-        return;
-    }
+    SelectionInfo info;
+    checkSelection(info);
 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
-
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-
-    auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
-                     << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
-    auto selection = dialog->getDialog()->getSelection(reasons);
-    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
-
-    auto pluralNumber(1);
-    if(selection.size() <= 1)
-    {
-        if(allSimilarIssues.size() != selection.size())
-        {
-            msgInfo.buttons |= QMessageBox::Yes;
-            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
-        }
-        else
-        {
-            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-        }
-    }
-    else
-    {
-        pluralNumber = selection.size();
-        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
-    }
-
-    msgInfo.buttonsText = textsByButton;
-
     if(node)
     {
         if(node->isFile())
         {
-            msgInfo.text = tr("Are you sure you want to keep the <b>remote file</b> %1?", "", pluralNumber).arg(ui->chooseRemoteCopy->data()->getFileName());
+            info.msgInfo.text = tr("Are you sure you want to keep the <b>remote file</b> %1?", "", info.selection.size()).arg(ui->chooseRemoteCopy->data()->getFileName());
         }
         else
         {
-            msgInfo.text = tr("Are you sure you want to keep the <b>remote folder</b> %1?", "", pluralNumber).arg(ui->chooseRemoteCopy->data()->getFileName());
+            info.msgInfo.text = tr("Are you sure you want to keep the <b>remote folder</b> %1?", "", info.selection.size()).arg(ui->chooseRemoteCopy->data()->getFileName());
         }
     }
     else
     {
-        msgInfo.text = tr("Are you sure you want to keep the <b>remote item</b> %1?", "", pluralNumber).arg(ui->chooseRemoteCopy->data()->getFileName());
+        info.msgInfo.text = tr("Are you sure you want to keep the <b>remote item</b> %1?", "", info.selection.size()).arg(ui->chooseRemoteCopy->data()->getFileName());
     }
 
     //For the moment, TYPE_TWOWAY or TYPE_UNKNOWN
@@ -225,52 +184,130 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     {
         if(localInfo.isFile())
         {
-            msgInfo.informativeText = tr("The <b>local file</b> %1 will be moved to the sync debris folder").arg(localInfo.fileName());
+            info.msgInfo.informativeText = tr("The <b>local file</b> %1 will be moved to the sync debris folder").arg(localInfo.fileName());
         }
         else
         {
-            msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to the sync debris folder").arg(localInfo.fileName());
+            info.msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to the sync debris folder").arg(localInfo.fileName());
         }
     }
     else
     {
         if(localInfo.isFile())
         {
-            msgInfo.informativeText = tr("The backup will be disabled in order to protect the local file %1", "", pluralNumber).arg(localInfo.fileName());
+            info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local file %1", "", info.selection.size()).arg(localInfo.fileName());
         }
         else
         {
-            msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folder %1", "", pluralNumber).arg(localInfo.fileName());
+            info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folder %1", "", info.selection.size()).arg(localInfo.fileName());
         }
     }
 
-    msgInfo.finishFunc = [this, selection, allSimilarIssues](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [this, info](QMessageBox* msgBox)
     {
         if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, selection);
+                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, info.selection);
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
-                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, allSimilarIssues);
+                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, info.similarSelection);
             }
         }
         else
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(selection);
+                MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(info.selection);
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
-                 MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(allSimilarIssues);
+                 MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(info.similarSelection);
             }
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    QMegaMessageBox::warning(info.msgInfo);
+}
+
+void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
+{
+    SelectionInfo info;
+    checkSelection(info);
+
+    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
+    QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
+    if(localInfo.isFile())
+    {
+        info.msgInfo.text = tr("Are you sure you want to keep <b>both file</b>?", "", info.selection.size());
+    }
+    else
+    {
+        info.msgInfo.text = tr("Are you sure you want to keep <b>both folder</b> %1?", "", info.selection.size());
+    }
+
+    std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
+    if(parentNode)
+    {
+        auto newName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, QStringList());
+
+        if(node->isFile())
+        {
+            info.msgInfo.informativeText = tr("The <b>remote file</b> will be renamed to %1", "", info.selection.size()).arg(newName);
+        }
+        else
+        {
+            info.msgInfo.informativeText = tr("The <b>remote file</b> will be renamed to %1", "", info.selection.size()).arg(newName);
+        }
+
+        info.msgInfo.finishFunc = [this, info](QMessageBox* msgBox)
+        {
+            if(msgBox->result() == QDialogButtonBox::Ok)
+            {
+                MegaSyncApp->getStalledIssuesModel()->chooseBothSides(info.selection);
+            }
+            else if(msgBox->result() == QDialogButtonBox::Yes)
+            {
+                MegaSyncApp->getStalledIssuesModel()->chooseBothSides(info.similarSelection);
+            }
+        };
+
+        QMegaMessageBox::warning(info.msgInfo);
+    }
+}
+
+void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
+{
+    auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
+
+    SelectionInfo info;
+    checkSelection(info);
+
+    info.msgInfo.text = tr("Are you sure you want to choose the latest modified side?");
+    if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
+    {
+        info.msgInfo.informativeText = tr("This action will choose the local side");
+    }
+    else
+    {
+        info.msgInfo.informativeText = tr("This action will choose the remote side");
+    }
+
+    info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+    {
+        if(msgBox->result() == QDialogButtonBox::Ok)
+        {
+            MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(info.selection);
+        }
+        else if(msgBox->result() == QDialogButtonBox::Yes)
+        {
+            MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(info.similarSelection);
+        }
+    };
+
+    QMegaMessageBox::warning(info.msgInfo);
 }
 
 bool LocalAndRemoteDifferentWidget::checkIssue(QDialog *dialog)
@@ -302,4 +339,48 @@ bool LocalAndRemoteDifferentWidget::checkIssue(QDialog *dialog)
     }
 
     return false;
+}
+
+void LocalAndRemoteDifferentWidget::checkSelection(SelectionInfo& info)
+{
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+    if(checkIssue(dialog ? dialog->getDialog() : nullptr))
+    {
+        return;
+    }
+
+    info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    info.msgInfo.title = MegaSyncApp->getMEGAString();
+    info.msgInfo.textFormat = Qt::RichText;
+    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+
+    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+    auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
+                                                               << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
+    info.selection = dialog->getDialog()->getSelection(reasons);
+    info.similarSelection = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
+
+    if(info.selection.size() <= 1)
+    {
+        if(info.similarSelection.size() != info.selection.size())
+        {
+            info.msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(info.similarSelection.size()));
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+        }
+    }
+    else
+    {
+        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(info.selection.size()));
+    }
+
+    info.msgInfo.buttonsText = textsByButton;
 }

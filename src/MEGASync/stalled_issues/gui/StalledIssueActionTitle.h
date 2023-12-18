@@ -24,11 +24,12 @@ public:
 
     void removeBackgroundColor();
 
-    void setTitle(const QString& title);
+    void setTitle(const QString& title, const QPixmap &icon = QPixmap());
     QString title() const;
 
     void addActionButton(const QIcon& icon, const QString& text, int id, bool mainButton);
     void hideActionButton(int id);
+    void setActionButtonInfo(const QIcon& icon, const QString& text, int id);
 
     virtual void showIcon();
     void setMessage(const QString& message, const QPixmap& pixmap = QPixmap());

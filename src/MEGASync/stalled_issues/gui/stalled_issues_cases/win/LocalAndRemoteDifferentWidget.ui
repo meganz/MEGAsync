@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>336</width>
-    <height>95</height>
+    <height>172</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,7 +78,7 @@
     <widget class="QWidget" name="chooseContainer" native="true">
      <layout class="QVBoxLayout" name="chooseLayout">
       <property name="spacing">
-       <number>28</number>
+       <number>12</number>
       </property>
       <property name="leftMargin">
        <number>1</number>
@@ -98,6 +98,12 @@
       <item>
        <widget class="LocalStalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
       </item>
+      <item>
+       <widget class="GenericChooseWidget" name="keepLastModifiedOption" native="true"/>
+      </item>
+      <item>
+       <widget class="GenericChooseWidget" name="keepBothOption" native="true"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -112,6 +118,12 @@
   </customwidget>
   <customwidget>
    <class>LocalStalledIssueChooseWidget</class>
+   <extends>QWidget</extends>
+   <header>StalledIssueChooseWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GenericChooseWidget</class>
    <extends>QWidget</extends>
    <header>StalledIssueChooseWidget.h</header>
    <container>1</container>

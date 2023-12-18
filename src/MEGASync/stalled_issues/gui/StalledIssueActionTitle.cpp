@@ -51,13 +51,20 @@ StalledIssueActionTitle::~StalledIssueActionTitle()
 void StalledIssueActionTitle::removeBackgroundColor()
 {
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, true);
+    setStyleSheet(styleSheet());
 }
 
-void StalledIssueActionTitle::setTitle(const QString &title)
+void StalledIssueActionTitle::setTitle(const QString& title, const QPixmap& icon)
 {
     updateSizeHints();
 
     ui->titleLabel->setText(title);
+    if(!icon.isNull())
+    {
+        ui->icon->setFixedSize(icon.size());
+        ui->icon->setPixmap(icon);
+        ui->icon->show();
+    }
 }
 
 QString StalledIssueActionTitle::title() const
@@ -116,6 +123,20 @@ void StalledIssueActionTitle::hideActionButton(int id)
     if(allHidden)
     {
         ui->actionContainer->hide();
+    }
+}
+
+void StalledIssueActionTitle::setActionButtonInfo(const QIcon &icon, const QString &text, int id)
+{
+    auto buttons = ui->actionContainer->findChildren<QPushButton*>();
+    foreach(auto& button, buttons)
+    {
+        if(button->property(BUTTON_ID).toInt() == id)
+        {
+            button->setIcon(icon);
+            button->setText(text);
+            break;
+        }
     }
 }
 

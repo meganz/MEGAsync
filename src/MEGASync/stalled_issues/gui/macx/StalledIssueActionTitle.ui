@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>154</width>
-    <height>78</height>
+    <height>79</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -140,7 +140,7 @@ QPushButton[main=true]
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -161,13 +161,13 @@ QPushButton[main=true]
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>3</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>5</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="QFrame" name="contents">

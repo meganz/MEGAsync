@@ -21,6 +21,8 @@ public:
     void chooseLocalSide();
     void chooseRemoteSide();
     void chooseLastMTimeSide();
+    void chooseBothSides(QStringList *namesUsed);
+
 
     bool UIShowFileAttributes() const override;
 
@@ -28,15 +30,18 @@ public:
     {
         None = 0,
         Remote,
-        Local
+        Local,
+        Both,
+        LastMtime
     };
 
     ChosenSide getChosenSide() const;
+    ChosenSide lastModifiedSide() const;
 
 private:
     MegaUploader* mUploader;
     ChosenSide mChosenSide = ChosenSide::None;
-
+    QString mNewName;
 };
 
 #endif // LOCALORREMOTEUSERMUSTCHOOSESTALLEDISSUE_H

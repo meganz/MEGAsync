@@ -36,9 +36,6 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data,
                                         LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
 {
     auto fileName = data->getFileName();
-
-    ui->chooseTitle->setTitle(data->isCloud() ? tr("Remote Copy") : tr("Local Copy"));
-    ui->chooseTitle->setIsCloud(data->isCloud());
     ui->chooseTitle->showIcon();
 
     ui->name->setTitle(fileName);
@@ -67,30 +64,48 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data,
         ui->chooseTitle->hideActionButton(BUTTON_ID);
 
         QIcon icon;
-        if(data->isCloud() == (side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Remote))
+        if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Remote)
+        {
+            if(data->isCloud())
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                ui->chooseTitle->setMessage(tr("Chosen"), icon.pixmap(24,24));
+            }
+            else
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
+                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(24,24));
+            }
+        }
+        else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
+        {
+            if(data->isCloud())
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
+                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(24,24));
+            }
+            else
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                ui->chooseTitle->setMessage(tr("Local file is being uploaded"), icon.pixmap(16,16));
+            }
+        }
+        else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Both)
         {
             icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
 
             if(data->isCloud())
             {
-                ui->chooseTitle->setMessage(tr("Chosen"), icon.pixmap(24,24));
+                auto cloudData = data->convert<CloudStalledIssueData>();
+                auto node(cloudData->getNode(true));
+                if(node)
+                {
+                    ui->chooseTitle->setMessage(tr("Renamed to %1").arg(QString::fromUtf8(node->getName())), icon.pixmap(24,24));
+                }
             }
             else
             {
-                ui->chooseTitle->setMessage(tr("Local file is being uploaded"), icon.pixmap(24,24));
-            }
-        }
-        else
-        {
-            if(data->isCloud())
-            {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->setMessage(movedToBinText(), icon.pixmap(24,24));
-            }
-            else
-            {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->setMessage(movedToBinText(), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(QString());
             }
         }
     }
@@ -138,7 +153,7 @@ void StalledIssueChooseWidget::setSolved()
 }
 
 //LOCAL
-QString LocalStalledIssueChooseWidget::movedToBinText() const
+QString LocalStalledIssueChooseWidget::solvedString() const
 {
     return PlatformStrings::movedFileToBin();
 }
@@ -147,8 +162,10 @@ void LocalStalledIssueChooseWidget::updateUi(LocalStalledIssueDataPtr localData,
                                              LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
 {
    updateExtraInfo(localData);
+   ui->chooseTitle->setTitle(tr("Local Copy"));
+   ui->chooseTitle->setIsCloud(false);
 
-    StalledIssueChooseWidget::updateUi(localData,side);
+   StalledIssueChooseWidget::updateUi(localData,side);
 }
 
 void LocalStalledIssueChooseWidget::onRawInfoToggled()
@@ -186,7 +203,7 @@ void LocalStalledIssueChooseWidget::updateExtraInfo(LocalStalledIssueDataPtr loc
 }
 
 //CLOUD
-QString CloudStalledIssueChooseWidget::movedToBinText() const
+QString CloudStalledIssueChooseWidget::solvedString() const
 {
     return tr("Moved to MEGA Bin");
 }
@@ -195,6 +212,8 @@ void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData,
                                              LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
 {
     updateExtraInfo(cloudData);
+    ui->chooseTitle->setTitle(tr("Remote Copy"));
+    ui->chooseTitle->setIsCloud(true);
 
     StalledIssueChooseWidget::updateUi(cloudData, side);
 }
@@ -241,4 +260,44 @@ void CloudStalledIssueChooseWidget::updateExtraInfo(CloudStalledIssueDataPtr clo
             ui->name->updateUser(user, show);
         });
     }
+}
+
+//Generic options
+QString GenericChooseWidget::solvedString() const
+{
+    return mInfo.solvedText;
+}
+
+void GenericChooseWidget::setChosen(bool state)
+{
+    if(state)
+    {
+        QIcon solvedIcon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+        ui->chooseTitle->setMessage(mInfo.solvedText, solvedIcon.pixmap(16,16));
+    }
+    else
+    {
+        ui->chooseTitle->setMessage(QString());
+    }
+
+    hideActionButton();
+}
+
+void GenericChooseWidget::setInfo(const GenericInfo &info)
+{
+    mInfo = info;
+
+    ui->pathContainer->hide();
+    ui->nameContainer->hide();
+
+    auto margins(ui->titleContainer->layout()->contentsMargins());
+    margins.setTop(0);
+    margins.setBottom(0);
+    ui->titleContainer->layout()->setContentsMargins(margins);
+    ui->chooseTitle->removeBackgroundColor();
+
+    QIcon icon(info.icon);
+    auto iconPixmap(icon.pixmap(QSize(16,16)));
+    ui->chooseTitle->setTitle(info.title, iconPixmap);
+    ui->chooseTitle->setActionButtonInfo(QIcon(), info.buttonText, BUTTON_ID);
 }

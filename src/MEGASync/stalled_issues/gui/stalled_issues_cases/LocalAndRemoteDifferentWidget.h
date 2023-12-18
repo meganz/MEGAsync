@@ -2,6 +2,7 @@
 #define LOCALANDREMOTEDIFFERENTWIDGET_H
 
 #include "StalledIssueBaseDelegateWidget.h"
+#include "QMegaMessageBox.h"
 
 #include <QWidget>
 #include <memory>
@@ -25,9 +26,19 @@ public:
 private slots:
     void onLocalButtonClicked(int);
     void onRemoteButtonClicked(int);
+    void onKeepBothButtonClicked(int);
+    void onKeepLastModifiedTimeButtonClicked(int);
 
 private:
     bool checkIssue(QDialog* dialog);
+
+    struct SelectionInfo
+    {
+        QModelIndexList selection;
+        QModelIndexList similarSelection;
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+    };
+    void checkSelection(SelectionInfo& info);
 
     Ui::LocalAndRemoteDifferentWidget *ui;
 };

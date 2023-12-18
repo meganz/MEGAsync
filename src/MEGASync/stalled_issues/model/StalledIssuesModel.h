@@ -119,6 +119,7 @@ public:
     //LocalOrRemoteConflicts
     void chooseRemoteForBackups(const QModelIndexList& list);
     void chooseSideManually(bool remote, const QModelIndexList& list);
+    void chooseBothSides(const QModelIndexList& list);
     void semiAutoSolveLocalRemoteIssues(const QModelIndexList& list);
 
     //IgnoreConflicts

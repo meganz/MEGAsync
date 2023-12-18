@@ -440,22 +440,9 @@ void LocalAndRemotePreviouslyUnsyncedDifferHeader::onMultipleActionButtonOptionS
 
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseActions(StalledIssueHeader *header)
 {
-    if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
+    if(header->getData().consultData()->isSolved())
     {
-        if(conflict->isSolvable() && !conflict->isSolved())
-        {
-            StalledIssueHeader::ActionInfo action(tr("Solve"), LocalAndRemoteActionButtonClicked::LocalAndRemoveButton::Solve);
-            header->showAction(action);
-        }
-        else
-        {
-            header->hideAction();
-        }
-
-        if(conflict->isSolved())
-        {
-            header->showSolvedMessage();
-        }
+        header->showSolvedMessage();
     }
 }
 
@@ -478,22 +465,9 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::onMultipleActionButtonOpti
 
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseActions(StalledIssueHeader *header)
 {
-    if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
+    if(header->getData().consultData()->isSolved())
     {
-        if(conflict->isSolvable() && !conflict->isSolved())
-        {
-            StalledIssueHeader::ActionInfo action(tr("Solve"), LocalAndRemoteActionButtonClicked::LocalAndRemoveButton::Solve);
-            header->showAction(action);
-        }
-        else
-        {
-            header->hideAction();
-        }
-
-        if(conflict->isSolved())
-        {
-            header->showSolvedMessage();
-        }
+        header->showSolvedMessage();
     }
 }
 

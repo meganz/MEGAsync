@@ -357,6 +357,16 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
                                     {
                                         item.getData()->updateHandle(currentParentHandle);
                                         item.getData()->resetUIUpdated();
+                                        if(item.getData()->checkForExternalChanges())
+                                        {
+                                            mModelMutex.unlock();
+                                            Utilities::queueFunctionInAppThread([this]()
+                                            {
+                                                updateStalledIssues();
+                                            });
+                                            return;
+                                        }
+
                                         parentFound = true;
                                     }
                                 }
@@ -892,6 +902,35 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList& 
                                                          "Local/Remote issue solved manually", false, nullptr);
                 }
 
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    solveListOfIssues(list, resolveIssue);
+}
+
+void StalledIssuesModel::chooseBothSides(const QModelIndexList& list)
+{
+    std::shared_ptr<QStringList> namesUsed(new QStringList());
+
+    auto resolveIssue = [this, namesUsed](int row) -> bool
+    {
+        auto item = mStalledIssues.at(row);
+        if(item.consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
+            item.consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
+        {
+            if(auto issue = item.convert<LocalOrRemoteUserMustChooseStalledIssue>())
+            {
+                issue->chooseBothSides(namesUsed.get());
+            }
+
+            if(item.consultData()->isSolved())
+            {
+                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_MANUALLY,
+                                                     "Local/Remote issue solved manually", false, nullptr);
                 return true;
             }
         }
