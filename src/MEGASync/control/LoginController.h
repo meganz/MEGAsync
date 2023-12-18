@@ -161,6 +161,7 @@ public:
     explicit LogoutController(QObject* parent =  nullptr);
     virtual ~LogoutController();
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
+    void onRequestStart(mega::MegaApi *api, mega::MegaRequest *request) override;
 
 signals:
     void logout(bool isLocalLogout);
@@ -168,6 +169,8 @@ signals:
 private:
     mega::MegaApi * mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+
+    bool mLogingIn;
 };
 
 #endif // LOGINCONTROLLER_H
