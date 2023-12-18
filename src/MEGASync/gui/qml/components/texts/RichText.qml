@@ -31,49 +31,91 @@ Text {
         if (root.activeFocus && root.text.length > 0) {
 
             // We are scanning the pixels of the link to look for coordinates with hyperlink.
-            var xiFocus = -1;
-            var xfFocus = -1;
-            var yiFocus = -1;
             var found = false;
+            var closed = false;
             var exit = false;
+            var link = ""
+            var linkCoords = new Object;
+            var linkCoordsList = [];
+            const verticalLineOffset = 3;
 
             // we are starting with y to allow multiline text.
             for (var y = 0; y < root.height && !exit; ++y) {
                 for (var x = 0; x < root.width && !exit; ++x) {
-                    var result  = root.linkAt(x, y)
-                    if (result.length > 0 && !found) {
-                        found = true;
-                        xiFocus = x;
-                        yiFocus = y;
-                    }
-                    else if (result.length === 0 && found) {
+
+                    var currentLink = root.linkAt(x, y);
+                    if (link.length > 0 && currentLink.length > 0 && link !== currentLink) { // detected second link in literal, not allowed.
                         exit = true;
-                        if (yiFocus != y) { // we detected the lose of link in the next line
-                            xfFocus = root.width;
+                        break;
+                    }
+
+                    if (currentLink.length > 0 && !found) { // detected a new link in pixel
+                        found = true;
+                        closed = false;
+
+                        link = currentLink;
+                        linkCoords.xiFocus = x;
+                        linkCoords.yiFocus = y;
+                    }
+                    else if (currentLink.length > 0 && found && closed && linkCoords.yiFocus !== y
+                             && (linkCoords.yiFocus + font.pixelSize + verticalLineOffset) < y) // link continues in the next line.
+                    {
+                        linkCoords = new Object;
+                        linkCoords.xiFocus = x;
+                        linkCoords.yiFocus = y;
+
+                        closed = false;
+                    }
+                    else if (currentLink.length === 0 && found && !closed) {
+                        if (linkCoords.yiFocus !== y) { // we detected the lose of link in the next line
+                            linkCoords.xfFocus = root.width;
                         }
                         else {
-                            xfFocus = x;
+                            linkCoords.xfFocus = x; // detect the lose of link in current line.
                         }
+
+                        linkCoordsList.push(linkCoords)
+                        closed = true;
                     }
                 }
             }
 
             // truly corner case :-) link is located on the edge of the text.
-            if (found && !exit) {
-                xfFocus = text.width;
+            if (found && !closed) {
+                linkCoords.xfFocus = root.width;
+                linkCoordsList.push(linkCoords)
             }
 
             // if found link on text, make focus border visible
             if(found) {
-                focusBorder.x = xiFocus-focusMargin;
-                focusBorder.y = yiFocus-focusMargin/2;
-                focusBorder.width = xfFocus - xiFocus + focusMargin * 2;
-                focusBorder.height = root.font.pixelSize + focusMargin * 2;
-                focusBorder.visible = true;
+                for(var coordsIndex = 0; coordsIndex < linkCoordsList.length; ++coordsIndex) {
+                    var coords = linkCoordsList[coordsIndex];
+
+                    var focusX = coords.xiFocus-focusMargin;
+                    var focusY = coords.yiFocus-focusMargin/2;
+                    var focusWidth = coords.xfFocus - coords.xiFocus + focusMargin * 2;
+                    var focusHeight = root.font.pixelSize + focusMargin * 2;
+
+                    if (coordsIndex == 0) {
+                        focusBorder0.x = focusX;
+                        focusBorder0.y = focusY;
+                        focusBorder0.width = focusWidth;
+                        focusBorder0.height = focusHeight;
+                        focusBorder0.visible = true;
+                    }
+                    else if (coordsIndex == 1) {
+                        focusBorder1.x = focusX;
+                        focusBorder1.y = focusY;
+                        focusBorder1.width = focusWidth;
+                        focusBorder1.height = focusHeight;
+                        focusBorder1.visible = true;
+                    }
+                }
             }
         }
         else {
-            focusBorder.visible = false;
+            focusBorder0.visible = false;
+            focusBorder1.visible = false;
         }
     }
 
@@ -126,7 +168,19 @@ Text {
     }
 
     Qml.Rectangle {
-        id: focusBorder
+        id: focusBorder0
+
+        color: "transparent"
+        radius: Sizes.focusBorderRadius
+        visible: false
+        border {
+            color: Styles.focus
+            width: Sizes.focusBorderWidth
+        }
+    }
+
+    Qml.Rectangle {
+        id: focusBorder1
 
         color: "transparent"
         radius: Sizes.focusBorderRadius
