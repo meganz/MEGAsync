@@ -22,11 +22,9 @@ CardButton {
 
     function getHeight() {
         let myHeight = calculatedHeight;
-        if(useMaxSiblingHeight)
-        {
+        if(useMaxSiblingHeight) {
             for(var i = 0; i < parent.children.length; i++) {
-                if(parent.children[i] !== button && parent.children[i].calculatedHeight > myHeight)
-                {
+                if(parent.children[i] !== button && parent.children[i].calculatedHeight > myHeight) {
                     myHeight = parent.children[i].height;
                 }
             }
@@ -34,7 +32,7 @@ CardButton {
         return myHeight;
     }
 
-    height: getHeight();
+    height: getHeight()
 
     Column {
         anchors.fill: parent
