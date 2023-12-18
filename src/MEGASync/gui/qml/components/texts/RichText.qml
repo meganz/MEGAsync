@@ -6,7 +6,7 @@ Text {
     id: root
 
     readonly property url defaultUrl: "default"
-    readonly property int focusMargin: 6
+    readonly property int focusMargin: 8
 
     property url url: defaultUrl
     property bool manageMouse: false
@@ -88,34 +88,29 @@ Text {
 
             // if found link on text, make focus border visible
             if(found) {
+                focusRepeater.model = linkCoordsList.length
+
                 for(var coordsIndex = 0; coordsIndex < linkCoordsList.length; ++coordsIndex) {
                     var coords = linkCoordsList[coordsIndex];
 
                     var focusX = coords.xiFocus-focusMargin;
-                    var focusY = coords.yiFocus-focusMargin/2;
+                    var focusY = coords.yiFocus-(focusMargin/2);
                     var focusWidth = coords.xfFocus - coords.xiFocus + focusMargin * 2;
-                    var focusHeight = root.font.pixelSize + focusMargin * 2;
+                    var focusHeight = root.font.pixelSize + focusMargin + (focusMargin * (3/5));
 
-                    if (coordsIndex == 0) {
-                        focusBorder0.x = focusX;
-                        focusBorder0.y = focusY;
-                        focusBorder0.width = focusWidth;
-                        focusBorder0.height = focusHeight;
-                        focusBorder0.visible = true;
-                    }
-                    else if (coordsIndex == 1) {
-                        focusBorder1.x = focusX;
-                        focusBorder1.y = focusY;
-                        focusBorder1.width = focusWidth;
-                        focusBorder1.height = focusHeight;
-                        focusBorder1.visible = true;
-                    }
+                    var focusRect = focusRepeater.itemAt(coordsIndex);
+                    focusRect.x = focusX;
+                    focusRect.y = focusY;
+                    focusRect.width = focusWidth;
+                    focusRect.height = focusHeight;
+                    focusRect.visible = true;
                 }
             }
         }
         else {
-            focusBorder0.visible = false;
-            focusBorder1.visible = false;
+            for(var modelIndex=0; modelIndex < focusRepeater.model; ++modelIndex) {
+                focusRepeater.itemAt(modelIndex).visible = false;
+            }
         }
     }
 
@@ -167,27 +162,19 @@ Text {
         }
     }
 
-    Qml.Rectangle {
-        id: focusBorder0
+    Qml.Repeater{
+        id: focusRepeater
 
-        color: "transparent"
-        radius: Sizes.focusBorderRadius
-        visible: false
-        border {
-            color: Styles.focus
-            width: Sizes.focusBorderWidth
-        }
-    }
+        Qml.Rectangle {
+            id: focusBorder
 
-    Qml.Rectangle {
-        id: focusBorder1
-
-        color: "transparent"
-        radius: Sizes.focusBorderRadius
-        visible: false
-        border {
-            color: Styles.focus
-            width: Sizes.focusBorderWidth
+            color: "transparent"
+            radius: Sizes.focusBorderRadius
+            visible: false
+            border {
+                color: Styles.focus
+                width: Sizes.focusBorderWidth
+            }
         }
     }
 
