@@ -44,9 +44,8 @@ Text {
             const verticalLineOffset = 3;
 
             const linkCoord = {
-                xi: 0,
-                yi: 0,
-                xf: 0,
+                x: 0,
+                y: 0,
                 width: 0
             }
 
@@ -67,24 +66,24 @@ Text {
                         closed = false;
 
                         link = currentLink;
-                        linkCoords.xi = x;
-                        linkCoords.yi = y;
+                        linkCoords.x = x;
+                        linkCoords.y = y;
                     }
-                    else if (currentLink.length > 0 && found && closed && linkCoords.yi !== y
-                             && (linkCoords.yi + font.pixelSize + verticalLineOffset) < y) // link continues in the next line.
+                    else if (currentLink.length > 0 && found && closed && linkCoords.y !== y
+                             && (linkCoords.y + font.pixelSize + verticalLineOffset) < y) // link continues in the next line.
                     {
                         linkCoords = new Object;
-                        linkCoords.xi = x;
-                        linkCoords.yi = y;
+                        linkCoords.x = x;
+                        linkCoords.y = y;
 
                         closed = false;
                     }
                     else if (currentLink.length === 0 && found && !closed) {
-                        if (linkCoords.yi !== y) { // we detected the lose of link in the next line
-                            linkCoords.width = root.width - linkCoords.xi
+                        if (linkCoords.y !== y) { // we detected the lose of link in the next line
+                            linkCoords.width = root.width - linkCoords.x
                         }
                         else {
-                            linkCoords.width = x - linkCoords.xi
+                            linkCoords.width = x - linkCoords.x
                         }
 
                         linkCoordsList.push(linkCoords);
@@ -107,10 +106,10 @@ Text {
                     var coords = linkCoordsList[coordsIndex];
 
                     var focusRect = focusRepeater.itemAt(coordsIndex);
-                    focusRect.x = coords.xi-focusMargin;;
-                    focusRect.y = coords.yi-(focusMargin/2);
-                    focusRect.width = coords.width + focusMargin * 2;;
-                    focusRect.height = root.font.pixelSize + focusMargin + (focusMargin * (3/5));;
+                    focusRect.x = coords.x-focusMargin;
+                    focusRect.y = coords.y-(focusMargin/2);
+                    focusRect.width = coords.width + focusMargin * 2;
+                    focusRect.height = root.font.pixelSize + focusMargin + (focusMargin * (3/5));
                     focusRect.visible = true;
                 }
             }
