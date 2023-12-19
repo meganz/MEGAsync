@@ -72,16 +72,15 @@ void WordWrapLabel::resetSizeLimits()
 
 void WordWrapLabel::setText(const QString& text)
 {
-    QTextEdit::setText(text);
+    mText = text;
 
     if (mFormat == Qt::PlainText)
     {
-        mText = toPlainText();
-        QTextEdit::setText(mText);
+        QTextEdit::setPlainText(mText);
     }
     else
     {
-        mText = text;
+        QTextEdit::setText(mText);
     }
 }
 
