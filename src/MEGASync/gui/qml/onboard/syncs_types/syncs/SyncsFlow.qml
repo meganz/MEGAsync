@@ -109,66 +109,70 @@ Item {
     */
     Connections {
         id: syncTypeNavigationConnection
+
         target: view.currentItem
         ignoreUnknownSignals: true
 
         function onSyncTypeMoveToBack() {
             if(syncsPanel.navInfo.comesFromResumePage) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.syncsFlowMoveToFinal()
-            } else {
-                root.syncsFlowMoveToBack()
+                root.syncsFlowMoveToFinal();
+            }
+            else {
+                root.syncsFlowMoveToBack();
             }
         }
 
         function onSyncTypeMoveToFullSync() {
-            root.state = root.fullSync
+            root.state = root.fullSync;
         }
 
         function onSyncTypeMoveToSelectiveSync() {
-            root.state = root.selectiveSync
+            root.state = root.selectiveSync;
         }
     }
 
     Connections {
         id: selectiveSyncNavigationConnection
+
         target: view.currentItem
         ignoreUnknownSignals: true
 
         function onSelectiveSyncMoveToBack() {
             if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.syncsFlowMoveToFinal()
+                root.syncsFlowMoveToFinal();
             }
             else {
-                root.state = root.syncType
+                root.state = root.syncType;
             }
         }
 
         function onSelectiveSyncMoveToSuccess() {
-            syncsPanel.navInfo.selectiveSyncDone = true
-            root.syncsFlowMoveToFinal()
+            syncsPanel.navInfo.selectiveSyncDone = true;
+            root.syncsFlowMoveToFinal();
         }
     }
 
     Connections {
         id: fullSyncNavigationConnection
+
         target: view.currentItem
         ignoreUnknownSignals: true
 
         function onFullSyncMoveToBack() {
             if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.syncsFlowMoveToFinal()
-
-            } else {
-                root.state = root.syncType
+                root.syncsFlowMoveToFinal();
+            }
+            else {
+                root.state = root.syncType;
             }
         }
 
         function onFullSyncMoveToSuccess() {
-            syncsPanel.navInfo.fullSyncDone = true
-            root.syncsFlowMoveToFinal()
+            syncsPanel.navInfo.fullSyncDone = true;
+            root.syncsFlowMoveToFinal();
         }
     }
 }

@@ -69,17 +69,21 @@ FocusScope {
         leftIconSource: local ? Images.pc : Images.megaOutline
         leftIconColor: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
-        toolTip.leftIconSource: leftIconSource
-        toolTip.timeout: 5000
+        toolTip {
+            leftIconSource: leftIconSource
+            timeout: 5000
+        }
     }
 
     OutlineButton {
         id: changeButtonItem
 
         height: folderItem.textField.height
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 15
+        anchors {
+            right: parent.right
+            top: parent.top
+            topMargin: 15
+        }
         focus: true
         text: OnboardingStrings.choose
         onClicked: {
