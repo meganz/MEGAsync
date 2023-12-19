@@ -10,7 +10,6 @@
 
 #include <Utilities.h>
 
-const int MINIMUM_DOC_HEIGHT = 3;
 const int MINMUM_HEIGHT = 16;
 
 /**
