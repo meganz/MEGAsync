@@ -34,7 +34,7 @@ public:
     std::shared_ptr<mega::MegaNode> getNode() const;
 
     void createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList);
-    bool areChildrenInitialized();
+    bool areChildrenInitialized() const;
 
     bool canFetchMore();
 
@@ -47,11 +47,12 @@ public:
     void setOwner(std::unique_ptr<mega::MegaUser> user);
     QPixmap getOwnerIcon();
     QIcon getStatusIcons();
-    Status getStatus();
+    Status getStatus() const;
     virtual bool isSyncable();
     virtual bool isVault();
-    bool isCloudDrive();
+    bool isCloudDrive() const;
     QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
+    QList<QPointer<NodeSelectorModelItem>> addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes);
     QPointer<NodeSelectorModelItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
     void displayFiles(bool enable);
     void setChatFilesFolder();
