@@ -10,8 +10,6 @@
 
 #include <Utilities.h>
 
-const int MINMUM_HEIGHT = 16;
-
 /**
  * THIS COMPONENT IS ONLY VALID WHEN THE LABEL HAS EXPANDING SIZE POLICY
  */
@@ -38,7 +36,6 @@ WordWrapLabel::WordWrapLabel(QWidget* parent)
     viewport()->installEventFilter(this);
 
     document()->setDocumentMargin(0);
-    setFixedHeight(MINMUM_HEIGHT);
 
     connect(this, &WordWrapLabel::anchorClicked, this, &WordWrapLabel::onLinkActivated);
 
