@@ -433,11 +433,6 @@ LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDi
 {
 }
 
-void LocalAndRemotePreviouslyUnsyncedDifferHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int index)
-{
-    LocalAndRemoteActionButtonClicked::onMultipleActionButtonOptionSelected(header, index);
-}
-
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseActions(StalledIssueHeader *header)
 {
     if(header->getData().consultData()->isSolved())
@@ -458,11 +453,6 @@ LocalAndRemoteChangedSinceLastSyncedStateHeader::LocalAndRemoteChangedSinceLastS
 {
 }
 
-void LocalAndRemoteChangedSinceLastSyncedStateHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int index)
-{
-    LocalAndRemoteActionButtonClicked::onMultipleActionButtonOptionSelected(header, index);
-}
-
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseActions(StalledIssueHeader *header)
 {
     if(header->getData().consultData()->isSolved())
@@ -475,70 +465,6 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseTitles(StalledI
 {
     header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
-}
-
-void LocalAndRemoteActionButtonClicked::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int)
-{
-    if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
-    {
-        auto reasons(QList<mega::MegaSyncStall::SyncStallReason>()
-                     << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
-                     << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
-
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-        auto selection = dialog->getDialog()->getSelection(reasons);
-
-        if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
-        {
-            return;
-        }
-
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-        QMap<QMessageBox::Button, QString> textsByButton;
-        textsByButton.insert(QMessageBox::No, tr("Cancel"));
-
-        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
-
-        if(selection.size() <= 1)
-        {
-            if(allSimilarIssues.size() != selection.size())
-            {
-                msgInfo.buttons |= QMessageBox::Yes;
-                textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-                textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
-            }
-            else
-            {
-                textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-            }
-        }
-        else
-        {
-            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
-        }
-
-        msgInfo.buttonsText = textsByButton;
-        msgInfo.text = tr("Are you sure you want to solve the issue?");
-        msgInfo.informativeText = tr("This action will choose the latest modified side");
-
-        msgInfo.finishFunc = [selection, allSimilarIssues, header, conflict](QMessageBox* msgBox)
-        {
-            if(msgBox->result() == QDialogButtonBox::Ok)
-            {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(selection);
-            }
-            else if(msgBox->result() == QDialogButtonBox::Yes)
-            {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(allSimilarIssues);
-            }
-        };
-
-        QMegaMessageBox::warning(msgInfo);
-    }
 }
 
 //Name Conflicts

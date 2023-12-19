@@ -88,7 +88,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
     if (issue->isSolved())
     {
         ui->keepBothOption->setChosen(false);
-        ui->keepLastModifiedOption->setChosen(false);
+        ui->keepLastModifiedOption->hide();
 
         if(issue->isPotentiallySolved())
         {
@@ -101,11 +101,9 @@ void LocalAndRemoteDifferentWidget::refreshUi()
             {
                 ui->keepBothOption->setChosen(true);
             }
-            else if(issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LastMtime)
-            {
-                ui->keepLastModifiedOption->setChosen(true);
-            }
         }
+
+        updateSizeHint();
     }
 }
 

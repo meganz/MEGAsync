@@ -219,7 +219,6 @@ class LocalAndRemotePreviouslyUnsyncedDifferHeader : public StalledIssueHeaderCa
 
 public:
     LocalAndRemotePreviouslyUnsyncedDifferHeader(StalledIssueHeader* header);
-    void onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int index) override;
 
 protected slots:
     void refreshCaseActions(StalledIssueHeader *header) override;
@@ -233,7 +232,6 @@ class LocalAndRemoteChangedSinceLastSyncedStateHeader : public StalledIssueHeade
 
 public:
     LocalAndRemoteChangedSinceLastSyncedStateHeader(StalledIssueHeader* header);
-    void onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int index) override;
 
 protected slots:
     void refreshCaseActions(StalledIssueHeader *header) override;

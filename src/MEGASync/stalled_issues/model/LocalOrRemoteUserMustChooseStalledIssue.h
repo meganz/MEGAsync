@@ -31,8 +31,7 @@ public:
         None = 0,
         Remote,
         Local,
-        Both,
-        LastMtime
+        Both
     };
 
     ChosenSide getChosenSide() const;
