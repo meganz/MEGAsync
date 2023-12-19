@@ -14,6 +14,7 @@ Qml.CheckBox {
     property Sizes sizes: Sizes {}
     property Colors colors: Colors {}
     property Icons icons: Icons {}
+    property Item nextTabItem: null
 
     function indeterminate() {
         return checkState === Qt.PartiallyChecked;
@@ -46,6 +47,8 @@ Qml.CheckBox {
     activeFocusOnTab: true
 
     contentItem: Texts.RichText {
+        id: checkLabel
+
         anchors.left: indicator.right
         leftPadding: root.spacing
         height: Math.max(contentItem.implicitHeight, indicator.height)
@@ -54,6 +57,7 @@ Qml.CheckBox {
         fontSizeMode: Text.Fit
         url: root.url
         verticalAlignment: Text.AlignVCenter
+        KeyNavigation.tab: root.nextTabItem
 
         MouseArea {
             anchors.fill: parent

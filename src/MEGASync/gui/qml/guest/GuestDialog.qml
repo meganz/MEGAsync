@@ -1,18 +1,16 @@
 import QtQuick 2.15
 
+import common 1.0
+
 import GuestQmlDialog 1.0
 import LoginController 1.0
 
 GuestQmlDialog {
-    id: guestWindow
+    id: window
 
-    width: guestFlow.width
-    height: guestFlow.height
+    width: 400
+    height: 560
     color: "transparent"
-
-    GuestFlow {
-        id: guestFlow
-    }
 
     onVisibleChanged:  {
         if(visible) {
@@ -26,18 +24,32 @@ GuestQmlDialog {
         }
     }
 
+    Rectangle {
+        id: borderItem
+
+        color: Styles.surface1
+        radius: 10
+        anchors.fill: parent
+        border.color: "#1F000000"
+        border.width: 1
+    }
+
+    GuestFlow {
+        id: guestFlow
+    }
+
     PropertyAnimation {
         id: fadeOut
 
-        target: guestWindow
+        target: window
         property: "opacity"
         to: 0
         duration: 100
 
         onRunningChanged: {
             if (!running) {
-                guestWindow.hide();
-                guestWindow.opacity = 1;
+                window.hide();
+                window.opacity = 1;
             }
         }
     }

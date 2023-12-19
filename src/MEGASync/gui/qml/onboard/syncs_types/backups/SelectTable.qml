@@ -48,8 +48,8 @@ Item {
     ListView {
         id: backupsListView
 
-        model: backupsModelAccess
         anchors.fill: parent
+        model: backupsModelAccess
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
@@ -74,19 +74,27 @@ Item {
         id: headerComponent
 
         Rectangle {
+            id: headerRectangle
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             height: headerFooterHeight
-            anchors.left: parent.left
-            anchors.right: parent.right
             color: Styles.pageBackground
             radius: tableRadius
             z: 2
 
             MouseArea {
+                id: headerMouseArea
+
                 anchors.fill: parent
                 hoverEnabled: true
             }
 
             RowLayout {
+                id: checkboxLayout
+
                 width: parent.width
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 0
@@ -110,6 +118,10 @@ Item {
                         selectAll.fromModel = false;
                     }
 
+                    Component.onCompleted: {
+                        selectAll.checkState = backupsModelAccess.checkAllState;
+                    }
+
                     Connections {
                         target: backupsModelAccess
 
@@ -118,29 +130,35 @@ Item {
                             selectAll.checkState = backupsModelAccess.checkAllState;
                         }
                     }
-
-                    Component.onCompleted: {
-                        selectAll.checkState = backupsModelAccess.checkAllState;
-                    }
                 }
             }
 
             Rectangle {
+                id: bottomLine
+
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
                 height: borderRectangle.border.width
                 color: Styles.borderSubtle
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
             }
-        }
-    }
+
+        } // Rectangle: headerRectangle
+
+    } // Component: headerComponent
 
     Component {
         id: folderComponent
 
         FolderRow {
-            anchors.right: parent.right
-            anchors.left: parent.left
+            id: folderItem
+
+            anchors {
+                right: parent.right
+                left: parent.left
+            }
 
             onFocusActivated: {
                 backupsListView.positionViewAtIndex(index, ListView.Center)
@@ -152,8 +170,12 @@ Item {
         id: footerComponent
 
         Rectangle {
-            anchors.left: parent.left
-            anchors.right: parent.right
+            id: footerRectangle
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             height: headerFooterHeight
             radius: tableRadius
             color: Styles.pageBackground
@@ -162,26 +184,33 @@ Item {
             TextButton {
                 id: addFoldersButton
 
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 20
+                anchors {
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: 20
+                }
                 text: OnboardingStrings.addFolder
                 sizes: SmallSizes { borderLess: true }
                 icons {
                     source: Images.plus
                     position: Icon.Position.LEFT
                 }
+
                 onClicked: {
                     folderDialog.openFolderSelector();
                 }
             }
 
             Rectangle {
+                id: topLine
+
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                }
                 height: borderRectangle.border.width
                 color: borderRectangle.border.color
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
             }
 
             ChooseLocalFolder {
@@ -197,7 +226,9 @@ Item {
                     backupsModelAccess.insert(folderPath);
                 }
             }
-        }
-    }
+
+        } // Rectangle: footerRectangle
+
+    } // Component: footerComponent
 
 }

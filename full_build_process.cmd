@@ -81,7 +81,7 @@ IF %MEGA_CORES% GTR 16 (
 	SET "VALID_CORES=0"
 )
 IF %MEGA_CORES% EQU 0 (
-	SET "MEGA_CORES=4"
+	FOR /f "tokens=2 delims==" %%f IN ('wmic cpu get NumberOfLogicalProcessors /value ^| find "="') DO SET MEGA_CORES=%%f
 )
 IF %VALID_CORES% EQU 0 (
 	echo "Please add a correct core argument: 1 to 16, or 0 for default value"
@@ -126,7 +126,7 @@ echo 	- -help: this message
 echo 	- 0 arguments: use these settings: 32/64 sign 1
 echo 	- Architecture : 64 or 32/64 to build either for 64 bit or both 32 and 64 bit
 echo 	- Sign: sign or nosign if the binaries must be signed or not
-echo 	- Cores: the number of cores to build the project, or 0 for default value (4)
+echo 	- Cores: the number of cores to build the project, or 0 for default value (number of logical cores on the machine)
 echo 	- Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
 echo MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.15.11\x64

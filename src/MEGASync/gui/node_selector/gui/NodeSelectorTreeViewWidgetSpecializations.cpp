@@ -157,7 +157,42 @@ void NodeSelectorTreeViewWidgetSearch::stopSearch()
 
 std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidgetSearch::createProxyModel()
 {
-    return std::unique_ptr<NodeSelectorProxyModelSearch>(new NodeSelectorProxyModelSearch);
+    auto proxy =  std::unique_ptr<NodeSelectorProxyModelSearch>(new NodeSelectorProxyModelSearch);
+    //The search view is the only one with a real proxy model (in terms on filterAcceptsRow)
+    connect(proxy.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
+    connect(proxy.get(), &QAbstractItemModel::rowsRemoved, this, &NodeSelectorTreeViewWidget::onRowsRemoved);
+    return proxy;
+}
+
+bool NodeSelectorTreeViewWidgetSearch::newNodeCanBeAdded(mega::MegaNode *node)
+{
+    auto nodeName(QString::fromUtf8(node->getName()));
+    auto containsText = nodeName.contains(ui->searchingText->text(),Qt::CaseInsensitive);
+    return containsText;
+}
+
+QModelIndex NodeSelectorTreeViewWidgetSearch::getAddedNodeParent(mega::MegaHandle parentHandle)
+{
+    return QModelIndex();
+}
+
+bool NodeSelectorTreeViewWidgetSearch::containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle&)
+{
+    if(node)
+    {
+        auto index = mModel->findItemByNodeHandle(node->getHandle(), QModelIndex());
+        if(index.isValid())
+        {
+            return true;
+        }
+        else
+        {
+            return newNodeCanBeAdded(node);
+        }
+
+    }
+
+    return false;
 }
 
 void NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked()
@@ -248,6 +283,16 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
     }
 
     checkAndClick(buttonToCheck);
+
+    if(ui->tMegaFolders->model())
+    {
+        if(ui->tMegaFolders->model()->rowCount() == 0 && showEmptyView())
+        {
+            ui->stackedWidget->setCurrentWidget(ui->emptyPage);
+            return;
+        }
+    }
+    ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
 }
 
 void NodeSelectorTreeViewWidgetSearch::checkAndClick(QToolButton* button)

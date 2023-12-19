@@ -4,7 +4,6 @@ import QtQuick.Controls 2.15
 
 import onboard.syncs_types 1.0
 
-import Onboarding 1.0
 import LoginController 1.0
 
 StackViewBase {

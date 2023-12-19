@@ -12,10 +12,6 @@ GuestQmlDialog::GuestQmlDialog(QWindow *parent)
     });
 }
 
-GuestQmlDialog::~GuestQmlDialog()
-{
-}
-
 bool GuestQmlDialog::isHiddenForLongTime() const
 {
     return QDateTime::currentMSecsSinceEpoch() - mLastHideTime > 500;

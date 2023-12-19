@@ -9,24 +9,25 @@ Item {
     id: root
 
     enum ToStates {
-        Disabled = 0,
-        Current = 1,
-        Done = 2,
-        Warning = 3,
-        Error = 4
+        DISABLED = 0,
+        CURRENT = 1,
+        DONE = 2,
+        WARNING = 3,
+        ERROR = 4
     }
 
     property alias text: stepText.text
-    property int toState: SubStep.ToStates.Disabled
 
-    onToStateChanged: {
-        substepContent.state = substepContent.statesMap.get(toState);
-    }
+    property int toState: SubStep.ToStates.DISABLED
 
     height: substepContent.height
     width: substepContent.width
     Layout.preferredWidth: substepContent.width
     Layout.preferredHeight: substepContent.height
+
+    onToStateChanged: {
+        substepContent.state = substepContent.statesMap.get(toState);
+    }
 
     Rectangle {
         id: substepContent
@@ -38,11 +39,11 @@ Item {
         readonly property string stateError: "ERROR"
 
         property var statesMap: new Map([
-            [SubStep.ToStates.Disabled, stateDisabled],
-            [SubStep.ToStates.Current, stateCurrent],
-            [SubStep.ToStates.Done, stateDone],
-            [SubStep.ToStates.Warning, stateWarning],
-            [SubStep.ToStates.Error, stateError]
+            [SubStep.ToStates.DISABLED, stateDisabled],
+            [SubStep.ToStates.CURRENT, stateCurrent],
+            [SubStep.ToStates.DONE, stateDone],
+            [SubStep.ToStates.WARNING, stateWarning],
+            [SubStep.ToStates.ERROR, stateError]
         ])
 
         state: stateDisabled
@@ -120,24 +121,28 @@ Item {
         RowLayout {
             id: content
 
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 5
-            anchors.topMargin: 4
-            anchors.bottomMargin: 4
-            anchors.rightMargin: 8
+            anchors {
+                top: parent.top
+                left: parent.left
+                bottom: parent.bottom
+                leftMargin: 5
+                topMargin: 4
+                bottomMargin: 4
+                rightMargin: 8
+            }
             spacing: 8
 
             Rectangle {
                 id: stepCircleSmall
 
-                radius: 4
                 width: 8
                 height: 8
-                border.width: 2
-                border.color: Styles.iconButtonDisabled
+                radius: 4
                 color: "transparent"
+                border {
+                    width: 2
+                    color: Styles.iconButtonDisabled
+                }
             }
 
             Item {
@@ -149,8 +154,8 @@ Item {
                 Rectangle {
                     id: stepCircleBig
 
-                    radius: 8
                     anchors.fill: parent
+                    radius: 8
                     color: Styles.iconButton
                     opacity: 0.4
                 }
@@ -159,9 +164,9 @@ Item {
                     id: stepCircleBigInside
 
                     anchors.centerIn: parent
-                    radius: 4
                     width: 8
                     height: 8
+                    radius: 4                    
                     color: stepCircleBig.color
                 }
             }
@@ -170,10 +175,14 @@ Item {
                 id: stepText
 
                 color: Styles.iconButton
-                font.pixelSize: Texts.Text.Size.Small
-                font.weight: Font.DemiBold
+                font {
+                    pixelSize: Texts.Text.Size.Small
+                    weight: Font.DemiBold
+                }
             }
-        }
-    }
+
+        } // RowLayout: content
+
+    } // Rectangle: substepContent
 
 }

@@ -14,7 +14,7 @@ import BackupsProxyModel 1.0
 import BackupsModel 1.0
 
 Rectangle {
-    id: tableRectangle
+    id: root
 
     readonly property int headerFooterMargin: 24
     readonly property int headerFooterHeight: 40
@@ -31,8 +31,8 @@ Rectangle {
     Rectangle {
         id: borderRectangle
 
-        width: tableRectangle.width
-        height: tableRectangle.height
+        width: root.width
+        height: root.height
         color: "transparent"
         border.color: Styles.borderStrong
         border.width: 1
@@ -43,8 +43,8 @@ Rectangle {
     ListView {
         id: listView
 
-        model: backupsProxyModel
         anchors.fill: parent
+        model: backupsProxyModel
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
@@ -59,30 +59,42 @@ Rectangle {
         id: headerComponent
 
         Rectangle {
+            id: headerRectangle
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             height: headerFooterHeight
-            anchors.left: parent.left
-            anchors.right: parent.right
             color: Styles.pageBackground
-            radius: tableRectangle.radius
+            radius: root.radius
             z: 3
 
             RowLayout {
-                width: parent.width
+                id: headerLayout
+
                 anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
                 spacing: 0
 
                 RowLayout {
+                    id: imageTextLayout
+
                     Layout.leftMargin: headerFooterMargin
                     Layout.fillWidth: true
                     spacing: headerFooterMargin / 2
 
                     SvgImage {
+                        id: headerImage
+
                         source: Images.database
                         color: Styles.iconPrimary
                         sourceSize: Qt.size(16, 16)
                     }
 
                     Texts.Text {
+                        id: headerText
+
                         text: OnboardingStrings.backupFolders
                         font.weight: Font.DemiBold
                         color: Styles.textPrimary
@@ -95,46 +107,56 @@ Rectangle {
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
                     text: backupsModelAccess.totalSize
-                    font.pixelSize: Texts.Text.Size.Small
-                    font.weight: Font.DemiBold
                     color: Styles.textPrimary
                     visible: backupsModelAccess.totalSizeReady
+                    font {
+                        pixelSize: Texts.Text.Size.Small
+                        weight: Font.DemiBold
+                    }
                 }
 
                 BusyIndicator {
+                    id: busyIndicatorItem
+
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
-                    visible: !backupsModelAccess.totalSizeReady
-                    color: Styles.textAccent
-                    imageSize: Qt.size(16, 16)
                     Layout.preferredWidth: 16
                     Layout.preferredHeight: 16
+                    imageSize: Qt.size(16, 16)
+                    visible: !backupsModelAccess.totalSizeReady
+                    color: Styles.textAccent
                 }
             }
 
             Rectangle {
+                id: lineRectangle
+
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
                 height: borderRectangle.border.width
                 color: Styles.borderSubtle
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
+
             }
 
             MouseArea {
+                id: headerMouseArea
+
                 anchors.fill: parent
                 hoverEnabled: true
             }
-        }
-    }
+
+        } // Rectangle: headerRectangle
+
+    } // Component: headerComponent
 
     Component {
         id: folderComponent
 
         FolderRow {
             id: folderRow
-
-            anchors.right: parent.right
-            anchors.left: parent.left
         }
     }
 
@@ -144,8 +166,10 @@ Rectangle {
         Rectangle {
             id: notificationFooter
 
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             height: notificationItem.height
             radius: tableRadius
             color: Styles.pageBackground

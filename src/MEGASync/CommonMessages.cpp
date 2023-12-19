@@ -67,6 +67,11 @@ QString CommonMessages::getDefaultDownloadFolderName()
     return QCoreApplication::translate("CommonMessages", "MEGA Downloads");
 }
 
+QString CommonMessages::getDefaultImportFolderName()
+{
+    return QCoreApplication::translate("CommonMessages", "MEGA Imports");
+}
+
 int CommonMessages::computeDaysToExpiration(int64_t expirationTimeStampInSecs)
 {
     QDateTime expiredDate;

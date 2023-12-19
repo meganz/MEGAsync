@@ -1,7 +1,8 @@
 #include "LinkProcessor.h"
-#include "Utilities.h"
 #include "Preferences/Preferences.h"
 #include "MegaApplication.h"
+#include "CommonMessages.h"
+
 #include <QDir>
 #include <QDateTime>
 #include <QApplication>
@@ -242,7 +243,8 @@ void LinkProcessor::importLinks(QString megaPath)
         }
 
         mRequestCounter++;
-        megaApi->createFolder("MEGA Imports", rootNode.get(), delegateListener);
+        megaApi->createFolder(CommonMessages::getDefaultImportFolderName().toUtf8().constData(),
+                              rootNode.get(), delegateListener);
     }
 }
 

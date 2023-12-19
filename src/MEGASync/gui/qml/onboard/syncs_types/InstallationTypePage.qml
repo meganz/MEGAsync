@@ -3,23 +3,23 @@ import QtQuick 2.15
 InstallationTypePageForm {
     id: root
 
-    signal installationTypeMoveToBack;
-    signal installationTypeMoveToSync;
-    signal installationTypeMoveToBackup;
+    signal installationTypeMoveToBack
+    signal installationTypeMoveToSync
+    signal installationTypeMoveToBackup
 
     footerButtons {
 
         rightSecondary.onClicked: {
-            root.installationTypeMoveToBack()
+            root.installationTypeMoveToBack();
         }
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
-                case SyncsType.Types.Sync:
-                    root.installationTypeMoveToSync()
+                case SyncsType.Types.SYNC:
+                    root.installationTypeMoveToSync();
                     break;
-                case SyncsType.Types.Backup:
-                    root.installationTypeMoveToBackup()
+                case SyncsType.Types.BACKUP:
+                    root.installationTypeMoveToBackup();
                     break;
                 default:
                     console.error("Button type does not exist -> "
