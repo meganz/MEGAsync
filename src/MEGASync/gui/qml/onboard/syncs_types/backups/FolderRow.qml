@@ -164,7 +164,7 @@ Item {
                                - selectRoot.imageTextSpacing - selectRoot.imageWidth -
                                (folderSize.visible ? (folderSize.width + selectRoot.checkboxSpacing) : 0) -
                                (busyIndicator.visible ? (busyIndicator.width + selectRoot.checkboxSpacing) : 0)
-                        font.pixelSize: Texts.Text.Size.Small
+                        font.pixelSize: Texts.Text.Size.SMALL
                         text: name
                         color: Styles.textPrimary
                     }
@@ -183,7 +183,7 @@ Item {
                 horizontalAlignment: Qt.AlignRight
                 verticalAlignment: Qt.AlignVCenter
                 text: size
-                font.pixelSize: Texts.Text.Size.Small
+                font.pixelSize: Texts.Text.Size.SMALL
                 color: Styles.textSecondary
                 visible: backupsProxyModel.selectedFilterEnabled && sizeReady
             }
@@ -267,7 +267,7 @@ Item {
                     }
                     width: conflictRoot.width - conflictRoot.imageTextSpacing - conflictRoot.imageWidth
                             - buttonRow.width - conflictRoot.contentMargin
-                    font.pixelSize: Texts.Text.Size.Small
+                    font.pixelSize: Texts.Text.Size.SMALL
                     text: name
                     color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
                            ? Styles.textError

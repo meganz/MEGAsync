@@ -20,7 +20,8 @@ Text {
         var color = Styles.linkPrimary;
         if(!enabled) {
             color = Styles.notificationInfo;
-        } else if(visited) {
+        }
+        else if(visited) {
             color = Styles.linkVisited;
         }
         root.text = root.text.replace("color:" + urlColor, "color:" + color);

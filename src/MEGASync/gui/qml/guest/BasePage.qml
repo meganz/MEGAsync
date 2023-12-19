@@ -81,7 +81,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font {
-                    pixelSize: Texts.Text.Size.MediumLarge
+                    pixelSize: Texts.Text.Size.MEDIUM_LARGE
                     weight: Font.DemiBold
                 }
                 lineHeight: 24
@@ -100,7 +100,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 color: Styles.textSecondary
                 manageMouse: true
-                font.pixelSize: Texts.Text.Size.Small
+                font.pixelSize: Texts.Text.Size.SMALL
                 lineHeight: 16
                 lineHeightMode: Text.FixedHeight
                 visible: description.text !== ""

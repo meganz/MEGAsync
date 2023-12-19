@@ -23,7 +23,7 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.preferredHeight: 30
         font {
-            pixelSize: Texts.Text.Size.Large
+            pixelSize: Texts.Text.Size.LARGE
             weight: Font.DemiBold
         }
     }
@@ -33,7 +33,7 @@ ColumnLayout {
 
         Layout.fillWidth: true
         Layout.preferredHeight: 20
-        font.pixelSize: Texts.Text.Size.Medium
+        font.pixelSize: Texts.Text.Size.MEDIUM
         wrapMode: Text.WordWrap
     }
 

@@ -12,10 +12,10 @@ import onboard 1.0
 import QmlClipboard 1.0
 
 FocusScope {
-
     id: root
 
-    property string key: digit1.text + digit2.text + digit3.text + digit4.text + digit5.text + digit6.text
+    property string key: digit1.text + digit2.text + digit3.text
+                            + digit4.text + digit5.text + digit6.text
     property bool hasError: false
 
     signal allDigitsFilled
@@ -36,6 +36,8 @@ FocusScope {
         digit6.text = pin.charAt(5);
     }
 
+    Layout.leftMargin: -digit1.sizes.focusBorderWidth
+
     onKeyChanged: {
         if(key.length === 6) {
             allDigitsFilled();
@@ -45,9 +47,8 @@ FocusScope {
         }
     }
 
-    Layout.leftMargin: -digit1.sizes.focusBorderWidth
-
     ColumnLayout {
+        id: columnLayout
 
         spacing: 20
 
@@ -121,20 +122,21 @@ FocusScope {
                     pastePin();
                 }
             }
-        }
+
+        } // RowLayout: mainLayout
 
         Texts.NotificationText {
             id: notification
 
-            visible: hasError
+            Layout.leftMargin: digit1.sizes.focusBorderWidth
+            Layout.preferredWidth: root.width - 2 * digit1.sizes.focusBorderWidth
+            Layout.preferredHeight: notification.height
             title: OnboardingStrings.auth2FAFailed
             text: OnboardingStrings.tryAgain
             type: Constants.MessageType.ERROR
             icon: Images.lock
             time: 2000
-            Layout.leftMargin: digit1.sizes.focusBorderWidth
-            Layout.preferredWidth: root.width - 2 * digit1.sizes.focusBorderWidth
-            Layout.preferredHeight: notification.height
+            visible: hasError
 
             onVisibilityTimerFinished: {
                 hasError = false;
@@ -163,13 +165,16 @@ FocusScope {
         }
 
         Shortcut {
+            id: shortcutItem
+
             sequence: [ StandardKey.Paste ]
             onActivated: {
                 pastePin();
             }
         }
 
-}
+    } // ColumnLayout: columnLayout
+
 }
 
 

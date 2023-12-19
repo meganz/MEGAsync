@@ -115,7 +115,7 @@ Item {
 
                     Layout.alignment: Qt.AlignLeft
                     font.weight: Font.DemiBold
-                    font.pixelSize: Texts.Text.Size.Medium
+                    font.pixelSize: Texts.Text.Size.MEDIUM
                     text: getAccountTypeText()
                 }
             }

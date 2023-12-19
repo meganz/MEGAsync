@@ -76,7 +76,7 @@ Qml.MenuItem {
                 anchors.bottomMargin: 10
                 verticalAlignment: Text.AlignVCenter
                 text: root.text
-                font.pixelSize: Texts.Text.Size.Medium
+                font.pixelSize: Texts.Text.Size.MEDIUM
                 color: Styles.textPrimary
             }
         }
