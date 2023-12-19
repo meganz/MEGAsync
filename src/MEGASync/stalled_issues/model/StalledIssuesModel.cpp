@@ -363,16 +363,6 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
                                     {
                                         item.getData()->updateHandle(currentParentHandle);
                                         item.getData()->resetUIUpdated();
-                                        if(item.getData()->checkForExternalChanges())
-                                        {
-                                            mModelMutex.unlock();
-                                            Utilities::queueFunctionInAppThread([this]()
-                                            {
-                                                updateStalledIssues();
-                                            });
-                                            return;
-                                        }
-
                                         parentFound = true;
                                     }
                                 }
@@ -960,7 +950,9 @@ void StalledIssuesModel::chooseBothSides(const QModelIndexList& list)
         return false;
     };
 
-    solveListOfIssues(list, resolveIssue);
+    SolveListInfo info(list, resolveIssue);
+    info.async = true;
+    solveListOfIssues(info);
 }
 
 

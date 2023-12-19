@@ -38,7 +38,7 @@ private:
         QModelIndexList similarSelection;
         QMegaMessageBox::MessageBoxInfo msgInfo;
     };
-    void checkSelection(SelectionInfo& info);
+    bool checkSelection(SelectionInfo& info);
 
     Ui::LocalAndRemoteDifferentWidget *ui;
 };

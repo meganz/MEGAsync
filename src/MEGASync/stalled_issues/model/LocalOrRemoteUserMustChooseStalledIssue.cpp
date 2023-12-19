@@ -140,9 +140,22 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* names
         {
             mNewName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, (*namesUsed));
             namesUsed->append(mNewName);
-            MegaSyncApp->getMegaApi()->renameNode(node.get(), mNewName.toUtf8().constData());
-            mChosenSide = ChosenSide::Both;
-            setIsSolved(false);
+            bool result(false);
+            QEventLoop eventLoop;
+            MegaSyncApp->getMegaApi()->renameNode(node.get(),
+                mNewName.toUtf8().constData(),
+                new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                    [&eventLoop, &result](bool, const mega::MegaRequest&, const mega::MegaError& e)
+                    {
+                        result = e.getErrorCode() == mega::MegaError::API_OK;
+                        eventLoop.quit();
+                    }));
+            eventLoop.exec();
+            if (result)
+            {
+                mChosenSide = ChosenSide::Both;
+                setIsSolved(false);
+            }
         }
     }
 }
@@ -154,6 +167,8 @@ LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseS
         return consultLocalData()->getAttributes()->modifiedTime() > consultCloudData()->getAttributes()->modifiedTime()
                    ? ChosenSide::Local : ChosenSide::Remote;
     }
+
+    return ChosenSide::None;
 }
 
 LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseStalledIssue::getChosenSide() const

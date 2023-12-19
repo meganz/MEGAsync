@@ -110,7 +110,10 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 {
     SelectionInfo info;
-    checkSelection(info);
+    if (!checkSelection(info))
+    {
+        return;
+    }
 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
@@ -155,7 +158,10 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 {
     SelectionInfo info;
-    checkSelection(info);
+    if (!checkSelection(info))
+    {
+        return;
+    }
 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
@@ -231,17 +237,22 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
 {
     SelectionInfo info;
-    checkSelection(info);
+    if (!checkSelection(info))
+    {
+        return;
+    }
 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
     if(localInfo.isFile())
     {
-        info.msgInfo.text = tr("Are you sure you want to keep <b>both file</b>?", "", info.selection.size());
+        info.msgInfo.text = tr(
+            "Are you sure you want to keep both file?", "", info.selection.size());
     }
     else
     {
-        info.msgInfo.text = tr("Are you sure you want to keep <b>both folder</b> %1?", "", info.selection.size());
+        info.msgInfo.text = tr(
+            "Are you sure you want to keep both folder %1?", "", info.selection.size());
     }
 
     std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
@@ -279,7 +290,10 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
     auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
 
     SelectionInfo info;
-    checkSelection(info);
+    if (!checkSelection(info))
+    {
+        return;
+    }
 
     info.msgInfo.text = tr("Are you sure you want to choose the latest modified side?");
     if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
@@ -337,13 +351,13 @@ bool LocalAndRemoteDifferentWidget::checkIssue(QDialog *dialog)
     return false;
 }
 
-void LocalAndRemoteDifferentWidget::checkSelection(SelectionInfo& info)
+bool LocalAndRemoteDifferentWidget::checkSelection(SelectionInfo& info)
 {
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
     if(checkIssue(dialog ? dialog->getDialog() : nullptr))
     {
-        return;
+        return false;
     }
 
     info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
@@ -379,4 +393,6 @@ void LocalAndRemoteDifferentWidget::checkSelection(SelectionInfo& info)
     }
 
     info.msgInfo.buttonsText = textsByButton;
+
+    return true;
 }
