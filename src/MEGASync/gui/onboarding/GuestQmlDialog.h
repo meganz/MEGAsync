@@ -14,6 +14,8 @@ public:
 
 signals:
     void guestActiveChanged(bool active);
+    void initializePageFocus();
+    void hideRequested();
 
 public slots:
     void realocate();
