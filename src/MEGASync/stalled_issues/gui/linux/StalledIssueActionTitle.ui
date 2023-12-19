@@ -59,7 +59,6 @@
 {
     font-family: Lato;
     font-size: 13px;
-    font-weight: 700;
     line-height: 16px;
     color: #333333;
 }
@@ -248,6 +247,13 @@ QPushButton[main=true]
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Lato</family>
+                   <pointsize>-1</pointsize>
+                   <bold>true</bold>
+                  </font>
                  </property>
                 </widget>
                </item>

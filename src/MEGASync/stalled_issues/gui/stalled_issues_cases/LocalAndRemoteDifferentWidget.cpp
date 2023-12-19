@@ -68,26 +68,24 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
     GenericChooseWidget::GenericInfo bothInfo;
     bothInfo.buttonText = tr("Choose both");
-    bothInfo.title = tr("Keep both");
+    bothInfo.title = tr("<b>Keep both</b>");
     bothInfo.icon = QLatin1String(":/images/copy.png");
     bothInfo.solvedText = tr("Chosen");
     ui->keepBothOption->setInfo(bothInfo);
 
-    ui->keepLastModifiedOption->setVisible(issue->isSolvable());
+    GenericChooseWidget::GenericInfo lastModifiedInfo;
+    lastModifiedInfo.buttonText = tr("Choose");
+    lastModifiedInfo.title =
+        tr("<b>Keep last modified</b> (%1)")
+            .arg(issue->lastModifiedSide() ==
+                         LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local
+                     ? tr("Local")
+                     : tr("Remote"));
+    lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
+    lastModifiedInfo.solvedText = tr("Chosen");
+    ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
 
-    if(issue->isSolvable())
-    {
-        GenericChooseWidget::GenericInfo lastModifiedInfo;
-        lastModifiedInfo.buttonText = tr("Choose");
-        lastModifiedInfo.title = tr("Keep last modified: ");
-        lastModifiedInfo.title.append(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local ?
-                                             tr("Local") : tr("Remote"));
-        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
-        lastModifiedInfo.solvedText = tr("Chosen");
-        ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
-    }
-
-    if(issue->isSolved())
+    if (issue->isSolved())
     {
         ui->keepBothOption->setChosen(false);
         ui->keepLastModifiedOption->setChosen(false);

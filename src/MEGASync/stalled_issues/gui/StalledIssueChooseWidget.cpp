@@ -298,6 +298,6 @@ void GenericChooseWidget::setInfo(const GenericInfo &info)
 
     QIcon icon(info.icon);
     auto iconPixmap(icon.pixmap(QSize(16,16)));
-    ui->chooseTitle->setTitle(info.title, iconPixmap);
+    ui->chooseTitle->setHTML(info.title, iconPixmap);
     ui->chooseTitle->setActionButtonInfo(QIcon(), info.buttonText, BUTTON_ID);
 }

@@ -24,6 +24,7 @@ public:
 
     void removeBackgroundColor();
 
+    void setHTML(const QString& title, const QPixmap& icon = QPixmap());
     void setTitle(const QString& title, const QPixmap &icon = QPixmap());
     QString title() const;
 

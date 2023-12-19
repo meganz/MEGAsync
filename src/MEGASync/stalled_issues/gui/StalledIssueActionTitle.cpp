@@ -54,6 +54,15 @@ void StalledIssueActionTitle::removeBackgroundColor()
     setStyleSheet(styleSheet());
 }
 
+void StalledIssueActionTitle::setHTML(const QString& title, const QPixmap& icon)
+{
+    auto font(ui->titleLabel->font());
+    font.setBold(false);
+    ui->titleLabel->setFont(font);
+
+    setTitle(title, icon);
+}
+
 void StalledIssueActionTitle::setTitle(const QString& title, const QPixmap& icon)
 {
     updateSizeHints();
