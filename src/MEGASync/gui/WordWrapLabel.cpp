@@ -133,9 +133,9 @@ void WordWrapLabel::onAdaptHeight()
                 auto elideLine = textLayout->createLine();
                 elideLine.setLineWidth(width());
                 textHeight += static_cast<int>(elideLine.height());
-                lineCounter++;
                 elidedText.prepend(textNotToElide);
 
+                //QTextEdit::setText removes the textLayout so its important to not remove these lines
                 textLayout->endLayout();
                 textLayout = nullptr;
 
