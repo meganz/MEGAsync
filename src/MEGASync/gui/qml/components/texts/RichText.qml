@@ -2,10 +2,19 @@ import QtQuick 2.15 as Qml
 
 import common 1.0
 
-import components.texts 1.0 as Texts
-
-Texts.Text {
+Text {
     id: root
+
+    readonly property url defaultUrl: "default"
+    readonly property int focusMargin: 8
+
+    property url url: defaultUrl
+    property bool manageMouse: false
+    property bool hovered: false
+    property bool manageHover: false
+    property bool visited: false
+    property color urlColor: Styles.linkPrimary
+    property string rawText: ""
 
     function updateLinkColor() {
         var color = Styles.linkPrimary;
@@ -18,15 +27,99 @@ Texts.Text {
         urlColor = color;
     }
 
-    readonly property url defaultUrl: "default"
+    function hasLink() {
+        return root.rawText.search("[A]") != -1;
+    }
 
-    property url url: defaultUrl
-    property bool manageMouse: false
-    property bool hovered: false
-    property bool manageHover: false
-    property bool visited: false
-    property color urlColor: Styles.linkPrimary
-    property string rawText: ""
+    function placeFocusBorder() {
+        if (root.activeFocus && hasLink()) {
+
+            // we are scanning the pixels of the link to look for coordinates with hyperlink.
+            var found = false;
+            var closed = false;
+            var exit = false;
+            var link = "";
+
+            var linkCoordsList = [];
+            const verticalLineOffset = 3;  // margin need to detect pixels from the next line that could be a part (still) of the same link.
+
+            const linkCoord = {
+                x: 0,
+                y: 0,
+                width: 0
+            };
+
+            var linkCoords = Object.create(linkCoord);
+
+            // we are starting with y to allow multiline text.
+            for (var y = 0; y < root.height && !exit; ++y) {
+                for (var x = 0; x < root.width && !exit; ++x) {
+
+                    var currentLink = root.linkAt(x, y);
+                    if (link.length > 0 && currentLink.length > 0 && link !== currentLink) { // detected second link in literal, not allowed.
+                        exit = true;
+                        break;
+                    }
+
+                    if (currentLink.length > 0 && !found) { // detected a new link in pixel
+                        found = true;
+                        closed = false;
+
+                        link = currentLink;
+                        linkCoords.x = x;
+                        linkCoords.y = y;
+                    }
+                    else if (currentLink.length > 0 && found && closed && linkCoords.y !== y
+                             && (linkCoords.y + font.pixelSize + verticalLineOffset) < y) // link continues in the next line.
+                    {
+                        linkCoords = new Object;
+                        linkCoords.x = x;
+                        linkCoords.y = y;
+
+                        closed = false;
+                    }
+                    else if (currentLink.length === 0 && found && !closed) {
+                        if (linkCoords.y !== y) { // we detected the lose of link in the next line
+                            linkCoords.width = root.width - linkCoords.x
+                        }
+                        else {
+                            linkCoords.width = x - linkCoords.x
+                        }
+
+                        linkCoordsList.push(linkCoords);
+                        closed = true;
+                    }
+                }
+            }
+
+            // truly corner case :-) link is located on the edge of the text.
+            if (found && !closed) {
+                linkCoords.width = root.width - linkCoords.xi;
+                linkCoordsList.push(linkCoords);
+            }
+
+            // if found link on text, make focus border visible
+            if(found) {
+                focusRepeater.model = linkCoordsList.length
+
+                for(var coordsIndex = 0; coordsIndex < linkCoordsList.length; ++coordsIndex) {
+                    var coords = linkCoordsList[coordsIndex];
+
+                    var focusRect = focusRepeater.itemAt(coordsIndex);
+                    focusRect.x = coords.x-focusMargin;
+                    focusRect.y = coords.y-(focusMargin/2);
+                    focusRect.width = coords.width + focusMargin * 2;
+                    focusRect.height = root.font.pixelSize + focusMargin + (focusMargin * (3/5));
+                    focusRect.visible = true;
+                }
+            }
+        }
+        else {
+            for(var modelIndex=0; modelIndex < focusRepeater.model; ++modelIndex) {
+                focusRepeater.itemAt(modelIndex).visible = false;
+            }
+        }
+    }
 
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     textFormat: Qml.Text.RichText
@@ -60,6 +153,36 @@ Texts.Text {
 
     onEnabledChanged: {
         updateLinkColor();
+    }
+
+    onFocusChanged: {
+        placeFocusBorder();
+    }
+
+    onTextChanged: {
+        placeFocusBorder();
+    }
+
+    Qml.Keys.onPressed: {
+        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
+            linkActivated("");
+        }
+    }
+
+    Qml.Repeater{
+        id: focusRepeater
+
+        Qml.Rectangle {
+            id: focusBorder
+
+            color: "transparent"
+            radius: Sizes.focusBorderRadius
+            visible: false
+            border {
+                color: Styles.focus
+                width: Sizes.focusBorderWidth
+            }
+        }
     }
 
     Qml.MouseArea {
