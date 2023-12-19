@@ -18,10 +18,10 @@ SyncTypePageForm {
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
                 case SyncsType.Types.FULL_SYNC:
-                    root.syncTypeMoveToFullSync()
+                    root.syncTypeMoveToFullSync();
                     break;
                 case SyncsType.Types.SELECTIVE_SYNC:
-                    root.syncTypeMoveToSelectiveSync()
+                    root.syncTypeMoveToSelectiveSync();
                     break;
                 default:
                     console.error("Button type does not exist -> "
