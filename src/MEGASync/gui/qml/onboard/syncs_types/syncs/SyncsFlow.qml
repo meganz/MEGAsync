@@ -75,8 +75,8 @@ Item {
 
     StackViewBase {
         id: view
-        anchors.fill: parent
 
+        anchors.fill: parent
         onCurrentItemChanged: {
             currentItem.setInitialFocusPosition();
         }

@@ -43,7 +43,7 @@ Qml.MenuItem {
         implicitWidth: 184
         implicitHeight: 40
         color: getBackgroundColor();
-        border.color: root.visualFocus ? Styles.focus : "transparent";
+        border.color: root.activeFocus ? Styles.focus : "transparent";
         border.width: 4
         radius: 4
 

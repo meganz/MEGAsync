@@ -147,6 +147,8 @@ Item {
             menuButton.checked = true;
             menu.visible = !menu.visible;
         }
+
+        KeyNavigation.tab: menu.visible ? aboutMenuItem : view.currentItem.leftButton
     }
 
     Qml.Menu {
@@ -182,6 +184,12 @@ Item {
             menuButton.checked = false;
         }
 
+        onVisibleChanged: {
+            if (visible) {
+                aboutMenuItem.forceActiveFocus();
+            }
+        }
+
         MenuItem {
             id: aboutMenuItem
 
@@ -215,6 +223,8 @@ Item {
                 guestContentAccess.onExitClicked();
                 window.hide();
             }
+
+            KeyNavigation.tab: view.currentItem.leftButton
         }
     }
 
@@ -245,6 +255,14 @@ Item {
                 text: OnboardingStrings.login
                 onClicked: {
                     loginControllerAccess.state = LoginController.LOGGED_OUT;
+                }
+            }
+
+            Connections {
+                target: window
+
+                function onInitializePageFocus() {
+                    leftButton.forceActiveFocus();
                 }
             }
         }
@@ -339,6 +357,14 @@ Item {
             rightButton.visible: false
             spacing: 0
             bottomMargin: 150
+        }
+    }
+
+    Connections {
+        target: window
+
+        function onHideRequested() {
+            menu.close();
         }
     }
 }
