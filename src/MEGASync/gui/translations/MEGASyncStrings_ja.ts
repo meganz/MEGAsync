@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ja" sourcelanguage="en">
 <context>
@@ -47,6 +47,14 @@
         <source>Backups</source>
         <translatorcomment>Label for Backups storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
         <translation>バックアップ</translation>
+    </message>
+</context>
+<context>
+    <name>AccountStatusController</name>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
+        <translation>あなたのアカウントはあなたの管理者によって無効化されました。詳細については、あなたのビジネスアカウント管理者にお問い合わせください。</translation>
     </message>
 </context>
 <context>
@@ -102,7 +110,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>名前、絶対パス（ワイルドカード*と？は許可）を入力するか、同期から除外したいファイルまたはフォルダを選択します。</translation>
+        <translation>名前、絶対パス（ワイルドカード*と？は許可）を入力するか、同期から除外したいファイルまたはフォルダを選択します</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -271,11 +279,6 @@
         <translation>[A]さんは削除または無効化されました</translation>
     </message>
     <message>
-        <source>[A] established you as a contact</source>
-        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A]さんはあなたの連絡先要求を受け入れました</translation>
-    </message>
-    <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
         <translation>[A]さんはあなたを連絡先からブロックしました</translation>
@@ -297,7 +300,7 @@
     </message>
     <message>
         <source>[A] accepted your contact request</source>
-        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request. (SNC-3341)</translatorcomment>
         <translation>[A]さんはあなたの連絡先要求を受け入れました</translation>
     </message>
     <message>
@@ -401,7 +404,7 @@
     <message>
         <source>Sort by state</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by check state</translatorcomment>
-        <translation>状態で並べ替え</translation>
+        <translation>ステータスで並べ替え</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -466,6 +469,19 @@
     </message>
 </context>
 <context>
+    <name>BackupSyncsMenu</name>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups;SNC-3654</translatorcomment>
+        <translation>バックアップを追加</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Menu option that shows backups menu;SNC-3654</translatorcomment>
+        <translation>バックアップ</translation>
+    </message>
+</context>
+<context>
     <name>BackupTableView</name>
     <message>
         <source>Open in MEGA</source>
@@ -494,6 +510,34 @@
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
         <translation>その他のバックアップアクションについては、3点のメニューをクリックしてください</translation>
+    </message>
+</context>
+<context>
+    <name>BackupsModel</name>
+    <message numerus="yes">
+        <source>Folder wasn&apos;t backed up. Try again.</source>
+        <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
+        <translation><numerusform>これらのフォルダはバックアップされませんでした。もう一度試してみてください。</numerusform></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>同じ名前のフォルダをバックアップすることはできません。名前を変更して、バックアップを続行します。お使いのコンピューター上のフォルダ名は変更されません。</translation>
+    </message>
+    <message numerus="yes">
+        <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
+        <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
+        <translation><numerusform>同じ名前のいくつかのフォルダがバックアップにすでに存在します。バックアップを続行するには、新しいフォルダの名前を変更してください。フォルダ名はコンピューター上では変更されません。</numerusform></translation>
+    </message>
+    <message>
+        <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
+        <translatorcomment>Warning message stating that a backup can´t contain another backup CON-468</translatorcomment>
+        <translation>バックアップフォルダに他のバックアップフォルダを含めたり、他のバックアップフォルダに含められることはできません。</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
+        <translation>フォルダが見つからないためバックアップできません。移動または削除されたか、アクセスできない可能性があります。</translation>
     </message>
 </context>
 <context>
@@ -974,7 +1018,7 @@
     <message>
         <source>Please enter your password</source>
         <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>パスワードを入力してください</translation>
+        <translation>パスワードを入力</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -1005,6 +1049,14 @@
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
         <translation>パスワードを変更しました。</translation>
+    </message>
+</context>
+<context>
+    <name>ChooseLocalFolder</name>
+    <message>
+        <source>Select local folder</source>
+        <translatorcomment>Label indicating the user that he has to select a local folder. CON-467</translatorcomment>
+        <translation>ローカルフォルダを選択</translation>
     </message>
 </context>
 <context>
@@ -1039,9 +1091,19 @@
         <translation>次の文字は許可されていません：%1</translation>
     </message>
     <message>
-        <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
-        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation>お支払いが失敗したか、お客様のサブスクリプションをキャンセルされたため、Pro&#xa0;Flexiアカウントが無効化されました。お支払いを行っていただき、サブスクリプションを再有効化されるまで、アカウントに保管されているデータにアクセスすることはできません。</translation>
+        <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
+        <translation>お支払いが失敗したか、サブスクリプションがキャンセルされたため、お客様のアカウントは無効化されました。データにアクセスするには、今すぐお支払いいただき、再有効してください。</translation>
+    </message>
+    <message>
+        <source>MEGA Uploads</source>
+        <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
+        <translation>MEGAアップロード</translation>
+    </message>
+    <message>
+        <source>MEGA Downloads</source>
+        <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
+        <translation>MEGAダウンロード</translation>
     </message>
 </context>
 <context>
@@ -1317,6 +1379,11 @@
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
         <translation><numerusform>[A]さんが%n個の項目をアップデートしました</numerusform></translation>
     </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Pro&#xa0; Flexiアカウントが無効になりました</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -1504,6 +1571,24 @@
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>さらに詳しく</translation>
     </message>
+    <message>
+        <source>loading time…</source>
+        <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
+        <translation>日付を取得しています…</translation>
+    </message>
+    <message>
+        <source>loading size…</source>
+        <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
+        <translation>サイズを計算しています…</translation>
+    </message>
+</context>
+<context>
+    <name>FastLoginController</name>
+    <message>
+        <source>Login error: %1</source>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message. SNC-4122</translatorcomment>
+        <translation>ログインエラー：%1</translation>
+    </message>
 </context>
 <context>
     <name>FilterAlertWidget</name>
@@ -1600,171 +1685,71 @@
     </message>
 </context>
 <context>
-    <name>GuestWidget</name>
+    <name>GuestStrings</name>
     <message>
-        <source>Login</source>
-        <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>ログ&#xa0;イン</translation>
+        <source>About MEGA</source>
+        <translatorcomment>Menu entry that opens the about MEGA dialog. CON-472</translatorcomment>
+        <translation>MEGAについて</translation>
     </message>
     <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation>アカウントを作成</translation>
+        <source>Quit</source>
+        <translatorcomment>Menu entry that quits the application for mac. CON-472</translatorcomment>
+        <translation>終了</translation>
     </message>
     <message>
-        <source>Email address</source>
-        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation>メールアドレス</translation>
+        <source>Exit</source>
+        <translatorcomment>Menu entry that quits the application for linux and windows. CON-472</translatorcomment>
+        <translation>終了</translation>
     </message>
     <message>
-        <source>Password</source>
-        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation>パスワード</translation>
+        <source>Settings</source>
+        <translatorcomment>Menu entry that opens the settings dialog. CON-472</translatorcomment>
+        <translation>設定</translation>
     </message>
     <message>
-        <source>Forgot password?</source>
-        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation>パスワードをお忘れですか？</translation>
+        <source>Log in or sign up to MEGA</source>
+        <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
+        <translation>MEGAにログインまたはサインアップする</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation>キャンセル</translation>
+        <source>Account temporarily locked</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>アカウントが一時的にロックされました</translation>
     </message>
     <message>
-        <source>Setting up your account...</source>
-        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>あなたのアカウントを設定しています…</translation>
+        <source>Your account has been temporarily locked due to a potential breach of our [A]Terms of Service[/A]. To unlock your account, verify your phone number.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>ログイン中…</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>ファイルリストを取得中…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>メールアドレスまたはパスワードが無効です。</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation>メールを確認し、リンクをクリックしてアカウントを確認してください。</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>ログインしようとした回数が多すぎます。[BR]%1まで待ってから、もう一度やり直してください。</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation>あなたのアカウントはブロックされています。support@mega.nzへご連絡ください。</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>メールアドレスを入力してください</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>有効なメールアドレスを入力してください</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation>パスワードを入力してください</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>ログアウト中…</translation>
-    </message>
-    <message>
-        <source>Locked Account</source>
-        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>アカウントがロックされました</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>あなたのアカウントは一時的に安全を確保するためにロックされました。メールアドレスを検証し、その手順に従ってアカウントのロックを解除してください。</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>ログ&#xa0;アウト</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation>不正使用の可能性があるため、あなたのアカウントは一時的にロックされています。アカウントのロックを解除するには、電話番号を検証してください。</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation>今すぐ検証</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGA app</translatorcomment>
-        <translation>アカウントを作成中…</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>これが表示されている理由は？</translation>
+        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>あなたのアカウントは安全のため一時的にロックされています。これは、データ侵害の可能性があるためです。アカウントのロックを解除するには、お送りしたメールの手順に従ってください。</translation>
     </message>
     <message>
         <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translatorcomment>Button text, on click the email to verify the account is resent CON-465</translatorcomment>
         <translation>メールを再送</translation>
     </message>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>メールが送信されました</translation>
+        <source>Log out</source>
+        <translatorcomment>Button text to logout CON-465</translatorcomment>
+        <translation>ログ&#xa0;アウト</translation>
     </message>
     <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>オーセンティケータアプリで生成されたコードを入力してください</translation>
+        <source>Verify now</source>
+        <translatorcomment>Button text to verify the account CON-465</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6桁のコード：</translation>
+        <source>Setting up your account…</source>
+        <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
+        <translation>アカウントを設定しています…</translation>
     </message>
     <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>コードが無効です</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation>次へ</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]オーセンティケータ端末を紛失しましたか？[/A]</translation>
-    </message>
-    <message>
-        <source>Log into MEGA</source>
-        <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
-        <translation>MEGAにログイン</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>SSLキーを認証できません。中間者攻撃の影響を受けていたり、ウイルス対策ソフトウェアが通信を傍受してこの問題を引き起こしている可能性があります。ウイルス対策ソフトウェアを無効にしてからもう一度お試しください。</translation>
+        <source>Waiting for email confirmation…</source>
+        <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
+        <translation>メールの確認を待っています…</translation>
     </message>
 </context>
 <context>
@@ -1857,6 +1842,54 @@
         <source>Open links</source>
         <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
         <translation>リンクを開く</translation>
+    </message>
+</context>
+<context>
+    <name>InfoAccount</name>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Label to refer Free tier CON-467</translatorcomment>
+        <translation>無料</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
+        <translation>Pro&#xa0;I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;III</translation>
+    </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
+        <translation>ビジネス</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Flexi</translation>
+    </message>
+    <message>
+        <source>Available storage:</source>
+        <translatorcomment>Label indicating that the number in the right is the available storage CON-467</translatorcomment>
+        <translation>利用可能なストレージ：</translation>
+    </message>
+    <message>
+        <source>Storage space:</source>
+        <translatorcomment>Label indicating that the number in the right is the storage space CON-467</translatorcomment>
+        <translation>ストレージスペース：</translation>
     </message>
 </context>
 <context>
@@ -2146,54 +2179,6 @@
     </message>
 </context>
 <context>
-    <name>InfoWizard</name>
-    <message>
-        <source>You are not logged in</source>
-        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
-        <translation>ログインしていません</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>ログ&#xa0;イン</translation>
-    </message>
-    <message>
-        <source>Create Account</source>
-        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
-        <translation>アカウントを作成</translation>
-    </message>
-    <message>
-        <source>MEGA Desktop app</source>
-        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>MEGAデスクトップアプリ</translation>
-    </message>
-    <message>
-        <source>Login or create an account to start using MEGA Desktop app.</source>
-        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>ログインするかアカウントを作成して、当社のアプリの使用を開始してください。</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>当社のアプリを使用するには、MEGAアカウントにログインしてください。</translation>
-    </message>
-    <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
-        <translation>アカウントを作成する</translation>
-    </message>
-    <message>
-        <source>Create account to join MEGA collaboration platform.</source>
-        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>アカウントを作成し、MEGAコラボレーションプラットフォームにご参加ください。</translation>
-    </message>
-    <message>
-        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
-        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>当社のアプリの詳細をご覧ください。[A]詳しくはこちら[/A]</translation>
-    </message>
-</context>
-<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -2278,6 +2263,52 @@
     </message>
 </context>
 <context>
+    <name>LoginController</name>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
+        <translation>メールを確認し、メール内にあるリンクをクリックすると、あなたのアカウントにアクセスできます。</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
+        <translation>あなたは何度もログインしようとしました。[BR]%1まで待ってからもう一度お試しください。</translation>
+    </message>
+    <message>
+        <source>Invalid email or password. Please try again.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
+        <translation>メールアドレスまたはパスワードが無効です。もう一度お試しください。</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
+        <translation>アプリが接続できません。インターネット接続とローカルファイアウォールの構成を確認してください。ほとんどのウイルス対策ソフトウェアにはファイアウォールが含まれていることにご注意ください。</translation>
+    </message>
+    <message>
+        <source>Email address already in use.</source>
+        <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. CON-465</translatorcomment>
+        <translation>メールアドレスがすでに使用されています</translation>
+    </message>
+</context>
+<context>
+    <name>LogoutController</name>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
+        <translation>別の場所からこのコンピューターでログアウトされました</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
+        <translation>SSLキーを認証できません。中間者攻撃の影響を受けていたり、ウイルス対策ソフトウェアが通信を傍受してこの問題を引き起こしている可能性があります。ウイルス対策ソフトウェアを無効にしてからもう一度お試しください。</translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
+        <translation>次のエラーのためログアウトされました：%1</translation>
+    </message>
+</context>
+<context>
     <name>LowDiskSpaceDialog</name>
     <message>
         <source>Low disk space</source>
@@ -2336,11 +2367,6 @@
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
         <translation>それらリンクはクリップボードにコピーされました</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>ログイン中…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2449,64 +2475,9 @@ https://mega.co.nz/#sync</source>
         <translation>構成に欠陥がありますので、やり直してください</translation>
     </message>
     <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>アプリが接続できません。インターネット接続とローカルファイアウォールの構成を確認してください。ほとんどのウイルス対策ソフトウェアにはファイアウォールが含まれていることにご注意ください。</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>ローカルフォルダが利用できないか、読み取りおよび書き込み権限がないため、同期「%1」は無効になっています。</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>ローカルフォルダが利用できないか、読み取りおよび書き込み権限がないため、同期「%1」は無効になっています。</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>あなたのアカウントはブロックされています。support@mega.nzへご連絡ください。</translation>
-    </message>
-    <message>
-        <source>Login error: %1</source>
-        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation>ログインエラー：%1</translation>
-    </message>
-    <message>
-        <source>You have been logged out on this computer from another location</source>
-        <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation>別の場所からこのコンピューターでログアウトされました</translation>
-    </message>
-    <message>
-        <source>You have been logged out because of this error: %1</source>
-        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation>次のエラーのため、ログアウトしました： %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>リモートフォルダがごみ箱に入っているため、同期&quot;%1&#8221; は無効となっています</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>ローカルフォルダが変わったため、同期 &#8220;%1&#8221; は無効となりました</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>同期「%1」は無効になっています。リモートフォルダ（またはその一部）に完全なアクセス権がありません。</translation>
-    </message>
-    <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation>容量超過</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>VirtualBox共有フォルダの同期は、そのファイルシステムの欠陥によりサポートされていないため、同期「%1」が無効になっています。</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2527,11 +2498,6 @@ https://mega.co.nz/#sync</source>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
         <translation>エラー：宛先フォルダが無効です。ダウンロードがキャンセルされました。</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>SSLキーを認証できません。中間者攻撃の影響を受けていたり、ウイルス対策ソフトウェアが通信を傍受してこの問題を引き起こしている可能性があります。ウイルス対策ソフトウェアを無効にしてからもう一度お試しください。</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -2576,7 +2542,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Please consider updating your operating system.</source>
         <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
-        <translation>お使いのオペレーティングシステムのアップデートを検討してください。</translation>
+        <translation>OSのアップデートを検討してください。</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -2649,11 +2615,6 @@ https://mega.co.nz/#sync</source>
         <translation>リンクを開く</translation>
     </message>
     <message>
-        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
-        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>あなたのアカウントはあなたの管理者によって無効化されました。詳細については、あなたのビジネスアカウント管理者にお問い合わせください。</translation>
-    </message>
-    <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation>アプリは引き続き動作しますが、Windows 7より前のバージョンの更新はサポートされなくなります。</translation>
@@ -2667,16 +2628,6 @@ https://mega.co.nz/#sync</source>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>1つ以上の同期が無効になっています</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>同期「%1」は無効になっています。理由：%2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been enabled</source>
-        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>同期「%1」は有効になりました</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -2726,41 +2677,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>1 つまたは複数のバックアップが無効になっています</translation>
     </message>
     <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>ローカルフォルダが利用できないか、読み取りおよび書き込み権限がないため、バックアップ「%1」は無効になっています。</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>VirtualBox共有フォルダの同期は、そのファイルシステムの欠陥によりサポートされていないため、バックアップ「%1」が無効になっています。</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>MEGAフォルダがごみ箱に入っているため、バックアップ「%1」は無効となっています。</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>バックアップ「%1」は無効になっています。 MEGAフォルダ（またはその一部）への完全なアクセス権がありません。</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>ローカルフォルダが変更されたため、バックアップ「%1」は無効になっています。</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>リモートフォルダが変更されたため、バックアップ「%1」は無効になっています</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>バックアップ「%1」は無効になっています。理由：%2</translation>
-    </message>
-    <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>セキュリティのアップグレード</translation>
@@ -2806,34 +2722,9 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>設定</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>同期とバックアップが無効になっています：%1</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>バックアップが無効になっています：%1</translation>
-    </message>
-    <message>
-        <source>Your syncs have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>同期が無効になっています：%1</translation>
-    </message>
-    <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
         <translation>リンク取得エラー：%1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>同期「%1」は一時的に無効になっています：%2</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>バックアップ「%1」は一時的に無効になっています：%2</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2844,6 +2735,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Account deactivated</source>
         <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
         <translation>アカウントが無効化されました</translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Pro&#xa0; Flexiアカウントが無効になりました</translation>
     </message>
 </context>
 <context>
@@ -3033,21 +2929,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Close</source>
         <translatorcomment>Button label to close current message box</translatorcomment>
         <translation>閉じる</translation>
-    </message>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>アカウントがロックされました</translation>
-    </message>
-    <message>
-        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>おそらく、MEGAアカウントで他のサービスと同じパスワードを使用しており、それらのサービスの少なくとも1つがデータ侵害を受けていると思われます。</translation>
-    </message>
-    <message>
-        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>あなたのパスワードが漏えいし、悪意のあるアクターがあなたのアカウント（あなたのMEGAアカウントを含むがこれに限定されない）にログインするために使用されています。</translation>
     </message>
 </context>
 <context>
@@ -3658,18 +3539,13 @@ Enter a different name</source>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>誰かがあなたの連絡先要求を受け入れました</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>情報</translation>
-    </message>
-    <message>
-        <source>Someone accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>誰かがあなたのコンタクト要求を受け入れました</translation>
     </message>
     <message>
         <source>Info:</source>
@@ -3710,6 +3586,554 @@ Enter a different name</source>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
         <translation>アップロードとダウンロード：</translation>
+    </message>
+</context>
+<context>
+    <name>OnboardingStrings</name>
+    <message>
+        <source>Add folder</source>
+        <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
+        <translation>フォルダを追加</translation>
+    </message>
+    <message>
+        <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
+        <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
+        <translation>MEGAの[B][A]利用規約[/A][/B]を読み、同意します</translation>
+    </message>
+    <message>
+        <source>Back up</source>
+        <translatorcomment>Button text to configure the selected backups CON-468</translatorcomment>
+        <translation>バックアップ</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Button title, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>バックアップ</translation>
+    </message>
+    <message>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>デバイスのデータは、リアルタイムで自動的かつ一貫してMEGAにバックアップされます。</translation>
+    </message>
+    <message>
+        <source>Backup: Confirm</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup confirm step CON-468</translatorcomment>
+        <translation>バックアップ：確定</translation>
+    </message>
+    <message>
+        <source>Backup Folders</source>
+        <translatorcomment>Backup folders table title CON-468</translatorcomment>
+        <translation>バックアップフォルダ</translation>
+    </message>
+    <message>
+        <source>Backup: Select folders</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
+        <translation>バックアップ：フォルダを選択</translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
+        <translation>バックアップ先：</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>選択</translation>
+    </message>
+    <message>
+        <source>Change folder</source>
+        <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
+        <translation>フォルダを変更する</translation>
+    </message>
+    <message>
+        <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
+        <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
+        <translation>新しいメールアドレスを入力し、「再送信」をクリックします。その後、アカウントを有効化するための確認メールがこの新しいメールアドレスに送信されます。</translation>
+    </message>
+    <message>
+        <source>Change your email address</source>
+        <translatorcomment>Change email window title CON-466</translatorcomment>
+        <translation>メールアドレスを変更する</translation>
+    </message>
+    <message>
+        <source>Device name</source>
+        <translatorcomment>Device name window title CON-467</translatorcomment>
+        <translation>デバイス名</translation>
+    </message>
+    <message>
+        <source>Add the name of your device.</source>
+        <translatorcomment>Device name window secondary title CON-467</translatorcomment>
+        <translation>デバイスの名前を追加します。</translation>
+    </message>
+    <message>
+        <source>Add device name</source>
+        <translatorcomment>Device name text input box title CON-467</translatorcomment>
+        <translation>デバイス名の追加</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translatorcomment>Button text to confirm the current action CON-467</translatorcomment>
+        <translation>確認</translation>
+    </message>
+    <message>
+        <source>There is already a folder with the same name in this backup</source>
+        <translatorcomment>Error text indicating that it can´t create a backup with duplicated names CON-468</translatorcomment>
+        <translation>このバックアップには同じ名前のフォルダがすでに存在します</translation>
+    </message>
+    <message>
+        <source>A folder with the same name already exists on your backups</source>
+        <translatorcomment>Error text indicating that a backup with the same name already exists CON-468</translatorcomment>
+        <translation>同じ名前のフォルダがバックアップにすでに存在します</translation>
+    </message>
+    <message>
+        <source>Confirm folders to back up</source>
+        <translatorcomment>Confirm backups table title CON-468</translatorcomment>
+        <translation>バックアップするフォルダの確定</translation>
+    </message>
+    <message>
+        <source>Account created</source>
+        <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
+        <translation>アカウントが作成されました</translation>
+    </message>
+    <message>
+        <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
+        <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
+        <translation>アカウントを有効にするには、メールアドレスを認証する必要があります。認証リンクを記載したメールを送信いたしました。リンクをクリックしてメールアドレスを認証すると、ログインできるようになります。</translation>
+    </message>
+    <message>
+        <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
+        <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>1時間以内にメールが届かない場合は、[B][A]サポートにご連絡ください[/A][/B]。</translation>
+    </message>
+    <message>
+        <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
+        <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>メールアドレスのスペルをお間違えになられた場合は、[B][A]こちらでご変更ください[/A][/B]。</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
+        <translation>パスワードを確認</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
+        <translation>完了</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translatorcomment>Email text input title CON-466</translatorcomment>
+        <translation>メールアドレス</translation>
+    </message>
+    <message>
+        <source>Please confirm your password</source>
+        <translatorcomment>Confirm password text input title CON-466</translatorcomment>
+        <translation>パスワードを確認</translation>
+    </message>
+    <message>
+        <source>Enter your password</source>
+        <translatorcomment>Password text input title CON-466</translatorcomment>
+        <translation>パスワードを入力</translation>
+    </message>
+    <message>
+        <source>Please enter your name</source>
+        <translatorcomment>Name text input title CON-466</translatorcomment>
+        <translation>名を入力してください</translation>
+    </message>
+    <message>
+        <source>Please enter your last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>姓を入力してください</translation>
+    </message>
+    <message>
+        <source>Passwords don&apos;t match. Check and try again.</source>
+        <translatorcomment>Error label indicating that password and confirm password content is not the same CON-466</translatorcomment>
+        <translation>パスワードが一致しません。確認して、再度お試しください。</translation>
+    </message>
+    <message>
+        <source>Enter a valid email address</source>
+        <translatorcomment>Error label indicating that the email is not valid CON-466</translatorcomment>
+        <translation>有効なメールアドレスを入力してください</translation>
+    </message>
+    <message>
+        <source>Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>バックアップが設定されており、デスクトップアプリが実行されているときは常に、選択されたデータが自動的にバックアップされます。バックアップとそのステータスは、「設定」の「バックアップ」タブで確認できます。</translation>
+    </message>
+    <message>
+        <source>Your backup is set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>バックアップが設定されました</translation>
+    </message>
+    <message>
+        <source>What else do you want to do?</source>
+        <translatorcomment>Text suggesting the user to create another backup or sync CON-468</translatorcomment>
+        <translation>他に何を行いたいですか？</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
+        <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
+        <translation>同期が設定されており、デスクトップアプリが実行されているときは常に、選択されたデータが自動的に同期されます。</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-467</translatorcomment>
+        <translation>同期が設定されました</translation>
+    </message>
+    <message>
+        <source>First name</source>
+        <translatorcomment>First name text input title CON-466</translatorcomment>
+        <translation>名前</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA account with your local device.</source>
+        <translatorcomment>Full sync button description CON-467</translatorcomment>
+        <translation>MEGAアカウント全体をローカルデバイスと同期します。</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translatorcomment>Full sync button title CON-467</translatorcomment>
+        <translation>全体同期</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Full sync page title CON-467</translatorcomment>
+        <translation>MEGA Cloudドライブ全体をローカルデバイスと同期します。</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
+        <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
+        <translation>新しいフォルダを作成する権限がないため、フォルダを同期できません。続行するには、既存のフォルダを選択してください。</translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
+        <translation>パスワードをお忘れですか？</translation>
+    </message>
+    <message>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a local folder CON-467</translatorcomment>
+        <translation>同期するローカルフォルダを選択してください</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a MEGA folder CON-467</translatorcomment>
+        <translation>同期するMEGAフォルダを選択してください</translation>
+    </message>
+    <message>
+        <source>Setup options</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the Setup options step CON-467</translatorcomment>
+        <translation>セットアップオプション</translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
+        <translation>選択：</translation>
+    </message>
+    <message>
+        <source>Welcome to MEGA</source>
+        <translatorcomment>Label wellcoming the user to MEGA CON-467</translatorcomment>
+        <translation>MEGAへようこそ</translation>
+    </message>
+    <message>
+        <source>Last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>名</translation>
+    </message>
+    <message>
+        <source>Log in</source>
+        <translatorcomment>Log in button text CON-465</translatorcomment>
+        <translation>ログ&#xa0;イン</translation>
+    </message>
+    <message>
+        <source>Log in to your [B]MEGA account[/B]</source>
+        <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
+        <translation>[B]MEGAアカウント[/B]にログイン</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
+        <translation>次</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
+        <translation>スキップ</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>設定で表示</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Password input field title CON-465</translatorcomment>
+        <translation>パスワード</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
+        <translation>前</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Button to rename a backup CON-468</translatorcomment>
+        <translation>名前を変更</translation>
+    </message>
+    <message>
+        <source>Resend</source>
+        <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
+        <translation>再送</translation>
+    </message>
+    <message>
+        <source>[B]Select all[/B]</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>[B]すべて選択[/B]</translation>
+    </message>
+    <message>
+        <source>Select folders to back up</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>バックアップするフォルダの選択</translation>
+    </message>
+    <message>
+        <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
+        <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
+        <translation>デスクトップアプリの実行中に、選択されたフォルダが自動的にMEGAにバックアップされます。</translation>
+    </message>
+    <message>
+        <source>Select a local folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a local folder CON-467</translatorcomment>
+        <translation>ローカルフォルダを選択</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
+        <translation>MEGAフォルダを選択</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA account with your local device.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>MEGAアカウント内の選択されたフォルダをローカルデバイスと同期します。</translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
+        <translation>MEGAクラウドドライブ内の特定のフォルダをローカルデバイスと同期します。</translation>
+    </message>
+    <message>
+        <source>Selective sync</source>
+        <translatorcomment>Selective sync button title text CON-467</translatorcomment>
+        <translation>選択的同期</translation>
+    </message>
+    <message>
+        <source>Set up MEGA</source>
+        <translatorcomment>Onboarding window title CON-467</translatorcomment>
+        <translation>MEGAをセットアップ</translation>
+    </message>
+    <message>
+        <source>Sign up</source>
+        <translatorcomment>Sign up button text CON-465</translatorcomment>
+        <translation>サインアップ</translation>
+    </message>
+    <message>
+        <source>Create your [B]MEGA account[/B]</source>
+        <translatorcomment>Sign up page title CON-466</translatorcomment>
+        <translation>[B]MEGAアカウント[/B]の作成</translation>
+    </message>
+    <message>
+        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>デバイスをMEGAと同期すると、ローカルでの変更は自動的かつ即座にMEGAに適用されます。また、その逆も同様です。</translation>
+    </message>
+    <message>
+        <source>Choose sync type</source>
+        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
+        <translation>同期の種類を選択</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Button title that forwards the user to the syncs flow CON-467</translatorcomment>
+        <translation>同期</translation>
+    </message>
+    <message>
+        <source>Sync: Choose type</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the choose sync type step CON-467</translatorcomment>
+        <translation>同期：種類を選択</translation>
+    </message>
+    <message>
+        <source>Sync set up</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
+        <translation>同期のセットアップ</translation>
+    </message>
+    <message>
+        <source>Problem with two-factor authentication?</source>
+        <translatorcomment>Text that the user has to click in case he has problems with 2FA CON-465</translatorcomment>
+        <translation>二要素認証に問題がありますか？</translation>
+    </message>
+    <message>
+        <source>Enter the 6-digit code generated by your authenticator app.</source>
+        <translatorcomment>2FA page secondary title CON-465</translatorcomment>
+        <translation>オーセンティケータアプリで生成された6桁のコードを入力してください。</translation>
+    </message>
+    <message>
+        <source>Continue with [B]two-factor authentication[/B]</source>
+        <translatorcomment>2FA page title CON-465</translatorcomment>
+        <translation>[B]二要素認証[/B]に進みます</translation>
+    </message>
+    <message>
+        <source>Logging in…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>ログインしています…</translation>
+    </message>
+    <message>
+        <source>Fetching file list…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>ファイルリストを取得しています…</translation>
+    </message>
+    <message>
+        <source>Creating account…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
+        <translation>アカウントを作成しています…</translation>
+    </message>
+    <message>
+        <source>Validating 2FA code…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>2FAコードを検証しています…</translation>
+    </message>
+    <message>
+        <source>Stop logging in?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>ログインを停止しますか？</translation>
+    </message>
+    <message>
+        <source>Closing this window will stop you logging in.</source>
+        <translatorcomment>Dialog body text. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>このウィンドウを閉じるとログインが停止されます。</translation>
+    </message>
+    <message>
+        <source>Stop Loggin in</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>ログインを停止します</translation>
+    </message>
+    <message>
+        <source>Don’t stop</source>
+        <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>停止しない</translation>
+    </message>
+    <message>
+        <source>Cancel account creation?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>アカウント作成をキャンセルしますか？</translation>
+    </message>
+    <message>
+        <source>Closing this window will cancel the sign up process.</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>このウィンドウを閉じると、サインアッププロセスがキャンセルされます。</translation>
+    </message>
+    <message>
+        <source>Cancel account</source>
+        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>作成をキャンセルする</translation>
+    </message>
+    <message>
+        <source>Don’t cancel</source>
+        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>キャンセルしない</translation>
+    </message>
+    <message>
+        <source>Password needs to be at least 8 characters</source>
+        <translatorcomment>Hint text that tells the user minimum requirement for the passwords CON-466</translatorcomment>
+        <translation>パスワードは8文字以上必要です</translation>
+    </message>
+    <message>
+        <source>It’s better to have:</source>
+        <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>以下を含めることをお勧めします：</translation>
+    </message>
+    <message>
+        <source>Upper and lower case letters</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>大文字と小文字</translation>
+    </message>
+    <message>
+        <source>At least one number or special character</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>少なくとも1つの数字または特殊文字</translation>
+    </message>
+    <message>
+        <source>Enter a minimum of 8 characters.</source>
+        <translatorcomment>Error text to force the user to fill minimum character requirement CON-466</translatorcomment>
+        <translation>最低8文字を入力してください。</translation>
+    </message>
+    <message>
+        <source>Your password is too easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>あなたのパスワードは簡単に推測されてしまいます。より強力にする必要があります。</translation>
+    </message>
+    <message>
+        <source>Your password is easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>あなたのパスワードは簡単に推測されてしまいます。より強力にする必要があります。</translation>
+    </message>
+    <message>
+        <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
+        <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
+        <translation>ファイルをお使いのコンピューターからMEGAに自動的に更新します。MEGA内のバックアップ項目は、MEGAから変更または削除できません。</translation>
+    </message>
+    <message>
+        <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
+        <translation>選択されたフォルダをお使いのコンピューターとMEGA間で同期すると、一方で行った変更が他方にも適用されます。</translation>
+    </message>
+    <message>
+        <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
+        <translation>お持ちのファイルをお使いのコンピューターとMEGA間で同期すると、一方で行った変更が他方にも適用されます。</translation>
+    </message>
+    <message>
+        <source>Let&apos;s get you set up</source>
+        <translatorcomment>Page title for new accounts in set device name page CON-467</translatorcomment>
+        <translation>セットアップしましょう</translation>
+    </message>
+    <message>
+        <source>Confirm your email and password</source>
+        <translatorcomment>Page title for new accounts in login page CON-465</translatorcomment>
+        <translation>メールアドレスとパスワードを確認してください</translation>
+    </message>
+    <message>
+        <source>Once confirmed, your account will be activated.</source>
+        <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
+        <translation>確定されると、アカウントが有効になります。</translation>
+    </message>
+    <message>
+        <source>Enter your email address</source>
+        <translatorcomment>Login error if user didn´t enter the email CON-465</translatorcomment>
+        <translation>メールアドレスを入力してください</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Device name text input field title CON-467</translatorcomment>
+        <translation>デバイス名を入力してください</translation>
+    </message>
+    <message>
+        <source>Names longer than 32 characters are not supported</source>
+        <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
+        <translation>32文字を超える名前はサポートされていません</translation>
+    </message>
+    <message>
+        <source>Authentication failed</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>認証に失敗しました</translation>
+    </message>
+    <message>
+        <source>Incorrect 2FA code</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>2FAコードが不正確です</translation>
     </message>
 </context>
 <context>
@@ -4035,14 +4459,16 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Upgraded to Qt5.15.
-- Fixed detected crashes on Windows, Linux and macOS.
-- Updated third-party libraries.
+        <source>- A new onboarding wizard is introduced when a new sync or backup process is initiated for the first time.
+- Revamped the user interface of the macOS installer.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Application performance improved.
 </source>
-        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
-        <translation>－Qt 5.15にアップグレードしました。
-－Windows、Linux、macOSで検出されたクラッシュを修正しました。
-－サードパーティのライブラリを更新しました。
+        <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
+        <translation>ー新しい同期またはバックアッププロセスが初めて開始されるときに、新しいオンボーディングウィザードが導入されます。
+ーmacOSインストーラーのユーザーインターフェースを刷新しました。
+ーWindows、Linux、macOS検出されたクラッシュを修正しました。
+ーアプリケーションのパフォーマンスが向上しました。
 </translation>
     </message>
 </context>
@@ -4062,16 +4488,6 @@ Enter a different name</source>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
         <translation>プロキシ設定：</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translatorcomment>HTTP proxy type</translatorcomment>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>SOCK5H</source>
-        <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -4367,7 +4783,7 @@ Enter a different name</source>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>不明</translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -4666,6 +5082,11 @@ Do you want to delete it anyway?</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
         <translation><numerusform>%n個のファイル</numerusform></translation>
     </message>
+    <message>
+        <source>Adding transfers…</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
+        <translation>転送を追加しています…</translation>
+    </message>
 </context>
 <context>
     <name>SearchLineEdit</name>
@@ -4915,11 +5336,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>ネットワーク</translation>
     </message>
     <message>
-        <source>Enable overlay icons</source>
-        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>オーバーレイアイコンを有効にする</translation>
-    </message>
-    <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
         <translation>アップデートの確認</translation>
@@ -5127,7 +5543,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Windows File Explorer統合を有効にする</translation>
+        <translation>File Explorer統合を有効にする</translation>
     </message>
     <message>
         <source>B</source>
@@ -5409,6 +5825,21 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>転送中または同期中にコンピューターがスリープ状態にならないようにします。</translation>
     </message>
+    <message>
+        <source>Enable sync status icons</source>
+        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
+        <translation>同期ステータスアイコンを有効にする</translation>
+    </message>
+    <message>
+        <source>Enabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>同期ステータスアイコンを有効にしています</translation>
+    </message>
+    <message>
+        <source>Disabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>同期ステータスアイコンを無効にしています</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog_Bandwith</name>
@@ -5424,340 +5855,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Auto</source>
         <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
         <translation>自動</translation>
-    </message>
-</context>
-<context>
-    <name>SetupWizard</name>
-    <message>
-        <source>Create a new MEGA account</source>
-        <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>MEGAのアカウントを新しく作成する</translation>
-    </message>
-    <message>
-        <source>Email:</source>
-        <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>メールアドレス：</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>パスワード：</translation>
-    </message>
-    <message>
-        <source>Repeat password:</source>
-        <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>パスワードをもう一度：</translation>
-    </message>
-    <message>
-        <source>Log in to your MEGA account</source>
-        <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>MEGAアカウントにログインしてください</translation>
-    </message>
-    <message>
-        <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>あなたのメールアドレスに送られた確認リンクを使って、あなたのアカウントを検証してください</translation>
-    </message>
-    <message>
-        <source>Choose install type</source>
-        <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>インストールタイプを選択</translation>
-    </message>
-    <message>
-        <source> Sync your entire cloud drive</source>
-        <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>あなたのクラウドドライブ全体を同期</translation>
-    </message>
-    <message>
-        <source>Selective sync</source>
-        <translatorcomment>Label displayed to show Selective sync mode. Max 18 characters.</translatorcomment>
-        <translation>選択的同期</translation>
-    </message>
-    <message>
-        <source>Local folder:</source>
-        <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>ローカルフォルダ：</translation>
-    </message>
-    <message>
-        <source>MEGA folder:</source>
-        <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>MEGAフォルダ：</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>変更</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>戻る</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>次へ</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>キャンセル</translation>
-    </message>
-    <message>
-        <source>User already exists</source>
-        <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>ユーザーはすでに存在します</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>ファイルリストを取得中…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>メールアドレスまたはパスワードが無効です。</translation>
-    </message>
-    <message>
-        <source>MEGA folder doesn&apos;t exist</source>
-        <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>MEGAフォルダが存在しません</translation>
-    </message>
-    <message>
-        <source>Finish</source>
-        <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>完了</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>メールアドレスを入力してください</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>有効なメールアドレスを入力してください</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>あなたのパスワードを入力してください</translation>
-    </message>
-    <message>
-        <source>Please, enter your name</source>
-        <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>名前を入力してください</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>より強力なパスワードを入力してください</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>入力されたパスワードが一致しません</translation>
-    </message>
-    <message>
-        <source>You have to accept our terms of service</source>
-        <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>当社のご利用規約に同意していただく必要がございます</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>アカウントを作成中…</translation>
-    </message>
-    <message>
-        <source>Please, select a local folder</source>
-        <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>ローカルフォルダを選択してください</translation>
-    </message>
-    <message>
-        <source>Please, select a MEGA folder</source>
-        <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>MEGAフォルダを選択してください</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>ローカルフォルダを選択</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>ログイン中…</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>ファイルシステムを取得できません。もう一度やり直してください。問題が解決しない場合は、bug@mega.nzまでご連絡ください。</translation>
-    </message>
-    <message>
-        <source>Set up Assistant - MEGAsync</source>
-        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>アシスタントを設定</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
-        <translation>完全同期</translation>
-    </message>
-    <message>
-        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>あなたのローカルフォルダとMEGAクラウドドライブは自動的に同期されます。</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>続行しますか？</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation>あなたのアカウントはブロックされています。support@mega.nzに連絡してください。</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>このウィザードをキャンセルして、変更をすべて取り消しますか？</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
-        <translation>スキップ</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>ログアウト中…</translation>
-    </message>
-    <message>
-        <source>Very Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation>非常に弱い</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation>弱い</translation>
-    </message>
-    <message>
-        <source>Medium</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation>普通</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation>良好</translation>
-    </message>
-    <message>
-        <source>Strong</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation>強い</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
-        <translation>メールを確認し、リンクをクリックしてアカウントを確認してください。</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
-        <translation>ログインしようとした回数が多すぎます。[BR]まで待ってから%1、もう一度やり直してください。</translation>
-    </message>
-    <message>
-        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
-        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>First name:</source>
-        <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation>姓：</translation>
-    </message>
-    <message>
-        <source>Last name:</source>
-        <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation>名：</translation>
-    </message>
-    <message>
-        <source>Check your inbox</source>
-        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation>受信トレイを確認してください</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your cloud drive</source>
-        <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>クラウドドライブ内の特定のフォルダを同期</translation>
-    </message>
-    <message>
-        <source>Selective sync:</source>
-        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
-        <translation>選択的同期</translation>
-    </message>
-    <message>
-        <source>Please, enter your last name</source>
-        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation>お名前を入力してください</translation>
-    </message>
-    <message>
-        <source>Set up selective sync</source>
-        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>選択的同期を設定</translation>
-    </message>
-    <message>
-        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>クラウドドライブ内の特定のフォルダは、一致するローカルフォルダと同期されます。</translation>
-    </message>
-    <message>
-        <source>Select Local folder:</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>ローカルフォルダを選択</translation>
-    </message>
-    <message>
-        <source>Set up full sync</source>
-        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>完全同期を設定</translation>
-    </message>
-    <message>
-        <source>Full Sync</source>
-        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation>完全同期</translation>
-    </message>
-    <message>
-        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>あなたのクラウドドライブ全体がローカルフォルダと同期されます。</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>ログ&#xa0;イン</translation>
-    </message>
-    <message>
-        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
-        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
-        <translation>MEGA[A]ご利用規約[/A]に同意します。</translation>
-    </message>
-    <message>
-        <source>Enjoy MEGAsync</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>当社のアプリをお楽しみください</translation>
-    </message>
-    <message>
-        <source>We are all done</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>すべて完了しました</translation>
-    </message>
-    <message>
-        <source>Creating folder…</source>
-        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>フォルダを作成中…</translation>
     </message>
 </context>
 <context>
@@ -5988,24 +6085,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>SyncController</name>
     <message>
-        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation>このフォルダはすでに同期されているため、同期できません。</translation>
-    </message>
-    <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
         <translation>フォルダはすでにバックアップされています。別のものを選択してください。</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation>このフォルダはすでに同期されているため、同期できません。</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation>このフォルダはすでにバックアップされているため、同期できません。</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
@@ -6013,39 +6095,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>このフォルダは同期フォルダ内にあるため、バックアップできません。</translation>
     </message>
     <message>
-        <source>You can&apos;t sync folders that are inside synced folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>同期されたフォルダ内にあるフォルダを同期することはできません。</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that are inside backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation>バックアップされたフォルダ内にあるフォルダを同期することはできません。</translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
         <translation>このフォルダには同期されたフォルダが含まれているため、バックアップできません。</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain synced folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>同期されたフォルダを含むフォルダを同期することはできません。</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation>バックアップされたフォルダを含むフォルダを同期することはできません。</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>このローカルフォルダに書き込む権限がありません。</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>このアプリは、ここで何かをダウンロードすることはできません。</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6078,20 +6130,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>バックアップを作成できません。詳細については、[A]サポート[/A]にご連絡ください。</translation>
     </message>
     <message>
-        <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation>「%1」はルートフォルダであるため、バックアップできません。ルートフォルダは、すべてのフォルダとファイルを保持するコンピューターの最上位フォルダか、システムまたはプログラムがインストールされているフォルダのいずれかです。ファイルの競合やエラーが発生する可能性があるため、ユーザー様がルートフォルダをバックアップすることはできません。
-続行するには、別のフォルダを選択してください。</translation>
-    </message>
-    <message>
-        <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation>「%1」はルートフォルダであるため、バックアップできません。ルートフォルダは、すべてのフォルダとファイルを保持するコンピューターの最上位フォルダか、システムまたはプログラムがインストールされているフォルダのいずれかです。ファイルの競合やエラーが発生する可能性があるため、ユーザー様がルートフォルダを同期することはできません。
-続行するには、別のフォルダを選択してください。</translation>
-    </message>
-    <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
         <translation>この共有フォルダへの完全なアクセス権がないため、同期できません。</translation>
@@ -6100,11 +6138,6 @@ To continue, select a different folder.</source>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
         <translation>このMEGAフォルダは同期できません。</translation>
-    </message>
-    <message>
-        <source>The selected MEGA folder is already synced.</source>
-        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation>選択されたMEGAフォルダはすでに同期されています。</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
@@ -6116,18 +6149,173 @@ To continue, select a different folder.</source>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
         <translation>フォルダはすでに同期されています。</translation>
     </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it is already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
+        <translation>フォルダはすでに同期されているためバックアップできません</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s already synced</source>
+        <translatorcomment>Warning message indicating that the folder is already synced. CON-467</translatorcomment>
+        <translation>フォルダはすでに同期されているため同期できません</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as is already backed up</source>
+        <translatorcomment>Warning message indicating that the selected folder is a backup. CON-467</translatorcomment>
+        <translation>フォルダはすでにバックアップされているため同期できません</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a sync folder. CON-467</translatorcomment>
+        <translation>フォルダは同期フォルダ内にあるため、同期できません。</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
+        <translation>フォルダはバックアップされたフォルダ内にあるため同期できません</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains synced folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains synced folders. CON-467</translatorcomment>
+        <translation>フォルダに同期されたフォルダが含まれているため、フォルダを同期できません</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains backed up folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains backed up folders. CON-467</translatorcomment>
+        <translation>フォルダにバックアップされたフォルダが含まれているため、フォルダを同期できません</translation>
+    </message>
+    <message>
+        <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
+        <translation>「%1」はルートフォルダであるためバックアップできません。続行するには、別のフォルダを選択してください。</translation>
+    </message>
+    <message>
+        <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
+        <translation>「%1」はルートフォルダであるため同期できません。続行するには、別のフォルダを選択してください。</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have write permissions.</source>
+        <translatorcomment>Warning message indicating that there is no write Permissions. CON-467</translatorcomment>
+        <translation>書き込み権限がないため、フォルダを同期できません</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
+        <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
+        <translation>フォルダはMEGAごみ箱にあるため同期できません</translation>
+    </message>
+    <message>
+        <source>This selection can&apos;t be synced as it’s a file.</source>
+        <translatorcomment>Warning message indicating that the selection is a file and files can´t be synced. CON-467</translatorcomment>
+        <translation>この選択されたものはファイルであるため同期できません</translation>
+    </message>
+    <message>
+        <source>This folder is already being synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
+        <translation>このフォルダはすでに同期されています</translation>
+    </message>
 </context>
 <context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>FATファイルシステムでフォーマットされたローカルフォルダを同期しています。そのファイルシステムには、大きなファイルや修正時間の管理に問題があり、同期の問題を引き起こす可能性があるため（夏時間の変更など）、NTFSなどの信頼性の高いファイルシステムでフォーマットされたフォルダのみを同期することを強くお勧めいたします（詳細は[A]こちら[/A] ）。</translation>
+        <translation>FATファイルシステムでフォーマットされたローカルフォルダを同期しています。そのファイルシステムには、大きなファイルや修正時間の管理に問題があり、同期の問題を引き起こす可能性があるため（夏時間の変更など）、NTFSなどの信頼性の高いファイルシステムでフォーマットされたフォルダのみを同期することを強くお勧めいたします（詳細は[A]こちら[/A]）。</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
         <translation>VMWareと共有されているローカルフォルダを同期します。このフォルダはファイルシステムの通知をサポートしていないため、変更を検出して同期するには、アプリはフォルダとその中のファイルを継続的にスキャンする必要があります。可能であれば、別のフォルダを使用してCPU使用率を減らしてください。</translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>同期とバックアップが無効になっています：%1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>バックアップが無効になっています：%1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>同期が無効になっています：%1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>ローカルフォルダが利用できないか、読み取りおよび書き込み権限がないため、同期「%1」は無効になっています。</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>ローカルフォルダが利用できないか、読み取りおよび書き込み権限がないため、同期「%1」は無効になっています。</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>MEGAはVirtualBoxフォルダを同期またはバックアップできないため、同期「%1」は無効になっています。</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>リモートフォルダがごみ箱に入っているため、同期&quot;%1&quot; は無効となっています</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>同期「%1」は無効になっています。リモートフォルダ（またはその一部）に完全なアクセス権がありません。</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>ローカルフォルダが変更されたため、同期「%1」は無効になっています。</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>同期「%1」は無効になっています。理由：%2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason.SNC-3654</translatorcomment>
+        <translation>バックアップ「%1」は一時的に無効になっています：%2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>ローカルフォルダが利用できないか、読み取りおよび書き込み権限がないため、バックアップ「%1」は無効になっています。</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>VirtualBox共有フォルダの同期は、そのファイルシステムの欠陥によりサポートされていないため、バックアップ「%1」が無効になっています。</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>MEGAフォルダがごみ箱に入っているため、バックアップ「%1」は無効となっています。</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>バックアップ「%1」は無効になっています。 MEGAフォルダ（またはその一部）への完全なアクセス権がありません。</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>ローカルフォルダが変更されたため、バックアップ「%1」は無効になっています</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>MEGAフォルダが変更されたため、バックアップ「%1」は無効になっています</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>バックアップ「%1」は無効になっています。理由：%2</translation>
     </message>
 </context>
 <context>
@@ -6135,7 +6323,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Sort by state</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by state in case the user clicks.</translatorcomment>
-        <translation>状態で並べ替え</translation>
+        <translation>ステータスで並べ替え</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -6217,26 +6405,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
-    <name>SyncsMenu</name>
+    <name>Syncs</name>
     <message>
-        <source>Add Sync</source>
-        <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>同期を追加</translation>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
+        <translation>同期するローカルフォルダを選択してください</translation>
     </message>
     <message>
-        <source>Syncs</source>
-        <translatorcomment>Menu option that shows syncs menu</translatorcomment>
-        <translation>同期</translation>
+        <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
+        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
+        <translation>書き込み権限がないため、フォルダを同期できません</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation>バックアップ</translation>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
+        <translation>同期するMEGAフォルダを選択してください</translation>
     </message>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>バックアップを追加</translation>
+        <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
+        <translation>フォルダが見つからないため同期できません。移動または削除されたか、アクセスできない可能性があります。</translation>
+    </message>
+    <message>
+        <source>%1 folder doesn&apos;t exist</source>
+        <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
+        <translation>「%1」フォルダが存在しません</translation>
     </message>
 </context>
 <context>
@@ -6991,6 +7184,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
         <translation>すべての転送を一時停止</translation>
+    </message>
+</context>
+<context>
+    <name>TwoWaySyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu option used to add sync;SNC-3654</translatorcomment>
+        <translation>同期を追加</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu option that shows syncs menu;SNC-3654</translatorcomment>
+        <translation>同期</translation>
     </message>
 </context>
 <context>
