@@ -78,6 +78,7 @@ void DuplicatedNodeItem::fillUi()
     }
 
     auto nodeName(getNodeName());
+    ui->lNodeName->setMaximumLines(4);
     ui->lNodeName->setText(nodeName);
 
     QIcon icon = isFile() ? QIcon(Utilities::getExtensionPixmapName(nodeName, QLatin1Literal(":/images/drag_")))
