@@ -79,11 +79,11 @@ Text {
                         closed = false;
                     }
                     else if (currentLink.length === 0 && found && !closed) {
-                        if (linkCoords.y !== y) { // we detected the lose of link in the next line
+                        if (linkCoords.y !== y) { // we detect the lose of link in the next line
                             linkCoords.width = root.width - linkCoords.x
                         }
                         else {
-                            linkCoords.width = x - linkCoords.x
+                            linkCoords.width = x - linkCoords.x // we detect the lose of link in the same line
                         }
 
                         linkCoordsList.push(linkCoords);
@@ -107,7 +107,7 @@ Text {
 
                     var focusRect = focusRepeater.itemAt(coordsIndex);
                     focusRect.x = coords.x - focusMargin;
-                    focusRect.y = coords.y - (focusMargin / 2); // by convention (design) we are using half of the margin for the top.
+                    focusRect.y = coords.y - focusMargin / 2; // by convention (design) we are using half of the margin for the top.
                     focusRect.width = coords.width + focusMargin * 2;
                     focusRect.height = coords.height + focusMargin;
                     focusRect.visible = true;
