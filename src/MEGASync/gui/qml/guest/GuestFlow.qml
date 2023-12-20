@@ -341,6 +341,14 @@ Item {
                     guestContentAccess.onVerifyEmailClicked();
                 }
             }
+
+            Connections {
+                target: window
+
+                function onInitializePageFocus() {
+                    leftButton.forceActiveFocus();
+                }
+            }
         }
     }
 
