@@ -632,6 +632,10 @@ void BackupsModel::checkDuplicatedBackups(const QStringList& candidateList)
         {
             error = BackupErrorCode::EXISTS_REMOTE;
         }
+        else
+        {
+            remoteSet.remove(name); //It went ok so we don´t want the name in the set
+        }
 
         if(error == BackupErrorCode::NONE)
         {

@@ -322,7 +322,7 @@ Item {
             imageTopMargin: 110
             title: GuestStrings.accountTempLocked
             description: GuestStrings.accountTempLockedEmail
-            descriptionFontSize: Texts.Text.Size.Normal
+            descriptionFontSize: Texts.Text.Size.NORMAL
             descriptionColor: Styles.textPrimary
             descriptionLineHeight: 18
             leftButton {

@@ -270,6 +270,9 @@
                   <property name="text">
                    <string/>
                   </property>
+                  <property name="textFormat">
+                   <enum>Qt::PlainText</enum>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -694,6 +697,9 @@ background-color: rgba(0, 0, 0, 8%);
                         </property>
                         <property name="text">
                          <string/>
+                        </property>
+                        <property name="textFormat">
+                         <enum>Qt::PlainText</enum>
                         </property>
                        </widget>
                       </item>

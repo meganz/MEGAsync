@@ -8,6 +8,7 @@ import onboard 1.0
 import onboard.syncs_types 1.0
 
 SyncsPage {
+    id: root
 
     property alias localFolderChooser: localFolder
     property alias remoteFolderChooser: remoteFolder
@@ -18,6 +19,7 @@ SyncsPage {
     }
 
     ColumnLayout {
+        id: column
 
         anchors {
             top: parent.top
@@ -28,12 +30,16 @@ SyncsPage {
         spacing: 24
 
         Header {
+            id: header
+
             Layout.preferredWidth: parent.width
             title: OnboardingStrings.selectiveSync
             description: OnboardingStrings.selectiveSyncDescription
         }
 
         InfoAccount {
+            id: accountData
+
             Layout.preferredWidth: parent.width
             Layout.topMargin: 8
         }

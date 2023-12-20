@@ -176,7 +176,7 @@ Item {
 
                 color: Styles.iconButton
                 font {
-                    pixelSize: Texts.Text.Size.Small
+                    pixelSize: Texts.Text.Size.SMALL
                     weight: Font.DemiBold
                 }
             }

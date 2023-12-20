@@ -54,7 +54,7 @@
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
-        <translation type="unfinished">Your account has been deactivated by your administrator. Please contact your Business account administrator for further details.</translation>
+        <translation>Your account has been deactivated by your administrator. Please contact your Business account administrator for further details.</translation>
     </message>
 </context>
 <context>
@@ -110,7 +110,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronisation.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -413,7 +413,7 @@
     <message>
         <source>Sort by state</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by check state</translatorcomment>
-        <translation>Sort by state</translation>
+        <translation>Sort by status</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -482,12 +482,12 @@
     <message>
         <source>Add Backup</source>
         <translatorcomment>Menu option used to add backups;SNC-3654</translatorcomment>
-        <translation type="unfinished">Add backup</translation>
+        <translation>Add backup</translation>
     </message>
     <message>
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu;SNC-3654</translatorcomment>
-        <translation type="unfinished">Backups</translation>
+        <translation>Backups</translation>
     </message>
 </context>
 <context>
@@ -526,20 +526,20 @@
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Folder wasn&apos;t backed up. Try again.</numerusform>
-            <numerusform>These folders weren&apos;t backed up. Try again.</numerusform>
+        <translation>
+            <numerusform>Folder wasn’t backed up. Try again.</numerusform>
+            <numerusform>These folders weren’t backed up. Try again.</numerusform>
         </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
         <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation type="unfinished">You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
+        <translation>You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
     </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</numerusform>
             <numerusform>Some folders with the same name already exist in your Backups. Rename the new folders to continue with the backup. Folder names will not change on your computer.</numerusform>
         </translation>
@@ -547,12 +547,12 @@
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
         <translatorcomment>Warning message stating that a backup can´t contain another backup CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Backup folders can’t contain or be contained by other backup folders.</translation>
     </message>
     <message>
         <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
         <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be backed up as it can’t be located. It may have been moved or deleted, or you might not have access.</translation>
     </message>
 </context>
 <context>
@@ -1048,7 +1048,7 @@
     <message>
         <source>Please enter your password</source>
         <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>Please enter your password</translation>
+        <translation>Enter your password</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -1058,7 +1058,7 @@
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>Please enter a stronger password</translation>
+        <translation>Enter a stronger password</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1086,7 +1086,7 @@
     <message>
         <source>Select local folder</source>
         <translatorcomment>Label indicating the user that he has to select a local folder. CON-467</translatorcomment>
-        <translation type="unfinished">Select local folder</translation>
+        <translation>Select local folder</translation>
     </message>
 </context>
 <context>
@@ -1130,17 +1130,17 @@
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</translation>
     </message>
     <message>
         <source>MEGA Uploads</source>
         <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA uploads</translation>
     </message>
     <message>
         <source>MEGA Downloads</source>
         <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA downloads</translation>
     </message>
     <message>
         <source>MEGA Imports</source>
@@ -1434,7 +1434,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pro&#xa0;Flexi account deactivated</translation>
     </message>
 </context>
 <context>
@@ -1447,7 +1447,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Please select the download folder for your files:</translation>
+        <translation>Select the download folder for your files:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1641,12 +1641,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>loading time…</source>
         <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>fetching date…</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>calculating size…</translation>
     </message>
 </context>
 <context>
@@ -1654,7 +1654,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Login error: %1</source>
         <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message. SNC-4122</translatorcomment>
-        <translation type="unfinished">Login error: %1</translation>
+        <translation>Login error: %1</translation>
     </message>
 </context>
 <context>
@@ -1762,62 +1762,57 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>About MEGA</source>
         <translatorcomment>Menu entry that opens the about MEGA dialog. CON-472</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>About MEGA</translation>
     </message>
     <message>
         <source>Quit</source>
         <translatorcomment>Menu entry that quits the application for mac. CON-472</translatorcomment>
-        <translation type="unfinished">Quit</translation>
+        <translation>Quit</translation>
     </message>
     <message>
         <source>Exit</source>
         <translatorcomment>Menu entry that quits the application for linux and windows. CON-472</translatorcomment>
-        <translation type="unfinished">Exit</translation>
+        <translation>Exit</translation>
     </message>
     <message>
         <source>Settings</source>
         <translatorcomment>Menu entry that opens the settings dialog. CON-472</translatorcomment>
-        <translation type="unfinished">Settings</translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <source>Log in or sign up to MEGA</source>
         <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Log in or sign up to MEGA</translation>
     </message>
     <message>
         <source>Account temporarily locked</source>
         <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Account temporarily locked</translation>
     </message>
     <message>
         <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
         <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we’ve sent you.</translation>
     </message>
     <message>
         <source>Resend email</source>
         <translatorcomment>Button text, on click the email to verify the account is resent CON-465</translatorcomment>
-        <translation type="unfinished">Resend email</translation>
+        <translation>Resend email</translation>
     </message>
     <message>
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
-        <translation type="unfinished">Log&#xa0;out</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button text to verify the account CON-465</translatorcomment>
-        <translation type="unfinished">Verify now</translation>
+        <translation>Log&#xa0;out</translation>
     </message>
     <message>
         <source>Setting up your account…</source>
         <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Setting up your account…</translation>
     </message>
     <message>
         <source>Waiting for email confirmation…</source>
         <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Waiting for email confirmation…</translation>
     </message>
 </context>
 <context>
@@ -1917,47 +1912,47 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Free</source>
         <translatorcomment>Label to refer Free tier CON-467</translatorcomment>
-        <translation type="unfinished">Free</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
-        <translation type="unfinished">Pro&#xa0;I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
-        <translation type="unfinished">Pro&#xa0;II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
-        <translation type="unfinished">Pro&#xa0;III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
-        <translation type="unfinished">Pro&#xa0;Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Business</source>
         <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
-        <translation type="unfinished">Business</translation>
+        <translation>Business</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation type="unfinished">Pro&#xa0;Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Available storage:</source>
         <translatorcomment>Label indicating that the number in the right is the available storage CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Available storage:</translation>
     </message>
     <message>
         <source>Storage space:</source>
         <translatorcomment>Label indicating that the number in the right is the storage space CON-467</translatorcomment>
-        <translation type="unfinished">Storage space:</translation>
+        <translation>Storage space:</translation>
     </message>
 </context>
 <context>
@@ -2339,27 +2334,27 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation type="unfinished">Please check your email and click the link to confirm your account.</translation>
+        <translation>Please check your email and click the link to confirm your account.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+        <translation>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Invalid email address or password. Please try again.</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation type="unfinished">The app is unable to connect. Please check your internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
+        <translation>The app is unable to connect. Please check your internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
         <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Email address already in use.</translation>
     </message>
 </context>
 <context>
@@ -2367,17 +2362,17 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation type="unfinished">You have been logged out on this computer from another location</translation>
+        <translation>You have been logged out on this computer from another location</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation type="unfinished">Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
+        <translation>Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
-        <translation type="unfinished">You have been logged out because of this error: %1</translation>
+        <translation>You have been logged out because of this error: %1</translation>
     </message>
 </context>
 <context>
@@ -2614,7 +2609,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Please consider updating your operating system.</source>
         <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
-        <translation>Please consider updating your operating system.</translation>
+        <translation>Consider updating your operating system.</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -2818,7 +2813,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pro&#xa0;Flexi account deactivated</translation>
     </message>
 </context>
 <context>
@@ -3688,547 +3683,547 @@ Enter a different name.</translation>
     <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
-        <translation type="unfinished">Add folder</translation>
+        <translation>Add folder</translation>
     </message>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
         <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I have read and agree to MEGA’s [B][A]Terms of Service[/A][/B]</translation>
     </message>
     <message>
         <source>Back up</source>
         <translatorcomment>Button text to configure the selected backups CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Back up</translation>
     </message>
     <message>
         <source>Backup</source>
         <translatorcomment>Button title, on click it goes to the backups section CON-468</translatorcomment>
-        <translation type="unfinished">Backup</translation>
+        <translation>Backup</translation>
     </message>
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
         <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Data from your device will automatically and consistently back up to MEGA in real-time.</translation>
     </message>
     <message>
         <source>Backup: Confirm</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the backup confirm step CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Backup: Confirm</translation>
     </message>
     <message>
         <source>Backup Folders</source>
         <translatorcomment>Backup folders table title CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Backup folders</translation>
     </message>
     <message>
         <source>Backup: Select folders</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Backup: Select folders</translation>
     </message>
     <message>
         <source>Backup to:</source>
         <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
-        <translation type="unfinished">Back up to:</translation>
+        <translation>Back up to:</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation type="unfinished">Choose</translation>
+        <translation>Choose</translation>
     </message>
     <message>
         <source>Change folder</source>
         <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Change folder</translation>
     </message>
     <message>
         <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
         <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</translation>
     </message>
     <message>
         <source>Change your email address</source>
         <translatorcomment>Change email window title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Change your email address</translation>
     </message>
     <message>
         <source>Device name</source>
         <translatorcomment>Device name window title CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Device name</translation>
     </message>
     <message>
         <source>Add the name of your device.</source>
         <translatorcomment>Device name window secondary title CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Add the name of your device.</translation>
     </message>
     <message>
         <source>Add device name</source>
         <translatorcomment>Device name text input box title CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Add device name</translation>
     </message>
     <message>
         <source>Confirm</source>
         <translatorcomment>Button text to confirm the current action CON-467</translatorcomment>
-        <translation type="unfinished">Confirm</translation>
+        <translation>Confirm</translation>
     </message>
     <message>
         <source>There is already a folder with the same name in this backup</source>
         <translatorcomment>Error text indicating that it can´t create a backup with duplicated names CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>There is already a folder with the same name in this backup</translation>
     </message>
     <message>
         <source>A folder with the same name already exists on your backups</source>
         <translatorcomment>Error text indicating that a backup with the same name already exists CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A folder with the same name already exists on your backups</translation>
     </message>
     <message>
         <source>Confirm folders to back up</source>
         <translatorcomment>Confirm backups table title CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Confirm folders to back up</translation>
     </message>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Account created</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
         <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>To activate your account, you need to verify your email address. We’ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</translation>
     </message>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>If you don’t receive the email within 1 hour, please [B][A]contact support[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
         <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>If you have misspelled your email address, [B][A]change it here[/A][/B].</translation>
     </message>
     <message>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Confirm password</translation>
     </message>
     <message>
         <source>Done</source>
         <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Done</translation>
     </message>
     <message>
         <source>Email</source>
         <translatorcomment>Email text input title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Email address</translation>
     </message>
     <message>
         <source>Please confirm your password</source>
         <translatorcomment>Confirm password text input title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Confirm your password</translation>
     </message>
     <message>
         <source>Enter your password</source>
         <translatorcomment>Password text input title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enter your password</translation>
     </message>
     <message>
         <source>Please enter your name</source>
         <translatorcomment>Name text input title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enter your first name</translation>
     </message>
     <message>
         <source>Please enter your last name</source>
         <translatorcomment>Last name text input title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enter your last name</translation>
     </message>
     <message>
         <source>Passwords don&apos;t match. Check and try again.</source>
         <translatorcomment>Error label indicating that password and confirm password content is not the same CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Passwords don’t match. Check and try again.</translation>
     </message>
     <message>
         <source>Enter a valid email address</source>
         <translatorcomment>Error label indicating that the email is not valid CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enter a valid email address</translation>
     </message>
     <message>
         <source>Your backup is set up</source>
         <translatorcomment>Title indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your backup is set up</translation>
     </message>
     <message>
         <source>What else do you want to do?</source>
         <translatorcomment>Text suggesting the user to create another backup or sync CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>What else do you want to do?</translation>
     </message>
     <message>
         <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
         <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your sync has been set up and will automatically sync selected data whenever the desktop app is running.</translation>
     </message>
     <message>
         <source>Your sync has been set up</source>
         <translatorcomment>Title indicating that the backup was successfully configured CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your sync is set up</translation>
     </message>
     <message>
         <source>First name</source>
         <translatorcomment>First name text input title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>First name</translation>
     </message>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync your entire MEGA account with your local device.</translation>
     </message>
     <message>
         <source>Full sync</source>
         <translatorcomment>Full sync button title CON-467</translatorcomment>
-        <translation type="unfinished">Full sync</translation>
+        <translation>Full sync</translation>
     </message>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync your entire MEGA Cloud drive with a local device.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
         <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</translation>
     </message>
     <message>
         <source>Forgot password?</source>
         <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
-        <translation type="unfinished">Forgot password?</translation>
+        <translation>Forgot password?</translation>
     </message>
     <message>
         <source>Select a local folder to sync.</source>
         <translatorcomment>Text input title indicating the user to select a local folder CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Select a local folder to sync</translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Text input title indicating the user to select a MEGA folder CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Select a MEGA folder to sync</translation>
     </message>
     <message>
         <source>Setup options</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the Setup options step CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Setup options</translation>
     </message>
     <message>
         <source>Choose:</source>
         <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Choose:</translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
         <translatorcomment>Label wellcoming the user to MEGA CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Welcome to MEGA</translation>
     </message>
     <message>
         <source>Last name</source>
         <translatorcomment>Last name text input title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Last name</translation>
     </message>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation type="unfinished">Log&#xa0;in</translation>
+        <translation>Log&#xa0;in</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
         <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Log in to your [B]MEGA account[/B]</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
-        <translation type="unfinished">Next</translation>
+        <translation>Next</translation>
     </message>
     <message>
         <source>Skip</source>
         <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
-        <translation type="unfinished">Skip</translation>
+        <translation>Skip</translation>
     </message>
     <message>
         <source>View in Settings</source>
         <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>View in Settings</translation>
     </message>
     <message>
         <source>Password</source>
         <translatorcomment>Password input field title CON-465</translatorcomment>
-        <translation type="unfinished">Password</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Previous</source>
         <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Previous</translation>
     </message>
     <message>
         <source>Rename</source>
         <translatorcomment>Button to rename a backup CON-468</translatorcomment>
-        <translation type="unfinished">Rename</translation>
+        <translation>Rename</translation>
     </message>
     <message>
         <source>Resend</source>
         <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Resend</translation>
     </message>
     <message>
         <source>[B]Select all[/B]</source>
         <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Select all[/B]</translation>
     </message>
     <message>
         <source>Select folders to back up</source>
         <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Select folders to back up</translation>
     </message>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selected folders will automatically back up to MEGA when the desktop app is running.</translation>
     </message>
     <message>
         <source>Select a local folder</source>
         <translatorcomment>Text that indicates to the user that he should select a local folder CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Select a local folder</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
-        <translation type="unfinished">Select a MEGA folder</translation>
+        <translation>Select a MEGA folder</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync selected folders in your MEGA account with your local device.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync specific folders in your MEGA Cloud drive with your local device.</translation>
     </message>
     <message>
         <source>Selective sync</source>
         <translatorcomment>Selective sync button title text CON-467</translatorcomment>
-        <translation type="unfinished">Selective sync</translation>
+        <translation>Selective sync</translation>
     </message>
     <message>
         <source>Set up MEGA</source>
         <translatorcomment>Onboarding window title CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Set up MEGA</translation>
     </message>
     <message>
         <source>Sign up</source>
         <translatorcomment>Sign up button text CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sign up</translation>
     </message>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Create your [B]MEGA account[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync your device with MEGA, and any local changes will automatically and instantly apply to MEGA and vice versa.</translation>
     </message>
     <message>
         <source>Choose sync type</source>
         <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Choose sync type</translation>
     </message>
     <message>
         <source>Sync</source>
         <translatorcomment>Button title that forwards the user to the syncs flow CON-467</translatorcomment>
-        <translation type="unfinished">Sync</translation>
+        <translation>Sync</translation>
     </message>
     <message>
         <source>Sync: Choose type</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the choose sync type step CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync: Choose type</translation>
     </message>
     <message>
         <source>Sync set up</source>
         <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync set up</translation>
     </message>
     <message>
         <source>Problem with two-factor authentication?</source>
         <translatorcomment>Text that the user has to click in case he has problems with 2FA CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Problem with two-factor authentication?</translation>
     </message>
     <message>
         <source>Enter the 6-digit code generated by your authenticator app.</source>
         <translatorcomment>2FA page secondary title CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enter the 6-digit code generated by your authenticator app.</translation>
     </message>
     <message>
         <source>Continue with [B]two-factor authentication[/B]</source>
         <translatorcomment>2FA page title CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Continue with [B]two-factor authentication[/B]</translation>
     </message>
     <message>
         <source>Logging in…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Logging in…</translation>
     </message>
     <message>
         <source>Fetching file list…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fetching file list…</translation>
     </message>
     <message>
         <source>Creating account…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Creating account…</translation>
     </message>
     <message>
         <source>Validating 2FA code…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Validating 2FA code…</translation>
     </message>
     <message>
         <source>Stop logging in?</source>
         <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Stop logging in?</translation>
     </message>
     <message>
         <source>Closing this window will stop you logging in.</source>
         <translatorcomment>Dialog body text. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Closing this window will stop you logging in.</translation>
     </message>
     <message>
         <source>Stop Loggin in</source>
         <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Stop logging in</translation>
     </message>
     <message>
         <source>Don’t stop</source>
         <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Don’t stop</translation>
     </message>
     <message>
         <source>Cancel account creation?</source>
         <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cancel account creation?</translation>
     </message>
     <message>
         <source>Closing this window will cancel the sign up process.</source>
         <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Closing this window will cancel the sign up process.</translation>
     </message>
     <message>
         <source>Cancel account</source>
         <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cancel creation</translation>
     </message>
     <message>
         <source>Don’t cancel</source>
         <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Don’t cancel</translation>
     </message>
     <message>
         <source>Password needs to be at least 8 characters</source>
         <translatorcomment>Hint text that tells the user minimum requirement for the passwords CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Password needs to be at least 8 characters</translation>
     </message>
     <message>
         <source>It’s better to have:</source>
         <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>It’s better to have:</translation>
     </message>
     <message>
         <source>Upper and lower case letters</source>
         <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Upper and lower case letters</translation>
     </message>
     <message>
         <source>At least one number or special character</source>
         <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>At least one number or special character</translation>
     </message>
     <message>
         <source>Enter a minimum of 8 characters.</source>
         <translatorcomment>Error text to force the user to fill minimum character requirement CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enter a minimum of 8 characters.</translation>
     </message>
     <message>
         <source>Your password is too easily guessed. You need to make it stronger.</source>
         <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your password is too easily guessed. You need to make it stronger.</translation>
     </message>
     <message>
         <source>Your password is easily guessed. You need to make it stronger.</source>
         <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your password is easily guessed. You should make it stronger.</translation>
     </message>
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Automatically update your files from your computers to MEGA. Backup items in MEGA can’t be modified or deleted from MEGA.</translation>
     </message>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync selected folders between your computer with MEGA; any change from one side will apply to another side.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync your files between your computers with MEGA; any change from one side will apply to another side.</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
         <translatorcomment>Page title for new accounts in set device name page CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Let’s get you set up</translation>
     </message>
     <message>
         <source>Confirm your email and password</source>
         <translatorcomment>Page title for new accounts in login page CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Confirm your email address and password</translation>
     </message>
     <message>
         <source>Once confirmed, your account will be activated.</source>
         <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Once confirmed, your account will be activated.</translation>
     </message>
     <message>
         <source>Enter your email address</source>
         <translatorcomment>Login error if user didn´t enter the email CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enter your email address</translation>
     </message>
     <message>
         <source>Enter a device name</source>
         <translatorcomment>Device name text input field title CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enter a device name</translation>
     </message>
     <message>
         <source>Names longer than 32 characters are not supported</source>
         <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Names longer than 32 characters are not supported</translation>
     </message>
     <message>
         <source>Authentication failed</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Authentication failed</translation>
     </message>
     <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Incorrect 2FA code</translation>
     </message>
     <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your backup has been set up and selected data will automatically back up whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</translation>
     </message>
 </context>
 <context>
@@ -4566,7 +4561,11 @@ Enter a different name.</translation>
 - Application performance improved.
 </source>
         <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- A new onboarding wizard is introduced when a new sync or backup process is initiated for the first time.
+- Revamped the user interface of the macOS installer.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Application performance improved.
+</translation>
     </message>
 </context>
 <context>
@@ -5188,7 +5187,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Adding transfers…</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Adding transfers…</translation>
     </message>
 </context>
 <context>
@@ -5646,7 +5645,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Enable Windows File Explorer integration</translation>
+        <translation>Enable File Explorer integration</translation>
     </message>
     <message>
         <source>B</source>
@@ -5872,7 +5871,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>Your sync ”%1“ can’t be disabled. Reason: %2</translation>
+        <translation>Your sync “%1” can’t be disabled. Reason: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5907,7 +5906,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Your backup ”%1“ can’t be enabled. Reason: %2</translation>
+        <translation>Your backup “%1” can’t be enabled. Reason: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5922,7 +5921,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Your backup ”%1“ can’t be disabled. Reason: %2</translation>
+        <translation>Your backup “%1” can’t be disabled. Reason: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5937,17 +5936,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable sync status icons</source>
         <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enable sync status icons</translation>
     </message>
     <message>
         <source>Enabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Enabling sync status icons</translation>
     </message>
     <message>
         <source>Disabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Disabling sync status icons</translation>
     </message>
 </context>
 <context>
@@ -6267,67 +6266,67 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folder can&apos;t be backed up as it is already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be backed up as it’s already synced</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s already synced</source>
         <translatorcomment>Warning message indicating that the folder is already synced. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as it’s already synced</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as is already backed up</source>
         <translatorcomment>Warning message indicating that the selected folder is a backup. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as it’s already backed up</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
         <translatorcomment>Warning message indicating that the selected is inside a sync folder. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as it’s inside a synced folder</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
         <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as it’s inside a backed up folder</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it contains synced folders</source>
         <translatorcomment>Warning message indicating that the selected is contains synced folders. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as it contains synced folders</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it contains backed up folders</source>
         <translatorcomment>Warning message indicating that the selected is contains backed up folders. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as it contains backed up folders</translation>
     </message>
     <message>
         <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
         <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Can’t back up “%1” as it’s the root folder. To continue, select a different folder.</translation>
     </message>
     <message>
         <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
         <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Can’t sync “%1” as it’s the root folder. To continue, select a different folder.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have write permissions.</source>
         <translatorcomment>Warning message indicating that there is no write Permissions. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as you don’t have write permissions</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
         <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as it’s in the MEGA Rubbish bin</translation>
     </message>
     <message>
         <source>This selection can&apos;t be synced as it’s a file.</source>
         <translatorcomment>Warning message indicating that the selection is a file and files can´t be synced. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>This selection can’t be synced as it’s a file</translation>
     </message>
     <message>
         <source>This folder is already being synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>This folder is already being synced</translation>
     </message>
 </context>
 <context>
@@ -6335,7 +6334,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>You are syncing a local folder formatted with a FAT file system. The FAT file system has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable file systems like NTFS (more information [A]here[/A]).</translation>
+        <translation>You are syncing a local folder formatted with a FAT file system. The FAT file system has deficiencies managing big files and modification times that can cause synchronisation problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable file systems like NTFS (more information [A]here[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -6345,92 +6344,92 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
-        <translation type="unfinished">Your syncs and backups have been disabled: %1</translation>
+        <translation>Your syncs and backups have been disabled: %1</translation>
     </message>
     <message>
         <source>Your backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backups have been disabled: %1</translation>
+        <translation>Your backups have been disabled: %1</translation>
     </message>
     <message>
         <source>Your syncs have been disabled: %1</source>
         <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
-        <translation type="unfinished">Your syncs have been disabled: %1</translation>
+        <translation>Your syncs have been disabled: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &amp;quot;%1&amp;quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &amp;quot;%1&amp;quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>Your sync “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &amp;quot;%1&amp;quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Your sync “%1” has been disabled because MEGA can’t sync or back up VirtualBox folders.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &amp;quot;%1&amp;quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the remote folder is in the Rubbish bin</translation>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Your sync “%1” has been disabled because the remote folder is in the Rubbish bin</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &amp;quot;%1&amp;quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled. The remote folder (or part of it) doesn’t have full access</translation>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Your sync “%1” has been disabled. The remote folder (or part of it) doesn’t have full access</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &amp;quot;%1&amp;quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the local folder has changed</translation>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Your sync “%1” has been disabled because the local folder has changed</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled. Reason: %2</translation>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>Your sync “%1” has been disabled. Reason: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backup “%1” has been temporarily disabled: %2</translation>
+        <translation>Your backup “%1” has been temporarily disabled: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backup ”%1“ has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
+        <translation>Your backup “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backup “%1” has been disabled because backing up VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
+        <translation>Your backup “%1” has been disabled because backing up VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backup ”%1“ has been disabled because the MEGA folder is in the Rubbish bin.</translation>
+        <translation>Your backup “%1” has been disabled because the MEGA folder is in the Rubbish bin.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backup “%1” has been disabled. You don’t have full access to the MEGA folder (or to part of it).</translation>
+        <translation>Your backup “%1” has been disabled. You don’t have full access to the MEGA folder (or to part of it).</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backup ”%1“ has been disabled because the local folder has changed.</translation>
+        <translation>Your backup “%1” has been disabled because the local folder has changed</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backup ”%1“ has been disabled because the MEGA folder has changed.</translation>
+        <translation>Your backup “%1” has been disabled because the MEGA folder has changed.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation type="unfinished">Your backup ”%1“ has been disabled. Reason: %2</translation>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>Your backup “%1” has been disabled. Reason: %2</translation>
     </message>
 </context>
 <context>
@@ -6438,7 +6437,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sort by state</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by state in case the user clicks.</translatorcomment>
-        <translation>Sort by state</translation>
+        <translation>Sort by status</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -6524,27 +6523,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Select a local folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Select a local folder to sync</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
         <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as you don’t have write permissions</translation>
     </message>
     <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Select a MEGA folder to sync</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
         <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be synced as it can’t be located. It may have been moved or deleted, or you might not have access.</translation>
     </message>
     <message>
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>“%1” folder doesn’t exist</translation>
     </message>
 </context>
 <context>
@@ -7345,12 +7344,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu option used to add sync;SNC-3654</translatorcomment>
-        <translation type="unfinished">Add sync</translation>
+        <translation>Add sync</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Menu option that shows syncs menu;SNC-3654</translatorcomment>
-        <translation type="unfinished">Syncs</translation>
+        <translation>Syncs</translation>
     </message>
 </context>
 <context>
@@ -7447,7 +7446,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Please select the upload folder for your files:</translation>
+        <translation>Select the upload folder for your files:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>

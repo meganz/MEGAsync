@@ -1,6 +1,7 @@
 import QtQuick 2.15
 
 QtObject {
+    id: root
 
     property int indicatorWidth: 16
     property int indicatorRadius: 4
@@ -10,5 +11,4 @@ QtObject {
     property int spacing: 4
     property int focusBorderWidth: 4
     property int focusBorderRadius: 8
-
 }
