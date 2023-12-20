@@ -120,4 +120,13 @@ Button {
             mouse.accepted = false;
         }
     }
+
+    Keys.onReleased: (event)=> {
+        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+            if (checkable) {
+                checked = true;
+            }
+            event.accepted = true;
+        }
+    }
 }
