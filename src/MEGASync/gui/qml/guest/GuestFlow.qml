@@ -150,6 +150,8 @@ Rectangle {
             menuButton.checked = true;
             menu.visible = !menu.visible;
         }
+
+        KeyNavigation.tab: menu.visible ? aboutMenuItem : view.currentItem.leftButton
     }
 
     Qml.Menu {
@@ -185,6 +187,12 @@ Rectangle {
             menuButton.checked = false;
         }
 
+        onVisibleChanged: {
+            if (visible) {
+                aboutMenuItem.forceActiveFocus();
+            }
+        }
+
         MenuItem {
             id: aboutMenuItem
 
@@ -218,6 +226,8 @@ Rectangle {
                 guestContentAccess.onExitClicked();
                 guestWindow.hide();
             }
+
+            KeyNavigation.tab: view.currentItem.leftButton
         }
     }
 
@@ -246,6 +256,14 @@ Rectangle {
                 text: OnboardingStrings.login
                 onClicked: {
                     loginControllerAccess.state = LoginController.LOGGED_OUT;
+                }
+            }
+
+            Connections {
+                target: window
+
+                function onInitializePageFocus() {
+                    leftButton.forceActiveFocus();
                 }
             }
         }
@@ -322,6 +340,14 @@ Rectangle {
                         guestContentAccess.onVerifyEmailClicked();
                 }
             }
+
+            Connections {
+                target: window
+
+                function onInitializePageFocus() {
+                    leftButton.forceActiveFocus();
+                }
+            }
         }
     }
 
@@ -337,6 +363,14 @@ Rectangle {
             rightButton.visible: false
             spacing: 0
             bottomMargin: 150
+        }
+    }
+
+    Connections {
+        target: window
+
+        function onHideRequested() {
+            menu.close();
         }
     }
 }

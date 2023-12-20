@@ -197,15 +197,6 @@ Qml.RoundButton {
         cursorShape: Qt.PointingHandCursor
     }
 
-    Keys.onReleased: (event)=> {
-        if (event.key === Qt.Key_Return) {
-            if (checkable) {
-                checked = true;
-            }
-            event.accepted = true;
-        }
-    }
-
     Keys.onReturnPressed: {
         root.clicked();
     }

@@ -33,10 +33,14 @@ void GuestQmlDialog::showEvent(QShowEvent *event)
 {
     realocate();
     QmlDialog::showEvent(event);
+
+    emit initializePageFocus();
 }
 
 void GuestQmlDialog::hideEvent(QHideEvent *event)
 {
     mLastHideTime = QDateTime::currentMSecsSinceEpoch();
     QmlDialog::hideEvent(event);
+
+    emit hideRequested();
 }

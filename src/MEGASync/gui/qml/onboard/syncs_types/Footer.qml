@@ -8,8 +8,6 @@ import components.buttons 1.0
 
 import onboard 1.0
 
-import Onboarding 1.0
-
 RowLayout {
 
     property alias leftSecondary: leftSecondaryComp
