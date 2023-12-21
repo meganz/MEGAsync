@@ -25,7 +25,7 @@ SyncsPage {
             left: parent.left
             right: parent.right
         }
-        spacing: 34
+        spacing: 20
 
         Header {
             id: headerItem
