@@ -30,7 +30,7 @@ protected:
 
 private slots:
     void onLinkActivated(const QUrl& link);
-    void onAdaptHeight();
+    void onAdaptHeight(bool parentConstrained = false);
 
 private:
     void setCursor(const QCursor& cursor);
@@ -41,6 +41,7 @@ private:
     QString mText;
     Qt::TextFormat mFormat;
     QTimer mAdaptHeightTimer;
+    int mParentHeight;
 };
 
 #endif // WORDWRAPLABEL_H
