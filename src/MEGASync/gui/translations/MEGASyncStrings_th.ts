@@ -427,7 +427,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>ในสำเนาสำรองของคุณ มีโฟลเดอร์ชื่อ &#8220;%1&#8221; อยู่แล้ว เปลี่ยนชื่อโฟลเดอร์ใหม่เพื่อดำเนินการสำรองข้อมูลต่อ ส่วนชื่อโฟลเดอร์บนคอมพิวเตอร์จะไม่มีการเปลี่ยนแปลงแต่อย่างใด</translation>
+        <translation>ในสำเนาสำรองของคุณ มีโฟลเดอร์ชื่อ “%1” อยู่แล้ว เปลี่ยนชื่อโฟลเดอร์ใหม่เพื่อดำเนินการสำรองข้อมูลต่อ ส่วนชื่อโฟลเดอร์บนคอมพิวเตอร์จะไม่มีการเปลี่ยนแปลงแต่อย่างใด</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
@@ -465,7 +465,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>ในสำเนาสำรองของคุณ มีโฟลเดอร์ชื่อ &#8220;%1&#8221; อยู่แล้ว เปลี่ยนชื่อโฟลเดอร์ใหม่เพื่อดำเนินการสำรองข้อมูลต่อ</translation>
+        <translation>ในสำเนาสำรองของคุณ มีโฟลเดอร์ชื่อ “%1” อยู่แล้ว เปลี่ยนชื่อโฟลเดอร์ใหม่เพื่อดำเนินการสำรองข้อมูลต่อ</translation>
     </message>
 </context>
 <context>
@@ -1099,12 +1099,17 @@
     <message>
         <source>MEGA Uploads</source>
         <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การอัปโหลด MEGA</translation>
     </message>
     <message>
         <source>MEGA Downloads</source>
         <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การดาวน์โหลด MEGA</translation>
+    </message>
+    <message>
+        <source>MEGA Imports</source>
+        <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
+        <translation>การนำเข้า MEGA</translation>
     </message>
 </context>
 <context>
@@ -1204,7 +1209,7 @@
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>สร้างผู้ติดต่อใหม่กับ [A] แล้ว</translation>
+        <translation>ผู้ติดต่อใหม่ [A] ได้ถูกเพิ่มเรียบร้อยแล้ว</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1576,7 +1581,7 @@
     <message>
         <source>loading time…</source>
         <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังดึงข้อมูลวันที่…</translation>
     </message>
     <message>
         <source>loading size…</source>
@@ -1719,11 +1724,6 @@
         <translation>บัญชีถูกล็อกชั่วคราว</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked due to a potential breach of our [A]Terms of Service[/A]. To unlock your account, verify your phone number.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
         <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
         <translation>บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ เนื่องจากอาจมีการละเมิดข้อมูล เพื่อปลดล็อกบัญชีของคุณ กรุณาทำตามขั้นตอนในอีเมลที่เราส่งถึงคุณ</translation>
@@ -1737,11 +1737,6 @@
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
         <translation>ออกจากระบบ</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button text to verify the account CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Setting up your account…</source>
@@ -2168,11 +2163,6 @@
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy link</translatorcomment>
         <translation>คัดลอกลิงก์ไปยังคลิปบอร์ด</translation>
-    </message>
-    <message>
-        <source>Added [A]</source>
-        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
-        <translation>เพิ่มเมื่อ [A]</translation>
     </message>
     <message>
         <source>Deleted or moved file</source>
@@ -3709,7 +3699,7 @@ Enter a different name</source>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation>หากคุณไม่ได้รับอีเมลภายใน 1 ชั่วโมง กรุณา[B][A]ติดต่อฝ่ายสนับสนุน[/A][/B]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -3734,7 +3724,7 @@ Enter a different name</source>
     <message>
         <source>Please confirm your password</source>
         <translatorcomment>Confirm password text input title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยืนยันรหัสผ่านของคุณ</translation>
     </message>
     <message>
         <source>Enter your password</source>
@@ -3762,11 +3752,6 @@ Enter a different name</source>
         <translation>กรอกอีเมลให้ถูกต้อง</translation>
     </message>
     <message>
-        <source>Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation>การสำรองข้อมูลของคุณได้รับการตั้งค่าเรียบร้อยแล้ว โดยข้อมูลที่คุณเลือกจะทำการสำรองข้อมูลโดยอัตโนมัติทุกครั้งที่เปิดแอปเดสก์ท็อป คุณสามารถตรวจสอบการสำรองข้อมูลและสถานะการสำรองข้อมูลของคุณได้จากแท็บการสำรองข้อมูลในการตั้งค่า</translation>
-    </message>
-    <message>
         <source>Your backup is set up</source>
         <translatorcomment>Title indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>การสำรองข้อมูลของคุณถูกตั้งค่าเรียบร้อยแล้ว</translation>
@@ -3784,7 +3769,7 @@ Enter a different name</source>
     <message>
         <source>Your sync has been set up</source>
         <translatorcomment>Title indicating that the backup was successfully configured CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การซิงค์ของคุณพร้อมใช้งานแล้ว</translation>
     </message>
     <message>
         <source>First name</source>
@@ -3904,7 +3889,7 @@ Enter a different name</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์ที่เลือกไว้จะสำรองข้อมูลไปยัง MEGA โดยอัตโนมัติเมื่อแอปเดสก์ท็อปทำงานอยู่</translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -3924,7 +3909,7 @@ Enter a different name</source>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ซิงค์โฟลเดอร์เฉพาะในคลาวด์ MEGA ของคุณกับอุปกรณ์ของคุณ</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -3949,7 +3934,7 @@ Enter a different name</source>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ซิงค์อุปกรณ์ของคุณกับ MEGA เพื่อทำให้ไฟล์และโฟลเดอร์ของคุณบนอุปกรณ์และบนคลาวด์ MEGA เหมือนกัน</translation>
     </message>
     <message>
         <source>Choose sync type</source>
@@ -4039,7 +4024,7 @@ Enter a different name</source>
     <message>
         <source>Cancel account</source>
         <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการสร้างบัญชี</translation>
     </message>
     <message>
         <source>Don’t cancel</source>
@@ -4084,7 +4069,7 @@ Enter a different name</source>
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ของคุณบนคอมพิวเตอร์จะอัปเดตไปยัง MEGA โดยอัตโนมัติ หากคุณลบไฟล์สำรองใน MEGA ไฟล์ในคอมพิวเตอร์ของคุณจะไม่ถูกลบ</translation>
     </message>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
@@ -4094,7 +4079,7 @@ Enter a different name</source>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ซิงค์ไฟล์บนคอมพิวเตอร์ของคุณกับ MEGA การเปลี่ยนแปลงใด ๆ ที่คุณทำในไฟล์ใดไฟล์หนึ่งจะปรากฏบนอุปกรณ์อื่น ๆ ของคุณด้วย</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
@@ -4104,7 +4089,7 @@ Enter a different name</source>
     <message>
         <source>Confirm your email and password</source>
         <translatorcomment>Page title for new accounts in login page CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยืนยันอีเมลและรหัสผ่านของคุณ</translation>
     </message>
     <message>
         <source>Once confirmed, your account will be activated.</source>
@@ -4135,6 +4120,11 @@ Enter a different name</source>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>รหัส 2FA ไม่ถูกต้อง</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>การสำรองข้อมูลของคุณได้รับการตั้งค่าเรียบร้อยแล้ว โดยข้อมูลที่คุณเลือกจะทำการสำรองข้อมูลโดยอัตโนมัติทุกครั้งที่เปิดแอปเดสก์ท็อป คุณสามารถตรวจสอบการสำรองข้อมูลและสถานะการสำรองข้อมูลของคุณได้จากแท็บการสำรองข้อมูลในการตั้งค่า</translation>
     </message>
 </context>
 <context>
@@ -5086,7 +5076,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Adding transfers…</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังเพิ่มการถ่ายโอน…</translation>
     </message>
 </context>
 <context>
@@ -5404,7 +5394,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>มีบางโฟลเดอร์ที่ไม่ได้ซิงโครไนซ์ สำหรับข้อมูลเพิ่มเติม กรุณาวางเมาส์เหนือไอคอนคำเตือนสีเหลือง</translation>
+        <translation>บางโฟลเดอร์ไม่ซิงโครไนซ์ กรุณาตรวจสอบข้อมูลเพิ่มเติมโดยวางเมาส์บนไอคอนแจ้งเตือนสีเหลือง</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -5544,7 +5534,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เปิดใช้งานการผนวกรวมเข้ากับ File Explorer</translation>
     </message>
     <message>
         <source>B</source>
@@ -5764,7 +5754,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถปิดใช้งานการซิงค์ “%1” ของคุณได้ สาเหตุ: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5799,7 +5789,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถเปิดใช้งานการสำรองข้อมูล “%1” ของคุณได้ สาเหตุ: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5814,7 +5804,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถปิดใช้งานการสำรองข้อมูล “%1” ของคุณได้ สาเหตุ: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5829,17 +5819,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable sync status icons</source>
         <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เปิดใช้งานไอคอนแสดงสถานะการซิงค์</translation>
     </message>
     <message>
         <source>Enabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังเปิดใช้งานไอคอนแสดงสถานะการซิงค์</translation>
     </message>
     <message>
         <source>Disabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังปิดใช้งานไอคอนแสดงสถานะการซิงค์</translation>
     </message>
 </context>
 <context>
@@ -6188,7 +6178,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
         <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถสำรองข้อมูลโฟลเดอร์ “%1” เนื่องจากเป็นโฟลเดอร์ราก หากต้องการดำเนินการต่อ กรุณาเลือกโฟลเดอร์อื่น</translation>
     </message>
     <message>
         <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
@@ -6213,7 +6203,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This folder is already being synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์นี้กำลังซิงค์อยู่</translation>
     </message>
 </context>
 <context>
@@ -6256,7 +6246,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งานแล้ว เนื่องจาก MEGA ไม่สามารถซิงค์หรือสำรองข้อมูลโฟลเดอร์ VirtualBox ได้</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -6266,17 +6256,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>การซิงค์ “%1” ของคุณได้ถูกปิดใช้งาน โฟลเดอร์ระยะไกล (หรือบางส่วน) ไม่มีสิทธิ์การเข้าถึงแบบเต็มที่</translation>
+        <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งาน คุณไม่มีสิทธิ์เข้าถึงโฟลเดอร์ระยะไกลแบบเต็มที่ได้ (หรือเข้าถึงได้แค่บางส่วน)</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การซิงค์ “%1” ของคุณได้ถูกปิดใช้งาน เนื่องจากโฟลเดอร์บนเครื่องมีการเปลี่ยนแปลง</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งาน สาเหตุ: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
@@ -6286,7 +6276,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การสำรองข้อมูล “%1” ของคุณถูกปิดใช้งาน เนื่องจากโฟลเดอร์ภายในเครื่องไม่สามารถใช้งานได้ หรือคุณไม่มีสิทธิ์อ่านและเขียน</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -6296,7 +6286,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การสำรองข้อมูล “%1” ของคุณถูกปิดใช้งานเนื่องจากโฟลเดอร์ MEGA อยู่ในถังขยะ</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -6306,17 +6296,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การสำรองข้อมูล “%1” ของคุณได้ถูกปิดใช้งาน เนื่องจากโฟลเดอร์บนเครื่องมีการเปลี่ยนแปลง</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การสำรองข้อมูล “%1” ของคุณได้ถูกปิดใช้งาน เนื่องจากโฟลเดอร์ MEGA มีการเปลี่ยนแปลง</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การสำรองข้อมูล “%1” ของคุณถูกปิดใช้งาน สาเหตุ: %2</translation>
     </message>
 </context>
 <context>
@@ -6430,7 +6420,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีโฟลเดอร์ “%1” นี้อยู่</translation>
     </message>
 </context>
 <context>
@@ -7220,7 +7210,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* ราคาในสกุลเงินท้องถิ่นเป็นเพียงการประมาณการเท่านั้น ธุรกรรมที่แสดงทั้งหมดจะถูกเรียกเก็บเงินในสกุลเงินยูโร</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7263,7 +7253,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* ราคาในสกุลเงินท้องถิ่นเป็นเพียงการประมาณการเท่านั้น ประวัติการทำธุรกรรมทั้งหมดจะแสดงเป็นสกุลเงินยูโร</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7294,7 +7284,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เลือกโฟลเดอร์ที่ใช้อัปโหลดไฟล์ของคุณ</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -7332,11 +7322,6 @@ Please delete the folder sync from settings to cancel them.</source>
 </context>
 <context>
     <name>Utilities</name>
-    <message>
-        <source>just now</source>
-        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>เมื่อสักครู่นี้</translation>
-    </message>
     <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
@@ -7381,36 +7366,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro&#xa0;III</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n วินาทีที่แล้ว</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n นาทีที่แล้ว</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n ชั่วโมงที่แล้ว</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n วันที่แล้ว</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n เดือนที่แล้ว</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n ปีที่แล้ว</numerusform></translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -7457,6 +7412,41 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
         <translation><numerusform>ใช้ไปแล้ว %1 (%2%) จาก %3</numerusform></translation>
     </message>
+    <message>
+        <source>Added just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -7489,21 +7479,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
         <translation>ส่งอีเมลอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>Verify your account</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation>ตรวจสอบบัญชีของคุณ</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation>บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิด กรุณาตรวจสอบหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation>ตรวจสอบตอนนี้</translation>
     </message>
     <message>
         <source>Email sent</source>
