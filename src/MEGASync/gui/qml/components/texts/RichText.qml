@@ -40,17 +40,16 @@ Text {
             var closed = false;
             var exit = false;
             var link = "";
-
             var linkCoordsList = [];
-            const verticalLineOffset = 3;  // margin need to detect pixels from the next line that could be a part (still) of the same link.
 
-            const linkCoord = {
+            const linkCoordBluePrint = {
                 x: 0,
                 y: 0,
-                width: 0
+                width: 0,
+                height: fontMetrics.height
             };
 
-            var linkCoords = Object.create(linkCoord);
+            var linkCoords = Object.create(linkCoordBluePrint);
 
             // we are starting with y to allow multiline text.
             for (var y = 0; y < root.height && !exit; ++y) {
@@ -71,20 +70,20 @@ Text {
                         linkCoords.y = y;
                     }
                     else if (currentLink.length > 0 && found && closed && linkCoords.y !== y
-                             && (linkCoords.y + font.pixelSize + verticalLineOffset) < y) // link continues in the next line.
+                             && (linkCoords.y + fontMetrics.lineSpacing) < y) // link continues in the next line.
                     {
-                        linkCoords = new Object;
+                        linkCoords = Object.create(linkCoordBluePrint);
                         linkCoords.x = x;
                         linkCoords.y = y;
 
                         closed = false;
                     }
                     else if (currentLink.length === 0 && found && !closed) {
-                        if (linkCoords.y !== y) { // we detected the lose of link in the next line
-                            linkCoords.width = root.width - linkCoords.x
+                        if (linkCoords.y !== y) { // we detect the lose of link in the next line
+                            linkCoords.width = root.width - linkCoords.x;
                         }
                         else {
-                            linkCoords.width = x - linkCoords.x
+                            linkCoords.width = x - linkCoords.x; // we detect the lose of link in the same line
                         }
 
                         linkCoordsList.push(linkCoords);
@@ -101,16 +100,16 @@ Text {
 
             // if found link on text, make focus border visible
             if(found) {
-                focusRepeater.model = linkCoordsList.length
+                focusRepeater.model = linkCoordsList.length;
 
                 for(var coordsIndex = 0; coordsIndex < linkCoordsList.length; ++coordsIndex) {
                     var coords = linkCoordsList[coordsIndex];
 
                     var focusRect = focusRepeater.itemAt(coordsIndex);
-                    focusRect.x = coords.x-focusMargin;
-                    focusRect.y = coords.y-(focusMargin/2);
+                    focusRect.x = coords.x - focusMargin;
+                    focusRect.y = coords.y - focusMargin / 2; // by convention (design) we are using half of the margin for the top.
                     focusRect.width = coords.width + focusMargin * 2;
-                    focusRect.height = root.font.pixelSize + focusMargin + (focusMargin * (3/5));
+                    focusRect.height = coords.height + focusMargin;
                     focusRect.visible = true;
                 }
             }
@@ -168,6 +167,12 @@ Text {
         if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
             linkActivated("");
         }
+    }
+
+    Qml.FontMetrics {
+        id: fontMetrics
+
+        font: root.font
     }
 
     Qml.Repeater{
