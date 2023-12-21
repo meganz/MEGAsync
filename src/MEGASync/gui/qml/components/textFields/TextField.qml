@@ -8,7 +8,7 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.toolTips 1.0
 
-FocusScope {
+Item {
     id: root
 
     property alias textField: textField
@@ -96,7 +96,7 @@ FocusScope {
         topPadding: sizes.padding
         bottomPadding: sizes.padding
         height: sizes.height + 2 * sizes.focusBorderWidth
-        focus: true
+        focus: root.focus
         selectByMouse: true
         selectionColor: colors.selection
         placeholderTextColor: colors.placeholder
@@ -123,7 +123,7 @@ FocusScope {
             radius: sizes.focusBorderRadius
             color: "transparent"
             border {
-                color: textField.activeFocus ? colors.focus : "transparent"
+                color: root.activeFocus || textField.activeFocus ? colors.focus : "transparent"
                 width: sizes.focusBorderWidth
             }
 
@@ -152,7 +152,7 @@ FocusScope {
                     else if(error) {
                         color = colors.borderError;
                     }
-                    else if(root.focus) {
+                    else if(root.activeFocus || textField.activeFocus) {
                         color = colors.borderFocus;
                     }
                     return color;
