@@ -150,7 +150,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         setWindowFlags(Qt::Window);
         doNotActAsPopup = true; //the first time systray is not available will set this flag to true to disallow popup until restarting
     }
-#else
+#elif defined(_WIN32)
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
+#else // OS X
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 #endif
 
