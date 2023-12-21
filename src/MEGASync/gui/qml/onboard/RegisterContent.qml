@@ -14,7 +14,6 @@ Column {
     readonly property int mainFormLayoutSpacing: 14
     readonly property int nameLayoutSpacing: 8
     readonly property int xPositionPasswordPopup: -335
-    readonly property int yPositionPasswordPopup: -54
 
     property alias firstName: firstNameItem
     property alias lastName: lastNameItem
