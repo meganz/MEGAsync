@@ -2400,7 +2400,8 @@ void MegaApplication::showInfoDialog()
     {
         if(anyModalWindow->windowModality() == Qt::ApplicationModal)
         {
-            // If the InfoDialog has opened any MessageBox (eg. enter your email), those must be closed first (as we are executing from that dialog's message loop!)
+            // If the InfoDialog has opened any MessageBox (eg. enter your email),
+            // those must be closed first (as we are executing from that dialog's message loop!)
             // Bring that dialog to the front for the user to dismiss.s
             DialogOpener::raiseAllDialogs();
             return;
@@ -2409,9 +2410,11 @@ void MegaApplication::showInfoDialog()
 
     if (infoDialog)
     {
-        // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
+        // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%),
+        // lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:
+        // infoDialog may be double size and only showing 1/4 or 1/2
         infoDialog->setWindowFlags(Qt::FramelessWindowHint);
-        infoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     }
 #endif
 
