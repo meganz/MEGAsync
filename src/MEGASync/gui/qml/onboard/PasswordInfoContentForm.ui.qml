@@ -19,7 +19,8 @@ Rectangle {
     property string password: ""
 
     width: 320
-    height: 180
+    height: strengthTitle.height + dividerLine.height
+                + bottomColumn.height + 2 * contentMargin + 2 * contentMargin
     color: Styles.pageBackground
     radius: 8
 
@@ -57,6 +58,9 @@ Rectangle {
             id: bottomColumn
 
             width: parent.width
+            height: upperLine.height + conditionUpperLowerCaseItem.height
+                        + conditionNumberSpecialCharacterItem.height
+                        + 2 * conditionSpacing
             spacing: conditionSpacing
 
             Texts.SecondaryText {
@@ -80,6 +84,7 @@ Rectangle {
             }
 
         }
-    }
+
+    } // Column: mainColumn
 
 }

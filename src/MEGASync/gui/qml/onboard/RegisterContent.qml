@@ -171,7 +171,7 @@ Column {
                 id: passwordInfoPopup
 
                 x: xPositionPasswordPopup
-                y: yPositionPasswordPopup
+                y: -passwordInfoPopup.height / 2 + passwordItem.textField.height + 7
                 password: passwordItem.textField.text
             }
 
