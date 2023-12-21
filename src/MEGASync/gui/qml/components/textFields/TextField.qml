@@ -56,6 +56,10 @@ Item {
     height: textField.height + ((titleItem.text !== "" && titleItem.visible) ? (titleItem.height + textField.anchors.topMargin) : 0) +
             ((hintItem.text !== "" && hintItem.visible) ? hint.height + hint.anchors.topMargin : 0)
 
+    onActiveFocusChanged: {
+        textField.forceActiveFocus();
+    }
+
     Texts.Text {
         id: titleItem
 
@@ -87,7 +91,6 @@ Item {
         anchors.right: parent.right
         anchors.top: titleItem.text.length > 0 ? titleItem.bottom : parent.top
         anchors.topMargin: sizes.titleSpacing
-        focus: root.focus
         selectByMouse: true
         selectionColor: colors.selection
         height: sizes.height + 2 * sizes.focusBorderWidth
