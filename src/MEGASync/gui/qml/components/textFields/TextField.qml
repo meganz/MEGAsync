@@ -57,6 +57,10 @@ Item {
         }
     }
 
+    onActiveFocusChanged: {
+        textField.forceActiveFocus();
+    }
+
     Texts.Text {
         id: titleItem
 
@@ -96,7 +100,6 @@ Item {
         topPadding: sizes.padding
         bottomPadding: sizes.padding
         height: sizes.height + 2 * sizes.focusBorderWidth
-        focus: root.focus
         selectByMouse: true
         selectionColor: colors.selection
         placeholderTextColor: colors.placeholder
