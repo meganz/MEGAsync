@@ -7,7 +7,6 @@
 #include <QAbstractTextDocumentLayout>
 #include <QTextBlock>
 #include <QTextLayout>
-#include <QLayout>
 
 #include <Utilities.h>
 
