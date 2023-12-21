@@ -72,7 +72,7 @@ Text {
                     else if (currentLink.length > 0 && found && closed && linkCoords.y !== y
                              && (linkCoords.y + fontMetrics.lineSpacing) < y) // link continues in the next line.
                     {
-                        linkCoords = Object.create(linkCoord);
+                        linkCoords = Object.create(linkCoordBluePrint);
                         linkCoords.x = x;
                         linkCoords.y = y;
 
@@ -80,10 +80,10 @@ Text {
                     }
                     else if (currentLink.length === 0 && found && !closed) {
                         if (linkCoords.y !== y) { // we detect the lose of link in the next line
-                            linkCoords.width = root.width - linkCoords.x
+                            linkCoords.width = root.width - linkCoords.x;
                         }
                         else {
-                            linkCoords.width = x - linkCoords.x // we detect the lose of link in the same line
+                            linkCoords.width = x - linkCoords.x; // we detect the lose of link in the same line
                         }
 
                         linkCoordsList.push(linkCoords);
@@ -100,7 +100,7 @@ Text {
 
             // if found link on text, make focus border visible
             if(found) {
-                focusRepeater.model = linkCoordsList.length
+                focusRepeater.model = linkCoordsList.length;
 
                 for(var coordsIndex = 0; coordsIndex < linkCoordsList.length; ++coordsIndex) {
                     var coords = linkCoordsList[coordsIndex];
