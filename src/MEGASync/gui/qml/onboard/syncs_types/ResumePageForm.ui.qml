@@ -94,7 +94,7 @@ SyncsPage {
 
         Texts.Text {
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 15
+            Layout.topMargin: 8
             text: OnboardingStrings.finalStepQuestion
             font.pixelSize: Texts.Text.Size.MediumLarge
             font.weight: Font.DemiBold
@@ -102,7 +102,7 @@ SyncsPage {
 
         Rectangle {
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 15
+            Layout.topMargin: 8
             color: "transparent"
 
             ButtonGroup {
@@ -124,7 +124,6 @@ SyncsPage {
                     ButtonGroup.group: buttonGroupItem
                     checkable: false
                     width: (parent.width - parent.spacing) / 2
-                    height: 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)
@@ -146,15 +145,12 @@ SyncsPage {
                     width: !syncButtonItem.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
-                    height: !syncButtonItem.visible
-                            ? 155
-                            : 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     imageSourceSize: Qt.size(32, 32)
                     contentMargin: 24
                     contentSpacing: 8
-                    useMaxSiblingHeight: true
+                    useMaxSiblingHeight: syncButtonItem.visible
                 }
             }
         }
