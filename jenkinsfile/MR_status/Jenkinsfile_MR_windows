@@ -207,7 +207,7 @@ pipeline {
                                         ${JF_PATH}\\jf rt upload MEGAupdater.pdb ${ART_UPLOAD_PATH}
                                         ${JF_PATH}\\jf rt upload legacy.pdb ${ART_UPLOAD_PATH}
                                     """
-                                }
+                                }//
                                 if (env.ARCHITECTURE == "64") {
                                     windows_artifactory_upload("MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows/built64/", "built64", "64")
                                 } else if (env.ARCHITECTURE == "32/64") {
