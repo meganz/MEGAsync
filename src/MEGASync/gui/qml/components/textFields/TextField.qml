@@ -124,7 +124,7 @@ FocusScope {
             radius: sizes.focusBorderRadius
             color: "transparent"
             border {
-                color: root.activeFocus || textField.activeFocus ? colors.focus : "transparent"
+                color: textField.activeFocus ? colors.focus : "transparent"
                 width: sizes.focusBorderWidth
             }
 
@@ -153,7 +153,7 @@ FocusScope {
                     else if(error) {
                         color = colors.borderError;
                     }
-                    else if(root.activeFocus || textField.activeFocus) {
+                    else if(textField.activeFocus) {
                         color = colors.borderFocus;
                     }
                     return color;
