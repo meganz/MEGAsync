@@ -20,7 +20,6 @@ ColumnLayout {
         id: title
 
         Layout.fillWidth: true
-        Layout.preferredHeight: 30
         font.pixelSize: Texts.Text.Size.Large
         font.weight: Font.DemiBold
     }
@@ -29,7 +28,6 @@ ColumnLayout {
         id: description
 
         Layout.fillWidth: true
-        Layout.preferredHeight: 20
         font.pixelSize: Texts.Text.Size.Medium
         wrapMode: Text.WordWrap
     }
