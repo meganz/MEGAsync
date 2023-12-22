@@ -55,7 +55,7 @@ Item {
     function getAccountTypeText() {
         switch(AccountInfoData.type) {
             case AccountInfoData.ACCOUNT_TYPE_FREE:
-                return accountTypeLite;
+                return accountTypeFree;
             case AccountInfoData.ACCOUNT_TYPE_PROI:
                 return accountTypeProI;
             case AccountInfoData.ACCOUNT_TYPE_PROII:
