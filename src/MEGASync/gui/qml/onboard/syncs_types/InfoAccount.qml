@@ -96,8 +96,8 @@ Item {
                 id: leftLayout
 
                 Layout.alignment: Qt.AlignLeft
-                Layout.leftMargin: 24
-                spacing: 8
+                Layout.leftMargin: 20
+                spacing: 7
 
                 SvgImage {
                     id: typeImage
@@ -123,7 +123,7 @@ Item {
                 id: rightLayout
 
                 Layout.alignment: Qt.AlignRight
-                Layout.rightMargin: 24
+                Layout.rightMargin: 18
                 visible: AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_BUSINESS
                          && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI
                          && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
