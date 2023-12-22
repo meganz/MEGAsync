@@ -14,7 +14,6 @@ Column {
     readonly property int mainFormLayoutSpacing: 14
     readonly property int nameLayoutSpacing: 8
     readonly property int xPositionPasswordPopup: -335
-    readonly property int yPositionPasswordPopup: -54
 
     property alias firstName: firstNameItem
     property alias lastName: lastNameItem
@@ -138,8 +137,8 @@ Column {
             title: OnboardingStrings.password
             cleanWhenError: false
 
-            textField.onFocusChanged: {
-                if (textField.focus) {
+            textField.onActiveFocusChanged: {
+                if (textField.activeFocus) {
                     passwordInfoPopup.open();
                     hint.visible = false;
                 }
@@ -171,7 +170,7 @@ Column {
                 id: passwordInfoPopup
 
                 x: xPositionPasswordPopup
-                y: yPositionPasswordPopup
+                y: -passwordInfoPopup.height / 2 + passwordItem.textField.height + 7
                 password: passwordItem.textField.text
             }
 
