@@ -3703,7 +3703,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dacă nu primiți e-mailul în decurs de o oră, verificați folderul dvs. de spam. Dacă încă nu o găsești, [B][A]contactați asistență[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -4078,7 +4078,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizați folderele selectate între calculatoarele dvs. cu MEGA; orice modificare dintr-o parte se va aplica pe cealaltă parte.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -7213,7 +7213,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Preț estimat în moneda locală. Contul dvs. va fi facturat în euro pentru toate tranzacțiile.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7256,7 +7256,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Preț estimat în moneda locală. Contul dvs. va fi facturat în euro pentru toate tranzacțiile.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7418,37 +7418,37 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Added just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Articol tocmai finalizat</translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Articol finalizat %n a doua în urmă</numerusform><numerusform>Articol finalizat %n cu câteva secunde în urmă</numerusform><numerusform>Articol finalizat %n cu câteva secunde în urmă</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Articol finalizat %n un minut în urmă</numerusform><numerusform>Articol finalizat %n minute în urmă</numerusform><numerusform>Articol finalizat %n minute în urmă</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Articol finalizat %n o oră în urmă</numerusform><numerusform>Articol finalizat %n ore în urmă</numerusform><numerusform>Articol finalizat %n ore în urmă</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Articol finalizat %n o zi în urmă</numerusform><numerusform>Articol finalizat %n zile în urmă</numerusform><numerusform>Articol finalizat %n zile în urmă</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Articol finalizat %n luna în urmă</numerusform><numerusform>Articol finalizat %n luni în urmă</numerusform><numerusform>Articol finalizat %n luni în urmă</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Articol finalizat %n un an în urmă</numerusform><numerusform>Articol finalizat %n ani în urmă</numerusform><numerusform>Articol finalizat %n ani în urmă</numerusform></translation>
     </message>
 </context>
 <context>

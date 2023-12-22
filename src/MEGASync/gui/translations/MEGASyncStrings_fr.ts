@@ -3705,7 +3705,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Si vous ne recevez pas le courriel d’ici une heure, vérifiez votre dossier Pourriel ou Indésirables. Si vous ne le trouvez toujours pas, [B][A]contactez l’assistance[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -4080,7 +4080,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Synchronisez des dossiers sélectionnés entre vos ordinateurs et MEGA ; tout changement d’un côté se reflétera sur l’autre.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -7215,7 +7215,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Prix estimatif dans votre monnaie locale. Pour toutes les transactions, votre compte sera facturé en euros.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7258,7 +7258,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Prix estimatif dans votre monnaie locale. Pour toutes les transactions, votre compte sera facturé en euros.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7420,37 +7420,37 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Added just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>L’élément vient d’être transféré</translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L’élément a été transféré il y a %n&#xa0;seconde</numerusform><numerusform>L’élément a été transféré il y a %n de secondes</numerusform><numerusform>L’élément a été transféré il y a %n&#xa0;secondes</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L’élément a été transféré il y a %n&#xa0;minute</numerusform><numerusform>L’élément a été transféré il y a %n de minutes</numerusform><numerusform>L’élément a été transféré il y a %n&#xa0;minutes</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L’élément a été transféré il y a %n&#xa0;heure</numerusform><numerusform>L’élément a été transféré il y a %n d’heures</numerusform><numerusform>L’élément a été transféré il y a %n&#xa0;heures</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L’élément a été transféré il y a %n&#xa0;jour</numerusform><numerusform>L’élément a été transféré il y a %n de jours</numerusform><numerusform>L’élément a été transféré il y a %n&#xa0;jours</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L’élément a été transféré il y a %n&#xa0;mois</numerusform><numerusform>L’élément a été transféré il y a %n de mois</numerusform><numerusform>L’élément a été transféré il y a %n&#xa0;mois</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L’élément a été transféré il y a %n&#xa0;an</numerusform><numerusform>L’élément a été transféré il y a %n d’années</numerusform><numerusform>L’élément a été transféré il y a %n&#xa0;ans</numerusform></translation>
     </message>
 </context>
 <context>
