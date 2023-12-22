@@ -89,6 +89,7 @@ SyncsPage {
                 pixelSize: Texts.Text.Size.LARGE
                 weight: Font.Bold
             }
+            wrapMode: Text.Wrap
         }
 
         Texts.Text {
@@ -98,13 +99,14 @@ SyncsPage {
             Layout.topMargin: 8
             text: description
             font.pixelSize: Texts.Text.Size.MEDIUM
+            wrapMode: Text.Wrap
         }
 
         Texts.Text {
             id: finalStepQuestionText
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 36
+            Layout.topMargin: 15
             text: OnboardingStrings.finalStepQuestion
             font {
                 pixelSize: Texts.Text.Size.MEDIUM_LARGE
@@ -116,7 +118,7 @@ SyncsPage {
             id: buttons
 
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 24
+            Layout.topMargin: 15
 
             ButtonGroup {
                 id: buttonGroupItem
