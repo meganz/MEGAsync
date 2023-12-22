@@ -94,7 +94,7 @@ SyncsPage {
 
         Texts.Text {
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
+            Layout.topMargin: 24
             text: OnboardingStrings.finalStepQuestion
             font.pixelSize: Texts.Text.Size.MediumLarge
             font.weight: Font.DemiBold
@@ -102,7 +102,7 @@ SyncsPage {
 
         Rectangle {
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 8
+            Layout.topMargin: 24
             color: "transparent"
 
             ButtonGroup {
