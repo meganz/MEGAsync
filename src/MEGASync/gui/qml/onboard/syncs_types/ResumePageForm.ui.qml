@@ -79,6 +79,7 @@ SyncsPage {
             text: title
             font.pixelSize: Texts.Text.Size.Large
             font.weight: Font.Bold
+            wrapMode: Text.Wrap
         }
 
         Texts.Text {
@@ -88,11 +89,12 @@ SyncsPage {
             Layout.topMargin: 8
             text: description
             font.pixelSize: Texts.Text.Size.Medium
+            wrapMode: Text.Wrap
         }
 
         Texts.Text {
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 36
+            Layout.topMargin: 15
             text: OnboardingStrings.finalStepQuestion
             font.pixelSize: Texts.Text.Size.MediumLarge
             font.weight: Font.DemiBold
@@ -100,7 +102,7 @@ SyncsPage {
 
         Rectangle {
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 24
+            Layout.topMargin: 15
             color: "transparent"
 
             ButtonGroup {
