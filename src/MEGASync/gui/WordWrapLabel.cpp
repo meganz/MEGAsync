@@ -141,7 +141,11 @@ void WordWrapLabel::onAdaptHeight(bool parentConstrained)
                 textLayout = nullptr;
 
                 QTextBrowser::setText(elidedText);
-                setToolTip(mText);
+
+                if(elidedText != mText)
+                {
+                    setToolTip(mText);
+                }
 
                 break;
             }
