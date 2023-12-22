@@ -3701,7 +3701,7 @@ Enter a different name</source>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>如果您在1小时内没有收到电子邮件，请检查您的垃圾邮件文件夹。如果您仍然找不到它，[B][A]请联系支持客服[/A][/B]。</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -4076,7 +4076,7 @@ Enter a different name</source>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>在您的计算机与MEGA之间同步所选择的文件夹，一边的任何更改都将应用于另一边。</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -7212,7 +7212,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>*本地货币估算价格仅供参考。您帐户的所有交易将依欧元结算。</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7255,7 +7255,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>*本地货币估算价格仅供参考。您帐户的所有交易将依欧元结算。</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7417,37 +7417,37 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Added just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>项目刚刚完成</translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>项目于%n秒前完成</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>项目于%n分钟前完成</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>项目于%n小时前完成</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>项目于%n天前完成</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>项目于%n个月前完成</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>项目于%n年前完成</numerusform></translation>
     </message>
 </context>
 <context>

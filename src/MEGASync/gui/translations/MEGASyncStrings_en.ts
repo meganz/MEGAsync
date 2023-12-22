@@ -7423,32 +7423,32 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Item added %n second ago</numerusform><numerusform>Item completed %n seconds ago</numerusform></translation>
+        <translation><numerusform>Item completed %n second ago</numerusform><numerusform>Item completed %n seconds ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Item added %n minute ago</numerusform><numerusform>Item completed %n minutes ago</numerusform></translation>
+        <translation><numerusform>Item completed %n minute ago</numerusform><numerusform>Item completed %n minutes ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Item added %n hour ago</numerusform><numerusform>Item completed %n hours ago</numerusform></translation>
+        <translation><numerusform>Item completed %n hour ago</numerusform><numerusform>Item completed %n hours ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Item added %n day ago</numerusform><numerusform>Item completed %n days ago</numerusform></translation>
+        <translation><numerusform>Item completed %n day ago</numerusform><numerusform>Item completed %n days ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Item added %n month ago</numerusform><numerusform>Item completed %n months ago</numerusform></translation>
+        <translation><numerusform>Item completed %n month ago</numerusform><numerusform>Item completed %n months ago</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Item added %n year ago</numerusform><numerusform>Item completed %n years ago</numerusform></translation>
+        <translation><numerusform>Item completed %n year ago</numerusform><numerusform>Item completed %n years ago</numerusform></translation>
     </message>
 </context>
 <context>

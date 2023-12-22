@@ -3701,7 +3701,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jika anda tidak menerima email dalam waktu 1 jam, periksa folder spam anda. Jika anda masih tidak dapat menemukannya, [B][A]hubungi bantuan[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -4076,7 +4076,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronkan folder yang dipilih antara komputer anda dengan MEGA; setiap perubahan dari satu sisi akan berlaku ke sisi lain.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -7213,7 +7213,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Perkiraan harga dalam mata uang lokal anda. Akun anda akan ditagih dalam euro untuk semua transaksi.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7256,7 +7256,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Perkiraan harga dalam mata uang lokal anda. Akun anda akan ditagih dalam euro untuk semua transaksi.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7418,37 +7418,37 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Added just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item baru saja selesai</translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Item selesai %n detik yang lalu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Item selesai %n menit yang lalu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Item selesai %n jam yang lalu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Item selesai %n hari yang lalu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Item selesai %n bulan lalu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Item selesai %n tahun lalu</numerusform></translation>
     </message>
 </context>
 <context>

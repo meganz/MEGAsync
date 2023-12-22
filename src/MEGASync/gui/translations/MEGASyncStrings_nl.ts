@@ -3703,7 +3703,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Als u de e-mail niet binnen 1 uur ontvangt, controleer dan uw spammap. Als u de e-mail nog steeds niet kunt vinden, neemt u [B][A]contact op met ondersteuning[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -4078,7 +4078,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Synchroniseer geselecteerde mappen tussen uw computers met MEGA; elke verandering aan de ene kant zal toegepast worden op de andere kant.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -7214,7 +7214,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Geschatte prijs in uw lokale valuta. Uw account wordt gefactureerd in euro’s voor alle transacties.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7257,7 +7257,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Geschatte prijs in uw lokale valuta. Uw account wordt gefactureerd in euro’s voor alle transacties.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7419,37 +7419,37 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Added just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item zojuist voltooid</translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Item %n seconde geleden voltooid</numerusform><numerusform>Item %n seconden geleden voltooid</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Item %n minuut geleden voltooid</numerusform><numerusform>Item %n minuten geleden voltooid</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Item %n uur geleden voltooid</numerusform><numerusform>Item %n uur geleden voltooid</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Item %n dag geleden voltooid</numerusform><numerusform>Item %n dagen geleden voltooid</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Item %n maand geleden voltooid</numerusform><numerusform>Item %n maanden geleden voltooid</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Item %n jaar geleden voltooid</numerusform><numerusform>Item %n jaar geleden voltooid</numerusform></translation>
     </message>
 </context>
 <context>

@@ -3704,7 +3704,7 @@ Enter a different name</source>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Если вы не получили письмо в течение часа, проверьте папку со спамом. Если вы по-прежнему не можете его найти, [B][A]обратитесь в поддержку[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -4079,7 +4079,7 @@ Enter a different name</source>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Синхронизируйте выбранные папки между своими компьютерами и MEGA. Любые изменения на одной стороне будут применены к другой.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -7215,7 +7215,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Ориентировочная цена в вашей местной валюте. Счета за все транзакции будут выставляться в евро.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7258,7 +7258,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Ориентировочная цена в вашей местной валюте. Счета за все транзакции будут выставляться в евро.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7420,37 +7420,37 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Added just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Передача завершена только что</translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Передача завершена %n секунду назад</numerusform><numerusform>Передача завершена %n секунды назад</numerusform><numerusform>Передача завершена %n секунд назад</numerusform><numerusform>Передача завершена %n секунды назад</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Передача завершена %n минуту назад</numerusform><numerusform>Передача завершена %n минуты назад</numerusform><numerusform>Передача завершена %n минут назад</numerusform><numerusform>Передача завершена %n минуты назад</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Передача завершена %n час назад</numerusform><numerusform>Передача завершена %n часа назад</numerusform><numerusform>Передача завершена %n часов назад</numerusform><numerusform>Передача завершена %n часа назад</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Передача завершена %n день назад</numerusform><numerusform>Передача завершена %n дня назад</numerusform><numerusform>Передача завершена %n дней назад</numerusform><numerusform>Передача завершена %n дня назад</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Передача завершена %n месяц назад</numerusform><numerusform>Передача завершена %n месяца назад</numerusform><numerusform>Передача завершена %n месяцев назад</numerusform><numerusform>Передача завершена %n месяца назад</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Передача завершена %n год назад</numerusform><numerusform>Передача завершена %n года назад</numerusform><numerusform>Передача завершена %n лет назад</numerusform><numerusform>Передача завершена %n года назад</numerusform></translation>
     </message>
 </context>
 <context>
