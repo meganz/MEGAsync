@@ -71,17 +71,6 @@ void AddExclusionDialog::on_bChoose_clicked()
 #endif
 }
 
-#ifndef __APPLE__
-void AddExclusionDialog::on_bChooseFile_clicked()
-{
-    auto processResult = [this](const QStringList& selection){
-        addItem(selection);
-    };
-
-    Platform::getInstance()->fileSelector(tr("Select the file you want to exclude"), mSyncLocalFolder, false, this, processResult);
-}
-#endif
-
 void AddExclusionDialog::addItem(const QStringList& selection)
 {
     if (!selection.isEmpty())
