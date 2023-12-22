@@ -8,7 +8,7 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.toolTips 1.0
 
-Item {
+FocusScope {
     id: root
 
     // Alias
@@ -56,10 +56,6 @@ Item {
     height: textField.height + ((titleItem.text !== "" && titleItem.visible) ? (titleItem.height + textField.anchors.topMargin) : 0) +
             ((hintItem.text !== "" && hintItem.visible) ? hint.height + hint.anchors.topMargin : 0)
 
-    onActiveFocusChanged: {
-        textField.forceActiveFocus();
-    }
-
     Texts.Text {
         id: titleItem
 
@@ -93,6 +89,7 @@ Item {
         anchors.topMargin: sizes.titleSpacing
         selectByMouse: true
         selectionColor: colors.selection
+        focus: true
         height: sizes.height + 2 * sizes.focusBorderWidth
         leftPadding: calculatePaddingWithIcon(leftIconSource != "")
         rightPadding: calculatePaddingWithIcon(rightIconSource != "")
