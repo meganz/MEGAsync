@@ -168,7 +168,7 @@ pipeline {
         stage('Build windows installers'){
             when {
                 beforeAgent true
-                expression { env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase.startsWith('trigger package windows')  }
+                expression { env.gitlabTriggerPhrase != null && (env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase.startsWith('trigger package windows'))  }
             }
             stages{
                 stage('Build windows installers'){
@@ -177,7 +177,6 @@ pipeline {
                     }
                     environment{
                         MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty_prev"
-                        //QT path is automatically changed to x86 with nsis when needed
                         MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
                         MEGA_THIRD_PARTY_DLL_DIR = "bin"
                     }
@@ -207,7 +206,7 @@ pipeline {
                                         ${JF_PATH}\\jf rt upload MEGAupdater.pdb ${ART_UPLOAD_PATH}
                                         ${JF_PATH}\\jf rt upload legacy.pdb ${ART_UPLOAD_PATH}
                                     """
-                                }//
+                                }
                                 if (env.ARCHITECTURE == "64") {
                                     windows_artifactory_upload("MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows/built64/", "built64", "64")
                                 } else if (env.ARCHITECTURE == "32/64") {

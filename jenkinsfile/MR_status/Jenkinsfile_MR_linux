@@ -158,7 +158,7 @@ pipeline {
         stage('Checkout and build packages'){
             when {
                 beforeAgent true
-                expression { env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase.startsWith('trigger package linux')  }
+                expression { env.gitlabTriggerPhrase != null && (env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase.startsWith('trigger package linux'))  }
             }
             agent { label 'docker && ci-debian-11-64-2' }
             stages{
