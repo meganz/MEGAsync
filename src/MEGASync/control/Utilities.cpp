@@ -1591,7 +1591,7 @@ TimeInterval::TimeInterval(long long secs, bool secondPrecision)
 }
 
 //Create Folders
-std::shared_ptr<MegaNode> CreateDirectory::createFolder(MegaNode* parentNode, const QString &folderName)
+std::shared_ptr<MegaNode> PathCreator::createFolder(MegaNode* parentNode, const QString &folderName)
 {
     std::shared_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getChildNode(parentNode, folderName.toUtf8().constData()));
     if(!node)
@@ -1614,7 +1614,7 @@ std::shared_ptr<MegaNode> CreateDirectory::createFolder(MegaNode* parentNode, co
 }
 
 
-std::shared_ptr<MegaNode> CreateDirectory::mkDir(const QString& root, const QString &path)
+std::shared_ptr<MegaNode> PathCreator::mkDir(const QString& root, const QString &path)
 {
     std::shared_ptr<MegaNode> nodeCreated(root.isEmpty() ? MegaSyncApp->getMegaApi()->getRootNode() :
                                            MegaSyncApp->getMegaApi()->getNodeByPath(root.toUtf8().constData()));

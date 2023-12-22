@@ -502,10 +502,10 @@ private:
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
 
 //This class is used to create complex paths in MEGA
-class CreateDirectory : public QObject
+class PathCreator : public QObject
 {
 public:
-    CreateDirectory() = default;
+    PathCreator() = default;
     std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path);
 
 private:

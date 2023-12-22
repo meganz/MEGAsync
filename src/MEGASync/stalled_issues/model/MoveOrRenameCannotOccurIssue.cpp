@@ -159,7 +159,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                 std::unique_ptr<mega::MegaNode> newParent(MegaSyncApp->getMegaApi()->getNodeByHandle(mPathToSolve.previousHandle));
                 if(!newParent)
                 {
-                    CreateDirectory dirCreator;
+                    PathCreator dirCreator;
                     dirCreator.mkDir(QString(), mPathToSolve.previousPath);
                 }
                 MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(), newParent.get());
