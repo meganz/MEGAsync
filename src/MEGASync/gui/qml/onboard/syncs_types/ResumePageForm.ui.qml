@@ -106,7 +106,7 @@ SyncsPage {
             id: finalStepQuestionText
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 15
+            Layout.topMargin: 8
             text: OnboardingStrings.finalStepQuestion
             font {
                 pixelSize: Texts.Text.Size.MEDIUM_LARGE
@@ -118,7 +118,7 @@ SyncsPage {
             id: buttons
 
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 15
+            Layout.topMargin: 8
 
             ButtonGroup {
                 id: buttonGroupItem
@@ -138,7 +138,6 @@ SyncsPage {
                     id: syncButtonItem
 
                     width: (parent.width - parent.spacing) / 2
-                    height: 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     contentMargin: 24
@@ -159,9 +158,6 @@ SyncsPage {
                     width: !syncButtonItem.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
-                    height: !syncButtonItem.visible
-                            ? 155
-                            : 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     contentMargin: 24
@@ -172,7 +168,7 @@ SyncsPage {
                     imageSource: Images.installationTypeBackups
                     type: SyncsType.Types.BACKUP
                     checkable: false
-                    useMaxSiblingHeight: true
+                    useMaxSiblingHeight: syncButtonItem.visible
                     ButtonGroup.group: buttonGroupItem
                 }
 
