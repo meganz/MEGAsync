@@ -171,8 +171,9 @@ pipeline {
         stage('Build macOS packages'){
             when {
                 beforeAgent true
-                expression { env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase.startsWith('trigger package macos')  }
+                expression { env.gitlabTriggerPhrase != null && (env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase.startsWith('trigger package macos'))  }
             }
+
             stages{
                 stage('Build macos packages'){
                     options {
