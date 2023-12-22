@@ -1145,7 +1145,7 @@
     <message>
         <source>MEGA Imports</source>
         <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA imports</translation>
     </message>
 </context>
 <context>
@@ -1245,7 +1245,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>New contact with [A] has been established</translation>
+        <translation>New contact [A] has been added</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -3798,7 +3798,7 @@ Enter a different name.</translation>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation>If you don’t receive the email within 1 hour, please [B][A]contact support[/A][/B].</translation>
+        <translation>If you don’t receive the email within 1 hour, check your spam folder. If you still can’t find it, [B][A]contact support[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -4168,12 +4168,12 @@ Enter a different name.</translation>
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
-        <translation>Automatically update your files from your computers to MEGA. Backup items in MEGA can’t be modified or deleted from MEGA.</translation>
+        <translation>Automatically update your files from your computers to MEGA. If you choose to delete your backups in MEGA, your local files won’t be removed.</translation>
     </message>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation>Sync selected folders between your computer with MEGA; any change from one side will apply to another side.</translation>
+        <translation>Sync selected folders between your computers with MEGA; any change from one side will apply to the other side.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -5505,7 +5505,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>Some folders have not synchronised. For more information please hover over the yellow warning icon.</translation>
+        <translation>Some folders were not synchronised. For more information, please hover over the yellow warning icon.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -6379,7 +6379,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Your sync “%1” has been disabled. The remote folder (or part of it) doesn’t have full access</translation>
+        <translation>Your sync “%1” has been disabled. You don’t have full access to the remote folder (or part of it).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -6399,7 +6399,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation>Your backup “%1” has been disabled because the local folder is unavailable or you don’t have read and write permissions.</translation>
+        <translation>Your backup “%1” has been disabled because the local folder is not available or you don’t have read and write permissions.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -6419,7 +6419,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>Your backup “%1” has been disabled because the local folder has changed</translation>
+        <translation>Your backup “%1” has been disabled because the local folder has changed.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
@@ -7372,7 +7372,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* The local currency price is an estimate only. All transactions shown charged in Euros.</translation>
+        <translation>* Estimated price in your local currency. Your account will be billed in euros for all transactions.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7415,7 +7415,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* The local currency price is an estimate only. All transactions shown charged in Euros.</translation>
+        <translation>* Estimated price in your local currency. Your account will be billed in euros for all transactions.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7583,54 +7583,54 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Added just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item just completed</translation>
     </message>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Added %n second ago</numerusform>
-            <numerusform>Added %n seconds ago</numerusform>
+        <translation>
+            <numerusform>Item added %n second ago</numerusform>
+            <numerusform>Item completed %n seconds ago</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Added %n minute ago</numerusform>
-            <numerusform>Added %n minutes ago</numerusform>
+        <translation>
+            <numerusform>Item added %n minute ago</numerusform>
+            <numerusform>Item completed %n minutes ago</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Added %n hour ago</numerusform>
-            <numerusform>Added %n hours ago</numerusform>
+        <translation>
+            <numerusform>Item added %n hour ago</numerusform>
+            <numerusform>Item completed %n hours ago</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Added %n day ago</numerusform>
-            <numerusform>Added %n days ago</numerusform>
+        <translation>
+            <numerusform>Item added %n day ago</numerusform>
+            <numerusform>Item completed %n days ago</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Added %n month ago</numerusform>
-            <numerusform>Added %n months ago</numerusform>
+        <translation>
+            <numerusform>Item added %n month ago</numerusform>
+            <numerusform>Item completed %n months ago</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Added %n year ago</numerusform>
-            <numerusform>Added %n years ago</numerusform>
+        <translation>
+            <numerusform>Item added %n year ago</numerusform>
+            <numerusform>Item completed %n years ago</numerusform>
         </translation>
     </message>
 </context>
