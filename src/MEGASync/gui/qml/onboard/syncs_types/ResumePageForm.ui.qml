@@ -106,7 +106,7 @@ SyncsPage {
             id: finalStepQuestionText
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
+            Layout.topMargin: 24
             text: OnboardingStrings.finalStepQuestion
             font {
                 pixelSize: Texts.Text.Size.MEDIUM_LARGE
@@ -118,7 +118,7 @@ SyncsPage {
             id: buttons
 
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 8
+            Layout.topMargin: 24
 
             ButtonGroup {
                 id: buttonGroupItem
