@@ -87,9 +87,9 @@ FocusScope {
         anchors.right: parent.right
         anchors.top: titleItem.text.length > 0 ? titleItem.bottom : parent.top
         anchors.topMargin: sizes.titleSpacing
-        focus: true
         selectByMouse: true
         selectionColor: colors.selection
+        focus: true
         height: sizes.height + 2 * sizes.focusBorderWidth
         leftPadding: calculatePaddingWithIcon(leftIconSource != "")
         rightPadding: calculatePaddingWithIcon(rightIconSource != "")
@@ -111,7 +111,9 @@ FocusScope {
             id: focusBorder
 
             color: "transparent"
-            border.color: textField.activeFocus ? colors.focus : "transparent"
+            border.color: textField.activeFocus
+                          ? colors.focus
+                          : "transparent"
             border.width: sizes.focusBorderWidth
             radius: sizes.focusBorderRadius
 
@@ -142,7 +144,7 @@ FocusScope {
                         color = colors.borderDisabled;
                     } else if(error) {
                         color = colors.borderError;
-                    } else if(root.focus) {
+                    } else if(textField.activeFocus) {
                         color = colors.borderFocus;
                     }
                     return color;
