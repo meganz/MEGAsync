@@ -137,8 +137,8 @@ Column {
             title: OnboardingStrings.password
             cleanWhenError: false
 
-            textField.onFocusChanged: {
-                if (textField.focus) {
+            textField.onActiveFocusChanged: {
+                if (textField.activeFocus) {
                     passwordInfoPopup.open();
                     hint.visible = false;
                 }

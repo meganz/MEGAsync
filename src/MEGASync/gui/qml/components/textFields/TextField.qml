@@ -8,7 +8,7 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.toolTips 1.0
 
-Item {
+FocusScope {
     id: root
 
     property alias textField: textField
@@ -57,10 +57,6 @@ Item {
         }
     }
 
-    onActiveFocusChanged: {
-        textField.forceActiveFocus();
-    }
-
     Texts.Text {
         id: titleItem
 
@@ -95,13 +91,15 @@ Item {
             top: titleItem.text.length > 0 ? titleItem.bottom : parent.top
             topMargin: sizes.titleSpacing
         }
+
+        selectByMouse: true
+        selectionColor: colors.selection
+        focus: true
+        height: sizes.height + 2 * sizes.focusBorderWidth
         leftPadding: calculatePaddingWithIcon(leftIconSource != "")
         rightPadding: calculatePaddingWithIcon(rightIconSource != "")
         topPadding: sizes.padding
         bottomPadding: sizes.padding
-        height: sizes.height + 2 * sizes.focusBorderWidth
-        selectByMouse: true
-        selectionColor: colors.selection
         placeholderTextColor: colors.placeholder
         color: enabled ? colors.text : colors.textDisabled
         font {
