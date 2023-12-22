@@ -1105,6 +1105,11 @@
         <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
         <translation>Download MEGA</translation>
     </message>
+    <message>
+        <source>MEGA Imports</source>
+        <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
+        <translation>Import di MEGA</translation>
+    </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
@@ -1203,7 +1208,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>Un nuovo contatto con [A] è stato stabilito</translation>
+        <translation>Il nuovo contatto [A] è stato aggiunto</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1718,11 +1723,6 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
         <translation>Account temporaneamente bloccato</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked due to a potential breach of our [A]Terms of Service[/A]. To unlock your account, verify your phone number.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
         <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
         <translation>Il tuo account è stato temporaneamente bloccato per la tua sicurezza. Questo è avvenuto a causa di una potenziale violazione dei dati. Per sbloccare il tuo account, segui i passaggi contenuti nella email che ti abbiamo inviato.</translation>
@@ -1736,11 +1736,6 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
         <translation>Effettua il logout</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button text to verify the account CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Setting up your account…</source>
@@ -2167,11 +2162,6 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy link</translatorcomment>
         <translation>Copia link negli appunti</translation>
-    </message>
-    <message>
-        <source>Added [A]</source>
-        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
-        <translation>Aggiunto [A]</translation>
     </message>
     <message>
         <source>Deleted or moved file</source>
@@ -3711,12 +3701,12 @@ Inserisci un nome differente.</translation>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation>Se non ricevi l&#8217;e-mail entro 1 ora, per favore [B][A]contatta l&#8217;assistenza[/A][/B].</translation>
+        <translation>Se non hai ricevuto l’email entro 1 ora, controlla la tua cartella Spam. Se non riesci a trovarla, [B][A]contatta il supporto[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
         <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation>Se hai digitato male il tuo indirizzo email, [B][A]cambialo qui[/A][/B].</translation>
+        <translation>Se hai scritto male il tuo indirizzo email, [B][A]cambialo qui[/A][/B].</translation>
     </message>
     <message>
         <source>Confirm password</source>
@@ -3764,11 +3754,6 @@ Inserisci un nome differente.</translation>
         <translation>Inserisci un indirizzo email valido</translation>
     </message>
     <message>
-        <source>Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation>Il backup è stato configurato e i dati selezionati verranno automaticamente salvati ogni volta che l&#8217;app desktop è in esecuzione. Puoi visualizzare i tuoi backup e il loro stato nella scheda Backup in Impostazioni.</translation>
-    </message>
-    <message>
         <source>Your backup is set up</source>
         <translatorcomment>Title indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>Il backup è configurato</translation>
@@ -3781,7 +3766,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
         <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
-        <translation>La sincronizzazione è stata configurata e sincronizzerà automaticamente i dati selezionati ogni volta che l&#8217;app desktop è in esecuzione.</translation>
+        <translation>La tua sincronizzazione è stata configurata e sincronizzerà automaticamente i dati selezionati ogni volta che l&#8217;app per desktop è in esecuzione.</translation>
     </message>
     <message>
         <source>Your sync has been set up</source>
@@ -3796,7 +3781,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Sincronizza l&#8217;intero account MEGA con il tuo dispositivo locale.</translation>
+        <translation>Sincronizza il tuo intero account MEGA con il tuo dispositivo locale.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -3806,12 +3791,12 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Sincronizza l&#8217;intera unità MEGA Cloud con un dispositivo locale.</translation>
+        <translation>Sincronizza il tuo intero Cloud Drive di MEGA con un dispositivo locale.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
         <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
-        <translation>La cartella non può essere sincronizzata poiché non disponi delle autorizzazioni per creare una nuova cartella. Per continuare, seleziona una cartella esistente.</translation>
+        <translation>La cartella non può essere sincronizzata perché non possiedi l&#8217;autorizzazione per creare una nuova cartella. Per continuare, seleziona una cartella esistente.</translation>
     </message>
     <message>
         <source>Forgot password?</source>
@@ -3856,7 +3841,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
         <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
-        <translation>Accedi al tuo [B]Account MEGA[/B]</translation>
+        <translation>Accedi al tuo [B]account MEGA[/B]</translation>
     </message>
     <message>
         <source>Next</source>
@@ -3871,7 +3856,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>View in Settings</source>
         <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation>Visualizza in Impostazioni</translation>
+        <translation>Visualizza nelle Impostazioni</translation>
     </message>
     <message>
         <source>Password</source>
@@ -3906,7 +3891,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Le cartelle selezionate verranno automaticamente salvate su MEGA quando l&#8217;app desktop è in esecuzione.</translation>
+        <translation>Le cartelle selezionate verranno automaticamente salvate su MEGA quando l&#8217;app per desktop è in esecuzione.</translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -3946,12 +3931,12 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Crea il tuo [B]Account MEGA[/B]</translation>
+        <translation>Crea il tuo [B]account MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sincronizza il tuo dispositivo con MEGA e qualsiasi modifica locale verrà applicata automaticamente e istantaneamente a MEGA e viceversa.</translation>
+        <translation>Sincronizza il tuo dispositivo con MEGA e qualsiasi modifica locale verrà applicata automaticamente ed istantaneamente a MEGA e viceversa.</translation>
     </message>
     <message>
         <source>Choose sync type</source>
@@ -3986,7 +3971,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Continue with [B]two-factor authentication[/B]</source>
         <translatorcomment>2FA page title CON-465</translatorcomment>
-        <translation>Continua con [B]autenticazione a due fattori[/B]</translation>
+        <translation>Continua con l&apos;[B]autenticazione a due fattori[/B]</translation>
     </message>
     <message>
         <source>Logging in…</source>
@@ -4026,7 +4011,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Don’t stop</source>
         <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation>Non fermarti</translation>
+        <translation>Non interrompere</translation>
     </message>
     <message>
         <source>Cancel account creation?</source>
@@ -4076,32 +4061,32 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Your password is too easily guessed. You need to make it stronger.</source>
         <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
-        <translation>La tua password è troppo facile da indovinare. Devi renderlo più forte.</translation>
+        <translation>La tua password è troppo facile da indovinare. Devi renderla più resistente.</translation>
     </message>
     <message>
         <source>Your password is easily guessed. You need to make it stronger.</source>
         <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
-        <translation>La tua password è facile da indovinare. Dovresti renderlo più forte.</translation>
+        <translation>La tua password è facile da indovinare. Dovresti renderla più resistente.</translation>
     </message>
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
-        <translation>Aggiorna automaticamente i tuoi file dai tuoi computer a MEGA. Gli elementi di backup in MEGA non possono essere modificati o eliminati da MEGA.</translation>
+        <translation>Aggiorna automaticamente i tuoi file dai tuoi computer a MEGA. Se scegli di eliminare i tuoi backup in MEGA, i tuoi file locali non saranno rimossi.</translation>
     </message>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation>Sincronizza le cartelle selezionate tra il tuo computer con MEGA; qualsiasi modifica da un lato verrà applicata a un altro lato.</translation>
+        <translation>Sincronizza cartelle selezionate tra i tuoi computer e MEGA; qualsiasi modifica da una parte verrà applicata all&#8217;altra.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation>Sincronizza i tuoi file tra i tuoi computer con MEGA; qualsiasi modifica da una parte verrà applicata all&#8217;altra.</translation>
+        <translation>Sincronizza i tuoi file tra i tuoi computer e MEGA; qualsiasi modifica da una parte verrà applicata all&#8217;altra.</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
         <translatorcomment>Page title for new accounts in set device name page CON-467</translatorcomment>
-        <translation>Ti prepariamo</translation>
+        <translation>Configuriamo</translation>
     </message>
     <message>
         <source>Confirm your email and password</source>
@@ -4137,6 +4122,11 @@ Inserisci un nome differente.</translation>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Codice 2FA non corretto</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Il tuo backup è stato impostato e i dati selezionati effettueranno automaticamente il backup quando l&#8217;app per desktop è in esecuzione. Puoi vedere i tuoi backup e il loro status nella sezione Backup delle Impostazioni.</translation>
     </message>
 </context>
 <context>
@@ -4468,7 +4458,7 @@ Inserisci un nome differente.</translation>
 - Application performance improved.
 </source>
         <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
-        <translation>- Una nuova procedura guidata di onboarding viene introdotta quando viene avviato per la prima volta un nuovo processo di sincronizzazione o backup.
+        <translation>- Una nuova procedura guidata viene introdotta quando viene avviato per la prima volta un nuovo processo di sincronizzazione o di backup.
 - Interfaccia utente rinnovata del programma di installazione di macOS.
 - Risolti i crash rilevati su Windows, Linux e macOS.
 - Prestazioni dell&apos;applicazione migliorate.
@@ -5088,7 +5078,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Adding transfers…</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
-        <translation>Aggiungere trasferimenti…</translation>
+        <translation>Aggiunta di trasferimenti…</translation>
     </message>
 </context>
 <context>
@@ -5406,7 +5396,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>Alcune cartelle non sono sincronizzate. Per maggiori informazioni vai sull&#8217;icona gialla di avvertimento.</translation>
+        <translation>Alcune cartelle non sono state sincronizzate. Per maggiori informazioni, per favore porta il cursore sopra l&#8217;icona gialla di avvertimento.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -5546,7 +5536,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Abilita l&#8217;integrazione con File Explorer</translation>
+        <translation>Abilita l&#8217;integrazione con Esplora file</translation>
     </message>
     <message>
         <source>B</source>
@@ -5766,7 +5756,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La tua sincronizzazione “%1” non può essere disattivata. Motivo: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5801,7 +5791,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo backup “%1” non può essere attivato. Motivo: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5816,7 +5806,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo backup “%1” non può essere disattivato. Motivo: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5831,17 +5821,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable sync status icons</source>
         <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
-        <translation>Abilita le icone di stato della sincronizzazione</translation>
+        <translation>Abilita le icone dello stato della sincronizzazione</translation>
     </message>
     <message>
         <source>Enabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
-        <translation>Abilitazione delle icone di stato della sincronizzazione</translation>
+        <translation>Abilitazione delle icone dello stato della sincronizzazione</translation>
     </message>
     <message>
         <source>Disabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
-        <translation>Disattivazione delle icone di stato della sincronizzazione</translation>
+        <translation>Disattivazione delle icone dello stato della sincronizzazione</translation>
     </message>
 </context>
 <context>
@@ -6175,7 +6165,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
         <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
-        <translation>La cartella non può essere sincronizzata poiché si trova all&#8217;interno di una cartella di backup</translation>
+        <translation>La cartella non può essere sincronizzata poiché si trova all&#8217;interno di una cartella di cui viene effettuato il backup</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it contains synced folders</source>
@@ -6185,17 +6175,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folder can&apos;t be synced as it contains backed up folders</source>
         <translatorcomment>Warning message indicating that the selected is contains backed up folders. CON-467</translatorcomment>
-        <translation>La cartella non può essere sincronizzata poiché contiene cartelle di backup</translation>
+        <translation>La cartella non può essere sincronizzata poiché contiene cartelle di cui viene effettuato il backup</translation>
     </message>
     <message>
         <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
         <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
-        <translation>Impossibile eseguire il backup»%1» in quanto è la cartella principale. Per continuare, seleziona una cartella diversa.</translation>
+        <translation>Impossibile eseguire il backup di “%1” in quanto è la cartella principale. Per continuare, seleziona una cartella diversa.</translation>
     </message>
     <message>
         <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
         <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
-        <translation>Impossibile sincronizzare»%1» in quanto è la cartella principale. Per continuare, seleziona una cartella diversa.</translation>
+        <translation>Impossibile sincronizzare “%1” in quanto è la cartella principale. Per continuare, seleziona una cartella diversa.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have write permissions.</source>
@@ -6205,7 +6195,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
         <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
-        <translation>La cartella non può essere sincronizzata perché si trova nel cestino MEGA</translation>
+        <translation>La cartella non può essere sincronizzata perché si trova nel Cestino MEGA</translation>
     </message>
     <message>
         <source>This selection can&apos;t be synced as it’s a file.</source>
@@ -6223,7 +6213,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Si sta sincronizzando una cartella locale formattata con un file system FAT. Il file system FAT presenta delle lacune nella gestione dei file di grandi dimensioni e degli orari di modifica che possono causare problemi di sincronizzazione (ad esempio quando cambia l&#8217;ora legale), quindi si consiglia vivamente di sincronizzare solo le cartelle formattate con file system più affidabili come NTFS (ulteriori informazioni) [A]qui[/A]).</translation>
+        <translation>Stai sincronizzando una cartella locale formattata con un file system FAT. Il file system FAT presenta delle lacune nella gestione dei file di grandi dimensioni e degli orari di modifica che possono causare problemi di sincronizzazione (ad esempio quando si passa dall&#8217;ora solare all&#8217;ora legale e viceversa), quindi si consiglia vivamente di sincronizzare solo le cartelle formattate con file system più affidabili come NTFS (ulteriori informazioni [A]qui[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -6258,7 +6248,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>La tua sincronizzazione»%1» è stato disabilitato perché MEGA non può sincronizzare o eseguire il backup delle cartelle di VirtualBox.</translation>
+        <translation>La tua sincronizzazione “%1” è stata disabilitata perché MEGA non può sincronizzare o eseguire il backup delle cartelle di VirtualBox.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -6268,17 +6258,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disattivata. La cartella remota (o parte di essa) non ha accesso completo.</translation>
+        <translation>La tua sincronizzazione “%1” è stata disattivata. Non hai accesso completo alla cartella remota (o a parte di essa).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>La tua sincronizzazione»%1» è stato disattivato perché la cartella locale è cambiata</translation>
+        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale è cambiata</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation>La tua sincronizzazione»%1» è stato disattivato. Motivo: %2</translation>
+        <translation>La tua sincronizzazione “%1” è stata disattivata. Motivo: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
@@ -6288,7 +6278,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -6298,7 +6288,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella di MEGA è nel Cestino.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -6308,17 +6298,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale è cambiata.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella di MEGA è cambiata.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo backup “%1” è stato disattivato. Motivo: %2</translation>
     </message>
 </context>
 <context>
@@ -6427,12 +6417,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
         <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
-        <translation>La cartella non può essere sincronizzata perché non può essere localizzata. È possibile che sia stato spostato o eliminato oppure che tu non abbia accesso.</translation>
+        <translation>La cartella non può essere sincronizzata perché non può essere trovata. È possibile che sia stata spostata o eliminata, oppure che tu non abbia accesso.</translation>
     </message>
     <message>
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
-        <translation>»%1» la cartella non esiste</translation>
+        <translation>La cartella “%1” non esiste</translation>
     </message>
 </context>
 <context>
@@ -7199,7 +7189,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Syncs</source>
         <translatorcomment>Menu option that shows syncs menu;SNC-3654</translatorcomment>
-        <translation>Sincronizza</translation>
+        <translation>Sincronizzazioni</translation>
     </message>
 </context>
 <context>
@@ -7222,7 +7212,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Il prezzo con la valuta locale è solo una stima. Tutte le transazioni mostrate verranno pagate in Euro.</translation>
+        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà fatturato in euro per tutte le transazioni.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7265,7 +7255,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Il prezzo con la valuta locale è solo una stima. Tutte le transazioni mostrate verranno pagate in Euro.</translation>
+        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà fatturato in euro per tutte le transazioni.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7335,11 +7325,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>Utilities</name>
     <message>
-        <source>just now</source>
-        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>ora</translation>
-    </message>
-    <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
         <translation>TB</translation>
@@ -7383,36 +7368,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro&#xa0;III</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n secondo fa</numerusform><numerusform>%n secondi fa</numerusform><numerusform>%n secondi fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n minuto fa</numerusform><numerusform>%n minuti fa</numerusform><numerusform>%n minuti fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n ora fa</numerusform><numerusform>%n ore fa</numerusform><numerusform>%n ore fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n giorno fa</numerusform><numerusform>%n giorni fa</numerusform><numerusform>%n giorni fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n mese fa</numerusform><numerusform>%n mesi fa</numerusform><numerusform>%n mesi fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n anno fa</numerusform><numerusform>%n anni fa</numerusform><numerusform>%n anni fa</numerusform></translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -7459,6 +7414,41 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
         <translation><numerusform>%1 (%2%) utilizzato su %3 </numerusform><numerusform>%1 (%2%) utilizzati su %3 </numerusform><numerusform>%1 (%2%) utilizzati su %3 </numerusform></translation>
     </message>
+    <message>
+        <source>Added just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
+        <translation>Trasferimento appena completato</translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n secondo fa</numerusform><numerusform>Oggetto completato %n di secondi fa</numerusform><numerusform>Oggetto completato %n secondi fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n minuto fa</numerusform><numerusform>Oggetto completato %n di minuti fa</numerusform><numerusform>Oggetto completato %n minuti fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n ora fa</numerusform><numerusform>Oggetto completato %n di ore fa</numerusform><numerusform>Oggetto completato %n ore fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n giorno fa</numerusform><numerusform>Oggetto completato %n di giorni fa</numerusform><numerusform>Oggetto completato %n giorni fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n mese fa</numerusform><numerusform>Oggetto completato %n di mesi fa</numerusform><numerusform>Oggetto completato %n mesi fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n anno fa</numerusform><numerusform>Oggetto completato %n di anni fa</numerusform><numerusform>Oggetto completato %n anni fa</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -7491,21 +7481,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
         <translation>Reinvia email</translation>
-    </message>
-    <message>
-        <source>Verify your account</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation>Verifica il tuo account</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation>Il tuo account è stato temporaneamente bloccato a causa di un potenziale abuso. Per favore, effettua una verifica del tuo numero di telefono per sbloccare il tuo account.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation>Verifica adesso</translation>
     </message>
     <message>
         <source>Email sent</source>

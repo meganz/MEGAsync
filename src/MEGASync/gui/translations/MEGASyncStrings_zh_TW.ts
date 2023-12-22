@@ -1106,6 +1106,11 @@
         <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
         <translation>MEGA下載</translation>
     </message>
+    <message>
+        <source>MEGA Imports</source>
+        <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
+        <translation>匯入MEGA</translation>
+    </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
@@ -1204,7 +1209,7 @@
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>[A]現在是聯絡人了</translation>
+        <translation>已新增新的聯絡人[A]</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1719,11 +1724,6 @@
         <translation>帳戶暫時鎖定</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked due to a potential breach of our [A]Terms of Service[/A]. To unlock your account, verify your phone number.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
         <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
         <translation>為了您的安全，您的帳戶已被暫時鎖定。這是由於潛在的資料洩露。若要解鎖您的帳戶，請按照我們發送給您的電子郵件中的步驟進行操作。</translation>
@@ -1737,11 +1737,6 @@
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
         <translation>登出</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button text to verify the account CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Setting up your account…</source>
@@ -2168,11 +2163,6 @@
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy link</translatorcomment>
         <translation>複製連結到剪貼簿</translation>
-    </message>
-    <message>
-        <source>Added [A]</source>
-        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
-        <translation>已加入[A]</translation>
     </message>
     <message>
         <source>Deleted or moved file</source>
@@ -3711,7 +3701,7 @@ Enter a different name</source>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation>如果您在一小時內沒有收到電子郵件，請[B][A]聯繫客服[/A][/B]。</translation>
+        <translation>如果您在一小時內沒有收到電子郵件，請檢查您的垃圾郵件資料夾。如果您仍然找不到信件，[B][A]請聯繫客服[/A][/B]。</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -3762,11 +3752,6 @@ Enter a different name</source>
         <source>Enter a valid email address</source>
         <translatorcomment>Error label indicating that the email is not valid CON-466</translatorcomment>
         <translation>輸入一個有效的電子郵件地址</translation>
-    </message>
-    <message>
-        <source>Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation>您的備份已設定，每當桌面應用程式執行時，所選定的資料將自動備份。您可以在設定中的備份分頁查看備份及其狀態。</translation>
     </message>
     <message>
         <source>Your backup is set up</source>
@@ -4086,7 +4071,7 @@ Enter a different name</source>
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
-        <translation>自動將您的檔案從電腦更新到MEGA。MEGA中的備份項目無法從MEGA中修改或刪除。</translation>
+        <translation>自動將您電腦上的檔案更新到MEGA。如果您選擇刪除MEGA中的備份，您的本地檔案將不會被刪除。</translation>
     </message>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
@@ -4137,6 +4122,11 @@ Enter a different name</source>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>不正確的2FA雙重驗證代碼</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>您的備份已設定，每當桌面應用程式執行時，所選定的資料將自動備份。您可以在設定中的備份分頁查看備份及其狀態。</translation>
     </message>
 </context>
 <context>
@@ -5406,7 +5396,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>某些資料夾未同步。請將滑鼠游標移至黃色警告圖示上取得更多訊息。</translation>
+        <translation>某些資料夾尚未同步。請將滑鼠游標移到黃色警告圖示上以查看更多訊息。</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -5766,7 +5756,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的同步「%1」無法停用。原因：%2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5801,7 +5791,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的備份「%1」無法啟用。原因：%2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5816,7 +5806,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的備份「%1」無法停用。原因：%2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -6253,7 +6243,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation>您的同步「%1」已停用，因為本地資料夾不可用，或您沒有讀寫權限。</translation>
+        <translation>您的同步「%1」已停用，因為本地資料夾不可用，或您沒有讀取和寫入權限。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -6268,7 +6258,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>您的同步 「%1」 已停用。遠端資料夾（或其中一部分）沒有完全存取權限。</translation>
+        <translation>您的同步「%1」已停用。您沒有遠端資料夾（或其中一部分）的完全存取權限。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -6288,7 +6278,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的備份「%1」已停用，因為本地資料夾不可用，或您沒有讀取和寫入權限。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -6298,7 +6288,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的備份「%1」已停用，因為MEGA資料夾在垃圾筒中。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -6308,17 +6298,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的備份「%1」已停用，因為本地資料夾已更改。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的備份「%1」已停用，因為MEGA資料夾已更改。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的備份「%1」已停用。原因：%2</translation>
     </message>
 </context>
 <context>
@@ -7222,7 +7212,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* 當地貨幣估算價格僅供參考。所有交易均以歐元計價。</translation>
+        <translation>*當地貨幣估算價格僅供參考。您帳戶的所有交易將依歐元計費。</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7265,7 +7255,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* 當地貨幣估算價格僅供參考。所有交易均以歐元計價。</translation>
+        <translation>*當地貨幣估算價格僅供參考。您帳戶的所有交易將依歐元計費。</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7335,11 +7325,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>Utilities</name>
     <message>
-        <source>just now</source>
-        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>正是現在</translation>
-    </message>
-    <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
         <translation>TB</translation>
@@ -7383,36 +7368,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro&#xa0;III</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n秒前</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n分鐘前</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n小時前</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n天前</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n個月前</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n年前</numerusform></translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -7459,6 +7414,41 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
         <translation><numerusform>%3，已使用%1（%2%）</numerusform></translation>
     </message>
+    <message>
+        <source>Added just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
+        <translation>項目剛完成</translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
+        <translation><numerusform>項目於%n秒前完成</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
+        <translation><numerusform>項目於%n分鐘前完成</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
+        <translation><numerusform>項目於%n小時前完成</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
+        <translation><numerusform>項目於%n天前完成</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
+        <translation><numerusform>項目於%n個月前完成</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
+        <translation><numerusform>項目於%n年前完成</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -7491,21 +7481,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
         <translation>重發電子郵件</translation>
-    </message>
-    <message>
-        <source>Verify your account</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation>驗證您的帳戶</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation>由於潛在的濫用行為，您的帳戶已被暫時封鎖。請驗證您的手機號碼以解鎖您的帳戶。</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation>立即驗證</translation>
     </message>
     <message>
         <source>Email sent</source>

@@ -54,7 +54,7 @@
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
-        <translation>A sua conta foi desativada pelo seu administrador. Você deve entrar em contato com o administrador da sua conta business para obter mais informações.</translation>
+        <translation>A sua conta foi desativada pelo seu administrador. Você deve entrar em contato com o administrador da sua conta Business para obter mais informações.</translation>
     </message>
 </context>
 <context>
@@ -110,7 +110,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Digite um nome, uma localização completa (curingas * e ? são permitidos) ou escolha qual arquivo ou pasta você quer excluir da sincronização.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -427,7 +427,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>Nos seus Backups já existe uma pasta chamada &quot;%1&quot;. Renomeie a nova pasta para continuar com o backup - o nome da pasta não será alterado no seu computador.</translation>
+        <translation>Nos seus Backups já existe uma pasta chamada “%1”. Renomeie a nova pasta para continuar com o backup - o nome da pasta não será alterado no seu computador.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
@@ -465,7 +465,8 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>Nos seus Backups já existe uma pasta chamada &quot;%1&quot;. Renomeie a nova pasta para continuar com o backup.</translation>
+        <translation>Nos seus Backups já existe uma pasta chamada “%1”
+. Renomeie a nova pasta para continuar com o backup.</translation>
     </message>
 </context>
 <context>
@@ -527,7 +528,7 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Uma pasta com o mesmo nome já existe em seus backups. Renomeie a nova pasta para continuar com o backup. O nome da pasta não mudará no seu computador.</numerusform><numerusform>Algumas pastas com o mesmo nome já existem em seus backups. Renomeie as novas pastas para continuar com o backup. Os nomes das pastas não mudarão no seu computador.</numerusform><numerusform>Algumas pastas com o mesmo nome já existem em seus backups. Renomeie as novas pastas para continuar com o backup. Os nomes das pastas não mudarão no seu computador.</numerusform></translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -537,7 +538,7 @@
     <message>
         <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
         <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível fazer backup da pasta, pois ela não pode ser localizada. Ela pode ter sido movida ou excluída, ou você pode não ter acesso a ela.</translation>
     </message>
 </context>
 <context>
@@ -1094,7 +1095,7 @@
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A sua conta foi desativada devido a falha no pagamento ou assinatura cancelada. Pague e reative-a agora para acessar seus dados.</translation>
     </message>
     <message>
         <source>MEGA Uploads</source>
@@ -1105,6 +1106,11 @@
         <source>MEGA Downloads</source>
         <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
         <translation>Downloads do MEGA</translation>
+    </message>
+    <message>
+        <source>MEGA Imports</source>
+        <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
+        <translation>MEGA importações</translation>
     </message>
 </context>
 <context>
@@ -1204,7 +1210,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>[A] agora é um contato</translation>
+        <translation>Novo contato [A] foi adicionado</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1719,14 +1725,9 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation>Conta temporariamente bloqueada</translation>
     </message>
     <message>
-        <source>Your account has been temporarily locked due to a potential breach of our [A]Terms of Service[/A]. To unlock your account, verify your phone number.</source>
-        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
         <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A sua conta foi temporariamente bloqueada para sua segurança. Isso se deve a uma possível violação de dados. Para desbloquear a sua conta, siga os passos no email que lhe enviamos.</translation>
     </message>
     <message>
         <source>Resend email</source>
@@ -1737,11 +1738,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
         <translation>Fazer logout</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button text to verify the account CON-465</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Setting up your account…</source>
@@ -2170,11 +2166,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation>Copiar o link para a área de transferência</translation>
     </message>
     <message>
-        <source>Added [A]</source>
-        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
-        <translation>Adicionado [A]</translation>
-    </message>
-    <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
         <translation>Arquivo deletado ou movido</translation>
@@ -2269,7 +2260,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>Por favor, cheque o seu e-mail e clique no link para confirmar sua conta.</translation>
+        <translation>Por favor, verifique o seu email e clique no link para confirmar sua conta.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3604,7 +3595,7 @@ Digite um nome diferente.
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
         <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eu li e concordo com os [B][A]Termos de serviço[/A][/B] do MEGA</translation>
     </message>
     <message>
         <source>Back up</source>
@@ -3619,7 +3610,7 @@ Digite um nome diferente.
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
         <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Os dados de seu dispositivo irão automaticamente e de forma consistente fazer backup no MEGA em tempo real.</translation>
     </message>
     <message>
         <source>Backup: Confirm</source>
@@ -3659,7 +3650,7 @@ Digite um nome diferente.
     <message>
         <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
         <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Digite o novo endereço de e-mail e clique em Reenviar. Em seguida, enviaremos um e-mail de verificação para esse novo endereço de e-mail para que você ative sua conta.</translation>
     </message>
     <message>
         <source>Change your email address</source>
@@ -3709,17 +3700,17 @@ Digite um nome diferente.
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
         <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Para ativar sua conta, você precisa verificar seu endereço de e-mail. Enviamos a você um e-mail com um link de confirmação. Clique no link para verificar seu endereço de e-mail e, em seguida, você poderá fazer login.</translation>
     </message>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Se você não receber o email dentro de 1 hora, verifique sua pasta de spam. Se ainda assim não conseguir encontrá-lo, [B][A]contate o suporte[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
         <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Se você digitou incorretamente o seu endereço de e-mail, [B][A]corrija-o aqui[/A][/B].</translation>
     </message>
     <message>
         <source>Confirm password</source>
@@ -3764,12 +3755,7 @@ Digite um nome diferente.
     <message>
         <source>Enter a valid email address</source>
         <translatorcomment>Error label indicating that the email is not valid CON-466</translatorcomment>
-        <translation>Digite um endereço de e-mail válido</translation>
-    </message>
-    <message>
-        <source>Your backup has been setup and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Digite um endereço de email válido</translation>
     </message>
     <message>
         <source>Your backup is set up</source>
@@ -4089,12 +4075,12 @@ Digite um nome diferente.
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Atualize automaticamente seus arquivos de seus computadores para o MEGA. Se você optar por deletar seus backups no MEGA, seus arquivos locais não serão removidos.</translation>
     </message>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation>Sincronize pastas selecionadas entre seu computador com o MEGA; qualquer alteração de um lado será aplicada ao outro lado.</translation>
+        <translation>Sincronize as pastas selecionadas entre seus computadores com o MEGA; qualquer alteração de um lado será aplicada ao outro lado.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -4109,7 +4095,7 @@ Digite um nome diferente.
     <message>
         <source>Confirm your email and password</source>
         <translatorcomment>Page title for new accounts in login page CON-465</translatorcomment>
-        <translation>Confirme o seu endereço de e-mail e sua senha</translation>
+        <translation>Confirme o seu endereço de email e sua senha</translation>
     </message>
     <message>
         <source>Once confirmed, your account will be activated.</source>
@@ -4119,7 +4105,7 @@ Digite um nome diferente.
     <message>
         <source>Enter your email address</source>
         <translatorcomment>Login error if user didn´t enter the email CON-465</translatorcomment>
-        <translation>Digite o seu endereço de e-mail</translation>
+        <translation>Digite o seu email</translation>
     </message>
     <message>
         <source>Enter a device name</source>
@@ -4140,6 +4126,11 @@ Digite um nome diferente.
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Código 2FA incorreto</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Seu backup foi configurado e será feito de forma automática sempre que o aplicativo para desktop estiver em execução. Você pode visualizar seus backups e seus status na aba Backup em Configurações.</translation>
     </message>
 </context>
 <context>
@@ -5409,7 +5400,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>Algumas pastas não foram sincronizadas. Para obter mais informações, passe o mouse sobre o ícone amarelo de aviso.</translation>
+        <translation>Algumas pastas não foram sincronizadas. Para obter mais informação, passe o cursor do mouse sobre o ícone de aviso amarelo.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -6271,7 +6262,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>A sincronização da pasta “%1” foi desativada. A pasta remota (ou parte dela) não tem acesso total</translation>
+        <translation>A sua sincronização “%1” foi desativada. Você não tem acesso total à pasta remota (ou parte dela).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -6291,7 +6282,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation>Seu backup “%1” foi desativado porque a pasta local não está disponível ou você não tem permissões de leitura e gravação.</translation>
+        <translation>O seu backup “%1” foi desativado porque a pasta local não está disponível ou você não tem permissões de leitura e gravação.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -6311,7 +6302,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>Seu backup “%1” foi desativado porque a pasta local foi alterada</translation>
+        <translation>Seu backup “%1” foi desativado porque a pasta local foi alterada.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
@@ -6430,7 +6421,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
         <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
-        <translation>A pasta não pode ser sincronizada porque ela não pode ser localizada. Ela pode ter sido movida ou excluída, ou você pode não ter acesso.</translation>
+        <translation>A pasta não pode ser sincronizada porque ela não pode ser localizada. Ela pode ter sido movida ou excluída, ou você pode não ter acesso a ela.</translation>
     </message>
     <message>
         <source>%1 folder doesn&apos;t exist</source>
@@ -7225,7 +7216,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* O preço na sua moeda local é apenas uma estimativa. Em todas as transações, será cobrado o preço indicado em euros.</translation>
+        <translation>* O preço na sua moeda local é apenas uma estimativa. A sua conta, em todas as transações, será cobrada o preço indicado em euros.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7268,7 +7259,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* O preço na sua moeda local é apenas uma estimativa. Em todas as transações, será cobrado o preço indicado em euros.</translation>
+        <translation>* O preço na sua moeda local é apenas uma estimativa. A sua conta, em todas as transações, será cobrada o preço indicado em euros.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7338,11 +7329,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>Utilities</name>
     <message>
-        <source>just now</source>
-        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>agora</translation>
-    </message>
-    <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
         <translation>TB</translation>
@@ -7386,36 +7372,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro&#xa0;III</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>há %n segundo</numerusform><numerusform>há %n de segundos</numerusform><numerusform>há %n segundos</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>há %n minuto</numerusform><numerusform>há %n de minutos</numerusform><numerusform>há %n minutos</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>há %n hora</numerusform><numerusform>há %n de horas</numerusform><numerusform>há %n horas</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>há %n dia</numerusform><numerusform>há %n de dias</numerusform><numerusform>há %n dias</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>há %n mês</numerusform><numerusform>há %n de meses</numerusform><numerusform>há %n meses</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>há %n ano</numerusform><numerusform>há %n de anos</numerusform><numerusform>há %n anos</numerusform></translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -7462,6 +7418,41 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
         <translation><numerusform>%1 (%2%) usado de %3 </numerusform><numerusform>%1 (%2%) usados de %3 </numerusform><numerusform>%1 (%2%) usados de %3 </numerusform></translation>
     </message>
+    <message>
+        <source>Added just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
+        <translation>Item recém concluído</translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Item concluído há %n segundo</numerusform><numerusform>Item concluído há %n segundos</numerusform><numerusform>Item concluído há %n segundos</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Item concluído há %n minuto</numerusform><numerusform>Item concluído há %n minutos</numerusform><numerusform>Item concluído há %n minutos</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Item concluído há %n hora</numerusform><numerusform>Item concluído há %n horas</numerusform><numerusform>Item concluído há %n horas</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Item concluído há %n dia</numerusform><numerusform>Item concluído há %n dias</numerusform><numerusform>Item concluído há %n dias</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Item concluído há %n mês</numerusform><numerusform>Item concluído há %n meses</numerusform><numerusform>Item concluído há %n meses</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Item concluído há %n ano</numerusform><numerusform>Item concluído há %n anos</numerusform><numerusform>Item concluído há %n anos</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -7494,21 +7485,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
         <translation>Reenviar email</translation>
-    </message>
-    <message>
-        <source>Verify your account</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation>Confirme a sua conta</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation>A sua conta foi temporariamente bloqueada devido a uma suspeita de infração. Por favor, confirme o seu número de telefone para desbloquear a sua conta.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation>Confirmar agora</translation>
     </message>
     <message>
         <source>Email sent</source>
