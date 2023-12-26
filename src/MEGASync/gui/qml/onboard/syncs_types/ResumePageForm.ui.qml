@@ -16,6 +16,8 @@ SyncsPage {
     readonly property string stateFullSync: "FULL"
     readonly property string stateSelectiveSync: "SELECTIVE"
     readonly property string stateBackup: "BACKUP"
+    readonly property int maxSizeDescription: 80
+    readonly property int buttonQuestionMargin: 24
 
     property alias buttonGroup: buttonGroupItem
     property alias syncButton: syncButtonItem
@@ -106,7 +108,7 @@ SyncsPage {
             id: finalStepQuestionText
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 24
+            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
             text: OnboardingStrings.finalStepQuestion
             font {
                 pixelSize: Texts.Text.Size.MEDIUM_LARGE
@@ -118,7 +120,7 @@ SyncsPage {
             id: buttons
 
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 24
+            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
 
             ButtonGroup {
                 id: buttonGroupItem
@@ -142,7 +144,7 @@ SyncsPage {
                     Layout.preferredHeight: height
                     contentMargin: 24
                     contentSpacing: 8
-                    imageSourceSize: Qt.size(32, 32)
+                    imageSourceSize: Qt.size(22, 20)
                     title: OnboardingStrings.selectiveSync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
@@ -162,7 +164,7 @@ SyncsPage {
                     Layout.preferredHeight: height
                     contentMargin: 24
                     contentSpacing: 8
-                    imageSourceSize: Qt.size(32, 32)
+                    imageSourceSize: Qt.size(22, 20)
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
