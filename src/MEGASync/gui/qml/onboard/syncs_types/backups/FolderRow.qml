@@ -29,8 +29,8 @@ Rectangle {
     signal focusActivated
 
     height: totalHeight
-    anchors.right: parent.right
-    anchors.left: parent.left
+    anchors.right: parent != null ? parent.right : undefined
+    anchors.left: parent != null ? parent.left : undefined
     anchors.rightMargin: horizontalMargin
     anchors.leftMargin: horizontalMargin
 

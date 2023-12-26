@@ -1,7 +1,5 @@
 import QtQuick 2.15
 
-import Onboarding 1.0
-
 ResumePageForm {
     id: root
     property int tabToOpen: 0

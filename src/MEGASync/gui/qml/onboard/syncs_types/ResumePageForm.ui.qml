@@ -23,6 +23,8 @@ SyncsPage {
     readonly property string stateFullSync: "FULL"
     readonly property string stateSelectiveSync: "SELECTIVE"
     readonly property string stateBackup: "BACKUP"
+    readonly property int maxSizeDescription: 80
+    readonly property int buttonQuestionMargin: 24
 
     footerButtons {
         leftSecondary.visible: false
@@ -94,7 +96,7 @@ SyncsPage {
 
         Texts.Text {
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 24
+            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
             text: OnboardingStrings.finalStepQuestion
             font.pixelSize: Texts.Text.Size.MediumLarge
             font.weight: Font.DemiBold
@@ -102,7 +104,7 @@ SyncsPage {
 
         Rectangle {
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 24
+            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
             color: "transparent"
 
             ButtonGroup {
@@ -126,7 +128,7 @@ SyncsPage {
                     width: (parent.width - parent.spacing) / 2
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
-                    imageSourceSize: Qt.size(32, 32)
+                    imageSourceSize: Qt.size(22, 20)
                     contentMargin: 24
                     contentSpacing: 8
                     focus: true
@@ -147,7 +149,7 @@ SyncsPage {
                            : (parent.width - parent.spacing) / 2
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
-                    imageSourceSize: Qt.size(32, 32)
+                    imageSourceSize: Qt.size(22, 20)
                     contentMargin: 24
                     contentSpacing: 8
                     useMaxSiblingHeight: syncButtonItem.visible
