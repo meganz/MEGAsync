@@ -11,7 +11,6 @@ import components.texts 1.0 as Texts
 
 import onboard 1.0
 
-import GuestContent 1.0
 import ApiEnums 1.0
 import LoginController 1.0
 
@@ -260,7 +259,7 @@ Rectangle {
             }
 
             Connections {
-                target: window
+                target: guestWindow
 
                 function onInitializePageFocus() {
                     leftButton.forceActiveFocus();
