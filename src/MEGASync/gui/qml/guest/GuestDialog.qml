@@ -4,7 +4,7 @@ import GuestQmlDialog 1.0
 import LoginController 1.0
 
 GuestQmlDialog {
-    id: guestWindow
+    id: window
 
     width: guestFlow.width
     height: guestFlow.height
@@ -29,15 +29,15 @@ GuestQmlDialog {
     PropertyAnimation {
         id: fadeOut
 
-        target: guestWindow
+        target: window
         property: "opacity"
         to: 0
         duration: 100
 
         onRunningChanged: {
             if (!running) {
-                guestWindow.hide();
-                guestWindow.opacity = 1;
+                window.hide();
+                window.opacity = 1;
             }
         }
     }

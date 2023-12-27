@@ -81,7 +81,7 @@ Rectangle {
             name: root.stateFetchNodesFinished
             extend: root.stateLoggedOut
             StateChangeScript {
-                script: guestWindow.hide();
+                script: window.hide();
             }
         },
         State {
@@ -200,7 +200,7 @@ Rectangle {
             position: MenuItem.Position.First
             onTriggered: {
                 guestContentAccess.onAboutMEGAClicked();
-                guestWindow.hide();
+                window.hide();
             }
         }
 
@@ -211,7 +211,7 @@ Rectangle {
             icon.source: Images.settings
             onTriggered: {
                 guestContentAccess.onPreferencesClicked();
-                guestWindow.hide();
+                window.hide();
             }
         }
 
@@ -223,7 +223,7 @@ Rectangle {
             position: MenuItem.Position.Last
             onTriggered: {
                 guestContentAccess.onExitClicked();
-                guestWindow.hide();
+                window.hide();
             }
 
             KeyNavigation.tab: view.currentItem.leftButton
@@ -259,7 +259,7 @@ Rectangle {
             }
 
             Connections {
-                target: guestWindow
+                target: window
 
                 function onInitializePageFocus() {
                     leftButton.forceActiveFocus();
