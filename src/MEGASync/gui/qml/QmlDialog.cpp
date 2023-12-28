@@ -1,6 +1,7 @@
 #include "QmlDialog.h"
 
 #include <QEvent>
+#include <QApplication>
 
 QmlDialog::QmlDialog(QWindow *parent)
     : QQuickWindow(parent)
@@ -9,15 +10,16 @@ QmlDialog::QmlDialog(QWindow *parent)
     setIcon(QIcon(QString::fromUtf8("://images/app_ico.ico")));
 }
 
-QmlDialog::~QmlDialog()
-{
-}
-
 bool QmlDialog::event(QEvent *evnt)
 {
     if(evnt->type() == QEvent::Close)
     {
         emit finished();
     }
+    else if (evnt->type() == QEvent::LanguageChange)
+    {
+        emit languageChanged();
+    }
+
     return QQuickWindow::event(evnt);
 }
