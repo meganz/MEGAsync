@@ -8,7 +8,6 @@
 #include <QSpinBox>
 #include <QComboBox>
 #include <QOperatingSystemVersion>
-#include <QApplication>
 
 const int TOOLTIP_DELAY = 250;
 
