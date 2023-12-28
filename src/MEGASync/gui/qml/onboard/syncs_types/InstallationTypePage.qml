@@ -39,7 +39,6 @@ InstallationTypePageForm {
         target: onboardingWindow
 
         function onInitializePageFocus() {
-            syncButton.checked = true;
             syncButton.forceActiveFocus();
         }
     }

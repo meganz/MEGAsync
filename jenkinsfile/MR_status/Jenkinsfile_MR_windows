@@ -1,0 +1,238 @@
+pipeline {
+    agent { label 'windows && amd64' }
+
+    options { 
+        buildDiscarder(logRotator(numToKeepStr: '30', daysToKeepStr: '15'))
+        gitLabConnection('GitLabConnectionJenkins')
+    }
+
+    stages {
+        stage('clean previous runs and update gitlab commit status'){
+            steps{
+                deleteDir()
+                updateGitlabCommitStatus(name: 'Build windows', state: 'running')
+            }
+        }
+        stage('Get parameters'){
+            parallel{
+                stage('Get build options'){
+                    steps {
+                        script{
+                            env.BUILD_OPTIONS = ' '
+                            env.BUILD_OPTIONS = sh(script: 'echo "$gitlabTriggerPhrase" | grep BUILD_OPTIONS | awk -F "BUILD_OPTIONS="  \'{print \$2}\' | cut -d"\\"" -f2 || :', returnStdout: true).trim()
+                            env.ARCHITECTURE = sh(script: 'echo "$gitlabTriggerPhrase" | grep ARCHITECTURE | awk -F "ARCHITECTURE="  \'{print \$2}\' | cut -d"\\"" -f2 || :', returnStdout: true).trim()
+                            if (env.ARCHITECTURE == "")
+                                { env.ARCHITECTURE = "64" }                            
+                            println BUILD_OPTIONS
+                            println ARCHITECTURE
+                        }
+                    }
+                    post{
+                        always {
+                            script{                        
+                                if (currentBuild.currentResult == 'FAILURE'){
+                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the additional build parameters :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('Get SDK branch'){
+                    steps {
+                        script{
+                            env.SDK_BRANCH = sh(script: 'echo "$gitlabMergeRequestDescription" | grep SDK_SUBMODULE_TEST | awk -F "SDK_SUBMODULE_TEST="  \'{print \$2}\' | cut -d" " -f1', returnStdout: true).trim()
+                            println SDK_BRANCH
+                        }
+                    }
+                    post{
+                        always {
+                            script{                        
+                                if (currentBuild.currentResult == 'FAILURE'){
+                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the SDK branch :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('get MEGAsync team'){
+                    when {
+                        expression { 
+                            env.gitlabMergeRequestDescription.contains('MEGASYNC_TEAM')
+                        }
+                    }
+                    steps {
+                        script{
+                            println "${env.gitlabMergeRequestDescription}"
+                            env.MEGASYNC_TEAM = sh(script: 'echo "$gitlabMergeRequestDescription" | grep MEGASYNC_TEAM | awk -F "MEGASYNC_TEAM="  \'{print \$2}\' | cut -d" " -f1', returnStdout: true).trim()
+                            println MEGASYNC_TEAM
+                        }
+                    }
+                    post{
+                        always {
+                            script{                        
+                                if (currentBuild.currentResult == 'FAILURE'){
+                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the MEGASYNC team :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Checkout windows'){
+            steps {
+                script {
+                    def scmExtensions = [
+                        [$class: "UserIdentity", name: "jenkins", email: "jenkins@jenkins"]
+                    ]
+                    if (env.gitlabTriggerPhrase == null || (env.gitlabTriggerPhrase != null && env.gitlabTriggerPhrase.startsWith('trigger compilation'))) {
+                        scmExtensions << [$class: 'PreBuildMerge', options: [fastForwardMode: 'FF', mergeRemote: "origin", mergeStrategy: 'DEFAULT', mergeTarget: "${env.gitlabTargetBranch}"]]
+                    }
+                    checkout([
+                        $class: 'GitSCM', 
+                        branches: [[name: "origin/${env.gitlabSourceBranch}"]],
+                        userRemoteConfigs: [[ url: "${env.GIT_URL_DESKTOP}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
+                        extensions: scmExtensions
+                    ])
+                    windows_sources_workspace = WORKSPACE
+
+                    dir('src\\MEGASync\\mega'){
+                        sh "echo Cloning SDK branch ${SDK_BRANCH}"
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "origin/${SDK_BRANCH}"]],
+                            userRemoteConfigs: [[ url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
+                            extensions: [
+                                [$class: "UserIdentity",name: "jenkins", email: "jenkins@jenkins"]
+                            ]
+                        ])
+                    }
+                }
+            }
+        }
+
+        stage('Compile windows'){
+            when {
+                beforeAgent true
+                anyOf {
+                    expression { env.gitlabTriggerPhrase != null && env.gitlabTriggerPhrase.startsWith('trigger compilation')  }
+                    allOf{
+                        expression { env.gitlabTriggerPhrase == null }
+                        triggeredBy "GitlabWebhookCause" 
+                    }
+                }
+            }
+            options {
+                timeout(time: 120, unit: 'MINUTES')
+            }
+            environment {
+                VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty_prev"
+                MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64"
+            }
+            steps{
+                sh "echo ${params.SDK_BRANCH}"
+                sh "echo ${env.BUILD_OPTIONS}"
+                dir(windows_sources_workspace){
+                    sh "mkdir contrib\\\\cmake\\\\build_dir\\\\"
+                    sh "cmake ${env.BUILD_OPTIONS} -DCMAKE_GENERATOR_PLATFORM=x64 -DCMAKE_PREFIX_PATH='${MEGAQTPATH}' -DUSE_PREBUILT_3RDPARTY=0 -DUSE_THIRDPARTY_FROM_VCPKG=1 -DMega3rdPartyDir='${VCPKGPATH}' -S '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\ -B '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\build_dir\\\\"
+                    sh "cmake --build '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\build_dir\\\\ --config Debug --target MEGASync -j 1"
+                    sh "cmake --build '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\build_dir\\\\ --config Debug --target MEGAupdater -j 1"
+                    sh "cmake --build '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\build_dir\\\\ --config Debug --target MEGAShellExt -j 1"            
+                }
+            }
+            post{
+                always {
+                    script{
+                        if (currentBuild.currentResult == 'SUCCESS'){
+                            addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} <b>Windows</b> SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                            updateGitlabCommitStatus(name: 'Build windows', state: 'success')
+                        }                                
+                        if (currentBuild.currentResult == 'FAILURE'){
+                            addGitLabMRComment(comment: ":red_circle: ${currentBuild.projectName} <b>Windows</b> FAILURE  :worried:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                            updateGitlabCommitStatus(name: 'Build windows', state: 'failed')
+                        }
+                        if (currentBuild.currentResult == 'ABORTED'){
+                            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} <b>Windows</b> ABORTED  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                            updateGitlabCommitStatus(name: 'Build windows', state: 'canceled')
+                        }                                
+                        if (currentBuild.currentResult == 'UNSTABLE'){
+                            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} <b>Windows</b> UNSTABLE  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                            updateGitlabCommitStatus(name: 'Build windows', state: 'failed')
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Build windows installers'){
+            when {
+                beforeAgent true
+                expression { env.gitlabTriggerPhrase != null && (env.gitlabTriggerPhrase == 'trigger package' || env.gitlabTriggerPhrase.startsWith('trigger package windows'))  }
+            }
+            stages{
+                stage('Build windows installers'){
+                    options {
+                        timeout(time: 120, unit: 'MINUTES')
+                    }
+                    environment{
+                        MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty_prev"
+                        MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
+                        MEGA_THIRD_PARTY_DLL_DIR = "bin"
+                    }
+                    steps {
+                        dir(windows_sources_workspace){
+                            bat "full_build_process.cmd ${env.ARCHITECTURE} nosign 2" //architecture can be 64 or 32/64
+                        }
+                    }
+                }
+                stage ('Upload Installers') {
+                    environment{
+                        JF_PATH  = "${windows_sources_workspace}\\.."
+                    }
+                    steps {
+                        dir(windows_sources_workspace){
+                            script {
+                                def windows_artifactory_upload = { String ART_UPLOAD_PATH, String buildDir, String arch ->
+                                
+                                    powershell """
+                                        ${JF_PATH}\\jf config use artifactory
+                                        ${JF_PATH}\\jf rt del ${ART_UPLOAD_PATH}
+                                        ${JF_PATH}\\jf rt upload MEGAsyncSetup${arch}.exe ${ART_UPLOAD_PATH}
+                                        cd ${buildDir}
+                                        ${JF_PATH}\\jf rt upload MEGAsync.pdb ${ART_UPLOAD_PATH}
+                                        ${JF_PATH}\\jf rt upload Mega.pdb ${ART_UPLOAD_PATH}
+                                        ${JF_PATH}\\jf rt upload MEGAShellExt.pdb ${ART_UPLOAD_PATH}
+                                        ${JF_PATH}\\jf rt upload MEGAupdater.pdb ${ART_UPLOAD_PATH}
+                                        ${JF_PATH}\\jf rt upload legacy.pdb ${ART_UPLOAD_PATH}
+                                    """
+                                }
+                                if (env.ARCHITECTURE == "64") {
+                                    windows_artifactory_upload("MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows/built64/", "built64", "64")
+                                } else if (env.ARCHITECTURE == "32/64") {
+                                    windows_artifactory_upload("MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows/built64/", "built64", "64")
+                                    windows_artifactory_upload("MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows/built32/", "built32", "32")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            post {
+                always {
+                    script{
+                        if (currentBuild.currentResult == 'SUCCESS'){
+                            addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} <b>Windows</b>  SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}<br/>Packages URL: [${env.REPO_URL}/MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows]" )
+                            updateGitlabCommitStatus(name: 'Windows compilation', state: 'success')
+                        }
+                        if (currentBuild.currentResult == 'FAILURE'){
+                            addGitLabMRComment(comment: ":red_circle: ${currentBuild.projectName} <b>Windows</b> FAILURE  :worried:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                            updateGitlabCommitStatus(name: 'Windows compilation', state: 'failed')
+                            error "Job failed"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

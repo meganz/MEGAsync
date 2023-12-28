@@ -25,7 +25,7 @@ SyncsPage {
             left: parent.left
             right: parent.right
         }
-        spacing: 34
+        spacing: 24
 
         Header {
             id: headerItem
@@ -34,21 +34,23 @@ SyncsPage {
             description: OnboardingStrings.selectBackupFoldersDescription
         }
 
-        ColumnLayout {
-            id: contentLayout
+        InfoAccount {
+            id: infoAccount
 
             Layout.preferredWidth: parent.width
-            spacing: 12
+        }
+    }
 
-            InfoAccount {
-                id: infoAccount
+    SelectTable {
+        id: backupsTable
 
-                Layout.preferredWidth: parent.width
-            }
-
-            SelectTable {
-                id: backupsTable
-            }
+        anchors {
+            top: selectFolderLayout.bottom
+            left: parent.left
+            right: parent.right
+            bottom: footerButtons.top
+            topMargin: 8 // value by design
+            bottomMargin: selectFolderLayout.spacing
         }
     }
 }

@@ -91,14 +91,15 @@ FocusScope {
             top: titleItem.text.length > 0 ? titleItem.bottom : parent.top
             topMargin: sizes.titleSpacing
         }
+
+        selectByMouse: true
+        selectionColor: colors.selection
+        focus: true
+        height: sizes.height + 2 * sizes.focusBorderWidth
         leftPadding: calculatePaddingWithIcon(leftIconSource != "")
         rightPadding: calculatePaddingWithIcon(rightIconSource != "")
         topPadding: sizes.padding
         bottomPadding: sizes.padding
-        height: sizes.height + 2 * sizes.focusBorderWidth
-        focus: true
-        selectByMouse: true
-        selectionColor: colors.selection
         placeholderTextColor: colors.placeholder
         color: enabled ? colors.text : colors.textDisabled
         font {
@@ -152,7 +153,7 @@ FocusScope {
                     else if(error) {
                         color = colors.borderError;
                     }
-                    else if(root.focus) {
+                    else if(textField.activeFocus) {
                         color = colors.borderFocus;
                     }
                     return color;

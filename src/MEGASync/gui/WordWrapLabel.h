@@ -3,6 +3,7 @@
 
 #include <QEvent>
 #include <QTextBrowser>
+#include <QTimer>
 
 class WordWrapLabel : public QTextBrowser
 {
@@ -13,21 +14,34 @@ public:
 
     WordWrapLabel(QWidget *parent);
 
-    void setText(const QString &text);
+    void setMaximumLines(int8_t lines);
+    void setMaximumHeight(int maxHeight);
+    void resetSizeLimits();
+
+    void setText(const QString& text);
+
+    //Try not to use maxLines/maxHeight with rich text strings, as it could potentially remove the hmtl tags when eliding
+    void setTextFormat(Qt::TextFormat format);
 
 protected:
     void resizeEvent(QResizeEvent *e) override;
-    bool eventFilter(QObject *obj, QEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *ev) override;
+    bool eventFilter(QObject* obj, QEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* ev) override;
 
 private slots:
     void onLinkActivated(const QUrl& link);
+    void onAdaptHeight(bool parentConstrained = false);
 
 private:
-    void setCursor(const QCursor &cursor);
-    void adaptHeight(bool sendEvent = false);
+    void setCursor(const QCursor& cursor);
 
     bool mLinkActivated;
+    int mMaxHeight;
+    int8_t mMaxLines;
+    QString mText;
+    Qt::TextFormat mFormat;
+    QTimer mAdaptHeightTimer;
+    int mParentHeight;
 };
 
 #endif // WORDWRAPLABEL_H

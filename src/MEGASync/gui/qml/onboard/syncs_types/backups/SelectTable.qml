@@ -23,7 +23,6 @@ Item {
 
     Layout.preferredWidth: parent.width
     Layout.preferredHeight: height
-    height: 240
     width: parent.width
 
     Rectangle {
