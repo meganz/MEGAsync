@@ -339,8 +339,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     lastTsBusinessWarning = 0;
     lastTsErrorMessageShown = 0;
     maxMemoryUsage = 0;
-    nUnviewedTransfers = 0;
-    completedTabActive = false;
     nodescurrent = false;
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
@@ -691,11 +689,6 @@ void MegaApplication::initialize()
     infoDialogTimer = new QTimer(this);
     infoDialogTimer->setSingleShot(true);
     connect(infoDialogTimer, SIGNAL(timeout()), this, SLOT(showInfoDialog()));
-
-    firstTransferTimer = new QTimer(this);
-    firstTransferTimer->setSingleShot(true);
-    firstTransferTimer->setInterval(200);
-    connect(firstTransferTimer, &QTimer::timeout, this, &MegaApplication::checkFirstTransfer);
 
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
@@ -1075,7 +1068,6 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     receivedStorageSum = 0;
-    finishedBlockedTransfers.clear();
     mSyncController.reset();
 
     for (unsigned i = 3; i--; )
@@ -1525,8 +1517,6 @@ void MegaApplication::onLogout()
                 {
                     clearUserAttributes();
                     preferences->unlink();
-                    removeAllFinishedTransfers();
-                    clearViewedTransfers();
                     preferences->setFirstStartDone();
                 }
                 else
@@ -2204,8 +2194,6 @@ void MegaApplication::cleanAll()
     PowerOptions::appShutdown();
     mSyncController.reset();
 
-    removeAllFinishedTransfers();
-    clearViewedTransfers();
     DialogOpener::closeAllDialogs();
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
     {
@@ -3595,69 +3583,6 @@ void MegaApplication::clearUserAttributes()
     UserAttributes::UserAttributesManager::instance().reset();
 }
 
-void MegaApplication::clearViewedTransfers()
-{
-    nUnviewedTransfers = 0;
-}
-
-void MegaApplication::onCompletedTransfersTabActive(bool active)
-{
-    completedTabActive = active;
-}
-
-void MegaApplication::checkFirstTransfer()
-{
-    if (appfinished || !megaApi)
-    {
-        return;
-    }
-
-    //Its a single shot timer, delete it forever
-    firstTransferTimer->deleteLater();
-    firstTransferTimer = nullptr;
-
-    auto TransfersStats = mTransfersModel->getTransfersCount();
-
-    if (TransfersStats.pendingDownloads)
-    {
-        mThreadPool->push([=]()
-        {//thread pool function
-
-            MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
-
-            Utilities::queueFunctionInAppThread([=]()
-            {//queued function
-
-                if (nextTransfer)
-                {
-                    onTransferUpdate(megaApi, nextTransfer);
-                    delete nextTransfer;
-                }
-            });//end of queued function
-
-        });// end of thread pool function
-    }
-
-    if (TransfersStats.pendingUploads)
-    {
-        mThreadPool->push([=]()
-        {//thread pool function
-
-            MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
-            if (nextTransfer)
-            {
-                Utilities::queueFunctionInAppThread([=]()
-                {//queued function
-
-                    onTransferUpdate(megaApi, nextTransfer);
-                    delete nextTransfer;
-
-                });//end of queued function
-            }
-        });// end of thread pool function
-    }
-}
-
 void MegaApplication::checkOperatingSystem()
 {
     if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD))
@@ -4060,74 +3985,6 @@ void MegaApplication::toggleLogging()
                      .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
         }
     }
-}
-
-void MegaApplication::removeFinishedTransfer(int transferTag)
-{
-    QMap<int, MegaTransfer*>::iterator it = finishedTransfers.find(transferTag);
-    if (it != finishedTransfers.end())
-    {
-        for (QList<MegaTransfer*>::iterator it2 = finishedTransferOrder.begin(); it2 != finishedTransferOrder.end(); it2++)
-        {
-            if ((*it2)->getTag() == transferTag)
-            {
-                finishedTransferOrder.erase(it2);
-                break;
-            }
-        }
-        delete it.value();
-        finishedTransfers.erase(it);
-
-        emit clearFinishedTransfer(transferTag);
-
-        if (!finishedTransfers.size() && infoDialog)
-        {
-            infoDialog->updateDialogState();
-        }
-    }
-}
-
-void MegaApplication::removeFinishedBlockedTransfer(int transferTag)
-{
-    finishedBlockedTransfers.remove(transferTag);
-}
-
-bool MegaApplication::finishedTransfersWhileBlocked(int transferTag)
-{
-    return finishedBlockedTransfers.contains(transferTag);
-}
-
-void MegaApplication::removeAllFinishedTransfers()
-{
-    qDeleteAll(finishedTransfers);
-    finishedTransferOrder.clear();
-    finishedTransfers.clear();
-
-    emit clearAllFinishedTransfers();
-
-    if (infoDialog)
-    {
-        infoDialog->updateDialogState();
-    }
-}
-
-QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
-{
-    return finishedTransferOrder;
-}
-
-int MegaApplication::getNumUnviewedTransfers()
-{
-    return nUnviewedTransfers;
-}
-
-MegaTransfer* MegaApplication::getFinishedTransferByTag(int tag)
-{
-    if (!finishedTransfers.contains(tag))
-    {
-        return nullptr;
-    }
-    return finishedTransfers.value(tag);
 }
 
 void MegaApplication::pauseTransfers()
@@ -6278,31 +6135,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     DeferPreferencesSyncForScope deferrer(this);
 
-    if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
-    {
-        MegaTransfer *t = transfer->copy();
-        if (finishedTransfers.count(transfer->getTag()))
-        {
-            assert(false);
-            megaApi->sendEvent(AppStatsEvents::EVENT_DUP_FINISHED_TRSF,
-                               QString::fromUtf8("Duplicated finished transfer: %1").arg(QString::number(transfer->getTag())).toUtf8().constData(), false, nullptr);
-            removeFinishedTransfer(transfer->getTag());
-        }
-
-        finishedTransfers.insert(transfer->getTag(), t);
-        finishedTransferOrder.push_back(t);
-
-        if (!mTransferManager)
-        {
-            completedTabActive = false;
-        }
-
-        if (!completedTabActive)
-        {
-            ++nUnviewedTransfers;
-        }
-    }
-
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
         HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
@@ -6311,16 +6143,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed(),
                                              QString::fromUtf8(transfer->getPath()));
-    }
-
-    if (mStatusController->isAccountBlocked())
-    {
-        finishedBlockedTransfers.insert(transfer->getTag());
-    }
-
-    if (finishedTransferOrder.size() > (int)Preferences::MAX_COMPLETED_ITEMS)
-    {
-        removeFinishedTransfer(finishedTransferOrder.first()->getTag());
     }
 
     if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
@@ -6393,11 +6215,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
         }
     }
-
-    if (firstTransferTimer && !firstTransferTimer->isActive())
-    {
-        firstTransferTimer->start();
-    }
 }
 
 //Called when a transfer has been updated
@@ -6424,11 +6241,6 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed(),
                                              QString::fromUtf8(transfer->getPath()));
-    }
-
-    if (firstTransferTimer && !firstTransferTimer->isActive())
-    {
-        firstTransferTimer->start();
     }
 }
 
