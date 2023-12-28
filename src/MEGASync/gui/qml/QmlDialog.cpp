@@ -1,6 +1,7 @@
 #include "QmlDialog.h"
 
 #include <QEvent>
+#include <QApplication>
 
 QmlDialog::QmlDialog(QWindow *parent)
     : QQuickWindow(parent)
@@ -15,5 +16,10 @@ bool QmlDialog::event(QEvent *evnt)
     {
         emit finished();
     }
+    else if (evnt->type() == QEvent::LanguageChange)
+    {
+        emit languageChanged();
+    }
+
     return QQuickWindow::event(evnt);
 }
