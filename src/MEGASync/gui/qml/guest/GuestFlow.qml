@@ -259,7 +259,7 @@ Item {
             }
 
             Connections {
-                target: guestWindow
+                target: window
 
                 function onInitializePageFocus() {
                     leftButton.forceActiveFocus();
