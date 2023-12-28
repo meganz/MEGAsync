@@ -1,5 +1,5 @@
 Name:		qt-mega
-Version:	5.15.11
+Version:	5.15.12
 Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	TODO
 License:	TODO
