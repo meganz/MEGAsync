@@ -29,8 +29,8 @@ Item {
     signal focusActivated
 
     anchors {
-        right: parent.right
-        left: parent.left
+        anchors.right: null != parent ? parent.right : undefined
+        anchors.left: null != parent ? parent.left : undefined
         rightMargin: horizontalMargin
         leftMargin: horizontalMargin
     }

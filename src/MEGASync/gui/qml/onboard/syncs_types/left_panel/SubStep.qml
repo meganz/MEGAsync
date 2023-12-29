@@ -21,8 +21,6 @@ Item {
     property int toState: SubStep.ToStates.DISABLED
 
     height: substepContent.height
-    width: substepContent.width
-    Layout.preferredWidth: substepContent.width
     Layout.preferredHeight: substepContent.height
 
     onToStateChanged: {
@@ -113,23 +111,20 @@ Item {
 
         radius: 12
         color: Styles.iconButtonPressedBackground
-        height: 24
-        width: content.width + 17
-        Layout.preferredWidth: width
-        Layout.preferredHeight: height
+        height: content.height + 10
+        width: parent.width - 16
 
         RowLayout {
             id: content
 
             anchors {
-                top: parent.top
                 left: parent.left
-                bottom: parent.bottom
+                right: parent.right
+                verticalCenter: parent.verticalCenter
                 leftMargin: 5
-                topMargin: 4
-                bottomMargin: 4
                 rightMargin: 8
             }
+
             spacing: 8
 
             Rectangle {
@@ -173,6 +168,7 @@ Item {
 
             Texts.Text {
                 id: stepText
+                Layout.fillWidth: true
 
                 color: Styles.iconButton
                 font {
@@ -184,5 +180,4 @@ Item {
         } // RowLayout: content
 
     } // Rectangle: substepContent
-
 }
