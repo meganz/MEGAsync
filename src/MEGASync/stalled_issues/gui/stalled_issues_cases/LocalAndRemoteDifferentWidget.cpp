@@ -1,6 +1,7 @@
 #include "LocalAndRemoteDifferentWidget.h"
 #include <QDialogButtonBox>
 #include "ui_LocalAndRemoteDifferentWidget.h"
+#include <QCheckBox>
 
 #include "MegaApplication.h"
 #include "StalledIssuesModel.h"
@@ -144,11 +145,14 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, info.selection);
-        }
-        else if(msgBox->result() == QDialogButtonBox::Yes)
-        {
-            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, info.similarSelection);
+            if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+            {
+                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, info.similarSelection);
+            }
+            else
+            {
+                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, info.selection);
+            }
         }
     };
 
@@ -211,22 +215,28 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, info.selection);
-            }
-            else if(msgBox->result() == QDialogButtonBox::Yes)
-            {
-                MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, info.similarSelection);
+                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                {
+                    MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, info.similarSelection);
+                }
+                else
+                {
+                    MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, info.selection);
+                }
             }
         }
         else
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(info.selection);
-            }
-            else if(msgBox->result() == QDialogButtonBox::Yes)
-            {
-                 MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(info.similarSelection);
+                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                {
+                    MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(info.similarSelection);
+                }
+                else
+                {
+                    MegaSyncApp->getStalledIssuesModel()->chooseRemoteForBackups(info.selection);
+                }
             }
         }
     };
@@ -269,15 +279,18 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
             info.msgInfo.informativeText = tr("The <b>remote file</b> will be renamed to %1", "", info.selection.size()).arg(newName);
         }
 
-        info.msgInfo.finishFunc = [this, info](QMessageBox* msgBox)
+        info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->chooseBothSides(info.selection);
-            }
-            else if(msgBox->result() == QDialogButtonBox::Yes)
-            {
-                MegaSyncApp->getStalledIssuesModel()->chooseBothSides(info.similarSelection);
+                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                {
+                    MegaSyncApp->getStalledIssuesModel()->chooseBothSides(info.similarSelection);
+                }
+                else
+                {
+                    MegaSyncApp->getStalledIssuesModel()->chooseBothSides(info.selection);
+                }
             }
         };
 
@@ -309,11 +322,14 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(info.selection);
-        }
-        else if(msgBox->result() == QDialogButtonBox::Yes)
-        {
-            MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(info.similarSelection);
+            if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+            {
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(info.similarSelection);
+            }
+            else
+            {
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(info.selection);
+            }
         }
     };
 
@@ -368,30 +384,17 @@ bool LocalAndRemoteDifferentWidget::checkSelection(SelectionInfo& info)
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::No, tr("Cancel"));
+    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
 
     auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
                                                                << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
     info.selection = dialog->getDialog()->getSelection(reasons);
     info.similarSelection = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
-
-    if(info.selection.size() <= 1)
+    if(info.similarSelection.size() != info.selection.size())
     {
-        if(info.similarSelection.size() != info.selection.size())
-        {
-            info.msgInfo.buttons |= QMessageBox::Yes;
-            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(info.similarSelection.size()));
-            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
-        }
-        else
-        {
-            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-        }
+        auto checkBox = new QCheckBox(tr("Apply to all"));
+        info.msgInfo.checkBox = checkBox;
     }
-    else
-    {
-        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(info.selection.size()));
-    }
-
     info.msgInfo.buttonsText = textsByButton;
 
     return true;

@@ -14,6 +14,7 @@
 
 #include <QFile>
 #include <QMouseEvent>
+#include <QCheckBox>
 
 const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
 const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
@@ -83,44 +84,31 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
 
     auto selection = dialog->getDialog()->getSelection(canBeIgnoredChecker);
-
-    if(selection.size() <= 1)
+    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
+    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(canBeIgnoredChecker);
+    if(allSimilarIssues.size() != selection.size())
     {
-        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(canBeIgnoredChecker);
-
-        if(allSimilarIssues.size() != selection.size())
-        {
-            msgInfo.buttons |= QMessageBox::Yes;
-            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-            textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
-        }
-        else
-        {
-            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-        }
-
+        auto checkBox = new QCheckBox(tr("Apply to all"));
+        msgInfo.checkBox = checkBox;
     }
-    else
-    {
-        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
-    }
-
     msgInfo.buttonsText = textsByButton;
     msgInfo.text = tr("Are you sure you want to ignore this issue?");
     msgInfo.informativeText = tr("This action will ignore this issue and it will not be synced.");
 
-    msgInfo.finishFunc = [this, selection](QMessageBox* msgBox)
+    msgInfo.finishFunc = [selection](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
+            if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+            {
+                MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList(), false);
+            }
+            else
+            {
             MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, false);
-        }
-        else if(msgBox->result() == QDialogButtonBox::Yes)
-        {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList(), false);
+            }
         }
     };
 

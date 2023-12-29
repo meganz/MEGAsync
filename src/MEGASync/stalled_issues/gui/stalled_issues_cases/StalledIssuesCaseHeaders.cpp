@@ -1,5 +1,6 @@
 #include "StalledIssuesCaseHeaders.h"
 #include <QDialogButtonBox>
+#include <QCheckBox>
 
 #include <Utilities.h>
 #include "control/Preferences/Preferences.h"
@@ -98,26 +99,15 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
 
     if(index == IgnoreType::IgnoreAll)
     {
-         textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+        textsByButton.insert(QMessageBox::Ok, tr("Ok"));
     }
     else
     {
-        if(selection.size() <= 1)
+        textsByButton.insert(QMessageBox::Ok, tr("Apply"));
+        if(allSimilarIssues.size() != selection.size())
         {
-            if(allSimilarIssues.size() != selection.size())
-            {
-                msgInfo.buttons |= QMessageBox::Yes;
-                textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar symlinks (%1)").arg(allSimilarIssues.size()));
-                textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
-            }
-            else
-            {
-                textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-            }
-        }
-        else
-        {
-            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+            auto checkbox = new QCheckBox(tr("Apply to all"));
+            msgInfo.checkBox = checkbox;
         }
     }
 
@@ -134,7 +124,7 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
         msgInfo.informativeText = tr("This action will ignore this symlink and it will not be synced.");
     }
 
-    msgInfo.finishFunc = [this, index, selection, allSimilarIssues](QMessageBox* msgBox)
+    msgInfo.finishFunc = [index, selection, allSimilarIssues](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
@@ -144,17 +134,18 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
             }
             else
             {
-                MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, true);
+                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                {
+                    MegaSyncApp->getStalledIssuesModel()->ignoreItems(allSimilarIssues, true);
+                }
+                else
+                {
+                    MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, true);
+                }
             }
         }
-        else if(msgBox->result() == QDialogButtonBox::Yes)
-        {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(allSimilarIssues, true);
-        }
     };
-
     QMegaMessageBox::warning(msgInfo);
-
 }
 
 void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
@@ -202,31 +193,15 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::No, tr("Cancel"));
+    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
 
     auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(fingerprintMissingChecker);
-
+    if(allSimilarIssues.size() != selection.size())
+    {
+        auto checkBox = new QCheckBox(tr("Apply to all"));
+        msgInfo.checkBox = checkBox;
+    }
     auto pluralNumber(1);
-
-    if(selection.size() <= 1)
-    {
-        if(allSimilarIssues.size() != selection.size())
-        {
-            msgInfo.buttons |= QMessageBox::Yes;
-            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-            textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
-
-        }
-        else
-        {
-            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-        }
-    }
-    else
-    {
-        pluralNumber = selection.size();
-        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
-    }
-
     msgInfo.text = tr("Are you sure you want to solve the issue?", "", pluralNumber);
     msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
@@ -236,15 +211,11 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
 
     msgInfo.buttonsText = textsByButton;
 
-    msgInfo.finishFunc = [this, index, selection, allSimilarIssues](QMessageBox* msgBox)
+    msgInfo.finishFunc = [selection, allSimilarIssues](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->fixFingerprint(selection);
-        }
-        else if(msgBox->result() == QDialogButtonBox::Yes)
-        {
-            MegaSyncApp->getStalledIssuesModel()->fixFingerprint(allSimilarIssues);
+            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? allSimilarIssues: selection);
         }
     };
 
@@ -625,27 +596,14 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
         QMap<QMessageBox::Button, QString> textsByButton;
         textsByButton.insert(QMessageBox::No, tr("Cancel"));
+        textsByButton.insert(QMessageBox::Ok, tr("Apply"));
 
         auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(solutionCanBeApplied);
-
-        if(selection.size() <= 1)
+        if(allSimilarIssues.size() != selection.size())
         {
-            if(allSimilarIssues.size() != selection.size())
-            {
-                msgInfo.buttons |= QMessageBox::Yes;
-                textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-                textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
-            }
-            else
-            {
-                textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-            }
+            auto checkBox = new QCheckBox(tr("Apply to all"));
+            msgInfo.checkBox = checkBox;
         }
-        else
-        {
-            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
-        }
-
         msgInfo.buttonsText = textsByButton;
         msgInfo.text = tr("Are you sure you want to solve the issue?");
 
@@ -673,11 +631,11 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             }
         }
 
-        msgInfo.finishFunc = [this, index, selection, allSimilarIssues, header, nameConflict](QMessageBox* msgBox)
+        msgInfo.finishFunc = [index, selection, allSimilarIssues, nameConflict](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(selection, index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues((msgBox->checkBox() && msgBox->checkBox()->isChecked())? allSimilarIssues : selection, index);
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
