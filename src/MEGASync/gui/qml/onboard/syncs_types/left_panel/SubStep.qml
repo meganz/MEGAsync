@@ -24,8 +24,6 @@ Item {
     }
 
     height: substepContent.height
-    width: substepContent.width
-    Layout.preferredWidth: substepContent.width
     Layout.preferredHeight: substepContent.height
 
     Rectangle {
@@ -112,20 +110,16 @@ Item {
 
         radius: 12
         color: Styles.iconButtonPressedBackground
-        height: 24
-        width: content.width + 17
-        Layout.preferredWidth: width
-        Layout.preferredHeight: height
+        height: content.height + 10
+        width: parent.width - 16
 
         RowLayout {
             id: content
 
-            anchors.top: parent.top
             anchors.left: parent.left
-            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 5
-            anchors.topMargin: 4
-            anchors.bottomMargin: 4
             anchors.rightMargin: 8
             spacing: 8
 
@@ -168,6 +162,7 @@ Item {
 
             Texts.Text {
                 id: stepText
+                Layout.fillWidth: true
 
                 color: Styles.iconButton
                 font.pixelSize: Texts.Text.Size.Small
@@ -175,5 +170,4 @@ Item {
             }
         }
     }
-
 }

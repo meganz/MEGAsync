@@ -133,8 +133,8 @@ Rectangle {
         FolderRow {
             id: folderRow
 
-            anchors.right: parent.right
-            anchors.left: parent.left
+            anchors.right: null != parent ? parent.right : undefined
+            anchors.left: null != parent ? parent.left : undefined
         }
     }
 
