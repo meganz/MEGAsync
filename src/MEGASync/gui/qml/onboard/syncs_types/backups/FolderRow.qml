@@ -29,8 +29,8 @@ Item {
     signal focusActivated
 
     anchors {
-        anchors.right: null != parent ? parent.right : undefined
-        anchors.left: null != parent ? parent.left : undefined
+        right: null != parent ? parent.right : undefined
+        left: null != parent ? parent.left : undefined
         rightMargin: horizontalMargin
         leftMargin: horizontalMargin
     }
@@ -39,9 +39,11 @@ Item {
     Rectangle {
         id: background
 
-        anchors.fill: parent
-        anchors.rightMargin: internalMargin
-        anchors.leftMargin: internalMargin
+        anchors {
+            fill: parent
+            rightMargin: internalMargin
+            leftMargin: internalMargin
+        }
         radius: internalMargin
         color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface1
 

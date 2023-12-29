@@ -122,7 +122,6 @@ Rectangle {
             Layout.alignment: Qt.AlignTop
             number: 1
             text: OnboardingStrings.deviceName
-            Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
         }
 
@@ -143,7 +142,6 @@ Rectangle {
             Layout.alignment: Qt.AlignTop
             number: 2
             text: OnboardingStrings.setUpOptions
-            Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
         }
 
