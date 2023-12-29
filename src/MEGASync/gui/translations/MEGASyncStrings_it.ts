@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="it" sourcelanguage="en">
 <context>
@@ -47,6 +47,14 @@
         <source>Backups</source>
         <translatorcomment>Label for Backups storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
         <translation>Backup</translation>
+    </message>
+</context>
+<context>
+    <name>AccountStatusController</name>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
+        <translation>Il tuo account è stato disabilitato dal tuo amministratore. Per favore, contatta il tuo amministratore degli account business per ottenere maggiori dettagli.</translation>
     </message>
 </context>
 <context>
@@ -271,11 +279,6 @@
         <translation>[A] è stato eliminato o disattivato</translation>
     </message>
     <message>
-        <source>[A] established you as a contact</source>
-        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A] ha accettato la tua richiesta di contatto</translation>
-    </message>
-    <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
         <translation>[A] ti ha bloccato</translation>
@@ -297,7 +300,7 @@
     </message>
     <message>
         <source>[A] accepted your contact request</source>
-        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request. (SNC-3341)</translatorcomment>
         <translation>[A] ha accettato la tua richiesta di contatto</translation>
     </message>
     <message>
@@ -368,12 +371,12 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] ha aggiunto %n oggetto</numerusform><numerusform>[A] ha aggiunto %n oggetti</numerusform></translation>
+        <translation><numerusform>[A] ha aggiunto %n oggetto</numerusform><numerusform>[A] ha aggiunto %n oggetti</numerusform><numerusform>[A] ha aggiunto %n oggetti</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] ha rimosso %n oggetto</numerusform><numerusform>[A] ha rimosso %n oggetti</numerusform></translation>
+        <translation><numerusform>[A] ha rimosso %n oggetto</numerusform><numerusform>[A] ha rimosso %n oggetti</numerusform><numerusform>[A] ha rimosso %n oggetti</numerusform></translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
@@ -393,7 +396,7 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] ha aggiornato %n oggetto</numerusform><numerusform>[A] ha aggiornato %n oggetti</numerusform></translation>
+        <translation><numerusform>[A] ha aggiornato %n oggetto</numerusform><numerusform>[A] ha aggiornato %n di oggetti</numerusform><numerusform>[A] ha aggiornato %n oggetti</numerusform></translation>
     </message>
 </context>
 <context>
@@ -466,6 +469,19 @@
     </message>
 </context>
 <context>
+    <name>BackupSyncsMenu</name>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups;SNC-3654</translatorcomment>
+        <translation>Aggiungi backup</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Menu option that shows backups menu;SNC-3654</translatorcomment>
+        <translation>Backup</translation>
+    </message>
+</context>
+<context>
     <name>BackupTableView</name>
     <message>
         <source>Open in MEGA</source>
@@ -494,6 +510,34 @@
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
         <translation>Clicca sui tre puntini per altre azioni di backup</translation>
+    </message>
+</context>
+<context>
+    <name>BackupsModel</name>
+    <message numerus="yes">
+        <source>Folder wasn&apos;t backed up. Try again.</source>
+        <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
+        <translation><numerusform>Non è stato effettuato il backup di questa cartella. Riprova.</numerusform><numerusform>Non è stato effettuato il backup di queste cartelle. Riprova.</numerusform><numerusform>Non è stato effettuato il backup di queste cartelle. Riprova.</numerusform></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Non puoi effettuare il backup di cartelle con lo stesso nome. Rinominale per continuare con il backup. I nomi delle cartelle non cambieranno sul tuo computer.</translation>
+    </message>
+    <message numerus="yes">
+        <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
+        <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
+        <translation><numerusform>Una cartella con lo stesso nome esiste già nei tuoi Backup. Rinomina la nuova cartella per continuare con il backup. I nomi delle cartelle non cambieranno sul tuo computer.</numerusform><numerusform>Alcune cartelle con lo stesso nome esistono già nei tuoi Backup. Rinomina la nuova cartella per continuare con il backup. I nomi delle cartelle non cambieranno sul tuo computer.</numerusform><numerusform>Alcune cartelle con lo stesso nome esistono già nei tuoi Backup. Rinomina la nuova cartella per continuare con il backup. I nomi delle cartelle non cambieranno sul tuo computer.</numerusform></translation>
+    </message>
+    <message>
+        <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
+        <translatorcomment>Warning message stating that a backup can´t contain another backup CON-468</translatorcomment>
+        <translation>Le cartelle di backup non possono contenere o essere contenute da altre cartelle di backup.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
+        <translation>Non può essere effettuato il backup della cartella perché non può essere trovata. Potrebbe essere stata spostata o eliminata, oppure potresti non avervi più accesso.</translation>
     </message>
 </context>
 <context>
@@ -586,27 +630,27 @@
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label that indicates the number of folders that are going to be backed up.</translatorcomment>
-        <translation><numerusform>%n cartella</numerusform><numerusform>%n cartelle</numerusform></translation>
+        <translation><numerusform>%n cartella</numerusform><numerusform>%n di cartelle</numerusform><numerusform>%n cartelle</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Backup created</source>
         <translatorcomment>Backup successfully created dialog title</translatorcomment>
-        <translation><numerusform>Backup creato</numerusform><numerusform>Backup creati</numerusform></translation>
+        <translation><numerusform>Backup creato</numerusform><numerusform>Backup creati</numerusform><numerusform>Backup creati</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation><numerusform>Stiamo effettuando il backup della tua cartella. Il tempo impiegato dipende dai file nella cartella.</numerusform><numerusform>Stiamo effettuando il backup delle tue cartelle. Il tempo impiegato dipende dai file nelle cartelle.</numerusform></translation>
+        <translation><numerusform>Stiamo effettuando il backup della tua cartella. Il tempo impiegato dipende dai file nella cartella.</numerusform><numerusform>Stiamo effettuando il backup delle tue cartelle. Il tempo impiegato dipende dai file nelle cartelle.</numerusform><numerusform>Stiamo effettuando il backup delle tue cartelle. Il tempo impiegato dipende dai file nelle cartelle.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Problem backing up folder</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>Problema con il backup della cartella</numerusform><numerusform>Problema con il backup delle cartelle</numerusform></translation>
+        <translation><numerusform>Problema con il backup della cartella</numerusform><numerusform>Problema con il backup delle cartelle</numerusform><numerusform>Problema con il backup delle cartelle</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>Non è stato effettuato il backup di questa cartella. Riprova.</numerusform><numerusform>Non è stato effettuato il backup di queste cartelle. Riprova.</numerusform></translation>
+        <translation><numerusform>Non è stato effettuato il backup di questa cartella. Riprova.</numerusform><numerusform>Non è stato effettuato il backup di queste cartelle. Riprova.</numerusform><numerusform>Non è stato effettuato il backup di queste cartelle. Riprova.</numerusform></translation>
     </message>
     <message>
         <source>Folder is already selected. Select a different folder.</source>
@@ -875,7 +919,7 @@
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>Al momento c&apos;è un&apos;altra segnalazione in caricamento.</translation>
+        <translation>Al momento c&#8217;è un&#8217;altra segnalazione in caricamento.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -984,7 +1028,7 @@
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>Per favore inserisci una password più resistente</translation>
+        <translation>Inserisci una password più resistente</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1008,6 +1052,14 @@
     </message>
 </context>
 <context>
+    <name>ChooseLocalFolder</name>
+    <message>
+        <source>Select local folder</source>
+        <translatorcomment>Label indicating the user that he has to select a local folder. CON-467</translatorcomment>
+        <translation>Seleziona cartella locale</translation>
+    </message>
+</context>
+<context>
     <name>CircularUsageProgressBar</name>
     <message>
         <source>[A]%</source>
@@ -1020,7 +1072,7 @@
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Il tuo piano Pro scadrà tra %n giorno</numerusform><numerusform>Il tuo piano Pro scadrà tra %n giorni</numerusform></translation>
+        <translation><numerusform>Il tuo piano Pro scadrà tra %n giorno</numerusform><numerusform>Il tuo piano Pro scadrà tra %n giorni </numerusform><numerusform>Il tuo piano Pro scadrà tra %n giorni</numerusform></translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -1030,7 +1082,7 @@
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Il tuo piano Pro è scaduto %n giorno fa</numerusform><numerusform>Il tuo piano Pro è scaduto %n giorni fa</numerusform></translation>
+        <translation><numerusform>Il tuo piano Pro è scaduto %n giorno fa</numerusform><numerusform>Il tuo piano Pro è scaduto %n giorni fa</numerusform><numerusform>Il tuo piano Pro è scaduto %n giorni fa</numerusform></translation>
     </message>
     <message>
         <source>The following characters are not allowed:
@@ -1039,9 +1091,24 @@
         <translation>I seguenti caratteri non sono ammessi: %1</translation>
     </message>
     <message>
-        <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
-        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation>Il tuo account Pro&#xa0;Flexi è stato disattivato a causa del fallimento del pagamento oppure perché hai annullato il tuo abbonamento. Non potrai accedere ai dati archiviati nel tuo account finché non avrai effettuato un pagamento e riattivato il tuo abbonamento.</translation>
+        <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
+        <translation>Il tuo account è stato disattivato a causa di un fallimento nel pagamento o dell&#8217;annullamento dell&#8217;abbonamento. Per favore, paga e riattiva ora il tuo account per accedere ai tuoi dati.</translation>
+    </message>
+    <message>
+        <source>MEGA Uploads</source>
+        <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
+        <translation>Caricamenti MEGA</translation>
+    </message>
+    <message>
+        <source>MEGA Downloads</source>
+        <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
+        <translation>Download MEGA</translation>
+    </message>
+    <message>
+        <source>MEGA Imports</source>
+        <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
+        <translation>Import di MEGA</translation>
     </message>
 </context>
 <context>
@@ -1141,7 +1208,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>Un nuovo contatto con [A] è stato stabilito</translation>
+        <translation>Il nuovo contatto [A] è stato aggiunto</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1281,12 +1348,12 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] ha aggiunto %n oggetto</numerusform><numerusform>[A] ha aggiunto %n oggetti</numerusform></translation>
+        <translation><numerusform>[A] ha aggiunto %n oggetto</numerusform><numerusform>[A] ha aggiunto %n oggetti</numerusform><numerusform>[A] ha aggiunto %n oggetti</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>Ti rimane %n giorno per salvare i tuoi dati</numerusform><numerusform>Ti rimangono %n giorni per salvare i tuoi dati</numerusform></translation>
+        <translation><numerusform>Ti rimane %n giorno per salvare i tuoi dati</numerusform><numerusform>Ti rimangono %n giorni per salvare i tuoi dati</numerusform><numerusform>Ti rimangono %n giorni per salvare i tuoi dati</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1316,7 +1383,12 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] ha aggiornato %n oggetto</numerusform><numerusform>[A] ha aggiornato %n oggetti</numerusform></translation>
+        <translation><numerusform>[A] ha aggiornato %n oggetto</numerusform><numerusform>[A] ha aggiornato %n di oggetti</numerusform><numerusform>[A] ha aggiornato %n oggetti</numerusform></translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Account Pro&#xa0;Flexi disattivato</translation>
     </message>
 </context>
 <context>
@@ -1329,7 +1401,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Seleziona la cartella di destinazione per i tuoi file:</translation>
+        <translation>Seleziona la cartella di download per i tuoi file:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1377,24 +1449,24 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>L&#8217;oggetto che hai selezionato è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>Gli oggetti che hai selezionato sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform></translation>
+        <translation><numerusform>L&#8217;oggetto che hai selezionato è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>Gli oggetti che hai selezionato sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>Gli oggetti che hai selezionato sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>Non hai più accesso a questo oggetto. Chiedi alla persona che lo ha condiviso con te di condividerlo nuovamente.</numerusform><numerusform>Non hai più accesso a questi oggetti. Chiedi alla persona che li ha condivisi con te di condividerli nuovamente.</numerusform></translation>
+        <translation><numerusform>Non hai più accesso a questo oggetto. Chiedi alla persona che lo ha condiviso con te di condividerlo nuovamente.</numerusform><numerusform>Non hai più accesso a questi oggetti. Chiedi alla persona che li ha condivisi con te di condividerli nuovamente.</numerusform><numerusform>Non hai più accesso a questi oggetti. Chiedi alla persona che li ha condivisi con te di condividerli nuovamente.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 oggetto selezionato.</numerusform><numerusform>%1 oggetti selezionati.</numerusform></translation>
+        <translation><numerusform>%1 oggetto selezionato.</numerusform><numerusform>%1 di oggetti selezionati.</numerusform><numerusform>%1 oggetti selezionati.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>%1. %2 sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform></translation>
+        <translation><numerusform>%1. %2 è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>%1. %2 sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>%1. %2 sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1455,7 +1527,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Applica all&#8217;altro duplicato</numerusform><numerusform>Applica a tutti i %1 duplicati</numerusform></translation>
+        <translation><numerusform>Applica all&#8217;altro duplicato</numerusform><numerusform>Applica a tutti i %1 duplicati</numerusform><numerusform>Applica a tutti i %1 duplicati</numerusform></translation>
     </message>
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
@@ -1504,6 +1576,24 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>Scopri di più</translation>
+    </message>
+    <message>
+        <source>loading time…</source>
+        <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
+        <translation>recupero della data…</translation>
+    </message>
+    <message>
+        <source>loading size…</source>
+        <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
+        <translation>calcolo della dimensione…</translation>
+    </message>
+</context>
+<context>
+    <name>FastLoginController</name>
+    <message>
+        <source>Login error: %1</source>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message. SNC-4122</translatorcomment>
+        <translation>Errore del login: %1</translation>
     </message>
 </context>
 <context>
@@ -1559,12 +1649,12 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n file</numerusform></translation>
+        <translation><numerusform>%n file</numerusform><numerusform>%n file</numerusform><numerusform>%n file</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n cartella</numerusform><numerusform>%n cartelle</numerusform></translation>
+        <translation><numerusform>%n cartella</numerusform><numerusform>%n cartelle</numerusform><numerusform>%n cartelle</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1601,171 +1691,61 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     </message>
 </context>
 <context>
-    <name>GuestWidget</name>
+    <name>GuestStrings</name>
     <message>
-        <source>Login</source>
-        <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Effettua il log&#xa0;in</translation>
+        <source>About MEGA</source>
+        <translatorcomment>Menu entry that opens the about MEGA dialog. CON-472</translatorcomment>
+        <translation>Info su MEGA</translation>
     </message>
     <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation>Crea account</translation>
+        <source>Quit</source>
+        <translatorcomment>Menu entry that quits the application for mac. CON-472</translatorcomment>
+        <translation>Esci</translation>
     </message>
     <message>
-        <source>Email address</source>
-        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation>Indirizzo email</translation>
+        <source>Exit</source>
+        <translatorcomment>Menu entry that quits the application for linux and windows. CON-472</translatorcomment>
+        <translation>Esci</translation>
     </message>
     <message>
-        <source>Password</source>
-        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation>Password</translation>
+        <source>Settings</source>
+        <translatorcomment>Menu entry that opens the settings dialog. CON-472</translatorcomment>
+        <translation>Impostazioni</translation>
     </message>
     <message>
-        <source>Forgot password?</source>
-        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation>Password dimenticata?</translation>
+        <source>Log in or sign up to MEGA</source>
+        <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
+        <translation>Effettua il login o iscriviti a MEGA</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation>Annulla</translation>
+        <source>Account temporarily locked</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>Account temporaneamente bloccato</translation>
     </message>
     <message>
-        <source>Setting up your account...</source>
-        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>Impostando il tuo account…</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>Effettuando il login…</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Recupero lista file…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Email o password non valide.</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation>Per favore, controlla la tua email e clicca sul link per confermare il tuo account.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>Hai tentato di fare l&#8217;accesso troppe volte. [BR]Per favore, aspetta sino alle %1 e riprova.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation>Il tuo account è stato bloccato. Si prega di contattare support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>Inserisci il tuo indirizzo email</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>Per favore inserisci un indirizzo e-mail valido</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation>Per favore inserisci la tua password</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Effettuando l&#8217;uscita…</translation>
-    </message>
-    <message>
-        <source>Locked Account</source>
-        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>Account bloccato</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>Il tuo account è stato temporaneamente bloccato per la tua sicurezza. Per favore, verifica la tua email e segui gli step per sbloccare il tuo account.</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>Effettua il log&#xa0;out</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation>Il tuo account è stato temporaneamente bloccato a causa di un potenziale abuso. Per favore, effettua una verifica del tuo numero di telefono per sbloccare il tuo account.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation>Verifica adesso</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGA app</translatorcomment>
-        <translation>Creando l&#8217;account…</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Perché sto vedendo questo?</translation>
+        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>Il tuo account è stato temporaneamente bloccato per la tua sicurezza. Questo è avvenuto a causa di una potenziale violazione dei dati. Per sbloccare il tuo account, segui i passaggi contenuti nella email che ti abbiamo inviato.</translation>
     </message>
     <message>
         <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>Reinvia email</translation>
+        <translatorcomment>Button text, on click the email to verify the account is resent CON-465</translatorcomment>
+        <translation>Reinvia e-mail</translation>
     </message>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>Email inviata</translation>
+        <source>Log out</source>
+        <translatorcomment>Button text to logout CON-465</translatorcomment>
+        <translation>Effettua il logout</translation>
     </message>
     <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Per favore, inserisci il codice generato dalla tua app di autenticazione</translation>
+        <source>Setting up your account…</source>
+        <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
+        <translation>Impostando il tuo account…</translation>
     </message>
     <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>Codice a 6 cifre:</translation>
-    </message>
-    <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Codice non valido</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation>Avanti</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Hai perso il tuo dispositivo di autenticazione?[/A]</translation>
-    </message>
-    <message>
-        <source>Log into MEGA</source>
-        <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
-        <translation>Effettua il login in MEGA</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>La nostra chiave SSL non può essere verificata. Potrebbe esserci un attacco man-in-the-middle in corso o il tuo software antivirus potrebbe star intercettando le tue comunicazioni e causando questo problema. Per favore, disabilitalo e riprova.</translation>
+        <source>Waiting for email confirmation…</source>
+        <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
+        <translation>In attesa della conferma dell&#8217;email…</translation>
     </message>
 </context>
 <context>
@@ -1861,6 +1841,54 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     </message>
 </context>
 <context>
+    <name>InfoAccount</name>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Label to refer Free tier CON-467</translatorcomment>
+        <translation>Gratis</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
+        <translation>Pro&#xa0;I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;III</translation>
+    </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
+        <translation>Business</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Flexi</translation>
+    </message>
+    <message>
+        <source>Available storage:</source>
+        <translatorcomment>Label indicating that the number in the right is the available storage CON-467</translatorcomment>
+        <translation>Spazio di archiviazione disponibile:</translation>
+    </message>
+    <message>
+        <source>Storage space:</source>
+        <translatorcomment>Label indicating that the number in the right is the storage space CON-467</translatorcomment>
+        <translation>Spazio di archiviazione:</translation>
+    </message>
+</context>
+<context>
     <name>InfoDialog</name>
     <message>
         <source>Add Sync</source>
@@ -1880,7 +1908,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation>Fai l&apos;upgrade dell&apos;account</translation>
+        <translation>Fai l&#8217;upgrade dell&#8217;account</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -2005,7 +2033,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
-        <translation>Fai l&apos;upgrade dell&apos;account</translation>
+        <translation>Fai l&#8217;upgrade dell&#8217;account</translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2040,17 +2068,17 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>Ti abbiamo contattato per email su [A] il [B] ma hai ancora %n file che occupano [D] nel tuo account MEGA, che ti obbliga ad avere [E].</numerusform><numerusform>Ti abbiamo contattato per email su [A] il [B] ma hai ancora %n file che occupano [D] nel tuo account MEGA, che ti obbliga ad avere [E].</numerusform></translation>
+        <translation><numerusform>Ti abbiamo contattato per email su [A] il [B] ma hai ancora %n file che occupano [D] nel tuo account MEGA, che ti obbliga ad avere [E].</numerusform><numerusform>Ti abbiamo contattato per email su [A] il [B] ma hai ancora %n file che occupano [D] nel tuo account MEGA, che ti obbliga ad avere [E].</numerusform><numerusform>Ti abbiamo contattato per email su [A] il [B] ma hai ancora %n file che occupano [D] nel tuo account MEGA, che ti obbliga ad avere [E].</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>Ti rimane [A]%n giorno[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n giorni[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform></translation>
+        <translation><numerusform>Ti rimane [A]%n giorno[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n giorni[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n giorni[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>Ti rimane [A]%n ora[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n ore[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform></translation>
+        <translation><numerusform>Ti rimane [A]%n ora[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n ore[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n ore[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform></translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2090,7 +2118,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to upgrade the current account.</translatorcomment>
-        <translation>Effettua l&apos;upgrade dell&apos;account</translation>
+        <translation>Effettua l&#8217;upgrade dell&#8217;account</translation>
     </message>
     <message>
         <source>I will wait</source>
@@ -2136,62 +2164,9 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
         <translation>Copia link negli appunti</translation>
     </message>
     <message>
-        <source>Added [A]</source>
-        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
-        <translation>Aggiunto [A]</translation>
-    </message>
-    <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
         <translation>File eliminato o spostato</translation>
-    </message>
-</context>
-<context>
-    <name>InfoWizard</name>
-    <message>
-        <source>You are not logged in</source>
-        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
-        <translation>Non sei connesso</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>Effettua il login</translation>
-    </message>
-    <message>
-        <source>Create Account</source>
-        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
-        <translation>Crea un account</translation>
-    </message>
-    <message>
-        <source>MEGA Desktop app</source>
-        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>App Desktop MEGA</translation>
-    </message>
-    <message>
-        <source>Login or create an account to start using MEGA Desktop app.</source>
-        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Effettua il login o crea un account per iniziare ad utilizzare la nostra app.</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>Effettua il login nel tuo account MEGA per utilizzare la nostra app.</translation>
-    </message>
-    <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
-        <translation>Crea account</translation>
-    </message>
-    <message>
-        <source>Create account to join MEGA collaboration platform.</source>
-        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>Crea un account per unirti alla piattaforma MEGA di collaborazione.</translation>
-    </message>
-    <message>
-        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
-        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Scopri di più riguardo la nostra app. [A]Leggi di più[/A]</translation>
     </message>
 </context>
 <context>
@@ -2279,6 +2254,52 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     </message>
 </context>
 <context>
+    <name>LoginController</name>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
+        <translation>Controlla la tua e-mail e clicca sul link per conferma il tuo account.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
+        <translation>Hai tentato di fare l’accesso troppe volte. [BR]Per favore, aspetta sino alle %1 e riprova.</translation>
+    </message>
+    <message>
+        <source>Invalid email or password. Please try again.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
+        <translation>Email o password non valida. Per favore, riprova.</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
+        <translation>L&#8217;app non riesce a connettersi. Per favore, controlla la tua connessione ad Internet e la configurazione del tuo firewall locale. Ricorda che la maggior parte degli antivirus include un firewall.</translation>
+    </message>
+    <message>
+        <source>Email address already in use.</source>
+        <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. CON-465</translatorcomment>
+        <translation>Indirizzo e-mail già in uso.</translation>
+    </message>
+</context>
+<context>
+    <name>LogoutController</name>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
+        <translation>Sei stato disconnesso su questo computer da un’altra posizione</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
+        <translation>La nostra chiave di criptazione SSL non può essere verificata. Potrebbe avvenire un attacco man-in-the-middle o il tuo software antivirus potrebbe star intercettando le tue comunicazioni e causando questo problema. Per favore, disabilitalo e riprova.</translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
+        <translation>È stato effettuato il logout a causa di questo errore: %1</translation>
+    </message>
+</context>
+<context>
     <name>LowDiskSpaceDialog</name>
     <message>
         <source>Low disk space</source>
@@ -2337,11 +2358,6 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
         <translation>I link sono stati copiati negli appunti</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Effettuando l&#8217;accesso…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2407,7 +2423,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>È stato riscontrato un errore durante l&apos;installazione dell&apos;aggiornamento. Per favore, riprova più tardi o scarica l&apos;ultima versione da: https://mega.nz/sync</translation>
+        <translation>È stato riscontrato un errore durante l&#8217;installazione dell&#8217;aggiornamento. Per favore, riprova più tardi o scarica l&#8217;ultima versione da: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -2450,64 +2466,9 @@ https://mega.co.nz/#sync</source>
         <translation>La tua configurazione è corrotta, per favore ricomincia</translation>
     </message>
     <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>L&#8217;app non riesce a connettersi. Per favore, controlla la tua connessione ad Internet e la configurazione del tuo firewall locale. Ricorda che la maggior parte degli antivirus include un firewall.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>Il tuo account è stato bloccato. Si prega di contattare support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Login error: %1</source>
-        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation>Errore login: %1</translation>
-    </message>
-    <message>
-        <source>You have been logged out on this computer from another location</source>
-        <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation>Sei stato disconnesso su questo computer da un&#8217;altra posizione</translation>
-    </message>
-    <message>
-        <source>You have been logged out because of this error: %1</source>
-        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation>Sei stato disconnesso a causa di questo errore: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disabilitata perché la cartella remota è nel cestino</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disabilitata perché la cartella locale è cambiata</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disattivata. La cartella remota (o parte di essa) non ha accesso completo.</translation>
-    </message>
-    <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation>Oltre quota</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disabilitata poiché la sincronizzazione delle cartelle VirtualBox condivise non è supportata a causa di errori in quel file system.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2528,11 +2489,6 @@ https://mega.co.nz/#sync</source>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
         <translation>Errore: Cartella di destinazione invalida. Il download è stato cancellato.</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>La nostra chiave di criptazione SSL non può essere verificata. Potrebbe avvenire un attacco man-in-the-middle o il tuo software antivirus potrebbe star intercettando le tue comunicazioni e causando questo problema. Per favore, disabilitalo e riprova.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -2562,7 +2518,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>Impossibile trovare una barra di sistema dove posizionare l&apos;icona dell&apos;app. Prova a chiudere e riaprire l&apos;app.</translation>
+        <translation>Impossibile trovare una barra di sistema dove posizionare l&#8217;icona dell&#8217;app. Prova a chiudere e riaprire l&#8217;app.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2577,7 +2533,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Please consider updating your operating system.</source>
         <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
-        <translation>Per favore, prendi in considerazione di aggiornare il tuo sistema operativo.</translation>
+        <translation>Valuta l&#8217;aggiornamento del tuo sistema operativo.</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -2650,11 +2606,6 @@ https://mega.co.nz/#sync</source>
         <translation>Apri i link</translation>
     </message>
     <message>
-        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
-        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Il tuo account è stato disabilitato dal tuo amministratore. Per favore, contatta il tuo amministratore degli account business per ottenere maggiori dettagli.</translation>
-    </message>
-    <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation>L&#8217;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati dalle versioni precedenti di Windows 7.</translation>
@@ -2668,16 +2619,6 @@ https://mega.co.nz/#sync</source>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Una o più sincronizzazioni sono state disattivate</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disattivata. Motivo: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been enabled</source>
-        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata attivata</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -2703,8 +2644,9 @@ https://mega.co.nz/#sync</source>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>C&apos;è un trasferimento attivo. Uscire dall&apos;app?
+        <translation><numerusform>C&#8217;è un trasferimento attivo. Uscire dall&#8217;app?
 Il trasferimento riprenderà automaticamente quando riaprirai l&apos;app.</numerusform><numerusform>Ci sono trasferimenti attivi. Uscire dall&apos;app?
+I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</numerusform><numerusform>Ci sono trasferimenti attivi. Uscire dall&apos;app?
 I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</numerusform></translation>
     </message>
     <message>
@@ -2728,41 +2670,6 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
         <translation>Uno o più backup sono stati disabilitati</translation>
     </message>
     <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup “%1” è stato disattivato perché la sincronizzazione di cartelle condivise di VirtualBox non è supportata a causa di mancanze in quel filesystem.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup &#8220;%1&#8221; è stato disattivato perché la cartella di MEGA è nel Cestino.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup “%1” è stato disattivato. Non hai accesso completo alla cartella MEGA (o a parte di essa).</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale è cambiata.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup “%1” è stato disattivato perché la cartella di MEGA è cambiata.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Il tuo backup “%1” è stato disattivato. Motivo: %2</translation>
-    </message>
-    <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>Aggiornamento di sicurezza</translation>
@@ -2775,7 +2682,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>Al momento stai condividendo questa cartella: %1</numerusform><numerusform>Al momento stai condividendo queste cartelle: %1</numerusform></translation>
+        <translation><numerusform>Al momento stai condividendo questa cartella: %1</numerusform><numerusform>Al momento stai condividendo queste cartelle: %1</numerusform><numerusform>Al momento stai condividendo queste cartelle: %1</numerusform></translation>
     </message>
     <message>
         <source>Failed to ugrade security. Error: %1</source>
@@ -2808,34 +2715,9 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Le tue sincronizzazioni e i tuoi backup sono stati disabilitati: %1</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>I tuoi backup sono stati disabilitati: %1</translation>
-    </message>
-    <message>
-        <source>Your syncs have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Le tue sincronizzazioni sono state disabilitate: %1</translation>
-    </message>
-    <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
         <translation>Errore nell&#8217;ottenimento del link: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stata disabilitata temporaneamente: %2</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Il tuo backup “%1” è stato disabilitato temporaneamente: %2</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2846,6 +2728,11 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
         <source>Account deactivated</source>
         <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
         <translation>Account disattivato</translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Account Pro&#xa0;Flexi disattivato</translation>
     </message>
 </context>
 <context>
@@ -3035,21 +2922,6 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
         <source>Close</source>
         <translatorcomment>Button label to close current message box</translatorcomment>
         <translation>Chiudi</translation>
-    </message>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>Account bloccati</translation>
-    </message>
-    <message>
-        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>È possibile che tu stia utilizzando la stessa password per il tuo account MEGA e per altri servizi, e che almeno uno di questi altri servizi è stato oggetto di un furto di dati.</translation>
-    </message>
-    <message>
-        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>La tua password è stata rubata e adesso viene usata da persone non identificate per entrare nei tuoi account, incluso il, ma non limitato al, tuo account MEGA.</translation>
     </message>
 </context>
 <context>
@@ -3286,22 +3158,22 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>Metti in pausa il trasferimento</numerusform><numerusform>Metti in pausa i trasferimenti</numerusform></translation>
+        <translation><numerusform>Metti in pausa il trasferimento</numerusform><numerusform>Metti in pausa i trasferimenti</numerusform><numerusform>Metti in pausa i trasferimenti</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>Riprendi il trasferimento</numerusform><numerusform>Riprendi i trasferimenti</numerusform></translation>
+        <translation><numerusform>Riprendi il trasferimento</numerusform><numerusform>Riprendi i trasferimenti</numerusform><numerusform>Riprendi i trasferimenti</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>Annulla il trasferimento</numerusform><numerusform>Annulla i trasferimenti</numerusform></translation>
+        <translation><numerusform>Annulla il trasferimento</numerusform><numerusform>Annulla i trasferimenti</numerusform><numerusform>Annulla i trasferimenti</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>Pulisci il trasferimento</numerusform><numerusform>Pulisci i trasferimenti</numerusform></translation>
+        <translation><numerusform>Pulisci il trasferimento</numerusform><numerusform>Pulisci i trasferimenti</numerusform><numerusform>Pulisci i trasferimenti</numerusform></translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -3404,7 +3276,7 @@ Le sincronizzazioni incomplete che hai selezionato non saranno annullate. Tutti 
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>Annulla e pulisci il trasferimento</numerusform><numerusform>Annulla e pulisci i trasferimenti</numerusform></translation>
+        <translation><numerusform>Annulla e pulisci il trasferimento</numerusform><numerusform>Annulla e pulisci i trasferimenti</numerusform><numerusform>Annulla e pulisci i trasferimenti</numerusform></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3660,18 +3532,13 @@ Inserisci un nome differente.</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>Qualcuno ha accettato la tua richiesta di contatto</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>Info</translation>
-    </message>
-    <message>
-        <source>Someone accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Richiesta di contatto accettata</translation>
     </message>
     <message>
         <source>Info:</source>
@@ -3715,11 +3582,559 @@ Inserisci un nome differente.</translation>
     </message>
 </context>
 <context>
+    <name>OnboardingStrings</name>
+    <message>
+        <source>Add folder</source>
+        <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
+        <translation>Aggiungi cartella</translation>
+    </message>
+    <message>
+        <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
+        <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
+        <translation>Ho letto e accettato i [B][A]Termini di Servizio[/A][/B] di MEGA</translation>
+    </message>
+    <message>
+        <source>Back up</source>
+        <translatorcomment>Button text to configure the selected backups CON-468</translatorcomment>
+        <translation>Effettua il backup</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Button title, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>Backup</translation>
+    </message>
+    <message>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>I dati dal tuo dispositivo saranno automaticamente e continuamente copiati su MEGA in tempo reale.</translation>
+    </message>
+    <message>
+        <source>Backup: Confirm</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup confirm step CON-468</translatorcomment>
+        <translation>Backup: Conferma</translation>
+    </message>
+    <message>
+        <source>Backup Folders</source>
+        <translatorcomment>Backup folders table title CON-468</translatorcomment>
+        <translation>Cartelle di backup</translation>
+    </message>
+    <message>
+        <source>Backup: Select folders</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
+        <translation>Backup: Seleziona cartelle</translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
+        <translation>Effettua il backup in:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>Scegli</translation>
+    </message>
+    <message>
+        <source>Change folder</source>
+        <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
+        <translation>Cambia cartella</translation>
+    </message>
+    <message>
+        <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
+        <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
+        <translation>Inserisci un nuovo indirizzo email e clicca su Reinvia. Invieremo un&#8217;email di verifica a questo nuovo indirizzo email in modo che tu possa attivare il tuo account.</translation>
+    </message>
+    <message>
+        <source>Change your email address</source>
+        <translatorcomment>Change email window title CON-466</translatorcomment>
+        <translation>Cambia il tuo indirizzo email</translation>
+    </message>
+    <message>
+        <source>Device name</source>
+        <translatorcomment>Device name window title CON-467</translatorcomment>
+        <translation>Nome del dispositivo</translation>
+    </message>
+    <message>
+        <source>Add the name of your device.</source>
+        <translatorcomment>Device name window secondary title CON-467</translatorcomment>
+        <translation>Aggiungi il nome del tuo dispositivo.</translation>
+    </message>
+    <message>
+        <source>Add device name</source>
+        <translatorcomment>Device name text input box title CON-467</translatorcomment>
+        <translation>Aggiungi nome dispositivo</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translatorcomment>Button text to confirm the current action CON-467</translatorcomment>
+        <translation>Conferma</translation>
+    </message>
+    <message>
+        <source>There is already a folder with the same name in this backup</source>
+        <translatorcomment>Error text indicating that it can´t create a backup with duplicated names CON-468</translatorcomment>
+        <translation>C&#8217;è già una cartella con lo stesso nome in questo backup</translation>
+    </message>
+    <message>
+        <source>A folder with the same name already exists on your backups</source>
+        <translatorcomment>Error text indicating that a backup with the same name already exists CON-468</translatorcomment>
+        <translation>Una cartella con lo stesso nome già esiste nei tuoi backup</translation>
+    </message>
+    <message>
+        <source>Confirm folders to back up</source>
+        <translatorcomment>Confirm backups table title CON-468</translatorcomment>
+        <translation>Conferma le cartelle di cui effettuare il backup</translation>
+    </message>
+    <message>
+        <source>Account created</source>
+        <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
+        <translation>Account creato</translation>
+    </message>
+    <message>
+        <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
+        <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
+        <translation>Per attivare il tuo account, devi verificare il tuo indirizzo email. Ti abbiamo inviato un&#8217;email con un link di conferma. Clicca sul link per verificare il tuo indirizzo email, poi potrai effettuare il login.</translation>
+    </message>
+    <message>
+        <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
+        <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>Se non hai ricevuto l’email entro 1 ora, controlla la tua cartella Spam. Se non riesci a trovarla, [B][A]contatta il supporto[/A][/B].</translation>
+    </message>
+    <message>
+        <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
+        <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>Se hai scritto male il tuo indirizzo email, [B][A]cambialo qui[/A][/B].</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
+        <translation>Conferma password</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
+        <translation>Fatto</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translatorcomment>Email text input title CON-466</translatorcomment>
+        <translation>Indirizzo email</translation>
+    </message>
+    <message>
+        <source>Please confirm your password</source>
+        <translatorcomment>Confirm password text input title CON-466</translatorcomment>
+        <translation>Conferma la tua password</translation>
+    </message>
+    <message>
+        <source>Enter your password</source>
+        <translatorcomment>Password text input title CON-466</translatorcomment>
+        <translation>Inserisci la tua password</translation>
+    </message>
+    <message>
+        <source>Please enter your name</source>
+        <translatorcomment>Name text input title CON-466</translatorcomment>
+        <translation>Inserisci il tuo nome</translation>
+    </message>
+    <message>
+        <source>Please enter your last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>Inserisci il tuo cognome</translation>
+    </message>
+    <message>
+        <source>Passwords don&apos;t match. Check and try again.</source>
+        <translatorcomment>Error label indicating that password and confirm password content is not the same CON-466</translatorcomment>
+        <translation>Le password non combaciano. Controlla e riprova.</translation>
+    </message>
+    <message>
+        <source>Enter a valid email address</source>
+        <translatorcomment>Error label indicating that the email is not valid CON-466</translatorcomment>
+        <translation>Inserisci un indirizzo email valido</translation>
+    </message>
+    <message>
+        <source>Your backup is set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Il backup è configurato</translation>
+    </message>
+    <message>
+        <source>What else do you want to do?</source>
+        <translatorcomment>Text suggesting the user to create another backup or sync CON-468</translatorcomment>
+        <translation>Cos&#8217;altro vuoi fare?</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
+        <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
+        <translation>La tua sincronizzazione è stata configurata e sincronizzerà automaticamente i dati selezionati ogni volta che l&#8217;app per desktop è in esecuzione.</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-467</translatorcomment>
+        <translation>La sincronizzazione è configurata</translation>
+    </message>
+    <message>
+        <source>First name</source>
+        <translatorcomment>First name text input title CON-466</translatorcomment>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA account with your local device.</source>
+        <translatorcomment>Full sync button description CON-467</translatorcomment>
+        <translation>Sincronizza il tuo intero account MEGA con il tuo dispositivo locale.</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translatorcomment>Full sync button title CON-467</translatorcomment>
+        <translation>Sincronizzazione completa</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Full sync page title CON-467</translatorcomment>
+        <translation>Sincronizza il tuo intero Cloud Drive di MEGA con un dispositivo locale.</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
+        <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata perché non possiedi l&#8217;autorizzazione per creare una nuova cartella. Per continuare, seleziona una cartella esistente.</translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
+        <translation>Password dimenticata?</translation>
+    </message>
+    <message>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a local folder CON-467</translatorcomment>
+        <translation>Seleziona una cartella locale da sincronizzare</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a MEGA folder CON-467</translatorcomment>
+        <translation>Seleziona una cartella MEGA da sincronizzare</translation>
+    </message>
+    <message>
+        <source>Setup options</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the Setup options step CON-467</translatorcomment>
+        <translation>Opzioni di configurazione</translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
+        <translation>Scegli:</translation>
+    </message>
+    <message>
+        <source>Welcome to MEGA</source>
+        <translatorcomment>Label wellcoming the user to MEGA CON-467</translatorcomment>
+        <translation>Ti diamo il benvenuto in MEGA</translation>
+    </message>
+    <message>
+        <source>Last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>Cognome</translation>
+    </message>
+    <message>
+        <source>Log in</source>
+        <translatorcomment>Log in button text CON-465</translatorcomment>
+        <translation>Effettua il log&#xa0;in</translation>
+    </message>
+    <message>
+        <source>Log in to your [B]MEGA account[/B]</source>
+        <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
+        <translation>Accedi al tuo [B]account MEGA[/B]</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
+        <translation>Avanti</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
+        <translation>Salta</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>Visualizza nelle Impostazioni</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Password input field title CON-465</translatorcomment>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
+        <translation>Precedente</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Button to rename a backup CON-468</translatorcomment>
+        <translation>Rinomina</translation>
+    </message>
+    <message>
+        <source>Resend</source>
+        <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
+        <translation>Reinvia</translation>
+    </message>
+    <message>
+        <source>[B]Select all[/B]</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>[B]Seleziona tutto[/B]</translation>
+    </message>
+    <message>
+        <source>Select folders to back up</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>Seleziona le cartelle di cui eseguire il backup</translation>
+    </message>
+    <message>
+        <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
+        <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
+        <translation>Le cartelle selezionate verranno automaticamente salvate su MEGA quando l&#8217;app per desktop è in esecuzione.</translation>
+    </message>
+    <message>
+        <source>Select a local folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a local folder CON-467</translatorcomment>
+        <translation>Seleziona una cartella locale</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
+        <translation>Seleziona una cartella MEGA</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA account with your local device.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>Sincronizza le cartelle selezionate nel tuo account MEGA con il tuo dispositivo locale.</translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
+        <translation>Sincronizza cartelle specifiche nel tuo MEGA Cloud drive con il tuo dispositivo locale.</translation>
+    </message>
+    <message>
+        <source>Selective sync</source>
+        <translatorcomment>Selective sync button title text CON-467</translatorcomment>
+        <translation>Sincronizzazione selettiva</translation>
+    </message>
+    <message>
+        <source>Set up MEGA</source>
+        <translatorcomment>Onboarding window title CON-467</translatorcomment>
+        <translation>Imposta MEGA</translation>
+    </message>
+    <message>
+        <source>Sign up</source>
+        <translatorcomment>Sign up button text CON-465</translatorcomment>
+        <translation>Iscriviti</translation>
+    </message>
+    <message>
+        <source>Create your [B]MEGA account[/B]</source>
+        <translatorcomment>Sign up page title CON-466</translatorcomment>
+        <translation>Crea il tuo [B]account MEGA[/B]</translation>
+    </message>
+    <message>
+        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>Sincronizza il tuo dispositivo con MEGA e qualsiasi modifica locale verrà applicata automaticamente ed istantaneamente a MEGA e viceversa.</translation>
+    </message>
+    <message>
+        <source>Choose sync type</source>
+        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
+        <translation>Scegli il tipo di sincronizzazione</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Button title that forwards the user to the syncs flow CON-467</translatorcomment>
+        <translation>Sincronizza</translation>
+    </message>
+    <message>
+        <source>Sync: Choose type</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the choose sync type step CON-467</translatorcomment>
+        <translation>Sincronizzazione: scegli il tipo</translation>
+    </message>
+    <message>
+        <source>Sync set up</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
+        <translation>Configurazione della sincronizzazione</translation>
+    </message>
+    <message>
+        <source>Problem with two-factor authentication?</source>
+        <translatorcomment>Text that the user has to click in case he has problems with 2FA CON-465</translatorcomment>
+        <translation>Problemi con l&#8217;autenticazione a due fattori?</translation>
+    </message>
+    <message>
+        <source>Enter the 6-digit code generated by your authenticator app.</source>
+        <translatorcomment>2FA page secondary title CON-465</translatorcomment>
+        <translation>Inserisci il codice a 6 cifre generato dalla tua app di autenticazione.</translation>
+    </message>
+    <message>
+        <source>Continue with [B]two-factor authentication[/B]</source>
+        <translatorcomment>2FA page title CON-465</translatorcomment>
+        <translation>Continua con l&apos;[B]autenticazione a due fattori[/B]</translation>
+    </message>
+    <message>
+        <source>Logging in…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Effettuando il login…</translation>
+    </message>
+    <message>
+        <source>Fetching file list…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Recupero dell&#8217;elenco dei file…</translation>
+    </message>
+    <message>
+        <source>Creating account…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
+        <translation>Creazione di un account…</translation>
+    </message>
+    <message>
+        <source>Validating 2FA code…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Convalida del codice 2FA…</translation>
+    </message>
+    <message>
+        <source>Stop logging in?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Interrompere l&#8217;accesso?</translation>
+    </message>
+    <message>
+        <source>Closing this window will stop you logging in.</source>
+        <translatorcomment>Dialog body text. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>La chiusura di questa finestra impedirà l&#8217;accesso.</translation>
+    </message>
+    <message>
+        <source>Stop Loggin in</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Interrompi l&#8217;accesso</translation>
+    </message>
+    <message>
+        <source>Don’t stop</source>
+        <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Non interrompere</translation>
+    </message>
+    <message>
+        <source>Cancel account creation?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Annullare la creazione dell&#8217;account?</translation>
+    </message>
+    <message>
+        <source>Closing this window will cancel the sign up process.</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>La chiusura di questa finestra annullerà la procedura di registrazione.</translation>
+    </message>
+    <message>
+        <source>Cancel account</source>
+        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Annulla creazione</translation>
+    </message>
+    <message>
+        <source>Don’t cancel</source>
+        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Non annullare</translation>
+    </message>
+    <message>
+        <source>Password needs to be at least 8 characters</source>
+        <translatorcomment>Hint text that tells the user minimum requirement for the passwords CON-466</translatorcomment>
+        <translation>La password deve contenere almeno 8 caratteri</translation>
+    </message>
+    <message>
+        <source>It’s better to have:</source>
+        <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>È meglio avere:</translation>
+    </message>
+    <message>
+        <source>Upper and lower case letters</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Lettere maiuscole e minuscole</translation>
+    </message>
+    <message>
+        <source>At least one number or special character</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Almeno un numero o un carattere speciale</translation>
+    </message>
+    <message>
+        <source>Enter a minimum of 8 characters.</source>
+        <translatorcomment>Error text to force the user to fill minimum character requirement CON-466</translatorcomment>
+        <translation>Inserisci un minimo di 8 caratteri.</translation>
+    </message>
+    <message>
+        <source>Your password is too easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>La tua password è troppo facile da indovinare. Devi renderla più resistente.</translation>
+    </message>
+    <message>
+        <source>Your password is easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>La tua password è facile da indovinare. Dovresti renderla più resistente.</translation>
+    </message>
+    <message>
+        <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
+        <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
+        <translation>Aggiorna automaticamente i tuoi file dai tuoi computer a MEGA. Se scegli di eliminare i tuoi backup in MEGA, i tuoi file locali non saranno rimossi.</translation>
+    </message>
+    <message>
+        <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
+        <translation>Sincronizza cartelle selezionate tra i tuoi computer e MEGA; qualsiasi modifica da una parte verrà applicata all&#8217;altra.</translation>
+    </message>
+    <message>
+        <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
+        <translation>Sincronizza i tuoi file tra i tuoi computer e MEGA; qualsiasi modifica da una parte verrà applicata all&#8217;altra.</translation>
+    </message>
+    <message>
+        <source>Let&apos;s get you set up</source>
+        <translatorcomment>Page title for new accounts in set device name page CON-467</translatorcomment>
+        <translation>Configuriamo</translation>
+    </message>
+    <message>
+        <source>Confirm your email and password</source>
+        <translatorcomment>Page title for new accounts in login page CON-465</translatorcomment>
+        <translation>Conferma il tuo indirizzo email e la password</translation>
+    </message>
+    <message>
+        <source>Once confirmed, your account will be activated.</source>
+        <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
+        <translation>Una volta confermato, il tuo account verrà attivato.</translation>
+    </message>
+    <message>
+        <source>Enter your email address</source>
+        <translatorcomment>Login error if user didn´t enter the email CON-465</translatorcomment>
+        <translation>Inserisci il tuo indirizzo email</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Device name text input field title CON-467</translatorcomment>
+        <translation>Inserisci il nome del dispositivo</translation>
+    </message>
+    <message>
+        <source>Names longer than 32 characters are not supported</source>
+        <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
+        <translation>I nomi più lunghi di 32 caratteri non sono supportati</translation>
+    </message>
+    <message>
+        <source>Authentication failed</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>Autenticazione fallita</translation>
+    </message>
+    <message>
+        <source>Incorrect 2FA code</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>Codice 2FA non corretto</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Il tuo backup è stato impostato e i dati selezionati effettueranno automaticamente il backup quando l&#8217;app per desktop è in esecuzione. Puoi vedere i tuoi backup e il loro status nella sezione Backup delle Impostazioni.</translation>
+    </message>
+</context>
+<context>
     <name>OsNotifications</name>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] ha rimosso %n oggetto</numerusform><numerusform>[A] ha rimosso %n oggetti</numerusform></translation>
+        <translation><numerusform>[A] ha rimosso %n oggetto</numerusform><numerusform>[A] ha rimosso %n oggetti</numerusform><numerusform>[A] ha rimosso %n oggetti</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3762,7 +4177,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation>Effettua l&apos;upgrade dell&apos;account</translation>
+        <translation>Effettua l&#8217;upgrade dell&#8217;account</translation>
     </message>
     <message>
         <source>Importing links is temporarily disabled.</source>
@@ -3993,7 +4408,7 @@ Inserisci un nome differente.</translation>
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>minimo %n utente</numerusform><numerusform>minimo %n utenti</numerusform></translation>
+        <translation><numerusform>minimo %n utente</numerusform><numerusform>minimo %n utenti</numerusform><numerusform>minimo %n utenti</numerusform></translation>
     </message>
     <message>
         <source>[A] storage</source>
@@ -4037,14 +4452,16 @@ Inserisci un nome differente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Upgraded to Qt5.15.
-- Fixed detected crashes on Windows, Linux and macOS.
-- Updated third-party libraries.
+        <source>- A new onboarding wizard is introduced when a new sync or backup process is initiated for the first time.
+- Revamped the user interface of the macOS installer.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Application performance improved.
 </source>
-        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
-        <translation>- Aggiornato a Qt 5.15.
-- Crash sistemati su Windows, Linux e macOS.
-- Librerie di terze parti aggiornate.
+        <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
+        <translation>- Una nuova procedura guidata viene introdotta quando viene avviato per la prima volta un nuovo processo di sincronizzazione o di backup.
+- Interfaccia utente rinnovata del programma di installazione di macOS.
+- Risolti i crash rilevati su Windows, Linux e macOS.
+- Prestazioni dell&apos;applicazione migliorate.
 </translation>
     </message>
 </context>
@@ -4064,16 +4481,6 @@ Inserisci un nome differente.</translation>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
         <translation>Impostazioni proxy:</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translatorcomment>HTTP proxy type</translatorcomment>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>SOCK5H</source>
-        <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -4369,7 +4776,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>Sconosciuto</translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -4661,12 +5068,17 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n cartella</numerusform><numerusform>%n cartelle</numerusform></translation>
+        <translation><numerusform>%n cartella</numerusform><numerusform>%n di cartelle</numerusform><numerusform>%n cartelle</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n file</numerusform></translation>
+        <translation><numerusform>%n file</numerusform><numerusform>%n di file</numerusform><numerusform>%n file</numerusform></translation>
+    </message>
+    <message>
+        <source>Adding transfers…</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
+        <translation>Aggiunta di trasferimenti…</translation>
     </message>
 </context>
 <context>
@@ -4754,7 +5166,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>L&apos;app effettuerà una scansione totale delle tue cartelle sincronizzate quando viene avviata. Vuoi riavviare l&apos;app ora?</translation>
+        <translation>L&#8217;app effettuerà una scansione totale delle tue cartelle sincronizzate quando viene avviata. Vuoi riavviare l&#8217;app ora?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4917,11 +5329,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Network</translation>
     </message>
     <message>
-        <source>Enable overlay icons</source>
-        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>Attiva icone sovrapposte</translation>
-    </message>
-    <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
         <translation>Controlla aggiornamenti</translation>
@@ -4989,7 +5396,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>Alcune cartelle non sono sincronizzate. Per maggiori informazioni vai sull&#8217;icona gialla di avvertimento.</translation>
+        <translation>Alcune cartelle non sono state sincronizzate. Per maggiori informazioni, per favore porta il cursore sopra l&#8217;icona gialla di avvertimento.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -5129,7 +5536,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Attiva l&#8217;integrazione con Esplora file di Windows</translation>
+        <translation>Abilita l&#8217;integrazione con Esplora file</translation>
     </message>
     <message>
         <source>B</source>
@@ -5249,12 +5656,12 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Banda di trasferimento utilizzata nell&#8217;ultima ora:</numerusform><numerusform>Banda di trasferimento utilizzata nelle ultime %n ore:</numerusform></translation>
+        <translation><numerusform>Banda di trasferimento utilizzata nell&#8217;ultima ora:</numerusform><numerusform>Banda di trasferimento utilizzata nelle ultime %n ore:</numerusform><numerusform>Banda di trasferimento utilizzata nelle ultime %n ore:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>giorno</numerusform><numerusform>giorni</numerusform></translation>
+        <translation><numerusform>giorno</numerusform><numerusform>giorni</numerusform><numerusform>giorni</numerusform></translation>
     </message>
     <message>
         <source>Sleep settings</source>
@@ -5411,6 +5818,21 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Impedisci al computer di andare in sospensione durante trasferimenti o sincronizzazioni in corso.</translation>
     </message>
+    <message>
+        <source>Enable sync status icons</source>
+        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
+        <translation>Abilita le icone dello stato della sincronizzazione</translation>
+    </message>
+    <message>
+        <source>Enabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>Abilitazione delle icone dello stato della sincronizzazione</translation>
+    </message>
+    <message>
+        <source>Disabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>Disattivazione delle icone dello stato della sincronizzazione</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog_Bandwith</name>
@@ -5426,340 +5848,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Auto</source>
         <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
         <translation>Automatiche</translation>
-    </message>
-</context>
-<context>
-    <name>SetupWizard</name>
-    <message>
-        <source>Create a new MEGA account</source>
-        <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>Crea un nuovo account MEGA</translation>
-    </message>
-    <message>
-        <source>Email:</source>
-        <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>Email:</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>Password:</translation>
-    </message>
-    <message>
-        <source>Repeat password:</source>
-        <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>Ripeti password:</translation>
-    </message>
-    <message>
-        <source>Log in to your MEGA account</source>
-        <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Effettua il login nel tuo account MEGA</translation>
-    </message>
-    <message>
-        <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Verifica il tuo account utilizzando il link di conferma che abbiamo inviato al tuo account di posta elettronica</translation>
-    </message>
-    <message>
-        <source>Choose install type</source>
-        <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>Scegli tipo di installazione</translation>
-    </message>
-    <message>
-        <source> Sync your entire cloud drive</source>
-        <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sincronizzazione dell&#8217;intero Cloud drive</translation>
-    </message>
-    <message>
-        <source>Selective sync</source>
-        <translatorcomment>Label displayed to show Selective sync mode. Max 18 characters.</translatorcomment>
-        <translation>Sincronizzazione selettiva</translation>
-    </message>
-    <message>
-        <source>Local folder:</source>
-        <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>Cartella locale:</translation>
-    </message>
-    <message>
-        <source>MEGA folder:</source>
-        <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>Cartella MEGA:</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>Cambia</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>Indietro</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Avanti</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Annulla</translation>
-    </message>
-    <message>
-        <source>User already exists</source>
-        <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>L&#8217;utente esiste già</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Recupero lista file…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Email o password non valide.</translation>
-    </message>
-    <message>
-        <source>MEGA folder doesn&apos;t exist</source>
-        <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>La cartella MEGA non esiste</translation>
-    </message>
-    <message>
-        <source>Finish</source>
-        <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>Fine</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Inserisci il tuo indirizzo email</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Per favore inserisci un indirizzo e-mail valido</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Per favore inserisci la tua password</translation>
-    </message>
-    <message>
-        <source>Please, enter your name</source>
-        <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Per favore inserisci il tuo nome</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Per favore inserisci una password più resistente</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>Le password inserite non corrispondono</translation>
-    </message>
-    <message>
-        <source>You have to accept our terms of service</source>
-        <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Per continuare devi accettare i nostri Termini di Servizio</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Creando l&#8217;account…</translation>
-    </message>
-    <message>
-        <source>Please, select a local folder</source>
-        <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Per favore scegli una cartella locale</translation>
-    </message>
-    <message>
-        <source>Please, select a MEGA folder</source>
-        <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Per favore scegli una cartella MEGA</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Seleziona cartella locale</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Effettuando l&#8217;accesso…</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Impossibile ottenere il file system. Per favore, riprova. Se il problema persiste per favore contattaci a bug@mega.nz</translation>
-    </message>
-    <message>
-        <source>Set up Assistant - MEGAsync</source>
-        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Imposta assistente</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
-        <translation>Sincronizzazione completa</translation>
-    </message>
-    <message>
-        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>La tua cartella locale e il tuo Cloud drive MEGA saranno sincronizzati automaticamente.</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>Vuoi continuare?</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation>Il tuo account è stato bloccato. Si prega di contattare support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Vuoi annullare questa azione e tutti i cambiamenti?</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
-        <translation>Salta</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Effettuando l&#8217;uscita…</translation>
-    </message>
-    <message>
-        <source>Very Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation>Molto debole</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation>Debole</translation>
-    </message>
-    <message>
-        <source>Medium</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation>Media</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation>Buono</translation>
-    </message>
-    <message>
-        <source>Strong</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation>Sicura</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
-        <translation>Controlla la tua e-mail e clicca sul link per conferma il tuo account.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
-        <translation>Hai tentato di fare l&#8217;accesso troppe volte. [BR]Per favore, aspetta sino alle %1 e riprova.</translation>
-    </message>
-    <message>
-        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
-        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>First name:</source>
-        <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation>Nome:</translation>
-    </message>
-    <message>
-        <source>Last name:</source>
-        <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation>Cognome:</translation>
-    </message>
-    <message>
-        <source>Check your inbox</source>
-        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation>Controlla la tua posta in arrivo</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your cloud drive</source>
-        <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Sincronizzazione cartelle specifiche nel tuo cloud drive</translation>
-    </message>
-    <message>
-        <source>Selective sync:</source>
-        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
-        <translation>Sincronizzazione selettiva</translation>
-    </message>
-    <message>
-        <source>Please, enter your last name</source>
-        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation>Per favore, inserisci il tuo cognome</translation>
-    </message>
-    <message>
-        <source>Set up selective sync</source>
-        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Imposta una sincronizzazione selettiva</translation>
-    </message>
-    <message>
-        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Cartelle specifiche del tuo Cloud drive verranno sincronizzate con una cartella locale identica.</translation>
-    </message>
-    <message>
-        <source>Select Local folder:</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Seleziona cartella locale</translation>
-    </message>
-    <message>
-        <source>Set up full sync</source>
-        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Imposta una sincronizzazione completa</translation>
-    </message>
-    <message>
-        <source>Full Sync</source>
-        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation>Sincronizzazione completa</translation>
-    </message>
-    <message>
-        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Il tuo intero Cloud drive verrà sincronizzato con una cartella locale.</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Effettua il login</translation>
-    </message>
-    <message>
-        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
-        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
-        <translation>Sono d&#8217;accordo con i [A]Termini di Servizio[/A] MEGA</translation>
-    </message>
-    <message>
-        <source>Enjoy MEGAsync</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Divertiti con la nostra app</translation>
-    </message>
-    <message>
-        <source>We are all done</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>Abbiamo fatto tutto</translation>
-    </message>
-    <message>
-        <source>Creating folder…</source>
-        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Creando la cartella…</translation>
     </message>
 </context>
 <context>
@@ -5812,12 +5900,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n file</numerusform></translation>
+        <translation><numerusform>%n file</numerusform><numerusform>%n file</numerusform><numerusform>%n file</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n cartella</numerusform><numerusform>%n cartelle</numerusform></translation>
+        <translation><numerusform>%n cartella</numerusform><numerusform>%n cartelle</numerusform><numerusform>%n cartelle</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5990,24 +6078,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>SyncController</name>
     <message>
-        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation>Non puoi effettuare il backup di questa cartella perché è già sincronizzata.</translation>
-    </message>
-    <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
         <translation>La cartella ha già effettuato il backup. Seleziona un&#8217;altra cartella.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation>Non puoi sincronizzare questa cartella perché è già sincronizzata.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation>Non puoi sincronizzare questa cartella perché è già impostato un backup.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
@@ -6015,39 +6088,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Non puoi effettuare il backup di questa cartella perché è dentro una cartella sincronizzata.</translation>
     </message>
     <message>
-        <source>You can&apos;t sync folders that are inside synced folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>Non puoi sincronizzare cartelle all&#8217;interno di altre cartelle sincronizzate.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that are inside backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation>Non puoi sincronizzare cartelle all&#8217;interno di cartelle che effettuano il backup.</translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
         <translation>Non puoi effettuare il backup di questa cartella perché contiene cartelle sincronizzate.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain synced folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>Non puoi sincronizzare cartelle che contengono cartelle sincronizzate.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation>Non puoi sincronizzare cartelle che contengono cartelle che effettuano il backup.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>Non hai i permessi di scrittura in questa cartella locale.</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>L&#8217;app non potrà scaricare nulla qui.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6080,20 +6123,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Impossibile creare il backup. Per maggiori informazioni, contatta il [A]Supporto[/A].</translation>
     </message>
     <message>
-        <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation>Non puoi effettuare il backup di “%1” perché è la cartella root. La cartella root è la cartella base di tutte le cartelle del tuo computer, oppure è la cartella dove il sistema è installato. Non permettiamo agli utenti di effettuare il backup delle cartelle root perché potrebbe causare conflitti o errori.
-Per continuare, seleziona un&apos;altra cartella.</translation>
-    </message>
-    <message>
-        <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation>Non puoi effettuare il backup di “%1” perché è la cartella root. La cartella root è la cartella base di tutte le cartelle del tuo computer, oppure è la cartella dove il sistema è installato. Non permettiamo agli utenti di effettuare il backup delle cartelle root perché potrebbe causare conflitti o errori.
-Per continuare, seleziona un&apos;altra cartella.</translation>
-    </message>
-    <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
         <translation>Non hai i permessi di pieno accesso a questa cartella condivisa e non puoi sincronizzarla.</translation>
@@ -6102,11 +6131,6 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
         <translation>Questa cartella MEGA non può essere sincronizzata.</translation>
-    </message>
-    <message>
-        <source>The selected MEGA folder is already synced.</source>
-        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation>La cartella MEGA selezionata è già sincronizzata.</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
@@ -6118,18 +6142,173 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
         <translation>La cartella è già sincronizzata.</translation>
     </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it is already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
+        <translation>Impossibile eseguire il backup della cartella poiché è già sincronizzata</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s already synced</source>
+        <translatorcomment>Warning message indicating that the folder is already synced. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata perché è già sincronizzata</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as is already backed up</source>
+        <translatorcomment>Warning message indicating that the selected folder is a backup. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata poiché è già stato eseguito il backup</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a sync folder. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata poiché si trova all&#8217;interno di una cartella sincronizzata</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata poiché si trova all&#8217;interno di una cartella di cui viene effettuato il backup</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains synced folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains synced folders. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata poiché contiene cartelle sincronizzate</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains backed up folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains backed up folders. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata poiché contiene cartelle di cui viene effettuato il backup</translation>
+    </message>
+    <message>
+        <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
+        <translation>Impossibile eseguire il backup di “%1” in quanto è la cartella principale. Per continuare, seleziona una cartella diversa.</translation>
+    </message>
+    <message>
+        <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
+        <translation>Impossibile sincronizzare “%1” in quanto è la cartella principale. Per continuare, seleziona una cartella diversa.</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have write permissions.</source>
+        <translatorcomment>Warning message indicating that there is no write Permissions. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata poiché non disponi delle autorizzazioni di scrittura</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
+        <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata perché si trova nel Cestino MEGA</translation>
+    </message>
+    <message>
+        <source>This selection can&apos;t be synced as it’s a file.</source>
+        <translatorcomment>Warning message indicating that the selection is a file and files can´t be synced. CON-467</translatorcomment>
+        <translation>Questa selezione non può essere sincronizzata in quanto è un file</translation>
+    </message>
+    <message>
+        <source>This folder is already being synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
+        <translation>Questa cartella è già sincronizzata</translation>
+    </message>
 </context>
 <context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Stai sincronizzando una cartella locale formattata con un filesystem FAT. Quel filesystem ha problemi nel gestire grandi file e le modifiche che può causare problemi di sincronizzazione (ad esempio quando cambia l’orario), quindi è altamente raccomandata la sincronizzazione di sole cartelle formattate con un filesystem più affidabile, come NTFS (più informazioni [A]qui[/A]).</translation>
+        <translation>Stai sincronizzando una cartella locale formattata con un file system FAT. Il file system FAT presenta delle lacune nella gestione dei file di grandi dimensioni e degli orari di modifica che possono causare problemi di sincronizzazione (ad esempio quando si passa dall&#8217;ora solare all&#8217;ora legale e viceversa), quindi si consiglia vivamente di sincronizzare solo le cartelle formattate con file system più affidabili come NTFS (ulteriori informazioni [A]qui[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>Stai sincronizzando una cartella locale condivisa con VMWare. Questa cartella non supporta le notifiche del filesystem, quindi per riscontrare cambiamenti e sincronizzare l&apos;app dovrà scansionare la cartella e i file al suo interno di continuo. Se possibile, utilizza un&apos;altra cartella per ridurre l&apos;utilizzo della CPU.</translation>
+        <translation>Stai sincronizzando una cartella locale condivisa con VMWare. Questa cartella non supporta le notifiche del filesystem, quindi per riscontrare cambiamenti e sincronizzare l&#8217;app dovrà scansionare la cartella e i file al suo interno di continuo. Se possibile, utilizza un&#8217;altra cartella per ridurre l&#8217;utilizzo della CPU.</translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Le tue sincronizzazioni e i tuoi backup sono stati disabilitati: %1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>I tuoi backup sono stati disabilitati: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Le tue sincronizzazioni sono state disabilitate: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>La tua sincronizzazione “%1” è stata disabilitata perché MEGA non può sincronizzare o eseguire il backup delle cartelle di VirtualBox.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>La tua sincronizzazione “%1” è stata disabilitata perché la cartella remota è nel cestino</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>La tua sincronizzazione “%1” è stata disattivata. Non hai accesso completo alla cartella remota (o a parte di essa).</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>La tua sincronizzazione “%1” è stata disattivata perché la cartella locale è cambiata</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>La tua sincronizzazione “%1” è stata disattivata. Motivo: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason.SNC-3654</translatorcomment>
+        <translation>Il tuo backup “%1” è stato disabilitato temporaneamente: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale non è disponibile oppure non possiedi i permessi di lettura e scrittura.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>Il tuo backup “%1” è stato disattivato perché la sincronizzazione di cartelle condivise di VirtualBox non è supportata a causa di mancanze in quel filesystem.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella di MEGA è nel Cestino.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Il tuo backup “%1” è stato disattivato. Non hai accesso completo alla cartella MEGA (o a parte di essa).</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale è cambiata.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella di MEGA è cambiata.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>Il tuo backup “%1” è stato disattivato. Motivo: %2</translation>
     </message>
 </context>
 <context>
@@ -6219,26 +6398,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
-    <name>SyncsMenu</name>
+    <name>Syncs</name>
     <message>
-        <source>Add Sync</source>
-        <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>Aggiungi sincronizzazione</translation>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
+        <translation>Seleziona una cartella locale da sincronizzare</translation>
     </message>
     <message>
-        <source>Syncs</source>
-        <translatorcomment>Menu option that shows syncs menu</translatorcomment>
-        <translation>Sincronizzazioni</translation>
+        <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
+        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata poiché non disponi delle autorizzazioni di scrittura</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation>Backup</translation>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
+        <translation>Seleziona una cartella MEGA da sincronizzare</translation>
     </message>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>Aggiungi backup</translation>
+        <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
+        <translation>La cartella non può essere sincronizzata perché non può essere trovata. È possibile che sia stata spostata o eliminata, oppure che tu non abbia accesso.</translation>
+    </message>
+    <message>
+        <source>%1 folder doesn&apos;t exist</source>
+        <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
+        <translation>La cartella “%1” non esiste</translation>
     </message>
 </context>
 <context>
@@ -6479,7 +6663,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1 risultato trovato</numerusform><numerusform>%1 risultati trovati</numerusform></translation>
+        <translation><numerusform>%1 risultato trovato</numerusform><numerusform>%1 risultati trovati</numerusform><numerusform>%1 risultati trovati</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
@@ -6511,7 +6695,7 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>Problema trovato</numerusform><numerusform>Problemi trovati</numerusform></translation>
+        <translation><numerusform>Problema trovato</numerusform><numerusform>Problemi trovati</numerusform><numerusform>Problemi trovati</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6552,7 +6736,7 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>Riprova l&#8217;oggetto fallito</numerusform><numerusform>Riprova gli oggetti falliti</numerusform></translation>
+        <translation><numerusform>Riprova l&#8217;oggetto fallito</numerusform><numerusform>Riprova gli oggetti falliti</numerusform><numerusform>Riprova gli oggetti falliti</numerusform></translation>
     </message>
     <message>
         <source>Could not upload</source>
@@ -6587,56 +6771,56 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>Impossibile caricare %n oggetti in %1.</numerusform><numerusform>Impossibile caricare %n oggetti in %1.</numerusform></translation>
+        <translation><numerusform>Impossibile caricare %n oggetti in %1.</numerusform><numerusform>Impossibile caricare %n di oggetti in %1.</numerusform><numerusform>Impossibile caricare %n oggetti in %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n oggetto caricato</numerusform><numerusform>%n oggetti caricati</numerusform></translation>
+        <translation><numerusform>%n oggetto caricato</numerusform><numerusform>%n di oggetti caricati</numerusform><numerusform>%n oggetti caricati</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, ma %n oggetto non è stato caricato.</numerusform><numerusform>%1, ma %n oggetti non sono stati caricati.</numerusform></translation>
+        <translation><numerusform>%1, ma %n oggetto non è stato caricato.</numerusform><numerusform>%1, ma %n di oggetti non sono stati caricati.</numerusform><numerusform>%1, ma %n oggetti non sono stati caricati.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n oggetto caricato in %1.</numerusform><numerusform>%n oggetti caricati in %1.</numerusform></translation>
+        <translation><numerusform>%n oggetto caricato in %1.</numerusform><numerusform>%n di oggetti caricati in %1.</numerusform><numerusform>%n oggetti caricati in %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n oggetto scaricato</numerusform><numerusform>%n oggetti scaricati</numerusform></translation>
+        <translation><numerusform>%n oggetto scaricato</numerusform><numerusform>%n di oggetti scaricati</numerusform><numerusform>%n oggetti scaricati</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, ma %n oggetto non è stato scaricato.</numerusform><numerusform>%1, ma %n oggetti non sono stati scaricati.</numerusform></translation>
+        <translation><numerusform>%1, ma %n oggetto non è stato scaricato.</numerusform><numerusform>%1, ma %n di oggetti non sono stati scaricati.</numerusform><numerusform>%1, ma %n oggetti non sono stati scaricati.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n oggetto non è stato scaricato in %1.</numerusform><numerusform>%n oggetti non sono stati scaricati in %1.</numerusform></translation>
+        <translation><numerusform>%n oggetto non è stato scaricato in %1.</numerusform><numerusform>%n di oggetti non sono stati scaricati in %1.</numerusform><numerusform>%n oggetti non sono stati scaricati in %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n oggetto scaricato in %1.</numerusform><numerusform>%n oggetti scaricati in %1.</numerusform></translation>
+        <translation><numerusform>%n oggetto scaricato in %1.</numerusform><numerusform>%n di oggetti scaricati in %1.</numerusform><numerusform>%n oggetti scaricati in %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n oggetto non esiste più o è stato rinominato.</numerusform><numerusform>%n oggetti non esistono più o sono stati rinominati.</numerusform></translation>
+        <translation><numerusform>%n oggetto non esiste più o è stato rinominato.</numerusform><numerusform>%n di oggetti non esistono più o sono stati rinominati.</numerusform><numerusform>%n oggetti non esistono più o sono stati rinominati.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n oggetto non esiste più.</numerusform><numerusform>%n oggetti non esistono più.</numerusform></translation>
+        <translation><numerusform>%n oggetto non esiste più.</numerusform><numerusform>%n di oggetti non esistono più.</numerusform><numerusform>%n oggetti non esistono più.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6996,6 +7180,19 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
+    <name>TwoWaySyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu option used to add sync;SNC-3654</translatorcomment>
+        <translation>Aggiungi sincronizzazione</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu option that shows syncs menu;SNC-3654</translatorcomment>
+        <translation>Sincronizzazioni</translation>
+    </message>
+</context>
+<context>
     <name>UpgradeDialog</name>
     <message>
         <source>Depleted transfer quota</source>
@@ -7015,7 +7212,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Il prezzo con la valuta locale è solo una stima. Tutte le transazioni mostrate verranno pagate in Euro.</translation>
+        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà fatturato in euro per tutte le transazioni.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7058,7 +7255,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Il prezzo con la valuta locale è solo una stima. Tutte le transazioni mostrate verranno pagate in Euro.</translation>
+        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà fatturato in euro per tutte le transazioni.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7089,7 +7286,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Per favore seleziona la cartella in cui caricare i tuoi file:</translation>
+        <translation>Seleziona la cartella di caricamento per i tuoi file:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -7127,11 +7324,6 @@ Please delete the folder sync from settings to cancel them.</source>
 </context>
 <context>
     <name>Utilities</name>
-    <message>
-        <source>just now</source>
-        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>ora</translation>
-    </message>
     <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
@@ -7177,36 +7369,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro&#xa0;III</translation>
     </message>
-    <message numerus="yes">
-        <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n secondo fa</numerusform><numerusform>%n secondi fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n minuto fa</numerusform><numerusform>%n minuti fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n ora fa</numerusform><numerusform>%n ore fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n giorno fa</numerusform><numerusform>%n giorni fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n mese fa</numerusform><numerusform>%n mesi fa</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>%n anno fa</numerusform><numerusform>%n anni fa</numerusform></translation>
-    </message>
     <message>
         <source>[DAYS] [HOURS]</source>
         <translatorcomment>String used to control formatting of time intervals. [DAYS] will be replaced by the days count and [HOURS] by the hours. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
@@ -7245,12 +7407,47 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 utilizzato</numerusform><numerusform>%1 utilizzati</numerusform></translation>
+        <translation><numerusform>%1 utilizzato</numerusform><numerusform>%1 utilizzati</numerusform><numerusform>%1 utilizzati</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 (%2%) utilizzato su %3 </numerusform><numerusform>%1 (%2%) utilizzati su %3 </numerusform></translation>
+        <translation><numerusform>%1 (%2%) utilizzato su %3 </numerusform><numerusform>%1 (%2%) utilizzati su %3 </numerusform><numerusform>%1 (%2%) utilizzati su %3 </numerusform></translation>
+    </message>
+    <message>
+        <source>Added just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
+        <translation>Trasferimento appena completato</translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n secondo fa</numerusform><numerusform>Oggetto completato %n di secondi fa</numerusform><numerusform>Oggetto completato %n secondi fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n minuto fa</numerusform><numerusform>Oggetto completato %n di minuti fa</numerusform><numerusform>Oggetto completato %n minuti fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n ora fa</numerusform><numerusform>Oggetto completato %n di ore fa</numerusform><numerusform>Oggetto completato %n ore fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n giorno fa</numerusform><numerusform>Oggetto completato %n di giorni fa</numerusform><numerusform>Oggetto completato %n giorni fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n mese fa</numerusform><numerusform>Oggetto completato %n di mesi fa</numerusform><numerusform>Oggetto completato %n mesi fa</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Oggetto completato %n anno fa</numerusform><numerusform>Oggetto completato %n di anni fa</numerusform><numerusform>Oggetto completato %n anni fa</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7284,21 +7481,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
         <translation>Reinvia email</translation>
-    </message>
-    <message>
-        <source>Verify your account</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation>Verifica il tuo account</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation>Il tuo account è stato temporaneamente bloccato a causa di un potenziale abuso. Per favore, effettua una verifica del tuo numero di telefono per sbloccare il tuo account.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation>Verifica adesso</translation>
     </message>
     <message>
         <source>Email sent</source>

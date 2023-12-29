@@ -1,0 +1,128 @@
+pipeline {
+    agent { label 'windows && amd64' }
+
+    options { 
+        buildDiscarder(logRotator(numToKeepStr: '25', daysToKeepStr: '30'))
+        gitLabConnection('GitLabConnectionJenkins')
+    }
+    parameters {
+        booleanParam(name: 'IS_RELEASE_CANDIDATE', defaultValue: false, description: 'Is it a Release Candidate?')
+        string(name: 'RELEASE_CANDIDATE_NAME', defaultValue: '', description: 'i.e: RC2, RC3 (only needed if IS_RELEASE_CANDIDATE is true)')
+        choice(name: 'ARCHITECTURE', choices: ['64', '32/64'], description: 'To build either for 64 bit or both 32 and 64 bit')        
+        string(name: 'MEGASYNC_BRANCH', defaultValue: "${env.BRANCH_NAME}", description: 'Which version of MEGAsync should we build? Default is current branch.')
+        string(name: 'SDK_BRANCH', defaultValue: ' ', description: 'Optionally, define a custom SDK branch.')
+    }
+    environment {
+        gitlab_token = credentials('jenkins_sdk_token')
+        MEGASYNC_BRANCH = "${params.MEGASYNC_BRANCH}"
+        SDK_BRANCH = "${params.SDK_BRANCH}"
+    }
+
+    stages {
+        stage('Clean previous runs'){
+            steps{
+                deleteDir()
+            }
+        }
+
+        stage('Checkout windows'){
+            steps {
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: "${env.MEGASYNC_BRANCH}"]],
+                    userRemoteConfigs: [[ url: "${env.GIT_URL_DESKTOP}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
+                    extensions: [
+                        [$class: "UserIdentity",name: "jenkins", email: "jenkins@jenkins"]
+                        ]
+                ])
+                script {
+                    windows_sources_workspace = WORKSPACE
+                    def branchToCheckout = ''
+                    if (env.SDK_BRANCH && env.SDK_BRANCH != ' ') {
+                        branchToCheckout = env.SDK_BRANCH
+                    } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
+                        branchToCheckout = "release/v4.31.0"
+                    } else {
+                        env.SDK_BRANCH = sh(script: "grep 'branch =' ${windows_sources_workspace}\\.gitmodules | sed 's/.*= //'", returnStdout: true).trim()
+                        branchToCheckout = env.SDK_BRANCH
+                    }
+
+                    dir('src\\MEGASync\\mega') {
+                        sh "echo Cloning SDK branch ${branchToCheckout}"
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: branchToCheckout]],
+                            userRemoteConfigs: [[url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1"]],
+                            extensions: [
+                                [$class: "UserIdentity", name: "jenkins", email: "jenkins@jenkins"]
+                            ]
+                        ])
+                    }
+                }
+            }
+        }
+        stage ('Build Windows installers'){
+            environment{
+                MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty_prev"
+                //QT path is automatically changed to x86 with nsis when needed
+                MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
+                MEGA_THIRD_PARTY_DLL_DIR = "bin"
+            }
+            steps {
+                gitlabCommitStatus (name: 'Build windows packages'){
+                    dir(windows_sources_workspace){
+                        bat "full_build_process.cmd ${params.ARCHITECTURE} nosign 2"
+                    }
+                }
+            }
+        }
+        stage ('Upload Installers') {
+            when {
+                beforeAgent true
+                anyOf {
+                    expression { params.IS_RELEASE_CANDIDATE == true}
+                }
+            }
+            environment{
+                JF_PATH  = "${windows_sources_workspace}\\.."
+            }
+            steps {
+                dir(windows_sources_workspace){
+                    script {
+                        def windows_artifactory_upload = { String ART_UPLOAD_PATH, String buildDir, String arch ->
+                        
+                            powershell """
+                                ${JF_PATH}\\jf config use artifactory
+                                ${JF_PATH}\\jf rt del ${ART_UPLOAD_PATH}
+                                ${JF_PATH}\\jf rt upload MEGAsyncSetup${arch}.exe ${ART_UPLOAD_PATH}
+                                cd ${buildDir}
+                                ${JF_PATH}\\jf rt upload MEGAsync.pdb ${ART_UPLOAD_PATH}
+                                ${JF_PATH}\\jf rt upload Mega.pdb ${ART_UPLOAD_PATH}
+                                ${JF_PATH}\\jf rt upload MEGAShellExt.pdb ${ART_UPLOAD_PATH}
+                                ${JF_PATH}\\jf rt upload MEGAupdater.pdb ${ART_UPLOAD_PATH}
+                                ${JF_PATH}\\jf rt upload legacy.pdb ${ART_UPLOAD_PATH}
+                            """
+                        }
+                        MEGASYNC_VERSION = powershell (
+                            script: "sed -nE 's/^#define VER_PRODUCTVERSION_STR\\s+\\\"([0-9]+\\.[0-9]+\\.[0-9]+).*/\\1/p' src\\MEGASync\\control\\Version.h",
+                            returnStdout: true
+                        ).trim()
+                        if (params.ARCHITECTURE == "64") {
+                            windows_artifactory_upload("MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/windows/", "built64", "64")
+                        } else if (params.ARCHITECTURE == "32/64") {
+                            windows_artifactory_upload("MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/windows/built64/", "built64", "64")
+                            windows_artifactory_upload("MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/windows/built32/", "built32", "32")
+                        }
+                    }
+                }
+            }
+            post {
+                success {
+                    script {
+                        echo "Installers successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/windows]"    
+                    }
+                }
+            }
+        }
+    }
+}

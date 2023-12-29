@@ -11,6 +11,7 @@
 #include "TransferMetaData.h"
 #include <QMegaMessageBox.h>
 #include "MegaTransferView.h"
+#include "control/AppStatsEvents.h"
 #include "StalledIssuesUtilities.h"
 
 #include <QSharedData>
@@ -1222,9 +1223,6 @@ void TransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> t
 
 void TransfersModel::processUpdateTransfers()
 {
-    QList<QExplicitlySharedDataPointer<TransferData>> alreadyUploadCompletedTransfers;
-    QList<QExplicitlySharedDataPointer<TransferData>> alreadyDownloadCompletedTransfers;
-
     for (auto it = mTransfersToProcess.updateTransfersByTag.begin(); it != mTransfersToProcess.updateTransfersByTag.end();)
     {   
         auto itValue = (*it);
@@ -1246,11 +1244,14 @@ void TransfersModel::processUpdateTransfers()
                     mCompletedTransfersByTag.insert(itValue->mNodeHandle, index(row,0));
                 }
             }
+            else
+            {
+                assert(false);
+                mMegaApi->sendEvent(AppStatsEvents::EVENT_DUP_FINISHED_TRSF,
+                    QString::fromUtf8("Duplicated finished transfer: %1").arg(QString::number(itValue->mTag)).toUtf8().constData(), false, nullptr);
+            }
         }
     }
-
-    mTransferEventWorker->resetCompletedUploads(alreadyUploadCompletedTransfers);
-    mTransferEventWorker->resetCompletedDownloads(alreadyDownloadCompletedTransfers);
 }
 
 void TransfersModel::processFailedTransfers()

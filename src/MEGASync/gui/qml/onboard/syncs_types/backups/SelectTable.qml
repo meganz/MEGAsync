@@ -14,7 +14,8 @@ import onboard 1.0
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
-Rectangle {
+Item {
+    id: root
 
     readonly property int headerFooterMargin: 24
     readonly property int headerFooterHeight: 40
@@ -22,29 +23,32 @@ Rectangle {
 
     Layout.preferredWidth: parent.width
     Layout.preferredHeight: height
-    height: 224
     width: parent.width
-    radius: tableRadius
-
-    color: Styles.pageBackground
 
     Rectangle {
         id: borderRectangle
 
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         color: "transparent"
         border.color: Styles.borderStrong
         border.width: 1
-        radius: 8
-        z: 5
+        radius: tableRadius
+        z: 2
+    }
+
+    Rectangle {
+        id: backgroundRectangle
+
+        anchors.fill: parent
+        color: Styles.pageBackground
+        radius: tableRadius
     }
 
     ListView {
         id: backupsListView
 
-        model: backupsModelAccess
         anchors.fill: parent
+        model: backupsModelAccess
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
@@ -55,23 +59,41 @@ Rectangle {
         ScrollBar.vertical: ScrollBar {}
     }
 
+    Connections {
+        id: backupsModelAccessConnection
+
+        target: backupsModelAccess
+
+        function onNewFolderAdded(newFolderIndex) {
+            backupsListView.positionViewAtIndex(newFolderIndex, ListView.Center)
+        }
+    }
+
     Component {
         id: headerComponent
 
         Rectangle {
+            id: headerRectangle
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             height: headerFooterHeight
-            anchors.left: parent.left
-            anchors.right: parent.right
             color: Styles.pageBackground
             radius: tableRadius
-            z: 3
+            z: 2
 
             MouseArea {
+                id: headerMouseArea
+
                 anchors.fill: parent
                 hoverEnabled: true
             }
 
             RowLayout {
+                id: checkboxLayout
+
                 width: parent.width
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 0
@@ -95,6 +117,10 @@ Rectangle {
                         selectAll.fromModel = false;
                     }
 
+                    Component.onCompleted: {
+                        selectAll.checkState = backupsModelAccess.checkAllState;
+                    }
+
                     Connections {
                         target: backupsModelAccess
 
@@ -103,29 +129,39 @@ Rectangle {
                             selectAll.checkState = backupsModelAccess.checkAllState;
                         }
                     }
-
-                    Component.onCompleted: {
-                        selectAll.checkState = backupsModelAccess.checkAllState;
-                    }
                 }
             }
 
             Rectangle {
+                id: bottomLine
+
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
                 height: borderRectangle.border.width
                 color: Styles.borderSubtle
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
             }
-        }
-    }
+
+        } // Rectangle: headerRectangle
+
+    } // Component: headerComponent
 
     Component {
         id: folderComponent
 
         FolderRow {
-            anchors.right: parent.right
-            anchors.left: parent.left
+            id: folderItem
+
+            anchors {
+                right: parent.right
+                left: parent.left
+            }
+
+            onFocusActivated: {
+                backupsListView.positionViewAtIndex(index, ListView.Center)
+            }
         }
     }
 
@@ -133,36 +169,47 @@ Rectangle {
         id: footerComponent
 
         Rectangle {
-            anchors.left: parent.left
-            anchors.right: parent.right
+            id: footerRectangle
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             height: headerFooterHeight
             radius: tableRadius
             color: Styles.pageBackground
-            z: 3
+            z: 2
 
             TextButton {
                 id: addFoldersButton
 
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 20
+                anchors {
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: 20
+                }
                 text: OnboardingStrings.addFolder
                 sizes: SmallSizes { borderLess: true }
                 icons {
                     source: Images.plus
                     position: Icon.Position.LEFT
                 }
+
                 onClicked: {
                     folderDialog.openFolderSelector();
                 }
             }
 
             Rectangle {
+                id: topLine
+
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                }
                 height: borderRectangle.border.width
                 color: borderRectangle.border.color
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
             }
 
             ChooseLocalFolder {
@@ -179,7 +226,8 @@ Rectangle {
                 }
             }
 
-        }
-    }
+        } // Rectangle: footerRectangle
+
+    } // Component: footerComponent
 
 }

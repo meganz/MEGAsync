@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ro" sourcelanguage="en">
 <context>
@@ -47,6 +47,14 @@
         <source>Backups</source>
         <translatorcomment>Label for Backups storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
         <translation>Backupuri</translation>
+    </message>
+</context>
+<context>
+    <name>AccountStatusController</name>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
+        <translation>Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.</translation>
     </message>
 </context>
 <context>
@@ -102,7 +110,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Introdu un nume, o cale absolută (caracterele wildcard * și ? sunt permise) sau alege care fișier sau folder vrei să-l excluzi de la sincronizare.</translation>
+        <translation>Introduceți un nume, o cale absolută (sunt permise metacaracterele * și ?) sau alegeți fișierul sau folderul care trebuie să fie exclus de la sincronizare.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -271,11 +279,6 @@
         <translation>[A] a fost șters sau dezactivat</translation>
     </message>
     <message>
-        <source>[A] established you as a contact</source>
-        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A] ți-a acceptat cererea de contact</translation>
-    </message>
-    <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
         <translation>[A] te-a blocat ca contact</translation>
@@ -297,7 +300,7 @@
     </message>
     <message>
         <source>[A] accepted your contact request</source>
-        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request. (SNC-3341)</translatorcomment>
         <translation>[A] ți-a acceptat cererea de contact</translation>
     </message>
     <message>
@@ -466,6 +469,19 @@
     </message>
 </context>
 <context>
+    <name>BackupSyncsMenu</name>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups;SNC-3654</translatorcomment>
+        <translation>Adaugă un backup</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Menu option that shows backups menu;SNC-3654</translatorcomment>
+        <translation>Backupuri</translation>
+    </message>
+</context>
+<context>
     <name>BackupTableView</name>
     <message>
         <source>Open in MEGA</source>
@@ -494,6 +510,34 @@
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
         <translation>Clic pe trei puncte pentru mai multe acțiuni de backup</translation>
+    </message>
+</context>
+<context>
+    <name>BackupsModel</name>
+    <message numerus="yes">
+        <source>Folder wasn&apos;t backed up. Try again.</source>
+        <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
+        <translation><numerusform>Folderul nu a fost făcut backup-uit. Încercați din nou.</numerusform><numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform><numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Nu poți face backup folderelor cu același nume. Redenumește-le pentru a continua cu backupul. Numele folderelor nu se vor schimba pe calculator.</translation>
+    </message>
+    <message numerus="yes">
+        <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
+        <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
+        <translation><numerusform>Un folder cu același nume există deja în Backups. Redenumiți noul folder pentru a continua cu backup-ul. Numele folderului nu se va schimba pe calculator.</numerusform><numerusform>Unele foldere cu același nume există deja în Backup-urile. Redenumiți noile foldere pentru a continua cu backup-ul. Numele folderelor nu se vor schimba pe calculator.</numerusform><numerusform>Unele foldere cu același nume există deja în Backupuri. Redenumiți noile foldere pentru a continua cu backup-ul. Numele folderelor nu se vor schimba pe calculator.</numerusform></translation>
+    </message>
+    <message>
+        <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
+        <translatorcomment>Warning message stating that a backup can´t contain another backup CON-468</translatorcomment>
+        <translation>Folderele de backup nu pot conține sau pot fi conținute de alte foldere de backup.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
+        <translation>Folderul nu poate fi backup-uit deoarece nu poate fi găsit. Este posibil să fi fost mutat sau șters sau este posibil să nu aveți acces.</translation>
     </message>
 </context>
 <context>
@@ -974,7 +1018,7 @@
     <message>
         <source>Please enter your password</source>
         <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>Te rugăm să introduci parola</translation>
+        <translation>Introdu parola</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -984,7 +1028,7 @@
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>Te rugăm să introduci o parolă mai puternică</translation>
+        <translation>Introduceți o parolă mai puternică</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1005,6 +1049,14 @@
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
         <translation>Parola ți-a fost modificată.</translation>
+    </message>
+</context>
+<context>
+    <name>ChooseLocalFolder</name>
+    <message>
+        <source>Select local folder</source>
+        <translatorcomment>Label indicating the user that he has to select a local folder. CON-467</translatorcomment>
+        <translation>Selectează folderul local</translation>
     </message>
 </context>
 <context>
@@ -1040,9 +1092,24 @@
 %1</translation>
     </message>
     <message>
-        <source>Your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</source>
-        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. SNC-3019</translatorcomment>
-        <translation>Contul dvs. Pro&#xa0;Flexi a fost dezactivat din cauza nerealizării plății sau v-ați anulat abonamentul. Nu veți putea accesa datele stocate în contul dvs. până când nu ați efectuat o plată și nu ați reactivat abonamentul.</translation>
+        <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
+        <translation>Contul dvs. a fost dezactivat din cauza eșecului plății sau a abonamentului anulat. Vă rugăm să plătiți și să reactivați acum pentru a vă accesa datele.</translation>
+    </message>
+    <message>
+        <source>MEGA Uploads</source>
+        <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
+        <translation>Încărcări MEGA</translation>
+    </message>
+    <message>
+        <source>MEGA Downloads</source>
+        <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
+        <translation>Descărcări MEGA</translation>
+    </message>
+    <message>
+        <source>MEGA Imports</source>
+        <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
+        <translation>Importuri de MEGA</translation>
     </message>
 </context>
 <context>
@@ -1142,7 +1209,7 @@
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>Contact nou cu [A] a fost stabilit</translation>
+        <translation>Noul contact [A] a fost adăugat</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1319,6 +1386,11 @@
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
         <translation><numerusform>[A] a actualizat %n articol</numerusform><numerusform>[A] a actualizat %n articole</numerusform><numerusform>[A] a actualizat %n de articole</numerusform></translation>
     </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Contul Pro&#xa0;Flexi a fost dezactivat</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -1330,7 +1402,7 @@
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Selectează folderul de descărcare pentru fișiere:</translation>
+        <translation>Selectați folderul de descărcare pentru fișierele dvs.:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1506,6 +1578,24 @@
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>Află mai multe</translation>
     </message>
+    <message>
+        <source>loading time…</source>
+        <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
+        <translation>preluarea datei…</translation>
+    </message>
+    <message>
+        <source>loading size…</source>
+        <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
+        <translation>calcularea dimensiunii…</translation>
+    </message>
+</context>
+<context>
+    <name>FastLoginController</name>
+    <message>
+        <source>Login error: %1</source>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message. SNC-4122</translatorcomment>
+        <translation>Eroare de conectare: %1</translation>
+    </message>
 </context>
 <context>
     <name>FilterAlertWidget</name>
@@ -1602,171 +1692,61 @@
     </message>
 </context>
 <context>
-    <name>GuestWidget</name>
+    <name>GuestStrings</name>
     <message>
-        <source>Login</source>
-        <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Autentifică-te</translation>
+        <source>About MEGA</source>
+        <translatorcomment>Menu entry that opens the about MEGA dialog. CON-472</translatorcomment>
+        <translation>Despre MEGA</translation>
     </message>
     <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation>Creează un cont</translation>
+        <source>Quit</source>
+        <translatorcomment>Menu entry that quits the application for mac. CON-472</translatorcomment>
+        <translation>Ieși</translation>
     </message>
     <message>
-        <source>Email address</source>
-        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation>Adresă de e-mail</translation>
+        <source>Exit</source>
+        <translatorcomment>Menu entry that quits the application for linux and windows. CON-472</translatorcomment>
+        <translation>Ieși</translation>
     </message>
     <message>
-        <source>Password</source>
-        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation>Parolă</translation>
+        <source>Settings</source>
+        <translatorcomment>Menu entry that opens the settings dialog. CON-472</translatorcomment>
+        <translation>Setări</translation>
     </message>
     <message>
-        <source>Forgot password?</source>
-        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation>Ai uitat parola?</translation>
+        <source>Log in or sign up to MEGA</source>
+        <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
+        <translation>Conectați-vă sau înscrieți-vă la MEGA</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation>Anulează</translation>
+        <source>Account temporarily locked</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>Contul a fost blocat temporar</translation>
     </message>
     <message>
-        <source>Setting up your account...</source>
-        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>Se configurează contul…</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>Se autentifică…</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Se preia lista de fișiere…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>E-mail sau parolă nevalide.</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation>Te rugăm să verifici e-mailul și să dai clic pe link pentru a confirma contul.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>Ai încercat să te autentifici de prea multe ori.[BR]Te rugăm să aștepți până la %1 și să încerci din nou.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation>Contul tău a fost blocat. Te rugăm să contactezi support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>Te rugăm să introduci adresa de e-mail</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>Te rugăm să introduci o adresă de e-mail validă</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation>Te rugăm să introduci parola</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Se deconectează…</translation>
-    </message>
-    <message>
-        <source>Locked Account</source>
-        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>Cont blocat</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>Contul tău a fost blocat temporar pentru siguranța ta. Te rugăm să-ți verifici e-mailul și urmează pașii pentru a debloca contul.</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>Deconectează-te</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation>Contul tău a fost blocat temporar din cauza unor posibile abuzuri. Te rugăm să verifici numărul de telefon pentru a-ți debloca contul.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation>Verifică acum</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGA app</translatorcomment>
-        <translation>Se creează contul…</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>De ce văd asta?</translation>
+        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>Contul dvs. a fost blocat temporar pentru siguranța dvs. Acest lucru se datorează unei potențiale încălcări a datelor. Pentru a vă debloca contul, urmați pașii din e-mailul pe care vi l-am trimis.</translation>
     </message>
     <message>
         <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translatorcomment>Button text, on click the email to verify the account is resent CON-465</translatorcomment>
         <translation>Retrimite e-mailul</translation>
     </message>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>E-mail trimis</translation>
+        <source>Log out</source>
+        <translatorcomment>Button text to logout CON-465</translatorcomment>
+        <translation>Deconectează-te</translation>
     </message>
     <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Te rugăm să introduci codul generat de aplicația de autentificare</translation>
+        <source>Setting up your account…</source>
+        <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
+        <translation>Configurarea contului dvs.…</translation>
     </message>
     <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>Cod de 6 cifre:</translation>
-    </message>
-    <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Cod nevalid</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation>Înainte</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Ți-ai pierdut dispozitivul de autentificare?[/A]</translation>
-    </message>
-    <message>
-        <source>Log into MEGA</source>
-        <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
-        <translation>Autentifică-te pe MEGA</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>Cheia noastră SSL nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle sau software-ul antivirus ar putea intercepta comunicările și să cauzeze problema. Te rugăm să dezactivezi software-ul antivirus și să încerci din nou.</translation>
+        <source>Waiting for email confirmation…</source>
+        <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
+        <translation>În așteptarea confirmării prin e-mail…</translation>
     </message>
 </context>
 <context>
@@ -1859,6 +1839,54 @@
         <source>Open links</source>
         <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
         <translation>Deschide linkuri</translation>
+    </message>
+</context>
+<context>
+    <name>InfoAccount</name>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Label to refer Free tier CON-467</translatorcomment>
+        <translation>Gratuit</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
+        <translation>Pro&#xa0;I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;III</translation>
+    </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
+        <translation>Business</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Flexi</translation>
+    </message>
+    <message>
+        <source>Available storage:</source>
+        <translatorcomment>Label indicating that the number in the right is the available storage CON-467</translatorcomment>
+        <translation>Spațiu de stocare disponibil:</translation>
+    </message>
+    <message>
+        <source>Storage space:</source>
+        <translatorcomment>Label indicating that the number in the right is the storage space CON-467</translatorcomment>
+        <translation>Spațiu de stocare:</translation>
     </message>
 </context>
 <context>
@@ -2137,62 +2165,9 @@
         <translation>Copiază linkul în clipboard</translation>
     </message>
     <message>
-        <source>Added [A]</source>
-        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
-        <translation>Adăugat [A]</translation>
-    </message>
-    <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
         <translation>Fișier șters sau mutat</translation>
-    </message>
-</context>
-<context>
-    <name>InfoWizard</name>
-    <message>
-        <source>You are not logged in</source>
-        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
-        <translation>Nu ești autentificat(ă)</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>Autentifică-te</translation>
-    </message>
-    <message>
-        <source>Create Account</source>
-        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
-        <translation>Creează un cont</translation>
-    </message>
-    <message>
-        <source>MEGA Desktop app</source>
-        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>Aplicație Desktop MEGA</translation>
-    </message>
-    <message>
-        <source>Login or create an account to start using MEGA Desktop app.</source>
-        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Autentifică-te sau creează un cont pentru a începe să folosești aplicația noastră.</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>Autentifică-te în contul MEGA pentru a folosi aplicația noastră.</translation>
-    </message>
-    <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
-        <translation>Creează un cont</translation>
-    </message>
-    <message>
-        <source>Create account to join MEGA collaboration platform.</source>
-        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>Creează un cont pentru a te alătura platformei colaborative MEGA.</translation>
-    </message>
-    <message>
-        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
-        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Află mai multe despre aplicația noastră.[A]Citește mai multe[/A]</translation>
     </message>
 </context>
 <context>
@@ -2210,7 +2185,7 @@
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Selectează dacă dorești să instalezi $(^NameDA) pentru tine doar sau pentru toți utilizatorii acestui calculator. $(^ClickNext)</translation>
+        <translation>Selectați dacă doriți să instalați $(^NameDA) numai pentru dvs. sau pentru toți utilizatorii acestui calculator. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -2280,6 +2255,52 @@
     </message>
 </context>
 <context>
+    <name>LoginController</name>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
+        <translation>Te rugăm să verifici e-mailul și să dai clic pe link pentru a confirma contul.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
+        <translation>Ai încercat să te autentifici de prea multe ori.[BR]Te rugăm să aștepți până la %1 și să încerci din nou.</translation>
+    </message>
+    <message>
+        <source>Invalid email or password. Please try again.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
+        <translation>Adresă de e-mail sau parolă nevalide. Vă rugăm să încercați din nou.</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
+        <translation>Aplicația nu se poate conecta. Vă rugăm să verificați conectivitatea la internet și configurația paravanului de protecție local. Rețineți că majoritatea software-urilor antivirus includ un firewall.</translation>
+    </message>
+    <message>
+        <source>Email address already in use.</source>
+        <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. CON-465</translatorcomment>
+        <translation>Adresa de e-mail deja în uz.</translation>
+    </message>
+</context>
+<context>
+    <name>LogoutController</name>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
+        <translation>Ați fost deconectat de pe acest calculator dintr-o altă locație</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
+        <translation>Cheia noastră SSL nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle sau software-ul antivirus ar putea intercepta comunicările și să cauzeze problema. Te rugăm să dezactivezi software-ul antivirus și să încerci din nou.</translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
+        <translation>Ați fost deconectat din cauza acestei erori: %1</translation>
+    </message>
+</context>
+<context>
     <name>LowDiskSpaceDialog</name>
     <message>
         <source>Low disk space</source>
@@ -2338,11 +2359,6 @@
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
         <translation>Linkurile au fost copiate în clipboard</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Se autentifică…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2451,64 +2467,9 @@ https://mega.co.nz/#sync</source>
         <translation>Config-ul tău este corupt, te rugăm să o iei de la început</translation>
     </message>
     <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>Aplicația nu se poate conecta. Vă rugăm să verificați conectivitatea la internet și configurația paravanului de protecție local. Rețineți că majoritatea software-urilor antivirus includ un firewall.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sincronizarea dvs. „%1” a fost dezactivată deoarece folderul local nu este disponibil sau nu aveți permisiuni de citire și scriere.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sincronizarea dvs. „%1” a fost dezactivată deoarece folderul local nu este disponibil sau nu aveți permisiuni de citire și scriere.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>Contul tău a fost blocat. Te rugăm să contactezi support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Login error: %1</source>
-        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation>Eroare la autentificare: %1</translation>
-    </message>
-    <message>
-        <source>You have been logged out on this computer from another location</source>
-        <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation>Ai fost deconectat de pe acest calculator din altă locație</translation>
-    </message>
-    <message>
-        <source>You have been logged out because of this error: %1</source>
-        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation>Ai fost autentificat din cauza acestei erori: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sincronizarea „%1” ți-a fost dezactivată deoarece folderul de la distanță este în Coșul de gunoi</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sincronizarea „%1” ți-a fost dezactivată deoarece folderul local s-a modificat</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sincronizarea „%1” ți-a fost dezactivată. Folderul la distanță (sau o parte din el) nu are acces complet</translation>
-    </message>
-    <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation>Cotă depășită</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sincronizarea ta „%1” a fost dezactivată deoarece sincronizarea folderelor partajate ale VirtualBox nu sunt suportate din cauza deficiențelor din acel sistem de fișiere.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2529,11 +2490,6 @@ https://mega.co.nz/#sync</source>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
         <translation>Eroare: Folder de destinație nevalid. Descărcarea a fost anulată.</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>Cheia noastră SSL nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle sau software-ul antivirus ar putea intercepta comunicările și să cauzeze problema. Te rugăm să dezactivezi software-ul antivirus și să încerci din nou.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -2578,7 +2534,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Please consider updating your operating system.</source>
         <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
-        <translation>Te rugăm să iei în considerare actualizarea sistemului de operare.</translation>
+        <translation>Luați în considerare actualizarea sistemului de operare.</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -2651,11 +2607,6 @@ https://mega.co.nz/#sync</source>
         <translation>Deschide linkuri</translation>
     </message>
     <message>
-        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
-        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.</translation>
-    </message>
-    <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation>Aplicația va continua să funcționeze, însă, actualizările nu vor mai fi suportate pentru versiunile anterioare Windows 7.</translation>
@@ -2669,16 +2620,6 @@ https://mega.co.nz/#sync</source>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Una sau mai multe sincronizări au fost dezactivate</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Sincronizarea „%1” ți-a fost dezactivată. Motivul: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been enabled</source>
-        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>Sincronizarea „%1” ți-a fost activată</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -2730,41 +2671,6 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <translation>Unul sau mai multe backupuri au fost dezactivate</translation>
     </message>
     <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Backup dvs. „%1” a fost dezactivată deoarece folderul local nu este disponibil sau nu aveți permisiuni de citire și scriere.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Backupul „%1” ți-a fost dezactivat deoarece sincronizarea folderelor partajate ale VirtualBox nu sunt suportate din cauza deficiențelor din acel sistem de fișiere.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Backupul „%1” ți-a fost dezactivat deoarece folderul MEGA este în Coșul de gunoi.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Backupul „%1” ți-a fost dezactivat. Nu ai acces complet la folderul MEGA (sau o parte din el).</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Backupul „%1” ți-a fost dezactivat deoarece folderul local s-a modificat.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Backupul „%1” ți-a fost dezactivat deoarece folderul MEGA s-a modificat.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Backupul „%1” ți-a fost dezactivat. Motivul: %2</translation>
-    </message>
-    <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>Actualizare de securitate</translation>
@@ -2810,34 +2716,9 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <translation>Setări</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Sincronizările și backupurile tale au fost dezactivate: %1</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Backupurile tale au fost dezactivate: %1</translation>
-    </message>
-    <message>
-        <source>Your syncs have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Backupurile tale au fost dezactivate: %1</translation>
-    </message>
-    <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
         <translation>Eroare la obținerea linkului: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Sincronizarea „%1” ți-a fost dezactivată temporar: %2</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Backupul „%1” ți-a fost dezactivat temporar: %2</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2848,6 +2729,11 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <source>Account deactivated</source>
         <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
         <translation>Cont dezactivat</translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Contul Pro&#xa0;Flexi a fost dezactivat</translation>
     </message>
 </context>
 <context>
@@ -3037,21 +2923,6 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
         <source>Close</source>
         <translatorcomment>Button label to close current message box</translatorcomment>
         <translation>Închide</translation>
-    </message>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>Conturi blocate</translation>
-    </message>
-    <message>
-        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>Este posibil să folosești aceeași parolă pentru contul tău MEGA ca și pentru alte servicii și că cel puțin unul dintre aceste alte servicii a suferit o încălcare a securității datelor.</translation>
-    </message>
-    <message>
-        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>Parola ta s-a scurs și acum este folosită de persoane rău-intenționate pentru a se autentifica în conturile tale, inclusiv, dar nu numai, în contul tău MEGA.</translation>
     </message>
 </context>
 <context>
@@ -3663,18 +3534,13 @@ Introdu un alt nume.</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>Cineva ți-a acceptat cererea de contact</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>Informații</translation>
-    </message>
-    <message>
-        <source>Someone accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Cineva ți-a acceptat cererea de contact</translation>
     </message>
     <message>
         <source>Info:</source>
@@ -3715,6 +3581,554 @@ Introdu un alt nume.</translation>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
         <translation>Încărcări și descărcări:</translation>
+    </message>
+</context>
+<context>
+    <name>OnboardingStrings</name>
+    <message>
+        <source>Add folder</source>
+        <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
+        <translation>Adaugă folder</translation>
+    </message>
+    <message>
+        <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
+        <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
+        <translation>Am citit și sunt de acord cu MEGA [B][A]Termenii de utilizare a serviciului[/A][/B]</translation>
+    </message>
+    <message>
+        <source>Back up</source>
+        <translatorcomment>Button text to configure the selected backups CON-468</translatorcomment>
+        <translation>Backup</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Button title, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>Realizează backupuri</translation>
+    </message>
+    <message>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>Datele de pe dispozitivul dvs. vor fi copiate automat și sistematic pe MEGA în timp real.</translation>
+    </message>
+    <message>
+        <source>Backup: Confirm</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup confirm step CON-468</translatorcomment>
+        <translation>Backup: confirmați</translation>
+    </message>
+    <message>
+        <source>Backup Folders</source>
+        <translatorcomment>Backup folders table title CON-468</translatorcomment>
+        <translation>Foldere de backup</translation>
+    </message>
+    <message>
+        <source>Backup: Select folders</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
+        <translation>Backup: selectați foldere</translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
+        <translation>Realizează backup către:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
+        <translation>Anulează</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>Alege</translation>
+    </message>
+    <message>
+        <source>Change folder</source>
+        <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
+        <translation>Schimbați folderul</translation>
+    </message>
+    <message>
+        <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
+        <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
+        <translation>Introduceți noua adresă de e-mail și faceți clic pe Retrimite. Vom trimite apoi e-mailul de confirmare la această nouă adresă de e-mail pentru a vă activa contul.</translation>
+    </message>
+    <message>
+        <source>Change your email address</source>
+        <translatorcomment>Change email window title CON-466</translatorcomment>
+        <translation>Schimbați-vă adresa de e-mail</translation>
+    </message>
+    <message>
+        <source>Device name</source>
+        <translatorcomment>Device name window title CON-467</translatorcomment>
+        <translation>Numele dispozitivului</translation>
+    </message>
+    <message>
+        <source>Add the name of your device.</source>
+        <translatorcomment>Device name window secondary title CON-467</translatorcomment>
+        <translation>Adăugați numele dispozitivului.</translation>
+    </message>
+    <message>
+        <source>Add device name</source>
+        <translatorcomment>Device name text input box title CON-467</translatorcomment>
+        <translation>Adăugați numele dispozitivului</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translatorcomment>Button text to confirm the current action CON-467</translatorcomment>
+        <translation>Confirmă</translation>
+    </message>
+    <message>
+        <source>There is already a folder with the same name in this backup</source>
+        <translatorcomment>Error text indicating that it can´t create a backup with duplicated names CON-468</translatorcomment>
+        <translation>Există deja un folder cu același nume în această copie de rezervă</translation>
+    </message>
+    <message>
+        <source>A folder with the same name already exists on your backups</source>
+        <translatorcomment>Error text indicating that a backup with the same name already exists CON-468</translatorcomment>
+        <translation>Un folder cu același nume există deja în copiile de rezervă</translation>
+    </message>
+    <message>
+        <source>Confirm folders to back up</source>
+        <translatorcomment>Confirm backups table title CON-468</translatorcomment>
+        <translation>Confirmați folderele pentru backup</translation>
+    </message>
+    <message>
+        <source>Account created</source>
+        <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
+        <translation>Contul a fost creat</translation>
+    </message>
+    <message>
+        <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
+        <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
+        <translation>Pentru a vă activa contul dvs., trebuie să vă confirmați adresa de e-mail. V-am trimis un e-mail cu un link de confirmare. Faceți clic pe link pentru a vă confirma adresa de e-mail, apoi vă veți putea conecta.</translation>
+    </message>
+    <message>
+        <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
+        <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>Dacă nu primiți e-mailul în decurs de o oră, verificați folderul dvs. de spam. Dacă încă nu o găsești, [B][A]contactați asistență[/A][/B].</translation>
+    </message>
+    <message>
+        <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
+        <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>Dacă ați scris greșit adresa dvs. de e-mail, [B][A]schimbați-l aici[/A][/B].</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
+        <translation>Confirmă parola</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
+        <translation>Gata</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translatorcomment>Email text input title CON-466</translatorcomment>
+        <translation>Adresă de e-mail</translation>
+    </message>
+    <message>
+        <source>Please confirm your password</source>
+        <translatorcomment>Confirm password text input title CON-466</translatorcomment>
+        <translation>Confirmați parola dvs.</translation>
+    </message>
+    <message>
+        <source>Enter your password</source>
+        <translatorcomment>Password text input title CON-466</translatorcomment>
+        <translation>Introdu parola</translation>
+    </message>
+    <message>
+        <source>Please enter your name</source>
+        <translatorcomment>Name text input title CON-466</translatorcomment>
+        <translation>Introduceți prenumele dvs.</translation>
+    </message>
+    <message>
+        <source>Please enter your last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>Introduceți numele dvs. de familie</translation>
+    </message>
+    <message>
+        <source>Passwords don&apos;t match. Check and try again.</source>
+        <translatorcomment>Error label indicating that password and confirm password content is not the same CON-466</translatorcomment>
+        <translation>Parolele nu se potrivesc. Verificați și încercați din nou.</translation>
+    </message>
+    <message>
+        <source>Enter a valid email address</source>
+        <translatorcomment>Error label indicating that the email is not valid CON-466</translatorcomment>
+        <translation>Introduceți o adresă de e-mail validă</translation>
+    </message>
+    <message>
+        <source>Your backup is set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Backup-ul dvs. este configurat</translation>
+    </message>
+    <message>
+        <source>What else do you want to do?</source>
+        <translatorcomment>Text suggesting the user to create another backup or sync CON-468</translatorcomment>
+        <translation>Ce altceva vrei să faci?</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
+        <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
+        <translation>Sincronizarea dvs. a fost configurată și va sincroniza automat datele selectate ori de câte ori aplicația desktop rulează.</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-467</translatorcomment>
+        <translation>Sincronizarea dvs. este configurată</translation>
+    </message>
+    <message>
+        <source>First name</source>
+        <translatorcomment>First name text input title CON-466</translatorcomment>
+        <translation>Prenume</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA account with your local device.</source>
+        <translatorcomment>Full sync button description CON-467</translatorcomment>
+        <translation>Sincronizați întregul cont MEGA cu dispozitivul local.</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translatorcomment>Full sync button title CON-467</translatorcomment>
+        <translation>Sincronizare completă</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Full sync page title CON-467</translatorcomment>
+        <translation>Sincronizați întreaga unitate Cloud MEGA cu un dispozitiv local.</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
+        <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece nu aveți permisiuni pentru a crea un folder nou. Pentru a continua, selectați un folder existent.</translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
+        <translation>Ați uitat parola?</translation>
+    </message>
+    <message>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a local folder CON-467</translatorcomment>
+        <translation>Selectați un folder local de sincronizat</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a MEGA folder CON-467</translatorcomment>
+        <translation>Selectați un folder MEGA pentru sincronizare</translation>
+    </message>
+    <message>
+        <source>Setup options</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the Setup options step CON-467</translatorcomment>
+        <translation>Opțiuni de configurare</translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
+        <translation>Alege:</translation>
+    </message>
+    <message>
+        <source>Welcome to MEGA</source>
+        <translatorcomment>Label wellcoming the user to MEGA CON-467</translatorcomment>
+        <translation>Bun venit la MEGA</translation>
+    </message>
+    <message>
+        <source>Last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>Nume</translation>
+    </message>
+    <message>
+        <source>Log in</source>
+        <translatorcomment>Log in button text CON-465</translatorcomment>
+        <translation>Autentifică-te</translation>
+    </message>
+    <message>
+        <source>Log in to your [B]MEGA account[/B]</source>
+        <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
+        <translation>Conectați-vă la [B]Cont MEGA[/B]</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
+        <translation>Înainte</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
+        <translation>Omite</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>Vizualizare în Setări</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Password input field title CON-465</translatorcomment>
+        <translation>Parolă</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
+        <translation>Anterior</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Button to rename a backup CON-468</translatorcomment>
+        <translation>Redenumește</translation>
+    </message>
+    <message>
+        <source>Resend</source>
+        <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
+        <translation>Retrimite</translation>
+    </message>
+    <message>
+        <source>[B]Select all[/B]</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>[B]Selectați toate[/B]</translation>
+    </message>
+    <message>
+        <source>Select folders to back up</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>Selectați folderele pentru a face o copie de rezervă</translation>
+    </message>
+    <message>
+        <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
+        <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
+        <translation>Folderele selectate vor face automat o copie de rezervă la MEGA atunci când aplicația desktop rulează.</translation>
+    </message>
+    <message>
+        <source>Select a local folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a local folder CON-467</translatorcomment>
+        <translation>Selectați un folder local</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
+        <translation>Selectați un folder MEGA</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA account with your local device.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>Sincronizați folderele selectate din contul MEGA cu dispozitivul local.</translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
+        <translation>Sincronizați anumite foldere din Unitatea cloud MEGA cu dispozitivul local.</translation>
+    </message>
+    <message>
+        <source>Selective sync</source>
+        <translatorcomment>Selective sync button title text CON-467</translatorcomment>
+        <translation>Sincronizare selectivă</translation>
+    </message>
+    <message>
+        <source>Set up MEGA</source>
+        <translatorcomment>Onboarding window title CON-467</translatorcomment>
+        <translation>Configurare MEGA</translation>
+    </message>
+    <message>
+        <source>Sign up</source>
+        <translatorcomment>Sign up button text CON-465</translatorcomment>
+        <translation>Înscrieți-vă</translation>
+    </message>
+    <message>
+        <source>Create your [B]MEGA account[/B]</source>
+        <translatorcomment>Sign up page title CON-466</translatorcomment>
+        <translation>Creează-ți [B]Cont MEGA[/B]</translation>
+    </message>
+    <message>
+        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>Sincronizați-vă dispozitivul cu MEGA, iar orice modificări locale se vor aplica automat și instantaneu la MEGA și invers.</translation>
+    </message>
+    <message>
+        <source>Choose sync type</source>
+        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
+        <translation>Alegeți tipul de sincronizare</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Button title that forwards the user to the syncs flow CON-467</translatorcomment>
+        <translation>Sincronizează</translation>
+    </message>
+    <message>
+        <source>Sync: Choose type</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the choose sync type step CON-467</translatorcomment>
+        <translation>Sincronizare: Alegeți tipul</translation>
+    </message>
+    <message>
+        <source>Sync set up</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
+        <translation>Sincronizarea este configurată</translation>
+    </message>
+    <message>
+        <source>Problem with two-factor authentication?</source>
+        <translatorcomment>Text that the user has to click in case he has problems with 2FA CON-465</translatorcomment>
+        <translation>Problemă cu autentificarea cu doi factori?</translation>
+    </message>
+    <message>
+        <source>Enter the 6-digit code generated by your authenticator app.</source>
+        <translatorcomment>2FA page secondary title CON-465</translatorcomment>
+        <translation>Introduceți codul din 6 cifre generat de aplicația dvs. de autentificare.</translation>
+    </message>
+    <message>
+        <source>Continue with [B]two-factor authentication[/B]</source>
+        <translatorcomment>2FA page title CON-465</translatorcomment>
+        <translation>Continuați cu [B]autentificare cu doi factori[/B]</translation>
+    </message>
+    <message>
+        <source>Logging in…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Autentificare…</translation>
+    </message>
+    <message>
+        <source>Fetching file list…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Se preia lista de fișiere…</translation>
+    </message>
+    <message>
+        <source>Creating account…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
+        <translation>Crearea contului…</translation>
+    </message>
+    <message>
+        <source>Validating 2FA code…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Validarea codului A2F…</translation>
+    </message>
+    <message>
+        <source>Stop logging in?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Întrerupeți conexiunea?</translation>
+    </message>
+    <message>
+        <source>Closing this window will stop you logging in.</source>
+        <translatorcomment>Dialog body text. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Închiderea acestei ferestre vă va opri conectarea.</translation>
+    </message>
+    <message>
+        <source>Stop Loggin in</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Opriți conectarea</translation>
+    </message>
+    <message>
+        <source>Don’t stop</source>
+        <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Nu te opri</translation>
+    </message>
+    <message>
+        <source>Cancel account creation?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Anulați crearea contului?</translation>
+    </message>
+    <message>
+        <source>Closing this window will cancel the sign up process.</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Închiderea acestei ferestre va anula procesul de înscriere.</translation>
+    </message>
+    <message>
+        <source>Cancel account</source>
+        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Anulează crearea</translation>
+    </message>
+    <message>
+        <source>Don’t cancel</source>
+        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Nu o anula</translation>
+    </message>
+    <message>
+        <source>Password needs to be at least 8 characters</source>
+        <translatorcomment>Hint text that tells the user minimum requirement for the passwords CON-466</translatorcomment>
+        <translation>Parola trebuie să aibă cel puțin 8 caractere</translation>
+    </message>
+    <message>
+        <source>It’s better to have:</source>
+        <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Este mai bine să aveți:</translation>
+    </message>
+    <message>
+        <source>Upper and lower case letters</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Litere mari și minuscule.</translation>
+    </message>
+    <message>
+        <source>At least one number or special character</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Cel puțin un număr sau un caracter special.</translation>
+    </message>
+    <message>
+        <source>Enter a minimum of 8 characters.</source>
+        <translatorcomment>Error text to force the user to fill minimum character requirement CON-466</translatorcomment>
+        <translation>Introduceți un minim de 8 caractere.</translation>
+    </message>
+    <message>
+        <source>Your password is too easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>Parola dvs. este prea ușor de ghicit. Trebuie să o faci mai puternică.</translation>
+    </message>
+    <message>
+        <source>Your password is easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>Parola dvs. este ușor de ghicit. Ar trebui să-l faci mai puternic.</translation>
+    </message>
+    <message>
+        <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
+        <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
+        <translation>Actualizați automat fișierele de pe computerele dvs. la MEGA. Dacă alegeți să ștergeți copiile de rezervă în MEGA, fișierele locale nu vor fi eliminate.</translation>
+    </message>
+    <message>
+        <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
+        <translation>Sincronizați folderele selectate între calculatoarele dvs. cu MEGA; orice modificare dintr-o parte se va aplica pe cealaltă parte.</translation>
+    </message>
+    <message>
+        <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
+        <translation>Sincronizați-vă fișierele între computerele dvs. cu MEGA; orice modificare dintr-o parte se va aplica în altă parte.</translation>
+    </message>
+    <message>
+        <source>Let&apos;s get you set up</source>
+        <translatorcomment>Page title for new accounts in set device name page CON-467</translatorcomment>
+        <translation>Hai să te pregătim</translation>
+    </message>
+    <message>
+        <source>Confirm your email and password</source>
+        <translatorcomment>Page title for new accounts in login page CON-465</translatorcomment>
+        <translation>Confirmați adresa de e-mail și parola</translation>
+    </message>
+    <message>
+        <source>Once confirmed, your account will be activated.</source>
+        <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
+        <translation>Odată confirmat, contul dvs. va fi activat.</translation>
+    </message>
+    <message>
+        <source>Enter your email address</source>
+        <translatorcomment>Login error if user didn´t enter the email CON-465</translatorcomment>
+        <translation>Introduceți adresa dvs. de e-mail</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Device name text input field title CON-467</translatorcomment>
+        <translation>Introduceți un nume de dispozitiv</translation>
+    </message>
+    <message>
+        <source>Names longer than 32 characters are not supported</source>
+        <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
+        <translation>Numele mai lungi de 32 de caractere nu sunt acceptate</translation>
+    </message>
+    <message>
+        <source>Authentication failed</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>Autentificarea a eșuat</translation>
+    </message>
+    <message>
+        <source>Incorrect 2FA code</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>Cod A2F incorect</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Backup-ul dvs. a fost configurat, iar datele selectate vor fi backup-uite automat ori de câte ori aplicația desktop este în funcțiune. Puteți vizualiza backup-urile și stările acestora în fila Backup din Setări.</translation>
     </message>
 </context>
 <context>
@@ -4040,15 +4454,16 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Upgraded to Qt5.15.
-- Fixed detected crashes on Windows, Linux and macOS.
-- Updated third-party libraries.
+        <source>- A new onboarding wizard is introduced when a new sync or backup process is initiated for the first time.
+- Revamped the user interface of the macOS installer.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Application performance improved.
 </source>
-        <translatorcomment>Changelog for v4.11.0 - CON-440</translatorcomment>
-        <translation>- Actualizat la Qt 5.15.
-- Au fost remediate defecțiunile detectate pe Windows, Linux și macOS.
-- Bibliotecile terților au fost actualizate.
-</translation>
+        <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
+        <translation>- Un nou asistent de onboarding este introdus atunci când un nou proces de sincronizare sau backup este inițiat pentru prima dată.
+- A fost reînnoită interfața de utilizator a programului de instalare macOS.
+- S-au rezolvat blocajele detectate pe Windows, Linux și MacOS.
+- Performanța aplicației îmbunătățită.</translation>
     </message>
 </context>
 <context>
@@ -4067,16 +4482,6 @@ Introdu un alt nume.</translation>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
         <translation>Setări pentru proxy:</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translatorcomment>HTTP proxy type</translatorcomment>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>SOCK5H</source>
-        <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -4372,7 +4777,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>Necunoscut</translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -4671,6 +5076,11 @@ Vrei să îl ștergi oricum?</translation>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
         <translation><numerusform>%n fișier</numerusform><numerusform>%n fișiere</numerusform><numerusform>%n de fișiere</numerusform></translation>
     </message>
+    <message>
+        <source>Adding transfers…</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
+        <translation>Adăugarea transferurilor…</translation>
+    </message>
 </context>
 <context>
     <name>SearchLineEdit</name>
@@ -4920,11 +5330,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Rețea</translation>
     </message>
     <message>
-        <source>Enable overlay icons</source>
-        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>Activează pictogramele de suprapunere</translation>
-    </message>
-    <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
         <translation>Caută actualizări</translation>
@@ -4992,7 +5397,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>Unele foldere nu au fost sincronizate. Pentru mai multe informații, te rugăm să plasezi cursorul peste pictograma galbenă de avertizare.</translation>
+        <translation>Unele foldere nu au fost sincronizate. Pentru mai multe informații, vă rugăm să treceți cu mouse-ul peste pictograma galbenă de avertizare.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -5002,7 +5407,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
-        <translation>Parola ta nu este stocată de MEGA și nu o putem recupera pentru tine. Pentru a evita pierderea accesului la cont, salvează cheia de recuperare într-un loc sigur.</translation>
+        <translation>Parola dvs. nu este stocată de MEGA și nu o putem recupera pentru dvs. Pentru a evita pierderea accesului la contul dvs., salvați cheia de recuperare într-un loc sigur.</translation>
     </message>
     <message>
         <source>Password</source>
@@ -5132,7 +5537,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Activează integrarea cu Explorerul din Windows</translation>
+        <translation>Activează integrarea cu Explorerul</translation>
     </message>
     <message>
         <source>B</source>
@@ -5352,7 +5757,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>Sincronizarea „%1” nu poate fi dezactivată. Motivul: %2</translation>
+        <translation>Sincronizarea dvs. „%1” nu poate fi dezactivată. Motivul: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5387,7 +5792,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Backupul „%1” nu poate fi activat. Motivul: %2</translation>
+        <translation>Backupul dvs. „%1” nu poate fi activat. Motivul: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5402,7 +5807,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Backupul „%1” nu poate fi dezactivat. Motivul: %2</translation>
+        <translation>Backupul dvs. „%1” nu poate fi dezactivat. Motivul: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5413,6 +5818,21 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Împiedică calculatorul să intre în repaus atunci când transferurile și sincronizările sunt în curs.</translation>
+    </message>
+    <message>
+        <source>Enable sync status icons</source>
+        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
+        <translation>Activați pictogramele de stare de sincronizare</translation>
+    </message>
+    <message>
+        <source>Enabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>Activarea pictogramelor de stare sincronizare</translation>
+    </message>
+    <message>
+        <source>Disabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>Dezactivarea pictogramelor de stare sincronizare</translation>
     </message>
 </context>
 <context>
@@ -5429,340 +5849,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Auto</source>
         <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
         <translation>Automate</translation>
-    </message>
-</context>
-<context>
-    <name>SetupWizard</name>
-    <message>
-        <source>Create a new MEGA account</source>
-        <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>Creează un nou cont MEGA</translation>
-    </message>
-    <message>
-        <source>Email:</source>
-        <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>E-mail:</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>Parolă:</translation>
-    </message>
-    <message>
-        <source>Repeat password:</source>
-        <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>Repetă parola:</translation>
-    </message>
-    <message>
-        <source>Log in to your MEGA account</source>
-        <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Autentifică-te în contul MEGA</translation>
-    </message>
-    <message>
-        <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Te rugăm să verifici contul folosind linkul de confirmare pe care ți l-am trimis în contul de e-mail</translation>
-    </message>
-    <message>
-        <source>Choose install type</source>
-        <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>Alege tipul de instalare</translation>
-    </message>
-    <message>
-        <source> Sync your entire cloud drive</source>
-        <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sincronizează întreaga Unitate cloud</translation>
-    </message>
-    <message>
-        <source>Selective sync</source>
-        <translatorcomment>Label displayed to show Selective sync mode. Max 18 characters.</translatorcomment>
-        <translation>Sincronizare selectivă</translation>
-    </message>
-    <message>
-        <source>Local folder:</source>
-        <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>Folder local:</translation>
-    </message>
-    <message>
-        <source>MEGA folder:</source>
-        <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>Folder MEGA:</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>Schimbă</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>Înapoi</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Înainte</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Anulează</translation>
-    </message>
-    <message>
-        <source>User already exists</source>
-        <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>Utilizatorul există deja</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Se preia lista de fișiere…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>E-mail sau parolă nevalide.</translation>
-    </message>
-    <message>
-        <source>MEGA folder doesn&apos;t exist</source>
-        <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>Folderul MEGA nu există</translation>
-    </message>
-    <message>
-        <source>Finish</source>
-        <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>Încheiere</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Te rugăm să introduci adresa de e-mail</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Te rugăm să introduci o adresă de e-mail validă</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Te rugăm să introduci parola</translation>
-    </message>
-    <message>
-        <source>Please, enter your name</source>
-        <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Te rugăm să-ți introduci numele</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Te rugăm să introduci o parolă mai puternică</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>Parolele introduse nu coincid</translation>
-    </message>
-    <message>
-        <source>You have to accept our terms of service</source>
-        <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Trebuie să accepți Termenii de utilizare a serviciului nostru</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Se creează contul…</translation>
-    </message>
-    <message>
-        <source>Please, select a local folder</source>
-        <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Te rugăm să selectezi un folder local</translation>
-    </message>
-    <message>
-        <source>Please, select a MEGA folder</source>
-        <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Te rugăm să selectezi un folder MEGA</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Selectează un folder local</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Se autentifică…</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Nu se poate obține sistemul de fișiere. Te rugăm să încerci din nou. Dacă problema persistă, te rugăm să ne contactezi la adresa bug@mega.nz</translation>
-    </message>
-    <message>
-        <source>Set up Assistant - MEGAsync</source>
-        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Asistent de configurare</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
-        <translation>Sincronizare completă</translation>
-    </message>
-    <message>
-        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Folderul tău local și Unitatea ta cloud MEGA vor fi sincronizate automat.</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>Vrei să continui?</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation>Contul tău a fost blocat. Te rugăm să contactezi support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Vrei să anulezi acest asistent și să anulezi toate modificările?</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
-        <translation>Omite</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Se deconectează…</translation>
-    </message>
-    <message>
-        <source>Very Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation>Foarte slabă</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation>Slabă</translation>
-    </message>
-    <message>
-        <source>Medium</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation>Medie</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation>Bună</translation>
-    </message>
-    <message>
-        <source>Strong</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation>Puternică</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
-        <translation>Te rugăm să verifici e-mailul și să dai clic pe link pentru a confirma contul.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
-        <translation>Ai încercat să te autentifici de prea multe ori.[BR]Te rugăm să aștepți până la %1 și să încerci din nou.</translation>
-    </message>
-    <message>
-        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
-        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>First name:</source>
-        <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation>Prenume:</translation>
-    </message>
-    <message>
-        <source>Last name:</source>
-        <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation>Nume:</translation>
-    </message>
-    <message>
-        <source>Check your inbox</source>
-        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation>Verifică mesajele primite de pe e-mail</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your cloud drive</source>
-        <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Sincronizează foldere specifice în Unitatea ta cloud</translation>
-    </message>
-    <message>
-        <source>Selective sync:</source>
-        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
-        <translation>Sincronizare selectivă</translation>
-    </message>
-    <message>
-        <source>Please, enter your last name</source>
-        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation>Te rugăm să-ți introduci numele</translation>
-    </message>
-    <message>
-        <source>Set up selective sync</source>
-        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Configurează sincronizarea selectivă</translation>
-    </message>
-    <message>
-        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Foldere specifice din Unitatea ta cloud vor fi sincronizate cu un folder local care corespunde.</translation>
-    </message>
-    <message>
-        <source>Select Local folder:</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Selectează un folder local</translation>
-    </message>
-    <message>
-        <source>Set up full sync</source>
-        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Configurează sincronizarea completă</translation>
-    </message>
-    <message>
-        <source>Full Sync</source>
-        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation>Sincronizare completă</translation>
-    </message>
-    <message>
-        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Întreaga ta Unitate cloud va fi sincronizată cu un folder local.</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Autentifică-te</translation>
-    </message>
-    <message>
-        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
-        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
-        <translation>Sunt de acord cu [A]Termenii de utilizare a serviciului[/A] MEGA</translation>
-    </message>
-    <message>
-        <source>Enjoy MEGAsync</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Bucură-te de aplicația noastră</translation>
-    </message>
-    <message>
-        <source>We are all done</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>Am terminat</translation>
-    </message>
-    <message>
-        <source>Creating folder…</source>
-        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Se creează folderul…</translation>
     </message>
 </context>
 <context>
@@ -5993,24 +6079,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>SyncController</name>
     <message>
-        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation>Nu poți face backup acestui folder deoarece acesta este deja sincronizat.</translation>
-    </message>
-    <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
         <translation>Folderului i s-a făcut backup deja. Selectează altul.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation>Nu poți sincroniza acest folder deoarece acesta este deja sincronizat.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation>Nu poți sincroniza acest folder deoarece acestuia i s-a făcut backup deja.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
@@ -6018,39 +6089,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Nu poți face backup acestui folder deoarece se află deja într-un folder sincronizat.</translation>
     </message>
     <message>
-        <source>You can&apos;t sync folders that are inside synced folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>Nu poți sincroniza foldere care se află în foldere sincronizate.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that are inside backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation>Nu poți sincroniza foldere care se află în folderele pentru care s-a făcut backup.</translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
         <translation>Nu poți face backup acestui folder deoarece acesta conține foldere sincronizate.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain synced folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>Nu poți sincroniza foldere care conțin foldere sincronizate.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation>Nu poți sincroniza foldere care conțin foldere pentru care s-a făcut backup.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>Nu ai permisiuni de scriere în acest folder local.</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>Aplicația nu va putea descărca nimic aici.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6083,20 +6124,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Nu se poate crea backupul. Pentru informații suplimentare, contactează [A]Asistența[/A].</translation>
     </message>
     <message>
-        <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation>Nu poți face backup la „%1” deoarece este folderul rădăcină. Folderul rădăcină este fie folderul de nivel superior de pe calculator care conține toate folderele și fișierele, fie folderul în care este instalat sistemul sau programul. Nu permitem utilizatorilor să facă backup folderelor rădăcină, deoarece poate cauza conflicte sau erori privind fișierele.
-Pentru a continua, selectează un alt folder.</translation>
-    </message>
-    <message>
-        <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation>Nu poți sincroniza „%1” deoarece este folderul rădăcină. Folderul rădăcină este fie folderul de nivel superior de pe calculator care conține toate folderele și fișierele, fie folderul în care este instalat sistemul sau programul. Nu permitem utilizatorilor să sincronizeze folderele rădăcină, deoarece poate cauza conflicte sau erori privind fișierele.
-Pentru a continua, selectează un alt folder.</translation>
-    </message>
-    <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
         <translation>Nu ai permisiunea de acces complet la acest folder partajat și nu îl poți sincroniza.</translation>
@@ -6105,11 +6132,6 @@ Pentru a continua, selectează un alt folder.</translation>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
         <translation>Acest folder MEGA nu poate fi sincronizat.</translation>
-    </message>
-    <message>
-        <source>The selected MEGA folder is already synced.</source>
-        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation>Folderul MEGA selectat a fost deja sincronizat.</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
@@ -6121,18 +6143,173 @@ Pentru a continua, selectează un alt folder.</translation>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
         <translation>Folderul a fost deja sincronizat.</translation>
     </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it is already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
+        <translation>Folderul nu poate fi copiat, deoarece este deja sincronizat</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s already synced</source>
+        <translatorcomment>Warning message indicating that the folder is already synced. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece este deja sincronizat</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as is already backed up</source>
+        <translatorcomment>Warning message indicating that the selected folder is a backup. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece este deja backupat</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a sync folder. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece se află într-un folder sincronizat</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece se află într-un folder de backupat</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains synced folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains synced folders. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece conține foldere sincronizate</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains backed up folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains backed up folders. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece conține folderele backupate</translation>
+    </message>
+    <message>
+        <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
+        <translation>Nu se poate backup „%1” deoarece este folderul rădăcină. Pentru a continua, selectați un folder diferit.</translation>
+    </message>
+    <message>
+        <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
+        <translation>Nu se poate sincroniza „%1” deoarece este folderul rădăcină. Pentru a continua, selectați un folder diferit.</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have write permissions.</source>
+        <translatorcomment>Warning message indicating that there is no write Permissions. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece nu aveți permisiuni de scriere</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
+        <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece este în coșul de gunoi MEGA</translation>
+    </message>
+    <message>
+        <source>This selection can&apos;t be synced as it’s a file.</source>
+        <translatorcomment>Warning message indicating that the selection is a file and files can´t be synced. CON-467</translatorcomment>
+        <translation>Această selecție nu poate fi sincronizată deoarece este un fișier</translation>
+    </message>
+    <message>
+        <source>This folder is already being synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
+        <translation>Acest folder este deja sincronizat</translation>
+    </message>
 </context>
 <context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Sincronizezi un folder local formatat cu un sistem de fișiere FAT. Sistemul de fișiere FAT are deficiențe la gestionarea fișierelor mari și timpilor de modificare care pot provoca probleme de sincronizare (de ex., când se modifică ora de vară), așadar se recomandă insistent să sincronizezi doar foldere formatate cu sisteme de fișiere mai fiabile precum NTFS (mai multe informații [A]aici[/A]).</translation>
+        <translation>Sincronizați un folder local formatat cu un sistem de fișiere FAT. Sistemul de fișiere FAT are deficiențe în gestionarea fișierelor mari și a timpilor de modificare care pot cauza probleme de sincronizare (de exemplu, atunci când se schimbă ora de vară), așa că este recomandat să sincronizați doar folderele formatate cu sisteme de fișiere mai fiabile, cum ar fi NTFS (mai multe informații [A]aici[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
         <translation>Sincronizezi un folder local partajat cu VMWare. Acest folder nu suportă notificări privind sistemul de fișiere, astfel pentru a detecta modificările și sincronizarea, aplicația va trebui să scaneze continuu folderul și fișierele din acesta. Dacă este posibil, folosește un folder diferit pentru a reduce utilizarea CPU-ului.</translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Sincronizările și backupurile tale au fost dezactivate: %1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Backupurile tale au fost dezactivate: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Backupurile tale au fost dezactivate: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>Sincronizarea dvs. „%1” a fost dezactivată deoarece folderul local nu este disponibil sau nu aveți permisiuni de citire și scriere.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>Sincronizarea dvs. „%1” a fost dezactivată deoarece folderul local nu este disponibil sau nu aveți permisiuni de citire și scriere.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Sincronizarea „%1” dvs. a fost dezactivată deoarece MEGA nu poate sincroniza sau backup folderele VirtualBox.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Sincronizarea „%1” ți-a fost dezactivată deoarece folderul de la distanță este în Coșul de gunoi</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Sincronizarea dvs. „%1” a fost dezactivat. Nu aveți acces complet la folderul de la distanță (sau la o parte din acesta).</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Sincronizarea dvs. „%1” a fost dezactivat deoarece folderul local s-a schimbat</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>Sincronizarea dvs. „%1” a fost dezactivat. Motivul: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason.SNC-3654</translatorcomment>
+        <translation>Backupul „%1” ți-a fost dezactivat temporar: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>Backupul dvs. „%1” a fost dezactivată deoarece folderul local nu este disponibil sau nu aveți permisiuni de citire și scriere.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>Backupul „%1” ți-a fost dezactivat deoarece sincronizarea folderelor partajate ale VirtualBox nu sunt suportate din cauza deficiențelor din acel sistem de fișiere.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Backupul dvs. „%1” a fost dezactivat deoarece folderul MEGA este în Coșul de gunoi.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Backupul „%1” ți-a fost dezactivat. Nu ai acces complet la folderul MEGA (sau o parte din el).</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Backupul dvs. ”%1„ a fost dezactivat deoarece folderul local s-a schimbat.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Backupul dvs. „%1” a fost dezactivat deoarece folderul MEGA s-a modificat.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>Backupul dvs. „%1” a fost dezactivat. Motivul: %2</translation>
     </message>
 </context>
 <context>
@@ -6222,26 +6399,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
-    <name>SyncsMenu</name>
+    <name>Syncs</name>
     <message>
-        <source>Add Sync</source>
-        <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>Adaugă o sincronizare</translation>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
+        <translation>Selectați un folder local de sincronizat</translation>
     </message>
     <message>
-        <source>Syncs</source>
-        <translatorcomment>Menu option that shows syncs menu</translatorcomment>
-        <translation>Sincronizări</translation>
+        <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
+        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece nu aveți permisiuni de scriere</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation>Backupuri</translation>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
+        <translation>Selectați un folder MEGA pentru sincronizare</translation>
     </message>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>Adaugă un backup</translation>
+        <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
+        <translation>Folderul nu poate fi sincronizat deoarece nu poate fi localizat. Este posibil să fi fost mutat sau șters sau este posibil să nu aveți acces.</translation>
+    </message>
+    <message>
+        <source>%1 folder doesn&apos;t exist</source>
+        <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
+        <translation>„%1” folder nu există</translation>
     </message>
 </context>
 <context>
@@ -6999,6 +7181,19 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
+    <name>TwoWaySyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu option used to add sync;SNC-3654</translatorcomment>
+        <translation>Adaugă o sincronizare</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu option that shows syncs menu;SNC-3654</translatorcomment>
+        <translation>Sincronizări</translation>
+    </message>
+</context>
+<context>
     <name>UpgradeDialog</name>
     <message>
         <source>Depleted transfer quota</source>
@@ -7018,7 +7213,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Prețul în moneda locală este doar o estimare. Toate tranzacțiile afișate sunt taxate în euro.</translation>
+        <translation>* Preț estimat în moneda locală. Contul dvs. va fi facturat în euro pentru toate tranzacțiile.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7061,7 +7256,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Prețul în moneda locală este doar o estimare. Toate tranzacțiile afișate sunt taxate în euro.</translation>
+        <translation>* Preț estimat în moneda locală. Contul dvs. va fi facturat în euro pentru toate tranzacțiile.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7092,7 +7287,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Selectează folderul de încărcare pentru fișiere:</translation>
+        <translation>Selectați folderul de încărcare pentru fișierele dvs.:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -7130,11 +7325,6 @@ Please delete the folder sync from settings to cancel them.</source>
 </context>
 <context>
     <name>Utilities</name>
-    <message>
-        <source>just now</source>
-        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>tocmai acum</translation>
-    </message>
     <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
@@ -7179,36 +7369,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro&#xa0;III</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>acum %n secundă</numerusform><numerusform>acum %n secunde</numerusform><numerusform>acum %n de secunde</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>acum %n minut</numerusform><numerusform>acum %n minute</numerusform><numerusform>acum %n de minute</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>acum %n oră</numerusform><numerusform>acum %n ore</numerusform><numerusform>acum %n de ore</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>acum %n zi</numerusform><numerusform>acum %n zile</numerusform><numerusform>acum %n de zile</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>acum %n lună</numerusform><numerusform>acum %n luni</numerusform><numerusform>acum %n de luni</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
-        <translation><numerusform>acum %n an</numerusform><numerusform>acum %n ani</numerusform><numerusform>acum %n de ani</numerusform></translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -7255,6 +7415,41 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
         <translation><numerusform>%1 (%2&#xa0;%) folosit din %3</numerusform><numerusform>%1 (%2&#xa0;%) folosiți din %3</numerusform><numerusform>%1 (%2&#xa0;%) folosiți din %3</numerusform></translation>
     </message>
+    <message>
+        <source>Added just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
+        <translation>Articol tocmai finalizat</translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Articol finalizat %n a doua în urmă</numerusform><numerusform>Articol finalizat %n cu câteva secunde în urmă</numerusform><numerusform>Articol finalizat %n cu câteva secunde în urmă</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Articol finalizat %n un minut în urmă</numerusform><numerusform>Articol finalizat %n minute în urmă</numerusform><numerusform>Articol finalizat %n minute în urmă</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Articol finalizat %n o oră în urmă</numerusform><numerusform>Articol finalizat %n ore în urmă</numerusform><numerusform>Articol finalizat %n ore în urmă</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Articol finalizat %n o zi în urmă</numerusform><numerusform>Articol finalizat %n zile în urmă</numerusform><numerusform>Articol finalizat %n zile în urmă</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Articol finalizat %n luna în urmă</numerusform><numerusform>Articol finalizat %n luni în urmă</numerusform><numerusform>Articol finalizat %n luni în urmă</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Articol finalizat %n un an în urmă</numerusform><numerusform>Articol finalizat %n ani în urmă</numerusform><numerusform>Articol finalizat %n ani în urmă</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -7287,21 +7482,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
         <translation>Retrimite e-mailul</translation>
-    </message>
-    <message>
-        <source>Verify your account</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation>Verifică-ți contul</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation>Contul tău a fost blocat temporar din cauza unor posibile abuzuri. Te rugăm să verifici numărul de telefon pentru a-ți debloca contul.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation>Verifică acum</translation>
     </message>
     <message>
         <source>Email sent</source>

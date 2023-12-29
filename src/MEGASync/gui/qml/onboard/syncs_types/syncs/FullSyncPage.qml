@@ -26,10 +26,11 @@ FullSyncPageForm {
                 localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath;
                 localFolderChooser.folderField.hint.visible = true;
             }
-            else if (localFolderChooser.choosenPath !== localFolder.getDefaultFolder(syncsCpp.defaultMegaFolder) || localFolder.createFolder(localFolderChooser.choosenPath)) {
+            else if (localFolderChooser.choosenPath !== localFolder.getDefaultFolder(syncs.defaultMegaFolder)
+                     || localFolder.createFolder(localFolderChooser.choosenPath)) {
                 root.enabled = false;
                 footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-                syncsCpp.addSync(localFolderChooser.choosenPath);
+                syncs.addSync(localFolderChooser.choosenPath);
             }
             else {
                 localFolderChooser.folderField.error = true;
@@ -44,7 +45,7 @@ FullSyncPageForm {
     }
 
     Syncs {
-        id: syncsCpp
+        id: syncs
 
         onSyncSetupSuccess: {
             root.enabled = true;
@@ -73,7 +74,7 @@ FullSyncPageForm {
         target: onboardingWindow
 
         function onInitializePageFocus() {
-            localFolderChooser.changeButton.setFocus(true);
+            localFolderChooser.forceActiveFocus();
         }
     }
 }

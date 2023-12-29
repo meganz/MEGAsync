@@ -419,6 +419,9 @@ QProgressBar::chunk
                <property name="text">
                 <string/>
                </property>
+               <property name="textFormat">
+                <enum>Qt::PlainText</enum>
+               </property>
               </widget>
              </item>
              <item>

@@ -8,9 +8,7 @@ class GuestContent : public QMLComponent
     Q_OBJECT
 
 public:
-
     explicit GuestContent(QObject *parent = 0);
-    ~GuestContent();
 
     QUrl getQmlUrl() override;
 
@@ -20,7 +18,6 @@ public:
     Q_INVOKABLE void onPreferencesClicked();
     Q_INVOKABLE void onExitClicked();
     Q_INVOKABLE void onVerifyEmailClicked();
-    Q_INVOKABLE void onVerifyPhoneClicked();
     Q_INVOKABLE void onLogoutClicked();
 };
 

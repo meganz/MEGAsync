@@ -23,7 +23,7 @@ TextField {
         verticalAlignment: Text.AlignVCenter
         validator: RegExpValidator { regExp: RegexExpressions.digit2FA }
         font {
-            pixelSize: Texts.Text.Size.Huge
+            pixelSize: Texts.Text.Size.HUGE
             weight: Font.Bold
         }
 
@@ -37,16 +37,18 @@ TextField {
     textField.onTextChanged: {
         var isCharacterEntered = textField.text.length !== 0;
         if(isCharacterEntered && next !== undefined) {
-            next.textField.focus = true;
-        } else {
-            textField.focus = false;
+            next.focus = true;
         }
-        textField.horizontalAlignment = isCharacterEntered ? TextInput.AlignHCenter : TextInput.AlignLeft;
+        else {
+            focus = false;
+        }
+        textField.horizontalAlignment =
+            isCharacterEntered ? TextInput.AlignHCenter : TextInput.AlignLeft;
     }
 
     onBackPressed: {
         if(previous !== undefined) {
-            previous.textField.focus = true;
+            previous.focus = true;
         }
     }
 }

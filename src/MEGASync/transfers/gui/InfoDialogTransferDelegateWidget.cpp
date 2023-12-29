@@ -331,13 +331,6 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
         mUi->lActionTransfer->setIconSize(QSize(24,24));
         mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
 
-        //Check if transfer finishes while the account was blocked, in order to provide the right context for failed error
-        bool blockedTransfer = MegaSyncApp->finishedTransfersWhileBlocked(getData()->mTag);
-        if (blockedTransfer)
-        {
-            MegaSyncApp->removeFinishedBlockedTransfer(getData()->mTag);
-        }
-
         mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorInContext()));
         updateFinishedIco(getData()->mType, true);
     }
@@ -359,7 +352,7 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
     }
 
     mUi->lElapsedTime->setStyleSheet(QLatin1String("color: #999999"));
-    mUi->lElapsedTime->setText(tr("Added [A]").replace(QLatin1String("[A]"), Utilities::getFinishedTimeString(finishedTime)));
+    mUi->lElapsedTime->setText(Utilities::getAddedTimeString(finishedTime));
 }
 
 QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const

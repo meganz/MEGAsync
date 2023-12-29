@@ -190,6 +190,24 @@ void freeStaticResources()
     Platform::destroy();
 }
 
+void addFonts()
+{
+#if !defined(__APPLE__) && !defined (_WIN32)
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Semibold.ttf"));
+
+    QFont font(QString::fromUtf8("Open Sans"), 8);
+    theapp->setFont(font);
+#endif
+
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Semibold.ttf"));
+
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Light.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Bold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Semibold.ttf"));
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setOrganizationName(QString::fromUtf8("Mega Limited"));
@@ -578,22 +596,7 @@ int main(int argc, char *argv[])
     }
     Platform::getInstance()->initialize(argc, argv);
 
-#if !defined(__APPLE__) && !defined (_WIN32)
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Semibold.ttf"));
-
-    QFont font(QString::fromUtf8("Open Sans"), 8);
-    app.setFont(font);
-#endif
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Light.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Bold.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Semibold.ttf"));
-
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Light.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Bold.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Semibold.ttf"));
+    addFonts();
 
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Bold.ttf"));
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Black.ttf"));

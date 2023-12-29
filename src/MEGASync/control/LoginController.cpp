@@ -366,6 +366,10 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
                 setPasswordErrorMsg(tr("Invalid email or password. Please try again."));
                 break;
             }
+            case mega::MegaError::API_EACCESS:
+            {
+                break;
+            }
             default:
             {
                 setPasswordErrorMsg(QCoreApplication::translate("MegaError", e->getErrorString()));
@@ -526,7 +530,6 @@ void LoginController::onLogout(mega::MegaRequest* request, mega::MegaError* e)
     Q_UNUSED(e)
     Q_UNUSED(request)
 
-    mNewAccount = false;
     setState(LOGGED_OUT);
 }
 
@@ -848,6 +851,7 @@ LogoutController::LogoutController(QObject* parent)
     : QObject(parent)
       , mMegaApi(MegaSyncApp->getMegaApi())
       , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
+      , mLogingIn(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
 }
@@ -859,6 +863,7 @@ LogoutController::~LogoutController()
 void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(api)
+
     if(request->getType() != mega::MegaRequest::TYPE_LOGOUT)
     {
         return;
@@ -867,7 +872,7 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
     int paramType =  request->getParamType();
     if (errorCode || paramType)
     {
-        if (errorCode == mega::MegaError::API_EINCOMPLETE && paramType == mega::MegaError::API_ESSL)
+        if (errorCode == mega::MegaError::API_EINCOMPLETE && paramType == mega::MegaError::API_ESSL && !mLogingIn)
         {
             //Typical case: Connecting from a public wifi when the wifi sends you to a landing page
             //SDK cannot connect through SSL securely and asks MEGA Desktop to log out
@@ -900,6 +905,7 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
             msgInfo.ignoreCloseAll = true;
 
             QMegaMessageBox::critical(msgInfo);
+            mMegaApi->localLogout();
         }
         else if (paramType != mega::MegaError::API_EACCESS && paramType != mega::MegaError::API_EBLOCKED)
         {
@@ -922,4 +928,14 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
     }
 
     emit logout(!request->getFlag());
+    mLogingIn = false;
+}
+
+void LogoutController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *request)
+{
+    Q_UNUSED(api)
+    if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
+    {
+        mLogingIn = true;
+    }
 }

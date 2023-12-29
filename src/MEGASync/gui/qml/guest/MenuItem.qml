@@ -10,49 +10,54 @@ Qml.MenuItem {
     id: root
 
     enum Position {
-        First = 0,
-        Inter = 1,
-        Last = 2
+        FIRST = 0,
+        INTER = 1,
+        LAST = 2
     }
 
     readonly property int paddingSize: 8
 
-    property int position: MenuItem.Position.Inter
+    property int position: MenuItem.Position.INTER
 
     function getBackgroundColor(){
-        if(root.pressed)
-        {
+        if(root.pressed) {
             return Styles.surface2;
         }
-        else if(root.hovered)
-        {
+        else if(root.hovered) {
             return Styles.textInverse;
         }
+
         return "transparent";
     }
 
     width: 200
-    height: root.position === MenuItem.Position.First || position === MenuItem.Position.Last ? 48 : 40
+    height: root.position === MenuItem.Position.FIRST || position === MenuItem.Position.LAST ? 48 : 40
     leftPadding: paddingSize
     rightPadding: paddingSize
-    topPadding: root.position === MenuItem.Position.First ? paddingSize : 0
-    bottomPadding: root.position === MenuItem.Position.Last ? paddingSize : 0
+    topPadding: root.position === MenuItem.Position.FIRST ? paddingSize : 0
+    bottomPadding: root.position === MenuItem.Position.LAST ? paddingSize : 0
 
     contentItem: Rectangle {
+        id: itemBorder
+
         implicitWidth: 184
         implicitHeight: 40
         color: getBackgroundColor();
-        border.color: root.visualFocus ? Styles.focus : "transparent";
+        border.color: root.activeFocus ? Styles.focus : "transparent";
         border.width: 4
         radius: 4
 
         Row {
+            id: row
+
             anchors.fill: parent
             anchors.leftMargin: 16
             anchors.rightMargin: 16
             spacing: 12
 
             SvgImage {
+                id: itemImage
+
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.topMargin: 12
@@ -63,19 +68,23 @@ Qml.MenuItem {
             }
 
             Texts.Text {
+                id: itemText
+
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.topMargin: 10
                 anchors.bottomMargin: 10
                 verticalAlignment: Text.AlignVCenter
                 text: root.text
-                font.pixelSize: Texts.Text.Size.Medium
+                font.pixelSize: Texts.Text.Size.MEDIUM
                 color: Styles.textPrimary
             }
         }
     }
 
     background: Rectangle {
+        id: itemBackground
+
         color: "transparent"
     }
 

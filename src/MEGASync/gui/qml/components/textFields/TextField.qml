@@ -8,10 +8,9 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.toolTips 1.0
 
-Rectangle {
+FocusScope {
     id: root
 
-    // Alias
     property alias textField: textField
     property alias text: textField.text
     property alias placeholderText: textField.placeholderText
@@ -20,25 +19,31 @@ Rectangle {
     property alias acceptableInput: textField.acceptableInput
     property alias validator: textField.validator
     property alias hint: hintItem
-
-    // Component properties
-    property bool error: false
     property alias title: titleItem.text
-
     property alias rightIconVisible: rightIcon.visible
-    property string rightIconSource: ""
-
     property alias leftIconColor: leftIcon.color
     property alias leftIconVisible: leftIcon.visible
+
+    property bool error: false
+    property string rightIconSource: ""
     property string leftIconSource: ""
 
     property Sizes sizes: Sizes {}
     property Colors colors: Colors {}
 
-    signal backPressed()
-    signal pastePressed()
-    signal returnPressed()
-    signal accepted()
+    signal backPressed
+    signal pastePressed
+    signal returnPressed
+    signal accepted
+
+    height: textField.height
+                + ((titleItem.text !== "" && titleItem.visible)
+                    ? (titleItem.height + textField.anchors.topMargin)
+                    : 0)
+                + ((hintItem.text !== "" && hintItem.visible)
+                    ? hint.height + hint.anchors.topMargin
+                    : 0)
+    Layout.preferredHeight: height
 
     onLeftIconSourceChanged: {
         if (leftIconSource.length > 0) {
@@ -49,20 +54,6 @@ Rectangle {
     onRightIconSourceChanged: {
         if (rightIconSource.length > 0) {
             rightIcon.source = rightIconSource
-        }
-    }
-
-    Layout.preferredHeight: height
-    height: textField.height + ((titleItem.text !== "" && titleItem.visible) ? (titleItem.height + textField.anchors.topMargin) : 0) +
-            ((hintItem.text !== "" && hintItem.visible) ? hint.height + hint.anchors.topMargin : 0)
-
-    color: "transparent"
-
-    function setFocus(focus) {
-        textField.focus = focus;
-
-        if (focus) {
-            textField.forceActiveFocus();
         }
     }
 
@@ -87,19 +78,23 @@ Rectangle {
             var padding = sizes.iconMargin;
             if(iconPresent) {
                 padding += sizes.iconWidth + sizes.iconTextSeparation;
-            } else {
+            }
+            else {
                 padding += sizes.focusBorderWidth;
             }
             return padding;
         }
 
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: titleItem.text.length > 0 ? titleItem.bottom : parent.top
-        anchors.topMargin: sizes.titleSpacing
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: titleItem.text.length > 0 ? titleItem.bottom : parent.top
+            topMargin: sizes.titleSpacing
+        }
 
         selectByMouse: true
         selectionColor: colors.selection
+        focus: true
         height: sizes.height + 2 * sizes.focusBorderWidth
         leftPadding: calculatePaddingWithIcon(leftIconSource != "")
         rightPadding: calculatePaddingWithIcon(rightIconSource != "")
@@ -107,23 +102,18 @@ Rectangle {
         bottomPadding: sizes.padding
         placeholderTextColor: colors.placeholder
         color: enabled ? colors.text : colors.textDisabled
-        onAccepted: {
-            root.accepted()
-        }
-
         font {
-            pixelSize: Texts.Text.Size.Medium
+            pixelSize: Texts.Text.Size.MEDIUM
             family: Styles.fontFamily
             styleName: Styles.fontStyleName
         }
 
+        onAccepted: {
+            root.accepted();
+        }
+
         background: Rectangle {
             id: focusBorder
-
-            color: "transparent"
-            border.color: textField.activeFocus ? colors.focus : "transparent"
-            border.width: sizes.focusBorderWidth
-            radius: sizes.focusBorderRadius
 
             anchors {
                 left: textField.left
@@ -131,28 +121,39 @@ Rectangle {
                 top: textField.top
                 bottom: textField.bottom
             }
+            radius: sizes.focusBorderRadius
+            color: "transparent"
+            border {
+                color: textField.activeFocus ? colors.focus : "transparent"
+                width: sizes.focusBorderWidth
+            }
 
             SvgImage {
                 id: leftIcon
 
+                anchors {
+                    top: focusBorder.top
+                    left: focusBorder.left
+                    topMargin: sizes.iconMargin
+                    leftMargin: sizes.iconMargin
+                }
                 color: enabled ? colors.icon : colors.iconDisabled
-                anchors.top: focusBorder.top
-                anchors.left: focusBorder.left
-                anchors.topMargin: sizes.iconMargin
-                anchors.leftMargin: sizes.iconMargin
                 sourceSize: sizes.iconSize
                 z: 2
             }
 
             Rectangle {
+                id: backgroundRect
 
                 function getBorderColor() {
                     var color = colors.border;
                     if(!enabled) {
                         color = colors.borderDisabled;
-                    } else if(error) {
+                    }
+                    else if(error) {
                         color = colors.borderError;
-                    } else if(textField.focus) {
+                    }
+                    else if(textField.activeFocus) {
                         color = colors.borderFocus;
                     }
                     return color;
@@ -169,57 +170,69 @@ Rectangle {
 
                 width: textField.width - 2 * sizes.focusBorderWidth
                 height: textField.height - 2 * sizes.focusBorderWidth
-                color: colors.background
-                border.color: getBorderColor()
-                border.width: sizes.borderWidth
                 radius: sizes.borderRadius
+                color: colors.background
+                border {
+                    color: getBorderColor()
+                    width: sizes.borderWidth
+                }
             }
 
             SvgImage {
                 id: rightIcon
 
-                color: enabled ? colors.icon : colors.iconDisabled
+                anchors {
+                    top: focusBorder.top
+                    right: focusBorder.right
+                    topMargin: sizes.iconMargin
+                    rightMargin: sizes.iconMargin
+                }
                 sourceSize: sizes.iconSize
-                anchors.top: focusBorder.top
-                anchors.right: focusBorder.right
-                anchors.topMargin: sizes.iconMargin
-                anchors.rightMargin: sizes.iconMargin
+                color: enabled ? colors.icon : colors.iconDisabled
                 z: 2
 
                 MouseArea {
                     id: rightIconMouseArea
 
-                    enabled: rightIcon.visible
                     anchors.fill: parent
+                    enabled: rightIcon.visible
                     cursorShape: rightIcon.visible ? Qt.PointingHandCursor : Qt.ArrowCursor
                 }
             }
-        }
+
+        } // Rectangle: focusBorder
 
         Keys.onPressed: {
             if(event.key === Qt.Key_Backspace) {
                 root.backPressed();
-            } else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
+            }
+            else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
                 pastePressed();
-            } else if(event.key === Qt.Key_Up) {
+            }
+            else if(event.key === Qt.Key_Up) {
                 textField.cursorPosition = 0;
-            } else if(event.key === Qt.Key_Down) {
+            }
+            else if(event.key === Qt.Key_Down) {
                 textField.cursorPosition = textField.text.length;
-            } else if(event.key === Qt.Key_Return) {
-                root.returnPressed()
+            }
+            else if(event.key === Qt.Key_Return) {
+                root.returnPressed();
             }
         }
-    }
+
+    } // Qml.TextField: textField
 
     Texts.HintText {
         id: hintItem
 
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: textField.bottom
-        anchors.topMargin: 2
-        anchors.leftMargin: sizes.focusBorderWidth
-        anchors.rightMargin: sizes.focusBorderWidth
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: textField.bottom
+            topMargin: 2
+            leftMargin: sizes.focusBorderWidth
+            rightMargin: sizes.focusBorderWidth
+        }
         type: Constants.MessageType.ERROR
         visible: false
     }
@@ -227,10 +240,11 @@ Rectangle {
     ToolTip {
         id: toolTip
 
+        text: textField.text
         visible: textField.text
                     && textField.readOnly
-                    && textField.contentWidth > textField.width - textField.leftPadding - textField.rightPadding
+                    && textField.contentWidth
+                            > textField.width - textField.leftPadding - textField.rightPadding
                     && textField.hovered
-        text: textField.text
     }
 }

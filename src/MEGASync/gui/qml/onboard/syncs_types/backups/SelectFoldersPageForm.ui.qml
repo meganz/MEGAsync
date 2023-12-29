@@ -9,6 +9,7 @@ import onboard.syncs_types 1.0
 import BackupsModel 1.0
 
 SyncsPage {
+    id: root
 
     footerButtons.rightPrimary {
         text: OnboardingStrings.backUp
@@ -17,29 +18,39 @@ SyncsPage {
     }
 
     ColumnLayout {
+        id: selectFolderLayout
 
         anchors {
             top: parent.top
             left: parent.left
             right: parent.right
         }
-        spacing: 34
+        spacing: 24
 
         Header {
+            id: headerItem
+
             title: OnboardingStrings.selectBackupFoldersTitle
             description: OnboardingStrings.selectBackupFoldersDescription
         }
 
-        ColumnLayout {
+        InfoAccount {
+            id: infoAccount
 
             Layout.preferredWidth: parent.width
-            spacing: 12
+        }
+    }
 
-            InfoAccount {
-                Layout.preferredWidth: parent.width
-            }
+    SelectTable {
+        id: backupsTable
 
-            SelectTable {}
+        anchors {
+            top: selectFolderLayout.bottom
+            left: parent.left
+            right: parent.right
+            bottom: footerButtons.top
+            topMargin: 8 // value by design
+            bottomMargin: selectFolderLayout.spacing
         }
     }
 }

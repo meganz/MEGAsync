@@ -9,11 +9,12 @@ class GuestQmlDialog : public QmlDialog
 
 public:
     explicit GuestQmlDialog(QWindow* parent = nullptr);
-    ~GuestQmlDialog() override;
     bool isHiddenForLongTime() const;
 
 signals:
     void guestActiveChanged(bool active);
+    void initializePageFocus();
+    void hideRequested();
 
 public slots:
     void realocate();

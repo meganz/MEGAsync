@@ -30,13 +30,17 @@ Item {
     Image {
         id: image
 
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: imageTopMargin
+        anchors {
+            top: parent.top
+            horizontalCenter: parent.horizontalCenter
+            topMargin: imageTopMargin
+        }
         source: Images.guest
     }
 
     Column {
+        id: mainColumn
+
         anchors {
             left: parent.left
             right: parent.right
@@ -50,27 +54,36 @@ Item {
         HorizontalProgressBar {
             id: progressBar
 
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             value: root.progressValue
         }
 
         Column {
             id: textColumn
 
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
             spacing: title.visible && description.visible ? 12 : 0
 
             Texts.Text {
                 id: title
 
-                anchors.left: parent.left
-                anchors.right: parent.right
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.pixelSize: Texts.Text.Size.MediumLarge
-                font.weight: Font.DemiBold
+                font {
+                    pixelSize: Texts.Text.Size.MEDIUM_LARGE
+                    weight: Font.DemiBold
+                }
                 lineHeight: 24
                 lineHeightMode: Text.FixedHeight
                 visible: title.text !== ""
@@ -79,13 +92,15 @@ Item {
             Texts.RichText {
                 id: description
 
-                anchors.left: parent.left
-                anchors.right: parent.right
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 color: Styles.textSecondary
                 manageMouse: true
-                font.pixelSize: Texts.Text.Size.Small
+                font.pixelSize: Texts.Text.Size.SMALL
                 lineHeight: 16
                 lineHeightMode: Text.FixedHeight
                 visible: description.text !== ""
@@ -101,7 +116,7 @@ Item {
                 id: leftButton
 
                 onClicked: {
-                    guestWindow.hide();
+                    window.hide();
                 }
             }
 
@@ -109,7 +124,7 @@ Item {
                 id: rightButton
 
                 onClicked: {
-                    guestWindow.hide();
+                    window.hide();
                 }
             }
         }

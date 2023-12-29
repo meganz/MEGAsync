@@ -1016,12 +1016,14 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (mLoadingSettings) return;
 
+    mPreferences->disableOverlayIcons(!checked);
+
     const int configuredSyncCount = mModel->getNumSyncedFolders(SyncInfo::AllHandledSyncTypes);
     if (configuredSyncCount <= 0)
         return;
 
     setOverlayCheckboxEnabled(false, checked);
-    mPreferences->disableOverlayIcons(!checked);
+
 #ifdef Q_OS_MACOS
     Platform::getInstance()->notifyRestartSyncFolders();
 #endif

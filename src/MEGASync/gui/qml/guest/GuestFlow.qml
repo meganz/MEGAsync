@@ -11,23 +11,11 @@ import components.texts 1.0 as Texts
 
 import onboard 1.0
 
-import GuestContent 1.0
 import ApiEnums 1.0
 import LoginController 1.0
 
-Rectangle {
+Item {
     id: root
-
-    width: 400
-    height: 560
-    radius: 10
-    color: Styles.surface1
-    border.color: "#1F000000"
-    border.width: 1
-
-    property string title: ""
-    property bool indeterminate: true
-    property double progressValue: 0.0
 
     readonly property string stateLoggedOut: "LOGGED_OUT"
     readonly property string stateInProgress: "IN_PROGRESS"
@@ -39,6 +27,12 @@ Rectangle {
     readonly property string stateFetchNodesFinished: "FETCH_NODES_FINISHED"
     readonly property string stateBlocked: "BLOCKED"
     readonly property string stateInOnboarding: "IN_ONBOARDING"
+
+    property string title: ""
+    property bool indeterminate: true
+    property double progressValue: 0.0
+
+    anchors.fill: parent
 
     function getState() {
         if(accountStatusControllerAccess.blockedState) {
@@ -75,20 +69,20 @@ Rectangle {
         State {
             name: root.stateLoggedOut
             StateChangeScript {
-                script: view.replace(initialPage);
+                script: view.replace(initialPageComponent);
             }
         },
         State {
             name: root.stateFetchNodesFinished
             extend: root.stateLoggedOut
             StateChangeScript {
-                script: guestWindow.hide();
+                script: window.hide();
             }
         },
         State {
             name: root.stateInProgress
             StateChangeScript {
-                script: view.replace(progressPage);
+                script: view.replace(progressPageComponent);
             }
         },
         State {
@@ -114,13 +108,13 @@ Rectangle {
         State {
             name: root.stateBlocked
             StateChangeScript {
-                script: view.replace(blockedPage);
+                script: view.replace(blockedPageComponent);
             }
         },
         State {
             name: root.stateInOnboarding
             StateChangeScript {
-                script: view.replace(settingUpAccountPage);
+                script: view.replace(settingUpAccountPageComponent);
             }
         }
     ]
@@ -139,10 +133,13 @@ Rectangle {
     IconButton {
         id: menuButton
 
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.topMargin: 9
-        anchors.rightMargin: 9
+        anchors{
+            top: parent.top
+            right: parent.right
+            topMargin: 9
+            rightMargin: 9
+        }
+
         icons.source: Images.menu
         z: 3
 
@@ -150,6 +147,8 @@ Rectangle {
             menuButton.checked = true;
             menu.visible = !menu.visible;
         }
+
+        KeyNavigation.tab: menu.visible ? aboutMenuItem : view.currentItem.leftButton
     }
 
     Qml.Menu {
@@ -185,15 +184,21 @@ Rectangle {
             menuButton.checked = false;
         }
 
+        onVisibleChanged: {
+            if (visible) {
+                aboutMenuItem.forceActiveFocus();
+            }
+        }
+
         MenuItem {
             id: aboutMenuItem
 
             text: GuestStrings.menuAboutMEGA
             icon.source: Images.megaOutline
-            position: MenuItem.Position.First
+            position: MenuItem.Position.FIRST
             onTriggered: {
                 guestContentAccess.onAboutMEGAClicked();
-                guestWindow.hide();
+                window.hide();
             }
         }
 
@@ -204,7 +209,7 @@ Rectangle {
             icon.source: Images.settings
             onTriggered: {
                 guestContentAccess.onPreferencesClicked();
-                guestWindow.hide();
+                window.hide();
             }
         }
 
@@ -213,11 +218,13 @@ Rectangle {
 
             text: GuestStrings.menuExit
             icon.source: Images.exit
-            position: MenuItem.Position.Last
+            position: MenuItem.Position.LAST
             onTriggered: {
                 guestContentAccess.onExitClicked();
-                guestWindow.hide();
+                window.hide();
             }
+
+            KeyNavigation.tab: view.currentItem.leftButton
         }
     }
 
@@ -230,9 +237,11 @@ Rectangle {
     }
 
     Component {
-        id: initialPage
+        id: initialPageComponent
 
         BasePage {
+            id: initialPage
+
             title: GuestStrings.logInOrSignUp
             spacing: 48
             showProgressBar: false
@@ -248,13 +257,22 @@ Rectangle {
                     loginControllerAccess.state = LoginController.LOGGED_OUT;
                 }
             }
+
+            Connections {
+                target: window
+
+                function onInitializePageFocus() {
+                    leftButton.forceActiveFocus();
+                }
+            }
         }
     }
 
     Component {
-        id: progressPage
+        id: progressPageComponent
 
         BasePage {
+            id: progressPage
 
             function getDescription() {
                 switch(loginControllerAccess.state) {
@@ -294,16 +312,17 @@ Rectangle {
     }
 
     Component {
-        id: blockedPage
+        id: blockedPageComponent
 
         BasePage {
+            id: blockedPage
 
             showProgressBar: false
             imageSource: Images.warningGuest
             imageTopMargin: 110
             title: GuestStrings.accountTempLocked
             description: GuestStrings.accountTempLockedEmail
-            descriptionFontSize: Texts.Text.Size.Normal
+            descriptionFontSize: Texts.Text.Size.NORMAL
             descriptionColor: Styles.textPrimary
             descriptionLineHeight: 18
             leftButton {
@@ -319,17 +338,26 @@ Rectangle {
                     position: Icon.Position.LEFT
                 }
                 onClicked: {
-                        guestContentAccess.onVerifyEmailClicked();
+                    guestContentAccess.onVerifyEmailClicked();
+                }
+            }
+
+            Connections {
+                target: window
+
+                function onInitializePageFocus() {
+                    leftButton.forceActiveFocus();
                 }
             }
         }
     }
 
-
     Component {
-        id: settingUpAccountPage
+        id: settingUpAccountPageComponent
 
         BasePage {
+            id: settingUpAccountPage
+
             showProgressBar: false
             title: GuestStrings.loggedInOnboarding
             imageSource: Images.settingUp
@@ -337,6 +365,14 @@ Rectangle {
             rightButton.visible: false
             spacing: 0
             bottomMargin: 150
+        }
+    }
+
+    Connections {
+        target: window
+
+        function onHideRequested() {
+            menu.close();
         }
     }
 }

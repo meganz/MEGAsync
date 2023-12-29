@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.15
 import common 1.0
 
 Button {
-    id: button
+    id: root
 
     readonly property int focusBorderWidth: 4
     readonly property int focusBorderRadius: 10
@@ -26,70 +26,77 @@ Button {
     }
 
     function getBorderColor() {
-        if(button.pressed || button.down) {
+        if(root.pressed || root.down) {
             return colors.borderPressed;
-        } else if(button.checked) {
+        }
+        else if(root.checked) {
             return colors.borderSelected;
-        } else if(button.hovered) {
+        }
+        else if(root.hovered) {
             return  colors.borderHover;
-        } else if(!button.enabled) {
+        }
+        else if(!root.enabled) {
             return colors.borderDisabled;
         }
         return colors.border;
     }
 
     function getBackgroundColor() {
-        if(button.pressed || button.down) {
+        if(root.pressed || root.down) {
             return colors.pressed;
-        } else if(button.hovered) {
+        }
+        else if(root.hovered) {
             return colors.hover;
-        } else if(button.checked) {
+        }
+        else if(root.checked) {
             return colors.background;
-        } else if(!button.enabled) {
+        }
+        else if(!root.enabled) {
             return colors.disabled;
         }
         return colors.background;
     }
 
-    function setFocus(focus)    {
-        button.focus = focus;
-
-        if(focus) {
-            button.forceActiveFocus();
-        }
-    }
-
     checkable: true
     checked: false
-    autoExclusive : true
+    autoExclusive: true
 
     background: Rectangle {
         id: focusRect
 
         color: "transparent"
-        border.color: button.enabled ? (button.activeFocus ? Styles.focus : "transparent") : "transparent"
-        border.width: button.focusBorderWidth
-        radius: button.focusBorderRadius
+        radius: root.focusBorderRadius
+        border {
+            color: root.enabled
+                   ? (root.activeFocus ? Styles.focus : "transparent")
+                   : "transparent"
+            width: root.focusBorderWidth
+        }
 
         Rectangle {
             id: buttonBackground
 
             readonly property int borderRadius: 6
 
-            border.width: (button.pressed || button.down || button.hovered || button.checked) ? 2 : 1
+            anchors {
+                top: focusRect.top
+                left: focusRect.left
+                topMargin: root.focusBorderWidth
+                leftMargin: root.focusBorderWidth
+            }
+            width: root.width - 2 * root.focusBorderWidth
+            height: root.height - 2 * root.focusBorderWidth
             radius: borderRadius
             color: getBackgroundColor()
-            border.color: getBorderColor()
-
-            anchors.top: focusRect.top
-            anchors.left: focusRect.left
-            anchors.topMargin: button.focusBorderWidth
-            anchors.leftMargin: button.focusBorderWidth
-            width: button.width - 2 * button.focusBorderWidth
-            height: button.height - 2 * button.focusBorderWidth
+            border {
+                width: (root.pressed || root.down || root.hovered || root.checked) ? 2 : 1
+                color: getBorderColor()
+            }
         }
 
         DropShadow {
+            id: shadow
+
             anchors.fill: buttonBackground
             horizontalOffset: 0
             verticalOffset: 5
@@ -98,16 +105,28 @@ Button {
             cached: true
             color: "#0d000000"
             source: buttonBackground
-            visible: !button.hovered
+            visible: !root.hovered
         }
-    }
+
+    } // Rectangle: focusRect
 
     MouseArea {
+        id: mouseArea
+
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
         onPressed: {
             mouse.accepted = false;
+        }
+    }
+
+    Keys.onReleased: (event)=> {
+        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+            if (checkable) {
+                checked = true;
+            }
+            event.accepted = true;
         }
     }
 }

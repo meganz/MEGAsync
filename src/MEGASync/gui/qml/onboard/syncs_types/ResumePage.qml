@@ -4,6 +4,7 @@ import Onboarding 1.0
 
 ResumePageForm {
     id: root
+
     property int tabToOpen: 0
 
     signal resumePageMoveToSyncs
@@ -12,14 +13,14 @@ ResumePageForm {
 
     buttonGroup.onClicked: {
         switch(button.type) {
-            case SyncsType.Sync:
-                root.resumePageMoveToSyncs()
+            case SyncsType.Types.SYNC:
+                root.resumePageMoveToSyncs();
                 break;
-            case SyncsType.SelectiveSync:
-                root.resumePageMoveToSelectiveSyncs()
+            case SyncsType.Types.SELECTIVE_SYNC:
+                root.resumePageMoveToSelectiveSyncs();
                 break;
-            case SyncsType.Backup:
-                root.resumePageMoveToBackup()
+            case SyncsType.Types.BACKUP:
+                root.resumePageMoveToBackup();
                 break;
             default:
                 console.error("Button type does not exist -> " + button.type);
@@ -43,7 +44,7 @@ ResumePageForm {
 
         function onInitializePageFocus() {
             syncButton.checked = true;
-            syncButton.setFocus(true);
+            syncButton.forceActiveFocus();
         }
     }
 }

@@ -10,18 +10,18 @@ import BackupsProxyModel 1.0
 Item {
     id: root
 
-    signal syncsFlowMoveToFinal
-    signal syncsFlowMoveToBack
-
     readonly property string syncType: "syncType"
     readonly property string fullSync: "full"
     readonly property string selectiveSync: "selective"
 
-    // added to avoid qml warning.
-    function setInitialFocusPosition() {
-    }
+    signal syncsFlowMoveToFinal
+    signal syncsFlowMoveToBack
 
-    state: syncsPanel.navInfo.fullSyncDone || syncsPanel.navInfo.typeSelected === SyncsType.Types.SelectiveSync
+    // added to avoid qml warning.
+    function setInitialFocusPosition() { }
+
+    state: syncsPanel.navInfo.fullSyncDone
+                || syncsPanel.navInfo.typeSelected === SyncsType.Types.SELECTIVE_SYNC
            ? selectiveSync
            : syncType
 
@@ -30,7 +30,7 @@ Item {
             name: syncType
             StateChangeScript {
                 script: {
-                    view.replace(syncPage);
+                    view.replace(syncPageComponent);
                 }
             }
             PropertyChanges {
@@ -44,8 +44,8 @@ Item {
             name: fullSync
             StateChangeScript {
                 script: {
-                    syncsPanel.navInfo.typeSelected = SyncsType.Types.FullSync;
-                    view.replace(fullSyncPage);
+                    syncsPanel.navInfo.typeSelected = SyncsType.Types.FULL_SYNC;
+                    view.replace(fullSyncPageComponent);
                 }
             }
             PropertyChanges {
@@ -59,8 +59,8 @@ Item {
             name: selectiveSync
             StateChangeScript {
                 script: {
-                    syncsPanel.navInfo.typeSelected = SyncsType.Types.SelectiveSync;
-                    view.replace(selectiveSyncPage);
+                    syncsPanel.navInfo.typeSelected = SyncsType.Types.SELECTIVE_SYNC;
+                    view.replace(selectiveSyncPageComponent);
                 }
             }
             PropertyChanges {
@@ -74,28 +74,34 @@ Item {
 
     StackViewBase {
         id: view
-        anchors.fill: parent
 
+        anchors.fill: parent
         onCurrentItemChanged: {
             currentItem.setInitialFocusPosition();
         }
 
         Component {
-            id: syncPage
+            id: syncPageComponent
 
-            SyncTypePage {}
+            SyncTypePage {
+                id: syncPage
+            }
         }
 
         Component {
-            id: fullSyncPage
+            id: fullSyncPageComponent
 
-            FullSyncPage {}
+            FullSyncPage {
+                id: fullSyncPage
+            }
         }
 
         Component {
-            id: selectiveSyncPage
+            id: selectiveSyncPageComponent
 
-            SelectiveSyncPage {}
+            SelectiveSyncPage {
+                id: selectiveSyncPage
+            }
         }
     }
 
@@ -104,66 +110,70 @@ Item {
     */
     Connections {
         id: syncTypeNavigationConnection
+
         target: view.currentItem
         ignoreUnknownSignals: true
 
         function onSyncTypeMoveToBack() {
             if(syncsPanel.navInfo.comesFromResumePage) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.syncsFlowMoveToFinal()
-            } else {
-                root.syncsFlowMoveToBack()
+                root.syncsFlowMoveToFinal();
+            }
+            else {
+                root.syncsFlowMoveToBack();
             }
         }
 
         function onSyncTypeMoveToFullSync() {
-            root.state = root.fullSync
+            root.state = root.fullSync;
         }
 
         function onSyncTypeMoveToSelectiveSync() {
-            root.state = root.selectiveSync
+            root.state = root.selectiveSync;
         }
     }
 
     Connections {
         id: selectiveSyncNavigationConnection
+
         target: view.currentItem
         ignoreUnknownSignals: true
 
         function onSelectiveSyncMoveToBack() {
             if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.syncsFlowMoveToFinal()
+                root.syncsFlowMoveToFinal();
             }
             else {
-                root.state = root.syncType
+                root.state = root.syncType;
             }
         }
 
         function onSelectiveSyncMoveToSuccess() {
-            syncsPanel.navInfo.selectiveSyncDone = true
-            root.syncsFlowMoveToFinal()
+            syncsPanel.navInfo.selectiveSyncDone = true;
+            root.syncsFlowMoveToFinal();
         }
     }
 
     Connections {
         id: fullSyncNavigationConnection
+
         target: view.currentItem
         ignoreUnknownSignals: true
 
         function onFullSyncMoveToBack() {
             if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.syncsFlowMoveToFinal()
-
-            } else {
-                root.state = root.syncType
+                root.syncsFlowMoveToFinal();
+            }
+            else {
+                root.state = root.syncType;
             }
         }
 
         function onFullSyncMoveToSuccess() {
-            syncsPanel.navInfo.fullSyncDone = true
-            root.syncsFlowMoveToFinal()
+            syncsPanel.navInfo.fullSyncDone = true;
+            root.syncsFlowMoveToFinal();
         }
     }
 }

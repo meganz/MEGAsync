@@ -17,11 +17,11 @@ SyncTypePageForm {
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
-                case SyncsType.Types.FullSync:
-                    root.syncTypeMoveToFullSync()
+                case SyncsType.Types.FULL_SYNC:
+                    root.syncTypeMoveToFullSync();
                     break;
-                case SyncsType.Types.SelectiveSync:
-                    root.syncTypeMoveToSelectiveSync()
+                case SyncsType.Types.SELECTIVE_SYNC:
+                    root.syncTypeMoveToSelectiveSync();
                     break;
                 default:
                     console.error("Button type does not exist -> "
@@ -42,7 +42,7 @@ SyncTypePageForm {
 
         function onInitializePageFocus() {
             fullSyncButton.checked = true;
-            fullSyncButton.setFocus(true);
+            fullSyncButton.forceActiveFocus();
         }
     }
 }

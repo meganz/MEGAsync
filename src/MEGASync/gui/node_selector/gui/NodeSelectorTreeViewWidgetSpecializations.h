@@ -74,6 +74,13 @@ public:
 signals:
     void nodeDoubleClicked(std::shared_ptr<mega::MegaNode> node, bool goToInit);
 
+protected:
+    bool newNodeCanBeAdded(mega::MegaNode* node) override;
+    QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle) override;
+
+protected slots:
+    bool containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle&) override;
+
 private slots:
     void onBackupsSearchClicked();
     void onIncomingSharesSearchClicked();

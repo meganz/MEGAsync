@@ -6,6 +6,7 @@ import common 1.0
 import components.texts 1.0 as Texts
 
 ColumnLayout {
+    id: root
 
     property alias title: title.rawText
     property alias titleWeight: title.font.weight
@@ -20,17 +21,17 @@ ColumnLayout {
         id: title
 
         Layout.fillWidth: true
-        Layout.preferredHeight: 30
-        font.pixelSize: Texts.Text.Size.Large
-        font.weight: Font.DemiBold
+        font {
+            pixelSize: Texts.Text.Size.LARGE
+            weight: Font.DemiBold
+        }
     }
 
     Texts.SecondaryText {
         id: description
 
         Layout.fillWidth: true
-        Layout.preferredHeight: 20
-        font.pixelSize: Texts.Text.Size.Medium
+        font.pixelSize: Texts.Text.Size.MEDIUM
         wrapMode: Text.WordWrap
     }
 

@@ -9,6 +9,7 @@ import onboard.syncs_types 1.0
 
 SyncsPage {
     id: root
+
     property alias localFolderChooser: localFolder
 
     footerButtons.rightPrimary {
@@ -17,6 +18,7 @@ SyncsPage {
     }
 
     ColumnLayout {
+        id: column
 
         anchors {
             top: parent.top
@@ -26,12 +28,16 @@ SyncsPage {
         spacing: 32
 
         Header {
+            id: header
+
             Layout.preferredWidth: parent.width
             title: OnboardingStrings.fullSync
             description: OnboardingStrings.fullSyncDescription
         }
 
         InfoAccount {
+            id: accountData
+
             Layout.topMargin: 16
             Layout.preferredWidth: parent.width
         }

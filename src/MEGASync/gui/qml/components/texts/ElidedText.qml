@@ -4,10 +4,11 @@ import components.toolTips 1.0
 import components.texts 1.0 as Texts
 
 Texts.Text {
-    id: elidedText
+    id: root
+
+    property alias tooltip: tooltip
 
     property bool showTooltip: true
-    property alias tooltip: tooltip
     property int tooltipMaxHorizontal: 0
 
     maximumLineCount: 1
@@ -16,6 +17,8 @@ Texts.Text {
     verticalAlignment: Qt.AlignVCenter
 
     MouseArea {
+        id: textMouseArea
+
         hoverEnabled: true
         anchors.fill: parent
         enabled: showTooltip
@@ -23,8 +26,8 @@ Texts.Text {
         ToolTip {
             id: tooltip
 
-            visible: showTooltip && elidedText.truncated && parent.containsMouse
-            text: elidedText.text
+            visible: showTooltip && root.truncated && parent.containsMouse
+            text: root.text
             delay: 500
             timeout: 5000
         }

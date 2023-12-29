@@ -59,11 +59,8 @@ class StalledIssuesModel;
 Q_DECLARE_METATYPE(QQueue<QString>)
 
 class LogoutController;
-class NotificatorBase;
-class ShellNotifier;
 class TransferMetadata;
 class DuplicatedNodeDialog;
-class LinkProcessor;
 class LoginController;
 class AccountStatusController;
 
@@ -164,15 +161,7 @@ public:
     // Create menus for the "..." menu in InfoDialog view.
     void createInfoDialogMenus();
     void toggleLogging();
-    QList<mega::MegaTransfer* > getFinishedTransfers();
-    int getNumUnviewedTransfers();
-    void removeFinishedTransfer(int transferTag);
-    void removeAllFinishedTransfers();
 
-    void removeFinishedBlockedTransfer(int transferTag);
-    bool finishedTransfersWhileBlocked(int transferTag);
-
-    mega::MegaTransfer* getFinishedTransferByTag(int tag);
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
@@ -227,7 +216,6 @@ signals:
     void tryUpdate();
     void installUpdate();
     void clearAllFinishedTransfers();
-    void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
     void unblocked();
     void nodeMoved(mega::MegaHandle handle);
@@ -309,9 +297,6 @@ public slots:
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
     void clearUserAttributes();
-    void clearViewedTransfers();
-    void onCompletedTransfersTabActive(bool active);
-    void checkFirstTransfer();
     void checkOperatingSystem();
     void notifyChangeToAllFolders();
     int getPrevVersion();
@@ -449,7 +434,6 @@ protected:
     long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;
-    int syncState;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;
     QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
@@ -459,7 +443,6 @@ protected:
     QTimer *periodicTasksTimer;
     QTimer *networkCheckTimer;
     QTimer *infoDialogTimer;
-    QTimer *firstTransferTimer;
     std::unique_ptr<std::thread> mMutexStealerThread;
 
     QTranslator translator;
@@ -479,13 +462,8 @@ protected:
     QMap<QString, QString> pendingLinks;
     std::unique_ptr<MegaSyncLogger> logger;
     QPointer<TransferManager> mTransferManager;
-    bool mTransferManagerFullScreen;
-    QMap<int, mega::MegaTransfer*> finishedTransfers;
-    QList<mega::MegaTransfer*> finishedTransferOrder;
-    QSet<int> finishedBlockedTransfers;
 
     bool reboot;
-    bool syncActive;
     bool paused;
     bool mIndexing;
     bool mWaiting;
@@ -502,8 +480,6 @@ protected:
     bool mIsFirstFileTwoWaySynced;
     bool mIsFirstFileBackedUp;
     bool networkConnectivity;
-    int nUnviewedTransfers;
-    bool completedTabActive;
     int prevVersion;
     bool isPublic;
     bool nodescurrent;

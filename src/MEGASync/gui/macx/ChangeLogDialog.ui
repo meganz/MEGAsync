@@ -315,7 +315,7 @@ border-bottom: 1px solid #EFEFEC;
          <set>Qt::AlignCenter</set>
         </property>
         <property name="wordWrap">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -346,7 +346,7 @@ border-bottom: 1px solid #EFEFEC;
          <set>Qt::AlignCenter</set>
         </property>
         <property name="wordWrap">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -374,7 +374,7 @@ border-bottom: 1px solid #EFEFEC;
          <set>Qt::AlignCenter</set>
         </property>
         <property name="wordWrap">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
