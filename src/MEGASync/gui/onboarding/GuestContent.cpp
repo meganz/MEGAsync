@@ -15,6 +15,13 @@ GuestContent::~GuestContent()
 {
 }
 
+void GuestContent::onInitialPageButtonClicked()
+{
+#ifdef Q_OS_LINUX
+    MegaSyncApp->openOnboardingDialog();
+#endif
+}
+
 void GuestContent::onAboutMEGAClicked()
 {
     MegaSyncApp->onAboutClicked();

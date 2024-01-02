@@ -250,12 +250,14 @@ Rectangle {
                 text: OnboardingStrings.signUp
                 onClicked: {
                     loginControllerAccess.state = LoginController.SIGN_UP;
+                    guestContentAccess.onInitialPageButtonClicked();
                 }
             }
             rightButton {
                 text: OnboardingStrings.login
                 onClicked: {
                     loginControllerAccess.state = LoginController.LOGGED_OUT;
+                    guestContentAccess.onInitialPageButtonClicked();
                 }
             }
 
