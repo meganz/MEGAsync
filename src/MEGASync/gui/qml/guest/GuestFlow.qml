@@ -262,7 +262,7 @@ Rectangle {
             }
 
             Connections {
-                target: window
+                target: guestWindow
 
                 function onInitializePageFocus() {
                     leftButton.forceActiveFocus();
@@ -339,12 +339,12 @@ Rectangle {
                     position: Icon.Position.LEFT
                 }
                 onClicked: {
-                        guestContentAccess.onVerifyEmailClicked();
+                    guestContentAccess.onVerifyEmailClicked();
                 }
             }
 
             Connections {
-                target: window
+                target: guestWindow
 
                 function onInitializePageFocus() {
                     leftButton.forceActiveFocus();
@@ -369,7 +369,7 @@ Rectangle {
     }
 
     Connections {
-        target: window
+        target: guestWindow
 
         function onHideRequested() {
             menu.close();
