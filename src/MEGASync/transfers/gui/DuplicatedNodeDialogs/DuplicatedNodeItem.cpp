@@ -90,6 +90,15 @@ void DuplicatedNodeItem::fillUi()
 void DuplicatedNodeItem::setModifiedTime(const QDateTime& dateTime)
 {
     auto timeString = dateTime.isValid() ? MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat) : tr("loading time…");
+
+#ifdef Q_OS_LINUX
+    if(QDateTime::fromSecsSinceEpoch(0) == dateTime)
+    {
+        timeString = QString::fromLatin1("");
+        ui->point->hide();
+    }
+#endif
+
     ui->lDate->setText(timeString);
 }
 
