@@ -13,7 +13,7 @@ GuestContent::GuestContent(QObject *parent)
 
 void GuestContent::onInitialPageButtonClicked()
 {
-#ifdef Q_OS_LINUX
+#ifndef WIN32
     MegaSyncApp->openOnboardingDialog();
 #endif
 }
