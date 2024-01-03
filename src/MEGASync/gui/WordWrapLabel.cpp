@@ -107,8 +107,8 @@ void WordWrapLabel::onAdaptHeight(bool parentConstrained)
 
     int processedStringLength(0);
     int lineCounter(0);
-    int fontHeight = fontMetrics().height();
-#ifndef __APPLE__
+    int fontHeight = fontMetrics().lineSpacing();
+#ifdef _WIN32
     fontHeight = fontHeight * devicePixelRatio();
 #endif
 
@@ -119,7 +119,7 @@ void WordWrapLabel::onAdaptHeight(bool parentConstrained)
         //Check if this is the last line
         if ((mMaxHeight > 0 && ((lineCounter + 1) * fontHeight) >= mMaxHeight) ||
             (mMaxLines > 0 && (lineCounter + 1 == mMaxLines)) ||
-            (parentConstrained && ((lineCounter + 1) * fontHeight) * 2 >= visibleRegion().boundingRect().height()))
+            (parentConstrained && ((lineCounter + 1) * fontHeight) >= visibleRegion().boundingRect().height()))
         {
             auto modifiedText(mText);
             auto textNotToElide(modifiedText.left(processedStringLength));
