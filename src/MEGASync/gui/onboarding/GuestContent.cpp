@@ -15,6 +15,13 @@ GuestContent::~GuestContent()
 {
 }
 
+void GuestContent::onInitialPageButtonClicked()
+{
+#ifndef WIN32
+    MegaSyncApp->openOnboardingDialog();
+#endif
+}
+
 void GuestContent::onAboutMEGAClicked()
 {
     MegaSyncApp->onAboutClicked();

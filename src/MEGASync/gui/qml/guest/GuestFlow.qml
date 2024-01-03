@@ -250,17 +250,19 @@ Rectangle {
                 text: OnboardingStrings.signUp
                 onClicked: {
                     loginControllerAccess.state = LoginController.SIGN_UP;
+                    guestContentAccess.onInitialPageButtonClicked();
                 }
             }
             rightButton {
                 text: OnboardingStrings.login
                 onClicked: {
                     loginControllerAccess.state = LoginController.LOGGED_OUT;
+                    guestContentAccess.onInitialPageButtonClicked();
                 }
             }
 
             Connections {
-                target: window
+                target: guestWindow
 
                 function onInitializePageFocus() {
                     leftButton.forceActiveFocus();
@@ -337,12 +339,12 @@ Rectangle {
                     position: Icon.Position.LEFT
                 }
                 onClicked: {
-                        guestContentAccess.onVerifyEmailClicked();
+                    guestContentAccess.onVerifyEmailClicked();
                 }
             }
 
             Connections {
-                target: window
+                target: guestWindow
 
                 function onInitializePageFocus() {
                     leftButton.forceActiveFocus();
@@ -367,7 +369,7 @@ Rectangle {
     }
 
     Connections {
-        target: window
+        target: guestWindow
 
         function onHideRequested() {
             menu.close();
