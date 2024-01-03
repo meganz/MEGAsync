@@ -11,6 +11,13 @@ GuestContent::GuestContent(QObject *parent)
     qmlRegisterType<GuestQmlDialog>("GuestQmlDialog", 1, 0, "GuestQmlDialog");
 }
 
+void GuestContent::onInitialPageButtonClicked()
+{
+#ifndef WIN32
+    MegaSyncApp->openOnboardingDialog();
+#endif
+}
+
 void GuestContent::onAboutMEGAClicked()
 {
     MegaSyncApp->onAboutClicked();
