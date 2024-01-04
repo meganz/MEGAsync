@@ -5212,7 +5212,7 @@ void MegaApplication::raiseOrHideInfoGuestDialog()
     }
 
     auto dialog = dynamic_cast<GuestQmlDialog*>(guestDialogWrapper->getDialog()->window());
-    if(dialog && !dialog->isVisible() && dialog->isHiddenForLongTime())
+    if(dialog && dialog->isHiddenForLongTime())
     {
         infoDialogTimer->start(200);
     }
