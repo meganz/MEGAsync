@@ -341,7 +341,7 @@ void TransferManagerDelegateWidget::setFileNameAndType()
     mUi->tFileType->setIcon(icon);
 
     // File name
-    mUi->lTransferName->setToolTip(Utilities::escapeHtmlTags(getData()->mFilename));
+    mUi->lTransferName->setToolTip(getData()->mFilename.toHtmlEscaped());
     adjustFileName();
 }
 
