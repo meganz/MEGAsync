@@ -154,11 +154,6 @@ Item {
         FolderRow {
             id: folderItem
 
-            anchors {
-                right: parent.right
-                left: parent.left
-            }
-
             onFocusActivated: {
                 backupsListView.positionViewAtIndex(index, ListView.Center)
             }

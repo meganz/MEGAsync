@@ -189,4 +189,12 @@ Rectangle {
             }
         }
     }
+
+    Connections {
+        target: onboardingWindow
+
+        function onLanguageChanged() {
+            backupsModelAccess.check();
+        }
+    }
 }

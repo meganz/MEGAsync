@@ -49,7 +49,7 @@ SyncsPage {
 
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
-            Layout.topMargin: 28
+            Layout.topMargin: 16
         }
 
         ChooseSyncFolder {

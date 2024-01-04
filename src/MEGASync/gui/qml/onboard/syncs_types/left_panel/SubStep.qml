@@ -21,15 +21,13 @@ Item {
     property int toState: SubStep.ToStates.DISABLED
 
     height: substepContent.height
-    width: substepContent.width
-    Layout.preferredWidth: substepContent.width
     Layout.preferredHeight: substepContent.height
 
     onToStateChanged: {
         substepContent.state = substepContent.statesMap.get(toState);
     }
 
-    Rectangle {
+    Item {
         id: substepContent
 
         readonly property string stateDisabled: "DISABLED"
@@ -50,7 +48,7 @@ Item {
         states: [
             State {
                 name: substepContent.stateDisabled
-                PropertyChanges { target: substepContent; color: "transparent"; }
+                PropertyChanges { target: background; color: "transparent"; }
                 PropertyChanges {
                     target: content;
                     spacing: 15;
@@ -67,7 +65,7 @@ Item {
             },
             State {
                 name: substepContent.stateCurrent
-                PropertyChanges { target: substepContent; color: Styles.iconButtonPressedBackground; }
+                PropertyChanges { target: background; color: Styles.iconButtonPressedBackground; }
                 PropertyChanges { target: content; spacing: 12; }
                 PropertyChanges { target: stepCircleSmall; visible: false; }
                 PropertyChanges { target: stepCircleBig; color: Styles.iconButton; }
@@ -76,7 +74,7 @@ Item {
             },
             State {
                 name: substepContent.stateDone
-                PropertyChanges { target: substepContent; color: "transparent"; }
+                PropertyChanges { target: background; color: "transparent"; }
                 PropertyChanges {
                     target: content;
                     spacing: 15;
@@ -93,7 +91,7 @@ Item {
             },
             State {
                 name: substepContent.stateWarning
-                PropertyChanges { target: substepContent; color: Styles.notificationWarning; }
+                PropertyChanges { target: background; color: Styles.notificationWarning; }
                 PropertyChanges { target: content; spacing: 12; }
                 PropertyChanges { target: stepCircleSmall; visible: false; }
                 PropertyChanges { target: stepCircleBig; color: Styles.textWarning; }
@@ -102,7 +100,7 @@ Item {
             },
             State {
                 name: substepContent.stateError
-                PropertyChanges { target: substepContent; color: Styles.notificationError; }
+                PropertyChanges { target: background; color: Styles.notificationError; }
                 PropertyChanges { target: content; spacing: 12; }
                 PropertyChanges { target: stepCircleSmall; visible: false; }
                 PropertyChanges { target: stepCircleBig; color: Styles.textError; }
@@ -111,23 +109,27 @@ Item {
             }
         ]
 
-        radius: 12
-        color: Styles.iconButtonPressedBackground
-        height: 24
-        width: content.width + 17
-        Layout.preferredWidth: width
-        Layout.preferredHeight: height
+        height: content.height + 10
+        width: parent.width - 20
 
-        RowLayout {
+        Rectangle {
+            id: background
+
+            radius: 12
+            color: Styles.iconButtonPressedBackground
+            anchors.left: parent.left
+            width: stepText.contentWidth + 40
+            height: content.height + 10
+        }
+
+        Row {
             id: content
 
             anchors {
-                top: parent.top
                 left: parent.left
-                bottom: parent.bottom
+                right: parent.right
+                verticalCenter: parent.verticalCenter
                 leftMargin: 5
-                topMargin: 4
-                bottomMargin: 4
                 rightMargin: 8
             }
             spacing: 8
@@ -139,10 +141,13 @@ Item {
                 height: 8
                 radius: 4
                 color: "transparent"
+
                 border {
                     width: 2
                     color: Styles.iconButtonDisabled
                 }
+
+                anchors.verticalCenter: parent.verticalCenter
             }
 
             Item {
@@ -150,6 +155,7 @@ Item {
 
                 width: 14
                 height: 14
+                anchors.verticalCenter: parent.verticalCenter
 
                 Rectangle {
                     id: stepCircleBig
@@ -174,6 +180,7 @@ Item {
             Texts.Text {
                 id: stepText
 
+                width: stepText.implicitWidth > (substepContent.width - 40) ? (substepContent.width - 40) : stepText.implicitWidth
                 color: Styles.iconButton
                 font {
                     pixelSize: Texts.Text.Size.SMALL
@@ -184,5 +191,4 @@ Item {
         } // RowLayout: content
 
     } // Rectangle: substepContent
-
 }

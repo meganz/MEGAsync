@@ -29,8 +29,8 @@ Item {
     signal focusActivated
 
     anchors {
-        right: parent.right
-        left: parent.left
+        right: null != parent ? parent.right : undefined
+        left: null != parent ? parent.left : undefined
         rightMargin: horizontalMargin
         leftMargin: horizontalMargin
     }
@@ -39,9 +39,11 @@ Item {
     Rectangle {
         id: background
 
-        anchors.fill: parent
-        anchors.rightMargin: internalMargin
-        anchors.leftMargin: internalMargin
+        anchors {
+            fill: parent
+            rightMargin: internalMargin
+            leftMargin: internalMargin
+        }
         radius: internalMargin
         color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface1
 
@@ -445,6 +447,15 @@ Item {
                 }
             }
 
+            Connections {
+                target: onboardingWindow
+
+                function onLanguageChanged() {
+                    if (editTextField.hint.visible) {
+                        doneAction();
+                    }
+                }
+            }
         } // Row: editRow
 
     } // Component: editContent
