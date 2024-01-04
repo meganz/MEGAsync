@@ -1258,9 +1258,8 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index)
                 finishSolvingIssues(isSolved ? 1 : 0, true, solveMessage);
             });
             moveOrRemoveIssue->solveIssue();
-
-            return true;
         }
+        return true;
     };
 
     SolveListInfo info(QModelIndexList() << index, resolveIssue);
