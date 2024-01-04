@@ -288,6 +288,7 @@ Rectangle {
             number: 1
             text: OnboardingStrings.deviceName
             Layout.alignment: Qt.AlignTop
+            Layout.fillWidth: true
         }
 
         Rectangle {
@@ -307,6 +308,7 @@ Rectangle {
             number: 2
             text: OnboardingStrings.setUpOptions
             Layout.alignment: Qt.AlignTop
+            Layout.fillWidth: true
         }
 
         Rectangle {
@@ -325,6 +327,7 @@ Rectangle {
 
             Layout.leftMargin: subStepLeftMargin
             Layout.alignment: Qt.AlignTop
+            Layout.fillWidth: true
         }
 
         Rectangle {
@@ -343,6 +346,7 @@ Rectangle {
 
             Layout.leftMargin: subStepLeftMargin
             Layout.alignment: Qt.AlignTop
+            Layout.fillWidth: true
         }
     }
 

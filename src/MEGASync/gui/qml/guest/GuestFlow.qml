@@ -11,7 +11,6 @@ import components.texts 1.0 as Texts
 
 import onboard 1.0
 
-import GuestContent 1.0
 import ApiEnums 1.0
 import LoginController 1.0
 
@@ -82,7 +81,7 @@ Rectangle {
             name: root.stateFetchNodesFinished
             extend: root.stateLoggedOut
             StateChangeScript {
-                script: guestWindow.hide();
+                script: window.hide();
             }
         },
         State {
@@ -201,7 +200,7 @@ Rectangle {
             position: MenuItem.Position.First
             onTriggered: {
                 guestContentAccess.onAboutMEGAClicked();
-                guestWindow.hide();
+                window.hide();
             }
         }
 
@@ -212,7 +211,7 @@ Rectangle {
             icon.source: Images.settings
             onTriggered: {
                 guestContentAccess.onPreferencesClicked();
-                guestWindow.hide();
+                window.hide();
             }
         }
 
@@ -224,7 +223,7 @@ Rectangle {
             position: MenuItem.Position.Last
             onTriggered: {
                 guestContentAccess.onExitClicked();
-                guestWindow.hide();
+                window.hide();
             }
 
             KeyNavigation.tab: view.currentItem.leftButton

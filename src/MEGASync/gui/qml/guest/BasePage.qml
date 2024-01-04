@@ -101,7 +101,7 @@ Item {
                 id: leftButton
 
                 onClicked: {
-                    guestWindow.hide();
+                    window.hide();
                 }
             }
 
@@ -109,7 +109,7 @@ Item {
                 id: rightButton
 
                 onClicked: {
-                    guestWindow.hide();
+                    window.hide();
                 }
             }
         }

@@ -363,6 +363,16 @@ Rectangle {
                 }
             }
 
+            Connections {
+                target: onboardingWindow
+
+                function onLanguageChanged() {
+                    if (editTextField.hint.visible) {
+                        doneAction();
+                    }
+                }
+            }
+
             function doneAction()
             {
                 editTextField.hint.visible = false;
