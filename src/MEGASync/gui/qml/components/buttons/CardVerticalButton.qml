@@ -63,6 +63,7 @@ CardButton {
                 anchors.rightMargin: button.textHorizontalExtraMargin
                 font.pixelSize: Texts.Text.Size.MediumLarge
                 font.weight: Font.Bold
+                wrapMode: Text.Wrap
             }
 
             Texts.Text {
@@ -77,6 +78,7 @@ CardButton {
                 color: Styles.textSecondary
                 lineHeight: textLineHeight
                 lineHeightMode: Text.FixedHeight
+                wrapMode: Text.Wrap
             }
         }
     }

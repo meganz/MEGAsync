@@ -138,9 +138,6 @@ Item {
         id: folderComponent
 
         FolderRow {
-            anchors.right: parent.right
-            anchors.left: parent.left
-
             onFocusActivated: {
                 backupsListView.positionViewAtIndex(index, ListView.Center)
             }

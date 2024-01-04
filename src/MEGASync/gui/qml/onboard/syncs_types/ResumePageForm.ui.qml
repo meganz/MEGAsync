@@ -23,6 +23,8 @@ SyncsPage {
     readonly property string stateFullSync: "FULL"
     readonly property string stateSelectiveSync: "SELECTIVE"
     readonly property string stateBackup: "BACKUP"
+    readonly property int maxSizeDescription: 80
+    readonly property int buttonQuestionMargin: 24
 
     footerButtons {
         leftSecondary.visible: false
@@ -79,6 +81,7 @@ SyncsPage {
             text: title
             font.pixelSize: Texts.Text.Size.Large
             font.weight: Font.Bold
+            wrapMode: Text.Wrap
         }
 
         Texts.Text {
@@ -88,11 +91,12 @@ SyncsPage {
             Layout.topMargin: 8
             text: description
             font.pixelSize: Texts.Text.Size.Medium
+            wrapMode: Text.Wrap
         }
 
         Texts.Text {
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 36
+            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
             text: OnboardingStrings.finalStepQuestion
             font.pixelSize: Texts.Text.Size.MediumLarge
             font.weight: Font.DemiBold
@@ -100,7 +104,7 @@ SyncsPage {
 
         Rectangle {
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 24
+            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
             color: "transparent"
 
             ButtonGroup {
@@ -122,10 +126,9 @@ SyncsPage {
                     ButtonGroup.group: buttonGroupItem
                     checkable: false
                     width: (parent.width - parent.spacing) / 2
-                    height: 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
-                    imageSourceSize: Qt.size(32, 32)
+                    imageSourceSize: Qt.size(22, 20)
                     contentMargin: 24
                     contentSpacing: 8
                     focus: true
@@ -144,15 +147,12 @@ SyncsPage {
                     width: !syncButtonItem.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
-                    height: !syncButtonItem.visible
-                            ? 155
-                            : 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
-                    imageSourceSize: Qt.size(32, 32)
+                    imageSourceSize: Qt.size(22, 20)
                     contentMargin: 24
                     contentSpacing: 8
-                    useMaxSiblingHeight: true
+                    useMaxSiblingHeight: syncButtonItem.visible
                 }
             }
         }
