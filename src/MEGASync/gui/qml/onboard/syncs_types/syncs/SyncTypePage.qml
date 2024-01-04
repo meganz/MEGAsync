@@ -41,7 +41,6 @@ SyncTypePageForm {
         target: onboardingWindow
 
         function onInitializePageFocus() {
-            fullSyncButton.checked = true;
             fullSyncButton.forceActiveFocus();
         }
     }
