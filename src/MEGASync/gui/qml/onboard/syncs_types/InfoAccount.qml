@@ -114,7 +114,7 @@ Item {
 
                     Layout.alignment: Qt.AlignLeft
                     font.weight: Font.DemiBold
-                    font.pixelSize: Texts.Text.Size.MEDIUM
+                    font.pixelSize: Texts.Text.Size.NORMAL
                     text: getAccountTypeText()
                 }
             }
@@ -135,6 +135,7 @@ Item {
                           ? availableStorage
                           : storageSpace
                     font.weight: Font.DemiBold
+                    font.pixelSize: Texts.Text.Size.SMALL
                 }
 
                 Texts.Text {
@@ -143,6 +144,7 @@ Item {
                     font.weight: Font.DemiBold
                     text: AccountInfoData.usedStorage
                     visible: !AccountInfoData.belowMinUsedStorageThreshold
+                    font.pixelSize: Texts.Text.Size.SMALL
                 }
 
                 Texts.SecondaryText {
@@ -151,6 +153,7 @@ Item {
                     font.weight: Font.DemiBold
                     text: "/"
                     visible: !AccountInfoData.belowMinUsedStorageThreshold
+                    font.pixelSize: Texts.Text.Size.SMALL
                 }
 
                 Texts.SecondaryText {
@@ -158,6 +161,7 @@ Item {
 
                     font.weight: Font.DemiBold
                     text: AccountInfoData.totalStorage
+                    font.pixelSize: Texts.Text.Size.SMALL
                 }
             }
 
