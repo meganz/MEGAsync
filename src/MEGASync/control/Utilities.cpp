@@ -1189,6 +1189,16 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     remainDays  = remainHours / 24;
 }
 
+QString Utilities::escapeHtmlTags(const QString &text)
+{
+    QString escapedString = text;
+    return escapedString.replace(QLatin1String("&"), QLatin1String("&amp;"))
+               .replace(QLatin1String("<"), QLatin1String("&lt;"))
+               .replace(QLatin1String(">"), QLatin1String("&gt;"))
+               .replace(QLatin1String("\""), QLatin1String("&quot;"))
+               .replace(QLatin1String("'"), QLatin1String("&#39;"));
+}
+
 QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode, const QString &currentName, bool unescapeName, const QStringList& itemsBeingRenamed)
 {
     QString newName;

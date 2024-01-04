@@ -144,7 +144,7 @@ void WordWrapLabel::onAdaptHeight(bool parentConstrained)
 
                 if(elidedText != mText)
                 {
-                    setToolTip(mText);
+                    setToolTip(Utilities::escapeHtmlTags(mText));
                 }
 
                 break;
