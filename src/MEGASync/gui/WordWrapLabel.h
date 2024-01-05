@@ -30,7 +30,7 @@ protected:
 
 private slots:
     void onLinkActivated(const QUrl& link);
-    void onAdaptHeight(bool availableSpaceChanged = false);
+    void onAdaptHeight(bool parentConstrained = false);
 
 private:
     void setCursor(const QCursor& cursor);
