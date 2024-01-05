@@ -4118,11 +4118,6 @@ Saisissez un nom différent.</translation>
         <translation>Le nom ne doit pas dépasser 32&#xa0;caractères</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>Échec d’authentification</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Le code d’A2F est erroné</translation>
@@ -4131,6 +4126,11 @@ Saisissez un nom différent.</translation>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>Votre sauvegarde a été configurée et les données sélectionnées seront sauvegardées automatiquement lors de l’exécution de l’appli pour ordinateur. Vous pouvez visualiser vos sauvegardes et leur état sous l’onglet Sauvegarde des Paramètres.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>Réessayer</translation>
     </message>
 </context>
 <context>

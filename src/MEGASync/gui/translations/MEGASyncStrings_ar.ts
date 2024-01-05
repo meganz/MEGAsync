@@ -231,7 +231,7 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation>تحديث طلب الاتصال</translation>
+        <translation>تحديث طلب التواصل</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
@@ -527,7 +527,7 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</numerusform><numerusform>يوجد مجلد بنفس الاسم بالفعل في النسخ الاحتياطية. أعد تسمية المجلد الجديد لمتابعة النسخ الاحتياطي. لن يتغير اسم المجلد على جهاز الكمبيوتر الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</numerusform></translation>
+        <translation><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform><numerusform>يوجد مجلد بنفس الاسم بالفعل في النسخ الاحتياطية. أعد تسمية المجلد الجديد لمتابعة النسخ الاحتياطي. لن يتغير اسم المجلد على جهاز الحاسوب الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform><numerusform>بعض المجلدات التي تحمل الاسم نفسه موجودة بالفعل في النسخ الاحتياطية. أعد تسمية المجلدات الجديدة لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الحاسوب الخاص بك.</numerusform></translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -1018,7 +1018,7 @@
     <message>
         <source>Please enter your password</source>
         <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>أدخل كلمة السر الخاصة بك</translation>
+        <translation>أدخل كلمة المرور الخاصة بك</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -1094,22 +1094,22 @@
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
-        <translation>تم إلغاء تنشيط حسابك بسبب فشل الدفع أو إلغاء الاشتراك. يرجى الدفع وإعادة التنشيط الآن للوصول إلى بياناتك.</translation>
+        <translation>تم إلغاء تفعيل حسابك بسبب فشل الدفع أو إلغاء الاشتراك. يرجى الدفع وإعادة التفعيل الآن للوصول إلى بياناتك.</translation>
     </message>
     <message>
         <source>MEGA Uploads</source>
         <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
-        <translation>التحميلات الضخمة</translation>
+        <translation>ترفيعات ميغا MEGA</translation>
     </message>
     <message>
         <source>MEGA Downloads</source>
         <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
-        <translation>تنزيلات ميجا</translation>
+        <translation>تنزيلات ميغا MEGA</translation>
     </message>
     <message>
         <source>MEGA Imports</source>
         <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
-        <translation>واردات ميجا</translation>
+        <translation>واردات ميغا MEGA</translation>
     </message>
 </context>
 <context>
@@ -1209,7 +1209,7 @@
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>جهة اتصال جديدة [A] تمت إضافته</translation>
+        <translation>تمت إضافة [A] كجهة اتصال جديدة  </translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1389,7 +1389,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>تم تعطيل حساب برو فليكسي</translation>
+        <translation>تم تعطيل حساب برو فليكسي Pro&#xa0;Flexi</translation>
     </message>
 </context>
 <context>
@@ -1581,7 +1581,7 @@
     <message>
         <source>loading time…</source>
         <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
-        <translation>تاريخ جلب&#8230;</translation>
+        <translation>تاريخ الاحضار&#8230;</translation>
     </message>
     <message>
         <source>loading size…</source>
@@ -1696,7 +1696,7 @@
     <message>
         <source>About MEGA</source>
         <translatorcomment>Menu entry that opens the about MEGA dialog. CON-472</translatorcomment>
-        <translation>حول MEGA</translation>
+        <translation>حول ميغا MEGA</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -1716,7 +1716,7 @@
     <message>
         <source>Log in or sign up to MEGA</source>
         <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
-        <translation>قم بتسجيل الدخول أو الاشتراك في MEGA</translation>
+        <translation>قم بتسجيل الدخول أو الاشتراك في ميغا MEGA</translation>
     </message>
     <message>
         <source>Account temporarily locked</source>
@@ -1759,7 +1759,7 @@
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation>لا يمكن إضافة %1 بسبب إلغاء تفعيل حساب Pro&#xa0;Flexi الخاص بك بسبب فشل الدفع أو أنك ألغيت اشتراكك. للمتابعة، قم بالدفع وأعد تفعيل اشتراكك.</translation>
+        <translation>لا يمكن إضافة %1 بسبب إلغاء تفعيل حساب برو فلكسي  Pro&#xa0;Flexi الخاص بك بسبب فشل الدفع أو أنك ألغيت اشتراكك. للمتابعة، قم بالدفع وأعد تفعيل اشتراكك.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1871,7 +1871,7 @@
     <message>
         <source>Business</source>
         <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
-        <translation>الأعمال Business</translation>
+        <translation>أعمال Business</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
@@ -2264,7 +2264,7 @@
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>لقد حاولت تسجيل الدخول مرات كثيرة.[Br][BR]الرجاء الانتظار حتى %1 ثم المحاولة ثانية</translation>
+        <translation>لقد حاولت تسجيل الدخول عدة مرات.[BR]الرجاء الانتظار حتى %1 ثم المحاولة ثانية</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
@@ -2287,7 +2287,7 @@
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>لقد تم تسجيل خروجك من هذا الكمبيوتر من موقع آخر</translation>
+        <translation>لقد تم تسجيل خروجك من هذا الحاسوب من موقع آخر</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -2736,7 +2736,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>تم تعطيل حساب برو فليكسي</translation>
+        <translation>تم تعطيل حساب برو فليكسي Pro&#xa0;Flexi</translation>
     </message>
 </context>
 <context>
@@ -3596,7 +3596,7 @@ Enter a different name</source>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
         <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
-        <translation>لقد قرأت وأوافق على MEGA [B][A]شروط الخدمة[/A][/B]</translation>
+        <translation>لقد قرأت وأوافق على [B][A]شروط خدمة[/A][/B] الخاصين بميغا MEGA</translation>
     </message>
     <message>
         <source>Back up</source>
@@ -3611,7 +3611,7 @@ Enter a different name</source>
     <message>
         <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
         <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
-        <translation>سيتم نسخ البيانات من جهازك تلقائيًا وباستمرار إلى MEGA في الوقت الفعلي.</translation>
+        <translation>سيتم نسخ البيانات من جهازك تلقائيًا وباستمرار إلى ميغا MEGA في الوقت الفعلي.</translation>
     </message>
     <message>
         <source>Backup: Confirm</source>
@@ -3651,7 +3651,7 @@ Enter a different name</source>
     <message>
         <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
         <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
-        <translation>أدخل عنوان البريد الإلكتروني الجديد وانقر فوق إعادة الإرسال. سنرسل بعد ذلك رسالة التحقق إلى عنوان البريد الإلكتروني الجديد هذا لتنشيط حسابك.</translation>
+        <translation>أدخل عنوان البريد الإلكتروني الجديد وانقر فوق إعادة الإرسال. سنرسل بعد ذلك رسالة التحقق إلى عنوان البريد الإلكتروني الجديد هذا لتفعيل حسابك.</translation>
     </message>
     <message>
         <source>Change your email address</source>
@@ -3701,12 +3701,12 @@ Enter a different name</source>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
         <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
-        <translation>لتنشيط حسابك، تحتاج إلى التحقق من عنوان بريدك الإلكتروني. لقد أرسلنا لك بريدًا إلكترونيًا يحتوي على رابط تأكيد. انقر على الرابط للتحقق من عنوان بريدك الإلكتروني، ثم ستتمكن من تسجيل الدخول.</translation>
+        <translation>لتفعيل حسابك، تحتاج إلى التحقق من عنوان بريدك الإلكتروني. لقد أرسلنا لك بريدًا إلكترونيًا يحتوي على رابط تأكيد. انقر على الرابط للتحقق من عنوان بريدك الإلكتروني، ثم ستتمكن من تسجيل الدخول.</translation>
     </message>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
         <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
-        <translation>إذا لم تستلم البريد الإلكتروني في غضون ساعة واحدة، فتحقق من مجلد الرسائل غير المرغوب فيها. إذا كنت لا تزال غير قادر على العثور عليه، [B][A]اتصل بالدعم[/A][/B].</translation>
+        <translation>إذا لم تستلم البريد الإلكتروني في غضون 1 ساعة واحدة، فتحقق من مجلد الرسائل غير المرغوب فيها. إذا كنت لا تزال غير قادر على العثور عليه، [B][A]تواصل مع الدعم[/A][/B].</translation>
     </message>
     <message>
         <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
@@ -3736,7 +3736,7 @@ Enter a different name</source>
     <message>
         <source>Enter your password</source>
         <translatorcomment>Password text input title CON-466</translatorcomment>
-        <translation>أدخل كلمة السر الخاصة بك</translation>
+        <translation>أدخل كلمة المرور الخاصة بك</translation>
     </message>
     <message>
         <source>Please enter your name</source>
@@ -3771,7 +3771,7 @@ Enter a different name</source>
     <message>
         <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
         <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
-        <translation>تم إعداد المزامنة الخاصة بك وستقوم تلقائيًا بمزامنة البيانات المحددة كلما كان تطبيق سطح المكتب قيد التشغيل.</translation>
+        <translation>تم إعداد المزامنة الخاصة بك وستقوم تلقائيًا بمزامنة البيانات المحددة كلما كان تطبيق الحاسوب المكتبي قيد التشغيل.</translation>
     </message>
     <message>
         <source>Your sync has been set up</source>
@@ -3786,7 +3786,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>قم بمزامنة حساب MEGA بالكامل مع جهازك المحلي.</translation>
+        <translation>قم بمزامنة حساب ميغا MEGA بالكامل مع جهازك المحلي.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -3796,7 +3796,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>قم بمزامنة محرك MEGA Cloud بالكامل مع جهاز محلي.</translation>
+        <translation>قم بمزامنة السواقة لسحابية ميغا MEGA بالكامل مع جهاز محلي.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -3816,7 +3816,7 @@ Enter a different name</source>
     <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Text input title indicating the user to select a MEGA folder CON-467</translatorcomment>
-        <translation>حدد مجلد MEGA للمزامنة</translation>
+        <translation>حدد مجلد ميغا MEGA للمزامنة</translation>
     </message>
     <message>
         <source>Setup options</source>
@@ -3846,7 +3846,7 @@ Enter a different name</source>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
         <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
-        <translation>قم بتسجيل الدخول إلى [B]حساب ميجا[/B]</translation>
+        <translation>قم بتسجيل الدخول إلى [B]حساب ميغا MEGA[/B]</translation>
     </message>
     <message>
         <source>Next</source>
@@ -3896,7 +3896,7 @@ Enter a different name</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>سيتم نسخ المجلدات المحددة تلقائيًا إلى MEGA عند تشغيل تطبيق سطح المكتب.</translation>
+        <translation>سيتم نسخ المجلدات المحددة تلقائيًا إلى ميغا MEGA عند تشغيل تطبيق الحاسوب المكتبي.</translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -3906,22 +3906,22 @@ Enter a different name</source>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
-        <translation>حدد مجلد MEGA</translation>
+        <translation>حدد مجلد ميغا MEGA</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>قم بمزامنة المجلدات المحددة في حساب MEGA الخاص بك مع جهازك المحلي.</translation>
+        <translation>قم بمزامنة المجلدات المحددة في حساب ميغا MEGA الخاص بك مع جهازك المحلي.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>قم بمزامنة مجلدات محددة في محرك MEGA Cloud الخاص بك مع جهازك المحلي.</translation>
+        <translation>قم بمزامنة مجلدات محددة في السواقة السحابية ميغا MEGA الخاص بك مع جهازك المحلي.</translation>
     </message>
     <message>
         <source>Selective sync</source>
         <translatorcomment>Selective sync button title text CON-467</translatorcomment>
-        <translation>انتقاء التزامن</translation>
+        <translation>مزامنة انتقائية</translation>
     </message>
     <message>
         <source>Set up MEGA</source>
@@ -3936,12 +3936,12 @@ Enter a different name</source>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>قم بإنشاء [B]حساب ميجا[/B]</translation>
+        <translation>قم بإنشاء [B]حساب ميغا MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>قم بمزامنة جهازك مع MEGA، وسيتم تطبيق أي تغييرات محلية تلقائيًا وفوريًا على MEGA والعكس صحيح.</translation>
+        <translation>قم بمزامنة جهازك مع ميغا MEGA وسيتم تطبيق أي تغييرات محلية تلقائيًا وفوريًا على ميغا MEGA والعكس صحيح.</translation>
     </message>
     <message>
         <source>Choose sync type</source>
@@ -3966,7 +3966,7 @@ Enter a different name</source>
     <message>
         <source>Problem with two-factor authentication?</source>
         <translatorcomment>Text that the user has to click in case he has problems with 2FA CON-465</translatorcomment>
-        <translation>مشكلة في المصادقة الثنائية؟</translation>
+        <translation>مشكلة في توثيق المصادقة المزدوجة؟</translation>
     </message>
     <message>
         <source>Enter the 6-digit code generated by your authenticator app.</source>
@@ -3976,27 +3976,27 @@ Enter a different name</source>
     <message>
         <source>Continue with [B]two-factor authentication[/B]</source>
         <translatorcomment>2FA page title CON-465</translatorcomment>
-        <translation>تواصل مع [B]مصادقة ثنائية[/B]</translation>
+        <translation>تواصل مع [B]توثيق المصادقة المزدوجة[/B]</translation>
     </message>
     <message>
         <source>Logging in…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>تسجيل الدخول&#8230;</translation>
+        <translation>جاري تسجيل الدخول&#8230;</translation>
     </message>
     <message>
         <source>Fetching file list…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>جاري جلب قائمة الملفات&#8230;</translation>
+        <translation>جاري احضار قائمة الملف&#8230;</translation>
     </message>
     <message>
         <source>Creating account…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
-        <translation>إنشاء حساب…</translation>
+        <translation>جاري إنشاء حساب…</translation>
     </message>
     <message>
         <source>Validating 2FA code…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>التحقق من صحة رمز 2FA&#8230;</translation>
+        <translation>التحقق من صحة رمز المصادقة المزدوجة 2FA&#8230;</translation>
     </message>
     <message>
         <source>Stop logging in?</source>
@@ -4011,12 +4011,12 @@ Enter a different name</source>
     <message>
         <source>Stop Loggin in</source>
         <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation>إيقاف تسجيل الدخول</translation>
+        <translation>أوقف تسجيل الدخول</translation>
     </message>
     <message>
         <source>Don’t stop</source>
         <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation>لا تتوقف</translation>
+        <translation>لا توقف</translation>
     </message>
     <message>
         <source>Cancel account creation?</source>
@@ -4031,7 +4031,7 @@ Enter a different name</source>
     <message>
         <source>Cancel account</source>
         <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation>إلغاء الإنشاء</translation>
+        <translation>ألغي الإنشاء</translation>
     </message>
     <message>
         <source>Don’t cancel</source>
@@ -4056,12 +4056,12 @@ Enter a different name</source>
     <message>
         <source>At least one number or special character</source>
         <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
-        <translation>رقم واحد على الأقل أو حرف خاص</translation>
+        <translation>رقم واحد على الأقل أو محرف خاص</translation>
     </message>
     <message>
         <source>Enter a minimum of 8 characters.</source>
         <translatorcomment>Error text to force the user to fill minimum character requirement CON-466</translatorcomment>
-        <translation>أدخل 8 أحرف كحد أدنى.</translation>
+        <translation>أدخل 8 محارف كحد أدنى.</translation>
     </message>
     <message>
         <source>Your password is too easily guessed. You need to make it stronger.</source>
@@ -4076,22 +4076,22 @@ Enter a different name</source>
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
-        <translation>قم بتحديث ملفاتك تلقائيًا من أجهزة الكمبيوتر الخاصة بك إلى MEGA. إذا اخترت حذف النسخ الاحتياطية في MEGA، فلن تتم إزالة ملفاتك المحلية.</translation>
+        <translation>قم بتحديث ملفاتك تلقائيًا من أجهزة الكمبيوتر الخاصة بك إلى ميغا MEGA. إذا اخترت حذف النسخ الاحتياطية في ميغا MEGA فلن تتم إزالة ملفاتك المحلية.</translation>
     </message>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation>قم بمزامنة المجلدات المحددة بين أجهزة الكمبيوتر الخاصة بك مع MEGA؛ سيتم تطبيق أي تغيير من جانب على الجانب الآخر.</translation>
+        <translation>قم بمزامنة المجلدات المحددة بين أجهزة الكمبيوتر الخاصة بك مع ميغا MEGA، سيتم تطبيق أي تغيير من جانب على الجانب الآخر.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation>قم بمزامنة ملفاتك بين أجهزة الكمبيوتر الخاصة بك مع MEGA؛ أي تغيير من جانب سينطبق على جانب آخر.</translation>
+        <translation>قم بمزامنة ملفاتك بين أجهزة الكمبيوتر الخاصة بك مع ميغا MEGA أي تغيير من جانب سينطبق على الجانب آخر.</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
         <translatorcomment>Page title for new accounts in set device name page CON-467</translatorcomment>
-        <translation>دعنا نجهزك</translation>
+        <translation>دعنا نجهز إعداداتك</translation>
     </message>
     <message>
         <source>Confirm your email and password</source>
@@ -4101,7 +4101,7 @@ Enter a different name</source>
     <message>
         <source>Once confirmed, your account will be activated.</source>
         <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
-        <translation>بمجرد التأكيد، سيتم تنشيط حسابك.</translation>
+        <translation>بمجرد التأكيد سيتم تفعيل حسابك.</translation>
     </message>
     <message>
         <source>Enter your email address</source>
@@ -4116,22 +4116,22 @@ Enter a different name</source>
     <message>
         <source>Names longer than 32 characters are not supported</source>
         <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
-        <translation>لا يتم دعم الأسماء التي يزيد طولها عن 32 حرفًا</translation>
-    </message>
-    <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>فشلت المصادقة</translation>
+        <translation>لا يتم دعم الأسماء التي يزيد طولها عن 32 محرفًا</translation>
     </message>
     <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>رمز 2FA خاطئ</translation>
+        <translation>رمز مصادقة مزدوجة 2FA خاطئ</translation>
     </message>
     <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation>تم إعداد النسخة الاحتياطية وسيتم نسخ البيانات المحددة احتياطيًا تلقائيًا عندما يكون تطبيق سطح المكتب قيد التشغيل. يمكنك عرض النسخ الاحتياطية وحالاتها ضمن علامة تبويب النسخ الاحتياطي في الإعدادات.</translation>
+        <translation>تم إعداد النسخة الاحتياطية وسيتم نسخ البيانات المحددة احتياطيًا تلقائيًا عندما يكون تطبيق الحاسوب المكتبي قيد التشغيل. يمكنك عرض النسخ الاحتياطية وحالاتها ضمن علامة تبويب النسخ الاحتياطي في الإعدادات.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>حاول مرة أخرى</translation>
     </message>
 </context>
 <context>
@@ -4464,8 +4464,8 @@ Enter a different name</source>
 </source>
         <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
         <translation>- يتم تقديم معالج الإعداد الجديد عند بدء عملية المزامنة أو النسخ الاحتياطي الجديدة لأول مرة.
-- تم تجديد واجهة المستخدم لمثبت macOS.
-- تم إصلاح الأعطال المكتشفة على أنظمة التشغيل Windows و Linux و macOS.
+- تم تجديد واجهة المستخدم لمثبت ماك أو إسmacOS.
+- تم إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينكس Linux و ماك أو إس macOS.
 - تم تحسين أداء التطبيق.
 </translation>
     </message>
@@ -5083,7 +5083,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Adding transfers…</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
-        <translation>إضافة التحويلات&#8230;</translation>
+        <translation>إضافة عمليات تراسل&#8230;</translation>
     </message>
 </context>
 <context>
@@ -5401,7 +5401,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>لم تتم مزامنة بعض المجلدات. لمزيد من المعلومات، يرجى تمرير مؤشر الماوس فوق رمز التحذير الأصفر.</translation>
+        <translation>لم تتم مزامنة بعض المجلدات. لمزيد من المعلومات، يرجى تمرير مؤشر الفأرة فوق أيقونة التحذير الأصفر.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -5541,7 +5541,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>تفعيل تكامل مستكشف ملفات ويندوز</translation>
+        <translation>تفعيل تكامل مستكشف ملفات ويندوز Windows</translation>
     </message>
     <message>
         <source>B</source>
@@ -6185,12 +6185,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
         <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
-        <translation>لا يمكن النسخ الاحتياطي»%1«لأنه المجلد الجذر. للمتابعة، حدد مجلدًا مختلفًا.</translation>
+        <translation>لا يمكن النسخ الاحتياطي ”%1“ لأنه المجلد الجذر. للمتابعة حدد مجلدًا مختلفًا.</translation>
     </message>
     <message>
         <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
         <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
-        <translation>لا يمكن المزامنة»%1«لأنه المجلد الجذر. للمتابعة، حدد مجلدًا مختلفًا.</translation>
+        <translation>لا يمكن المزامنة ”%1“ لأنه المجلد الجذر. للمتابعة حدد مجلدًا مختلفًا.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have write permissions.</source>
@@ -6200,7 +6200,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
         <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
-        <translation>لا يمكن مزامنة المجلد لأنه موجود في سلة المهملات MEGA</translation>
+        <translation>لا يمكن مزامنة المجلد لأنه موجود في سلة محذوفات ميغا MEGA</translation>
     </message>
     <message>
         <source>This selection can&apos;t be synced as it’s a file.</source>
@@ -6253,7 +6253,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>المزامنة الخاصة بك»%1«تم تعطيله لأن MEGA لا يمكنها مزامنة مجلدات VirtualBox أو نسخها احتياطيًا.</translation>
+        <translation>تم تعطيل المزامنة الخاصة بك ”%1“ لأنه لا يمكن لميغا MEGA مزامنة مجلدات VirtualBox أو نسخها احتياطيًا.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -6263,17 +6263,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>المزامنة الخاصة بك»%1«تم تعطيله. ليس لديك حق الوصول الكامل إلى المجلد البعيد (أو جزء منه).</translation>
+        <translation>تم تعطيل مزامنتك ”%1“. ليس لديك إذن الوصول الكامل إلى مجلد ميغا MEGA (أو جزء منه).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>المزامنة الخاصة بك»%1«تم تعطيله بسبب تغيير المجلد المحلي</translation>
+        <translation>تم تعطيل مزامنتك &#8220;%1&#8221; بسبب تغيير المجلد المحلي</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
-        <translation>المزامنة الخاصة بك»%1«تم تعطيله. السبب: %2</translation>
+        <translation>تم تعطيل مزامنتك &quot;%1&quot;. بسبب: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
@@ -6283,7 +6283,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
-        <translation>النسخة الاحتياطية الخاصة بك»%1«تم تعطيله لأن المجلد المحلي غير متاح أو ليس لديك أذونات القراءة والكتابة.</translation>
+        <translation>تم تعطيل النسخ الاحتياطي ”%1“ لأن المجلد المحلي غير متوفر أو ليس لديك أذونات القراءة والكتابة.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -6303,7 +6303,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
-        <translation>النسخة الاحتياطية الخاصة بك»%1» تم تعطيله بسبب تغيير المجلد المحلي.</translation>
+        <translation>تم تعطيل نسخك الاحتياطي &#8220;%1&#8221; بسبب تغيير المجلد المحلي</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
@@ -6417,7 +6417,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
-        <translation>حدد مجلد MEGA للمزامنة</translation>
+        <translation>حدد مجلد ميغا MEGA للمزامنة</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
@@ -6427,7 +6427,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
-        <translation>»%1» المجلد غير موجود</translation>
+        <translation>المجلد ”%1“ غير موجود.</translation>
     </message>
 </context>
 <context>
@@ -7291,7 +7291,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>حدد مجلد التحميل لملفاتك:</translation>
+        <translation>حدد مجلد لترفيع ملفاتك إليه:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -7427,32 +7427,32 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم إكمال العنصر %n منذ ثوان</numerusform><numerusform>تمت إضافة العنصر %n قبل ثانية</numerusform><numerusform>تم إكمال العنصر %n منذ ثوان</numerusform><numerusform>تم إكمال العنصر %n منذ ثوان</numerusform><numerusform>تم إكمال العنصر %n منذ ثوان</numerusform><numerusform>تم إكمال العنصر %n منذ ثوان</numerusform></translation>
+        <translation><numerusform>تم إكمال العنصر منذ %n ثانية</numerusform><numerusform>تم إكمال العنصر منذ %n ثانية</numerusform><numerusform>تم إكمال العنصر منذ %n ثانيتين</numerusform><numerusform>تم إكمال العنصر منذ %n ثوان</numerusform><numerusform>تم إكمال العنصر منذ %n ثانية</numerusform><numerusform>تم إكمال العنصر منذ %n ثانية</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم إكمال العنصر %n منذ دقائق</numerusform><numerusform>تمت إضافة العنصر %n منذ دقيقة</numerusform><numerusform>تم إكمال العنصر %n منذ دقائق</numerusform><numerusform>تم إكمال العنصر %n منذ دقائق</numerusform><numerusform>تم إكمال العنصر %n منذ دقائق</numerusform><numerusform>تم إكمال العنصر %n منذ دقائق</numerusform></translation>
+        <translation><numerusform>تم إكمال العنصر منذ %n دقيقة</numerusform><numerusform>تم إكمال العنصر منذ %n دقيقة</numerusform><numerusform>تم إكمال العنصر منذ %n دقيقتين</numerusform><numerusform>تم إكمال العنصر منذ %n دقائق</numerusform><numerusform>تم إكمال العنصر منذ %n دقيقة</numerusform><numerusform>تم إكمال العنصر منذ %n دقيقة</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم إكمال العنصر %n منذ ساعات</numerusform><numerusform>تمت إضافة العنصر %n منذ ساعة</numerusform><numerusform>تم إكمال العنصر %n منذ ساعات</numerusform><numerusform>تم إكمال العنصر %n منذ ساعات</numerusform><numerusform>تم إكمال العنصر %n منذ ساعات</numerusform><numerusform>تم إكمال العنصر %n منذ ساعات</numerusform></translation>
+        <translation><numerusform>تم إكمال العنصر منذ %n ساعة</numerusform><numerusform>تم إكمال العنصر منذ %n ساعة</numerusform><numerusform>تم إكمال العنصر منذ %n ساعتين</numerusform><numerusform>تم إكمال العنصر منذ %n ساعات</numerusform><numerusform>تم إكمال العنصر منذ %n ساعة</numerusform><numerusform>تم إكمال العنصر منذ %n ساعة</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم إكمال العنصر %n منذ أيام</numerusform><numerusform>تمت إضافة العنصر %n قبل يوم</numerusform><numerusform>تم إكمال العنصر %n منذ أيام</numerusform><numerusform>تم إكمال العنصر %n منذ أيام</numerusform><numerusform>تم إكمال العنصر %n منذ أيام</numerusform><numerusform>تم إكمال العنصر %n منذ أيام</numerusform></translation>
+        <translation><numerusform>تم إكمال العنصر منذ %n يوم</numerusform><numerusform>تمت إضافة العنصر منذ %n يوم</numerusform><numerusform>تم إكمال العنصر منذ %n يومين</numerusform><numerusform>تم إكمال العنصر منذ %n أيام</numerusform><numerusform>تم إكمال العنصر منذ %n يوم</numerusform><numerusform>تم إكمال العنصر منذ %n يوم</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم إكمال العنصر %n منذ أشهر</numerusform><numerusform>تمت إضافة العنصر %n منذ شهر</numerusform><numerusform>تم إكمال العنصر %n منذ أشهر</numerusform><numerusform>تم إكمال العنصر %n منذ أشهر</numerusform><numerusform>تم إكمال العنصر %n منذ أشهر</numerusform><numerusform>تم إكمال العنصر %n منذ أشهر</numerusform></translation>
+        <translation><numerusform>تم إكمال العنصر منذ %n شهر</numerusform><numerusform>تم إكمال العنصر منذ %n شهر</numerusform><numerusform>تم إكمال العنصر منذ %n شهرين</numerusform><numerusform>تم إكمال العنصر منذ %n أشهر</numerusform><numerusform>تم إكمال العنصر منذ %n شهر</numerusform><numerusform>تم إكمال العنصر منذ %n شهر</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>تم إكمال العنصر %n منذ سنوات</numerusform><numerusform>تمت إضافة العنصر %n منذ عام</numerusform><numerusform>تم إكمال العنصر %n منذ سنوات</numerusform><numerusform>تم إكمال العنصر %n منذ سنوات</numerusform><numerusform>تم إكمال العنصر %n منذ سنوات</numerusform><numerusform>تم إكمال العنصر %n منذ سنوات</numerusform></translation>
+        <translation><numerusform>تم إكمال العنصر منذ %n سنة</numerusform><numerusform>تم إكمال العنصر منذ %n سنة</numerusform><numerusform>تم إكمال العنصر منذ %n سنتين</numerusform><numerusform>تم إكمال العنصر منذ %n سنوات</numerusform><numerusform>تم إكمال العنصر منذ %n سنة</numerusform><numerusform>تم إكمال العنصر منذ %n سنة</numerusform></translation>
     </message>
 </context>
 <context>

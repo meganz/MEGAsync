@@ -4117,11 +4117,6 @@ Enter a different name</source>
         <translation>Названия длиннее 32 символов не поддерживаются</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>Ошибка аутентификации</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Неверный 2FA-код</translation>
@@ -4130,6 +4125,11 @@ Enter a different name</source>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>Резервное копирование настроено, и выбранные данные будут автоматически копироваться во время работы настольного приложения. Вы можете просмотреть свои резервные копии и их статусы на вкладке «Резервное копирование» в «Настройках».</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>Попробуйте ещё раз</translation>
     </message>
 </context>
 <context>

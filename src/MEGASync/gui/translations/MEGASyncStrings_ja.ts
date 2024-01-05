@@ -4111,11 +4111,6 @@ Enter a different name</source>
         <translation>32文字を超える名前はサポートされていません</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>認証に失敗しました</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>2FAコードが不正確です</translation>
@@ -4124,6 +4119,11 @@ Enter a different name</source>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>バックアップが設定されており、デスクトップアプリが実行されているときは常に、選択されたデータが自動的にバックアップされます。バックアップとそのステータスは、「設定」の「バックアップ」タブで確認できます。</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>もう一度お試しください</translation>
     </message>
 </context>
 <context>

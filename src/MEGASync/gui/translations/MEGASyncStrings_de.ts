@@ -4115,11 +4115,6 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <translation>Namen mit mehr als 32 Zeichen werden nicht unterstützt</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>Authentifizierung fehlgeschlagen</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Ungültiger 2FA-Code</translation>
@@ -4128,6 +4123,11 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>Ihr Backup wurde eingerichtet, und die ausgewählten Daten werden automatisch gesichert, wenn die Desktop-App ausgeführt wird. Sie können Ihre Backups und deren Status auf dem Reiter „Backup“ in den Einstellungen einsehen.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>Versuchen Sie es erneut</translation>
     </message>
 </context>
 <context>
