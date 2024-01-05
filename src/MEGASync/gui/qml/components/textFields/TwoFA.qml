@@ -133,7 +133,7 @@ FocusScope {
             icon: Images.lock
             time: 2000
             Layout.leftMargin: digit1.sizes.focusBorderWidth
-            Layout.preferredWidth: root.width - 2 * digit1.sizes.focusBorderWidth
+            Layout.preferredWidth: root.width - digit1.sizes.focusBorderWidth
             Layout.preferredHeight: notification.height
 
             onVisibilityTimerFinished: {
