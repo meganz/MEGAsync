@@ -79,6 +79,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: root.margin
+            textSpacing: 4
         }
     }
 
