@@ -131,7 +131,7 @@ FocusScope {
             Layout.leftMargin: digit1.sizes.focusBorderWidth
             Layout.preferredWidth: root.width - digit1.sizes.focusBorderWidth
             Layout.preferredHeight: notification.height
-            title: OnboardingStrings.auth2FAFailed
+            title: OnboardingStrings.incorrect2FACode
             text: OnboardingStrings.tryAgain
             type: Constants.MessageType.ERROR
             icon: Images.lock
