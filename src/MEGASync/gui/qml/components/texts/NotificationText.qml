@@ -85,6 +85,7 @@ Item {
                 right: parent.right
                 margins: root.margin
             }
+            textSpacing: 4
         }
     }
 
