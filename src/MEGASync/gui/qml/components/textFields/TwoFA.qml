@@ -129,7 +129,7 @@ FocusScope {
             id: notification
 
             Layout.leftMargin: digit1.sizes.focusBorderWidth
-            Layout.preferredWidth: root.width - 2 * digit1.sizes.focusBorderWidth
+            Layout.preferredWidth: root.width - digit1.sizes.focusBorderWidth
             Layout.preferredHeight: notification.height
             title: OnboardingStrings.auth2FAFailed
             text: OnboardingStrings.tryAgain
