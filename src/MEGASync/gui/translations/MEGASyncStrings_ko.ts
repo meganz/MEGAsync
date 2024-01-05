@@ -4116,11 +4116,6 @@ Enter a different name</source>
         <translation>32자를 초과하는 이름은 지원되지 않습니다</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>인증 실패</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>잘못된 2단계 인증 코드</translation>
@@ -4129,6 +4124,11 @@ Enter a different name</source>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>백업이 설정되었으며 데스크톱 앱이 실행 중일 때 선택된 데이터가 자동으로 백업될 것입니다. 백업과 백업 상태를 설정의 백업 택에서 볼 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>다시 시도</translation>
     </message>
 </context>
 <context>

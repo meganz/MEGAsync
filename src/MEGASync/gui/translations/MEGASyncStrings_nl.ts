@@ -4116,11 +4116,6 @@ Voer een andere naam in.</translation>
         <translation>Namen die langer zijn dan 32 tekens worden niet ondersteund</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>Authenticatie mislukt</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Onjuiste 2FA code</translation>
@@ -4129,6 +4124,11 @@ Voer een andere naam in.</translation>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>Uw back-up is ingesteld en van geselecteerde gegevens wordt automatisch een back-up gemaakt wanneer de desktop-applicatie actief is. U kunt uw back-ups en hun status bekijken op het tabblad Back-up in Instellingen.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>Probeer opnieuw</translation>
     </message>
 </context>
 <context>
