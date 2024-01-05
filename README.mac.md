@@ -72,14 +72,14 @@ $ rm -r bin_dest
 
 # Third-Party dependencies
 
-## Qt SDK (5.15.11)
+## Qt SDK (5.15.12)
 
 You can install Qt Creator using the Qt Online Installer from:
 https://www.qt.io/download-qt-installer
 
 You will have to create an account, even if you only install the Community Editions.
 
-We are currently using Qt 5.15.11, for which the Qt Company does not provide pre-built
+We are currently using Qt 5.15.12, for which the Qt Company does not provide pre-built
 binaries. You can build Qt using:
 ```
 $ cd contrib/build_qt/macOS
@@ -107,17 +107,17 @@ You can specify the target architecture to build (x86_64 and/or arm64). Just nee
 
 ```
 $ cd ~/mega/desktop/contrib/cmake
-$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt-build/5.15.11/5.15.11/x86_64" -DTARGET=MEGAsync -DTRIPLET=x64-osx-mega -P build_from_scratch.cmake
+$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt-build/5.15.12/5.15.12/x86_64" -DTARGET=MEGAsync -DTRIPLET=x64-osx-mega -P build_from_scratch.cmake
 
 $ cd ~/mega/desktop/contrib/cmake
-$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt-build/5.15.11/5.15.11/arm64" -DTARGET=MEGAsync -DTRIPLET=arm64-osx-mega -P build_from_scratch.cmake
+$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt-build/5.15.12/5.15.12/arm64" -DTARGET=MEGAsync -DTRIPLET=arm64-osx-mega -P build_from_scratch.cmake
 
 ```
 
 # Development using Qt Creator
 
 Now you can open open `src/MEGASync/MEGASync.pro` to start editing and building. Set it up
-as any other Qt QMake based project, using the Qt 5.15.11 kit you installed and set
+as any other Qt QMake based project, using the Qt 5.15.12 kit you installed and set
 matching target architecture.
 
 When building using the QMake project, both the application and the SDK are
@@ -131,10 +131,10 @@ go to Tools -> External -> Linguist and click on Release Translations action.
 You can achieve the same, from the command-line running the x86_64 binary:
 ```
 $ cd ~/mega/desktop/src
-$ ~/Qt-build/5.15.11/5.15.11/x86_64/bin/lrelease MEGASync/MEGASync.pro
+$ ~/Qt-build/5.15.12/5.15.12/x86_64/bin/lrelease MEGASync/MEGASync.pro
 ```
 or you can run from arm64 bin location:
 ```
 $ cd ~/mega/desktop/src
-$ ~/Qt-build/5.15.11/5.15.11/arm64/bin/lrelease MEGASync/MEGASync.pro
+$ ~/Qt-build/5.15.12/5.15.12/arm64/bin/lrelease MEGASync/MEGASync.pro
 ```
