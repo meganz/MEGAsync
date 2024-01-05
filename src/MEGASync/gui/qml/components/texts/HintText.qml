@@ -14,6 +14,7 @@ Item {
     property alias iconColor: hintIcon.color
     property alias titleColor: hintTitle.color
     property alias textColor: hintText.color
+    property alias textSpacing: col.spacing
 
     property int type: Constants.MessageType.NONE
     property int textSize: Texts.Text.Size.Normal

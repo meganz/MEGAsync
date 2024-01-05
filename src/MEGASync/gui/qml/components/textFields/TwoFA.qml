@@ -127,7 +127,7 @@ FocusScope {
             id: notification
 
             visible: hasError
-            title: OnboardingStrings.auth2FAFailed
+            title: OnboardingStrings.incorrect2FACode
             text: OnboardingStrings.tryAgain
             type: Constants.MessageType.ERROR
             icon: Images.lock
