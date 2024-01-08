@@ -4113,11 +4113,6 @@ Nhập một tên khác.</translation>
         <translation>Tên dài hơn 32 ký&#xa0;tự không được hỗ&#xa0;trợ</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>Xác&#xa0;thực không thành&#xa0;công</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Mã XT2B không đúng</translation>
@@ -4126,6 +4121,11 @@ Nhập một tên khác.</translation>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>Sao&#xa0;lưu của bạn đã được thiết&#xa0;lập và dữ&#xa0;liệu được chọn sẽ tự&#xa0;động sao&#xa0;lưu bất cứ khi nào ứng&#xa0;dụng máy tính đang chạy. Bạn có thể xem các mục sao&#xa0;lưu của mình và trạng&#xa0;thái tại tab Sao&#xa0;lưu trong Thiết&#xa0;Đặt.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>Thử lại</translation>
     </message>
 </context>
 <context>

@@ -4114,11 +4114,6 @@ Masukkan nama yang berbeda.</translation>
         <translation>Nama yang lebih panjang dari 32 karakter tidak didukung</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>Otentikasi gagal</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Kode 2FA salah</translation>
@@ -4127,6 +4122,11 @@ Masukkan nama yang berbeda.</translation>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>Cadangan anda telah diatur dan data yang dipilih akan secara otomatis dicadangkan setiap kali aplikasi desktop berjalan. Anda dapat melihat cadangan dan statusnya di bawah tab Cadangan di Pengaturan.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>Coba lagi</translation>
     </message>
 </context>
 <context>
