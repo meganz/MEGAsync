@@ -155,7 +155,7 @@ Text {
         updateLinkColor();
     }
 
-    onFocusChanged: {
+    onActiveFocusChanged: {
         placeFocusBorder();
     }
 
