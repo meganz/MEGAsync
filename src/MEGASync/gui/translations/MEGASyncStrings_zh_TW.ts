@@ -4114,11 +4114,6 @@ Enter a different name</source>
         <translation>不支援超過32個字元的名稱</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>驗證失敗</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>不正確的2FA雙重驗證代碼</translation>
@@ -4127,6 +4122,11 @@ Enter a different name</source>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>您的備份已設定，每當桌面應用程式執行時，所選定的資料將自動備份。您可以在設定中的備份分頁查看備份及其狀態。</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>再試一次</translation>
     </message>
 </context>
 <context>

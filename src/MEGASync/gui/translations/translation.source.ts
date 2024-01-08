@@ -4223,7 +4223,7 @@ Enter a different name.</translation>
     <message>
         <source>Try again</source>
         <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
-        <translation type="unfinished">Try again</translation>
+        <translation>Try again</translation>
     </message>
 </context>
 <context>
