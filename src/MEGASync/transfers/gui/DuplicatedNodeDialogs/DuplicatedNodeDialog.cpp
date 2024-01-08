@@ -5,13 +5,14 @@
 #include "EventUpdater.h"
 #include <MegaApplication.h>
 #include "WordWrapLabel.h"
+#include "QScreen"
 
 #include <QFileInfo>
 
 DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node) :
-    mNode(node),
     QDialog(nullptr),
-    ui(new Ui::DuplicatedNodeDialog)
+    ui(new Ui::DuplicatedNodeDialog),
+    mNode(node)
 {
     ui->setupUi(this);
 
@@ -41,7 +42,6 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node)
     connect(&mSizeAdjustTimer, &QTimer::timeout, this, [this](){
         adjustSize();
     }, Qt::UniqueConnection);
-
 }
 
 DuplicatedNodeDialog::~DuplicatedNodeDialog()
@@ -359,6 +359,17 @@ bool DuplicatedNodeDialog::eventFilter(QObject* watched, QEvent* event)
     }
 
     return QDialog::eventFilter(watched, event);
+}
+
+void DuplicatedNodeDialog::resizeEvent(QResizeEvent *)
+{
+    if(auto screen = QGuiApplication::screenAt(this->pos()))
+    {
+        QRect rect = screen->geometry();
+        QRect geo = geometry();
+        geo.moveCenter(rect.center());
+        move(geo.topLeft());
+    }
 }
 
 bool DuplicatedNodeDialog::event(QEvent *event)
