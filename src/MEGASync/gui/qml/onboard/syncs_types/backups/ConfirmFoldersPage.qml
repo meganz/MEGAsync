@@ -66,7 +66,7 @@ ConfirmFoldersPageForm {
         target: onboardingWindow
 
         function onLanguageChanged() {
-            if (footerButtons.rightPrimary.enabled) {
+            if (footerButtons.rightPrimary.enabled && backupsModelAccess.globalError > backupsModelAccess.BackupErrorCode.NONE) {
                 footerButtons.rightPrimary.clicked();
             }
         }
