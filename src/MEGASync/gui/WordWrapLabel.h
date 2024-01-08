@@ -41,7 +41,7 @@ private:
     QString mText;
     Qt::TextFormat mFormat;
     QTimer mAdaptHeightTimer;
-    int mBoundingHeight;
+    int mParentHeight;
 };
 
 #endif // WORDWRAPLABEL_H

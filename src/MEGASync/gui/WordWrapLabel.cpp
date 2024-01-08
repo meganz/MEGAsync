@@ -23,7 +23,7 @@ WordWrapLabel::WordWrapLabel(QWidget* parent)
     , mMaxHeight(-1)
     , mMaxLines(-1)
     , mFormat(Qt::PlainText)
-    , mBoundingHeight(-1)
+    , mParentHeight(-1)
 {
     setFrameStyle(QFrame::NoFrame);
     setTextInteractionFlags(Qt::LinksAccessibleByMouse);
@@ -116,7 +116,7 @@ void WordWrapLabel::onAdaptHeight(bool parentConstrained)
         //Check if this is the last line
         if ((mMaxHeight > 0 && ((lineCounter + 1) * fontHeight) >= mMaxHeight) ||
             (mMaxLines > 0 && (lineCounter + 1 == mMaxLines)) ||
-            (parentConstrained && ((lineCounter + 1) * fontHeight) * devicePixelRatio() >= visibleRegion().boundingRect().height()))
+            (parentConstrained && ((lineCounter + 2) * fontHeight) * devicePixelRatio() >= visibleRegion().boundingRect().height()))
         {
             auto modifiedText(mText);
             auto textNotToElide(modifiedText.left(processedStringLength));
@@ -205,8 +205,8 @@ bool WordWrapLabel::eventFilter(QObject* obj, QEvent* event)
     if(event->type() == QEvent::Resize && obj == parent())
     {
         updateGeometry();
-        onAdaptHeight(visibleRegion().boundingRect().height() < mBoundingHeight);
-        mBoundingHeight = visibleRegion().boundingRect().height();
+        onAdaptHeight(parentWidget()->height() < mParentHeight);
+        mParentHeight = parentWidget()->height();
     }
     return QTextBrowser::eventFilter(obj, event);
 }
