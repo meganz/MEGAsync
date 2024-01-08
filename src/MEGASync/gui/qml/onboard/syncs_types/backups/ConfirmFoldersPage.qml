@@ -58,4 +58,14 @@ ConfirmFoldersPageForm {
             }
         }
     }
+
+    Connections {
+        target: onboardingWindow
+
+        function onLanguageChanged() {
+            if (footerButtons.rightPrimary.enabled) {
+                footerButtons.rightPrimary.clicked();
+            }
+        }
+    }
 }
