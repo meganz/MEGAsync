@@ -76,5 +76,11 @@ FullSyncPageForm {
         function onInitializePageFocus() {
             localFolderChooser.forceActiveFocus();
         }
+
+        function onLanguageChanged() {
+            if (localFolderChooser.folderField.hint.visible) {
+                footerButtons.rightPrimary.clicked();
+            }
+        }
     }
 }
