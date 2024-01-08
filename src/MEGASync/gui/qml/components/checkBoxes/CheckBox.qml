@@ -137,11 +137,14 @@ Qml.CheckBox {
     MouseArea {
         id: rootMouseArea
 
+        z: -1
         anchors.fill: parent
         onClicked: {
             toggleCheckboxState();
+            root.forceActiveFocus();
             mouse.accepted = true;
         }
+
         cursorShape: Qt.PointingHandCursor
     }
 
