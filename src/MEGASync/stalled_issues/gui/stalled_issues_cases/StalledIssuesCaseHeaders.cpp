@@ -5,6 +5,7 @@
 #include <Utilities.h>
 #include "control/Preferences/Preferences.h"
 #include <MegaApplication.h>
+#include "TextDecorator.h"
 
 #include <StalledIssuesModel.h>
 #include <StalledIssue.h>
@@ -22,6 +23,12 @@
 #elif defined Q_OS_LINUX
     #include "limits.h"
 #endif
+
+namespace
+{
+Text::Bold boldTextDecorator;
+const Text::Decorator textDecorator(&boldTextDecorator);
+}
 
 StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
     :QObject(header)
@@ -64,7 +71,9 @@ DefaultHeader::DefaultHeader(StalledIssueHeader* header)
 
 void DefaultHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Error detected with <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Error detected with [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Reason not found."));
 }
 
@@ -150,7 +159,9 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
 
 void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Detected sym link: <b>%1</b>").arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
+    QString headerText = tr("Detected sym link: [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
     header->setTitleDescriptionText(QString());
     header->setIsExpandable(false);
 }
@@ -206,7 +217,9 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        msgInfo.informativeText.append(tr("<br><b>Please, resume your transfers to fix the issue</b></br>", "", pluralNumber));
+        QString informativeMessage = QString::fromUtf8("<br>") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber) + QString::fromUtf8("</br>");
+        textDecorator.process(informativeMessage);
+        msgInfo.informativeText.append(informativeMessage);
     }
 
     msgInfo.buttonsText = textsByButton;
@@ -225,7 +238,9 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
 
 void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Can´t download <b>%1</b> to the selected location").arg(header->getData().consultData()->consultCloudData()->getNativeFilePath()));
+    QString headerText =tr("Can´t download [B]%1[/B] to the selected location");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->getData().consultData()->consultCloudData()->getNativeFilePath()));
     header->setTitleDescriptionText(tr("File fingerprint missing"));
     header->setIsExpandable(false);
 }
@@ -245,8 +260,13 @@ CloudNodeUndecryptedHeader::CloudNodeUndecryptedHeader(StalledIssueHeader* heade
 
 void CloudNodeUndecryptedHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Clode node undecrypted <b>%1</b>").arg(header->displayFileName()));
-    header->setTitleDescriptionText(tr("Decryption process could not be completed. Reload your account on <a href=\"http://mega.io/\">MEGA</a> or contact <a href=mailto:support@mega.nz>Support</a>."));
+    QString headerText =tr("Clode node undecrypted [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
+    QString titleDescriptionText = tr("Decryption process could not be completed. Reload your account on [A]Support[/A].");
+    titleDescriptionText.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"http://mega.io/\">MEGA</a> or contact <a href=mailto:support@mega.nz>"));
+    titleDescriptionText.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
+    header->setTitleDescriptionText(titleDescriptionText);
 }
 
 //Local folder not scannable
@@ -256,7 +276,9 @@ FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
 
 void FileIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
+    QString headerText =tr("Can´t sync [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     if(header->getData().consultData()->filesCount() > 0)
     {
         header->setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
@@ -274,7 +296,9 @@ MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(StalledIssueHeader*
 
 void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Cannot move or rename <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Cannot move or rename [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     if (header->getData().consultData()->mDetectedMEGASide)
     {
         header->setTitleDescriptionText(tr("A move or rename was detected in MEGA, but could not be replicated in the local filesystem."));
@@ -310,7 +334,9 @@ DeleteOrMoveWaitingOnScanningHeader::DeleteOrMoveWaitingOnScanningHeader(Stalled
 
 void DeleteOrMoveWaitingOnScanningHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Can´t find <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Can´t find [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
 }
 
@@ -321,7 +347,9 @@ DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(StalledIssueHeader* heade
 
 void DeleteWaitingOnMovesHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Waiting to move <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Waiting to move [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting for other processes to complete."));
 }
 
@@ -333,7 +361,9 @@ UploadIssueHeader::UploadIssueHeader(StalledIssueHeader* header)
 
 void UploadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Can´t upload <b>%1</b> to the selected location").arg(header->displayFileName()));
+    QString headerText = tr("Can´t upload [B]%1[/B] to the selected location");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot reach the destination folder."));
 }
 
@@ -345,7 +375,9 @@ DownloadIssueHeader::DownloadIssueHeader(StalledIssueHeader* header)
 
 void DownloadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Can´t download <b>%1</b> to the selected location").arg(header->displayFileName(true)));
+    QString headerText = tr("Can´t download [B]%1[/B] to the selected location");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName(true)));
     header->setTitleDescriptionText(tr("A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location."));
 }
 
@@ -356,7 +388,9 @@ CannotCreateFolderHeader::CannotCreateFolderHeader(StalledIssueHeader* header)
 
 void CannotCreateFolderHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Cannot create <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Cannot create [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
 
@@ -367,7 +401,9 @@ CannotPerformDeletionHeader::CannotPerformDeletionHeader(StalledIssueHeader* hea
 
 void CannotPerformDeletionHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Cannot perform deletion <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Cannot perform deletion [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
 
@@ -379,7 +415,9 @@ SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader
 
 void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Unable to sync <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Unable to sync [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
 }
 
@@ -414,7 +452,9 @@ FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(StalledIssueHeade
 
 void FolderMatchedAgainstFileHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Can´t sync [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot sync folders against files."));
 }
 
@@ -433,7 +473,9 @@ void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseActions(StalledIss
 
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Can´t sync [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("This file has conflicting copies"));
 }
 
@@ -453,7 +495,9 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseActions(Stalled
 
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
+    QString headerText = tr("Can´t sync [B]%1[/B]");
+    textDecorator.process(headerText);
+    header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
 }
 
@@ -513,8 +557,8 @@ void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
-        QString text(tr("Name Conflicts: <b>%1</b>"));
-
+        QString text(tr("Name Conflicts: [B]%1[/B]"));
+        textDecorator.process(text);
         auto cloudData = nameConflict->getNameConflictCloudData();
         if(cloudData.firstNameConflict())
         {

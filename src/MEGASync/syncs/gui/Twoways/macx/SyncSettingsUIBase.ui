@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string/>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -228,7 +228,7 @@
   <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
-   <header>waitingspinnerwidget.h</header>
+   <header>gui/WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

@@ -717,8 +717,7 @@ color: #2C5BEB;
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="text">
-                   <string>&lt;a href=&quot;https://help.mega.io/installs-apps/desktop-syncing/sync-v2&quot; 
-   style=&quot;text-decoration: none&quot;&gt;Learn more&lt;/a&gt;</string>
+                   <string/>
                   </property>
                   <property name="openExternalLinks">
                    <bool>true</bool>
@@ -1090,7 +1089,7 @@ color: #2C5BEB;
                 <UInt>4</UInt>
                </property>
                <property name="iconPrefix" stdset="0">
-                <string>solved-issues</string>
+                <string notr="true">solved-issues</string>
                </property>
               </widget>
              </item>
@@ -1318,7 +1317,7 @@ QMenu::item:default
 }</string>
              </property>
              <property name="text">
-              <string>...</string>
+              <string notr="true">...</string>
              </property>
              <property name="icon">
               <iconset resource="../../../gui/Resources_macx.qrc">

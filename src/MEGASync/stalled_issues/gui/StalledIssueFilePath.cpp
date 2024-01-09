@@ -525,7 +525,7 @@ QString StalledIssueFilePath::getHelpLink(mega::MegaSyncStall::SyncPathProblem p
     {
         case mega::MegaSyncStall::FilesystemCannotStoreThisName:
         {
-            return tr("https://help.mega.io/");
+            return QLatin1String("https://help.mega.io/");
         }
     }
 

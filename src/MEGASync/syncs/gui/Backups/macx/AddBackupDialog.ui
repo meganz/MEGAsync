@@ -222,7 +222,7 @@ margin-right: 32px;
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>Add Exclusions</string>
+           <string>Add exclusions</string>
           </property>
           <property name="default">
            <bool>true</bool>
