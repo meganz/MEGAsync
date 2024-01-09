@@ -5,14 +5,15 @@ import BackupsModel 1.0
 ConfirmFoldersPageForm {
     id: root
 
+    required property var backupsProxyModelRef
+
     signal confirmFoldersMoveToSelect
-    signal confirmFoldersMoveToSuccess
+    signal confirmFoldersMoveToFinal(bool success)
 
     footerButtons {
 
         rightSecondary.onClicked: {
             backupsModelAccess.clean(true);
-            backupsProxyModel.selectedFilterEnabled = false;
             root.confirmFoldersMoveToSelect();
         }
 
@@ -20,7 +21,7 @@ ConfirmFoldersPageForm {
             footerButtons.enabled = false;
             enableConfirmHeader = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            backupsProxyModel.createBackups();
+            backupsProxyModelRef.createBackups();
         }
     }
 
@@ -30,38 +31,20 @@ ConfirmFoldersPageForm {
         function onNoneSelected() {
             root.confirmFoldersMoveToSelect();
         }
-
-        function onExistConflictsChanged() {
-            if(backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE) {
-                if(backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
-                    stepPanel.state = stepPanel.step4Error;
-                }
-                else {
-                    stepPanel.state = stepPanel.step4Warning;
-                }
-            }
-            else {
-                stepPanel.state = stepPanel.step4;
-            }
-        }
     }
 
     Connections {
-        target: backupsProxyModel
+        target: backupsProxyModelRef
 
         function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;
             enableConfirmHeader = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            if(success) {
-                root.confirmFoldersMoveToSuccess();
-            }
-            else {
-                stepPanel.state = stepPanel.step4Error;
-            }
+            root.confirmFoldersMoveToFinal(success);
         }
     }
 
+    /*
     Connections {
         target: onboardingWindow
 
@@ -71,4 +54,5 @@ ConfirmFoldersPageForm {
             }
         }
     }
+    */
 }

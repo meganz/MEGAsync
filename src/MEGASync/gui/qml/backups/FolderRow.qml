@@ -326,7 +326,7 @@ Item {
                         bottom: parent.bottom
                         rightMargin: -sizes.focusBorderWidth
                     }
-                    text: conflictRoot.showChange ? OnboardingStrings.changeFolder : OnboardingStrings.rename
+                    text: conflictRoot.showChange ? BackupsStrings.changeFolder : BackupsStrings.rename
                     sizes: Buttons.SmallSizes {}
                     icons {
                         position: Buttons.Icon.Position.LEFT
@@ -395,11 +395,11 @@ Item {
                         break;
                     case backupsModelAccess.BackupErrorCode.EXISTS_REMOTE:
                         editTextField.hint.visible = true;
-                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
+                        editTextField.hint.text = BackupsStrings.confirmBackupErrorRemote;
                         break;
                     case backupsModelAccess.BackupErrorCode.DUPLICATED_NAME:
                         editTextField.hint.visible = true;
-                        editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
+                        editTextField.hint.text = BackupsStrings.confirmBackupErrorDuplicated;
                         break;
                     default:
                         console.error("FolderRow: Unexpected error after rename -> " + error);
@@ -421,7 +421,7 @@ Item {
                 validator: RegExpValidator { regExp: RegexExpressions.allowedFolderChars }
 
                 onAccepted: {
-                    doneAction()
+                    doneAction();
                 }
 
                 onHeightChanged: {
@@ -441,12 +441,13 @@ Item {
                 sizes: Buttons.SmallSizes {}
 
                 onClicked: {
-                    if (editTextField.acceptableInput){
-                        doneAction()
+                    if (editTextField.acceptableInput) {
+                        doneAction();
                     }
                 }
             }
 
+            /*
             Connections {
                 target: onboardingWindow
 
@@ -456,6 +457,7 @@ Item {
                     }
                 }
             }
+            */
         } // Row: editRow
 
     } // Component: editContent

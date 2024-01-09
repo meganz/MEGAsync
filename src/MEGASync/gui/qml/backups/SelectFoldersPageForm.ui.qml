@@ -12,7 +12,7 @@ SyncsPage {
     id: root
 
     footerButtons.rightPrimary {
-        text: OnboardingStrings.backUp
+        text: BackupsStrings.backUp
         icons.source: Images.database
         enabled: backupsModelAccess.checkAllState !== Qt.Unchecked
     }
@@ -30,8 +30,8 @@ SyncsPage {
         Header {
             id: headerItem
 
-            title: OnboardingStrings.selectBackupFoldersTitle
-            description: OnboardingStrings.selectBackupFoldersDescription
+            title: BackupsStrings.selectBackupFoldersTitle
+            description: BackupsStrings.selectBackupFoldersDescription
         }
 
         InfoAccount {

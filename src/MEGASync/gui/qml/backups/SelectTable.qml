@@ -97,7 +97,7 @@ Item {
 
                     implicitHeight: parent.height
                     Layout.leftMargin: headerFooterMargin
-                    text: OnboardingStrings.selectAll
+                    text: BackupsStrings.selectAll
                     tristate: true
                     sizes.spacing: 8
                     enabled: backupsListView.count > 0
@@ -163,7 +163,7 @@ Item {
             anchors {
                 left: parent.left
                 right: parent.right
-                bottom: borderRectangle.bottom
+                //bottom: borderRectangle.bottom
             }
             height: headerFooterHeight
             radius: tableRadius
@@ -204,7 +204,7 @@ Item {
                 verticalCenter: parent.verticalCenter
                 leftMargin: 20
             }
-            text: OnboardingStrings.addFolder
+            text: BackupsStrings.addFolder
             sizes: SmallSizes { borderLess: true }
             icons {
                 source: Images.plus

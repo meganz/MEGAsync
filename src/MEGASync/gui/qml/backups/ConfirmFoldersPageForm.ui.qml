@@ -17,7 +17,7 @@ SyncsPage {
     property alias enableConfirmHeader: confirmHeader.enabled
 
     footerButtons.rightPrimary {
-        text: OnboardingStrings.backUp
+        text: BackupsStrings.backUp
         icons.source: Images.database
         enabled: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.NONE
                     || (backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
@@ -37,7 +37,7 @@ SyncsPage {
         Header {
             id: confirmHeader
 
-            title: OnboardingStrings.confirmBackupFoldersTitle
+            title: BackupsStrings.confirmBackupFoldersTitle
         }
 
         ColumnLayout {
@@ -56,7 +56,7 @@ SyncsPage {
                 colors.text: colorStyle.textPlaceholder
                 Layout.preferredWidth: parent.width
                 Layout.leftMargin: -deviceField.sizes.focusBorderWidth
-                title: OnboardingStrings.backupTo
+                title: BackupsStrings.backupTo
                 leftIconSource: Images.database
                 textField.readOnly: true
                 textField.text: "/" + deviceName.name

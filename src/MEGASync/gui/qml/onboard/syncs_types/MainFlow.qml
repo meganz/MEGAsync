@@ -4,12 +4,14 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
+import backups 1.0
+
 import onboard 1.0
 import onboard.syncs_types.left_panel 1.0
 import onboard.syncs_types.syncs 1.0
-import onboard.syncs_types.backups 1.0
 
 import BackupsProxyModel 1.0
+import BackupsModel 1.0
 import LoginController 1.0
 import SettingsDialog 1.0
 
@@ -196,7 +198,51 @@ Rectangle {
         Component {
             id: backupsFlowPage
 
-            BackupsFlow {}
+            BackupsFlow {
+                id: backupsFlowItem
+
+                isOnboarding: true
+
+                onStateChanged: {
+                    switch(backupsFlowItem.state) {
+                        case backupsFlowItem.selectBackup:
+                            stepPanel.step3Text = OnboardingStrings.backupSelectFolders;
+                            stepPanel.step4Text = OnboardingStrings.confirm;
+                            stepPanel.state = stepPanel.step3;
+                            break;
+                        case backupsFlowItem.confirmBackup:
+                            if(backupsModelAccess.conflictsNotificationText !== "") {
+                                stepPanel.state = stepPanel.step4Warning;
+                            }
+                            else {
+                                stepPanel.state = stepPanel.step4;
+                            }
+                            stepPanel.step3Text = OnboardingStrings.backupSelectFolders;
+                            stepPanel.step4Text = OnboardingStrings.backupConfirm;
+                            stepPanel.state = stepPanel.step4;
+                            break;
+                        default:
+                            console.warn("MainFlow: backupsFlowItem.state does not exist -> "
+                                         + backupsFlowItem.state);
+                            break;
+                    }
+                }
+
+                Connections {
+                    target: backupsModelAccess
+
+                    function onExistConflictsChanged() {
+                        if(backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE) {
+                            if(backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
+                                stepPanel.state = stepPanel.step4Error;
+                            }
+                            else {
+                                stepPanel.state = stepPanel.step4Warning;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         Component {
@@ -269,11 +315,22 @@ Rectangle {
         target: rightPanel.currentItem
         ignoreUnknownSignals: true
 
-        function onBackupFlowMoveToFinal() {
+        function onBackupFlowMoveToFinal(success) {
+            if(!success) {
+                stepPanel.state = stepPanel.step4Error;
+                return;
+            }
+
             syncsPanel.state = resume;
         }
 
         function onBackupFlowMoveToBack() {
+            if(syncsPanel.navInfo.comesFromResumePage) {
+                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
+                syncsPanel.state = resume;
+                return;
+            }
+
             syncsPanel.state = syncType;
         }
     }

@@ -95,7 +95,7 @@ Rectangle {
                     Texts.Text {
                         id: headerText
 
-                        text: OnboardingStrings.backupFolders
+                        text: BackupsStrings.backupFolders
                         font.weight: Font.DemiBold
                         color: colorStyle.textPrimary
                     }
@@ -190,6 +190,7 @@ Rectangle {
         }
     }
 
+    /*
     Connections {
         target: onboardingWindow
 
@@ -197,4 +198,5 @@ Rectangle {
             backupsModelAccess.check();
         }
     }
+    */
 }

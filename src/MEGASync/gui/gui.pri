@@ -100,7 +100,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/GuestContent.cpp \
     $$PWD/SyncExclusions/SyncExclusions.cpp \
     $$PWD/SyncExclusions/ExclusionsQmlDialog.cpp \
-    $$PWD/SyncExclusions/ExclusionRulesModel.cpp
+    $$PWD/SyncExclusions/ExclusionRulesModel.cpp \
+    $$PWD/backups/Backups.cpp \
+    $$PWD/backups/BackupsQmlDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -201,7 +203,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SyncExclusions/SyncExclusions.h \
     $$PWD/SyncExclusions/ExclusionsQmlDialog.h \
     $$PWD/onboarding/GuestContent.h \
-    $$PWD/SyncExclusions/ExclusionRulesModel.h
+    $$PWD/SyncExclusions/ExclusionRulesModel.h \
+    $$PWD/backups/Backups.h \
+    $$PWD/backups/BackupsQmlDialog.h
 
 INCLUDEPATH += $$PWD
 

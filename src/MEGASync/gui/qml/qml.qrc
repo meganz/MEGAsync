@@ -6,6 +6,9 @@
         <file>common/Links.qml</file>
         <file>common/RegexExpressions.qml</file>
         <file>common/OS.qml</file>
+        <file>common/FontStyles.qml</file>
+        <file>common/themes/light/Colors.qml</file>
+        <file>common/themes/dark/Colors.qml</file>
         <file>components/busyIndicator/qmldir</file>
         <file>components/busyIndicator/BusyIndicator.qml</file>
         <file>components/buttons/qmldir</file>
@@ -30,6 +33,9 @@
         <file>components/checkBoxes/Colors.qml</file>
         <file>components/checkBoxes/Icons.qml</file>
         <file>components/checkBoxes/Sizes.qml</file>
+        <file>components/comboBoxes/qmldir</file>
+        <file>components/comboBoxes/ComboBox.qml</file>
+        <file>components/comboBoxes/Sizes.qml</file>
         <file>components/images/qmldir</file>
         <file>components/images/SvgImage.qml</file>
         <file>components/scrollBars/qmldir</file>
@@ -55,6 +61,7 @@
         <file>components/texts/Text.qml</file>
         <file>components/texts/ElidedText.qml</file>
         <file>components/texts/HighlightedText.qml</file>
+        <file>components/texts/Sizes.qml</file>
         <file>components/toolTips/qmldir</file>
         <file>components/toolTips/ToolTip.qml</file>
         <file>components/views/qmldir</file>
@@ -99,15 +106,6 @@
         <file>onboard/syncs_types/SyncsPage.qml</file>
         <file>onboard/syncs_types/SyncsType.qml</file>
         <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
-        <file>onboard/syncs_types/backups/qmldir</file>
-        <file>onboard/syncs_types/backups/BackupsFlow.qml</file>
-        <file>onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
-        <file>onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
-        <file>onboard/syncs_types/backups/ConfirmTable.qml</file>
-        <file>onboard/syncs_types/backups/FolderRow.qml</file>
-        <file>onboard/syncs_types/backups/SelectFoldersPage.qml</file>
-        <file>onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
-        <file>onboard/syncs_types/backups/SelectTable.qml</file>
         <file>onboard/syncs_types/left_panel/qmldir</file>
         <file>onboard/syncs_types/left_panel/Step.qml</file>
         <file>onboard/syncs_types/left_panel/StepPanel.qml</file>
@@ -128,21 +126,25 @@
         <file>guest/GuestDialog.qml</file>
         <file>guest/GuestStrings.qml</file>
         <file>guest/MenuItem.qml</file>
-        <file>components/texts/Sizes.qml</file>
-        <file>common/FontStyles.qml</file>
-        <file>common/themes/light/Colors.qml</file>
-        <file>common/themes/dark/Colors.qml</file>
         <file>sync_exclusions/qmldir</file>
         <file>sync_exclusions/ExclusionsQmlDialog.qml</file>
         <file>sync_exclusions/ExclusionsStrings.qml</file>
         <file>sync_exclusions/RulesTable.qml</file>
         <file>sync_exclusions/AddRuleDialog.qml</file>
-        <file>components/comboBoxes/qmldir</file>
-        <file>components/comboBoxes/ComboBox.qml</file>
-        <file>components/comboBoxes/Sizes.qml</file>
         <file>whatsNew/WhatsNewStrings.qml</file>
         <file>whatsNew/qmldir</file>
         <file>whatsNew/WhatsNewDialog.qml</file>
         <file>whatsNew/UpdatesElement.qml</file>
+        <file>backups/qmldir</file>
+        <file>backups/BackupsDialog.qml</file>
+        <file>backups/BackupsFlow.qml</file>
+        <file>backups/BackupsStrings.qml</file>
+        <file>backups/ConfirmFoldersPage.qml</file>
+        <file>backups/ConfirmFoldersPageForm.ui.qml</file>
+        <file>backups/ConfirmTable.qml</file>
+        <file>backups/FolderRow.qml</file>
+        <file>backups/SelectFoldersPage.qml</file>
+        <file>backups/SelectFoldersPageForm.ui.qml</file>
+        <file>backups/SelectTable.qml</file>
     </qresource>
 </RCC>

@@ -29,6 +29,7 @@
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "onboarding/Onboarding.h"
+#include "backups/Backups.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -1030,6 +1031,22 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
 
 void InfoDialog::addBackup()
 {
+    if(DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>() == nullptr)
+    {
+        QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
+        DialogOpener::addDialog(onboarding);
+    }
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
+    {
+        DialogOpener::showDialog(dialog->getDialog());
+        return;
+    }
+
+    QPointer<QmlDialogWrapper<Backups>> backupsDialog = new QmlDialogWrapper<Backups>();
+    DialogOpener::showDialog(backupsDialog);
+
+/*
     auto overQuotaDialog = app->showSyncOverquotaDialog();
 
     auto addBackupLambda = [overQuotaDialog, this]()
@@ -1071,6 +1088,7 @@ void InfoDialog::addBackup()
     {
         addBackupLambda();
     }
+*/
 }
 
 void InfoDialog::onOverlayClicked()
