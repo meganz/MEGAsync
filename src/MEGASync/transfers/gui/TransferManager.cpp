@@ -718,11 +718,10 @@ void TransferManager::onTransfersDataUpdated()
 {
     mTransfersCount = mModel->getTransfersCount();
 
-    long long oldNumber(0);
-    QLabel* label (mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()]);
-    if(label)
+    auto processedNumber = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
+    if (processedNumber == 0 && mModel->areAllPaused())
     {
-        oldNumber = label->text().toLongLong();
+        pauseResumeTransfers(!mModel->areAllPaused());
     }
 
     // Refresh stats
