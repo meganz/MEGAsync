@@ -4116,11 +4116,6 @@ Introdu un alt nume.</translation>
         <translation>Numele mai lungi de 32 de caractere nu sunt acceptate</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>Autentificarea a eșuat</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Cod A2F incorect</translation>
@@ -4129,6 +4124,11 @@ Introdu un alt nume.</translation>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>Backup-ul dvs. a fost configurat, iar datele selectate vor fi backup-uite automat ori de câte ori aplicația desktop este în funcțiune. Puteți vizualiza backup-urile și stările acestora în fila Backup din Setări.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>Reîncearcă</translation>
     </message>
 </context>
 <context>

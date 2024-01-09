@@ -111,7 +111,7 @@ QtObject {
     readonly property string errorEmptyEmail: qsTr("Enter your email address")
     readonly property string errorEmptyDeviceName: qsTr("Enter a device name")
     readonly property string errorDeviceNameLimit: qsTr("Names longer than 32 characters are not supported")
-    readonly property string auth2FAFailed: qsTr("Authentication failed")
-    readonly property string tryAgain: qsTr("Incorrect 2FA code")
+    readonly property string incorrect2FACode: qsTr("Incorrect 2FA code")
+    readonly property string tryAgain: qsTr("Try again")
 
 }

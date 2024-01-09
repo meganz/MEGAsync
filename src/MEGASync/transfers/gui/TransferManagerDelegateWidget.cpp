@@ -341,11 +341,11 @@ void TransferManagerDelegateWidget::setFileNameAndType()
     QIcon icon;
     // File type icon
     icon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                          getData()->mFilename, QLatin1Literal(":/images/drag_")));
+                                          getData()->mFilename, QLatin1String(":/images/drag_")));
     mUi->tFileType->setIcon(icon);
 
     // File name
-    mUi->lTransferName->setToolTip(getData()->mFilename);
+    mUi->lTransferName->setToolTip(getData()->mFilename.toHtmlEscaped());
     adjustFileName();
 }
 
@@ -357,11 +357,11 @@ void TransferManagerDelegateWidget::setType()
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/arrow_download_ico.png"));
+        icon = Utilities::getCachedPixmap(QLatin1String(":/images/transfer_manager/transfers_states/arrow_download_ico.png"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/arrow_upload_ico.png"));
+        icon = Utilities::getCachedPixmap(QLatin1String(":/images/transfer_manager/transfers_states/arrow_upload_ico.png"));
     }
 
     mUi->bItemSpeed->setIcon(icon);

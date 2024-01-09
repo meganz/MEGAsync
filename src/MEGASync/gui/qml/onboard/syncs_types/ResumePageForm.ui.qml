@@ -16,6 +16,8 @@ SyncsPage {
     readonly property string stateFullSync: "FULL"
     readonly property string stateSelectiveSync: "SELECTIVE"
     readonly property string stateBackup: "BACKUP"
+    readonly property int maxSizeDescription: 80
+    readonly property int buttonQuestionMargin: 24
 
     property alias buttonGroup: buttonGroupItem
     property alias syncButton: syncButtonItem
@@ -89,6 +91,7 @@ SyncsPage {
                 pixelSize: Texts.Text.Size.LARGE
                 weight: Font.Bold
             }
+            wrapMode: Text.Wrap
         }
 
         Texts.Text {
@@ -98,13 +101,14 @@ SyncsPage {
             Layout.topMargin: 8
             text: description
             font.pixelSize: Texts.Text.Size.MEDIUM
+            wrapMode: Text.Wrap
         }
 
         Texts.Text {
             id: finalStepQuestionText
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 36
+            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
             text: OnboardingStrings.finalStepQuestion
             font {
                 pixelSize: Texts.Text.Size.MEDIUM_LARGE
@@ -116,7 +120,7 @@ SyncsPage {
             id: buttons
 
             Layout.preferredWidth: parent.width + 8
-            Layout.topMargin: 24
+            Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
 
             ButtonGroup {
                 id: buttonGroupItem
@@ -136,12 +140,11 @@ SyncsPage {
                     id: syncButtonItem
 
                     width: (parent.width - parent.spacing) / 2
-                    height: 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     contentMargin: 24
                     contentSpacing: 8
-                    imageSourceSize: Qt.size(32, 32)
+                    imageSourceSize: Qt.size(22, 20)
                     title: OnboardingStrings.selectiveSync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
@@ -157,20 +160,17 @@ SyncsPage {
                     width: !syncButtonItem.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
-                    height: !syncButtonItem.visible
-                            ? 155
-                            : 195
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                     contentMargin: 24
                     contentSpacing: 8
-                    imageSourceSize: Qt.size(32, 32)
+                    imageSourceSize: Qt.size(22, 20)
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
                     type: SyncsType.Types.BACKUP
                     checkable: false
-                    useMaxSiblingHeight: true
+                    useMaxSiblingHeight: syncButtonItem.visible
                     ButtonGroup.group: buttonGroupItem
                 }
 

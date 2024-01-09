@@ -4112,11 +4112,6 @@ Enter a different name</source>
         <translation>ชื่อต้องมีความยาวไม่เกิน 32 ตัวอักษร</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>รับรองความถูกต้องไม่สำเร็จ</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>รหัส 2FA ไม่ถูกต้อง</translation>
@@ -4125,6 +4120,11 @@ Enter a different name</source>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>การสำรองข้อมูลของคุณได้รับการตั้งค่าเรียบร้อยแล้ว โดยข้อมูลที่คุณเลือกจะทำการสำรองข้อมูลโดยอัตโนมัติทุกครั้งที่เปิดแอปเดสก์ท็อป คุณสามารถตรวจสอบการสำรองข้อมูลและสถานะการสำรองข้อมูลของคุณได้จากแท็บการสำรองข้อมูลในการตั้งค่า</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>ลองอีกครั้ง</translation>
     </message>
 </context>
 <context>

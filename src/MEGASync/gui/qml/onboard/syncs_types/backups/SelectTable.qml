@@ -26,17 +26,6 @@ Item {
     width: parent.width
 
     Rectangle {
-        id: borderRectangle
-
-        anchors.fill: parent
-        color: "transparent"
-        border.color: Styles.borderStrong
-        border.width: 1
-        radius: tableRadius
-        z: 2
-    }
-
-    Rectangle {
         id: backgroundRectangle
 
         anchors.fill: parent
@@ -47,7 +36,10 @@ Item {
     ListView {
         id: backupsListView
 
-        anchors.fill: parent
+        anchors {
+            fill: parent
+            margins: borderRectangle.border.width
+        }
         model: backupsModelAccess
         headerPositioning: ListView.OverlayHeader
         focus: true
@@ -55,7 +47,7 @@ Item {
         delegate: folderComponent
         header: headerComponent
         footerPositioning: ListView.OverlayFooter
-        footer: footerComponent
+        footer: fakeFooterComponent
         ScrollBar.vertical: ScrollBar {}
     }
 
@@ -154,80 +146,116 @@ Item {
         FolderRow {
             id: folderItem
 
-            anchors {
-                right: parent.right
-                left: parent.left
-            }
-
             onFocusActivated: {
                 backupsListView.positionViewAtIndex(index, ListView.Center)
             }
         }
     }
 
+    // This component must be used to reserve space for the footer in the ListView
+    // but the real footer is defined in the footerItem. This is neccessary because
+    // there is a bug in Qt that causes the footer is not visible if the ListView
+    // is empty, the clip property is enabled and the footerPositioning is ListView.OverlayFooter
+    // https://bugreports.qt.io/browse/QTBUG-85302
     Component {
-        id: footerComponent
+        id: fakeFooterComponent
 
         Rectangle {
-            id: footerRectangle
-
             anchors {
                 left: parent.left
                 right: parent.right
+                bottom: borderRectangle.bottom
             }
             height: headerFooterHeight
             radius: tableRadius
-            color: Styles.pageBackground
-            z: 2
+            color: "transparent"
+        }
+    }
 
-            TextButton {
-                id: addFoldersButton
+    Rectangle {
+        id: footerItem
 
-                anchors {
-                    left: parent.left
-                    verticalCenter: parent.verticalCenter
-                    leftMargin: 20
-                }
-                text: OnboardingStrings.addFolder
-                sizes: SmallSizes { borderLess: true }
-                icons {
-                    source: Images.plus
-                    position: Icon.Position.LEFT
-                }
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: borderRectangle.bottom
+            bottomMargin: borderRectangle.border.width
+            leftMargin: borderRectangle.border.width
+            rightMargin: 10
+        }
+        height: headerFooterHeight - 2 * borderRectangle.border.width
+        radius: tableRadius
+        color: Styles.pageBackground
+        z: 2
 
-                onClicked: {
-                    folderDialog.openFolderSelector();
-                }
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: false
+            cursorShape: Qt.ArrowCursor
+            onClicked: {
+                mouse.accepted = false;
+            }
+        }
+
+        TextButton {
+            id: addFoldersButton
+
+            anchors {
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+                leftMargin: 20
+            }
+            text: OnboardingStrings.addFolder
+            sizes: SmallSizes { borderLess: true }
+            icons {
+                source: Images.plus
+                position: Icon.Position.LEFT
             }
 
-            Rectangle {
-                id: topLine
-
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                }
-                height: borderRectangle.border.width
-                color: borderRectangle.border.color
+            onClicked: {
+                folderDialog.openFolderSelector();
             }
+        }
 
-            ChooseLocalFolder {
-                id: folderDialog
+        ChooseLocalFolder {
+            id: folderDialog
+        }
+
+        Connections {
+            id: chooseLocalFolderConnection
+
+            target: folderDialog
+
+            function onFolderChoosen(folderPath) {
+                backupsModelAccess.insert(folderPath);
             }
+        }
 
-            Connections {
-                id: chooseLocalFolderConnection
+    } // Rectangle: footerItem
 
-                target: folderDialog
 
-                function onFolderChoosen(folderPath) {
-                    backupsModelAccess.insert(folderPath);
-                }
-            }
+    Rectangle {
+        id: topLine
 
-        } // Rectangle: footerRectangle
+        anchors {
+            top: footerItem.top
+            left: parent.left
+            right: parent.right
+        }
+        height: borderRectangle.border.width
+        color: borderRectangle.border.color
+        z: 2
+    }
 
-    } // Component: footerComponent
+    Rectangle {
+        id: borderRectangle
+
+        anchors.fill: parent
+        color: "transparent"
+        border.color: Styles.borderStrong
+        border.width: 1
+        radius: tableRadius
+        z: 4
+    }
 
 }

@@ -42,6 +42,7 @@ StackViewPage {
         TwoFA {
             id: twoFAItem
 
+            Layout.fillWidth: true
             focus: true
         }
     }

@@ -75,6 +75,7 @@ CardButton {
                     weight: Font.Bold
                 }
                 text: title
+                wrapMode: Text.Wrap
             }
 
             Texts.Text {
@@ -91,6 +92,7 @@ CardButton {
                 lineHeight: textLineHeight
                 lineHeightMode: Text.FixedHeight
                 text: description
+                wrapMode: Text.Wrap
             }
         }
 

@@ -4117,11 +4117,6 @@ Wprowadź inną nazwę.</translation>
         <translation>Nazwy dłuższe niż 32 znaki nie są obsługiwane</translation>
     </message>
     <message>
-        <source>Authentication failed</source>
-        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
-        <translation>Uwierzytelnianie nie powiodło się</translation>
-    </message>
-    <message>
         <source>Incorrect 2FA code</source>
         <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
         <translation>Kod 2FA niepoprawny</translation>
@@ -4130,6 +4125,11 @@ Wprowadź inną nazwę.</translation>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
         <translation>Twoja kopia zapasowa została skonfigurowana, a wybrane dane będą automatycznie tworzone przy każdym uruchomieniu aplikacji komputerowej. Kopie zapasowe i ich statusy można przeglądać w zakładce Kopia zapasowa w Ustawieniach.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>Ponów</translation>
     </message>
 </context>
 <context>

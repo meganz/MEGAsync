@@ -1,7 +1,5 @@
 import QtQuick 2.15
 
-import Onboarding 1.0
-
 ResumePageForm {
     id: root
 
@@ -43,7 +41,6 @@ ResumePageForm {
         target: onboardingWindow
 
         function onInitializePageFocus() {
-            syncButton.checked = true;
             syncButton.forceActiveFocus();
         }
     }
