@@ -21,6 +21,11 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QString learnMoretext = tr("[A]Learn more[/A]");
+    learnMoretext.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.io/installs-apps/desktop-syncing/sync-v2\" \n   style=\"text-decoration: none\">"));
+    learnMoretext.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
+
+    ui->LearnMoreLabel->setText(learnMoretext);
 #ifndef Q_OS_MACOS
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);

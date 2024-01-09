@@ -499,24 +499,26 @@ void NameConflict::onActionClicked(int actionId)
             {
                 if(isFile)
                 {
-                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>");
+                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]");
                 }
                 else
                 {
-                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>");
+                    msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]");
                 }
             }
             else
             {
                 if(isFile)
                 {
-                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.<br>You will be able to retrieve the file from there.</br>");
+                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]");
                 }
                 else
                 {
-                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.<br>You will be able to retrieve the folder from there.</br>");
+                    msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]");
                 }
             }
+            msgInfo.informativeText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("<br>"));
+            msgInfo.informativeText.replace(QString::fromUtf8("[/BR]"), QString::fromUtf8("</br>"));
 
             msgInfo.finishFunc = [this, issueData, handle, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
             {
