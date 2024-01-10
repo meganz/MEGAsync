@@ -94,7 +94,7 @@ Item {
 
             anchors {
                 fill: parent
-                margins: contentMargin
+                margins: selectRoot.contentMargin
             }
 
             Row {

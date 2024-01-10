@@ -1,11 +1,12 @@
 import QtQuick 2.15
 
 import BackupsModel 1.0
+import BackupsProxyModel 1.0
 
 ConfirmFoldersPageForm {
     id: root
 
-    required property var backupsProxyModelRef
+    required property BackupsProxyModel backupsProxyModelRef
 
     signal confirmFoldersMoveToSelect
     signal confirmFoldersMoveToFinal(bool success)
