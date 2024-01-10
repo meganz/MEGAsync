@@ -1058,7 +1058,7 @@
     <message>
         <source>Cannot perform deletion [B]%1[/B]</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync), [B] is for Bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1233,14 +1233,14 @@
 <context>
     <name>CloudNodeUndecryptedHeader</name>
     <message>
-        <source>Clode node undecrypted [B]%1[/B]</source>
+        <source>Cloude node undecrypted [B]%1[/B]</source>
         <translatorcomment>Title for the header widget sync stall thatoccurs when the node being synced cannot be decrypted.[B] is for bold.SNC-2565</translatorcomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Decryption process could not be completed. Reload your account on [A]Support[/A].</source>
-        <translatorcomment>Subtitle for the header widget sync stall thatoccurs when the node being synced cannot be decrypted, [A] will be replaced by support linkSNC-2565</translatorcomment>
-        <translation></translation>
+        <source>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</source>
+        <translatorcomment>Subtitle for the header widget sync stall thatoccurs when the node being synced cannot be decrypted, [A] will be replaced by Mega link, [A1] will be replaced by support link. SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
