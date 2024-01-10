@@ -1,6 +1,4 @@
 import QtQuick 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15
 
 import common 1.0
 
@@ -15,7 +13,7 @@ Rectangle {
 
     color: colorStyle.surface1
 
-    Footer {
+    FooterButtons {
         id: footerButtonsItem
     }
 }

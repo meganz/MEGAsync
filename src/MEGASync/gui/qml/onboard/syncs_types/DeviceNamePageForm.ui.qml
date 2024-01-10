@@ -6,10 +6,11 @@ import common 1.0
 
 import components.textFields 1.0
 import components.images 1.0
+import components.pages 1.0
 
 import onboard 1.0
 
-SyncsPage {
+FooterButtonsPage {
     id: root
 
     property alias deviceNameTextField: deviceNameTextFieldComp
@@ -26,7 +27,7 @@ SyncsPage {
         }
         spacing: 12
 
-        Header {
+        HeaderTexts {
             id: headerItem
 
             Layout.preferredWidth: parent.width

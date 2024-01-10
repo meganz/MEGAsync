@@ -1,4 +1,4 @@
 module components.pages
-Header 1.0 Header.qml
-Footer 1.0 Footer.qml
-SyncsPage 1.0 SyncsPage.qml
+HeaderTexts 1.0 HeaderTexts.qml
+FooterButtons 1.0 FooterButtons.qml
+FooterButtonsPage 1.0 FooterButtonsPage.qml

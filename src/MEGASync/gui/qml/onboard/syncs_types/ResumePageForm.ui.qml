@@ -7,10 +7,11 @@ import common 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0
+import components.pages 1.0
 
 import onboard 1.0
 
-SyncsPage {
+FooterButtonsPage {
     id: root
 
     readonly property string stateFullSync: "FULL"

@@ -6,8 +6,7 @@ import common 1.0
 import components.buttons 1.0
 import components.textFields 1.0
 import components.texts 1.0 as Texts
-
-import onboard.syncs_types 1.0
+import components.pages 1.0
 
 import LoginController 1.0
 
@@ -29,7 +28,7 @@ StackViewPage {
         }
         spacing: contentSpacing
 
-        Header {
+        HeaderTexts {
             id: headerItem
 
             spacing: contentSpacing / 2

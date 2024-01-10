@@ -9,6 +9,7 @@
         <file>common/FontStyles.qml</file>
         <file>common/themes/light/Colors.qml</file>
         <file>common/themes/dark/Colors.qml</file>
+        <file>components/accountData/qmldir</file>
         <file>components/accountData/InfoAccount.qml</file>
         <file>components/busyIndicator/qmldir</file>
         <file>components/busyIndicator/BusyIndicator.qml</file>
@@ -41,9 +42,10 @@
         <file>components/images/SvgImage.qml</file>
         <file>components/scrollBars/qmldir</file>
         <file>components/scrollBars/ScrollBar.qml</file>
-        <file>components/pages/Footer.qml</file>
-        <file>components/pages/Header.qml</file>
-        <file>components/pages/SyncsPage.qml</file>
+        <file>components/pages/qmldir</file>
+        <file>components/pages/FooterButtons.qml</file>
+        <file>components/pages/HeaderTexts.qml</file>
+        <file>components/pages/FooterButtonsPage.qml</file>
         <file>components/progressBars/qmldir</file>
         <file>components/progressBars/HorizontalProgressBar.qml</file>
         <file>components/textFields/qmldir</file>

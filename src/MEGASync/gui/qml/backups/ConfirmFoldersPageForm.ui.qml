@@ -4,13 +4,12 @@ import QtQuick.Layouts 1.15
 import common 1.0
 
 import components.textFields 1.0
-
-import onboard.syncs_types 1.0
+import components.pages 1.0
 
 import BackupsModel 1.0
 import QmlDeviceName 1.0
 
-SyncsPage {
+FooterButtonsPage {
     id: root
 
     property alias enableConfirmHeader: confirmHeader.enabled
@@ -33,7 +32,7 @@ SyncsPage {
         }
         spacing: 24
 
-        Header {
+        HeaderTexts {
             id: confirmHeader
 
             title: BackupsStrings.confirmBackupFoldersTitle
