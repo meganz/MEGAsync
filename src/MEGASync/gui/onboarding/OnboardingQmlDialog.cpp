@@ -12,11 +12,6 @@ OnboardingQmlDialog::OnboardingQmlDialog(QWindow *parent)
     , mForceClose(false)
     , mCreatingAccount(false)
 {
-    connect(this, &OnboardingQmlDialog::requestPageFocus, this, &OnboardingQmlDialog::onRequestPageFocus, Qt::QueuedConnection);
-}
-
-OnboardingQmlDialog::~OnboardingQmlDialog()
-{
 }
 
 bool OnboardingQmlDialog::getCreatingAccount() const

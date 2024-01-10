@@ -7,6 +7,8 @@ QmlDialog::QmlDialog(QWindow *parent)
 {
     setFlags(flags() | Qt::Dialog);
     setIcon(QIcon(QString::fromUtf8("://images/app_ico.ico")));
+
+    connect(this, &QmlDialog::requestPageFocus, this, &QmlDialog::onRequestPageFocus, Qt::QueuedConnection);
 }
 
 bool QmlDialog::event(QEvent *evnt)
@@ -21,4 +23,9 @@ bool QmlDialog::event(QEvent *evnt)
     }
 
     return QQuickWindow::event(evnt);
+}
+
+void QmlDialog::onRequestPageFocus()
+{
+    emit initializePageFocus();
 }
