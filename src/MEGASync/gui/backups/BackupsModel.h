@@ -1,5 +1,5 @@
-#ifndef BACKUPFOLDERMODEL_H
-#define BACKUPFOLDERMODEL_H
+#ifndef BACKUPSMODEL_H
+#define BACKUPSMODEL_H
 
 #include "syncs/control/SyncController.h"
 #include "BackupsController.h"
@@ -210,4 +210,4 @@ private:
     BackupsModel* backupsModel();
 };
 
-#endif // BACKUPFOLDERMODEL_H
+#endif // BACKUPSMODEL_H

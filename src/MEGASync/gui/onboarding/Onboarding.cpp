@@ -3,13 +3,13 @@
 
 #include <QQmlEngine>
 #include "Syncs.h"
-#include "AccountInfoData.h"
+#include "qml/AccountInfoData.h"
 #include "ChooseFolder.h"
 #include "PasswordStrengthChecker.h"
 #include "QmlDeviceName.h"
 #include "AccountStatusController.h"
 #include "SettingsDialog.h"
-#include "BackupsModel.h"
+#include "backups/BackupsModel.h"
 #include "OnboardingQmlDialog.h"
 
 using namespace mega;
