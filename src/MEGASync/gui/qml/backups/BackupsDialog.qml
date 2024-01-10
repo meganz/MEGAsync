@@ -16,6 +16,7 @@ BackupsQmlDialog {
     maximumWidth: 496
     minimumHeight: 560
     minimumWidth: 496
+    iconSrc: Images.icoBackup
 
     Rectangle {
         id: backgroundRect
