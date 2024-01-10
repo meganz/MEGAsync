@@ -48,7 +48,7 @@ DeviceNamePageForm {
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onInitializePageFocus() {
             deviceNameTextField.forceActiveFocus();

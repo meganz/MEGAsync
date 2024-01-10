@@ -29,7 +29,7 @@ RowLayout {
 
         text: OnboardingStrings.skip
         onClicked: {
-            onboardingWindow.close();
+            window.close();
         }
     }
 

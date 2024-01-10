@@ -5,7 +5,7 @@ import common 1.0
 import BackupsQmlDialog 1.0
 
 BackupsQmlDialog {
-    id: backupsWindow
+    id: window
 
     title: BackupsStrings.setupBackups
     visible: true
@@ -37,11 +37,11 @@ BackupsQmlDialog {
         ignoreUnknownSignals: true
 
         function onBackupFlowMoveToBack() {
-            backupsWindow.close();
+            window.close();
         }
 
         function onBackupFlowMoveToFinal() {
-            backupsWindow.close();
+            window.close();
         }
     }
 }

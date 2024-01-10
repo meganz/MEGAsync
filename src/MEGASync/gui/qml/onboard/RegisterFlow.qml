@@ -200,14 +200,14 @@ Rectangle {
         target: loginControllerAccess
 
         function onAccountCreationCancelled() {
-            onboardingWindow.creatingAccount = false;
+            window.creatingAccount = false;
             cancelCreateAccount.close();
-            onboardingWindow.forceClose();
+            window.forceClose();
         }
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onClosingButLoggingIn() {
             cancelLogin.visible = true;

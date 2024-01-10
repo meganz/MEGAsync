@@ -210,7 +210,7 @@ Rectangle {
         target: logoutControllerAccess
 
         function onLogout() {
-            onboardingWindow.forceClose();
+            window.forceClose();
         }
     }
 

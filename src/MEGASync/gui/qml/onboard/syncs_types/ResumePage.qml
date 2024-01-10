@@ -33,12 +33,12 @@ ResumePageForm {
         }
 
         rightPrimary.onClicked: {
-            onboardingWindow.close();
+            window.close();
         }
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onInitializePageFocus() {
             syncButton.forceActiveFocus();

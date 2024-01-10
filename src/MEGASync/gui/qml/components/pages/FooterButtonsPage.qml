@@ -8,7 +8,7 @@ Rectangle {
     property alias footerButtons: footerButtonsItem
 
     function setInitialFocusPosition() {
-        //onboardingWindow.requestPageFocus();
+        window.requestPageFocus();
     }
 
     color: colorStyle.surface1

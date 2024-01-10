@@ -13,7 +13,7 @@ Item {
     readonly property int buttonsBottomMargin: 28
 
     function setInitialFocusPosition() {
-        onboardingWindow.requestPageFocus();
+        window.requestPageFocus();
     }
 
     Texts.Text {
