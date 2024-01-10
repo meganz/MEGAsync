@@ -8,8 +8,6 @@ import common 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
 
-import onboard 1.0
-
 import AccountInfoData 1.0
 
 Item {

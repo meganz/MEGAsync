@@ -9,6 +9,7 @@
         <file>common/FontStyles.qml</file>
         <file>common/themes/light/Colors.qml</file>
         <file>common/themes/dark/Colors.qml</file>
+        <file>components/accountData/InfoAccount.qml</file>
         <file>components/busyIndicator/qmldir</file>
         <file>components/busyIndicator/BusyIndicator.qml</file>
         <file>components/buttons/qmldir</file>
@@ -40,6 +41,9 @@
         <file>components/images/SvgImage.qml</file>
         <file>components/scrollBars/qmldir</file>
         <file>components/scrollBars/ScrollBar.qml</file>
+        <file>components/pages/Footer.qml</file>
+        <file>components/pages/Header.qml</file>
+        <file>components/pages/SyncsPage.qml</file>
         <file>components/progressBars/qmldir</file>
         <file>components/progressBars/HorizontalProgressBar.qml</file>
         <file>components/textFields/qmldir</file>
@@ -95,15 +99,11 @@
         <file>onboard/syncs_types/NavigationInfo.qml</file>
         <file>onboard/syncs_types/DeviceNamePage.qml</file>
         <file>onboard/syncs_types/DeviceNamePageForm.ui.qml</file>
-        <file>onboard/syncs_types/Footer.qml</file>
-        <file>onboard/syncs_types/Header.qml</file>
-        <file>onboard/syncs_types/InfoAccount.qml</file>
         <file>onboard/syncs_types/InstallationTypePage.qml</file>
         <file>onboard/syncs_types/InstallationTypePageForm.ui.qml</file>
         <file>onboard/syncs_types/ResumePage.qml</file>
         <file>onboard/syncs_types/ResumePageForm.ui.qml</file>
         <file>onboard/syncs_types/SyncsHorizontalButton.qml</file>
-        <file>onboard/syncs_types/SyncsPage.qml</file>
         <file>onboard/syncs_types/SyncsType.qml</file>
         <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
         <file>onboard/syncs_types/BackupsPage.qml</file>
