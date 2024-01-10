@@ -47,8 +47,8 @@ Item {
             id: selectBackupFoldersPage
 
             SelectFoldersPage {
-                footerButtons.leftSecondary.visible: isOnboarding
-                footerButtons.rightSecondary.text: isOnboarding ? OnboardingStrings.previous : OnboardingStrings.cancel
+                footerButtons.leftSecondary.text: OnboardingStrings.cancel
+                footerButtons.rightSecondary.visible: isOnboarding
             }
         }
 
