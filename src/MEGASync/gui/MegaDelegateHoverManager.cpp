@@ -1,6 +1,7 @@
 #include "MegaDelegateHoverManager.h"
 
 #include <QMouseEvent>
+#include <QChildEvent>
 #include <QApplication>
 
 MegaDelegateHoverManager::MegaDelegateHoverManager() : mView(nullptr)
@@ -24,7 +25,8 @@ bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
     {
         auto index = mView->indexAt(mouseEvent->pos());
 
-        if(mCurrentIndex.row() != index.row())
+        if(mCurrentIndex.row() != index.row()
+                || mCurrentIndex.parent() != index.parent())
         {
             sendEvent(QEvent::Leave);
             mCurrentIndex = index;
@@ -46,7 +48,16 @@ bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
         sendEvent(QEvent::Leave);
         mCurrentIndex = QModelIndex();
     }
-
+    else if(event->type() == QEvent::ChildAdded)
+    {
+        if(auto childEvent = dynamic_cast<QChildEvent*>(event))
+        {
+            if(auto editor = dynamic_cast<QWidget*>(childEvent->child()))
+            {
+                editor->setMouseTracking(true);
+            }
+        }
+    }
     return QObject::eventFilter(watched, event);
 }
 

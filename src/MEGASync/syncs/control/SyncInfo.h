@@ -39,6 +39,7 @@ class SyncInfo : public QObject, public mega::MegaListener
 
 signals:
     void syncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
+    void syncStatsUpdated(std::shared_ptr<::mega::MegaSyncStats>);
     void syncRemoved(std::shared_ptr<SyncSettings> syncSettings);
     void syncDisabledListUpdated();
 
@@ -55,6 +56,11 @@ private:
 
     QTimer mShowErrorTimer;
     int mLastError = mega::MegaSync::NO_SYNC_ERROR;
+
+public:
+    // Data for display in Settings dialog Syncs/Backups.
+    // Model data that needs to be kept even before the window is shown
+    std::map<::mega::MegaHandle, std::shared_ptr<::mega::MegaSyncStats>> mSyncStatsMap;
 
 protected:
     mutable QMutex syncMutex;
@@ -150,4 +156,5 @@ protected:
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncFileStateChanged(mega::MegaApi *, mega::MegaSync *, std::string *localPath, int newState) override;
+    void onSyncStatsUpdated(mega::MegaApi *api, mega::MegaSyncStats* syncStats);
 };

@@ -2943,7 +2943,40 @@ QToolButton
              </item>
             </layout>
            </widget>
-          </widget>
+           <widget class="QWidget" name="pStalledIssuesHeaderInfo">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <spacer name="horizontalSpacer_16">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="SomeIssuesOccurredMessage" name="stalledIssuesContainer" native="true"/>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_17">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+		  </widget>
          </item>
         </layout>
        </widget>
@@ -3270,6 +3303,12 @@ QToolButton
    <class>TransfersWidget</class>
    <extends>QWidget</extends>
    <header>TransfersWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SomeIssuesOccurredMessage</class>
+   <extends>QWidget</extends>
+   <header>SomeIssuesOccurredMessage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

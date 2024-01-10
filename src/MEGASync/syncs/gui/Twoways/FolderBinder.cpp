@@ -102,7 +102,6 @@ void FolderBinder::on_bLocalFolder_clicked()
     info.parent = this;
     info.canCreateDirectories= true;
     info.func = [this](QStringList selection){
-
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
@@ -122,6 +121,7 @@ void FolderBinder::onLocalFolderSet(const QString& path)
         ui->eLocalFolder->setText(nativePath);
 
         checkSelectedSides();
+        emit localPathSelected();
     }
 }
 

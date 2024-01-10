@@ -20,6 +20,7 @@ SyncSettings::SyncSettings(const SyncSettings& a) :
     mSyncID(a.getSyncID()),
     mMegaFolder(a.mMegaFolder)
 {
+    qRegisterMetaType<std::shared_ptr<SyncSettings>>("std::shared_ptr<SyncSettings>");
 }
 
 SyncSettings& SyncSettings::operator=(const SyncSettings& a)
@@ -142,11 +143,6 @@ QString SyncSettings::getLocalFolder(bool normalizeDisplay) const
     return normalizeDisplay ? toret.normalized(QString::NormalizationForm_C) : toret;
 }
 
-long long SyncSettings::getLocalFingerprint()  const
-{
-    return mSync->getLocalFingerprint();
-}
-
 QString SyncSettings::getMegaFolder()  const
 {
     if (mMegaFolder.isEmpty())
@@ -163,19 +159,40 @@ MegaHandle SyncSettings::getMegaHandle()  const
     return mSync->getMegaHandle();
 }
 
-bool SyncSettings::isEnabled()  const
-{
-    return getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING;
-}
-
 bool SyncSettings::isActive()  const
 {
-    return getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING;
+    return getSync()->getRunState() <= ::mega::MegaSync::RUNSTATE_RUNNING;
 }
 
 int SyncSettings::getError() const
 {
     return mSync->getError();
+}
+
+int SyncSettings::getWarning() const
+{
+    return mSync->getWarning();
+}
+
+QString SyncSettings::getRunStateAsString() const
+{
+    switch (mSync->getRunState())
+    {
+        case MegaSync::RUNSTATE_PENDING:   return QApplication::translate("Sync states", "Pending");
+        case MegaSync::RUNSTATE_LOADING:   return QApplication::translate("Sync states", "Loading");
+        case MegaSync::RUNSTATE_RUNNING:   return QApplication::translate("Sync states", "Running");
+        case MegaSync::RUNSTATE_PAUSED:    return QApplication::translate("Sync states", "Paused");
+        case MegaSync::RUNSTATE_SUSPENDED: return QApplication::translate("Sync states", "Suspended");
+        case MegaSync::RUNSTATE_DISABLED:  return QApplication::translate("Sync states", "Disabled");
+    }
+    return QApplication::translate("Sync states", "Unkown state");;
+}
+
+int SyncSettings::getRunState() const
+{
+    assert(mSync);
+
+    return mSync->getRunState();
 }
 
 MegaHandle SyncSettings::backupId() const

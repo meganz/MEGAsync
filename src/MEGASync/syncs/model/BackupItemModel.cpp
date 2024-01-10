@@ -1,6 +1,7 @@
 #include "Utilities.h"
 #include "syncs/model/BackupItemModel.h"
 #include "syncs/control/SyncController.h"
+#include "syncs/gui/SyncTooltipCreator.h"
 
 #include <QCoreApplication>
 #include <QIcon>
@@ -18,25 +19,28 @@ QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, i
     {
         switch(section)
         {
-        case Column::ENABLED:
-            if(role == Qt::ToolTipRole)
-                return tr("Sort by state");
-            break;
         case Column::LNAME:
             if(role == Qt::DisplayRole)
                 return tr("Local Folder");
             if(role == Qt::ToolTipRole)
                 return tr("Sort by name");
             break;
+        case Column::STATE:
+            if(role == Qt::DisplayRole)
+                return tr("State");
+            if(role == Qt::ToolTipRole)
+                return tr("Sort by backup state");
+            break;
         }
     }
-    return QVariant();
+    return SyncItemModel::headerData(section, orientation, role);
 }
 
 int BackupItemModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
 
+    //We don´t have downloads on backups
     return kColumns;
 }
 
@@ -52,7 +56,7 @@ void BackupItemModel::sendDataChanged(int row)
                      QVector<int>()<< Qt::CheckStateRole << Qt::DecorationRole << Qt::ToolTipRole);
 }
 
-QVariant BackupItemModel::data(const QModelIndex &index, int role) const
+QVariant BackupItemModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -64,44 +68,39 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
 
     switch(index.column())
     {
-    case Column::ENABLED:
-        if(role == Qt::CheckStateRole)
-            return sync->isEnabled() ? Qt::Checked : Qt::Unchecked;
-        break;
+        case Column::ENABLED:
+            if(role == Qt::ToolTipRole)
+            {
+                return sync->isActive() ? tr("Backup is enabled") : tr("Backup is disabled");
+            }
+            break;
     case Column::LNAME:
         if(role == Qt::DecorationRole)
         {
-            QIcon syncIcon;
-            if(sync->getError())
+            if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING
+                     || (sync->getRunState() == mega::MegaSync::RUNSTATE_LOADING || sync->getRunState() == mega::MegaSync::RUNSTATE_PENDING))
             {
-                syncIcon.addFile(QLatin1String(":/images/ic_sync_warning.png"), QSize(WARNING_ICON_SIZE, WARNING_ICON_SIZE), QIcon::Normal);
+                QIcon syncIcon;
+                syncIcon.addFile(QLatin1String(":/images/sync_states/backup.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                syncIcon.addFile(QLatin1String(":/images/sync_states/backup-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
+                return syncIcon;
             }
-            else
-            {
-                syncIcon.addFile(QLatin1String(":/images/icons/folder/folder-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
-                syncIcon.addFile(QLatin1String(":/images/icons/folder/folder-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
-            }
-            return syncIcon;
         }
         else if(role == Qt::DisplayRole)
         {
             return SyncController::getSyncNameFromPath(sync->getLocalFolder(true));
         }
-        break;
-    case Column::MENU:
-
-        if(role == Qt::DecorationRole)
+        else if(role == Qt::ToolTipRole)
         {
-            QIcon dotsMenu;
-            dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
-            dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-press.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
-            dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Active);
-            return dotsMenu;
+            QString toolTip;
+            toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
+            return toolTip;
         }
-        else if(role == Qt::TextAlignmentRole)
-            return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter);
         break;
+    case Column::DOWNLOADS:
+            return QVariant();
+            break;
     }
-    return QVariant();
+    return SyncItemModel::data(index,role);
 }
 

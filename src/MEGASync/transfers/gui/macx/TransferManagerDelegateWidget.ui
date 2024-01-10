@@ -396,10 +396,10 @@ QProgressBar::chunk
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="QLabel" name="lTransferName">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>

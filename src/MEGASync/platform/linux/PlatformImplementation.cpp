@@ -41,7 +41,7 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
     }
 }
 
-void PlatformImplementation::notifySyncFileChange(std::string *localPath, int newState)
+void PlatformImplementation::notifySyncFileChange(std::string *localPath, int newState, bool)
 {
     if(localPath && localPath->size())
     {

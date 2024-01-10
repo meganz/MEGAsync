@@ -38,7 +38,7 @@ public:
     virtual void prepareForSync();
     virtual bool enableTrayIcon(QString executable);
     virtual void notifyItemChange(const QString& localPath, int newState) = 0;
-    virtual void notifySyncFileChange(std::string *localPath, int newState) = 0;
+    virtual void notifySyncFileChange(std::string *localPath, int newState, bool stringIsPlatformEncoded) = 0;
     virtual bool startOnStartup(bool value) = 0;
     virtual bool isStartOnStartupActive() = 0;
     virtual bool isTilingWindowManager();

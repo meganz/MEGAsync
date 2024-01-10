@@ -100,7 +100,7 @@ void LinuxSignalHandler(int signum)
 #endif
 
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
-    {       
+    {
         switch (type)
         {
             case QtInfoMsg:

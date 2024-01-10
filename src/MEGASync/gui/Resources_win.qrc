@@ -869,6 +869,42 @@
         <file>images/chevron-up-ico.png</file>
         <file>images/chevron-up-ico@2x.png</file>
         <file>images/chevron-up-ico@3x.png</file>
+        <file>images/StalledIssues/ico_menu_full.png</file>
+        <file>images/StalledIssues/ico_menu_full@2x.png</file>
+        <file>images/StalledIssues/ico_menu_full@3x.png</file>
+        <file>images/StalledIssues/alert-circle-small-outline.png</file>
+        <file>images/StalledIssues/alert-circle-small-outline@2x.png</file>
+        <file>images/StalledIssues/alert-circle-small-outline@3x.png</file>
+        <file>images/StalledIssues/alert-circle-small-solid.png</file>
+        <file>images/StalledIssues/alert-circle-small-solid@2x.png</file>
+        <file>images/StalledIssues/alert-circle-small-solid@3x.png</file>
+        <file>images/StalledIssues/edit-small-outline.png</file>
+        <file>images/StalledIssues/edit-small-outline@2x.png</file>
+        <file>images/StalledIssues/edit-small-outline@3x.png</file>
+        <file>images/StalledIssues/edit-small-solid.png</file>
+        <file>images/StalledIssues/edit-small-solid@2x.png</file>
+        <file>images/StalledIssues/edit-small-solid@3x.png</file>
+        <file>images/StalledIssues/folder-small-outline.png</file>
+        <file>images/StalledIssues/folder-small-outline@2x.png</file>
+        <file>images/StalledIssues/folder-small-outline@3x.png</file>
+        <file>images/StalledIssues/folder-small-solid.png</file>
+        <file>images/StalledIssues/folder-small-solid@2x.png</file>
+        <file>images/StalledIssues/folder-small-solid@3x.png</file>
+        <file>images/StalledIssues/more-circle-small-outline.png</file>
+        <file>images/StalledIssues/more-circle-small-outline@2x.png</file>
+        <file>images/StalledIssues/more-circle-small-outline@3x.png</file>
+        <file>images/StalledIssues/more-circle-small-solid.png</file>
+        <file>images/StalledIssues/more-circle-small-solid@2x.png</file>
+        <file>images/StalledIssues/more-circle-small-solid@3x.png</file>
+        <file>images/StalledIssues/options_ico_rest.png</file>
+        <file>images/StalledIssues/options_ico_rest@2x.png</file>
+        <file>images/StalledIssues/options_ico_rest@3x.png</file>
+        <file>images/StalledIssues/ic-open-outside.png</file>
+        <file>images/StalledIssues/ic-open-outside@2x.png</file>
+        <file>images/StalledIssues/ic-open-outside@3x.png</file>
+        <file>images/StalledIssues/help-circle.png</file>
+        <file>images/StalledIssues/help-circle@2x.png</file>
+        <file>images/StalledIssues/help-circle@3x.png</file>
         <file>images/transfer_manager/context_menu/cancel_transfer_ico.png</file>
         <file>images/transfer_manager/context_menu/cancel_transfer_ico@2x.png</file>
         <file>images/transfer_manager/context_menu/cancel_transfer_ico@3x.png</file>
@@ -1168,6 +1204,42 @@
         <file>images/node_selector/icon_small_user.png</file>
         <file>images/node_selector/icon_small_user@2x.png</file>
         <file>images/node_selector/icon_small_user@3x.png</file>
+        <file>images/StalledIssues/alert_circle_small_default.png</file>
+        <file>images/StalledIssues/alert_circle_small_default@2x.png</file>
+        <file>images/StalledIssues/alert_circle_small_default@3x.png</file>
+        <file>images/StalledIssues/tree_link_default.png</file>
+        <file>images/StalledIssues/tree_link_default@2x.png</file>
+        <file>images/StalledIssues/tree_link_default@3x.png</file>
+        <file>images/StalledIssues/tree_link_end_default.png</file>
+        <file>images/StalledIssues/tree_link_end_default@2x.png</file>
+        <file>images/StalledIssues/tree_link_end_default@3x.png</file>
+        <file>images/StalledIssues/tree_end_default.png</file>
+        <file>images/StalledIssues/tree_end_default@2x.png</file>
+        <file>images/StalledIssues/tree_end_default@3x.png</file>
+        <file>images/StalledIssues/check_default.png</file>
+        <file>images/StalledIssues/check_default@2x.png</file>
+        <file>images/StalledIssues/check_default@3x.png</file>
+        <file>images/StalledIssues/cloud_default.png</file>
+        <file>images/StalledIssues/cloud_default@2x.png</file>
+        <file>images/StalledIssues/cloud_default@3x.png</file>
+        <file>images/StalledIssues/folder_orange_default.png</file>
+        <file>images/StalledIssues/folder_orange_default@2x.png</file>
+        <file>images/StalledIssues/folder_orange_default@3x.png</file>
+        <file>images/StalledIssues/monitor_default.png</file>
+        <file>images/StalledIssues/monitor_default@2x.png</file>
+        <file>images/StalledIssues/monitor_default@3x.png</file>
+        <file>images/StalledIssues/remove_default.png</file>
+        <file>images/StalledIssues/remove_default@2x.png</file>
+        <file>images/StalledIssues/remove_default@3x.png</file>
+        <file>images/StalledIssues/rename_node_default.png</file>
+        <file>images/StalledIssues/rename_node_default@2x.png</file>
+        <file>images/StalledIssues/rename_node_default@3x.png</file>
+        <file>images/StalledIssues/folder_error_default.png</file>
+        <file>images/StalledIssues/folder_error_default@2x.png</file>
+        <file>images/StalledIssues/folder_error_default@3x.png</file>
+        <file>images/StalledIssues/tree_double_link_default.png</file>
+        <file>images/StalledIssues/tree_double_link_default@2x.png</file>
+        <file>images/StalledIssues/tree_double_link_default@3x.png</file>
         <file>images/account_details/available_storage.png</file>
         <file>images/account_details/available_storage@2x.png</file>
         <file>images/account_details/available_storage@3x.png</file>
@@ -1340,6 +1412,96 @@
         <file>images/icons/folder/small-folder-outgoing-disabled.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@2x.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@3x.png</file>
+        <file>images/sync_context_menu/edit-small.png</file>
+        <file>images/sync_context_menu/edit-small@2x.png</file>
+        <file>images/sync_context_menu/edit-small@3x.png</file>
+        <file>images/sync_context_menu/folder-small.png</file>
+        <file>images/sync_context_menu/folder-small@2x.png</file>
+        <file>images/sync_context_menu/folder-small@3x.png</file>
+        <file>images/sync_context_menu/MEGA-small.png</file>
+        <file>images/sync_context_menu/MEGA-small@2x.png</file>
+        <file>images/sync_context_menu/MEGA-small@3x.png</file>
+        <file>images/sync_context_menu/minus-circle.png</file>
+        <file>images/sync_context_menu/minus-circle@2x.png</file>
+        <file>images/sync_context_menu/minus-circle@3x.png</file>
+        <file>images/sync_context_menu/search-dark-small.png</file>
+        <file>images/sync_context_menu/search-dark-small@2x.png</file>
+        <file>images/sync_context_menu/search-dark-small@3x.png</file>
+        <file>images/sync_context_menu/search-small.png</file>
+        <file>images/sync_context_menu/search-small@2x.png</file>
+        <file>images/sync_context_menu/search-small@3x.png</file>
+        <file>images/backup_ico_black_default@3x.png</file>
+        <file>images/backup_ico_black_default@2x.png</file>
+        <file>images/backup_ico_black_default.png</file>
+        <file>images/sync_states/pause-circle.png</file>
+        <file>images/sync_states/pause-circle@2x.png</file>
+        <file>images/sync_states/pause-circle@3x.png</file>
+        <file>images/sync_states/x-circle.png</file>
+        <file>images/sync_states/x-circle@2x.png</file>
+        <file>images/sync_states/x-circle@3x.png</file>
+        <file>images/sync_states/backup.png</file>
+        <file>images/sync_states/backup@2x.png</file>
+        <file>images/sync_states/backup@3x.png</file>
+        <file>images/sync_states/backup-selected.png</file>
+        <file>images/sync_states/backup-selected@2x.png</file>
+        <file>images/sync_states/backup-selected@3x.png</file>
+        <file>images/sync_states/hand.png</file>
+        <file>images/sync_states/hand@2x.png</file>
+        <file>images/sync_states/hand@3x.png</file>
+        <file>images/sync_states/hand-selected.png</file>
+        <file>images/sync_states/hand-selected@2x.png</file>
+        <file>images/sync_states/hand-selected@3x.png</file>
+        <file>images/sync_states/pause-circle-selected.png</file>
+        <file>images/sync_states/pause-circle-selected@2x.png</file>
+        <file>images/sync_states/pause-circle-selected@3x.png</file>
+        <file>images/sync_states/sync-running.png</file>
+        <file>images/sync_states/sync-running@2x.png</file>
+        <file>images/sync_states/sync-running@3x.png</file>
+        <file>images/sync_states/sync-running-selected.png</file>
+        <file>images/sync_states/sync-running-selected@2x.png</file>
+        <file>images/sync_states/sync-running-selected@3x.png</file>
+        <file>images/sync_states/x-circle-selected.png</file>
+        <file>images/sync_states/x-circle-selected@2x.png</file>
+        <file>images/sync_states/x-circle-selected@3x.png</file>
+        <file>images/sync_context_menu/play-circle.png</file>
+        <file>images/sync_context_menu/play-circle@2x.png</file>
+        <file>images/sync_context_menu/play-circle@3x.png</file>
+        <file>images/sync_states/x-circle-error.png</file>
+        <file>images/sync_states/x-circle-error@2x.png</file>
+        <file>images/sync_states/x-circle-error@3x.png</file>
+        <file>images/sync_states/hand-error.png</file>
+        <file>images/sync_states/hand-error@2x.png</file>
+        <file>images/sync_states/hand-error@3x.png</file>
+        <file>images/StalledIssues/advanced-mode.png</file>
+        <file>images/StalledIssues/advanced-mode@2x.png</file>
+        <file>images/StalledIssues/advanced-mode@3x.png</file>
+        <file>images/StalledIssues/smart-mode.png</file>
+        <file>images/StalledIssues/smart-mode@2x.png</file>
+        <file>images/StalledIssues/smart-mode@3x.png</file>
+        <file>images/StalledIssues/solve-issues-button.png</file>
+        <file>images/StalledIssues/solve-issues-button@2x.png</file>
+        <file>images/StalledIssues/solve-issues-button@3x.png</file>
+        <file>images/StalledIssues/solved-issues-outline.png</file>
+        <file>images/StalledIssues/solved-issues-outline@2x.png</file>
+        <file>images/StalledIssues/solved-issues-outline@3x.png</file>
+        <file>images/StalledIssues/solved-issues-solid.png</file>
+        <file>images/StalledIssues/solved-issues-solid@2x.png</file>
+        <file>images/StalledIssues/solved-issues-solid@3x.png</file>
+        <file>images/StalledIssues/help-circle-link.png</file>
+        <file>images/StalledIssues/help-circle-link@2x.png</file>
+        <file>images/StalledIssues/help-circle-link@3x.png</file>
+        <file>images/StalledIssues/help-stalled-issues.png</file>
+        <file>images/StalledIssues/help-stalled-issues@2x.png</file>
+        <file>images/StalledIssues/help-stalled-issues@3x.png</file>
+        <file>images/StalledIssues/settings-stalled-issues.png</file>
+        <file>images/StalledIssues/settings-stalled-issues@2x.png</file>
+        <file>images/StalledIssues/settings-stalled-issues@3x.png</file>
+        <file>images/sync_context_menu/slash-circle.png</file>
+        <file>images/sync_context_menu/slash-circle@2x.png</file>
+        <file>images/sync_context_menu/slash-circle@3x.png</file>
+        <file>images/StalledIssues/rotate_cw_default.png</file>
+        <file>images/StalledIssues/rotate_cw_default@2x.png</file>
+        <file>images/StalledIssues/rotate_cw_default@3x.png</file>
         <file>fonts/Inter-Black.ttf</file>
         <file>fonts/Inter-Bold.ttf</file>
         <file>fonts/Inter-ExtraBold.ttf</file>
@@ -1349,5 +1511,8 @@
         <file>fonts/Inter-Regular.ttf</file>
         <file>fonts/Inter-SemiBold.ttf</file>
         <file>fonts/Inter-Thin.ttf</file>
+        <file>images/copy.png</file>
+        <file>images/copy@2x.png</file>
+        <file>images/copy@3x.png</file>
     </qresource>
 </RCC>

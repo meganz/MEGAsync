@@ -210,9 +210,9 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
     notifyItemChange(path, mShellNotifier);
 }
 
-void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
+void PlatformImplementation::notifySyncFileChange(std::string *localPath, int, bool stringIsPlatformEncoded)
 {
-    QString path = getPreparedPath(localPath);
+    QString path = getPreparedPath(localPath, stringIsPlatformEncoded);
     notifyItemChange(path, mSyncFileNotifier);
 }
 
@@ -412,7 +412,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
             }
 
             if (path)
-            {                
+            {
                 bool found = false;
 
                 swprintf_s(subKeyPath, MAX_PATH, L"Software\\Classes\\CLSID\\%s\\Instance\\InitPropertyBag", uuid);
@@ -1428,8 +1428,14 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
-QString PlatformImplementation::getPreparedPath(std::string *localPath)
+QString PlatformImplementation::getPreparedPath(std::string *localPath, bool stringIsPlatformEncoded)
 {
+    if (!stringIsPlatformEncoded)
+    {
+        return QString::fromUtf8(localPath->c_str());
+    }
+
+
     // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.
     QString preparedPath = QString::fromWCharArray(reinterpret_cast<const wchar_t *>(localPath->data()),
                                                    static_cast<int>(localPath->size() / (sizeof(wchar_t)

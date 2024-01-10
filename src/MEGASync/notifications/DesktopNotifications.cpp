@@ -611,9 +611,7 @@ void DesktopNotifications::redirectToUpgrade(MegaNotification::Action activation
 {
     if (checkIfActionIsValid(activationButton))
     {
-        QString url = QString::fromUtf8("mega://#pro");
-        Utilities::getPROurlWithParameters(url);
-        Utilities::openUrl(QUrl(url));
+        Utilities::upgradeClicked();
     }
 }
 

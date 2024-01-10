@@ -26,10 +26,6 @@ namespace Ui {
 class TransferManagerDragBackDrop;
 }
 
-#include <QObject>
-#include <QPushButton>
-#include <QEvent>
-
 class TransferManager : public QDialog
 {
     Q_OBJECT
@@ -109,6 +105,7 @@ private:
     QuotaState mTransferQuotaState;
     bool hasOverQuotaErrors();
 
+    bool mFoundStalledIssues;
     ButtonIconManager mButtonIconManager;
 
     void refreshStateStats();
@@ -148,6 +145,8 @@ private slots:
     void on_bPause_toggled();
     void pauseResumeTransfers(bool isPaused);
 
+    void onStalledIssuesStateChanged();
+    void checkContentInfo();
     void on_bOpenLinks_clicked();
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
@@ -173,6 +172,7 @@ private slots:
 
     void refreshSpeed();
     void refreshView();
+    void disableTransferManager(bool state);
 
     void updateTransferWidget(QWidget* widgetToShow);
     void onScanningAnimationUpdate();

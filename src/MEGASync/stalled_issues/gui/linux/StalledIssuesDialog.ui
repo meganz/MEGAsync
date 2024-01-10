@@ -1,0 +1,1461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StalledIssuesDialog</class>
+ <widget class="QDialog" name="StalledIssuesDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Stalled Issues</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#StalledIssuesDialog
+{
+   background-color: #FFFFFF;
+   border-radius: 12px;
+}
+
+#stalledIssuesList
+{
+   border:none;
+   background-color: transparent;
+}
+
+#footer
+{
+    background-color: #F7F8F9;
+}
+
+#footer QPushButton
+{
+    font-family: Lato;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0, 0.15);
+}
+
+#doneButton
+{
+    background-color: #FCFCFC;
+    color: #333333;
+}
+
+#updateButton
+{
+min-height:32px;
+padding-left:12px;
+padding-right:12px;
+font-size:14px;
+font-weight: 400;
+border-radius:4px;
+background:#00BFA5;
+border: 1px solid rgba(0, 0, 0, 0.1);
+color:#FFFFFF;
+}
+
+#updateButton:disabled
+{
+background: rgba(0, 191, 165, 0.3);
+color:#FFFFFF;
+}
+
+#updateButton:hover
+{
+background: #00A787;
+color:#FFFFFF;
+}
+
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="styleSheet">
+      <string notr="true">#ModeSelector
+{
+background-color: #F3F4F4;
+}</string>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="View">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="header" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>88</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>88</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">#header
+{
+   background-color: #F7F8F9;
+}
+
+
+#title QLabel
+{
+  font-family: &quot;Poppins&quot;;
+  font-size:20px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #333333;
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>23</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>7</number>
+          </property>
+          <item>
+           <widget class="QWidget" name="title" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-color: none;
+    outline: none;
+    border: none;
+}</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>12</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>15</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="titleLabel">
+               <property name="text">
+                <string>Sync issues</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="HelpButton">
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normalon>:/images/StalledIssues/help-stalled-issues.png</normalon>
+                </iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="SettingsButton">
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../gui/Resources_linux.qrc">
+                 <normaloff>:/images/StalledIssues/settings-stalled-issues.png</normaloff>:/images/StalledIssues/settings-stalled-issues.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="categories" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>26</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>8</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="StalledIssueTab" name="allIssuesTab">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="title" stdset="0">
+                <string>All issues:</string>
+               </property>
+               <property name="filterCriterion" stdset="0">
+                <number>0</number>
+               </property>
+               <property name="iconPrefix" stdset="0">
+                <string notr="true">alert-circle-small</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="StalledIssueTab" name="nameConflictsTab">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="title" stdset="0">
+                <string>Name conflicts:</string>
+               </property>
+               <property name="filterCriterion" stdset="0">
+                <number>1</number>
+               </property>
+               <property name="iconPrefix" stdset="0">
+                <string notr="true">edit-small</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="StalledIssueTab" name="itemTypeTab">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="title" stdset="0">
+                <string>Item type conflicts:</string>
+               </property>
+               <property name="iconPrefix" stdset="0">
+                <string notr="true">folder-small</string>
+               </property>
+               <property name="filterCriterion" stdset="0">
+                <number>2</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="StalledIssueTab" name="otherTab">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="title" stdset="0">
+                <string>Other:</string>
+               </property>
+               <property name="iconPrefix" stdset="0">
+                <string notr="true">more-circle-small</string>
+               </property>
+               <property name="filterCriterion" stdset="0">
+                <number>3</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="StalledIssueTab" name="solvedIssuesTab">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="title" stdset="0">
+                <string>Solved:</string>
+               </property>
+               <property name="filterCriterion" stdset="0">
+                <UInt>4</UInt>
+               </property>
+               <property name="iconPrefix" stdset="0">
+                <string notr="true">solved-issues</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QStackedWidget" name="TreeViewContainer">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QStackedWidget
+{
+    border-top: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08); 
+    border-left: 0px;
+    border-right: 0px;
+}
+</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+         <property name="lineWidth">
+          <number>0</number>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="TreeViewContainerPage">
+          <property name="styleSheet">
+           <string notr="true">QScrollBar:vertical
+{
+    background: #f6f6f6;
+    width: 15px;
+    border-left: 1px solid #E4E4E4;
+}
+
+QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
+{
+    border: none;
+    background: none;
+    width:0px;
+    height:0px;
+}
+
+QScrollBar::handle:vertical
+{
+    background: #c0c0c0;
+    min-height: 20px;
+    border-radius: 4px;
+    margin: 3px 4px 3px 2px;
+}
+
+QMenu
+{
+    border: 1px solid #B8B8B8;
+   border-radius: 8px;
+    background: #ffffff;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+QMenu::item
+{
+   font-size: 14px;
+   color: #333333;
+   background: transparent; 
+   margin-top: 3px;
+   margin-bottom: 3px;
+   padding-left: 16px;
+   padding-right: 16px;
+   margin-left: 16px;
+   margin-right: 16px;
+}
+
+QMenu::item:selected
+{
+    font-weight: bold;  
+}
+
+QMenu::separator
+{
+    height: 1px;
+	width: 164px;
+	min-width: 164px;
+	max-width: 164px;
+    background-color: #EEEEEE;
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+QMenu::item:disabled
+{
+    background-color: #ffffff;
+    color: rgba(119,119,119,0.3);
+}
+
+QMenu::item:default
+{
+    color: #F46265;
+}</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="StalledIssuesView" name="stalledIssuesTree">
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgba(255, 255, 255,0);</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <property name="lineWidth">
+              <number>0</number>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QAbstractScrollArea::AdjustToContents</enum>
+             </property>
+             <property name="autoScroll">
+              <bool>false</bool>
+             </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>false</bool>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::ExtendedSelection</enum>
+             </property>
+             <property name="verticalScrollMode">
+              <enum>QAbstractItemView::ScrollPerPixel</enum>
+             </property>
+             <property name="indentation">
+              <number>0</number>
+             </property>
+             <property name="rootIsDecorated">
+              <bool>false</bool>
+             </property>
+             <property name="sortingEnabled">
+              <bool>true</bool>
+             </property>
+             <property name="expandsOnDoubleClick">
+              <bool>false</bool>
+             </property>
+             <attribute name="headerVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="headerCascadingSectionResizes">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="headerStretchLastSection">
+              <bool>true</bool>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="EmptyViewContainerPage">
+          <layout class="QGridLayout" name="gridLayout">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QToolButton" name="toolButton">
+             <property name="styleSheet">
+              <string notr="true">QToolButton
+{
+    border:none;
+}</string>
+             </property>
+             <property name="text">
+              <string notr="true">...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../gui/Resources_linux.qrc">
+               <normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>240</width>
+               <height>240</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="footer" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>18</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>18</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="updateButton">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>34</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Refresh</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>:/images/StalledIssues/rotate_cw_default.png</normaloff>:/images/StalledIssues/rotate_cw_default.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="doneButton">
+            <property name="minimumSize">
+             <size>
+              <width>64</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>64</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Close</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="ModeSelector">
+      <layout class="QVBoxLayout" name="verticalLayout_11">
+       <property name="topMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>20</number>
+       </property>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QWidget" name="TitleContainer" native="true">
+         <property name="styleSheet">
+          <string notr="true">#ModeTitle
+{
+  font-size:20px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #303233;
+}
+
+#ModeSubTitle
+{
+  font-size:14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #303233;
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <property name="spacing">
+           <number>20</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="ModeTitle">
+            <property name="text">
+             <string>Sync stall mode</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="ModeSubTitle">
+            <property name="text">
+             <string>Choose:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QWidget" name="Body" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QWidget" name="BodyContainer" native="true">
+            <property name="styleSheet">
+             <string notr="true">#Advance[SELECTED=true], #Smart[SELECTED=true] 
+{
+border: 2px solid #04101E;
+border-radius: 6px;
+background-color: white;
+}
+
+#Advance[SELECTED=false], #Smart[SELECTED=false] 
+{
+border: 2px solid white;
+border-radius: 6px;
+background-color: white;
+}</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="Container" native="true">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="spacing">
+                 <number>8</number>
+                </property>
+                <item>
+                 <widget class="QFrame" name="Smart">
+                  <property name="minimumSize">
+                   <size>
+                    <width>248</width>
+                    <height>184</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>248</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#SmartTitle
+{
+  font-size:16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #303233;
+}
+
+#SmartDescription
+{
+  font-size:12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: #616366;
+}
+</string>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_7">
+                   <property name="spacing">
+                    <number>4</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>24</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>24</number>
+                   </property>
+                   <item alignment="Qt::AlignHCenter">
+                    <widget class="QPushButton" name="SmartIcon">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>48</width>
+                       <height>48</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>48</width>
+                       <height>48</height>
+                      </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::NoFocus</enum>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">border: none;</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../../../gui/Resources_linux.qrc">
+                       <normaloff>:/images/StalledIssues/smart-mode.png</normaloff>
+                       <disabledoff>:/images/StalledIssues/smart-mode.png</disabledoff>
+                       <disabledon>:/images/StalledIssues/smart-mode.png</disabledon>:/images/StalledIssues/smart-mode.png</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>48</width>
+                       <height>48</height>
+                      </size>
+                     </property>
+                     <property name="autoDefault">
+                      <bool>false</bool>
+                     </property>
+                     <property name="flat">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_7">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Fixed</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="SmartTitle">
+                     <property name="text">
+                      <string>Smart mode</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item alignment="Qt::AlignTop">
+                    <widget class="QLabel" name="SmartDescription">
+                     <property name="text">
+                      <string>Let Mega solve sync issues
+automatically</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="Advance">
+                  <property name="minimumSize">
+                   <size>
+                    <width>248</width>
+                    <height>184</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>248</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#AdvanceTitle
+{
+  font-size:16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #303233;
+}
+
+#AdvanceDescription
+{
+  font-size:12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: #616366;
+}</string>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_6">
+                   <property name="spacing">
+                    <number>4</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>24</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>24</number>
+                   </property>
+                   <item alignment="Qt::AlignHCenter">
+                    <widget class="QPushButton" name="AdvanceIcon">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>48</width>
+                       <height>48</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>48</width>
+                       <height>48</height>
+                      </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::NoFocus</enum>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">border: none;</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../../../gui/Resources_linux.qrc">
+                       <normaloff>:/images/StalledIssues/advanced-mode.png</normaloff>
+                       <disabledoff>:/images/StalledIssues/advanced-mode.png</disabledoff>
+                       <disabledon>:/images/StalledIssues/advanced-mode.png</disabledon>:/images/StalledIssues/advanced-mode.png</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>48</width>
+                       <height>48</height>
+                      </size>
+                     </property>
+                     <property name="autoDefault">
+                      <bool>false</bool>
+                     </property>
+                     <property name="flat">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_6">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Fixed</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="AdvanceTitle">
+                     <property name="text">
+                      <string>Advanced mode</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item alignment="Qt::AlignTop">
+                    <widget class="QLabel" name="AdvanceDescription">
+                     <property name="text">
+                      <string>Get full control of the sync issues</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QWidget" name="ButtonsContainer" native="true">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <spacer name="horizontalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="SelectButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton
+{
+min-height:48px;
+padding-left:24px;
+padding-right:24px;
+font-size:16px;
+font-weight: 400;
+line-height: 24px;
+border-radius:4px;
+background:#00BFA5;
+border: 1px solid rgba(0, 0, 0, 0.1);
+color:#FFFFFF;
+}
+
+QPushButton:disabled
+{
+background: rgba(255, 255, 255, 0.3);
+color:#333333;
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>Solve issues</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normalon>:/images/StalledIssues/solve-issues-button.png</normalon>
+                   </iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_9">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QWidget" name="LearnMoreContainer" native="true">
+               <property name="styleSheet">
+                <string notr="true">#LearnMoreLabel
+{
+font-size:12px;
+line-height: 18px;
+font-weight: 400;
+color: #2C5BEB;
+
+}</string>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <spacer name="horizontalSpacer_7">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                 <widget class="QPushButton" name="LearnMoreIcon">
+                  <property name="minimumSize">
+                   <size>
+                    <width>16</width>
+                    <height>16</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16</width>
+                    <height>16</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normalon>:/images/StalledIssues/help-circle-link.png</normalon>
+                   </iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>16</width>
+                    <height>16</height>
+                   </size>
+                  </property>
+                  <property name="flat">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                 <widget class="QLabel" name="LearnMoreLabel">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="openExternalLinks">
+                   <bool>true</bool>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_8">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>StalledIssuesView</class>
+   <extends>QTreeView</extends>
+   <header>StalledIssuesView.h</header>
+  </customwidget>
+  <customwidget>
+   <class>StalledIssueTab</class>
+   <extends>QFrame</extends>
+   <header>StalledIssueTab.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+    <include location="../../../gui/Resources_linux.qrc"/>
+ </resources>
+ <connections/>
+</ui>

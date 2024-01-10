@@ -8,6 +8,8 @@ class PlatformStrings : QObject
 {
     Q_OBJECT
 public:
+    static QString movedFileToBin();
+    static QString bin();
     static QString fileExplorer();
     static QString exit();
 };

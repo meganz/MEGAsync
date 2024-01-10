@@ -126,6 +126,7 @@ include(syncs/syncs.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
 include(qtlockedfile/qtlockedfile.pri)
+include(stalled_issues/stalledissues.pri)
 
 unix:!macx {
     GCC_VERSION = $$system("g++ -dumpversion")
