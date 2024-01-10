@@ -348,7 +348,7 @@ void StalledIssueActionTitle::updateCRC(const QString& fp)
 
     if(rawValues)
     {
-        QString fpText = fp.isEmpty() ? tr("-") : fp;
+        QString fpText = fp.isEmpty() ? QLatin1String("-") : fp;
 
         auto& fpLabel = mUpdateLabels[AttributeType::CRC];
         if(!fpLabel)

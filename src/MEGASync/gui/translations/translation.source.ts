@@ -6798,10 +6798,6 @@ Do you want to delete it anyway?</translation>
         <translation></translation>
     </message>
     <message>
-        <source>-</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>CRC:</source>
         <translatorcomment>Label indicating fingerprint for the file causing sync stall. SNC-2565</translatorcomment>
         <translation></translation>
