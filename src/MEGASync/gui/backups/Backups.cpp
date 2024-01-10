@@ -1,12 +1,12 @@
 #include "Backups.h"
 
-#include "BackupsQmlDialog.h"
+#include "qml/QmlDialog.h"
 
 Backups::Backups(QObject *parent)
     : QMLComponent(parent)
 {
     qmlRegisterModule("Backups", 1, 0);
-    qmlRegisterType<BackupsQmlDialog>("BackupsQmlDialog", 1, 0, "BackupsQmlDialog");
+    qmlRegisterType<QmlDialog>("QmlDialog", 1, 0, "QmlDialog");
 }
 
 QUrl Backups::getQmlUrl()

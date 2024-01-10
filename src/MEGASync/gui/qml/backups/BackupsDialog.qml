@@ -2,9 +2,9 @@ import QtQuick 2.0
 
 import common 1.0
 
-import BackupsQmlDialog 1.0
+import QmlDialog 1.0
 
-BackupsQmlDialog {
+QmlDialog {
     id: window
 
     title: BackupsStrings.setupBackups

@@ -202,7 +202,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/GuestContent.h \
     $$PWD/SyncExclusions/SyncExclusions.h \
     $$PWD/SyncExclusions/ExclusionsQmlDialog.h \
-    $$PWD/onboarding/GuestContent.h \
     $$PWD/SyncExclusions/ExclusionRulesModel.h \
     $$PWD/backups/Backups.h \
     $$PWD/backups/BackupsQmlDialog.h
