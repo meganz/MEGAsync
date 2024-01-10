@@ -9,8 +9,6 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0
 
-import onboard 1.0
-
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 

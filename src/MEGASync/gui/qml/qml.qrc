@@ -106,6 +106,7 @@
         <file>onboard/syncs_types/SyncsPage.qml</file>
         <file>onboard/syncs_types/SyncsType.qml</file>
         <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
+        <file>onboard/syncs_types/BackupsPage.qml</file>
         <file>onboard/syncs_types/left_panel/qmldir</file>
         <file>onboard/syncs_types/left_panel/Step.qml</file>
         <file>onboard/syncs_types/left_panel/StepPanel.qml</file>

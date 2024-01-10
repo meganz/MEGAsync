@@ -2,7 +2,6 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 
 import onboard 1.0
-import onboard.syncs_types.left_panel 1.0
 
 import BackupsProxyModel 1.0
 

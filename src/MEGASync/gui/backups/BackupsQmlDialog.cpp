@@ -3,6 +3,5 @@
 BackupsQmlDialog::BackupsQmlDialog(QWindow *parent)
     : QmlDialog(parent)
 {
-    // TODO: set window icon
-    //setIcon();
+    setIcon(QIcon(QString::fromUtf8(":/images/icons/ico_backup.png")));
 }

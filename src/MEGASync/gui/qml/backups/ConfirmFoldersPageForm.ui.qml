@@ -5,7 +5,6 @@ import common 1.0
 
 import components.textFields 1.0
 
-import onboard 1.0
 import onboard.syncs_types 1.0
 
 import BackupsModel 1.0

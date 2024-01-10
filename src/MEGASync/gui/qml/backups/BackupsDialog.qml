@@ -7,7 +7,7 @@ import BackupsQmlDialog 1.0
 BackupsQmlDialog {
     id: backupsWindow
 
-    title: "Configure backups"//OnboardingStrings.setUpMEGA
+    title: BackupsStrings.setupBackups
     visible: true
     modality: Qt.NonModal
     width: 496
