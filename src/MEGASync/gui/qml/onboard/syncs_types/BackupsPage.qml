@@ -57,6 +57,9 @@ BackupsFlow {
                     stepPanelRef.state = stepPanelRef.step4Warning;
                 }
             }
+            else {
+                stepPanelRef.state = stepPanelRef.step4;
+            }
         }
     }
 }
