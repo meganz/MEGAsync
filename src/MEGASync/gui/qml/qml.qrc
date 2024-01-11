@@ -73,6 +73,7 @@
         <file>components/toolTips/ToolTip.qml</file>
         <file>components/views/qmldir</file>
         <file>components/views/ScrollPanel.qml</file>
+        <file>components/views/StackViewBase.qml</file>
         <file>components/dialogs/qmldir</file>
         <file>components/dialogs/ConfirmCloseDialog.qml</file>
         <file>onboard/qmldir</file>
@@ -96,7 +97,6 @@
         <file>onboard/PasswordInfoContent.qml</file>
         <file>onboard/PasswordInfoContentForm.ui.qml</file>
         <file>onboard/PasswordInfoPopUp.qml</file>
-        <file>onboard/StackViewBase.qml</file>
         <file>onboard/syncs_types/qmldir</file>
         <file>onboard/syncs_types/MainFlow.qml</file>
         <file>onboard/syncs_types/NavigationInfo.qml</file>
