@@ -31,7 +31,7 @@ FLAG_CARES=""
 FLAG_CURL=""
 FLAG_DISABLE_ZLIB=""
 
-while getopts ":efgiqzW" opt; do
+while getopts ":efgiLqzW" opt; do
     case $opt in
         L) 
             FLAG_SQLITE="-L"; 
