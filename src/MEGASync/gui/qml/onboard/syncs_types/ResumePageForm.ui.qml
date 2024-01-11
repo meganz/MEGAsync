@@ -32,7 +32,7 @@ FooterButtonsPage {
         leftSecondary.visible: false
         rightSecondary.text: OnboardingStrings.viewInSettings
         rightPrimary {
-            text: OnboardingStrings.done
+            text: Strings.done
             icons: Icon {}
         }
     }

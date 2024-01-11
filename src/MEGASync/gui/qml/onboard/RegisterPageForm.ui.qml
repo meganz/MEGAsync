@@ -74,7 +74,7 @@ StackViewPage {
                         && registerContentItem.password.validPassword
                         && registerContentItem.confirmPassword.text !== ""
                         && registerContentItem.termsCheckBox.checked
-            text: OnboardingStrings.next
+            text: Strings.next
             icons {
                 source: Images.arrowRight
                 busyIndicatorVisible: loginControllerAccess.state === LoginController.CREATING_ACCOUNT

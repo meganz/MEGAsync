@@ -5,6 +5,7 @@
         <file>common/Images.qml</file>
         <file>common/Links.qml</file>
         <file>common/RegexExpressions.qml</file>
+        <file>common/Strings.qml</file>
         <file>common/OS.qml</file>
         <file>common/FontStyles.qml</file>
         <file>common/themes/light/Colors.qml</file>

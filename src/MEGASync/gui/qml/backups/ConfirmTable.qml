@@ -8,8 +8,6 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.busyIndicator 1.0
 
-import onboard 1.0
-
 import BackupsProxyModel 1.0
 import BackupsModel 1.0
 

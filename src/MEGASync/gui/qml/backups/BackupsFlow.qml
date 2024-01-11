@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
+import common 1.0
+
 import onboard 1.0
 
 import BackupsProxyModel 1.0
@@ -47,7 +49,7 @@ Item {
             id: selectBackupFoldersPage
 
             SelectFoldersPage {
-                footerButtons.leftSecondary.text: OnboardingStrings.cancel
+                footerButtons.leftSecondary.text: Strings.cancel
                 footerButtons.rightSecondary.visible: isOnboarding
             }
         }

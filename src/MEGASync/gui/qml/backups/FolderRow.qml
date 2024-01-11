@@ -11,8 +11,6 @@ import components.buttons 1.0 as Buttons
 import components.textFields 1.0
 import components.busyIndicator 1.0
 
-import onboard 1.0
-
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
@@ -437,7 +435,7 @@ Item {
             Buttons.PrimaryButton {
                 id: doneButton
 
-                text: OnboardingStrings.done
+                text: Strings.done
                 sizes: Buttons.SmallSizes {}
 
                 onClicked: {

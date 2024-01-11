@@ -7,8 +7,6 @@ import components.texts 1.0 as Texts
 import components.textFields 1.0
 import components.buttons 1.0
 
-import onboard 1.0
-
 import QmlClipboard 1.0
 
 FocusScope {
@@ -131,8 +129,8 @@ FocusScope {
             Layout.leftMargin: digit1.sizes.focusBorderWidth
             Layout.preferredWidth: root.width - digit1.sizes.focusBorderWidth
             Layout.preferredHeight: notification.height
-            title: OnboardingStrings.incorrect2FACode
-            text: OnboardingStrings.tryAgain
+            title: Strings.incorrect2FACode
+            text: Strings.tryAgain
             type: Constants.MessageType.ERROR
             icon: Images.lock
             time: 2000
@@ -154,7 +152,7 @@ FocusScope {
             id: helpButtonItem
 
             Layout.leftMargin: -sizes.horizontalPadding
-            text: OnboardingStrings.twoFANeedHelp
+            text: Strings.twoFANeedHelp
             url: Links.recovery
             icons {
                 source: Images.helpCircle

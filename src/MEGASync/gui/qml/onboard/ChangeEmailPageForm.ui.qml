@@ -65,7 +65,7 @@ StackViewPage {
         OutlineButton {
             id: cancelButton
 
-            text: OnboardingStrings.cancel
+            text: Strings.cancel
         }
 
         PrimaryButton {

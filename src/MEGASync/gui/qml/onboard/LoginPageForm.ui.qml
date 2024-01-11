@@ -132,7 +132,7 @@ StackViewPage {
         PrimaryButton {
             id: loginButtonItem
 
-            text: loginControllerAccess.newAccount ? OnboardingStrings.next : OnboardingStrings.login
+            text: loginControllerAccess.newAccount ? Strings.next : OnboardingStrings.login
             progressValue: loginControllerAccess.progress
             icons.source: loginControllerAccess.newAccount ? Images.arrowRight : Images.none
             Layout.alignment: Qt.AlignRight

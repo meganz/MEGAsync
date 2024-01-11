@@ -6,8 +6,6 @@ import common 1.0
 
 import components.buttons 1.0
 
-import onboard 1.0
-
 RowLayout {
     id: root
 
@@ -27,7 +25,7 @@ RowLayout {
     OutlineButton {
         id: leftSecondaryComp
 
-        text: OnboardingStrings.skip
+        text: Strings.skip
         onClicked: {
             window.close();
         }
@@ -41,13 +39,13 @@ RowLayout {
         OutlineButton {
             id: rightSecondaryComp
 
-            text: OnboardingStrings.previous
+            text: Strings.previous
         }
 
         PrimaryButton {
             id: rightPrimaryComp
 
-            text: OnboardingStrings.next
+            text: Strings.next
             icons.source: Images.arrowRight
         }
     }
