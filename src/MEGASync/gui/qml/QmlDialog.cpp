@@ -17,8 +17,12 @@ void QmlDialog::setIconScr(const QString& iconScr)
     {
         source = source.mid(3);
     }
-    mIconScr = source;
-    setIcon(QIcon(mIconScr));
+
+    if(source != mIconScr)
+    {
+        mIconScr = source;
+        setIcon(QIcon(mIconScr));
+    }
 }
 
 bool QmlDialog::event(QEvent *evnt)

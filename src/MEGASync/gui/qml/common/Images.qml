@@ -10,7 +10,6 @@ QtObject {
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url imagesPath: Qt.resolvedUrl("../../images/")
-    readonly property url iconsPath: Qt.resolvedUrl(imagesPath + "icons/")
     readonly property url imagesQmlPath: Qt.resolvedUrl(imagesPath + "qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesQmlPath + "onboarding/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
@@ -19,8 +18,6 @@ QtObject {
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    readonly property url icoBackup: iconsPath + "ico_backup.png"
 
     readonly property url alertCircle: imagesQmlPath + "alert_circle.svg"
     readonly property url alertTriangle: imagesQmlPath + "alert_triangle.svg"

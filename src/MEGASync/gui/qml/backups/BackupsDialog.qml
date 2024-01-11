@@ -10,13 +10,12 @@ QmlDialog {
     title: BackupsStrings.setupBackups
     visible: true
     modality: Qt.NonModal
-    width: 496
+    width: 600
     height: 560
     maximumHeight: 560
-    maximumWidth: 496
+    maximumWidth: 600
     minimumHeight: 560
-    minimumWidth: 496
-    iconSrc: Images.icoBackup
+    minimumWidth: 600
 
     Rectangle {
         id: backgroundRect
