@@ -52,7 +52,7 @@ FooterButtonsPage {
                 id: deviceField
 
                 colors.text: colorStyle.textPlaceholder
-                Layout.preferredWidth: parent.width
+                Layout.preferredWidth: parent.width + 2 * deviceField.sizes.focusBorderWidth
                 Layout.leftMargin: -deviceField.sizes.focusBorderWidth
                 title: BackupsStrings.backupTo
                 leftIconSource: Images.database
