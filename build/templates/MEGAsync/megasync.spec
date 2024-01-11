@@ -157,6 +157,13 @@ BuildRequires: ffmpeg-mega
     %define flag_disablemediainfo %{nil}
 %endif
 
+#Build sqlite3?
+%define flag_sqlite3 %{nil}
+
+%if 0%{?centos_version} == 7
+    %define flag_sqlite3 -L
+%endif
+
 #Build cryptopp?
 %define flag_cryptopp %{nil}
 
