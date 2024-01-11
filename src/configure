@@ -9,7 +9,7 @@ display_help() {
     local app=$(basename "$0")
     echo ""
     echo "Usage:"
-    echo " $app [-e] [-f] [-g] [-q] [-z]"
+    echo " $app [-e] [-f] [-g] [-i] [-L] [-q] [-z] [-W]"
     echo ""
     echo "Configure MEGA SDK (creates config.h file)"
     echo ""

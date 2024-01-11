@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
-FSQLITE3 := $(shell cat /etc/issue | grep "Ubuntu 18\|Ubuntu 20.04\|Debian.* [789]|Debian.* 10" >/dev/null && echo "-L" || echo "")
+FSQLITE3 := $(shell cat /etc/issue | grep "Ubuntu 18\|Ubuntu 20.04\|Debian.* [789]\|Debian.* 10" >/dev/null && echo "-L" || echo "")
 FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 1[4-8]\|Ubuntu 19.04\|Debian.* [8]" >/dev/null && echo "" || echo "-q")
 DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Debian.* [789]" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
