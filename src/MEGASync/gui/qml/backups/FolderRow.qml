@@ -445,17 +445,6 @@ Item {
                 }
             }
 
-            /*
-            Connections {
-                target: onboardingWindow
-
-                function onLanguageChanged() {
-                    if (editTextField.hint.visible) {
-                        doneAction();
-                    }
-                }
-            }
-            */
         } // Row: editRow
 
     } // Component: editContent

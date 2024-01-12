@@ -103,7 +103,7 @@ public:
             QMegaMessageBox::critical(msgInfo);
         });
 
-        connect(mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, int syncErrorCode, const QString errorMsg, const QString localPath)
+        connect(mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, int syncErrorCode, const QString localPath)
         {
             const QString title = getErrorAddingTitle();
 
@@ -121,7 +121,7 @@ public:
                     onSavingSyncsCompleted(SAVING_FINISHED);
                     Text::Link link(QString::fromUtf8("https://mega.nz/contact"));
                     Text::Decorator dec(&link);
-                    QString msg = errorMsg;
+                    QString msg = SyncController::getErrorString(errorCode, syncErrorCode);
                     dec.process(msg);
 
                     QMegaMessageBox::MessageBoxInfo msgInfo;

@@ -64,8 +64,8 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
             this, &BackupsWizard::onDeviceNameSet);
     connect(mMyBackupsHandleRequest.get(), &UserAttributes::MyBackupsHandle::attributeReady,
             this, &BackupsWizard::onMyBackupsFolderHandleSet);
-    connect(&mSyncController, &SyncController::syncAddStatus,
-            this, &BackupsWizard::onSyncAddRequestStatus);
+    //connect(&mSyncController, &SyncController::syncAddStatus,
+    //        this, &BackupsWizard::onSyncAddRequestStatus);
     connect(mFoldersModel, &QStandardItemModel::itemChanged,
             this, &BackupsWizard::onItemChanged);
 

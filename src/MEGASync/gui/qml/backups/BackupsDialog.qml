@@ -40,8 +40,10 @@ QmlDialog {
             window.close();
         }
 
-        function onBackupFlowMoveToFinal() {
-            window.close();
+        function onBackupFlowMoveToFinal(success) {
+            if (success) {
+                window.close();
+            }
         }
     }
 }

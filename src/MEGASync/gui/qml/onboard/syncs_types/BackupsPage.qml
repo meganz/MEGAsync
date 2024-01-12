@@ -39,7 +39,7 @@ BackupsFlow {
         }
     }
 
-    onBackupFlowMoveToFinal: {
+    onBackupFlowMoveToFinal: (success) => {
         if(!success) {
             stepPanelRef.state = stepPanelRef.step4Error;
         }

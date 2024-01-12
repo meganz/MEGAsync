@@ -35,36 +35,26 @@ void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
 
 bool BackupsController::existsName(const QString& name) const
 {
-    auto foundIt = std::find_if(mBackupsToDoList.constBegin(), mBackupsToDoList.constEnd(),
-                                [&name](const QPair<QString, QString>& backupToDo){
+    auto foundIt = std::find_if(mBackupsToDoList.constBegin(),
+                                mBackupsToDoList.constEnd(),
+                                [&name](const QPair<QString, QString>& backupToDo)
+                                {
                                     return (backupToDo.first == name);
                                 });
 
     return foundIt != mBackupsToDoList.constEnd();
 }
 
-void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name)
+void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString name)
 {
-    Q_UNUSED(errorMsg)
-    Q_UNUSED(syncErrorCode)
-
     if(!existsName(name))
     {
         return;
     }
 
-    if(errorCode == mega::MegaError::API_OK)
+    emit backupFinished(mBackupsToDoList.first().first, errorCode, syncErrorCode);
+    if(errorCode != mega::MegaError::API_OK)
     {
-        emit backupFinished(mBackupsToDoList.first().first, true);
-    }
-    else
-    {
-        QString message = MegaSyncApp->getMegaApi()->isBusinessAccount()
-                            && !MegaSyncApp->getMegaApi()->isBusinessAccountActive()
-                          ? QCoreApplication::translate("MegaSyncError",
-                                mega::MegaSync::getMegaSyncErrorCode(mega::MegaSync::ACCOUNT_EXPIRED))
-                          : errorMsg;
-        emit backupFinished(mBackupsToDoList.first().first, false, message);
         mBackupsProcessedWithError++;
     }
 
@@ -78,4 +68,23 @@ void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCod
     {
         emit backupsCreationFinished(mBackupsProcessedWithError == 0);
     }
+}
+
+QString BackupsController::getErrorString(int errorCode, int syncErrorCode)
+{
+    QString errorMsg;
+    if(errorCode != mega::MegaError::API_OK)
+    {
+        if(MegaSyncApp->getMegaApi()->isBusinessAccount()
+            && !MegaSyncApp->getMegaApi()->isBusinessAccountActive())
+        {
+            errorMsg = QCoreApplication::translate("MegaSyncError",
+                                                   mega::MegaSync::getMegaSyncErrorCode(mega::MegaSync::ACCOUNT_EXPIRED));
+        }
+        else
+        {
+            errorMsg = SyncController::getErrorString(errorCode, syncErrorCode);
+        }
+    }
+    return errorMsg;
 }

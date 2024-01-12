@@ -18,10 +18,10 @@ public:
 
     QSet<QString> getRemoteFolders() const;
 
+    static QString getErrorString(int errorCode, int syncErrorCode);
+
 signals:
-    void backupFinished(const QString& folder,
-                        bool done,
-                        const QString& sdkError = QString());
+    void backupFinished(const QString& folder, int errorCode, int syncErrorCode);
     void backupsCreationFinished(bool success);
 
 private:
@@ -37,7 +37,7 @@ private:
     bool existsName(const QString& name) const;
 
 private slots:
-    void onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);
+    void onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString name);
 
 };
 

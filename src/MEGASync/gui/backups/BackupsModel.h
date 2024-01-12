@@ -25,7 +25,7 @@ public:
 
     // Back (without role)
     qint64 folderSize;
-    QString sdkError;
+    QPair<int, int> sdkError;
 
     BackupFolder();
 
@@ -137,7 +137,6 @@ signals:
     void newFolderAdded(int newFolderIndex);
 
 private:
-    const QString getFolderUnavailableErrorMsg();
     static int CHECK_DIRS_TIME;
 
     QList<BackupFolder*> mBackupFolderList;
@@ -147,11 +146,13 @@ private:
     SyncController mSyncController;
     std::unique_ptr<BackupsController> mBackupsController;
     int mConflictsSize;
-    QString mConflictsNotificationText;
     Qt::CheckState mCheckAllState;
     int mGlobalError;
     QTimer mCheckDirsTimer;
     bool mExistsOnlyGlobalError;
+    int mSdkCount;
+    int mRemoteCount;
+
     void populateDefaultDirectoryList();
     void checkSelectedAll();
     bool isLocalFolderSyncable(const QString& inputPath);
@@ -172,13 +173,13 @@ private:
     bool existsFolder(const QString& inputPath);
     void setGlobalError(BackupErrorCode error);
     void setTotalSizeReady(bool ready);
+    QString getSdkErrorString() const;
+    QString getSyncErrorString() const;
 
 private slots:
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
     void onBackupsCreationFinished(bool success);
-    void onBackupFinished(const QString& folder,
-                          bool done,
-                          const QString& sdkError = QString());
+    void onBackupFinished(const QString& folder, int errorCode, int syncErrorCode);
 
 };
 

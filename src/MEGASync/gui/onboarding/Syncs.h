@@ -46,7 +46,7 @@ private:
     bool helperCheckRemoteSync(const QString& path, QString& errorMessage) const;
 
 private slots:
-    void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);
+    void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
 };
 
