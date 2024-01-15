@@ -873,6 +873,12 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
     foreach(auto child, childrenItem)
     {
         auto index = child->property(INDEX_PROPERTY).toModelIndex();
+
+        mIndexesActionInfo.indexesToBeExpanded.append(qMakePair(child->getNode()->getHandle(), index));
+        mIndexesActionInfo.needsToBeSelected = true;
+        mIndexesActionInfo.needsToBeEntered = true;
+        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded,false);
+
         emit dataChanged(index, index);
     }
 }

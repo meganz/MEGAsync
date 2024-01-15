@@ -386,16 +386,11 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
             QModelIndex idx = ui->tMegaFolders->rootIndex();
             if(!idx.isValid())
             {
-                QModelIndex rootIdx = ui->tMegaFolders->rootIndex();
-                if(!rootIdx.isValid())
-                {
-                    rootIdx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
-                }
-                mProxyModel->setExpandMapped(true);
-                mProxyModel->addNode(std::move(newNode), rootIdx);
+                idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
             }
+
             mProxyModel->setExpandMapped(true);
-            mProxyModel->addNode(std::move(newNode), idx);
+            setRootIndex(getIndexFromHandle(mNewFolderAdded));
         }
     });
 }
