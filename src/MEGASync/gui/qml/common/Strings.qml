@@ -10,7 +10,5 @@ QtObject {
     readonly property string skip: qsTr("Skip")
     readonly property string previous: qsTr("Previous")
     readonly property string tryAgain: qsTr("Try again")
-    readonly property string incorrect2FACode: qsTr("Incorrect 2FA code")
-    readonly property string twoFANeedHelp: qsTr("Problem with two-factor authentication?")
 
 }
