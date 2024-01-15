@@ -10,26 +10,26 @@
 #include <QFileInfo>
 #include <QEvent>
 #include <QScrollBar>
-#include "qml/QmlDialogWrapper.h"
 
 #include "InfoDialog.h"
 #include "AccountDetailsDialog.h"
 #include "ui_InfoDialog.h"
-#include "control/Utilities.h"
 #include "GuiUtilities.h"
 #include "MegaApplication.h"
 #include "TransferManager.h"
 #include "MenuItemAction.h"
 #include "StalledIssuesModel.h"
-#include "platform/Platform.h"
 #include "assert.h"
-#include "syncs/gui/Backups/BackupsWizard.h"
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
-#include "syncs/gui/Twoways/BindFolderDialog.h"
-#include "onboarding/Onboarding.h"
+
+#include "control/Utilities.h"
+#include "platform/Platform.h"
+#include "qml/QmlDialogWrapper.h"
 #include "backups/Backups.h"
+#include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "syncs/gui/Backups/BackupsWizard.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -1031,12 +1031,6 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
 
 void InfoDialog::addBackup()
 {
-    if(DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>() == nullptr)
-    {
-        QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-        DialogOpener::addDialog(onboarding);
-    }
-
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
     {
         DialogOpener::showDialog(dialog->getDialog());

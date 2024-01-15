@@ -1,15 +1,16 @@
 #include "Onboarding.h"
-#include "MegaApplication.h"
 
 #include <QQmlEngine>
+
+#include "MegaApplication.h"
+
+#include "backups/Backups.h"
+
 #include "Syncs.h"
-#include "qml/AccountInfoData.h"
 #include "ChooseFolder.h"
 #include "PasswordStrengthChecker.h"
-#include "QmlDeviceName.h"
 #include "AccountStatusController.h"
 #include "SettingsDialog.h"
-#include "backups/BackupsModel.h"
 #include "OnboardingQmlDialog.h"
 
 using namespace mega;
@@ -18,22 +19,15 @@ Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
 {
     qmlRegisterModule("Onboarding", 1, 0);
-
-
-    qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
-
-    qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",
-                                             QString::fromUtf8("Cannot create WarningLevel in QML"));
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
     qmlRegisterType<AccountStatusController>("AccountStatusController", 1, 0, "AccountStatusController");
     qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
     qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker", 1, 0, "PasswordStrengthChecker");
-    qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
-    qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
     qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
-    qmlRegisterSingletonType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData", AccountInfoData::instance);
     qmlRegisterUncreatableType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog",
                                                QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
+
+    Backups::registerQmlModules();
 
     // Makes the Guest window transparent (macOS)
     QQuickWindow::setDefaultAlphaBuffer(true);

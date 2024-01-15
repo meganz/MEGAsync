@@ -16,6 +16,8 @@ public:
 
     QString contextName() override;
 
+    static void registerQmlModules();
+
 };
 
 #endif // BACKUPS_H
