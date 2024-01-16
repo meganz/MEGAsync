@@ -42,7 +42,7 @@ QmlDialog {
 
         function onBackupFlowMoveToFinal(success) {
             if (success) {
-                window.close();
+                window.accept();
             }
         }
     }

@@ -16,6 +16,8 @@ public:
     Q_INVOKABLE void setIconScr(const QString& iconScr);
 
 signals:
+    void accept();
+    void reject();
     void finished();
     void languageChanged();
     void accepted();

@@ -132,6 +132,14 @@ public:
                 reject();
             });
 
+            connect(mWindow, &QmlDialog::accept, this, [this](){
+                QmlDialogWrapperBase::accept();
+            });
+
+            connect(mWindow, &QmlDialog::reject, this, [this](){
+                QmlDialogWrapperBase::reject();
+            });
+
             connect(mWindow, &QQuickWindow::screenChanged, this, [this](){
                 QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
             });
