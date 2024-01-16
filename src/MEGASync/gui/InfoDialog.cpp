@@ -29,7 +29,6 @@
 #include "qml/QmlDialogWrapper.h"
 #include "backups/Backups.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
-#include "syncs/gui/Backups/BackupsWizard.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -89,7 +88,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncing (false),
     mTransferring (false),
     mTransferManager(nullptr),
-    mAddBackupDialog (nullptr),
     mAddSyncDialog (nullptr),
     mPreferences (Preferences::instance()),
     mSyncInfo (SyncInfo::instance()),
@@ -1031,58 +1029,31 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
 
 void InfoDialog::addBackup()
 {
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
-    {
-        DialogOpener::showDialog(dialog->getDialog());
-        return;
-    }
-
-    QPointer<QmlDialogWrapper<Backups>> backupsDialog = new QmlDialogWrapper<Backups>();
-    DialogOpener::showDialog(backupsDialog);
-
-/*
     auto overQuotaDialog = app->showSyncOverquotaDialog();
-
     auto addBackupLambda = [overQuotaDialog, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            bool showWizardIfNoBackups(SyncInfo::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP) == 0);
-            if(showWizardIfNoBackups)
+            if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
             {
-                auto backupsWizard = new BackupsWizard();
-                DialogOpener::showDialog<BackupsWizard>(backupsWizard);
+                DialogOpener::showDialog(dialog->getDialog());
             }
             else
             {
-                auto backupDialog = new AddBackupDialog();
-
-                setupSyncController();
-
-                DialogOpener::showDialog<AddBackupDialog>(backupDialog,[this, backupDialog]
-                {
-                    if(backupDialog && backupDialog->result() == QDialog::Accepted)
-                    {
-                        QString dirToBackup (backupDialog->getSelectedFolder());
-                        QString backupName (backupDialog->getBackupName());
-                        mSyncController->addBackup(dirToBackup, backupName);
-
-                        app->createAppMenus();
-                    }
-                });
+                QPointer<QmlDialogWrapper<Backups>> backupsDialog = new QmlDialogWrapper<Backups>();
+                DialogOpener::showDialog(backupsDialog);
             }
         }
     };
 
     if(overQuotaDialog)
     {
-        DialogOpener::showDialog(overQuotaDialog,addBackupLambda);
+        DialogOpener::showDialog(overQuotaDialog, addBackupLambda);
     }
     else
     {
         addBackupLambda();
     }
-*/
 }
 
 void InfoDialog::onOverlayClicked()
