@@ -383,14 +383,7 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
             //Set the focus to the view to allow the user to press enter (or go back, in a future feature)
             ui->tMegaFolders->setFocus();
 
-            QModelIndex idx = ui->tMegaFolders->rootIndex();
-            if(!idx.isValid())
-            {
-                idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
-            }
-
             mProxyModel->setExpandMapped(true);
-            setRootIndex(getIndexFromHandle(mNewFolderAdded));
         }
     });
 }

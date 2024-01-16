@@ -875,11 +875,14 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
         auto index = child->property(INDEX_PROPERTY).toModelIndex();
 
         mIndexesActionInfo.indexesToBeExpanded.append(qMakePair(child->getNode()->getHandle(), index));
+        emit dataChanged(index, index);
+    }
+
+    if (childrenItem.size() > 0)
+    {
         mIndexesActionInfo.needsToBeSelected = true;
         mIndexesActionInfo.needsToBeEntered = true;
-        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded,false);
-
-        emit dataChanged(index, index);
+        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, false);
     }
 }
 
