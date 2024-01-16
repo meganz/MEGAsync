@@ -880,8 +880,6 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
 
     if (!childrenItem.empty())
     {
-        mIndexesActionInfo.needsToBeSelected = true;
-        mIndexesActionInfo.needsToBeEntered = true;
         emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, false);
     }
 }

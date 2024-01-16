@@ -155,7 +155,8 @@ private:
     QList<mega::MegaHandle> mRemovedNodesByHandle;
     QList<mega::MegaHandle> mMovedNodesByHandle;
     QTimer mNodesUpdateTimer;
-    mega::MegaHandle mNewFolderAdded;
+    mega::MegaHandle mNewFolderHandle;
+    bool mNewFolderAdded;
 
     friend class DownloadType;
     friend class SyncType;

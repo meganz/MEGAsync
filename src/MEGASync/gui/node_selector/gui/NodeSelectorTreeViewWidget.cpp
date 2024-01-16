@@ -30,7 +30,8 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     mUiBlocked(false),
     mNodeHandleToSelect(INVALID_HANDLE),
     mSelectType(mode),
-    mNewFolderAdded(mega::INVALID_HANDLE)
+    mNewFolderHandle(mega::INVALID_HANDLE),
+    mNewFolderAdded(false)
 {
     ui->setupUi(this);
     setFocusProxy(ui->tMegaFolders);
@@ -283,8 +284,9 @@ void NodeSelectorTreeViewWidget::onExpandReady()
                     ui->tMegaFolders->scrollTo(proxyIndex, QAbstractItemView::ScrollHint::PositionAtCenter);
                 }
 
-                if(indexesAndSelected.needsToBeEntered)
+                if(indexesAndSelected.needsToBeEntered || mNewFolderAdded)
                 {
+                    mNewFolderAdded = false;
                     onItemDoubleClick(proxyIndex);
                 }
             }
@@ -382,8 +384,6 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
 
             //Set the focus to the view to allow the user to press enter (or go back, in a future feature)
             ui->tMegaFolders->setFocus();
-
-            mProxyModel->setExpandMapped(true);
         }
     });
 }
@@ -694,7 +694,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             mUpdatedNodesByPreviousHandle.append(updateNode);
         }
         //New node
-        else if(mNewFolderAdded != updateNode.node->getHandle())
+        else if(mNewFolderHandle != updateNode.node->getHandle())
         {
             if(newNodeCanBeAdded(updateNode.node.get()) &&
                 (!updateNode.node->isFile() || mModel->showFiles()))
