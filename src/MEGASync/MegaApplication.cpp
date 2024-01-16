@@ -2342,7 +2342,7 @@ void MegaApplication::raiseInfoDialog()
 void MegaApplication::raiseOnboardingDialog()
 {
     if(mStatusController->isAccountBlocked()
-        || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
+        || (mLoginController && mLoginController->getState() != LoginController::FETCH_NODES_FINISHED))
     {
         if (preferences->getSession().isEmpty())
         {
