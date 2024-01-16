@@ -878,7 +878,7 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
         emit dataChanged(index, index);
     }
 
-    if (childrenItem.size() > 0)
+    if (!childrenItem.empty())
     {
         mIndexesActionInfo.needsToBeSelected = true;
         mIndexesActionInfo.needsToBeEntered = true;
