@@ -5047,7 +5047,12 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         if (firstActiveSyncSetting != syncSettings.cend())
         {
             infoDialogTimer->stop();
-            infoDialog->hide();
+
+            if(infoDialog)
+            {
+                infoDialog->hide();
+            }
+
             QString localFolderPath = (*firstActiveSyncSetting)->getLocalFolder();
             if (!localFolderPath.isEmpty())
             {
