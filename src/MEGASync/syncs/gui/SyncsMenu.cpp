@@ -17,18 +17,50 @@ const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-linux_24.png");
 #endif
 
 // SyncsMenu ----------
+SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
+                     int itemIndent,
+                     const QIcon& iconMenu,
+                     QWidget *parent)
+    : QWidget(parent)
+    , mMenu (new QMenu(this))
+    , mLastHovered (nullptr)
+    , mType (type)
+    , mItemIndent (itemIndent)
+    , mMenuIcon(iconMenu)
+{
+    mAddAction = new MenuItemAction(QString(), QString(), mMenu);
+    mAddAction->setManagesHoverStates(true);
+    connect(mAddAction, &MenuItemAction::triggered,
+            this, &SyncsMenu::onAddSync);
+
+    mMenuAction = new MenuItemAction(QString(), QString(), mMenu);
+    mMenuAction->setManagesHoverStates(true);
+    mMenuAction->setIcon(mMenuIcon);
+
+    mMenu->setToolTipsVisible(true);
+
+    //Highlight menu entry on mouse over
+    connect(mMenu, &QMenu::hovered,
+            this, &SyncsMenu::highLightMenuEntry);
+    mMenu->installEventFilter(this);
+}
+
 SyncsMenu* SyncsMenu::newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled, QWidget* parent)
 {
     SyncsMenu* menu (nullptr);
 
     switch (type)
     {
-    case mega::MegaSync::TYPE_TWOWAY:
-        menu = new TwoWaySyncsMenu(parent);
-        break;
-    case mega::MegaSync::TYPE_BACKUP:
-        menu = new BackupSyncsMenu(parent);
-        break;
+        case mega::MegaSync::TYPE_TWOWAY:
+        {
+            menu = new TwoWaySyncsMenu(parent);
+            break;
+        }
+        case mega::MegaSync::TYPE_BACKUP:
+        {
+            menu = new BackupSyncsMenu(parent);
+            break;
+        }
     }
 
     if (menu)
@@ -60,40 +92,12 @@ void SyncsMenu::setEnabled(bool state)
     mAddAction->setEnabled(state);
 }
 
-SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
-                     int itemIndent,
-                     const QIcon& iconMenu,
-                     const QString& addActionText,
-                     const QString& menuActionText,
-                     QWidget *parent) :
-    QWidget(parent),
-    mMenu (new QMenu(this)),
-    mLastHovered (nullptr),
-    mType (type),
-    mItemIndent (itemIndent),
-    mMenuIcon(iconMenu),
-    mAddActionText(addActionText),
-    mMenuActionText(menuActionText)
+void SyncsMenu::initMenuTexts()
 {
-    mAddAction  = new MenuItemAction(QString(), QString(), mMenu);
-    mAddAction->setManagesHoverStates(true);
-    mAddAction->setLabelText(tr(mAddActionText.toUtf8().constData()));
-    connect(mAddAction, &MenuItemAction::triggered,
-            this, &SyncsMenu::onAddSync);
-
-    mMenuAction  = new MenuItemAction(QString(), QString(), mMenu);
-    mMenuAction->setManagesHoverStates(true);
-    mMenuAction->setLabelText(tr(mMenuActionText.toUtf8().constData()));
-    mMenuAction->setIcon(mMenuIcon);
-
-    const auto menuName (QString::fromLatin1("SyncsMenu - ").append(mMenuActionText));
+    mAddAction->setLabelText(getAddActionText());
+    mMenuAction->setLabelText(getMenuActionText());
+    const auto menuName (QString::fromLatin1("SyncsMenu - ").append(getMenuActionText()));
     Platform::getInstance()->initMenu(mMenu, menuName.toUtf8().constData());
-    mMenu->setToolTipsVisible(true);
-
-    //Highlight menu entry on mouse over
-    connect(mMenu, &QMenu::hovered,
-            this, &SyncsMenu::highLightMenuEntry);
-    mMenu->installEventFilter(this);
 }
 
 bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
@@ -109,8 +113,8 @@ bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
     }
     else if(obj == mMenu && e->type() == QEvent::LanguageChange)
     {
-        mMenuAction->setLabelText(tr(mMenuActionText.toUtf8().constData()));
-        mAddAction->setLabelText(tr(mAddActionText.toUtf8().constData()));
+        mMenuAction->setLabelText(getMenuActionText());
+        mAddAction->setLabelText(getAddActionText());
     }
     return QObject::eventFilter(obj, e);
 }
@@ -209,15 +213,13 @@ void SyncsMenu::highLightMenuEntry(QAction* action)
 }
 
 // TwoWaySyncsMenu ----
-TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent) :
-    SyncsMenu(mega::MegaSync::TYPE_TWOWAY, mTwoWaySyncItemIndent,
-              QIcon(QLatin1String("://images/icons/ico_sync.png")),
-              QLatin1String("Add Sync"),
-              QLatin1String("Syncs"),
-              parent)
+TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent)
+    : SyncsMenu(mega::MegaSync::TYPE_TWOWAY,
+                    mTwoWaySyncItemIndent,
+                    QIcon(QLatin1String("://images/icons/ico_sync.png")),
+                    parent)
 {
-    QT_TR_NOOP("Add Sync");
-    QT_TR_NOOP("Syncs");
+    initMenuTexts();
 }
 
 QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
@@ -226,19 +228,27 @@ QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSetting
            + SyncTooltipCreator::createForRemote(syncSetting->getMegaFolder());
 }
 
-// BackupSyncsMenu ----
-BackupSyncsMenu::BackupSyncsMenu(QWidget* parent) :
-    SyncsMenu(mega::MegaSync::TYPE_BACKUP, mBackupItemIndent,
-                QIcon(QLatin1String("://images/icons/ico_backup.png")),
-                QLatin1String("Add Backup"),
-                QLatin1String("Backups"),
-                parent),
-    mDevNameAction(nullptr),
-    mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName()),
-    mMyBackupsHandleRequest(UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
+QString TwoWaySyncsMenu::getMenuActionText() const
 {
-    QT_TR_NOOP("Add Backup");
-    QT_TR_NOOP("Backups");
+    return tr("Syncs");
+}
+
+QString TwoWaySyncsMenu::getAddActionText() const
+{
+    return tr("Add Sync");
+}
+
+// BackupSyncsMenu ----
+BackupSyncsMenu::BackupSyncsMenu(QWidget* parent)
+    : SyncsMenu(mega::MegaSync::TYPE_BACKUP,
+                    mBackupItemIndent,
+                    QIcon(QLatin1String("://images/icons/ico_backup.png")),
+                    parent)
+    , mDevNameAction(nullptr)
+    , mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName())
+    , mMyBackupsHandleRequest(UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
+{
+    initMenuTexts();
     connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
             this, &BackupSyncsMenu::onDeviceNameSet);
 }
@@ -287,4 +297,14 @@ void BackupSyncsMenu::refresh()
         menu->insertAction(firstBackup, mDevNameAction);
         onDeviceNameSet(mDeviceNameRequest->getDeviceName());
     }
+}
+
+QString BackupSyncsMenu::getMenuActionText() const
+{
+    return tr("Backups");
+}
+
+QString BackupSyncsMenu::getAddActionText() const
+{
+    return tr("Add Backup");
 }

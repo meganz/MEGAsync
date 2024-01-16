@@ -29,7 +29,7 @@ public:
     QPointer<MenuItemAction> getAction();
     void callMenu(const QPoint& p);
     void setEnabled(bool state);
-
+    void initMenuTexts();
 
 signals:
     void addSync(mega::MegaSync::SyncType type);
@@ -38,14 +38,15 @@ protected:
     explicit SyncsMenu(mega::MegaSync::SyncType type,
                        int itemIndent,
                        const QIcon& iconMenu,
-                       const QString& addActionText,
-                       const QString& menuActionText,
                        QWidget* parent);
     bool eventFilter(QObject* obj, QEvent* e) override;
     virtual QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const;
     virtual void refresh();
 
     QPointer<QMenu> getMenu();
+
+    virtual QString getMenuActionText() const = 0;
+    virtual QString getAddActionText() const = 0;
 
 private slots:
     void onAddSync();
@@ -60,8 +61,7 @@ private:
     mega::MegaSync::SyncType mType;
     int mItemIndent;
     QIcon mMenuIcon;
-    QString mAddActionText;
-    QString mMenuActionText;
+
 };
 
 class TwoWaySyncsMenu : public SyncsMenu
@@ -70,6 +70,10 @@ class TwoWaySyncsMenu : public SyncsMenu
 
 public:
     explicit TwoWaySyncsMenu(QWidget* parent);
+
+protected:
+    QString getMenuActionText() const;
+    QString getAddActionText() const;
 
 private:
     QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const override;
@@ -83,6 +87,10 @@ class BackupSyncsMenu : public SyncsMenu
 
 public:
     explicit BackupSyncsMenu(QWidget* parent);
+
+protected:
+    QString getMenuActionText() const;
+    QString getAddActionText() const;
 
 private slots:
     void onDeviceNameSet(QString name);
