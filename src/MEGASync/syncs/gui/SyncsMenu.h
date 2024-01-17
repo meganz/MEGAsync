@@ -72,8 +72,8 @@ public:
     explicit TwoWaySyncsMenu(QWidget* parent);
 
 protected:
-    QString getMenuActionText() const;
-    QString getAddActionText() const;
+    QString getMenuActionText() const override;
+    QString getAddActionText() const override;
 
 private:
     QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const override;
@@ -89,8 +89,8 @@ public:
     explicit BackupSyncsMenu(QWidget* parent);
 
 protected:
-    QString getMenuActionText() const;
-    QString getAddActionText() const;
+    QString getMenuActionText() const override;
+    QString getAddActionText() const override;
 
 private slots:
     void onDeviceNameSet(QString name);
