@@ -2342,7 +2342,7 @@ void MegaApplication::raiseInfoDialog()
 void MegaApplication::raiseOnboardingDialog()
 {
     if(mStatusController->isAccountBlocked()
-        || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
+        || (mLoginController && mLoginController->getState() != LoginController::FETCH_NODES_FINISHED))
     {
         if (preferences->getSession().isEmpty())
         {
@@ -5047,7 +5047,12 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         if (firstActiveSyncSetting != syncSettings.cend())
         {
             infoDialogTimer->stop();
-            infoDialog->hide();
+
+            if(infoDialog)
+            {
+                infoDialog->hide();
+            }
+
             QString localFolderPath = (*firstActiveSyncSetting)->getLocalFolder();
             if (!localFolderPath.isEmpty())
             {
