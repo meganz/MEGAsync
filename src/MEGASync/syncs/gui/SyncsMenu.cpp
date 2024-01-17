@@ -1,6 +1,5 @@
 #include "SyncsMenu.h"
 #include "Utilities.h"
-//#include "InfoDialog.h"
 #include "Preferences/Preferences.h"
 #include "syncs/control/SyncInfo.h"
 #include "Platform.h"
@@ -61,6 +60,10 @@ SyncsMenu* SyncsMenu::newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled
             menu = new BackupSyncsMenu(parent);
             break;
         }
+        default:
+        {
+            break;
+        }
     }
 
     if (menu)
@@ -90,14 +93,6 @@ void SyncsMenu::callMenu(const QPoint& p)
 void SyncsMenu::setEnabled(bool state)
 {
     mAddAction->setEnabled(state);
-}
-
-void SyncsMenu::initMenuTexts()
-{
-    mAddAction->setLabelText(getAddActionText());
-    mMenuAction->setLabelText(getMenuActionText());
-    const auto menuName (QString::fromLatin1("SyncsMenu - ").append(getMenuActionText()));
-    Platform::getInstance()->initMenu(mMenu, menuName.toUtf8().constData());
 }
 
 bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
@@ -219,7 +214,7 @@ TwoWaySyncsMenu::TwoWaySyncsMenu(QWidget* parent)
                     QIcon(QLatin1String("://images/icons/ico_sync.png")),
                     parent)
 {
-    initMenuTexts();
+    Platform::getInstance()->initMenu(mMenu, "SyncsMenu - Syncs");
 }
 
 QString TwoWaySyncsMenu::createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const
@@ -248,7 +243,8 @@ BackupSyncsMenu::BackupSyncsMenu(QWidget* parent)
     , mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName())
     , mMyBackupsHandleRequest(UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
 {
-    initMenuTexts();
+    Platform::getInstance()->initMenu(mMenu, "SyncsMenu - Backups");
+
     connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
             this, &BackupSyncsMenu::onDeviceNameSet);
 }
