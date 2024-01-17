@@ -89,6 +89,7 @@ void NodeSelectorTreeViewWidget::init()
     mSelectType->init(this);
 
     connect(mProxyModel.get(), &NodeSelectorProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
+    connect(mProxyModel.get(), &NodeSelectorProxyModel::modelSorted, this, &NodeSelectorTreeViewWidget::onProxyModelSorted);
     connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
     connect(mModel.get(), &QAbstractItemModel::rowsRemoved, this, &NodeSelectorTreeViewWidget::onRowsRemoved);
     connect(mModel.get(), &NodeSelectorModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
@@ -218,6 +219,15 @@ void NodeSelectorTreeViewWidget::onRowsRemoved()
     modelLoaded();
 }
 
+void NodeSelectorTreeViewWidget::onProxyModelSorted()
+{
+    if (mNewFolderAdded)
+    {
+        mNewFolderAdded = false;
+        onItemDoubleClick(mProxyModel->getIndexFromHandle(mNewFolderHandle));
+    }
+}
+
 void NodeSelectorTreeViewWidget::onExpandReady()
 {
     if(ui->tMegaFolders->model() == nullptr)
@@ -284,9 +294,8 @@ void NodeSelectorTreeViewWidget::onExpandReady()
                     ui->tMegaFolders->scrollTo(proxyIndex, QAbstractItemView::ScrollHint::PositionAtCenter);
                 }
 
-                if(indexesAndSelected.needsToBeEntered || mNewFolderAdded)
+                if(indexesAndSelected.needsToBeEntered)
                 {
-                    mNewFolderAdded = false;
                     onItemDoubleClick(proxyIndex);
                 }
             }
@@ -375,7 +384,8 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
         //2) The dialog has been rejected because the folder already exists. If so, select the existing folder
         if(newNode)
         {
-            mNewFolderAdded = newNode->getHandle();
+            mNewFolderHandle = newNode->getHandle();
+            mNewFolderAdded = true;
 #ifdef Q_OS_LINUX
             //It seems that the NodeSelector is not activated when the NewFolderDialog is closed,
             //so the ui->tMegaFolders is not correctly focused

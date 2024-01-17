@@ -318,6 +318,8 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
     }
     emit getMegaModel()->blockUi(false);
     mItemsToMap.clear();
+
+    emit modelSorted();
 }
 
 NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)

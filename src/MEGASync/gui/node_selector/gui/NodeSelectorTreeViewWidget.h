@@ -67,6 +67,7 @@ public slots:
     void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes);
     void onRowsInserted();
     void onRowsRemoved();
+    void onProxyModelSorted();
 
 signals:
     void okBtnClicked();
