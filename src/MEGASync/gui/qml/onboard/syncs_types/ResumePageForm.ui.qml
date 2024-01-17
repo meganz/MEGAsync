@@ -9,6 +9,8 @@ import components.images 1.0
 import components.buttons 1.0
 import components.pages 1.0
 
+import backups 1.0
+
 import onboard 1.0
 
 FooterButtonsPage {
@@ -30,7 +32,7 @@ FooterButtonsPage {
 
     footerButtons {
         leftSecondary.visible: false
-        rightSecondary.text: OnboardingStrings.viewInSettings
+        rightSecondary.text: Strings.viewInSettings
         rightPrimary {
             text: Strings.done
             icons: Icon {}
@@ -56,8 +58,8 @@ FooterButtonsPage {
         },
         State {
             name: stateBackup
-            PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepBackupTitle; }
-            PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
+            PropertyChanges { target: titleItem; text: BackupsStrings.finalStepBackupTitle; }
+            PropertyChanges { target: descriptionItem; text: BackupsStrings.finalStepBackup; }
             PropertyChanges {
                 target: syncButtonItem;
                 type: !fullSyncDone && !selectiveSyncDone

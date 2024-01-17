@@ -10,5 +10,6 @@ QtObject {
     readonly property string skip: qsTr("Skip")
     readonly property string previous: qsTr("Previous")
     readonly property string tryAgain: qsTr("Try again")
+    readonly property string viewInSettings: qsTr("View in Settings")
 
 }

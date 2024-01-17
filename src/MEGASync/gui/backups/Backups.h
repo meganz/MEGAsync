@@ -18,6 +18,8 @@ public:
 
     static void registerQmlModules();
 
+    Q_INVOKABLE void openBackupsTabInPreferences() const;
+
 };
 
 #endif // BACKUPS_H

@@ -29,7 +29,7 @@ ResumePageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            onboardingAccess.openPreferences(tabToOpen)
+            onboardingAccess.openPreferences(tabToOpen);
         }
 
         rightPrimary.onClicked: {

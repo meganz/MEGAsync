@@ -1,5 +1,7 @@
 #include "Backups.h"
 
+#include "MegaApplication.h"
+
 #include "qml/QmlDialog.h"
 #include "qml/AccountInfoData.h"
 
@@ -35,4 +37,9 @@ void Backups::registerQmlModules()
     qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
     qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",
                                              QString::fromUtf8("Cannot register BackupsModel::BackupErrorCode in QML"));
+}
+
+void Backups::openBackupsTabInPreferences() const
+{
+    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
 }

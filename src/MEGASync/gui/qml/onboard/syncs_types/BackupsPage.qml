@@ -33,8 +33,7 @@ BackupsFlow {
                 stepPanelRef.state = stepPanelRef.step4;
                 break;
             default:
-                console.warn("BackupsPage: state does not exist -> "
-                             + root.state);
+                console.warn("BackupsPage: state does not exist -> " + root.state);
                 break;
         }
     }
@@ -46,9 +45,12 @@ BackupsFlow {
     }
 
     Connections {
-        target: backupsModelAccess
+        id: backupsModelConnections
 
-        function onExistConflictsChanged() {
+        target: backupsModelAccess
+        ignoreUnknownSignals: true
+
+        function onGlobalErrorChanged() {
             if(backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE) {
                 if(backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
                     stepPanelRef.state = stepPanelRef.step4Error;
@@ -57,7 +59,7 @@ BackupsFlow {
                     stepPanelRef.state = stepPanelRef.step4Warning;
                 }
             }
-            else {
+            else if (root.state == root.confirmBackup) {
                 stepPanelRef.state = stepPanelRef.step4;
             }
         }

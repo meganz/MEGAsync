@@ -150,5 +150,8 @@
         <file>backups/SelectFoldersPage.qml</file>
         <file>backups/SelectFoldersPageForm.ui.qml</file>
         <file>backups/SelectTable.qml</file>
+        <file>backups/ResumePageForm.ui.qml</file>
+        <file>backups/ResumePage.qml</file>
+        <file>backups/BackupsPage.qml</file>
     </qresource>
 </RCC>

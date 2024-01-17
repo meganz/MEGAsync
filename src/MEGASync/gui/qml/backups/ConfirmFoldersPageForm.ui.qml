@@ -18,8 +18,7 @@ FooterButtonsPage {
         text: BackupsStrings.backUp
         icons.source: Images.database
         enabled: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.NONE
-                    || (backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
-                            && backupsModelAccess.existsOnlyGlobalError)
+                    || backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
     }
 
     ColumnLayout {

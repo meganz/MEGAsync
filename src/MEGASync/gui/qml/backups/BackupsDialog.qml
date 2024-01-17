@@ -2,6 +2,8 @@ import QtQuick 2.0
 
 import common 1.0
 
+import components.views 1.0
+
 import QmlDialog 1.0
 
 QmlDialog {
@@ -18,32 +20,55 @@ QmlDialog {
     minimumWidth: 600
 
     Rectangle {
-        id: backgroundRect
+        id: backupsContentItem
 
         anchors.fill: parent
         color: Styles.surface1
 
-        BackupsFlow {
-            id: backupsFlowItem
+        readonly property string backupsFlow: "backupsFlow"
+        readonly property string resume: "resume"
+
+        state: backupsFlow
+        states: [
+            State {
+                name: backupsContentItem.backupsFlow
+                StateChangeScript {
+                    script: stackView.replace(backupsFlowPage);
+                }
+            },
+            State {
+                name: backupsContentItem.resume
+                StateChangeScript {
+                    script: stackView.replace(resumePage);
+                }
+            }
+        ]
+
+        StackViewBase {
+            id: stackView
 
             anchors.fill: parent
             anchors.margins: 48
-        }
-    }
 
-    Connections {
-        target: backupsFlowItem
+            Component {
+                id: backupsFlowPage
 
-        ignoreUnknownSignals: true
+                BackupsPage {
+                    id: backupsFlowItem
 
-        function onBackupFlowMoveToBack() {
-            window.close();
-        }
+                    backupsContentItemRef: backupsContentItem
+                }
+            }
 
-        function onBackupFlowMoveToFinal(success) {
-            if (success) {
-                window.accept();
+            Component {
+                id: resumePage
+
+                ResumePage {
+                    id: resumePageItem
+                }
             }
         }
-    }
+
+    } // Rectangle: contentItem
+
 }

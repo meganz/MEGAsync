@@ -17,5 +17,7 @@ QtObject {
     readonly property string selectAll: qsTr("[B]Select all[/B]")
     readonly property string selectBackupFoldersTitle: qsTr("Select folders to back up")
     readonly property string selectBackupFoldersDescription: qsTr("Selected folders will automatically back up to the cloud when the desktop app is running.")
+    readonly property string finalStepBackup: qsTr("Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.")
+    readonly property string finalStepBackupTitle: qsTr("Your backup is set up")
 
 }

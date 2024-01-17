@@ -63,13 +63,10 @@ class BackupsModel : public QAbstractListModel
                NOTIFY checkAllStateChanged)
     Q_PROPERTY(QString conflictsNotificationText
                READ getConflictsNotificationText
-               NOTIFY existConflictsChanged)
+               NOTIFY globalErrorChanged)
     Q_PROPERTY(int globalError
                READ getGlobalError
                NOTIFY globalErrorChanged)
-    Q_PROPERTY(bool existsOnlyGlobalError
-               READ existsOnlyGlobalError
-               NOTIFY existsOnlyGlobalErrorChanged)
 
 public:
 
@@ -99,6 +96,7 @@ public:
 
     explicit BackupsModel(QObject* parent = nullptr);
     ~BackupsModel();
+
     QHash<int,QByteArray> roleNames() const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
@@ -111,7 +109,6 @@ public:
     bool getExistConflicts() const;
     QString getConflictsNotificationText() const;
     int getGlobalError() const;
-    bool existsOnlyGlobalError() const;
     int getRow(const QString& folder);
     void calculateFolderSizes();
     void updateSelectedAndTotalSize();
@@ -128,10 +125,8 @@ public slots:
 signals:
     void totalSizeChanged();
     void checkAllStateChanged();
-    void existConflictsChanged();
     void noneSelected();
     void globalErrorChanged();
-    void existsOnlyGlobalErrorChanged();
     void totalSizeReadyChanged();
     void backupsCreationFinished(bool succes);
     void newFolderAdded(int newFolderIndex);
@@ -149,7 +144,6 @@ private:
     Qt::CheckState mCheckAllState;
     int mGlobalError;
     QTimer mCheckDirsTimer;
-    bool mExistsOnlyGlobalError;
     int mSdkCount;
     int mRemoteCount;
 

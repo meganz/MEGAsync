@@ -349,11 +349,6 @@ int BackupsModel::getGlobalError() const
     return mGlobalError;
 }
 
-bool BackupsModel::existsOnlyGlobalError() const
-{
-    return mExistsOnlyGlobalError;
-}
-
 void BackupsModel::insert(const QString &folder)
 {
     QString inputPath(QDir::toNativeSeparators(QDir(folder).absolutePath()));
@@ -603,9 +598,6 @@ void BackupsModel::reviewConflicts()
                         + pathRelationCount
                         + unavailableCount;
 
-    mExistsOnlyGlobalError = mConflictsSize == 0;
-    emit existsOnlyGlobalErrorChanged();
-
     if(mSdkCount > 0)
     {
         setGlobalError(BackupErrorCode::SDK_CREATION);
@@ -630,7 +622,6 @@ void BackupsModel::reviewConflicts()
     {
         setGlobalError(BackupErrorCode::UNAVAILABLE_DIR);
     }
-    emit existConflictsChanged();
 }
 
 void BackupsModel::checkDuplicatedBackups(const QStringList& candidateList)
