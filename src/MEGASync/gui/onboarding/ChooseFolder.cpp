@@ -37,8 +37,10 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
     info.title = tr("Select local folder");
     info.defaultDir = openFromFolder;
     info.canCreateDirectories = true;
-    info.func = [this](QStringList selection){
-        if(!selection.isEmpty())
+
+    QPointer<const QObject> context = this;
+    info.func = [this, context](QStringList selection){
+        if(context && !selection.isEmpty())
         {
             QString fPath = selection.first();
             auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
@@ -113,9 +115,10 @@ void ChooseRemoteFolder::openFolderSelector()
         nodeSelector->setSelectedNodeHandle(node);
     }
 
-    DialogOpener::showDialog<SyncNodeSelector>(nodeSelector, [nodeSelector, this]()
+    QPointer<const QObject> context = this;
+    DialogOpener::showDialog<SyncNodeSelector>(nodeSelector, [nodeSelector, this, context]()
     {
-        if (nodeSelector->result() == QDialog::Accepted)
+        if (context && nodeSelector->result() == QDialog::Accepted)
         {
             mFolderHandle = nodeSelector->getSelectedNodeHandle();
             auto node = MegaSyncApp->getMegaApi()->getNodeByHandle(mFolderHandle);
