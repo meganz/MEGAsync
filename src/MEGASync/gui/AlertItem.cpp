@@ -324,7 +324,7 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                         .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
-                notificationContent = tr("[A] established you as a contact")
+                notificationContent = tr("[A] accepted your contact request")
                         .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:

@@ -1,6 +1,6 @@
 #include <platform/PowerOptions.h>
 
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "megaapi.h"
 
 #include <Windows.h>

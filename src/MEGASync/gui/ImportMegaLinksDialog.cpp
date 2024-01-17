@@ -1,13 +1,14 @@
 #include "ImportMegaLinksDialog.h"
 #include "ui_ImportMegaLinksDialog.h"
 #include "gui/ImportListWidgetItem.h"
-#include "gui/node_selector/gui/NodeSelector.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
 #include <MegaNodeNames.h>
 #include "Platform.h"
+#include "CommonMessages.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -22,7 +23,10 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
     ui(new Ui::ImportMegaLinksDialog),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mPreferences(Preferences::instance()),
-    mLinkProcessor(linkProcessor)
+    mLinkProcessor(linkProcessor),
+    mDownloadPathChangedByUser(false),
+    mUseDefaultImportPath(true),
+    mImportPathChangedByUser(false)
 {
     ui->setupUi(this);
 
@@ -46,22 +50,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
 
     ui->linkList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    QString defaultFolderPath;
-    QString downloadFolder = QDir::toNativeSeparators(mPreferences->downloadFolder());
-    QFileInfo test(downloadFolder);
-    if (!test.isDir())
-    {
-        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads")));
-        defaultFolder.mkpath(QString::fromLatin1("."));
-        defaultFolderPath = defaultFolder.absolutePath();
-        defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
-    }
-    else
-    {
-        defaultFolderPath = downloadFolder;
-    }
-
-    ui->eLocalFolder->setText(defaultFolderPath);
+    updateDownloadPath();
 
     if (mPreferences->logged())
     {
@@ -120,21 +109,28 @@ void ImportMegaLinksDialog::on_cImport_clicked()
 
 void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 {
-    QString defaultPath = ui->eLocalFolder->text().trimmed();
-    if (!defaultPath.size())
+    SelectorInfo info;
+
+    info.defaultDir = ui->eLocalFolder->text().trimmed();
+    if (!info.defaultDir.size())
     {
-        defaultPath = Utilities::getDefaultBasePath();
+        info.defaultDir = Utilities::getDefaultBasePath();
     }
 
-    defaultPath = QDir::toNativeSeparators(defaultPath);
-
-    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+    info.defaultDir = QDir::toNativeSeparators(info.defaultDir);
+    info.title = tr("Select local folder");
+    info.multiSelection = false;
+    info.parent = this;
+    info.canCreateDirectories = true;
+    info.func = [&](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
             onLocalFolderSet(fPath);
         }
-    });
+    };
+
+    Platform::getInstance()->folderSelector(info);
 }
 
 void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
@@ -160,6 +156,7 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
         else
         {
             ui->eLocalFolder->setText(nativePath);
+            mDownloadPathChangedByUser = true;
         }
     }
 }
@@ -183,7 +180,8 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
                 return;
             }
 
-            ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
+            mImportPathChangedByUser = true;
+            updateImportPath(QString::fromUtf8(fPath.get()));
         }
     });
 }
@@ -237,11 +235,32 @@ void ImportMegaLinksDialog::onLinkStateChanged(int id, int state)
     checkLinkValidAndSelected();
 }
 
-void ImportMegaLinksDialog::accept()
+void ImportMegaLinksDialog::on_bOk_clicked()
 {
+    if (ui->cDownload->isChecked() && !ui->eLocalFolder->text().isEmpty())
+    {
+        QDir dir(ui->eLocalFolder->text());
+        if (!dir.exists())
+        {
+            dir.mkpath(QLatin1String("."));
+        }
+
+        QString qFilePath = QDir::fromNativeSeparators(ui->eLocalFolder->text()); // QFile always wants `/` as separator
+        QTemporaryFile test(qFilePath + QDir::separator());
+        if (!test.open())
+        {
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("You don't have write permissions in this local folder.");
+            QMegaMessageBox::critical(msgInfo);
+            return;
+        }
+    }
+
     mPreferences->setImportMegaLinksEnabled(ui->cImport->isChecked());
     mPreferences->setDownloadMegaLinksEnabled(ui->cDownload->isChecked());
-    QDialog::accept();
+
+    accept();
 }
 
 void ImportMegaLinksDialog::changeEvent(QEvent *event)
@@ -249,6 +268,10 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+
+        updateDownloadPath();
+        updateImportPath();
+
         int totalImports = mLinkProcessor->getCurrentIndex();
         for (int i = 0; i < totalImports; i++)
             this->onLinkInfoAvailable(i);
@@ -281,6 +304,7 @@ void ImportMegaLinksDialog::initImportFolderControl()
         {
             ui->eMegaFolder->setText(QString::fromUtf8(importFolderPath));
             delete [] importFolderPath;
+            mUseDefaultImportPath = false;
         }
         else
         {
@@ -295,8 +319,9 @@ void ImportMegaLinksDialog::initImportFolderControl()
 
 void ImportMegaLinksDialog::setInvalidImportFolder()
 {
-    ui->eMegaFolder->setText(QString::fromUtf8("/MEGA Imports"));
     mPreferences->setImportFolder(mega::INVALID_HANDLE);
+    mUseDefaultImportPath = true;
+    updateImportPath();
 }
 
 void ImportMegaLinksDialog::enableOkButton() const
@@ -326,4 +351,34 @@ void ImportMegaLinksDialog::checkLinkValidAndSelected()
     enableOkButton();
     enableLocalFolder(enable && ui->cDownload->isChecked());
     enableMegaFolder(enable && ui->cImport->isChecked());
+}
+
+void ImportMegaLinksDialog::updateDownloadPath()
+{
+    if (!mDownloadPathChangedByUser)
+    {
+        QString downloadFolder = mPreferences->downloadFolder();
+        bool useDefaultDownloadPath = downloadFolder.isEmpty() || !QFileInfo::exists(downloadFolder);
+
+        if (useDefaultDownloadPath)
+        {
+            downloadFolder = Utilities::getDefaultBasePath() + QLatin1Char('/')
+                      + CommonMessages::getDefaultDownloadFolderName();
+        }
+        ui->eLocalFolder->setText(QDir::toNativeSeparators(downloadFolder));
+    }
+}
+
+void ImportMegaLinksDialog::updateImportPath(const QString& path)
+{
+    QString newPath (path);
+    if (!mImportPathChangedByUser && mUseDefaultImportPath)
+    {
+        newPath = QLatin1String("/") + CommonMessages::getDefaultImportFolderName();
+    }
+
+    if (!newPath.isEmpty())
+    {
+        ui->eMegaFolder->setText(newPath);
+    }
 }

@@ -59,8 +59,11 @@ public:
     bool makePubliclyReadable(const QString &fileName) override;
 
     void streamWithApp(const QString& app, const QString& url) override;
+    void processSymLinks() override;
 
     static void notify(const std::string& path);
+
+    void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);

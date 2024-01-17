@@ -144,12 +144,12 @@ void InfoDialogTransferDelegateWidget::setFileNameAndType()
 {
     mUi->lFileName->ensurePolished();
     mUi->lFileName->setText(getData()->mFilename);
-    mUi->lFileName->setToolTip(getData()->mFilename);
+    mUi->lFileName->setToolTip(getData()->mFilename.toHtmlEscaped());
     mUi->lFileName->adjustSize();
 
     mUi->lFileNameCompleted->ensurePolished();
     mUi->lFileNameCompleted->setText(getData()->mFilename);
-    mUi->lFileNameCompleted->setToolTip(getData()->mFilename);
+    mUi->lFileNameCompleted->setToolTip(getData()->mFilename.toHtmlEscaped());
     mUi->lFileNameCompleted->adjustSize();
 
     QIcon icon = Utilities::getExtensionPixmapMedium(getData()->mFilename);
@@ -359,7 +359,7 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
     }
 
     mUi->lElapsedTime->setStyleSheet(QLatin1String("color: #999999"));
-    mUi->lElapsedTime->setText(tr("Added [A]").replace(QLatin1String("[A]"), Utilities::getFinishedTimeString(finishedTime)));
+    mUi->lElapsedTime->setText(Utilities::getAddedTimeString(finishedTime));
 }
 
 QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const

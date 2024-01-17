@@ -307,6 +307,7 @@ public:
 
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
+    static QString getSizeStringLocalized(quint64 bytes);
     static int toNearestUnit(long long bytes);
     struct ProgressSize
     {
@@ -321,7 +322,7 @@ public:
     static QString createCompleteUsedString(long long usedData, long long totalData, int percentage);
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
-    static QString getFinishedTimeString(long long secs);
+    static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
@@ -432,8 +433,11 @@ public:
     };
 
     // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
+    // @param undelete Indicates a special request for a node that has been completely deleted
+    // (even from Rubbish Bin); allowed only for accounts with PRO level
     WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
-                mega::MegaNode* node = nullptr);
+                mega::MegaNode* node = nullptr,
+                bool undelete = false);
 
     // Destructor
     ~WrappedNode()
@@ -454,12 +458,19 @@ public:
         return mNode;
     }
 
+    bool getUndelete() const
+    {
+        return mUndelete;
+    }
+
 private:
     // Keep track of transfer origin
     WrappedNode::TransferOrigin  mTransfersFrom;
 
     // Wrapped MEGA node
     mega::MegaNode* mNode;
+
+    bool mUndelete;
 };
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)

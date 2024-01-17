@@ -1,7 +1,8 @@
 #include "LinkProcessor.h"
-#include "Utilities.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "MegaApplication.h"
+#include "CommonMessages.h"
+
 #include <QDir>
 #include <QDateTime>
 #include <QApplication>
@@ -242,7 +243,8 @@ void LinkProcessor::importLinks(QString megaPath)
         }
 
         mRequestCounter++;
-        megaApi->createFolder("MEGA Imports", rootNode.get(), delegateListener);
+        megaApi->createFolder(CommonMessages::getDefaultImportFolderName().toUtf8().constData(),
+                              rootNode.get(), delegateListener);
     }
 }
 
@@ -364,8 +366,10 @@ void LinkProcessor::startDownload(mega::MegaNode* linkNode, const QString &local
     const char* appData = nullptr;
     MegaCancelToken* cancelToken = nullptr; // No cancellation possible
     MegaTransferListener* listener = nullptr;
+    const bool undelete = false;
     megaApi->startDownload(linkNode, path.constData(), name, appData, startFirst, cancelToken,
                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
+                           undelete,
                            listener);
 }

@@ -1,6 +1,6 @@
 
 #include "Utilities.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 
 #include <QApplication>
 #include <QImageReader>
@@ -30,6 +30,7 @@ QHash<QString, QString> Utilities::languageNames;
 
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
+const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
 
 const unsigned long long KB = 1024;
@@ -625,7 +626,7 @@ QString Utilities::getQuantityString(unsigned long long quantity)
     return QString::number(quantity);
 }
 
-QString Utilities::getFinishedTimeString(long long secs)
+QString Utilities::getAddedTimeString(long long secs)
 {
     const int SECS_IN_1_MINUTE = 60;
     const int SECS_IN_1_HOUR = 3600;
@@ -635,38 +636,38 @@ QString Utilities::getFinishedTimeString(long long secs)
 
     if (secs < 2)
     {
-        return QCoreApplication::translate("Utilities", "just now");
+        return QCoreApplication::translate("Utilities", "Added just now");
     }
     else if (secs < SECS_IN_1_MINUTE)
     {
         const int secsAsInt = static_cast<int>(secs);
-        return QCoreApplication::translate("Utilities", "%n second ago", "", secsAsInt);
+        return QCoreApplication::translate("Utilities", "Added %n second ago", "", secsAsInt);
     }
     else if (secs < SECS_IN_1_HOUR)
     {
         const int minutes = static_cast<int>(secs/SECS_IN_1_MINUTE);
-        return QCoreApplication::translate("Utilities", "%n minute ago", "", minutes);
+        return QCoreApplication::translate("Utilities", "Added %n minute ago", "", minutes);
     }
     else if (secs < SECS_IN_1_DAY)
     {
         const int hours = static_cast<int>(secs/SECS_IN_1_HOUR);
-        return QCoreApplication::translate("Utilities", "%n hour ago", "", hours);
+        return QCoreApplication::translate("Utilities", "Added %n hour ago", "", hours);
     }
     else if (secs < SECS_IN_1_MONTH)
     {
         const int days = static_cast<int>(secs/SECS_IN_1_DAY);
-        return QCoreApplication::translate("Utilities", "%n day ago", "", days);
+        return QCoreApplication::translate("Utilities", "Added %n day ago", "", days);
     }
     else if (secs < SECS_IN_1_YEAR)
     {
         const int months = static_cast<int>(secs/SECS_IN_1_MONTH);
-        return QCoreApplication::translate("Utilities", "%n month ago", "", months);
+        return QCoreApplication::translate("Utilities", "Added %n month ago", "", months);
     }
     // We might not need century precision... give years.
     else
     {
         const int years = static_cast<int>(secs/SECS_IN_1_YEAR);
-        return QCoreApplication::translate("Utilities", "%n year ago", "", years);
+        return QCoreApplication::translate("Utilities", "Added %n year ago", "", years);
     }
 }
 
@@ -701,6 +702,37 @@ QString Utilities::getSizeString(unsigned long long bytes)
 
     return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ")
                     + QCoreApplication::translate("Utilities", "Bytes");
+}
+
+QString Utilities::getSizeStringLocalized(quint64 bytes)
+{
+    auto baseUnitSize = Platform::getInstance()->getBaseUnitsSize();
+
+    static const QVector<QPair<QString, quint64>> unitsSize{
+        {QLatin1String("TB"), static_cast<quint64>(std::pow(baseUnitSize, 4))},
+        {QLatin1String("GB"), static_cast<quint64>(std::pow(baseUnitSize, 3))},
+        {QLatin1String("MB"), static_cast<quint64>(std::pow(baseUnitSize, 2))},
+        {QLatin1String("KB"), baseUnitSize},
+        {QLatin1String("Bytes"), 1}
+    };
+
+    auto foundIt = std::find_if(unitsSize.constBegin(), unitsSize.constEnd(), [&bytes](const QPair<QString, quint64>& pair){
+        return bytes >= pair.second;
+    });
+
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+
+    if (foundIt != unitsSize.constEnd())
+    {
+        return locale.toString(toDoubleInUnit(bytes, foundIt->second)) + QString::fromLatin1(" ")
+                + QCoreApplication::translate("Utilities", foundIt->first.toStdString().c_str());
+    }
+    else
+    {
+        return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ")
+                + QCoreApplication::translate("Utilities", "Bytes");
+    }
 }
 
 QString Utilities::getSizeString(long long bytes)
@@ -1165,7 +1197,7 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
 
     if(node->isFile())
     {
-        QFileInfo fileInfo(QString::fromUtf8(node->getName()));
+        QFileInfo fileInfo(currentName);
 
         auto nameSplitted = Utilities::getFilenameBasenameAndSuffix(fileInfo.fileName());
         if(nameSplitted != QPair<QString, QString>())
@@ -1188,10 +1220,10 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
         nodeName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toUtf8().constData()));
     }
 
-    bool nameFound(false);
     int counter(1);
-    while(!nameFound)
+    while(newName.isEmpty())
     {
+        bool nameFound = false;
         QString suggestedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
         if(node)
         {
@@ -1203,13 +1235,20 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
 
         if(!itemsBeingRenamed.contains(suggestedName, Qt::CaseInsensitive))
         {
-            auto foundNode = std::shared_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode, suggestedName.toStdString().c_str(),
-                                                                                                     node->isFile() ? MegaNode::TYPE_FILE : MegaNode::TYPE_FOLDER));
+            std::unique_ptr<MegaNodeList>nodes(MegaSyncApp->getMegaApi()->getChildren(parentNode));
+            for(int index = 0; index < nodes->size(); ++index)
+            {
+                QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
+                if(suggestedName.compare(nodeName, Qt::CaseInsensitive) == 0)
+                {
+                    nameFound = true;
+                }
+            }
 
-            if(!foundNode)
+
+            if(!nameFound)
             {
                 newName = suggestedName;
-                nameFound = true;
             }
         }
 
@@ -1515,8 +1554,8 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
     }
 }
 
-WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node)
-    : mTransfersFrom(from), mNode(node)
+WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node, bool undelete)
+    : mTransfersFrom(from), mNode(node), mUndelete(undelete)
 {
     qRegisterMetaType<QQueue<WrappedNode*>>("QQueue<WrappedNode*>");
 }

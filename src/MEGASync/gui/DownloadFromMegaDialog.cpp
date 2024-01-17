@@ -2,30 +2,32 @@
 #include "ui_DownloadFromMegaDialog.h"
 #include "control/Utilities.h"
 #include "Platform.h"
+#include "CommonMessages.h"
 
 #include <QDesktopServices>
 #include <QTemporaryFile>
 #include "QMegaMessageBox.h"
 #include <QPointer>
 
-DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *parent) :
+DownloadFromMegaDialog::DownloadFromMegaDialog(QString path, QWidget *parent) :
     QDialog(parent),
+    mUseDefaultPath(false),
+    mPathChangedByUser(false),
     ui(new Ui::DownloadFromMegaDialog)
 {
     ui->setupUi(this);
 
-    QString defaultDownloadPath;
+    mUseDefaultPath = path.isEmpty() || !QFile(path).exists();
 
-    if (!defaultPath.size() || !QFile(defaultPath).exists())
+    if (mUseDefaultPath)
     {
-        defaultDownloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads");
+        updatePath();
     }
     else
     {
-        defaultDownloadPath = defaultPath;
+        ui->eFolderPath->setText(QDir::toNativeSeparators(path));
     }
 
-    ui->eFolderPath->setText(QDir::toNativeSeparators(defaultDownloadPath));
     ui->cDefaultPath->setChecked(false);
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
@@ -54,18 +56,26 @@ QString DownloadFromMegaDialog::getPath()
 
 void DownloadFromMegaDialog::on_bChange_clicked()
 {
-    Platform::getInstance()->folderSelector(tr("Select local folder"),ui->eFolderPath->text(),false,this,[this](QStringList selection){
+    SelectorInfo info;
+    info.title = tr("Select local folder");
+    info.defaultDir = ui->eFolderPath->text();
+    info.multiSelection = false;
+    info.canCreateDirectories = true;
+    info.parent = this;
+    info.func = [&](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
             onPathChanged(fPath);
         }
-    });
+    };
+
+    Platform::getInstance()->folderSelector(info);
 }
 
 void DownloadFromMegaDialog::onPathChanged(const QString& path)
 {
-    if (!path.size())
+    if (path.isEmpty())
     {
         return;
     }
@@ -82,7 +92,18 @@ void DownloadFromMegaDialog::onPathChanged(const QString& path)
     }
     else
     {
-        ui->eFolderPath->setText(path);
+        ui->eFolderPath->setText(QDir::toNativeSeparators(path));
+        mPathChangedByUser = true;
+    }
+}
+
+void DownloadFromMegaDialog::updatePath()
+{
+    if (!mPathChangedByUser && mUseDefaultPath)
+    {
+        auto downloadPath = Utilities::getDefaultBasePath() + QLatin1Char('/')
+                            + CommonMessages::getDefaultDownloadFolderName();
+        ui->eFolderPath->setText(QDir::toNativeSeparators(downloadPath));
     }
 }
 
@@ -91,6 +112,7 @@ void DownloadFromMegaDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        updatePath();
     }
     QDialog::changeEvent(event);
 }

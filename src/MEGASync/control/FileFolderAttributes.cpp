@@ -17,9 +17,9 @@
 #endif
 
 FileFolderAttributes::FileFolderAttributes(QObject* parent)
-    : mCancelled(false),
-      mSize(-1),
-      QObject(parent)
+    : QObject(parent),
+    mCancelled(false),
+    mSize(NOT_READY)
 {
 }
 
@@ -191,7 +191,7 @@ void LocalFileFolderAttributes::requestSize(QObject* caller,std::function<void(q
             }
             else
             {
-                if(mSize < 0)
+                if(mSize <= Status::NOT_READY)
                 {
                     auto future = QtConcurrent::run([this]() -> qint64{
                         return calculateSize();
@@ -199,6 +199,10 @@ void LocalFileFolderAttributes::requestSize(QObject* caller,std::function<void(q
                     mFolderSizeFuture.setFuture(future);
                 }
             }
+        }
+        else
+        {
+            mSize = Status::NOT_READABLE;
         }
     }
 
@@ -282,6 +286,8 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
             struct stat the_time;
             stat(mPath.toUtf8(), &the_time);
             mCreatedTime.setTime_t(the_time.st_birthtimespec.tv_sec);
+#elif defined(Q_OS_LINUX)
+            mCreatedTime = QDateTime::fromSecsSinceEpoch(0);
 #endif
             if(!fileInfo.isFile())
             {
@@ -345,9 +351,13 @@ qint64 LocalFileFolderAttributes::calculateSize()
     qint64 newSize(0);
 
     QFileInfo fileInfo(mPath);
+    if(!fileInfo.isReadable())
+    {
+        newSize = NOT_READABLE;
+    }
     if(!mPath.isEmpty() && fileInfo.exists())
     {
-        QDirIterator filesIt(mPath, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::Subdirectories);
+        QDirIterator filesIt(mPath, QDir::Files| QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Hidden, QDirIterator::Subdirectories);
 
         while (filesIt.hasNext())
         {
@@ -361,7 +371,14 @@ qint64 LocalFileFolderAttributes::calculateSize()
 
 void LocalFileFolderAttributes::setPath(const QString &newPath)
 {
-    mPath = newPath;
+    if(mPath != newPath)
+    {
+        mPath = newPath;
+        mSize = NOT_READY;
+        //initAllAttributes();
+        mRequestTimestamps.clear();
+        mRequests.clear();
+    }
 }
 
 //REMOTE

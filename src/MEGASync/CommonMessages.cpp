@@ -53,8 +53,23 @@ QString CommonMessages::errorInvalidChars()
 
 QString CommonMessages::getExpiredProFlexiMessage()
 {
-    return QCoreApplication::translate("CommonMessages", "Your Pro Flexi account has been deactivated due to payment failure or you've cancelled your subscription. "
-                                       "You won't be able to access the data stored in your account until you've made a payment and reactivated your subscription.");
+    return QCoreApplication::translate("CommonMessages", "Your account has been deactivated due to payment failure or cancelled subscription. "
+                                                         "Please pay and reactivate now to access your data.");
+}
+
+QString CommonMessages::getDefaultUploadFolderName()
+{
+    return QCoreApplication::translate("CommonMessages", "MEGA Uploads");
+}
+
+QString CommonMessages::getDefaultDownloadFolderName()
+{
+    return QCoreApplication::translate("CommonMessages", "MEGA Downloads");
+}
+
+QString CommonMessages::getDefaultImportFolderName()
+{
+    return QCoreApplication::translate("CommonMessages", "MEGA Imports");
 }
 
 int CommonMessages::computeDaysToExpiration(int64_t expirationTimeStampInSecs)

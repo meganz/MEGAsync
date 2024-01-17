@@ -3,7 +3,7 @@
 #include <QDir>
 
 #include <MegaApplication.h>
-#include <Preferences.h>
+#include "Preferences/Preferences.h"
 #include <Notificator.h>
 #include <MegaNodeNames.h>
 
@@ -116,7 +116,8 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
             TransferData::TransferState state(TransferData::TRANSFER_NONE);
 
             if(transfer->getState() == mega::MegaTransfer::STATE_FAILED
-                    || e->getErrorCode() == mega::MegaError::API_EINCOMPLETE)
+                 || e->getErrorCode() == mega::MegaError::API_EINCOMPLETE
+                 || e->getErrorCode() == mega::MegaError::API_EACCESS)
             {
                 state = TransferData::TRANSFER_FAILED;
                 value->failedTransfer = std::shared_ptr<mega::MegaTransfer>(transfer->copy());
@@ -482,7 +483,7 @@ void TransferMetaData::checkAndSendNotification()
             }
 
             QList<unsigned long long> appIds;
-            if((getFileTransfersCancelled() != getTotalFiles() || getEmptyFolderTransfersOK() > 0)
+            if((getFileTransfersCancelled() != getTotalFiles() || getEmptyFolderTransfersOK() + getEmptyFolderTransfersFailed() > 0)
                 && (!isNonExistData() && (mFiles.size() == 0 || mFiles.hasChanged())))
             {
                 mFiles.setHasChanged(false);

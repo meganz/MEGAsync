@@ -26,9 +26,10 @@ if [ $# -eq 0 ]; then
 fi
 
 APP_NAME=MEGAsync
+VOLUME_NAME="Install MEGA"
 ID_BUNDLE=mega.mac
 MOUNTDIR=tmp
-RESOURCES=installer/resourcesDMG
+RESOURCES=installer/macOS/resourcesDMG
 MSYNC_PREFIX=MEGASync/
 MUPDATER_PREFIX=MEGAUpdater/
 
@@ -172,7 +173,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
 
     # Prepare bundle
     cp -R ${MSYNC_PREFIX}MEGAsync.app ${MSYNC_PREFIX}MEGAsync_orig.app
-    ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -no-strip
+    ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -qmldir=../src/MEGASync/gui/qml -no-strip
     dsymutil ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
     strip ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
     dsymutil ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
@@ -182,8 +183,19 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
 
     touch ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
 
+    # Delete unused debug libs
+    find ${MSYNC_PREFIX}MEGAsync.app/Contents -type d -name "*.dSYM" -exec rm -r {} +
     # need to remove .prl leftovers from frameworks after macdeployqt
     find ${MSYNC_PREFIX}MEGAsync.app/Contents -type f -name "*.prl" -exec rm -f {} +
+
+    # Generate symlinks file to recreate after update
+    MEGASYNC_VERSION_CODE=`grep -o -E '#define VER_FILEVERSION_CODE\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+'`
+    echo  ${MEGASYNC_VERSION_CODE} > ${MSYNC_PREFIX}MEGAsync.app/Contents/Resources/mega.links
+
+    cd ${MSYNC_PREFIX}/MEGAsync.app
+    find . -type l -exec bash -c 'echo $(readlink "$0") ; echo "$0";' {} \; >> ./Contents/Resources/mega.links
+    cd ../..
+
 
     if [ ${build_cmake} -ne 1 ]; then
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ] && cp -L $CARES_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
@@ -234,7 +246,7 @@ if [ "$createdmg" = "1" ]; then
 	echo "DMG CREATION PROCESS..."
 	echo "Creating temporary Disk Image (1/7)"
 	#Create a temporary Disk Image
-	/usr/bin/hdiutil create -srcfolder $APP_NAME.app/ -volname $APP_NAME -ov $APP_NAME-tmp.dmg -fs HFS+ -format UDRW >/dev/null
+	/usr/bin/hdiutil create -srcfolder $APP_NAME.app/ -volname $VOLUME_NAME -ov $APP_NAME-tmp.dmg -fs HFS+ -format UDRW >/dev/null
 
 	echo "Attaching the temporary image (2/7)"
 	#Attach the temporary image
@@ -243,16 +255,20 @@ if [ "$createdmg" = "1" ]; then
 
 	echo "Copying resources (3/7)"
 	#Copy the background, the volume icon and DS_Store files
-	unzip -d $MOUNTDIR/$APP_NAME ../$RESOURCES.zip
-	/usr/bin/SetFile -a C $MOUNTDIR/$APP_NAME
+	unzip -d $MOUNTDIR/$VOLUME_NAME ../$RESOURCES.zip
+	/usr/bin/SetFile -a C $MOUNTDIR/$VOLUME_NAME
 
 	echo "Adding symlinks (4/7)"
 	#Add a symbolic link to the Applications directory
-	ln -s /Applications/ $MOUNTDIR/$APP_NAME/Applications
+	ln -s /Applications/ $MOUNTDIR/$VOLUME_NAME/Applications
+
+    # Delete unnecessary file system events log if possible
+    echo "Deleting .fseventsd"
+    rm -rf $MOUNTDIR/$VOLUME_NAME/.fseventsd || true
 
 	echo "Detaching temporary Disk Image (5/7)"
 	#Detach the temporary image
-	/usr/bin/hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
+	/usr/bin/hdiutil detach $MOUNTDIR/$VOLUME_NAME >/dev/null
 
 	echo "Compressing Image (6/7)"
 	#Compress it to a new image
@@ -289,8 +305,8 @@ if [ "$notarize" = "1" ]; then
     echo "Checking signature and notarization (3/3)"
     mkdir $MOUNTDIR || :
     hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
-    spctl --assess -vv -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
-    hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
+    spctl --assess -vv -a $MOUNTDIR/$VOLUME_NAME/$APP_NAME.app
+    hdiutil detach $MOUNTDIR/$VOLUME_NAME >/dev/null
     rmdir $MOUNTDIR
 
 	cd ..

@@ -1,0 +1,24 @@
+module onboard
+singleton OnboardingStrings 1.0 OnboardingStrings.qml
+LoginPage 1.0 LoginPage.qml
+LoginPageForm 1.0 LoginPageForm.ui.qml
+OnboardingDialog 1.0 OnboardingDialog.qml
+OnboardingFlow 1.0 OnboardingFlow.qml
+RegisterContent 1.0 RegisterContent.qml
+RegisterFlow 1.0 RegisterFlow.qml
+RegisterPage 1.0 RegisterPage.qml
+RegisterPageForm 1.0 RegisterPageForm.ui.qml
+SyncSelectTypeButton 1.0 SyncSelectTypeButton.qml
+TwoFAPage 1.0 TwoFAPage.qml
+TwoFAPageForm 1.0 TwoFAPageForm.ui.qml
+ChangeEmailPage 1.0 ChangeEmailPage.qml
+ChangeEmailPageForm 1.0 ChangeEmailPageForm.ui.qml
+ConfirmEmailPage 1.0 ConfirmEmailPage.qml
+ConfirmEmailPageForm 1.0 ConfirmEmailPageForm.ui.qml
+CancelLogin 1.0 CancelLogin.qml
+PasswordInfoPopUp 1.0 PasswordInfoPopUp.qml
+PasswordConditionItem 1.0 PasswordConditionItem.qml
+PasswordInfoContent 1.0 PasswordInfoContent.qml
+PasswordInfoContentForm 1.0 PasswordInfoContentForm.ui.qml
+StackViewBase 1.0 StackViewBase.qml
+StackViewPage 1.0 StackViewPage.qml

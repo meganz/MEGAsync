@@ -303,21 +303,5 @@ height: 16px;
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>bOk</sender>
-   <signal>clicked()</signal>
-   <receiver>ImportMegaLinksDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>317</x>
-     <y>184</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>222</x>
-     <y>102</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
 </ui>

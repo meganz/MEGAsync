@@ -641,7 +641,16 @@ void DesktopNotifications::sendBusinessWarningNotification(int businessStatus) c
     {
         const auto notification = new MegaNotification();
 
-        if (megaApi->isMasterBusinessAccount())
+        if (megaApi->isProFlexiAccount())
+        {
+            const QString message = CommonMessages::getExpiredProFlexiMessage();
+            notification->setTitle(tr("Pro Flexi Account deactivated"));
+            notification->setText(tr(message.toLatin1()));
+            notification->setActions(QStringList() << tr("Pay Now"));
+
+            connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToPayBusiness);
+        }
+        else if (megaApi->isMasterBusinessAccount())
         {
             notification->setTitle(tr("Your Business account is expired"));
             notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
