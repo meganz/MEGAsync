@@ -29,7 +29,6 @@ public:
     QPointer<MenuItemAction> getAction();
     void callMenu(const QPoint& p);
     void setEnabled(bool state);
-    void initMenuTexts();
 
 signals:
     void addSync(mega::MegaSync::SyncType type);
@@ -48,13 +47,14 @@ protected:
     virtual QString getMenuActionText() const = 0;
     virtual QString getAddActionText() const = 0;
 
+    QPointer<QMenu> mMenu;
+
 private slots:
     void onAddSync();
 
 private:
     void highLightMenuEntry(QAction *action);
 
-    QPointer<QMenu> mMenu;
     QPointer<MenuItemAction> mAddAction;
     QPointer<MenuItemAction> mMenuAction;
     QPointer<MenuItemAction> mLastHovered;
