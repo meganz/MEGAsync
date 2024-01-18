@@ -1,8 +1,9 @@
 #ifndef BACKUPSCONTROLLER_H
 #define BACKUPSCONTROLLER_H
 
-#include "QTMegaRequestListener.h"
 #include "syncs/control/SyncController.h"
+
+#include "QTMegaRequestListener.h"
 
 class BackupsController : public QObject
 {

@@ -1,9 +1,9 @@
 #ifndef CHOOSEFOLDER_H
 #define CHOOSEFOLDER_H
 
-#include <QObject>
+#include "megaapi.h"
 
-#include <megaapi.h>
+#include <QObject>
 
 class ChooseLocalFolder : public QObject
 {

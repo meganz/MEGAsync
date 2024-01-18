@@ -1,14 +1,13 @@
 #include "Backups.h"
 
-#include "MegaApplication.h"
+#include "BackupsModel.h"
 
 #include "qml/QmlDialog.h"
 #include "qml/AccountInfoData.h"
 #include "qml/QmlDeviceName.h"
 #include "qml/ChooseFolder.h"
 
-
-#include "BackupsModel.h"
+#include "MegaApplication.h"
 
 Backups::Backups(QObject *parent)
     : QMLComponent(parent)

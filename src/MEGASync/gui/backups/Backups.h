@@ -2,6 +2,7 @@
 #define BACKUPS_H
 
 #include "qml/QmlDialogWrapper.h"
+
 #include <QScreen>
 
 class Backups : public QMLComponent

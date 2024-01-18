@@ -1,18 +1,18 @@
 #include "Onboarding.h"
 
-#include <QQmlEngine>
-
-#include "MegaApplication.h"
-
-#include "backups/Backups.h"
-
 #include "Syncs.h"
 #include "PasswordStrengthChecker.h"
 #include "AccountStatusController.h"
-#include "SettingsDialog.h"
 #include "OnboardingQmlDialog.h"
 
+#include "backups/Backups.h"
 #include "qml/ChooseFolder.h"
+
+#include "SettingsDialog.h"
+#include "MegaApplication.h"
+
+#include <QQmlEngine>
+
 using namespace mega;
 
 Onboarding::Onboarding(QObject *parent)

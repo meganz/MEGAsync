@@ -4,6 +4,7 @@
 #include "UserAttributesRequests/DeviceName.h"
 
 #include <QObject>
+
 #include <memory>
 
 class QmlDeviceName : public QObject

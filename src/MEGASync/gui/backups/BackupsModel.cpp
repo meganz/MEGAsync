@@ -1,9 +1,9 @@
 #include "BackupsModel.h"
 
+#include "qml/QmlManager.h"
+#include "qml/StandardIconProvider.h"
 #include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
-#include "qml/StandardIconProvider.h"
-#include "qml/QmlManager.h"
 
 #include "MegaApplication.h"
 #include "Utilities.h"

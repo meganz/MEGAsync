@@ -1,19 +1,19 @@
-#include <QDir>
-#include <QDebug>
-
 #include "ChooseFolder.h"
-#include <Platform.h>
-#include <MegaApplication.h>
+
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
-#include <DialogOpener.h>
+#include "onboarding/Syncs.h"
+
+#include "Platform.h"
+#include "MegaApplication.h"
+#include "DialogOpener.h"
+
 #include "megaapi.h"
-#include "Syncs.h"
+
+#include <QDir>
 
 ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
     : QObject(parent)
-{
-
-}
+{}
 
 void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
 {

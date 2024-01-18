@@ -1,13 +1,14 @@
 #ifndef BACKUPSMODEL_H
 #define BACKUPSMODEL_H
 
-#include "syncs/control/SyncController.h"
 #include "BackupsController.h"
+
+#include "control/FileFolderAttributes.h"
+#include "syncs/control/SyncController.h"
 
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>
 #include <QTimer>
-#include "control/FileFolderAttributes.h"
 
 class BackupFolder : public QObject
 {
