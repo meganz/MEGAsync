@@ -261,7 +261,7 @@ Rectangle {
             }
 
             Connections {
-                target: guestWindow
+                target: window
 
                 function onInitializePageFocus() {
                     leftButton.forceActiveFocus();
@@ -343,7 +343,7 @@ Rectangle {
             }
 
             Connections {
-                target: guestWindow
+                target: window
 
                 function onInitializePageFocus() {
                     leftButton.forceActiveFocus();
@@ -368,7 +368,7 @@ Rectangle {
     }
 
     Connections {
-        target: guestWindow
+        target: window
 
         function onHideRequested() {
             menu.close();

@@ -2,6 +2,7 @@
 #define QMLCOMPONENTWRAPPER_H
 
 #include "QmlDialog.h"
+#include "megaapi.h"
 
 #include <QQmlComponent>
 #include <QDebug>
@@ -122,8 +123,6 @@ public:
             {
                 context->setContextProperties(propertyList);
             }
-            // TODO: Think on removing this line
-            //context->setContextProperty(QString::fromUtf8("Wrapper"), this);
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
             connect(mWindow, &QmlDialog::finished, this, [this](){
@@ -139,13 +138,11 @@ public:
         }
         else
         {
-#if DEBUG
             /*
             * Errors will be printed respecting the original format (with links to source qml that fails).
             * All errors will be printed, using qDebug() some errors were hidden.
             */
-            std::cout << qmlComponent.errorString().toStdString() << std::endl;
-#endif
+            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_ERROR, qmlComponent.errorString().toStdString().c_str());
         }
     }
 
