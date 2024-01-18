@@ -127,6 +127,7 @@ void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex &id
 
 NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPtr mode, QWidget *parent)
     : NodeSelectorTreeViewWidget(mode, parent)
+    , mHasRows(false)
 
 {
     ui->lFolderName->setText(tr("Searching:"));
@@ -153,6 +154,7 @@ void NodeSelectorTreeViewWidgetSearch::stopSearch()
 {
     auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
     search_model->stopSearch();
+    mHasRows = false;
 }
 
 std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidgetSearch::createProxyModel()
@@ -173,12 +175,13 @@ bool NodeSelectorTreeViewWidgetSearch::newNodeCanBeAdded(mega::MegaNode *node)
 
 QModelIndex NodeSelectorTreeViewWidgetSearch::getAddedNodeParent(mega::MegaHandle parentHandle)
 {
+    Q_UNUSED(parentHandle)
     return QModelIndex();
 }
 
 bool NodeSelectorTreeViewWidgetSearch::containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle&)
 {
-    if(node)
+    if(mHasRows && node)
     {
         auto index = mModel->findItemByNodeHandle(node->getHandle(), QModelIndex());
         if(index.isValid())
@@ -286,7 +289,8 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
 
     if(ui->tMegaFolders->model())
     {
-        if(ui->tMegaFolders->model()->rowCount() == 0 && showEmptyView())
+        mHasRows = ui->tMegaFolders->model()->rowCount() > 0;
+        if(!mHasRows && showEmptyView())
         {
             ui->stackedWidget->setCurrentWidget(ui->emptyPage);
             return;

@@ -873,7 +873,13 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
     foreach(auto child, childrenItem)
     {
         auto index = child->property(INDEX_PROPERTY).toModelIndex();
+
         emit dataChanged(index, index);
+    }
+
+    if (!childrenItem.empty())
+    {
+        emit levelsAdded({}, false);
     }
 }
 

@@ -95,6 +95,7 @@ private:
     QIcon getEmptyIcon() override;
     void modelLoaded() override;
     bool newFolderBtnCanBeVisisble() override {return false;}
+    bool mHasRows;
 };
 
 #endif // NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H
