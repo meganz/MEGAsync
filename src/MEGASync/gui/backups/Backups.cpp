@@ -4,9 +4,9 @@
 
 #include "qml/QmlDialog.h"
 #include "qml/AccountInfoData.h"
+#include "qml/QmlDeviceName.h"
+#include "qml/ChooseFolder.h"
 
-#include "onboarding/QmlDeviceName.h"
-#include "onboarding/ChooseFolder.h"
 
 #include "BackupsModel.h"
 

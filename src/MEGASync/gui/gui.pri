@@ -88,10 +88,10 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/qml/QmlManager.cpp \
     $$PWD/qml/StandardIconProvider.cpp \
     $$PWD/qml/AccountInfoData.cpp \
-    $$PWD/onboarding/ChooseFolder.cpp \
+    $$PWD/qml/ChooseFolder.cpp \
+    $$PWD/qml/QmlDeviceName.cpp \
     $$PWD/onboarding/Onboarding.cpp \
     $$PWD/onboarding/Syncs.cpp \
-    $$PWD/onboarding/QmlDeviceName.cpp \
     $$PWD/onboarding/PasswordStrengthChecker.cpp \
     $$PWD/onboarding/GuestQmlDialog.cpp \
     $$PWD/onboarding/OnboardingQmlDialog.cpp \
@@ -189,10 +189,10 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/qml/QmlManager.h \
     $$PWD/qml/StandardIconProvider.h \
     $$PWD/qml/AccountInfoData.h \
-    $$PWD/onboarding/ChooseFolder.h \
+    $$PWD/qml/ChooseFolder.h \
+    $$PWD/qml/QmlDeviceName.h \
     $$PWD/onboarding/Onboarding.h \
     $$PWD/onboarding/Syncs.h \
-    $$PWD/onboarding/QmlDeviceName.h \
     $$PWD/onboarding/PasswordStrengthChecker.h \
     $$PWD/onboarding/GuestQmlDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \

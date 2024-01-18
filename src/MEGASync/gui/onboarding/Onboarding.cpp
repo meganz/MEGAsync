@@ -7,12 +7,12 @@
 #include "backups/Backups.h"
 
 #include "Syncs.h"
-#include "ChooseFolder.h"
 #include "PasswordStrengthChecker.h"
 #include "AccountStatusController.h"
 #include "SettingsDialog.h"
 #include "OnboardingQmlDialog.h"
 
+#include "qml/ChooseFolder.h"
 using namespace mega;
 
 Onboarding::Onboarding(QObject *parent)
