@@ -18,7 +18,7 @@ display_help() {
     echo " -f : Force software packages rebuild."
     echo " -g : Download and link CURL statically."
     echo " -i : Do not download and link LIBMEDIAINFO statically."
-    echo " -L : Download and link sqlite3 statically."
+    echo " -L : Do not download and link sqlite3 statically."
     echo " -q : Download and link CRYPTOPP statically."
     echo " -z : Do not download and link ZLIB statically."
     echo " -W : Download and link LIBRAW statically."

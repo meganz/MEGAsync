@@ -158,10 +158,10 @@ BuildRequires: ffmpeg-mega
 %endif
 
 #Build sqlite3?
-%define flag_sqlite3 %{nil}
+%define flag_disablesqlite3 -L
 
 %if 0%{?centos_version} == 7
-    %define flag_sqlite3 -L
+    %define flag_disablesqlite3 %{nil}
 %endif
 
 #Build cryptopp?
@@ -222,7 +222,7 @@ sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
-./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
+./configure %{flag_cryptopp} -g %{flag_disablesqlite3} %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
 
 # Link dynamically with freeimage
 ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3
