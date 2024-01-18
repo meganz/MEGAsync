@@ -64,7 +64,7 @@ public:
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes);
+    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes) override;
     void onRowsInserted();
     void onRowsRemoved();
     void onProxyModelSorted();
