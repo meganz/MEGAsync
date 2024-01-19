@@ -43,7 +43,7 @@ cd $cwd
 archives=$cwd/archives
 rm -fr $archives
 mkdir $archives
-../src/MEGASync/mega/contrib/build_sdk.sh -q -L -n -e -g -w -s -v -u -W -o $archives
+../src/MEGASync/mega/contrib/build_sdk.sh -q -n -e -g -w -s -v -u -W -o $archives
 
 # get current version
 MEGASYNC_VERSION=`grep -Po '#define VER_PRODUCTVERSION_STR[[:space:]]*"\K.*(?=\.)' ../src/MEGASync/control/Version.h`
