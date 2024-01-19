@@ -89,10 +89,10 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
     }
     mSearchCanceled = false;
 
-    mega::MegaSearchFilter* searchFilter = mega::MegaSearchFilter::createInstance();
+    std::unique_ptr<mega::MegaSearchFilter> searchFilter(mega::MegaSearchFilter::createInstance());
     searchFilter->byName(text.toUtf8().constData());
 
-    auto nodeList = std::unique_ptr<mega::MegaNodeList>(MegaSyncApp->getMegaApi()->search(searchFilter, mega::MegaApi::ORDER_NONE, mCancelToken.get()));
+    auto nodeList = std::unique_ptr<mega::MegaNodeList>(MegaSyncApp->getMegaApi()->search(searchFilter.get(), mega::MegaApi::ORDER_NONE, mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
     mSearchedTypes = NodeSelectorModelItemSearch::Type::NONE;
 
