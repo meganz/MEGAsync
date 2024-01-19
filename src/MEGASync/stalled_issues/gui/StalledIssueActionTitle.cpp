@@ -59,6 +59,7 @@ void StalledIssueActionTitle::setHTML(const QString& title, const QPixmap& icon)
     auto font(ui->titleLabel->font());
     font.setBold(false);
     ui->titleLabel->setFont(font);
+    ui->titleLabel->setTextFormat(Qt::AutoText);
 
     setTitle(title, icon);
 }

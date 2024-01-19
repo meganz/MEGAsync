@@ -271,13 +271,11 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
     if(localInfo.isFile())
     {
-        info.msgInfo.text = tr(
-            "Are you sure you want to keep both file?", "", info.selection.size());
+        info.msgInfo.text = tr("Keep both files?");
     }
     else
     {
-        info.msgInfo.text = tr(
-            "Are you sure you want to keep both folder %1?", "", info.selection.size());
+        info.msgInfo.text = tr("Keep both folders");
     }
 
     std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));

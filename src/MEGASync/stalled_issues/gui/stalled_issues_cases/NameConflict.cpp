@@ -490,19 +490,16 @@ void NameConflict::onActionClicked(int actionId)
             msgInfo.textFormat = Qt::RichText;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::Cancel;
 
-            msgInfo.text = tr("Are you sure you want to remove the %1 %2 %3?")
-                    .arg(isCloud() ? tr("remote") : tr("local"))
-                    .arg(isFile ? tr("file") : tr("folder"))
-                    .arg(fileName);
-
             if(isCloud())
             {
                 if(isFile)
                 {
+                    msgInfo.text = tr("Are you sure you want to remove the remote file %1?").arg(fileName);
                     msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]");
                 }
                 else
                 {
+                    msgInfo.text = tr("Are you sure you want to remove the remote folder %1?").arg(fileName);
                     msgInfo.informativeText = tr("It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]");
                 }
             }
@@ -510,10 +507,12 @@ void NameConflict::onActionClicked(int actionId)
             {
                 if(isFile)
                 {
+                    msgInfo.text = tr("Are you sure you want to remove the local file %1?").arg(fileName);
                     msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]");
                 }
                 else
                 {
+                    msgInfo.text = tr("Are you sure you want to remove the local folder %1?").arg(fileName);
                     msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]");
                 }
             }

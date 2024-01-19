@@ -80,6 +80,12 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
         });
 #endif
 
+    auto description = ui->descriptionLabel->text();
+    description.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"));
+    ui->descriptionLabel->setText(description);
+    auto advancedText = ui->lAdvanced->text();
+    advancedText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"));
+    ui->lAdvanced->setText(advancedText);
 }
 
 IgnoresEditingDialog::~IgnoresEditingDialog()

@@ -1235,12 +1235,12 @@
     <message>
         <source>Cloude node undecrypted [B]%1[/B]</source>
         <translatorcomment>Title for the header widget sync stall thatoccurs when the node being synced cannot be decrypted.[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</source>
         <translatorcomment>Subtitle for the header widget sync stall thatoccurs when the node being synced cannot be decrypted, [A] will be replaced by Mega link, [A1] will be replaced by support link. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2118,14 +2118,6 @@ Please, refresh the list.</source>
         <translation></translation>
     </message>
     <message>
-        <source>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don&apos;t need on all of your devices,
-or certain file types that need not be synced.
-</source>
-        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>by size</source>
         <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
         <translation></translation>
@@ -2171,12 +2163,6 @@ or certain file types that need not be synced.
         <translation></translation>
     </message>
     <message>
-        <source>You can change the associated .megaignore file on a text editor. This is a task better
-suited for users who are comfortable with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Open .megaignore</source>
         <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
         <translation></translation>
@@ -2202,13 +2188,6 @@ suited for users who are comfortable with regular expressions.</source>
         <translation></translation>
     </message>
     <message>
-        <source>You can change the associated .megaignore file on a text editor.
-This is a task better suited for advanced users who are comfortable
-with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Advanced:</source>
         <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
         <translation></translation>
@@ -2226,6 +2205,24 @@ with regular expressions.</source>
     <message>
         <source>Current file has been modified by another program. it will be reloaded</source>
         <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive.
+This can be useful for large files, files that you don&apos;t need on all of your devices,[BR]or certain file types that need not be synced.
+</source>
+        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
+        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>You can change the associated .megaignore file on a text editor.
+This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
+        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
         <translation></translation>
     </message>
 </context>
@@ -2720,22 +2717,6 @@ with regular expressions.</source>
             <numerusform>The backup will be disabled in order to protect the local folders %1</numerusform>
         </translation>
     </message>
-    <message numerus="yes">
-        <source>Are you sure you want to keep both file?</source>
-        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>Are you sure you want to keep both file?</numerusform>
-            <numerusform>Are you sure you want to keep both files?</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Are you sure you want to keep both folder %1?</source>
-        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>Are you sure you want to keep both folder %1?</numerusform>
-            <numerusform>Are you sure you want to keep both folders %1?</numerusform>
-        </translation>
-    </message>
     <message>
         <source>[B]Keep both[/B]</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
@@ -2878,6 +2859,16 @@ Please, refresh the list.</source>
     <message>
         <source>Apply to all</source>
         <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Keep both files?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Keep both folders</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
         <translation></translation>
     </message>
 </context>
@@ -4100,31 +4091,6 @@ Please refresh the view</source>
         <translation></translation>
     </message>
     <message>
-        <source>Are you sure you want to remove the %1 %2 %3?</source>
-        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the file/folder causing the conflict. placeholder 1 will be filled in runtime with location (remote/ local) ,2 will be filled with type (file/folder) ,3 will have the path.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>remote</source>
-        <translatorcomment>Text in a message box displayed whe the user tries to solve a name conflict stall by removing a fie. completes the text in the message box.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>local</source>
-        <translatorcomment>Text in a message box displayed whe the user tries to solve a name conflict stall by removing a fie. completes the text in the message box.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>file</source>
-        <translatorcomment>Text in a message box displayed whe the user tries to solve a name conflict stall by removing a fie. completes the text in the message box.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>folder</source>
-        <translatorcomment>Text in a message box displayed whe the user tries to solve a name conflict stall by removing a fie. completes the text in the message box.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
         <translation></translation>
@@ -4146,7 +4112,27 @@ Please refresh the view</source>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&amp;apos;s solved by resolving other conflicting names.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the remote file %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the remote folder %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the local file %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the local folder %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
         <translation></translation>
     </message>
 </context>
@@ -5417,11 +5403,6 @@ Enter a different name.</translation>
         <translation></translation>
     </message>
     <message>
-        <source>Trash</source>
-        <translatorcomment>Recycle bin name in the different OS.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
         <translation>Show in folder</translation>
@@ -5437,11 +5418,6 @@ Enter a different name.</translation>
         <translation></translation>
     </message>
     <message>
-        <source>Rubbish Bin</source>
-        <translatorcomment>Recycle bin name in the different OS.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
         <translation>Show in Finder</translation>
@@ -5454,11 +5430,6 @@ Enter a different name.</translation>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Recycle Bin</source>
-        <translatorcomment>Recycle bin name in the different OS.SNC-2565</translatorcomment>
         <translation></translation>
     </message>
     <message>
@@ -7411,44 +7382,6 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     </message>
 </context>
 <context>
-    <name>Sync states</name>
-    <message>
-        <source>Pending</source>
-        <translatorcomment>Sync state. to display in syncs table.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Loading</source>
-        <translatorcomment>Sync state. to display in syncs table.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Running</source>
-        <translatorcomment>Sync state. to display in syncs table.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Paused</source>
-        <translatorcomment>Sync state. to display in syncs table.SNC-2565</translatorcomment>
-        <translation>Paused</translation>
-    </message>
-    <message>
-        <source>Suspended</source>
-        <translatorcomment>Sync state. to display in syncs table.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translatorcomment>Sync state. to display in syncs table.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Unkown state</source>
-        <translatorcomment>Sync state. to display in syncs table.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>SyncAccountFullMessage</name>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
@@ -7784,11 +7717,6 @@ Please move it to a location that is less than 64 folders deep.</source>
         <translation>Paused</translation>
     </message>
     <message>
-        <source>Suspended</source>
-        <translatorcomment>SNC-2565Text in syncs table indicating sync state.SNC-2565</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Disabled</source>
         <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
         <translation></translation>
@@ -7812,6 +7740,11 @@ Please move it to a location that is less than 64 folders deep.</source>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table).SNC-4208</translatorcomment>
         <translation>Click on the three-dot menu for more sync actions</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
