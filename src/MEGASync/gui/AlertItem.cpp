@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "UserAttributesRequests/FullName.h"
 #include <MegaNodeNames.h>
+#include <mega/bindings/qt/QTMegaRequestListener.h>
 
 #include <QDateTime>
 #include <QFutureWatcher>
@@ -49,20 +50,22 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
 {
     mAlertUser.reset(alert->copy());
 
-    //Alerts from your own user come without email (like Payment reminders)
-    if(alert->getEmail())
+    if (alert->getUserHandle() != INVALID_HANDLE)
     {
-        mFullNameAttributes = UserAttributes::FullName::requestFullName(alert->getEmail());
-
-        if(mFullNameAttributes)
+        if (alert->getEmail())
         {
-            connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
-        }
+            requestFullName(alert->getEmail());
 
-        ui->wAvatarContact->setUserEmail(alert->getEmail());
+            ui->wAvatarContact->setUserEmail(alert->getEmail());
+        }
+        else
+        {
+            mFullNameAttributes.reset();
+
+            requestEmail(alert->getUserHandle());
+        }
     }
-    //If it comes without email, it is because is an own alert, then take your email.
-    else
+    else //If it comes without user handler, it is because is an own alert, then take your email.
     {
         if(megaApi)
         {
@@ -75,6 +78,35 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     });
 
     onAttributesReady();
+}
+
+void AlertItem::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* error)
+{
+    if(request->getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL)
+    {
+        if(error->getErrorCode() == mega::MegaError::API_OK && request->getEmail() != nullptr)
+        {
+            requestFullName(request->getEmail());
+        }
+    }
+}
+
+void AlertItem::requestEmail(mega::MegaHandle userHandle)
+{
+    megaApi->getUserEmail(userHandle, this);
+}
+
+void AlertItem::requestFullName(const char* email)
+{
+    if (email != nullptr)
+    {
+        mFullNameAttributes = UserAttributes::FullName::requestFullName(email);
+
+        if(mFullNameAttributes)
+        {
+            connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
+        }
+    }
 }
 
 void AlertItem::onAttributesReady()
@@ -515,6 +547,7 @@ QString AlertItem::getUserFullName(MegaUserAlert *alert)
     {
         return mFullNameAttributes->getRichFullName();
     }
+
     return QString::fromUtf8(alert->getEmail());
 }
 

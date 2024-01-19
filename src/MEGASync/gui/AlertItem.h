@@ -2,9 +2,12 @@
 #define ALERTITEM_H
 
 #include <QWidget>
-#include "megaapi.h"
 #include <QFutureWatcher>
+
 #include <memory>
+
+#include "megaapi.h"
+#include <mega/bindings/qt/QTMegaRequestListener.h>
 
 namespace Ui {
 class AlertItem;
@@ -14,7 +17,7 @@ namespace UserAttributes{
 class FullName;
 }
 
-class AlertItem : public QWidget
+class AlertItem : public QWidget, public mega::MegaRequestListener
 {
     Q_OBJECT
 
@@ -27,6 +30,7 @@ public:
     void setAlertHeading(mega::MegaUserAlert *alert);
     void setAlertContent(mega::MegaUserAlert *alert);
     void setAlertTimeStamp(int64_t ts);
+    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *error) override;
 
     QString getHeadingString();
 
@@ -45,6 +49,8 @@ private slots:
 private:
     QString formatRichString(QString str);
     QString getUserFullName(mega::MegaUserAlert *alert);
+    void requestFullName(const char* email);
+    void requestEmail(mega::MegaHandle userHandle);
 
 private:
     Ui::AlertItem *ui;
