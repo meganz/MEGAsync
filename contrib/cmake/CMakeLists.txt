@@ -220,11 +220,7 @@ set (FORMS
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncStallModeSelector.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncSettingsUIBase.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/BindFolderDialog.ui
-    ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupsWizard.ui
-    ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/AddBackupDialog.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/RemoveBackupDialog.ui
-    ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupRenameWidget.ui
-    ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupNameConflictDialog.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/OpenBackupsFolder.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferDelegateWidget.ui
@@ -374,15 +370,17 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.h
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h
     ${MEGAsyncDir}/gui/MegaNodeNames.h
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.h
     ${MEGAsyncDir}/gui/DateTimeFormatter.h
     ${MEGAsyncDir}/gui/RemoteItemUI.h
     ${MEGAsyncDir}/gui/WordWrapLabel.h
+
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.h
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
+
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
@@ -390,6 +388,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.h
     ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorSpecializations.h
+
     ${MEGAsyncDir}/gui/qml/QmlClipboard.h
     ${MEGAsyncDir}/gui/qml/ColorTheme.h
     ${MEGAsyncDir}/gui/qml/QmlDialog.h
@@ -398,17 +397,21 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/qml/ApiEnums.h
     ${MEGAsyncDir}/gui/qml/QmlDialogManager.h
     ${MEGAsyncDir}/gui/qml/QmlManager.h
-    ${MEGAsyncDir}/gui/onboarding/ChooseFolder.h
+    ${MEGAsyncDir}/gui/qml/ChooseFolder.h
+    ${MEGAsyncDir}/gui/qml/AccountInfoData.h
+    ${MEGAsyncDir}/gui/qml/QmlDeviceName.h
+
+>>>>>>> d124faed8 (Update CMakeLists.txt)
     ${MEGAsyncDir}/gui/onboarding/Onboarding.h
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.h
     ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.h
     ${MEGAsyncDir}/gui/onboarding/GuestContent.h
-    ${MEGAsyncDir}/gui/onboarding/AccountInfoData.h
-    ${MEGAsyncDir}/gui/onboarding/BackupsModel.h
     ${MEGAsyncDir}/gui/onboarding/Syncs.h
-    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.h
     ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.h
-    ${MEGAsyncDir}/gui/onboarding/BackupsController.h
+
+    ${MEGAsyncDir}/gui/backups/Backups.h
+    ${MEGAsyncDir}/gui/backups/BackupsController.h
+    ${MEGAsyncDir}/gui/backups/BackupsModel.h
 
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
@@ -426,11 +429,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.h
-    ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.h
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.h
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupRenameWidget.h
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupNameConflictDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupSettingsElements.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupSettingsUI.h
     ${MEGAsyncDir}/syncs/model/BackupItemModel.h
@@ -650,9 +649,11 @@ set (SRCS
     ${MEGAsyncDir}/gui/RemoteItemUI.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
     ${MEGAsyncDir}/gui/WordWrapLabel.cpp
+
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
+
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.cpp
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
@@ -665,6 +666,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
+
     ${MEGAsyncDir}/gui/qml/QmlClipboard.cpp
     ${MEGAsyncDir}/gui/qml/ColorTheme.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialog.cpp
@@ -672,22 +674,26 @@ set (SRCS
     ${MEGAsyncDir}/gui/qml/StandardIconProvider.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialogManager.cpp
     ${MEGAsyncDir}/gui/qml/QmlManager.cpp
-    ${MEGAsyncDir}/gui/onboarding/ChooseFolder.cpp
+    ${MEGAsyncDir}/gui/qml/ChooseFolder.cpp
+    ${MEGAsyncDir}/gui/qml/AccountInfoData.cpp
+    ${MEGAsyncDir}/gui/qml/QmlDeviceName.cpp
+
     ${MEGAsyncDir}/gui/onboarding/Onboarding.cpp
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.cpp
     ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.cpp
     ${MEGAsyncDir}/gui/onboarding/GuestContent.cpp
-    ${MEGAsyncDir}/gui/onboarding/AccountInfoData.cpp
-    ${MEGAsyncDir}/gui/onboarding/BackupsModel.cpp
     ${MEGAsyncDir}/gui/onboarding/Syncs.cpp
-    ${MEGAsyncDir}/gui/onboarding/QmlDeviceName.cpp
     ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.cpp
-    ${MEGAsyncDir}/gui/onboarding/BackupsController.cpp
+
+    ${MEGAsyncDir}/gui/backups/Backups.cpp
+    ${MEGAsyncDir}/gui/backups/BackupsController.cpp
+    ${MEGAsyncDir}/gui/backups/BackupsModel.cpp
+
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransferMetaData.cpp
-    
+
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
@@ -790,11 +796,7 @@ set (SRCS
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupRenameWidget.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupNameConflictDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupSettingsUI.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupSettingsElements.cpp
     ${MEGAsyncDir}/syncs/model/BackupItemModel.cpp
