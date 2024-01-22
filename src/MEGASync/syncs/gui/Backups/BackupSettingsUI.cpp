@@ -43,26 +43,12 @@ void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
 {
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
     {
-        auto backupsDialog = dialog->getDialog();
-        DialogOpener::showDialog(backupsDialog, [this, backupsDialog]()
-        {
-            if(backupsDialog->result() == QDialog::Accepted)
-            {
-                syncsStateInformation(SyncStateInformation::SAVING);
-            }
-        });
+        DialogOpener::showDialog(dialog->getDialog());
+        return;
     }
-    else
-    {
-        QPointer<QmlDialogWrapper<Backups>> backupsDialog = new QmlDialogWrapper<Backups>();
-        DialogOpener::showDialog(backupsDialog, [this, backupsDialog]()
-        {
-            if(backupsDialog->result() == QDialog::Accepted)
-            {
-                syncsStateInformation(SyncStateInformation::SAVING);
-            }
-        });
-    }
+
+    QPointer<QmlDialogWrapper<Backups>> backupsDialog = new QmlDialogWrapper<Backups>();
+    DialogOpener::showDialog(backupsDialog);
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)
