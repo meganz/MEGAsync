@@ -2,7 +2,6 @@
 #include "Notificator.h"
 #include "NotificationDelayer.h"
 #include "Preferences/Preferences.h"
-#include "QTMegaRequestListener.h"
 
 #include <QObject>
 
@@ -29,6 +28,9 @@ public:
     };
     DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon);
     void addUserAlertList(mega::MegaUserAlertList *alertList);
+    void sendAlert(mega::MegaUserAlert* alert);
+    void requestFullName(mega::MegaUserAlert* alert, QString email);
+    void requestEmail(mega::MegaUserAlert* alert);
     void sendOverStorageNotification(int state) const;
     void sendOverTransferNotification(const QString& title) const;
     void sendFinishedTransferNotification(unsigned long long appDataId) const;
@@ -53,6 +55,7 @@ public slots:
 
 private slots:
     void OnUserAttributesReady();
+    void OnUserEmailReady(mega::MegaUserAlert* alert, QString email);
 
 private:
     void notifyTakeDown(mega::MegaUserAlert* alert, bool isReinstated = false) const;

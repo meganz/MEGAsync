@@ -2,11 +2,13 @@ DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD/DesktopNotifications.cpp \
+           $$PWD/EmailRequester.cpp \
            $$PWD/TransferNotificationBuilder.cpp \
            $$PWD/NotificatorBase.cpp \
            $$PWD/NotificationDelayer.cpp
 
 HEADERS += $$PWD/DesktopNotifications.h \
+           $$PWD/EmailRequester.h \
            $$PWD/TransferNotificationBuilder.h  \
            $$PWD/NotificatorBase.h \
            $$PWD/NotificationDelayer.h

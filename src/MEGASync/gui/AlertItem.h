@@ -30,7 +30,7 @@ public:
     void setAlertHeading(mega::MegaUserAlert *alert);
     void setAlertContent(mega::MegaUserAlert *alert);
     void setAlertTimeStamp(int64_t ts);
-    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *error) override;
+    void onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* error) override;
 
     QString getHeadingString();
 

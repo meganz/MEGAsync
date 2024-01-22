@@ -1,6 +1,7 @@
 #include "megaapi.h"
 #include "CommonMessages.h"
 #include "DesktopNotifications.h"
+#include "EmailRequester.h"
 #include "MegaApplication.h"
 #include "QTMegaRequestListener.h"
 #include "mega/user.h"
@@ -154,31 +155,64 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
         // alerts are sent again after seen state updated, so lets only notify the unseen alerts
         if(!alert->getSeen() && !alert->isRemoved())
         {
-            auto userEmail = QString::fromUtf8(alert->getEmail());
-
-            if(!userEmail.isEmpty())
-            {
-                auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(userEmail.toUtf8().constData());
-                if(fullNameUserAttributes)
-                {
-                    connect(fullNameUserAttributes.get(), &UserAttributes::FullName::fullNameReady,
-                            this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
-                }
-
-                if(fullNameUserAttributes && !fullNameUserAttributes->isAttributeReady())
-                {
-                    mPendingUserAlerts.insert(userEmail, alert->copy());
-                }
-                else
-                {
-                    processAlert(alert);
-                }
-            }
-            else
-            {
-                processAlert(alert);
-            }
+            sendAlert(alert);
         }
+    }
+}
+
+void DesktopNotifications::sendAlert(mega::MegaUserAlert* alert)
+{
+    auto userHandle = alert->getUserHandle();
+
+    if (userHandle != mega::INVALID_HANDLE)
+    {
+        if(alert->getEmail() != nullptr)
+        {
+            auto email = QString::fromUtf8(alert->getEmail());
+
+            requestFullName(alert, email);
+        }
+        else
+        {
+            requestEmail(alert);
+        }
+    }
+    else
+    {
+        processAlert(alert);
+    }
+}
+
+void DesktopNotifications::requestEmail(mega::MegaUserAlert* alert)
+{
+    EmailRequester* request = new EmailRequester(alert->copy());
+
+    connect(request, &EmailRequester::emailReceived, this, &DesktopNotifications::OnUserEmailReady, Qt::DirectConnection);
+
+    request->requestEmail();
+}
+
+void DesktopNotifications::OnUserEmailReady(mega::MegaUserAlert* alert, QString email)
+{
+    requestFullName(alert, email);
+}
+
+void DesktopNotifications::requestFullName(mega::MegaUserAlert* alert, QString email)
+{
+    auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(email.toUtf8().constData());
+    if(fullNameUserAttributes)
+    {
+        connect(fullNameUserAttributes.get(), &UserAttributes::FullName::fullNameReady,
+                this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
+    }
+
+    if(fullNameUserAttributes && !fullNameUserAttributes->isAttributeReady())
+    {
+        mPendingUserAlerts.insert(email, alert->copy());
+    }
+    else
+    {
+        processAlert(alert);
     }
 }
 
