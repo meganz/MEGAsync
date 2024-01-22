@@ -185,6 +185,7 @@ void DesktopNotifications::sendAlert(mega::MegaUserAlert* alert)
 
 void DesktopNotifications::requestEmail(mega::MegaUserAlert* alert)
 {
+    // delete will be handled on EmailRequester::onRequestFinish
     EmailRequester* request = new EmailRequester(alert->copy());
 
     connect(request, &EmailRequester::emailReceived, this, &DesktopNotifications::OnUserEmailReady, Qt::DirectConnection);
