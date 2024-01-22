@@ -55,13 +55,9 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
         if (alert->getEmail())
         {
             requestFullName(alert->getEmail());
-
-            ui->wAvatarContact->setUserEmail(alert->getEmail());
         }
         else
         {
-            mFullNameAttributes.reset();
-
             requestEmail(alert->getUserHandle());
         }
     }
@@ -106,7 +102,11 @@ void AlertItem::requestFullName(const char* email)
         {
             connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
         }
+
+        ui->wAvatarContact->setUserEmail(email);
     }
+
+    onAttributesReady();
 }
 
 void AlertItem::onAttributesReady()
