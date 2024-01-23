@@ -52,6 +52,9 @@ install: build
 	if [ -n "$(DEB_TESTING)" ]; then dh_install version /usr/share/doc/megasync; fi
 
 installqt:
+	# To install the whole Qt distribution:
+	#find /opt/mega -type f -exec install -D {} $(CURDIR)/debian/megasync/{} \;
+
 	for i in `ldd MEGASync/megasync | grep opt | awk '{print $$3}'`; do a=`echo $$i | awk -F "/" 'BEGIN{OFS="/"}{NF--;print $$0}' | sed "s#target/##g"`; mkdir -p $(CURDIR)/debian/megasync/$$a; install $$i $(CURDIR)/debian/megasync/$$a; done
 	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
 	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
@@ -79,6 +82,12 @@ installqt:
 	install /opt/mega/plugins/bearer/libqnmbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
 	install /opt/mega/plugins/bearer/libqgenericbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
 	install /opt/mega/plugins/bearer/libqconnmanbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
+	install /opt/mega/plugins/xcbglintegrations/libqxcb-glx-integration.so -D $(CURDIR)/debian/megasync/opt/mega/plugins/xcbglintegrations/libqxcb-glx-integration.so
+	install -p /opt/mega/lib/libQt5QuickControls2.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5QuickControls2.so.5
+	install -p /opt/mega/lib/libQt5QmlWorkerScript.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5QmlWorkerScript.so.5
+	install -p /opt/mega/lib/libQt5QuickTemplates2.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5QuickTemplates2.so.5
+	for m in QtQml QtQuick.2 QtGraphicalEffects QtQuick/Controls QtQuick/Controls.2 QtQuick/Dialogs QtQuick/Extras QtQuick/Layouts QtQuick/PrivateWidgets QtQuick/Templates.2 QtQuick/Window.2 Qt/labs/folderlistmodel Qt/labs/settings; do find /opt/mega/qml/$$m -type f ! -name "*.debug" -exec install -D {} $(CURDIR)/debian/megasync/{} \; ; done
+
 install3rd:
 	mkdir -p $(CURDIR)/debian/megasync/opt/mega/lib
 	install $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.* $(CURDIR)/debian/megasync/opt/mega/lib
