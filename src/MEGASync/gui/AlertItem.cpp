@@ -4,8 +4,7 @@
 #include "MegaApplication.h"
 #include "UserAttributesRequests/FullName.h"
 #include <MegaNodeNames.h>
-#include <mega/bindings/qt/QTMegaRequestListener.h>
-#include "mega/types.h"
+#include "EmailRequester.h"
 
 #include <QDateTime>
 #include <QFutureWatcher>
@@ -20,12 +19,10 @@ using namespace mega;
 AlertItem::AlertItem(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AlertItem),
-    megaApi(MegaSyncApp->getMegaApi()),
-    mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+    megaApi(MegaSyncApp->getMegaApi())
 {
-    megaApi->addRequestListener(mDelegateListener.get());
-
     ui->setupUi(this);
+
     ui->sIconWidget->hide();
     ui->wNotificationIcon->hide();
     ui->lNew->hide();
@@ -61,7 +58,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
         }
         else
         {
-            requestEmail(alert->getUserHandle());
+            requestEmail(alert);
         }
     }
     else //If it comes without user handler, it is because is an own alert, then take your email.
@@ -79,20 +76,20 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     onAttributesReady();
 }
 
-void AlertItem::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* error)
+void AlertItem::onUserEmailReady(mega::MegaUserAlert* alert, QString email)
 {
-    if(request->getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL)
-    {
-        if(error->getErrorCode() == mega::MegaError::API_OK && request->getEmail() != nullptr)
-        {
-            requestFullName(request->getEmail());
-        }
-    }
+    std::unique_ptr<mega::MegaUserAlert> removeAlert(alert);
+
+    requestFullName(email.toUtf8().constData());
 }
 
-void AlertItem::requestEmail(mega::MegaHandle userHandle)
+void AlertItem::requestEmail(mega::MegaUserAlert* alert)
 {
-    megaApi->getUserEmail(userHandle);
+    EmailRequester* request = new EmailRequester(alert->copy());
+
+    connect(request, &EmailRequester::emailReceived, this, &AlertItem::onUserEmailReady, Qt::QueuedConnection);
+
+    request->requestEmail();
 }
 
 void AlertItem::requestFullName(const char* email)

@@ -30,7 +30,7 @@ public:
     void setAlertHeading(mega::MegaUserAlert *alert);
     void setAlertContent(mega::MegaUserAlert *alert);
     void setAlertTimeStamp(int64_t ts);
-    void onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* error) override;
+    void onUserEmailReady(mega::MegaUserAlert* alert, QString email);
 
     QString getHeadingString();
 
@@ -50,7 +50,7 @@ private:
     QString formatRichString(QString str);
     QString getUserFullName(mega::MegaUserAlert *alert);
     void requestFullName(const char* email);
-    void requestEmail(mega::MegaHandle userHandle);
+    void requestEmail(mega::MegaUserAlert* alert);
 
 private:
     Ui::AlertItem *ui;
@@ -60,7 +60,6 @@ private:
     std::unique_ptr<mega::MegaUserAlert> mAlertUser;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 };
 
 #endif // ALERTITEM_H

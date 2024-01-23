@@ -55,7 +55,7 @@ public slots:
 
 private slots:
     void OnUserAttributesReady();
-    void OnUserEmailReady(mega::MegaUserAlert* alert, QString email);
+    void onUserEmailReady(mega::MegaUserAlert* alert, QString email);
 
 private:
     void notifyTakeDown(mega::MegaUserAlert* alert, bool isReinstated = false) const;
