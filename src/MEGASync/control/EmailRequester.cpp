@@ -27,7 +27,7 @@ void EmailRequester::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request,
             emit emailReceived(mAlert->copy(), userEmail);
         }
 
-        delete this;
+        deleteLater();
     }
 }
 
