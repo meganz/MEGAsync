@@ -65,7 +65,7 @@ pipeline {
         }
         stage ('Build macOS packages'){
             environment{
-                VCPKGPATH  = "${env.HOME}/jenkins/3rdparty_prev"
+                VCPKGPATH  = "${env.HOME}/jenkins/3rdparty"
                 QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.11/5.15.11"
             }
             steps {
