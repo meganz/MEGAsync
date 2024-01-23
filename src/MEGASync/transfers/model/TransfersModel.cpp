@@ -1520,6 +1520,10 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplici
 
             foreach(auto& failedTransferdata, transferDatas)
             {
+                if(!failedTransferdata)
+                {
+                    continue;
+                }
                 auto failedTransfer = failedTransferdata->mFailedTransfer;
 
                 std::shared_ptr<TransferMetaData> data(nullptr);
