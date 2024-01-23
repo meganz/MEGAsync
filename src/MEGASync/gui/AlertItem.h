@@ -60,6 +60,7 @@ private:
     std::unique_ptr<mega::MegaUserAlert> mAlertUser;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
+    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 };
 
 #endif // ALERTITEM_H

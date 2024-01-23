@@ -5,6 +5,7 @@
 #include "UserAttributesRequests/FullName.h"
 #include <MegaNodeNames.h>
 #include <mega/bindings/qt/QTMegaRequestListener.h>
+#include "mega/types.h"
 
 #include <QDateTime>
 #include <QFutureWatcher>
@@ -18,11 +19,13 @@ using namespace mega;
 
 AlertItem::AlertItem(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AlertItem)
+    ui(new Ui::AlertItem),
+    megaApi(MegaSyncApp->getMegaApi()),
+    mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
 {
-    ui->setupUi(this);
-    megaApi = ((MegaApplication *)qApp)->getMegaApi();
+    megaApi->addRequestListener(mDelegateListener.get());
 
+    ui->setupUi(this);
     ui->sIconWidget->hide();
     ui->wNotificationIcon->hide();
     ui->lNew->hide();
@@ -89,7 +92,7 @@ void AlertItem::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega
 
 void AlertItem::requestEmail(mega::MegaHandle userHandle)
 {
-    megaApi->getUserEmail(userHandle, this);
+    megaApi->getUserEmail(userHandle);
 }
 
 void AlertItem::requestFullName(const char* email)
