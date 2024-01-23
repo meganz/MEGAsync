@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "megaapi.h"
-#include <mega/bindings/qt/QTMegaRequestListener.h>
 
 namespace Ui {
 class AlertItem;
@@ -17,7 +16,7 @@ namespace UserAttributes{
 class FullName;
 }
 
-class AlertItem : public QWidget, public mega::MegaRequestListener
+class AlertItem : public QWidget
 {
     Q_OBJECT
 
