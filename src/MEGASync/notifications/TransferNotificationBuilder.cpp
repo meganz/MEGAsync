@@ -191,7 +191,7 @@ QStringList TransferNotificationBuilder::buildSingleDownloadActions(const QStrin
 
     if(data->allHaveFailed())
     {
-        if(!data->isNonExistData())
+        if(!data->isNonExistData() && MegaSyncApp->getMegaApi()->isLoggedIn())
         {
             actions << tr("Retry");
         }
@@ -245,6 +245,11 @@ QString TransferNotificationBuilder::buildMultipleUploadMessage()
 QStringList TransferNotificationBuilder::buildMultipleUploadActions()
 {
     QStringList actions;
+
+    if(!MegaSyncApp->getMegaApi()->isLoggedIn())
+    {
+        return actions;
+    }
 
     if(data->allHaveFailed())
     {
@@ -303,9 +308,14 @@ QStringList TransferNotificationBuilder::buildMultipleDownloadActions(const QStr
 {
     QStringList actions;
 
+    if(!MegaSyncApp->getMegaApi()->isLoggedIn())
+    {
+        return actions;
+    }
+
     if(data->allHaveFailed())
     {
-        if(!data->isNonExistData())
+        if(!data->isNonExistData() && MegaSyncApp->getMegaApi()->isLoggedIn())
         {
             actions << tr("Retry");
         }
@@ -314,7 +324,7 @@ QStringList TransferNotificationBuilder::buildMultipleDownloadActions(const QStr
     {
         actions << tr("Show in folder");
 
-        if(!data->isNonExistData())
+        if(!data->isNonExistData() && MegaSyncApp->getMegaApi()->isLoggedIn())
         {
             actions << tr("Retry failed items", "", data->getFileTransfersFailed() + data->getEmptyFolderTransfersFailed());
         }
