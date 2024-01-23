@@ -8,7 +8,7 @@ pipeline {
     
 
     environment {
-        VCPKGPATH = "${env.HOME}/jenkins/3rdparty_prev"
+        VCPKGPATH = "${env.HOME}/jenkins/3rdparty"
     }
 
     stages {
@@ -180,7 +180,7 @@ pipeline {
                         timeout(time: 120, unit: 'MINUTES')
                     }
                     environment{
-                        VCPKGPATH = "/users/macstudio3/jenkins/3rdparty_prev"
+                        VCPKGPATH = "/users/macstudio3/jenkins/3rdparty"
                         QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.11/5.15.11"
                     }
                     steps {
