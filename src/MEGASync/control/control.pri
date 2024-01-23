@@ -30,6 +30,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/ConnectivityChecker.cpp \
     $$PWD/TransferBatch.cpp \
     $$PWD/TextDecorator.cpp \
+    $$PWD/EmailRequester.cpp \
     $$PWD/qrcodegen.c
 
 HEADERS  +=  $$PWD/HTTPServer.h \
@@ -58,5 +59,6 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/TransferBatch.h \
     $$PWD/TextDecorator.h \
     $$PWD/Version.h \
+    $$PWD/EmailRequester.h \
     $$PWD/qrcodegen.h \
     $$PWD/gzjoin.h

@@ -185,16 +185,17 @@ void DesktopNotifications::sendAlert(mega::MegaUserAlert* alert)
 
 void DesktopNotifications::requestEmail(mega::MegaUserAlert* alert)
 {
-    // delete will be handled on EmailRequester::onRequestFinish
     EmailRequester* request = new EmailRequester(alert->copy());
 
-    connect(request, &EmailRequester::emailReceived, this, &DesktopNotifications::OnUserEmailReady, Qt::DirectConnection);
+    connect(request, &EmailRequester::emailReceived, this, &DesktopNotifications::OnUserEmailReady, Qt::QueuedConnection);
 
     request->requestEmail();
 }
 
 void DesktopNotifications::OnUserEmailReady(mega::MegaUserAlert* alert, QString email)
 {
+    std::unique_ptr<mega::MegaUserAlert> removeAlert(alert);
+
     requestFullName(alert, email);
 }
 

@@ -1,14 +1,14 @@
 #include "EmailRequester.h"
 
+#include "mega/types.h"
 #include "MegaApplication.h"
 
 EmailRequester::EmailRequester(mega::MegaUserAlert* alert):
-    mAlert(alert)
-{}
-
-EmailRequester::~EmailRequester()
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mAlert(alert),
+    mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
 {
-    delete mAlert;
+    mMegaApi->addRequestListener(mDelegateListener.get());
 }
 
 void EmailRequester::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* error)
@@ -24,7 +24,7 @@ void EmailRequester::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request,
                 userEmail = QString::fromUtf8(request->getEmail());
             }
 
-            emit emailReceived(mAlert, userEmail);
+            emit emailReceived(mAlert->copy(), userEmail);
         }
 
         delete this;
@@ -35,6 +35,6 @@ void EmailRequester::requestEmail()
 {
     const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
 
-    megaApi->getUserEmail(mAlert->getUserHandle(), this);
+    megaApi->getUserEmail(mAlert->getUserHandle());
 }
 
