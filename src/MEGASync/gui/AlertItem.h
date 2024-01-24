@@ -29,7 +29,7 @@ public:
     void setAlertHeading(mega::MegaUserAlert *alert);
     void setAlertContent(mega::MegaUserAlert *alert);
     void setAlertTimeStamp(int64_t ts);
-    void onUserEmailReady(mega::MegaUserAlert* alert, QString email);
+    void onUserEmailReady(QString email);
 
     QString getHeadingString();
 

@@ -10,17 +10,17 @@ class EmailRequester : public QObject, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    explicit EmailRequester(mega::MegaUserAlert* alert);
+    explicit EmailRequester(mega::MegaHandle userHandle);
     ~EmailRequester() override{};
     void requestEmail();
     void onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* error) override;
 
 signals:
-    void emailReceived(mega::MegaUserAlert* alert, QString email);
+    void emailReceived(QString email);
 
 private:
     mega::MegaApi * mMegaApi;
-    std::unique_ptr<mega::MegaUserAlert> mAlert;
+    mega::MegaHandle mUserHandle;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 };
 

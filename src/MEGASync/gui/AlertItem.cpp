@@ -76,16 +76,14 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     onAttributesReady();
 }
 
-void AlertItem::onUserEmailReady(mega::MegaUserAlert* alert, QString email)
+void AlertItem::onUserEmailReady(QString email)
 {
-    std::unique_ptr<mega::MegaUserAlert> removeAlert(alert);
-
     requestFullName(email.toUtf8().constData());
 }
 
 void AlertItem::requestEmail(mega::MegaUserAlert* alert)
 {
-    EmailRequester* request = new EmailRequester(alert->copy());
+    EmailRequester* request = new EmailRequester(alert->getUserHandle());
 
     connect(request, &EmailRequester::emailReceived, this, &AlertItem::onUserEmailReady, Qt::QueuedConnection);
 
