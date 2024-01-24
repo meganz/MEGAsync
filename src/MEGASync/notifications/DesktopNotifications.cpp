@@ -185,18 +185,15 @@ void DesktopNotifications::sendAlert(mega::MegaUserAlert* alert)
 
 void DesktopNotifications::requestEmail(mega::MegaUserAlert* alert)
 {
-    EmailRequester* request = new EmailRequester(alert->copy());
+    EmailRequester* request = new EmailRequester(alert->getUserHandle());
 
-    connect(request, &EmailRequester::emailReceived, this, &DesktopNotifications::onUserEmailReady, Qt::QueuedConnection);
+    mega::MegaUserAlert* alertCopy = alert->copy();
+    connect(request, &EmailRequester::emailReceived, this, [this, alertCopy](const QString email) {
+            std::unique_ptr<mega::MegaUserAlert> alert(alertCopy);
+            requestFullName(alertCopy, email);
+        }, Qt::QueuedConnection);
 
     request->requestEmail();
-}
-
-void DesktopNotifications::onUserEmailReady(mega::MegaUserAlert* alert, QString email)
-{
-    std::unique_ptr<mega::MegaUserAlert> removeAlert(alert);
-
-    requestFullName(alert, email);
 }
 
 void DesktopNotifications::requestFullName(mega::MegaUserAlert* alert, QString email)
