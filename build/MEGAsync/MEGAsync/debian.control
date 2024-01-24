@@ -22,9 +22,9 @@ Build-Depends:  debhelper,
 Package: megasync
 Architecture: any
 Depends: ${shlibs:Depends}, libc-ares2, apt-transport-https, gpg,
-         qml-module-qtquick-dialogs | qt-mega,
-         qml-module-qtquick-controls | qt-mega,
-         qml-module-qtquick-controls2 | qt-mega
+         qml-module-qtquick-dialogs,
+         qml-module-qtquick-controls,
+         qml-module-qtquick-controls2
 Description: Get more control over your data
   - Sync your entire MEGA Cloud or selected folders with your computer so your MEGA stays up to date with the changes you make to your data on your computer and vice versa.
   - Back up your computer with MEGA to automatically copy data to MEGA in real time and eliminate the risk of accidental data loss.
