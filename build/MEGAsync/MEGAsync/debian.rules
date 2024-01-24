@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
+FSQLITE3 := $(shell cat /etc/issue | grep "Ubuntu 18\|Ubuntu 20.04\|Debian.* [789]\|Debian.* 10" >/dev/null && echo "" || echo "-L")
 FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 1[4-8]\|Ubuntu 19.04\|Debian.* [8]" >/dev/null && echo "" || echo "-q")
 DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Debian.* [789]" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
@@ -21,7 +22,7 @@ build-stamp:
 	sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2$(MEGA_BUILD_ID)\"/g" MEGASync/control/Version.h
 	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1$(MEGA_BUILD_ID)/g" MEGASync/control/Version.h
 	sed -i -E "0,/megasync \(([0-9.]*)[^\)]*\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
-	./configure -g $(FCRYPTOPP) $(FMEDIAINFO)
+	./configure -g $(FSQLITE3) $(FCRYPTOPP) $(FMEDIAINFO)
 
 	# Link dynamically with freeimage if pdfium is required.
 	if [ -n "$(INSTALL3RD)" ]; then  \
@@ -52,6 +53,9 @@ install: build
 	if [ -n "$(DEB_TESTING)" ]; then dh_install version /usr/share/doc/megasync; fi
 
 installqt:
+	# To install the whole Qt distribution:
+	#find /opt/mega -type f -exec install -D {} $(CURDIR)/debian/megasync/{} \;
+
 	for i in `ldd MEGASync/megasync | grep opt | awk '{print $$3}'`; do a=`echo $$i | awk -F "/" 'BEGIN{OFS="/"}{NF--;print $$0}' | sed "s#target/##g"`; mkdir -p $(CURDIR)/debian/megasync/$$a; install $$i $(CURDIR)/debian/megasync/$$a; done
 	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
 	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
@@ -79,6 +83,12 @@ installqt:
 	install /opt/mega/plugins/bearer/libqnmbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
 	install /opt/mega/plugins/bearer/libqgenericbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
 	install /opt/mega/plugins/bearer/libqconnmanbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
+	install /opt/mega/plugins/xcbglintegrations/libqxcb-glx-integration.so -D $(CURDIR)/debian/megasync/opt/mega/plugins/xcbglintegrations/libqxcb-glx-integration.so
+	install -p /opt/mega/lib/libQt5QuickControls2.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5QuickControls2.so.5
+	install -p /opt/mega/lib/libQt5QmlWorkerScript.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5QmlWorkerScript.so.5
+	install -p /opt/mega/lib/libQt5QuickTemplates2.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5QuickTemplates2.so.5
+	for m in QtQml QtQuick.2 QtGraphicalEffects QtQuick/Controls QtQuick/Controls.2 QtQuick/Dialogs QtQuick/Extras QtQuick/Layouts QtQuick/PrivateWidgets QtQuick/Templates.2 QtQuick/Window.2 Qt/labs/folderlistmodel Qt/labs/settings; do find /opt/mega/qml/$$m -type f ! -name "*.debug" -exec install -D {} $(CURDIR)/debian/megasync/{} \; ; done
+
 install3rd:
 	mkdir -p $(CURDIR)/debian/megasync/opt/mega/lib
 	install $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.* $(CURDIR)/debian/megasync/opt/mega/lib
