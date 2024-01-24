@@ -192,10 +192,10 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     MEGASYNC_VERSION_CODE=`grep -o -E '#define VER_FILEVERSION_CODE\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+'`
     echo  ${MEGASYNC_VERSION_CODE} > ${MSYNC_PREFIX}MEGAsync.app/Contents/Resources/mega.links
 
-    cd ${MSYNC_PREFIX}/MEGAsync.app
+    pushd .
+    cd ${MSYNC_PREFIX}MEGAsync.app
     find . -type l -exec bash -c 'echo $(readlink "$0") ; echo "$0";' {} \; >> ./Contents/Resources/mega.links
-    cd ../..
-
+    popd
 
     if [ ${build_cmake} -ne 1 ]; then
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ] && cp -L $CARES_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
@@ -208,7 +208,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
             exit 1
         fi
     fi
-
+    
     MEGASYNC_VERSION=`grep -o -E '#define VER_PRODUCTVERSION_STR\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+\.\d+\.\d+'`
     /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "${MSYNC_PREFIX}$APP_NAME.app/Contents/Info.plist"
 
