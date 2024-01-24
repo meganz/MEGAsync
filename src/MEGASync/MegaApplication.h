@@ -12,6 +12,7 @@
 #include <QQueue>
 #include <QNetworkInterface>
 #include <QFutureWatcher>
+#include <QQmlFileSelector>
 
 #include <memory>
 #include <QQmlEngine>
@@ -34,6 +35,7 @@
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
 #include "control/Utilities.h"
+#include "qqmlapplicationengine.h"
 #include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
 #include "megaapi.h"
@@ -597,7 +599,7 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
-    QQmlEngine* mEngine;
+    QQmlApplicationEngine* mEngine;
 
     void processUpgradeSecurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;

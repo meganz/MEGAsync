@@ -131,7 +131,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mLoginController(nullptr),
     scanStageController(this),
     mDisableGfx (false),
-    mEngine(new QQmlEngine())
+    mEngine(new QQmlApplicationEngine())
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!getenv("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -155,6 +155,16 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     appfinished = false;
 
     bool logToStdout = false;
+
+    QQmlFileSelector* qmlFileSelector = QQmlFileSelector::get(mEngine);
+    if (qmlFileSelector != nullptr)
+    {
+        QStringList style;
+        style << QLatin1String("green");
+        qmlFileSelector->setExtraSelectors(style);
+    }
+
+    changeStyleTimer->start();
 
     // Collect program arguments
     QStringList args;
