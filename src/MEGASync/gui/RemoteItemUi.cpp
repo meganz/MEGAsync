@@ -86,6 +86,11 @@ void RemoteItemUi::changeEvent(QEvent* event)
     QWidget::changeEvent(event);
 }
 
+void RemoteItemUi::setAddButtonEnabled(bool enabled)
+{
+    ui->bAdd->setEnabled(enabled);
+}
+
 void RemoteItemUi::setTableViewProperties(QTableView *view) const
 {
     view->setFrameShape(QFrame::NoFrame);

@@ -4,8 +4,8 @@
 #include "syncs/model/BackupItemModel.h"
 
 #include "qml/QmlDialogWrapper.h"
-
 #include "backups/Backups.h"
+#include "onboarding/Onboarding.h"
 
 #include "Utilities.h"
 #include "DialogOpener.h"
@@ -33,6 +33,24 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
 
     mElements.initElements(this);
     ui->gSyncs->setUsePermissions(false);
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        ui->gSyncs->setAddButtonEnabled(!dialog->getDialog()->isVisible());
+        connect(dialog->getDialog(), &QmlDialogWrapper<Onboarding>::finished, this, [this]()
+        {
+            ui->gSyncs->setAddButtonEnabled(true);
+        });
+    }
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
+    {
+        ui->gSyncs->setAddButtonEnabled(!dialog->getDialog()->isVisible());
+        connect(dialog->getDialog(), &QmlDialogWrapper<Backups>::finished, this, [this]()
+        {
+            ui->gSyncs->setAddButtonEnabled(true);
+        });
+    }
 }
 
 BackupSettingsUI::~BackupSettingsUI()
@@ -41,14 +59,22 @@ BackupSettingsUI::~BackupSettingsUI()
 
 void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
 {
+    QPointer<QmlDialogWrapper<Backups>> backupsDialog;
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
     {
-        DialogOpener::showDialog(dialog->getDialog());
-        return;
+        backupsDialog = dialog->getDialog();
     }
-
-    QPointer<QmlDialogWrapper<Backups>> backupsDialog = new QmlDialogWrapper<Backups>();
+    else
+    {
+        backupsDialog = new QmlDialogWrapper<Backups>();
+    }
     DialogOpener::showDialog(backupsDialog);
+
+    ui->gSyncs->setAddButtonEnabled(false);
+    connect(backupsDialog, &QmlDialogWrapper<Backups>::finished, this, [this]()
+    {
+        ui->gSyncs->setAddButtonEnabled(true);
+    });
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)
