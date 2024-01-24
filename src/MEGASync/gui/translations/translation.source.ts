@@ -2094,8 +2094,8 @@ In some cases they may contain details about your data, such as file or folder n
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation>The issue may have been solved externally.
-Please, refresh the list.</translation>
+        <translation>The stall may have been solved externally.
+Refresh the list.</translation>
     </message>
 </context>
 <context>
@@ -2213,18 +2213,21 @@ Please, refresh the list.</translation>
 This can be useful for large files, files that you don&apos;t need on all of your devices,[BR]or certain file types that need not be synced.
 </source>
         <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Here you can exclude files and folders from being synced with your cloud drive.
+This can be useful for large files, files that you don&apos;t need on all of your devices,[BR]or certain file types that need not be synced.
+</translation>
     </message>
     <message>
         <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
+        <translation>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</translation>
     </message>
     <message>
         <source>You can change the associated .megaignore file on a text editor.
 This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
         <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>You can change the associated .megaignore file on a text editor.
+This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</translation>
     </message>
 </context>
 <context>
@@ -2693,30 +2696,14 @@ This is a task better suited for advanced users who are comfortable[BR]with regu
         <translation>Choose</translation>
     </message>
     <message>
-        <source>Local</source>
-        <translatorcomment>Button text to choose local version in the local remote changed stall body widget. will have &quot;choose&quot; preceeding it.SNC-2565</translatorcomment>
-        <translation>Local</translation>
+        <source>The backup will be disabled in order to protect the local file %1</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup, %1 placeholder will have the file name.SNC-2565</translatorcomment>
+        <translation type="unfinished">The backup will be disabled in order to protect the local file [B]%1[/B]</translation>
     </message>
     <message>
-        <source>Remote</source>
-        <translatorcomment>Button text to choose remote version in the local remote changed stall body widget. will have &quot;choose&quot; preceeding it.SNC-2565</translatorcomment>
-        <translation>Remote</translation>
-    </message>
-    <message numerus="yes">
-        <source>The backup will be disabled in order to protect the local file %1</source>
-        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>The backup will be disabled in order to protect the local file [B]%1[/B]</numerusform>
-            <numerusform>The backup will be disabled in order to protect the local files [B]%1[/B]</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
         <source>The backup will be disabled in order to protect the local folder %1</source>
-        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>The backup will be disabled in order to protect the local folder [B]%1[/B]</numerusform>
-            <numerusform>The backup will be disabled in order to protect the local folders [B]%1[/B]</numerusform>
-        </translation>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup,%1 placeholder will have the folder name.SNC-2565</translatorcomment>
+        <translation type="unfinished">The backup will be disabled in order to protect the local folder [B]%1[/B]</translation>
     </message>
     <message>
         <source>[B]Keep both[/B]</source>
@@ -2724,42 +2711,25 @@ This is a task better suited for advanced users who are comfortable[BR]with regu
         <translation>[B]Keep both[/B]</translation>
     </message>
     <message>
-        <source>[B]Keep last modified[/B] (%1)</source>
-        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Keep last modified[/B] (%1)</translation>
-    </message>
-    <message numerus="yes">
         <source>Are you sure you want to keep the [B]local file[/B] %1?</source>
-        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>Are you sure you want to keep the local file [B]%1[/B]?</numerusform>
-            <numerusform>Are you sure you want to keep the local file [B]%1[/B]?</numerusform>
-        </translation>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished">Keep the local file [B]%1[/B]?</translation>
     </message>
-    <message numerus="yes">
+    <message>
         <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
-        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>Are you sure you want to keep the local folder [B]%1[/B]?</numerusform>
-            <numerusform>Are you sure you want to keep the local folders [B]%1[/B]?</numerusform>
-        </translation>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished">Are you sure you want to keep the local folder [B]%1[/B]?</translation>
     </message>
-    <message numerus="yes">
+    <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
 Please wait for the upload to complete.</source>
-        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>The local file [B]%1[/B] will be uploaded to MEGA and added as a version of the remote file.</numerusform>
-            <numerusform>The local files [B]%1[/B] will be uploaded to MEGA and added as versions of the remote files.</numerusform>
-        </translation>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished">The local file [B]%1[/B] will be uploaded to MEGA and added as a version of the file already in MEGA.</translation>
     </message>
-    <message numerus="yes">
+    <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
-        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>The remote folder [B]%1[/B] will be moved to the MEGA Rubbish bin.[BR]You will be able to recover the folder from there.</numerusform>
-            <numerusform>The remote folders [B]%1[/B] will be moved to the MEGA Rubbish bin.[BR]You will be able to recover the folders from there.</numerusform>
-        </translation>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished">The remote folder [B]%1[/B] will be moved to the MEGA Rubbish bin.[BR]You will be able to recover the folder from there.</translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -2769,55 +2739,30 @@ Please wait for the upload to complete.</source>
             <numerusform>Resume your transfers to fix the stalls.</numerusform>
         </translation>
     </message>
-    <message numerus="yes">
+    <message>
         <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
-        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>Keep the remote file [B]%1[/B]?</numerusform>
-            <numerusform>Keep the remote files [B]%1[/B]?</numerusform>
-        </translation>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished">Keep the file in MEGA [B]%1[/B]?</translation>
     </message>
-    <message numerus="yes">
+    <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
-        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>Keep the remote folder [B]%1[/B]?</numerusform>
-            <numerusform>Keep the remote folders [B]%1[/B]?</numerusform>
-        </translation>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished">Keep the remote folder [B]%1[/B]?</translation>
     </message>
-    <message numerus="yes">
+    <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
-        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>Are you sure you want to keep the [B]remote item[/B] %1?</numerusform>
-            <numerusform>Are you sure you want to keep the [B]remote items[/B] %1?</numerusform>
-        </translation>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished">Are you sure you want to keep the [B]remote item[/B] %1?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
-        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
         <translation>The local file [B]%1[/B] will be moved to the .rubbish or .debris folder in your local sync location.</translation>
     </message>
     <message>
         <source>The [B]local folder[/B] %1 will be moved to the sync debris folder</source>
-        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
         <translation>The local folder [B]%1[/B] will be moved to the .rubbish or .debris folder in your local sync location.</translation>
-    </message>
-    <message numerus="yes">
-        <source>The [B]remote file[/B] will be renamed to %1</source>
-        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>The remote file will be renamed to [B]%1[/B].</numerusform>
-            <numerusform>The remote files will be renamed.</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>The [B]remote folder[/B] will be renamed to %1</source>
-        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>
-            <numerusform>The [B]remote folder[/B] will be renamed to %1</numerusform>
-            <numerusform>The [B]remote folders[/B] will be renamed to %1</numerusform>
-        </translation>
     </message>
     <message>
         <source>Are you sure you want to choose the latest modified side?</source>
@@ -2843,7 +2788,8 @@ Please wait for the upload to complete.</source>
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation>The issue may have been solved externally. Refresh the list.</translation>
+        <translation>The stall may have been solved externally.
+Refresh the list.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2863,12 +2809,104 @@ Please, refresh the list.</source>
     <message>
         <source>Keep both files?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keep both files?</translation>
     </message>
     <message>
         <source>Keep both folders</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation>Keep both folders</translation>
+    </message>
+    <message>
+        <source>[B]Keep last modified[/B] (local)</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Keep last modified[/B] (remote)</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the [B]local files[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the [B]local folders[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is a placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
+Please wait for the upload to complete.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote files[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote folders[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote items[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]local folders[/B] will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local files</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local folders</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep all files?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep all folders</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>The [B]remote file[/B] will have a suffix like (1) added</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>
+            <numerusform>The [B]remote file[/B] will have a suffix like (1) added</numerusform>
+            <numerusform>The [B]remote files[/B] will have a suffix like (1) added</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>
+            <numerusform>The [B]remote folder[/B] will have a suffix like (1) added</numerusform>
+            <numerusform>The [B]remote folders[/B] will have a suffix like (1) added</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -4081,7 +4119,7 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Confirmation text when a name conflict has been resolved externally.SNC-2565</translatorcomment>
-        <translation>The issue may have been solved externally.
+        <translation>The stall may have been solved externally.
 Refresh the list.</translation>
     </message>
     <message>
@@ -4119,22 +4157,22 @@ Refresh the view</translation>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure you want to remove the remote file %1?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure you want to remove the remote folder %1?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure you want to remove the local file %1?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure you want to remove the local folder %1?</translation>
     </message>
 </context>
 <context>
@@ -4215,7 +4253,7 @@ This may be due to syncing to case insensitive local filesystems, or the effects
     <message>
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
-        <translation>Solve this issue?</translation>
+        <translation>Solve this stall?</translation>
     </message>
     <message>
         <source>This action will rename the conflicted items (adding a suffix like (1)).</source>
@@ -4236,7 +4274,7 @@ and rename the files with the same name but different content (adding a suffix l
     <message>
         <source>This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
         <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>This action will delete the duplicate files, and rename the remaining items in case of name conflict by adding a suffix like (1).</translation>
+        <translation>This action will delete the duplicate files, and rename the remaining items by adding a suffix like (1).</translation>
     </message>
     <message>
         <source>This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
@@ -5416,7 +5454,7 @@ Enter a different name.</translation>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation>Moved to OS Rubbish Bin</translation>
+        <translation>Moved to Trash</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5431,7 +5469,7 @@ Enter a different name.</translation>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation>Moved to OS Recycle Bin</translation>
+        <translation>Moved to Recycle Bin</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5451,14 +5489,12 @@ Enter a different name.</translation>
 - Performance improved. 
 </source>
         <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
-        <translation>- Sync Rework Beta V1 version.
-- New Exclusions dialog for syncs.
-- New header for undecrypted cloud issues.
-- Minor changes in issues description. 
-- Auto solve reparse points and hard/sym links in Smart Mode. 
+        <translation>Sync Rework Beta V1 version.
+- New exclusions dialog for syncs.
+- Minor changes to stall descriptions. 
+- Auto-solve reparse points, hard links and sym links in Smart Mode. 
 - Minor bugs fixed. 
-- Performance improved. 
-</translation>
+- Performance improved. </translation>
     </message>
 </context>
 <context>
@@ -5950,11 +5986,6 @@ Do you want to delete it anyway?</translation>
 </context>
 <context>
     <name>RemoteItemUi</name>
-    <message>
-        <source>Item Type</source>
-        <translatorcomment>Placeholder label for the section title in the settings (Backups, syncs).SNC-2565</translatorcomment>
-        <translation>Item Type</translation>
-    </message>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
@@ -6746,7 +6777,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>View...</source>
         <translatorcomment>Button to show the sync stalls.SNC-2565</translatorcomment>
-        <translation>View…</translation>
+        <translation>View</translation>
     </message>
 </context>
 <context>
@@ -6769,7 +6800,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Loading size</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>Loading size</translation>
+        <translation>Loading size…</translation>
     </message>
     <message>
         <source>Size:</source>
@@ -6784,7 +6815,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Loading time…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>Loading time…</translation>
+        <translation>Loading timestamp…</translation>
     </message>
     <message>
         <source>Last modified:</source>
@@ -6799,7 +6830,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Created at:</source>
         <translatorcomment>Label indicating creation time for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation>Created at:</translation>
+        <translation>Created:</translation>
     </message>
 </context>
 <context>
@@ -6817,7 +6848,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Renamed to %1</source>
         <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
-        <translation>Renamed to %1</translation>
+        <translation>Renamed</translation>
     </message>
     <message>
         <source>Chosen</source>
@@ -6845,22 +6876,22 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>File is being frequently changing.</source>
         <translatorcomment>Label descriping the error causing sync stall. SNC-2565</translatorcomment>
-        <translation>File is being frequently changing.</translation>
+        <translation>File is being frequently changed</translation>
     </message>
     <message>
         <source>Ignore rules unknown.</source>
-        <translatorcomment>Label descriping a sync stall is happening because the file has unknown exclusion move source.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
         <translation>Ignore rules unknown.</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.SNC-2565</translatorcomment>
-        <translation>Detected Sym link.</translation>
+        <translation>Detected symbolic link</translation>
     </message>
     <message>
         <source>Detected special file.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a special file and cannot be synced.SNC-2565</translatorcomment>
-        <translation>Detected special file.</translation>
+        <translation>Detected special file</translation>
     </message>
     <message>
         <source>Different file or folder is already present.</source>
@@ -6870,52 +6901,52 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Parent folder does not exist.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud parent folder is removed.SNC-2565</translatorcomment>
-        <translation>Parent folder does not exist.</translation>
+        <translation>Parent folder does not exist</translation>
     </message>
     <message>
         <source>Filesystem error during operation.</source>
         <translatorcomment>Label descriping a sync stall is happening because of filesystem failed operation ( Eg. folder creation).SNC-2565</translatorcomment>
-        <translation>Filesystem error during operation.</translation>
+        <translation>A local error occurred during operation</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
         <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
-        <translation>Name too long for filesystem.</translation>
+        <translation>Name too long for filesystem</translation>
     </message>
     <message>
         <source>Cannot fingerprint file.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA cannot create a fingerprint for it.SNC-2565</translatorcomment>
-        <translation>Cannot fingerprint file.</translation>
+        <translation>Cannot fingerprint file</translation>
     </message>
     <message>
         <source>Hard link or Reparse Point detected.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a hard link and cannot be synced.SNC-2565</translatorcomment>
-        <translation>Hard link or reparse point detected.</translation>
+        <translation>Hard link or reparse point detected. Contact Support if there is no hard link or reparse point in this location.</translation>
     </message>
     <message>
         <source>The folder could not be found. Ensure that the path is correct and try again.</source>
         <translatorcomment>Label descriping the sync sall is caused by removed path.SNC-2565</translatorcomment>
-        <translation>The folder could not be found. Ensure that the path is correct and try again.</translation>
+        <translation>The folder couldn’t be found. Ensure that the path is correct and try again.</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
         <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
-        <translation>MAC verification failure.</translation>
+        <translation>MAC verification failure</translation>
     </message>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation>Deleted or moved by user.</translation>
+        <translation>Deleted or moved in MEGA</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is deleted by the user.SNC-2565</translatorcomment>
-        <translation>Deleted by user.</translation>
+        <translation>Deleted in MEGA</translation>
     </message>
     <message>
         <source>Move to debris folder failed.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA could not move the item to sync debris folder.SNC-2565</translatorcomment>
-        <translation>Move to debris folder failed.</translation>
+        <translation>Move to debris folder failed</translation>
     </message>
     <message>
         <source>Ignore file malformed.</source>
@@ -6930,7 +6961,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>Error identifying folder content in filesystem.</translation>
+        <translation>Error identifying folder content in local filesystem</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
@@ -6940,32 +6971,32 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Waiting for scanning to complete.</source>
         <translatorcomment>Label descriping the sync sall is caused by ongoing scan operation.SNC-2565</translatorcomment>
-        <translation>Waiting for scanning to complete.</translation>
+        <translation>Waiting for scanning to complete</translation>
     </message>
     <message>
         <source>Waiting for another move to complete.</source>
         <translatorcomment>Label descriping the sync sall is caused by ongoing move operation.SNC-2565</translatorcomment>
-        <translation>Waiting for another move to complete.</translation>
+        <translation>Waiting for another move to complete</translation>
     </message>
     <message>
         <source>Source was moved elsewhere.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud version was move.SNC-2565</translatorcomment>
-        <translation>Source was moved elsewhere.</translation>
+        <translation>File or folder in MEGA was moved elsewhere</translation>
     </message>
     <message>
         <source>Local filesystem cannot store this name.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA cannot store the file ( possible reasons: filenames with trailing spaces).SNC-2565</translatorcomment>
-        <translation>Local filesystem cannot store this name.</translation>
+        <translation>Local filesystem cannot use this file name</translation>
     </message>
     <message>
         <source>Fingerprint is missing or invalid.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file fingerprint is missing.SNC-2565</translatorcomment>
-        <translation>Fingerprint is missing or invalid.</translation>
+        <translation>Fingerprint is missing or invalid</translation>
     </message>
     <message>
         <source>Error not detected</source>
         <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>
-        <translation>Error not detected</translation>
+        <translation>Unknown error</translation>
     </message>
 </context>
 <context>
@@ -6983,12 +7014,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Are you sure you want to ignore this issue?</source>
         <translatorcomment>Text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation>Are you sure you want to ignore this issue?</translation>
+        <translation>Ignore this stall?</translation>
     </message>
     <message>
         <source>This action will ignore this issue and it will not be synced.</source>
         <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation>This action will ignore this issue and it will not be synced.</translation>
+        <translation>This action will ignore this stall and it will not be synced.</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -7072,8 +7103,7 @@ Do you want to delete it anyway?</translation>
         <source>Let Mega solve sync issues
 automatically</source>
         <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
-        <translation>Let Mega solve sync issues
-automatically</translation>
+        <translation>Let Mega solve sync stalls automatically</translation>
     </message>
     <message>
         <source>Advanced mode</source>
@@ -7093,7 +7123,7 @@ automatically</translation>
     <message>
         <source>No issues</source>
         <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
-        <translation>No issues</translation>
+        <translation>No stalls</translation>
     </message>
     <message>
         <source>[A]Learn more[/A]</source>
@@ -7130,7 +7160,7 @@ Refresh the view.</translation>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>Fixing issues</translation>
+        <translation>Solving stalls</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
@@ -7156,12 +7186,12 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     <message>
         <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
         <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation>File “%1” was moved to &quot;%2&quot;.</translation>
+        <translation>File “%1” was moved to &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
         <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation>Folder “%1” was moved to &quot;%2&quot;.</translation>
+        <translation>Folder “%1” was moved to &quot;%2&quot;</translation>
     </message>
 </context>
 <context>
@@ -7356,12 +7386,12 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     <message>
         <source>Are you sure you want to ignore all symlinks in all syncs?</source>
         <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation>Are you sure you want to ignore all symlinks in all syncs?</translation>
+        <translation>Ignore all symbolic links in all syncs?</translation>
     </message>
     <message>
         <source>This action will ignore all present and future symlinks in all your syncs.</source>
         <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
-        <translation>This action will ignore all present and future symlinks in all your syncs.</translation>
+        <translation>This action will ignore all present and future symbolic links in all of your syncs.</translation>
     </message>
     <message>
         <source>Are you sure you want to ignore this symlink?</source>
@@ -7399,12 +7429,12 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.SNC-4208</translatorcomment>
-        <translation>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.SNC-4208</translation>
+        <translation>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</translation>
     </message>
     <message>
         <source>Purchase more storage</source>
         <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.SNC-4208</translatorcomment>
-        <translation>Purchase more storage</translation>
+        <translation>Buy more storage</translation>
     </message>
 </context>
 <context>
@@ -7758,7 +7788,7 @@ Move it to a location that is less than 64 folders deep.</translation>
     <message>
         <source>Stopped</source>
         <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Stopped</translation>
     </message>
 </context>
 <context>
@@ -7780,7 +7810,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Synced Folders</source>
         <translatorcomment>Section title for Synchronized folders table view.SNC-4208</translatorcomment>
-        <translation>Synced Folders</translation>
+        <translation>Synced folders</translation>
     </message>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
@@ -7795,7 +7825,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
         <translatorcomment>Text in message box shown when an error occurs when removing a sync.SNC-2565</translatorcomment>
-        <translation>Your folder “%1” is not able to sync. Reason: %2</translation>
+        <translation>Your folder “%1” can’t sync. Reason: %2</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -7879,7 +7909,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Run</source>
         <translatorcomment>Menu action to resume syncing for syncs or backups.SNC-2565</translatorcomment>
-        <translation>Run</translation>
+        <translation>Resume</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -8222,8 +8252,8 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
         <translation>
-            <numerusform>Issue found</numerusform>
-            <numerusform>Issues found</numerusform>
+            <numerusform>Stall detected</numerusform>
+            <numerusform>Stalls detected</numerusform>
         </translation>
     </message>
 </context>
