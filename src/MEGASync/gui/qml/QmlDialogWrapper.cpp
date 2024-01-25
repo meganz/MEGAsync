@@ -54,20 +54,35 @@ void QmlDialogWrapperBase::setWindowState(Qt::WindowState state)
 {
     switch(state)
     {
-    case Qt::WindowState::WindowMaximized:
-        mWindow->showMaximized();
-        break;
-    case Qt::WindowState::WindowFullScreen:
-        mWindow->showFullScreen();
-        break;
-    case Qt::WindowState::WindowMinimized:
-        mWindow->showMinimized();
-        break;
-    case Qt::WindowState::WindowNoState:
-        mWindow->showNormal();
-        break;
-    case Qt::WindowState::WindowActive:
-        mWindow->requestActivate();
+        case Qt::WindowState::WindowMaximized:
+        {
+            mWindow->showMaximized();
+            break;
+        }
+        case Qt::WindowState::WindowFullScreen:
+        {
+            mWindow->showFullScreen();
+            break;
+        }
+        case Qt::WindowState::WindowMinimized:
+        {
+            mWindow->showMinimized();
+            break;
+        }
+        case Qt::WindowState::WindowNoState:
+        {
+            mWindow->showNormal();
+            break;
+        }
+        case Qt::WindowState::WindowActive:
+        {
+            mWindow->requestActivate();
+            break;
+        }
+        default:
+        {
+            return;
+        }
     }
 }
 
