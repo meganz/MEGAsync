@@ -63,7 +63,7 @@ background-color: rgba(0,0,0,0.1)
         </property>
         <property name="text">
          <string>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don't need on all of your devices,[BR]or certain file types that need not be synced.
+This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
 </string>
         </property>
         <property name="wordWrap">

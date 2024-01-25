@@ -2209,15 +2209,6 @@ Refresh the list.</translation>
         <translation>Current .megaignore file has been modified by another program, it will be reloaded</translation>
     </message>
     <message>
-        <source>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don&apos;t need on all of your devices,[BR]or certain file types that need not be synced.
-</source>
-        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don&apos;t need on all of your devices,[BR]or certain file types that need not be synced.
-</translation>
-    </message>
-    <message>
         <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
         <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
         <translation>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</translation>
@@ -2228,6 +2219,13 @@ This is a task better suited for advanced users who are comfortable[BR]with regu
         <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
         <translation>You can change the associated .megaignore file on a text editor.
 This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive.
+This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.
+</source>
+        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2698,12 +2696,12 @@ This is a task better suited for advanced users who are comfortable[BR]with regu
     <message>
         <source>The backup will be disabled in order to protect the local file %1</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup, %1 placeholder will have the file name.SNC-2565</translatorcomment>
-        <translation type="unfinished">The backup will be disabled in order to protect the local file [B]%1[/B]</translation>
+        <translation>The backup will be disabled in order to protect the local file [B]%1[/B]</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local folder %1</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup,%1 placeholder will have the folder name.SNC-2565</translatorcomment>
-        <translation type="unfinished">The backup will be disabled in order to protect the local folder [B]%1[/B]</translation>
+        <translation>The backup will be disabled in order to protect the local folder [B]%1[/B]</translation>
     </message>
     <message>
         <source>[B]Keep both[/B]</source>
@@ -2713,23 +2711,23 @@ This is a task better suited for advanced users who are comfortable[BR]with regu
     <message>
         <source>Are you sure you want to keep the [B]local file[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished">Keep the local file [B]%1[/B]?</translation>
+        <translation>Keep the local file [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished">Are you sure you want to keep the local folder [B]%1[/B]?</translation>
+        <translation>Are you sure you want to keep the local folder [B]%1[/B]?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished">The local file [B]%1[/B] will be uploaded to MEGA and added as a version of the file already in MEGA.</translation>
+        <translation>The local file [B]%1[/B] will be uploaded to MEGA and added as a version of the file already in MEGA.</translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished">The remote folder [B]%1[/B] will be moved to the MEGA Rubbish bin.[BR]You will be able to recover the folder from there.</translation>
+        <translation>The remote folder [B]%1[/B] will be moved to the MEGA Rubbish bin.[BR]You will be able to recover the folder from there.</translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -2742,17 +2740,17 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished">Keep the file in MEGA [B]%1[/B]?</translation>
+        <translation>Keep the file in MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished">Keep the remote folder [B]%1[/B]?</translation>
+        <translation>Keep the remote folder [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished">Are you sure you want to keep the [B]remote item[/B] %1?</translation>
+        <translation>Are you sure you want to keep the [B]remote item[/B] %1?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2819,78 +2817,74 @@ Refresh the list.</translation>
     <message>
         <source>[B]Keep last modified[/B] (local)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Keep last modified[/B] (local)</translation>
     </message>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Keep last modified[/B] (remote)</translation>
     </message>
     <message>
         <source>Keep the [B]local files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keep the [B]local folders[/B] %1?</source>
-        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is a placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keep the [B]local files[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
+Please wait for the upload to complete.</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</translation>
     </message>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keep the [B]remote files[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keep the [B]remote folders[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keep the [B]remote items[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The [B]local files[/B] will be moved to the sync debris folder</translation>
     </message>
     <message>
         <source>The [B]local folders[/B] will be moved to the sync debris folder</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The [B]local folders[/B] will be moved to the sync debris folder</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local files</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The backup will be disabled in order to protect the local files</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local folders</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The backup will be disabled in order to protect the local folders</translation>
     </message>
     <message>
         <source>Keep all files?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keep all files?</translation>
     </message>
     <message>
         <source>Keep all folders</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keep all folders</translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
@@ -2907,6 +2901,11 @@ Please wait for the upload to complete.</source>
             <numerusform>The [B]remote folder[/B] will have a suffix like (1) added</numerusform>
             <numerusform>The [B]remote folders[/B] will have a suffix like (1) added</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Keep the [B]local folders[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -88,11 +88,11 @@ void LocalAndRemoteDifferentWidget::refreshUi()
     QString lastModifiedInfoTitle;
     if (issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
     {
-        QString lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (local)");
+        lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (local)");
     }
     else
     {
-        QString lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
+        lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
     }
         textDecorator.process(lastModifiedInfoTitle);
         lastModifiedInfo.title = lastModifiedInfoTitle;
@@ -145,7 +145,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         info.msgInfo.text = tr("Are you sure you want to keep the [B]local folder[/B] %1?").arg(ui->chooseLocalCopy->data()->getFileName());
         if(info.selection.size() > 1)
         {
-            info.msgInfo.text = tr("Keep the [B]local folders[/B] %1?");
+            info.msgInfo.text = tr("Keep the [B]local folders[/B]?");
         }
     }
     textDecorator.process(info.msgInfo.text);
@@ -200,7 +200,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     {
         return;
     }
-
+    
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
     if(node)
@@ -239,7 +239,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
             info.msgInfo.informativeText = tr("The [B]local file[/B] %1 will be moved to the sync debris folder").arg(localInfo.fileName());
             if (info.selection.size() > 1)
             {
-                info.msgInfo.informativeText = tr("The [B]local files[/B] will be moved to the sync debris folder").arg(localInfo.fileName());
+                info.msgInfo.informativeText = tr("The [B]local files[/B] will be moved to the sync debris folder");
             }
         }
         else
@@ -247,7 +247,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
             info.msgInfo.informativeText = tr("The [B]local folder[/B] %1 will be moved to the sync debris folder").arg(localInfo.fileName());
             if (info.selection.size() > 1)
             {
-                info.msgInfo.informativeText = tr("The [B]local folders[/B] will be moved to the sync debris folder").arg(localInfo.fileName());
+                info.msgInfo.informativeText = tr("The [B]local folders[/B] will be moved to the sync debris folder");
             }
         }
     }
@@ -317,7 +317,7 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
-    if(localInfo.isFile())
+        if(localInfo.isFile())
     {
         info.msgInfo.text = tr("Keep both files?");
         if(info.selection.size())
@@ -341,11 +341,11 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
 
         if(node->isFile())
         {
-            info.msgInfo.informativeText = tr("The [B]remote file[/B] will have a suffix like (1) added", "", info.selection.size()).arg(newName);
+            info.msgInfo.informativeText = tr("The [B]remote file[/B] will have a suffix like (1) added", "", info.selection.size());
         }
         else
         {
-            info.msgInfo.informativeText = tr("The [B]remote folder[/B] will have a suffix like (1) added", "", info.selection.size()).arg(newName);
+            info.msgInfo.informativeText = tr("The [B]remote folder[/B] will have a suffix like (1) added", "", info.selection.size());
         }
         textDecorator.process(info.msgInfo.informativeText);
 
