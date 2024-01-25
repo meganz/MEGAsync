@@ -15,7 +15,7 @@
 #include <QQmlFileSelector>
 
 #include <memory>
-#include <QQmlEngine>
+#include <QQmlApplicationEngine>
 
 #include "gui/TransferManager.h"
 #include "gui/InfoDialog.h"
@@ -35,7 +35,6 @@
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
 #include "control/Utilities.h"
-#include "qqmlapplicationengine.h"
 #include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
 #include "megaapi.h"
