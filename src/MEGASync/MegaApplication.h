@@ -605,6 +605,7 @@ private:
     QQueue<QString> createQueue(const QStringList& newUploads) const;
 
     void registerCommonQMLElements();
+    void addStyleSelector(const QStringList& args);
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

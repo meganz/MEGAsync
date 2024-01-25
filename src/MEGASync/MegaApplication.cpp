@@ -156,16 +156,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     bool logToStdout = false;
 
-    QQmlFileSelector* qmlFileSelector = QQmlFileSelector::get(mEngine);
-    if (qmlFileSelector != nullptr)
-    {
-        QStringList style;
-        style << QLatin1String("green");
-        qmlFileSelector->setExtraSelectors(style);
-    }
-
-    changeStyleTimer->start();
-
     // Collect program arguments
     QStringList args;
     for (int i=0; i < argc; ++i)
@@ -221,6 +211,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     "QFileDialog QWidget {font-size: 13px;}"
                       ));
 #endif
+
+    addStyleSelector(args);
 
     // For some reason this doesn't work on Windows (done in stylesheet above)
     // TODO: re-try with Qt > 5.12.15
@@ -379,6 +371,21 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
     setAttribute(Qt::AA_DisableWindowContextHelpButton);
+}
+
+void MegaApplication::addStyleSelector(const QStringList& args)
+{
+    QQmlFileSelector* qmlFileSelector = QQmlFileSelector::get(mEngine);
+    if (qmlFileSelector != nullptr && args.contains(QLatin1String("--theme")))
+    {
+        auto styleValueIndex = args.indexOf(QLatin1String("--theme")) + 1;
+        if (styleValueIndex < args.size())
+        {
+            QStringList style;
+            style << args.at(styleValueIndex);
+            qmlFileSelector->setExtraSelectors(style);
+        }
+    }
 }
 
 MegaApplication::~MegaApplication()
