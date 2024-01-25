@@ -33,6 +33,9 @@
 #include "EmailRequester.h"
 #include "StatsEventHandler.h"
 
+#include "qml/QmlManager.h"
+#include "qml/QmlDialogManager.h"
+
 #include "DialogOpener.h"
 #include "PowerOptions.h"
 #include "DateTimeFormatter.h"
