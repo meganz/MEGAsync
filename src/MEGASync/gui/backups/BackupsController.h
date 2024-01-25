@@ -3,8 +3,6 @@
 
 #include "syncs/control/SyncController.h"
 
-#include "QTMegaRequestListener.h"
-
 class BackupsController : public QObject
 {
     Q_OBJECT
@@ -27,7 +25,6 @@ signals:
 
 private:
     mega::MegaApi* mMegaApi;
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     SyncController* mBackupController;
     int mBackupsToDoSize;
     int mBackupsProcessedWithError;

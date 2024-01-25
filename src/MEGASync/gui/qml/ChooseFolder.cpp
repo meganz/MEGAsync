@@ -11,10 +11,6 @@
 
 #include <QDir>
 
-ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
-    : QObject(parent)
-{}
-
 void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
 {
     auto openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());

@@ -3,8 +3,6 @@
 
 #include "qml/QmlDialogWrapper.h"
 
-#include <QScreen>
-
 class Backups : public QMLComponent
 {
     Q_OBJECT

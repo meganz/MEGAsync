@@ -4,24 +4,24 @@
 
 QmlDialog::QmlDialog(QWindow *parent)
     : QQuickWindow(parent)
-    , mIconScr(QString::fromUtf8(":/images/app_ico.ico")) // Default mega app icon
+    , mIconSrc(QString::fromUtf8(":/images/app_ico.ico")) // Default mega app icon
 {
     setFlags(flags() | Qt::Dialog);
     connect(this, &QmlDialog::requestPageFocus, this, &QmlDialog::onRequestPageFocus, Qt::QueuedConnection);
 }
 
-void QmlDialog::setIconScr(const QString& iconScr)
+void QmlDialog::setIconSrc(const QString& iconSrc)
 {
-    QString source = iconScr;
-    if(iconScr.startsWith(QString::fromUtf8("qrc:")))
+    QString source = iconSrc;
+    if(iconSrc.startsWith(QString::fromUtf8("qrc:")))
     {
         source = source.mid(3);
     }
 
-    if(source != mIconScr)
+    if(source != mIconSrc)
     {
-        mIconScr = source;
-        setIcon(QIcon(mIconScr));
+        mIconSrc = source;
+        setIcon(QIcon(mIconSrc));
     }
 }
 

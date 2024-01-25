@@ -25,8 +25,8 @@ BackupFolder::BackupFolder(const QString& folder,
     , mError(0)
     , mFolderAttr(nullptr)
     , mFolder(folder)
-    , folderSize(FileFolderAttributes::NOT_READY)
-    , sdkError(-1, -1)
+    , mFolderSize(FileFolderAttributes::NOT_READY)
+    , mSdkError(-1, -1)
 {
 }
 
@@ -39,8 +39,8 @@ void BackupFolder::setSize(qint64 size)
 
     if(size > FileFolderAttributes::NOT_READY)
     {
-        folderSize = static_cast<quint64>(size);
-        mSize = Utilities::getSizeStringLocalized(folderSize);
+        mFolderSize = static_cast<quint64>(size);
+        mSize = Utilities::getSizeStringLocalized(mFolderSize);
         changedRoles.append(BackupsModel::SIZE_ROLE);
     }
 
@@ -284,36 +284,33 @@ bool BackupsModel::getExistConflicts() const
 
 QString BackupsModel::getSdkErrorString() const
 {
-    QString message;
-    auto item = mBackupFolderList.cbegin();
-    while (item != mBackupFolderList.cend() && message.isEmpty())
+    QString message = tr("Folder wasn't backed up. Try again.", "", mSdkCount);
+    auto itFound = std::find_if(mBackupFolderList.cbegin(), mBackupFolderList.cend(), [](const BackupFolder* backupFolder)
+                                {
+                                    return (backupFolder->mSelected && backupFolder->mError == SDK_CREATION);
+                                });
+
+    if (itFound != mBackupFolderList.cend())
     {
-        if((*item)->mSelected && (*item)->mError == SDK_CREATION)
-        {
-           message = SyncController::getErrorString((*item)->sdkError.first, (*item)->sdkError.second);
-        }
-        item++;
+        message = SyncController::getErrorString((*itFound)->mSdkError.first, (*itFound)->mSdkError.second);
     }
 
-    if(message.isEmpty())
-    {
-        message = tr("Folder wasn't backed up. Try again.", "", mSdkCount);
-    }
     return message;
 }
 
 QString BackupsModel::getSyncErrorString() const
 {
     QString message;
-    auto item = mBackupFolderList.cbegin();
-    while (item != mBackupFolderList.cend() && message.isEmpty())
+    auto itFound = std::find_if(mBackupFolderList.cbegin(), mBackupFolderList.cend(), [](const BackupFolder* backupFolder)
+                                {
+                                    return (backupFolder->mSelected && backupFolder->mError == SYNC_CONFLICT);
+                                });
+
+    if (itFound != mBackupFolderList.cend())
     {
-        if((*item)->mSelected && (*item)->mError == SYNC_CONFLICT)
-        {
-            SyncController::isLocalFolderSyncable((*item)->getFolder(), mega::MegaSync::TYPE_BACKUP, message);
-        }
-        item++;
+        SyncController::isLocalFolderSyncable((*itFound)->getFolder(), mega::MegaSync::TYPE_BACKUP, message);
     }
+
     return message;
 }
 
@@ -447,7 +444,7 @@ void BackupsModel::updateSelectedAndTotalSize()
             if (backupFolder->mFolderSizeReady)
             {
                 ++selectedAndSizeReadyFolders;
-                totalSize += backupFolder->folderSize;
+                totalSize += backupFolder->mFolderSize;
             }
         }
     }
@@ -964,7 +961,7 @@ void BackupsModel::onBackupFinished(const QString& folder, int errorCode, int sy
     }
     else
     {
-        mBackupFolderList[row]->sdkError = QPair<int,int>(errorCode, syncErrorCode);
+        mBackupFolderList[row]->mSdkError = QPair<int,int>(errorCode, syncErrorCode);
         setData(index(row, 0), QVariant(BackupErrorCode::SDK_CREATION), ERROR_ROLE);
     }
 }

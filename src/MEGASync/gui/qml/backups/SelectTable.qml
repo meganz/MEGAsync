@@ -161,7 +161,6 @@ Item {
             anchors {
                 left: parent.left
                 right: parent.right
-                //bottom: borderRectangle.bottom
             }
             height: headerFooterHeight
             radius: tableRadius

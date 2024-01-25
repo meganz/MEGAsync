@@ -7,13 +7,13 @@ class QmlDialog : public QQuickWindow
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString iconSrc MEMBER mIconScr WRITE setIconScr)
+    Q_PROPERTY(QString iconSrc MEMBER mIconSrc WRITE setIconSrc)
 
 public:
     explicit QmlDialog(QWindow* parent = nullptr);
     ~QmlDialog() = default;
 
-    Q_INVOKABLE void setIconScr(const QString& iconScr);
+    Q_INVOKABLE void setIconSrc(const QString& iconSrc);
 
 signals:
     void accept();
@@ -30,7 +30,7 @@ protected:
     void onRequestPageFocus();
 
 private:
-    QString mIconScr;
+    QString mIconSrc;
 
 };
 
