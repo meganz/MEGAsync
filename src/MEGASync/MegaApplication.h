@@ -603,6 +603,7 @@ private:
     QQueue<QString> createQueue(const QStringList& newUploads) const;
 
     void registerCommonQMLElements();
+    void registerQMLModules();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
