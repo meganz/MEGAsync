@@ -1,11 +1,11 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION             4, 12, 1, 0
-#define VER_FILEVERSION_CODE        41201
-#define VER_PRODUCTVERSION          4, 12, 1, 0
+#define VER_FILEVERSION             4, 12, 2, 0
+#define VER_FILEVERSION_CODE        41202
+#define VER_PRODUCTVERSION          4, 12, 2, 0
 // Update scrips relying on this value if you move it
-#define VER_PRODUCTVERSION_STR      "4.12.1.0\0"
+#define VER_PRODUCTVERSION_STR      "4.12.2.0\0"
 
 #define VER_BUILD_ID                0
 

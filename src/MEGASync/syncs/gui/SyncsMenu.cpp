@@ -88,6 +88,7 @@ void SyncsMenu::callMenu(const QPoint& p)
 {
     refresh();
     mMenu->actions().isEmpty() ? onAddSync() : mMenu->popup(p);
+    mAddAction->setLabelText(getAddActionText());
 }
 
 void SyncsMenu::setEnabled(bool state)
