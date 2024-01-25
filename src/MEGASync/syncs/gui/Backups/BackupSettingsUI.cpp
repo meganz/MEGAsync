@@ -36,20 +36,16 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
 
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
     {
-        ui->gSyncs->setAddButtonEnabled(!dialog->getDialog()->isVisible());
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
         connect(dialog->getDialog(), &QmlDialogWrapper<Onboarding>::finished, this, [this]()
         {
-            ui->gSyncs->setAddButtonEnabled(true);
+            setAddButtonEnabled(true);
         });
     }
 
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
     {
-        ui->gSyncs->setAddButtonEnabled(!dialog->getDialog()->isVisible());
-        connect(dialog->getDialog(), &QmlDialogWrapper<Backups>::finished, this, [this]()
-        {
-            ui->gSyncs->setAddButtonEnabled(true);
-        });
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
     }
 }
 
@@ -69,12 +65,6 @@ void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
         backupsDialog = new QmlDialogWrapper<Backups>();
     }
     DialogOpener::showDialog(backupsDialog);
-
-    ui->gSyncs->setAddButtonEnabled(false);
-    connect(backupsDialog, &QmlDialogWrapper<Backups>::finished, this, [this]()
-    {
-        ui->gSyncs->setAddButtonEnabled(true);
-    });
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)

@@ -78,6 +78,7 @@ public slots:
 
     //Enable/Disable controls
     void setEnabledAllControls(const bool enabled);
+    void setBackupsAddButtonEnabled(const bool enabled);
 
 private slots:
     void on_bBackupCenter_clicked();

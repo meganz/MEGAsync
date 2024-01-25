@@ -1,5 +1,6 @@
 #include "Backups.h"
 
+#include "BackupsQmlDialog.h"
 #include "BackupsModel.h"
 
 #include "qml/QmlDialog.h"
@@ -33,6 +34,7 @@ void Backups::registerQmlModules()
     qmlRegisterSingletonType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData", AccountInfoData::instance);
 
     qmlRegisterModule("Backups", 1, 0);
+    qmlRegisterType<BackupsQmlDialog>("BackupsQmlDialog", 1, 0, "BackupsQmlDialog");
     qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
     qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",
                                              QString::fromUtf8("Cannot register BackupsModel::BackupErrorCode in QML"));

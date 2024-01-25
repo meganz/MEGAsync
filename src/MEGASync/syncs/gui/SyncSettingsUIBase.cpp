@@ -141,7 +141,12 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                     }
                 }
                 break;
-        }
+            }
+}
+
+void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
+{
+    ui->gSyncs->setAddButtonEnabled(enabled);
 }
 
 #ifdef Q_OS_MACOS

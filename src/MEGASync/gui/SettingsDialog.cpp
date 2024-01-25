@@ -1367,6 +1367,14 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->wStackFooter->setEnabled(enabled);
 }
 
+void SettingsDialog::setBackupsAddButtonEnabled(const bool enabled)
+{
+    if(mUi->backupSettings)
+    {
+        mUi->backupSettings->setAddButtonEnabled(enabled);
+    }
+}
+
 void SettingsDialog::setGeneralTabEnabled(const bool enabled)
 {
     // We want to keep only the "Send bug report" button enabled.

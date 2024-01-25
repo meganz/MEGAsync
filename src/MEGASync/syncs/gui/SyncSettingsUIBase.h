@@ -47,6 +47,8 @@ public:
     void onSavingSyncsCompleted(SyncStateInformation value);
     void syncsStateInformation(SyncStateInformation state);
 
+    void setAddButtonEnabled(bool enabled);
+
     template <class TableType, class ModelType, class SortModelType = SyncItemSortModel>
     void setTable()
     {

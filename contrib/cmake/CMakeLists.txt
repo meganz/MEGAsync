@@ -412,6 +412,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/backups/Backups.h
     ${MEGAsyncDir}/gui/backups/BackupsController.h
     ${MEGAsyncDir}/gui/backups/BackupsModel.h
+    ${MEGAsyncDir}/gui/backups/BackupsQmlDialog.h
 
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
@@ -688,6 +689,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/backups/Backups.cpp
     ${MEGAsyncDir}/gui/backups/BackupsController.cpp
     ${MEGAsyncDir}/gui/backups/BackupsModel.cpp
+    ${MEGAsyncDir}/gui/backups/BackupsQmlDialog.cpp
 
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
