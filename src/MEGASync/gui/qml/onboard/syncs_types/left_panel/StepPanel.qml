@@ -46,18 +46,14 @@ Rectangle {
         },
         State {
             name: step2InstallationType
+            extend: step1DeviceName
             PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
             PropertyChanges { target: step2_line; color: colorStyle.iconButton; }
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT; }
-            PropertyChanges { target: step3_line; visible: false; }
-            PropertyChanges { target: step3_content; visible: false; }
-            PropertyChanges { target: step4_line; visible: false; }
-            PropertyChanges { target: step4_content; visible: false; }
         },
         State {
             name: step3
-            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: step2_line; color: colorStyle.iconButton; }
+            extend: step2InstallationType
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
             PropertyChanges { target: step3_line; color: colorStyle.iconButton; visible: true; }
             PropertyChanges { target: step3_content; toState: SubStep.ToStates.CURRENT; visible: true; }
@@ -66,43 +62,26 @@ Rectangle {
         },
         State {
             name: step4
-            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: step2_line; color: colorStyle.iconButton; }
-            PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
-            PropertyChanges { target: step3_line; color: colorStyle.iconButton; visible: true; }
-            PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; visible: true; }
-            PropertyChanges { target: step4_line; color: colorStyle.iconButton; visible: true; }
-            PropertyChanges { target: step4_content; toState: SubStep.ToStates.CURRENT; visible: true; }
+            extend: step3
+            PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; }
+            PropertyChanges { target: step4_line; color: colorStyle.iconButton; }
+            PropertyChanges { target: step4_content; toState: SubStep.ToStates.CURRENT; }
         },
         State {
             name: step4Warning
-            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: step2_line; color: colorStyle.iconButton; }
-            PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
-            PropertyChanges { target: step3_line; color: colorStyle.iconButton; visible: true; }
-            PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; visible: true; }
-            PropertyChanges { target: step4_line; color: colorStyle.iconButton; visible: true; }
-            PropertyChanges { target: step4_content; toState: SubStep.ToStates.WARNING; visible: true; }
+            extend: step4
+            PropertyChanges { target: step4_content; toState: SubStep.ToStates.WARNING; }
         },
         State {
             name: step4Error
-            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: step2_line; color: colorStyle.iconButton; }
-            PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
-            PropertyChanges { target: step3_line; color: colorStyle.iconButton; visible: true; }
-            PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; visible: true; }
-            PropertyChanges { target: step4_line; color: colorStyle.iconButton; visible: true; }
-            PropertyChanges { target: step4_content; toState: SubStep.ToStates.ERROR; visible: true; }
+            extend: step4
+            PropertyChanges { target: step4_content; toState: SubStep.ToStates.ERROR; }
         },
         State {
             name: stepAllDone
-            PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: step2_line; color: colorStyle.iconButton; }
+            extend: step4
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: step3_line; color: colorStyle.iconButton; visible: true; }
-            PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; visible: true; }
-            PropertyChanges { target: step4_line; color: colorStyle.iconButton; visible: true; }
-            PropertyChanges { target: step4_content; toState: SubStep.ToStates.DONE; visible: true; }
+            PropertyChanges { target: step4_content; toState: SubStep.ToStates.DONE; }
         }
     ]
 
