@@ -116,12 +116,6 @@ Rectangle {
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.stepAllDone;
-                step3Text: navInfo.typeSelected === SyncsType.Types.BACKUP
-                           ? OnboardingStrings.backupSelectFolders
-                           : OnboardingStrings.syncChooseType;
-                step4Text: navInfo.typeSelected === SyncsType.Types.BACKUP
-                           ? OnboardingStrings.backupConfirm
-                           : OnboardingStrings.syncSetUp;
             }
         }
     ]

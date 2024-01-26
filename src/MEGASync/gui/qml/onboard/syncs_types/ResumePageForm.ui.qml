@@ -45,11 +45,16 @@ FooterButtonsPage {
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
             PropertyChanges { target: syncButtonItem; visible: false; }
+            PropertyChanges {
+                target: stepPanel;
+                state: stepPanel.stepAllDone;
+                step3Text: OnboardingStrings.syncChooseType;
+                step4Text: OnboardingStrings.syncSetUp;
+            }
         },
         State {
             name: stateSelectiveSync
-            PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
-            PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+            extend: stateFullSync
             PropertyChanges {
                 target: syncButtonItem;
                 type: SyncsType.Types.SELECTIVE_SYNC;
@@ -72,6 +77,12 @@ FooterButtonsPage {
                 description: !fullSyncDone && !selectiveSyncDone
                              ? OnboardingStrings.finalPageButtonSync
                              : OnboardingStrings.finalPageButtonSelectiveSync;
+            }
+            PropertyChanges {
+                target: stepPanel;
+                state: stepPanel.stepAllDone;
+                step3Text: OnboardingStrings.backupSelectFolders;
+                step4Text: OnboardingStrings.backupConfirm;
             }
         }
     ]
