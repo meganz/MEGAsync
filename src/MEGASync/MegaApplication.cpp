@@ -1211,7 +1211,6 @@ void MegaApplication::start()
     }
 
     mEngine->rootContext()->setContextProperty(QString::fromUtf8("loginControllerAccess"), mLoginController);
-    qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 
     if (preferences->getSession().isEmpty())
     {
@@ -3064,6 +3063,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
     qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
                                      QString::fromUtf8("Cannot create ApiEnums in QML"));
+    qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
