@@ -375,10 +375,16 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 void MegaApplication::addStyleSelector(const QStringList& args)
 {
+    /*
+     * Forced to use --theme instead of --style due to Qt is already using it
+     * for its own style selection (Material, Universal, etc.)
+    */
+    static const QString themeArg = QString::fromUtf8("--theme");
+
     QQmlFileSelector* qmlFileSelector = QQmlFileSelector::get(mEngine);
-    if (qmlFileSelector != nullptr && args.contains(QLatin1String("--theme")))
+    if (qmlFileSelector != nullptr && args.contains(themeArg))
     {
-        auto styleValueIndex = args.indexOf(QLatin1String("--theme")) + 1;
+        auto styleValueIndex = args.indexOf(themeArg) + 1;
         if (styleValueIndex < args.size())
         {
             QStringList style;
