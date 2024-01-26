@@ -450,7 +450,6 @@ void MegaApplication::initialize()
     QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
 
-    registerQMLModules();
     registerCommonQMLElements();
 
     qRegisterMetaTypeStreamOperators<EphemeralCredentials>("EphemeralCredentials");
