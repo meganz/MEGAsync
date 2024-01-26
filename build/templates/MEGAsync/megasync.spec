@@ -160,7 +160,7 @@ BuildRequires: ffmpeg-mega
 #Build sqlite3?
 %define flag_disablesqlite3 -L
 
-%if 0%{?centos_version} == 7
+%if 0%{?centos_version} == 700
     %define flag_disablesqlite3 %{nil}
 %endif
 
