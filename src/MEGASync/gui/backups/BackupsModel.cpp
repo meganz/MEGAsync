@@ -925,8 +925,11 @@ void BackupsModel::clean(bool resetErrors)
 
 void BackupsModel::setGlobalError(BackupErrorCode error)
 {
-    mGlobalError = error;
-    emit globalErrorChanged();
+    if(mGlobalError != error)
+    {
+        mGlobalError = error;
+        emit globalErrorChanged();
+    }
 }
 
 void BackupsModel::setTotalSizeReady(bool ready)
