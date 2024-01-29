@@ -515,53 +515,53 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
     {
         return;
     }
-
-    if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
+    auto nameConflict = header->getData().convert<NameConflictedStalledIssue>();
+    if(!nameConflict)
     {
-        QList<StalledIssueHeader::ActionInfo> actions;
-
-        if(header->getData().consultData()->filesCount() > 0)
+        return;
+    }
+    QList<StalledIssueHeader::ActionInfo> actions;
+    if(header->getData().consultData()->filesCount() > 0)
+    {
+        if(nameConflict->areAllDuplicatedNodes())
         {
-            if(header->getData().consultData()->foldersCount() > 0)
+            actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates"), NameConflictedStalledIssue::RemoveDuplicated);
+        }
+        else if(nameConflict->hasDuplicatedNodes())
+        {
+            NameConflictedStalledIssue::ActionsSelected selection(NameConflictedStalledIssue::RemoveDuplicated | NameConflictedStalledIssue::Rename);
+            QString actionMessage;
+            if(nameConflict->hasFoldersToMerge())
             {
-                if(nameConflict->areAllDuplicatedNodes())
-                {
-                    actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates"), NameConflictedStalledIssue::RemoveDuplicated);
-                }
-                else if(nameConflict->hasDuplicatedNodes())
-                {
-                    NameConflictedStalledIssue::ActionsSelected selection(NameConflictedStalledIssue::RemoveDuplicated | NameConflictedStalledIssue::Rename);
-                    QString actionMessage;
-                    if(nameConflict->hasFoldersToMerge())
-                    {
-                        selection |= NameConflictedStalledIssue::MergeFolders;
-                        actionMessage = tr("Remove duplicates, merge folders and rename the rest");
-                    }
-                    else
-                    {
-                        actionMessage = tr("Remove duplicates and rename the rest");
-                    }
-                    actions << StalledIssueHeader::ActionInfo(actionMessage, selection);
-                }
-                else if(nameConflict->hasFoldersToMerge())
-                {
-                     actions << StalledIssueHeader::ActionInfo(tr("Merge folders and rename the rest"), NameConflictedStalledIssue::Rename | NameConflictedStalledIssue::MergeFolders);
-                }
-
-                actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::Rename);
-            }
-            else if(header->getData().consultData()->foldersCount() > 1)
-            {
-                actions << StalledIssueHeader::ActionInfo(tr("Merge folders"), NameConflictedStalledIssue::MergeFolders);
+                selection |= NameConflictedStalledIssue::MergeFolders;
+                actionMessage = tr("Remove duplicates, merge folders and rename the rest");
             }
             else
             {
-                actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::Rename);
+                actionMessage = tr("Remove duplicates and rename the rest");
             }
+            actions << StalledIssueHeader::ActionInfo(actionMessage, selection);
+        }
+        else if(nameConflict->hasFoldersToMerge())
+        {
+            actions << StalledIssueHeader::ActionInfo(tr("Merge folders and rename the rest"), NameConflictedStalledIssue::Rename | NameConflictedStalledIssue::MergeFolders);
         }
 
-        header->showActions(tr("Solve options"), actions);
+        actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::Rename);
     }
+    else if(header->getData().consultData()->foldersCount() > 1)
+    {
+        if(nameConflict->hasFoldersToMerge())
+        {
+            actions << StalledIssueHeader::ActionInfo(tr("Merge folders"), NameConflictedStalledIssue::MergeFolders);
+        }
+        else
+        {
+            actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::Rename);
+        }
+    }
+
+    header->showActions(tr("Solve options"), actions);
 }
 
 void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
