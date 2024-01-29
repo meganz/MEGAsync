@@ -36,7 +36,6 @@
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
 
-#include <QQmlApplicationEngine>
 #include "DialogOpener.h"
 #include "PowerOptions.h"
 #include "DateTimeFormatter.h"
@@ -131,7 +130,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mLoginController(nullptr),
     scanStageController(this),
     mDisableGfx (false),
-    mEngine(new QQmlApplicationEngine())
+    mEngine(new QQmlEngine())
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!getenv("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -381,15 +380,15 @@ void MegaApplication::addStyleSelector(const QStringList& args)
     */
     static const QString themeArg = QString::fromUtf8("--theme");
 
-    QQmlFileSelector* qmlFileSelector = QQmlFileSelector::get(mEngine);
-    if (qmlFileSelector != nullptr && args.contains(themeArg))
+    mQmlFileSelector.reset(new QQmlFileSelector(mEngine));
+    if (mQmlFileSelector.get() != nullptr && args.contains(themeArg))
     {
         auto styleValueIndex = args.indexOf(themeArg) + 1;
         if (styleValueIndex < args.size())
         {
             QStringList style;
             style << args.at(styleValueIndex);
-            qmlFileSelector->setExtraSelectors(style);
+            mQmlFileSelector->setExtraSelectors(style);
         }
     }
 }

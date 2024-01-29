@@ -15,7 +15,7 @@
 #include <QQmlFileSelector>
 
 #include <memory>
-#include <QQmlApplicationEngine>
+#include <QQmlEngine>
 
 #include "gui/TransferManager.h"
 #include "gui/InfoDialog.h"
@@ -598,7 +598,8 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
-    QQmlApplicationEngine* mEngine;
+    QQmlEngine* mEngine;
+    std::unique_ptr<QQmlFileSelector> mQmlFileSelector;
 
     void processUpgradeSecurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;
