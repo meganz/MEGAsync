@@ -599,7 +599,7 @@ private:
     }
 
     QQmlEngine* mEngine;
-    std::unique_ptr<QQmlFileSelector> mQmlFileSelector;
+    QQmlFileSelector* mQmlFileSelector;
 
     void processUpgradeSecurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;
