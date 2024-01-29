@@ -130,8 +130,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mLoginController(nullptr),
     scanStageController(this),
     mDisableGfx (false),
-    mEngine(new QQmlEngine()),
-    mQmlFileSelector(new QQmlFileSelector(mEngine, mEngine))
+    mEngine(new QQmlEngine())
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!getenv("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -381,14 +380,15 @@ void MegaApplication::addStyleSelector(const QStringList& args)
     */
     static const QString themeArg = QString::fromUtf8("--theme");
 
-    if (mQmlFileSelector != nullptr && args.contains(themeArg))
+    auto qmlFileSelector(new QQmlFileSelector(mEngine, mEngine));
+    if (qmlFileSelector != nullptr && args.contains(themeArg))
     {
         auto styleValueIndex = args.indexOf(themeArg) + 1;
         if (styleValueIndex < args.size())
         {
             QStringList style;
             style << args.at(styleValueIndex);
-            mQmlFileSelector->setExtraSelectors(style);
+            qmlFileSelector->setExtraSelectors(style);
         }
     }
 }
