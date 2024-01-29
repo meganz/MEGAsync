@@ -211,15 +211,20 @@ void DesktopNotifications::requestFullName(mega::MegaUserAlert* alert, QString e
     }
     else
     {
-        processAlert(alert);
+        processAlert(alert, email);
     }
 }
 
-void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
+void DesktopNotifications::processAlert(mega::MegaUserAlert* alert, const QString& email)
 {
-    QString email = QString::fromUtf8(alert->getEmail());
-    QString fullName = email;
-    if (!email.isEmpty())
+    QString contactEmail = QString::fromUtf8(alert->getEmail());
+    if (contactEmail.isEmpty())
+    {
+        contactEmail = email;
+    }
+
+    QString fullName = contactEmail;
+    if (!contactEmail.isEmpty())
     {
         auto FullNameRequest = UserAttributes::FullName::requestFullName(email.toUtf8().constData());
         if (FullNameRequest)

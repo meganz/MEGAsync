@@ -66,7 +66,7 @@ private:
     QString createTakeDownMessage(mega::MegaUserAlert* alert, bool isReinstated = false) const;
     int countUnseenAlerts(mega::MegaUserAlertList *alertList);
 
-    void processAlert(mega::MegaUserAlert* alert);
+    void processAlert(mega::MegaUserAlert* alert, const QString& email = QString());
     MegaNotification* CreateContactNotification(const QString& title,
                                                const QString& message,
                                                const QString& email, const QStringList &actions = QStringList());
