@@ -43,7 +43,7 @@ pipeline {
                     if (env.SDK_BRANCH && env.SDK_BRANCH != ' ') {
                         branchToCheckout = env.SDK_BRANCH
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
-                        branchToCheckout = "release/v4.31.0"
+                        branchToCheckout = "develop"
                     } else {
                         env.SDK_BRANCH = sh(script: "grep 'branch =' ${linux_sources_workspace}/.gitmodules | sed 's/.*= //'", returnStdout: true).trim()
                         branchToCheckout = env.SDK_BRANCH
