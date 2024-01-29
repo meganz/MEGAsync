@@ -71,18 +71,20 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
 {
     bool duplicatedRemoved(false);
 
-    auto nameData = getData(issue);
+    mIssue = issue;
+    auto nameData = getData();
 
     //Fill conflict names
-    auto conflictedNames = getConflictedNames(issue);
+    auto conflictedNamesInfo = getConflictedNamesInfo();
 
     //Reset widgets
     bool allSolved(true);
 
-    for(int index = conflictedNames.size()-1; index >= 0; index--)
+    auto totalSize(0);
+    for(int index = conflictedNamesInfo.size()-1; index >= 0; index--)
     {
-        std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(index));
-        QString conflictedName(info->getConflictedName());
+        std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNamesInfo.at(index));
+        QString conflictedName(getConflictedName(info));
 
         QWidget* parent(ui->nameConflicts);
         QVBoxLayout* titleLayout(ui->nameConflictsLayout);
@@ -113,6 +115,11 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         {
             title = new StalledIssueActionTitle(parent);
             initTitle(title, index, conflictedName);
+            if(!issue->isSolved())
+            {
+                initActionButtons(title);
+            }
+
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
             titleLayout->addWidget(title);
             mTitlesByIndex.insert(index, title);
@@ -220,8 +227,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         setDisabled();
     }
 
-    mIssue = issue;
-
     ui->nameConflicts->layout()->activate();
     ui->nameConflicts->updateGeometry();
     layout()->activate();
@@ -238,7 +243,10 @@ void NameConflict::initTitle(StalledIssueActionTitle* title, int index, const QS
     title->setProperty(TITLE_FILENAME, conflictedName);
     title->setProperty(TITLE_INDEX, index);
     title->setSolved(false);
+}
 
+void NameConflict::initActionButtons(StalledIssueActionTitle* title)
+{
     QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
     QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
     title->addActionButton(renameIcon, tr("Rename"), RENAME_ID, false);
@@ -247,7 +255,7 @@ void NameConflict::initTitle(StalledIssueActionTitle* title, int index, const QS
 
 void NameConflict::onRawInfoChecked()
 {
-    const auto conflictedNames = getConflictedNames(mIssue);
+    const auto conflictedNames = getConflictedNamesInfo();
     foreach(auto title, mTitlesByIndex)
     {
         //Fill conflict names
@@ -335,6 +343,11 @@ void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDeleg
     mDelegateWidget = newDelegate;
 }
 
+QString NameConflict::getConflictedName(std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info) const
+{
+    return info->getConflictedName();
+}
+
 void NameConflict::setDisabled()
 {
 }
@@ -366,14 +379,14 @@ void NameConflict::onActionClicked(int actionId)
             return;
         }
 
-        auto issueData = getData(mIssue);
+        auto issueData = getData();
 
         QFileInfo info;
         auto titleFileName = chooseTitle->property(TITLE_FILENAME).toString();
         info.setFile(issueData->getNativePath(), titleFileName);
         QString filePath(info.filePath());
 
-        auto conflictedNames(getConflictedNames(mIssue));
+        auto conflictedNames(getConflictedNamesInfo());
         auto conflictIndex(chooseTitle->property(TITLE_INDEX).toInt());
 
         if(actionId == RENAME_ID)

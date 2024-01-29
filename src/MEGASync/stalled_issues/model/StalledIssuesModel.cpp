@@ -70,6 +70,11 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
 
                 variant.getData()->fillIssue(stall);
 
+                if(variant.shouldBeIgnored())
+                {
+                    continue;
+                }
+
                 //Chec if it is being solved...
                 if(!variant.getData()->isSolved())
                 {

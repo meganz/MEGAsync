@@ -110,6 +110,15 @@ QStringList NameConflictedStalledIssue::getLocalFiles()
     return files;
 }
 
+bool NameConflictedStalledIssue::shouldBeIgnored() const
+{
+    //We need to check if all of them are well decrypted
+    //This is a temporary fix: the SDK is sending a name conflict for undecrypted nodes in shared folders
+    auto areAllKeysDecrypted = mCloudConflictedNames.areAllKeysDecrypted();
+
+    return !areAllKeysDecrypted;
+}
+
 bool NameConflictedStalledIssue::hasDuplicatedNodes() const
 {
     for(int index = 0; index < mCloudConflictedNames.size(); ++index)
@@ -141,7 +150,7 @@ const QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>>& Na
     return mLocalConflictedNames;
 }
 
-const NameConflictedStalledIssue::CloudConflictedNamesByHandle& NameConflictedStalledIssue::getNameConflictCloudData() const
+const NameConflictedStalledIssue::CloudConflictedNames& NameConflictedStalledIssue::getNameConflictCloudData() const
 {
     return mCloudConflictedNames;
 }
@@ -308,6 +317,27 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIn
     }
 
     return result;
+}
+
+bool NameConflictedStalledIssue::hasFoldersToMerge() const
+{
+    uint8_t cloudFolders(0);
+    auto conflictedNames(mCloudConflictedNames.getConflictedNames());
+
+    foreach(const auto& cloudConflictedName, conflictedNames)
+    {
+        std::unique_ptr<mega::MegaNode> conflictedNode(MegaSyncApp->getMegaApi()->getNodeByHandle(cloudConflictedName->mHandle));
+        if(conflictedNode && conflictedNode->isFolder())
+        {
+            cloudFolders++;
+            if(cloudFolders > 1)
+            {
+                break;
+            }
+        }
+    }
+
+    return cloudFolders > 1;
 }
 
 bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIndex, const QString &renameTo)
@@ -584,11 +614,6 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(bool isPoten
     }
 
     return mIsSolved;
-}
-
-bool NameConflictedStalledIssue::isSolvable() const
-{
-    return !isSolved();
 }
 
 void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
