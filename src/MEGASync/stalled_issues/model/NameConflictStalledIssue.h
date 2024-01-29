@@ -6,6 +6,7 @@
 #include <FileFolderAttributes.h>
 #include <StalledIssuesUtilities.h>
 #include <Utilities.h>
+#include <MegaNodeNames.h>
 
 class NameConflictedStalledIssue : public StalledIssue
 {
@@ -72,7 +73,7 @@ public:
                 if(mHandle != mega::INVALID_HANDLE)
                 {
                     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle));
-                    if(node)
+                    if(node && node->isNodeKeyDecrypted())
                     {
                         auto nodePath = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(mHandle));
                         if(nodePath != mConflictedPath)
@@ -111,34 +112,42 @@ public:
         QString mUnescapedConflictedName;
     };
 
-    class CloudConflictedNames
+    struct CloudConflictedNameAttributes
     {
-    public:
-        CloudConflictedNames(QString ufingerprint, int64_t usize, int64_t umodifiedTime)
-            : fingerprint(ufingerprint), size(usize), modifiedTime(umodifiedTime)
-        {}
-
-        CloudConflictedNames()
-        {}
-
         QString fingerprint;
         int64_t size = -1;
         int64_t modifiedTime = -1;
+    };
+
+    class CloudConflictedNamesByAttributes
+    {
+    public:
+        CloudConflictedNamesByAttributes(QString ufingerprint, int64_t usize, int64_t umodifiedTime)
+        {
+            mAttributes.fingerprint = ufingerprint;
+            mAttributes.size = usize;
+            mAttributes.modifiedTime = umodifiedTime;
+        }
+
+        CloudConflictedNamesByAttributes()
+        {}
+
+        CloudConflictedNameAttributes mAttributes;
 
         bool solved = false;
 
         QMultiMap<int64_t, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
     };
 
-    class CloudConflictedNamesByHandle
+    class CloudConflictedNames
     {
     public:
-        CloudConflictedNamesByHandle()
+        CloudConflictedNames()
         {}
 
         void addFolderConflictedName(mega::MegaHandle handle, std::shared_ptr<ConflictedNameInfo> info)
         {
-            CloudConflictedNames newConflictedName;
+            CloudConflictedNamesByAttributes newConflictedName;
             newConflictedName.conflictedNames.insert(handle, info);
             mConflictedNames.append(newConflictedName);
         }
@@ -159,9 +168,9 @@ public:
             {
                 auto& namesByHandle = mConflictedNames[index];
 
-                if(fingerprint == namesByHandle.fingerprint
-                   && size == namesByHandle.size
-                   && modifiedtimestamp == namesByHandle.modifiedTime)
+                if(fingerprint == namesByHandle.mAttributes.fingerprint
+                   && size == namesByHandle.mAttributes.size
+                   && modifiedtimestamp == namesByHandle.mAttributes.modifiedTime)
                 {
                     info->mDuplicatedGroupId = index;
                     info->mDuplicated = true;
@@ -185,7 +194,7 @@ public:
                     remainIndex->mDuplicated = false;
                 }
 
-                CloudConflictedNames newConflictedName(fingerprint, size, modifiedtimestamp);
+                CloudConflictedNamesByAttributes newConflictedName(fingerprint, size, modifiedtimestamp);
                 newConflictedName.conflictedNames.insertMulti(newcreationtimestamp,info);
                 mConflictedNames.append(newConflictedName);
 
@@ -199,9 +208,9 @@ public:
             for(int index = 0; index < mConflictedNames.size(); ++index)
             {
                 auto& namesByHandle = mConflictedNames[index];
-                if(fingerprint == namesByHandle.fingerprint
-                        && size == namesByHandle.size
-                        && modifiedtimestamp == namesByHandle.modifiedTime)
+                if(fingerprint == namesByHandle.mAttributes.fingerprint
+                        && size == namesByHandle.mAttributes.size
+                        && modifiedtimestamp == namesByHandle.mAttributes.modifiedTime)
                 {
                     auto previousSize = namesByHandle.conflictedNames.size();
 
@@ -223,7 +232,7 @@ public:
                 }
             }
 
-            CloudConflictedNames newConflictedName(fingerprint, size, modifiedtimestamp);
+            CloudConflictedNamesByAttributes newConflictedName(fingerprint, size, modifiedtimestamp);
             newConflictedName.conflictedNames.insertMulti(creationtimestamp,info);
             mConflictedNames.append(newConflictedName);
         }
@@ -268,6 +277,29 @@ public:
             return result;
         }
 
+        CloudConflictedNameAttributes getAttributesByNameInfo(const std::shared_ptr<ConflictedNameInfo>& info) const
+        {
+            CloudConflictedNameAttributes attributes;
+
+            foreach(auto& namesByAttributes, mConflictedNames)
+            {
+                if(!namesByAttributes.conflictedNames.isEmpty())
+                {
+                    auto infoFound = std::find_if(namesByAttributes.conflictedNames.begin(), namesByAttributes.conflictedNames.end(),
+                                                  [&info](const std::shared_ptr<ConflictedNameInfo>& check){
+                        return info == check;
+                    });
+
+                    if(infoFound != namesByAttributes.conflictedNames.end())
+                    {
+                        return namesByAttributes.mAttributes;
+                    }
+                }
+            }
+
+            return attributes;
+        }
+
         std::shared_ptr<ConflictedNameInfo> firstNameConflict() const
         {
             foreach(auto& namesByHandle, mConflictedNames)
@@ -305,6 +337,54 @@ public:
             }
 
             return aux;
+        }
+
+        QString getConflictedName(const std::shared_ptr<ConflictedNameInfo>& info) const
+        {
+            if(!mConflictedNames.isEmpty())
+            {
+                if(isKeyUndecryped(info))
+                {
+                    return MegaNodeNames::getUndecryptedName();
+                }
+
+                return info->getConflictedName();
+            }
+
+            return QString();
+        }
+
+        QString getConflictedName()
+        {
+            if(!mConflictedNames.isEmpty() && !mConflictedNames.first().conflictedNames.isEmpty())
+            {
+                auto firstConflictedNameInfo(mConflictedNames.first().conflictedNames.first());
+
+                if(isKeyUndecryped(firstConflictedNameInfo))
+                {
+                    return MegaNodeNames::getUndecryptedName();
+                }
+
+                return firstConflictedNameInfo->getConflictedName();
+            }
+
+            return QString();
+        }
+
+        bool areAllKeysDecrypted() const
+        {
+            foreach(auto& namesByAttributes, mConflictedNames)
+            {
+                foreach(auto& conflictedName, namesByAttributes.conflictedNames)
+                {
+                    if(isKeyUndecryped(conflictedName))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         int size() const
@@ -398,10 +478,20 @@ public:
             }
         }
 
-
     private:
-         QList<CloudConflictedNames> mConflictedNames;
-         bool mDuplicatedSolved = false;
+        bool isKeyUndecryped(const std::shared_ptr<ConflictedNameInfo>& info) const
+        {
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(info->mHandle));
+            if(node && !node->isNodeKeyDecrypted())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        QList<CloudConflictedNamesByAttributes> mConflictedNames;
+        bool mDuplicatedSolved = false;
     };
 
     enum ActionSelected
@@ -419,7 +509,7 @@ public:
     void fillIssue(const mega::MegaSyncStall *stall) override;
 
     const QList<std::shared_ptr<ConflictedNameInfo>>& getNameConflictLocalData() const;
-    const CloudConflictedNamesByHandle& getNameConflictCloudData() const;
+    const CloudConflictedNames& getNameConflictCloudData() const;
 
     bool containsHandle(mega::MegaHandle handle) override;
     void updateHandle(mega::MegaHandle handle) override;
@@ -433,11 +523,12 @@ public:
     bool solveCloudConflictedNameByRename(int conflictIndex, const QString& renameTo);
     bool solveLocalConflictedNameByRename(int conflictIndex, const QString& renameTo);
 
+    bool hasFoldersToMerge() const;
+
     void renameNodesAutomatically();
 
     void semiAutoSolveIssue(int option);
     bool autoSolveIssue() override;
-    bool isSolvable() const override;
 
     bool hasDuplicatedNodes() const;
     bool areAllDuplicatedNodes() const;
@@ -450,6 +541,8 @@ public:
     {
         return true;
     }
+
+    bool shouldBeIgnored() const override;
 
 private:
     bool checkAndSolveConflictedNamesSolved(bool isPotentiallySolved = false);
@@ -472,7 +565,7 @@ private:
     //Find local or remote sibling
     std::shared_ptr<ConflictedNameInfo> findOtherSideItem(const QList<std::shared_ptr<ConflictedNameInfo>>& items, std::shared_ptr<ConflictedNameInfo> check);
 
-    CloudConflictedNamesByHandle mCloudConflictedNames;
+    CloudConflictedNames mCloudConflictedNames;
     QList<std::shared_ptr<ConflictedNameInfo>> mLocalConflictedNames;
 
     //Convenient class
