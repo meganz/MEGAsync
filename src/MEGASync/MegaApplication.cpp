@@ -130,7 +130,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mLoginController(nullptr),
     scanStageController(this),
     mDisableGfx (false),
-    mEngine(new QQmlEngine())
+    mEngine(new QQmlEngine()),
+    mQmlFileSelector(new QQmlFileSelector(mEngine))
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!getenv("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -380,7 +381,6 @@ void MegaApplication::addStyleSelector(const QStringList& args)
     */
     static const QString themeArg = QString::fromUtf8("--theme");
 
-    mQmlFileSelector.reset(new QQmlFileSelector(mEngine));
     if (mQmlFileSelector.get() != nullptr && args.contains(themeArg))
     {
         auto styleValueIndex = args.indexOf(themeArg) + 1;
