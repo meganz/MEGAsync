@@ -68,8 +68,8 @@ AttributeRequest::RequestInfo FullName::fillRequestInfo()
                                                     mega::MegaApi::USER_ATTR_LASTNAME);
     };
 
-    QSharedPointer<ParamInfo> firstNameInfo(new ParamInfo(firstNameRequest));
-    QSharedPointer<ParamInfo> lastNameInfo(new ParamInfo(lastNameRequest));
+    QSharedPointer<ParamInfo> firstNameInfo(new ParamInfo(firstNameRequest, QList<int>()<<mega::MegaError::API_OK));
+    QSharedPointer<ParamInfo> lastNameInfo(new ParamInfo(lastNameRequest, QList<int>()<<mega::MegaError::API_OK));
 
     ParamInfoMap paramInfo({{mega::MegaApi::USER_ATTR_FIRSTNAME, firstNameInfo},
                             {mega::MegaApi::USER_ATTR_LASTNAME, lastNameInfo}});
