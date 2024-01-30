@@ -974,7 +974,7 @@ void DesktopNotifications::OnUserAttributesReady()
         {
             foreach(auto alert, pendingAlerts)
             {
-                processAlert(alert);
+                processAlert(alert, UserAttribute->getEmail());
                 delete alert;
             }
             mPendingUserAlerts.remove(UserAttribute->getEmail());
