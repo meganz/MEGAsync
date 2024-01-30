@@ -41,6 +41,7 @@ public:
 
     long long getUnseenNotifications(int type) const;
     bool existsNotifications(int type) const;
+    void updateContacts(mega::MegaUserList *userList);
 
 private:
     int checkAlertType(int alertType) const;

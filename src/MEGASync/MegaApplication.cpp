@@ -1246,6 +1246,7 @@ void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRe
         mOsNotifications->addUserAlertList(theList);
     }
 
+    //@jsubi.
     if (notificationsModel)
     {
         notificationsModel->insertAlerts(theList, copyRequired);
@@ -6409,6 +6410,12 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
             }
             break;
         }
+    }
+
+    // @jsubi.
+    if (notificationsModel)
+    {
+        notificationsModel->updateContacts(userList);
     }
 }
 

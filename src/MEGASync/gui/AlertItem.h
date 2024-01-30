@@ -29,12 +29,13 @@ public:
     void setAlertHeading(mega::MegaUserAlert *alert);
     void setAlertContent(mega::MegaUserAlert *alert);
     void setAlertTimeStamp(int64_t ts);
-    void onUserEmailReady(QString email);
+    void updateEmail(QString email);
 
     QString getHeadingString();
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+    mega::MegaHandle getContactHandle() const;
 
 signals:
     void refreshAlertItem(unsigned item);
@@ -43,12 +44,13 @@ protected:
     void changeEvent(QEvent *event);
 
 private slots:
+    void onUserEmailReady(QString email);
     void onAttributesReady();
 
 private:
     QString formatRichString(QString str);
-    QString getUserFullName(mega::MegaUserAlert *alert);
-    void requestFullName(const char* email);
+    QString getUserFullName();
+    void requestFullName();
     void requestEmail(mega::MegaUserAlert* alert);
 
 private:
@@ -59,6 +61,7 @@ private:
     std::unique_ptr<mega::MegaUserAlert> mAlertUser;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
+    QString mEmail;
 };
 
 #endif // ALERTITEM_H

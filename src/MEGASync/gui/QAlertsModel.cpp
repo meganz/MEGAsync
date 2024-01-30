@@ -20,6 +20,29 @@ QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent
     insertAlerts(alerts, copy);
 }
 
+void QAlertsModel::updateContacts(mega::MegaUserList* userList)
+{
+    if (alertItems.isEmpty())
+    {
+        return;
+    }
+
+    for(auto userIndex = 0; userIndex < userList->size(); ++userIndex)
+    {
+        auto userContact = userList->get(userIndex);
+
+        for (auto alertIndex = 0; alertIndex < alertItems.count(); ++alertIndex)
+        {
+            auto alert = alertItems[alertIndex];
+
+            if (alert->getContactHandle() == userContact->getHandle())
+            {
+                alert->updateEmail(QString::fromUtf8(userContact->getEmail()));
+            }
+        }
+    }
+}
+
 void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
 {
     int numAlerts = alerts ? alerts->size() : 0;
