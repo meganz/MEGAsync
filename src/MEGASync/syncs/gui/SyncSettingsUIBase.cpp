@@ -144,11 +144,6 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
             }
 }
 
-void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
-{
-    ui->gSyncs->setAddButtonEnabled(enabled);
-}
-
 #ifdef Q_OS_MACOS
 void SyncSettingsUIBase::setToolBarItem(QMacToolBarItem *item)
 {
@@ -164,6 +159,11 @@ void SyncSettingsUIBase::setToolBarItem(QToolButton *item)
     syncsStateInformation(SAVING_FINISHED);
 }
 #endif
+
+void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
+{
+    ui->gSyncs->setAddButtonEnabled(enabled);
+}
 
 void SyncSettingsUIBase::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {

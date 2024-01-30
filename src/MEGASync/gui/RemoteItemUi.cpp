@@ -86,11 +86,6 @@ void RemoteItemUi::changeEvent(QEvent* event)
     QWidget::changeEvent(event);
 }
 
-void RemoteItemUi::setAddButtonEnabled(bool enabled)
-{
-    ui->bAdd->setEnabled(enabled);
-}
-
 void RemoteItemUi::setTableViewProperties(QTableView *view) const
 {
     view->setFrameShape(QFrame::NoFrame);
@@ -107,4 +102,13 @@ void RemoteItemUi::setTableViewProperties(QTableView *view) const
     view->verticalHeader()->setVisible(false);
     view->verticalHeader()->setMinimumSectionSize(24);
     view->verticalHeader()->setDefaultSectionSize(24);
+}
+
+void RemoteItemUi::setAddButtonEnabled(bool enabled)
+{
+#ifdef Q_OS_MACOS
+    ui->tableSegementedControl->setTableButtonEnable(QSegmentedControl::ADD_BUTTON, enabled);
+#else
+    ui->bAdd->setEnabled(enabled);
+#endif
 }
