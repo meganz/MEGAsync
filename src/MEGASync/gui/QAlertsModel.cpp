@@ -22,6 +22,7 @@ QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent
 
 void QAlertsModel::updateContacts(mega::MegaUserList* userList)
 {
+    /*
     if (alertItems.isEmpty())
     {
         return;
@@ -41,6 +42,7 @@ void QAlertsModel::updateContacts(mega::MegaUserList* userList)
             }
         }
     }
+    */
 }
 
 void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
@@ -66,7 +68,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
         while (copy && !alertOrder.empty()
                && actualNumberOfAlertsToInsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
         {
-            MegaUserAlert *alertToDelete = alertsMap[alertOrder.back()];
+            MegaUserAlertFacade* alertToDelete = alertsMap[alertOrder.back()];
             assert(alertToDelete && "something went wrong: no alert to delete");
             if (alertToDelete)
             {
@@ -101,7 +103,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 if (!alert->isRemoved())
                 {
                     alertOrder.push_front(alert->getId());
-                    alertsMap.insert(alert->getId(), alert);
+                    alertsMap.insert(alert->getId(), new MegaUserAlertFacade(alert));
                     if (!alert->getSeen())
                     {
                         if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
@@ -116,12 +118,12 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 MegaUserAlert *alert = alerts->get(i)->copy();
                 if (!alert->isRemoved())
                 {
-                    QMap<int, mega::MegaUserAlert*>::iterator existing = alertsMap.find(alert->getId());
+                    auto existing = alertsMap.find(alert->getId());
                     if (existing != alertsMap.end())
                     {
-                        MegaUserAlert *old = existing.value();
-                        alertsMap[alert->getId()] = alert;
-                        if (alert->getSeen() != old->getSeen())
+                        std::unique_ptr<MegaUserAlertFacade> oldAlert{existing.value()};
+                        alertsMap[alert->getId()] = new MegaUserAlertFacade(alert);
+                        if (alert->getSeen() != oldAlert->getSeen())
                         {
                             if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
                             {
@@ -132,10 +134,9 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         AlertItem *udpatedAlertItem = alertItems[alert->getId()];
                         if (udpatedAlertItem)
                         {
+                            //@jsubi - TODO: setAlertData should use MegaUserAlertFacade to keep correct email on change.
                             udpatedAlertItem->setAlertData(alert);
                         }
-
-                        delete old;
 
                         //update row element
                         std::deque<unsigned int>::iterator orderIter = std::find(alertOrder.begin(), alertOrder.end(),alert->getId());
@@ -156,7 +157,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     else
                     {
                         alertOrder.push_front(alert->getId());
-                        alertsMap.insert(alert->getId(), alert);
+                        alertsMap.insert(alert->getId(), new MegaUserAlertFacade(alert));
                         if (!alert->getSeen())
                         {
                             if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)

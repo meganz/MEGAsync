@@ -29,7 +29,7 @@ public:
     void setAlertHeading(mega::MegaUserAlert *alert);
     void setAlertContent(mega::MegaUserAlert *alert);
     void setAlertTimeStamp(int64_t ts);
-    void updateEmail(QString email);
+    void contactEmailChanged(QString email);
 
     QString getHeadingString();
 
@@ -44,7 +44,6 @@ protected:
     void changeEvent(QEvent *event);
 
 private slots:
-    void onUserEmailReady(QString email);
     void onAttributesReady();
 
 private:

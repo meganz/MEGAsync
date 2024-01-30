@@ -77,15 +77,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     onAttributesReady();
 }
 
-void AlertItem::onUserEmailReady(QString email)
-{
-    if (mEmail != email)
-    {
-        requestFullName();
-    }
-}
-
-void AlertItem::updateEmail(QString email)
+void AlertItem::contactEmailChanged(QString email)
 {
     if (mEmail != email)
     {
@@ -97,7 +89,7 @@ void AlertItem::requestEmail(mega::MegaUserAlert* alert)
 {
     EmailRequester* request = new EmailRequester(alert->getUserHandle());
 
-    connect(request, &EmailRequester::emailReceived, this, &AlertItem::onUserEmailReady, Qt::QueuedConnection);
+    connect(request, &EmailRequester::emailReceived, this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
 
     request->requestEmail();
 }
