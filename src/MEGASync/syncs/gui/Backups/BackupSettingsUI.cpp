@@ -65,6 +65,7 @@ void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
         backupsDialog = new QmlDialogWrapper<Backups>();
     }
     DialogOpener::showDialog(backupsDialog);
+    backupsDialog->wrapper()->comesFromSettings(true);
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)

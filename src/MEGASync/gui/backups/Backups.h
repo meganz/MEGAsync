@@ -7,6 +7,8 @@ class Backups : public QMLComponent
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool comesFromSettings MEMBER mComesFromSettings READ getComesFromSettings NOTIFY comesFromSettingsChanged)
+
 public:
 
     explicit Backups(QObject *parent = 0);
@@ -18,6 +20,16 @@ public:
     static void registerQmlModules();
 
     Q_INVOKABLE void openBackupsTabInPreferences() const;
+
+    void comesFromSettings(bool value);
+
+    bool getComesFromSettings() const;
+
+signals:
+    void comesFromSettingsChanged(bool value);
+
+private:
+    bool mComesFromSettings;
 
 };
 

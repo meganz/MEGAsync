@@ -9,6 +9,7 @@ static bool qmlRegistrationDone = false;
 
 Backups::Backups(QObject *parent)
     : QMLComponent(parent)
+    , mComesFromSettings(false)
 {
     registerQmlModules();
 }
@@ -40,3 +41,15 @@ void Backups::openBackupsTabInPreferences() const
 {
     MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
 }
+
+bool Backups::getComesFromSettings() const
+{
+    return mComesFromSettings;
+}
+
+void Backups::comesFromSettings(bool value)
+{
+    mComesFromSettings = value;
+    emit comesFromSettingsChanged(value);
+}
+
