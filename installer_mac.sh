@@ -146,7 +146,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
         SWRESAMPLE_VERSION=libswresample.4.dylib
 
         CARES_VERSION=libcares.2.dylib
-        CURL_VERSION=libcurl.dylib
+        CURL_VERSION=libcurl.4.dylib
 
         AVCODEC_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVCODEC_VERSION
         AVFORMAT_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVFORMAT_VERSION
