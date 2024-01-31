@@ -2460,7 +2460,7 @@ void MegaApplication::showInfoDialog()
 
     if(!mStatusController->isAccountBlocked())
     {
-        updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+        updateUserStats(true, true, false, true, USERSTATS_SHOWMAINDIALOG);
     }
 }
 

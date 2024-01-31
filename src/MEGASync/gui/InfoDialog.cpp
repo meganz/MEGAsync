@@ -1271,8 +1271,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 void InfoDialog::on_bStorageDetails_clicked()
 {
     auto dialog = new AccountDetailsDialog();
-    dialog->setAttribute(Qt::WA_DeleteOnClose, true);
-    dialog->show();
+    DialogOpener::showDialog<AccountDetailsDialog>(dialog);
 }
 
 void InfoDialog::animateStates(bool opt)
