@@ -68,7 +68,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
         while (copy && !alertOrder.empty()
                && actualNumberOfAlertsToInsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
         {
-            MegaUserAlert* alertToDelete = alertsMap[alertOrder.back()];
+            MegaUserAlertExt* alertToDelete = alertsMap[alertOrder.back()];
             assert(alertToDelete && "something went wrong: no alert to delete");
             if (alertToDelete)
             {
@@ -103,7 +103,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 if (!alert->isRemoved())
                 {
                     alertOrder.push_front(alert->getId());
-                    alertsMap.insert(alert->getId(), alert);
+                    alertsMap.insert(alert->getId(), new MegaUserAlertExt(alert));
                     if (!alert->getSeen())
                     {
                         if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
@@ -121,8 +121,8 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     auto existing = alertsMap.find(alert->getId());
                     if (existing != alertsMap.end())
                     {
-                        std::unique_ptr<MegaUserAlert> oldAlert{existing.value()};
-                        alertsMap[alert->getId()] = alert;
+                        std::unique_ptr<MegaUserAlertExt> oldAlert{existing.value()};
+                        alertsMap[alert->getId()] = new MegaUserAlertExt(alert);
                         if (alert->getSeen() != oldAlert->getSeen())
                         {
                             if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
@@ -157,7 +157,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     else
                     {
                         alertOrder.push_front(alert->getId());
-                        alertsMap.insert(alert->getId(), alert);
+                        alertsMap.insert(alert->getId(), new MegaUserAlertExt(alert));
                         if (!alert->getSeen())
                         {
                             if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
@@ -225,7 +225,7 @@ QVariant QAlertsModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::UserRole) //Role used to sort by date
     {
-        MegaUserAlert *item = (MegaUserAlert *)index.internalPointer();
+        MegaUserAlertExt *item = (MegaUserAlertExt *)index.internalPointer();
         QDateTime date;
         date.setMSecsSinceEpoch(item->getTimestamp(0) * 1000);
 

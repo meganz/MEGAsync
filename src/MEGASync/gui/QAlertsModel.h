@@ -51,7 +51,7 @@ public:
 private:
     int checkAlertType(int alertType) const;
 
-    QMap<int, mega::MegaUserAlert*> alertsMap;
+    QMap<int, MegaUserAlertExt*> alertsMap;
     std::deque<unsigned int> alertOrder;
     std::array<int, ALERT_ALL> unSeenNotifications;
     std::array<bool, ALERT_ALL> hasNotificationsOfType;
