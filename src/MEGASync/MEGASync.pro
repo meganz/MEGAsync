@@ -216,7 +216,7 @@ win32 {
 }
 
 macx {
-    QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM -D_DARWIN_C_SOURCE
+    QMAKE_CXXFLAGS += -D_DARWIN_C_SOURCE
     MAC_ICONS_RESOURCES.files += $$PWD/folder.icns
     MAC_ICONS_RESOURCES.files += $$PWD/folder_yosemite.icns
     MAC_ICONS_RESOURCES.files += $$PWD/folder_bigsur.icns

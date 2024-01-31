@@ -140,7 +140,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
 
     if [ ${build_cmake} -ne 1 ]; then
         CARES_VERSION=libcares.2.dylib
-        CURL_VERSION=libcurl.dylib
+        CURL_VERSION=libcurl.4.dylib
 
         CARES_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CARES_VERSION
         CURL_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CURL_VERSION
@@ -208,6 +208,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
             exit 1
         fi
     fi
+
     
     MEGASYNC_VERSION=`grep -o -E '#define VER_PRODUCTVERSION_STR\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+\.\d+\.\d+'`
     /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "${MSYNC_PREFIX}$APP_NAME.app/Contents/Info.plist"
