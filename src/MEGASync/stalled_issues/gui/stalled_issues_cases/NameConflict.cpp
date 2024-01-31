@@ -80,7 +80,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     //Reset widgets
     bool allSolved(true);
 
-    auto totalSize(0);
     for(int index = conflictedNamesInfo.size()-1; index >= 0; index--)
     {
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNamesInfo.at(index));
