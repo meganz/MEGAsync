@@ -2,7 +2,7 @@
 #define QFILTERALERTSMODEL_H
 
 #include <QSortFilterProxyModel>
-#include "QAlertsModel.h"
+
 #include <megaapi.h>
 
 class QFilterAlertsModel : public QSortFilterProxyModel

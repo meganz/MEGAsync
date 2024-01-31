@@ -135,7 +135,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         if (udpatedAlertItem)
                         {
                             //@jsubi - TODO: setAlertData should use MegaUserAlertFacade to keep correct email on change.
-                            udpatedAlertItem->setAlertData(alert);
+                            udpatedAlertItem->setAlertData(alertsMap[alert->getId()]);
                         }
 
                         //update row element

@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "megaapi.h"
+#include "MegaUserAlertExt.h"
 
 namespace Ui {
 class AlertItem;
@@ -24,10 +25,10 @@ public:
     explicit AlertItem(QWidget *parent = 0);
     ~AlertItem();
 
-    void setAlertData(mega::MegaUserAlert *alert);
+    void setAlertData(MegaUserAlertExt* alert);
     void setAlertType(int type);
-    void setAlertHeading(mega::MegaUserAlert *alert);
-    void setAlertContent(mega::MegaUserAlert *alert);
+    void setAlertHeading(MegaUserAlertExt* alert);
+    void setAlertContent(MegaUserAlertExt* alert);
     void setAlertTimeStamp(int64_t ts);
     void contactEmailChanged(QString email);
 
@@ -50,17 +51,17 @@ private:
     QString formatRichString(QString str);
     QString getUserFullName();
     void requestFullName();
-    void requestEmail(mega::MegaUserAlert* alert);
+    void requestEmail(MegaUserAlertExt* alert);
 
 private:
+    QString mEmail;
     Ui::AlertItem *ui;
     mega::MegaApi *megaApi;
     QString mNotificationHeading;
+    MegaUserAlertExt* mAlertUser;
     std::unique_ptr<mega::MegaNode> mAlertNode;
-    std::unique_ptr<mega::MegaUserAlert> mAlertUser;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
-    QString mEmail;
 };
 
 #endif // ALERTITEM_H

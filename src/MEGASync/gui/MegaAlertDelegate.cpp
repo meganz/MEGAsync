@@ -27,7 +27,7 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 
         //Map index when we are using QSortFilterProxyModel
         // if we are using QAbstractItemModel just access internalPointer casting to MegaAlert
-        MegaUserAlertExt *alert = NULL;
+        MegaUserAlertExt* alert = nullptr;
         if (mUseProxy)
         {
             QModelIndex actualId = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
@@ -37,11 +37,11 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
                 return;
             }
 
-            alert = (MegaUserAlertExt *)actualId.internalPointer();
+            alert = static_cast<MegaUserAlertExt*>(actualId.internalPointer());
         }
         else
         {
-            alert = (MegaUserAlertExt *)index.internalPointer();
+            alert = static_cast<MegaUserAlertExt*>(index.internalPointer());
         }
 
         if (!alert)
@@ -51,7 +51,7 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
             return;
         }
 
-        AlertItem *ti = mAlertsModel->alertItems[alert->getId()];
+        AlertItem* ti = mAlertsModel->alertItems[alert->getId()];
         if (!ti)
         {
             ti = new AlertItem();
@@ -59,8 +59,7 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 
             mAlertsModel->alertItems.insert(alert->getId(), ti);
 
-
-            ti->setAlertData(alert->getMegaUserAlert()); //Just set when created and when updated at QAlertsModel
+            ti->setAlertData(alert); //Just set when created and when updated at QAlertsModel
         }
 
         painter->save();
@@ -221,7 +220,7 @@ bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, co
 
     if (event->type() == QEvent::ToolTip)
     {
-        MegaUserAlert *alert = NULL;
+        MegaUserAlertExt* alert = nullptr;
         if (mUseProxy)
         {
             QModelIndex actualId = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
@@ -230,11 +229,11 @@ bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, co
                 return true;
             }
 
-            alert = (MegaUserAlert *)actualId.internalPointer();
+            alert = static_cast<MegaUserAlertExt*>(actualId.internalPointer());
         }
         else
         {
-            alert = (MegaUserAlert *)index.internalPointer();
+            alert = static_cast<MegaUserAlertExt*>(index.internalPointer());
         }
 
         if (!alert)

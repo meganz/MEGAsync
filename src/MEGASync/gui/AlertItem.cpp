@@ -32,8 +32,8 @@ AlertItem::AlertItem(QWidget *parent) :
         mAlertNode.reset(static_cast<MegaNode*>(mAlertNodeWatcher.result()));
 
         setAlertType(mAlertUser->getType());
-        setAlertHeading(mAlertUser.get());
-        setAlertContent(mAlertUser.get());
+        setAlertHeading(mAlertUser);
+        setAlertContent(mAlertUser);
         setAlertTimeStamp(mAlertUser->getTimestamp(0));
         mAlertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
 
@@ -46,9 +46,9 @@ AlertItem::~AlertItem()
     delete ui;
 }
 
-void AlertItem::setAlertData(MegaUserAlert *alert)
+void AlertItem::setAlertData(MegaUserAlertExt* alert)
 {
-    mAlertUser.reset(alert->copy());
+    mAlertUser = alert;
 
     if (alert->getUserHandle() != INVALID_HANDLE)
     {
@@ -85,7 +85,7 @@ void AlertItem::contactEmailChanged(QString email)
     }
 }
 
-void AlertItem::requestEmail(mega::MegaUserAlert* alert)
+void AlertItem::requestEmail(MegaUserAlertExt* alert)
 {
     EmailRequester* request = new EmailRequester(alert->getUserHandle());
 
@@ -125,8 +125,8 @@ void AlertItem::onAttributesReady()
     else
     {
         setAlertType(mAlertUser->getType());
-        setAlertHeading(mAlertUser.get());
-        setAlertContent(mAlertUser.get());
+        setAlertHeading(mAlertUser);
+        setAlertContent(mAlertUser);
         setAlertTimeStamp(mAlertUser->getTimestamp(0));
         mAlertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
         emit refreshAlertItem(mAlertUser->getId());
@@ -214,7 +214,7 @@ void AlertItem::setAlertType(int type)
     ui->lTitle->setText(notificationTitle);
 }
 
-void AlertItem::setAlertHeading(MegaUserAlert *alert)
+void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
 {
     ui->sIconWidget->hide();
     mNotificationHeading.clear();
@@ -332,7 +332,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
     }
 }
 
-void AlertItem::setAlertContent(MegaUserAlert *alert)
+void AlertItem::setAlertContent(MegaUserAlertExt *alert)
 {
     QString notificationContent;
     switch (alert->getType())
@@ -540,8 +540,8 @@ void AlertItem::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
         setAlertType(mAlertUser->getType());
-        setAlertHeading(mAlertUser.get());
-        setAlertContent(mAlertUser.get());
+        setAlertHeading(mAlertUser);
+        setAlertContent(mAlertUser);
         setAlertTimeStamp(mAlertUser->getTimestamp(0));
     }
     QWidget::changeEvent(event);

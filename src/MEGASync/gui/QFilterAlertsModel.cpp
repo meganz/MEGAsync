@@ -1,5 +1,6 @@
 #include "QFilterAlertsModel.h"
-#include "qdebug.h"
+
+#include "MegaUserAlertExt.h"
 
 using namespace mega;
 
@@ -78,8 +79,7 @@ bool QFilterAlertsModel::checkFilterType(int typeToCheck) const
 bool QFilterAlertsModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(row, 0, sourceParent);
-    MegaUserAlert *alert = NULL;
-    alert = (MegaUserAlert *)index.internalPointer();
+    MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(index.internalPointer());
 
     return alert ? checkFilterType(alert->getType()) : true;
 }
