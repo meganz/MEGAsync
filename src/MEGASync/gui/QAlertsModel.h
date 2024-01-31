@@ -10,7 +10,7 @@
 #include <megaapi.h>
 
 #include "AlertItem.h"
-#include "MegaUserAlertFacade.h"
+#include "MegaUserAlertExt.h"
 
 class QAlertsModel : public QAbstractItemModel
 {
@@ -51,7 +51,7 @@ public:
 private:
     int checkAlertType(int alertType) const;
 
-    QMap<int, MegaUserAlertFacade*> alertsMap;
+    QMap<int, mega::MegaUserAlert*> alertsMap;
     std::deque<unsigned int> alertOrder;
     std::array<int, ALERT_ALL> unSeenNotifications;
     std::array<bool, ALERT_ALL> hasNotificationsOfType;

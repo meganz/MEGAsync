@@ -15,7 +15,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
-    $$PWD/MegaUserAlertFacade.cpp \
+    $$PWD/MegaUserAlertExt.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/ScanningWidget.cpp \
@@ -107,7 +107,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
     $$PWD/MegaNodeNames.h \
-    $$PWD/MegaUserAlertFacade.h \
+    $$PWD/MegaUserAlertExt.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/ScanningWidget.h \
