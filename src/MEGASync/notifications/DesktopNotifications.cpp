@@ -226,7 +226,7 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert, const QStrin
     QString fullName = contactEmail;
     if (!contactEmail.isEmpty())
     {
-        auto FullNameRequest = UserAttributes::FullName::requestFullName(email.toUtf8().constData());
+        auto FullNameRequest = UserAttributes::FullName::requestFullName(contactEmail.toUtf8().constData());
         if (FullNameRequest)
         {
             fullName = FullNameRequest->getFullName();
