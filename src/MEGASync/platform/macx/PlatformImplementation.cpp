@@ -358,6 +358,15 @@ double PlatformImplementation::getUpTime()
     return uptime();
 }
 
+DriveSpaceData PlatformImplementation::getDriveData(const QString&)
+{
+    DriveSpaceData data;
+    data.mAvailableSpace = 0;
+    data.mTotalSpace = 0;
+    data.mIsReady = false;
+    return data;
+}
+
 void PlatformImplementation::disableSignalHandler()
 {
     signal(SIGSEGV, SIG_DFL);
