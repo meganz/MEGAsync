@@ -1,6 +1,7 @@
 #include "megaapi.h"
 #include "CommonMessages.h"
 #include "DesktopNotifications.h"
+#include "EmailRequester.h"
 #include "MegaApplication.h"
 #include "QTMegaRequestListener.h"
 #include "mega/user.h"
@@ -154,41 +155,78 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
         // alerts are sent again after seen state updated, so lets only notify the unseen alerts
         if(!alert->getSeen() && !alert->isRemoved())
         {
-            auto userEmail = QString::fromUtf8(alert->getEmail());
-
-            if(!userEmail.isEmpty())
-            {
-                auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(userEmail.toUtf8().constData());
-                if(fullNameUserAttributes)
-                {
-                    connect(fullNameUserAttributes.get(), &UserAttributes::FullName::fullNameReady,
-                            this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
-                }
-
-                if(fullNameUserAttributes && !fullNameUserAttributes->isAttributeReady())
-                {
-                    mPendingUserAlerts.insert(userEmail, alert->copy());
-                }
-                else
-                {
-                    processAlert(alert);
-                }
-            }
-            else
-            {
-                processAlert(alert);
-            }
+            sendAlert(alert);
         }
     }
 }
 
-void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
+void DesktopNotifications::sendAlert(mega::MegaUserAlert* alert)
 {
-    QString email = QString::fromUtf8(alert->getEmail());
-    QString fullName = email;
-    if (!email.isEmpty())
+    auto userHandle = alert->getUserHandle();
+
+    if (userHandle != mega::INVALID_HANDLE)
     {
-        auto FullNameRequest = UserAttributes::FullName::requestFullName(email.toUtf8().constData());
+        if(alert->getEmail() != nullptr)
+        {
+            auto email = QString::fromUtf8(alert->getEmail());
+
+            requestFullName(alert, email);
+        }
+        else
+        {
+            requestEmail(alert);
+        }
+    }
+    else
+    {
+        processAlert(alert);
+    }
+}
+
+void DesktopNotifications::requestEmail(mega::MegaUserAlert* alert)
+{
+    EmailRequester* request = new EmailRequester(alert->getUserHandle());
+
+    mega::MegaUserAlert* alertCopy = alert->copy();
+    connect(request, &EmailRequester::emailReceived, this, [this, alertCopy](const QString email) {
+            std::unique_ptr<mega::MegaUserAlert> alert(alertCopy);
+            requestFullName(alertCopy, email);
+        }, Qt::QueuedConnection);
+
+    request->requestEmail();
+}
+
+void DesktopNotifications::requestFullName(mega::MegaUserAlert* alert, QString email)
+{
+    auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(email.toUtf8().constData());
+    if(fullNameUserAttributes)
+    {
+        connect(fullNameUserAttributes.get(), &UserAttributes::FullName::fullNameReady,
+                this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
+    }
+
+    if(fullNameUserAttributes && !fullNameUserAttributes->isAttributeReady())
+    {
+        mPendingUserAlerts.insert(email, alert->copy());
+    }
+    else
+    {
+        processAlert(alert, email);
+    }
+}
+
+void DesktopNotifications::processAlert(mega::MegaUserAlert* alert, const QString& email)
+{
+    QString contactEmail = QString::fromUtf8(alert->getEmail());
+    if (contactEmail.isEmpty())
+    {
+        contactEmail = email;
+    }
+
+    QString fullName = contactEmail;
+    if (!contactEmail.isEmpty())
+    {
+        auto FullNameRequest = UserAttributes::FullName::requestFullName(contactEmail.toUtf8().constData());
         if (FullNameRequest)
         {
             fullName = FullNameRequest->getFullName();
@@ -936,7 +974,7 @@ void DesktopNotifications::OnUserAttributesReady()
         {
             foreach(auto alert, pendingAlerts)
             {
-                processAlert(alert);
+                processAlert(alert, UserAttribute->getEmail());
                 delete alert;
             }
             mPendingUserAlerts.remove(UserAttribute->getEmail());

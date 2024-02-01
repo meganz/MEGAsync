@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "UserAttributesRequests/FullName.h"
 #include <MegaNodeNames.h>
+#include "EmailRequester.h"
 
 #include <QDateTime>
 #include <QFutureWatcher>
@@ -17,10 +18,10 @@ using namespace mega;
 
 AlertItem::AlertItem(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AlertItem)
+    ui(new Ui::AlertItem),
+    megaApi(MegaSyncApp->getMegaApi())
 {
     ui->setupUi(this);
-    megaApi = ((MegaApplication *)qApp)->getMegaApi();
 
     ui->sIconWidget->hide();
     ui->wNotificationIcon->hide();
@@ -49,20 +50,18 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
 {
     mAlertUser.reset(alert->copy());
 
-    //Alerts from your own user come without email (like Payment reminders)
-    if(alert->getEmail())
+    if (alert->getUserHandle() != INVALID_HANDLE)
     {
-        mFullNameAttributes = UserAttributes::FullName::requestFullName(alert->getEmail());
-
-        if(mFullNameAttributes)
+        if (alert->getEmail())
         {
-            connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
+            requestFullName(alert->getEmail());
         }
-
-        ui->wAvatarContact->setUserEmail(alert->getEmail());
+        else
+        {
+            requestEmail(alert);
+        }
     }
-    //If it comes without email, it is because is an own alert, then take your email.
-    else
+    else //If it comes without user handler, it is because is an own alert, then take your email.
     {
         if(megaApi)
         {
@@ -73,6 +72,37 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     connect(ui->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this](){
         emit refreshAlertItem(mAlertUser->getId());
     });
+
+    onAttributesReady();
+}
+
+void AlertItem::onUserEmailReady(QString email)
+{
+    requestFullName(email.toUtf8().constData());
+}
+
+void AlertItem::requestEmail(mega::MegaUserAlert* alert)
+{
+    EmailRequester* request = new EmailRequester(alert->getUserHandle());
+
+    connect(request, &EmailRequester::emailReceived, this, &AlertItem::onUserEmailReady, Qt::QueuedConnection);
+
+    request->requestEmail();
+}
+
+void AlertItem::requestFullName(const char* email)
+{
+    if (email != nullptr)
+    {
+        mFullNameAttributes = UserAttributes::FullName::requestFullName(email);
+
+        if(mFullNameAttributes)
+        {
+            connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
+        }
+
+        ui->wAvatarContact->setUserEmail(email);
+    }
 
     onAttributesReady();
 }
@@ -515,6 +545,7 @@ QString AlertItem::getUserFullName(MegaUserAlert *alert)
     {
         return mFullNameAttributes->getRichFullName();
     }
+
     return QString::fromUtf8(alert->getEmail());
 }
 
