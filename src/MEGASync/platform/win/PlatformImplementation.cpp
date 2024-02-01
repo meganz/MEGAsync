@@ -1746,3 +1746,25 @@ bool PlatformImplementation::openRegistry(HKEY baseKey, const QString &regKeyPat
     LONG result = RegOpenKeyEx(baseKey, wideRegKey.c_str(), 0, KEY_READ, &openedKey);
     return (result == ERROR_SUCCESS);
 }
+
+DriveSpaceData PlatformImplementation::getDriveData(const QString &path)
+{
+    DriveSpaceData data;
+    // Network paths in Windows such as \\<ip>\<dir> are not handled by QStorageInfo,
+    // so we can't get available space this way.
+    const QByteArray pathArray = path.toUtf8();
+
+    DWORD sectorsPerCluster;
+    DWORD bytesPerSector;
+    DWORD freeClustersCount;
+    DWORD totalClustersCount;
+    BOOL ok = GetDiskFreeSpaceA(pathArray.constData(),
+                                &sectorsPerCluster,
+                                &bytesPerSector,
+                                &freeClustersCount,
+                                &totalClustersCount);
+    data.mIsReady = (ok == TRUE);
+    data.mAvailableSpace = freeClustersCount * bytesPerSector * sectorsPerCluster;
+    data.mTotalSpace = totalClustersCount * bytesPerSector * sectorsPerCluster;
+    return data;
+}

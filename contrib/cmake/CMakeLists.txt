@@ -279,6 +279,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/EventUpdater.h
     ${MEGAsyncDir}/FolderTransferListener.h
     ${MEGAsyncDir}/BlockingStageProgressController.h
+    ${MEGAsyncDir}/drivedata.h
 
     ${MEGAsyncDir}/notifications/DesktopNotifications.h
     ${MEGAsyncDir}/notifications/NotificationDelayer.h
@@ -309,6 +310,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/Version.h
     ${MEGAsyncDir}/control/LoginController.h
     ${MEGAsyncDir}/control/AccountStatusController.h
+    ${MEGAsyncDir}/control/EmailRequester.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -564,6 +566,7 @@ set (SRCS
     ${MEGAsyncDir}/EventUpdater.cpp
     ${MEGAsyncDir}/FolderTransferListener.cpp
     ${MEGAsyncDir}/BlockingStageProgressController.cpp
+    ${MEGAsyncDir}/drivedata.cpp
 
     ${MEGAsyncDir}/notifications/TransferNotificationBuilder.cpp
     ${MEGAsyncDir}/notifications/DesktopNotifications.cpp
@@ -748,6 +751,7 @@ set (SRCS
     ${MEGAsyncDir}/control/LoginController.cpp
     ${MEGAsyncDir}/control/AccountStatusController.cpp
     ${MEGAsyncDir}/control/FileFolderAttributes.cpp
+    ${MEGAsyncDir}/control/EmailRequester.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp

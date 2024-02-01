@@ -1344,9 +1344,6 @@
         <file>images/node_selector/search_filter/small_cloud_default@3x.png</file>
         <file>images/node_selector/search_filter/small_cloud_default@2x.png</file>
         <file>images/node_selector/search_filter/small_cloud_default.png</file>
-        <file>images/HD_mac.png</file>
-        <file>images/HD_mac@2x.png</file>
-        <file>images/HD_mac@3x.png</file>
         <file>images/node_selector/chevron-right@3x.png</file>
         <file>images/node_selector/chevron-right@2x.png</file>
         <file>images/node_selector/chevron-right.png</file>
@@ -1482,6 +1479,7 @@
         <file>images/StalledIssues/rotate_cw_default.png</file>
         <file>images/StalledIssues/rotate_cw_default@2x.png</file>
         <file>images/StalledIssues/rotate_cw_default@3x.png</file>
+        <file>images/drive-low-space.svg</file>
         <file>fonts/Inter-Black.ttf</file>
         <file>fonts/Inter-Bold.ttf</file>
         <file>fonts/Inter-ExtraBold.ttf</file>

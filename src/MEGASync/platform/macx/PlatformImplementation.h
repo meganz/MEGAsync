@@ -46,6 +46,7 @@ public:
 
     void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
     void streamWithApp(const QString& app, const QString& url) override;
+    DriveSpaceData getDriveData(const QString& path) override;
 
     void processSymLinks() override;
 

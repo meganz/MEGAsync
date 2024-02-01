@@ -159,7 +159,8 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/UserAttributesRequests/DeviceName.cpp \
     $$PWD/UserAttributesRequests/FullName.cpp \
     $$PWD/UserAttributesRequests/MyBackupsHandle.cpp \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp \
+    $$PWD/drivedata.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
     $$PWD/TransferQuota.h \
@@ -176,7 +177,8 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/UserAttributesRequests/DeviceName.h \
     $$PWD/UserAttributesRequests/FullName.h \
     $$PWD/UserAttributesRequests/MyBackupsHandle.h \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.h
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.h \
+    $$PWD/drivedata.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \

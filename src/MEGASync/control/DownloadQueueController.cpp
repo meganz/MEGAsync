@@ -3,6 +3,11 @@
 #include "LowDiskSpaceDialog.h"
 #include "MegaApplication.h"
 #include "DialogOpener.h"
+#include "platform/Platform.h"
+
+#ifdef WIN32
+#include <fileapi.h>
+#endif
 
 using namespace mega;
 
@@ -103,7 +108,7 @@ void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, Me
 
 void DownloadQueueController::tryDownload()
 {
-    bool downloadPossible(hasEnoughSpaceForDownloads());
+    const bool downloadPossible = hasEnoughSpaceForDownloads();
     if (!downloadPossible)
     {
         askUserForChoice();
@@ -118,12 +123,12 @@ bool DownloadQueueController::hasEnoughSpaceForDownloads()
 {
     if (!mCurrentTargetPath.isEmpty())
     {
-        QStorageInfo destinationDrive(mCurrentTargetPath);
-        // bytesAvailable() is valid only if isReady().
-        // Network paths in Windows such as \\<ip>\<dir> are not handled by QStorageInfo,
-        // so we can't get available space this way. For now, allow download if we can't check
-        // available space.
-        return (!destinationDrive.isReady() || mTotalQueueDiskSize < destinationDrive.bytesAvailable());
+        mCachedDriveData = getDriveSpaceDataFromQt();
+        if (!mCachedDriveData.isAvailable())
+        {
+            mCachedDriveData = Platform::getInstance()->getDriveData(mCurrentTargetPath);
+        }
+        return (!mCachedDriveData.mIsReady || mTotalQueueDiskSize < mCachedDriveData.mAvailableSpace);
     }
     return true;
 }
@@ -131,17 +136,60 @@ bool DownloadQueueController::hasEnoughSpaceForDownloads()
 void DownloadQueueController::askUserForChoice()
 {
     QStorageInfo destinationDrive(mCurrentTargetPath);
-    QString driveName = destinationDrive.name();
-    if (driveName.isEmpty())
-    {
-        driveName = tr("Local Disk");
-    }
 
-    LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, destinationDrive.bytesAvailable(),
-                              destinationDrive.bytesTotal(), driveName);
+    const DriveDisplayData driveDisplayData = getDriveDisplayData(destinationDrive);
+
+
+    LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, mCachedDriveData.mAvailableSpace,
+                              mCachedDriveData.mTotalSpace, driveDisplayData);
     DialogOpener::showDialog<LowDiskSpaceDialog>(dialog, [this, dialog](){
         dialog->result() == QDialog::Accepted ? tryDownload() : emit finishedAvailableSpaceCheck(false);
     });
+}
+
+DriveDisplayData DownloadQueueController::getDriveDisplayData(const QStorageInfo &driveInfo) const
+{
+    DriveDisplayData data;
+    data.name = driveInfo.name();
+    if (data.name.isEmpty())
+    {
+        data.name = getDefaultDriveName();
+    }
+    data.icon = getDriveIcon();
+    return data;
+}
+
+QString DownloadQueueController::getDefaultDriveName() const
+{
+#ifdef WIN32
+    UINT driveType = GetDriveTypeA(mCurrentTargetPath.toUtf8().constData());
+    if (driveType == DRIVE_REMOVABLE || driveType == DRIVE_CDROM)
+    {
+        return tr("Removable drive");
+    }
+    else if (driveType == DRIVE_REMOTE || driveType == DRIVE_UNKNOWN || driveType == DRIVE_NO_ROOT_DIR)
+    {
+        return tr("Shared drive");
+    }
+#endif
+    return tr("Local drive");
+}
+
+QString DownloadQueueController::getDriveIcon() const
+{
+    return QString::fromLatin1(":/images/drive-low-space.svg");
+}
+
+DriveSpaceData DownloadQueueController::getDriveSpaceDataFromQt()
+{
+    DriveSpaceData data;
+
+    QStorageInfo destinationDrive(mCurrentTargetPath);
+    data.mIsReady = destinationDrive.isReady();
+    data.mAvailableSpace = destinationDrive.bytesAvailable();
+    data.mTotalSpace = destinationDrive.bytesTotal();
+
+    return data;
 }
 
 const QString& DownloadQueueController::getCurrentTargetPath() const

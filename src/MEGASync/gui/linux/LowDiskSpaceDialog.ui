@@ -86,7 +86,7 @@ QPushButton {
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">border-image: url(:/images/HD_mac.png);</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string notr="true"/>
