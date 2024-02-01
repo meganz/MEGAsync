@@ -7084,11 +7084,6 @@ Do you want to delete it anyway?</translation>
         <translation>Solved:</translation>
     </message>
     <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Refresh</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translatorcomment>Button to close sync stalls dialog</translatorcomment>
         <translation>Close</translation>
@@ -7138,6 +7133,11 @@ automatically</source>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
         <translation>[A]Learn more[/A]</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
+        <translation>Help</translation>
     </message>
 </context>
 <context>

@@ -892,7 +892,7 @@ color: #2C5BEB;
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="HelpButton">
+              <widget class="QPushButton" name="updateButton">
                <property name="minimumSize">
                 <size>
                  <width>24</width>
@@ -909,12 +909,11 @@ color: #2C5BEB;
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="text">
-                <string notr="true"/>
+                <string/>
                </property>
                <property name="icon">
                 <iconset>
-                 <normalon>:/images/StalledIssues/help-stalled-issues.png</normalon>
-                </iconset>
+                 <normaloff>:/images/StalledIssues/refresh.png</normaloff>:/images/StalledIssues/refresh.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1392,7 +1391,7 @@ QMenu::item:default
           <string notr="true"/>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="spacing">
+<property name="spacing">
            <number>0</number>
           </property>
           <property name="leftMargin">
@@ -1408,34 +1407,32 @@ QMenu::item:default
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="updateButton">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>34</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
+           <widget class="QPushButton" name="HelpButton">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+border: none;
+color: #0078D7;
+}
+
+QPushButton::!enabled {
+color: grey;
+}</string>
             </property>
             <property name="text">
-             <string>Refresh</string>
+             <string>Help</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>:/images/StalledIssues/rotate_cw_default.png</normaloff>:/images/StalledIssues/rotate_cw_default.png</iconset>
+              <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>16</width>
-              <height>16</height>
+              <width>24</width>
+              <height>24</height>
              </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1497,7 +1494,7 @@ QMenu::item:default
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources_win.qrc"/>
- </resources>
+    <include location="../../../gui/Resources_win.qrc"/>
+   </resources>
  <connections/>
 </ui>
