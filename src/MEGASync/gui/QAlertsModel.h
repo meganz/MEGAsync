@@ -8,11 +8,12 @@
 #include <QAbstractItemModel>
 
 #include <megaapi.h>
+#include <mega/bindings/qt/QTMegaGlobalListener.h>
 
 #include "AlertItem.h"
 #include "MegaUserAlertExt.h"
 
-class QAlertsModel : public QAbstractItemModel
+class QAlertsModel : public QAbstractItemModel, public mega::MegaGlobalListener
 {
     Q_OBJECT
 
@@ -45,8 +46,8 @@ public:
 
     long long getUnseenNotifications(int type) const;
     bool existsNotifications(int type) const;
-    void updateContacts(mega::MegaUserList *userList);
     void refreshAlertItem(unsigned item);
+    void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
 
 private:
     int checkAlertType(int alertType) const;
@@ -55,6 +56,7 @@ private:
     std::deque<unsigned int> alertOrder;
     std::array<int, ALERT_ALL> unSeenNotifications;
     std::array<bool, ALERT_ALL> hasNotificationsOfType;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 };
 
 #endif // QALERTSMODEL_H

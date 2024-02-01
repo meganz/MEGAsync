@@ -4,7 +4,6 @@
 #include "MegaApplication.h"
 #include "UserAttributesRequests/FullName.h"
 #include <MegaNodeNames.h>
-#include "EmailRequester.h"
 
 #include <QDateTime>
 #include <QFutureWatcher>
@@ -50,16 +49,15 @@ void AlertItem::setAlertData(MegaUserAlertExt* alert)
 {
     mAlertUser = alert;
 
-    if (alert->getUserHandle() != INVALID_HANDLE)
+    if (mAlertUser->getUserHandle() != INVALID_HANDLE)
     {
         if (alert->getEmail())
         {
-            mEmail = QString::fromUtf8(alert->getEmail());
             requestFullName();
         }
         else
         {
-            requestEmail(alert);
+            requestEmail();
         }
     }
     else //If it comes without user handler, it is because is an own alert, then take your email.
@@ -77,36 +75,33 @@ void AlertItem::setAlertData(MegaUserAlertExt* alert)
     onAttributesReady();
 }
 
-void AlertItem::contactEmailChanged(QString email)
+void AlertItem::contactEmailChanged()
 {
-    if (mEmail != email)
-    {
-        requestFullName();
-    }
+    requestFullName();
 }
 
-void AlertItem::requestEmail(MegaUserAlertExt* alert)
+void AlertItem::requestEmail()
 {
-    EmailRequester* request = new EmailRequester(alert->getUserHandle());
+    connect(mAlertUser, &MegaUserAlertExt::emailChanged, this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
 
-    connect(request, &EmailRequester::emailReceived, this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
-
-    request->requestEmail();
+    mAlertUser->requestEmail();
 }
 
 void AlertItem::requestFullName()
 {
-    if (!mEmail.isEmpty())
+    if (!mAlertUser->getEmail())
     {
-        mFullNameAttributes = UserAttributes::FullName::requestFullName(mEmail.toStdString().c_str());
-
-        if(mFullNameAttributes)
-        {
-            connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
-        }
-
-        ui->wAvatarContact->setUserEmail(mEmail.toStdString().c_str());
+        return;
     }
+
+    mFullNameAttributes = UserAttributes::FullName::requestFullName(mAlertUser->getEmail());
+
+    if(mFullNameAttributes)
+    {
+        connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
+    }
+
+    ui->wAvatarContact->setUserEmail(mAlertUser->getEmail());
 
     onAttributesReady();
 }
@@ -325,9 +320,9 @@ void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
     ui->lHeading->ensurePolished();
     ui->lHeading->setText(ui->lHeading->fontMetrics().elidedText(mNotificationHeading, Qt::ElideMiddle,ui->lHeading->minimumWidth()));
 
-    if(!mEmail.isEmpty())
+    if(mAlertUser->getEmail())
     {
-        mNotificationHeading.append(QString::fromLatin1(" (") + mEmail + QString::fromLatin1(")"));
+        mNotificationHeading.append(QString::fromLatin1(" (") + QString::fromLatin1(mAlertUser->getEmail()) + QString::fromLatin1(")"));
         setToolTip(mNotificationHeading);
     }
 }
@@ -396,7 +391,7 @@ void AlertItem::setAlertContent(MegaUserAlertExt *alert)
                 }
                 else //Access for the user was removed by share owner
                 {
-                    notificationContent = !mEmail.isEmpty() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
+                    notificationContent = mAlertUser->getEmail() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
                                                             : tr("Access to shared folder was removed");
                 }
                 break;
@@ -524,16 +519,6 @@ QSize AlertItem::sizeHint() const
     return QSize(400, 122);
 }
 
-MegaHandle AlertItem::getContactHandle() const
-{
-    if (mAlertUser != nullptr)
-    {
-        return mAlertUser->getUserHandle();
-    }
-
-    return INVALID_HANDLE;
-}
-
 void AlertItem::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -560,6 +545,6 @@ QString AlertItem::getUserFullName()
         return mFullNameAttributes->getRichFullName();
     }
 
-    return mEmail;
+    return QString::fromUtf8(mAlertUser->getEmail());
 }
 

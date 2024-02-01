@@ -8,6 +8,8 @@
 
 #include "megaapi.h"
 
+#include "EmailRequester.h"
+
 class MegaUserAlertExt : public QObject
 {
     Q_OBJECT
@@ -15,26 +17,17 @@ class MegaUserAlertExt : public QObject
 public:
     MegaUserAlertExt() = delete;
     MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject *parent = nullptr);
-    ~MegaUserAlertExt() = default;
+    ~MegaUserAlertExt();
 
-    MegaUserAlertExt& operator=(MegaUserAlertExt&& megaUserAlert)
-    {
-        mMegaUserAlert.reset(megaUserAlert.mMegaUserAlert.release());
-        megaUserAlert.mMegaUserAlert = nullptr;
-
-        mEmail = megaUserAlert.mEmail;
-        megaUserAlert.mEmail.clear();
-
-        return *this;
-    }
+    MegaUserAlertExt& operator=(MegaUserAlertExt&& megaUserAlert);
 
     const char* getEmail() const;
     void setEmail(QString email);
+    void requestEmail();
     bool isValid() const;
     void reset(mega::MegaUserAlert* alert);
 
     virtual unsigned getId() const;
-
     virtual bool getSeen() const;
     virtual bool getRelevant() const;
     virtual int getType() const;
@@ -50,7 +43,10 @@ signals:
 
 private:
     std::unique_ptr<mega::MegaUserAlert> mMegaUserAlert;
+    std::unique_ptr<EmailRequester> mEmailRequester;
     std::string mEmail;
+
+    void init();
 };
 
 #endif // MEGAUSERALERTEXT_H

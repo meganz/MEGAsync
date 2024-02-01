@@ -1,14 +1,21 @@
 #include "QAlertsModel.h"
-#include "QFilterAlertsModel.h"
-#include <QDateTime>
-#include "Preferences/Preferences.h"
+
 #include <assert.h>
+
+#include <QDateTime>
+
+#include "mega/types.h"
+
+#include "MegaApplication.h"
+#include "Preferences/Preferences.h"
 
 using namespace mega;
 
 QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
-    : QAbstractItemModel(parent)
+    : QAbstractItemModel(parent),
+    mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
 {
+    MegaSyncApp->getMegaApi()->addGlobalListener(mGlobalListener.get());
 
     for(int i = 0; i < ALERT_ALL; i++)
     {
@@ -18,31 +25,6 @@ QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent
 
     alertItems.setMaxCost(16);
     insertAlerts(alerts, copy);
-}
-
-void QAlertsModel::updateContacts(mega::MegaUserList* userList)
-{
-    /*
-    if (alertItems.isEmpty())
-    {
-        return;
-    }
-
-    for(auto userIndex = 0; userIndex < userList->size(); ++userIndex)
-    {
-        auto userContact = userList->get(userIndex);
-
-        for (auto alertIndex = 0; alertIndex < alertItems.count(); ++alertIndex)
-        {
-            auto alert = alertItems[alertIndex];
-
-            if (alert->getContactHandle() == userContact->getHandle())
-            {
-                alert->updateEmail(QString::fromUtf8(userContact->getEmail()));
-            }
-        }
-    }
-    */
 }
 
 void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
@@ -309,4 +291,40 @@ void QAlertsModel::refreshAlertItem(unsigned id)
 
     emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 
+}
+
+void QAlertsModel::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users)
+{
+    Q_UNUSED(api);
+
+    if (alertsMap.isEmpty())
+    {
+        return;
+    }
+
+    /*
+     * Look for alerts from users that changed their email and update them
+     */
+    bool dataChanged = false;
+    for(auto userIndex = 0; userIndex < users->size(); ++userIndex)
+    {
+        auto user = users->get(userIndex);
+
+        for(auto alertIndex = 0; alertIndex < alertsMap.count(); ++alertIndex)
+        {
+            auto alert = alertsMap[alertIndex];
+            if (alert != nullptr && alert->getUserHandle() == user->getHandle() && alert->getEmail() != user->getEmail())
+            {
+                alert->setEmail(QString::fromUtf8(user->getEmail()));
+                dataChanged = true;
+            }
+        }
+    }
+
+    if (dataChanged)
+    {
+        beginResetModel();
+        endResetModel();
+        refreshAlerts();
+    }
 }

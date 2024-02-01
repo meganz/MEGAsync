@@ -6411,12 +6411,6 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
             break;
         }
     }
-
-    // @jsubi.
-    if (notificationsModel)
-    {
-        notificationsModel->updateContacts(userList);
-    }
 }
 
 //Called when nodes have been updated in MEGA

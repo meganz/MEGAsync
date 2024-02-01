@@ -30,13 +30,10 @@ public:
     void setAlertHeading(MegaUserAlertExt* alert);
     void setAlertContent(MegaUserAlertExt* alert);
     void setAlertTimeStamp(int64_t ts);
-    void contactEmailChanged(QString email);
-
+    void contactEmailChanged();
     QString getHeadingString();
-
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
-    mega::MegaHandle getContactHandle() const;
 
 signals:
     void refreshAlertItem(unsigned item);
@@ -51,10 +48,9 @@ private:
     QString formatRichString(QString str);
     QString getUserFullName();
     void requestFullName();
-    void requestEmail(MegaUserAlertExt* alert);
+    void requestEmail();
 
 private:
-    QString mEmail;
     Ui::AlertItem *ui;
     mega::MegaApi *megaApi;
     QString mNotificationHeading;

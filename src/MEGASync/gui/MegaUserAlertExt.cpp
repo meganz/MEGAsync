@@ -3,18 +3,52 @@
 MegaUserAlertExt::MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject *parent)
     : QObject(parent),
     mMegaUserAlert(megaUserAlert)
-{}
+{
+    init();
+}
+
+MegaUserAlertExt::~MegaUserAlertExt()
+{
+    mEmail.clear();
+}
+
+void MegaUserAlertExt::init()
+{
+    assert(mMegaUserAlert != nullptr);
+
+    if (mMegaUserAlert->getEmail())
+    {
+        mEmail.assign(mMegaUserAlert->getEmail());
+    }
+    else if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
+    {
+        requestEmail();
+    }
+}
+
+void MegaUserAlertExt::requestEmail()
+{
+    mEmailRequester.reset(new EmailRequester(mMegaUserAlert->getUserHandle()));
+
+    connect(mEmailRequester.get(), &EmailRequester::emailReceived, this, &MegaUserAlertExt::setEmail, Qt::QueuedConnection);
+
+    mEmailRequester->requestEmail();
+}
+
+MegaUserAlertExt &MegaUserAlertExt::operator=(MegaUserAlertExt &&megaUserAlert)
+{
+    mMegaUserAlert.reset(megaUserAlert.mMegaUserAlert.release());
+    megaUserAlert.mMegaUserAlert = nullptr;
+
+    mEmail = megaUserAlert.mEmail;
+    megaUserAlert.mEmail.clear();
+
+    return *this;
+}
 
 const char* MegaUserAlertExt::getEmail() const
 {
-    if (mEmail.empty() && mMegaUserAlert != nullptr)
-    {
-        return mMegaUserAlert->getEmail();
-    }
-    else
-    {
-        return mEmail.c_str();
-    }
+    return mEmail.c_str();
 }
 
 void MegaUserAlertExt::setEmail(QString email)
@@ -37,6 +71,8 @@ bool MegaUserAlertExt::isValid() const
 void MegaUserAlertExt::reset(mega::MegaUserAlert* alert)
 {
     mMegaUserAlert.reset(alert);
+
+    init();
 }
 
 unsigned int MegaUserAlertExt::getId() const
