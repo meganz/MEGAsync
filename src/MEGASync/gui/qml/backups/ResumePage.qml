@@ -9,6 +9,7 @@ ResumePageForm {
 
         rightSecondary.onClicked: {
             backupsAccess.openBackupsTabInPreferences();
+            window.accept();
         }
 
         rightPrimary.onClicked: {

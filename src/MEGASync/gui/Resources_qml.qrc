@@ -36,7 +36,9 @@
         <file>images/qml/onboarding/shield_account_proIII.svg</file>
         <file>images/qml/onboarding/twofa.png</file>
         <file>images/qml/onboarding/mail.svg</file>
-        <file>images/qml/onboarding/OKIcon.png</file>
+        <file>images/qml/ok.png</file>
+        <file>images/qml/ok@2x.png</file>
+        <file>images/qml/ok@3x.png</file>
         <file>images/qml/mega.svg</file>
         <file>images/qml/mega_outline.svg</file>
         <file>images/qml/guest/exit.svg</file>

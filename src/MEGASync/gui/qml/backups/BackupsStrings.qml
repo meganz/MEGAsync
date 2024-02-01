@@ -9,7 +9,7 @@ QtObject {
     readonly property string backupFolders: qsTr("Backup Folders")
     readonly property string backupTo: qsTr("Backup to:")
     readonly property string changeFolder: qsTr("Change folder")
-    readonly property string setupBackups: qsTr("Setup backups")
+    readonly property string backupsWindowTitle: qsTr("Add backup")
     readonly property string confirmBackupErrorDuplicated: qsTr("There is already a folder with the same name in this backup")
     readonly property string confirmBackupErrorRemote: qsTr("A folder with the same name already exists on your backups")
     readonly property string confirmBackupFoldersTitle: qsTr("Confirm folders to back up")

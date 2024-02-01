@@ -42,6 +42,7 @@ QtObject {
     readonly property url rocket: imagesQmlPath + "rocket.png"
     readonly property url megaCloud: imagesQmlPath + "mega-cloud.png"
     readonly property url contols: imagesQmlPath + "controls.png"
+    readonly property url ok: imagesQmlPath + "ok.png"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"
@@ -66,7 +67,6 @@ QtObject {
     readonly property url shield_account_proIII: imagesOnboardingPath + "shield_account_proIII.svg"
     readonly property url sync: imagesOnboardingPath + "sync.svg"
     readonly property url syncIcon: imagesOnboardingPath + "syncb.svg"
-    readonly property url okIcon: imagesOnboardingPath + "OKIcon.png"
 
     readonly property url exit: imagesGuestPath + "exit.svg"
     readonly property url guest: imagesGuestPath + "guest.png"

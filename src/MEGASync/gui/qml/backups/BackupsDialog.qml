@@ -9,7 +9,7 @@ import BackupsQmlDialog 1.0
 BackupsQmlDialog {
     id: window
 
-    title: BackupsStrings.setupBackups
+    title: BackupsStrings.backupsWindowTitle
     visible: true
     modality: Qt.NonModal
     width: 600

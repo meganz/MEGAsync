@@ -31,11 +31,20 @@ FooterButtonsPage {
             left: parent.left
             right: parent.right
         }
+        spacing: 8
+
+        Image {
+            id: image
+
+            source: Images.ok
+            sourceSize: Qt.size(120, 120)
+        }
 
         Texts.Text {
             id: titleItem
 
             Layout.preferredWidth: parent.width
+            Layout.topMargin: 40
             text: BackupsStrings.finalStepBackupTitle
             font {
                 pixelSize: Texts.Text.Size.LARGE
@@ -44,22 +53,15 @@ FooterButtonsPage {
             wrapMode: Text.Wrap
         }
 
-        Texts.Text {
+        Texts.SecondaryText {
             id: descriptionItem
 
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
             text: BackupsStrings.finalStepBackup
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
-        }
-
-        Image {
-            id: image
-
-            Layout.topMargin: 48
-            source: Images.okIcon
-            sourceSize: Qt.size(120, 120)
+            lineHeight: 20
+            lineHeightMode: Text.FixedHeight
         }
 
     } // ColumnLayout: mainLayout
