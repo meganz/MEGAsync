@@ -49,8 +49,9 @@ private:
     QString getUserFullName();
     void requestFullName();
     void requestEmail();
+    void updateAlertData();
 
-private:
+
     Ui::AlertItem *ui;
     mega::MegaApi *megaApi;
     QString mNotificationHeading;

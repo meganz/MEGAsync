@@ -290,7 +290,6 @@ void QAlertsModel::refreshAlertItem(unsigned id)
     }
 
     emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
-
 }
 
 void QAlertsModel::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users)
@@ -305,7 +304,6 @@ void QAlertsModel::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users)
     /*
      * Look for alerts from users that changed their email and update them
      */
-    bool dataChanged = false;
     for(auto userIndex = 0; userIndex < users->size(); ++userIndex)
     {
         auto user = users->get(userIndex);
@@ -316,15 +314,7 @@ void QAlertsModel::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users)
             if (alert != nullptr && alert->getUserHandle() == user->getHandle() && alert->getEmail() != user->getEmail())
             {
                 alert->setEmail(QString::fromUtf8(user->getEmail()));
-                dataChanged = true;
             }
         }
-    }
-
-    if (dataChanged)
-    {
-        beginResetModel();
-        endResetModel();
-        refreshAlerts();
     }
 }

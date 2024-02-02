@@ -27,17 +27,9 @@ AlertItem::AlertItem(QWidget *parent) :
     ui->lNew->hide();
 
     connect(&mAlertNodeWatcher, &QFutureWatcher<void>::finished, this, [=](){
-
         mAlertNode.reset(static_cast<MegaNode*>(mAlertNodeWatcher.result()));
-
-        setAlertType(mAlertUser->getType());
-        setAlertHeading(mAlertUser);
-        setAlertContent(mAlertUser);
-        setAlertTimeStamp(mAlertUser->getTimestamp(0));
-        mAlertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
-
-        emit refreshAlertItem(mAlertUser->getId());
-        });
+        updateAlertData();
+    });
 }
 
 AlertItem::~AlertItem()
@@ -48,6 +40,11 @@ AlertItem::~AlertItem()
 void AlertItem::setAlertData(MegaUserAlertExt* alert)
 {
     mAlertUser = alert;
+
+    connect(mAlertUser, &MegaUserAlertExt::emailChanged, this, [=]()
+    {
+        updateAlertData();
+    });
 
     if (mAlertUser->getUserHandle() != INVALID_HANDLE)
     {
@@ -119,13 +116,19 @@ void AlertItem::onAttributesReady()
     }
     else
     {
-        setAlertType(mAlertUser->getType());
-        setAlertHeading(mAlertUser);
-        setAlertContent(mAlertUser);
-        setAlertTimeStamp(mAlertUser->getTimestamp(0));
-        mAlertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
-        emit refreshAlertItem(mAlertUser->getId());
+        updateAlertData();
     }
+}
+
+void AlertItem::updateAlertData()
+{
+    setAlertType(mAlertUser->getType());
+    setAlertHeading(mAlertUser);
+    setAlertContent(mAlertUser);
+    setAlertTimeStamp(mAlertUser->getTimestamp(0));
+    mAlertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
+
+    emit refreshAlertItem(mAlertUser->getId());
 }
 
 void AlertItem::setAlertType(int type)
