@@ -1246,7 +1246,6 @@ void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRe
         mOsNotifications->addUserAlertList(theList);
     }
 
-    //@jsubi.
     if (notificationsModel)
     {
         notificationsModel->insertAlerts(theList, copyRequired);
