@@ -5,11 +5,6 @@
 
 #include <QEvent>
 
-BackupsQmlDialog::BackupsQmlDialog(QWindow *parent)
-    : QmlDialog(parent)
-{
-}
-
 bool BackupsQmlDialog::event(QEvent* event)
 {
     if(event->type() == QEvent::Close)

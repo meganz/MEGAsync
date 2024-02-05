@@ -47,9 +47,7 @@ bool Backups::getComesFromSettings() const
     return mComesFromSettings;
 }
 
-void Backups::comesFromSettings(bool value)
+void Backups::setComesFromSettings(bool value)
 {
     mComesFromSettings = value;
-    emit comesFromSettingsChanged(value);
 }
-

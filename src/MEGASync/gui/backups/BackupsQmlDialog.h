@@ -8,7 +8,7 @@ class BackupsQmlDialog : public QmlDialog
     Q_OBJECT
 
 public:
-    explicit BackupsQmlDialog(QWindow *parent = nullptr);
+    using QmlDialog::QmlDialog;
     ~BackupsQmlDialog() override = default;
 
 protected:

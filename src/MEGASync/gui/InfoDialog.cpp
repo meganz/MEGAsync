@@ -1037,13 +1037,13 @@ void InfoDialog::addBackup()
             if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
             {
                 DialogOpener::showDialog(dialog->getDialog());
-                dialog->getDialog()->wrapper()->comesFromSettings(false);
+                dialog->getDialog()->wrapper()->setComesFromSettings(false);
             }
             else
             {
                 QPointer<QmlDialogWrapper<Backups>> backupsDialog = new QmlDialogWrapper<Backups>();
                 DialogOpener::showDialog(backupsDialog);
-                backupsDialog->wrapper()->comesFromSettings(false);
+                backupsDialog->wrapper()->setComesFromSettings(false);
             }
         }
     };
