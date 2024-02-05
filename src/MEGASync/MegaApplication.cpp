@@ -35,6 +35,7 @@
 #include "qml/QmlClipboard.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
+#include "qml/StyleValues.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -3086,6 +3087,9 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
                                      QString::fromUtf8("Cannot create ApiEnums in QML"));
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
+
+    auto colorStyle = new ColorStyle(mEngine, this);
+    mEngine->rootContext()->setContextProperty(QString::fromUtf8("colorStyle"), colorStyle);
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const

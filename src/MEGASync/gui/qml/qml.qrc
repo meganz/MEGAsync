@@ -129,5 +129,7 @@
         <file>guest/GuestStrings.qml</file>
         <file>guest/MenuItem.qml</file>
         <file>components/texts/Sizes.qml</file>
+        <file>common/light/Styles.qml</file>
+        <file>common/dark/Styles.qml</file>
     </qresource>
 </RCC>

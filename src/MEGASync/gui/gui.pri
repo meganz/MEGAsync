@@ -93,7 +93,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/BackupsController.cpp \
     $$PWD/onboarding/GuestQmlDialog.cpp \
     $$PWD/onboarding/OnboardingQmlDialog.cpp \
-    $$PWD/onboarding/GuestContent.cpp
+    $$PWD/onboarding/GuestContent.cpp \
+    $$PWD/qml/StyleValues.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -187,6 +188,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/GuestQmlDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \
     $$PWD/onboarding/GuestContent.h \
+    $$PWD/qml/StyleValues.h
 
 INCLUDEPATH += $$PWD
 
