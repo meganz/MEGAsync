@@ -3088,8 +3088,7 @@ void MegaApplication::registerCommonQMLElements()
                                      QString::fromUtf8("Cannot create ApiEnums in QML"));
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
     
-    auto colorStyle = new ColorTheme(mEngine, this);
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("colorStyle"), colorStyle);
+    mEngine->rootContext()->setContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, this));
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
