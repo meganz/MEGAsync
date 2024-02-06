@@ -35,7 +35,7 @@ protected:
 
 private slots:
     void on_doneButton_clicked();
-    void on_updateButton_clicked();
+    void on_refreshButton_clicked();
     void checkIfViewIsEmpty();
     void onGlobalSyncStateChanged(bool);
 

@@ -232,7 +232,7 @@ background-color: #F3F4F4;
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="updateButton">
+              <widget class="QPushButton" name="refreshButton">
                <property name="minimumSize">
                 <size>
                  <width>24</width>
@@ -1452,7 +1452,7 @@ color: #2C5BEB;
   </customwidget>
  </customwidgets>
  <resources>
-    <include location="../../../gui/Resources_linux.qrc"/>
+  <include location="../../../gui/Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

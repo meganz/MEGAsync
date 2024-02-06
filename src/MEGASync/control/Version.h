@@ -28,13 +28,13 @@
 //"- item n\n"              \
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- Sync Rework Beta V1 version.\n"                                                                 \
-"- New Exclusions dialog for syncs.\n"                                                             \
-"- New header for undecrypted cloud issues.\n"                                                     \
-"- Minor changes in issues description. \n"                                                        \
-"- Auto solve reparse points and hard/sym links in Smart Mode. \n"                                 \
-"- Minor bugs fixed. \n"                                                                           \
-"- Performance improved. \n"                                                                       \
+"- Sync rework Beta V2 is released.\n"                                                             \
+"- A new onboarding wizard is introduced for any new sync or backup processes.\n"                  \
+"- Changes are detected and stalled issues are updated automatically.\n"                           \
+"- MEGA-supported language set is now available.\n"                                                \
+"- User experience for batch fixing sync issues is improved.\n"                                    \
+"- Minor bugs are fixed.\n"                                                                        \
+"- Performance is improved.\n"                                                                     \
 )
 
 #endif // VERSION_H

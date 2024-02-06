@@ -5489,21 +5489,16 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync Rework Beta V1 version.
-- New Exclusions dialog for syncs.
-- New header for undecrypted cloud issues.
-- Minor changes in issues description. 
-- Auto solve reparse points and hard/sym links in Smart Mode. 
-- Minor bugs fixed. 
-- Performance improved. 
+        <source>- Sync rework Beta V2 is released.
+- A new onboarding wizard is introduced for any new sync or backup processes.
+- Changes are detected and stalled issues are updated automatically.
+- MEGA-supported language set is now available.
+- User experience for batch fixing sync issues is improved.
+- Minor bugs are fixed.
+- Performance is improved.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
-        <translation>Sync Rework Beta V1 version.
-- New exclusions dialog for syncs.
-- Minor changes to stall descriptions. 
-- Auto-solve reparse points, hard links and sym links in Smart Mode. 
-- Minor bugs fixed. 
-- Performance improved. </translation>
+        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
