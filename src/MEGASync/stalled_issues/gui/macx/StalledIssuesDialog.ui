@@ -898,7 +898,7 @@ color: #2C5BEB;
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="updateButton">
+              <widget class="QPushButton" name="refreshButton">
                <property name="minimumSize">
                 <size>
                  <width>24</width>
@@ -1352,7 +1352,7 @@ QMenu::item:default
           <string notr="true"/>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
-<property name="spacing">
+          <property name="spacing">
            <number>0</number>
           </property>
           <property name="leftMargin">
@@ -1456,6 +1456,6 @@ color: grey;
  </customwidgets>
  <resources>
   <include location="../../../gui/Resources_macx.qrc"/>
-   </resources>
+ </resources>
  <connections/>
 </ui>
