@@ -1,15 +1,19 @@
 #include "MegaAlertDelegate.h"
-#include <QPainter>
+
+#include "MegaApplication.h"
+
 #include "megaapi.h"
+
+#include <QPainter>
 #include <QEvent>
 #include <QSortFilterProxyModel>
 #include <QDesktopServices>
 #include <QUrl>
-#include "MegaApplication.h"
 #include <QtConcurrent/QtConcurrent>
-#include "assert.h"
 #include <QHelpEvent>
 #include <QToolTip>
+
+#include <cassert>
 
 using namespace mega;
 

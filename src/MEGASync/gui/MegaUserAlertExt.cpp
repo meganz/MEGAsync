@@ -35,7 +35,7 @@ void MegaUserAlertExt::requestEmail()
     mEmailRequester->requestEmail();
 }
 
-MegaUserAlertExt &MegaUserAlertExt::operator=(MegaUserAlertExt &&megaUserAlert)
+MegaUserAlertExt &MegaUserAlertExt::operator=(MegaUserAlertExt&& megaUserAlert)
 {
     mMegaUserAlert.reset(megaUserAlert.mMegaUserAlert.release());
     megaUserAlert.mMegaUserAlert = nullptr;

@@ -1,14 +1,14 @@
 #ifndef MEGAUSERALERTEXT_H
 #define MEGAUSERALERTEXT_H
 
+#include "EmailRequester.h"
+
+#include "megaapi.h"
+
 #include <QObject>
 
 #include <memory>
 #include <iostream>
-
-#include "megaapi.h"
-
-#include "EmailRequester.h"
 
 class MegaUserAlertExt : public QObject
 {

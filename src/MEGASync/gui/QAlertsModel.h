@@ -1,17 +1,17 @@
 #ifndef QALERTSMODEL_H
 #define QALERTSMODEL_H
 
-#include <deque>
-#include <array>
-
-#include <QCache>
-#include <QAbstractItemModel>
+#include "AlertItem.h"
+#include "MegaUserAlertExt.h"
 
 #include <megaapi.h>
 #include <mega/bindings/qt/QTMegaGlobalListener.h>
 
-#include "AlertItem.h"
-#include "MegaUserAlertExt.h"
+#include <QCache>
+#include <QAbstractItemModel>
+
+#include <deque>
+#include <array>
 
 class QAlertsModel : public QAbstractItemModel, public mega::MegaGlobalListener
 {

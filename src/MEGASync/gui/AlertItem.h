@@ -1,13 +1,14 @@
 #ifndef ALERTITEM_H
 #define ALERTITEM_H
 
+#include "MegaUserAlertExt.h"
+
+#include "megaapi.h"
+
 #include <QWidget>
 #include <QFutureWatcher>
 
 #include <memory>
-
-#include "megaapi.h"
-#include "MegaUserAlertExt.h"
 
 namespace Ui {
 class AlertItem;

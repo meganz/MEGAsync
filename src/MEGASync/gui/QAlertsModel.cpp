@@ -1,13 +1,13 @@
 #include "QAlertsModel.h"
 
-#include <assert.h>
-
-#include <QDateTime>
+#include "MegaApplication.h"
+#include "Preferences/Preferences.h"
 
 #include "mega/types.h"
 
-#include "MegaApplication.h"
-#include "Preferences/Preferences.h"
+#include <QDateTime>
+
+#include <assert.h>
 
 using namespace mega;
 
@@ -116,7 +116,6 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         AlertItem *udpatedAlertItem = alertItems[alert->getId()];
                         if (udpatedAlertItem)
                         {
-                            //@jsubi - TODO: setAlertData should use MegaUserAlertFacade to keep correct email on change.
                             udpatedAlertItem->setAlertData(alertsMap[alert->getId()]);
                         }
 
