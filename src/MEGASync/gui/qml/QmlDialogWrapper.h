@@ -138,9 +138,6 @@ public:
         }
         else
         {
-
-            std::cout << qmlComponent.errorString().toStdString() << std::endl;
-
             /*
             * Errors will be printed respecting the original format (with links to source qml that fails).
             * All errors will be printed, using qDebug() some errors were hidden.
