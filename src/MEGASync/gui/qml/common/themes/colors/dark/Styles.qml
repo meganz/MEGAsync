@@ -1,9 +1,6 @@
 import QtQuick 2.15
 
 QtObject {
-    readonly property string fontFamily: "Inter"
-    readonly property string fontStyleName: "normal"
-
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Colors - Sorted like in Figma
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -50,7 +47,7 @@ QtObject {
     readonly property color textAccent: "#FAFAFB"
     readonly property color textPlaceholder: "#80F3F4F4"
     readonly property color textInverseAccent: "#04101E"
-    readonly property color textOnColor: "#FAFAFA"
+    readonly property color textOnColor: "#04101E"
     readonly property color textOnColorDisabled: "#80FAFAFA"
     readonly property color textError: "#FD6F90"
     readonly property color textSuccess: "#09BF5B"

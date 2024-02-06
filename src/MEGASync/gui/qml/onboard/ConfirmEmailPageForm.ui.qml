@@ -29,7 +29,7 @@ StackViewPage {
 
             rawText: OnboardingStrings.confirmEmailTitle
             wrapMode: Text.WordWrap
-            color: Styles.textPrimary
+            color: colorStyle.textPrimary
             font {
                 pixelSize: Texts.Text.Size.LARGE
                 bold: true
@@ -67,7 +67,7 @@ StackViewPage {
 
                 source: Images.mail
                 sourceSize: Qt.size(24, 24)
-                color: Styles.textPrimary
+                color: colorStyle.textPrimary
                 Layout.alignment: Qt.AlignTop
             }
 
@@ -93,7 +93,7 @@ StackViewPage {
             font.pixelSize: Texts.Text.Size.MEDIUM
             rawText: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
-            color: Styles.textPrimary
+            color: colorStyle.textPrimary
             manageMouse: true
             Layout.preferredWidth: layout.width
             KeyNavigation.tab: bodyText2Item

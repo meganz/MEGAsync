@@ -146,7 +146,7 @@ Rectangle {
         width: 1
         height: 464
         radius: 2
-        color: Styles.borderDisabled
+        color: colorStyle.borderDisabled
     }
 
     StackViewBase {

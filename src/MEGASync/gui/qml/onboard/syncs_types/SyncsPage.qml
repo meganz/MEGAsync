@@ -13,7 +13,7 @@ Rectangle {
         onboardingWindow.requestPageFocus();
     }
 
-    color: Styles.surface1
+    color: colorStyle.surface1
 
     Footer {
         id: footerButtonsItem

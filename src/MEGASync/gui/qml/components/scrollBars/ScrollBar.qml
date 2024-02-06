@@ -110,7 +110,7 @@ Qml.ScrollBar {
 
         Rectangle {
             radius: scrollBarRadius
-            color: Styles.iconPrimary
+            color: colorStyle.iconPrimary
             opacity: root.pressed ? scrollBarPressedOpacity : 1.0
         }
     }
@@ -221,7 +221,7 @@ Qml.ScrollBar {
             height: direction === ScrollBar.Direction.VERTICAL ? backgroundContentHeight : 2
             width: direction === ScrollBar.Direction.VERTICAL ? 2 : backgroundContentWidth
             radius: scrollBarRadius
-            color: Styles.iconButton
+            color: colorStyle.iconButton
             opacity: scrollBarBackgroundOpacity
         }
 
@@ -268,7 +268,7 @@ Qml.ScrollBar {
             radius: buttonFocusRadius
             activeFocusOnTab: true
             border {
-                color: enabled && activeFocus ? Styles.focus : "transparent"
+                color: enabled && activeFocus ? colorStyle.focus : "transparent"
                 width: buttonFocusBorder
             }
 
@@ -283,7 +283,7 @@ Qml.ScrollBar {
                 }
                 source: Images.arrowRight
                 sourceSize: Qt.size(iconSize, iconSize)
-                color: enabled ? Styles.iconButton : Styles.iconButtonDisabled
+                color: enabled ? colorStyle.iconButton : colorStyle.iconButtonDisabled
                 rotation: buttonRotation
             }
         }

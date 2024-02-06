@@ -24,7 +24,7 @@ Item {
             bottom: root.bottom
         }
         font.pixelSize: Texts.Text.Size.SMALL
-        color: Styles.textSecondary
+        color: colorStyle.textSecondary
         text: {
             switch(loginControllerAccess.state) {
                 case LoginController.FETCHING_NODES:

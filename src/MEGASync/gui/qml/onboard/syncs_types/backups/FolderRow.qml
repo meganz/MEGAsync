@@ -45,7 +45,7 @@ Item {
             leftMargin: internalMargin
         }
         radius: internalMargin
-        color: (index % 2 === 0) ? Styles.pageBackground : Styles.surface1
+        color: (index % 2 === 0) ? colorStyle.pageBackground : colorStyle.surface1
 
         Loader {
             id: content
@@ -168,7 +168,7 @@ Item {
                                (busyIndicator.visible ? (busyIndicator.width + selectRoot.checkboxSpacing) : 0)
                         font.pixelSize: Texts.Text.Size.SMALL
                         text: name
-                        color: Styles.textPrimary
+                        color: colorStyle.textPrimary
                     }
                 }
 
@@ -186,7 +186,7 @@ Item {
                 verticalAlignment: Qt.AlignVCenter
                 text: size
                 font.pixelSize: Texts.Text.Size.SMALL
-                color: Styles.textSecondary
+                color: colorStyle.textSecondary
                 visible: backupsProxyModel.selectedFilterEnabled && sizeReady
             }
 
@@ -198,7 +198,7 @@ Item {
                     verticalCenter: parent.verticalCenter
                 }
                 imageSize: Qt.size(12, 12)
-                color: Styles.textAccent
+                color: colorStyle.textAccent
                 visible: backupsProxyModel.selectedFilterEnabled && !sizeReady
             }
 
@@ -256,8 +256,8 @@ Item {
                             : Images.alertTriangle
                     sourceSize: Qt.size(conflictRoot.imageWidth, conflictRoot.imageWidth)
                     color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
-                           ? Styles.textError
-                           : Styles.textWarning
+                           ? colorStyle.textError
+                           : colorStyle.textWarning
                 }
 
                 Texts.ElidedText {
@@ -272,8 +272,8 @@ Item {
                     font.pixelSize: Texts.Text.Size.SMALL
                     text: name
                     color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
-                           ? Styles.textError
-                           : Styles.textWarning
+                           ? colorStyle.textError
+                           : colorStyle.textWarning
                     showTooltip: false
                 }
             }
@@ -415,7 +415,7 @@ Item {
                 width: parent.width - parent.spacing - doneButton.width
                 text: name
                 leftIconSource: Images.edit
-                leftIconColor: Styles.iconSecondary
+                leftIconColor: colorStyle.iconSecondary
                 error: hint.visible
                 sizes: SmallSizes {}
                 validator: RegExpValidator { regExp: RegexExpressions.allowedFolderChars }
