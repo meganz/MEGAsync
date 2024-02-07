@@ -1,10 +1,6 @@
 import QtQuick 2.15
 
 QtObject {
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //   Colors - Sorted like in Figma
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     readonly property color borderInteractive: "#F23433"
     readonly property color borderStrong: "#4DF4F4F5"
     readonly property color borderStrongSelected: "#F4F4F5"

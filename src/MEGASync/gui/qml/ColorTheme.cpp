@@ -10,8 +10,8 @@
 static const QString ColorStyleFilePath = QString::fromUtf8("qrc:/common/themes/colors/%1/Styles.qml");
 
 ColorTheme::ColorTheme(QQmlEngine *engine, QObject *parent):
-    QObject{parent},
-    mEngine{engine}
+    QObject(parent),
+    mEngine(engine)
 {
     init();
 
@@ -26,13 +26,11 @@ void ColorTheme::init()
     // TODO : set connection to capture theme changed event.
 
     // snipet to check theme change from light to dark.
-    /*
     static QTimer timer;
     timer.start(10000);
     connect(&timer, &QTimer::timeout, this, [this](){
         onThemeChanged(QLatin1String("dark"));
     });
-    */
 
     mCurrentTheme = QString().fromUtf8("light");
     mThemes << QString().fromUtf8("dark") << QString().fromUtf8("light");
@@ -58,7 +56,8 @@ void ColorTheme::loadThemes()
 
         if (qmlComponent.isError())
         {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error loading color style file : %1").arg(colorStyleFile).toUtf8().constData());
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error loading color style file : %1")
+                .arg(colorStyleFile).toUtf8().constData());
         }
         else
         {
