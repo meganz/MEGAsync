@@ -18,7 +18,7 @@ void MegaUserAlertExt::init()
 
     if (mMegaUserAlert->getEmail())
     {
-        mEmail.assign(mMegaUserAlert->getEmail());
+        mEmail = QString::fromUtf8(mMegaUserAlert->getEmail());
     }
     else if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
     {
@@ -35,7 +35,7 @@ void MegaUserAlertExt::requestEmail()
     mEmailRequester->requestEmail();
 }
 
-MegaUserAlertExt &MegaUserAlertExt::operator=(MegaUserAlertExt&& megaUserAlert)
+MegaUserAlertExt& MegaUserAlertExt::operator=(MegaUserAlertExt&& megaUserAlert)
 {
     mMegaUserAlert.reset(megaUserAlert.mMegaUserAlert.release());
     megaUserAlert.mMegaUserAlert = nullptr;
@@ -46,18 +46,16 @@ MegaUserAlertExt &MegaUserAlertExt::operator=(MegaUserAlertExt&& megaUserAlert)
     return *this;
 }
 
-const char* MegaUserAlertExt::getEmail() const
+QString MegaUserAlertExt::getEmail() const
 {
-    return mEmail.c_str();
+    return mEmail;
 }
 
 void MegaUserAlertExt::setEmail(QString email)
 {
-    auto toStoreEmail = email.toStdString();
-
-    if (toStoreEmail != mEmail)
+    if (email != mEmail)
     {
-        mEmail = toStoreEmail;
+        mEmail = email;
 
         emit emailChanged();
     }
@@ -115,12 +113,12 @@ mega::MegaHandle MegaUserAlertExt::getNodeHandle() const
     return mMegaUserAlert->getNodeHandle();
 }
 
-const char *MegaUserAlertExt::getString(unsigned int index) const
+const char* MegaUserAlertExt::getString(unsigned int index) const
 {
     return mMegaUserAlert->getString(index);
 }
 
-const char *MegaUserAlertExt::getTitle() const
+const char* MegaUserAlertExt::getTitle() const
 {
     return mMegaUserAlert->getTitle();
 }

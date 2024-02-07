@@ -310,7 +310,7 @@ void QAlertsModel::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users)
         for(auto alertIndex = 0; alertIndex < alertsMap.count(); ++alertIndex)
         {
             auto alert = alertsMap[alertIndex];
-            if (alert != nullptr && alert->getUserHandle() == user->getHandle() && alert->getEmail() != user->getEmail())
+            if (alert != nullptr && alert->getUserHandle() == user->getHandle() && alert->getEmail().toUtf8().constData() != user->getEmail())
             {
                 alert->setEmail(QString::fromUtf8(user->getEmail()));
             }

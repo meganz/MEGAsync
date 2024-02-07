@@ -21,7 +21,7 @@ public:
 
     MegaUserAlertExt& operator=(MegaUserAlertExt&& megaUserAlert);
 
-    const char* getEmail() const;
+    QString getEmail() const;
     void setEmail(QString email);
     void requestEmail();
     bool isValid() const;
@@ -44,7 +44,7 @@ signals:
 private:
     std::unique_ptr<mega::MegaUserAlert> mMegaUserAlert;
     std::unique_ptr<EmailRequester> mEmailRequester;
-    std::string mEmail;
+    QString mEmail;
 
     void init();
 };

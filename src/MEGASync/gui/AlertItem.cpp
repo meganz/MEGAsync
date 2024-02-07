@@ -48,7 +48,7 @@ void AlertItem::setAlertData(MegaUserAlertExt* alert)
 
     if (mAlertUser->getUserHandle() != INVALID_HANDLE)
     {
-        if (alert->getEmail())
+        if (!alert->getEmail().isEmpty())
         {
             requestFullName();
         }
@@ -86,19 +86,19 @@ void AlertItem::requestEmail()
 
 void AlertItem::requestFullName()
 {
-    if (!mAlertUser->getEmail())
+    if (mAlertUser->getEmail().isEmpty())
     {
         return;
     }
 
-    mFullNameAttributes = UserAttributes::FullName::requestFullName(mAlertUser->getEmail());
+    mFullNameAttributes = UserAttributes::FullName::requestFullName(mAlertUser->getEmail().toUtf8().constData());
 
     if(mFullNameAttributes)
     {
         connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
     }
 
-    ui->wAvatarContact->setUserEmail(mAlertUser->getEmail());
+    ui->wAvatarContact->setUserEmail(mAlertUser->getEmail().toUtf8().constData());
 
     onAttributesReady();
 }
@@ -323,9 +323,9 @@ void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
     ui->lHeading->ensurePolished();
     ui->lHeading->setText(ui->lHeading->fontMetrics().elidedText(mNotificationHeading, Qt::ElideMiddle,ui->lHeading->minimumWidth()));
 
-    if(mAlertUser->getEmail())
+    if(!mAlertUser->getEmail().isEmpty())
     {
-        mNotificationHeading.append(QString::fromLatin1(" (") + QString::fromLatin1(mAlertUser->getEmail()) + QString::fromLatin1(")"));
+        mNotificationHeading.append(QString::fromLatin1(" (") + mAlertUser->getEmail() + QString::fromLatin1(")"));
         setToolTip(mNotificationHeading);
     }
 }
@@ -394,7 +394,7 @@ void AlertItem::setAlertContent(MegaUserAlertExt *alert)
                 }
                 else //Access for the user was removed by share owner
                 {
-                    notificationContent = mAlertUser->getEmail() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
+                    notificationContent = !mAlertUser->getEmail().isEmpty() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
                                                             : tr("Access to shared folder was removed");
                 }
                 break;
@@ -548,6 +548,6 @@ QString AlertItem::getUserFullName()
         return mFullNameAttributes->getRichFullName();
     }
 
-    return QString::fromUtf8(mAlertUser->getEmail());
+    return mAlertUser->getEmail();
 }
 
