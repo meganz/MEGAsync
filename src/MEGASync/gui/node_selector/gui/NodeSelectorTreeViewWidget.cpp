@@ -990,6 +990,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     auto node = item->getNode();
     if(node)
     {
+        ui->tMegaFolders->selectionModel()->select(node_column_idx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         setTitleText(MegaNodeNames::getNodeName(node.get()));
     }
 }
