@@ -7,7 +7,6 @@ import common 1.0
 import components.pages 1.0
 
 import onboard 1.0
-import onboard.syncs_types 1.0
 
 FooterButtonsPage {
     id: root
@@ -33,13 +32,12 @@ FooterButtonsPage {
             title: OnboardingStrings.syncTitle
         }
 
-        Rectangle {
+        Item {
             id: spacer
 
             Layout.preferredHeight: 208
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignLeft
-            color: "transparent"
 
             ButtonGroup {
                 id: buttonGroup
@@ -56,7 +54,7 @@ FooterButtonsPage {
 
                     Layout.leftMargin: -fullSyncButtonItem.focusBorderWidth
                     title: OnboardingStrings.fullSync
-                    type: SyncsType.Types.FULL_SYNC
+                    type: Constants.SyncType.FULL_SYNC
                     description: OnboardingStrings.fullSyncButtonDescription
                     imageSource: Images.fullSync
                     imageSourceSize: Qt.size(172, 100)
@@ -70,7 +68,7 @@ FooterButtonsPage {
 
                     Layout.rightMargin: -selectiveSyncButton.focusBorderWidth
                     title: OnboardingStrings.selectiveSync
-                    type: SyncsType.Types.SELECTIVE_SYNC
+                    type: Constants.SyncType.SELECTIVE_SYNC
                     description: OnboardingStrings.selectiveSyncButtonDescription
                     imageSource: Images.selectiveSync
                     imageSourceSize: Qt.size(172, 100)
@@ -80,5 +78,6 @@ FooterButtonsPage {
                 }
             }
         }
-    }
+
+    } // ColumnLayout: column
 }

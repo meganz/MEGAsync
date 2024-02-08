@@ -1,12 +1,8 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+
+import common 1.0
 
 import components.views 1.0
-
-import onboard 1.0
-import onboard.syncs_types 1.0
-
-import BackupsProxyModel 1.0
 
 Item {
     id: root
@@ -15,16 +11,31 @@ Item {
     readonly property string fullSync: "fullSync"
     readonly property string selectiveSync: "selectiveSync"
 
+    property bool isOnboarding: false
+
     signal syncsFlowMoveToFinal
     signal syncsFlowMoveToBack
 
     // added to avoid qml warning.
     function setInitialFocusPosition() { }
 
-    state: syncsPanel.navInfo.fullSyncDone
+    state: syncType
+        /*
+           TODO: This is a temporary solution, we have to get the correct state:
+
+        We should offer both options, if some rules apply.
+
+        User doesn't have a sync == we offer both
+        User has a sync = we offer selective
+
+        It is simple on the surface, where we assume that if the user can do a full sync,
+        we provide that option.
+
+        syncsPanel.navInfo.fullSyncDone
                 || syncsPanel.navInfo.typeSelected === SyncsType.Types.SELECTIVE_SYNC
            ? root.selectiveSync
            : root.syncType
+           */
 
     states: [
         State {
@@ -34,42 +45,48 @@ Item {
                     view.replace(syncPageComponent);
                 }
             }
+            /*
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
                 step3Text: OnboardingStrings.syncChooseType;
                 step4Text: OnboardingStrings.confirm;
             }
+            */
         },
         State {
             name: root.fullSync
             StateChangeScript {
                 script: {
-                    syncsPanel.navInfo.typeSelected = SyncsType.Types.FULL_SYNC;
+                    //syncsPanel.navInfo.typeSelected = SyncsType.Types.FULL_SYNC;
                     view.replace(fullSyncPageComponent);
                 }
             }
+            /*
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step4;
                 step3Text: OnboardingStrings.syncChooseType;
                 step4Text: OnboardingStrings.fullSync;
             }
+            */
         },
         State {
             name: root.selectiveSync
             StateChangeScript {
                 script: {
-                    syncsPanel.navInfo.typeSelected = SyncsType.Types.SELECTIVE_SYNC;
+                    //syncsPanel.navInfo.typeSelected = SyncsType.Types.SELECTIVE_SYNC;
                     view.replace(selectiveSyncPageComponent);
                 }
             }
+            /*
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step4;
                 step3Text: OnboardingStrings.syncChooseType;
                 step4Text: OnboardingStrings.selectiveSync;
             }
+            */
         }
     ]
 
@@ -85,7 +102,10 @@ Item {
             id: syncPageComponent
 
             SyncTypePage {
-                id: syncPage
+                id: syncTypePage
+
+                footerButtons.leftSecondary.text: Strings.cancel
+                footerButtons.rightSecondary.visible: root.isOnboarding
             }
         }
 
@@ -94,6 +114,8 @@ Item {
 
             FullSyncPage {
                 id: fullSyncPage
+
+                footerButtons.leftSecondary.visible: root.isOnboarding
             }
         }
 
@@ -102,6 +124,8 @@ Item {
 
             SelectiveSyncPage {
                 id: selectiveSyncPage
+
+                footerButtons.leftSecondary.visible: root.isOnboarding
             }
         }
     }
@@ -109,6 +133,7 @@ Item {
     /*
     * Navigation connections
     */
+
     Connections {
         id: syncTypeNavigationConnection
 
@@ -116,6 +141,7 @@ Item {
         ignoreUnknownSignals: true
 
         function onSyncTypeMoveToBack() {
+            /*
             if(syncsPanel.navInfo.comesFromResumePage) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
                 root.syncsFlowMoveToFinal();
@@ -123,6 +149,7 @@ Item {
             else {
                 root.syncsFlowMoveToBack();
             }
+            */
         }
 
         function onSyncTypeMoveToFullSync() {
@@ -141,17 +168,18 @@ Item {
         ignoreUnknownSignals: true
 
         function onSelectiveSyncMoveToBack() {
+            /*
             if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
                 root.syncsFlowMoveToFinal();
             }
-            else {
+            else {*/
                 root.state = root.syncType;
-            }
+            //}
         }
 
         function onSelectiveSyncMoveToSuccess() {
-            syncsPanel.navInfo.selectiveSyncDone = true;
+            //syncsPanel.navInfo.selectiveSyncDone = true;
             root.syncsFlowMoveToFinal();
         }
     }
@@ -163,17 +191,18 @@ Item {
         ignoreUnknownSignals: true
 
         function onFullSyncMoveToBack() {
+            /*
             if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
                 root.syncsFlowMoveToFinal();
             }
-            else {
+            else {*/
                 root.state = root.syncType;
-            }
+            //}
         }
 
         function onFullSyncMoveToSuccess() {
-            syncsPanel.navInfo.fullSyncDone = true;
+           // syncsPanel.navInfo.fullSyncDone = true;
             root.syncsFlowMoveToFinal();
         }
     }

@@ -27,8 +27,11 @@
 
 #include "Utilities.h"
 #include "platform/Platform.h"
+
 #include "QmlDialogManager.h"
+#include "syncs/SyncsComponent.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "onboarding/Onboarding.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -1049,6 +1052,7 @@ void InfoDialog::addSync(MegaHandle h)
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
+            /*
             mAddSyncDialog = new BindFolderDialog(app);
 
             if (h != mega::INVALID_HANDLE)
@@ -1057,6 +1061,24 @@ void InfoDialog::addSync(MegaHandle h)
             }
 
             DialogOpener::showDialog(mAddSyncDialog, this, &InfoDialog::onAddSyncDialogFinished);
+            */
+
+            if(DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>() == nullptr)
+            {
+                QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
+                DialogOpener::addDialog(onboarding);
+            }
+
+
+            if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+            {
+                DialogOpener::showDialog(dialog->getDialog());
+            }
+            else
+            {
+                QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog = new QmlDialogWrapper<SyncsComponent>();
+                DialogOpener::showDialog(syncsDialog);
+            }
         }
     };
 

@@ -102,7 +102,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/backups/Backups.cpp \
     $$PWD/backups/BackupsModel.cpp \
     $$PWD/backups/BackupsController.cpp \
-    $$PWD/backups/BackupsQmlDialog.cpp
+    $$PWD/backups/BackupsQmlDialog.cpp \
+    $$PWD/syncs/SyncsComponent.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -204,7 +205,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/backups/Backups.h \
     $$PWD/backups/BackupsModel.h \
     $$PWD/backups/BackupsController.h \
-    $$PWD/backups/BackupsQmlDialog.h
+    $$PWD/backups/BackupsQmlDialog.h \
+    $$PWD/syncs/SyncsComponent.h
 
 INCLUDEPATH += $$PWD
 

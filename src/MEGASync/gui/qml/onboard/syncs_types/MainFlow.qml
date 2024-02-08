@@ -6,9 +6,10 @@ import common 1.0
 
 import components.views 1.0
 
+import syncs 1.0
+
 import onboard 1.0
 import onboard.syncs_types.backups 1.0
-import onboard.syncs_types.syncs 1.0
 
 import LoginController 1.0
 import SettingsDialog 1.0
@@ -54,7 +55,7 @@ Rectangle {
             name: syncsFlow
             StateChangeScript {
                 script: {
-                    navInfo.typeSelected = SyncsType.Types.SYNC;
+                    navInfo.typeSelected = Constants.SyncType.SYNC;
                     rightPanel.replace(syncsFlowPage);
                 }
             }
@@ -67,7 +68,7 @@ Rectangle {
             name: backupsFlow
             StateChangeScript {
                 script: {
-                    navInfo.typeSelected = SyncsType.Types.BACKUP;
+                    navInfo.typeSelected = Constants.SyncType.BACKUP;
                     rightPanel.replace(backupsFlowPage);
                 }
             }
@@ -85,15 +86,15 @@ Rectangle {
                     var resumePageState = "";
                     var toOpenTabIndex = 0;
                     switch(syncsPanel.navInfo.typeSelected) {
-                        case SyncsType.Types.SELECTIVE_SYNC:
+                        case Constants.SyncType.SELECTIVE_SYNC:
                             resumePageState = "stateSelectiveSync";
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
-                        case SyncsType.Types.FULL_SYNC:
+                        case Constants.SyncType.FULL_SYNC:
                             resumePageState = "stateFullSync";
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
-                        case SyncsType.Types.BACKUP:
+                        case Constants.SyncType.BACKUP:
                             resumePageState = "stateBackup";
                             toOpenTabIndex = SettingsDialog.BACKUP_TAB;
                             break;

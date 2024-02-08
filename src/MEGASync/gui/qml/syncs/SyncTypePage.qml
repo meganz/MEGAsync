@@ -1,26 +1,26 @@
 import QtQuick 2.15
 
-import onboard.syncs_types 1.0
+import common 1.0
 
 SyncTypePageForm {
     id: root
 
-    signal syncTypeMoveToBack;
-    signal syncTypeMoveToFullSync;
-    signal syncTypeMoveToSelectiveSync;
+    signal syncTypeMoveToBack
+    signal syncTypeMoveToFullSync
+    signal syncTypeMoveToSelectiveSync
 
     footerButtons {
 
         rightSecondary.onClicked: {
-            root.syncTypeMoveToBack()
+            root.syncTypeMoveToBack();
         }
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
-                case SyncsType.Types.FULL_SYNC:
+                case Constants.SyncType.FULL_SYNC:
                     root.syncTypeMoveToFullSync();
                     break;
-                case SyncsType.Types.SELECTIVE_SYNC:
+                case Constants.SyncType.SELECTIVE_SYNC:
                     root.syncTypeMoveToSelectiveSync();
                     break;
                 default:

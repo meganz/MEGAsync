@@ -1,10 +1,14 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
-import onboard.syncs_types 1.0
+import common 1.0
 
-SyncsVerticalButton {
+import components.buttons 1.0
+
+CardVerticalButton {
     id: root
+
+    property int type: Constants.SyncType.SYNC
 
     Layout.preferredWidth: width
     Layout.preferredHeight: height

@@ -58,7 +58,7 @@ FooterButtonsPage {
             extend: root.stateFullSync
             PropertyChanges {
                 target: syncButtonItem;
-                type: SyncsType.Types.SELECTIVE_SYNC;
+                type: Constants.SyncType.SELECTIVE_SYNC;
                 visible: true;
             }
         },
@@ -74,8 +74,8 @@ FooterButtonsPage {
             PropertyChanges {
                 target: syncButtonItem;
                 type: !fullSyncDone && !selectiveSyncDone
-                      ? SyncsType.Types.SYNC
-                      : SyncsType.Types.SELECTIVE_SYNC;
+                      ? Constants.SyncType.SYNC
+                      : Constants.SyncType.SELECTIVE_SYNC;
                 visible: !fullSyncDone;
                 title: !fullSyncDone && !selectiveSyncDone
                        ? OnboardingStrings.sync
@@ -194,7 +194,7 @@ FooterButtonsPage {
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
-                    type: SyncsType.Types.BACKUP
+                    type: Constants.SyncType.BACKUP
                     checkable: false
                     useMaxSiblingHeight: syncButtonItem.visible
                     ButtonGroup.group: buttonGroupItem

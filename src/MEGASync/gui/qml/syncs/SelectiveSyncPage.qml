@@ -14,7 +14,7 @@ SelectiveSyncPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            root.selectiveSyncMoveToBack()
+            root.selectiveSyncMoveToBack();
         }
 
         rightPrimary.onClicked: {
@@ -32,7 +32,7 @@ SelectiveSyncPageForm {
                 localFolderChooser.folderField.hint.visible = true;
             }
 
-            var remoteFolderError = false
+            var remoteFolderError = false;
             if (remoteFolderChooser.choosenPath.length === 0) {
                 remoteFolderError = true;
                 remoteFolderChooser.folderField.error = true;
@@ -102,10 +102,12 @@ SelectiveSyncPageForm {
             localFolderChooser.forceActiveFocus();
         }
 
+        /*
         function onLanguageChanged() {
             if (localFolderChooser.folderField.hint.visible || remoteFolderChooser.folderField.hint.visible) {
                 footerButtons.rightPrimary.clicked();
             }
         }
+        */
     }
 }

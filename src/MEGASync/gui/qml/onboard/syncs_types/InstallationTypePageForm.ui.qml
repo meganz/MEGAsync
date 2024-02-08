@@ -58,7 +58,7 @@ FooterButtonsPage {
                 title: OnboardingStrings.sync
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync
-                type: SyncsType.Types.SYNC
+                type: Constants.SyncType.SYNC
                 ButtonGroup.group: buttonGroupComp
             }
 
@@ -70,7 +70,7 @@ FooterButtonsPage {
                 title: OnboardingStrings.backup
                 description: OnboardingStrings.backupButtonDescription
                 imageSource: Images.installationTypeBackups
-                type: SyncsType.Types.BACKUP
+                type: Constants.SyncType.BACKUP
                 ButtonGroup.group: buttonGroupComp
             }
         }

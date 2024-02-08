@@ -120,16 +120,19 @@
         <file>onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
         <file>onboard/syncs_types/backups/SelectFoldersPage.qml</file>
         <file>onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
-        <file>onboard/syncs_types/syncs/qmldir</file>
-        <file>onboard/syncs_types/syncs/ChooseSyncFolder.qml</file>
-        <file>onboard/syncs_types/syncs/FullSyncPage.qml</file>
-        <file>onboard/syncs_types/syncs/FullSyncPageForm.ui.qml</file>
-        <file>onboard/syncs_types/syncs/SelectiveSyncPage.qml</file>
-        <file>onboard/syncs_types/syncs/SelectiveSyncPageForm.ui.qml</file>
-        <file>onboard/syncs_types/syncs/SyncTypeButton.qml</file>
-        <file>onboard/syncs_types/syncs/SyncTypePage.qml</file>
-        <file>onboard/syncs_types/syncs/SyncTypePageForm.ui.qml</file>
-        <file>onboard/syncs_types/syncs/SyncsFlow.qml</file>
+        <file>syncs/qmldir</file>
+        <file>syncs/SyncsDialog.qml</file>
+        <file>syncs/ChooseSyncFolder.qml</file>
+        <file>syncs/FullSyncPage.qml</file>
+        <file>syncs/FullSyncPageForm.ui.qml</file>
+        <file>syncs/SelectiveSyncPage.qml</file>
+        <file>syncs/SelectiveSyncPageForm.ui.qml</file>
+        <file>syncs/SyncTypeButton.qml</file>
+        <file>syncs/SyncTypePage.qml</file>
+        <file>syncs/SyncTypePageForm.ui.qml</file>
+        <file>syncs/SyncsFlow.qml</file>
+        <file>syncs/ResumeSyncsPageForm.ui.qml</file>
+        <file>syncs/ResumeSyncsPage.qml</file>
         <file>guest/qmldir</file>
         <file>guest/BasePage.qml</file>
         <file>guest/GuestFlow.qml</file>
