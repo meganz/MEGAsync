@@ -256,7 +256,8 @@ int main(int argc, char *argv[])
             }
         }
 
-        Utilities::removeRecursively(MegaApplication::applicationDataPath());
+        QDir dir(MegaApplication::applicationDataPath());
+        dir.removeRecursively();
         Platform::getInstance()->uninstall();
 
 #ifdef WIN32
