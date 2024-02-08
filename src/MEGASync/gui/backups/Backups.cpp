@@ -3,6 +3,9 @@
 #include "BackupsQmlDialog.h"
 #include "BackupsModel.h"
 
+#include "syncs/gui/Twoways/IgnoresEditingDialog.h"
+
+#include "DialogOpener.h"
 #include "MegaApplication.h"
 
 static bool qmlRegistrationDone = false;
@@ -50,4 +53,14 @@ bool Backups::getComesFromSettings() const
 void Backups::setComesFromSettings(bool value)
 {
     mComesFromSettings = value;
+}
+
+void Backups::openExclusionsDialog(const QString &folder) const
+{
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
+    {
+        QWidget* parentWidget = static_cast<QWidget*>(dialog->getDialog().data());
+        QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(folder, true, parentWidget);
+        DialogOpener::showDialog(exclusionRules);
+    }
 }
