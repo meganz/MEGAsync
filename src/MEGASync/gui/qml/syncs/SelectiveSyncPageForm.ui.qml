@@ -7,8 +7,6 @@ import common 1.0
 import components.accountData 1.0
 import components.pages 1.0
 
-import onboard 1.0
-
 FooterButtonsPage {
     id: root
 
@@ -16,7 +14,7 @@ FooterButtonsPage {
     property alias remoteFolderChooser: remoteFolder
 
     footerButtons.rightPrimary {
-        text: OnboardingStrings.sync
+        text: SyncsStrings.sync
         icons.source: Images.syncIcon
     }
 
@@ -35,8 +33,8 @@ FooterButtonsPage {
             id: header
 
             Layout.preferredWidth: parent.width
-            title: OnboardingStrings.selectiveSync
-            description: OnboardingStrings.selectiveSyncDescription
+            title: SyncsStrings.selectiveSync
+            description: SyncsStrings.selectiveSyncDescription
         }
 
         InfoAccount {

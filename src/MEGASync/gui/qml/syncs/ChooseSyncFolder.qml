@@ -8,8 +8,6 @@ import common 1.0
 import components.buttons 1.0
 import components.textFields 1.0
 
-import onboard 1.0
-
 import Syncs 1.0
 import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
@@ -64,7 +62,7 @@ FocusScope {
             top: parent.top
             rightMargin: textEditMargin
         }
-        title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
+        title: local ? SyncsStrings.selectLocalFolder : SyncsStrings.selectMEGAFolder
         text: getFolder()
         leftIconSource: local ? Images.pc : Images.megaOutline
         leftIconColor: enabled ? colorStyle.iconSecondary : colorStyle.iconDisabled
@@ -85,7 +83,7 @@ FocusScope {
             topMargin: 15
         }
         focus: true
-        text: OnboardingStrings.choose
+        text: Strings.choose
         onClicked: {
             folderItem.error = false;
             folderItem.hint.visible = false;

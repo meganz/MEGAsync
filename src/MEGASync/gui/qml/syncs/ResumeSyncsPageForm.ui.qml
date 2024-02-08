@@ -8,8 +8,6 @@ import components.texts 1.0 as Texts
 import components.buttons 1.0
 import components.pages 1.0
 
-import onboard 1.0
-
 FooterButtonsPage {
     id: root
 
@@ -47,7 +45,7 @@ FooterButtonsPage {
 
             Layout.preferredWidth: parent.width
             Layout.topMargin: 40
-            text: OnboardingStrings.finalStepSyncTitle
+            text: SyncsStrings.finalStepSyncTitle
             font {
                 pixelSize: Texts.Text.Size.LARGE
                 weight: Font.Bold
@@ -59,7 +57,7 @@ FooterButtonsPage {
             id: descriptionItem
 
             Layout.preferredWidth: parent.width
-            text: OnboardingStrings.finalStepSync
+            text: SyncsStrings.finalStepSync
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
             lineHeight: 20

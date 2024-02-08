@@ -10,6 +10,7 @@ import components.buttons 1.0
 import components.pages 1.0
 
 import backups 1.0
+import syncs 1.0
 
 import onboard 1.0
 
@@ -42,8 +43,8 @@ FooterButtonsPage {
     states: [
         State {
             name: root.stateFullSync
-            PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
-            PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+            PropertyChanges { target: titleItem; text: SyncsStrings.finalStepSyncTitle; }
+            PropertyChanges { target: descriptionItem; text: SyncsStrings.finalStepSync; }
             PropertyChanges { target: descriptionItem2; visible: false; }
             PropertyChanges { target: syncButtonItem; visible: false; }
             PropertyChanges {
@@ -78,8 +79,8 @@ FooterButtonsPage {
                       : Constants.SyncType.SELECTIVE_SYNC;
                 visible: !fullSyncDone;
                 title: !fullSyncDone && !selectiveSyncDone
-                       ? OnboardingStrings.sync
-                       : OnboardingStrings.selectiveSync;
+                       ? SyncsStrings.sync
+                       : SyncsStrings.selectiveSync;
                 description: !fullSyncDone && !selectiveSyncDone
                              ? OnboardingStrings.finalPageButtonSync
                              : OnboardingStrings.finalPageButtonSelectiveSync;
@@ -171,7 +172,7 @@ FooterButtonsPage {
                     contentMargin: 24
                     contentSpacing: 8
                     imageSourceSize: Qt.size(22, 20)
-                    title: OnboardingStrings.selectiveSync
+                    title: SyncsStrings.selectiveSync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
                     checkable: false

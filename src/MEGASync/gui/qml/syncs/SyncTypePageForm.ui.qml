@@ -6,8 +6,6 @@ import common 1.0
 
 import components.pages 1.0
 
-import onboard 1.0
-
 FooterButtonsPage {
     id: root
 
@@ -29,7 +27,7 @@ FooterButtonsPage {
         HeaderTexts {
             id: header
 
-            title: OnboardingStrings.syncTitle
+            title: SyncsStrings.syncTitle
         }
 
         Item {
@@ -53,9 +51,9 @@ FooterButtonsPage {
                     id: fullSyncButtonItem
 
                     Layout.leftMargin: -fullSyncButtonItem.focusBorderWidth
-                    title: OnboardingStrings.fullSync
+                    title: SyncsStrings.fullSync
                     type: Constants.SyncType.FULL_SYNC
-                    description: OnboardingStrings.fullSyncButtonDescription
+                    description: SyncsStrings.fullSyncButtonDescription
                     imageSource: Images.fullSync
                     imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
@@ -67,9 +65,9 @@ FooterButtonsPage {
                     id: selectiveSyncButton
 
                     Layout.rightMargin: -selectiveSyncButton.focusBorderWidth
-                    title: OnboardingStrings.selectiveSync
+                    title: SyncsStrings.selectiveSync
                     type: Constants.SyncType.SELECTIVE_SYNC
-                    description: OnboardingStrings.selectiveSyncButtonDescription
+                    description: SyncsStrings.selectiveSyncButtonDescription
                     imageSource: Images.selectiveSync
                     imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
