@@ -10,7 +10,7 @@ RegisterPageForm {
             return;
         }
 
-        loginControllerAccess.createAccount(registerContent.email.text,
+        loginControllerAccess.createAccount(registerContent.email.text.trim(),
                                             registerContent.password.text,
                                             registerContent.firstName.text,
                                             registerContent.lastName.text);
