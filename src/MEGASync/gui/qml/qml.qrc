@@ -114,7 +114,8 @@
         <file>onboard/syncs_types/SyncsType.qml</file>
         <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
         <file>onboard/syncs_types/StepPanel.qml</file>
-        <file>onboard/syncs_types/backups/qmldir</file>
+        <file>onboard/syncs_types/SyncsPage.qml</file>
+	<file>onboard/syncs_types/backups/qmldir</file>
         <file>onboard/syncs_types/backups/BackupsPage.qml</file>
         <file>onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
         <file>onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>

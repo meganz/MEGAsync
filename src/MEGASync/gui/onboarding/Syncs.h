@@ -17,8 +17,17 @@ class Syncs : public QObject, public mega::MegaRequestListener
 
     Q_PROPERTY(QString defaultMegaFolder READ getDefaultMegaFolder CONSTANT FINAL)
     Q_PROPERTY(QString defaultMegaPath READ getDefaultMegaPath CONSTANT FINAL)
+    Q_PROPERTY(int syncStatus MEMBER mSyncStatus NOTIFY syncStatusChanged)
 
 public:
+    enum SyncStatusCode
+    {
+        NONE = 0,
+        FULL,
+        SELECTIVE
+    };
+    Q_ENUM(SyncStatusCode)
+
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
     Q_INVOKABLE void addSync(const QString& local, const QString& remote = QLatin1String("/"));
@@ -33,6 +42,7 @@ public:
 signals:
     void syncSetupSuccess();
     void cantSync(const QString& message = QString(), bool localFolderError = true);
+    void syncStatusChanged();
 
 private:
     mega::MegaApi* mMegaApi;
@@ -41,6 +51,7 @@ private:
     QString mRemoteFolder;
     QString mLocalFolder;
     bool mCreatingFolder;
+    int mSyncStatus;
 
     bool errorOnSyncPaths(const QString& localPath, const QString& remotePath);
     bool helperCheckLocalSync(const QString& path, QString& errorMessage) const;

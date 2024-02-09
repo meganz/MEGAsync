@@ -6,8 +6,6 @@ import common 1.0
 
 import components.views 1.0
 
-import syncs 1.0
-
 import onboard 1.0
 import onboard.syncs_types.backups 1.0
 
@@ -201,14 +199,28 @@ Rectangle {
         Component {
             id: syncsFlowPage
 
-            SyncsFlow {
+            SyncsPage {
                 id: syncsFlowPageItem
 
+                stepPanelRef: stepPanel
+
                 onSyncsFlowMoveToFinal: {
+                    if(syncType === Constants.SyncType.FULL_SYNC) {
+                        syncsPanel.navInfo.fullSyncDone = true;
+                    }
+                    else if(syncType === Constants.SyncType.SELECTIVE_SYNC) {
+                        syncsPanel.navInfo.selectiveSyncDone = true;
+                    }
                     syncsPanel.state = resume;
                 }
 
                 onSyncsFlowMoveToBack: {
+                    if(syncsPanel.navInfo.comesFromResumePage) {
+                        syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
+                        syncsPanel.state = resume;
+                        return;
+                    }
+
                     syncsPanel.state = syncType;
                 }
             }

@@ -20,6 +20,16 @@ Syncs::Syncs(QObject *parent)
     mMegaApi->addRequestListener(mDelegateListener.get());
     connect(mSyncController.get(), &SyncController::syncAddStatus,
             this, &Syncs::onSyncAddRequestStatus);
+
+    SyncInfo * syncInfo = SyncInfo::instance();
+    if(syncInfo->getNumSyncedFolders(mega::MegaSync::SyncType::TYPE_TWOWAY) <= 0)
+    {
+        mSyncStatus = NONE;
+    }
+    else
+    {
+        mSyncStatus = FULL;
+    }
 }
 
 void Syncs::addSync(const QString& local, const QString& remote)

@@ -1,5 +1,8 @@
 #include "SyncsComponent.h"
 
+#include "qml/ChooseFolder.h"
+#include "onboarding/Syncs.h"
+
 #include "MegaApplication.h"
 
 static bool qmlRegistrationDone = false;
@@ -8,6 +11,7 @@ SyncsComponent::SyncsComponent(QObject *parent)
     : QMLComponent(parent)
 {
     registerQmlModules();
+    //connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &SyncsComponent::onSyncRemoved);
 }
 
 QUrl SyncsComponent::getQmlUrl()
@@ -17,7 +21,7 @@ QUrl SyncsComponent::getQmlUrl()
 
 QString SyncsComponent::contextName()
 {
-    return QString::fromUtf8("syncsAccess");
+    return QString::fromUtf8("syncsComponentAccess");
 }
 
 void SyncsComponent::registerQmlModules()
@@ -25,6 +29,10 @@ void SyncsComponent::registerQmlModules()
     if (!qmlRegistrationDone)
     {
         qmlRegisterModule("Syncs", 1, 0);
+        qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
+        qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
+        qmlRegisterUncreatableType<Syncs>("Syncs", 1, 0, "SyncStatusCode",
+                                          QString::fromUtf8("Cannot register Syncs::SyncStatusCode in QML"));
         qmlRegistrationDone = true;
     }
 }
@@ -33,3 +41,19 @@ void SyncsComponent::openSyncsTabInPreferences() const
 {
     MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
 }
+
+/*
+void SyncsComponent::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
+{
+    Q_UNUSED(syncSettings);
+    auto syncInfo = SyncInfo::instance();
+    if(syncInfo->getNumSyncedFolders(mega::MegaSync::SyncType::TYPE_TWOWAY) <= 0)
+    {
+        mSyncStatus = NONE;
+    }
+    else
+    {
+        mSyncStatus = FULL;
+    }
+}
+*/
