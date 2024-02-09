@@ -10,8 +10,8 @@
 static const QString ColorStyleFilePath = QString::fromUtf8("qrc:/common/themes/%1/colors/Styles.qml");
 
 ColorTheme::ColorTheme(QQmlEngine *engine, QObject *parent):
-    QObject{parent},
-    mEngine{engine}
+    QObject(parent),
+    mEngine(engine)
 {
     init();
 
@@ -56,7 +56,8 @@ void ColorTheme::loadThemes()
 
         if (qmlComponent.isError())
         {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error loading color style file : %1").arg(colorStyleFile).toUtf8().constData());
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error loading color style file : %1")
+                .arg(colorStyleFile).toUtf8().constData());
         }
         else
         {
