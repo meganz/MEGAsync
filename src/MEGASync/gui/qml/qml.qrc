@@ -128,8 +128,8 @@
         <file>guest/GuestStrings.qml</file>
         <file>guest/MenuItem.qml</file>
         <file>components/texts/Sizes.qml</file>
-        <file>common/themes/colors/light/Styles.qml</file>
-        <file>common/themes/colors/dark/Styles.qml</file>
         <file>common/FontStyles.qml</file>
+        <file>common/themes/light/colors/Styles.qml</file>
+        <file>common/themes/dark/colors/Styles.qml</file>
     </qresource>
 </RCC>
