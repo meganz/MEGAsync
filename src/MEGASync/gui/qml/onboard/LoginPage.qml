@@ -167,7 +167,7 @@ LoginPageForm {
             return;
         }
 
-        loginControllerAccess.login(email.text.trim(), password.text.trim());
+        loginControllerAccess.login(email.text.trim(), password.text);
     }
 
     signUpButton.onClicked: {
