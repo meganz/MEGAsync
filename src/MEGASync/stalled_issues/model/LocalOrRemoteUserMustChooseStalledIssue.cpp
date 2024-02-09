@@ -162,7 +162,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* names
 
 LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseStalledIssue::lastModifiedSide() const
 {
-    if(isFile() && (consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size()))
+    if(isFile())
     {
         return consultLocalData()->getAttributes()->modifiedTime() > consultCloudData()->getAttributes()->modifiedTime()
                    ? ChosenSide::Local : ChosenSide::Remote;
