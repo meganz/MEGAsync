@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-static const QString ColorStyleFilePath = QString::fromUtf8("qrc:/common/themes/%1/colors/Styles.qml");
+static const QString ColorStyleFilePath = QString::fromUtf8("qrc:/common/themes/%1/Colors.qml");
 
 ColorTheme::ColorTheme(QQmlEngine *engine, QObject *parent):
     QObject(parent),
@@ -26,11 +26,13 @@ void ColorTheme::init()
     // TODO : set connection to capture theme changed event.
 
     // snipet to check theme change from light to dark.
+    /*
     static QTimer timer;
     timer.start(10000);
     connect(&timer, &QTimer::timeout, this, [this](){
         onThemeChanged(QLatin1String("dark"));
     });
+    */
 
     mCurrentTheme = QString().fromUtf8("light");
     mThemes << QString().fromUtf8("dark") << QString().fromUtf8("light");
