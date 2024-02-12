@@ -5245,7 +5245,17 @@ void MegaApplication::openSettings(int tab)
 void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
 {
     openSettings(SettingsDialog::SYNCS_TAB);
-    mSettingsDialog->addSyncFolder(megaFolderHandle);
+
+    if(megaFolderHandle == ::mega::INVALID_HANDLE)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromUtf8("Invalid Mega handle when trying to add sync").toUtf8().constData());
+        return;
+    }
+
+    auto node = megaApi->getNodeByHandle(megaFolderHandle);
+    QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
+    mSettingsDialog->addSyncFolder(remoteFolder);
 }
 
 void MegaApplication::createAppMenus()

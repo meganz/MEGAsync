@@ -15,6 +15,8 @@ import ChooseRemoteFolder 1.0
 FocusScope {
     id: root
 
+    required property bool isOnboardingRef
+
     readonly property int textEditMargin: 2
 
     property alias choosenPath: folderItem.text
@@ -31,17 +33,31 @@ FocusScope {
     function getFolder() {
         var defaultFolder = "";
 
-        if (local) {
-            if(syncsComponentAccess.remoteFolder === "") {
+        if(root.isOnboardingRef) {
+            if (local) {
                 defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
             }
-        }
-        else {
-            if(syncsComponentAccess.remoteFolder === "") {
+            else {
                 defaultFolder = syncs.defaultMegaPath;
             }
+        }
+        else { // Standalone syncs window
+            if(syncsComponentAccess === null) {
+                return defaultFolder;
+            }
+
+            if (local) {
+                if(syncsComponentAccess.remoteFolder === "") {
+                    defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
+                }
+            }
             else {
-                defaultFolder = syncsComponentAccess.remoteFolder;
+                if(syncsComponentAccess.remoteFolder === "") {
+                    defaultFolder = syncs.defaultMegaPath;
+                }
+                else {
+                    defaultFolder = syncsComponentAccess.remoteFolder;
+                }
             }
         }
 
@@ -59,6 +75,17 @@ FocusScope {
 
     Syncs {
         id: syncs
+    }
+
+    Connections {
+        id: syncsConnection
+
+        target: syncs
+
+        function onSyncRemoved() {
+            // Check if MEGA is available again when removed
+            folderItem.text = getFolder();
+        }
     }
 
     TextField {

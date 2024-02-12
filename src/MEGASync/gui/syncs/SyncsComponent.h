@@ -3,8 +3,6 @@
 
 #include "qml/QmlDialogWrapper.h"
 
-#include "syncs/control/SyncSettings.h"
-
 class SyncsComponent : public QMLComponent
 {
     Q_OBJECT
@@ -35,13 +33,6 @@ signals:
 private:
     bool mComesFromSettings;
     QString mRemoteFolder;
-    //mega::MegaHandle mMegaFolderHandle;
-
-    /*
-private slots:
-    void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
-*/
-
 
 };
 

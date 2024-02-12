@@ -17,7 +17,7 @@ class Syncs : public QObject, public mega::MegaRequestListener
 
     Q_PROPERTY(QString defaultMegaFolder READ getDefaultMegaFolder CONSTANT FINAL)
     Q_PROPERTY(QString defaultMegaPath READ getDefaultMegaPath CONSTANT FINAL)
-    Q_PROPERTY(int syncStatus MEMBER mSyncStatus NOTIFY syncStatusChanged)
+    Q_PROPERTY(int syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY syncStatusChanged)
 
 public:
     enum SyncStatusCode
@@ -28,21 +28,27 @@ public:
     };
     Q_ENUM(SyncStatusCode)
 
+    static const QString DEFAULT_MEGA_FOLDER;
+    static const QString DEFAULT_MEGA_PATH;
+
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
+
     Q_INVOKABLE void addSync(const QString& local, const QString& remote = QLatin1String("/"));
     Q_INVOKABLE bool checkLocalSync(const QString& path) const;
     Q_INVOKABLE bool checkRemoteSync(const QString& path) const;
+
     QString getDefaultMegaFolder() const;
     QString getDefaultMegaPath() const;
 
-    static const QString DEFAULT_MEGA_FOLDER;
-    static const QString DEFAULT_MEGA_PATH;
+    int getSyncStatus() const;
+    void setSyncStatus(int status);
 
 signals:
     void syncSetupSuccess();
     void cantSync(const QString& message = QString(), bool localFolderError = true);
     void syncStatusChanged();
+    void syncRemoved();
 
 private:
     mega::MegaApi* mMegaApi;
@@ -60,6 +66,8 @@ private:
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
+    void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
+
 };
 
 #endif // SYNCS_H

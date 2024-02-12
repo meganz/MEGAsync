@@ -12,7 +12,6 @@ SyncsComponent::SyncsComponent(QObject *parent)
     , mRemoteFolder(QString())
 {
     registerQmlModules();
-    //connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &SyncsComponent::onSyncRemoved);
 }
 
 QUrl SyncsComponent::getQmlUrl()
@@ -50,8 +49,11 @@ bool SyncsComponent::getComesFromSettings() const
 
 void SyncsComponent::setRemoteFolder(const QString& remoteFolder)
 {
-    mRemoteFolder = remoteFolder;
-    emit remoteFolderChanged();
+    if(remoteFolder != mRemoteFolder)
+    {
+        mRemoteFolder = remoteFolder;
+        emit remoteFolderChanged();
+    }
 }
 
 QString SyncsComponent::getRemoteFolder() const
@@ -64,18 +66,3 @@ void SyncsComponent::setComesFromSettings(bool value)
     mComesFromSettings = value;
 }
 
-/*
-void SyncsComponent::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
-{
-    Q_UNUSED(syncSettings);
-    auto syncInfo = SyncInfo::instance();
-    if(syncInfo->getNumSyncedFolders(mega::MegaSync::SyncType::TYPE_TWOWAY) <= 0)
-    {
-        mSyncStatus = NONE;
-    }
-    else
-    {
-        mSyncStatus = FULL;
-    }
-}
-*/

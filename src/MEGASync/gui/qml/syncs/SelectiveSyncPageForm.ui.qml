@@ -10,6 +10,8 @@ import components.pages 1.0
 FooterButtonsPage {
     id: root
 
+    required property bool isOnboardingRef
+
     property alias localFolderChooser: localFolder
     property alias remoteFolderChooser: remoteFolder
 
@@ -50,6 +52,7 @@ FooterButtonsPage {
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
             Layout.topMargin: 16
+            isOnboardingRef: root.isOnboardingRef
         }
 
         ChooseSyncFolder {
@@ -58,6 +61,7 @@ FooterButtonsPage {
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
             local: false
+            isOnboardingRef: root.isOnboardingRef
         }
     }
 }

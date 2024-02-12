@@ -32,7 +32,7 @@ protected:
 
     void setSyncsTitle();
     void changeEvent(QEvent *) override;
-    void addSyncAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE) const override;
+    void addSyncAfterOverQuotaCheck(const QString& remoteFolder) const override;
 
 private slots:
     void storageStateChanged(int newStorageState);

@@ -216,14 +216,17 @@ Rectangle {
                     root.state = root.resume;
                 }
 
-                onSyncsFlowMoveToBack: {
+                onSyncsFlowMoveToBack: (fromSelectType) => {
                     if(root.navInfo.comesFromResumePage) {
                         root.navInfo.typeSelected = root.navInfo.previousTypeSelected;
                         root.state = root.resume;
-                        return;
                     }
-
-                    root.state = root.syncType;
+                    else if(fromSelectType) {
+                        root.state = root.syncType;
+                    }
+                    else {
+                        syncsFlowPageItem.state = syncsFlowPageItem.syncType;
+                    }
                 }
             }
         }
@@ -270,7 +273,7 @@ Rectangle {
                 onResumePageMoveToSelectiveSyncs: {
                     root.navInfo.previousTypeSelected = root.navInfo.typeSelected;
                     root.state = root.syncsFlow;
-                    root.navInfo.typeSelected = SyncsType.Types.SELECTIVE_SYNC;
+                    root.navInfo.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
                 }
 
                 onResumePageMoveToBackup: {

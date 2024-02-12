@@ -10,6 +10,8 @@ import components.pages 1.0
 FooterButtonsPage {
     id: root
 
+    required property bool isOnboardingRef
+
     property alias localFolderChooser: localFolder
 
     footerButtons.rightPrimary {
@@ -46,7 +48,8 @@ FooterButtonsPage {
             id: localFolder
 
             Layout.preferredWidth: parent.width + 8
-            Layout.leftMargin: -4            
+            Layout.leftMargin: -4
+            isOnboardingRef: root.isOnboardingRef
         }
     }
 }

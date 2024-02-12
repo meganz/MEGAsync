@@ -33,7 +33,7 @@ protected:
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
 
     void setBackupsTitle();
-    void addSyncAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE) const override;
+    void addSyncAfterOverQuotaCheck(const QString& remoteFolder) const override;
     void changeEvent(QEvent* event) override;
 
 protected slots:

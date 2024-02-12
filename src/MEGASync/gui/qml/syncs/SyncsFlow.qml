@@ -16,15 +16,24 @@ Item {
     property bool isOnboarding: false
 
     signal syncsFlowMoveToFinal(int syncType)
-    signal syncsFlowMoveToBack
+    signal syncsFlowMoveToBack(bool fromSelectType)
 
     // added to avoid qml warning.
     function setInitialFocusPosition() { }
 
-    state: (syncItem.syncStatus === undefined || syncItem.syncStatus === syncItem.SyncStatusCode.NONE)
-                && syncsComponentAccess.remoteFolder === ""
-           ? root.syncType
-           : root.selectiveSync
+    function getState() {
+        if(isOnboarding) {
+            return syncItem.syncStatus === syncItem.SyncStatusCode.NONE ? root.syncType : root.selectiveSync;
+        }
+        else {
+            return syncItem.syncStatus === syncItem.SyncStatusCode.NONE
+                        && syncsComponentAccess.remoteFolder === ""
+                   ? root.syncType
+                   : root.selectiveSync;
+        }
+    }
+
+    state: getState()
 
     states: [
         State {
@@ -75,7 +84,7 @@ Item {
                 footerButtons.rightSecondary.visible: root.isOnboarding
 
                 onSyncTypeMoveToBack: {
-                    root.syncsFlowMoveToBack();
+                    root.syncsFlowMoveToBack(true);
                 }
 
                 onSyncTypeMoveToFullSync: {
@@ -94,17 +103,21 @@ Item {
             FullSyncPage {
                 id: fullSyncPage
 
+                isOnboardingRef: root.isOnboarding
+
                 footerButtons.leftSecondary {
                     text: root.isOnboarding ? Strings.skip : Strings.cancel
                     visible: root.isOnboarding
                 }
 
                 onFullSyncMoveToBack: {
-                    if(syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
+                    // If it is the standalone window, then move to the sync type page
+                    // Otherwise, delegate the state control to MainFlow using the signal
+                    if(!isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
                         root.state = root.syncType;
                     }
                     else {
-                        root.syncsFlowMoveToBack();
+                        root.syncsFlowMoveToBack(false);
                     }
                 }
 
@@ -121,23 +134,26 @@ Item {
             SelectiveSyncPage {
                 id: selectiveSyncPage
 
-                function buttonVisible() {
-                    return root.isOnboarding
-                                || (!root.isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE)
-                }
+                isOnboardingRef: root.isOnboarding
 
-                footerButtons.rightSecondary.visible: selectiveSyncPage.buttonVisible()
+                footerButtons.rightSecondary.visible: root.isOnboarding
+                                                        || (!root.isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE
+                                                                && syncsComponentAccess.remoteFolder === "")
                 footerButtons.leftSecondary {
                     text: root.isOnboarding ? Strings.skip : Strings.cancel
-                    visible: selectiveSyncPage.buttonVisible()
+                    visible: root.isOnboarding
+                                || (!root.isOnboarding && syncItem.syncStatus !== syncItem.SyncStatusCode.NONE)
+                                || syncsComponentAccess.remoteFolder !== ""
                 }
 
                 onSelectiveSyncMoveToBack: {
-                    if(syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
+                    // If it is the standalone window, then move to the sync type page
+                    // Otherwise, delegate the state control to MainFlow using the signal
+                    if(!isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
                         root.state = root.syncType;
                     }
                     else {
-                        root.syncsFlowMoveToBack();
+                        root.syncsFlowMoveToBack(false);
                     }
                 }
 

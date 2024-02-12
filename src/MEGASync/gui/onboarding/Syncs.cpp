@@ -18,18 +18,13 @@ Syncs::Syncs(QObject *parent)
     , mCreatingFolder(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
+
     connect(mSyncController.get(), &SyncController::syncAddStatus,
             this, &Syncs::onSyncAddRequestStatus);
+    connect(SyncInfo::instance(), &SyncInfo::syncRemoved,
+            this, &Syncs::onSyncRemoved);
 
-    SyncInfo * syncInfo = SyncInfo::instance();
-    if(syncInfo->getNumSyncedFolders(mega::MegaSync::SyncType::TYPE_TWOWAY) <= 0)
-    {
-        mSyncStatus = NONE;
-    }
-    else
-    {
-        mSyncStatus = FULL;
-    }
+    onSyncRemoved(nullptr);
 }
 
 void Syncs::addSync(const QString& local, const QString& remote)
@@ -187,6 +182,20 @@ QString Syncs::getDefaultMegaPath() const
     return DEFAULT_MEGA_PATH;
 }
 
+int Syncs::getSyncStatus() const
+{
+    return mSyncStatus;
+}
+
+void Syncs::setSyncStatus(int status)
+{
+    if(status != mSyncStatus)
+    {
+        mSyncStatus = status;
+        emit syncStatusChanged();
+    }
+}
+
 void Syncs::onRequestFinish(mega::MegaApi* api,
                             mega::MegaRequest* request,
                             mega::MegaError* error)
@@ -216,6 +225,22 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
             emit cantSync(QCoreApplication::translate("MegaError", error->getErrorString()), false);
         }
     }
+}
+
+void Syncs::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
+{
+    Q_UNUSED(syncSettings)
+
+    SyncInfo* syncInfo = SyncInfo::instance();
+    if(syncInfo->getNumSyncedFolders(mega::MegaSync::SyncType::TYPE_TWOWAY) <= 0)
+    {
+        setSyncStatus(NONE);
+    }
+    else
+    {
+        setSyncStatus(FULL);
+    }
+    emit syncRemoved();
 }
 
 void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name)

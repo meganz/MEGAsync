@@ -114,7 +114,7 @@ void SyncSettingsUI::changeEvent(QEvent* event)
     SyncSettingsUIBase::changeEvent(event);
 }
 
-void SyncSettingsUI::addSyncAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle) const
+void SyncSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) const
 {
     QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
@@ -126,12 +126,7 @@ void SyncSettingsUI::addSyncAfterOverQuotaCheck(mega::MegaHandle megaFolderHandl
         syncsDialog = new QmlDialogWrapper<SyncsComponent>();
     }
     syncsDialog->wrapper()->setComesFromSettings(true);
-    if(megaFolderHandle != mega::INVALID_HANDLE)
-    {
-        auto node = MegaSyncApp->getMegaApi()->getNodeByHandle(megaFolderHandle);
-        QString remoteFolder (QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(node)));
-        syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-    }
+    syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
     DialogOpener::showDialog(syncsDialog);
 }
 

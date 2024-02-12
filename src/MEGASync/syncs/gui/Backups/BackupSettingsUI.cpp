@@ -134,9 +134,9 @@ void BackupSettingsUI::setBackupsTitle()
     setTitle(tr("Backups"));
 }
 
-void BackupSettingsUI::addSyncAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle) const
+void BackupSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) const
 {
-    Q_UNUSED(megaFolderHandle);
+    Q_UNUSED(remoteFolder);
 
     QPointer<QmlDialogWrapper<Backups>> backupsDialog;
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
