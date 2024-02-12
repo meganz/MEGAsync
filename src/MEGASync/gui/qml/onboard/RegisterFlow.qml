@@ -16,7 +16,7 @@ Rectangle {
     readonly property string confirmEmail: "confirmEmail"
     readonly property string changeConfirmEmail: "changeConfirmEmail"
 
-    color: Styles.surface1
+    color: colorStyle.surface1
 
     state:  {
         switch(loginControllerAccess.state) {
@@ -146,7 +146,7 @@ Rectangle {
         width: 1
         height: 464
         radius: 2
-        color: Styles.borderDisabled
+        color: colorStyle.borderDisabled
     }
 
     StackViewBase {

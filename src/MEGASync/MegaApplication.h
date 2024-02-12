@@ -12,7 +12,6 @@
 #include <QQueue>
 #include <QNetworkInterface>
 #include <QFutureWatcher>
-#include <QQmlFileSelector>
 
 #include <memory>
 #include <QQmlEngine>
@@ -604,7 +603,6 @@ private:
     QQueue<QString> createQueue(const QStringList& newUploads) const;
 
     void registerCommonQMLElements();
-    void addStyleSelector(const QStringList& args);
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

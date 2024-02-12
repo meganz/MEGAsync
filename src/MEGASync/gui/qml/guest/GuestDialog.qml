@@ -26,7 +26,7 @@ GuestQmlDialog {
     Rectangle {
         id: borderItem
 
-        color: Styles.surface1
+        color: colorStyle.surface1
         radius: 10
         anchors.fill: parent
         border.color: "#1F000000"

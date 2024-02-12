@@ -15,14 +15,14 @@ Button {
     property size imageSourceSize
 
     property Colors colors: Colors {
-        background: Styles.pageBackground
-        hover: Styles.buttonOutlineBackgroundHover
-        pressed: Styles.pageBackground
-        border: Styles.borderDisabled
-        borderDisabled: Styles.borderDisabled
-        borderHover: Styles.borderDisabled
-        borderPressed: Styles.borderSubtle
-        borderSelected: Styles.borderStrongSelected
+        background: colorStyle.pageBackground
+        hover: colorStyle.buttonOutlineBackgroundHover
+        pressed: colorStyle.pageBackground
+        border: colorStyle.borderDisabled
+        borderDisabled: colorStyle.borderDisabled
+        borderHover: colorStyle.borderDisabled
+        borderPressed: colorStyle.borderSubtle
+        borderSelected: colorStyle.borderStrongSelected
     }
 
     function getBorderColor() {
@@ -68,7 +68,7 @@ Button {
         radius: root.focusBorderRadius
         border {
             color: root.enabled
-                   ? (root.activeFocus ? Styles.focus : "transparent")
+                   ? (root.activeFocus ? colorStyle.focus : "transparent")
                    : "transparent"
             width: root.focusBorderWidth
         }

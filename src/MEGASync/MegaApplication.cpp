@@ -35,6 +35,7 @@
 #include "qml/QmlClipboard.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
+#include "qml/ColorTheme.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -211,8 +212,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
                       ));
 #endif
 
-    addStyleSelector(args);
-
     // For some reason this doesn't work on Windows (done in stylesheet above)
     // TODO: re-try with Qt > 5.12.15
     QPalette palette = QToolTip::palette();
@@ -370,27 +369,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
     setAttribute(Qt::AA_DisableWindowContextHelpButton);
-}
-
-void MegaApplication::addStyleSelector(const QStringList& args)
-{
-    /*
-     * Forced to use --theme instead of --style due to Qt is already using it
-     * for its own style selection (Material, Universal, etc.)
-    */
-    static const QString themeArg = QString::fromUtf8("--theme");
-
-    auto qmlFileSelector(new QQmlFileSelector(mEngine, mEngine));
-    if (qmlFileSelector != nullptr && args.contains(themeArg))
-    {
-        auto styleValueIndex = args.indexOf(themeArg) + 1;
-        if (styleValueIndex < args.size())
-        {
-            QStringList style;
-            style << args.at(styleValueIndex);
-            qmlFileSelector->setExtraSelectors(style);
-        }
-    }
 }
 
 MegaApplication::~MegaApplication()
@@ -3086,6 +3064,8 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
                                      QString::fromUtf8("Cannot create ApiEnums in QML"));
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
+    
+    mEngine->rootContext()->setContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, this));
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const

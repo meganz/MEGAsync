@@ -37,7 +37,7 @@ SyncsPage {
             description: OnboardingStrings.chooseInstallation
             spacing: 36
             descriptionWeight: Font.DemiBold
-            descriptionColor: Styles.textPrimary
+            descriptionColor: colorStyle.textPrimary
         }
 
         ButtonGroup {
