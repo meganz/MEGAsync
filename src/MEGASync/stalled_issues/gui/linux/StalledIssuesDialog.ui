@@ -419,7 +419,7 @@ background-color: #F3F4F4;
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="title" stdset="0">
-                <string>Solved:</string>
+                <string/>
                </property>
                <property name="filterCriterion" stdset="0">
                 <UInt>4</UInt>
@@ -1037,6 +1037,9 @@ automatically</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignCenter</set>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>

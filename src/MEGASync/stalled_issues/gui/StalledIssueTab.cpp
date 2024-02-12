@@ -86,7 +86,13 @@ void StalledIssueTab::leaveEvent(QEvent*)
 
 void StalledIssueTab::onUpdateCounter()
 {
-    ui->counter->setText(QString::number(
+    // This is a work around to enable pluralization of resolved string in resolved issues tab
+    if (static_cast<StalledIssueFilterCriterion>(mFilterCriterion) == StalledIssueFilterCriterion::SOLVED_CONFLICTS)
+    {
+       ui->title->setText(tr("Resolved: %n","", MegaSyncApp->getStalledIssuesModel()
+                                                     ->getCountByFilterCriterion(static_cast<StalledIssueFilterCriterion>(mFilterCriterion))));
+    }
+        ui->counter->setText(QString::number(
                              MegaSyncApp->getStalledIssuesModel()->getCountByFilterCriterion(static_cast<StalledIssueFilterCriterion>(mFilterCriterion))));
 }
 
@@ -142,4 +148,11 @@ int StalledIssueTab::filterCriterion() const
 void StalledIssueTab::setFilterCriterion(int filterCriterion)
 {
     mFilterCriterion = filterCriterion;
+    // This is a work around to enable pluralization of resolved string in resolved issues tab
+    if(static_cast<StalledIssueFilterCriterion>(mFilterCriterion) == StalledIssueFilterCriterion::SOLVED_CONFLICTS)
+    {
+        ui->counter->hide();
+        ui->title->setText(tr("Resolved: %n","", MegaSyncApp->getStalledIssuesModel()
+                                                      ->getCountByFilterCriterion(static_cast<StalledIssueFilterCriterion>(mFilterCriterion))));
+    }
 }
