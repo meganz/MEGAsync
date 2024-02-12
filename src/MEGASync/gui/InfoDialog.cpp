@@ -1065,11 +1065,13 @@ void InfoDialog::addSync(MegaHandle h)
             if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
             {
                 DialogOpener::showDialog(dialog->getDialog());
+                dialog->getDialog()->wrapper()->setComesFromSettings(false);
             }
             else
             {
                 QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog = new QmlDialogWrapper<SyncsComponent>();
                 DialogOpener::showDialog(syncsDialog);
+                syncsDialog->wrapper()->setComesFromSettings(false);
             }
         }
     };

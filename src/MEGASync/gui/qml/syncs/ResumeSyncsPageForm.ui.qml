@@ -15,7 +15,7 @@ FooterButtonsPage {
         leftSecondary.visible: false
         rightSecondary {
             text: Strings.viewInSettings
-            visible: true//backupsAccess != null ? !backupsAccess.comesFromSettings : false
+            visible: syncsComponentAccess != null ? !syncsComponentAccess.comesFromSettings : false
         }
         rightPrimary {
             text: Strings.done

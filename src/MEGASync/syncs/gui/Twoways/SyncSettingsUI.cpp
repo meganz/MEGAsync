@@ -2,6 +2,13 @@
 
 #include "syncs/gui/Twoways/SyncTableView.h"
 #include "syncs/model/SyncItemModel.h"
+
+#include "qml/QmlDialogWrapper.h"
+#include "syncs/SyncsComponent.h"
+#include "onboarding/Onboarding.h"
+
+#include "DialogOpener.h"
+
 #include <MegaApplication.h>
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
@@ -19,6 +26,20 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
 #ifdef Q_OS_WINDOWS
     adjustSize();
 #endif
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+        connect(dialog->getDialog(), &QmlDialogWrapper<Onboarding>::finished, this, [this]()
+        {
+            setAddButtonEnabled(true);
+        });
+    }
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+    }
 }
 
 SyncSettingsUI::~SyncSettingsUI()
@@ -93,14 +114,29 @@ void SyncSettingsUI::changeEvent(QEvent* event)
     SyncSettingsUIBase::changeEvent(event);
 }
 
+void SyncSettingsUI::addSyncAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle) const
+{
+    QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    {
+        syncsDialog = dialog->getDialog();
+    }
+    else
+    {
+        syncsDialog = new QmlDialogWrapper<SyncsComponent>();
+    }
+    syncsDialog->wrapper()->setComesFromSettings(true);
+    if(megaFolderHandle != mega::INVALID_HANDLE)
+    {
+        auto node = MegaSyncApp->getMegaApi()->getNodeByHandle(megaFolderHandle);
+        QString remoteFolder (QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(node)));
+        syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
+    }
+    DialogOpener::showDialog(syncsDialog);
+}
+
 void SyncSettingsUI::storageStateChanged(int newStorageState)
 {
     mSyncElement.setOverQuotaMode(newStorageState == mega::MegaApi::STORAGE_STATE_RED
                                   || newStorageState == mega::MegaApi::STORAGE_STATE_PAYWALL);
 }
-
-
-
-
-
-

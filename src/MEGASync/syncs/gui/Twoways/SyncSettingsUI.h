@@ -32,6 +32,7 @@ protected:
 
     void setSyncsTitle();
     void changeEvent(QEvent *) override;
+    void addSyncAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE) const override;
 
 private slots:
     void storageStateChanged(int newStorageState);

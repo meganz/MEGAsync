@@ -9,6 +9,7 @@ static bool qmlRegistrationDone = false;
 
 SyncsComponent::SyncsComponent(QObject *parent)
     : QMLComponent(parent)
+    , mRemoteFolder(QString())
 {
     registerQmlModules();
     //connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &SyncsComponent::onSyncRemoved);
@@ -40,6 +41,27 @@ void SyncsComponent::registerQmlModules()
 void SyncsComponent::openSyncsTabInPreferences() const
 {
     MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+}
+
+bool SyncsComponent::getComesFromSettings() const
+{
+    return mComesFromSettings;
+}
+
+void SyncsComponent::setRemoteFolder(const QString& remoteFolder)
+{
+    mRemoteFolder = remoteFolder;
+    emit remoteFolderChanged();
+}
+
+QString SyncsComponent::getRemoteFolder() const
+{
+    return mRemoteFolder;
+}
+
+void SyncsComponent::setComesFromSettings(bool value)
+{
+    mComesFromSettings = value;
 }
 
 /*

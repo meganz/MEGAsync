@@ -18,8 +18,9 @@ FocusScope {
     readonly property int textEditMargin: 2
 
     property alias choosenPath: folderItem.text
-    property bool local: true
     property alias folderField: folderItem
+
+    property bool local: true
 
     function reset() {
         if(!local) {
@@ -31,10 +32,17 @@ FocusScope {
         var defaultFolder = "";
 
         if (local) {
-            defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
+            if(syncsComponentAccess.remoteFolder === "") {
+                defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
+            }
         }
         else {
-            defaultFolder = syncs.defaultMegaPath;
+            if(syncsComponentAccess.remoteFolder === "") {
+                defaultFolder = syncs.defaultMegaPath;
+            }
+            else {
+                defaultFolder = syncsComponentAccess.remoteFolder;
+            }
         }
 
         if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder))) {

@@ -21,7 +21,8 @@ Item {
     // added to avoid qml warning.
     function setInitialFocusPosition() { }
 
-    state: syncItem.syncStatus === undefined || syncItem.syncStatus === syncItem.SyncStatusCode.NONE
+    state: (syncItem.syncStatus === undefined || syncItem.syncStatus === syncItem.SyncStatusCode.NONE)
+                && syncsComponentAccess.remoteFolder === ""
            ? root.syncType
            : root.selectiveSync
 
