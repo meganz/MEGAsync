@@ -381,6 +381,9 @@ automatically</string>
                      <property name="alignment">
                       <set>Qt::AlignCenter</set>
                      </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -1082,7 +1085,7 @@ color: #2C5BEB;
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="title" stdset="0">
-                <string>Solved:</string>
+                <string/>
                </property>
                <property name="filterCriterion" stdset="0">
                 <UInt>4</UInt>
@@ -1456,6 +1459,6 @@ color: grey;
  </customwidgets>
  <resources>
   <include location="../../../gui/Resources_macx.qrc"/>
- </resources>
+   </resources>
  <connections/>
 </ui>

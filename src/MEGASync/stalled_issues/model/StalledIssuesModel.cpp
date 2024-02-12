@@ -960,7 +960,6 @@ void StalledIssuesModel::chooseBothSides(const QModelIndexList& list)
     };
 
     SolveListInfo info(list, resolveIssue);
-    info.async = true;
     solveListOfIssues(info);
 }
 
