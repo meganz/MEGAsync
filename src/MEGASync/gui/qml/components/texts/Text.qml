@@ -14,11 +14,11 @@ Qml.Text {
         HUGE = 48
     }
 
-    color: enabled ? Styles.textPrimary : Styles.textDisabled
+    color: enabled ? colorStyle.textPrimary : colorStyle.textDisabled
     wrapMode: Text.WordWrap
     font {
-        family: Styles.fontFamily
-        styleName: Styles.fontStyleName
+        family: FontStyles.fontFamily
+        styleName: FontStyles.fontStyleName
         pixelSize: Text.Size.NORMAL
     }
 }

@@ -79,7 +79,6 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
             ui->bDeleteName->setEnabled(!ui->lExcludedNames->selectedItems().isEmpty());
         });
 #endif
-
 }
 
 IgnoresEditingDialog::~IgnoresEditingDialog()

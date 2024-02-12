@@ -5,11 +5,12 @@
 #include "control/Utilities.h"
 #include "megaapi.h"
 #include <QTMegaRequestListener.h>
-#include "TransferMetaData.h"
+#include "drivedata.h"
 
 #include <QMap>
 #include <QObject>
 #include <QString>
+#include <QStorageInfo>
 
 class DownloadQueueController : public QObject, public mega::MegaRequestListener
 {
@@ -45,6 +46,10 @@ private:
     void tryDownload();
     bool hasEnoughSpaceForDownloads();
     void askUserForChoice();
+    DriveDisplayData getDriveDisplayData(const QStorageInfo& driveInfo) const;
+    QString getDefaultDriveName() const;
+    QString getDriveIcon() const;
+    DriveSpaceData getDriveSpaceDataFromQt();
 
     mega::MegaApi *mMegaApi;
     const QMap<mega::MegaHandle, QString>& mPathMap;
@@ -55,5 +60,7 @@ private:
     QString mCurrentTargetPath;
     BlockingBatch* mDownloadBatches;
     QQueue<WrappedNode*>* mDownloadQueue;
+
+    DriveSpaceData mCachedDriveData;
 };
 #endif // DOWNLOADQUEUECONTROLLER_H

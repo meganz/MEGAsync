@@ -28,6 +28,6 @@ TextField {
         height: root.outRect.height
         sourceSize: Qt.size(16 ,16)
         source: imageSource
-        color: Styles.iconSecondary
+        color: colorStyle.iconSecondary
     }
 }

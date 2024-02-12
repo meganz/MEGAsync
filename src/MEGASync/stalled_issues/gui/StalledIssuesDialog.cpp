@@ -194,7 +194,7 @@ void StalledIssuesDialog::on_doneButton_clicked()
     close();
 }
 
-void StalledIssuesDialog::on_updateButton_clicked()
+void StalledIssuesDialog::on_refreshButton_clicked()
 {
     mProxyModel->updateStalledIssues();
 }
@@ -319,7 +319,7 @@ void StalledIssuesDialog::showView(bool update)
 
     if(update)
     {
-        on_updateButton_clicked();
+        on_refreshButton_clicked();
     }
 }
 

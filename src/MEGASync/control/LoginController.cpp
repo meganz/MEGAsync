@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "QMegaMessageBox.h"
 #include "mega/types.h"
+#include "AppStatsEvents.h"
 
 #include <QQmlContext>
 
@@ -405,6 +406,13 @@ void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaEr
         credentials.email = mEmail;
         credentials.sessionId = QString::fromUtf8(request->getSessionKey());
         mPreferences->setEphemeralCredentials(credentials);
+        mMegaApi->sendEvent(AppStatsEvents::EVENT_ACC_CREATION_START,
+                            "MEGAsync account creation start",
+                            false, nullptr);
+        if (!mPreferences->accountCreationTime())
+        {
+                mPreferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
+        }
         setState(WAITING_EMAIL_CONFIRMATION);
     }
     else

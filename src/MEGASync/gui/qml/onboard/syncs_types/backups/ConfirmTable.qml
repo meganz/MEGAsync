@@ -26,7 +26,7 @@ Rectangle {
             ? 192 : 192 - headerFooterHeight + listView.footerItem.height
     width: parent.width
     radius: tableRadius
-    color: Styles.pageBackground
+    color: colorStyle.pageBackground
 
     Rectangle {
         id: borderRectangle
@@ -34,7 +34,7 @@ Rectangle {
         width: root.width
         height: root.height
         color: "transparent"
-        border.color: Styles.borderStrong
+        border.color: colorStyle.borderStrong
         border.width: 1
         radius: 8
         z: 5
@@ -66,7 +66,7 @@ Rectangle {
                 right: parent.right
             }
             height: headerFooterHeight
-            color: Styles.pageBackground
+            color: colorStyle.pageBackground
             radius: root.radius
             z: 3
 
@@ -88,7 +88,7 @@ Rectangle {
                         id: headerImage
 
                         source: Images.database
-                        color: Styles.iconPrimary
+                        color: colorStyle.iconPrimary
                         sourceSize: Qt.size(16, 16)
                     }
 
@@ -97,7 +97,7 @@ Rectangle {
 
                         text: OnboardingStrings.backupFolders
                         font.weight: Font.DemiBold
-                        color: Styles.textPrimary
+                        color: colorStyle.textPrimary
                     }
                 }
 
@@ -107,7 +107,7 @@ Rectangle {
                     Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
                     text: backupsModelAccess.totalSize
-                    color: Styles.textPrimary
+                    color: colorStyle.textPrimary
                     visible: backupsModelAccess.totalSizeReady
                     font {
                         pixelSize: Texts.Text.Size.SMALL
@@ -124,7 +124,7 @@ Rectangle {
                     Layout.preferredHeight: 16
                     imageSize: Qt.size(16, 16)
                     visible: !backupsModelAccess.totalSizeReady
-                    color: Styles.textAccent
+                    color: colorStyle.textAccent
                 }
             }
 
@@ -137,7 +137,7 @@ Rectangle {
                     right: parent.right
                 }
                 height: borderRectangle.border.width
-                color: Styles.borderSubtle
+                color: colorStyle.borderSubtle
 
             }
 
@@ -172,7 +172,7 @@ Rectangle {
             }
             height: notificationItem.height
             radius: tableRadius
-            color: Styles.pageBackground
+            color: colorStyle.pageBackground
             z: 3
             visible: backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE
 

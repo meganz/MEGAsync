@@ -279,6 +279,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/EventUpdater.h
     ${MEGAsyncDir}/FolderTransferListener.h
     ${MEGAsyncDir}/BlockingStageProgressController.h
+    ${MEGAsyncDir}/drivedata.h
 
     ${MEGAsyncDir}/notifications/DesktopNotifications.h
     ${MEGAsyncDir}/notifications/NotificationDelayer.h
@@ -309,6 +310,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/Version.h
     ${MEGAsyncDir}/control/LoginController.h
     ${MEGAsyncDir}/control/AccountStatusController.h
+    ${MEGAsyncDir}/control/EmailRequester.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -380,6 +382,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorSpecializations.h
     ${MEGAsyncDir}/gui/qml/QmlClipboard.h
+    ${MEGAsyncDir}/gui/qml/ColorTheme.h
     ${MEGAsyncDir}/gui/qml/QmlDialog.h
     ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.h
     ${MEGAsyncDir}/gui/qml/StandardIconProvider.h
@@ -564,6 +567,7 @@ set (SRCS
     ${MEGAsyncDir}/EventUpdater.cpp
     ${MEGAsyncDir}/FolderTransferListener.cpp
     ${MEGAsyncDir}/BlockingStageProgressController.cpp
+    ${MEGAsyncDir}/drivedata.cpp
 
     ${MEGAsyncDir}/notifications/TransferNotificationBuilder.cpp
     ${MEGAsyncDir}/notifications/DesktopNotifications.cpp
@@ -650,6 +654,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
     ${MEGAsyncDir}/gui/qml/QmlClipboard.cpp
+    ${MEGAsyncDir}/gui/qml/ColorTheme.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialog.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.cpp
     ${MEGAsyncDir}/gui/qml/StandardIconProvider.cpp
@@ -748,6 +753,7 @@ set (SRCS
     ${MEGAsyncDir}/control/LoginController.cpp
     ${MEGAsyncDir}/control/AccountStatusController.cpp
     ${MEGAsyncDir}/control/FileFolderAttributes.cpp
+    ${MEGAsyncDir}/control/EmailRequester.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp

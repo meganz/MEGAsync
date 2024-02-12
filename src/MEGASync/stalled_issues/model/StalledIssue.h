@@ -347,6 +347,8 @@ public:
     //In case there are two syncs, use the first one
     mega::MegaSync::SyncType getSyncType() const;
 
+    virtual bool shouldBeIgnored() const {return false;}
+
 protected:
     bool initLocalIssue();
     QExplicitlySharedDataPointer<LocalStalledIssueData> mLocalData;
@@ -413,6 +415,11 @@ public:
     void removeDelegateSize(StalledIssue::Type type)
     {
         mData->removeDelegateSize(type);
+    }
+
+    bool shouldBeIgnored() const
+    {
+        return mData->shouldBeIgnored();
     }
 
     template <class Type>

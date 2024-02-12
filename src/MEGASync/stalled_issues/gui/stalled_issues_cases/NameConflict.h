@@ -36,14 +36,18 @@ public:
 
     void setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate);
 
+    virtual QString getConflictedName(std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info) const;
+
 signals:
     void refreshUi();
     void allSolved();
 
 protected:
+    std::shared_ptr<const NameConflictedStalledIssue> mIssue;
+
     virtual bool isCloud() = 0;
-    virtual QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNames(std::shared_ptr<const NameConflictedStalledIssue> issue) = 0;
-    virtual const StalledIssueDataPtr getData(std::shared_ptr<const NameConflictedStalledIssue> issue) = 0;
+    virtual QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNamesInfo() = 0;
+    virtual const StalledIssueDataPtr getData() = 0;
 
 private slots:
     void onActionClicked(int actionId);
@@ -51,10 +55,10 @@ private slots:
 
 private:
     void initTitle(StalledIssueActionTitle* title, int index, const QString& conflictedName);
+    void initActionButtons(StalledIssueActionTitle* title);
     void updateTitleExtraInfo(StalledIssueActionTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info);
 
     Ui::NameConflict *ui;
-    std::shared_ptr<const NameConflictedStalledIssue> mIssue;
     StalledIssuesUtilities mUtilities;
     QPointer<StalledIssueBaseDelegateWidget> mDelegateWidget;
     QMap<int, QPointer<StalledIssueActionTitle>> mTitlesByIndex;
@@ -74,28 +78,38 @@ public:
 
 protected:
     bool isCloud(){return true;}
-    QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNames(std::shared_ptr<const NameConflictedStalledIssue> issue)
+    QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNamesInfo()
     {
-        if(issue)
+        if(mIssue)
         {
-            return issue->getNameConflictCloudData().getConflictedNames();
+            return mIssue->getNameConflictCloudData().getConflictedNames();
         }
         else
         {
             return QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>>();
         }
     }
-    const StalledIssueDataPtr getData(std::shared_ptr<const NameConflictedStalledIssue> issue)
+
+    QString getConflictedName(std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info) const override
     {
-        if(issue)
+        return mIssue->getNameConflictCloudData().getConflictedName(info);
+    }
+
+    const StalledIssueDataPtr getData()
+    {
+        if(mIssue)
         {
-            return issue->consultCloudData();
+            return mIssue->consultCloudData();
         }
         else
         {
             return StalledIssueDataPtr();
         }
     }
+
+
+private:
+    QMap<QString, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> mIssuesByFingerprint;
 };
 
 class LocalNameConflict : public NameConflict
@@ -111,22 +125,22 @@ public:
 
 protected:
     bool isCloud(){return false;}
-    QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNames(std::shared_ptr<const NameConflictedStalledIssue> issue)
+    QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNamesInfo()
     {
-        if(issue)
+        if(mIssue)
         {
-            return issue->getNameConflictLocalData();
+            return mIssue->getNameConflictLocalData();
         }
         else
         {
             return QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>>();
         }
     }
-    const StalledIssueDataPtr getData(std::shared_ptr<const NameConflictedStalledIssue> issue)
+    const StalledIssueDataPtr getData()
     {
-        if(issue)
+        if(mIssue)
         {
-            return issue->consultLocalData();
+            return mIssue->consultLocalData();
         }
         else
         {

@@ -5,7 +5,6 @@
         <file>common/Images.qml</file>
         <file>common/Links.qml</file>
         <file>common/RegexExpressions.qml</file>
-        <file>common/Styles.qml</file>
         <file>common/OS.qml</file>
         <file>components/busyIndicator/qmldir</file>
         <file>components/busyIndicator/BusyIndicator.qml</file>
@@ -129,5 +128,8 @@
         <file>guest/GuestStrings.qml</file>
         <file>guest/MenuItem.qml</file>
         <file>components/texts/Sizes.qml</file>
+        <file>common/FontStyles.qml</file>
+        <file>common/themes/light/Colors.qml</file>
+        <file>common/themes/dark/Colors.qml</file>
     </qresource>
 </RCC>

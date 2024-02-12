@@ -28,7 +28,7 @@ void BackupSettingsElements::initElements(SyncSettingsUIBase *syncSettingsUi)
             this, &BackupSettingsElements::onMyBackupsFolderHandleSet);
     onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
 
-    syncSettingsUi->insertUIElement(openBackupsFolder, 1);
+    syncSettingsUi->insertUIElement(openBackupsFolder, 0);
 }
 
 void BackupSettingsElements::updateUI()

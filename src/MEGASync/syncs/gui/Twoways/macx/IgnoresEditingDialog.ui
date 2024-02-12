@@ -56,16 +56,18 @@ background-color: rgba(0,0,0,0.1)
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="lDescription">
+       <widget class="QLabel" name="descriptionLabel">
         <property name="styleSheet">
          <string notr="true">QLabel
 {color: rgba(48, 50, 51, 0.75) }</string>
         </property>
         <property name="text">
          <string>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don't need on all of your devices,
-or certain file types that need not be synced.
+This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
 </string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -649,11 +651,13 @@ spacing: 5px;
              </widget>
             </item>
             <item row="0" column="0" colspan="2">
-             <widget class="QLabel" name="lAdvanceLabel">
+             <widget class="QLabel" name="lAdvanced">
               <property name="text">
                <string>You can change the associated .megaignore file on a text editor.
-This is a task better suited for advanced users who are comfortable
-with regular expressions.</string>
+This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>

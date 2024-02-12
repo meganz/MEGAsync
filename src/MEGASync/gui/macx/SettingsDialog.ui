@@ -822,6 +822,12 @@ margin-right: 32px;</string>
                       <height>32</height>
                      </size>
                     </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>32</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>Clear</string>
                     </property>
@@ -1278,6 +1284,18 @@ margin-right: 32px;</string>
                     <property name="enabled">
                      <bool>true</bool>
                     </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>32</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>32</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>Clear</string>
                     </property>
@@ -1665,6 +1683,18 @@ margin-right: 32px;</string>
                   </item>
                   <item>
                    <widget class="QPushButton" name="bSendBug">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>32</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>32</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>Report Issue</string>
                     </property>
@@ -1920,6 +1950,18 @@ margin-right: 32px;</string>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>32</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>My Account</string>
                  </property>
@@ -1935,6 +1977,18 @@ margin-right: 32px;</string>
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>32</height>
+                  </size>
                  </property>
                  <property name="focusPolicy">
                   <enum>Qt::StrongFocus</enum>
@@ -2519,6 +2573,18 @@ margin-right: 7px;
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>32</height>
+               </size>
+              </property>
               <property name="text">
                <string>Export Key</string>
               </property>
@@ -2626,6 +2692,18 @@ margin-right: 7px;
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>32</height>
+               </size>
               </property>
               <property name="text">
                <string>Change Password</string>
@@ -2746,6 +2824,18 @@ margin-right: 7px;
                </property>
                <item row="0" column="2">
                 <widget class="QPushButton" name="bUploadFolder">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>32</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Choose</string>
                  </property>
@@ -2847,6 +2937,18 @@ margin-right: 7px;
                </item>
                <item row="1" column="2">
                 <widget class="QPushButton" name="bDownloadFolder">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>32</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Choose</string>
                  </property>
@@ -3013,6 +3115,18 @@ margin-right: 7px;
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>32</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Change Settings…</string>
                 </property>
@@ -3155,6 +3269,18 @@ margin-right: 8px;
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>32</height>
+                 </size>
                 </property>
                 <property name="text">
                  <string>Change Settings…</string>
@@ -3375,6 +3501,18 @@ margin-right: 32px;</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>32</height>
+               </size>
+              </property>
               <property name="text">
                <string>Log out</string>
               </property>
@@ -3397,13 +3535,13 @@ margin-right: 32px;</string>
              <number>0</number>
             </property>
             <property name="topMargin">
-             <number>0</number>
+             <number>12</number>
             </property>
             <property name="rightMargin">
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>0</number>
+             <number>12</number>
             </property>
             <item>
              <widget class="QPushButton" name="bFullCheck">
@@ -3416,13 +3554,13 @@ margin-right: 32px;</string>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>0</height>
+                <height>32</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>16777215</height>
+                <height>32</height>
                </size>
               </property>
               <property name="layoutDirection">
@@ -3448,6 +3586,18 @@ margin-right: 32px;</string>
             </property>
             <item>
              <widget class="QPushButton" name="bBackupCenter">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>32</height>
+               </size>
+              </property>
               <property name="text">
                <string>Go to backup centre</string>
               </property>
@@ -3476,6 +3626,18 @@ margin-right: 32px;</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>32</height>
+               </size>
               </property>
               <property name="layoutDirection">
                <enum>Qt::RightToLeft</enum>

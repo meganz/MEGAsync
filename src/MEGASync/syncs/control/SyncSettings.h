@@ -57,7 +57,6 @@ public:
     int getError() const;
     int getWarning() const;
     bool isActive() const;
-    QString getRunStateAsString() const;
 
     int getRunState() const;
 

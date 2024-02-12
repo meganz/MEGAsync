@@ -85,19 +85,22 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
     GenericChooseWidget::GenericInfo lastModifiedInfo;
     lastModifiedInfo.buttonText = tr("Choose");
-    QString lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (%1)");
-    textDecorator.process(lastModifiedInfoTitle);
-    lastModifiedInfo.title =
-           lastModifiedInfoTitle.arg(issue->lastModifiedSide() ==
-                         LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local
-                     ? tr("Local")
-                     : tr("Remote"));
-    lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
-    lastModifiedInfo.solvedText = tr("Chosen");
-    ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
-
-    if (issue->isSolved())
+    QString lastModifiedInfoTitle;
+    if (issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
     {
+        lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (local)");
+    }
+    else
+    {
+        lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
+    }
+        textDecorator.process(lastModifiedInfoTitle);
+        lastModifiedInfo.title = lastModifiedInfoTitle;
+        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
+        lastModifiedInfo.solvedText = tr("Chosen");
+        ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
+
+        if (issue->isSolved()) {
         ui->keepBothOption->setChosen(false);
         ui->keepLastModifiedOption->hide();
 
@@ -130,21 +133,38 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
     if(localInfo.isFile())
     {
-        info.msgInfo.text = tr("Are you sure you want to keep the [B]local file[/B] %1?", "", info.selection.size()).arg(ui->chooseLocalCopy->data()->getFileName());
+        info.msgInfo.text = tr("Are you sure you want to keep the [B]local file[/B] %1?").arg(ui->chooseLocalCopy->data()->getFileName());
+        if(info.selection.size() > 1)
+        {
+            info.msgInfo.text = tr("Keep the [B]local files[/B]?");
+        }
     }
     else
     {
-        info.msgInfo.text = tr("Are you sure you want to keep the [B]local folder[/B] %1?", "", info.selection.size()).arg(ui->chooseLocalCopy->data()->getFileName());
+
+        info.msgInfo.text = tr("Are you sure you want to keep the [B]local folder[/B] %1?").arg(ui->chooseLocalCopy->data()->getFileName());
+        if(info.selection.size() > 1)
+        {
+            info.msgInfo.text = tr("Keep the [B]local folders[/B]?");
+        }
     }
     textDecorator.process(info.msgInfo.text);
 
     if(node->isFile())
     {
-        info.msgInfo.informativeText = (tr("The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease wait for the upload to complete.", "", info.selection.size()).arg(localInfo.fileName())) + QString::fromUtf8("<br>");
+        info.msgInfo.informativeText = (tr("The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease wait for the upload to complete.").arg(localInfo.fileName())) + QString::fromUtf8("<br>");
+        if(info.selection.size() > 1)
+        {
+            info.msgInfo.informativeText = (tr("The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.\nPlease wait for the upload to complete.").arg(localInfo.fileName())) + QString::fromUtf8("<br>");
+        }
     }
     else
     {
-        info.msgInfo.informativeText = tr("The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]", "", info.selection.size()).arg(localInfo.fileName());
+        info.msgInfo.informativeText = tr("The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]").arg(localInfo.fileName());
+        if(info.selection.size() > 1)
+        {
+            info.msgInfo.informativeText = tr("The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]");
+        }
         info.msgInfo.informativeText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("<br>"));
         info.msgInfo.informativeText.replace(QString::fromUtf8("[/BR]"), QString::fromUtf8("</br>"));
     }
@@ -180,23 +200,35 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     {
         return;
     }
-
+    
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
     if(node)
     {
         if(node->isFile())
         {
-            info.msgInfo.text = tr("Are you sure you want to keep the [B]remote file[/B] %1?", "", info.selection.size()).arg(ui->chooseRemoteCopy->data()->getFileName());
+            info.msgInfo.text = tr("Are you sure you want to keep the [B]remote file[/B] %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+            if (info.selection.size() > 1)
+            {
+                info.msgInfo.text = tr("Keep the [B]remote files[/B]?");
+            }
         }
         else
         {
-            info.msgInfo.text = tr("Are you sure you want to keep the [B]remote folder[/B] %1?", "", info.selection.size()).arg(ui->chooseRemoteCopy->data()->getFileName());
+            info.msgInfo.text = tr("Are you sure you want to keep the [B]remote folder[/B] %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+            if (info.selection.size() > 1)
+            {
+                info.msgInfo.text = tr("Keep the [B]remote folders[/B]?");
+            }
         }
     }
     else
     {
-        info.msgInfo.text = tr("Are you sure you want to keep the [B]remote item[/B] %1?", "", info.selection.size()).arg(ui->chooseRemoteCopy->data()->getFileName());
+        info.msgInfo.text = tr("Are you sure you want to keep the [B]remote item[/B] %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
+        if (info.selection.size() > 1)
+        {
+            info.msgInfo.text = tr("Keep the [B]remote items[/B]?");
+        }
     }
     textDecorator.process(info.msgInfo.text);
     //For the moment, TYPE_TWOWAY or TYPE_UNKNOWN
@@ -205,21 +237,37 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         if(localInfo.isFile())
         {
             info.msgInfo.informativeText = tr("The [B]local file[/B] %1 will be moved to the sync debris folder").arg(localInfo.fileName());
+            if (info.selection.size() > 1)
+            {
+                info.msgInfo.informativeText = tr("The [B]local files[/B] will be moved to the sync debris folder");
+            }
         }
         else
         {
             info.msgInfo.informativeText = tr("The [B]local folder[/B] %1 will be moved to the sync debris folder").arg(localInfo.fileName());
+            if (info.selection.size() > 1)
+            {
+                info.msgInfo.informativeText = tr("The [B]local folders[/B] will be moved to the sync debris folder");
+            }
         }
     }
     else
     {
         if(localInfo.isFile())
         {
-            info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local file %1", "", info.selection.size()).arg(localInfo.fileName());
+            info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local file %1").arg(localInfo.fileName());
+            if (info.selection.size() > 1)
+            {
+                info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local files");
+            }
         }
         else
         {
-            info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folder %1", "", info.selection.size()).arg(localInfo.fileName());
+            info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folder %1").arg(localInfo.fileName());
+            if (info.selection.size() > 1)
+            {
+                info.msgInfo.informativeText = tr("The backup will be disabled in order to protect the local folders");
+            }
         }
     }
     textDecorator.process(info.msgInfo.informativeText);
@@ -269,15 +317,21 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
-    if(localInfo.isFile())
+        if(localInfo.isFile())
     {
-        info.msgInfo.text = tr(
-            "Are you sure you want to keep both file?", "", info.selection.size());
+        info.msgInfo.text = tr("Keep both files?");
+        if(info.selection.size())
+        {
+            info.msgInfo.text = tr("Keep all files?");
+        }
     }
     else
     {
-        info.msgInfo.text = tr(
-            "Are you sure you want to keep both folder %1?", "", info.selection.size());
+        info.msgInfo.text = tr("Keep both folders");
+        if(info.selection.size())
+        {
+            info.msgInfo.text = tr("Keep all folders");
+        }
     }
 
     std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
@@ -287,11 +341,11 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
 
         if(node->isFile())
         {
-            info.msgInfo.informativeText = tr("The [B]remote file[/B] will be renamed to %1", "", info.selection.size()).arg(newName);
+            info.msgInfo.informativeText = tr("The [B]remote file[/B] will have a suffix like (1) added", "", info.selection.size());
         }
         else
         {
-            info.msgInfo.informativeText = tr("The [B]remote folder[/B] will be renamed to %1", "", info.selection.size()).arg(newName);
+            info.msgInfo.informativeText = tr("The [B]remote folder[/B] will have a suffix like (1) added", "", info.selection.size());
         }
         textDecorator.process(info.msgInfo.informativeText);
 

@@ -85,6 +85,11 @@
         <translation>Резервировать в:</translation>
     </message>
     <message>
+        <source>Add exclusions</source>
+        <translatorcomment>Button that allows users to add exclusion rules for their new backups.SNC-2565</translatorcomment>
+        <translation>Добавить исключения</translation>
+    </message>
+    <message>
         <source>Add</source>
         <translatorcomment>Button text to add a backup</translatorcomment>
         <translation>Добавить</translation>
@@ -402,11 +407,6 @@
 <context>
     <name>BackupItemModel</name>
     <message>
-        <source>Sort by state</source>
-        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by check state</translatorcomment>
-        <translation>Сортировать по статусу</translation>
-    </message>
-    <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
         <translation>Локальная папка</translation>
@@ -415,6 +415,26 @@
         <source>Sort by name</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
         <translation>Сортировать по названию</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translatorcomment>backup state column header name for backlups table in settings dialog.SNC-2565</translatorcomment>
+        <translation>Статус</translation>
+    </message>
+    <message>
+        <source>Sort by backup state</source>
+        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by backup state.SNC-2565</translatorcomment>
+        <translation>Сортировать по статусу резервного копирования</translation>
+    </message>
+    <message>
+        <source>Backup is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled).SNC-4208</translatorcomment>
+        <translation>Резервное копирование включено</translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled).SNC-4208</translatorcomment>
+        <translation>Резервное копирование отключено</translation>
     </message>
 </context>
 <context>
@@ -469,6 +489,54 @@
     </message>
 </context>
 <context>
+    <name>BackupSettingsUI</name>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Title for backups tab in the settings.SNC-2565</translatorcomment>
+        <translation>Резервные копии</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
+        <translation>Ошибка перемещения или удаления синхронизируемой папки MEGA</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
+        <translation>Не удаётся переместить или удалить синхронизируемую папку MEGA. Причина: %1</translation>
+    </message>
+    <message>
+        <source>Sync operation failed</source>
+        <translatorcomment>Title for error dialog shown when a  sync fails.SNC-2565</translatorcomment>
+        <translation>Не удалось синхронизировать</translation>
+    </message>
+    <message>
+        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
+        <translatorcomment>text for error dialog shown when a  sync fails, folder path and reason are given during runtime in the placeholders.SNC-2565</translatorcomment>
+        <translation>Невозможно синхронизировать папку «%1». Причина: %2</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
+        <translation>Ошибка добавления синхронизации</translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
+        <translation>Ошибка остановки синхронизации</translation>
+    </message>
+    <message>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder.SNC-4208</translatorcomment>
+        <translation>Невозможно удалить синхронизацию. Причина: %1</translation>
+    </message>
+    <message>
+        <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
+        <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.SNC-2565</translatorcomment>
+        <translation>Резервные копии некоторых папок не созданы. Чтобы получить дополнительную информацию, наведите курсор на красный значок.</translation>
+    </message>
+</context>
+<context>
     <name>BackupSyncsMenu</name>
     <message>
         <source>Add Backup</source>
@@ -484,32 +552,9 @@
 <context>
     <name>BackupTableView</name>
     <message>
-        <source>Open in MEGA</source>
-        <translatorcomment>Menu action that opens MEGA webclient to show this backup</translatorcomment>
-        <translation>Открыть в MEGA</translation>
-    </message>
-    <message>
-        <source>Remove backup</source>
-        <translatorcomment>Menu action removes the backup</translatorcomment>
+        <source>Stop backup</source>
+        <translatorcomment>Menu action that stops the backup.SNC-2565</translatorcomment>
         <translation>Прекратить резервное копирование</translation>
-    </message>
-</context>
-<context>
-    <name>BackupTableViewTooltips</name>
-    <message>
-        <source>Backup is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation>Резервное копирование включено</translation>
-    </message>
-    <message>
-        <source>Backup is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation>Резервное копирование отключено</translation>
-    </message>
-    <message>
-        <source>Click menu for more Backup actions</source>
-        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>Дополнительные действия с резервными копиями</translation>
     </message>
 </context>
 <context>
@@ -796,7 +841,7 @@
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>Пожалуйста, выберите локальную папку и папку MEGA</translation>
+        <translation>Выберите локальную папку и MEGA-папку</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -812,6 +857,11 @@
         <source>Add synchronised folder</source>
         <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
         <translation>Добавить синхронизируемую папку</translation>
+    </message>
+    <message>
+        <source>Add exclusions</source>
+        <translatorcomment>Button to allow users to add exclusion rules for new syncs.SNC-2565</translatorcomment>
+        <translation>Добавить исключения</translation>
     </message>
     <message>
         <source>Add</source>
@@ -894,17 +944,17 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Ваше сообщение не удаётся отправить из-за ошибки. Пожалуйста, попробуйте ещё раз позже или свяжитесь с нашей службой поддержки по адресу [A]support@mega.nz[/A], если проблема не устранена.</translation>
+        <translation>Ваше сообщение не удаётся отправить из-за ошибки. Повторите попытку позже или напишите в нашу команду поддержки на [A]support@mega.nz[/A], если проблема не исчезнет.</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Отменить загрузку сообщения об ошибке?</translation>
+        <translation>Отменить отправку сообщения об ошибке?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation>Об ошибке не будет сообщено, если вы отмените загрузку.</translation>
+        <translation>Об ошибке не будет сообщено, если вы отмените отправку.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -953,6 +1003,32 @@
         <source>Cancelling…</source>
         <translatorcomment>Message displayed while transfers cancelling is in progress</translatorcomment>
         <translation>Отмена…</translation>
+    </message>
+</context>
+<context>
+    <name>CannotCreateFolderHeader</name>
+    <message>
+        <source>Cannot create [B]%1[/B]</source>
+        <translatorcomment>itle for the header widget sync stall that occurs when a folder cannot be created in the local drive, will be followed with the folder path, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось создать [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Filesystem error preventing folder access.</source>
+        <translatorcomment>Subtitle for the header widget  sync stall that occurs when a folder cannot be created in the local drive.SNC-2565</translatorcomment>
+        <translation>Локальная ошибка не позволяет получить доступ к папке</translation>
+    </message>
+</context>
+<context>
+    <name>CannotPerformDeletionHeader</name>
+    <message>
+        <source>Filesystem error preventing folder access.</source>
+        <translatorcomment>Subtitle for the header widget  sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync).SNC-2565</translatorcomment>
+        <translation>Локальная ошибка не позволяет получить доступ к папке</translation>
+    </message>
+    <message>
+        <source>Cannot perform deletion [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync), [B] is for Bold.SNC-2565</translatorcomment>
+        <translation>Не удалось удалить [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -1068,6 +1144,80 @@
     </message>
 </context>
 <context>
+    <name>CloudFingerprintMissingHeader</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button to discard fixing the stalled issue.FM-1615</translatorcomment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box to allow user to apply a fix to all similar stall issues.FM-1615</translatorcomment>
+        <translation>Применить ко всем</translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to solve the issue?</source>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation><numerusform>Исправить ошибку?</numerusform><numerusform>Исправить ошибки?</numerusform><numerusform>Исправить ошибки?</numerusform><numerusform>Исправить ошибки?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
+        <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
+        <translation><numerusform>Приложение скачает файл во временное расположение, исправит ошибку, а затем удалит этот файл.</numerusform><numerusform>Приложение скачает файлы во временное расположение, исправит ошибки, а затем удалит эти файлы.</numerusform><numerusform>Приложение скачает файлы во временное расположение, исправит ошибки, а затем удалит эти файлы.</numerusform><numerusform>Приложение скачает файлы во временное расположение, исправит ошибки, а затем удалит эти файлы.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]Please, resume your transfers to fix the issue[/B]</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
+        <translation><numerusform>Возобновите передачи, чтобы исправить ошибку.</numerusform><numerusform>Возобновите передачи, чтобы исправить ошибки.</numerusform><numerusform>Возобновите передачи, чтобы исправить ошибки.</numerusform><numerusform>Возобновите передачи, чтобы исправить ошибки.</numerusform></translation>
+    </message>
+    <message>
+        <source>Can´t download [B]%1[/B] to the selected location</source>
+        <translatorcomment>Title for the header widget sync stall that occurs when a file cannot be downloaded for not having a fingerprint,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось скачать [B]%1[/B] в выбранное расположение</translation>
+    </message>
+    <message>
+        <source>File fingerprint missing</source>
+        <translatorcomment>Subtitle for the header widget sync stall that occurs when a file cannot be downloaded for not having a fingerprint.SNC-2565</translatorcomment>
+        <translation>Отсутствует отпечаток файла</translation>
+    </message>
+    <message>
+        <source>Solve</source>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
+        <translation>Исправить</translation>
+    </message>
+</context>
+<context>
+    <name>CloudNodeUndecryptedHeader</name>
+    <message>
+        <source>Cloude node undecrypted [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget sync stall thatoccurs when the node being synced cannot be decrypted.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось расшифровать элемент в MEGA [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</source>
+        <translatorcomment>Subtitle for the header widget sync stall thatoccurs when the node being synced cannot be decrypted, [A] will be replaced by Mega link, [A1] will be replaced by support link. SNC-2565</translatorcomment>
+        <translation>Не удалось завершить дешифрование. Перезагрузите аккаунт в [A]MEGA[/A] или обратитесь в [A1]воддержку[/A1].</translation>
+    </message>
+</context>
+<context>
+    <name>CloudStalledIssueChooseWidget</name>
+    <message>
+        <source>Moved to MEGA Bin</source>
+        <translatorcomment>Title of the solved issue showing what happened to the files when the user had to choose between a local and a remote versions of a file.SNC-2565</translatorcomment>
+        <translation>Перемещено в Корзину</translation>
+    </message>
+    <message>
+        <source>Remote Copy</source>
+        <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
+        <translation>Облачная копия</translation>
+    </message>
+</context>
+<context>
     <name>CommonMessages</name>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
@@ -1157,6 +1307,45 @@
         <source>Yesterday at %1</source>
         <translatorcomment>Label to indicate the yesterday time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
         <translation>Вчера в %1</translation>
+    </message>
+</context>
+<context>
+    <name>DefaultHeader</name>
+    <message>
+        <source>Error detected with [B]%1[/B]</source>
+        <translatorcomment>Title for the header widgetof the default stall issue shown if the reason of the stall is unknown. file path will be added to the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Обнаружена ошибка в [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Reason not found.</source>
+        <translatorcomment>Subtitle for the header widget of the default stall issue shown if the reason of the stall is unknown.SNC-2565</translatorcomment>
+        <translation>Неизвестная ошибка</translation>
+    </message>
+</context>
+<context>
+    <name>DeleteOrMoveWaitingOnScanningHeader</name>
+    <message>
+        <source>Can´t find [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of a sync stall when a file or folder cannot be found,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось найти [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Waiting to finish scan to see if the file was moved or deleted.</source>
+        <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
+        <translation>Ожидается завершение сканирования, чтобы проверить, был ли файл перемещён или удалён.</translation>
+    </message>
+</context>
+<context>
+    <name>DeleteWaitingOnMovesHeader</name>
+    <message>
+        <source>Waiting to move [B]%1[/B]</source>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&amp;amp;apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Ожидание перемещения [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Waiting for other processes to complete.</source>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translation>Ожидание завершения других процессов.</translation>
     </message>
 </context>
 <context>
@@ -1397,7 +1586,7 @@
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Скачать с MEGA</translation>
+        <translation>Скачивание с MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
@@ -1438,6 +1627,19 @@
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>У вас нет прав записи в эту локальную папку.</translation>
+    </message>
+</context>
+<context>
+    <name>DownloadIssueHeader</name>
+    <message>
+        <source>Can´t download [B]%1[/B] to the selected location</source>
+        <translatorcomment>Subtitle for the header widget of a sync stall when a file or cannot be downloaded, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось скачать [B]%1[/B] в выбранное расположение</translation>
+    </message>
+    <message>
+        <source>A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location.</source>
+        <translatorcomment>Title for the header widget of a sync stall when a file or cannot be downloaded.SNC-2565</translatorcomment>
+        <translation>Произошла ошибка либо при скачивании файла, либо при перемещении скачанного временного файла в его конечное расположение.</translation>
     </message>
 </context>
 <context>
@@ -1598,6 +1800,24 @@
     </message>
 </context>
 <context>
+    <name>FileIssueHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось синхронизировать [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>A single file had an issue that needs a user decision to solve</source>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translation>С файлом связана ошибка, требующая вашего решения</translation>
+    </message>
+    <message>
+        <source>A single folder had an issue that needs a user decision to solve.</source>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translation>С папкой связана ошибка, требующая вашего решения</translation>
+    </message>
+</context>
+<context>
     <name>FilterAlertWidget</name>
     <message>
         <source>All notifications</source>
@@ -1692,6 +1912,19 @@
     </message>
 </context>
 <context>
+    <name>FolderMatchedAgainstFileHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось синхронизировать [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Cannot sync folders against files.</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translation>У синхронизируемого файла нет расширения и такое же название, как у существующей папки</translation>
+    </message>
+</context>
+<context>
     <name>GuestStrings</name>
     <message>
         <source>About MEGA</source>
@@ -1752,16 +1985,6 @@
 <context>
     <name>GuiUtilities</name>
     <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-3694.</translatorcomment>
-        <translation>Ошибка добавления синхронизации</translation>
-    </message>
-    <message>
-        <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
-        <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-3019</translatorcomment>
-        <translation>Невозможно добавить %1, так как ваш аккаунт Pro&#xa0;Flexi был деактивирован из-за сбоя оплаты или из-за того, что вы отменили подписку. Чтобы продолжить, совершите платёж и возобновите подписку.</translation>
-    </message>
-    <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account. SNC-3019</translatorcomment>
         <translation>Оплатить сейчас</translation>
@@ -1783,6 +2006,151 @@
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation>Загрузка запущена</translation>
+    </message>
+</context>
+<context>
+    <name>HeaderCaseIssueChecker</name>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
+        <translation>Ошибка могла быть исправлена извне.
+Обновите список.</translation>
+    </message>
+</context>
+<context>
+    <name>IgnoredStalledIssue</name>
+    <message>
+        <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
+        <translatorcomment>Text in message box shown when a failure in adding rules in the file containing ignore rules.SNC-2565</translatorcomment>
+        <translation>Не удалось обновить файл .megaignore. Проверьте, есть ли у вас разрешения на его запись.</translation>
+    </message>
+</context>
+<context>
+    <name>IgnoresEditingDialog</name>
+    <message>
+        <source>Edit exclusions</source>
+        <translatorcomment>window name for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation>Редактирование исключений</translation>
+    </message>
+    <message>
+        <source>Manage exclusions</source>
+        <translatorcomment>window title for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation>Настройка исключений</translation>
+    </message>
+    <message>
+        <source>by size</source>
+        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
+        <translation>По размеру</translation>
+    </message>
+    <message>
+        <source>Exclude files smaller than</source>
+        <translatorcomment>Check box text responsible for the lower size limit of included files in the sync.SNC-4208</translatorcomment>
+        <translation>Исключить файлы меньше</translation>
+    </message>
+    <message>
+        <source>Exclude files bigger than</source>
+        <translatorcomment>Check box text responsible for the upper size limit of included files in the sync.SNC-4208</translatorcomment>
+        <translation>Исключить файлы больше</translation>
+    </message>
+    <message>
+        <source>by name</source>
+        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
+        <translation>По названию</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from synchronisation.</source>
+        <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
+        <translation>Файлы или папки для исключения из синхронизации:</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button to add new ignore rule in the sync ignores file.SNC-2565</translatorcomment>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button to delete selected ignore rules in the sync ignores dialog.SNC-2565</translatorcomment>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>by file type</source>
+        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
+        <translation>По типу файла</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
+        <translation>Продвинутым пользователям</translation>
+    </message>
+    <message>
+        <source>Open .megaignore</source>
+        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
+        <translation>Открыть .megaignore</translation>
+    </message>
+    <message>
+        <source>by size:</source>
+        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
+        <translation>По размеру:</translation>
+    </message>
+    <message>
+        <source>by name:</source>
+        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
+        <translation>По названию:</translation>
+    </message>
+    <message>
+        <source>by file type:</source>
+        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
+        <translation>По типу файла:</translation>
+    </message>
+    <message>
+        <source>Edit .megaignore</source>
+        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
+        <translation>Редактировать .megaignore</translation>
+    </message>
+    <message>
+        <source>Advanced:</source>
+        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
+        <translation>Раширенная настройка:</translation>
+    </message>
+    <message>
+        <source>Rule already exists.</source>
+        <translatorcomment>Text in a message box shown when the user adds a new rule identical to existing one.SNC-2565</translatorcomment>
+        <translation>Правило уже существует</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translatorcomment>Title for message box shown when an external chane detected in the ignore rules file.SNC-2565</translatorcomment>
+        <translation>Перезагрузка</translation>
+    </message>
+    <message>
+        <source>Current file has been modified by another program. it will be reloaded</source>
+        <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
+        <translation>Текущий файл .megaignore был изменён в другой программе, он будет перезагружен</translation>
+    </message>
+    <message>
+        <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
+        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
+        <translation>Вы можете редактировать связанный файл .megaignore в текстовом редакторе. Это подходит для пользователей, хорошо знакомых с регулярными выражениями.</translation>
+    </message>
+    <message>
+        <source>You can change the associated .megaignore file on a text editor.
+This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
+        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
+        <translation>Вы можете редактировать связанный файл .megaignore в текстовом редакторе. Это подходит для пользователей, хорошо знакомых с регулярными выражениями.</translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive.
+This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
+</source>
+        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation>Вы можете исключить определённые файлы и папки из синхронизации с Облачным диском.
+Это может быть полезно для больших файлов, файлов, которые вам не нужны на всех устройствах, или файлов определённых типов, которые не нужно синхронизировать.</translation>
     </message>
 </context>
 <context>
@@ -1902,11 +2270,6 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <source>Blocked file: %1</source>
-        <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation>Заблокированный файл: %1</translation>
-    </message>
-    <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
         <translation>Улучшить аккаунт</translation>
@@ -1920,11 +2283,6 @@
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
         <translation>Опции</translation>
-    </message>
-    <message>
-        <source>The process is taking longer than expected. Please wait...</source>
-        <translatorcomment>Message displayed in the InfoDialog when a process is busy for a longer time than normal due to Mega servers being busy</translatorcomment>
-        <translation>Процесс длится дольше ожидаемого. Пожалуйста, подождите.</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -2199,6 +2557,286 @@
     </message>
 </context>
 <context>
+    <name>LoadingSceneMessageHandler</name>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Loading message showing the progress of stalled issues being solved in smart mode, placeholders are filled in runtime with the number of solved issues and the total number of issues.SNC-2565</translatorcomment>
+        <translation>%1 из %2</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translatorcomment>stop button in the loading scene of stalled issues dialog shown during stalled issues are solved in smart mode to stop the solving.SNC-2565</translatorcomment>
+        <translation>Остановить</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Confirmation button inthe loading scene of stalled issues dialog shown when all issues have been solved in the smart mode.SNC-2565</translatorcomment>
+        <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteChangedSinceLastSyncedStateHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced changed oth locally and remotely, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось синхронизировать [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>This file has been changed both in MEGA and locally since it it was last synced.</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file being synced changed oth locally and remotely.SNC-2565</translatorcomment>
+        <translation>Этот файл был изменён как в MEGA, так и локально с момента последней синхронизации</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteDifferentWidget</name>
+    <message>
+        <source>Please select which version you want to keep</source>
+        <translatorcomment>Title for the solve options in a local remote changed stalled issue.SNC-2565</translatorcomment>
+        <translation>Выберите, какую версию оставить</translation>
+    </message>
+    <message>
+        <source>Choose both</source>
+        <translatorcomment>Button text to choose both local and remote versions in the local remote changed stall body widget.SNC-2565</translatorcomment>
+        <translation>Выбрать обе</translation>
+    </message>
+    <message>
+        <source>Chosen</source>
+        <translatorcomment>TText shown on the choosen version (local, remote, both) in a solved local remote stall.SNC-2565</translatorcomment>
+        <translation>Выбрано</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text to choose either local or remote versions in the local remote changed stall body widget. will be follwed by &quot;Local&quot; or &quot;Remote&quot;.SNC-2565</translatorcomment>
+        <translation>Выбрать</translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local file %1</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup, %1 placeholder will have the file name.SNC-2565</translatorcomment>
+        <translation>Резервное копирование будет отключено для защиты локального файла [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local folder %1</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup,%1 placeholder will have the folder name.SNC-2565</translatorcomment>
+        <translation>Резервное копирование будет отключено для защиты локальной папки [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>[B]Keep both[/B]</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]Оставить обе[/B]</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]local file[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Оставить локальный файл [B]%1[/B]?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Действительно оставить локальную папку [B]%1[/B]?</translation>
+    </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
+Please wait for the upload to complete.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Локальный файл [B]%1[/B] будет загружен в MEGA и добавлен как версия файла, уже находящегося в MEGA.</translation>
+    </message>
+    <message>
+        <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Облачная папка [B]%1[/B] будет перемещена в Корзину MEGA.[BR]Оттуда вы сможете восстановить её.</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]Please, resume your transfers to fix the issue[/B]</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
+        <translation><numerusform>Возобновите передачи, чтобы исправить ошибку.</numerusform><numerusform>Возобновите передачи, чтобы исправить ошибки.</numerusform><numerusform>Возобновите передачи, чтобы исправить ошибки.</numerusform><numerusform>Возобновите передачи, чтобы исправить ошибки.</numerusform></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Оставить файл в MEGA [B]%1[/B]?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Оставить облачную папку [B]%1[/B]?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Оставить облачный элемент [B]%1[/B]?</translation>
+    </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Локальный файл [B]%1[/B] будет перемещён в папку .rubbish или .debris в локальном расположении синхронизации.</translation>
+    </message>
+    <message>
+        <source>The [B]local folder[/B] %1 will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Локальная папка [B]%1[/B] будет перемещена в папку .rubbish или .debris в локальном расположении синхронизации.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to choose the latest modified side?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the last modified version of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation>Выбрать последний изменённый элемент?</translation>
+    </message>
+    <message>
+        <source>This action will choose the local side</source>
+        <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
+        <translation>Будет выбран локальный элемент.</translation>
+    </message>
+    <message>
+        <source>This action will choose the remote side</source>
+        <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
+        <translation>Будет выбран уже хранящийся в MEGA элемент.</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
+        <translation>Ошибка могла быть исправлена извне.
+Обновите список.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.FM-1615</translatorcomment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>Применить ко всем</translation>
+    </message>
+    <message>
+        <source>Keep both files?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation>Оставить оба файла?</translation>
+    </message>
+    <message>
+        <source>Keep both folders</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation>Оставить обе папки?</translation>
+    </message>
+    <message>
+        <source>[B]Keep last modified[/B] (local)</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]Оставить последний изменённый[/B] (локальный)</translation>
+    </message>
+    <message>
+        <source>[B]Keep last modified[/B] (remote)</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]Оставить последний изменённый[/B] (облачный)</translation>
+    </message>
+    <message>
+        <source>Keep the [B]local files[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Оставить [B]локальные[/B] файлы?</translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
+Please wait for the upload to complete.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]Локальные[/B] файлы будут загружены в MEGA и добавлены как версии к облачным файлам.
+Пожалуйста, подождите завершения загрузки.</translation>
+    </message>
+    <message>
+        <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]Облачные[/B] папки будут перемещены в Корзину MEGA.[BR]Оттуда вы сможете восстановить её.</translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote files[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Оставить [B]облачные[/B] файлы?</translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote folders[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Оставить [B]облачные[/B] папки?</translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote items[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Оставить [B]облачные[/B] элементы?</translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]Локальные[/B] файлы будут перемещены в скрытую папку .rubbish или .debris в локальной папке синхронизации.</translation>
+    </message>
+    <message>
+        <source>The [B]local folders[/B] will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]Локальные[/B] папки будут перемещены в папку .debris или .rubbish в локальной папке синхронизации.</translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local files</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
+        <translation>Резервное копирование будет отключено для защиты локальных файлов.</translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local folders</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
+        <translation>Резервное копирование будет отключено для защиты локальных папок.</translation>
+    </message>
+    <message>
+        <source>Keep all files?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
+        <translation>Оставить все файлы?</translation>
+    </message>
+    <message>
+        <source>Keep all folders</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
+        <translation>Оставить все папки?</translation>
+    </message>
+    <message numerus="yes">
+        <source>The [B]remote file[/B] will have a suffix like (1) added</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
+        <translation><numerusform>К [B]облачному[/B] файлу будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] файлам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] файлам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] файлам будет добавлен суффикс типа (1).</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
+        <translation><numerusform>К [B]облачной[/B] папке будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] папкам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] папкам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] папкам будет добавлен суффикс типа (1).</numerusform></translation>
+    </message>
+    <message>
+        <source>Keep the [B]local folders[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Оставить [B]локальные[/B] папки?</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemotePreviouslyUnsyncedDifferHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось синхронизировать [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>This file has conflicting copies</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version.SNC-2565</translatorcomment>
+        <translation>У этого элемента есть конфликтующие копии</translation>
+    </message>
+</context>
+<context>
+    <name>LocalStalledIssueChooseWidget</name>
+    <message>
+        <source>Local Copy</source>
+        <translatorcomment>Title in the choosing widget used to offer the user the option to choose local version when conflicts occur.SNC-2565</translatorcomment>
+        <translation>Локальная копия</translation>
+    </message>
+</context>
+<context>
     <name>LockedPopOver</name>
     <message>
         <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
@@ -2394,6 +3032,11 @@
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Ожидание</translation>
+    </message>
+    <message>
+        <source>Stalled</source>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
+        <translation>Обнаружена ошибка</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -2972,7 +3615,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation>Удалённый путь синхронизации недействителен</translation>
+        <translation>Облачный путь синхронизации недействителен</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -2997,7 +3640,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node not found</source>
         <translatorcomment>Label to show that remote node was not found for a sync during a SDK operation.</translatorcomment>
-        <translation>Удалённая синхронизируемая папка не найдена</translation>
+        <translation>Облачная синхронизируемая папка не найдена</translation>
     </message>
     <message>
         <source>Reached storage quota limit</source>
@@ -3012,17 +3655,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote path has changed</source>
         <translatorcomment>Label to show that remote path has changed for a sync during a SDK operation.</translatorcomment>
-        <translation>Местоположение удалённой синхронизируемой папки изменилось</translation>
+        <translation>Местоположение облачной синхронизируемой папки изменилось</translation>
     </message>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>Удалённая синхронизируемая папка перемещёна в Корзину</translation>
+        <translation>Облачная синхронизируемая папка перемещёна в Корзину</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>У вас нет полного доступа к удалённой синхронизируемой папке</translation>
+        <translation>У вас нет полного доступа к облачной синхронизируемой папке</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3037,22 +3680,22 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Active sync below path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with path inside the selected remote target</translatorcomment>
-        <translation>В вашей удалённой папке уже есть активная синхронизация</translation>
+        <translation>В вашей облачной папке уже есть активная синхронизация</translation>
     </message>
     <message>
         <source>Active sync above path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with a remote path as includes the selected remote target.</translatorcomment>
-        <translation>Удалённая папка уже включена в существующую активную синхронизацию</translation>
+        <translation>Облачная папка уже включена в существующую активную синхронизацию</translation>
     </message>
     <message>
         <source>Remote node has been deleted</source>
         <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
-        <translation>Удалённая синхронизируемая папка удалена</translation>
+        <translation>Облачная синхронизируемая папка удалена</translation>
     </message>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>Удалённая синхронизируемая папка находится в Корзине</translation>
+        <translation>Облачная синхронизируемая папка находится в Корзине</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -3297,11 +3940,241 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     </message>
 </context>
 <context>
+    <name>MoveOrRenameCannotOccurHeader</name>
+    <message>
+        <source>Cannot move or rename [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the item cannot be moved ore renamed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось переместить или переименовать [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
+        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
+        <translation>Перемещение или переименование было обнаружено в MEGA, но его не удалось воспроизвести локально.</translation>
+    </message>
+    <message>
+        <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
+        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
+        <translation>Перемещение или переименование было обнаружено в локальной файловой системе, но его не удалось воспроизвести в MEGA.</translation>
+    </message>
+    <message>
+        <source>Solve</source>
+        <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
+        <translation>Исправить</translation>
+    </message>
+</context>
+<context>
     <name>MultiQFileDialog</name>
     <message>
         <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
         <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
         <translation>Выбрано слишком много элементов. Чтобы продолжить, отмените выбор некоторых или вместо них выберите родительскую папку.</translation>
+    </message>
+</context>
+<context>
+    <name>NameConflict</name>
+    <message>
+        <source>Removed</source>
+        <translatorcomment>Label in solved name conflict sync stalls by removing the file.SNC-2565</translatorcomment>
+        <translation>Удалено</translation>
+    </message>
+    <message>
+        <source>Renamed to &quot;%1&quot;</source>
+        <translatorcomment>Label in solved name conflict sync stalls by renaming the file.SNC-2565</translatorcomment>
+        <translation>Переименовано в «%1»</translation>
+    </message>
+    <message>
+        <source>Merged</source>
+        <translatorcomment>Label in solved name conflict sync stalls when folders are merged.SNC-2565</translatorcomment>
+        <translation>Объединено</translation>
+    </message>
+    <message>
+        <source>Modified externally</source>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
+        <translation>Изменено извне</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Solve option for name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Переименовать</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to refresh sync stalls when an external change to sync stalls is detected.SNC-2565</translatorcomment>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Confirmation text when a name conflict has been resolved externally.SNC-2565</translatorcomment>
+        <translation>Ошибка могла быть исправлена извне.
+Обновите список.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.
+Please refresh the view</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by renamming the local file and the file is actually deleted.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B] больше не существует.
+Обновите представление.</translation>
+    </message>
+    <message>
+        <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation>Он будет перемещён в папку SyncDebris в Корзине MEGA.[BR]Оттуда вы сможете восстановить файл и любые версии этого файла.[/BR]</translation>
+    </message>
+    <message>
+        <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation>Она будет перемещена в папку SyncDebris в Корзине MEGA.[BR]Оттуда вы сможете восстановить её.[/BR]</translation>
+    </message>
+    <message>
+        <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation>Он будет перемещён в папку .rubbish или .debris в локальном расположении синхронизации.[BR]Оттуда вы сможете восстановить файл.[/BR]</translation>
+    </message>
+    <message>
+        <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation>Она будет перемещена в папку .rubbish или .debris в локальном расположении синхронизации.[BR]Оттуда вы сможете восстановить папку.[/BR]</translation>
+    </message>
+    <message>
+        <source>No action needed</source>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
+        <translation>Действия не требуются</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the remote file %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
+        <translation>Удалить облачный файл [B]%1[/B]?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the remote folder %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
+        <translation>Удалить облачную папку [B]%1[/B]?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the local file %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
+        <translation>Удалить локальный файл [B]%1[/B]?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the local folder %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
+        <translation>Удалить локальную папку [B]%1[/B]?</translation>
+    </message>
+</context>
+<context>
+    <name>NameConflictsHeader</name>
+    <message>
+        <source>Remove duplicates</source>
+        <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
+        <translation>Удалить дубликаты</translation>
+    </message>
+    <message>
+        <source>Remove duplicates, merge folders and rename the rest</source>
+        <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Удалить дубликаты, объединить папки и переименовать остальное</translation>
+    </message>
+    <message>
+        <source>Remove duplicates and rename the rest</source>
+        <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Удалить дубликаты и переименовать остальное</translation>
+    </message>
+    <message>
+        <source>Merge folders and rename the rest</source>
+        <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Объединить папки и переименовать остальное</translation>
+    </message>
+    <message>
+        <source>Rename all items</source>
+        <translatorcomment>Button to solve a name conflict sync stall by renaming items.SNC-2565</translatorcomment>
+        <translation>Переименовать все элементы</translation>
+    </message>
+    <message>
+        <source>Merge folders</source>
+        <translatorcomment>Button to solve a name conflict sync stall by merging folders.SNC-2565</translatorcomment>
+        <translation>Объединить папки</translation>
+    </message>
+    <message>
+        <source>Solve options</source>
+        <translatorcomment>Button text to show the solve action of sync stall.SNC-2565</translatorcomment>
+        <translation>Варианты исправления</translation>
+    </message>
+    <message>
+        <source>Name Conflicts: [B]%1[/B]</source>
+        <translatorcomment>Title for name conflict sync stall header widget .[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Конфликты названий: [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>These items contain multiple names on one side, that would all become the same single name on the other side.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>На одной стороне синхронизации есть несколько элементов с одинаковым названием, которые на другой стороне синхронизации станут одним и тем же элементом</translation>
+    </message>
+    <message>
+        <source>These files contain multiple names on one side, that would all become the same single name on the other side.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>На одной стороне синхронизации есть несколько элементов с одинаковым названием, которые на другой стороне синхронизации станут одним и тем же элементом</translation>
+    </message>
+    <message>
+        <source>These folders contain multiple names on one side, that would all become the same single name on the other side.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>На одной стороне синхронизации есть несколько элементов с одинаковым названием, которые на другой стороне синхронизации станут одним и тем же элементом</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button to discard fixing the stalled issue.SNC-2565</translatorcomment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts.FM-1615</translatorcomment>
+        <translation>Применить ко всем</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to solve the issue?</source>
+        <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
+        <translation>Исправить ошибку?</translation>
+    </message>
+    <message>
+        <source>This action will rename the conflicted items (adding a suffix like (1)).</source>
+        <translatorcomment>Info text for confirmation message of rename action in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Конфликтующие элементы будут переименованы с добавлением суффикса типа (1).</translation>
+    </message>
+    <message>
+        <source>This action will merge all folders into a single one. We will skip duplicated files
+and rename the files with the same name but different content (adding a suffix like (1))</source>
+        <translatorcomment>Info text for confirmation message of merge folder action in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Все папки будут объединены в одну. Дубликаты файлов будут пропущены, а файлы с таким же названием, но разным содержимым будут переименованы с добавлением суффикса типа (1).</translation>
+    </message>
+    <message>
+        <source>This action will delete the duplicate files.</source>
+        <translatorcomment>Info text for confirmation message of remove duplicates action in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Дубликаты файлов будут удалены.</translation>
+    </message>
+    <message>
+        <source>This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
+        <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Дубликаты файлов будут удалены, а оставшиеся элементы переименованы с добавлением суффикса типа (1).</translation>
+    </message>
+    <message>
+        <source>This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
+        <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Дубликаты файлов будут удалены, все папки будут объединены в одну, а оставшиеся элементы переименованы с добавлением суффикса типа (1) в случае конфликта названий.</translation>
+    </message>
+</context>
+<context>
+    <name>NameDuplicatedContainer</name>
+    <message>
+        <source>Duplicated</source>
+        <translatorcomment>Title for list showing all dublicated items in a conflicted name sync stall.SNC-2565</translatorcomment>
+        <translation>Дубликаты</translation>
     </message>
 </context>
 <context>
@@ -4133,6 +5006,24 @@ Enter a different name</source>
     </message>
 </context>
 <context>
+    <name>OpenBackupsFolder</name>
+    <message>
+        <source>Backup Folder</source>
+        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
+        <translation>Папка резервного копирования</translation>
+    </message>
+    <message>
+        <source>View in MEGA</source>
+        <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
+        <translation>Посмотреть в MEGA</translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
+        <translation>Папка резервного копирования:</translation>
+    </message>
+</context>
+<context>
     <name>OsNotifications</name>
     <message numerus="yes">
         <source>[A] removed %n item</source>
@@ -4427,6 +5318,11 @@ Enter a different name</source>
 <context>
     <name>PlatformStrings</name>
     <message>
+        <source>Moved to OS Trash</source>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
+        <translation>Перемещено в корзину</translation>
+    </message>
+    <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
         <translation>Показать в папке</translation>
@@ -4435,6 +5331,11 @@ Enter a different name</source>
         <source>Exit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Windows or Linux</translatorcomment>
         <translation>Выход</translation>
+    </message>
+    <message>
+        <source>Moved to OS Rubbish Bin</source>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
+        <translation>Перемещено в корзину</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -4447,6 +5348,11 @@ Enter a different name</source>
         <translation>Выход</translation>
     </message>
     <message>
+        <source>Moved to OS Recycle Bin</source>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
+        <translation>Перемещено в корзину</translation>
+    </message>
+    <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
         <translation>Показать в проводнике</translation>
@@ -4455,17 +5361,21 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- A new onboarding wizard is introduced when a new sync or backup process is initiated for the first time.
-- Revamped the user interface of the macOS installer.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Application performance improved.
+        <source>- Sync Rework Beta V1 version.
+- New Exclusions dialog for syncs.
+- New header for undecrypted cloud issues.
+- Minor changes in issues description. 
+- Auto solve reparse points and hard/sym links in Smart Mode. 
+- Minor bugs fixed. 
+- Performance improved. 
 </source>
-        <translatorcomment>Changelog for v4.12.0 - CON-475</translatorcomment>
-        <translation>- Новый мастер настройки появляется при первом запуске новой синхронизации или резервного копирования.
-- Обновлён интерфейс установщика для macOS.
-- Исправлены обнаруженные сбои в Windows, Linux и macOS.
-- Улучшена производительность приложения.
-</translation>
+        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
+        <translation>Бета-версия переработанной синхронизации V1.
+- Новый диалог исключений для синхронизации.
+- Незначительно измененены описания ошибок.
+- Добавлено автоматическое определение точек повторного анализа, жёстких и символических ссылок в умном режиме.
+- Исправлены мелкие ошибки.
+- Улучшена производительность. </translation>
     </message>
 </context>
 <context>
@@ -4929,7 +5839,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt;Название «%1» использовать нельзя.&lt;/b&gt;&lt;p&gt;Попробуйте использовать другое название, с меньшим количеством символов или без знаков препинания.</translation>
+        <translation>&lt;b&gt;Нельзя использовать название «%1».&lt;/b&gt;&lt;p&gt;Попробуйте указать название покороче или без знаков пунктуации.</translation>
     </message>
 </context>
 <context>
@@ -4953,6 +5863,24 @@ Do you want to delete it anyway?</source>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button in message boxes</translatorcomment>
         <translation>Отмена</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteItemUi</name>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
+        <translation>Разрешения</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button to add new syncs or backups from settings window.SNC-2565</translatorcomment>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
+        <translation>Удалить</translation>
     </message>
 </context>
 <context>
@@ -5140,16 +6068,6 @@ Do you want to delete it anyway?</source>
         <translation>Улучшить</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translatorcomment>Button label to delete a synchronization. String as short as possible.</translatorcomment>
-        <translation>Удалить</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>Добавить</translation>
-    </message>
-    <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>Данные временно недоступны</translation>
@@ -5158,18 +6076,6 @@ Do you want to delete it anyway?</source>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Очистить</translation>
-    </message>
-    <message>
-        <source>Full scan</source>
-        <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
-        <translation>Полное сканирование</translation>
-    </message>
-    <message>
-        <source>MEGAsync will perform a full scan of your synced folders when it starts.
-
-Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>Приложение будет полностью сканировать синхронизируемые папки при запуске. Перезапустить приложение сейчас?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -5217,16 +6123,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Всегда храните ключ восстановления физически (например, на своём компьютере, внешнем накопителе или листе бумаги).</translation>
     </message>
     <message>
-        <source>Exclude by size</source>
-        <translatorcomment>Section title for controls to let the user exclude files from being synced by size.</translatorcomment>
-        <translation>Исключить по размеру</translation>
-    </message>
-    <message>
-        <source>Excluded file and folder names</source>
-        <translatorcomment>Section title for controls to indicate the file and folder names excluded from synchronization.</translatorcomment>
-        <translation>Исключённые имена файлов и папок</translation>
-    </message>
-    <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
         <translation>Резервные копии ранее синхронизированных файлов на компьютере будут полностью удалены. Проверьте папки с резервными копиями файлов, если нужно что-то оставить:</translation>
@@ -5235,16 +6131,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
         <translation>Резервные копии ранее синхронизированных файлов на компьютере будут полностью удалены. Проверьте папку «[A]» в Корзине MEGA, если нужно что-то оставить.</translation>
-    </message>
-    <message>
-        <source>Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation>Перезапустить приложение сейчас?</translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation>Права</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -5259,17 +6145,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Clear remote backup</source>
         <translatorcomment>Title label for the warning to the user before clearing the remote sync cache. Keep as short as possible.</translatorcomment>
-        <translation>Стереть удалённые данные</translation>
+        <translation>Стереть данные в облаке</translation>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
         <translatorcomment>Confirmation prompt for the remote sync cache clear action message box.</translatorcomment>
-        <translation>Действительно стереть удалённые данные?</translation>
-    </message>
-    <message>
-        <source>Restart</source>
-        <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
-        <translation>Перезапуск</translation>
+        <translation>Действительно удалить резервную копию в облаке?</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -5295,16 +6176,6 @@ Do you want to restart MEGAsync now?</source>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
         <translation>MEGA-КЛЮЧ-ВОССТАНОВЛЕНИЯ</translation>
-    </message>
-    <message>
-        <source>Error enabling sync</source>
-        <translatorcomment>Title error message shown when an error occurs while trying to enable a sync.</translatorcomment>
-        <translation>Ошибка при включении синхронизации</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
-        <translation>Невозможно включить синхронизацию «%1». Причина: %2</translation>
     </message>
     <message>
         <source>General</source>
@@ -5354,7 +6225,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (удалённый кеш)</translation>
+        <translation>SyncDebris (облачный кеш)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -5369,7 +6240,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>Сообщить о проблеме</translation>
+        <translation>Сообщить об ошибке</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -5385,21 +6256,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>Допустимый объём передачи данных</translation>
-    </message>
-    <message>
-        <source>Synced folders</source>
-        <translatorcomment>Section title for Synchronized folders table view.</translatorcomment>
-        <translation>Синхронизируемые папки</translation>
-    </message>
-    <message>
-        <source>Purchase more storage</source>
-        <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.</translatorcomment>
-        <translation>Купить больше места</translation>
-    </message>
-    <message>
-        <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
-        <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>Некоторые папки не синхронизированы. Чтобы получить дополнительную информацию, наведите курсор на жёлтый значок предупреждения.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -5432,21 +6288,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Выбрать</translation>
     </message>
     <message>
-        <source>Exclude files smaller than</source>
-        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, smaller than the specified size.</translatorcomment>
-        <translation>Исключить файлы меньше чем</translation>
-    </message>
-    <message>
-        <source>Exclude files bigger than</source>
-        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, bigger than the specified size.</translatorcomment>
-        <translation>Исключить файлы больше чем</translation>
-    </message>
-    <message>
-        <source>Restart MEGA Desktop App to apply changes.</source>
-        <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Перезапустите приложение, чтобы применить изменения.</translation>
-    </message>
-    <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
         <translation>Изменить настройки…</translation>
@@ -5459,7 +6300,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Force a Full Scan</source>
         <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Полное сканирование</translation>
+        <translation>Принудительное полное сканирование</translation>
     </message>
     <message>
         <source>Session history</source>
@@ -5479,7 +6320,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (удалённый кеш):</translation>
+        <translation>SyncDebris (облачный кеш):</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -5502,24 +6343,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Допустимый объём передачи данных:</translation>
     </message>
     <message>
-        <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
-        <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation>Ваш аккаунт MEGA заполнен. Загрузки отключены, а синхронизация папок приостановлена.</translation>
-    </message>
-    <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
         <translation>Безопасность вашего аккаунта зависит от надёжности вашего пароля. Пароли должны быть уникальными, и их должно быть невозможно угадать. Мы рекомендуем использовать менеджер паролей.</translation>
-    </message>
-    <message>
-        <source>Excluded file and folder names:</source>
-        <translatorcomment>Label for controls to indicate the file and folder names excluded from synchronization.(macOS)</translatorcomment>
-        <translation>Исключённые имена файлов и папок:</translation>
-    </message>
-    <message>
-        <source>Exclude by size:</source>
-        <translatorcomment>Label for controls to let the user exclude files from being synced by size.(macOS)</translatorcomment>
-        <translation>Исключить по размеру:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
@@ -5542,26 +6368,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Включить интеграцию с проводником</translation>
     </message>
     <message>
-        <source>B</source>
-        <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>Б</translation>
-    </message>
-    <message>
-        <source>KB</source>
-        <translatorcomment>Kilo-Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>КБ</translation>
-    </message>
-    <message>
-        <source>MB</source>
-        <translatorcomment>Mega-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>МБ</translation>
-    </message>
-    <message>
-        <source>GB</source>
-        <translatorcomment>Giga-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>ГБ</translation>
-    </message>
-    <message>
         <source>Install Update</source>
         <translatorcomment>Button label text shown in General pane when there is an update available. Keep as short as possible.</translatorcomment>
         <translation>Установить обновление</translation>
@@ -5580,11 +6386,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Business</source>
         <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Бизнес</translation>
-    </message>
-    <message>
-        <source>Restart MEGAsync</source>
-        <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation>Перезапустить</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -5615,16 +6416,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
         <translation>Сообщение об ошибке</translation>
-    </message>
-    <message>
-        <source>Choose which files or folders you want to exclude from synchronisation.</source>
-        <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation>Выберите, какие папки или файлы вы хотите исключить из синхронизации</translation>
-    </message>
-    <message>
-        <source>Saving synchronised folders…</source>
-        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>Сохранение синхронизируемых папок…</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -5692,36 +6483,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Резервные копии</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Backups table title</translatorcomment>
-        <translation>Резервные копии</translation>
-    </message>
-    <message>
-        <source>Backup Folder</source>
-        <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
-        <translation>Папка резервного копирования</translation>
-    </message>
-    <message>
-        <source>View in MEGA</source>
-        <translatorcomment>Button text that opens backups folder in webclient</translatorcomment>
-        <translation>Посмотреть в MEGA</translation>
-    </message>
-    <message>
-        <source>Saving backups…</source>
-        <translatorcomment>Label text displayed while backups settings are being saved</translatorcomment>
-        <translation>Сохранение резервного копирования…</translation>
-    </message>
-    <message>
-        <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
-        <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation>Резервные копии некоторых папок не созданы. Чтобы получить дополнительную информацию, наведите курсор на жёлтый значок предупреждения.</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Line edit title, remote backup folder path will be displayed (macOS)</translatorcomment>
-        <translation>Папка резервных копий:</translation>
-    </message>
-    <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
         <translation>Синхронизации и резервные копии будут отключены.</translation>
@@ -5742,74 +6503,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Действительно выйти?</translation>
     </message>
     <message>
-        <source>Error removing sync</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a sync.</translatorcomment>
-        <translation>Ошибка удаления синхронизации</translation>
-    </message>
-    <message>
-        <source>Your sync can&apos;t be removed. Reason: %1</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>Невозможно удалить синхронизацию. Причина: %1</translation>
-    </message>
-    <message>
-        <source>Error disabling sync</source>
-        <translatorcomment>Warning message title indicating that an error happened disabling a sync.</translatorcomment>
-        <translation>Ошибка отключения синхронизации</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>Невозможно отключить синхронизацию «%1». Причина: %2</translation>
-    </message>
-    <message>
-        <source>Error adding backup %1</source>
-        <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
-        <translation>Ошибка добавления резервного копирования %1</translation>
-    </message>
-    <message>
-        <source>Error removing backup</source>
-        <translatorcomment>Error message dialog title</translatorcomment>
-        <translation>Ошибка остановки синхронизации</translation>
-    </message>
-    <message>
-        <source>Your backup can&apos;t be removed. Reason: %1</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>Невозможно остановить резервное копирование. Причина: %1</translation>
-    </message>
-    <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>Ошибка перемещения или удаления синхронизируемой MEGA-папки</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>Не удаётся переместить или удалить синхронизируемую MEGA-папку. Причина: %1</translation>
-    </message>
-    <message>
-        <source>Error enabling backup</source>
-        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>Ошибка включения резервного копирования</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Невозможно включить резервное копирование «%1». Причина: %2</translation>
-    </message>
-    <message>
-        <source>Error disabling backup</source>
-        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>Ошибка отключения резервного копирования</translation>
-    </message>
-    <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Pro&#xa0;Flexi</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Невозможно отключить резервное копирование «%1». Причина: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5909,6 +6605,453 @@ Do you want to restart MEGAsync now?</source>
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
         <translation><numerusform>%n папка</numerusform><numerusform>%n папки</numerusform><numerusform>%n папок</numerusform><numerusform>%n папки</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>Sizes</name>
+    <message>
+        <source>B</source>
+        <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane..SNC-4208</translatorcomment>
+        <translation>Б</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Kilo Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane..SNC-4208</translatorcomment>
+        <translation>КБ</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Mega Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.SNC-4208</translatorcomment>
+        <translation>МБ</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Giga Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.SNC-4208</translatorcomment>
+        <translation>ГБ</translation>
+    </message>
+</context>
+<context>
+    <name>SomeIssuesOccurredMessage</name>
+    <message>
+        <source>Some issues ocurred.</source>
+        <translatorcomment>Label that appeaers when sync stalls are detected.SNC-2565</translatorcomment>
+        <translation>Обнаружены ошибки</translation>
+    </message>
+    <message>
+        <source>View...</source>
+        <translatorcomment>Button to show the sync stalls.SNC-2565</translatorcomment>
+        <translation>Просмотр</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueActionTitle</name>
+    <message>
+        <source>Loading user…</source>
+        <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
+        <translation>получение пользователя…</translation>
+    </message>
+    <message>
+        <source>Upload by:</source>
+        <translatorcomment>Label indicating uploader for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Загружено пользователем:</translation>
+    </message>
+    <message>
+        <source>Versions:</source>
+        <translatorcomment>Label indicating number of versions for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Версии:</translation>
+    </message>
+    <message>
+        <source>Loading size</source>
+        <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
+        <translation>Загрузка размера…</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translatorcomment>Label indicating size for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Размер:</translation>
+    </message>
+    <message>
+        <source>CRC:</source>
+        <translatorcomment>Label indicating fingerprint for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>CRC:</translation>
+    </message>
+    <message>
+        <source>Loading time…</source>
+        <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
+        <translation>Загрузка отметки времени…</translation>
+    </message>
+    <message>
+        <source>Last modified:</source>
+        <translatorcomment>Label indicating last modification time for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Последнее изменение:</translation>
+    </message>
+    <message>
+        <source>Upload at:</source>
+        <translatorcomment>Label indicating upload time for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Загружено:</translation>
+    </message>
+    <message>
+        <source>Created at:</source>
+        <translatorcomment>Label indicating creation time for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Создано:</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueChooseWidget</name>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button to choose either remote or local version.SNC-2565</translatorcomment>
+        <translation>Выбрать</translation>
+    </message>
+    <message>
+        <source>Local file is being uploaded</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
+        <translation>Локальный файл загружается</translation>
+    </message>
+    <message>
+        <source>Renamed to %1</source>
+        <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
+        <translation>Переименовано</translation>
+    </message>
+    <message>
+        <source>Chosen</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
+        <translation>Выбрано</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueFilePath</name>
+    <message>
+        <source>move</source>
+        <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
+        <translation>Перемещено в</translation>
+    </message>
+    <message>
+        <source>on MEGA:</source>
+        <translatorcomment>Label descriping where the sync stall is originating.SNC-2565</translatorcomment>
+        <translation>В MEGA:</translation>
+    </message>
+    <message>
+        <source>Local:</source>
+        <translatorcomment>Subtitle for the section containg local file details of the sync stall.SNC-2565</translatorcomment>
+        <translation>Локально:</translation>
+    </message>
+    <message>
+        <source>File is being frequently changing.</source>
+        <translatorcomment>Label descriping the error causing sync stall. SNC-2565</translatorcomment>
+        <translation>Файл часто изменяется</translation>
+    </message>
+    <message>
+        <source>Ignore rules unknown.</source>
+        <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
+        <translation>Вычисляются правила исключения. Подождите и повторите попытку.</translation>
+    </message>
+    <message>
+        <source>Detected Sym link.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.SNC-2565</translatorcomment>
+        <translation>Обнаружена символическая ссылка</translation>
+    </message>
+    <message>
+        <source>Detected special file.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a special file and cannot be synced.SNC-2565</translatorcomment>
+        <translation>Обнаружен специальный файл</translation>
+    </message>
+    <message>
+        <source>Different file or folder is already present.</source>
+        <translatorcomment>Label descriping a sync stall is happening because an item with this name already exists.SNC-2565</translatorcomment>
+        <translation>Уже есть элемент с таким названием</translation>
+    </message>
+    <message>
+        <source>Parent folder does not exist.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud parent folder is removed.SNC-2565</translatorcomment>
+        <translation>Родительская папка не существует</translation>
+    </message>
+    <message>
+        <source>Filesystem error during operation.</source>
+        <translatorcomment>Label descriping a sync stall is happening because of filesystem failed operation ( Eg. folder creation).SNC-2565</translatorcomment>
+        <translation>Во время операции произошла локальная ошибка</translation>
+    </message>
+    <message>
+        <source>Name too long for filesystem.</source>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
+        <translation>Название слишком длинное для файловой системы</translation>
+    </message>
+    <message>
+        <source>Cannot fingerprint file.</source>
+        <translatorcomment>Label descriping a sync stall is happening because MEGA cannot create a fingerprint for it.SNC-2565</translatorcomment>
+        <translation>Не удалось создать отпечаток файла</translation>
+    </message>
+    <message>
+        <source>Hard link or Reparse Point detected.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a hard link and cannot be synced.SNC-2565</translatorcomment>
+        <translation>Обнаружена жёсткая ссылка или точка повторного анализа. Обратитесь в поддержку, если в этом расположении нет жёсткой ссылки или точки повторной анализа.</translation>
+    </message>
+    <message>
+        <source>The folder could not be found. Ensure that the path is correct and try again.</source>
+        <translatorcomment>Label descriping the sync sall is caused by removed path.SNC-2565</translatorcomment>
+        <translation>Не удалось найти папку. Проверьте, что путь указан правильно, и повторите попытку.</translation>
+    </message>
+    <message>
+        <source>MAC verification failure.</source>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
+        <translation>Сбой проверки имитовставки</translation>
+    </message>
+    <message>
+        <source>Deleted or moved by user.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
+        <translation>Удалено или перемещено в MEGA</translation>
+    </message>
+    <message>
+        <source>Deleted by user.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud node is deleted by the user.SNC-2565</translatorcomment>
+        <translation>Удалено в MEGA</translation>
+    </message>
+    <message>
+        <source>Move to debris folder failed.</source>
+        <translatorcomment>Label descriping a sync stall is happening because MEGA could not move the item to sync debris folder.SNC-2565</translatorcomment>
+        <translation>Невозможно переместить папку .debris или .rubbish в локальном расположении синхронизации</translation>
+    </message>
+    <message>
+        <source>Ignore file malformed.</source>
+        <translatorcomment>Label descriping a sync stall is happening because exclusion rules file is malformed (.megaignore).SNC-2565</translatorcomment>
+        <translation>В файле .megaignore обнаружена ошибка. Отредактируйте файл, чтобы исправить её.</translation>
+    </message>
+    <message>
+        <source>Error Listing folder in filesystem.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be read.SNC-2565</translatorcomment>
+        <translation>Не удалось получить метаданные для этой папки. Проверьте разрешения и повторите сканирование.</translation>
+    </message>
+    <message>
+        <source>Error identifying folder content in filesystem.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
+        <translation>Ошибка определения содержимого папки в локальной файловой системе</translation>
+    </message>
+    <message>
+        <source>Cloud node undecrypted.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the node cannot be decrypted( not owned by the user).SNC-2565</translatorcomment>
+        <translation>Невозможно расшивровать элемент на Облачном диске.</translation>
+    </message>
+    <message>
+        <source>Waiting for scanning to complete.</source>
+        <translatorcomment>Label descriping the sync sall is caused by ongoing scan operation.SNC-2565</translatorcomment>
+        <translation>Ожидание завершения сканирования</translation>
+    </message>
+    <message>
+        <source>Waiting for another move to complete.</source>
+        <translatorcomment>Label descriping the sync sall is caused by ongoing move operation.SNC-2565</translatorcomment>
+        <translation>Ожидание завершения другого перемещения</translation>
+    </message>
+    <message>
+        <source>Source was moved elsewhere.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud version was move.SNC-2565</translatorcomment>
+        <translation>Файл или папка в MEGA были перемещены в другое расположение</translation>
+    </message>
+    <message>
+        <source>Local filesystem cannot store this name.</source>
+        <translatorcomment>Label descriping a sync stall is happening because MEGA cannot store the file ( possible reasons: filenames with trailing spaces).SNC-2565</translatorcomment>
+        <translation>Это название файла недопустимо локальной файловой системе.</translation>
+    </message>
+    <message>
+        <source>Fingerprint is missing or invalid.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file fingerprint is missing.SNC-2565</translatorcomment>
+        <translation>Отпечаток отсутствует или недействителен</translation>
+    </message>
+    <message>
+        <source>Error not detected</source>
+        <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>
+        <translation>Неизвестная ошибка</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueHeader</name>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>Применить ко всем</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to ignore this issue?</source>
+        <translatorcomment>Text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
+        <translation>Игнорировать эту ошибку?</translation>
+    </message>
+    <message>
+        <source>This action will ignore this issue and it will not be synced.</source>
+        <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
+        <translation>Ошибка будет проигнорирована, и элемент не будет синхронизироваться, пока она не будет исправлена.</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translatorcomment>Ignore option for the file causing stall.SNC-2565</translatorcomment>
+        <translation>Игнорировать</translation>
+    </message>
+    <message>
+        <source>Ignored</source>
+        <translatorcomment>Resolution message shown on item when the file has been ignored.SNC-2565</translatorcomment>
+        <translation>Игнорируется</translation>
+    </message>
+    <message>
+        <source>Solved</source>
+        <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
+        <translation>Исправлено</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssuesDialog</name>
+    <message>
+        <source>Stalled Issues</source>
+        <translatorcomment>Window tittle of sync stalls window.DNS-1388</translatorcomment>
+        <translation>Ошибки</translation>
+    </message>
+    <message>
+        <source>Sync issues</source>
+        <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>Ошибки синхронизации</translation>
+    </message>
+    <message>
+        <source>All issues:</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>Все ошибки:</translation>
+    </message>
+    <message>
+        <source>Name conflicts:</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>Конфликты названий:</translation>
+    </message>
+    <message>
+        <source>Item type conflicts:</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
+        <translation>Конфликты типа элемента:</translation>
+    </message>
+    <message>
+        <source>Other:</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>Другое:</translation>
+    </message>
+    <message>
+        <source>Solved:</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>Исправлено:</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button to close sync stalls dialog</translatorcomment>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <source>Sync stall mode</source>
+        <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
+        <translation>Режим исправления ошибок</translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translatorcomment>Label tellong the user to choose the sync stall mode.DNS-1388</translatorcomment>
+        <translation>Выберите:</translation>
+    </message>
+    <message>
+        <source>Smart mode</source>
+        <translatorcomment>Button for choosing smart (automatic) mode for solving stalled issues.DNS-1388</translatorcomment>
+        <translation>Умный режим</translation>
+    </message>
+    <message>
+        <source>Let Mega solve sync issues
+automatically</source>
+        <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
+        <translation>MEGA автоматически исправляет ошибки синхронизации</translation>
+    </message>
+    <message>
+        <source>Advanced mode</source>
+        <translatorcomment>Button for choosing advanced (manual) mode for solving stalled issues. DNS-1388</translatorcomment>
+        <translation>Расширенный режим</translation>
+    </message>
+    <message>
+        <source>Get full control of the sync issues</source>
+        <translatorcomment>Description of the advanced mode of sync stalls.DNS-1388</translatorcomment>
+        <translation>Полный контроль над ошибками синхронизации</translation>
+    </message>
+    <message>
+        <source>Solve issues</source>
+        <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
+        <translation>Исправить ошибки</translation>
+    </message>
+    <message>
+        <source>No issues</source>
+        <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
+        <translation>Нет ошибок</translation>
+    </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
+        <translation>[A]Подробнее[/A]</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssuesModel</name>
+    <message>
+        <source>Processing issues</source>
+        <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translation>Исправление ошибок…</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Message box button to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <source>Some external changes were detected. Please, refresh the view.</source>
+        <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
+        <translation>Обнаружены некоторые внешние изменения.
+Обновите представление.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n issues fixed</source>
+        <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translation><numerusform>Исправлена %n ошибка</numerusform><numerusform>Исправлено %n ошибки</numerusform><numerusform>Исправлено %n ошибок</numerusform><numerusform>Исправлено %n ошибки</numerusform></translation>
+    </message>
+    <message>
+        <source>Fixing issues</source>
+        <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translation>Исправление ошибок…</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
+        <translation>Ошибка могла быть исправлена извне.
+Обновите список.</translation>
+    </message>
+    <message>
+        <source>Some issues can&apos;t be fixed.
+Verify the permissions of the .megaignore file on your local sync folder locations.</source>
+        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
+        <translation>Некоторые ошибки не могут быть исправлены.
+Проверьте разрешения на доступ к файлу .megaignore в локальной папке синхронизации.</translation>
+    </message>
+    <message>
+        <source>Issues can&apos;t be fixed.
+Verify the permissions of the .megaignore on file your local sync folder locations.</source>
+        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
+        <translation>Некоторые ошибки не могут быть исправлены.
+Проверьте разрешения на доступ к файлу .megaignore в локальной папке синхронизации.</translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
+        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
+        <translation>Файл «%1» перемещён в «%2»</translation>
+    </message>
+    <message>
+        <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
+        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
+        <translation>Папка «%1» перемещена в «%2»</translation>
     </message>
 </context>
 <context>
@@ -6079,6 +7222,82 @@ Do you want to restart MEGAsync now?</source>
     </message>
 </context>
 <context>
+    <name>SymLinkHeader</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.SNC-2565</translatorcomment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button to confirm ignoring symlinks in all syncs.FM-1615</translatorcomment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>Применить ко всем</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to ignore all symlinks in all syncs?</source>
+        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
+        <translation>Игнорировать символические ссылки во всех синхронизациях?</translation>
+    </message>
+    <message>
+        <source>This action will ignore all present and future symlinks in all your syncs.</source>
+        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translation>Будут игнорироваться все существующие и будущие символические ссылки во всех ваших синхронизациях.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to ignore this symlink?</source>
+        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
+        <translation>Игнорировать эту символическую ссылку?</translation>
+    </message>
+    <message>
+        <source>This action will ignore this symlink and it will not be synced.</source>
+        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translation>Эта символическая ссылка будет проигнорирована и не будет синхронизирована.</translation>
+    </message>
+    <message>
+        <source>Detected sym link: [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced is a sym link.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Обнаружена символическая ссылка: [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Ignore symlink</source>
+        <translatorcomment>Button text to ignore the sym link causing sync stall.SNC-2565</translatorcomment>
+        <translation>Игнорировать символическую ссылку</translation>
+    </message>
+    <message>
+        <source>Ignore all symlinks in all syncs</source>
+        <translatorcomment>Button text to ignore all sym link causing sync stall.SNC-2565</translatorcomment>
+        <translation>Игнорировать символические ссылки во всех синхронизациях</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translatorcomment>Title for solve actions for a sync stall.SNC-2565</translatorcomment>
+        <translation>Игнорировать</translation>
+    </message>
+</context>
+<context>
+    <name>SyncAccountFullMessage</name>
+    <message>
+        <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
+        <translatorcomment>Warning text message shown in Sync pane when account storage is full.SNC-4208</translatorcomment>
+        <translation>Ваш аккаунт MEGA заполнен. Загрузки отключены, а синхронизация папок приостановлена.</translation>
+    </message>
+    <message>
+        <source>Purchase more storage</source>
+        <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.SNC-4208</translatorcomment>
+        <translation>Купить больше места</translation>
+    </message>
+</context>
+<context>
     <name>SyncController</name>
     <message>
         <source>Folder is already backed up. Select a different one.</source>
@@ -6191,11 +7410,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Невозможно минхронизировать «%1», так как это корневая папка. Чтобы продолжить, выберите другую папку.</translation>
     </message>
     <message>
-        <source>Folder can’t be synced as you don’t have write permissions.</source>
-        <translatorcomment>Warning message indicating that there is no write Permissions. CON-467</translatorcomment>
-        <translation>Папку нельзя синхронизировать, так как у вас нет прав на запись</translation>
-    </message>
-    <message>
         <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
         <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
         <translation>Папку нельзя синхронизировать, так как она в корзине MEGA</translation>
@@ -6256,12 +7470,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Синхронизация «%1» была отключена, так как удалённая папка находится в Корзине</translation>
+        <translation>Синхронизация «%1» была отключена, так как облачная папка находится в Корзине</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Синхронизация «%1» отключена. У вас нет полного доступа к удалённой папке (или её части).</translation>
+        <translation>Синхронизация «%1» отключена. У вас нет полного доступа к облачной папке (или её части).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -6315,6 +7529,21 @@ Do you want to restart MEGAsync now?</source>
     </message>
 </context>
 <context>
+    <name>SyncItemExceedsSupoortedTreeDepthHeader</name>
+    <message>
+        <source>Unable to sync [B]%1[/B]</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file is more than 64 folders deep.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Невозможно синхронизировать [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Target is too deep on your folder structure.
+Please move it to a location that is less than 64 folders deep.</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
+        <translation>Целевой элемент находится слишком глубоко в структуре папок.
+Переместите его в расположение глубиной менее 64 папок.</translation>
+    </message>
+</context>
+<context>
     <name>SyncItemModel</name>
     <message>
         <source>Sort by state</source>
@@ -6322,24 +7551,104 @@ Do you want to restart MEGAsync now?</source>
         <translation>Сортировать по статусу</translation>
     </message>
     <message>
-        <source>Local Folder</source>
-        <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>Локальная папка</translation>
+        <source>Sync Name</source>
+        <translatorcomment>Syncs table column header, it shows sync name.SNC-2565</translatorcomment>
+        <translation>Название синхронизации</translation>
     </message>
     <message>
-        <source>Sort by folder name</source>
-        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.</translatorcomment>
-        <translation>Сортировать по названию папки</translation>
+        <source>Sort by sync name</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Сортировать по названию синхронизации</translation>
     </message>
     <message>
-        <source>MEGA Folder</source>
-        <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>MEGA-папка</translation>
+        <source>State</source>
+        <translatorcomment>Syncs table column header, it shows sync state.SNC-2565</translatorcomment>
+        <translation>Статус</translation>
     </message>
     <message>
-        <source>Sort by MEGA folder name</source>
-        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
-        <translation>Сортировать по названию MEGA-папки</translation>
+        <source>Sort by sync state</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by sync state in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Сортировать по статусу синхронизации</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Syncs table  column name, it shows number of files in a sync.SNC-2565</translatorcomment>
+        <translation>Файлы</translation>
+    </message>
+    <message>
+        <source>Sort by file count</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by file count in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Сортировать по числу файлов</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Syncs table column name, it shows number of folders in a sync.SNC-2565</translatorcomment>
+        <translation>Папки</translation>
+    </message>
+    <message>
+        <source>Sort by folder count</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder count in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Сортировать по числу папок</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Syncs table column name, it shows number of downloads.SNC-2565</translatorcomment>
+        <translation>Скачивания</translation>
+    </message>
+    <message>
+        <source>Sort by Downloads</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by downloads in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Сортировать по скачиваниям</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Syncs table column header, it shows number of uploads.SNC-2565</translatorcomment>
+        <translation>Загрузки</translation>
+    </message>
+    <message>
+        <source>Sort by Uploads</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by uploads in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Сортировать по загрузкам</translation>
+    </message>
+    <message>
+        <source>Loading</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Загрузка</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Приостановлено</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Отключено</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Сканирование</translation>
+    </message>
+    <message>
+        <source>Syncing</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Выполняется</translation>
+    </message>
+    <message>
+        <source>Monitoring</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Наблюдение</translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table).SNC-4208</translatorcomment>
+        <translation>Дополнительные действия с синхронизациями</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Остановлено</translation>
     </message>
 </context>
 <context>
@@ -6357,34 +7666,135 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>SyncSettingsUI</name>
+    <message>
+        <source>Synced Folders</source>
+        <translatorcomment>Section title for Synchronized folders table view.SNC-4208</translatorcomment>
+        <translation>Синхронизируемые папки</translation>
+    </message>
+    <message>
+        <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
+        <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.SNC-2565</translatorcomment>
+        <translation>Резервные копии не синхронизированы. Для подробностей наведите курсор на красный значок.</translation>
+    </message>
+    <message>
+        <source>Sync operation failed</source>
+        <translatorcomment>Title for message box shown when an error occurs in a sync.SNC-2565</translatorcomment>
+        <translation>Не удалось синхронизировать</translation>
+    </message>
+    <message>
+        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
+        <translatorcomment>Text in message box shown when an error occurs when removing a sync.SNC-2565</translatorcomment>
+        <translation>Невозможно синхронизировать папку «%1». Причина: %2</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
+        <translation>Ошибка добавления синхронизации</translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
+        <translation>Ошибка остановки синхронизации</translation>
+    </message>
+    <message>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>MEssage box text shown when an error occurs when removing sync.SNC-4208</translatorcomment>
+        <translation>Невозможно удалить синхронизацию. Причина: %1</translation>
+    </message>
+</context>
+<context>
+    <name>SyncSettingsUIBase</name>
+    <message>
+        <source>Saving synchronised folders…</source>
+        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
+        <translation>Сохранение синхронизируемых папок</translation>
+    </message>
+    <message>
+        <source>Error opening megaignore file</source>
+        <translatorcomment>Text in message box shown when the ignore rules file cannot be opened.SNC-2565</translatorcomment>
+        <translation>Ошибка при открытии файла .megaignore</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
+        <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
+        <translation>Невозможно добавить [B]%1[/B], так как ваш аккаунт Pro&#xa0;Flexi был деактивирован из-за сбоя оплаты или из-за того, что вы отменили подписку. Чтобы продолжить, совершите платёж и возобновите подписку.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncStallModeSelector</name>
+    <message>
+        <source>Sync stall mode</source>
+        <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
+        <translation>Режим исправления ошибок</translation>
+    </message>
+    <message>
+        <source>Smart</source>
+        <translatorcomment>Stalled issues solve mode to allow mega to try solve stalled issues when it can.SNC-2565</translatorcomment>
+        <translation>Умный</translation>
+    </message>
+    <message>
+        <source>Let MEGA solve sync issues automatically</source>
+        <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
+        <translation>MEGA автоматически исправляет ошибки синхронизации</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
+        <translation>Расширенный</translation>
+    </message>
+    <message>
+        <source>Get full control of the sync issues</source>
+        <translatorcomment>Description for the advanced solve mode of stalled issues.SNC-2565</translatorcomment>
+        <translation>Полный контроль над ошибками синхронизации</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.SNC-2565</translatorcomment>
+        <translation>Узнать больше</translation>
+    </message>
+</context>
+<context>
     <name>SyncTableView</name>
     <message>
         <source>Open in MEGA</source>
-        <translatorcomment>Context menu option that opens the folder in MEGA webclient.</translatorcomment>
+        <translatorcomment>Context menu option that opens the folder in MEGA webclient.SNC-2565</translatorcomment>
         <translation>Открыть в MEGA</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
-        <translatorcomment>Context menu option that removes the sync.</translatorcomment>
+        <translatorcomment>Context menu option that removes the sync.SNC-2565</translatorcomment>
         <translation>Удалить синхронизируемую папку</translation>
     </message>
-</context>
-<context>
-    <name>SyncTableViewTooltips</name>
     <message>
-        <source>Sync is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(sync enabled)</translatorcomment>
-        <translation>Синхронизация включена</translation>
+        <source>Run</source>
+        <translatorcomment>Menu action to resume syncing for syncs or backups.SNC-2565</translatorcomment>
+        <translation>Возобновить</translation>
     </message>
     <message>
-        <source>Sync is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(sync disabled)</translatorcomment>
-        <translation>Синхронизация отключена</translation>
+        <source>Pause</source>
+        <translatorcomment>Menu action to pause syncing for syncs or backups.SNC-2565</translatorcomment>
+        <translation>Приостановить</translation>
     </message>
     <message>
-        <source>Click menu for more Sync actions</source>
-        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>Дополнительные действия с синхронизациями</translation>
+        <source>Add exclusions</source>
+        <translatorcomment>Button to allow adding exclusion rules for new syncs &amp; backups.SNC-2565</translatorcomment>
+        <translation>Добавить исключения</translation>
+    </message>
+    <message>
+        <source>Quick Rescan</source>
+        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
+        <translation>Быстрое повторное сканирование</translation>
+    </message>
+    <message>
+        <source>Deep Rescan</source>
+        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
+        <translation>Глубокое повторное сканирование</translation>
+    </message>
+    <message>
+        <source>Edit .megaignore</source>
+        <translatorcomment>Menu action to open and start adding ignore rules file for a sync or backup folder.SNC-2565</translatorcomment>
+        <translation>Редактировать .megaignore</translation>
     </message>
 </context>
 <context>
@@ -6698,7 +8108,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform></translation>
+        <translation><numerusform>Обнаружена ошибка</numerusform><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7272,6 +8682,19 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
+    <name>UploadIssueHeader</name>
+    <message>
+        <source>Can´t upload [B]%1[/B] to the selected location</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Не удалось загрузить [B]%1[/B] в выбранное расположение</translation>
+    </message>
+    <message>
+        <source>Cannot reach the destination folder.</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translation>Не удалось получить папку назначения</translation>
+    </message>
+</context>
+<context>
     <name>UploadNodeSelector</name>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
@@ -7415,7 +8838,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>занят %1 (%2%) из %3 </numerusform><numerusform>занято %1 (%2%) из %3 </numerusform><numerusform>занято %1 (%2%) из %3 </numerusform><numerusform>занято %1 (%2%) из %3 </numerusform></translation>
+        <translation><numerusform>Использовано %1 (%2%) из %3 </numerusform><numerusform>Использовано %1 (%2%) из %3 </numerusform><numerusform>Использовано %1 (%2%) из %3 </numerusform><numerusform>Использовано %1 (%2%) из %3 </numerusform></translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -7489,6 +8912,14 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
         <translation>Письмо отправлено</translation>
+    </message>
+</context>
+<context>
+    <name>ViewLoadingSceneUI</name>
+    <message>
+        <source>Stop</source>
+        <translatorcomment>button in auto solve view of stalled issues to stop the auto solve process.SNC-2565</translatorcomment>
+        <translation>Остановить</translation>
     </message>
 </context>
 <context>

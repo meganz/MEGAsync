@@ -34,7 +34,8 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->multipleActionButton, &QPushButton::clicked, this, &StalledIssueHeader::onMultipleActionClicked);
-
+    ui->fileNameTitle->setTextFormat(Qt::TextFormat::AutoText);
+    ui->errorDescriptionText->setTextFormat(Qt::TextFormat::AutoText);
     QSizePolicy sp_retain = ui->arrow->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
     ui->arrow->setSizePolicy(sp_retain);

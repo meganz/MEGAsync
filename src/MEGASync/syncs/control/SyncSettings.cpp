@@ -174,20 +174,6 @@ int SyncSettings::getWarning() const
     return mSync->getWarning();
 }
 
-QString SyncSettings::getRunStateAsString() const
-{
-    switch (mSync->getRunState())
-    {
-        case MegaSync::RUNSTATE_PENDING:   return QApplication::translate("Sync states", "Pending");
-        case MegaSync::RUNSTATE_LOADING:   return QApplication::translate("Sync states", "Loading");
-        case MegaSync::RUNSTATE_RUNNING:   return QApplication::translate("Sync states", "Running");
-        case MegaSync::RUNSTATE_PAUSED:    return QApplication::translate("Sync states", "Paused");
-        case MegaSync::RUNSTATE_SUSPENDED: return QApplication::translate("Sync states", "Suspended");
-        case MegaSync::RUNSTATE_DISABLED:  return QApplication::translate("Sync states", "Disabled");
-    }
-    return QApplication::translate("Sync states", "Unkown state");;
-}
-
 int SyncSettings::getRunState() const
 {
     assert(mSync);

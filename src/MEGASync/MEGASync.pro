@@ -159,7 +159,8 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/UserAttributesRequests/DeviceName.cpp \
     $$PWD/UserAttributesRequests/FullName.cpp \
     $$PWD/UserAttributesRequests/MyBackupsHandle.cpp \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp \
+    $$PWD/drivedata.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
     $$PWD/TransferQuota.h \
@@ -176,7 +177,8 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/UserAttributesRequests/DeviceName.h \
     $$PWD/UserAttributesRequests/FullName.h \
     $$PWD/UserAttributesRequests/MyBackupsHandle.h \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.h
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.h \
+    $$PWD/drivedata.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \
@@ -216,7 +218,7 @@ win32 {
 }
 
 macx {
-    QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM -D_DARWIN_C_SOURCE
+    QMAKE_CXXFLAGS += -D_DARWIN_C_SOURCE
     MAC_ICONS_RESOURCES.files += $$PWD/folder.icns
     MAC_ICONS_RESOURCES.files += $$PWD/folder_yosemite.icns
     MAC_ICONS_RESOURCES.files += $$PWD/folder_bigsur.icns

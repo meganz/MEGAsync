@@ -4,23 +4,23 @@ Button {
     id: root
 
     icons {
-        colorEnabled: Styles.buttonOutline
-        colorHovered: Styles.buttonOutlineHover
-        colorPressed: Styles.buttonOutlinePressed
+        colorEnabled: colorStyle.buttonOutline
+        colorHovered: colorStyle.buttonOutlineHover
+        colorPressed: colorStyle.buttonOutlinePressed
     }
 
     colors {
         background: "transparent"
         disabled: "transparent"
-        hover: Styles.buttonOutlineBackgroundHover
-        border: Styles.buttonOutline
-        borderHover: Styles.buttonOutlineHover
-        borderDisabled: Styles.buttonDisabled
-        text: Styles.buttonOutline
-        textHover: Styles.buttonOutlineHover
-        textPressed: Styles.buttonOutlinePressed
+        hover: colorStyle.buttonOutlineBackgroundHover
+        border: colorStyle.buttonOutline
+        borderHover: colorStyle.buttonOutlineHover
+        borderDisabled: colorStyle.buttonDisabled
+        text: colorStyle.buttonOutline
+        textHover: colorStyle.buttonOutlineHover
+        textPressed: colorStyle.buttonOutlinePressed
         pressed: "transparent"
-        borderPressed: Styles.buttonOutlinePressed
+        borderPressed: colorStyle.buttonOutlinePressed
     }
 }
 

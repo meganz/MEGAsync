@@ -70,6 +70,11 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
 
                 variant.getData()->fillIssue(stall);
 
+                if(variant.shouldBeIgnored())
+                {
+                    continue;
+                }
+
                 //Chec if it is being solved...
                 if(!variant.getData()->isSolved())
                 {
@@ -188,16 +193,20 @@ bool StalledIssuesModel::issuesRequested() const
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 {
     auto isSyncStalled(api->isSyncStalled());
-    if(isSyncStalled &&
-       mStalledIssues.size() == mSolvedStalledIssues.size() &&
-       mIsStalled != isSyncStalled)
+    if(isSyncStalled)
     {
-        //For Smart mode -> resolve problems as soon as they are received
+        if ((mStalledIssues.size() == mSolvedStalledIssues.size() && mIsStalled != isSyncStalled)
+            || (isSyncStalled && api->isSyncStalledChanged()))
+        {
+            //For Smart mode -> resolve problems as soon as they are received
+            updateStalledIssues();
+        }
+    }
+    else if(!mStalledIssues.isEmpty()) // Sync not stalled but we still have some old issues (reset them)
+    {
         updateStalledIssues();
     }
-
     mIsStalled = isSyncStalled;
-
     emit stalledIssuesChanged();
 }
 

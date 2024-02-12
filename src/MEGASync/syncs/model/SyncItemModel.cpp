@@ -186,7 +186,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
                     {
                         if(sync->getError())
                         {
-                            s = tr("Suspended");
+                            s = tr("Stopped");
                         }
                         else
                         {

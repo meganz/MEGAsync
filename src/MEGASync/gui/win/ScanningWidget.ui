@@ -209,7 +209,7 @@
      <item>
       <widget class="QFrame" name="frame">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+        <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>

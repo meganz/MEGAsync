@@ -60,6 +60,7 @@ public:
 
     void streamWithApp(const QString& app, const QString& url) override;
     void processSymLinks() override;
+    DriveSpaceData getDriveData(const QString &path) override;
 
     static void notify(const std::string& path);
 

@@ -41,7 +41,7 @@ pipeline {
                     if (env.SDK_BRANCH && env.SDK_BRANCH != ' ') {
                         branchToCheckout = env.SDK_BRANCH
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
-                        branchToCheckout = "release/v4.31.0"
+                        branchToCheckout = "develop"
                     } else {
                         env.SDK_BRANCH = sh(script: "grep 'branch =' ${windows_sources_workspace}\\.gitmodules | sed 's/.*= //'", returnStdout: true).trim()
                         branchToCheckout = env.SDK_BRANCH
@@ -63,7 +63,7 @@ pipeline {
         }
         stage ('Build Windows installers'){
             environment{
-                MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty_prev"
+                MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
                 //QT path is automatically changed to x86 with nsis when needed
                 MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
                 MEGA_THIRD_PARTY_DLL_DIR = "bin"

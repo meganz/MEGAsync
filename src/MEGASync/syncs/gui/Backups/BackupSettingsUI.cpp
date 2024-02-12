@@ -21,7 +21,7 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
         onSavingSyncsCompleted(SAVING_FINISHED);
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.title = tr("Error moving or removing remote backup folder");
-        msgInfo.text =                                  tr("Failed to move or remove the remote backup folder. Reason: %1")
+        msgInfo.text = tr("Failed to move or remove the remote backup folder. Reason: %1")
                 .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
         QMegaMessageBox::warning(msgInfo);
 

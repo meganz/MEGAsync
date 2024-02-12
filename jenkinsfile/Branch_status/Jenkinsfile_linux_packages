@@ -43,7 +43,7 @@ pipeline {
                     if (env.SDK_BRANCH && env.SDK_BRANCH != ' ') {
                         branchToCheckout = env.SDK_BRANCH
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
-                        branchToCheckout = "release/v4.31.0"
+                        branchToCheckout = "develop"
                     } else {
                         env.SDK_BRANCH = sh(script: "grep 'branch =' ${linux_sources_workspace}/.gitmodules | sed 's/.*= //'", returnStdout: true).trim()
                         branchToCheckout = env.SDK_BRANCH
@@ -144,7 +144,7 @@ pipeline {
                                 script{
                                     def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
                                     sh "jf rt del MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO"
-                                    sh "cd ${env.INTERNAL_REPO_PATH}/$DISTRO && jf rt upload --regexp '((x86_64|amd64|i386)/megasync.*deb\$|(x86_64|amd64|i386)/megasync.*rpm\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/"  
+                                    sh "cd ${env.INTERNAL_REPO_PATH}/repo/private/$DISTRO && jf rt upload --regexp '((x86_64|amd64|i386)/megasync.*deb\$|(x86_64|amd64|i386)/megasync.*rpm\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/"  
                                     echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/]"
                                 }
                             }

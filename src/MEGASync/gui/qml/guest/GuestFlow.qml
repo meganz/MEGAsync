@@ -166,7 +166,7 @@ Item {
         background: Rectangle {
             implicitWidth: 200
             implicitHeight: 120
-            color: Styles.pageBackground
+            color: colorStyle.pageBackground
             radius: 12
             layer.enabled: true
             layer.effect: DropShadow {
@@ -325,7 +325,7 @@ Item {
             title: GuestStrings.accountTempLocked
             description: GuestStrings.accountTempLockedEmail
             descriptionFontSize: Texts.Text.Size.NORMAL
-            descriptionColor: Styles.textPrimary
+            descriptionColor: colorStyle.textPrimary
             descriptionLineHeight: 18
             leftButton {
                 text: GuestStrings.logOut

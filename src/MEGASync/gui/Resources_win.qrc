@@ -1376,9 +1376,6 @@
         <file>images/node_selector/chevron-right-active.png</file>
         <file>images/node_selector/chevron-right-active@2x.png</file>
         <file>images/node_selector/chevron-right-active@3x.png</file>
-        <file>images/HD_win.png</file>
-        <file>images/HD_win@2x.png</file>
-        <file>images/HD_win@3x.png</file>
         <file>images/node_selector/search_filter/small_cloud_hover_selected.png</file>
         <file>images/node_selector/search_filter/small_cloud_hover_selected@2x.png</file>
         <file>images/node_selector/search_filter/small_cloud_hover_selected@3x.png</file>
@@ -1502,6 +1499,10 @@
         <file>images/StalledIssues/rotate_cw_default.png</file>
         <file>images/StalledIssues/rotate_cw_default@2x.png</file>
         <file>images/StalledIssues/rotate_cw_default@3x.png</file>
+        <file>images/StalledIssues/refresh.png</file>
+        <file>images/StalledIssues/refresh@2x.png</file>
+        <file>images/StalledIssues/refresh@3x.png</file>
+        <file>images/drive-low-space.svg</file>
         <file>fonts/Inter-Black.ttf</file>
         <file>fonts/Inter-Bold.ttf</file>
         <file>fonts/Inter-ExtraBold.ttf</file>

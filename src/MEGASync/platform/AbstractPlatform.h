@@ -1,6 +1,7 @@
 #ifndef ABSTRACTPLATFORM_H
 #define ABSTRACTPLATFORM_H
 
+#include "drivedata.h"
 #include "MegaApplication.h"
 #include "ShellNotifier.h"
 
@@ -88,6 +89,7 @@ public:
     virtual void processSymLinks() = 0;
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
+    virtual DriveSpaceData getDriveData(const QString& path) = 0;
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;

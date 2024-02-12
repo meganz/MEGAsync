@@ -43,7 +43,7 @@ pipeline {
                     if (env.SDK_BRANCH && env.SDK_BRANCH != ' ') {
                         branchToCheckout = env.SDK_BRANCH
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
-                        branchToCheckout = "release/v4.31.0"
+                        branchToCheckout = "develop"
                     } else {
                         env.SDK_BRANCH = sh(script: "grep 'branch =' ${macos_sources_workspace}/.gitmodules | sed 's/.*= //'", returnStdout: true).trim()
                         branchToCheckout = env.SDK_BRANCH
@@ -65,7 +65,7 @@ pipeline {
         }
         stage ('Build macOS packages'){
             environment{
-                VCPKGPATH  = "${env.HOME}/jenkins/3rdparty_prev"
+                VCPKGPATH  = "${env.HOME}/jenkins/3rdparty"
                 QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.11/5.15.11"
             }
             steps {

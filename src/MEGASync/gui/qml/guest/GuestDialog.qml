@@ -3,7 +3,6 @@ import QtQuick 2.15
 import common 1.0
 
 import GuestQmlDialog 1.0
-import LoginController 1.0
 
 GuestQmlDialog {
     id: window
@@ -27,7 +26,7 @@ GuestQmlDialog {
     Rectangle {
         id: borderItem
 
-        color: Styles.surface1
+        color: colorStyle.surface1
         radius: 10
         anchors.fill: parent
         border.color: "#1F000000"
