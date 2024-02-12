@@ -49,7 +49,7 @@ Item {
             id: selectBackupFoldersPage
 
             SelectFoldersPage {
-                footerButtons.leftSecondary.text: Strings.cancel
+                footerButtons.leftSecondary.text: root.isOnboarding ? Strings.skip : Strings.cancel
                 footerButtons.rightSecondary.visible: isOnboarding
             }
         }
