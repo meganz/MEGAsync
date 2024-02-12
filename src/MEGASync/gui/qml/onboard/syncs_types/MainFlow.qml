@@ -203,8 +203,9 @@ Rectangle {
                 id: syncsFlowPageItem
 
                 stepPanelRef: stepPanel
+                navInfoRef: navInfo
 
-                onSyncsFlowMoveToFinal: {
+                onSyncsFlowMoveToFinal: (syncType) => {
                     if(syncType === Constants.SyncType.FULL_SYNC) {
                         syncsPanel.navInfo.fullSyncDone = true;
                     }

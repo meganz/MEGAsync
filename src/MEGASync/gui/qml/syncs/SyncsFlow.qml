@@ -52,6 +52,10 @@ Item {
         }
     ]
 
+    Syncs {
+        id: syncItem
+    }
+
     StackViewBase {
         id: view
 
@@ -68,6 +72,18 @@ Item {
 
                 footerButtons.leftSecondary.text: root.isOnboarding ? Strings.skip : Strings.cancel
                 footerButtons.rightSecondary.visible: root.isOnboarding
+
+                onSyncTypeMoveToBack: {
+                    root.syncsFlowMoveToBack();
+                }
+
+                onSyncTypeMoveToFullSync: {
+                    root.state = root.fullSync;
+                }
+
+                onSyncTypeMoveToSelectiveSync: {
+                    root.state = root.selectiveSync;
+                }
             }
         }
 
@@ -81,6 +97,20 @@ Item {
                     text: root.isOnboarding ? Strings.skip : Strings.cancel
                     visible: root.isOnboarding
                 }
+
+                onFullSyncMoveToBack: {
+                    if(syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
+                        root.state = root.syncType;
+                    }
+                    else {
+                        root.syncsFlowMoveToBack();
+                    }
+                }
+
+                onFullSyncMoveToSuccess: {
+                    syncItem.syncStatus = syncItem.SyncStatusCode.FULL;
+                    root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
+                }
             }
         }
 
@@ -90,104 +120,33 @@ Item {
             SelectiveSyncPage {
                 id: selectiveSyncPage
 
-                footerButtons.rightSecondary.visible: root.isOnboarding
-                                                        || (!root.isOnboarding
-                                                                && syncItem.syncStatus === syncItem.SyncStatusCode.NONE)
+                function buttonVisible() {
+                    return root.isOnboarding
+                                || (!root.isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE)
+                }
+
+                footerButtons.rightSecondary.visible: selectiveSyncPage.buttonVisible()
                 footerButtons.leftSecondary {
                     text: root.isOnboarding ? Strings.skip : Strings.cancel
-                    visible: root.isOnboarding
-                                || (!root.isOnboarding
-                                        && syncItem.syncStatus !== syncItem.SyncStatusCode.NONE)
+                    visible: selectiveSyncPage.buttonVisible()
+                }
+
+                onSelectiveSyncMoveToBack: {
+                    if(syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
+                        root.state = root.syncType;
+                    }
+                    else {
+                        root.syncsFlowMoveToBack();
+                    }
+                }
+
+                onSelectiveSyncMoveToSuccess: {
+                    syncItem.syncStatus = syncItem.SyncStatusCode.SELECTIVE;
+                    root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
                 }
             }
         }
-    }
 
-    Syncs {
-        id: syncItem
-    }
+    } // StackViewBase: view
 
-    /*
-    * Navigation connections
-    */
-
-    Connections {
-        id: syncTypeNavigationConnection
-
-        target: view.currentItem
-        ignoreUnknownSignals: true
-
-        function onSyncTypeMoveToBack() {
-            root.syncsFlowMoveToBack();
-        }
-
-        function onSyncTypeMoveToFullSync() {
-            root.state = root.fullSync;
-        }
-
-        function onSyncTypeMoveToSelectiveSync() {
-            root.state = root.selectiveSync;
-        }
-    }
-
-    Connections {
-        id: selectiveSyncNavigationConnection
-
-        target: view.currentItem
-        ignoreUnknownSignals: true
-
-        function onSelectiveSyncMoveToBack() {
-            /*
-            if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
-                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.syncsFlowMoveToFinal();
-            }
-            else {*/
-                //root.state = root.syncType;
-            //}
-            if(syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
-                root.state = root.syncType;
-            }
-            else {
-                root.syncsFlowMoveToBack();
-            }
-        }
-
-        function onSelectiveSyncMoveToSuccess() {
-            //syncsPanel.navInfo.selectiveSyncDone = true;
-            syncItem.syncStatus = syncItem.SyncStatusCode.SELECTIVE;
-            root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
-        }
-    }
-
-    Connections {
-        id: fullSyncNavigationConnection
-
-        target: view.currentItem
-        ignoreUnknownSignals: true
-
-        function onFullSyncMoveToBack() {
-            /*
-            if(syncsPanel.navInfo.comesFromResumePage && syncsPanel.navInfo.syncDone) {
-                syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.syncsFlowMoveToFinal();
-            }
-            else {*/
-                //root.state = root.syncType;
-            //}
-
-            if(syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
-                root.state = root.syncType;
-            }
-            else {
-                root.syncsFlowMoveToBack();
-            }
-        }
-
-        function onFullSyncMoveToSuccess() {
-           // syncsPanel.navInfo.fullSyncDone = true;
-            syncItem.syncStatus = syncItem.SyncStatusCode.FULL;
-            root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
-        }
-    }
 }

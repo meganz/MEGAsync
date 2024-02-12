@@ -11,11 +11,11 @@ SyncsFlow {
     id: root
 
     required property StepPanel stepPanelRef
+    required property NavigationInfo navInfoRef
 
     isOnboarding: true
 
-    state: syncsPanel.navInfo.fullSyncDone
-                || syncsPanel.navInfo.typeSelected === Constants.SyncType.SELECTIVE_SYNC
+    state: navInfoRef.fullSyncDone || navInfoRef.typeSelected === Constants.SyncType.SELECTIVE_SYNC
            ? root.selectiveSync
            : root.syncType
 
@@ -63,11 +63,11 @@ SyncsFlow {
                 stepPanelStateWrapper.state = stepPanelStateWrapper.syncTypePage;
                 break;
             case root.selectiveSync:
-                syncsPanel.navInfo.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
+                navInfoRef.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
                 stepPanelStateWrapper.state = stepPanelStateWrapper.selectiveSyncPage;
                 break;
             case root.fullSync:
-                syncsPanel.navInfo.typeSelected = Constants.SyncType.FULL_SYNC;
+                navInfoRef.typeSelected = Constants.SyncType.FULL_SYNC;
                 stepPanelStateWrapper.state = stepPanelStateWrapper.fullSyncPage;
                 break;
             default:
