@@ -23,7 +23,7 @@ QmlDialog {
         id: syncsContentItem
 
         anchors.fill: parent
-        color: Styles.surface1
+        color: colorStyle.surface1
 
         readonly property string syncsFlow: "syncsFlow"
         readonly property string resume: "resume"
