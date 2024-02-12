@@ -124,6 +124,11 @@ QStringList TransferNotificationBuilder::buildSingleUploadActions()
 {
     QStringList actions;
 
+    if(!MegaSyncApp->getMegaApi()->isLoggedIn())
+    {
+        return actions;
+    }
+
     if(data->allHaveFailed())
     {
         actions << tr("Retry");

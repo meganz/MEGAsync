@@ -69,9 +69,21 @@ TransferThread::TransfersToProcess TransferThread::processTransfers()
 void TransferThread::clear()
 {
     QMutexLocker lock(&mCacheMutex);
-
     mTransfersToProcess.clear();
-    mTransfersCount.clear();
+    clearTransfersCount();
+}
+
+void TransferThread::clearTransfersCount()
+{
+    if(mTransfersCount.pendingTransfers() > 0)
+    {
+       mResetCounter = true;
+    }
+    else
+    {
+       mTransfersCount.clear();
+       mResetCounter = false;
+    }
 }
 
 QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::extractFromCache(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, int spaceForTransfers)
@@ -495,6 +507,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
 
             data->mIsTempTransfer = isTemp;
         }
+    }
+
+    if(mResetCounter)
+    {
+        clearTransfersCount();
     }
 }
 

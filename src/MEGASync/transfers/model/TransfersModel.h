@@ -132,10 +132,11 @@ public:
 
     TransfersToProcess processTransfers();
     void clear();
+    void clearTransfersCount();
 
 public slots:
     void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);
-    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*e);
+    void onTransferFinish(mega::MegaApi*, mega::MegaTransfer* transfer, mega::MegaError* e);
     void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferTemporaryError(mega::MegaApi*,mega::MegaTransfer* transfer,mega::MegaError*);
 
@@ -181,6 +182,7 @@ private:
     TransfersCount mTransfersCount;
     LastTransfersCount mLastTransfersCount;
     std::atomic<int16_t> mMaxTransfersToProcess;
+    bool mResetCounter;
 
     QList<int> mRetriedFolder;
     QList<int> mIgnoredFiles;
