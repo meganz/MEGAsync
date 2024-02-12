@@ -23,7 +23,7 @@ BackupsQmlDialog {
         id: backupsContentItem
 
         anchors.fill: parent
-        color: Styles.surface1
+        color: colorStyle.surface1
 
         readonly property string backupsFlow: "backupsFlow"
         readonly property string resume: "resume"
