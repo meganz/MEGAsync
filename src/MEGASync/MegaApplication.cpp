@@ -5038,30 +5038,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
     }
 #ifndef __APPLE__
-    else if (reason == QSystemTrayIcon::DoubleClick)
-    {
-
-        // open local folder for the first active setting
-        const auto syncSettings (model->getAllSyncSettings());
-        auto firstActiveSyncSetting (std::find_if(syncSettings.cbegin(), syncSettings.cend(),
-                                                  [](std::shared_ptr<SyncSettings> s)
-                                     {return s->getRunState() == MegaSync::RUNSTATE_RUNNING;}));
-        if (firstActiveSyncSetting != syncSettings.cend())
-        {
-            infoDialogTimer->stop();
-
-            if(infoDialog)
-            {
-                infoDialog->hide();
-            }
-
-            QString localFolderPath = (*firstActiveSyncSetting)->getLocalFolder();
-            if (!localFolderPath.isEmpty())
-            {
-                Utilities::openUrl(QUrl::fromLocalFile(localFolderPath));
-            }
-        }
-    }
     else if (reason == QSystemTrayIcon::MiddleClick)
     {
         showTrayMenu();
