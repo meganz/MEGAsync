@@ -46,6 +46,13 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     }
 }
 
+TransfersWidget::~TransfersWidget()
+{
+    delete ui;
+    if (tDelegate) delete tDelegate;
+    if (mProxyModel) delete mProxyModel;
+}
+
 void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersManagerSortFilterProxyModel(ui->tvTransfers);
@@ -64,13 +71,6 @@ void TransfersWidget::setupTransfers()
     connect(app->getTransfersModel(), &TransfersModel::rowsAboutToBeMoved, this, &TransfersWidget::onRowsAboutToBeMoved);
 
     configureTransferView();
-}
-
-TransfersWidget::~TransfersWidget()
-{
-    delete ui;
-    if (tDelegate) delete tDelegate;
-    if (mProxyModel) delete mProxyModel;
 }
 
 void TransfersWidget::configureTransferView()

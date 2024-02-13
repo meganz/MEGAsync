@@ -322,7 +322,7 @@
                <item>
                 <widget class="QLabel" name="lSize">
                  <property name="text">
-                  <string/>
+                  <string>loading size…</string>
                  </property>
                 </widget>
                </item>
@@ -345,7 +345,7 @@
                <item>
                 <widget class="QLabel" name="lDate">
                  <property name="text">
-                  <string/>
+                  <string>loading time…</string>
                  </property>
                 </widget>
                </item>

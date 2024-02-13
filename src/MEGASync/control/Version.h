@@ -1,11 +1,11 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION             4, 12, 0, 0
-#define VER_FILEVERSION_CODE        41200
-#define VER_PRODUCTVERSION          4, 12, 0, 0
-// Update scrips relying on this value if you move it
-#define VER_PRODUCTVERSION_STR      "4.12.0.0\0"
+#define VER_FILEVERSION             5, 2, 0, 0
+#define VER_FILEVERSION_CODE        50200
+#define VER_PRODUCTVERSION          5, 2, 0, 0
+// Update scripts relying on this value if you move it
+#define VER_PRODUCTVERSION_STR      "5.2.0.0\0"
 
 #define VER_BUILD_ID                0
 
@@ -17,7 +17,7 @@
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
-#define VER_SDK_ID                  "2e9307d"
+#define VER_SDK_ID                  "f71b604"
 
 // Update scrips relying on this value if you move it
 // Format: 1 item by line, starting from line following the #define
@@ -28,10 +28,13 @@
 //"- item n\n"              \
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- A new onboarding wizard is introduced when a new sync or backup process is initiated for the first time.\n"                     \
-"- Revamped the user interface of the macOS installer.\n"                                                                          \
-"- Fixed detected crashes on Windows, Linux, and macOS.\n"                                                                         \
-"- Application performance improved.\n" \
+"- Sync rework Beta V2 is released.\n"                                                             \
+"- A new onboarding wizard is introduced for any new sync or backup processes.\n"                  \
+"- Changes are detected and stalled issues are updated automatically.\n"                           \
+"- MEGA-supported language set is now available.\n"                                                \
+"- User experience for batch fixing sync issues is improved.\n"                                    \
+"- Minor bugs are fixed.\n"                                                                        \
+"- Performance is improved.\n"                                                                     \
 )
 
 #endif // VERSION_H

@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <map>
+#include <sys/statvfs.h>
 
 #include "DolphinFileManager.h"
 #include "NautilusFileManager.h"
@@ -41,7 +42,7 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
     }
 }
 
-void PlatformImplementation::notifySyncFileChange(std::string *localPath, int newState)
+void PlatformImplementation::notifySyncFileChange(std::string *localPath, int newState, bool)
 {
     if(localPath && localPath->size())
     {
@@ -471,6 +472,18 @@ void PlatformImplementation::streamWithApp(const QString &app, const QString &ur
 {
     QString command = QString::fromUtf8("%1 \"%2\"").arg(QDir::toNativeSeparators(app)).arg(url);
     QProcess::startDetached(command);
+}
+
+DriveSpaceData PlatformImplementation::getDriveData(const QString& path)
+{
+    DriveSpaceData data;
+
+    struct statvfs statData;
+    const int result = statvfs(path.toUtf8().constData(), &statData);
+    data.mIsReady = (result == 0);
+    data.mTotalSpace = static_cast<qint64>(statData.f_blocks * statData.f_bsize);
+    data.mAvailableSpace = static_cast<qint64>(statData.f_bfree * statData.f_bsize);
+    return data;
 }
 
 QStringList PlatformImplementation::getListRunningProcesses()

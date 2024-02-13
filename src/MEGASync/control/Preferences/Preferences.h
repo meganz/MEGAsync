@@ -179,6 +179,21 @@ public:
     static QString notificationsTypeToString(NotificationsTypes type);
     //**** END OF Notifications ****/
 
+    //**** Stalled Issues ****/
+    enum class StalledIssuesModeType
+    {
+        None = 0,
+        Smart,
+        Advance
+    };
+    StalledIssuesModeType stalledIssuesMode();
+    void setStalledIssuesMode(StalledIssuesModeType value);
+
+    QDate stalledIssuesEventLastDate();
+    void updateStalledIssuesEventLastDate();
+
+    //**** END OF Stalled Issues ****/
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -313,11 +328,6 @@ public:
                                        int *cachedStorageState = nullptr, QString email = QString());
     void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
-    QStringList getExcludedSyncNames();
-    void setExcludedSyncNames(QStringList names);
-    QStringList getExcludedSyncPaths();
-    void setExcludedSyncPaths(QStringList paths);
-
     bool isOneTimeActionDone(int action);
     void setOneTimeActionDone(int action, bool done);
 
@@ -344,9 +354,6 @@ public:
     void enterUser(int i);
     bool enterUser(QString account);
 
-    // preloads excluded sync names and adds missing defaults ones in previous versions
-    void loadExcludedSyncNames();
-
     // leave user
     void leaveUser();
 
@@ -359,9 +366,6 @@ public:
     void unlink();
     void resetGlobalSettings();//Clear and remove any global setting. Not account specific ones.
 
-
-    bool mustDeleteSdkCacheAtStartup();
-    void setDeleteSdkCacheAtStartup(bool value);
     bool isCrashed();
     void setCrashed(bool value);
     bool getGlobalPaused();
@@ -509,8 +513,6 @@ public:
     static const QString TRANSLATION_PREFIX;
     static const qint16 HTTP_PORT;
 
-    static const int LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG;
-
     static const QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const QString FINDER_EXT_BUNDLE_ID;
@@ -523,6 +525,7 @@ public:
     static void overridePreferences(const QSettings &settings);
 
     //Public keys for valueChanged signals
+    static const QString stalledIssuesModeKey;
     //In this section, you need to move the keys to make them accessible from outside
 
 protected:
@@ -566,8 +569,6 @@ protected:
     // These are only used for retrieving values or removing at uninstall
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> loadedSyncsMap;
 
-    QStringList excludedSyncNames;
-    QStringList excludedSyncPaths;
     bool errorFlag;
     long long tempBandwidth;
     int tempBandwidthInterval;
@@ -679,7 +680,6 @@ protected:
     static const QString excludedSyncNamesKey;
     static const QString excludedSyncPathsKey;
     static const QString lastVersionKey;
-    static const QString deleteSdkCacheAtStartupKey;
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;
     static const QString wasPausedKey;
@@ -734,6 +734,12 @@ protected:
     //Only for retrocompatibility purposes
     static const QString showDeprecatedNotificationsKey;
     static const bool defaultDeprecatedNotifications;
+
+    //Stalled issues smart choice
+    static const StalledIssuesModeType defaultStalledIssuesMode;
+
+    //Stalled issues event date
+    static const QString stalledIssuesEventDateKey;
 
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;

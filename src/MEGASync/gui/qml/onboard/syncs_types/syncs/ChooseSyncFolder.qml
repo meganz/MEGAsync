@@ -67,7 +67,7 @@ FocusScope {
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: getFolder()
         leftIconSource: local ? Images.pc : Images.megaOutline
-        leftIconColor: enabled ? Styles.iconSecondary : Styles.iconDisabled
+        leftIconColor: enabled ? colorStyle.iconSecondary : colorStyle.iconDisabled
         textField.readOnly: true
         toolTip {
             leftIconSource: leftIconSource

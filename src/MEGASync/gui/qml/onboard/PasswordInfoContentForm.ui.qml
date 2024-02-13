@@ -21,7 +21,7 @@ Rectangle {
     width: 320
     height: strengthTitle.height + dividerLine.height
                 + bottomColumn.height + 2 * contentMargin + 2 * contentMargin
-    color: Styles.pageBackground
+    color: colorStyle.pageBackground
     radius: 8
 
     Column {
@@ -51,7 +51,7 @@ Rectangle {
             width: parent.width
             height: lineHeight
             radius: height
-            color: Styles.divider
+            color: colorStyle.divider
         }
 
         Column {

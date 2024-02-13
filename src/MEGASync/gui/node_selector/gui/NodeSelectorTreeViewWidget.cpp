@@ -30,7 +30,8 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     mUiBlocked(false),
     mNodeHandleToSelect(INVALID_HANDLE),
     mSelectType(mode),
-    mNewFolderAdded(mega::INVALID_HANDLE)
+    mNewFolderHandle(mega::INVALID_HANDLE),
+    mNewFolderAdded(false)
 {
     ui->setupUi(this);
     setFocusProxy(ui->tMegaFolders);
@@ -88,6 +89,7 @@ void NodeSelectorTreeViewWidget::init()
     mSelectType->init(this);
 
     connect(mProxyModel.get(), &NodeSelectorProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
+    connect(mProxyModel.get(), &NodeSelectorProxyModel::modelSorted, this, &NodeSelectorTreeViewWidget::onProxyModelSorted);
     connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
     connect(mModel.get(), &QAbstractItemModel::rowsRemoved, this, &NodeSelectorTreeViewWidget::onRowsRemoved);
     connect(mModel.get(), &NodeSelectorModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
@@ -215,6 +217,15 @@ void NodeSelectorTreeViewWidget::onRowsRemoved()
 {
     checkBackForwardButtons();
     modelLoaded();
+}
+
+void NodeSelectorTreeViewWidget::onProxyModelSorted()
+{
+    if (mNewFolderAdded)
+    {
+        mNewFolderAdded = false;
+        onItemDoubleClick(mProxyModel->getIndexFromHandle(mNewFolderHandle));
+    }
 }
 
 void NodeSelectorTreeViewWidget::onExpandReady()
@@ -373,7 +384,8 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
         //2) The dialog has been rejected because the folder already exists. If so, select the existing folder
         if(newNode)
         {
-            mNewFolderAdded = newNode->getHandle();
+            mNewFolderHandle = newNode->getHandle();
+            mNewFolderAdded = true;
 #ifdef Q_OS_LINUX
             //It seems that the NodeSelector is not activated when the NewFolderDialog is closed,
             //so the ui->tMegaFolders is not correctly focused
@@ -382,20 +394,6 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
 
             //Set the focus to the view to allow the user to press enter (or go back, in a future feature)
             ui->tMegaFolders->setFocus();
-
-            QModelIndex idx = ui->tMegaFolders->rootIndex();
-            if(!idx.isValid())
-            {
-                QModelIndex rootIdx = ui->tMegaFolders->rootIndex();
-                if(!rootIdx.isValid())
-                {
-                    rootIdx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
-                }
-                mProxyModel->setExpandMapped(true);
-                mProxyModel->addNode(std::move(newNode), rootIdx);
-            }
-            mProxyModel->setExpandMapped(true);
-            mProxyModel->addNode(std::move(newNode), idx);
         }
     });
 }
@@ -706,7 +704,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             mUpdatedNodesByPreviousHandle.append(updateNode);
         }
         //New node
-        else if(mNewFolderAdded != updateNode.node->getHandle())
+        else if(mNewFolderHandle != updateNode.node->getHandle())
         {
             if(newNodeCanBeAdded(updateNode.node.get()) &&
                 (!updateNode.node->isFile() || mModel->showFiles()))
@@ -992,6 +990,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     auto node = item->getNode();
     if(node)
     {
+        ui->tMegaFolders->selectionModel()->select(node_column_idx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         setTitleText(MegaNodeNames::getNodeName(node.get()));
     }
 }

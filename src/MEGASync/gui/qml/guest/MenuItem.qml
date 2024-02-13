@@ -21,10 +21,10 @@ Qml.MenuItem {
 
     function getBackgroundColor(){
         if(root.pressed) {
-            return Styles.surface2;
+            return colorStyle.surface2;
         }
         else if(root.hovered) {
-            return Styles.textInverse;
+            return colorStyle.textInverse;
         }
 
         return "transparent";
@@ -43,7 +43,7 @@ Qml.MenuItem {
         implicitWidth: 184
         implicitHeight: 40
         color: getBackgroundColor();
-        border.color: root.activeFocus ? Styles.focus : "transparent";
+        border.color: root.activeFocus ? colorStyle.focus : "transparent";
         border.width: 4
         radius: 4
 
@@ -64,7 +64,7 @@ Qml.MenuItem {
                 anchors.bottomMargin: 12
                 source: root.icon.source
                 sourceSize: Qt.size(16, 16)
-                color: Styles.iconPrimary
+                color: colorStyle.iconPrimary
             }
 
             Texts.Text {
@@ -77,7 +77,7 @@ Qml.MenuItem {
                 verticalAlignment: Text.AlignVCenter
                 text: root.text
                 font.pixelSize: Texts.Text.Size.MEDIUM
-                color: Styles.textPrimary
+                color: colorStyle.textPrimary
             }
         }
     }

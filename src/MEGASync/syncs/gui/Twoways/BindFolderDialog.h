@@ -27,9 +27,12 @@ public:
 
     QString getMegaPath() const;
 
+    mega::MegaHandle megaPathHandle = 0;
+
 private slots:
     void on_bOK_clicked();
     void allSelectionsDone();
+    void onAddExclusionsClicked();
 
 protected:
     bool focusNextPrevChild(bool next) override;

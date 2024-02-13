@@ -20,6 +20,7 @@
 #include "MegaApplication.h"
 #include "TransferManager.h"
 #include "MenuItemAction.h"
+#include "StalledIssuesModel.h"
 #include "platform/Platform.h"
 #include "assert.h"
 #include "syncs/gui/Backups/BackupsWizard.h"
@@ -29,7 +30,7 @@
 #include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "onboarding/Onboarding.h"
 
-#ifdef _WIN32    
+#ifdef _WIN32
 #include <chrono>
 using namespace std::chrono;
 #endif
@@ -190,8 +191,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     reset();
 
-    ui->lSDKblock->setText(QString());
-    ui->wBlocked->setVisible(false);
+    hideSomeIssues();
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
@@ -269,14 +269,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     }
 #endif
 
-    minHeightAnimationBlockedError = new QPropertyAnimation();
-    maxHeightAnimationBlockedError = new QPropertyAnimation();
-
-    animationGroupBlockedError.addAnimation(minHeightAnimationBlockedError);
-    animationGroupBlockedError.addAnimation(maxHeightAnimationBlockedError);
-    connect(&animationGroupBlockedError, &QParallelAnimationGroup::finished,
-            this, &InfoDialog::onAnimationFinishedBlockedError);
-
     adjustSize();
 
     mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs, ui->pTransfersTab);
@@ -286,6 +278,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mResetTransferSummaryWidget.setInterval(2000);
     mResetTransferSummaryWidget.setSingleShot(true);
     connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
+
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
+            this,  &InfoDialog::onStalledIssuesChanged);
+    onStalledIssuesChanged();
 }
 
 InfoDialog::~InfoDialog()
@@ -580,6 +576,20 @@ void InfoDialog::onTransfersStateChanged()
     }
 }
 
+void InfoDialog::onStalledIssuesChanged()
+{
+    if (!MegaSyncApp->getStalledIssuesModel()->isEmpty())
+    {
+        showSomeIssues();
+    }
+    else
+    {
+        hideSomeIssues();
+    }
+
+    updateState();
+}
+
 void InfoDialog::onResetTransfersSummaryWidget()
 {
     ui->bTransferManager->reset();
@@ -640,64 +650,6 @@ void InfoDialog::updateBlockedState()
     {
         return;
     }
-
-    if (!mWaiting)
-    {
-        if (ui->wBlocked->isVisible())
-        {
-            setBlockedStateLabel(QString::fromUtf8(""));
-        }
-    }
-    else
-    {
-        const char *blockedPath = megaApi->getBlockedPath();
-        if (blockedPath)
-        {
-            QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
-
-            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-            {
-                setBlockedStateLabel(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
-                                                                .arg(fileBlocked.absoluteFilePath())
-                                                                .arg(fileBlocked.fileName())));
-            }
-            else
-            {
-                 setBlockedStateLabel(QString::fromUtf8(""));
-            }
-
-            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-            ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
-                                                           .arg(fileBlocked.absoluteFilePath())
-                                                           .arg(fileBlocked.fileName())));
-            delete [] blockedPath;
-        }
-        else if (megaApi->areServersBusy())
-        {
-
-            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-            {
-                setBlockedStateLabel(tr("The process is taking longer than expected. Please wait..."));
-            }
-            else
-            {
-                setBlockedStateLabel(QString::fromUtf8(""));
-            }
-
-            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-            ui->lUploadToMegaDesc->setText(tr("The process is taking longer than expected. Please wait..."));
-        }
-        else
-        {
-            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-            {
-                setBlockedStateLabel(QString::fromUtf8(""));
-            }
-
-            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-            ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
-        }
-    }
 }
 
 void InfoDialog::updateState()
@@ -707,21 +659,18 @@ void InfoDialog::updateState()
         return;
     }
 
-    if (mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+    if(!checkFailedState())
     {
-        changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
-    }
-    else if (mPreferences->getGlobalPaused())
-    {
-        if(!checkFailedState())
+        if (mTransferScanCancelUi != nullptr && mTransferScanCancelUi->isActive())
+        {
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
+        }
+        else if (mPreferences->getGlobalPaused())
         {
             mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
             animateStates(mWaiting || mIndexing || mSyncing);
         }
-    }
-    else
-    {
-        if (mIndexing)
+        else if (mIndexing)
         {
             changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
         }
@@ -739,10 +688,7 @@ void InfoDialog::updateState()
         }
         else
         {
-            if(!checkFailedState())
-            {
-                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED, false);
-            }
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED, false);
         }
     }
 
@@ -761,14 +707,10 @@ bool InfoDialog::checkFailedState()
 {
     auto isFailed(false);
 
-    if(app->getTransfersModel() && app->getTransfersModel()->failedTransfers())
+    if((app->getTransfersModel() && app->getTransfersModel()->failedTransfers()) 
+    || (app->getStalledIssuesModel() && !app->getStalledIssuesModel()->isEmpty()))
     {
-        if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
-        {
-            mState = StatusInfo::TRANSFERS_STATES::STATE_FAILED;
-            animateStates(false);
-        }
-
+        changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_FAILED);
         isFailed = true;
     }
 
@@ -1009,9 +951,7 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bUpgrade_clicked()
 {
-    QString url = QString::fromUtf8("mega://#pro");
-    Utilities::getPROurlWithParameters(url);
-    Utilities::openUrl(QUrl(url));
+    Utilities::upgradeClicked();
 }
 
 void InfoDialog::on_bUpgradeOverDiskQuota_clicked()
@@ -1195,8 +1135,7 @@ void InfoDialog::reset()
 
     ui->bTransferManager->reset();
 
-    ui->wBlocked->hide();
-    shownBlockedError = false;
+    hideSomeIssues();
 
     setUnseenNotifications(0);
     if (filterMenu)
@@ -1339,7 +1278,7 @@ void InfoDialog::on_bStorageDetails_clicked()
 void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
-    {        
+    {
         ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/init_scanning.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
@@ -1366,7 +1305,7 @@ void InfoDialog::animateStates(bool opt)
         }
     }
     else //Disable animation
-    {   
+    {
         ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
@@ -1569,52 +1508,22 @@ void InfoDialog::sTabsChanged(int tab)
 
 
 
-void InfoDialog::hideBlockedError(bool animated)
+void InfoDialog::hideSomeIssues()
 {
-    if (!shownBlockedError)
-    {
-        return;
-    }
-    shownBlockedError = false;
-    minHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
-    maxHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
-    minHeightAnimationBlockedError->setPropertyName("minimumHeight");
-    maxHeightAnimationBlockedError->setPropertyName("maximumHeight");
-    minHeightAnimationBlockedError->setStartValue(30);
-    maxHeightAnimationBlockedError->setStartValue(30);
-    minHeightAnimationBlockedError->setEndValue(0);
-    maxHeightAnimationBlockedError->setEndValue(0);
-    minHeightAnimationBlockedError->setDuration(animated ? 250 : 1);
-    maxHeightAnimationBlockedError->setDuration(animated ? 250 : 1);
-    animationGroupBlockedError.start();
-    ui->wBlocked->show();
+    mShownSomeIssuesOccurred = false;
+    ui->wSomeIssuesOccurred->hide();
 }
 
-void InfoDialog::showBlockedError()
+void InfoDialog::showSomeIssues()
 {
-    if (shownBlockedError)
+    if (mShownSomeIssuesOccurred)
     {
         return;
     }
 
-    ui->wBlocked->show();
-    minHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
-    maxHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
-    minHeightAnimationBlockedError->setPropertyName("minimumHeight");
-    maxHeightAnimationBlockedError->setPropertyName("maximumHeight");
-    minHeightAnimationBlockedError->setStartValue(0);
-    maxHeightAnimationBlockedError->setStartValue(0);
-    minHeightAnimationBlockedError->setEndValue(30);
-    maxHeightAnimationBlockedError->setEndValue(30);
-    minHeightAnimationBlockedError->setDuration(250);
-    maxHeightAnimationBlockedError->setDuration(250);
-    animationGroupBlockedError.start();
-    shownBlockedError = true;
-}
-
-void InfoDialog::onAnimationFinishedBlockedError()
-{
-    ui->wBlocked->setVisible(shownBlockedError);
+    ui->wSomeIssuesOccurred->show();
+    animationGroupSomeIssues.start();
+    mShownSomeIssuesOccurred = true;
 }
 
 void InfoDialog::on_bDismissSyncSettings_clicked()
@@ -1664,20 +1573,6 @@ void InfoDialog::move(int x, int y)
 {
    qtBugFixer.onStartMove();
    QDialog::move(x, y);
-}
-
-void InfoDialog::setBlockedStateLabel(QString state)
-{
-    if (state.isEmpty())
-    {
-        hideBlockedError(true);
-    }
-    else
-    {
-        showBlockedError();
-    }
-
-    ui->lSDKblock->setText(state);
 }
 
 long long InfoDialog::getUnseenNotifications() const
@@ -1757,7 +1652,6 @@ void InfoDialog::setupSyncController()
     if (!mSyncController)
     {
         mSyncController.reset(new SyncController());
-        GuiUtilities::connectAddSyncDefaultHandler(mSyncController.get(), mPreferences->accountType());
     }
 }
 

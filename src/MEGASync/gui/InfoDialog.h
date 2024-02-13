@@ -35,10 +35,19 @@ class InfoDialog;
 class MegaApplication;
 class TransferManager;
 class BindFolderDialog;
-
-class InfoDialog : public QDialog, public mega::MegaTransferListener
+class InfoDialog : public QDialog
 {
     Q_OBJECT
+
+    enum {
+        STATE_STARTING,
+        STATE_PAUSED,
+        STATE_WAITING,
+        STATE_INDEXING,
+        STATE_UPDATED,
+        STATE_SYNCING,
+        STATE_TRANSFERRING,
+    };
 
 public:
 
@@ -142,7 +151,6 @@ private slots:
     void on_bBuyQuota_clicked();
 
     void onAnimationFinished();
-    void onAnimationFinishedBlockedError();
 
     void sTabsChanged(int tab);
 
@@ -158,7 +166,10 @@ private slots:
     void onResetTransfersSummaryWidget();
     void onTransfersStateChanged();
 
+    void onStalledIssuesChanged();
+
 signals:
+
     void openTransferManager(int tab);
     void dismissStorageOverquota(bool oq);
     // signal emitted when showing or dismissing the overquota message.
@@ -216,16 +227,15 @@ private:
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
 
-    bool shownBlockedError = false;
-    QPropertyAnimation *minHeightAnimationBlockedError;
-    QPropertyAnimation *maxHeightAnimationBlockedError;
-    QParallelAnimationGroup animationGroupBlockedError;
-    void hideBlockedError(bool animated = false);
-    void showBlockedError();
+    bool mShownSomeIssuesOccurred = false;
+    QPropertyAnimation *minHeightAnimationSomeIssues;
+    QPropertyAnimation *maxHeightAnimationSomeIssues;
+    QParallelAnimationGroup animationGroupSomeIssues;
+    void hideSomeIssues();
+    void showSomeIssues();
     QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
 
 protected:
-    void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
     bool checkFailedState();

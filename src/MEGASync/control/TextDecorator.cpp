@@ -9,7 +9,7 @@ Decorator::Decorator(QObject *parent) :
 {
 }
 
-void Decorator::process(QString &input)
+void Decorator::process(QString &input) const
 {
     if(parent())
     {
@@ -27,7 +27,7 @@ Link::Link(const QString &link, QObject *parent) :
 }
 
 //Use [A] for url replacement
-void Link::process(QString &input)
+void Link::process(QString &input) const
 {
     Decorator::process(input);
     input.replace(QLatin1String("[A]"), QString::fromUtf8("<a href=\"%1\">").arg(mLinkAddress));
@@ -39,7 +39,7 @@ ClearLink::ClearLink(QObject *parent) : Decorator(parent)
 
 }
 
-void ClearLink::process(QString &input)
+void ClearLink::process(QString &input) const
 {
     Decorator::process(input);
     input.remove(QLatin1String("[A]"));
@@ -51,7 +51,7 @@ Bold::Bold(QObject *parent) : Decorator(parent)
 }
 
 //Use [B] for bold tags replacement
-void Bold::process(QString &input)
+void Bold::process(QString &input) const
 {
     Decorator::process(input);
     input.replace(QLatin1String("[B]"), QLatin1String("<b>"));

@@ -11,6 +11,7 @@ SOURCES += $$PWD/model/TransfersModel.cpp \
            $$PWD/gui/InfoDialogTransferLoadingItem.cpp \
            $$PWD/model/InfoDialogTransfersProxyModel.cpp \
            $$PWD/model/TransfersManagerSortFilterProxyModel.cpp \
+           $$PWD/gui/SomeIssuesOccurredMessage.cpp \
            $$PWD/model/TransferMetaData.cpp \
            $$PWD/gui/InfoDialogTransferDelegateWidget.cpp \
            $$PWD/gui/InfoDialogTransfersWidget.cpp \
@@ -37,6 +38,7 @@ HEADERS += $$PWD/model/InfoDialogTransfersProxyModel.h \
            $$PWD/model/TransfersSortFilterProxyBaseModel.h \
            $$PWD/model/TransfersModel.h \
            $$PWD/model/TransferMetaData.h \
+           $$PWD/gui/SomeIssuesOccurredMessage.h \
            $$PWD/gui/InfoDialogTransferDelegateWidget.h \
            $$PWD/gui/InfoDialogTransfersWidget.h \
            $$PWD/gui/MegaTransferDelegate.h  \
@@ -66,6 +68,7 @@ win32 {
                 $$PWD/gui/win/InfoDialogTransferLoadingItem.ui \
                 $$PWD/gui/win/TransfersStatusWidget.ui \
                 $$PWD/gui/win/TransfersSummaryWidget.ui \
+                $$PWD/gui/win/SomeIssuesOccurredMessage.ui \
                 $$PWD/gui/DuplicatedNodeDialogs/win/DuplicatedNodeDialog.ui \
                 $$PWD/gui/DuplicatedNodeDialogs/win/DuplicatedNodeItem.ui
 }
@@ -84,6 +87,7 @@ macx {
                 $$PWD/gui/macx/InfoDialogTransferLoadingItem.ui \
                 $$PWD/gui/macx/TransfersStatusWidget.ui \
                 $$PWD/gui/macx/TransfersSummaryWidget.ui \
+                $$PWD/gui/macx/SomeIssuesOccurredMessage.ui \
                 $$PWD/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeDialog.ui \
                 $$PWD/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
 }
@@ -102,6 +106,7 @@ unix:!macx {
                 $$PWD/gui/linux/InfoDialogTransferLoadingItem.ui \
                 $$PWD/gui/linux/TransfersStatusWidget.ui \
                 $$PWD/gui/linux/TransfersSummaryWidget.ui \
+                $$PWD/gui/linux/SomeIssuesOccurredMessage.ui \
                 $$PWD/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeDialog.ui \
                 $$PWD/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeItem.ui
 }

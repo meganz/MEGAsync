@@ -56,7 +56,10 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
     msgBox->setInformativeText(info.informativeText);
     msgBox->setTextFormat(info.textFormat);
     msgBox->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-
+    if (info.checkBox)
+    {
+        msgBox->setCheckBox(info.checkBox);
+    }
     QDialogButtonBox *buttonBox = msgBox->findChild<QDialogButtonBox*>();
     Q_ASSERT(buttonBox != 0);
 

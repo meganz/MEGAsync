@@ -47,6 +47,7 @@
 #include "BlockingStageProgressController.h"
 
 class TransfersModel;
+class StalledIssuesModel;
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -101,7 +102,6 @@ public:
     static QString applicationDataPath();
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
-    void updateTrayIcon();
 
     QString getFormattedDateByCurrentLanguage(const QDateTime& datetime, QLocale::FormatType format = QLocale::FormatType::LongFormat) const;
 
@@ -178,6 +178,7 @@ public:
     void pushToThreadPool(std::function<void()> functor);
 
     TransfersModel* getTransfersModel(){return mTransfersModel;}
+    StalledIssuesModel* getStalledIssuesModel(){return mStalledIssuesModel;}
 
     /**
      * @brief migrates sync configuration and fetches nodes
@@ -226,6 +227,7 @@ signals:
     void shellNotificationsProcessed();
 
 public slots:
+    void updateTrayIcon();
     void unlink(bool keepLogs = false);
     void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -268,7 +270,6 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
-    void deleteSdkCache();
     void tryExitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
@@ -464,11 +465,12 @@ protected:
 
     bool reboot;
     bool paused;
-    bool indexing;
-    bool waiting;
-    bool syncing; //if any sync is in syncing state
+    bool mIndexing;
+    bool mWaiting;
+    bool mSyncing; //if any sync is in syncing state
+    bool mSyncStalled = false;
     bool updated;
-    bool transferring; //if there is any regular transfer in progress
+    bool mTransferring; //if there is any regular transfer in progress
     bool checkupdate;
     bool updateBlocked;
     long long lastExit;
@@ -502,6 +504,7 @@ protected:
     std::shared_ptr<FolderTransferListener> mFolderTransferListener;
 
     bool mDisableGfx;
+    StalledIssuesModel* mStalledIssuesModel;
 
 private:
     void loadSyncExclusionRules(QString email = QString());

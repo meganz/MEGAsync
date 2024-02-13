@@ -12,7 +12,7 @@ Item {
 
         height: root.height
         width: root.width * root.value
-        color: Styles.buttonPrimaryPressed
+        color: colorStyle.buttonPrimaryPressed
     }
 }
 

@@ -1,0 +1,28 @@
+#ifndef LOCALANDREMOTENAMECONFLICTS_H
+#define LOCALANDREMOTENAMECONFLICTS_H
+
+#include "StalledIssueBaseDelegateWidget.h"
+
+namespace Ui {
+class LocalAndRemoteNameConflicts;
+}
+
+class LocalAndRemoteNameConflicts : public StalledIssueBaseDelegateWidget
+{
+    Q_OBJECT
+
+public:
+    explicit LocalAndRemoteNameConflicts(QWidget *parent = nullptr);
+    ~LocalAndRemoteNameConflicts();
+
+public slots:
+    void refreshUi() override;
+
+private slots:
+    void onNameConflictSolved();
+
+private:
+    Ui::LocalAndRemoteNameConflicts *ui;
+};
+
+#endif // LOCALANDREMOTENAMECONFLICTS_H

@@ -89,7 +89,10 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
     }
     mSearchCanceled = false;
 
-    auto nodeList = std::unique_ptr<mega::MegaNodeList>(MegaSyncApp->getMegaApi()->search(text.toUtf8().constData(), mCancelToken.get()));
+    std::unique_ptr<mega::MegaSearchFilter> searchFilter(mega::MegaSearchFilter::createInstance());
+    searchFilter->byName(text.toUtf8().constData());
+
+    auto nodeList = std::unique_ptr<mega::MegaNodeList>(MegaSyncApp->getMegaApi()->search(searchFilter.get(), mega::MegaApi::ORDER_NONE, mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
     mSearchedTypes = NodeSelectorModelItemSearch::Type::NONE;
 
@@ -873,7 +876,13 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
     foreach(auto child, childrenItem)
     {
         auto index = child->property(INDEX_PROPERTY).toModelIndex();
+
         emit dataChanged(index, index);
+    }
+
+    if (!childrenItem.empty())
+    {
+        emit levelsAdded({}, false);
     }
 }
 

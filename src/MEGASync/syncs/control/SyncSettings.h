@@ -52,12 +52,13 @@ public:
     void setSync(mega::MegaSync *sync);
 
     QString getLocalFolder(bool normalizeDisplay = false) const;
-    long long getLocalFingerprint() const;
     QString getMegaFolder() const;
     mega::MegaHandle getMegaHandle() const;
-    bool isEnabled() const; //enabled by user
-    bool isActive() const; //not disabled by user nor failed (nor being removed)
     int getError() const;
+    int getWarning() const;
+    bool isActive() const;
+
+    int getRunState() const;
 
     mega::MegaSync* getSync() const;
 
@@ -70,6 +71,6 @@ public:
     mega::MegaSync::SyncType getType();
 };
 
-Q_DECLARE_METATYPE(SyncSettings);
+Q_DECLARE_METATYPE(SyncSettings)
 Q_DECLARE_SMART_POINTER_METATYPE(std::shared_ptr)
 Q_DECLARE_METATYPE(std::shared_ptr<SyncSettings>)

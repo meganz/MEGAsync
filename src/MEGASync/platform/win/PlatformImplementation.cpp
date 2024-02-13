@@ -210,9 +210,9 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
     notifyItemChange(path, mShellNotifier);
 }
 
-void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
+void PlatformImplementation::notifySyncFileChange(std::string *localPath, int, bool stringIsPlatformEncoded)
 {
-    QString path = getPreparedPath(localPath);
+    QString path = getPreparedPath(localPath, stringIsPlatformEncoded);
     notifyItemChange(path, mSyncFileNotifier);
 }
 
@@ -412,7 +412,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
             }
 
             if (path)
-            {                
+            {
                 bool found = false;
 
                 swprintf_s(subKeyPath, MAX_PATH, L"Software\\Classes\\CLSID\\%s\\Instance\\InitPropertyBag", uuid);
@@ -1428,8 +1428,14 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
-QString PlatformImplementation::getPreparedPath(std::string *localPath)
+QString PlatformImplementation::getPreparedPath(std::string *localPath, bool stringIsPlatformEncoded)
 {
+    if (!stringIsPlatformEncoded)
+    {
+        return QString::fromUtf8(localPath->c_str());
+    }
+
+
     // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.
     QString preparedPath = QString::fromWCharArray(reinterpret_cast<const wchar_t *>(localPath->data()),
                                                    static_cast<int>(localPath->size() / (sizeof(wchar_t)
@@ -1739,4 +1745,26 @@ bool PlatformImplementation::openRegistry(HKEY baseKey, const QString &regKeyPat
     const std::wstring wideRegKey = regKeyPath.toStdWString();
     LONG result = RegOpenKeyEx(baseKey, wideRegKey.c_str(), 0, KEY_READ, &openedKey);
     return (result == ERROR_SUCCESS);
+}
+
+DriveSpaceData PlatformImplementation::getDriveData(const QString &path)
+{
+    DriveSpaceData data;
+    // Network paths in Windows such as \\<ip>\<dir> are not handled by QStorageInfo,
+    // so we can't get available space this way.
+    const QByteArray pathArray = path.toUtf8();
+
+    DWORD sectorsPerCluster;
+    DWORD bytesPerSector;
+    DWORD freeClustersCount;
+    DWORD totalClustersCount;
+    BOOL ok = GetDiskFreeSpaceA(pathArray.constData(),
+                                &sectorsPerCluster,
+                                &bytesPerSector,
+                                &freeClustersCount,
+                                &totalClustersCount);
+    data.mIsReady = (ok == TRUE);
+    data.mAvailableSpace = freeClustersCount * bytesPerSector * sectorsPerCluster;
+    data.mTotalSpace = totalClustersCount * bytesPerSector * sectorsPerCluster;
+    return data;
 }

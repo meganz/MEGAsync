@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "QMegaMessageBox.h"
 #include "mega/types.h"
+#include "AppStatsEvents.h"
 
 #include <QQmlContext>
 
@@ -405,6 +406,13 @@ void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaEr
         credentials.email = mEmail;
         credentials.sessionId = QString::fromUtf8(request->getSessionKey());
         mPreferences->setEphemeralCredentials(credentials);
+        mMegaApi->sendEvent(AppStatsEvents::EVENT_ACC_CREATION_START,
+                            "MEGAsync account creation start",
+                            false, nullptr);
+        if (!mPreferences->accountCreationTime())
+        {
+                mPreferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
+        }
         setState(WAITING_EMAIL_CONFIRMATION);
     }
     else
@@ -669,51 +677,12 @@ void LoginController::loadSyncExclusionRules(const QString& email)
         {
             return;
         }
-
-        mPreferences->loadExcludedSyncNames(); //to attend the corner case:
-                                                // comming from old versions that didn't include some defaults
-
     }
     assert(mPreferences->logged()); //At this point mPreferences should be logged, just because you enterUser() or it was already logged
 
     if (!mPreferences->logged())
     {
         return;
-    }
-
-    const QStringList exclusions = mPreferences->getExcludedSyncNames();
-    std::vector<std::string> vExclusions;
-    for (const QString& exclusion : exclusions)
-    {
-        vExclusions.push_back(exclusion.toStdString());
-    }
-
-    mMegaApi->setExcludedNames(&vExclusions);
-
-    const QStringList exclusionPaths = mPreferences->getExcludedSyncPaths();
-    std::vector<std::string> vExclusionPaths;
-    for (const QString& exclusionPath : exclusionPaths)
-    {
-        vExclusionPaths.push_back(exclusionPath.toStdString());
-    }
-    mMegaApi->setExcludedPaths(&vExclusionPaths);
-
-    if (mPreferences->lowerSizeLimit())
-    {
-        mMegaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(mPreferences->lowerSizeLimitValue(), mPreferences->lowerSizeLimitUnit()));
-    }
-    else
-    {
-        mMegaApi->setExclusionLowerSizeLimit(0);
-    }
-
-    if (mPreferences->upperSizeLimit())
-    {
-        mMegaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(mPreferences->upperSizeLimitValue(), mPreferences->upperSizeLimitUnit()));
-    }
-    else
-    {
-        mMegaApi->setExclusionUpperSizeLimit(0);
     }
 
     if (temporarilyLoggedPrefs)

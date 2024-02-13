@@ -683,7 +683,7 @@ void BackupsWizard::on_bCancel_clicked()
 
 void BackupsWizard::on_bMoreFolders_clicked()
 {
-    auto processResult = [this](QStringList paths)
+    auto processResult = [this](const QStringList& paths)
     {
         if(!paths.isEmpty())
         {

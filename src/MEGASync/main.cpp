@@ -100,7 +100,7 @@ void LinuxSignalHandler(int signum)
 #endif
 
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
-    {       
+    {
         switch (type)
         {
             case QtInfoMsg:
@@ -256,7 +256,8 @@ int main(int argc, char *argv[])
             }
         }
 
-        Utilities::removeRecursively(MegaApplication::applicationDataPath());
+        QDir dir(MegaApplication::applicationDataPath());
+        dir.removeRecursively();
         Platform::getInstance()->uninstall();
 
 #ifdef WIN32

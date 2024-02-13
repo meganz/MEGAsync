@@ -48,6 +48,7 @@ signals:
     void expandReady();
     void navigateReady(const QModelIndex& index);
     void modelAboutToBeChanged();
+    void modelSorted();
 
 private:
     QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());

@@ -64,9 +64,10 @@ public:
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes);
+    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes) override;
     void onRowsInserted();
     void onRowsRemoved();
+    void onProxyModelSorted();
 
 signals:
     void okBtnClicked();
@@ -155,7 +156,8 @@ private:
     QList<mega::MegaHandle> mRemovedNodesByHandle;
     QList<mega::MegaHandle> mMovedNodesByHandle;
     QTimer mNodesUpdateTimer;
-    mega::MegaHandle mNewFolderAdded;
+    mega::MegaHandle mNewFolderHandle;
+    bool mNewFolderAdded;
 
     friend class DownloadType;
     friend class SyncType;

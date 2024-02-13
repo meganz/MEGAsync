@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LocalAndRemoteNameConflicts</class>
+ <widget class="QWidget" name="LocalAndRemoteNameConflicts">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>538</width>
+    <height>97</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>11</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="selectLabel">
+     <property name="font">
+      <font>
+       <family>Lato 13</family>
+       <pointsize>-1</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#selectLabel
+{
+    font-family: Lato Bold;
+    font-size: 13px;
+    line-height: 16px;
+    color: #333333;
+}</string>
+     </property>
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="indent">
+      <number>11</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>5</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QWidget" name="nameContainer" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>24</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="CloudNameConflict" name="cloudConflictNames" native="true"/>
+      </item>
+      <item>
+       <widget class="LocalNameConflict" name="localConflictNames" native="true"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CloudNameConflict</class>
+   <extends>QWidget</extends>
+   <header>stalled_issues_cases/NameConflict.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LocalNameConflict</class>
+   <extends>QWidget</extends>
+   <header>stalled_issues_cases/NameConflict.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
