@@ -50,6 +50,7 @@ private:
 
     void updateIcon();
     void toggleOffSiblings();
+    QString createResolvedTitle();
 
     Ui::StalledIssueTab *ui;
     QString mIconPrefix;
