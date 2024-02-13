@@ -32,8 +32,6 @@ Item {
     property bool indeterminate: true
     property double progressValue: 0.0
 
-    anchors.fill: parent
-
     function getState() {
         if(accountStatusControllerAccess.blockedState) {
             return root.stateBlocked;
