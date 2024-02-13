@@ -41,8 +41,7 @@ public slots:
     void onExcludeUpperThanClicked();
     void onExcludeLowerThanClicked();
     void onFileChanged(const QString &file);
-signals:
-    void signalOpenMegaignore();
+    void on_bOpenMegaIgnore_clicked();
 private:
     Ui::IgnoresEditingDialog *ui;
 

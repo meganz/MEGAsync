@@ -58,7 +58,6 @@ IgnoresEditingDialog::IgnoresEditingDialog(const QString &syncLocalFolder, bool 
     connect(mIgnoresFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, &IgnoresEditingDialog::onFileChanged);
     refreshUI();
 
-    connect(ui->bOpenMegaIgnore, &QPushButton::clicked, this, &IgnoresEditingDialog::signalOpenMegaignore);
     connect(ui->eUpperThan, QOverload<int>::of(&QSpinBox::valueChanged), this, &IgnoresEditingDialog::onUpperThanValueChanged);
     connect(ui->eLowerThan, QOverload<int>::of(&QSpinBox::valueChanged), this, &IgnoresEditingDialog::onLowerThanValueChanged);
     connect(ui->cbExcludeUpperUnit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &IgnoresEditingDialog::onExcludeUpperUnitCurrentIndexChanged);
@@ -310,4 +309,14 @@ void IgnoresEditingDialog::addNameRule(std::shared_ptr<MegaIgnoreRule> rule)
     // Add rule to the list
     QListWidgetItem* item = new QListWidgetItem(rule->getDisplayText(), ui->lExcludedNames);
     item->setData(Qt::UserRole, QVariant::fromValue(rule));
+}
+
+void IgnoresEditingDialog::on_bOpenMegaIgnore_clicked()
+{
+    if(mSyncLocalFolder.isEmpty())
+    {
+        return;
+    }
+    QString ignore(mSyncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(ignore));
 }
