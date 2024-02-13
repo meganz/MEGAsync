@@ -26,15 +26,19 @@ GuestQmlDialog {
     Rectangle {
         id: borderItem
 
+        width: window.width
+        height: window.height
         color: Styles.surface1
         radius: 10
-        anchors.fill: parent
         border.color: "#1F000000"
         border.width: 1
     }
 
     GuestFlow {
         id: guestFlow
+
+        width: window.width
+        height: window.height
     }
 
     PropertyAnimation {
