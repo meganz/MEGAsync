@@ -375,6 +375,9 @@ automatically</string>
                      <property name="alignment">
                       <set>Qt::AlignCenter</set>
                      </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -1079,7 +1082,7 @@ color: #2C5BEB;
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="title" stdset="0">
-                <string>Solved:</string>
+                <string/>
                </property>
                <property name="iconPrefix" stdset="0">
                 <string notr="true">solved-issues</string>
@@ -1494,7 +1497,7 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources_win.qrc"/>
+    <include location="../../../gui/Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
