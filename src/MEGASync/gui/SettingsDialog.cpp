@@ -1367,11 +1367,24 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->wStackFooter->setEnabled(enabled);
 }
 
-void SettingsDialog::setBackupsAddButtonEnabled(bool enabled)
+void SettingsDialog::setSyncAddButtonEnabled(const bool enabled,
+                                             SettingsDialog::Tabs tab)
 {
     if(mUi->backupSettings)
     {
-        mUi->backupSettings->setAddButtonEnabled(enabled);
+        switch (tab)
+        {
+            case SYNCS_TAB:
+                mUi->syncSettings->setAddButtonEnabled(enabled);
+                break;
+            case BACKUP_TAB:
+                mUi->backupSettings->setAddButtonEnabled(enabled);
+                break;
+            default:
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                             QString::fromUtf8("Unexpected tab when setting add button enabled state").toUtf8().constData());
+                break;
+        }
     }
 }
 

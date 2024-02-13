@@ -1,5 +1,7 @@
 #include "SyncsComponent.h"
 
+#include "SyncsQmlDialog.h"
+
 #include "qml/ChooseFolder.h"
 #include "onboarding/Syncs.h"
 
@@ -29,6 +31,7 @@ void SyncsComponent::registerQmlModules()
     if (!qmlRegistrationDone)
     {
         qmlRegisterModule("Syncs", 1, 0);
+        qmlRegisterType<SyncsQmlDialog>("SyncsQmlDialog", 1, 0, "SyncsQmlDialog");
         qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
         qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
         qmlRegisterUncreatableType<Syncs>("Syncs", 1, 0, "SyncStatusCode",

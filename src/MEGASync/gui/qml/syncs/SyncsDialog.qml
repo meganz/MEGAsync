@@ -4,9 +4,9 @@ import common 1.0
 
 import components.views 1.0
 
-import QmlDialog 1.0
+import SyncsQmlDialog 1.0
 
-QmlDialog {
+SyncsQmlDialog {
     id: window
 
     title: SyncsStrings.syncsWindowTitle

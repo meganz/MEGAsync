@@ -103,6 +103,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/BackupsQmlDialog.h
     gui/SyncExclusions/AddExclusionRule.h
     gui/syncs/SyncsComponent.h
+    gui/syncs/SyncsQmlDialog.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -206,6 +207,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/BackupsQmlDialog.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
     gui/syncs/SyncsComponent.cpp
+    gui/syncs/SyncsQmlDialog.cpp
 )
 
 # UI files additions

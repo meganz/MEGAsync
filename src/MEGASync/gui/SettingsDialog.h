@@ -68,6 +68,9 @@ public:
     // Backups
     void setBackupsAddButtonEnabled(bool enabled);
 
+    void setSyncAddButtonEnabled(const bool enabled,
+                                 SettingsDialog::Tabs tab = SettingsDialog::Tabs::SYNCS_TAB);
+
 signals:
     void userActivity();
 
