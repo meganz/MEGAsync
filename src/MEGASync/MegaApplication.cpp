@@ -5244,6 +5244,11 @@ void MegaApplication::openSettings(int tab)
 
 void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     openSettings(SettingsDialog::SYNCS_TAB);
 
     if(megaFolderHandle == ::mega::INVALID_HANDLE)

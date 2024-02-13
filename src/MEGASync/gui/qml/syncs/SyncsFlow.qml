@@ -21,19 +21,9 @@ Item {
     // added to avoid qml warning.
     function setInitialFocusPosition() { }
 
-    function getState() {
-        if(isOnboarding) {
-            return syncItem.syncStatus === syncItem.SyncStatusCode.NONE ? root.syncType : root.selectiveSync;
-        }
-        else {
-            return syncItem.syncStatus === syncItem.SyncStatusCode.NONE
-                        && syncsComponentAccess.remoteFolder === ""
-                   ? root.syncType
-                   : root.selectiveSync;
-        }
-    }
-
-    state: getState()
+    state: syncItem.syncStatus !== syncItem.SyncStatusCode.NONE
+           ? root.selectiveSync
+           : root.syncType
 
     states: [
         State {
@@ -165,5 +155,18 @@ Item {
         }
 
     } // StackViewBase: view
+
+    Connections {
+        id: syncsComponentAccessConnection
+
+        target: syncsComponentAccess
+        enabled: !isOnboarding
+
+        function onRemoteFolderChanged() {
+            if(syncsComponentAccess.remoteFolder !== "") {
+                root.state = root.selectiveSync;
+            }
+        }
+    }
 
 }

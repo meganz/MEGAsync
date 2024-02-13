@@ -52,11 +52,8 @@ bool SyncsComponent::getComesFromSettings() const
 
 void SyncsComponent::setRemoteFolder(const QString& remoteFolder)
 {
-    if(remoteFolder != mRemoteFolder)
-    {
-        mRemoteFolder = remoteFolder;
-        emit remoteFolderChanged();
-    }
+    mRemoteFolder = remoteFolder;
+    emit remoteFolderChanged();
 }
 
 QString SyncsComponent::getRemoteFolder() const
