@@ -7042,6 +7042,17 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Resolved: %n</numerusform>
+            <numerusform>Resolved: %n</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>StalledIssuesDialog</name>
     <message>
         <source>Stalled Issues</source>
@@ -7072,11 +7083,6 @@ Do you want to delete it anyway?</translation>
         <source>Other:</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
         <translation>Other:</translation>
-    </message>
-    <message>
-        <source>Solved:</source>
-        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Resolved:</translation>
     </message>
     <message>
         <source>Close</source>
