@@ -159,8 +159,9 @@ Item {
     Connections {
         id: syncsComponentAccessConnection
 
-        target: syncsComponentAccess
+        target: isOnboarding ? null : syncsComponentAccess
         enabled: !isOnboarding
+        ignoreUnknownSignals: true
 
         function onRemoteFolderChanged() {
             if(syncsComponentAccess.remoteFolder !== "") {

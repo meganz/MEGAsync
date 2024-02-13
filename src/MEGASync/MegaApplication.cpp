@@ -5249,18 +5249,27 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
         return;
     }
 
-    openSettings(SettingsDialog::SYNCS_TAB);
-
-    if(megaFolderHandle == ::mega::INVALID_HANDLE)
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Invalid Mega handle when trying to add sync").toUtf8().constData());
-        return;
+        // The onboarding is shown and the remote folder is set
+        // (sync button notification, incoming share with full access)
+        DialogOpener::showDialog(dialog->getDialog());
     }
-
-    auto node = megaApi->getNodeByHandle(megaFolderHandle);
-    QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
-    mSettingsDialog->addSyncFolder(remoteFolder);
+    else
+    {
+        openSettings(SettingsDialog::SYNCS_TAB);
+        if(megaFolderHandle == ::mega::INVALID_HANDLE)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Invalid Mega handle when trying to add sync").toUtf8().constData());
+        }
+        else
+        {
+            auto node = megaApi->getNodeByHandle(megaFolderHandle);
+            QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
+            mSettingsDialog->addSyncFolder(remoteFolder);
+        }
+    }
 }
 
 void MegaApplication::createAppMenus()
