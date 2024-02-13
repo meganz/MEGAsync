@@ -42,8 +42,6 @@
 #TransfersSummaryWidget {
 height: 28px;
 width: 182px;
-border: 1px solid rgba(0,0,0,0.02);
-border: 1px solid rgba(0,0,0);
 border: 1px;
 border-style: solid;
 border-radius: 15px;

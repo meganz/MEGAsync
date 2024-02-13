@@ -31,7 +31,7 @@
   <property name="styleSheet">
    <string notr="true">#wContainer
 {
-  border: 2px solid rgba(220,225,225);
+  border: 2px solid rgb(220,225,225);
   border-radius: 8px;
   background-color: #FFFFFF;
 }
