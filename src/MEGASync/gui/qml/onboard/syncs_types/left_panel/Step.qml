@@ -120,7 +120,7 @@ Item {
 
                     anchors.centerIn: parent
                     text: number.toString()
-                    color: colorStylev.textInverseAccent
+                    color: colorStyle.textInverseAccent
                     font.bold: true
                     lineHeight: 16
                     lineHeightMode: Text.FixedHeight
