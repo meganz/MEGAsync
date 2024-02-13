@@ -156,6 +156,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     bool logToStdout = false;
 
+#if defined(LOG_TO_STDOUT)
+    logToStdout = true;
+#endif
+
     // Collect program arguments
     QStringList args;
     for (int i=0; i < argc; ++i)
