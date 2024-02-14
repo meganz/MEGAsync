@@ -45,8 +45,8 @@ pipeline {
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
                         branchToCheckout = "develop"
                     } else {
-                        env.SDK_BRANCH = sh(script: "grep 'branch =' ${macos_sources_workspace}/.gitmodules | sed 's/.*= //'", returnStdout: true).trim()
-                        branchToCheckout = env.SDK_BRANCH
+                        def status = sh(script: "git submodule status", returnStdout: true).trim()
+                        branchToCheckout = status.tokenize(' ')[0].substring(1)
                     }
 
                     dir('src/MEGASync/mega') {
