@@ -160,5 +160,7 @@ QString StalledIssueTab::createTitle()
             return tr("Other: %n", "", itemsCount).arg(itemsCount);
         case StalledIssueFilterCriterion::SOLVED_CONFLICTS:
             return tr("Resolved: %n", "", itemsCount).arg(itemsCount);
+        default:
+            return QString();
     }
 }
