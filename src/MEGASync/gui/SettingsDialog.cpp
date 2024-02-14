@@ -1271,7 +1271,6 @@ void SettingsDialog::on_bStorageDetails_clicked()
     auto accountDetailsDialog = new AccountDetailsDialog();
 #endif
 
-    mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
