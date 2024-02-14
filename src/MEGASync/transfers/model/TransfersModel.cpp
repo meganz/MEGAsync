@@ -70,20 +70,7 @@ void TransferThread::clear()
 {
     QMutexLocker lock(&mCacheMutex);
     mTransfersToProcess.clear();
-    clearTransfersCount();
-}
-
-void TransferThread::clearTransfersCount()
-{
-    if(mTransfersCount.pendingTransfers() > 0)
-    {
-       mResetCounter = true;
-    }
-    else
-    {
-       mTransfersCount.clear();
-       mResetCounter = false;
-    }
+    mTransfersCount.clear();
 }
 
 QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::extractFromCache(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, int spaceForTransfers)
@@ -348,7 +335,7 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     }
 }
 
-void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError* e)
+void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, MegaError* e)
 {
     if (!transfer->isStreamingTransfer())
     { 
@@ -375,6 +362,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
                     //If it is a completed transfer from a retried folder, ignore it
                     TransferMetaDataContainer::finishFromFolderTransfer(transfer, e);
                 }
+            }
+
+            if(!megaApi->isLoggedIn())
+            {
+                return;
             }
 
             if(!transfer->isFolderTransfer())
@@ -468,6 +460,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
         }
 
         {
+            if(!megaApi->isLoggedIn())
+            {
+                return;
+            }
+
             QMutexLocker cacheLock(&mCacheMutex);
             auto data = onTransferEvent(transfer, e);
 
@@ -507,11 +504,6 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
 
             data->mIsTempTransfer = isTemp;
         }
-    }
-
-    if(mResetCounter)
-    {
-        clearTransfersCount();
     }
 }
 
