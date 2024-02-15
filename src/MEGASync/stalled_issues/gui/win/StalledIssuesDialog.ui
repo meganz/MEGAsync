@@ -1006,7 +1006,7 @@ color: #2C5BEB;
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="title" stdset="0">
-                <string>All issues:</string>
+                <string/>
                </property>
                <property name="filterCriterion" stdset="0">
                 <number>0</number>
@@ -1025,7 +1025,7 @@ color: #2C5BEB;
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="title" stdset="0">
-                <string>Name conflicts:</string>
+                <string/>
                </property>
                <property name="filterCriterion" stdset="0">
                 <number>1</number>
@@ -1044,7 +1044,7 @@ color: #2C5BEB;
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="title" stdset="0">
-                <string>Item type conflicts:</string>
+                <string/>
                </property>
                <property name="iconPrefix" stdset="0">
                 <string notr="true">folder-small</string>
@@ -1063,7 +1063,7 @@ color: #2C5BEB;
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="title" stdset="0">
-                <string>Other:</string>
+                <string/>
                </property>
                <property name="iconPrefix" stdset="0">
                 <string notr="true">more-circle-small</string>
@@ -1497,7 +1497,7 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-    <include location="../../../gui/Resources_win.qrc"/>
+  <include location="../../../gui/Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
