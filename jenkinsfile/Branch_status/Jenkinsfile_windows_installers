@@ -38,15 +38,17 @@ pipeline {
                 script {
                     windows_sources_workspace = WORKSPACE
                     def branchToCheckout = ''
+
                     if (env.SDK_BRANCH && env.SDK_BRANCH != ' ') {
                         branchToCheckout = env.SDK_BRANCH
+                        shouldCloneSDK = true
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
                         branchToCheckout = "develop"
+                        shouldCloneSDK = true
                     } else {
-                        env.SDK_BRANCH = sh(script: "grep 'branch =' ${windows_sources_workspace}\\.gitmodules | sed 's/.*= //'", returnStdout: true).trim()
-                        branchToCheckout = env.SDK_BRANCH
+                        def status = sh(script: "git submodule status", returnStdout: true).trim()
+                        branchToCheckout = status.tokenize(' ')[0].substring(1)
                     }
-
                     dir('src\\MEGASync\\mega') {
                         sh "echo Cloning SDK branch ${branchToCheckout}"
                         checkout([
@@ -67,11 +69,19 @@ pipeline {
                 //QT path is automatically changed to x86 with nsis when needed
                 MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
                 MEGA_THIRD_PARTY_DLL_DIR = "bin"
+
             }
             steps {
                 gitlabCommitStatus (name: 'Build windows packages'){
                     dir(windows_sources_workspace){
-                        bat "full_build_process.cmd ${params.ARCHITECTURE} nosign 2"
+                        bat """
+                            mkdir tmp
+                            set _MSPDBSRV_ENDPOINT_= ${BUILD_TAG}
+                            set TMP=${Workspace}\\tmp
+                            set TEMP=${Workspace}\\tmp
+                            set TMPDIR=${Workspace}\\tmp   
+                            full_build_process.cmd ${params.ARCHITECTURE} nosign 2                     
+                        """
                     }
                 }
             }
