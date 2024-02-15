@@ -78,7 +78,7 @@ pipeline {
                         if ( params.IS_RELEASE_CANDIDATE == true) {
                             def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
                             sh "cd ${env.INTERNAL_REPO_PATH}/repo/private/$DISTRO_TO_BUILD && jf rt upload --regexp '((x86_64|amd64|i386)/megasync.*deb\$|(x86_64|amd64|i386)/megasync.*rpm\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/"
-                            echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/]"
+                            echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/]"
                         }
                     }
                 }
