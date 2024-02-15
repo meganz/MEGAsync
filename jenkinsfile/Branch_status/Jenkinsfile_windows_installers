@@ -69,11 +69,19 @@ pipeline {
                 //QT path is automatically changed to x86 with nsis when needed
                 MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
                 MEGA_THIRD_PARTY_DLL_DIR = "bin"
+
             }
             steps {
                 gitlabCommitStatus (name: 'Build windows packages'){
                     dir(windows_sources_workspace){
-                        bat "full_build_process.cmd ${params.ARCHITECTURE} nosign 2"
+                        bat """
+                            mkdir tmp
+                            set _MSPDBSRV_ENDPOINT_= ${BUILD_TAG}
+                            set TMP=${Workspace}\\tmp
+                            set TEMP=${Workspace}\\tmp
+                            set TMPDIR=${Workspace}\\tmp   
+                            full_build_process.cmd ${params.ARCHITECTURE} nosign 2                     
+                        """
                     }
                 }
             }
