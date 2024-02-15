@@ -1,40 +1,137 @@
 #include "EmailRequester.h"
 
-#include "mega/types.h"
 #include "MegaApplication.h"
 
-EmailRequester::EmailRequester(mega::MegaHandle userHandle):
+#include "mega/types.h"
+
+#include <QMutexLocker>
+
+EmailRequester::EmailRequester():
     mMegaApi(MegaSyncApp->getMegaApi()),
-    mUserHandle(userHandle),
-    mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+    mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
 {
-    mMegaApi->addRequestListener(mDelegateListener.get());
+    MegaSyncApp->getMegaApi()->addGlobalListener(mGlobalListener.get());
 }
 
-void EmailRequester::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* error)
+EmailRequester::~EmailRequester()
 {
-    if(request->getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL)
+    mRequestsData.clear();
+}
+
+void EmailRequester::addEmailTracking(mega::MegaHandle userHandle)
+{
+    QMutexLocker locker(&mRequestsDataLock);
+
+    auto foundUserHandleIt = mRequestsData.find(userHandle);
+    if (foundUserHandleIt == mRequestsData.end())
     {
-        QString userEmail;
-
-        if(error->getErrorCode() == mega::MegaError::API_OK)
-        {
-            if (request->getEmail() != nullptr)
-            {
-                userEmail = QString::fromUtf8(request->getEmail());
-            }
-        }
-
-        emit emailReceived(userEmail);
-
-        deleteLater();
+        RequestInfo requestInfo;
+        requestInfo.requestFinished = true;
+        mRequestsData[userHandle] = requestInfo;
     }
 }
 
-void EmailRequester::requestEmail()
+EmailRequester* EmailRequester::instance()
 {
-    const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+    static EmailRequester instance;
+    return &instance;
+}
 
-    megaApi->getUserEmail(mUserHandle);
+void EmailRequester::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users)
+{
+    Q_UNUSED(api);
+
+    /*
+     * Look for alerts from users that changed their email and update them
+     */
+    bool dataChanged = false;
+    {
+        QMutexLocker locker(&mRequestsDataLock);
+
+        if (mRequestsData.isEmpty())
+        {
+            return;
+        }
+
+        for(auto userIndex = 0; userIndex < users->size(); ++userIndex)
+        {
+            auto user = users->get(userIndex);
+
+            auto requestDataIt = mRequestsData.find(user->getHandle());
+            if (requestDataIt != mRequestsData.end())
+            {
+                auto email = QString::fromUtf8(user->getEmail());
+                if (requestDataIt->email != email)
+                {
+                    requestDataIt->email = email;
+                    dataChanged = true;
+                }
+            }
+        }
+    }
+
+    if (dataChanged)
+    {
+        emit emailChanged();
+    }
+}
+
+QString EmailRequester::getEmail(mega::MegaHandle userHandle, bool forceRequest)
+{
+    QString email;
+
+    {
+        QMutexLocker locker(&mRequestsDataLock);
+        auto foundUserHandleIt = mRequestsData.find(userHandle);
+        if (foundUserHandleIt != mRequestsData.end())
+        {
+            if (foundUserHandleIt->requestFinished)
+            {
+                email = foundUserHandleIt->email;
+            }
+        }
+    }
+
+    if (email.isEmpty() && forceRequest)
+    {
+        requestEmail(userHandle);
+    }
+
+    return email;
+}
+
+void EmailRequester::requestEmail(mega::MegaHandle userHandle)
+{
+    QMutexLocker locker(&mRequestsDataLock);
+
+    auto foundUserHandleIt = mRequestsData.find(userHandle);
+    if (foundUserHandleIt == mRequestsData.end())
+    {
+        RequestInfo requestInfo;
+        requestInfo.requestFinished = false;
+        mRequestsData[userHandle] = requestInfo;
+
+        mMegaApi->getUserEmail(userHandle, new mega::OnFinishOneShot(mMegaApi,  this, [this, userHandle]
+            (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& error)
+            {
+                if(request.getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL && error.getErrorCode() == mega::MegaError::API_OK)
+                {
+                    if (request.getEmail() != nullptr && isContextValid)
+                    {
+                        QMutexLocker locker(&mRequestsDataLock);
+
+                        auto foundUserHandleIt = mRequestsData.find(userHandle);
+                        if (foundUserHandleIt != mRequestsData.end())
+                        {
+                            foundUserHandleIt->requestFinished = true;
+                            foundUserHandleIt->email = QString::fromUtf8(request.getEmail());
+
+                            emit emailChanged();
+                        }
+                    }
+                }
+            })
+        );
+    }
 }
 

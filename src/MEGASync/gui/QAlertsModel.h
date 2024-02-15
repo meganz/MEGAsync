@@ -13,7 +13,7 @@
 #include <deque>
 #include <array>
 
-class QAlertsModel : public QAbstractItemModel, public mega::MegaGlobalListener
+class QAlertsModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -47,7 +47,6 @@ public:
     long long getUnseenNotifications(int type) const;
     bool existsNotifications(int type) const;
     void refreshAlertItem(unsigned item);
-    void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
 
 private:
     int checkAlertType(int alertType) const;
@@ -56,7 +55,6 @@ private:
     std::deque<unsigned int> alertOrder;
     std::array<int, ALERT_ALL> unSeenNotifications;
     std::array<bool, ALERT_ALL> hasNotificationsOfType;
-    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 };
 
 #endif // QALERTSMODEL_H

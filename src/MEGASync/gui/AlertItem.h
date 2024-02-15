@@ -49,9 +49,7 @@ private:
     QString formatRichString(QString str);
     QString getUserFullName();
     void requestFullName();
-    void requestEmail();
     void updateAlertData();
-
 
     Ui::AlertItem *ui;
     mega::MegaApi *megaApi;

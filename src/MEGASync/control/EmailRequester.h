@@ -1,27 +1,42 @@
 #ifndef EMAILREQUESTER_H
 #define EMAILREQUESTER_H
 
-#include <QObject>
-
+#include <mega/bindings/qt/QTMegaGlobalListener.h>
 #include <mega/bindings/qt/QTMegaRequestListener.h>
 
-class EmailRequester : public QObject, public mega::MegaRequestListener
+#include <QMap>
+#include <QMutex>
+#include <QObject>
+
+class EmailRequester : public QObject, public mega::MegaGlobalListener
 {
     Q_OBJECT
 
 public:
-    explicit EmailRequester(mega::MegaHandle userHandle);
-    ~EmailRequester() override{};
-    void requestEmail();
-    void onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* error) override;
+    static EmailRequester* instance();
+
+    QString getEmail(mega::MegaHandle userHandle, bool forceRequest = false);
+    void addEmailTracking(mega::MegaHandle userHandle);
+    void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
 
 signals:
-    void emailReceived(QString email);
+    void emailChanged();
 
 private:
-    mega::MegaApi * mMegaApi;
-    mega::MegaHandle mUserHandle;
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    explicit EmailRequester();
+    ~EmailRequester() override;
+    void requestEmail(mega::MegaHandle userHandle);
+
+    struct RequestInfo
+    {
+        bool requestFinished;
+        QString email;
+    };
+
+    mega::MegaApi* mMegaApi;
+    QMutex mRequestsDataLock;
+    QMap<mega::MegaHandle, EmailRequester::RequestInfo> mRequestsData;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 };
 
 #endif

@@ -1,9 +1,6 @@
 #include "QAlertsModel.h"
 
-#include "MegaApplication.h"
 #include "Preferences/Preferences.h"
-
-#include "mega/types.h"
 
 #include <QDateTime>
 
@@ -12,11 +9,8 @@
 using namespace mega;
 
 QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
-    : QAbstractItemModel(parent),
-    mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
+    : QAbstractItemModel(parent)
 {
-    MegaSyncApp->getMegaApi()->addGlobalListener(mGlobalListener.get());
-
     for(int i = 0; i < ALERT_ALL; i++)
     {
         hasNotificationsOfType[i] = false;
@@ -289,31 +283,4 @@ void QAlertsModel::refreshAlertItem(unsigned id)
     }
 
     emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
-}
-
-void QAlertsModel::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users)
-{
-    Q_UNUSED(api);
-
-    if (alertsMap.isEmpty())
-    {
-        return;
-    }
-
-    /*
-     * Look for alerts from users that changed their email and update them
-     */
-    for(auto userIndex = 0; userIndex < users->size(); ++userIndex)
-    {
-        auto user = users->get(userIndex);
-
-        for(auto alertIndex = 0; alertIndex < alertsMap.count(); ++alertIndex)
-        {
-            auto alert = alertsMap[alertIndex];
-            if (alert != nullptr && alert->getUserHandle() == user->getHandle() && alert->getEmail().toUtf8().constData() != user->getEmail())
-            {
-                alert->setEmail(QString::fromUtf8(user->getEmail()));
-            }
-        }
-    }
 }

@@ -1,5 +1,7 @@
 #include "MegaUserAlertExt.h"
 
+#include "EmailRequester.h"
+
 MegaUserAlertExt::MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject *parent)
     : QObject(parent),
     mMegaUserAlert(megaUserAlert)
@@ -16,23 +18,25 @@ void MegaUserAlertExt::init()
 {
     assert(mMegaUserAlert != nullptr);
 
+    connect(EmailRequester::instance(), &EmailRequester::emailChanged, this, &MegaUserAlertExt::setEmail, Qt::QueuedConnection);
+
+    if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
+    {
+        EmailRequester::instance()->addEmailTracking(mMegaUserAlert->getUserHandle());
+    }
+
     if (mMegaUserAlert->getEmail())
     {
         mEmail = QString::fromUtf8(mMegaUserAlert->getEmail());
     }
     else if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
     {
-        requestEmail();
+        auto email = EmailRequester::instance()->getEmail(mMegaUserAlert->getUserHandle(), true);
+        if (!email.isEmpty())
+        {
+            setEmail();
+        }
     }
-}
-
-void MegaUserAlertExt::requestEmail()
-{
-    mEmailRequester.reset(new EmailRequester(mMegaUserAlert->getUserHandle()));
-
-    connect(mEmailRequester.get(), &EmailRequester::emailReceived, this, &MegaUserAlertExt::setEmail, Qt::QueuedConnection);
-
-    mEmailRequester->requestEmail();
 }
 
 MegaUserAlertExt& MegaUserAlertExt::operator=(MegaUserAlertExt&& megaUserAlert)
@@ -51,9 +55,15 @@ QString MegaUserAlertExt::getEmail() const
     return mEmail;
 }
 
-void MegaUserAlertExt::setEmail(QString email)
+void MegaUserAlertExt::setEmail()
 {
-    if (email != mEmail)
+    if (mMegaUserAlert->getUserHandle() == mega::INVALID_HANDLE)
+    {
+        return;
+    }
+
+    QString email = EmailRequester::instance()->getEmail(mMegaUserAlert->getUserHandle(), false);
+    if (!email.isEmpty() && email != mEmail)
     {
         mEmail = email;
 

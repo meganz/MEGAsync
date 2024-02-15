@@ -1,8 +1,6 @@
 #ifndef MEGAUSERALERTEXT_H
 #define MEGAUSERALERTEXT_H
 
-#include "EmailRequester.h"
-
 #include "megaapi.h"
 
 #include <QObject>
@@ -22,8 +20,7 @@ public:
     MegaUserAlertExt& operator=(MegaUserAlertExt&& megaUserAlert);
 
     QString getEmail() const;
-    void setEmail(QString email);
-    void requestEmail();
+    void setEmail();
     bool isValid() const;
     void reset(mega::MegaUserAlert* alert);
 
@@ -43,7 +40,6 @@ signals:
 
 private:
     std::unique_ptr<mega::MegaUserAlert> mMegaUserAlert;
-    std::unique_ptr<EmailRequester> mEmailRequester;
     QString mEmail;
 
     void init();

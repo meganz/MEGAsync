@@ -41,6 +41,7 @@ void AlertItem::setAlertData(MegaUserAlertExt* alert)
 {
     mAlertUser = alert;
 
+    connect(mAlertUser, &MegaUserAlertExt::emailChanged, this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
     connect(mAlertUser, &MegaUserAlertExt::emailChanged, this, [=]()
     {
         updateAlertData();
@@ -48,13 +49,9 @@ void AlertItem::setAlertData(MegaUserAlertExt* alert)
 
     if (mAlertUser->getUserHandle() != INVALID_HANDLE)
     {
-        if (!alert->getEmail().isEmpty())
+        if (!mAlertUser->getEmail().isEmpty())
         {
             requestFullName();
-        }
-        else
-        {
-            requestEmail();
         }
     }
     else //If it comes without user handler, it is because is an own alert, then take your email.
@@ -75,13 +72,6 @@ void AlertItem::setAlertData(MegaUserAlertExt* alert)
 void AlertItem::contactEmailChanged()
 {
     requestFullName();
-}
-
-void AlertItem::requestEmail()
-{
-    connect(mAlertUser, &MegaUserAlertExt::emailChanged, this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
-
-    mAlertUser->requestEmail();
 }
 
 void AlertItem::requestFullName()
