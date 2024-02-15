@@ -14,9 +14,10 @@ class EmailRequester : public QObject, public mega::MegaGlobalListener
 
 public:
     static EmailRequester* instance();
+    ~EmailRequester() override;
 
     QString getEmail(mega::MegaHandle userHandle, bool forceRequest = false);
-    void addEmailTracking(mega::MegaHandle userHandle);
+    void addEmailTracking(mega::MegaHandle userHandle, const QString& email = QString());
     void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
 
 signals:
@@ -24,7 +25,6 @@ signals:
 
 private:
     explicit EmailRequester();
-    ~EmailRequester() override;
     void requestEmail(mega::MegaHandle userHandle);
 
     struct RequestInfo
@@ -37,6 +37,7 @@ private:
     QMutex mRequestsDataLock;
     QMap<mega::MegaHandle, EmailRequester::RequestInfo> mRequestsData;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
+    static EmailRequester* mInstance;
 };
 
 #endif

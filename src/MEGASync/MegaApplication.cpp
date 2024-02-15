@@ -27,6 +27,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "gui/UploadToMegaDialog.h"
+#include "EmailRequester.h"
 
 #include "qml/QmlDialog.h"
 #include "onboarding/GuestQmlDialog.h"
@@ -2215,6 +2216,8 @@ void MegaApplication::cleanAll()
     notificationsProxyModel = nullptr;
     delete notificationsDelegate;
     notificationsDelegate = nullptr;
+
+    delete EmailRequester::instance();
 
     infoDialog->deleteLater();
 

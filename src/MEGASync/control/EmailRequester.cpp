@@ -6,6 +6,8 @@
 
 #include <QMutexLocker>
 
+EmailRequester* EmailRequester::mInstance = nullptr;
+
 EmailRequester::EmailRequester():
     mMegaApi(MegaSyncApp->getMegaApi()),
     mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
@@ -18,7 +20,7 @@ EmailRequester::~EmailRequester()
     mRequestsData.clear();
 }
 
-void EmailRequester::addEmailTracking(mega::MegaHandle userHandle)
+void EmailRequester::addEmailTracking(mega::MegaHandle userHandle, const QString& email)
 {
     QMutexLocker locker(&mRequestsDataLock);
 
@@ -27,14 +29,19 @@ void EmailRequester::addEmailTracking(mega::MegaHandle userHandle)
     {
         RequestInfo requestInfo;
         requestInfo.requestFinished = true;
+        requestInfo.email = email;
         mRequestsData[userHandle] = requestInfo;
     }
 }
 
 EmailRequester* EmailRequester::instance()
 {
-    static EmailRequester instance;
-    return &instance;
+    if (mInstance == nullptr)
+    {
+        mInstance = new EmailRequester();
+    }
+
+    return mInstance;
 }
 
 void EmailRequester::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users)

@@ -20,11 +20,6 @@ void MegaUserAlertExt::init()
 
     connect(EmailRequester::instance(), &EmailRequester::emailChanged, this, &MegaUserAlertExt::setEmail, Qt::QueuedConnection);
 
-    if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
-    {
-        EmailRequester::instance()->addEmailTracking(mMegaUserAlert->getUserHandle());
-    }
-
     if (mMegaUserAlert->getEmail())
     {
         mEmail = QString::fromUtf8(mMegaUserAlert->getEmail());
@@ -36,6 +31,14 @@ void MegaUserAlertExt::init()
         {
             setEmail();
         }
+    }
+
+    /**
+     *  Add email tracking for the user handle, so we are able to update the email when the user changes it
+     */
+    if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
+    {
+        EmailRequester::instance()->addEmailTracking(mMegaUserAlert->getUserHandle(), mEmail);
     }
 }
 
