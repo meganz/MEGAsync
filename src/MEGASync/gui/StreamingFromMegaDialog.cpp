@@ -408,7 +408,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
             ui->bOpenOther->setEnabled(true);
             ui->bCopyLink->setEnabled(true);
             ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                           "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
+                                                           "stop: 0 rgb(246,247,250), stop: 1 rgb(232,233,235));"));
         }
         else if(LinkStatus::TRANSFER_OVER_QUOTA == status)
         {
@@ -417,7 +417,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
             ui->bOpenOther->setEnabled(true);
             ui->bCopyLink->setEnabled(true);
             ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                           "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
+                                                           "stop: 0 rgb(246,247,250), stop: 1 rgb(232,233,235));"));
         }
         else
         {
