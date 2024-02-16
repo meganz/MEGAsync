@@ -8,9 +8,8 @@ SOURCES += $$PWD/gui/Backups/BackupSettingsElements.cpp \
            $$PWD/gui/SyncSettingsUIBase.cpp \
            $$PWD/gui/SyncTooltipCreator.cpp \
            $$PWD/gui/SyncsMenu.cpp \
-           $$PWD/gui/Twoways/BindFolderDialog.cpp \
-           $$PWD/gui/Twoways/FolderBinder.cpp \
            $$PWD/gui/Twoways/RemoveSyncConfirmationDialog.cpp \
+#jsubi           $$PWD/gui/Twoways/IgnoresEditingDialog.cpp \
            $$PWD/gui/Twoways/SyncTableView.cpp \
            $$PWD/gui/Twoways/SyncSettingsUI.cpp \
            $$PWD/gui/Twoways/SyncSettingsElements.cpp \
@@ -29,9 +28,8 @@ HEADERS += $$PWD/gui/Backups/BackupSettingsElements.h \
            $$PWD/gui/SyncSettingsUIBase.h \
            $$PWD/gui/SyncTooltipCreator.h \
            $$PWD/gui/SyncsMenu.h \
-           $$PWD/gui/Twoways/BindFolderDialog.h \
-           $$PWD/gui/Twoways/FolderBinder.h \
            $$PWD/gui/Twoways/RemoveSyncConfirmationDialog.h \
+#jsubi           $$PWD/gui/Twoways/IgnoresEditingDialog.h \
            $$PWD/gui/Twoways/SyncTableView.h \
            $$PWD/gui/Twoways/SyncSettingsUI.h \
            $$PWD/gui/Twoways/SyncSettingsElements.h \
@@ -46,9 +44,8 @@ HEADERS += $$PWD/gui/Backups/BackupSettingsElements.h \
 win32 {
     INCLUDEPATH += $$PWD/win
     RESOURCES += $$PWD/../gui/Resources_win.qrc
-    FORMS    += $$PWD/gui/Twoways/win/FolderBinder.ui \
-                $$PWD/gui/Twoways/win/BindFolderDialog.ui \
-                $$PWD/gui/Twoways/win/SyncSettingsUIBase.ui \
+#jsubi    FORMS    += $$PWD/gui/Twoways/win/IgnoresEditingDialog.ui \
+    FORMS    += $$PWD/gui/Twoways/win/SyncSettingsUIBase.ui \
                 $$PWD/gui/Twoways/win/SyncAccountFullMessage.ui \
                 $$PWD/gui/Twoways/win/SyncStallModeSelector.ui \
                 $$PWD/gui/Backups/win/RemoveBackupDialog.ui \
@@ -58,9 +55,8 @@ win32 {
 macx {
     INCLUDEPATH += $$PWD/macx
     RESOURCES += $$PWD/../gui/Resources_macx.qrc
-    FORMS    += $$PWD/gui/Twoways/macx/FolderBinder.ui \
-                $$PWD/gui/Twoways/macx/BindFolderDialog.ui \
-                $$PWD/gui/Twoways/macx/RemoveSyncConfirmationDialog.ui \
+    FORMS    += $$PWD/gui/Twoways/macx/RemoveSyncConfirmationDialog.ui \
+#@jsubi         $$PWD/gui/Twoways/macx/IgnoresEditingDialog.ui \
                 $$PWD/gui/Twoways/macx/SyncAccountFullMessage.ui \
                 $$PWD/gui/Twoways/macx/SyncSettingsUIBase.ui \
                 $$PWD/gui/Twoways/macx/SyncStallModeSelector.ui \
@@ -71,9 +67,8 @@ macx {
 unix:!macx {
     INCLUDEPATH += $$PWD/linux
     RESOURCES += $$PWD/../gui/Resources_linux.qrc
-    FORMS    += $$PWD/gui/Twoways/linux/FolderBinder.ui \
-                $$PWD/gui/Twoways/linux/BindFolderDialog.ui \
-                $$PWD/gui/Twoways/linux/RemoveSyncConfirmationDialog.ui \
+    FORMS    += $$PWD/gui/Twoways/linux/RemoveSyncConfirmationDialog.ui \
+#jsubi		$$PWD/gui/Twoways/linux/IgnoresEditingDialog.ui \
                 $$PWD/gui/Twoways/linux/SyncAccountFullMessage.ui \
                 $$PWD/gui/Twoways/linux/SyncSettingsUIBase.ui \
                 $$PWD/gui/Twoways/linux/SyncStallModeSelector.ui \
