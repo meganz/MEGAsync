@@ -91,7 +91,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/qml/ChooseFolder.cpp \
     $$PWD/qml/QmlDeviceName.cpp \
     $$PWD/onboarding/Onboarding.cpp \
-    $$PWD/onboarding/Syncs.cpp \
     $$PWD/onboarding/PasswordStrengthChecker.cpp \
     $$PWD/onboarding/GuestQmlDialog.cpp \
     $$PWD/onboarding/OnboardingQmlDialog.cpp \
@@ -104,7 +103,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/backups/BackupsController.cpp \
     $$PWD/backups/BackupsQmlDialog.cpp \
     $$PWD/syncs/SyncsComponent.cpp \
-    $$PWD/syncs/SyncsQmlDialog.cpp
+    $$PWD/syncs/SyncsQmlDialog.cpp \
+    $$PWD/syncs/Syncs.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -195,7 +195,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/qml/ChooseFolder.h \
     $$PWD/qml/QmlDeviceName.h \
     $$PWD/onboarding/Onboarding.h \
-    $$PWD/onboarding/Syncs.h \
     $$PWD/onboarding/PasswordStrengthChecker.h \
     $$PWD/onboarding/GuestQmlDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \
@@ -208,7 +207,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/backups/BackupsController.h \
     $$PWD/backups/BackupsQmlDialog.h \
     $$PWD/syncs/SyncsComponent.h \
-    $$PWD/syncs/SyncsQmlDialog.h
+    $$PWD/syncs/SyncsQmlDialog.h \
+    $$PWD/syncs/Syncs.h
 
 INCLUDEPATH += $$PWD
 

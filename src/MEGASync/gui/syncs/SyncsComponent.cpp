@@ -2,8 +2,9 @@
 
 #include "SyncsQmlDialog.h"
 
-#include "qml/ChooseFolder.h"
-#include "onboarding/Syncs.h"
+#include "Syncs.h"
+
+#include "ChooseFolder.h"
 //@jsubi
 //#include "syncs/gui/Twoways/IgnoresEditingDialog.h"
 

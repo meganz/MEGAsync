@@ -1,7 +1,7 @@
 #include "ChooseFolder.h"
 
 #include "NodeSelectorSpecializations.h"
-#include "Syncs.h"
+#include "syncs/Syncs.h"
 
 #include "Platform.h"
 #include "MegaApplication.h"
