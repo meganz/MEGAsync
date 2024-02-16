@@ -10,6 +10,12 @@ FullSyncPageForm {
     signal fullSyncMoveToSuccess
 
     footerButtons {
+        executeDefaultLeftSecondary: root.isOnboardingRef
+        leftSecondary.onClicked: {
+            if(!root.isOnboardingRef) {
+                syncsComponentAccess.openExclusionsDialog(localFolderChooser.choosenPath);
+            }
+        }
 
         rightSecondary.onClicked: {
             root.fullSyncMoveToBack();

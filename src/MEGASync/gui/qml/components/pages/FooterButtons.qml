@@ -16,6 +16,8 @@ RowLayout {
     property alias rightSecondary: rightSecondaryButton // 2nd
     property alias rightPrimary: rightPrimaryButton // 1st
 
+    property bool executeDefaultLeftSecondary: true
+
     anchors {
         bottom: parent.bottom
         right: parent.right
@@ -52,7 +54,9 @@ RowLayout {
 
             text: Strings.skip
             onClicked: {
-                window.close();
+                if(root.executeDefaultLeftSecondary) {
+                    window.close();
+                }
             }
         }
 

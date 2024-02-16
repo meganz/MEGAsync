@@ -4,7 +4,10 @@
 
 #include "qml/ChooseFolder.h"
 #include "onboarding/Syncs.h"
+//@jsubi
+//#include "syncs/gui/Twoways/IgnoresEditingDialog.h"
 
+#include "DialogOpener.h"
 #include "MegaApplication.h"
 
 static bool qmlRegistrationDone = false;
@@ -66,3 +69,13 @@ void SyncsComponent::setComesFromSettings(bool value)
     mComesFromSettings = value;
 }
 
+void SyncsComponent::openExclusionsDialog(const QString& folder) const
+{
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    {
+        /* @jsubi.
+        QPointer<IgnoresEditingDialog> exclusionsDialog = new IgnoresEditingDialog(folder, true, dialog->getDialog());
+        DialogOpener::showDialog(exclusionsDialog);
+        */
+    }
+}

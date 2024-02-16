@@ -19,6 +19,7 @@ public:
     static void registerQmlModules();
 
     Q_INVOKABLE void openSyncsTabInPreferences() const;
+    Q_INVOKABLE void openExclusionsDialog(const QString& folder) const;
 
     void setComesFromSettings(bool value);
     bool getComesFromSettings() const;

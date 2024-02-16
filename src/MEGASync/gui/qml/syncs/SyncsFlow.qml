@@ -95,10 +95,7 @@ Item {
 
                 isOnboardingRef: root.isOnboarding
 
-                footerButtons.leftSecondary {
-                    text: root.isOnboarding ? Strings.skip : Strings.cancel
-                    visible: root.isOnboarding
-                }
+                footerButtons.leftSecondary.text: root.isOnboarding ? Strings.skip : Strings.addExclusions
 
                 onFullSyncMoveToBack: {
                     // If it is the standalone window, then move to the sync type page
@@ -126,14 +123,15 @@ Item {
 
                 isOnboardingRef: root.isOnboarding
 
+                footerButtons.leftSecondary.text: root.isOnboarding ? Strings.skip : Strings.addExclusions
                 footerButtons.rightSecondary.visible: root.isOnboarding
-                                                        || (!root.isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE
-                                                                && syncsComponentAccess.remoteFolder === "")
+                                                      || (!root.isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE
+                                                          && syncsComponentAccess.remoteFolder === "")
                 footerButtons.leftSecondary {
                     text: root.isOnboarding ? Strings.skip : Strings.cancel
                     visible: root.isOnboarding
-                                || (!root.isOnboarding && syncItem.syncStatus !== syncItem.SyncStatusCode.NONE)
-                                || syncsComponentAccess.remoteFolder !== ""
+                             || (!root.isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE
+                                 && (syncsComponentAccess != null && syncsComponentAccess.remoteFolder === ""))
                 }
 
                 onSelectiveSyncMoveToBack: {
