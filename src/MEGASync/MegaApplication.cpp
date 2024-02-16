@@ -3580,11 +3580,7 @@ void MegaApplication::clearUserAttributes()
         infoDialog->clearUserAttributes();
     }
 
-    QString pathToAvatar = Utilities::getAvatarPath(preferences->email());
-    if (QFileInfo(pathToAvatar).exists())
-    {
-        QFile::remove(pathToAvatar);
-    }
+    Utilities::removeAvatars();
 
     UserAttributes::UserAttributesManager::instance().reset();
 }

@@ -388,6 +388,7 @@ private:
 public:
     static QString languageCodeToString(QString code);
     static QString getAvatarPath(QString email);
+    static void removeAvatars();
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
 
