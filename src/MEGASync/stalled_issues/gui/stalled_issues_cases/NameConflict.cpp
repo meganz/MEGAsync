@@ -14,7 +14,7 @@
 #include "StalledIssuesUtilities.h"
 
 #include <megaapi.h>
-
+#include "TextDecorator.h"
 #include <QDialogButtonBox>
 #include <QPainter>
 
@@ -23,6 +23,12 @@ static const int REMOVE_ID = 1;
 
 const char* TITLE_FILENAME = "TITLE_FILENAME";
 const char* TITLE_INDEX = "TITLE_INDEX";
+
+namespace
+{
+Text::Bold boldTextDecorator;
+const Text::Decorator textDecorator(&boldTextDecorator);
+}
 
 //NAME DUPLICATED
 void NameDuplicatedContainer::paintEvent(QPaintEvent*)
@@ -572,7 +578,8 @@ void NameConflict::onActionClicked(int actionId)
                     }
                 }
             };
-
+            textDecorator.process(msgInfo.informativeText);
+            textDecorator.process(msgInfo.text);
             QMegaMessageBox::warning(msgInfo);
         }
     }
