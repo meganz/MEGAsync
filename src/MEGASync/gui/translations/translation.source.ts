@@ -3901,7 +3901,7 @@ You will not be able to regain access to your stored data or be authorised to re
     </message>
     <message>
         <source>Unable to write sync configs to disk.</source>
-        <translatorcomment>SDK error to inform the user that megasync wasn´t able to read sync configuration files.</translatorcomment>
+        <translatorcomment>SDK error to inform the user that megasync wasn´t able to write sync configuration files.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
