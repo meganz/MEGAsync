@@ -4902,7 +4902,17 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
     if (infoDialog)
     {
-        infoDialog->addSync(targetFolder);
+        if(targetFolder == ::mega::INVALID_HANDLE)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Invalid Mega handle when trying to add external sync").toUtf8().constData());
+        }
+        else
+        {
+            auto node = megaApi->getNodeByHandle(targetFolder);
+            QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
+            infoDialog->addSync(remoteFolder);
+        }
     }
 }
 

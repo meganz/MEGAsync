@@ -7,6 +7,7 @@
 #include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/gui/Twoways/BindFolderDialog.h>
 #include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
+//@jsubi #include <syncs/gui/Twoways/IgnoresEditingDialog.h>
 #include <syncs/model/SyncItemModel.h>
 #include "SyncExclusions/SyncExclusions.h"
 #ifndef Q_OS_WIN
