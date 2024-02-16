@@ -711,6 +711,10 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             {
                 mAddedNodesByParentHandle.insertMulti(updateNode.parentHandle, updateNode.node);
             }
+            if(updateNode.node->getChanges() & MegaNode::CHANGE_TYPE_PARENT)
+            {
+                mRemovedNodesByHandle.append(updateNode.previousHandle);
+            }
         }
     }
 
