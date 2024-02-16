@@ -27,6 +27,7 @@ protected:
     void resizeEvent(QResizeEvent *e) override;
     bool eventFilter(QObject* obj, QEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* ev) override;
+    QString stripHtmlTags(const QString &text);
 
 private slots:
     void onLinkActivated(const QUrl& link);
@@ -42,6 +43,8 @@ private:
     Qt::TextFormat mFormat;
     QTimer mAdaptHeightTimer;
     int mParentHeight;
+    QTextDocument mTextDocument; // This is only to remove html tags from tooltips
+
 };
 
 #endif // WORDWRAPLABEL_H
