@@ -23,6 +23,10 @@
 using namespace std;
 using namespace mega;
 
+namespace
+{
+    constexpr char AVATARS_EXTENSION_FILTER[] = "*.jpg";
+}
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, Utilities::FileType> Utilities::fileTypes;
 QHash<QString, QString> Utilities::languageNames;
@@ -516,6 +520,19 @@ QString Utilities::getAvatarPath(QString email)
     QString avatarsPath = QString::fromUtf8("%1/avatars/%2.jpg")
             .arg(Preferences::instance()->getDataPath()).arg(email);
     return QDir::toNativeSeparators(avatarsPath);
+}
+
+void Utilities::removeAvatars()
+{   
+    const QString avatarsPath = QString::fromUtf8("%1/avatars/").arg(Preferences::instance()->getDataPath());
+    QDir avatarsDirectory(avatarsPath);
+    avatarsDirectory.setNameFilters(QStringList() << QString::fromUtf8(::AVATARS_EXTENSION_FILTER));
+    avatarsDirectory.setFilter(QDir::Files);
+    const QStringList avatars = avatarsDirectory.entryList();
+    for(const QString &avatar: avatars)
+    {
+        avatarsDirectory.remove(avatar);
+    }
 }
 
 bool Utilities::removeRecursively(QString path)
