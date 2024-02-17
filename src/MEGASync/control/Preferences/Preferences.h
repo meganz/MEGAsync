@@ -330,6 +330,10 @@ public:
 
     bool isOneTimeActionDone(int action);
     void setOneTimeActionDone(int action, bool done);
+    void setSystemTrayPromptSuppressed(bool suppressed);
+    bool isSystemTrayPromptSuppressed();
+    void setSystemTrayLastPromptTimestamp(long long timestamp);
+    long long getSystemTrayLastPromptTimestamp();
 
     bool isOneTimeActionUserDone(int action);
     void setOneTimeActionUserDone(int action, bool done);
@@ -723,6 +727,8 @@ protected:
     static const QString notifyDisabledSyncsKey;
     static const QString importMegaLinksEnabledKey;
     static const QString downloadMegaLinksEnabledKey;
+    static const QString systemTrayPromptSuppressed;
+    static const QString systemTrayLastPromptTimestamp;
 
     //Sleep mode
     static const QString awakeIfActiveKey;
@@ -775,6 +781,7 @@ protected:
     static const bool defaultNeverCreateLink;
     static const bool defaultImportMegaLinksEnabled;
     static const bool defaultDownloadMegaLinksEnabled;
+    static const bool defaultSystemTrayPromptSuppressed;
 
 private:
     void updateFullName();
