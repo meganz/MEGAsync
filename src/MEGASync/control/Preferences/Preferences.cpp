@@ -249,6 +249,9 @@ const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCr
 const QString Preferences::notifyDisabledSyncsKey = QString::fromLatin1("notifyDisabledSyncs");
 const QString Preferences::importMegaLinksEnabledKey = QString::fromLatin1("importMegaLinksEnabled");
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromLatin1("downloadMegaLinksEnabled");
+const QString Preferences::systemTrayPromptSuppressed = QString::fromLatin1("systemTrayPromptSuppressed");
+const QString Preferences::systemTrayLastPromptTimestamp = QString::fromLatin1("systemTrayLastPromptTimestamp");
+
 
 //Sleep settings
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
@@ -297,6 +300,7 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
+const bool Preferences::defaultSystemTrayPromptSuppressed = false;
 
 std::shared_ptr<Preferences> Preferences::instance()
 {
@@ -2093,6 +2097,26 @@ void Preferences::setOneTimeActionDone(int action, bool done)
     }
     mSettings->sync();
     mutex.unlock();
+}
+
+void Preferences::setSystemTrayPromptSuppressed(bool value)
+{
+    setValueAndSyncConcurrent(systemTrayPromptSuppressed, value);
+}
+
+bool Preferences::isSystemTrayPromptSuppressed()
+{
+    return getValueConcurrent<bool>(systemTrayPromptSuppressed, defaultSystemTrayPromptSuppressed);
+}
+
+void Preferences::setSystemTrayLastPromptTimestamp(long long timestamp)
+{
+    setValueConcurrent(systemTrayLastPromptTimestamp, timestamp);
+}
+
+long long Preferences::getSystemTrayLastPromptTimestamp()
+{
+    return getValueConcurrent<long long>(systemTrayLastPromptTimestamp, defaultTimeStamp);
 }
 
 

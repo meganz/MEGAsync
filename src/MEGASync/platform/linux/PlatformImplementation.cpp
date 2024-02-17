@@ -1,8 +1,10 @@
 #include "PlatformImplementation.h"
 
+#include <QProgressBar>
 #include <QSet>
 #include <QX11Info>
 #include <QScreen>
+
 
 #include <cstdlib>
 #include <cstring>
@@ -11,6 +13,7 @@
 
 #include "DolphinFileManager.h"
 #include "NautilusFileManager.h"
+#include "QMegaMessageBox.h"
 
 using namespace std;
 using namespace mega;
@@ -529,6 +532,277 @@ xcb_atom_t PlatformImplementation::getAtom(xcb_connection_t * const connection, 
     free(reply);
 
     return result;
+}
+
+bool PlatformImplementation::validateSystemTrayIntegration()
+{
+    if (QSystemTrayIcon::isSystemTrayAvailable() || verifyAndEnableAppIndicatorExtension())
+    {
+        return true;
+    }
+
+    QByteArray appIndicatorInstallFlag = qgetenv("MEGA_ALLOW_DNF_APPINDICATOR_INSTALL");
+
+    bool isAppIndicatorInstallEnabled = !appIndicatorInstallFlag.isEmpty() &&
+                                        (appIndicatorInstallFlag == "1" ||
+                                         appIndicatorInstallFlag.toLower() == "true" ||
+                                         appIndicatorInstallFlag.toLower() == "yes");
+
+    if (isAppIndicatorInstallEnabled || isFedoraWithGnome())
+    {
+        constexpr qint64 SECONDS_IN_A_WEEK = 604800;
+
+        qint64 currentTimestamp = QDateTime::currentSecsSinceEpoch();
+        qint64 lastPromptTimestamp = Preferences::instance()->getSystemTrayLastPromptTimestamp();
+
+        bool aWeekHasPassed = (currentTimestamp - lastPromptTimestamp >= SECONDS_IN_A_WEEK);
+        bool oneTimeSystrayCheck = !Preferences::instance()->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE);
+        bool promptSuppressed = Preferences::instance()->isSystemTrayPromptSuppressed();
+
+        // Check if it's time to prompt the user
+        if ((oneTimeSystrayCheck || aWeekHasPassed) && !promptSuppressed)
+        {
+            promptFedoraGnomeUser();
+        }
+        return true; // Always return true for Fedora GNOME environment as the system tray integration is already handled
+    }
+
+    // Return false for non-Fedora GNOME environments
+    return false;
+}
+
+bool PlatformImplementation::isFedoraWithGnome()
+{
+    // Check for GNOME Desktop Environment
+    QByteArray desktopEnvironment = qgetenv("XDG_CURRENT_DESKTOP");
+    if (!desktopEnvironment.toLower().contains(QStringLiteral("gnome").toUtf8()))
+    {
+        return false;
+    }
+
+    // Check for Fedora OS
+    QString osReleasePath = QStringLiteral("/etc/os-release");
+    QFile osReleaseFile(osReleasePath);
+    if (osReleaseFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QString content = QString::fromUtf8(osReleaseFile.readAll());
+        if (content.contains(QStringLiteral("ID=fedora"), Qt::CaseInsensitive))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void PlatformImplementation::promptFedoraGnomeUser()
+{
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install notification area icon");
+    msgInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.\n"
+                                                                                    "Would you like to install the necessary components now?");
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::Yes;
+    msgInfo.checkboxText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Do not show again");
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    {
+        if (!msg) return;
+
+        bool isInstallationAttempted = (msg->result() == QMessageBox::Yes);
+        bool isInstallationSuccessful = false;
+
+        if (isInstallationAttempted)
+        {
+            // Execute the bash script to install appindicator.
+            isInstallationSuccessful = installAppIndicatorForFedoraGnome();
+        }
+
+        if (msg->checkBox() && msg->checkBox()->isChecked())
+        {
+            Preferences::instance()->setSystemTrayPromptSuppressed(true);
+        }
+        else
+        {
+            Preferences::instance()->setSystemTrayLastPromptTimestamp(QDateTime::currentSecsSinceEpoch());
+        }
+
+        // Set the one-time action done if the user clicked "No" or if the installation was successful.
+        if (!isInstallationAttempted || isInstallationSuccessful)
+        {
+            Preferences::instance()->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
+        }
+    };
+
+    QMegaMessageBox::question(msgInfo);
+}
+
+bool PlatformImplementation::installAppIndicatorForFedoraGnome()
+{
+    constexpr char GNOME_EXTENSIONS_CMD[] = "gnome-extensions";
+    constexpr char APP_INDICATOR_EXTENSION_ID[] = "appindicatorsupport@rgcjonas.gmail.com";
+    const int PROCESS_TIMEOUT_MS = 120000; // 2 minutes
+
+    QProcess checkProcess;
+    checkProcess.start(QString::fromUtf8(GNOME_EXTENSIONS_CMD), { QStringLiteral("version") });
+    bool gnomeExtensionsAvailable = checkProcess.waitForFinished(PROCESS_TIMEOUT_MS) && checkProcess.exitCode() == 0;
+
+    QStringList installArgs = { QStringLiteral("dnf"), QStringLiteral("install"), QStringLiteral("-y") };
+    if (!gnomeExtensionsAvailable)
+    {
+        installArgs << QStringLiteral("gnome-shell-extensions");
+    }
+    installArgs << QStringLiteral("gnome-shell-extension-appindicator");
+
+    QProgressDialog progressDialog(QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Installing notification area icon..."), QCoreApplication::translate("LinuxPlatformNotificationAreaIcon","Cancel"), 0, 100);
+    progressDialog.setWindowTitle(QCoreApplication::translate("LinuxPlatformNotificationAreaIcon","Installing"));
+    progressDialog.setWindowModality(Qt::WindowModal);
+    progressDialog.show();
+
+    QProcess installProcess;
+    QEventLoop loop;
+    QByteArray byteArray;
+    bool cancellationInitiated = false;
+
+    auto updateProgress =  [this, &cancellationInitiated, &installProcess, &progressDialog, &byteArray, &loop]()
+    {
+        QString output = QString::fromUtf8(byteArray.data(), byteArray.size());
+        int parsedValue = this->parseDnfOutput(output);
+        progressDialog.setValue(parsedValue);
+
+        if (progressDialog.wasCanceled() && !cancellationInitiated)
+        {
+            cancellationInitiated = true;
+            installProcess.kill();
+            installProcess.waitForFinished();
+            progressDialog.close();
+
+            QMegaMessageBox::MessageBoxInfo msgWarnInfo;
+            msgWarnInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Installation Cancelled");
+            msgWarnInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon installation was cancelled.");
+            QMegaMessageBox::warning(msgWarnInfo);
+
+            loop.exit(1);
+        }
+    };
+
+    QObject::connect(&installProcess, &QProcess::readyReadStandardOutput, [&]() {
+        byteArray += installProcess.readAllStandardOutput();
+        updateProgress();
+    });
+
+    QObject::connect(&installProcess, &QProcess::readyReadStandardError,  [&]() {
+        byteArray += installProcess.readAllStandardError();
+        updateProgress();
+    });
+
+    QObject::connect(&installProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [&](int exitCode) {
+        if (exitCode == 0)
+        {
+            progressDialog.close();
+            loop.exit(0);
+        } else
+        {
+            QMegaMessageBox::MessageBoxInfo errorInfo;
+            errorInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Error installing components");
+            errorInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Failed to install the necessary components.");
+            errorInfo.informativeText = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "To install manually, please run the following commands:\n\n"
+                                                       "sudo dnf install gnome-shell-extensions\n"
+                                                       "sudo dnf install gnome-shell-extension-appindicator\n"
+                                                       "gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com");
+            QMegaMessageBox::critical(errorInfo);
+            loop.exit(1);
+        }
+    });
+
+    installProcess.start(QStringLiteral("pkexec"), installArgs);
+    int loopResult = loop.exec();
+
+    if (loopResult != 0)
+    {
+        return false;
+    }
+
+    // After successful installation, enable the extension
+    QProcess enableProcess;
+    enableProcess.start(QString::fromUtf8(GNOME_EXTENSIONS_CMD), { QStringLiteral("enable"), QString::fromUtf8(APP_INDICATOR_EXTENSION_ID) });
+    enableProcess.waitForFinished(PROCESS_TIMEOUT_MS);
+
+    QMegaMessageBox::MessageBoxInfo successInfo;
+    successInfo.title = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "Install complete");
+    successInfo.text = QCoreApplication::translate("LinuxPlatformNotificationAreaIcon", "The notification area icon was installed successfully.\n"
+                                                                                        "Please log out of your computer to complete the installation.");
+    QMegaMessageBox::information(successInfo);
+
+    return true;
+}
+
+int PlatformImplementation::parseDnfOutput(const QString& dnfOutput)
+{
+    QRegularExpression progressRegExp(QString::fromUtf8(R"(\((\d+)/(\d+)\):)"));
+    int totalPackages = 0;
+    int packagesProcessed = 0;
+
+    QStringList lines = dnfOutput.split(QLatin1Char('\n'));
+    for (const QString& line : lines)
+    {
+        QRegularExpressionMatch match = progressRegExp.match(line);
+        if (match.hasMatch())
+        {
+            int currentPackageIndex = match.captured(1).toInt();
+            int currentTotalPackages = match.captured(2).toInt();
+            totalPackages = qMax(totalPackages, currentTotalPackages);
+            packagesProcessed = qMax(packagesProcessed, currentPackageIndex);
+        }
+    }
+
+    return totalPackages > 0 ? static_cast<int>(100.0 * packagesProcessed / totalPackages) : 0;
+}
+
+bool PlatformImplementation::verifyAndEnableAppIndicatorExtension()
+{
+    constexpr char GNOME_EXTENSIONS_CMD[] = "gnome-extensions";
+    constexpr char APP_INDICATOR_EXTENSION_ID[] = "appindicatorsupport@rgcjonas.gmail.com";
+    constexpr char GNOME_EXTENSION_PATH[] = "/usr/share/gnome-shell/extensions/";
+    const int PROCESS_TIMEOUT_MS = 120000; // 2 minutes
+
+    QProcess process;
+
+    // Check if the extension directory exists in the filesystem
+    const QString extensionDirPath = QString::fromUtf8(GNOME_EXTENSION_PATH) + QString::fromUtf8(APP_INDICATOR_EXTENSION_ID);
+    if (!QDir(extensionDirPath).exists())
+    {
+        return false;
+    }
+
+    // Check if GNOME extensions command is available
+    process.start(QString::fromUtf8(GNOME_EXTENSIONS_CMD), { QStringLiteral("version") });
+    bool gnomeExtensionsAvailable = process.waitForFinished(PROCESS_TIMEOUT_MS) && process.exitCode() == 0;
+    if (!gnomeExtensionsAvailable)
+    {
+        return false;
+    }
+
+    // List all the available extensions to ensure the extension is recognized by GNOME
+    process.start(QString::fromUtf8(GNOME_EXTENSIONS_CMD), {QLatin1String("list")});
+    if (!process.waitForFinished(PROCESS_TIMEOUT_MS))
+    {
+        return false;
+    }
+
+    // Check if the app indicator extension is recognized by GNOME
+    QString output = QString::fromUtf8(process.readAllStandardOutput());
+    if (!output.contains(QString::fromUtf8(APP_INDICATOR_EXTENSION_ID))) {
+        return false;
+    }
+
+    // Enable the app indicator extension using GNOME extensions command
+    process.start(QString::fromUtf8(GNOME_EXTENSIONS_CMD), { QStringLiteral("enable"), QString::fromUtf8(APP_INDICATOR_EXTENSION_ID) });
+    if (!process.waitForFinished(PROCESS_TIMEOUT_MS) || process.exitCode() != 0)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)

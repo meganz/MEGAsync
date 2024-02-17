@@ -53,6 +53,7 @@
 #include <QSettings>
 #include <QToolTip>
 #include <QFuture>
+#include <QCheckBox>
 
 #include <assert.h>
 
@@ -1565,21 +1566,26 @@ void MegaApplication::onLogout()
 
 void MegaApplication::checkSystemTray()
 {
-    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    if (QSystemTrayIcon::isSystemTrayAvailable() || Platform::getInstance()->validateSystemTrayIntegration())
     {
-        if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
-        {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = getMEGAString();
-            msgInfo.text = tr("Could not find a system tray to place MEGAsync tray icon. "
-                              "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
-                              "If you want to open the interface, just try to open MEGAsync again.");
-            msgInfo.finishFunc = [this](QPointer<QMessageBox>){
-                preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
-            };
-            QMegaMessageBox::warning(msgInfo);
-        }
+        return;
     }
+
+    if (preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
+    {
+        return;
+    }
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = getMEGAString();
+    msgInfo.text = tr("Could not find a system tray to place MEGAsync tray icon. "
+                      "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+                      "If you want to open the interface, just try to open MEGAsync again.");
+    msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+    {
+        preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
+    };
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
@@ -5424,7 +5430,6 @@ void MegaApplication::createInfoDialogMenus()
     recreateMenuAction(&uploadAction, infoDialogMenu, tr("Upload"), "://images/ico_upload.png", &MegaApplication::uploadActionClicked);
     recreateMenuAction(&downloadAction, infoDialogMenu, tr("Download"), "://images/ico_download.png", &MegaApplication::downloadActionClicked);
     recreateMenuAction(&streamAction, infoDialogMenu, tr("Stream"), "://images/ico_stream.png", &MegaApplication::streamActionClicked);
-
 
     previousEnabledState = true;
     if (updateAction)

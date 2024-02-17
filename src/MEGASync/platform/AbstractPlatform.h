@@ -83,6 +83,7 @@ public:
     virtual void addFileManagerExtensionToSystem() {};
     virtual void reloadFileManagerExtension() {};
     virtual void enableFileManagerExtension(bool) {};
+    virtual bool validateSystemTrayIntegration();
 
     virtual void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) = 0;
     virtual void streamWithApp(const QString& app, const QString& url) = 0;
