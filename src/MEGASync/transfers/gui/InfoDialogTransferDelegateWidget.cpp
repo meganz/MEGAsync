@@ -30,6 +30,7 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
 
     mUi->lFileNameCompleted->installEventFilter(this);
     mUi->lFileName->installEventFilter(this);
+    mUi->lElapsedTime->installEventFilter(this);
 }
 
 InfoDialogTransferDelegateWidget::~InfoDialogTransferDelegateWidget()
@@ -391,6 +392,26 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
                                                          availableSize));
             nameLabel->updateGeometry();
             nameLabel->parentWidget()->updateGeometry();
+        }
+    }
+
+    if(watched == mUi->lElapsedTime && getData()->mErrorCode < 0 && (event->type() == QEvent::Resize || event->type() == QEvent::Paint))
+    {
+        int leftMargin;
+        int rightMargin;
+
+        mUi->wContainerCompletedData->layout()->getContentsMargins(&leftMargin, 0, &rightMargin, 0);
+
+        int availableWidth = mUi->wContainerCompletedData->width() - mUi->lFileTypeCompleted->width() - mUi->wOptions->width()
+                        - mUi->wContainerCompletedData->layout()->spacing() * 2 - rightMargin - leftMargin
+                        - mUi->horizontalLayout_5->spacing();
+
+        QString text = tr("Failed: %1").arg(getErrorInContext());
+        QString elidedText = mUi->lElapsedTime->fontMetrics().elidedText(text, Qt::ElideMiddle, availableWidth);
+        if(text != elidedText)
+        {
+            mUi->lElapsedTime->setText(elidedText);
+            mUi->lElapsedTime->setToolTip(text);
         }
     }
 
