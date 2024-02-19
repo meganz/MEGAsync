@@ -48,6 +48,12 @@ void EmailRequester::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users
 {
     Q_UNUSED(api);
 
+    // check function precondition
+    if (users == nullptr)
+    {
+        return;
+    }
+
     /*
      * Look for alerts from users that changed their email and update them
      */
@@ -121,20 +127,24 @@ void EmailRequester::requestEmail(mega::MegaHandle userHandle)
         mMegaApi->getUserEmail(userHandle, new mega::OnFinishOneShot(mMegaApi,  this, [this, userHandle]
             (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& error)
             {
-                if(request.getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL && error.getErrorCode() == mega::MegaError::API_OK)
+                if(request.getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL)
                 {
-                    if (request.getEmail() != nullptr && isContextValid)
+                    QString email;
+
+                    if (error.getErrorCode() == mega::MegaError::API_OK && request.getEmail() != nullptr && isContextValid)
                     {
-                        QMutexLocker locker(&mRequestsDataLock);
+                        email = QString::fromUtf8(request.getEmail());
+                    }
 
-                        auto foundUserHandleIt = mRequestsData.find(userHandle);
-                        if (foundUserHandleIt != mRequestsData.end())
-                        {
-                            foundUserHandleIt->requestFinished = true;
-                            foundUserHandleIt->email = QString::fromUtf8(request.getEmail());
+                    QMutexLocker locker(&mRequestsDataLock);
 
-                            emit emailChanged();
-                        }
+                    auto foundUserHandleIt = mRequestsData.find(userHandle);
+                    if (foundUserHandleIt != mRequestsData.end())
+                    {
+                        foundUserHandleIt->requestFinished = true;
+                        foundUserHandleIt->email = email;
+
+                        emit emailChanged();
                     }
                 }
             })
