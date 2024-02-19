@@ -12,7 +12,7 @@ SET MEGA_WORK_DIR=C:\Qt-build\%MEGA_QT_VER%
 mkdir %MEGA_WORK_DIR%
 cd %MEGA_WORK_DIR%
 
-git clone git://code.qt.io/qt/qt5.git Src
+git clone https://code.qt.io/qt/qt5.git Src
 cd Src
 git checkout v%MEGA_QT_VER%-lts-lgpl
 perl init-repository --module-subset=essential,qtwinextras,qtimageformats,qtquickcontrols,qtsvg,qtgraphicaleffects,qtdeclarative,qtquickcontrols2
