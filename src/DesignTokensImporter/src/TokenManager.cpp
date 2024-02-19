@@ -1,6 +1,8 @@
 #include "TokenManager.h"
 #include "utilities.h"
 #include "PathProvider.h"
+#include "IQMLStyleGenerator.h"
+#include "QMLStyleGenerator.h"
 
 #include <QDebug>
 #include <QDir>
@@ -115,6 +117,10 @@ namespace DTI
 
         // Parse .json token files and create colour map
         FilePathColourMap fileToColourMap = parseTokenJSON(mTokenFilePathsList);
+
+        // qml style generator entry point.
+        std::unique_ptr<IQMLStyleGenerator> styleGenerator{new QmlStyleGenerator()};
+        styleGenerator->start(fileToColourMap);
 
         // Save colourMaps .JSON files
         for (auto it = fileToColourMap.constBegin(); it != fileToColourMap.constEnd(); ++it)
