@@ -413,6 +413,10 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
             mUi->lElapsedTime->setText(elidedText);
             mUi->lElapsedTime->setToolTip(text);
         }
+        else
+        {
+            mUi->lElapsedTime->setToolTip(QString());
+        }
     }
 
     return TransferBaseDelegateWidget::eventFilter(watched, event);
