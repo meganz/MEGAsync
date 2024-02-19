@@ -19,7 +19,6 @@ signals:
     void accept();
     void reject();
     void finished();
-    void languageChanged();
     void accepted();
     void rejected();
     void requestPageFocus();
