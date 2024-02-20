@@ -1512,6 +1512,7 @@ void MegaApplication::onLogout()
     mTransfersModel->resetModel();
     mStalledIssuesModel->fullReset();
     mStatusController->reset();
+    EmailRequester::instance()->reset();
 
     // Queue processing of logout cleanup to avoid race conditions
     // due to threadifing processing.

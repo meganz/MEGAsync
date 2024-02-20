@@ -27,8 +27,8 @@ class EmailRequester : public QObject, public mega::MegaGlobalListener
 
 public:
     static EmailRequester* instance();
-    ~EmailRequester() override;
 
+    void reset();
     QString getEmail(mega::MegaHandle userHandle);
     RequestInfo* addUser(mega::MegaHandle userHandle, const QString& email = QString());
     void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;

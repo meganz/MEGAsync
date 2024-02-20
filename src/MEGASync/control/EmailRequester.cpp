@@ -15,7 +15,7 @@ EmailRequester::EmailRequester():
     MegaSyncApp->getMegaApi()->addGlobalListener(mGlobalListener.get());
 }
 
-EmailRequester::~EmailRequester()
+void EmailRequester::reset()
 {
     mRequestsData.clear();
 }
