@@ -13,11 +13,19 @@ class RequestInfo: public QObject
     Q_OBJECT
 
 public :
+    explicit RequestInfo(QObject* parent = nullptr)
+        : QObject(parent)
+    {
+    }
     bool requestFinished;
-    QString email;
+    void setEmail(const QString& email);
+    QString getEmail() const;
 
 signals:
     void emailChanged(QString email);
+
+private:
+    QString mEmail;
 };
 
 
@@ -30,6 +38,7 @@ public:
 
     void reset();
     QString getEmail(mega::MegaHandle userHandle);
+    static RequestInfo* getRequest(mega::MegaHandle userHandle, const QString& email = QString());
     RequestInfo* addUser(mega::MegaHandle userHandle, const QString& email = QString());
     void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
 
@@ -39,7 +48,7 @@ private:
 
     mega::MegaApi* mMegaApi;
     QRecursiveMutex mRequestsDataLock;
-    QMap<mega::MegaHandle, std::shared_ptr<RequestInfo>> mRequestsData;
+    QMap<mega::MegaHandle, RequestInfo*> mRequestsData;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     static EmailRequester* mInstance;
 };

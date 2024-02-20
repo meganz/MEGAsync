@@ -20,7 +20,7 @@ void MegaUserAlertExt::init()
 
     if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
     {
-        auto requestInfo = EmailRequester::instance()->addUser(mMegaUserAlert->getUserHandle(), QString::fromUtf8(mMegaUserAlert->getEmail()));
+        auto requestInfo = EmailRequester::getRequest(mMegaUserAlert->getUserHandle(), QString::fromUtf8(mMegaUserAlert->getEmail()));
 
         connect(requestInfo, &RequestInfo::emailChanged, this, &MegaUserAlertExt::setEmail, Qt::QueuedConnection);
     }

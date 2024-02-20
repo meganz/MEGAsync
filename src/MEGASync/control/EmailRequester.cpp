@@ -1,5 +1,4 @@
 #include "EmailRequester.h"
-
 #include "MegaApplication.h"
 
 #include "mega/types.h"
@@ -17,19 +16,22 @@ EmailRequester::EmailRequester():
 
 void EmailRequester::reset()
 {
+    qDeleteAll(mRequestsData);
     mRequestsData.clear();
 }
 
 RequestInfo* EmailRequester::addUser(mega::MegaHandle userHandle, const QString& email)
 {
+    assert(userHandle != mega::INVALID_HANDLE);
+
     QMutexLocker locker(&mRequestsDataLock);
 
     auto foundUserHandleIt = mRequestsData.find(userHandle);
     if (foundUserHandleIt == mRequestsData.end())
     {
-        auto requestInfo = std::make_shared<RequestInfo>();
+        auto requestInfo = new RequestInfo(this);
         requestInfo->requestFinished = !email.isEmpty();
-        requestInfo->email = email;
+        requestInfo->setEmail(email);
 
         mRequestsData[userHandle] = requestInfo;
 
@@ -39,7 +41,7 @@ RequestInfo* EmailRequester::addUser(mega::MegaHandle userHandle, const QString&
         }
     }
 
-    return mRequestsData[userHandle].get();
+    return mRequestsData[userHandle];
 }
 
 EmailRequester* EmailRequester::instance()
@@ -81,10 +83,9 @@ void EmailRequester::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users
             if (requestDataIt != mRequestsData.end())
             {
                 auto email = QString::fromUtf8(user->getEmail());
-                if (requestDataIt->get()->email != email)
+                if ((*requestDataIt)->getEmail() != email)
                 {
-                    requestDataIt->get()->email = email;
-                    emit requestDataIt->get()->emailChanged(email);
+                    (*requestDataIt)->setEmail(email);
                 }
             }
         }
@@ -100,14 +101,19 @@ QString EmailRequester::getEmail(mega::MegaHandle userHandle)
         auto foundUserHandleIt = mRequestsData.find(userHandle);
         if (foundUserHandleIt != mRequestsData.end())
         {
-            if (foundUserHandleIt->get()->requestFinished)
+            if ((*foundUserHandleIt)->requestFinished)
             {
-                email = foundUserHandleIt->get()->email;
+                email = (*foundUserHandleIt)->getEmail();
             }
         }
     }
 
     return email;
+}
+
+RequestInfo* EmailRequester::getRequest(mega::MegaHandle userHandle, const QString& email)
+{
+    return instance()->addUser(userHandle, email);
 }
 
 void EmailRequester::requestEmail(mega::MegaHandle userHandle)
@@ -117,7 +123,12 @@ void EmailRequester::requestEmail(mega::MegaHandle userHandle)
     auto foundUserHandleIt = mRequestsData.find(userHandle);
     if (foundUserHandleIt != mRequestsData.end())
     {
-        mMegaApi->getUserEmail(userHandle, new mega::OnFinishOneShot(mMegaApi,  this, [this, userHandle]
+        if(!(*foundUserHandleIt)->requestFinished)
+        {
+            return;
+        }
+
+        mMegaApi->getUserEmail(userHandle, new mega::OnFinishOneShot(mMegaApi,  this, [this]
             (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& error)
             {
                 if(isContextValid && request.getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL)
@@ -131,12 +142,11 @@ void EmailRequester::requestEmail(mega::MegaHandle userHandle)
 
                     QMutexLocker locker(&mRequestsDataLock);
 
-                    auto foundUserHandleIt = mRequestsData.find(userHandle);
+                    auto foundUserHandleIt = mRequestsData.find(request.getNodeHandle());
                     if (foundUserHandleIt != mRequestsData.end())
                     {
-                        foundUserHandleIt->get()->requestFinished = true;
-                        foundUserHandleIt->get()->email = email;
-                        emit foundUserHandleIt->get()->emailChanged(email);
+                        (*foundUserHandleIt)->requestFinished = true;
+                        (*foundUserHandleIt)->setEmail(email);
                     }
                 }
             })
@@ -144,3 +154,17 @@ void EmailRequester::requestEmail(mega::MegaHandle userHandle)
     }
 }
 
+
+void RequestInfo::setEmail(const QString& email)
+{
+    if(!email.isEmpty() && mEmail != email)
+    {
+        mEmail = email;
+        emit emailChanged(mEmail);
+    }
+}
+
+QString RequestInfo::getEmail() const
+{
+    return mEmail;
+}

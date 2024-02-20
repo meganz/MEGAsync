@@ -191,7 +191,7 @@ void DesktopNotifications::requestEmail(mega::MegaUserAlert* alert)
     {
         mega::MegaUserAlert* alertCopy = alert->copy();
 
-        auto requestInfo = EmailRequester::instance()->addUser(alert->getUserHandle(), QString());
+        auto requestInfo = EmailRequester::getRequest(alert->getUserHandle());
 
         connect(requestInfo, &RequestInfo::emailChanged, this, [this, alertCopy](QString email) {
                 std::unique_ptr<mega::MegaUserAlert> alert(alertCopy);
