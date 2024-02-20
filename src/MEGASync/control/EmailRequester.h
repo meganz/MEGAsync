@@ -5,8 +5,8 @@
 #include <mega/bindings/qt/QTMegaRequestListener.h>
 
 #include <QMap>
-#include <QMutex>
 #include <QObject>
+#include <QRecursiveMutex>
 
 class RequestInfo: public QObject
 {
@@ -38,7 +38,7 @@ private:
     void requestEmail(mega::MegaHandle userHandle);
 
     mega::MegaApi* mMegaApi;
-    QMutex mRequestsDataLock;
+    QRecursiveMutex mRequestsDataLock;
     QMap<mega::MegaHandle, std::shared_ptr<RequestInfo>> mRequestsData;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     static EmailRequester* mInstance;
