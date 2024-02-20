@@ -206,7 +206,7 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
                 if(nonExistData)
                 {
                     item->state = TransferData::TRANSFER_FAILED;
-                    nonExistData->mFiles.nonExistFailedTransfers.insert(item->id, item);
+                    mFiles.nonExistFailedTransfers.insert(item->id, item);
                 }
             }
         }
@@ -496,10 +496,7 @@ void TransferMetaData::checkAndSendNotification()
 
             if(nonExistData)
             {
-                //Do not overwrite non exist files
-                auto nonExistFiles = nonExistData->mFiles.nonExistFailedTransfers;
                 nonExistData->mFiles = mFiles;
-                nonExistData->mFiles.nonExistFailedTransfers = nonExistFiles;
 
                 nonExistData->mEmptyFolders = mEmptyFolders;
                 nonExistData->mFolders = mFolders;
