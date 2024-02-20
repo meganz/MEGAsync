@@ -20,7 +20,7 @@ public:
     MegaUserAlertExt& operator=(MegaUserAlertExt&& megaUserAlert);
 
     QString getEmail() const;
-    void setEmail();
+    void setEmail(QString email);
     bool isValid() const;
     void reset(mega::MegaUserAlert* alert);
 

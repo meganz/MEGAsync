@@ -20,18 +20,26 @@ EmailRequester::~EmailRequester()
     mRequestsData.clear();
 }
 
-void EmailRequester::addEmailTracking(mega::MegaHandle userHandle, const QString& email)
+RequestInfo* EmailRequester::addUser(mega::MegaHandle userHandle, const QString& email)
 {
     QMutexLocker locker(&mRequestsDataLock);
 
     auto foundUserHandleIt = mRequestsData.find(userHandle);
     if (foundUserHandleIt == mRequestsData.end())
     {
-        RequestInfo requestInfo;
-        requestInfo.requestFinished = true;
-        requestInfo.email = email;
+        auto requestInfo = std::make_shared<RequestInfo>();
+        requestInfo->requestFinished = !email.isEmpty();
+        requestInfo->email = email;
+
         mRequestsData[userHandle] = requestInfo;
+
+        if (email.isEmpty())
+        {
+            requestEmail(userHandle);
+        }
     }
+
+    return mRequestsData[userHandle].get();
 }
 
 EmailRequester* EmailRequester::instance()
@@ -57,7 +65,6 @@ void EmailRequester::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users
     /*
      * Look for alerts from users that changed their email and update them
      */
-    bool dataChanged = false;
     {
         QMutexLocker locker(&mRequestsDataLock);
 
@@ -74,22 +81,17 @@ void EmailRequester::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users
             if (requestDataIt != mRequestsData.end())
             {
                 auto email = QString::fromUtf8(user->getEmail());
-                if (requestDataIt->email != email)
+                if (requestDataIt->get()->email != email)
                 {
-                    requestDataIt->email = email;
-                    dataChanged = true;
+                    requestDataIt->get()->email = email;
+                    emit requestDataIt->get()->emailChanged(email);
                 }
             }
         }
     }
-
-    if (dataChanged)
-    {
-        emit emailChanged();
-    }
 }
 
-QString EmailRequester::getEmail(mega::MegaHandle userHandle, bool forceRequest)
+QString EmailRequester::getEmail(mega::MegaHandle userHandle)
 {
     QString email;
 
@@ -98,16 +100,11 @@ QString EmailRequester::getEmail(mega::MegaHandle userHandle, bool forceRequest)
         auto foundUserHandleIt = mRequestsData.find(userHandle);
         if (foundUserHandleIt != mRequestsData.end())
         {
-            if (foundUserHandleIt->requestFinished)
+            if (foundUserHandleIt->get()->requestFinished)
             {
-                email = foundUserHandleIt->email;
+                email = foundUserHandleIt->get()->email;
             }
         }
-    }
-
-    if (email.isEmpty() && forceRequest)
-    {
-        requestEmail(userHandle);
     }
 
     return email;
@@ -118,20 +115,16 @@ void EmailRequester::requestEmail(mega::MegaHandle userHandle)
     QMutexLocker locker(&mRequestsDataLock);
 
     auto foundUserHandleIt = mRequestsData.find(userHandle);
-    if (foundUserHandleIt == mRequestsData.end())
+    if (foundUserHandleIt != mRequestsData.end())
     {
-        RequestInfo requestInfo;
-        requestInfo.requestFinished = false;
-        mRequestsData[userHandle] = requestInfo;
-
         mMegaApi->getUserEmail(userHandle, new mega::OnFinishOneShot(mMegaApi,  this, [this, userHandle]
             (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& error)
             {
-                if(request.getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL)
+                if(isContextValid && request.getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL)
                 {
                     QString email;
 
-                    if (error.getErrorCode() == mega::MegaError::API_OK && request.getEmail() != nullptr && isContextValid)
+                    if (error.getErrorCode() == mega::MegaError::API_OK && request.getEmail() != nullptr)
                     {
                         email = QString::fromUtf8(request.getEmail());
                     }
@@ -141,10 +134,9 @@ void EmailRequester::requestEmail(mega::MegaHandle userHandle)
                     auto foundUserHandleIt = mRequestsData.find(userHandle);
                     if (foundUserHandleIt != mRequestsData.end())
                     {
-                        foundUserHandleIt->requestFinished = true;
-                        foundUserHandleIt->email = email;
-
-                        emit emailChanged();
+                        foundUserHandleIt->get()->requestFinished = true;
+                        foundUserHandleIt->get()->email = email;
+                        emit foundUserHandleIt->get()->emailChanged(email);
                     }
                 }
             })
