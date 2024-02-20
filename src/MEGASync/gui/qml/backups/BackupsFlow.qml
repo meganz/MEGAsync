@@ -49,8 +49,9 @@ Item {
             id: selectBackupFoldersPage
 
             SelectFoldersPage {
-                footerButtons.leftSecondary.text: root.isOnboarding ? Strings.skip : Strings.cancel
-                footerButtons.rightSecondary.visible: isOnboarding
+                id: selectFoldersPageItem
+
+                isOnboardingRef: root.isOnboarding
             }
         }
 
@@ -58,7 +59,9 @@ Item {
             id: confirmBackupFoldersPage
 
             ConfirmFoldersPage {
-                footerButtons.leftSecondary.visible: isOnboarding
+                id: confirmFoldersPageItem
+
+                isOnboardingRef: root.isOnboarding
                 backupsProxyModelRef: backupsProxyModel
             }
         }

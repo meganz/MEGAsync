@@ -9,9 +9,11 @@ import components.buttons 1.0
 RowLayout {
     id: root
 
-    property alias leftSecondary: leftSecondaryComp
-    property alias rightSecondary: rightSecondaryComp
-    property alias rightPrimary: rightPrimaryComp
+    property alias leftIcon: leftIconButton
+    property alias leftSecondary: leftSecondaryButton
+    property alias rightTertiary: rightTertiaryButton
+    property alias rightSecondary: rightSecondaryButton
+    property alias rightPrimary: rightPrimaryButton
 
     anchors {
         bottom: parent.bottom
@@ -22,28 +24,61 @@ RowLayout {
         rightMargin: -rightPrimary.sizes.focusBorderWidth
     }
 
-    OutlineButton {
-        id: leftSecondaryComp
+    //        left               |                    right
+    // +------+ +-----------+        +----------+ +-----------+ +---------+
+    // | icon | | secondary |        | tertiary | | secundary | | primary |
+    // +------+ +-----------+        +----------+ +-----------+ +---------+
+    //
+    // Default visibility:
+    //    NO         YES                  NO           YES          YES
 
-        text: Strings.skip
-        onClicked: {
-            window.close();
+    RowLayout {
+        id: leftButtonsLayout
+
+        spacing: 0
+        Layout.alignment: Qt.AlignLeft
+
+        IconButton {
+            id: leftIconButton
+
+            icons.source: Images.helpCircle
+            visible: false
+        }
+
+        OutlineButton {
+            id: leftSecondaryButton
+
+            text: Strings.skip
+            onClicked: {
+                window.close();
+            }
         }
     }
 
     RowLayout {
-        id: buttonsLayout
+        id: rightButtonsLayout
 
+        spacing: 0
         Layout.alignment: Qt.AlignRight
 
         OutlineButton {
-            id: rightSecondaryComp
+            id: rightTertiaryButton
+
+            text: Strings.cancel
+            visible: false
+            onClicked: {
+                window.close();
+            }
+        }
+
+        OutlineButton {
+            id: rightSecondaryButton
 
             text: Strings.previous
         }
 
         PrimaryButton {
-            id: rightPrimaryComp
+            id: rightPrimaryButton
 
             text: Strings.next
             icons.source: Images.arrowRight

@@ -1,3 +1,5 @@
+import common 1.0
+
 import BackupsModel 1.0
 
 SelectFoldersPageForm {
@@ -7,9 +9,17 @@ SelectFoldersPageForm {
     signal selectFolderMoveToConfirm
 
     footerButtons {
+        leftIcon.onClicked: {
+            Qt.openUrlExternally(Links.desktopSyncApp);
+        }
 
         rightSecondary.onClicked: {
-            root.selectFolderMoveToBack();
+            if(root.isOnboardingRef) {
+                root.selectFolderMoveToBack();
+            }
+            else {
+                window.close();
+            }
         }
 
         rightPrimary.onClicked: {

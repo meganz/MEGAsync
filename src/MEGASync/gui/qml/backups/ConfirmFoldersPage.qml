@@ -1,5 +1,7 @@
 import QtQuick 2.15
 
+import common 1.0
+
 import BackupsModel 1.0
 import BackupsProxyModel 1.0
 
@@ -12,6 +14,9 @@ ConfirmFoldersPageForm {
     signal confirmFoldersMoveToFinal(bool success)
 
     footerButtons {
+        leftIcon.onClicked: {
+            Qt.openUrlExternally(Links.desktopSyncApp);
+        }
 
         rightSecondary.onClicked: {
             backupsModelAccess.clean(true);

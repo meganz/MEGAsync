@@ -16,4 +16,5 @@ Rectangle {
     FooterButtons {
         id: footerButtonsItem
     }
+
 }

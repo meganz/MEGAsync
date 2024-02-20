@@ -12,6 +12,7 @@ FooterButtonsPage {
     id: root
 
     footerButtons {
+        leftIcon.visible: true
         leftSecondary.visible: false
         rightSecondary {
             text: Strings.viewInSettings

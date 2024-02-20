@@ -12,13 +12,20 @@ import QmlDeviceName 1.0
 FooterButtonsPage {
     id: root
 
+    required property bool isOnboardingRef
+
     property alias enableConfirmHeader: confirmHeader.enabled
 
-    footerButtons.rightPrimary {
-        text: BackupsStrings.backUp
-        icons.source: Images.database
-        enabled: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.NONE
-                    || backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
+    footerButtons {
+        leftIcon.visible: !root.isOnboardingRef
+        leftSecondary.visible: root.isOnboardingRef
+        rightTertiary.visible: !root.isOnboardingRef
+        rightPrimary {
+            text: BackupsStrings.backUp
+            icons.source: Images.database
+            enabled: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.NONE
+                        || backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
+        }
     }
 
     ColumnLayout {
@@ -35,6 +42,7 @@ FooterButtonsPage {
             id: confirmHeader
 
             title: BackupsStrings.confirmBackupFoldersTitle
+            titleVisible: root.isOnboardingRef
         }
 
         ColumnLayout {

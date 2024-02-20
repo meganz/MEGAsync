@@ -10,6 +10,7 @@ ColumnLayout {
 
     property alias title: title.rawText
     property alias titleWeight: title.font.weight
+    property alias titleVisible: title.visible
     property alias description: description.text
     property alias descriptionWeight: description.font.weight
     property alias descriptionColor: description.color

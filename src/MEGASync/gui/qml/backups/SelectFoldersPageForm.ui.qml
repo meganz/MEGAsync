@@ -11,10 +11,17 @@ import BackupsModel 1.0
 FooterButtonsPage {
     id: root
 
-    footerButtons.rightPrimary {
-        text: BackupsStrings.backUp
-        icons.source: Images.database
-        enabled: backupsModelAccess.checkAllState !== Qt.Unchecked
+    required property bool isOnboardingRef
+
+    footerButtons {
+        leftIcon.visible: !root.isOnboardingRef
+        leftSecondary.visible: root.isOnboardingRef
+        rightSecondary.text: root.isOnboardingRef ? Strings.previous : Strings.cancel
+        rightPrimary {
+            text: root.isOnboardingRef ? BackupsStrings.backUp : Strings.next
+            icons.source: root.isOnboardingRef ? Images.database : Images.arrowRight
+            enabled: backupsModelAccess.checkAllState !== Qt.Unchecked
+        }
     }
 
     ColumnLayout {
@@ -31,6 +38,7 @@ FooterButtonsPage {
             id: headerItem
 
             title: BackupsStrings.selectBackupFoldersTitle
+            titleVisible: root.isOnboardingRef
             description: BackupsStrings.selectBackupFoldersDescription
         }
 
@@ -38,6 +46,7 @@ FooterButtonsPage {
             id: infoAccount
 
             Layout.preferredWidth: parent.width
+            visible: root.isOnboardingRef
         }
     }
 
