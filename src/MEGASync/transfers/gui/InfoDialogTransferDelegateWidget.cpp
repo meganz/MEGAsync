@@ -404,7 +404,7 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
 
         int availableWidth = mUi->wContainerCompletedData->width() - mUi->lFileTypeCompleted->width() - mUi->wOptions->width()
                         - mUi->wContainerCompletedData->layout()->spacing() * 2 - rightMargin - leftMargin
-                        - mUi->horizontalLayout_5->spacing();
+                        - mUi->horizontalLayout_5->spacing() - 3;
 
         QString text = tr("Failed: %1").arg(getErrorInContext());
         QString elidedText = mUi->lElapsedTime->fontMetrics().elidedText(text, Qt::ElideMiddle, availableWidth);
