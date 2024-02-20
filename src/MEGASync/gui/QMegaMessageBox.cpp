@@ -85,6 +85,10 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
              || (info.defaultButton != NoButton && sb == uint(info.defaultButton)))
      {
          msgBox->setDefaultButton(button);
+#ifdef Q_OS_MACOS
+         // Work-around for default buttons not highlighted correctly in MacOS(
+         button->setFixedHeight(32);
+#endif
      }
     }
 
