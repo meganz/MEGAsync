@@ -3,7 +3,6 @@ import QtQuick 2.15
 import backups 1.0
 
 import onboard 1.0
-import onboard.syncs_types.left_panel 1.0
 
 import BackupsModel 1.0
 

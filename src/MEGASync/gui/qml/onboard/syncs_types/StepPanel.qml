@@ -5,6 +5,7 @@ import QtQuick.Controls 2.15
 import common 1.0
 
 import components.buttons 1.0
+import components.steps 1.0
 
 import onboard 1.0
 
@@ -32,10 +33,10 @@ Rectangle {
     height: parent.height
     color: colorStyle.surface1
 
-    state: step1DeviceName
+    state: root.step1DeviceName
     states: [
         State {
-            name: step1DeviceName
+            name: root.step1DeviceName
             PropertyChanges { target: step1_deviceName; toState: Step.ToStates.CURRENT; }
             PropertyChanges { target: step2_line; color: colorStyle.iconButtonDisabled; }
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.DISABLED; }
@@ -45,15 +46,15 @@ Rectangle {
             PropertyChanges { target: step4_content; visible: false; }
         },
         State {
-            name: step2InstallationType
-            extend: step1DeviceName
+            name: root.step2InstallationType
+            extend: root.step1DeviceName
             PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
             PropertyChanges { target: step2_line; color: colorStyle.iconButton; }
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT; }
         },
         State {
-            name: step3
-            extend: step2InstallationType
+            name: root.step3
+            extend: root.step2InstallationType
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
             PropertyChanges { target: step3_line; color: colorStyle.iconButton; visible: true; }
             PropertyChanges { target: step3_content; toState: SubStep.ToStates.CURRENT; visible: true; }
@@ -61,25 +62,25 @@ Rectangle {
             PropertyChanges { target: step4_content; toState: SubStep.ToStates.DISABLED; visible: true; }
         },
         State {
-            name: step4
-            extend: step3
+            name: root.step4
+            extend: root.step3
             PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; }
             PropertyChanges { target: step4_line; color: colorStyle.iconButton; }
             PropertyChanges { target: step4_content; toState: SubStep.ToStates.CURRENT; }
         },
         State {
-            name: step4Warning
-            extend: step4
+            name: root.step4Warning
+            extend: root.step4
             PropertyChanges { target: step4_content; toState: SubStep.ToStates.WARNING; }
         },
         State {
-            name: step4Error
-            extend: step4
+            name: root.step4Error
+            extend: root.step4
             PropertyChanges { target: step4_content; toState: SubStep.ToStates.ERROR; }
         },
         State {
-            name: stepAllDone
-            extend: step4
+            name: root.stepAllDone
+            extend: root.step4
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.DONE; }
             PropertyChanges { target: step4_content; toState: SubStep.ToStates.DONE; }
         }
@@ -107,12 +108,12 @@ Rectangle {
         Rectangle {
             id: step2_line
 
-            Layout.preferredWidth: lineWidth
-            Layout.preferredHeight: lineMainStepHeight
-            Layout.leftMargin: lineLeftMargin
+            Layout.preferredWidth: root.lineWidth
+            Layout.preferredHeight: root.lineMainStepHeight
+            Layout.leftMargin: root.lineLeftMargin
             Layout.alignment: Qt.AlignTop
             color: colorStyle.buttonSecondaryPressed
-            radius: lineRadius
+            radius: root.lineRadius
         }
 
         Step {
@@ -127,18 +128,18 @@ Rectangle {
         Rectangle {
             id: step3_line
 
-            Layout.preferredWidth: lineWidth
-            Layout.preferredHeight: lineSubStepHeight
-            Layout.leftMargin: lineLeftMargin
+            Layout.preferredWidth: root.lineWidth
+            Layout.preferredHeight: root.lineSubStepHeight
+            Layout.leftMargin: root.lineLeftMargin
             Layout.alignment: Qt.AlignTop
             color: colorStyle.buttonSecondaryPressed
-            radius: lineRadius
+            radius: root.lineRadius
         }
 
         SubStep {
             id: step3_content
 
-            Layout.leftMargin: subStepLeftMargin
+            Layout.leftMargin: root.subStepLeftMargin
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
         }
@@ -146,18 +147,18 @@ Rectangle {
         Rectangle {
             id: step4_line
 
-            Layout.preferredWidth: lineWidth
-            Layout.preferredHeight: lineSubStepHeight
-            Layout.leftMargin: lineLeftMargin
+            Layout.preferredWidth: root.lineWidth
+            Layout.preferredHeight: root.lineSubStepHeight
+            Layout.leftMargin: root.lineLeftMargin
             Layout.alignment: Qt.AlignTop
             color: colorStyle.buttonSecondaryPressed
-            radius: lineRadius
+            radius: root.lineRadius
         }
 
         SubStep {
             id: step4_content
 
-            Layout.leftMargin: subStepLeftMargin
+            Layout.leftMargin: root.subStepLeftMargin
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
         }

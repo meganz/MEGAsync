@@ -49,6 +49,9 @@
         <file>components/pages/FooterButtonsPage.qml</file>
         <file>components/progressBars/qmldir</file>
         <file>components/progressBars/HorizontalProgressBar.qml</file>
+        <file>components/steps/qmldir</file>
+        <file>components/steps/Step.qml</file>
+        <file>components/steps/SubStep.qml</file>
         <file>components/textFields/qmldir</file>
         <file>components/textFields/EmailTextField.qml</file>
         <file>components/textFields/IconTextField.qml</file>
@@ -110,10 +113,7 @@
         <file>onboard/syncs_types/SyncsType.qml</file>
         <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
         <file>onboard/syncs_types/BackupsPage.qml</file>
-        <file>onboard/syncs_types/left_panel/qmldir</file>
-        <file>onboard/syncs_types/left_panel/Step.qml</file>
-        <file>onboard/syncs_types/left_panel/StepPanel.qml</file>
-        <file>onboard/syncs_types/left_panel/SubStep.qml</file>
+        <file>onboard/syncs_types/StepPanel.qml</file>
         <file>onboard/syncs_types/syncs/qmldir</file>
         <file>onboard/syncs_types/syncs/ChooseSyncFolder.qml</file>
         <file>onboard/syncs_types/syncs/FullSyncPage.qml</file>
