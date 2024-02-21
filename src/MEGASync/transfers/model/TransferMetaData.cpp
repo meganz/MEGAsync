@@ -518,8 +518,12 @@ void TransferMetaData::checkAndSendNotification()
             if(!appIds.isEmpty())
             {
                 //This method is called from the transfer model secondary thread, but the notification should be called from the main thread
-                Utilities::queueFunctionInAppThread([this, appIds]()
+                Utilities::queueFunctionInAppThread([appIds]()
                 {
+                    if(MegaSyncApp->finished())
+                    {
+                        return;
+                    }
                     //Transfers finished and ready, show notification
                     foreach(auto& appId, appIds)
                     {
