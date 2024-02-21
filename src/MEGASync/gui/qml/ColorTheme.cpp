@@ -1,5 +1,7 @@
 #include "ColorTheme.h"
 
+#include "QmlTheme.h"
+
 #include "megaapi.h"
 
 #include <QQmlComponent>
@@ -9,38 +11,23 @@
 
 static const QString ColorStyleFilePath = QString::fromUtf8("qrc:/common/themes/%1/Colors.qml");
 
-ColorTheme::ColorTheme(QQmlEngine *engine, QObject *parent):
+ColorTheme::ColorTheme(const QmlTheme* const theme, QQmlEngine *engine, QObject *parent):
     QObject(parent),
-    mEngine(engine)
+    mEngine(engine),
+    mTheme(theme)
 {
-    init();
+    assert(mTheme != nullptr);
+
+    mCurrentTheme = mTheme->getTheme();
+
+    connect(mTheme, &QmlTheme::themeChanged, this, &ColorTheme::onThemeChanged);
 
     loadThemes();
 }
 
-void ColorTheme::init()
-{
-    // @jsubi.
-    // TODO : get theme list.
-    // TODO : get current theme.
-    // TODO : set connection to capture theme changed event.
-
-    // snipet to check theme change from light to dark.
-    /*
-    static QTimer timer;
-    timer.start(10000);
-    connect(&timer, &QTimer::timeout, this, [this](){
-        onThemeChanged(QLatin1String("dark"));
-    });
-    */
-
-    mCurrentTheme = QString().fromUtf8("light");
-    mThemes << QString().fromUtf8("dark") << QString().fromUtf8("light");
-}
-
 void ColorTheme::onThemeChanged(QString theme)
-{
-    if (theme != mCurrentTheme)
+{    
+    if (!theme.isEmpty() && mCurrentTheme != theme)
     {
         mCurrentTheme = theme;
 
@@ -50,7 +37,7 @@ void ColorTheme::onThemeChanged(QString theme)
 
 void ColorTheme::loadThemes()
 {
-    for (const auto& theme: qAsConst(mThemes))
+    for (const auto& theme: mTheme->getThemes())
     {
         QQmlComponent qmlComponent(mEngine);
         QString colorStyleFile = ColorStyleFilePath.arg(theme);
@@ -72,7 +59,7 @@ QString ColorTheme::getValue(const char* tokenId)
 {
     QString returnValue;
 
-    if(mThemes.contains(mCurrentTheme))
+    if(mThemesMap.contains(mCurrentTheme))
     {
         returnValue = mThemesMap[mCurrentTheme]->property(tokenId).toString();
     }

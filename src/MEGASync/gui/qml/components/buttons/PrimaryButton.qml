@@ -4,7 +4,9 @@ Button {
     id: root
 
     colors {
-        background: colorStyle.buttonPrimary
+        //background: colorStyle.buttonPrimary
+        background: themeManager.theme, categoryStyle.getValue("primaryButton", "buttonPrimary")
+
         border: colors.background
         pressed: colorStyle.buttonPrimaryPressed
         borderPressed: colors.pressed

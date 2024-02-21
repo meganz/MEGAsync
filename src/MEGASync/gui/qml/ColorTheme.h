@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QQmlEngine>
-#include <QTimer>
+
+class QmlTheme;
 
 class ColorTheme : public QObject
 {
@@ -110,7 +111,7 @@ class ColorTheme : public QObject
     Q_PROPERTY (QString gradientContrastBottom READ gradientContrastBottom NOTIFY valueChanged)
 
 public:
-    explicit ColorTheme(QQmlEngine* engine, QObject *parent = nullptr);
+    explicit ColorTheme(const QmlTheme* const theme, QQmlEngine* engine, QObject *parent = nullptr);
     ~ColorTheme();
 
     QString borderInteractive();
@@ -220,12 +221,11 @@ signals:
     void valueChanged();
 
 private:
-    QString mCurrentTheme;
     QQmlEngine* mEngine;
-    QStringList mThemes;
     QMap<QString, QObject*> mThemesMap;
+    const QmlTheme* const mTheme;
+    QString mCurrentTheme;
 
-    void init();
     void loadThemes();
     QString getValue(const char* tokenId);
 };
