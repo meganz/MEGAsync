@@ -14,10 +14,12 @@ class RequestInfo: public QObject
 
 public :
     explicit RequestInfo(QObject* parent = nullptr)
-        : QObject(parent)
+        : QObject(parent),
+        requestFinished(true)
     {
     }
-    bool requestFinished = true;
+
+    bool requestFinished;
     void setEmail(const QString& email);
     QString getEmail() const;
 
