@@ -6,7 +6,6 @@
 #include <QObject>
 
 #include <memory>
-#include <iostream>
 
 class MegaUserAlertExt : public QObject
 {
