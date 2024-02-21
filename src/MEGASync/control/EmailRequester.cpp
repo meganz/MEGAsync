@@ -30,7 +30,6 @@ RequestInfo* EmailRequester::addUser(mega::MegaHandle userHandle, const QString&
     if (foundUserHandleIt == mRequestsData.end())
     {
         auto requestInfo = new RequestInfo(this);
-        requestInfo->requestFinished = !email.isEmpty();
         requestInfo->setEmail(email);
 
         mRequestsData[userHandle] = requestInfo;
@@ -128,6 +127,7 @@ void EmailRequester::requestEmail(mega::MegaHandle userHandle)
             return;
         }
 
+        (*foundUserHandleIt)->requestFinished = false;
         mMegaApi->getUserEmail(userHandle, new mega::OnFinishOneShot(mMegaApi,  this, [this]
             (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& error)
             {

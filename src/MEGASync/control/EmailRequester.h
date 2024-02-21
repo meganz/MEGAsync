@@ -17,7 +17,7 @@ public :
         : QObject(parent)
     {
     }
-    bool requestFinished;
+    bool requestFinished = true;
     void setEmail(const QString& email);
     QString getEmail() const;
 
