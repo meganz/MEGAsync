@@ -31,6 +31,7 @@ FooterButtonsPage {
             top: parent.top
             left: parent.left
             right: parent.right
+            topMargin: 24
         }
         spacing: 8
 
@@ -63,6 +64,18 @@ FooterButtonsPage {
             wrapMode: Text.Wrap
             lineHeight: 20
             lineHeightMode: Text.FixedHeight
+        }
+
+        Texts.SecondaryText {
+            id: descriptionItem2
+
+            Layout.preferredWidth: parent.width
+            text: BackupsStrings.finalStepBackup2
+            font.pixelSize: Texts.Text.Size.MEDIUM
+            wrapMode: Text.Wrap
+            lineHeight: 20
+            lineHeightMode: Text.FixedHeight
+            visible: backupsAccess != null ? !backupsAccess.comesFromSettings : false
         }
 
     } // ColumnLayout: mainLayout

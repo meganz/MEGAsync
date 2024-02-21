@@ -11,4 +11,3 @@ InstallationTypePage 1.0 InstallationTypePage.qml
 InstallationTypePageForm 1.0 InstallationTypePageForm.ui.qml
 NavigationInfo 1.0 NavigationInfo.qml
 BackupsPage 1.0 BackupsPage.qml
-StepPanel 1.0 StepPanel.qml

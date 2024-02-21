@@ -19,56 +19,79 @@ BackupsQmlDialog {
     minimumHeight: 560
     minimumWidth: 600
 
-    Rectangle {
-        id: backupsContentItem
+    Column {
+        id: contentItem
 
         anchors.fill: parent
-        color: colorStyle.surface1
 
-        readonly property string backupsFlow: "backupsFlow"
-        readonly property string resume: "resume"
+        StepPanel {
+            id: stepPanelItem
 
-        state: backupsFlow
-        states: [
-            State {
-                name: backupsContentItem.backupsFlow
-                StateChangeScript {
-                    script: stackView.replace(backupsFlowPage);
-                }
-            },
-            State {
-                name: backupsContentItem.resume
-                StateChangeScript {
-                    script: stackView.replace(resumePage);
-                }
-            }
-        ]
-
-        StackViewBase {
-            id: stackView
-
-            anchors.fill: parent
-            anchors.margins: 48
-
-            Component {
-                id: backupsFlowPage
-
-                BackupsPage {
-                    id: backupsFlowItem
-
-                    backupsContentItemRef: backupsContentItem
-                }
-            }
-
-            Component {
-                id: resumePage
-
-                ResumePage {
-                    id: resumePageItem
-                }
-            }
+            width: parent.width
+            height: 128
         }
 
-    } // Rectangle: contentItem
+        Rectangle {
+            id: backupsContentItem
+
+            readonly property string backupsFlow: "backupsFlow"
+            readonly property string resume: "resume"
+
+            width: parent.width
+            height: parent.height - stepPanelItem.height
+            color: colorStyle.surface1
+
+            state: backupsFlow
+            states: [
+                State {
+                    name: backupsContentItem.backupsFlow
+                    StateChangeScript {
+                        script: stackView.replace(backupsFlowPage);
+                    }
+                },
+                State {
+                    name: backupsContentItem.resume
+                    StateChangeScript {
+                        script: stackView.replace(resumePage);
+                    }
+                    PropertyChanges { target: stepPanelItem; state: stepPanelItem.stepAllDone; }
+                }
+            ]
+
+            StackViewBase {
+                id: stackView
+
+                readonly property int contentMargin: 48
+
+                anchors {
+                    fill: parent
+                    topMargin: stackView.contentMargin / 2
+                    leftMargin: stackView.contentMargin
+                    rightMargin: stackView.contentMargin
+                    bottomMargin: stackView.contentMargin
+                }
+
+                Component {
+                    id: backupsFlowPage
+
+                    BackupsPage {
+                        id: backupsFlowItem
+
+                        stepPanelRef: stepPanelItem
+                        backupsContentItemRef: backupsContentItem
+                    }
+                }
+
+                Component {
+                    id: resumePage
+
+                    ResumePage {
+                        id: resumePageItem
+                    }
+                }
+            }
+
+        } // Rectangle: backupsContentItem
+    }
 
 }

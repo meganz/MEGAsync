@@ -36,7 +36,7 @@ FooterButtonsPage {
             left: parent.left
             right: parent.right
         }
-        spacing: 24
+        spacing: root.isOnboardingRef ? 24 : 0
 
         HeaderTexts {
             id: confirmHeader

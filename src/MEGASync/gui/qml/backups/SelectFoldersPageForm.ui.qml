@@ -58,7 +58,7 @@ FooterButtonsPage {
             left: parent.left
             right: parent.right
             bottom: footerButtons.top
-            topMargin: 8 // value by design
+            topMargin: root.isOnboardingRef ? 8 : selectFolderLayout.spacing
             bottomMargin: selectFolderLayout.spacing
         }
     }

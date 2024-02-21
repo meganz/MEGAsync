@@ -12,8 +12,8 @@ Item {
     id: root
 
     readonly property string syncType: "syncType"
-    readonly property string fullSync: "full"
-    readonly property string selectiveSync: "selective"
+    readonly property string fullSync: "fullSync"
+    readonly property string selectiveSync: "selectiveSync"
 
     signal syncsFlowMoveToFinal
     signal syncsFlowMoveToBack
@@ -23,12 +23,12 @@ Item {
 
     state: syncsPanel.navInfo.fullSyncDone
                 || syncsPanel.navInfo.typeSelected === SyncsType.Types.SELECTIVE_SYNC
-           ? selectiveSync
-           : syncType
+           ? root.selectiveSync
+           : root.syncType
 
     states: [
         State {
-            name: syncType
+            name: root.syncType
             StateChangeScript {
                 script: {
                     view.replace(syncPageComponent);
@@ -42,7 +42,7 @@ Item {
             }
         },
         State {
-            name: fullSync
+            name: root.fullSync
             StateChangeScript {
                 script: {
                     syncsPanel.navInfo.typeSelected = SyncsType.Types.FULL_SYNC;
@@ -57,7 +57,7 @@ Item {
             }
         },
         State {
-            name: selectiveSync
+            name: root.selectiveSync
             StateChangeScript {
                 script: {
                     syncsPanel.navInfo.typeSelected = SyncsType.Types.SELECTIVE_SYNC;

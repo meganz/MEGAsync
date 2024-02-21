@@ -16,17 +16,17 @@ import onboard 1.0
 FooterButtonsPage {
     id: root
 
-    readonly property string stateFullSync: "FULL"
-    readonly property string stateSelectiveSync: "SELECTIVE"
-    readonly property string stateBackup: "BACKUP"
+    required property StepPanel stepPanelRef
+
+    readonly property string stateFullSync: "stateFullSync"
+    readonly property string stateSelectiveSync: "stateSelectiveSync"
+    readonly property string stateBackup: "stateBackup"
     readonly property int maxSizeDescription: 80
     readonly property int buttonQuestionMargin: 24
 
     property alias buttonGroup: buttonGroupItem
     property alias syncButton: syncButtonItem
 
-    property string title
-    property string description
     property bool fullSyncDone
     property bool selectiveSyncDone
 
@@ -41,20 +41,21 @@ FooterButtonsPage {
 
     states: [
         State {
-            name: stateFullSync
+            name: root.stateFullSync
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+            PropertyChanges { target: descriptionItem2; visible: false; }
             PropertyChanges { target: syncButtonItem; visible: false; }
             PropertyChanges {
-                target: stepPanel;
-                state: stepPanel.stepAllDone;
+                target: stepPanelRef;
+                state: stepPanelRef.stepAllDone;
                 step3Text: OnboardingStrings.syncChooseType;
                 step4Text: OnboardingStrings.syncSetUp;
             }
         },
         State {
-            name: stateSelectiveSync
-            extend: stateFullSync
+            name: root.stateSelectiveSync
+            extend: root.stateFullSync
             PropertyChanges {
                 target: syncButtonItem;
                 type: SyncsType.Types.SELECTIVE_SYNC;
@@ -62,9 +63,14 @@ FooterButtonsPage {
             }
         },
         State {
-            name: stateBackup
+            name: root.stateBackup
             PropertyChanges { target: titleItem; text: BackupsStrings.finalStepBackupTitle; }
             PropertyChanges { target: descriptionItem; text: BackupsStrings.finalStepBackup; }
+            PropertyChanges {
+                target: descriptionItem2;
+                text: BackupsStrings.finalStepBackup2;
+                visible: true;
+            }
             PropertyChanges {
                 target: syncButtonItem;
                 type: !fullSyncDone && !selectiveSyncDone
@@ -79,8 +85,8 @@ FooterButtonsPage {
                              : OnboardingStrings.finalPageButtonSelectiveSync;
             }
             PropertyChanges {
-                target: stepPanel;
-                state: stepPanel.stepAllDone;
+                target: stepPanelRef;
+                state: stepPanelRef.stepAllDone;
                 step3Text: OnboardingStrings.backupSelectFolders;
                 step4Text: OnboardingStrings.backupConfirm;
             }
@@ -100,7 +106,6 @@ FooterButtonsPage {
             id: titleItem
 
             Layout.preferredWidth: parent.width
-            text: title
             font {
                 pixelSize: Texts.Text.Size.LARGE
                 weight: Font.Bold
@@ -108,12 +113,19 @@ FooterButtonsPage {
             wrapMode: Text.Wrap
         }
 
-        Texts.Text {
+        Texts.SecondaryText {
             id: descriptionItem
 
             Layout.preferredWidth: parent.width
             Layout.topMargin: 8
-            text: description
+            font.pixelSize: Texts.Text.Size.MEDIUM
+            wrapMode: Text.Wrap
+        }
+
+        Texts.SecondaryText {
+            id: descriptionItem2
+
+            Layout.preferredWidth: parent.width
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
         }

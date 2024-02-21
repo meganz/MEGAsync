@@ -153,5 +153,6 @@
         <file>backups/ResumePageForm.ui.qml</file>
         <file>backups/ResumePage.qml</file>
         <file>backups/BackupsPage.qml</file>
+        <file>backups/StepPanel.qml</file>
     </qresource>
 </RCC>

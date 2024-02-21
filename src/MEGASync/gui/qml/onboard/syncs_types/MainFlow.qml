@@ -87,15 +87,15 @@ Rectangle {
                     var toOpenTabIndex = 0;
                     switch(syncsPanel.navInfo.typeSelected) {
                         case SyncsType.Types.SELECTIVE_SYNC:
-                            resumePageState = "SELECTIVE";
+                            resumePageState = "stateSelectiveSync";
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
                         case SyncsType.Types.FULL_SYNC:
-                            resumePageState = "FULL";
+                            resumePageState = "stateFullSync";
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
                         case SyncsType.Types.BACKUP:
-                            resumePageState = "BACKUP";
+                            resumePageState = "stateBackup";
                             toOpenTabIndex = SettingsDialog.BACKUP_TAB;
                             break;
                         default:
@@ -247,6 +247,8 @@ Rectangle {
 
             ResumePage {
                 id: resumePageItem
+
+                stepPanelRef: stepPanel
 
                 onResumePageMoveToSyncs: {
                     syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;

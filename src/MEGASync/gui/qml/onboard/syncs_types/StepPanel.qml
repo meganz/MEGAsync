@@ -1,6 +1,5 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15
 
 import common 1.0
 
@@ -12,13 +11,13 @@ import onboard 1.0
 Rectangle {
     id: root
 
-    readonly property string step1DeviceName: "STEP1_DEVICE_NAME"
-    readonly property string step2InstallationType: "STEP2_INSTALLATION_TYPE"
-    readonly property string step3: "STEP3"
-    readonly property string step4: "STEP4"
-    readonly property string step4Warning: "STEP4_WARNING"
-    readonly property string step4Error: "STEP4_ERROR"
-    readonly property string stepAllDone: "ALL_DONE"
+    readonly property string step1DeviceName: "step1DeviceName"
+    readonly property string step2InstallationType: "step2InstallationType"
+    readonly property string step3: "step3"
+    readonly property string step4: "step4"
+    readonly property string step4Warning: "step4Warning"
+    readonly property string step4Error: "step4Error"
+    readonly property string stepAllDone: "stepAllDone"
 
     readonly property int lineLeftMargin: 15
     readonly property int subStepLeftMargin: 4
