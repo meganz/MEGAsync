@@ -1,3 +1,4 @@
+#This file is no longer maintained. Ubuntu 18.04 reached EOL 04/2023.
 Format: 1.0
 Source: megasync
 Binary: megasync
@@ -12,3 +13,4 @@ Package-List:
  megasync deb gnome optional
 Files:
  00000000000000000000000000000000 0 megasync_MEGASYNC_VERSION.tar.gz
+
