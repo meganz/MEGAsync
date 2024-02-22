@@ -4,11 +4,11 @@ Button {
     id: root
 
     colors {
-        //background: colorStyle.buttonPrimary
-        background: themeManager.theme, categoryStyle.getValue("primaryButton", "buttonPrimary")
+        background: Style.getCategoryValue("primaryButton", "buttonPrimary")
 
         border: colors.background
-        pressed: colorStyle.buttonPrimaryPressed
+        //pressed: colorStyle.buttonPrimaryPressed
+        pressed: Style.getColorValue("buttonPrimaryPressed");
         borderPressed: colors.pressed
         hover: colorStyle.buttonPrimaryHover
         borderHover: colors.hover

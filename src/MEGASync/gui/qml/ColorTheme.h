@@ -114,6 +114,8 @@ public:
     explicit ColorTheme(const QmlTheme* const theme, QQmlEngine* engine, QObject *parent = nullptr);
     ~ColorTheme();
 
+    Q_INVOKABLE QString getValue(QString tokenId);
+
     QString borderInteractive();
     QString borderStrong();
     QString borderStrongSelected();
@@ -227,7 +229,6 @@ private:
     QString mCurrentTheme;
 
     void loadThemes();
-    QString getValue(const char* tokenId);
 };
 
 

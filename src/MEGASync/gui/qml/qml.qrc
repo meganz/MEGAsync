@@ -131,5 +131,6 @@
         <file>common/FontStyles.qml</file>
         <file>common/themes/light/Colors.qml</file>
         <file>common/themes/dark/Colors.qml</file>
+        <file>common/Style.js</file>
     </qresource>
 </RCC>
