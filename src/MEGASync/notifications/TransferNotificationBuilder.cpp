@@ -359,7 +359,7 @@ QString TransferNotificationBuilder::buildNonExistentItemsMessageDownloads()
 
 QString TransferNotificationBuilder::getImagePath()
 {
-    return MegaNotification::defaultImage;
+    return DesktopAppNotification::defaultImage;
 }
 
 bool TransferNotificationBuilder::isFolder() const

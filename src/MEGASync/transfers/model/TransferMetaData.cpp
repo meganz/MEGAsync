@@ -592,14 +592,14 @@ void TransferMetaData::setInitialTransfers(int newInitialPendingTransfers)
     mInitialTopLevelTransfers = newInitialPendingTransfers;
 }
 
-void TransferMetaData::setNotification(MegaNotification* newNotification)
+void TransferMetaData::setNotification(DesktopAppNotification* newNotification)
 {
     unlinkNotification();
 
     newNotification->setData(getAppId());
 
     mNotification = newNotification;
-    mNotificationDestroyedConnection = MegaNotification::connect(newNotification, &MegaNotification::destroyed, [newNotification](){
+    mNotificationDestroyedConnection = DesktopAppNotification::connect(newNotification, &DesktopAppNotification::destroyed, [newNotification](){
         auto appDataId(newNotification->getData().toULongLong());
         auto data = TransferMetaDataContainer::getAppDataById(appDataId);
         if(data && data->isNonExistData())
@@ -615,7 +615,7 @@ void TransferMetaData::unlinkNotification()
 {
     if(mNotification)
     {
-        MegaNotification::disconnect(mNotificationDestroyedConnection);
+        DesktopAppNotification::disconnect(mNotificationDestroyedConnection);
         mNotification->deleteLater();
     }
 }

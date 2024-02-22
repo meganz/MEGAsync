@@ -10,23 +10,23 @@
     int64_t notificationKey = [response.notification.request.content.categoryIdentifier longLongValue];
     int64_t  activationType = [response.actionIdentifier integerValue];
 
-    QHash<int64_t, MegaNotification*>::iterator it
+    QHash<int64_t, DesktopAppNotification*>::iterator it
            = Notificator::notifications.find(notificationKey);
     if (it == Notificator::notifications.end())
     {
         return;
     }
 
-    MegaNotification* n = it.value();
+    DesktopAppNotification* n = it.value();
     Notificator::notifications.erase(it);
 
     if (![response.actionIdentifier isEqualToString:UNNotificationDismissActionIdentifier])
     {
-        emit n->activated((MegaNotification::Action) activationType);
+        emit n->activated((DesktopAppNotification::Action) activationType);
     }
     else
     {
-        emit n->closed(MegaNotification::CloseReason::Unknown);
+        emit n->closed(DesktopAppNotification::CloseReason::Unknown);
     }
 
     completionHandler();
