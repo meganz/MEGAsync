@@ -5645,10 +5645,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     {
         manageBusinessStatus(event->getNumber());
     }
-//    else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
-//    {
-//        processUpgradeSecurityEvent();
-//    }
+    else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
+    {
+        processUpgradeSecurityEvent();
+    }
 }
 
 //Called when a request has finished
