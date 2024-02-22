@@ -132,5 +132,8 @@
         <file>common/themes/light/Colors.qml</file>
         <file>common/themes/dark/Colors.qml</file>
         <file>common/ColorsTheme.qml</file>
+        <file>common/themes/dark/Category.qml</file>
+        <file>common/themes/light/Category.qml</file>
+        <file>common/CategoryTheme.qml</file>
     </qresource>
 </RCC>

@@ -6,3 +6,4 @@ singleton Links 1.0 Links.qml
 singleton RegexExpressions 1.0 RegexExpressions.qml
 singleton OS 1.0 OS.qml
 ColorsTheme 1.0 ColorsTheme.qml
+CategoryTheme 1.0 CategoryTheme.qml

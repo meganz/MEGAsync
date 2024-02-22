@@ -4,10 +4,10 @@ Button {
     id: root
 
     colors {
-        background: colorStyle.buttonPrimary
+        //background: colorStyle.buttonPrimary
+        background: category.style.megaButtonRed.iconButton
         border: colors.background        
         pressed: colorStyle.buttonPrimaryPressed
-        //pressed: Style.getColorValue("buttonPrimaryPressed");
         borderPressed: colors.pressed
         hover: colorStyle.buttonPrimaryHover
         borderHover: colors.hover

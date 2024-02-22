@@ -15,13 +15,17 @@ OnboardingQmlDialog {
     minimumHeight: 560
     minimumWidth: 800
 
+    ColorsTheme {
+        id: colorStyle
+    }
+
+    CategoryTheme {
+        id: category
+    }
+
     OnboardingFlow {
         id: onboarding
 
         anchors.fill: parent
-    }
-
-    ColorsTheme {
-        id: colorStyle
     }
 }

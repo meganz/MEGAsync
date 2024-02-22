@@ -33,7 +33,6 @@
 #include "qml/QmlDialogWrapper.h"
 #include "qml/ApiEnums.h"
 #include "qml/QmlClipboard.h"
-#include "qml/ColorTheme.h"
 #include "qml/CategoryTheme.h"
 #include "qml/QmlTheme.h"
 #include "onboarding/Onboarding.h"
