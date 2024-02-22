@@ -24,7 +24,7 @@ using namespace WinToastLib;
 
 using namespace mega;
 
-const QString& MegaNotificationBase::defaultImage = QString();
+const QString& DesktopAppNotificationBase::defaultImage = QString();
 
 Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
     NotificatorBase(programName, trayicon, parent)
@@ -64,7 +64,7 @@ void Notificator::notifySystray(Class cls, const QString &title, const QString &
     }
 }
 
-void Notificator::notifySystray(MegaNotificationBase *notification)
+void Notificator::notifySystray(DesktopAppNotificationBase *notification)
 {
     if (!notification)
     {
@@ -84,7 +84,7 @@ void Notificator::notifySystray(MegaNotificationBase *notification)
         return;
     }
 
-    connect(notification, &MegaNotificationBase::failed, this, &Notificator::onModernNotificationFailed);
+    connect(notification, &DesktopAppNotificationBase::failed, this, &Notificator::onModernNotificationFailed);
 
     WinToastTemplate templ(WinToastTemplate::ImageAndText02);
     templ.setTextField((LPCWSTR)notification->getTitle().utf16(), WinToastTemplate::FirstLine);
@@ -119,7 +119,7 @@ void Notificator::onModernNotificationFailed()
 }
 
 DesktopAppNotification::DesktopAppNotification()
-    : MegaNotificationBase()
+    : DesktopAppNotificationBase()
 {
     QFile icon(QString::fromUtf8("://images/app_ico.ico"));
     mImagePath = MegaApplication::applicationDataPath() + QString::fromUtf8("\\MEGAsync.ico");
@@ -139,7 +139,7 @@ DesktopAppNotification::~DesktopAppNotification()
 
 QMutex WinToastNotification::mMutex;
 
-WinToastNotification::WinToastNotification(QPointer<MegaNotificationBase> megaNotification)
+WinToastNotification::WinToastNotification(QPointer<DesktopAppNotificationBase> megaNotification)
 {
     this->notification = megaNotification;
 }

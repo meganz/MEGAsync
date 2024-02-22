@@ -68,10 +68,10 @@ void Notificator::notify(DesktopAppNotification *notification)
     }
 }
 
-const QString& MegaNotificationBase::defaultImage = QString();
+const QString& DesktopAppNotificationBase::defaultImage = QString();
 
 DesktopAppNotification::DesktopAppNotification()
-    : MegaNotificationBase()
+    : DesktopAppNotificationBase()
 {
 }
 

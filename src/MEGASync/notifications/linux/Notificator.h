@@ -11,7 +11,7 @@
 class QDBusInterface;
 #endif
 
-class DesktopAppNotification : public MegaNotificationBase
+class DesktopAppNotification : public DesktopAppNotificationBase
 {
     Q_OBJECT
 

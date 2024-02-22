@@ -27,13 +27,13 @@ public:
     ~Notificator() = default;
 
     void notifySystray(Class cls, const QString &title, const QString &text, int millisTimeout, bool forceQt) override;
-    void notifySystray(MegaNotificationBase *notification) override;
+    void notifySystray(DesktopAppNotificationBase *notification) override;
 
 protected slots:
     void onModernNotificationFailed();
 };
 
-class DesktopAppNotification : public MegaNotificationBase
+class DesktopAppNotification : public DesktopAppNotificationBase
 {
     Q_OBJECT
 
@@ -48,10 +48,10 @@ class WinToastNotification : public WinToastLib::IWinToastHandler
 {
 private:
     static QMutex mMutex;
-    QPointer<MegaNotificationBase> notification;
+    QPointer<DesktopAppNotificationBase> notification;
 
 public:
-    WinToastNotification(QPointer<MegaNotificationBase> megaNotification);
+    WinToastNotification(QPointer<DesktopAppNotificationBase> megaNotification);
     virtual ~WinToastNotification();
 
     void toastActivated();

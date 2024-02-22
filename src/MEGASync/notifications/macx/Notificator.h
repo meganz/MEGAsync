@@ -7,7 +7,7 @@
 
 #include "NotificatorBase.h"
 
-class DesktopAppNotification : public MegaNotificationBase
+class DesktopAppNotification : public DesktopAppNotificationBase
 {
     Q_OBJECT
 
