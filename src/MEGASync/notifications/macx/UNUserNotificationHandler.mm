@@ -13,7 +13,7 @@ UNUserNotificationHandler::UNUserNotificationHandler()
     mNotificationDelegate = [[UNUserNotificationDelegate alloc] init];
 }
 
-void UNUserNotificationHandler::showNotification(MegaNotification *notification)
+void UNUserNotificationHandler::showNotification(DesktopAppNotification *notification)
 {
     static int64_t currentNotificationId = 1;
     
@@ -68,7 +68,7 @@ void UNUserNotificationHandler::showNotification(MegaNotification *notification)
     }];
 }
 
-void UNUserNotificationHandler::hideNotification(MegaNotification *notification)
+void UNUserNotificationHandler::hideNotification(DesktopAppNotification *notification)
 {
     NSString *idString = [[NSNumber numberWithLongLong:notification->getId()] stringValue];
     NSArray<NSString*>* arrayOfIds = [NSArray arrayWithObject: idString];

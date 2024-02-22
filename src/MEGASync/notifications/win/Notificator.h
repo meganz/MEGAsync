@@ -33,13 +33,13 @@ protected slots:
     void onModernNotificationFailed();
 };
 
-class MegaNotification : public MegaNotificationBase
+class DesktopAppNotification : public MegaNotificationBase
 {
     Q_OBJECT
 
 public:
-    MegaNotification();
-    ~MegaNotification();
+    DesktopAppNotification();
+    ~DesktopAppNotification();
 };
 
 #include "platform/win/wintoastlib.h"

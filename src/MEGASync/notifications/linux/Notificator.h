@@ -11,13 +11,13 @@
 class QDBusInterface;
 #endif
 
-class MegaNotification : public MegaNotificationBase
+class DesktopAppNotification : public MegaNotificationBase
 {
     Q_OBJECT
 
 public:
-    MegaNotification();
-    ~MegaNotification() = default;
+    DesktopAppNotification();
+    ~DesktopAppNotification() = default;
 
     QIcon getImage() const;
     void setImagePath(const QString &value) override;
@@ -47,14 +47,14 @@ public:
     ~Notificator();
 
     void notify(Class cls, const QString &title, const QString &text, int millisTimeout = 10000);
-    void notify(MegaNotification *notification);
+    void notify(DesktopAppNotification *notification);
 
 #ifdef USE_DBUS
 private:
     QDBusInterface *interface;
     bool dbussSupportsActions;
 
-    void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, const QStringList &actions = QStringList(), MegaNotification *notification = nullptr);
+    void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, const QStringList &actions = QStringList(), DesktopAppNotification *notification = nullptr);
 #endif
 };
 

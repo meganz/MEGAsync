@@ -161,7 +161,7 @@ QVariant FreedesktopImage::toVariant(const QImage &img)
     return QVariant(FreedesktopImage::metaType(), &fimg);
 }
 
-void Notificator::notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, const QStringList& actions, MegaNotification *notification)
+void Notificator::notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, const QStringList& actions, DesktopAppNotification *notification)
 {
     Q_UNUSED(cls);
     // Arguments for DBus call:
@@ -251,7 +251,7 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, i
     {
 #ifdef USE_DBUS
     case Freedesktop:
-        static QIcon icon(MegaNotification::defaultImage);
+        static QIcon icon(DesktopAppNotification::defaultImage);
         notifyDBus(cls, title, text, icon, millisTimeout);
         break;
 #endif
@@ -260,7 +260,7 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, i
     }
 }
 
-void Notificator::notify(MegaNotification *notification)
+void Notificator::notify(DesktopAppNotification *notification)
 {
 #ifdef USE_DBUS
     if (mMode == Freedesktop && dbussSupportsActions)
@@ -287,14 +287,14 @@ void Notificator::notify(MegaNotification *notification)
 
 ////MEGANOTIFICATION
 ///
-MegaNotification::MegaNotification()
+DesktopAppNotification::DesktopAppNotification()
     : MegaNotificationBase()
 {
     image = QIcon(defaultImage);
 }
 
 #ifdef USE_DBUS
-void MegaNotification::dBusNotificationSentCallback(QDBusMessage dbusMssage)
+void DesktopAppNotification::dBusNotificationSentCallback(QDBusMessage dbusMssage)
 {
     if (dbusMssage.arguments().size())
     {
@@ -308,7 +308,7 @@ void MegaNotification::dBusNotificationSentCallback(QDBusMessage dbusMssage)
     }
 }
 
-void MegaNotification::dbusNotificationSentErrorCallback(QDBusError error)
+void DesktopAppNotification::dbusNotificationSentErrorCallback(QDBusError error)
 {
     if(error.isValid())
     {
@@ -318,7 +318,7 @@ void MegaNotification::dbusNotificationSentErrorCallback(QDBusError error)
     deleteLater();
 }
 
-void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
+void DesktopAppNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
 {
     if (dbusMssage.arguments().size() && mId != dbusMssage.arguments().at(0).toUInt())
     {
@@ -357,13 +357,13 @@ void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
 }
 #endif
 
-void MegaNotification::setImagePath(const QString &value)
+void DesktopAppNotification::setImagePath(const QString &value)
 {
     MegaNotificationBase::setImagePath(value);
     image = QIcon(value);
 }
 
-QIcon MegaNotification::getImage() const
+QIcon DesktopAppNotification::getImage() const
 {
     return image;
 }

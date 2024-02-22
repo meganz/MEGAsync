@@ -24,7 +24,7 @@
 
 using namespace mega;
 
-QHash<int64_t, MegaNotification*> Notificator::notifications;
+QHash<int64_t, DesktopAppNotification*> Notificator::notifications;
 
 Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
     NotificatorBase(programName, nullptr, parent)
@@ -38,7 +38,7 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, i
     {
     case UserNotificationCenter:
     {
-        MegaNotification *n = new MegaNotification();
+        DesktopAppNotification *n = new DesktopAppNotification();
         if (title != MegaSyncApp->getMEGAString())
         {
             n->setTitle(title);
@@ -55,7 +55,7 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, i
     }
 }
 
-void Notificator::notify(MegaNotification *notification)
+void Notificator::notify(DesktopAppNotification *notification)
 {
     if (mMode == UserNotificationCenter)
     {
@@ -70,17 +70,17 @@ void Notificator::notify(MegaNotification *notification)
 
 const QString& MegaNotificationBase::defaultImage = QString();
 
-MegaNotification::MegaNotification()
+DesktopAppNotification::DesktopAppNotification()
     : MegaNotificationBase()
 {
 }
 
-MegaNotification::~MegaNotification()
+DesktopAppNotification::~DesktopAppNotification()
 {
     NotificationHandler::instance()->hideNotification(this);
 }
 
-QStringList MegaNotification::getActions() const
+QStringList DesktopAppNotification::getActions() const
 {
     if(NotificationHandler::instance()->acceptsMultipleSelection())
     {
