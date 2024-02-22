@@ -78,7 +78,7 @@ Qml.CheckBox {
         radius: sizes.focusBorderRadius
         border {
             color: root.enabled
-                   ? (root.activeFocus ? colorStyle.focus : "transparent")
+                   ? (root.activeFocus ? colorStyle.focusColor : "transparent")
                    : "transparent"
             width: sizes.focusBorderWidth
         }

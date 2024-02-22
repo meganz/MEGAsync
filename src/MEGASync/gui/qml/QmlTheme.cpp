@@ -4,7 +4,7 @@
 
 QmlTheme::QmlTheme(QObject *parent)
     : QObject{parent},
-    mTheme(QString().fromUtf8("light"))
+    mTheme(QString::fromUtf8("light"))
 {
     startDemoChange();
 }
@@ -41,6 +41,14 @@ void QmlTheme::startDemoChange()
     static QTimer timer;
     timer.start(10000);
     connect(&timer, &QTimer::timeout, this, [this](){
-        emit themeChanged(QString::fromUtf8("dark"));
+        time_t t;
+        srand((unsigned) time(&t));
+
+        if (rand() % 2) {
+            setTheme(QString::fromUtf8("dark"));
+        }
+        else {
+            setTheme(QString::fromUtf8("light"));
+        }
     });
 }

@@ -268,7 +268,7 @@ Qml.ScrollBar {
             radius: buttonFocusRadius
             activeFocusOnTab: true
             border {
-                color: enabled && activeFocus ? colorStyle.focus : "transparent"
+                color: enabled && activeFocus ? colorStyle.focusColor : "transparent"
                 width: buttonFocusBorder
             }
 

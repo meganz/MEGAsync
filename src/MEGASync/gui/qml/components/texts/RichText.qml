@@ -185,7 +185,7 @@ Text {
             radius: Sizes.focusBorderRadius
             visible: false
             border {
-                color: colorStyle.focus
+                color: colorStyle.focusColor
                 width: Sizes.focusBorderWidth
             }
         }

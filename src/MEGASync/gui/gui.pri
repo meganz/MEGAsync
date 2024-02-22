@@ -80,7 +80,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/node_selector/gui/SearchLineEdit.cpp \
     $$PWD/node_selector/gui/NodeSelectorSpecializations.cpp \
     $$PWD/qml/CategoryTheme.cpp \
-    $$PWD/qml/ColorTheme.cpp \
     $$PWD/qml/QmlClipboard.cpp \
     $$PWD/qml/QmlDialog.cpp \
     $$PWD/qml/QmlDialogWrapper.cpp \
@@ -175,7 +174,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/node_selector/gui/SearchLineEdit.h \
     $$PWD/node_selector/gui/NodeSelectorSpecializations.h \
     $$PWD/qml/CategoryTheme.h \
-    $$PWD/qml/ColorTheme.h \
     $$PWD/qml/QmlClipboard.h \
     $$PWD/qml/QmlDialog.h \
     $$PWD/qml/QmlDialogWrapper.h \

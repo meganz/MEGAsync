@@ -5,11 +5,11 @@ import common 1.0
 QtObject {
     id: root
 
-    property color selection: colorStyle.focus
+    property color selection: colorStyle.focusColor
     property color placeholder: colorStyle.textPlaceholder
     property color text: colorStyle.textPrimary
     property color textDisabled: colorStyle.textDisabled
-    property color focus: colorStyle.focus
+    property color focus: colorStyle.focusColor
     property color border: colorStyle.borderStrong
     property color borderDisabled: colorStyle.borderDisabled
     property color borderError: colorStyle.textError

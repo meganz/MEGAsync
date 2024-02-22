@@ -9,7 +9,7 @@ QtObject {
     property color disabled: colorStyle.buttonDisabled
     property color text
     property color textDisabled: colorStyle.textDisabled
-    property color focus: colorStyle.focus
+    property color focus: colorStyle.focusColor
     property color textHover
     property color textPressed
     property color hover

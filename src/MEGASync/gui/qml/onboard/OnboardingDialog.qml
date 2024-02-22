@@ -20,4 +20,8 @@ OnboardingQmlDialog {
 
         anchors.fill: parent
     }
+
+    ColorsTheme {
+        id: colorStyle
+    }
 }

@@ -3080,7 +3080,6 @@ void MegaApplication::registerCommonQMLElements()
     // style / theming related classes.
     auto theme = new QmlTheme(this);
     mEngine->rootContext()->setContextProperty(QString::fromUtf8("themeManager"), theme);
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(theme, mEngine, this));
     mEngine->rootContext()->setContextProperty(QString::fromUtf8("categoryStyle"), new CategoryTheme(theme, this));
 }
 
