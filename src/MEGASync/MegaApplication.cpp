@@ -27,6 +27,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "gui/UploadToMegaDialog.h"
+#include "EmailRequester.h"
 
 #include "qml/QmlDialog.h"
 #include "onboarding/GuestQmlDialog.h"
@@ -1516,6 +1517,7 @@ void MegaApplication::onLogout()
     mTransfersModel->resetModel();
     mStalledIssuesModel->fullReset();
     mStatusController->reset();
+    EmailRequester::instance()->reset();
 
     // Queue processing of logout cleanup to avoid race conditions
     // due to threadifing processing.
@@ -2225,6 +2227,8 @@ void MegaApplication::cleanAll()
     notificationsProxyModel = nullptr;
     delete notificationsDelegate;
     notificationsDelegate = nullptr;
+
+    delete EmailRequester::instance();
 
     infoDialog->deleteLater();
 

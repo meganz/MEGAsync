@@ -1,7 +1,9 @@
 #include "QAlertsModel.h"
-#include "QFilterAlertsModel.h"
-#include <QDateTime>
+
 #include "Preferences/Preferences.h"
+
+#include <QDateTime>
+
 #include <assert.h>
 
 using namespace mega;
@@ -9,7 +11,6 @@ using namespace mega;
 QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
     : QAbstractItemModel(parent)
 {
-
     for(int i = 0; i < ALERT_ALL; i++)
     {
         hasNotificationsOfType[i] = false;
@@ -43,7 +44,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
         while (copy && !alertOrder.empty()
                && actualNumberOfAlertsToInsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
         {
-            MegaUserAlert *alertToDelete = alertsMap[alertOrder.back()];
+            MegaUserAlertExt* alertToDelete = alertsMap[alertOrder.back()];
             assert(alertToDelete && "something went wrong: no alert to delete");
             if (alertToDelete)
             {
@@ -78,7 +79,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 if (!alert->isRemoved())
                 {
                     alertOrder.push_front(alert->getId());
-                    alertsMap.insert(alert->getId(), alert);
+                    alertsMap.insert(alert->getId(), new MegaUserAlertExt(alert));
                     if (!alert->getSeen())
                     {
                         if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
@@ -93,12 +94,12 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 MegaUserAlert *alert = alerts->get(i)->copy();
                 if (!alert->isRemoved())
                 {
-                    QMap<int, mega::MegaUserAlert*>::iterator existing = alertsMap.find(alert->getId());
+                    auto existing = alertsMap.find(alert->getId());
                     if (existing != alertsMap.end())
                     {
-                        MegaUserAlert *old = existing.value();
-                        alertsMap[alert->getId()] = alert;
-                        if (alert->getSeen() != old->getSeen())
+                        std::unique_ptr<MegaUserAlertExt> oldAlert{existing.value()};
+                        alertsMap[alert->getId()] = new MegaUserAlertExt(alert);
+                        if (alert->getSeen() != oldAlert->getSeen())
                         {
                             if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
                             {
@@ -109,10 +110,8 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         AlertItem *udpatedAlertItem = alertItems[alert->getId()];
                         if (udpatedAlertItem)
                         {
-                            udpatedAlertItem->setAlertData(alert);
+                            udpatedAlertItem->setAlertData(alertsMap[alert->getId()]);
                         }
-
-                        delete old;
 
                         //update row element
                         std::deque<unsigned int>::iterator orderIter = std::find(alertOrder.begin(), alertOrder.end(),alert->getId());
@@ -133,7 +132,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     else
                     {
                         alertOrder.push_front(alert->getId());
-                        alertsMap.insert(alert->getId(), alert);
+                        alertsMap.insert(alert->getId(), new MegaUserAlertExt(alert));
                         if (!alert->getSeen())
                         {
                             if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
@@ -201,7 +200,7 @@ QVariant QAlertsModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::UserRole) //Role used to sort by date
     {
-        MegaUserAlert *item = (MegaUserAlert *)index.internalPointer();
+        MegaUserAlertExt *item = (MegaUserAlertExt *)index.internalPointer();
         QDateTime date;
         date.setMSecsSinceEpoch(item->getTimestamp(0) * 1000);
 
@@ -284,5 +283,4 @@ void QAlertsModel::refreshAlertItem(unsigned id)
     }
 
     emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
-
 }
