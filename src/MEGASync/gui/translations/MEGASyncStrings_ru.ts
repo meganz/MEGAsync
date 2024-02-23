@@ -1168,7 +1168,7 @@
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Приложение скачает файл во временное расположение, исправит ошибку, а затем удалит этот файл.</numerusform><numerusform>Приложение скачает файлы во временное расположение, исправит ошибки, а затем удалит эти файлы.</numerusform><numerusform>Приложение скачает файлы во временное расположение, исправит ошибки, а затем удалит эти файлы.</numerusform><numerusform>Приложение скачает файлы во временное расположение, исправит ошибки, а затем удалит эти файлы.</numerusform></translation>
+        <translation><numerusform>Приложение скачает файл во временное расположение, исправит ошибку, а затем удалит временный файл.</numerusform><numerusform>Приложение скачает файлы во временное расположение, исправит ошибки, а затем удалит временные файлы.</numerusform><numerusform>Приложение скачает файлы во временное расположение, исправит ошибки, а затем удалит временные файлы.</numerusform><numerusform>Приложение скачает файлы во временное расположение, исправит ошибки, а затем удалит временные файлы.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -1214,7 +1214,7 @@
     <message>
         <source>Remote Copy</source>
         <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
-        <translation>Облачная копия</translation>
+        <translation>Скопировать в MEGA</translation>
     </message>
 </context>
 <context>
@@ -1675,8 +1675,18 @@
 <context>
     <name>DownloadQueueController</name>
     <message>
-        <source>Local Disk</source>
-        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
+        <source>Removable drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Removable drive. See SNC-3506.</translatorcomment>
+        <translation>Съёмный носитель</translation>
+    </message>
+    <message>
+        <source>Shared drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
+        <translation>Сетевой диск</translation>
+    </message>
+    <message>
+        <source>Local drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files. See SNC-3506.</translatorcomment>
         <translation>Локальный диск</translation>
     </message>
 </context>
@@ -2658,12 +2668,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Оставить облачную папку [B]%1[/B]?</translation>
+        <translation>Оставить сохранённую в MEGA папку [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Оставить облачный элемент [B]%1[/B]?</translation>
+        <translation>Оставить уже сохранённый в MEGA элемент [B]%1[/B]?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2735,7 +2745,7 @@ Please, refresh the list.</source>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Оставить последний изменённый[/B] (облачный)</translation>
+        <translation>[B]Оставить последний изменённый[/B] (в MEGA)</translation>
     </message>
     <message>
         <source>Keep the [B]local files[/B]?</source>
@@ -2746,28 +2756,27 @@ Please, refresh the list.</source>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Локальные[/B] файлы будут загружены в MEGA и добавлены как версии к облачным файлам.
-Пожалуйста, подождите завершения загрузки.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Облачные[/B] папки будут перемещены в Корзину MEGA.[BR]Оттуда вы сможете восстановить её.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Оставить [B]облачные[/B] файлы?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Оставить [B]облачные[/B] папки?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Оставить [B]облачные[/B] элементы?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
@@ -2802,12 +2811,12 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>К [B]облачному[/B] файлу будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] файлам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] файлам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] файлам будет добавлен суффикс типа (1).</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>К [B]облачной[/B] папке будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] папкам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] папкам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] папкам будет добавлен суффикс типа (1).</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Keep the [B]local folders[/B]?</source>
@@ -3660,12 +3669,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>Облачная синхронизируемая папка перемещёна в Корзину</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>У вас нет полного доступа к облачной синхронизируемой папке</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3695,7 +3704,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>Облачная синхронизируемая папка находится в Корзине</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -3861,14 +3870,14 @@ All the other transfers will be cancelled and cleared.</source>
         <source>Clear transfers?
 All your completed transfers will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation>Очистить передачи?
+        <translation>Очистить список?
 Все завершённые передачи будут удалены.</translation>
     </message>
     <message>
         <source>Clear transfers?
 All your completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
-        <translation>Очистить передачи?
+        <translation>Очистить список?
 Все завершённые передачи в этой категории будут удалены.</translation>
     </message>
     <message>
@@ -3903,7 +3912,7 @@ All the other selected transfers will be cancelled and cleared.</source>
         <source>Clear transfers?
 All the selected completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation>Очистить передачи?
+        <translation>Очистить список?
 Все выбранные завершённые передачи в этой категории будут удалены.</translation>
     </message>
     <message>
@@ -4029,12 +4038,12 @@ Please refresh the view</source>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation>Он будет перемещён в папку .rubbish или .debris в локальном расположении синхронизации.[BR]Оттуда вы сможете восстановить файл.[/BR]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation>Она будет перемещена в папку .rubbish или .debris в локальном расположении синхронизации.[BR]Оттуда вы сможете восстановить папку.[/BR]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No action needed</source>
@@ -4044,12 +4053,12 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>Удалить облачный файл [B]%1[/B]?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>Удалить облачную папку [B]%1[/B]?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
@@ -5320,7 +5329,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Trash</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation>Перемещено в корзину</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5335,7 +5344,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation>Перемещено в корзину</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5350,7 +5359,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation>Перемещено в корзину</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5361,21 +5370,23 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync Rework Beta V1 version.
-- New Exclusions dialog for syncs.
-- New header for undecrypted cloud issues.
-- Minor changes in issues description. 
-- Auto solve reparse points and hard/sym links in Smart Mode. 
-- Minor bugs fixed. 
-- Performance improved. 
+        <source>- Sync rework Beta V2 is released.
+- A new onboarding wizard is introduced for any new sync or backup processes.
+- Changes are detected and stalled issues are updated automatically.
+- MEGA-supported language set is now available.
+- User experience for batch fixing sync issues is improved.
+- Minor bugs are fixed.
+- Performance is improved.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
-        <translation>Бета-версия переработанной синхронизации V1.
-- Новый диалог исключений для синхронизации.
-- Незначительно измененены описания ошибок.
-- Добавлено автоматическое определение точек повторного анализа, жёстких и символических ссылок в умном режиме.
+        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
+        <translation>Бета-версия переработанной синхронизации V2
+- Для любых новых процессов синхронизации или резервного копирования используется новый мастер настройки.
+- Автоматическое обнаружение изменений и обновление ошибок синхронизации.
+- Теперь доступно на всех поддерживаемых MEGA языках.
+- Улучшен пользовательский интерфейс для пакетного исправления ошибок синхронизации.
 - Исправлены мелкие ошибки.
-- Улучшена производительность. </translation>
+- Улучшена производительность.
+</translation>
     </message>
 </context>
 <context>
@@ -6225,7 +6236,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (облачный кеш)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6320,7 +6331,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (облачный кеш):</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6724,7 +6735,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation>Перемещено в</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6744,7 +6755,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation>Вычисляются правила исключения. Подождите и повторите попытку.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -6799,7 +6810,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation>Удалено или перемещено в MEGA</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deleted by user.</source>
@@ -6901,6 +6912,34 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
     <name>StalledIssuesDialog</name>
     <message>
         <source>Stalled Issues</source>
@@ -6911,36 +6950,6 @@ Do you want to delete it anyway?</source>
         <source>Sync issues</source>
         <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
         <translation>Ошибки синхронизации</translation>
-    </message>
-    <message>
-        <source>All issues:</source>
-        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Все ошибки:</translation>
-    </message>
-    <message>
-        <source>Name conflicts:</source>
-        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Конфликты названий:</translation>
-    </message>
-    <message>
-        <source>Item type conflicts:</source>
-        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
-        <translation>Конфликты типа элемента:</translation>
-    </message>
-    <message>
-        <source>Other:</source>
-        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Другое:</translation>
-    </message>
-    <message>
-        <source>Solved:</source>
-        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Исправлено:</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Обновить</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6992,6 +7001,11 @@ automatically</source>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
         <translation>[A]Подробнее[/A]</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
+        <translation>Помощь</translation>
     </message>
 </context>
 <context>
@@ -7470,12 +7484,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Синхронизация «%1» была отключена, так как облачная папка находится в Корзине</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Синхронизация «%1» отключена. У вас нет полного доступа к облачной папке (или её части).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -8389,27 +8403,27 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation>Очистить все передачи в «Аудио»</translation>
+        <translation>Удалить все передачи в «Аудио»</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>Очистить все передачи в «Видео»</translation>
+        <translation>Удалить все передачи в «Видео»</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation>Очистить все передачи в «Архивах»</translation>
+        <translation>Удалить все передачи в «Архивах»</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation>Очистить все передачи в «Документах»</translation>
+        <translation>Удалить все передачи в «Документах»</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation>Очистить все передачи в «Изображениях»</translation>
+        <translation>Удалить все передачи в «Изображениях»</translation>
     </message>
     <message>
         <source>Clear all transfers</source>

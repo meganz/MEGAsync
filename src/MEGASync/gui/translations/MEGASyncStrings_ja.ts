@@ -1168,7 +1168,7 @@
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>この操作により、ファイルが一時的な場所にダウンロードされ、問題が修正されてから削除されます。</numerusform></translation>
+        <translation><numerusform>この操作により、ファイルが一時的な場所にダウンロードされ、問題が修正されてから一時ファイル削除されます。</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -1214,7 +1214,7 @@
     <message>
         <source>Remote Copy</source>
         <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
-        <translation>リモートコピー</translation>
+        <translation>MEGAでコピー</translation>
     </message>
 </context>
 <context>
@@ -1673,9 +1673,19 @@
 <context>
     <name>DownloadQueueController</name>
     <message>
-        <source>Local Disk</source>
-        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation>ローカルディスク</translation>
+        <source>Removable drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Removable drive. See SNC-3506.</translatorcomment>
+        <translation>リムーバブルドライブ</translation>
+    </message>
+    <message>
+        <source>Shared drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
+        <translation>ネットワークドライブ</translation>
+    </message>
+    <message>
+        <source>Local drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files. See SNC-3506.</translatorcomment>
+        <translation>ローカルドライブ</translation>
     </message>
 </context>
 <context>
@@ -2641,7 +2651,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>リモートフォルダ[B]%1[/B]はMEGAごみ箱に移動されます。[BR]そこからフォルダを復元できるようになります。</translation>
+        <translation>MEGAのフォルダ[B]%1[/B]はMEGAごみ箱に移動されます。[BR]そこからフォルダを復元できるようになります。</translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -2656,12 +2666,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>リモートフォルダ[B]%1[/B]を保持しますか？</translation>
+        <translation>MEGAに保管されているフォルダ[B]%1[/B]をそのまま保持しますか？</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>リモート項目[B]%1[/B]を保持しますか？</translation>
+        <translation>MEGAに保管されている項目[B]%1[/B]をそのまま保持しますか？</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2733,7 +2743,7 @@ Please, refresh the list.</source>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]最終変更を保持[/B]（リモート）</translation>
+        <translation>[B]最終変更を保持[/B]（MEGAに）</translation>
     </message>
     <message>
         <source>Keep the [B]local files[/B]?</source>
@@ -2744,28 +2754,28 @@ Please, refresh the list.</source>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]ローカル[/B]ファイルはMEGAにアップロードされ、バージョンとしてリモートファイルに追加されます。
+        <translation>[B]ローカル[/B]ファイルはMEGAにアップロードされ、MEGAにすでにあるファイルにバージョンとして追加されます。
 アップロードが完了するまでお待ちください。</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]リモート[/B]フォルダはあなたのMEGAごみ箱に移動されます。[BR]そこからフォルダを復元できるようになります。</translation>
+        <translation>すでにMEGAに保管されているフォルダ[B]%1[/B]はMEGAごみ箱に移動されます。[BR]そこからフォルダを復元できるようになります。</translation>
     </message>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]リモート[/B]ファイルを保持しますか？</translation>
+        <translation>すでに[B]MEGAに[/B]保管されているファイルをそのまま保持しますか？</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]リモート[/B]フォルダを保持しますか？</translation>
+        <translation>すでに[B]MEGAに[/B]保管されているフォルダをそのまま保持しますか？</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]リモート[/B]項目を保持しますか？</translation>
+        <translation>すでに[B]MEGAに[/B]保管されている項目をそのまま保持しますか？</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
@@ -2800,12 +2810,12 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>[B]リモート[/B]ファイルには、(1) のような接尾辞が追加されます。</numerusform></translation>
+        <translation><numerusform>すでにMEGAに保管されているファイルには (1) のような接尾辞が追加されます。</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>[B]リモート[/B]フォルダには、(1) のような接尾辞が追加されます。</numerusform></translation>
+        <translation><numerusform>すでにMEGAに保管されているフォルダには (1) のような接尾辞が追加されます。</numerusform></translation>
     </message>
     <message>
         <source>Keep the [B]local folders[/B]?</source>
@@ -3655,12 +3665,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>リモート同期フォルダがごみ箱に移動されました</translation>
+        <translation>MEGA内のフォルダがごみ箱に移動されました</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>リモート同期フォルダへの完全なアクセス権がありません</translation>
+        <translation>MEGA内の共有フォルダへの完全なアクセス権がありません</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3690,7 +3700,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>リモート同期フォルダはあなたのごみ箱にあります</translation>
+        <translation>MEGA内のフォルダはごみ箱にあります</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -4024,7 +4034,7 @@ Please refresh the view</source>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation>そのファイルはローカルの同期場所の.rubbishまたは.debrisフォルダに移動さ​​れます。[BR]そこからファイルを復元できます。[/BR]</translation>
+        <translation>これはローカルの同期場所の.rubbishまたは.debrisフォルダに移動さ​​れます。[BR]そこからファイルを復元できます。[/BR]</translation>
     </message>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -4039,12 +4049,12 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>リモートファイル[B]%1[/B]を削除しますか？</translation>
+        <translation>すでにMEGAに保管されているファイル[B]%1[/B]を削除しますか？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>リモートフォルダ[B]%1[/B]を削除しますか？</translation>
+        <translation>すでにMEGAに保管されているフォルダ[B]%1[/B]を削除しますか？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
@@ -5314,7 +5324,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Trash</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation>ごみ箱に移動しました</translation>
+        <translation>項目をごみ箱に移動しました</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5329,7 +5339,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation>ごみ箱に移動しました</translation>
+        <translation>項目をごみ箱に移動しました</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5344,7 +5354,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation>Recycle Bin（ゴミ箱）に移動しました</translation>
+        <translation>項目をRecycle Bin（ごみ箱）に移動しました</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5355,21 +5365,23 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync Rework Beta V1 version.
-- New Exclusions dialog for syncs.
-- New header for undecrypted cloud issues.
-- Minor changes in issues description. 
-- Auto solve reparse points and hard/sym links in Smart Mode. 
-- Minor bugs fixed. 
-- Performance improved. 
+        <source>- Sync rework Beta V2 is released.
+- A new onboarding wizard is introduced for any new sync or backup processes.
+- Changes are detected and stalled issues are updated automatically.
+- MEGA-supported language set is now available.
+- User experience for batch fixing sync issues is improved.
+- Minor bugs are fixed.
+- Performance is improved.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
-        <translation>Sync Rework Beta V1。
-ー同期用の新しい除外ダイアログ。
-ー問題の説明を若干変更しました。
-ースマートモードで再解析ポイント、ハードリンク、およびシンボリックリンクを自動解決できるようになりました。
-ー軽微なバグを修正しました。
-ーパフォーマンスが向上しました。</translation>
+        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
+        <translation>同期リワークベータ版V2
+－新しい同期またはバックアッププロセス用に、新しいオンボーディングウィザードが導入されました。
+－変更が検出され、同期問題が自動的に更新されます。
+－MEGA対応言語すべてでご利用可能になりました。
+－同期の問題を一括修正するためのユーザーエクスペリエンスが向上しました。
+－軽微なバグが修正されました。
+－パフォーマンスが向上しました。
+</translation>
     </message>
 </context>
 <context>
@@ -6219,7 +6231,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris(リモートキャッシュ)</translation>
+        <translation>SyncDebris（MEGA内）</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6314,7 +6326,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris(リモートキャッシュ)：</translation>
+        <translation>SyncDebris（MEGA内）：</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6718,7 +6730,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation>移動先</translation>
+        <translation>項目移動先：</translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6738,7 +6750,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation>除外ルールを計算しています。少し待ってから再試行してください。</translation>
+        <translation>除外ルールの計算中です。完了すると問題は解決されます。</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -6793,7 +6805,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation>MEGA内で削除または移動されました</translation>
+        <translation>MEGA内の項目が削除または移動されました</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
@@ -6895,6 +6907,34 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation><numerusform>解決済み：%n</numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation>すべての問題：%1</translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation><numerusform>名前の競合：%n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation><numerusform>項目タイプの競合：%n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation><numerusform>その他：%n</numerusform></translation>
+    </message>
+</context>
+<context>
     <name>StalledIssuesDialog</name>
     <message>
         <source>Stalled Issues</source>
@@ -6905,36 +6945,6 @@ Do you want to delete it anyway?</source>
         <source>Sync issues</source>
         <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
         <translation>同期の問題</translation>
-    </message>
-    <message>
-        <source>All issues:</source>
-        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>すべての問題：</translation>
-    </message>
-    <message>
-        <source>Name conflicts:</source>
-        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>名前の競合：</translation>
-    </message>
-    <message>
-        <source>Item type conflicts:</source>
-        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
-        <translation>項目タイプの競合：</translation>
-    </message>
-    <message>
-        <source>Other:</source>
-        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>その他：</translation>
-    </message>
-    <message>
-        <source>Solved:</source>
-        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>解決済み：</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>更新</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6986,6 +6996,11 @@ automatically</source>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
         <translation>[A]詳細[/A]</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
+        <translation>ヘルプ</translation>
     </message>
 </context>
 <context>
@@ -7464,12 +7479,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>リモートフォルダがごみ箱に入っているため、同期&quot;%1&quot; は無効となっています</translation>
+        <translation>MEGA内のフォルダがごみ箱に入っているため、同期「%1」は無効となっています</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>同期「%1」は無効になっています。リモートフォルダ（またはその一部）への完全なアクセス権がありません。</translation>
+        <translation>同期「%1」は無効になっています。MEGA内のフォルダ（またはその一部）への完全なアクセス権がありません。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>

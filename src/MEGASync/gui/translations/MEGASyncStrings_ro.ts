@@ -54,7 +54,7 @@
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
-        <translation>Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.</translation>
+        <translation>Contul dvs. a fost dezactivat de administrator. Vă rugăm să contactați administratorul contului dvs. de afaceri pentru mai multe detalii.</translation>
     </message>
 </context>
 <context>
@@ -321,12 +321,12 @@
     <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Plata pentru planul [A] a fost primită</translation>
+        <translation>Plata pentru abonamentul [A] a fost primită</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Nu am primit plata ta pentru planul [A].</translation>
+        <translation>Nu am primit plata ta pentru abonamentul [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -356,22 +356,22 @@
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Fișierul tău partajat public ([A]) a fost eliminat</translation>
+        <translation>Fișierul dvs. partajat public ([A]) a fost eliminat</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Folderul tău partajat public ([A]) a fost eliminat</translation>
+        <translation>Folderul dvs. partajat public ([A]) a fost eliminat</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Fișierul tău partajat public ([A]) a fost restabilit</translation>
+        <translation>Fișierul dvs. partajat public ([A]) a fost restabilit</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Folderul tău partajat public ([A]) a fost restabilit</translation>
+        <translation>Folderul dvs. partajat public ([A]) a fost restabilit</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -889,7 +889,7 @@
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>Te rugăm să descrii clar problema întâmpinată. Cu cât oferi mai multe detalii, cu atât ne va fi mai ușor să o rezolvăm. Trimiterea ta va fi examinată de către echipa noastră de dezvoltare.</translation>
+        <translation>Vă rugăm să descrieți clar problema pe care ați întâlnit-o. Cu cât furnizați mai multe detalii, cu atât ne va fi mai ușor să rezolvăm. Trimiterea dvs. va fi revizuită de echipa noastră de dezvoltare.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -974,7 +974,7 @@
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Te rugăm să aștepți până când încărcarea actuală este finalizată.</translation>
+        <translation>Vă rugăm să așteptați până când încărcarea curentă este finalizată.</translation>
     </message>
 </context>
 <context>
@@ -1109,12 +1109,12 @@
     <message>
         <source>Too many requests. Please wait.</source>
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation>Prea multe cereri. Te rugăm să aștepți.</translation>
+        <translation>Prea multe cereri. Vă rugăm să așteptați.</translation>
     </message>
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>Ai introdus parola actuală, te rugăm să introduci o nouă parolă.</translation>
+        <translation>Ați introdus parola curentă, vă rugăm să introduceți o nouă parolă.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -1163,17 +1163,17 @@
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Rezolvați problema?</numerusform><numerusform>Rezolvați problemele?</numerusform><numerusform>Rezolvați problemele?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Această acțiune va descărca fișierul într-o locație temporară, va remedia problema și apoi va elimina fișierul temporar.</numerusform><numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va elimina fișierele temporare.</numerusform><numerusform>Această acțiune va descărca fișierele într-o locație temporară, va remedia problemele și apoi va elimina fișierele temporare.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Reluați transferurile pentru a remedia problema.</numerusform><numerusform>Reluați transferurile pentru a remedia problemele.</numerusform><numerusform>Reluați transferurile pentru a remedia problemele.</numerusform></translation>
     </message>
     <message>
         <source>Can´t download [B]%1[/B] to the selected location</source>
@@ -1188,7 +1188,7 @@
     <message>
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rezolva</translation>
     </message>
 </context>
 <context>
@@ -1214,7 +1214,7 @@
     <message>
         <source>Remote Copy</source>
         <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
-        <translation>Copie la distanță</translation>
+        <translation>Copiați în MEGA</translation>
     </message>
 </context>
 <context>
@@ -1222,17 +1222,17 @@
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Planul pentru calitatea de membru Pro va expira în %n zi.</numerusform><numerusform>Planul pentru calitatea de membru Pro va expira în %n zile.</numerusform><numerusform>Planul pentru calitatea de membru Pro va expira în %n de zile.</numerusform></translation>
+        <translation><numerusform>Abonamentul pentru calitatea de membru Pro va expira în %n zi.</numerusform><numerusform>Abonamentul pentru calitatea de membru Pro va expira în %n zile.</numerusform><numerusform>Abonamentul pentru calitatea de membru Pro va expira în %n de zile.</numerusform></translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Planul pentru calitatea de membru Pro expiră în curând</translation>
+        <translation>Abonamentul pentru calitatea de membru Pro expiră în curând</translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Planul pentru calitatea de membru Pro a expirat acum %n zi.</numerusform><numerusform>Planul pentru calitatea de membru Pro a expirat acum %n zile.</numerusform><numerusform>Planul pentru calitatea de membru Pro a expirat acum %n de zile.</numerusform></translation>
+        <translation><numerusform>Abonamentul pentru calitatea de membru Pro a expirat acum %n zi.</numerusform><numerusform>Abonamentul pentru calitatea de membru Pro a expirat acum %n zile.</numerusform><numerusform>Abonamentul pentru calitatea de membru Pro a expirat acum %n de zile.</numerusform></translation>
     </message>
     <message>
         <source>The following characters are not allowed:
@@ -1277,7 +1277,7 @@
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Ne poți ajuta să îmbunătățim aplicația MEGA trimițând acest raport de eroare. Acesta nu conține informații cu caracter personal. Dacă vrei să ne dai mai multe detalii, te rugăm să le scrii mai jos:</translation>
+        <translation>Ne puteți ajuta să îmbunătățim aplicația MEGA trimițând acest raport de eroare. Nu conține informații personale. Dacă doriți să ne oferiți mai multe detalii, vă rugăm să le scrieți mai jos:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1453,22 +1453,22 @@
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Fișierul tău partajat public ([A]) a fost restabilit</translation>
+        <translation>Fișierul dvs. partajat public ([A]) a fost restabilit</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Fișierul tău partajat public ([A]) a fost eliminat</translation>
+        <translation>Fișierul dvs. partajat public ([A]) a fost eliminat</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Folderul tău partajat public ([A]) a fost restabilit</translation>
+        <translation>Folderul dvs. partajat public ([A]) a fost restabilit</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Folderul tău partajat public ([A]) a fost eliminat</translation>
+        <translation>Folderul dvs. partajat public ([A]) a fost eliminat</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -1488,12 +1488,12 @@
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation>Contul tău este aproape plin.</translation>
+        <translation>Contul dvs. este aproape plin.</translation>
     </message>
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation>Contul tău este plin.</translation>
+        <translation>Contul dvs. este plin.</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
@@ -1523,7 +1523,7 @@
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Contul tău a fost dezactivat în modul numai citire până când vei efectua plățile necesare.</translation>
+        <translation>Contul dvs. a fost dezactivat numai citire până când continuați cu plățile necesare.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1553,7 +1553,7 @@
     <message>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation>Obține planul PRO</translation>
+        <translation>Obțineți abonamentul Pro</translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
@@ -1675,9 +1675,19 @@
 <context>
     <name>DownloadQueueController</name>
     <message>
-        <source>Local Disk</source>
-        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation>Disc local</translation>
+        <source>Removable drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Removable drive. See SNC-3506.</translatorcomment>
+        <translation>Unitate detașabilă</translation>
+    </message>
+    <message>
+        <source>Shared drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
+        <translation>Unitate de rețea</translation>
+    </message>
+    <message>
+        <source>Local drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files. See SNC-3506.</translatorcomment>
+        <translation>Unitate locală</translation>
     </message>
 </context>
 <context>
@@ -2013,13 +2023,14 @@
     <message>
         <source>Refresh</source>
         <translatorcomment>Button in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation>Reîmprospătează</translation>
+        <translation>Actualizați</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Este posibil ca problema să fi fost rezolvată extern.
+Actualizați lista.</translation>
     </message>
 </context>
 <context>
@@ -2027,7 +2038,7 @@ Please, refresh the list.</source>
     <message>
         <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
         <translatorcomment>Text in message box shown when a failure in adding rules in the file containing ignore rules.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu am putut actualiza fişierul .megaignore. Verificați dacă aveți permisiuni de scriere pentru acest fișier.</translation>
     </message>
 </context>
 <context>
@@ -2157,7 +2168,7 @@ Acest lucru poate fi util pentru fișiere mari, fișiere de care nu aveți nevoi
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until the app fetches link information from the server</translatorcomment>
-        <translation>Te rugăm să astepți…</translation>
+        <translation>Vă rugăm să așteptați&#8230;</translation>
     </message>
 </context>
 <context>
@@ -2311,7 +2322,7 @@ Acest lucru poate fi util pentru fișiere mari, fișiere de care nu aveți nevoi
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Contul tău MEGA este plin.</translation>
+        <translation>Contul dvs. MEGA este plin.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -2321,7 +2332,7 @@ Acest lucru poate fi util pentru fișiere mari, fișiere de care nu aveți nevoi
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Te rugăm să-ți upgradezi contul.</translation>
+        <translation>Vă rugăm să vă actualizați contul.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2486,17 +2497,17 @@ Acest lucru poate fi util pentru fișiere mari, fișiere de care nu aveți nevoi
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
-        <translation>Nu poți continua descărcarea deoarece nu mai ai suficientă cotă de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou plan sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea planului.</translation>
+        <translation>Nu poți continua descărcarea deoarece nu mai ai suficientă cotă de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou abonament sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea abonamentului.</translation>
     </message>
     <message>
         <source>Buy new plan</source>
         <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
-        <translation>Cumpără un plan nou</translation>
+        <translation>Cumpără un abonament nou</translation>
     </message>
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation>Descărcarea poate fi întreruptă deoarece ai folosit 90% din cota de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou plan sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea planului.</translation>
+        <translation>Descărcarea poate fi întreruptă deoarece ai folosit 90% din cota de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou abonament sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea abonamentului.</translation>
     </message>
 </context>
 <context>
@@ -2642,12 +2653,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Folderul de la distanță [B]%1[/B] va fi mutat în Coșul de gunoi MEGA.[BR]Veți putea recupera folderul de acolo.</translation>
+        <translation>Folderul în MEGA [B]%1[/B] va fi mutat în Coșul de gunoi MEGA.[BR]Veți putea recupera folderul de acolo.</translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Reluați transferurile pentru a remedia problema.</numerusform><numerusform>Reluați transferurile pentru a remedia problemele.</numerusform><numerusform>Reluați transferurile pentru a remedia problemele.</numerusform></translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
@@ -2657,12 +2668,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Păstrați folderul de la distanță [B]%1[/B]?</translation>
+        <translation>Păstrați folderul stocat în MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Păstrați elementul de la distanță [B]%1[/B]?</translation>
+        <translation>Păstrați elementul deja stocate în MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2692,13 +2703,14 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Refresh</source>
         <translatorcomment>Button in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation>Reîmprospătează</translation>
+        <translation>Actualizați</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Este posibil ca problema să fi fost rezolvată extern.
+Actualizați lista.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2733,7 +2745,7 @@ Please, refresh the list.</source>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Păstrați ultima modificare[/B] (la distanță)</translation>
+        <translation>[B]Păstrați ultima versiune modificată[/B] (în MEGA)</translation>
     </message>
     <message>
         <source>Keep the [B]local files[/B]?</source>
@@ -2744,33 +2756,33 @@ Please, refresh the list.</source>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Fișierele [B]locale[/B] vor fi încărcate în MEGA și adăugate ca versiune la fișierele de la distanță.
+        <translation>Fișierele [B]locale[/B] vor fi încărcate în MEGA și adăugate ca versiune la fișierele în MEGA.
 Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Folderele [B]de la la distanță[/B] folderele vor fi mutate în coșul de gunoi MEGA.[BR]Veți putea recupera folderele de acolo.</translation>
+        <translation>Folderele deja stocate în MEGA vor fi mutate în Coșul de gunoi MEGA.[BR]Veți putea recupera folderele de acolo.</translation>
     </message>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Păstrați fișierele [B]de la distanță[/B]?</translation>
+        <translation>Păstrați fișierele deja stocate [B]în MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Păstrați folderele [B]de la distanță[/B]?</translation>
+        <translation>Păstrați folderele deja stocate [B]în MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Păstrați elementele [B]de la distanță[/B]?</translation>
+        <translation>Păstrați elementele deja stocate [B]în MEGA[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierele [B]locale[/B] vor fi mutate în folderul ascuns .rubbish sau .debris din folderul local de sincronizare.</translation>
     </message>
     <message>
         <source>The [B]local folders[/B] will be moved to the sync debris folder</source>
@@ -2800,12 +2812,12 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Un sufix precum (1) va fi adăugat la fișierul [/B]de la distanță[/B].</numerusform><numerusform>Un sufix precum (1) va fi adăugat fișierelor [/B]de la distanță[/B].</numerusform><numerusform>Un sufix precum (1) va fi adăugat fișierelor [/B]de la distanță[/B].</numerusform></translation>
+        <translation><numerusform>Un sufix precum (1) va fi adăugat la fișierul deja stocate în MEGA.</numerusform><numerusform>Un sufix precum (1) va fi adăugat fișierelor deja stocate în MEGA.</numerusform><numerusform>Un sufix precum (1) va fi adăugat fișierelor deja stocate în MEGA.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Un sufix precum (1) va fi adăugat la folderul [/B]de la distanță[/B].</numerusform><numerusform>Un sufix precum (1) va fi adăugat folderelor [/B]de la distanță[/B].</numerusform><numerusform>Un sufix precum (1) va fi adăugat folderelor [/B]de la distanță[/B].</numerusform></translation>
+        <translation><numerusform>Un sufix precum (1) va fi adăugat la folderul deja stocate în MEGA.</numerusform><numerusform>Un sufix precum (1) va fi adăugat folderelor deja stocate în MEGA.</numerusform><numerusform>Un sufix precum (1) va fi adăugat folderelor deja stocate în MEGA.</numerusform></translation>
     </message>
     <message>
         <source>Keep the [B]local folders[/B]?</source>
@@ -2839,12 +2851,12 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     <message>
         <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
         <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>[A]Este posibil să folosești aceeași parolă pentru contul tău MEGA ca și pentru alte servicii și că cel puțin unul dintre aceste alte servicii a suferit o încălcare a securității datelor.[/A]</translation>
+        <translation>[A]Este posibil să utilizați aceeași parolă pentru contul dvs. MEGA ca și pentru alte servicii și că cel puțin unul dintre aceste alte servicii a suferit o încălcare a datelor.[/A]</translation>
     </message>
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>[A]Parola ta s-a scurs și acum este folosită de persoane rău-intenționate pentru a se autentifica în conturile tale, inclusiv, dar nu numai, în contul tău MEGA.[/A]</translation>
+        <translation>[A]Parola dvs. s-a scurs și este acum folosită de actori răi pentru a vă conecta la conturile dvs., inclusiv, dar fără a se limita la, contul dvs. MEGA.[/A]</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
@@ -2862,7 +2874,7 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Te rugăm să introduci codul generat de aplicația de autentificare</translation>
+        <translation>Vă rugăm să introduceți codul generat de aplicația dvs. de autentificare</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2895,12 +2907,12 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>Te rugăm să verifici e-mailul și să dai clic pe link pentru a confirma contul.</translation>
+        <translation>Vă rugăm să verificați adresa de e-mail și să faceți clic pe link pentru a vă confirma contul.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>Ai încercat să te autentifici de prea multe ori.[BR]Te rugăm să aștepți până la %1 și să încerci din nou.</translation>
+        <translation>Ați încercat să vă conectați de prea multe ori.[BR]Vă rugăm să așteptați până %1 și încercați din nou.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
@@ -2928,7 +2940,7 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>Cheia noastră SSL nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle sau software-ul antivirus ar putea intercepta comunicările și să cauzeze problema. Te rugăm să dezactivezi software-ul antivirus și să încerci din nou.</translation>
+        <translation>Cheia noastră SSL nu poate fi verificată. Ați putea fi afectat de un atac man-in-the-middle sau software-ul antivirus ar putea să vă intercepteze comunicațiile și să cauzeze această problemă. Vă rugăm să îl dezactivați și să încercați din nou.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3034,7 +3046,7 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     <message>
         <source>Stalled</source>
         <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Problemă a fost detectată</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -3065,7 +3077,7 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>A apărut o problemă la instalarea actualizării. Te rugăm să reîncerci mai târziu sau să descarci ultima versiune de pe: https://mega.nz/#sync</translation>
+        <translation>A apărut o problemă la instalarea actualizării. Încercați din nou mai târziu sau descărcați cea mai recentă versiune de la: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3105,7 +3117,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Config-ul tău este corupt, te rugăm să o iei de la început</translation>
+        <translation>Configurația dvs. este coruptă, vă rugăm să începeți din nou</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -3200,7 +3212,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Contul tău business a fost dezactivat din cauza nerealizării plății. Nu vei putea accesa datele stocate în contul tău până când nu vei efectua o plată și nu îți vei reactiva abonamentul.</translation>
+        <translation>Contul dvs. de afaceri a fost dezactivat din cauza eșecului plății. Nu veți putea accesa datele stocate în contul dvs. până când nu efectuați o plată și nu ați reactivat abonamentul.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -3215,7 +3227,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Plata din această lună a eșuat. Te rugăm să îți rezolvi problema legată de plată cât mai curând posibil pentru a evita dezactivarea contului.</translation>
+        <translation>Plata din această lună a eșuat. Vă rugăm să rezolvați problema de plată cât mai curând posibil pentru a evita dezactivarea contului.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -3225,7 +3237,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Contul tău a [A]fost dezactivat[/A]. Poți doar să răsfoiești prin datele tale.</translation>
+        <translation>Contul dvs. are [A]a fost dezactivat[/A]. Puteți răsfoi doar datele dvs.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -3319,7 +3331,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
         <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation>Securitatea contului tău este în curs de actualizare. Acest lucru se va întâmpla doar o singură dată. Dacă ai mai văzut acest mesaj pentru acest cont, dă clic pe Anulează.</translation>
+        <translation>Securitatea contului dvs. este acum actualizată. Acest lucru se va întâmpla o singură dată. Dacă ați mai văzut acest mesaj pentru acest cont, faceți clic pe Anulare.</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -3527,7 +3539,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Cotă de stocare depășită. Te rugăm să faci upgrade acum.</translation>
+        <translation>Cota de stocare a fost depășită. Vă rugăm să actualizați acum.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3589,7 +3601,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>Te rugăm să astepți…</translation>
+        <translation>Vă rugăm să așteptați&#8230;</translation>
     </message>
 </context>
 <context>
@@ -3657,12 +3669,12 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>Folderul de sincronizare la distanță a fost mutat în Coșul de gunoi</translation>
+        <translation>Folderul în MEGA a fost mutat în Coșul de gunoi</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>Nu ai acces complet la folderul de sincronizare la distanță</translation>
+        <translation>Nu aveți acces complet la folderul partajat în MEGA</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3677,7 +3689,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Active sync below path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with path inside the selected remote target</translatorcomment>
-        <translation>Există deja o sincronizare activă în folderul tău la distanță</translation>
+        <translation>Există deja o sincronizare activă în folderul dvs. de la distanță</translation>
     </message>
     <message>
         <source>Active sync above path</source>
@@ -3692,7 +3704,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>Folderul de sincronizare la distanță este în Coșul de gunoi</translation>
+        <translation>Folderul în MEGA se află în Coșul de gunoi</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -3717,7 +3729,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Your account is blocked</source>
         <translatorcomment>SDK error shown when your account is blocked</translatorcomment>
-        <translation>Contul tău a fost blocat</translation>
+        <translation>Contul dvs. a fost blocat</translation>
     </message>
     <message>
         <source>Unknown temporary error</source>
@@ -3727,7 +3739,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Too many changes in account, local state invalid</source>
         <translatorcomment>SDK error label shown to inform the user that local state of a sync is invalid due to too many changes.</translatorcomment>
-        <translation>Stare de sincronizare nevalidă din cauza prea multor modificări în contul tău</translation>
+        <translation>Starea sincronizării nevalide din cauza prea multor modificări în contul dvs.</translation>
     </message>
     <message>
         <source>Undefined error</source>
@@ -3742,7 +3754,7 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
-        <translation>Planul dvs. a expirat</translation>
+        <translation>Abonamentul dvs. a expirat</translation>
     </message>
 </context>
 <context>
@@ -3956,7 +3968,7 @@ Transferurile de sincronizare nefinalizate selectate nu vor fi anulate. Toate ce
     <message>
         <source>Solve</source>
         <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rezolva</translation>
     </message>
 </context>
 <context>
@@ -3997,20 +4009,21 @@ Transferurile de sincronizare nefinalizate selectate nu vor fi anulate. Toate ce
     <message>
         <source>Refresh</source>
         <translatorcomment>Button to refresh sync stalls when an external change to sync stalls is detected.SNC-2565</translatorcomment>
-        <translation>Reîmprospătează</translation>
+        <translation>Actualizați</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Confirmation text when a name conflict has been resolved externally.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Este posibil ca problema să fi fost rezolvată extern.
+Actualizați lista.</translation>
     </message>
     <message>
         <source>%1 no longer exists.
 Please refresh the view</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by renamming the local file and the file is actually deleted.SNC-2565</translatorcomment>
         <translation>[B]%1[/B] nu mai există.
-Reîmprospătați fereastra.</translation>
+Actualizați fereastra.</translation>
     </message>
     <message>
         <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]</source>
@@ -4025,12 +4038,12 @@ Reîmprospătați fereastra.</translation>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation>Fișierul va fi mutat în folderul .rubbish sau .debris din locația dvs. locală de sincronizare.[BR]Veți putea recupera fișierul de acolo.[/BR]</translation>
+        <translation>Acesta va fi mutat în folderul .rubbish sau .debris din locația locală de sincronizare.[BR]Veți putea recupera fișierul de acolo.[/BR]</translation>
     </message>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation>Aceasta va fi mutată în folderul .rubbish sau .debris din locația dvs. locală de sincronizare.[BR]Veți putea recupera folderul de acolo.[/BR]</translation>
+        <translation>Acesta va fi mutat în folderul .rubbish sau .debris din locația locală de sincronizare.[BR]Veți putea recupera folderul de acolo.[/BR]</translation>
     </message>
     <message>
         <source>No action needed</source>
@@ -4040,12 +4053,12 @@ Reîmprospătați fereastra.</translation>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>Eliminați fișierul de la distanță [B]%1[/B]?</translation>
+        <translation>Eliminați fișierul deja stocat în MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>Eliminați folderul de la distanță [B]%1[/B]?</translation>
+        <translation>Eliminați folderul deja stocat în MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
@@ -4093,7 +4106,7 @@ Reîmprospătați fereastra.</translation>
     <message>
         <source>Solve options</source>
         <translatorcomment>Button text to show the solve action of sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Opțiuni de rezolvare</translation>
     </message>
     <message>
         <source>Name Conflicts: [B]%1[/B]</source>
@@ -4136,7 +4149,7 @@ This may be due to syncing to case insensitive local filesystems, or the effects
     <message>
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rezolvați această problemă?</translation>
     </message>
     <message>
         <source>This action will rename the conflicted items (adding a suffix like (1)).</source>
@@ -4548,12 +4561,12 @@ Introdu un alt nume.</translation>
     <message>
         <source>There is already a folder with the same name in this backup</source>
         <translatorcomment>Error text indicating that it can´t create a backup with duplicated names CON-468</translatorcomment>
-        <translation>Există deja un folder cu același nume în această copie de rezervă</translation>
+        <translation>Există deja un folder cu același nume în această backup</translation>
     </message>
     <message>
         <source>A folder with the same name already exists on your backups</source>
         <translatorcomment>Error text indicating that a backup with the same name already exists CON-468</translatorcomment>
-        <translation>Un folder cu același nume există deja în copiile de rezervă</translation>
+        <translation>Un folder cu același nume există deja în backup-urile dvs.</translation>
     </message>
     <message>
         <source>Confirm folders to back up</source>
@@ -4758,12 +4771,12 @@ Introdu un alt nume.</translation>
     <message>
         <source>Select folders to back up</source>
         <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
-        <translation>Selectați folderele pentru a face o copie de rezervă</translation>
+        <translation>Selectați folderele pentru backup</translation>
     </message>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Folderele selectate vor face automat o copie de rezervă la MEGA atunci când aplicația desktop rulează.</translation>
+        <translation>Folderele selectate vor backup automat la MEGA atunci când aplicația desktop rulează.</translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -4943,7 +4956,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
         <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
-        <translation>Actualizați automat fișierele de pe computerele dvs. la MEGA. Dacă alegeți să ștergeți copiile de rezervă în MEGA, fișierele locale nu vor fi eliminate.</translation>
+        <translation>Actualizați automat fișierele de pe computerele dvs. la MEGA. Dacă alegeți să ștergeți backup-urile din MEGA, fișierele locale nu vor fi eliminate</translation>
     </message>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
@@ -5037,7 +5050,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting set syncs but disabled until there is enough free storage space within the account.</translatorcomment>
-        <translation>Ai depășit cota de transfer disponibilă pentru contul tău. Poți adăuga sincronizări, însă acestea vor rămâne dezactivate până când există suficient spațiu în cont.</translation>
+        <translation>Ați depășit spațiul de stocare disponibil pentru contul dvs. Puteți adăuga sincronizări, dar acestea vor rămâne dezactivate până când există suficient spațiu în contul dvs.</translation>
     </message>
     <message>
         <source>Buy more space</source>
@@ -5052,7 +5065,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting to add new uploads that will be queued until there is enough free storage space within the account.</translatorcomment>
-        <translation>Ai depășit cota de transfer disponibilă pentru contul tău. Poți adăuga încărcări, însă transferurile vor rămâne în coada de așteptare până când există suficient spațiu în cont.</translation>
+        <translation>Ați depășit spațiul de stocare disponibil pentru contul dvs. Puteți adăuga încărcări, dar transferurile vor rămâne în coada de așteptare până când există suficient spațiu în contul dvs.</translation>
     </message>
     <message>
         <source>Syncs are temporarily disabled.</source>
@@ -5062,7 +5075,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
-        <translation>Ai depășit cota de transfer disponibilă pentru contul tău. Poți adăuga sincronizări, însă acestea vor rămâne dezactivate până când contul va avea mai multă cotă de transfer disponibilă.</translation>
+        <translation>Ați depășit cota de transfer disponibilă pentru contul dvs. Puteți adăuga sincronizări, dar acestea vor rămâne dezactivate până când contul dvs. va avea mai multă cotă de transfer disponibilă.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -5077,7 +5090,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
-        <translation>Ai depășit cota de transfer disponibilă pentru contul tău. Poți importa linkuri, însă transferurile vor rămâne în coada de așteptare până când contul va avea mai multă cotă de transfer disponibilă.</translation>
+        <translation>Ați depășit cota de transfer disponibilă pentru contul dvs.. Puteți importa linkuri, dar transferurile vor rămâne în coada de așteptare până când contul dvs. va avea mai multă cotă de transfer disponibilă.</translation>
     </message>
     <message>
         <source>Downloads are temporarily disabled.</source>
@@ -5087,7 +5100,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation>Ai depășit cota de transfer disponibilă pentru contul tău. Poți adăuga descărcări, însă transferurile vor rămâne în coada de așteptare până când contul va avea mai multă cotă de transfer disponibilă.</translation>
+        <translation>Ați depășit cota de transfer disponibilă pentru contul dvs.. Puteți adăuga descărcări, dar transferurile vor rămâne în coada de așteptare până când contul dvs. va avea mai multă cotă de transfer disponibilă.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
@@ -5097,7 +5110,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
-        <translation>Ai depășit cota de transfer disponibilă pentru contul tău. Poți adăuga redări în flux, însă transferurile vor rămâne în coada de așteptare până când contul va avea mai multă cotă de transfer disponibilă.</translation>
+        <translation>Ați depășit cota de transfer disponibilă pentru contul dvs.. Puteți adăuga fluxuri, dar transferurile vor rămâne în coada de așteptare până când contul dvs. va avea mai multă cotă de transfer disponibilă.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>
@@ -5212,7 +5225,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>Fișierele și folderele au un proprietar și aparțin unui grup de utilizatori. Folosind această casetă de dialog, poți acorda permisiuni diferite de acces pentru fișierele și folderele noi create de aplicația desktop utilizatorilor care aparțin aceluiași grup și restului de utilizatori de pe calculator. Dacă nu ai nevoie să le schimbi, te rugăm să le lași pe setările implicite din motive de securitate.</translation>
+        <translation>Fișierele și folderele au un proprietar și aparțin unui grup de utilizatori. Folosind acest dialog, puteți acorda permisiuni de acces diferite pentru fișierele și folderele noi create de aplicația desktop utilizatorilor care aparțin aceluiași grup și celorlalți utilizatori din calculator. Dacă nu trebuie să le modificați, vă rugăm să le lăsați în setările implicite din motive de securitate.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5253,7 +5266,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation>Planul actual</translation>
+        <translation>Abonamentul actual</translation>
     </message>
     <message>
         <source>%1 per user</source>
@@ -5316,7 +5329,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Moved to OS Trash</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation>Mutată în Coșul de gunoi</translation>
+        <translation>Elementul a fost mutat în Coșul de gunoi</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5331,7 +5344,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation>Mutată în Coșul de gunoi</translation>
+        <translation>Elementul a fost mutat în Coșul de gunoi</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5346,7 +5359,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation>Mutată în Coșul de reciclare</translation>
+        <translation>Elementul a fost mutat în Coșul de gunoi</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5357,16 +5370,23 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync Rework Beta V1 version.
-- New Exclusions dialog for syncs.
-- New header for undecrypted cloud issues.
-- Minor changes in issues description. 
-- Auto solve reparse points and hard/sym links in Smart Mode. 
-- Minor bugs fixed. 
-- Performance improved. 
+        <source>- Sync rework Beta V2 is released.
+- A new onboarding wizard is introduced for any new sync or backup processes.
+- Changes are detected and stalled issues are updated automatically.
+- MEGA-supported language set is now available.
+- User experience for batch fixing sync issues is improved.
+- Minor bugs are fixed.
+- Performance is improved.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
+        <translation>Refacerea sincronizarea&#xa0; beta V2
+- Un nou asistent este prezentat pentru orice proces nou de sincronizare sau backup.
+- Modificările sunt detectate și problemele de sincronizare sunt actualizate automat.
+- Disponibil pentru toate limbile oferite de MEGA.
+- Experiența utilizatorului pentru rezolvarea problemelor de sincronizare în lot este îmbunătățită.
+- Sunt remediate erori minore.
+- Performanța este îmbunătățită.
+</translation>
     </message>
 </context>
 <context>
@@ -5733,8 +5753,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Folderul nu a fost găsit.
-Te rugăm să verifici dacă a fost dat numele corect al folderului.</translation>
+Dosarul nu a fost găsit.
+Vă rugăm să confirmați numele corect al folderului.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5750,7 +5770,7 @@ Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
         <translation>%1
 Fișierul nu a fost găsit.
-Te rugăm să verifici dacă a fost dat numele corect al fișierului.</translation>
+Vă rugăm să confirmați numele corect al fișierului.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6116,12 +6136,12 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Backupurile versiunilor anterioare ale fișierelor sincronizate de pe calculator vor fi șterse definitiv. Te rugăm să verifici folderele cu backup pentru a vedea dacă este nevoie să salvezi ceva înainte de a continua:</translation>
+        <translation>Backup-urile versiunilor anterioare ale fișierelor sincronizate din calculator vor fi șterse definitiv. Vă rugăm să verificați folderele de backup pentru a vedea dacă trebuie să salvați ceva înainte de a continua:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Backupurile versiunilor anterioare ale fișierelor sincronizate pe MEGA vor fi șterse definitiv. Te rugăm să verifici folderul [A] din Coșul de gunoi al contului tău MEGA pentru a vedea dacă este nevoie să salvezi ceva înainte de a continua:</translation>
+        <translation>Backup-urile versiunilor anterioare ale fișierelor sincronizate în MEGA vor fi șterse definitiv. Vă rugăm să verificați [A] folder în Coșul de gunoi al contului MEGA pentru a vedea dacă trebuie să salvați ceva înainte de a continua.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6216,7 +6236,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (cache la distanță)</translation>
+        <translation>SyncDebris (în MEGA)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6226,7 +6246,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>Te rugăm să ne dai de știre dacă întâmpini probleme. Ajută-ne oferind cât mai multe detalii posibil.</translation>
+        <translation>Vă rugăm să ne anunțați dacă întâmpinați probleme. Ajutați-ne oferind cât mai multe detalii posibil.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6311,7 +6331,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (cache la distanță):</translation>
+        <translation>SyncDebris (în MEGA):</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6336,7 +6356,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
-        <translation>Securitatea contului tău depinde de puterea parolei tale. Parolele trebuie să fie unice și imposibil de ghicit. Îți recomandăm să folosești un manager de parole.</translation>
+        <translation>Securitatea contului dvs. depinde de puterea parolei. Parolele trebuie să fie unice și imposibil de ghicit. Vă recomandăm să utilizați un manager de parole.</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
@@ -6626,7 +6646,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Some issues ocurred.</source>
         <translatorcomment>Label that appeaers when sync stalls are detected.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Probleme au fost detectate</translation>
     </message>
     <message>
         <source>View...</source>
@@ -6715,7 +6735,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation>Mutat la</translation>
+        <translation>Elementul a fost mutat în</translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6735,7 +6755,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation>Calculând regulile de excludere, așteptați și încercați din nou.</translation>
+        <translation>Calculând regulile de excludere, problema va fi rezolvată odată finalizată.</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -6790,7 +6810,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation>Șters sau mutat în MEGA</translation>
+        <translation>Element șters sau mutat în MEGA</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
@@ -6868,7 +6888,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Are you sure you want to ignore this issue?</source>
         <translatorcomment>Text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ignorați această problemă?</translation>
     </message>
     <message>
         <source>This action will ignore this issue and it will not be synced.</source>
@@ -6888,7 +6908,35 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Solved</source>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rezolvată</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation><numerusform>Rezolvată: %n</numerusform><numerusform>Rezolvate: %n</numerusform><numerusform>Rezolvate: %n</numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation>Toate problemele: %1</translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation><numerusform>Conflict de nume: %n</numerusform><numerusform>Conflicte de nume: %n</numerusform><numerusform>Conflicte de nume: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation><numerusform>Conflictul tipului de element: %n</numerusform><numerusform>Conflictele tipului de element: %n</numerusform><numerusform>Conflictele tipului de element: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation><numerusform>Altă: %n</numerusform><numerusform>Alte: %n</numerusform><numerusform>Alte: %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6904,36 +6952,6 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Probleme de sincronizare</translation>
     </message>
     <message>
-        <source>All issues:</source>
-        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Toate problemele:</translation>
-    </message>
-    <message>
-        <source>Name conflicts:</source>
-        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Conflicte de nume:</translation>
-    </message>
-    <message>
-        <source>Item type conflicts:</source>
-        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
-        <translation>Conflictele tipului de element:</translation>
-    </message>
-    <message>
-        <source>Other:</source>
-        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Altele:</translation>
-    </message>
-    <message>
-        <source>Solved:</source>
-        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Reîmprospătează</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translatorcomment>Button to close sync stalls dialog</translatorcomment>
         <translation>Închide</translation>
@@ -6941,7 +6959,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Metoda de rezolvare a problemelor</translation>
     </message>
     <message>
         <source>Choose:</source>
@@ -6957,7 +6975,7 @@ Vrei să îl ștergi oricum?</translation>
         <source>Let Mega solve sync issues
 automatically</source>
         <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lăsați MEGA să rezolve automat problemele de sincronizare</translation>
     </message>
     <message>
         <source>Advanced mode</source>
@@ -6972,17 +6990,22 @@ automatically</source>
     <message>
         <source>Solve issues</source>
         <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rezolvați problemelor</translation>
     </message>
     <message>
         <source>No issues</source>
         <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nicio problemă</translation>
     </message>
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
         <translation>[A]En apprendre davantage[/A]</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
+        <translation>Ajutor</translation>
     </message>
 </context>
 <context>
@@ -6990,46 +7013,49 @@ automatically</source>
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rezolvarea problemelor…</translation>
     </message>
     <message>
         <source>Refresh</source>
         <translatorcomment>Message box button to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
-        <translation>Reîmprospătează</translation>
+        <translation>Actualizați</translation>
     </message>
     <message>
         <source>Some external changes were detected. Please, refresh the view.</source>
         <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
         <translation>Au fost detectate unele modificări externe.
-Reîmprospătați vizualizarea.</translation>
+Actualizați vizualizarea.</translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n&#xa0;problemă a fost rezolvată</numerusform><numerusform>%n&#xa0;probleme au fost rezolvate</numerusform><numerusform>%n de probleme au fost rezolvate</numerusform></translation>
     </message>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rezolvarea problemelor…</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Este posibil ca problema să fi fost rezolvată extern.
+Actualizați lista.</translation>
     </message>
     <message>
         <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unele probleme nu pot fi rezolvate.
+Verificați permisiunile fișierului.megaignore în locațiile folderului local de sincronizare.</translation>
     </message>
     <message>
         <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unele probleme nu pot fi rezolvate.
+Verificați permisiunile fișierului.megaignore în locațiile folderului local de sincronizare.</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
@@ -7188,7 +7214,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
-        <translation>Te rugăm să astepți…</translation>
+        <translation>Vă rugăm să așteptați&#8230;</translation>
     </message>
     <message>
         <source>Select items</source>
@@ -7458,12 +7484,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Sincronizarea „%1” ți-a fost dezactivată deoarece folderul de la distanță este în Coșul de gunoi</translation>
+        <translation>Sincronizarea dvs. „%1” a fost dezactivată deoarece folderul în MEGA este în Coșul de gunoi</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Sincronizarea dvs. „%1” a fost dezactivat. Nu aveți acces complet la folderul de la distanță (sau la o parte din acesta).</translation>
+        <translation>Sincronizarea dvs. „%1” a fost dezactivată. Nu aveți acces complet la folderul în MEGA (sau o parte din acesta).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -7650,7 +7676,7 @@ Mutați-l într-o locație care are o adâncime mai mică de 64 de foldere.</tra
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation>Nu se poate sincroniza folderul. Te rugăm să te asiguri că nu folosești „\”, „/” sau „:” în numele folderelor.</translation>
+        <translation>Nu se poate sincroniza folderul. Asigurați-vă că nu folosiți „\”, „/” sau „:” în numele folderelor.</translation>
     </message>
 </context>
 <context>
@@ -7714,7 +7740,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Metoda de rezolvare a problemelor</translation>
     </message>
     <message>
         <source>Smart</source>
@@ -7724,7 +7750,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Let MEGA solve sync issues automatically</source>
         <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lăsați MEGA să rezolve automat problemele de sincronizare</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -8079,7 +8105,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Contul tău MEGA este plin</translation>
+        <translation>Contul dvs. MEGA este plin</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
@@ -8096,7 +8122,7 @@ Pentru a obține mai multă cotă, fă upgrade la un cont Pro sau așteaptă [A]
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Problemă a fost detectată</numerusform><numerusform>Probleme au fost detectate</numerusform><numerusform>Probleme au fost detectate</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8608,7 +8634,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Te rugăm să upgradezi la Pro pentru a continua imediat sau așteaptă %1 pentru a continua gratuit</translation>
+        <translation>Vă rugăm să actualizați la Pro pentru a continua imediat sau așteptați %1 pentru a continua gratuit</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8641,12 +8667,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Te rugăm să upgradezi contul pentru a te bucura de mai mult spațiu de stocare (încărcările îți vor fi reluate automat).</translation>
+        <translation>Vă rugăm să vă actualizați contul pentru a vă bucura de mai mult spațiu de stocare (încărcările dvs. se vor relua automat).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Contul tău MEGA este plin.</translation>
+        <translation>Contul dvs. MEGA este plin.</translation>
     </message>
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
@@ -8661,7 +8687,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>100% din cei %1 disponibili sunt folosiți în contul tău.</translation>
+        <translation>100% din %1 disponibil utilizat în contul dvs.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
@@ -8889,7 +8915,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Contul tău a fost blocat temporar pentru siguranța ta. Te rugăm să-ți verifici e-mail și să urmezi pașii pentru a debloca contul.</translation>
+        <translation>Contul dvs. a fost blocat temporar pentru siguranța dvs. Vă rugăm să verificați adresa de e-mail și să urmați pașii săi pentru a vă debloca contul.</translation>
     </message>
     <message>
         <source>Resend email</source>

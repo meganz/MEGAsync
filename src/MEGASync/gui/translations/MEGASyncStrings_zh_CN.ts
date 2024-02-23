@@ -1158,7 +1158,7 @@
     <message>
         <source>Apply to all</source>
         <translatorcomment>Check box to allow user to apply a fix to all similar stall issues.FM-1615</translatorcomment>
-        <translation>适用于全部</translation>
+        <translation>应用于全部</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
@@ -1168,7 +1168,7 @@
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>此操作会将文件下载到临时位置，修复问题，然后将其删除。</numerusform></translation>
+        <translation><numerusform>此操作会将文件下载到临时位置，修复问题，然后移除临时文件。</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -1214,7 +1214,7 @@
     <message>
         <source>Remote Copy</source>
         <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
-        <translation>远程复制</translation>
+        <translation>在MEGA中复制</translation>
     </message>
 </context>
 <context>
@@ -1675,9 +1675,19 @@
 <context>
     <name>DownloadQueueController</name>
     <message>
-        <source>Local Disk</source>
-        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation>本地磁盘</translation>
+        <source>Removable drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Removable drive. See SNC-3506.</translatorcomment>
+        <translation>可移动驱动器</translation>
+    </message>
+    <message>
+        <source>Shared drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
+        <translation>网络驱动器</translation>
+    </message>
+    <message>
+        <source>Local drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files. See SNC-3506.</translatorcomment>
+        <translation>本地驱动器</translation>
     </message>
 </context>
 <context>
@@ -2571,7 +2581,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Ok</source>
         <translatorcomment>Confirmation button inthe loading scene of stalled issues dialog shown when all issues have been solved in the smart mode.SNC-2565</translatorcomment>
-        <translation>Ok</translation>
+        <translation>好的</translation>
     </message>
 </context>
 <context>
@@ -2643,7 +2653,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>远程文件夹[B]%1[/B]将被移至MEGA回收站。[BR]您将能够从那里恢复文件夹。</translation>
+        <translation>MEGA中的[B]%1[/B]文件夹将被移至MEGA回收站。[BR]您将能够从那里恢复文件夹。</translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -2658,12 +2668,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>要保留远程文件夹[B]%1[/B]吗？</translation>
+        <translation>要保留已存储在MEGA[B]%1[/B]的文件夹？</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>要保留远程项目[B]%1[/B]吗？</translation>
+        <translation>要保留已存储在MEGA[B]%1[/B]中的项目吗？</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2735,7 +2745,7 @@ Please, refresh the list.</source>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]保留最后修改[/B]（远程）</translation>
+        <translation>[B]保留最后修改[/B]（在MEGA中）</translation>
     </message>
     <message>
         <source>Keep the [B]local files[/B]?</source>
@@ -2746,28 +2756,28 @@ Please, refresh the list.</source>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]本地[/B]文件将上传到MEGA，并作为远程文件的新增版本。
+        <translation>[B]本地[/B]文件将上传到MEGA，并添加为MEGA中既有文件的一个版本。
 请等待上传完成。</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]远程[/B]文件夹将被移到您的MEGA回收站。[BR]您将能够从那里恢复文件夹。</translation>
+        <translation>已经存储在MEGA中的文件夹将移到您的MEGA回收站中。[BR]您将能够从那里恢复这些文件夹。</translation>
     </message>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>要保留[B]远程[/B]文件吗？</translation>
+        <translation>要保留已存储[B]在MEGA[/B]中的文件吗？</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>要保留[B]远程[/B]文件夹吗？</translation>
+        <translation>要保留已存储[B]在MEGA[/B]的文件夹吗？</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>要保留[B]远程[/B]项目吗？</translation>
+        <translation>要保留已存储[B]在MEGA[/B]的项目吗？</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
@@ -2802,12 +2812,12 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>[B]远程[/B]文件将添加一个像(1)这样的后缀。</numerusform></translation>
+        <translation><numerusform>已存储在MEGA中的文件将添加一个像（1）这样的后缀。</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>[B]远程[/B]文件夹将添加一个像(1)这样的后缀。</numerusform></translation>
+        <translation><numerusform>已存储在MEGA中的文件夹将添加一个像（1）这样的后缀。</numerusform></translation>
     </message>
     <message>
         <source>Keep the [B]local folders[/B]?</source>
@@ -3657,12 +3667,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>远程同步文件夹已移至回收站</translation>
+        <translation>MEGA中的文件夹已移至回收站</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>您没有远程同步文件夹的完全访问权限</translation>
+        <translation>您没有MEGA中共享文件夹的完全访问权限</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3692,7 +3702,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>远程同步文件夹在您的回收站中</translation>
+        <translation>MEGA中的文件夹在您的回收站里</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -4031,7 +4041,7 @@ Please refresh the view</source>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation>文件夹将移至您本地同步位置的.rubbish或.debris文件夹。[BR]您将能够从那里恢复该文件夹。[/BR]</translation>
+        <translation>文件将移至您本地同步位置的.rubbish或.debris文件夹。[BR]您将能够从那里恢复文件夹。[/BR]</translation>
     </message>
     <message>
         <source>No action needed</source>
@@ -4041,12 +4051,12 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>要移除远程文件[B]%1[/B]吗？</translation>
+        <translation>要移除已存储在MEGA[B]%1[/B]中的文件吗？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>要移除远程文件夹[B]%1[/B]吗？</translation>
+        <translation>要移除已存储在MEGA[B]%1[/B]中的文件夹吗？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
@@ -5317,7 +5327,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Trash</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation>已移至废纸篓</translation>
+        <translation>项目已移至废纸篓</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5332,7 +5342,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation>已移至废纸篓</translation>
+        <translation>项目已移至废纸篓</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5347,7 +5357,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation>已移至回收站</translation>
+        <translation>项目已移至回收站</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5358,16 +5368,23 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync Rework Beta V1 version.
-- New Exclusions dialog for syncs.
-- New header for undecrypted cloud issues.
-- Minor changes in issues description. 
-- Auto solve reparse points and hard/sym links in Smart Mode. 
-- Minor bugs fixed. 
-- Performance improved. 
+        <source>- Sync rework Beta V2 is released.
+- A new onboarding wizard is introduced for any new sync or backup processes.
+- Changes are detected and stalled issues are updated automatically.
+- MEGA-supported language set is now available.
+- User experience for batch fixing sync issues is improved.
+- Minor bugs are fixed.
+- Performance is improved.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
+        <translation>同步功能重制测试版 V2
+－为任何新的同步或备份流程引入新的入门向导。
+－检测到更改并自动更新同步问题。
+－现在提供所有MEGA支持的语言。
+－改善批量修复同步问题的用户体验。
+－修复一些小错误。
+－改善性能。
+</translation>
     </message>
 </context>
 <context>
@@ -6217,7 +6234,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris（远程缓存）</translation>
+        <translation>SyncDebris（在MEGA中）</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6312,7 +6329,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris（远程缓存）：</translation>
+        <translation>SyncDebris（在MEGA中）：</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6604,7 +6621,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>B</source>
         <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane..SNC-4208</translatorcomment>
-        <translation>布</translation>
+        <translation>B</translation>
     </message>
     <message>
         <source>KB</source>
@@ -6665,12 +6682,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>CRC:</source>
         <translatorcomment>Label indicating fingerprint for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>循环冗余校验：</translation>
     </message>
     <message>
         <source>Loading time…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>正在加载时间戳&#8230;</translation>
     </message>
     <message>
         <source>Last modified:</source>
@@ -6716,7 +6733,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>项目已移至</translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6731,77 +6748,77 @@ Do you want to delete it anyway?</source>
     <message>
         <source>File is being frequently changing.</source>
         <translatorcomment>Label descriping the error causing sync stall. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>文件经常被更改</translation>
     </message>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>计算排除规则中，问题将在完成后得到解决。</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>检测到的符号链接</translation>
     </message>
     <message>
         <source>Detected special file.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a special file and cannot be synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>检测到的特殊文件</translation>
     </message>
     <message>
         <source>Different file or folder is already present.</source>
         <translatorcomment>Label descriping a sync stall is happening because an item with this name already exists.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已经存在相同名称的项目</translation>
     </message>
     <message>
         <source>Parent folder does not exist.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud parent folder is removed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>父文件夹不存在</translation>
     </message>
     <message>
         <source>Filesystem error during operation.</source>
         <translatorcomment>Label descriping a sync stall is happening because of filesystem failed operation ( Eg. folder creation).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>操作期间出现本地错误</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
         <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>对文件系统而言名称太长</translation>
     </message>
     <message>
         <source>Cannot fingerprint file.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA cannot create a fingerprint for it.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>无法对比文件指纹</translation>
     </message>
     <message>
         <source>Hard link or Reparse Point detected.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a hard link and cannot be synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>检测到硬链接或重解析点。如果此位置没有硬链接或重解点，请联系客服部门。</translation>
     </message>
     <message>
         <source>The folder could not be found. Ensure that the path is correct and try again.</source>
         <translatorcomment>Label descriping the sync sall is caused by removed path.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>找不到该文件夹。请确保路径正确，然后重试。</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
         <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MAC验证失败</translation>
     </message>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>项目已在MEGA中删除或移动</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is deleted by the user.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已在MEGA中删除</translation>
     </message>
     <message>
         <source>Move to debris folder failed.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA could not move the item to sync debris folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>无法移到本地同步位置的.debris或.rubbish文件夹中</translation>
     </message>
     <message>
         <source>Ignore file malformed.</source>
@@ -6816,37 +6833,37 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>识别本地文件系统中的文件夹内容时出错</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
         <translatorcomment>Label descriping a sync stall is happening because the node cannot be decrypted( not owned by the user).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>无法解密云盘中的项目。</translation>
     </message>
     <message>
         <source>Waiting for scanning to complete.</source>
         <translatorcomment>Label descriping the sync sall is caused by ongoing scan operation.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>正在等待扫描完成</translation>
     </message>
     <message>
         <source>Waiting for another move to complete.</source>
         <translatorcomment>Label descriping the sync sall is caused by ongoing move operation.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>正在等待另一个操作完成</translation>
     </message>
     <message>
         <source>Source was moved elsewhere.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud version was move.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA中的文件或文件夹已被移至其它地方</translation>
     </message>
     <message>
         <source>Local filesystem cannot store this name.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA cannot store the file ( possible reasons: filenames with trailing spaces).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>本地文件系统无法使用此文件名</translation>
     </message>
     <message>
         <source>Fingerprint is missing or invalid.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file fingerprint is missing.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>文件指纹缺失或无效</translation>
     </message>
     <message>
         <source>Error not detected</source>
@@ -6864,17 +6881,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Apply to all</source>
         <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
-        <translation>适用于全部</translation>
+        <translation>应用于全部</translation>
     </message>
     <message>
         <source>Are you sure you want to ignore this issue?</source>
         <translatorcomment>Text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>忽略此问题？</translation>
     </message>
     <message>
         <source>This action will ignore this issue and it will not be synced.</source>
         <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>此操作将忽略此问题，并且在问题解决之前不会同步该项目。</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -6889,7 +6906,35 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Solved</source>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已解决</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation><numerusform>已解决：%n</numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation>所有问题：%1</translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation><numerusform>名称冲突：%n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation><numerusform>项目类型冲突：%n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation><numerusform>其它：%n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6902,37 +6947,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Sync issues</source>
         <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All issues:</source>
-        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>所有问题：</translation>
-    </message>
-    <message>
-        <source>Name conflicts:</source>
-        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>名称冲突：</translation>
-    </message>
-    <message>
-        <source>Item type conflicts:</source>
-        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
-        <translation>项目类型冲突：</translation>
-    </message>
-    <message>
-        <source>Other:</source>
-        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>其它：</translation>
-    </message>
-    <message>
-        <source>Solved:</source>
-        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>刷新</translation>
+        <translation>同步问题</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6942,7 +6957,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>问题解决模式</translation>
     </message>
     <message>
         <source>Choose:</source>
@@ -6958,7 +6973,7 @@ Do you want to delete it anyway?</source>
         <source>Let Mega solve sync issues
 automatically</source>
         <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>让MEGA自动解决同步问题</translation>
     </message>
     <message>
         <source>Advanced mode</source>
@@ -6973,17 +6988,22 @@ automatically</source>
     <message>
         <source>Solve issues</source>
         <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>解决问题</translation>
     </message>
     <message>
         <source>No issues</source>
         <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>没有问题</translation>
     </message>
     <message>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
         <translation>[A]了解更多[/A]</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
+        <translation>帮助</translation>
     </message>
 </context>
 <context>
@@ -6991,7 +7011,7 @@ automatically</source>
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>正在解决问题&#8230;</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -7007,12 +7027,12 @@ automatically</source>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>已解决%n个问题</numerusform></translation>
     </message>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>正在解决问题&#8230;</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
@@ -7025,23 +7045,25 @@ Please, refresh the list.</source>
         <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>某些问题无法解决。
+在本地同步文件夹中验证.megaignore文件的权限。</translation>
     </message>
     <message>
         <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>某些问题无法解决。
+在本地同步文件夹中验证.megaignore文件的权限。</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
         <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>文件“%1”已移至“%2”</translation>
     </message>
     <message>
         <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
         <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>文件夹“%1”已移至“%2”</translation>
     </message>
 </context>
 <context>
@@ -7221,7 +7243,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Ok</source>
         <translatorcomment>Button to confirm ignoring symlinks in all syncs.FM-1615</translatorcomment>
-        <translation>Ok</translation>
+        <translation>好的</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -7231,42 +7253,42 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Apply to all</source>
         <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
-        <translation>适用于全部</translation>
+        <translation>应用于全部</translation>
     </message>
     <message>
         <source>Are you sure you want to ignore all symlinks in all syncs?</source>
         <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>要忽略所有同步中的符号链接吗？</translation>
     </message>
     <message>
         <source>This action will ignore all present and future symlinks in all your syncs.</source>
         <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>此操作将忽略所有同步中的所有当前和未来的符号链接。</translation>
     </message>
     <message>
         <source>Are you sure you want to ignore this symlink?</source>
         <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>要忽略此符号链接吗？</translation>
     </message>
     <message>
         <source>This action will ignore this symlink and it will not be synced.</source>
         <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>此操作将忽略此符号链接，并且不会进行同步。</translation>
     </message>
     <message>
         <source>Detected sym link: [B]%1[/B]</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced is a sym link.[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>检测到的符号链接：[B]%1[/B]</translation>
     </message>
     <message>
         <source>Ignore symlink</source>
         <translatorcomment>Button text to ignore the sym link causing sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>忽略符号链接</translation>
     </message>
     <message>
         <source>Ignore all symlinks in all syncs</source>
         <translatorcomment>Button text to ignore all sym link causing sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>在所有同步中忽略符号链接</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -7279,12 +7301,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的MEGA帐户已满。上传已禁用，文件夹同步已暂停。</translation>
     </message>
     <message>
         <source>Purchase more storage</source>
         <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>购买更多存储空间</translation>
     </message>
 </context>
 <context>
@@ -7460,12 +7482,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>由于远程文件夹位于回收站中，您的同步“%1”已被禁用</translation>
+        <translation>您的同步“%1”已被停用，因为MEGA中的文件夹在回收站里</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>您的同步“%1“已被禁用。您没有远程文件夹（或它的其中一部分）的完全访问权限。</translation>
+        <translation>您的同步“%1”已被停用。您没有MEGA中的文件夹（或其中一部分）的完全访问权限。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -7529,7 +7551,8 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>目标在您的文件夹结构中的位置太深。
+将其移至深度小于64个文件夹的位置。</translation>
     </message>
 </context>
 <context>
@@ -7659,7 +7682,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Synced Folders</source>
         <translatorcomment>Section title for Synchronized folders table view.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已同步的文件夹</translation>
     </message>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
@@ -7715,7 +7738,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>问题解决模式</translation>
     </message>
     <message>
         <source>Smart</source>
@@ -7725,7 +7748,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Let MEGA solve sync issues automatically</source>
         <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>让MEGA自动解决同步问题</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -8097,7 +8120,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>检测到问题</numerusform></translation>
     </message>
 </context>
 <context>

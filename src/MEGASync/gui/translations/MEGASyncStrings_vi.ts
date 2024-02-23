@@ -1675,9 +1675,19 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
 <context>
     <name>DownloadQueueController</name>
     <message>
-        <source>Local Disk</source>
-        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation>Ổ&#xa0;đĩa cục&#xa0;bộ</translation>
+        <source>Removable drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Removable drive. See SNC-3506.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shared drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files. See SNC-3506.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3653,12 +3663,12 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>Thư mục cho việc đồng bộ từ xa đã bị chuyển vào Thùng Rác</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>Bạn không&#xa0;có phép toàn&#xa0;quyền để truy&#xa0;cập vào thư&#xa0;mục đồng&#xa0;bộ từ xa</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3688,7 +3698,7 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>Thư mục cho việc đồng bộ từ xa nằm trong Thùng Rác</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -5310,7 +5320,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Moved to OS Trash</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation>Đã chuyển vào Thùng&#xa0;Rác</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5325,7 +5335,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation>Đã chuyển vào Thùng&#xa0;Rác</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5340,7 +5350,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation>Đã chuyển vào Thùng&#xa0;Rác</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5351,15 +5361,15 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync Rework Beta V1 version.
-- New Exclusions dialog for syncs.
-- New header for undecrypted cloud issues.
-- Minor changes in issues description. 
-- Auto solve reparse points and hard/sym links in Smart Mode. 
-- Minor bugs fixed. 
-- Performance improved. 
+        <source>- Sync rework Beta V2 is released.
+- A new onboarding wizard is introduced for any new sync or backup processes.
+- Changes are detected and stalled issues are updated automatically.
+- MEGA-supported language set is now available.
+- User experience for batch fixing sync issues is improved.
+- Minor bugs are fixed.
+- Performance is improved.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
+        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6210,7 +6220,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>Rác thải đồng bộ (nhớ tạm trên mạng)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6305,7 +6315,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>Rác thải đồng&#xa0;bộ (nhớ tạm từ xa):</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6709,7 +6719,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation>Đã di&#xa0;chuyển đến</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6886,6 +6896,34 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     </message>
 </context>
 <context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
     <name>StalledIssuesDialog</name>
     <message>
         <source>Stalled Issues</source>
@@ -6896,36 +6934,6 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>Sync issues</source>
         <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All issues:</source>
-        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name conflicts:</source>
-        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Mâu&#xa0;thuẫn đặt tên</translation>
-    </message>
-    <message>
-        <source>Item type conflicts:</source>
-        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
-        <translation>Mâu&#xa0;thuẫn dạng mục</translation>
-    </message>
-    <message>
-        <source>Other:</source>
-        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Khác:</translation>
-    </message>
-    <message>
-        <source>Solved:</source>
-        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Tải mới lại</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6977,6 +6985,11 @@ automatically</source>
         <source>[A]Learn more[/A]</source>
         <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
         <translation>[A]Tìm&#xa0;hiểu thêm[/A]</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
+        <translation>Thắc mắc cần trợ giúp</translation>
     </message>
 </context>
 <context>
@@ -7452,12 +7465,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu vì thư&#xa0;mục từ xa đã bị chuyển vào Thùng&#xa0;Rác ở máy khác</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Đồng bộ “%1” của bạn đã bị vô&#xa0;hiệu hóa. Bạn không có toàn quyền truy&#xa0;cập vào thư&#xa0;mục từ xa (hoặc một phần của nó).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>

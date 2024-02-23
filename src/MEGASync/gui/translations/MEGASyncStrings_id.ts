@@ -944,7 +944,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah anda tidak dapat diunggah karena kesalahan. Coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.nz[/A] jika masalah berlanjut.</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
@@ -1163,17 +1163,17 @@
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Selesaikan masalah?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Tindakan ini akan mengunduh file ke lokasi sementara, memperbaiki masalah dan kemudian menghapus file sementara.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Lanjutkan transfer anda untuk memperbaiki masalah.</numerusform></translation>
     </message>
     <message>
         <source>Can´t download [B]%1[/B] to the selected location</source>
@@ -1188,7 +1188,7 @@
     <message>
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan</translation>
     </message>
 </context>
 <context>
@@ -1214,7 +1214,7 @@
     <message>
         <source>Remote Copy</source>
         <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
-        <translation>Salinan jarak jauh</translation>
+        <translation>Salin di MEGA</translation>
     </message>
 </context>
 <context>
@@ -1675,9 +1675,19 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
 <context>
     <name>DownloadQueueController</name>
     <message>
-        <source>Local Disk</source>
-        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation>Disk lokal</translation>
+        <source>Removable drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Removable drive. See SNC-3506.</translatorcomment>
+        <translation>Drive yang dapat dilepas</translation>
+    </message>
+    <message>
+        <source>Shared drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
+        <translation>Drive jaringan</translation>
+    </message>
+    <message>
+        <source>Local drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files. See SNC-3506.</translatorcomment>
+        <translation>Drive lokal</translation>
     </message>
 </context>
 <context>
@@ -1809,12 +1819,12 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
         <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File memiliki masalah yang membutuhkan keputusan anda untuk menyelesaikannya</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
         <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder memiliki masalah yang membutuhkan keputusan anda untuk menyelesaikannya</translation>
     </message>
 </context>
 <context>
@@ -2019,7 +2029,8 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah ini mungkin telah diselesaikan secara eksternal.
+Muat ulang daftar.</translation>
     </message>
 </context>
 <context>
@@ -2027,7 +2038,7 @@ Please, refresh the list.</source>
     <message>
         <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
         <translatorcomment>Text in message box shown when a failure in adding rules in the file containing ignore rules.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat memperbarui file .megaignore. Periksa apakah anda memiliki izin menulis untuk file ini.</translation>
     </message>
 </context>
 <context>
@@ -2065,7 +2076,7 @@ Please, refresh the list.</source>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File atau folder yang akan dikecualikan dari sinkronisasi:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2135,20 +2146,21 @@ Please, refresh the list.</source>
     <message>
         <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
         <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anda dapat mengubah file .megaignore dengan editor teks. Ini adalah tugas yang lebih cocok untuk pengguna yang nyaman dengan regular expression.</translation>
     </message>
     <message>
         <source>You can change the associated .megaignore file on a text editor.
 This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
         <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anda dapat mengubah file .megaignore dengan editor teks. Ini adalah tugas yang lebih cocok untuk pengguna yang nyaman dengan regular expression.</translation>
     </message>
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive.
 This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
 </source>
         <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anda dapat mengecualikan file dan folder tertentu agar tidak disinkronkan dengan drive Cloud anda.
+Ini dapat berguna untuk file besar, file yang tidak anda perlukan di semua perangkat anda, atau jenis file tertentu yang tidak perlu disinkronkan.</translation>
     </message>
 </context>
 <context>
@@ -2610,12 +2622,12 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>The backup will be disabled in order to protect the local file %1</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup, %1 placeholder will have the file name.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cadangan akan dinonaktifkan untuk melindungi file lokal [B]%1[/B]</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local folder %1</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup,%1 placeholder will have the folder name.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cadangan akan dinonaktifkan untuk melindungi folder lokal [B]%1[/B]</translation>
     </message>
     <message>
         <source>[B]Keep both[/B]</source>
@@ -2625,43 +2637,43 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Are you sure you want to keep the [B]local file[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan file lokal [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Apakah anda yakin ingin menyimpan folder lokal [B]%1[/B]?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File lokal [B]%1[/B] akan diunggah ke MEGA dan ditambahkan sebagai versi file yang sudah ada di MEGA.</translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder di MEGA [B]%1[/B] akan dipindahkan ke tempat sampah MEGA.[BR]Anda akan dapat memulihkan folder dari sana.</translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Lanjutkan transfer anda untuk memperbaiki masalah.</numerusform></translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan file di MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan folder di MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan item yang sudah disimpan di MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2686,7 +2698,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tindakan ini akan memilih item yang sudah disimpan di MEGA.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2697,7 +2709,8 @@ Please wait for the upload to complete.</source>
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah ini mungkin telah diselesaikan secara eksternal.
+Muat ulang daftar.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2717,98 +2730,99 @@ Please, refresh the list.</source>
     <message>
         <source>Keep both files?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan kedua file?</translation>
     </message>
     <message>
         <source>Keep both folders</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan kedua folder?</translation>
     </message>
     <message>
         <source>[B]Keep last modified[/B] (local)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Simpan modifikasi terakhir[/B] (lokal)</translation>
     </message>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Simpan modifikasi terakhir[/B] (dalam MEGA)</translation>
     </message>
     <message>
         <source>Keep the [B]local files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan file [B]lokal[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File [B]lokal[/B] akan diunggah ke MEGA dan ditambahkan sebagai versi ke file yang sudah ada di MEGA.
+Harap tunggu hingga unggahan selesai.</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder yang sudah disimpan di MEGA akan dipindahkan ke tempat sampah MEGA anda.[BR]Anda akan dapat memulihkan folder dari sana.</translation>
     </message>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan file yang sudah disimpan [B]dalam MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan folder yang sudah disimpan [B]dalam MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan barang yang sudah disimpan [B]dalam MEGA[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File [B]lokal[/B] akan dipindahkan ke folder tersembunyi .rubbish atau .debris di folder sinkronisasi lokal anda.</translation>
     </message>
     <message>
         <source>The [B]local folders[/B] will be moved to the sync debris folder</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lokal [B]folder[/B] akan dipindahkan ke folder .debris .atau .rubbish di folder sinkronisasi lokal anda.</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local files</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cadangan akan dinonaktifkan untuk melindungi file lokal.</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local folders</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cadangan akan dinonaktifkan untuk melindungi folder lokal.</translation>
     </message>
     <message>
         <source>Keep all files?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan semua file?</translation>
     </message>
     <message>
         <source>Keep all folders</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan semua folder?</translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>File yang sudah disimpan di MEGA akan memiliki akhiran seperti (1) ditambahkan.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Folder yang sudah disimpan di MEGA akan memiliki akhiran seperti (1) ditambahkan.</numerusform></translation>
     </message>
     <message>
         <source>Keep the [B]local folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan [B]lokal[/B] folder?</translation>
     </message>
 </context>
 <context>
@@ -3032,7 +3046,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Stalled</source>
         <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah terdeteksi</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -3653,12 +3667,12 @@ Anda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>Folder sinkronisasi jarak jauh telah dipindahkan ke Sampah</translation>
+        <translation>Folder di MEGA telah dipindahkan ke tempat Sampah</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>Anda tidak memiliki akses penuh ke folder sinkronisasi jarak jauh</translation>
+        <translation>Anda tidak memiliki akses penuh ke folder bersama di MEGA</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3688,7 +3702,7 @@ Anda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>Folder sinkronisasi jarak jauh ada di Sampah anda</translation>
+        <translation>Folder di MEGA ada di tempat Sampah anda</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -3947,12 +3961,12 @@ Transfer sinkronisasi tidak lengkap yang anda pilih tidak akan dibatalkan. Semua
     <message>
         <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
         <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tindakan pindah atau mengganti nama terdeteksi di sistem file lokal, tetapi tidak dapat direplikasi di MEGA.</translation>
     </message>
     <message>
         <source>Solve</source>
         <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan</translation>
     </message>
 </context>
 <context>
@@ -3999,13 +4013,15 @@ Transfer sinkronisasi tidak lengkap yang anda pilih tidak akan dibatalkan. Semua
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Confirmation text when a name conflict has been resolved externally.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah ini mungkin telah diselesaikan secara eksternal.
+Muat ulang daftar.</translation>
     </message>
     <message>
         <source>%1 no longer exists.
 Please refresh the view</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by renamming the local file and the file is actually deleted.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]%1[/B] tidak ada lagi.
+Muat ulang tampilan.</translation>
     </message>
     <message>
         <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]</source>
@@ -4025,7 +4041,7 @@ Please refresh the view</source>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation>Ini akan dipindahkan ke folder .rubbish atau .di lokasi sinkronisasi lokal anda.[BR]Anda akan dapat memulihkan folder dari sana.[/BR]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No action needed</source>
@@ -5352,15 +5368,15 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync Rework Beta V1 version.
-- New Exclusions dialog for syncs.
-- New header for undecrypted cloud issues.
-- Minor changes in issues description. 
-- Auto solve reparse points and hard/sym links in Smart Mode. 
-- Minor bugs fixed. 
-- Performance improved. 
+        <source>- Sync rework Beta V2 is released.
+- A new onboarding wizard is introduced for any new sync or backup processes.
+- Changes are detected and stalled issues are updated automatically.
+- MEGA-supported language set is now available.
+- User experience for batch fixing sync issues is improved.
+- Minor bugs are fixed.
+- Performance is improved.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
+        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6211,7 +6227,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (cache terpencil)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6306,7 +6322,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (cache terpencil):</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6887,6 +6903,34 @@ Apakah anda tetap ingin menghapusnya?</translation>
     </message>
 </context>
 <context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
     <name>StalledIssuesDialog</name>
     <message>
         <source>Stalled Issues</source>
@@ -6897,36 +6941,6 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>Sync issues</source>
         <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All issues:</source>
-        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name conflicts:</source>
-        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Konflik nama:</translation>
-    </message>
-    <message>
-        <source>Item type conflicts:</source>
-        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
-        <translation>Konflik jenis item:</translation>
-    </message>
-    <message>
-        <source>Other:</source>
-        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Lainnya:</translation>
-    </message>
-    <message>
-        <source>Solved:</source>
-        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Muat ulang</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6979,6 +6993,11 @@ automatically</source>
         <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
         <translation>[A]Pelajari lebih lanjut[/A]</translation>
     </message>
+    <message>
+        <source>Help</source>
+        <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
+        <translation>Bantuan</translation>
+    </message>
 </context>
 <context>
     <name>StalledIssuesModel</name>
@@ -7012,7 +7031,8 @@ Muat ulang tampilan.</translation>
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah ini mungkin telah diselesaikan secara eksternal.
+Muat ulang daftar.</translation>
     </message>
     <message>
         <source>Some issues can&apos;t be fixed.
@@ -7453,12 +7473,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Sync anda “%1” telah dibatalkan karena folder remote ada di Tempat sampah</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Sinkronisasi anda”%1” telah dinonaktifkan. Anda tidak memiliki akses penuh ke folder jarak jauh (atau sebagian darinya).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>

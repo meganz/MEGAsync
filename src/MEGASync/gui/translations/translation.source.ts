@@ -1748,7 +1748,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Shared drive</source>
         <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
-        <translation>Shared drive</translation>
+        <translation>Network drive</translation>
     </message>
     <message>
         <source>Local drive</source>
@@ -2854,17 +2854,17 @@ Please wait for the upload to complete.</translation>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Keep the files already stored in MEGA?</translation>
+        <translation>Keep the files already stored [B]in MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Keep the folders already stored in MEGA?</translation>
+        <translation>Keep the folders already stored [B]in MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Keep the items already stored in MEGA?</translation>
+        <translation>Keep the items already stored [B]in MEGA[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
@@ -5500,8 +5500,8 @@ Enter a different name.</translation>
         <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
         <translation>Sync rework beta V2
 - A new onboarding wizard is introduced for any new sync or backup processes.
-- Changes are detected and stalled issues are updated automatically.
-- MEGA-supported language set is now available.
+- Changes are detected and sync issues are updated automatically.
+- Now available in all MEGA-supported languages.
 - User experience for batch fixing sync issues is improved.
 - Minor bugs are fixed.
 - Performance is improved.
@@ -6892,7 +6892,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation>Calculating exclusion rules, wait and try again.</translation>
+        <translation>Calculating exclusion rules, issue will be resolved once completed.</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -6947,7 +6947,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation>Deleted or moved in MEGA</translation>
+        <translation>Item deleted or moved in MEGA</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
@@ -7053,7 +7053,7 @@ Do you want to delete it anyway?</translation>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Resolved: %n</numerusform>
             <numerusform>Resolved: %n</numerusform>
         </translation>
@@ -7061,7 +7061,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>All issues: %1</source>
         <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>All issues: %1</translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
@@ -7082,7 +7082,7 @@ Do you want to delete it anyway?</translation>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Other: %n</numerusform>
             <numerusform>Others: %n</numerusform>
         </translation>
