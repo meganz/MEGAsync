@@ -1754,17 +1754,15 @@ DriveSpaceData PlatformImplementation::getDriveData(const QString &path)
     // so we can't get available space this way.
     const QByteArray pathArray = path.toUtf8();
 
-    DWORD sectorsPerCluster;
-    DWORD bytesPerSector;
-    DWORD freeClustersCount;
-    DWORD totalClustersCount;
-    BOOL ok = GetDiskFreeSpaceA(pathArray.constData(),
-                                &sectorsPerCluster,
-                                &bytesPerSector,
-                                &freeClustersCount,
-                                &totalClustersCount);
+    ULARGE_INTEGER freeBytesAvailableToUser;
+    ULARGE_INTEGER totalBytes;
+    ULARGE_INTEGER totalFreeBytes;
+    BOOL ok = GetDiskFreeSpaceExA(pathArray.constData(),
+                                &freeBytesAvailableToUser,
+                                &totalBytes,
+                                &totalFreeBytes);
     data.mIsReady = (ok == TRUE);
-    data.mAvailableSpace = freeClustersCount * bytesPerSector * sectorsPerCluster;
-    data.mTotalSpace = totalClustersCount * bytesPerSector * sectorsPerCluster;
+    data.mAvailableSpace = totalFreeBytes.QuadPart;
+    data.mTotalSpace = totalBytes.QuadPart;
     return data;
 }
