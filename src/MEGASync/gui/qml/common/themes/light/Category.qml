@@ -1,18 +1,18 @@
 import QtQuick 2.15
 
 Item {
-    property alias megaButtonRed: megaButtonRed
-    property alias megaButtonGreen: megaButtonGreen
+    property alias primaryButton: primaryButton
+    property alias secondaryButton: secondaryButton
 
     Item {
-        id: megaButtonRed
+        id: primaryButton
 
-        readonly property color iconButton: "#00FF00"
+        readonly property color background: "#00FF00"
     }
 
     Item {
-        id: megaButtonGreen
+        id: secondaryButton
 
-        readonly property color iconButton: "#00FF00"
+        readonly property color background: "#00FF00"
     }
 }

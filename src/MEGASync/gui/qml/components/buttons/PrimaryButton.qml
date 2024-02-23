@@ -4,17 +4,17 @@ Button {
     id: root
 
     colors {
-        //background: colorStyle.buttonPrimary
-        background: category.megaButtonRed.iconButton
+        //background: ColorTheme.buttonPrimary
+        background: CategoryTheme.primaryButton.background
         border: colors.background        
-        pressed: colorStyle.buttonPrimaryPressed
+        pressed: ColorTheme.buttonPrimaryPressed
         borderPressed: colors.pressed
-        hover: colorStyle.buttonPrimaryHover
+        hover: ColorTheme.buttonPrimaryHover
         borderHover: colors.hover
-        text: colorStyle.textOnColor
-        textPressed: colorStyle.textOnColor
-        textHover: colorStyle.textOnColor
-        textDisabled: colorStyle.textDisabled
+        text: ColorTheme.textOnColor
+        textPressed: ColorTheme.textOnColor
+        textHover: ColorTheme.textOnColor
+        textDisabled: ColorTheme.textDisabled
     }
 }
 

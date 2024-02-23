@@ -5,19 +5,19 @@ import common 1.0
 QtObject {
     id: root
 
-    property color selection: colorStyle.focusColor
-    property color placeholder: colorStyle.textPlaceholder
-    property color text: colorStyle.textPrimary
-    property color textDisabled: colorStyle.textDisabled
-    property color focus: colorStyle.focusColor
-    property color border: colorStyle.borderStrong
-    property color borderDisabled: colorStyle.borderDisabled
-    property color borderError: colorStyle.textError
-    property color borderFocus: colorStyle.borderStrongSelected
-    property color background: colorStyle.pageBackground
-    property color title: colorStyle.textPrimary
-    property color titleDisabled: colorStyle.textDisabled
-    property color icon: colorStyle.iconSecondary
-    property color iconDisabled: colorStyle.iconDisabled
+    property color selection: ColorTheme.focusColor
+    property color placeholder: ColorTheme.textPlaceholder
+    property color text: ColorTheme.textPrimary
+    property color textDisabled: ColorTheme.textDisabled
+    property color focus: ColorTheme.focusColor
+    property color border: ColorTheme.borderStrong
+    property color borderDisabled: ColorTheme.borderDisabled
+    property color borderError: ColorTheme.textError
+    property color borderFocus: ColorTheme.borderStrongSelected
+    property color background: ColorTheme.pageBackground
+    property color title: ColorTheme.textPrimary
+    property color titleDisabled: ColorTheme.textDisabled
+    property color icon: ColorTheme.iconSecondary
+    property color iconDisabled: ColorTheme.iconDisabled
 
 }

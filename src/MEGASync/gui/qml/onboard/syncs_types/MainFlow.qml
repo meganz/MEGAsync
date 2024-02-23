@@ -29,7 +29,7 @@ Rectangle {
 
     property NavigationInfo navInfo: NavigationInfo {}
 
-    color: colorStyle.surface1
+    color: ColorTheme.surface1
     state: deviceName
     states: [
         State {
@@ -131,7 +131,7 @@ Rectangle {
 
         width: stepPanelWidth
         height: parent.height
-        color: colorStyle.surface1
+        color: ColorTheme.surface1
         z: 2
 
         StepPanel {
@@ -156,7 +156,7 @@ Rectangle {
             width: lineWidth
             height: contentHeight
             radius: lineWidth
-            color: colorStyle.borderDisabled
+            color: ColorTheme.borderDisabled
         }
     }
 

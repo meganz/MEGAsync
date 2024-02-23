@@ -1,11 +1,9 @@
+pragma Singleton
+
 import QtQuick 2.15
 
 Item {
     id: root
-
-    //property alias style: loader.item
-    property alias megaButtonRed: megaButtonRed
-    property alias megaButtonGreen: megaButtonGreen
 
     Loader {
         id: loader
@@ -13,17 +11,20 @@ Item {
         source: "qrc:/common/themes/"+themeManager.theme+"/Category.qml"
     }
 
+    property alias primaryButton: primaryButton
+    property alias secondaryButton: secondaryButton
+
 
     Item {
-        id: megaButtonRed
+        id: primaryButton
 
-        readonly property color iconButton: loader.item.megaButtonRed.iconButton
+        readonly property color background: loader.item.primaryButton.background
     }
 
     Item {
-        id: megaButtonGreen
+        id: secondaryButton
 
-        readonly property color iconButton: loader.item.megaButtonGreen.iconButton
+        readonly property color background: loader.item.secondaryButton.background
     }
 }
 

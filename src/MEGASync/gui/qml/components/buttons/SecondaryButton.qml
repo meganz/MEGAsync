@@ -4,21 +4,21 @@ Button {
     id: root
 
     icons {
-        colorEnabled: colorStyle.iconSecondary
-        colorHovered: colorStyle.iconSecondary
-        colorPressed: colorStyle.iconSecondary
+        colorEnabled: ColorTheme.iconSecondary
+        colorHovered: ColorTheme.iconSecondary
+        colorPressed: ColorTheme.iconSecondary
     }
 
     colors {
-        background: colorStyle.buttonSecondary
+        background: ColorTheme.buttonSecondary
         border: colors.background
-        text: colorStyle.textSecondary
-        textPressed: colorStyle.buttonSecondaryPressed
-        textHover: colorStyle.textSecondary
-        textDisabled: colorStyle.textDisabled
-        pressed: colorStyle.buttonSecondaryPressed
+        text: ColorTheme.textSecondary
+        textPressed: ColorTheme.buttonSecondaryPressed
+        textHover: ColorTheme.textSecondary
+        textDisabled: ColorTheme.textDisabled
+        pressed: ColorTheme.buttonSecondaryPressed
         borderPressed: colors.pressed
-        hover: colorStyle.buttonSecondaryHover
+        hover: ColorTheme.buttonSecondaryHover
         borderHover: colors.hover
     }
 }

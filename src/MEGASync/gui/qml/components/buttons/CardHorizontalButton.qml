@@ -73,7 +73,7 @@ CardButton {
                 }
                 width: 314
                 text: description
-                color: colorStyle.textSecondary
+                color: ColorTheme.textSecondary
                 font.pixelSize: Texts.Text.Size.SMALL
                 lineHeightMode: Texts.Text.FixedHeight
                 lineHeight: descriptionLineHeight
