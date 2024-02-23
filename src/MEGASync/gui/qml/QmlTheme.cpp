@@ -2,13 +2,12 @@
 
 #include <QTimer>
 
-#include <iostream>
-
 QmlTheme::QmlTheme(QObject *parent)
     : QObject{parent},
     mTheme(QString::fromUtf8("light"))
 {
-    startDemoChange();
+    // uncomment to trigger a cyclic theme change.
+    //startDemoChange();
 }
 
 QString QmlTheme::getTheme() const
@@ -18,11 +17,8 @@ QString QmlTheme::getTheme() const
 
 void QmlTheme::setTheme(const QString& theme)
 {
-    std::cout << "setTheme : " << theme.toStdString() << std::endl;
-
     if (!theme.isEmpty() && theme != mTheme)
     {
-        std::cout << "Theme changed: " << theme.toStdString() << std::endl;
         mTheme = theme;
         emit themeChanged(mTheme);
     }
