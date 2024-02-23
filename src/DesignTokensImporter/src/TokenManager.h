@@ -6,11 +6,10 @@
 #include <QMap>
 #include <QStringList>
 
+#include "StyleDefinitions.h"
+
 namespace DTI
 {
-    typedef QMap<QString, QString> ColourMap;
-    typedef QMap<QString, ColourMap> FilePathColourMap;
-
     class TokenManager
     {
     public:

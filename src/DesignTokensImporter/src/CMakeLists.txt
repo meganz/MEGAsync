@@ -12,18 +12,29 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui Svg Xml)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Svg Xml)
 
-add_executable(DesignTokensImporter
-  main.cpp
-  utilities.cpp utilities.h
-  TokenManager.h TokenManager.cpp
-  UIClass.h UIClass.cpp
-  SVGIcon.h SVGIcon.cpp
-  SVGRenderer.h SVGRenderer.cpp
-  PathProvider.h PathProvider.cpp
-  Resources.qrc
-  StylesheetParser.h StylesheetParser.cpp
-  StyleDefinitions.h
+set(SOURCES ${SOURCES}
+    main.cpp
+    utilities.cpp utilities.h
+    TokenManager.h TokenManager.cpp
+    UIClass.h UIClass.cpp
+    SVGIcon.h SVGIcon.cpp
+    SVGRenderer.h SVGRenderer.cpp
+    PathProvider.h PathProvider.cpp
+    Resources.qrc
+    StylesheetParser.h StylesheetParser.cpp
+    StyleDefinitions.h
 )
+
+set(INCLUDE_DIRECTORIES ${INCLUDE_DIRECTORIES}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/qml)
+
+include_directories(${INCLUDE_DIRECTORIES})
+
+add_executable(DesignTokensImporter ${SOURCES})
+
 target_link_libraries(DesignTokensImporter
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
