@@ -210,6 +210,18 @@
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -217,6 +229,18 @@
       </item>
       <item>
        <widget class="QPushButton" name="bSubmit">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <property name="text">
          <string>Submit</string>
         </property>
