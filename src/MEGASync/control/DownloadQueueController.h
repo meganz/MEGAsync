@@ -55,7 +55,7 @@ private:
     const QMap<mega::MegaHandle, QString>& mPathMap;
     std::unique_ptr<mega::QTMegaRequestListener> mListener;
     std::atomic<long> mFolderCountPendingSizeComputation;
-    std::atomic<qint64> mTotalQueueDiskSize;
+    std::atomic<quint64> mTotalQueueDiskSize;
     unsigned long long mCurrentAppDataId;
     QString mCurrentTargetPath;
     BlockingBatch* mDownloadBatches;
