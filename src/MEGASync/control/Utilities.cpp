@@ -1437,7 +1437,10 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
     {
         secondPath.append(separator);
     }
-
+    if (firstPath == secondPath)
+    {
+        return path1;
+    }
     int index = 1;
     while (firstPath.mid(0, index) == secondPath.mid(0, index))
     {
