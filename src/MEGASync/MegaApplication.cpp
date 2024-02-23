@@ -33,7 +33,6 @@
 #include "qml/QmlDialogWrapper.h"
 #include "qml/ApiEnums.h"
 #include "qml/QmlClipboard.h"
-#include "qml/CategoryTheme.h"
 #include "qml/QmlTheme.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
@@ -3076,10 +3075,7 @@ void MegaApplication::registerCommonQMLElements()
                                      QString::fromUtf8("Cannot create ApiEnums in QML"));
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
     
-    // style / theming related classes.
-    auto theme = new QmlTheme(this);
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("themeManager"), theme);
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("categoryStyle"), new CategoryTheme(theme, this));
+    mEngine->rootContext()->setContextProperty(QString::fromUtf8("themeManager"), new QmlTheme(this));
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const

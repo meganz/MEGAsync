@@ -5,7 +5,7 @@ Button {
 
     colors {
         //background: colorStyle.buttonPrimary
-        background: category.style.megaButtonRed.iconButton
+        background: category.megaButtonRed.iconButton
         border: colors.background        
         pressed: colorStyle.buttonPrimaryPressed
         borderPressed: colors.pressed
