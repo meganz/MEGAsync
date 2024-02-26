@@ -13,9 +13,12 @@ void ProxyStatsEventHandler::sendEvent(int eventType, const char *message, bool 
 
 bool ProxyStatsEventHandler::canSend() const
 {
+/*
+* Usage : declare the list of not allowed conditions to send stats.
+*/
 #if !defined QT_DEBUG
     return true;
-#endif
-
+#else
     return false;
+#endif
 }
