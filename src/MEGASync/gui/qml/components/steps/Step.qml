@@ -13,7 +13,9 @@ Item {
         DISABLED = 0,
         CURRENT = 1,
         CURRENT_SUBSTEP = 2,
-        DONE = 3
+        DONE = 3,
+        WARNING = 4,
+        ERROR = 5
     }
 
     property alias text: stepText.text
@@ -37,12 +39,16 @@ Item {
         readonly property string stateCurrent: "CURRENT"
         readonly property string stateCurrentSubstep: "SUBSTEP"
         readonly property string stateDone: "DONE"
+        readonly property string stateWarning: "WARNING"
+        readonly property string stateError: "ERROR"
 
         property var statesMap: new Map([
             [Step.ToStates.DISABLED, stateDisabled],
             [Step.ToStates.CURRENT, stateCurrent],
             [Step.ToStates.CURRENT_SUBSTEP, stateCurrentSubstep],
-            [Step.ToStates.DONE, stateDone]
+            [Step.ToStates.DONE, stateDone],
+            [Step.ToStates.WARNING, stateWarning],
+            [Step.ToStates.ERROR, stateError]
         ])
 
         width: content.width + 17
@@ -70,7 +76,7 @@ Item {
             State {
                 name: stepContent.stateCurrent
                 PropertyChanges { target: stepContent; color: colorStyle.iconButtonPressedBackground; }
-                PropertyChanges { target: stepCircle; color: colorStyle.iconButton;  border.width: 0; }
+                PropertyChanges { target: stepCircle; color: colorStyle.iconButton; border.width: 0; }
                 PropertyChanges { target: stepCircleImage; visible: false; }
                 PropertyChanges { target: stepCircleText; color: colorStyle.textInverseAccent; }
                 PropertyChanges { target: stepText; color: colorStyle.iconButton; }
@@ -86,10 +92,41 @@ Item {
             State {
                 name: stepContent.stateDone
                 PropertyChanges { target: stepContent; color: "transparent"; }
-                PropertyChanges { target: stepCircle; color: colorStyle.supportSuccess; border.width: 0; }
-                PropertyChanges { target: stepCircleImage; visible: true; }
-                PropertyChanges { target: stepCircleText; color: colorStyle.textInverseAccent; visible: false; }
+                PropertyChanges { target: stepCircle; color: "transparent"; border.width: 0; }
+                PropertyChanges {
+                    target: stepCircleImage;
+                    visible: true;
+                    source: Images.checkCircleFilled;
+                    color: colorStyle.supportSuccess;
+                }
+                PropertyChanges { target: stepCircleText; visible: false; }
                 PropertyChanges { target: stepText; color: colorStyle.iconButton; }
+            },
+            State {
+                name: stepContent.stateWarning
+                PropertyChanges { target: stepContent; color: colorStyle.notificationWarning; }
+                PropertyChanges { target: stepCircle; color: "transparent"; border.width: 0; }
+                PropertyChanges {
+                    target: stepCircleImage;
+                    visible: true;
+                    source: Images.alertCircleFilled;
+                    color: colorStyle.textWarning;
+                }
+                PropertyChanges { target: stepCircleText; visible: false; }
+                PropertyChanges { target: stepText; color: colorStyle.textWarning; }
+            },
+            State {
+                name: stepContent.stateError
+                PropertyChanges { target: stepContent; color: colorStyle.notificationError; }
+                PropertyChanges { target: stepCircle; color: "transparent"; border.width: 0; }
+                PropertyChanges {
+                    target: stepCircleImage;
+                    visible: true;
+                    source: Images.alertCircleFilled;
+                    color: colorStyle.textError;
+                }
+                PropertyChanges { target: stepCircleText; visible: false; }
+                PropertyChanges { target: stepText; color: colorStyle.textError; }
             }
         ]
 
@@ -131,7 +168,7 @@ Item {
 
                     anchors.centerIn: parent
                     source: Images.check
-                    sourceSize: Qt.size(2 * parent.width / 3, 2 * parent.width / 3)
+                    sourceSize: Qt.size(stepCircle.width, stepCircle.height)
                     color: colorStyle.textInverseAccent
                     visible: false
                 }

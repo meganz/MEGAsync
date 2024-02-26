@@ -20,6 +20,7 @@ QtObject {
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url alertCircle: imagesQmlPath + "alert_circle.svg"
+    readonly property url alertCircleFilled: imagesQmlPath + "alert_circle_filled.svg"
     readonly property url alertTriangle: imagesQmlPath + "alert_triangle.svg"
     readonly property url arrowRight: imagesQmlPath + "arrow_right.svg"
     readonly property url check: imagesQmlPath + "check.svg"
@@ -35,6 +36,7 @@ QtObject {
     readonly property url xCircle: imagesQmlPath + "x_circle.svg"
     readonly property url smallCheck: imagesQmlPath + "small_check.svg"
     readonly property url checkCircle: imagesQmlPath + "check_circle.svg"
+    readonly property url checkCircleFilled: imagesQmlPath + "check_circle_filled.svg"
     readonly property url warning: imagesQmlPath + "warning.png"
     readonly property url twofa: imagesQmlPath + "lock.png"
     readonly property url eye: imagesQmlPath + "eye.svg"

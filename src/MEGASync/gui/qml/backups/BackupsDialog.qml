@@ -12,12 +12,12 @@ BackupsQmlDialog {
     title: BackupsStrings.backupsWindowTitle
     visible: true
     modality: Qt.NonModal
-    width: 600
+    width: 640
     height: 560
     maximumHeight: 560
-    maximumWidth: 600
+    maximumWidth: 640
     minimumHeight: 560
-    minimumWidth: 600
+    minimumWidth: 640
 
     Column {
         id: contentItem

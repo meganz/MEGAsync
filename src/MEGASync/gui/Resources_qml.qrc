@@ -85,5 +85,7 @@
         <file>images/qml/mega-cloud.png</file>
         <file>images/qml/mega-cloud@2x.png</file>
         <file>images/qml/mega-cloud@3x.png</file>
+        <file>images/qml/alert_circle_filled.svg</file>
+        <file>images/qml/check_circle_filled.svg</file>
     </qresource>
 </RCC>

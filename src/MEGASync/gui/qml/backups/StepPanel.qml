@@ -10,8 +10,8 @@ Rectangle {
 
     readonly property string step1: "step1"
     readonly property string step2: "step2"
-    //readonly property string step2Warning: "step2Warning"
-    //readonly property string step2Error: "step2Error"
+    readonly property string step2Warning: "step2Warning"
+    readonly property string step2Error: "step2Error"
     readonly property string stepAllDone: "stepAllDone"
 
     readonly property int contentLeftMargin: 48
@@ -37,18 +37,16 @@ Rectangle {
             PropertyChanges { target: line; color: colorStyle.iconButton; }
             PropertyChanges { target: step2; toState: Step.ToStates.CURRENT; }
         },
-        /*
         State {
             name: root.step2Warning
             extend: root.step2
-            PropertyChanges { target: step2; toState: SubStep.ToStates.WARNING; }
+            PropertyChanges { target: step2; toState: Step.ToStates.WARNING; }
         },
         State {
             name: root.step2Error
             extend: root.step2
-            PropertyChanges { target: step2; toState: SubStep.ToStates.ERROR; }
+            PropertyChanges { target: step2; toState: Step.ToStates.ERROR; }
         },
-        */
         State {
             name: root.stepAllDone
             extend: root.step2
