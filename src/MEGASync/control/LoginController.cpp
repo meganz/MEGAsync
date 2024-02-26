@@ -406,7 +406,7 @@ void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaEr
         credentials.email = mEmail;
         credentials.sessionId = QString::fromUtf8(request->getSessionKey());
         mPreferences->setEphemeralCredentials(credentials);
-        mMegaApi->sendEvent(AppStatsEvents::EVENT_ACC_CREATION_START,
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_ACC_CREATION_START,
                             "MEGAsync account creation start",
                             false, nullptr);
         if (!mPreferences->accountCreationTime())
