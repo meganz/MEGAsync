@@ -11,7 +11,7 @@ class IStatsEventHandler : public QObject
 
 public:
     explicit IStatsEventHandler(QObject *parent = nullptr): QObject(parent) {}
-    virtual ~IStatsEventHandler(){};
+    virtual ~IStatsEventHandler() = default;
 
     virtual void sendEvent(int eventType, const char *message, bool addJourneyId, const char *viewId, mega::MegaRequestListener *listener = nullptr) = 0;
 };
