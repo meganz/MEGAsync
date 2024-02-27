@@ -1179,6 +1179,9 @@ automatically</string>
                      <property name="alignment">
                       <set>Qt::AlignCenter</set>
                      </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -1455,7 +1458,7 @@ color: #2C5BEB;
   </customwidget>
  </customwidgets>
  <resources>
-    <include location="../../../gui/Resources_linux.qrc"/>
+  <include location="../../../gui/Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

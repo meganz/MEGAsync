@@ -565,9 +565,6 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
 
 void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
-    ui->bNewFolder->setEnabled(true);
-    ui->bOk->setEnabled(true);
-
     if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
     {
         if (e->getErrorCode() != MegaError::API_OK)
