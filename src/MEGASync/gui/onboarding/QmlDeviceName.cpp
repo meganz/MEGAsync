@@ -1,5 +1,9 @@
 #include "QmlDeviceName.h"
 
+#include <QHostInfo>
+
+static const QString defaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
+
 QmlDeviceName::QmlDeviceName(QObject *parent)
     : QObject{parent}
     , mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName())
@@ -26,10 +30,27 @@ bool QmlDeviceName::setDeviceName(const QString &newName)
 
 void QmlDeviceName::onDeviceNameSet()
 {
-    if(mName != mDeviceNameRequest->getDeviceName())
+    auto deviceName = mDeviceNameRequest->getDeviceName();
+    if (deviceName.isEmpty())
     {
-        mName = mDeviceNameRequest->getDeviceName();
+        deviceName = QHostInfo::localHostName();
+    }
+
+    if(mName != deviceName)
+    {
+        if(deviceName.contains(defaultFactoryBiosName))
+        {
+            auto hostName = QHostInfo::localHostName();
+            if (!hostName.isEmpty() && mName != hostName)
+            {
+                setDeviceName(hostName);
+                return;
+            }
+        }
+
+        mName = deviceName;
         emit deviceNameChanged();
+
         if(mChanging)
         {
             mChanging = false;
