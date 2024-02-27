@@ -11,10 +11,6 @@ ConfirmFoldersPageForm {
     signal confirmFoldersMoveToFinal(bool success)
 
     footerButtons {
-        leftIcon.onClicked: {
-            Qt.openUrlExternally(Links.desktopSyncApp);
-        }
-
         rightSecondary.onClicked: {
             backupsModelAccess.clean(true);
             root.confirmFoldersMoveToSelect();
@@ -22,6 +18,7 @@ ConfirmFoldersPageForm {
 
         rightPrimary.onClicked: {
             footerButtons.enabled = false;
+            enableConfirmHeader = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             backupsProxyModelRef.createBackups();
         }
@@ -40,6 +37,7 @@ ConfirmFoldersPageForm {
 
         function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;
+            enableConfirmHeader = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             root.confirmFoldersMoveToFinal(success);
         }

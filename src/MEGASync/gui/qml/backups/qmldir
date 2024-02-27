@@ -2,12 +2,8 @@ module backups
 singleton BackupsStrings 1.0 BackupsStrings.qml
 BackupsDialog 1.0 BackupsDialog.qml
 BackupsFlow 1.0 BackupsFlow.qml
-ConfirmFoldersPage 1.0 ConfirmFoldersPage.qml
-ConfirmFoldersPageForm 1.0 ConfirmFoldersPageForm.ui.qml
 ConfirmTable 1.0 ConfirmTable.qml
 FolderRow 1.0 FolderRow.qml
-SelectFoldersPage 1.0 SelectFoldersPage.qml
-SelectFoldersPageForm 1.0 SelectFoldersPageForm.ui.qml
 SelectTable 1.0 SelectTable.qml
 ResumePageForm 1.0 ResumePageForm.ui.qml
 ResumePage 1.0 ResumePage.qml

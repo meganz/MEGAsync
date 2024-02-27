@@ -1,19 +1,14 @@
-import common 1.0
-
 import BackupsModel 1.0
 
 SelectFoldersPageForm {
     id: root
 
+    signal selectFolderMoveToBack
     signal selectFolderMoveToConfirm
 
     footerButtons {
-        leftIcon.onClicked: {
-            Qt.openUrlExternally(Links.desktopSyncApp);
-        }
-
         rightSecondary.onClicked: {
-            window.close();
+            root.selectFolderMoveToBack();
         }
 
         rightPrimary.onClicked: {

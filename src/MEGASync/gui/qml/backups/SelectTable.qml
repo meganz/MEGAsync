@@ -9,11 +9,14 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0
 
+import BackupsProxyModel 1.0
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
 Item {
     id: root
+
+    required property BackupsProxyModel backupsProxyModelRef
 
     readonly property int headerFooterMargin: 24
     readonly property int headerFooterHeight: 40
@@ -143,6 +146,7 @@ Item {
         FolderRow {
             id: folderItem
 
+            backupsProxyModelRef: root.backupsProxyModelRef
             onFocusActivated: {
                 backupsListView.positionViewAtIndex(index, ListView.Center)
             }

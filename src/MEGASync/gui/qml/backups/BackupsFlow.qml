@@ -10,10 +10,13 @@ import BackupsProxyModel 1.0
 Item {
     id: root
 
+    required property Component selectFoldersPage
+    required property Component confirmFoldersPage
+
+    property alias backupsProxyModel: backupsProxyModel
+
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
-
-    property bool isOnboarding: false
 
     // Added to avoid qml warning.
     function setInitialFocusPosition() {}
@@ -21,18 +24,18 @@ Item {
     signal backupFlowMoveToFinal(bool success)
     signal backupFlowMoveToBack
 
-    state: selectBackup
+    state: root.selectBackup
     states: [
         State {
-            name: selectBackup
+            name: root.selectBackup
             StateChangeScript {
-                script: view.replace(selectBackupFoldersPage);
+                script: view.replace(selectFoldersPage);
             }
         },
         State {
-            name: confirmBackup
+            name: root.confirmBackup
             StateChangeScript {
-                script: view.replace(confirmBackupFoldersPage);
+                script: view.replace(confirmFoldersPage);
             }
         }
     ]
@@ -43,27 +46,6 @@ Item {
         anchors.fill: parent
         onCurrentItemChanged: {
             currentItem.setInitialFocusPosition();
-        }
-
-        Component {
-            id: selectBackupFoldersPage
-
-            SelectFoldersPage {
-                id: selectFoldersPageItem
-
-                isOnboardingRef: root.isOnboarding
-            }
-        }
-
-        Component {
-            id: confirmBackupFoldersPage
-
-            ConfirmFoldersPage {
-                id: confirmFoldersPageItem
-
-                isOnboardingRef: root.isOnboarding
-                backupsProxyModelRef: backupsProxyModel
-            }
         }
     }
 

@@ -8,6 +8,26 @@ BackupsFlow {
     required property StepPanel stepPanelRef
     required property var backupsContentItemRef
 
+    selectFoldersPage: Component {
+        id: selectFoldersPageComponent
+
+        SelectFoldersPage {
+            id: selectFoldersPageItem
+
+            backupsProxyModelRef: root.backupsProxyModel
+        }
+    }
+
+    confirmFoldersPage: Component {
+        id: confirmFoldersPageComponent
+
+        ConfirmFoldersPage {
+            id: confirmFoldersPageItem
+
+            backupsProxyModelRef: root.backupsProxyModel
+        }
+    }
+
     Item {
         id: stepPanelStateWrapper
 

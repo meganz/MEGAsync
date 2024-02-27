@@ -1,25 +1,25 @@
 import QtQuick 2.15
-import QtQuick.Layouts 1.15
 
 import common 1.0
 
 import components.textFields 1.0
 import components.pages 1.0
 
+import BackupsProxyModel 1.0
 import BackupsModel 1.0
 import QmlDeviceName 1.0
 
 FooterButtonsPage {
     id: root
 
-    required property bool isOnboardingRef
+    required property BackupsProxyModel backupsProxyModelRef
 
-    property alias enableConfirmHeader: confirmHeader.enabled
+    readonly property int spacing: 24
 
     footerButtons {
-        leftIcon.visible: !root.isOnboardingRef
-        leftSecondary.visible: root.isOnboardingRef
-        rightTertiary.visible: !root.isOnboardingRef
+        leftIcon.visible: true
+        leftSecondary.visible: false
+        rightTertiary.visible: true
         rightPrimary {
             text: BackupsStrings.backUp
             icons.source: Images.database
@@ -28,48 +28,40 @@ FooterButtonsPage {
         }
     }
 
-    ColumnLayout {
-        id: externalLayout
+    ConfirmTable {
+        id: confirmFoldersTable
 
         anchors {
             top: parent.top
             left: parent.left
             right: parent.right
+            bottom: deviceField.top
+            topMargin: root.spacing
+            bottomMargin: root.spacing
         }
-        spacing: root.isOnboardingRef ? 24 : 0
+        backupsProxyModelRef: root.backupsProxyModelRef
+    }
 
-        HeaderTexts {
-            id: confirmHeader
+    TextField {
+        id: deviceField
 
-            title: BackupsStrings.confirmBackupFoldersTitle
-            titleVisible: root.isOnboardingRef
+        anchors {
+            bottom: footerButtons.top
+            left: parent.left
+            right: parent.right
+            bottomMargin: root.spacing - footerButtons.rightPrimary.sizes.focusBorderWidth
+            leftMargin: -deviceField.sizes.focusBorderWidth
+            rightMargin: -deviceField.sizes.focusBorderWidth
         }
+        colors.text: colorStyle.textPlaceholder
+        title: BackupsStrings.backupTo
+        leftIconSource: Images.database
+        textField.readOnly: true
+        textField.text: "/" + deviceName.name
 
-        ColumnLayout {
-            id: mainLayout
-
-            Layout.preferredWidth: parent.width
-            spacing: 24
-
-            ConfirmTable {
-                id: confirmFoldersTable
-            }
-
-            TextField {
-                id: deviceField
-
-                colors.text: colorStyle.textPlaceholder
-                Layout.preferredWidth: parent.width + 2 * deviceField.sizes.focusBorderWidth
-                Layout.leftMargin: -deviceField.sizes.focusBorderWidth
-                title: BackupsStrings.backupTo
-                leftIconSource: Images.database
-                textField.readOnly: true
-                textField.text: "/" + deviceName.name
-            }
+        QmlDeviceName {
+            id: deviceName
         }
     }
 
-    QmlDeviceName {
-        id: deviceName
-    }
 }

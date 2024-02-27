@@ -14,15 +14,16 @@ import BackupsModel 1.0
 Rectangle {
     id: root
 
+    required property BackupsProxyModel backupsProxyModelRef
+
     readonly property int headerFooterMargin: 24
     readonly property int headerFooterHeight: 40
     readonly property int tableRadius: 8
 
     Layout.preferredWidth: width
     Layout.preferredHeight: height
-    height: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.NONE
-            ? 192 : 192 - headerFooterHeight + listView.footerItem.height
-    width: parent.width
+    width: 400
+    height: 225
     radius: tableRadius
     color: colorStyle.pageBackground
 
@@ -42,7 +43,7 @@ Rectangle {
         id: listView
 
         anchors.fill: parent
-        model: backupsProxyModel
+        model: root.backupsProxyModelRef
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
@@ -155,6 +156,8 @@ Rectangle {
 
         FolderRow {
             id: folderRow
+
+            backupsProxyModelRef: root.backupsProxyModelRef
         }
     }
 

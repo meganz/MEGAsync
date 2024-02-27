@@ -8,19 +8,18 @@ import components.texts 1.0 as Texts
 ColumnLayout {
     id: root
 
-    property alias title: title.rawText
-    property alias titleWeight: title.font.weight
-    property alias titleVisible: title.visible
-    property alias description: description.text
-    property alias descriptionWeight: description.font.weight
-    property alias descriptionColor: description.color
-    property alias descriptionFontSize: description.font.pixelSize
-    property alias titleWrapMode: title.wrapMode
+    property alias title: titleItem.rawText
+    property alias titleWeight: titleItem.font.weight
+    property alias description: descriptionItem.text
+    property alias descriptionWeight: descriptionItem.font.weight
+    property alias descriptionColor: descriptionItem.color
+    property alias descriptionFontSize: descriptionItem.font.pixelSize
+    property alias titleWrapMode: titleItem.wrapMode
 
-    spacing: 8
+    spacing: (root.title !== "" && root.description !== "") ? 8 : 0
 
     Texts.RichText {
-        id: title
+        id: titleItem
 
         Layout.fillWidth: true
         font {
@@ -30,7 +29,7 @@ ColumnLayout {
     }
 
     Texts.SecondaryText {
-        id: description
+        id: descriptionItem
 
         Layout.fillWidth: true
         font.pixelSize: Texts.Text.Size.MEDIUM

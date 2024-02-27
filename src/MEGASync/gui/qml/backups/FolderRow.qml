@@ -11,11 +11,14 @@ import components.buttons 1.0 as Buttons
 import components.textFields 1.0
 import components.busyIndicator 1.0
 
+import BackupsProxyModel 1.0
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
 Item {
     id: root
+
+    property BackupsProxyModel backupsProxyModelRef
 
     readonly property int totalHeight: 34
     readonly property int horizontalMargin: 8
@@ -51,7 +54,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.fill: parent
             sourceComponent: {
-                if(!backupsProxyModel.selectedFilterEnabled
+                if(!backupsProxyModelRef.selectedFilterEnabled
                         || error === backupsModelAccess.BackupErrorCode.NONE) {
                     return selectContent;
                 }
@@ -112,9 +115,9 @@ Item {
                         verticalCenter: parent.verticalCenter
                         topMargin: -checkbox.sizes.focusBorderWidth + 1
                     }
-                    width: backupsProxyModel.selectedFilterEnabled ? 0 : selectRoot.checkboxWidth
+                    width: backupsProxyModelRef.selectedFilterEnabled ? 0 : selectRoot.checkboxWidth
                     checked: selected
-                    visible: !backupsProxyModel.selectedFilterEnabled
+                    visible: !backupsProxyModelRef.selectedFilterEnabled
                     manageChecked: true
 
                     Keys.onPressed: {
@@ -185,7 +188,7 @@ Item {
                 text: size
                 font.pixelSize: Texts.Text.Size.SMALL
                 color: colorStyle.textSecondary
-                visible: backupsProxyModel.selectedFilterEnabled && sizeReady
+                visible: backupsProxyModelRef.selectedFilterEnabled && sizeReady
             }
 
             BusyIndicator {
@@ -197,18 +200,18 @@ Item {
                 }
                 imageSize: Qt.size(12, 12)
                 color: colorStyle.textAccent
-                visible: backupsProxyModel.selectedFilterEnabled && !sizeReady
+                visible: backupsProxyModelRef.selectedFilterEnabled && !sizeReady
             }
 
             MouseArea {
                 anchors.fill: parent
-                cursorShape: backupsProxyModel.selectedFilterEnabled
+                cursorShape: backupsProxyModelRef.selectedFilterEnabled
                              ? Qt.ArrowCursor
                              : Qt.PointingHandCursor
                 onClicked: {
                     selected = !selected;
                 }
-                enabled: !backupsProxyModel.selectedFilterEnabled
+                enabled: !backupsProxyModelRef.selectedFilterEnabled
             }
 
         } // Item: selectRoot

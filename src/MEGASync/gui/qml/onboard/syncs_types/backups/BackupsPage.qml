@@ -3,6 +3,7 @@ import QtQuick 2.15
 import backups 1.0
 
 import onboard 1.0
+import onboard.syncs_types 1.0
 
 import BackupsModel 1.0
 
@@ -11,7 +12,25 @@ BackupsFlow {
 
     required property StepPanel stepPanelRef
 
-    isOnboarding: true
+    selectFoldersPage: Component {
+        id: selectFoldersPageComponent
+
+        SelectFoldersPage {
+            id: selectFoldersPageItem
+
+            backupsProxyModelRef: root.backupsProxyModel
+        }
+    }
+
+    confirmFoldersPage: Component {
+        id: confirmFoldersPageComponent
+
+        ConfirmFoldersPage {
+            id: confirmFoldersPageItem
+
+            backupsProxyModelRef: root.backupsProxyModel
+        }
+    }
 
     Item {
         id: stepPanelStateWrapper
