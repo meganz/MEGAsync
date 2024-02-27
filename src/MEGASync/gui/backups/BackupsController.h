@@ -43,6 +43,8 @@ private:
     SyncInfo::SyncOrigin mBackupsOrigin;
 
     bool existsName(const QString& name) const;
+    bool hasBackupsWithErrors() const;
+    void showErrorMessage() const;
 
 private slots:
     void onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString name);

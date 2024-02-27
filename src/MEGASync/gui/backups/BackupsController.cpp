@@ -44,6 +44,20 @@ bool BackupsController::existsName(const QString& name) const
     return foundIt != mBackupsToDoList.constEnd();
 }
 
+bool BackupsController::hasBackupsWithErrors() const
+{
+    return mBackupsProcessedWithError > 0 && mBackupsProcessedWithError != mBackupsToDoSize;
+}
+
+void BackupsController::showErrorMessage() const
+{
+    auto completedItems(mBackupsToDoSize - mBackupsProcessedWithError);
+    QString successItems(tr("%n folder was backed up", "", completedItems));
+    QString message(tr("%1, but %n folder couldn’t be backed up.", "", mBackupsProcessedWithError)
+                        .arg(successItems));
+    MegaSyncApp->showErrorMessage(message, tr("Not all folders were backed up"));
+}
+
 void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCode, QString name)
 {
     if(!existsName(name))
@@ -67,6 +81,10 @@ void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCod
     {
         mBackupsOrigin = SyncInfo::SyncOrigin::NONE;
         emit backupsCreationFinished(mBackupsProcessedWithError == 0);
+        if (hasBackupsWithErrors())
+        {
+            showErrorMessage();
+        }
     }
 }
 
