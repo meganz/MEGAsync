@@ -445,6 +445,10 @@ private:
 
 };
 
+void exitFunction()
+{
+    gAppExit = true;
+}
 
 MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& desktopPath, bool logToStdout)
 : QObject{parent}
@@ -770,11 +774,6 @@ bool MegaSyncLogger::cleanLogs()
 
 void MegaSyncLogger::resumeAfterReporting()
 {
-}
-
-void MegaSyncLogger::exitFunction()
-{
-    gAppExit = true;
 }
 
 void MegaSyncLogger::flushAndClose()
