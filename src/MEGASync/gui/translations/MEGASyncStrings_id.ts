@@ -4026,22 +4026,22 @@ Muat ulang tampilan.</translation>
     <message>
         <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ini akan dipindahkan ke folder SyncDebris di tempat Sampah MEGA.[BR]Anda akan dapat memulihkan file dan versi file apa pun dari sana.[/BR]</translation>
     </message>
     <message>
         <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ini akan dipindahkan ke folder SyncDebris di tempat Sampah MEGA.[BR]Anda akan dapat memulihkan folder dari sana.[/BR]</translation>
     </message>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ini akan dipindahkan ke folder .rubbish atau .debris di lokasi sinkronisasi lokal anda.[BR]Anda akan dapat memulihkan file dari sana.[/BR]</translation>
     </message>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ini akan dipindahkan ke folder .rubbish atau .debris di lokasi sinkronisasi lokal anda.[BR]Anda akan dapat memulihkan folder dari sana.[/BR]</translation>
     </message>
     <message>
         <source>No action needed</source>
@@ -4051,22 +4051,22 @@ Muat ulang tampilan.</translation>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus file yang sudah disimpan di MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus folder yang sudah disimpan di MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus file lokal [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus folder lokal [B]%1[/B]?</translation>
     </message>
 </context>
 <context>
@@ -4079,12 +4079,12 @@ Muat ulang tampilan.</translation>
     <message>
         <source>Remove duplicates, merge folders and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus duplikat, gabungkan folder dan ganti nama sisanya</translation>
     </message>
     <message>
         <source>Remove duplicates and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus duplikat dan ganti nama sisanya</translation>
     </message>
     <message>
         <source>Merge folders and rename the rest</source>
@@ -4104,7 +4104,7 @@ Muat ulang tampilan.</translation>
     <message>
         <source>Solve options</source>
         <translatorcomment>Button text to show the solve action of sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan opsi</translation>
     </message>
     <message>
         <source>Name Conflicts: [B]%1[/B]</source>
@@ -4115,19 +4115,19 @@ Muat ulang tampilan.</translation>
         <source>These items contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ada beberapa item dengan nama yang sama di satu sisi sinkronisasi anda yang semuanya akan menjadi item tunggal yang sama di sisi lain sinkronisasi anda</translation>
     </message>
     <message>
         <source>These files contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ada beberapa item dengan nama yang sama di satu sisi sinkronisasi anda yang semuanya akan menjadi item tunggal yang sama di sisi lain sinkronisasi anda</translation>
     </message>
     <message>
         <source>These folders contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ada beberapa item dengan nama yang sama di satu sisi sinkronisasi anda yang semuanya akan menjadi item tunggal yang sama di sisi lain sinkronisasi anda</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4147,7 +4147,7 @@ This may be due to syncing to case insensitive local filesystems, or the effects
     <message>
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan masalah ini?</translation>
     </message>
     <message>
         <source>This action will rename the conflicted items (adding a suffix like (1)).</source>
@@ -4168,7 +4168,7 @@ and rename the files with the same name but different content (adding a suffix l
     <message>
         <source>This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
         <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tindakan ini akan menghapus file duplikat, dan mengganti nama item yang tersisa dengan menambahkan akhiran seperti (1).</translation>
     </message>
     <message>
         <source>This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
@@ -5327,7 +5327,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Moved to OS Trash</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item dipindahkan ke Sampah</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5342,7 +5342,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item dipindahkan ke Sampah</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5357,7 +5357,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item dipindahkan ke Recycle Bin</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5377,7 +5377,14 @@ Masukkan nama yang berbeda.</translation>
 - Performance is improved.
 </source>
         <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronkan pengerjaan ulang beta V2
+- Wizard onboarding baru diperkenalkan untuk proses sinkronisasi atau cadangan baru.
+- Perubahan terdeteksi dan masalah sinkronisasi diperbarui secara otomatis.
+- Sekarang tersedia dalam semua bahasa yang didukung MEGA.
+- Pengalaman pengguna untuk memperbaiki masalah sinkronisasi batch ditingkatkan.
+- Bug kecil diperbaiki.
+- Kinerja ditingkatkan.
+</translation>
     </message>
 </context>
 <context>
@@ -6227,7 +6234,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SyncDebris (dalam MEGA)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6322,7 +6329,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SyncDebris (dalam MEGA):</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6637,7 +6644,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Some issues ocurred.</source>
         <translatorcomment>Label that appeaers when sync stalls are detected.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah terdeteksi</translation>
     </message>
     <message>
         <source>View...</source>
@@ -6665,7 +6672,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Loading size</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Memuat ukuran&#8230;</translation>
     </message>
     <message>
         <source>Size:</source>
@@ -6675,12 +6682,12 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>CRC:</source>
         <translatorcomment>Label indicating fingerprint for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>CRC:</translation>
     </message>
     <message>
         <source>Loading time…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Memuat stempel waktu&#8230;</translation>
     </message>
     <message>
         <source>Last modified:</source>
@@ -6726,7 +6733,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item dipindahkan ke</translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6741,77 +6748,77 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>File is being frequently changing.</source>
         <translatorcomment>Label descriping the error causing sync stall. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File sering diubah</translation>
     </message>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Menghitung aturan pengecualian, masalah akan diselesaikan setelah selesai.</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tautan simbolis terdeteksi</translation>
     </message>
     <message>
         <source>Detected special file.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a special file and cannot be synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File khusus terdeteksi</translation>
     </message>
     <message>
         <source>Different file or folder is already present.</source>
         <translatorcomment>Label descriping a sync stall is happening because an item with this name already exists.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item dengan nama yang sama sudah ada</translation>
     </message>
     <message>
         <source>Parent folder does not exist.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud parent folder is removed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder induk tidak ada</translation>
     </message>
     <message>
         <source>Filesystem error during operation.</source>
         <translatorcomment>Label descriping a sync stall is happening because of filesystem failed operation ( Eg. folder creation).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan lokal terjadi selama operasi</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
         <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nama terlalu panjang untuk sistem file</translation>
     </message>
     <message>
         <source>Cannot fingerprint file.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA cannot create a fingerprint for it.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat berkas sidik jari</translation>
     </message>
     <message>
         <source>Hard link or Reparse Point detected.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a hard link and cannot be synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tautan keras atau titik reparse terdeteksi. Hubungi Bantuan jika tidak ada tautan keras atau titik reparse di lokasi ini.</translation>
     </message>
     <message>
         <source>The folder could not be found. Ensure that the path is correct and try again.</source>
         <translatorcomment>Label descriping the sync sall is caused by removed path.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder tidak dapat ditemukan. Pastikan bahwa jalurnya benar dan coba lagi.</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
         <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kegagalan verifikasi MAC</translation>
     </message>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item dihapus atau dipindahkan di MEGA</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is deleted by the user.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dihapus di MEGA</translation>
     </message>
     <message>
         <source>Move to debris folder failed.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA could not move the item to sync debris folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat pindah ke folder .debris atau .rubbish di lokasi sinkronisasi lokal anda</translation>
     </message>
     <message>
         <source>Ignore file malformed.</source>
@@ -6826,7 +6833,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan mengidentifikasi konten folder di sistem file lokal</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
@@ -6836,27 +6843,27 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Waiting for scanning to complete.</source>
         <translatorcomment>Label descriping the sync sall is caused by ongoing scan operation.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Menunggu pemindaian selesai</translation>
     </message>
     <message>
         <source>Waiting for another move to complete.</source>
         <translatorcomment>Label descriping the sync sall is caused by ongoing move operation.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Menunggu pindahan lain untuk diselesaikan</translation>
     </message>
     <message>
         <source>Source was moved elsewhere.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud version was move.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File atau folder di MEGA dipindahkan ke tempat lain</translation>
     </message>
     <message>
         <source>Local filesystem cannot store this name.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA cannot store the file ( possible reasons: filenames with trailing spaces).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sistem file lokal tidak dapat menggunakan nama file ini</translation>
     </message>
     <message>
         <source>Fingerprint is missing or invalid.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file fingerprint is missing.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sidik jari hilang atau tidak valid</translation>
     </message>
     <message>
         <source>Error not detected</source>
@@ -6879,12 +6886,12 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Are you sure you want to ignore this issue?</source>
         <translatorcomment>Text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Abaikan masalah ini?</translation>
     </message>
     <message>
         <source>This action will ignore this issue and it will not be synced.</source>
         <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tindakan ini akan mengabaikan masalah ini dan item tidak akan disinkronkan sampai masalah diselesaikan.</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -6899,7 +6906,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Solved</source>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Terselesaikan</translation>
     </message>
 </context>
 <context>
@@ -6907,27 +6914,27 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Terselesaikan: %n</numerusform></translation>
     </message>
     <message>
         <source>All issues: %1</source>
         <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Semua masalah: %1</translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Konflik nama: %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Konflik jenis item: %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Lainnya: %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6935,12 +6942,12 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Stalled Issues</source>
         <translatorcomment>Window tittle of sync stalls window.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah</translation>
     </message>
     <message>
         <source>Sync issues</source>
         <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah sinkronisasi</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6950,7 +6957,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mode resolusi masalah</translation>
     </message>
     <message>
         <source>Choose:</source>
@@ -6966,7 +6973,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>Let Mega solve sync issues
 automatically</source>
         <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Biarkan MEGA menyelesaikan masalah sinkronisasi secara otomatis</translation>
     </message>
     <message>
         <source>Advanced mode</source>
@@ -6981,12 +6988,12 @@ automatically</source>
     <message>
         <source>Solve issues</source>
         <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan masalah</translation>
     </message>
     <message>
         <source>No issues</source>
         <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada masalah</translation>
     </message>
     <message>
         <source>[A]Learn more[/A]</source>
@@ -7004,7 +7011,7 @@ automatically</source>
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Menyelesaikan masalah&#8230;</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -7020,12 +7027,12 @@ Muat ulang tampilan.</translation>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n masalah diselesaikan</numerusform></translation>
     </message>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Menyelesaikan masalah&#8230;</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
@@ -7038,23 +7045,25 @@ Muat ulang daftar.</translation>
         <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Beberapa masalah tidak dapat diselesaikan.
+Verifikasi izin file .megaignore di lokasi folder sinkronisasi lokal anda.</translation>
     </message>
     <message>
         <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Beberapa masalah tidak dapat diselesaikan.
+Verifikasi izin file .megaignore di lokasi folder sinkronisasi lokal anda.</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
         <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Berkas “%1” dipindahkan ke “%2”</translation>
     </message>
     <message>
         <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
         <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder “%1” dipindahkan ke “%2”</translation>
     </message>
 </context>
 <context>
@@ -7249,12 +7258,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Are you sure you want to ignore all symlinks in all syncs?</source>
         <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Abaikan tautan simbolis di semua sinkronisasi?</translation>
     </message>
     <message>
         <source>This action will ignore all present and future symlinks in all your syncs.</source>
         <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tindakan ini akan mengabaikan semua tautan simbolis saat ini dan masa depan di semua sinkronisasi anda.</translation>
     </message>
     <message>
         <source>Are you sure you want to ignore this symlink?</source>
@@ -7292,12 +7301,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Akun MEGA anda penuh. Unggahan dinonaktifkan dan sinkronisasi folder dijeda.</translation>
     </message>
     <message>
         <source>Purchase more storage</source>
         <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Beli lebih banyak penyimpanan</translation>
     </message>
 </context>
 <context>
@@ -7473,12 +7482,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi anda “%1” telah dinonaktifkan karena folder di MEGA ada di tempat Sampah</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi anda “%1” telah dinonaktifkan. Anda tidak memiliki akses penuh ke folder di MEGA (atau sebagian darinya).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -7673,7 +7682,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Synced Folders</source>
         <translatorcomment>Section title for Synchronized folders table view.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder yang disinkronkan</translation>
     </message>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
@@ -7729,7 +7738,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mode resolusi masalah</translation>
     </message>
     <message>
         <source>Smart</source>
@@ -7739,7 +7748,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Let MEGA solve sync issues automatically</source>
         <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Biarkan MEGA menyelesaikan masalah sinkronisasi secara otomatis</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -8111,7 +8120,7 @@ Untuk mendapatkan lebih banyak kuota, upgrade ke akun Pro atau tunggu [A] hingga
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Masalah terdeteksi</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8695,7 +8704,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Cannot reach the destination folder.</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat mencapai folder tujuan</translation>
     </message>
 </context>
 <context>

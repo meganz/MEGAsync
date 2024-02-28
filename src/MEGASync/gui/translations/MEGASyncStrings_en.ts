@@ -2668,12 +2668,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Keep the folder stored in MEGA [B]%1[/B]?</translation>
+        <translation>Keep the folder [B]%1[/B] already stored in MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Keep the item already stored in MEGA [B]%1[/B]?</translation>
+        <translation>Keep the item [B]%1[/B] already stored in MEGA?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -4052,12 +4052,12 @@ Refresh the view.</translation>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>Replace the file already stored in MEGA [B]%1[/B]?</translation>
+        <translation>Replace the file [B]%1[/B] already stored in MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>Replace the folder already stored in MEGA [B]%1[/B]?</translation>
+        <translation>Replace the folder [B]%1[/B] already stored in MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>

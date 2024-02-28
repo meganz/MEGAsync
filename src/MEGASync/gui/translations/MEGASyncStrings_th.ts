@@ -4104,7 +4104,7 @@ Please refresh the view</source>
     <message>
         <source>Solve options</source>
         <translatorcomment>Button text to show the solve action of sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ตัวเลือกการแก้ไขปัญหา</translation>
     </message>
     <message>
         <source>Name Conflicts: [B]%1[/B]</source>
@@ -4147,7 +4147,7 @@ This may be due to syncing to case insensitive local filesystems, or the effects
     <message>
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขปัญหานี้หรือไม่</translation>
     </message>
     <message>
         <source>This action will rename the conflicted items (adding a suffix like (1)).</source>
@@ -5325,7 +5325,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Trash</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รายการถูกย้ายไปที่ถังขยะแล้ว</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5340,7 +5340,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รายการถูกย้ายไปที่ถังขยะแล้ว</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5355,7 +5355,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รายการถูกย้ายไปที่ถังขยะแล้ว</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5375,7 +5375,12 @@ Enter a different name</source>
 - Performance is improved.
 </source>
         <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ปรับปรุงการทำงานการซิงค์เบต้า V2
+- ตัวช่วยสร้างการเริ่มต้นใช้งานใหม่ ช่วยให้ผู้ใช้เริ่มต้นการซิงค์หรือสำรองข้อมูลได้ง่าย
+- ระบบจะตรวจจับการเปลี่ยนแปลงของไฟล์ และอัปเดตปัญหาการซิงค์โดยอัตโนมัติ
+- การแก้ไขปัญหาการซิงค์แบบเป็นกลุ่ม ช่วยให้ผู้ใช้แก้ไขปัญหาการซิงค์หลายรายการพร้อมกันได้
+- แก้ไขข้อผิดพลาดเล็กน้อย
+- ปรับปรุงประสิทธิภาพการทำงาน</translation>
     </message>
 </context>
 <context>
@@ -6225,7 +6230,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SyncDebris (ใน MEGA)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6320,7 +6325,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SyncDebris (ใน MEGA):</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6635,7 +6640,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Some issues ocurred.</source>
         <translatorcomment>Label that appeaers when sync stalls are detected.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>พบปัญหาการซิงค์ข้อมูล</translation>
     </message>
     <message>
         <source>View...</source>
@@ -6724,7 +6729,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รายการถูกย้ายไปที่</translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6744,7 +6749,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังคำนวณกฎการยกเว้นอยู่ ระบบจะทำงานต่อได้เมื่อคำนวณเสร็จ</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -6799,7 +6804,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รายการถูกลบหรือย้ายออกจาก MEGA แล้ว</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
@@ -6877,7 +6882,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Are you sure you want to ignore this issue?</source>
         <translatorcomment>Text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ละเว้นปัญหานี้หรือไม่</translation>
     </message>
     <message>
         <source>This action will ignore this issue and it will not be synced.</source>
@@ -6897,7 +6902,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Solved</source>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขปัญหาแล้ว</translation>
     </message>
 </context>
 <context>
@@ -6905,27 +6910,27 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>แก้ไขปัญหาแล้ว: %n</numerusform></translation>
     </message>
     <message>
         <source>All issues: %1</source>
         <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ปัญหาทั้งหมด: %1</translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>ชื่อไฟล์ขัดแย้งกัน: %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>ประเภทรายการขัดแย้งกัน: %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>อื่น ๆ: %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6948,7 +6953,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โหมดแก้ไขปัญหาการซิงค์ข้อมูล</translation>
     </message>
     <message>
         <source>Choose:</source>
@@ -6964,7 +6969,7 @@ Do you want to delete it anyway?</source>
         <source>Let Mega solve sync issues
 automatically</source>
         <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ให้ MEGA แก้ไขปัญหาการซิงค์ข้อมูลโดยอัตโนมัติ</translation>
     </message>
     <message>
         <source>Advanced mode</source>
@@ -6979,12 +6984,12 @@ automatically</source>
     <message>
         <source>Solve issues</source>
         <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เริ่มแก้ไขปัญหา</translation>
     </message>
     <message>
         <source>No issues</source>
         <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ปัญหาการซิงค์ข้อมูลถูกแก้ไขหมดแล้ว</translation>
     </message>
     <message>
         <source>[A]Learn more[/A]</source>
@@ -7002,7 +7007,7 @@ automatically</source>
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังแก้ไขปัญหา…</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -7017,12 +7022,12 @@ automatically</source>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>แก้ไขปัญหา %n รายการแล้ว</numerusform></translation>
     </message>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังแก้ไขปัญหา…</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
@@ -7035,13 +7040,15 @@ Please, refresh the list.</source>
         <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถแก้ไขปัญหาบางอย่างได้
+สิทธิ์การเข้าถึงไฟล์ .megaignore ในโฟลเดอร์ซิงค์บนอุปกรณ์ของคุณไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถแก้ไขปัญหาบางอย่างได้
+สิทธิ์การเข้าถึงไฟล์ .megaignore ในโฟลเดอร์ซิงค์บนอุปกรณ์ของคุณไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
@@ -7470,12 +7477,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การซิงค์ “%1” ของคุณถูกปิดการใช้งาน เนื่องจากโฟลเดอร์ใน MEGA อยู่ในถังขยะ</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งาน คุณไม่มีสิทธิ์เข้าถึงโฟลเดอร์ใน MEGA แบบเต็มที่ได้ (หรือเข้าถึงได้แค่บางส่วน)</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -7725,7 +7732,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โหมดแก้ไขปัญหาการซิงค์ข้อมูล</translation>
     </message>
     <message>
         <source>Smart</source>
@@ -7735,7 +7742,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Let MEGA solve sync issues automatically</source>
         <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ให้ MEGA แก้ไขปัญหาการซิงค์ข้อมูลโดยอัตโนมัติ</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -8107,7 +8114,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>พบปัญหาการซิงค์ข้อมูล</numerusform></translation>
     </message>
 </context>
 <context>

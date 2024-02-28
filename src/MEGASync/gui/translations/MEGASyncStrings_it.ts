@@ -1681,7 +1681,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Shared drive</source>
         <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unità di rete</translation>
     </message>
     <message>
         <source>Local drive</source>
@@ -2766,17 +2766,17 @@ Per favore, attendi il completamento dei caricamenti.</translation>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Conservare i file già archiviati [B]in MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Conservare le cartelle già archiviate [B]in MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Conservare gli oggetti già archiviati [B]in MEGA[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
@@ -5377,7 +5377,14 @@ Inserisci un nome differente.</translation>
 - Performance is improved.
 </source>
         <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizzazioni beta V2
+- Nuova procedura guidata di inserimento per qualsiasi nuovo processo di sincronizzazione o backup.
+- Le modifiche vengono rilevate e i problemi di sincronizzazione vengono aggiornati automaticamente.
+- Ora disponibile in tutte le lingue supportate da MEGA.
+- Esperienza utente per la risoluzione in blocco dei problemi di sincronizzazione è migliorata.
+- Bug minori sono stati corretti.
+- Prestazioni migliorate.
+</translation>
     </message>
 </context>
 <context>
@@ -6746,7 +6753,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Calcolando le regole di eccezione, il problema verrà risolto una volta completato.</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -6801,7 +6808,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Oggetto eliminato o spostato in MEGA</translation>
     </message>
     <message>
         <source>Deleted by user.</source>

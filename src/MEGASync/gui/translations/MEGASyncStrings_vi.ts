@@ -508,12 +508,12 @@
     <message>
         <source>Sync operation failed</source>
         <translatorcomment>Title for error dialog shown when a  sync fails.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể đồng&#xa0;bộ hóa</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
         <translatorcomment>text for error dialog shown when a  sync fails, folder path and reason are given during runtime in the placeholders.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể đồng bộ thư&#xa0;mục “%1” của bạn. Lý do: %2</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -1214,7 +1214,7 @@
     <message>
         <source>Remote Copy</source>
         <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bản&#xa0;sao trên MEGA</translation>
     </message>
 </context>
 <context>
@@ -2839,7 +2839,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Local Copy</source>
         <translatorcomment>Title in the choosing widget used to offer the user the option to choose local version when conflicts occur.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bảo&#xa0;sao cục&#xa0;bộ</translation>
     </message>
 </context>
 <context>
@@ -3982,12 +3982,12 @@ Các phiên truyền tải đồng bộ chưa hoàn tất mà bạn đã ch�
     <message>
         <source>Renamed to &quot;%1&quot;</source>
         <translatorcomment>Label in solved name conflict sync stalls by renaming the file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đổi tên thành “%1”</translation>
     </message>
     <message>
         <source>Merged</source>
         <translatorcomment>Label in solved name conflict sync stalls when folders are merged.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã hợp nhất</translation>
     </message>
     <message>
         <source>Modified externally</source>
@@ -4087,12 +4087,12 @@ Please refresh the view</source>
     <message>
         <source>Rename all items</source>
         <translatorcomment>Button to solve a name conflict sync stall by renaming items.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đổi tên tất cả các mục</translation>
     </message>
     <message>
         <source>Merge folders</source>
         <translatorcomment>Button to solve a name conflict sync stall by merging folders.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hợp nhất các thư&#xa0;mục</translation>
     </message>
     <message>
         <source>Solve options</source>
@@ -5015,7 +5015,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>View in MEGA</source>
         <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xem trên MEGA</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -5320,7 +5320,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Moved to OS Trash</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục đã chuyển vào Rác</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5335,7 +5335,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục đã chuyển vào Rác</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5350,7 +5350,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục đã chuyển vào Thùng&#xa0;Rác</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -6220,7 +6220,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SyncDebris (trên MEGA)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6315,7 +6315,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SyncDebris (trên MEGA)</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6892,7 +6892,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Solved</source>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã giải quyết</translation>
     </message>
 </context>
 <context>
@@ -6928,7 +6928,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Stalled Issues</source>
         <translatorcomment>Window tittle of sync stalls window.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vấn đề</translation>
     </message>
     <message>
         <source>Sync issues</source>
@@ -6979,7 +6979,7 @@ automatically</source>
     <message>
         <source>No issues</source>
         <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không có vấn&#xa0;đề</translation>
     </message>
     <message>
         <source>[A]Learn more[/A]</source>
@@ -7674,12 +7674,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sync operation failed</source>
         <translatorcomment>Title for message box shown when an error occurs in a sync.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể đồng&#xa0;bộ hóa</translation>
     </message>
     <message>
         <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
         <translatorcomment>Text in message box shown when an error occurs when removing a sync.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể đồng bộ thư&#xa0;mục “%1” của bạn. Lý do: %2</translation>
     </message>
     <message>
         <source>Error adding sync</source>

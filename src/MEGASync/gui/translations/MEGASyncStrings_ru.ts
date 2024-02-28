@@ -2756,7 +2756,8 @@ Please, refresh the list.</source>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Локальные[/B] файлы будут загружены в MEGA и добавлены как версии к облачным файлам.
+Пожалуйста, подождите завершения загрузки.</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
