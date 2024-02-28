@@ -149,6 +149,7 @@ struct LogLinkedList
 };
 
 MegaSyncLogger *g_megaSyncLogger = nullptr;
+std::atomic<bool> gAppExit(false);
 
 struct LoggingThread
 {
@@ -449,6 +450,7 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 : QObject{parent}
 , mDesktopPath{desktopPath}
 {
+    std::atexit(exitFunction);
     assert(!g_megaSyncLogger);
     g_megaSyncLogger = this;
     mLogToStdout = logToStdout;
@@ -586,6 +588,11 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
 //        emit sendLog(QString::fromUtf8(ts), loglevel, m);
 //    }
 //#endif
+
+    if(gAppExit)
+    {
+        return;
+    }
 
     bool direct = directMessages != nullptr;
 
@@ -763,6 +770,11 @@ bool MegaSyncLogger::cleanLogs()
 
 void MegaSyncLogger::resumeAfterReporting()
 {
+}
+
+void MegaSyncLogger::exitFunction()
+{
+    gAppExit = true;
 }
 
 void MegaSyncLogger::flushAndClose()
