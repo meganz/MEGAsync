@@ -323,6 +323,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/AccountDetailsDialog.h
     ${MEGAsyncDir}/gui/AddExclusionDialog.h
     ${MEGAsyncDir}/gui/AvatarWidget.h
+    ${MEGAsyncDir}/gui/MenuItemAction.h
+    ${MEGAsyncDir}/gui/MegaUserAlertExt.h
     ${MEGAsyncDir}/gui/ChangeLogDialog.h
     ${MEGAsyncDir}/gui/ChangePassword.h
     ${MEGAsyncDir}/gui/PasswordLineEdit.h
@@ -611,6 +613,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/QMegaMessageBox.cpp
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
+    ${MEGAsyncDir}/gui/MegaUserAlertExt.cpp
     ${MEGAsyncDir}/gui/AddExclusionDialog.cpp
     ${MEGAsyncDir}/gui/StatusInfo.cpp
     ${MEGAsyncDir}/gui/ChangePassword.cpp

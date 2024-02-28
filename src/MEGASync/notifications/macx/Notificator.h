@@ -7,13 +7,13 @@
 
 #include "NotificatorBase.h"
 
-class MegaNotification : public MegaNotificationBase
+class DesktopAppNotification : public DesktopAppNotificationBase
 {
     Q_OBJECT
 
 public:
-    MegaNotification();
-    ~MegaNotification();
+    DesktopAppNotification();
+    ~DesktopAppNotification();
 
     QStringList getActions() const override;
 };
@@ -24,16 +24,16 @@ class Notificator: public NotificatorBase
     Q_OBJECT
 
 public:    
-    static QHash<int64_t, MegaNotification*> notifications;
+    static QHash<int64_t, DesktopAppNotification*> notifications;
 
     /** Create a new notificator.
        @note Ownership of trayIcon is not transferred to this object.
     */
-    Notificator(const QString &programName, QSystemTrayIcon *trayIcon, QObject *parent);
+    Notificator(const QString& programName, QSystemTrayIcon* trayIcon, QObject* parent);
     ~Notificator() = default;
 
     void notify(Class cls, const QString &title, const QString &text, int millisTimeout = 10000);
-    void notify(MegaNotification *notification);
+    void notify(DesktopAppNotification *notification);
 };
 
 #endif // NOTIFICATOR_H

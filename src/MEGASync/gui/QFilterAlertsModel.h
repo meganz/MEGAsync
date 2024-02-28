@@ -1,9 +1,9 @@
 #ifndef QFILTERALERTSMODEL_H
 #define QFILTERALERTSMODEL_H
 
-#include <QSortFilterProxyModel>
-#include "QAlertsModel.h"
 #include <megaapi.h>
+
+#include <QSortFilterProxyModel>
 
 class QFilterAlertsModel : public QSortFilterProxyModel
 {

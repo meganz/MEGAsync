@@ -211,6 +211,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view,
         if (widget)
         {
             QToolTip::showText(event->globalPos(), widget->toolTip());
+            return true;
         }
     }
     return QStyledItemDelegate::helpEvent(event, view, option, index);

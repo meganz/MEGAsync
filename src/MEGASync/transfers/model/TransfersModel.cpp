@@ -69,7 +69,6 @@ TransferThread::TransfersToProcess TransferThread::processTransfers()
 void TransferThread::clear()
 {
     QMutexLocker lock(&mCacheMutex);
-
     mTransfersToProcess.clear();
     mTransfersCount.clear();
 }
@@ -336,7 +335,7 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     }
 }
 
-void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError* e)
+void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, MegaError* e)
 {
     if (!transfer->isStreamingTransfer())
     { 
@@ -363,6 +362,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
                     //If it is a completed transfer from a retried folder, ignore it
                     TransferMetaDataContainer::finishFromFolderTransfer(transfer, e);
                 }
+            }
+
+            if(!megaApi->isLoggedIn())
+            {
+                return;
             }
 
             if(!transfer->isFolderTransfer())
@@ -456,6 +460,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
         }
 
         {
+            if(!megaApi->isLoggedIn())
+            {
+                return;
+            }
+
             QMutexLocker cacheLock(&mCacheMutex);
             auto data = onTransferEvent(transfer, e);
 
@@ -1520,6 +1529,10 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplici
 
             foreach(auto& failedTransferdata, transferDatas)
             {
+                if(!failedTransferdata)
+                {
+                    continue;
+                }
                 auto failedTransfer = failedTransferdata->mFailedTransfer;
 
                 std::shared_ptr<TransferMetaData> data(nullptr);

@@ -57,6 +57,12 @@ background-color: rgba(0,0,0,0.1)
       </item>
       <item>
        <widget class="QLabel" name="descriptionLabel">
+        <property name="minimumSize">
+         <size>
+          <width>617</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">QLabel
 {color: rgba(48, 50, 51, 0.75) }</string>

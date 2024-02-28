@@ -16,7 +16,7 @@ NSUserNotificationHandler::NSUserNotificationHandler()
     mNotificationDelegate = [[NSUserNotificationDelegate alloc] init];
 }
 
-void NSUserNotificationHandler::showNotification(MegaNotification *notification)
+void NSUserNotificationHandler::showNotification(DesktopAppNotification *notification)
 {
     static int64_t currentNotificationId = 1;
 
@@ -49,7 +49,7 @@ void NSUserNotificationHandler::showNotification(MegaNotification *notification)
     [userNotification release];
 }
 
-void NSUserNotificationHandler::hideNotification(MegaNotification *notification)
+void NSUserNotificationHandler::hideNotification(DesktopAppNotification *notification)
 {
     NSString *idString = [[NSNumber numberWithLongLong:notification->getId()] stringValue];
 

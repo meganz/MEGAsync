@@ -17,8 +17,8 @@ class NSUserNotificationHandler : public NotificationHandler
 public:
     NSUserNotificationHandler();
 
-    void showNotification(MegaNotification *notification) override;
-    void hideNotification(MegaNotification *notification) override;
+    void showNotification(DesktopAppNotification *notification) override;
+    void hideNotification(DesktopAppNotification *notification) override;
     bool acceptsMultipleSelection() override;
 };
 
