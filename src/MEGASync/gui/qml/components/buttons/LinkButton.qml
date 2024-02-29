@@ -51,11 +51,12 @@ Button {
         if(event.key === Qt.Key_Space || event.key === Qt.Key_Return) {
             if (defaultHandleLinkAction) {
                 openHelpUrl();
-                event.accepted = true;
             }
             else{
                 root.linkActionTriggered();
             }
+
+            event.accepted = true;
         }
     }
 
