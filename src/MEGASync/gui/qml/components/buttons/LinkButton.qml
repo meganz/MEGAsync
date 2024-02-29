@@ -7,6 +7,9 @@ Button {
 
     property string url
     property bool visited: false
+    property bool defaultHandleLinkAction: true
+
+    signal linkActionTriggered
 
     function openHelpUrl() {
         Qt.openUrlExternally(url);
@@ -36,13 +39,23 @@ Button {
     }
 
     onClicked: {
-        openHelpUrl();
+        if (defaultHandleLinkAction) {
+            openHelpUrl();
+        }
+        else{
+            root.linkActionTriggered();
+        }
     }
 
     Keys.onPressed: {
         if(event.key === Qt.Key_Space || event.key === Qt.Key_Return) {
-            openHelpUrl();
-            event.accepted = true;
+            if (defaultHandleLinkAction) {
+                openHelpUrl();
+                event.accepted = true;
+            }
+            else{
+                root.linkActionTriggered();
+            }
         }
     }
 

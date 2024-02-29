@@ -1,6 +1,7 @@
 import QtQuick 2.15
 
 import onboard 1.0
+import common 1.0
 
 import ApiEnums 1.0
 import LoginController 1.0
@@ -233,6 +234,17 @@ LoginPageForm {
             else {
                 email.forceActiveFocus();
             }
+        }
+    }
+
+    Connections {
+        target: helpButton
+
+        function onLinkActionTriggered() {
+            helpButton.url = Links.recovery + (email.valid() ? "?email="+Qt.btoa(email.text) : "");
+            helpButton.visited = true;
+
+            Qt.openUrlExternally(helpButton.url);
         }
     }
 }

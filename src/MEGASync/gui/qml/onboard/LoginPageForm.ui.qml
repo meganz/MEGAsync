@@ -16,6 +16,7 @@ StackViewPage {
     property alias loginButton: loginButtonItem
     property alias email: emailItem
     property alias password: passwordItem
+    property alias helpButton: helpButtonItem
 
     Column {
         id: mainColumn
@@ -106,6 +107,7 @@ StackViewPage {
         }
         visible: !loginControllerAccess.newAccount
         sizes: SmallSizes { borderLess: true }
+        defaultHandleLinkAction: false
     }
 
     RowLayout {
