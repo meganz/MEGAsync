@@ -7166,7 +7166,7 @@ Verifique as permissões do arquivo. megaignore na pasta de sincronização loca
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation>Escolha aplicação</translation>
+        <translation>Escolher aplicativo</translation>
     </message>
     <message>
         <source>Close</source>
