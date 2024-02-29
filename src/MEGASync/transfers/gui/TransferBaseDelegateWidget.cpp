@@ -167,6 +167,13 @@ int TransferBaseDelegateWidget::getNameAvailableSize(QWidget *nameContainer, QWi
     return nameContainer->contentsRect().width() - syncLabel->contentsRect().width() - nameContainer->layout()->spacing()*2 - spacer->sizeHint().width();
 }
 
+QString TransferBaseDelegateWidget::getErrorText()
+{
+    return (getData() && getData()->mFailedTransfer->isForeignOverquota())
+                ? tr("Destination storage is full.")
+                : getErrorInContext();
+}
+
 QString TransferBaseDelegateWidget::getErrorInContext()
 {
     auto context (mega::MegaError::ErrorContexts::API_EC_DEFAULT);
@@ -175,14 +182,16 @@ QString TransferBaseDelegateWidget::getErrorInContext()
         case TransferData::TRANSFER_DOWNLOAD:
         case TransferData::TRANSFER_LTCPDOWNLOAD:
         {
-                context = mega::MegaError::ErrorContexts::API_EC_DOWNLOAD;
-                break;
+            context = mega::MegaError::ErrorContexts::API_EC_DOWNLOAD;
+            break;
         }
         case TransferData::TRANSFER_UPLOAD:
         {
-                context = mega::MegaError::ErrorContexts::API_EC_UPLOAD;
-                break;
+            context = mega::MegaError::ErrorContexts::API_EC_UPLOAD;
+            break;
         }
+        default:
+            break;
     }
 
     // SNC-4190/CON-556

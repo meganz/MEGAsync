@@ -259,7 +259,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                     //Double check that the mFailedTransfer is OK
                     if(getData()->isFailed())
                     {
-                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(getErrorInContext()));
+                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(getErrorText()));
                     }
 
                     if(update)
@@ -332,7 +332,7 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
         mUi->lActionTransfer->setIconSize(QSize(24,24));
         mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
 
-        mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorInContext()));
+        mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorText()));
         updateFinishedIco(getData()->mType, true);
     }
     else
@@ -406,7 +406,7 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
                         - mUi->wContainerCompletedData->layout()->spacing() * 2 - rightMargin - leftMargin
                         - mUi->horizontalLayout_5->spacing() - 3;
 
-        QString text = tr("Failed: %1").arg(getErrorInContext());
+        QString text = tr("Failed: %1").arg(getErrorText());
         QString elidedText = mUi->lElapsedTime->fontMetrics().elidedText(text, Qt::ElideMiddle, availableWidth);
         if(text != elidedText)
         {
