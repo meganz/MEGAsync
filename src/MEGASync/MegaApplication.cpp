@@ -4016,9 +4016,8 @@ void MegaApplication::officialWeb()
 
 void MegaApplication::goToMyCloud()
 {
-    const char* rootBase64Handle(megaApi->getRootNode()->getBase64Handle());
-    const QString rootID(QString::fromUtf8(rootBase64Handle));
-    delete [] rootBase64Handle;
+    std::unique_ptr<char[]> rootBase64Handle(getRootNode()->getBase64Handle());
+    const QString rootID(QString::fromUtf8(rootBase64Handle.get()));
     const QString url(QString::fromUtf8("fm/%1").arg(rootID));
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
