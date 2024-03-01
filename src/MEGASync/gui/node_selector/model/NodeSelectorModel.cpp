@@ -471,7 +471,8 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     QAbstractItemModel(parent),
     mRequiredRights(mega::MegaShare::ACCESS_READ),
     mDisplayFiles(false),
-    mSyncSetupMode(false)
+    mSyncSetupMode(false),
+    mValidModel(true)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
@@ -705,11 +706,6 @@ int NodeSelectorModel::rowCount(const QModelIndex &parent) const
         mNodeRequesterWorker->lockDataMutex(true);
         NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
         auto rows = item ? item->getNumChildren() : 0;
-        // if(item)
-        // {
-        //     if(QString::fromUtf8(item->getNode()->getName()) != QString::fromUtf8("Cloud Drive"))
-        //     std::cout<<"NODES ROWCOUNT NAME :: "<<item->getNode()->getName() << " ROWCOUNT: "<< rows <<std::endl;
-        // }
         mNodeRequesterWorker->lockDataMutex(false);
         return rows;
     }
@@ -738,7 +734,6 @@ bool NodeSelectorModel::hasChildren(const QModelIndex &parent) const
     {
         mNodeRequesterWorker->lockDataMutex(true);
         auto numChild = item->getNumChildren() > 0;
-        if(QString::fromUtf8(item->getNode()->getName()) != QString::fromUtf8("Cloud Drive"))
         mNodeRequesterWorker->lockDataMutex(false);
         return numChild;
     }
@@ -825,9 +820,9 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
             {
                 clearIndexesNodeInfo();
                 auto totalRows = rowCount(parent);
+                mValidModel = false;
                 beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
                 emit requestAddNodes(nodes, parent, parentItem);
-                std::cout << "NODES:: -> ADDNODES PARENT NODE::" << parentItem->getNode()->getName()<<std::endl;
 
             }
         }
@@ -836,15 +831,11 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
 
 void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> childrenItem)
 {
-
     endInsertRows();
-
-    QList<QPair<mega::MegaHandle, QModelIndex>> parentIndexes;
+    mValidModel = true;
 
     foreach(auto child, childrenItem)
     {
-        std::cout << "NODES:: -> ON NODES ADDED::" << child->getNode()->getName()<<std::endl;
-
         auto index = child->property(INDEX_PROPERTY).toModelIndex();
         emit dataChanged(index, index);
     }
@@ -857,12 +848,14 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
 
 void NodeSelectorModel::onRootItemAdded()
 {
-    endInsertingRows();
+    endInsertRows();
+    mValidModel = true;
 }
 
 void NodeSelectorModel::onRootItemDeleted()
 {
     endRemoveRows();
+    mValidModel = true;
 }
 
 bool NodeSelectorModel::addToLoadingList(const std::shared_ptr<mega::MegaNode> node)
@@ -882,10 +875,10 @@ void NodeSelectorModel::removeNode(const QModelIndex &index)
         std::shared_ptr<mega::MegaNode> node = item->getNode();
         if (node)
         {
+            mValidModel = false;
             NodeSelectorModelItem* parent = static_cast<NodeSelectorModelItem*>(index.parent().internalPointer());
             if(parent)
             {
-                std::cout<<"NODE REMOVE:: PARENT NAME::"<<parent->getNode()->getName()<<"REMOVING NODE::"<<node->getName()<<std::endl;
                 int row = parent->indexOf(item);
                 beginRemoveRows(index.parent(), row, row);
                 mNodeRequesterWorker->lockDataMutex(true);
@@ -901,6 +894,7 @@ void NodeSelectorModel::removeNode(const QModelIndex &index)
                 emit removeRootItem(item);
                 endRemoveRows();
             }
+            mValidModel = true;
         }
     }
 }
@@ -1075,10 +1069,12 @@ QModelIndex NodeSelectorModel::getIndexFromNode(const std::shared_ptr<mega::Mega
 void NodeSelectorModel::rootItemsLoaded()
 {
     endResetModel();
+    mValidModel = true;
 }
 
 void NodeSelectorModel::addRootItems()
 {
+    mValidModel = false;
     emit blockUi(true);
     beginResetModel();
     createRootNodes();
@@ -1122,6 +1118,7 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
         if(itemNumChildren > 0)
         {
             blockSignals(true);
+            mValidModel = false;
             beginInsertRows(parent, 0, itemNumChildren-1);
             blockSignals(false);
             emit requestChildNodes(item, parent);
@@ -1166,6 +1163,8 @@ bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentInde
     if(mNodesToLoad.isEmpty())
     {
         loadLevelFinished();
+        endInsertRows();
+        mValidModel = true;
     }
     return result;
 }

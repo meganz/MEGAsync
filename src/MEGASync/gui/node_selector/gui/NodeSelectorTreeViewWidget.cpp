@@ -802,49 +802,61 @@ void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
 
 void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 {
-    if(!mProxyModel->isModelProcessing() && !mModel->isRequestingNodes())
+    if(!mProxyModel->isModelProcessing() && !mModel->isRequestingNodes() && areThereNodesToUpdate())
     {
-        if(areThereNodesToUpdate())
+        if(mModel->isModelValid())
         {
             foreach(auto info, mRenamedNodesByHandle)
             {
                 updateNode(info, true);
             }
+            mRenamedNodesByHandle.clear();
+        }
 
+        if(mModel->isModelValid())
+        {
             foreach(auto info, mUpdatedNodesByPreviousHandle)
             {
                 updateNode(info, false);
                 //If they have been updated, we don´t need to remove them
                 mMovedNodesByHandle.removeOne(info.node->getHandle());
+                mUpdatedNodesByPreviousHandle.clear();
             }
+        }
 
+        if(mModel->isModelValid())
+        {
             foreach(auto handle, mMovedNodesByHandle)
             {
                 removeItemByHandle(handle);
             }
+            mMovedNodesByHandle.clear();
+        }
 
+        if(mModel->isModelValid())
+        {
+            foreach(auto handle, mRemovedNodesByHandle)
+            {
+                removeItemByHandle(handle);
+            }
+            mRemovedNodesByHandle.clear();
+        }
+
+
+        if(mModel->isModelValid())
+        {
             if(!mAddedNodesByParentHandle.isEmpty())
             {
                 mProxyModel->setExpandMapped(true);
             }
-
             foreach(auto& parentHandle, mAddedNodesByParentHandle.uniqueKeys())
             {
                 auto parentIndex = getAddedNodeParent(parentHandle);
                 mModel->addNodes(mAddedNodesByParentHandle.values(parentHandle), parentIndex);
             }
-
-            foreach(auto handle, mRemovedNodesByHandle)
-            {
-                removeItemByHandle(handle);
-            }
-
-            mRemovedNodesByHandle.clear();
             mAddedNodesByParentHandle.clear();
-            mRenamedNodesByHandle.clear();
-            mUpdatedNodesByPreviousHandle.clear();
-            mMovedNodesByHandle.clear();
         }
+
     }
 }
 

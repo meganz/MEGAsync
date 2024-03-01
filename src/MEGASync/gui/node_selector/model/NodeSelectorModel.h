@@ -166,8 +166,6 @@ public:
     QVariant getIcon(const QModelIndex &index, NodeSelectorModelItem* item) const;
     QVariant getText(const QModelIndex &index, NodeSelectorModelItem* item) const;
     void setFetchStep(int step);
-    void endInsertingRows(){endInsertRows();}
-    void beginInsertingRows(const QModelIndex& index, int rowCount){beginInsertRows(index, 0 , rowCount-1);}
 
     void loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
@@ -193,6 +191,8 @@ public:
 
     bool showFiles() const;
 
+    bool isModelValid() const {return mValidModel;};
+
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
@@ -216,6 +216,7 @@ protected:
     mutable IndexesActionInfo mIndexesActionInfo;
     NodeRequester* mNodeRequesterWorker;
     QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;
+    bool mValidModel; //Used to know if the model state is reliable: Avoid nesting of begininsertrows, beginremoverows as it is not supported by Qt
 
 protected slots:
     virtual void onRootItemAdded();
@@ -233,7 +234,6 @@ private:
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
-
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
