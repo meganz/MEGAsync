@@ -86,7 +86,6 @@ public slots:
     void removeRootItem(NodeSelectorModelItem* item);
     void removeRootItem(std::shared_ptr<mega::MegaNode> node);
 
-    void onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem* parentItem);
     void onAddNodesRequested(QList<std::shared_ptr<mega::MegaNode>> newNodes, const QModelIndex& parentIndex, NodeSelectorModelItem *parentItem);
     void removeItem(NodeSelectorModelItem *item);
     void abort();
@@ -159,7 +158,6 @@ public:
 
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
-    void addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent);
     virtual void addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &index);
     void showFiles(bool show);
@@ -199,7 +197,6 @@ signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
     void firstLoadFinished(const QModelIndex& parent);
-    void requestAddNode(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem* parent);
     void requestAddNodes(QList<std::shared_ptr<mega::MegaNode>> newNodes, const QModelIndex& parentIndex, NodeSelectorModelItem* parent);
     void removeItem(NodeSelectorModelItem* items);
     void removeRootItem(NodeSelectorModelItem* items);
@@ -226,7 +223,6 @@ protected slots:
 
 private slots:
     void onChildNodesReady(NodeSelectorModelItem *parent);
-    void onNodeAdded(NodeSelectorModelItem* childItem);
     void onNodesAdded(QList<QPointer<NodeSelectorModelItem> > childrenItem);
 
 private:

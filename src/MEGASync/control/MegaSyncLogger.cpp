@@ -592,6 +592,9 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
 //        emit sendLog(QString::fromUtf8(ts), loglevel, m);
 //    }
 //#endif
+    auto mess = QString::fromUtf8(message);
+    if(!mess.startsWith(QString::fromUtf8("NODES")))
+        return;
 
     if(gAppExit)
     {

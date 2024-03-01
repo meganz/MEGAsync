@@ -334,23 +334,6 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
     }
 }
 
-void NodeRequester::onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem *parentItem)
-{
-    lockDataMutex(true);
-    auto childItem = parentItem->addNode(newNode);
-    lockDataMutex(false);
-    childItem->setProperty(INDEX_PROPERTY, mModel->index(parentItem->getNumChildren() -1 ,0, parentIndex));
-
-    if(!isAborted())
-    {
-        emit nodeAdded(childItem);
-    }
-    else
-    {
-        removeItem(childItem);
-    }
-}
-
 void NodeRequester::onAddNodesRequested(QList<std::shared_ptr<mega::MegaNode>> newNodes, const QModelIndex& parentIndex, NodeSelectorModelItem *parentItem)
 {
     auto lastChild = parentItem->getNumChildren();
@@ -499,7 +482,6 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     mNodeRequesterThread->start();
 
     connect(this, &NodeSelectorModel::requestChildNodes, mNodeRequesterWorker, &NodeRequester::requestNodeAndCreateChildren, Qt::QueuedConnection);
-    connect(this, &NodeSelectorModel::requestAddNode, mNodeRequesterWorker, &NodeRequester::onAddNodeRequested, Qt::QueuedConnection);
     connect(this, &NodeSelectorModel::requestAddNodes, mNodeRequesterWorker, &NodeRequester::onAddNodesRequested, Qt::QueuedConnection);
     connect(this, &NodeSelectorModel::removeItem, mNodeRequesterWorker, &NodeRequester::removeItem);
     connect(this, &NodeSelectorModel::removeRootItem, this, [this](NodeSelectorModelItem* item)
@@ -511,7 +493,6 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterWorker, &QObject::deleteLater, Qt::DirectConnection);
 
     connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &NodeSelectorModel::onChildNodesReady, Qt::QueuedConnection);
-    connect(mNodeRequesterWorker, &NodeRequester::nodeAdded, this, &NodeSelectorModel::onNodeAdded, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodesAdded, this, &NodeSelectorModel::onNodesAdded, Qt::QueuedConnection);
 
     connect(mNodeRequesterWorker, &NodeRequester::rootItemsAdded, this, &NodeSelectorModel::onRootItemAdded, Qt::QueuedConnection);
@@ -724,6 +705,11 @@ int NodeSelectorModel::rowCount(const QModelIndex &parent) const
         mNodeRequesterWorker->lockDataMutex(true);
         NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
         auto rows = item ? item->getNumChildren() : 0;
+        // if(item)
+        // {
+        //     if(QString::fromUtf8(item->getNode()->getName()) != QString::fromUtf8("Cloud Drive"))
+        //     std::cout<<"NODES ROWCOUNT NAME :: "<<item->getNode()->getName() << " ROWCOUNT: "<< rows <<std::endl;
+        // }
         mNodeRequesterWorker->lockDataMutex(false);
         return rows;
     }
@@ -752,6 +738,7 @@ bool NodeSelectorModel::hasChildren(const QModelIndex &parent) const
     {
         mNodeRequesterWorker->lockDataMutex(true);
         auto numChild = item->getNumChildren() > 0;
+        if(QString::fromUtf8(item->getNode()->getName()) != QString::fromUtf8("Cloud Drive"))
         mNodeRequesterWorker->lockDataMutex(false);
         return numChild;
     }
@@ -827,19 +814,6 @@ void NodeSelectorModel::setSyncSetupMode(bool value)
     mNodeRequesterWorker->setSyncSetupMode(value);
 }
 
-void NodeSelectorModel::addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent)
-{
-    NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-    if(parentItem && parentItem->getNode()->isFolder())
-    {
-        clearIndexesNodeInfo();
-
-        auto totalRows = rowCount(parent);
-        beginInsertRows(parent, totalRows, totalRows);
-        emit requestAddNode(node, parent, parentItem);
-    }
-}
-
 void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex &parent)
 {
     if(!nodes.isEmpty())
@@ -853,30 +827,25 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
                 auto totalRows = rowCount(parent);
                 beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
                 emit requestAddNodes(nodes, parent, parentItem);
+                std::cout << "NODES:: -> ADDNODES PARENT NODE::" << parentItem->getNode()->getName()<<std::endl;
+
             }
         }
     }
 }
 
-void NodeSelectorModel::onNodeAdded(NodeSelectorModelItem* childItem)
-{
-    endInsertRows();
-    auto index = childItem->property(INDEX_PROPERTY).toModelIndex();
-    mIndexesActionInfo.indexesToBeExpanded.append(qMakePair(childItem->getNode()->getHandle(), index));
-
-    mIndexesActionInfo.needsToBeSelected = true;
-    mIndexesActionInfo.needsToBeEntered = true;
-    emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded,false);
-}
-
 void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> childrenItem)
 {
+
     endInsertRows();
+
+    QList<QPair<mega::MegaHandle, QModelIndex>> parentIndexes;
 
     foreach(auto child, childrenItem)
     {
-        auto index = child->property(INDEX_PROPERTY).toModelIndex();
+        std::cout << "NODES:: -> ON NODES ADDED::" << child->getNode()->getName()<<std::endl;
 
+        auto index = child->property(INDEX_PROPERTY).toModelIndex();
         emit dataChanged(index, index);
     }
 
@@ -916,6 +885,7 @@ void NodeSelectorModel::removeNode(const QModelIndex &index)
             NodeSelectorModelItem* parent = static_cast<NodeSelectorModelItem*>(index.parent().internalPointer());
             if(parent)
             {
+                std::cout<<"NODE REMOVE:: PARENT NAME::"<<parent->getNode()->getName()<<"REMOVING NODE::"<<node->getName()<<std::endl;
                 int row = parent->indexOf(item);
                 beginRemoveRows(index.parent(), row, row);
                 mNodeRequesterWorker->lockDataMutex(true);
