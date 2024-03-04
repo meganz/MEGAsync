@@ -636,9 +636,6 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             continue;
         }
 
-        std::cout <<"NODES UPDATE:: "<<node->getName()<<"|| PARENT CHANGE : "<<  (node->getChanges() & (MegaNode::CHANGE_TYPE_PARENT))
-                  <<" || NEW : "<<  (node->getChanges() & (MegaNode::CHANGE_TYPE_NEW))<<" || REMOVED : "<<  (node->getChanges() & (MegaNode::CHANGE_TYPE_REMOVED))<<std::endl;
-
         if(node->getParentHandle() != mega::INVALID_HANDLE)
         {
             if (node->getChanges() & (MegaNode::CHANGE_TYPE_PARENT |
