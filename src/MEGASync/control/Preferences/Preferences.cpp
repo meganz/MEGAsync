@@ -511,7 +511,6 @@ void Preferences::removeEphemeralCredentials()
     QMutexLocker lock(&mutex);
     mSettings->remove(ephemeralSessionKey);
     removeFromCache(ephemeralSessionKey);
-    mSettings->sync();
 }
 
 void Preferences::setEphemeralCredentials(const EphemeralCredentials& cred)
@@ -522,7 +521,6 @@ void Preferences::setEphemeralCredentials(const EphemeralCredentials& cred)
     stream << cred;
     mSettings->setValue(ephemeralSessionKey, array.toBase64());
     setCachedValue(ephemeralSessionKey, array.toBase64());
-    mSettings->sync();
 }
 
 EphemeralCredentials Preferences::getEphemeralCredentials()
@@ -927,7 +925,6 @@ void Preferences::setValueAndSyncConcurrent(const QString &key, const QVariant &
 {
     QMutexLocker locker(&mutex);
     setAndCachedValue(key, value);
-    mSettings->sync();
     if(notifyChange)
     {
         emit valueChanged(key);
