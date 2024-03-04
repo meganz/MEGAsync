@@ -65,8 +65,7 @@ void TransfersStatusWidget::paintEvent(QPaintEvent*)
     QPainter painter(this);
 
     painter.setRenderHints(QPainter::Antialiasing
-                           | QPainter::SmoothPixmapTransform
-                           | QPainter::HighQualityAntialiasing);
+                           | QPainter::SmoothPixmapTransform);
     painter.setPen(pengrey);
     painter.drawArc(marginoutside+margininside, marginoutside+margininside,diaminside, diaminside, 0, 360*16);
     painter.drawArc(marginoutside, marginoutside, diamoutside, diamoutside, 0, 360*16);
@@ -83,11 +82,11 @@ bool TransfersStatusWidget::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::Enter)
     {
-        ui->bTransferManager->setIcon(QIcon(QString::fromAscii(":/images/transfer_manager_hover_ico.png")));
+        ui->bTransferManager->setIcon(QIcon(QString::fromLatin1(":/images/transfer_manager_hover_ico.png")));
     }
     else  if (event->type() == QEvent::Leave)
     {
-        ui->bTransferManager->setIcon(QIcon(QString::fromAscii(":/images/transfer_manager.png")));
+        ui->bTransferManager->setIcon(QIcon(QString::fromLatin1(":/images/transfer_manager.png")));
     }
 
     return QWidget::eventFilter(obj,event);

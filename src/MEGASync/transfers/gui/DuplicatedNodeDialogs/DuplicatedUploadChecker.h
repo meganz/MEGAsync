@@ -13,25 +13,29 @@ class DuplicatedUploadBase : public QObject
     Q_OBJECT
 
 public:
-     DuplicatedUploadBase(){}
+    DuplicatedUploadBase(){}
     virtual ~DuplicatedUploadBase(){}
 
-    virtual std::shared_ptr<DuplicatedNodeInfo> checkUpload(const QString& localPath, std::shared_ptr<mega::MegaNode> parentNode);
     virtual void fillUi(DuplicatedNodeDialog* dialog, std::shared_ptr<DuplicatedNodeInfo> conflict) = 0;
 
-     QString getHeader(bool isFile);
-     QString getSkipText(bool isFile);
+    QString getHeader(std::shared_ptr<DuplicatedNodeInfo> conflict);
+    QString getSkipText(bool isFile);
+
+    QStringList& getCheckedNames();
 
 signals:
-     void selectionDone();
+    void selectionDone();
 
 protected:
-     void fillTitle();
+    void fillTitle();
 
-     std::shared_ptr<DuplicatedNodeInfo> mUploadInfo;
+    std::shared_ptr<DuplicatedNodeInfo> mUploadInfo;
 
 protected slots:
     void onNodeItemSelected();
+
+private:
+    QStringList checkedNames;
 };
 
 class DuplicatedUploadFile : public DuplicatedUploadBase
@@ -54,6 +58,9 @@ public:
     ~DuplicatedUploadFolder(){}
 
     void fillUi(DuplicatedNodeDialog* dialog, std::shared_ptr<DuplicatedNodeInfo> conflict) override;
+
+private slots:
+    void onUploadAndMergeSelected();
 };
 
 

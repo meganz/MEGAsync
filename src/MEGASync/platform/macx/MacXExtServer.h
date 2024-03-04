@@ -49,18 +49,14 @@ private:
    bool GetAnswerToRequest(const char *buf, QByteArray *response);
    void clientDisconnected(QPointer<MacXLocalSocket> client);
    template <class COMMAND>
-   void addIsIncomingShareToCommand(std::string* path, COMMAND* command)
+   void addIsIncomingShareToCommand(std::string* path, COMMAND* command, bool isIncomingShare)
    {
        command->append(":");
-       std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(path));
-       if(Utilities::isIncommingShare(node.get()))
-       {
-           command->append("1");
-       }
-       else
-       {
-           command->append("0");
-       }
+       
+       // We used to call the SDK here, but it's extremely inefficient, interrupts the sync for every notified path the sync sends.
+       // The flag should be passed in. The SDK/sync can provide it on path callbacks if really needed
+       // But, it seems the finder extension hardly uses it anyway.  So let's try just using 0
+       command->append(isIncomingShare ? "1" : "0");
    }
 
    template <class COMMAND>

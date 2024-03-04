@@ -100,7 +100,7 @@ void LinuxSignalHandler(int signum)
 #endif
 
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
-    {       
+    {
         switch (type)
         {
             case QtInfoMsg:
@@ -190,6 +190,24 @@ void freeStaticResources()
     Platform::destroy();
 }
 
+void addFonts()
+{
+#if !defined(__APPLE__) && !defined (_WIN32)
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Semibold.ttf"));
+
+    QFont font(QString::fromUtf8("Open Sans"), 8);
+    theapp->setFont(font);
+#endif
+
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Semibold.ttf"));
+
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Light.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Bold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Semibold.ttf"));
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setOrganizationName(QString::fromUtf8("Mega Limited"));
@@ -198,6 +216,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationVersion(QString::number(Preferences::VERSION_CODE));
 
     Platform::create();
+
+    // This call is responsible for rebuilding the Qt symlinks in platforms where it applies.
+    // This needs to be done when starting the first time after an update.
+    // For this to work, the call needs to know the version of the app BEFORE updating,
+    // so needs to be made before the file megasync.version is updated.
+    Platform::getInstance()->processSymLinks();
 
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
@@ -232,7 +256,8 @@ int main(int argc, char *argv[])
             }
         }
 
-        Utilities::removeRecursively(MegaApplication::applicationDataPath());
+        QDir dir(MegaApplication::applicationDataPath());
+        dir.removeRecursively();
         Platform::getInstance()->uninstall();
 
 #ifdef WIN32
@@ -429,6 +454,15 @@ int main(int argc, char *argv[])
         MegaApi::log(message.logLevel, message.message.toStdString().c_str());
     }
 
+#ifdef Q_OS_LINUX
+    auto megaLibGL = getenv("MEGA_LIBGL_ALWAYS_SOFTWARE");
+    if (megaLibGL && !strcmp(megaLibGL, "1"))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting LIBGL_ALWAYS_SOFTWARE to 1");
+        qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
+    }
+#endif
+
 #ifndef Q_OS_MACX
     const auto scaleFactorLogMessages = scaleFactorManager.getLogMessages();
     for(const auto& message : scaleFactorLogMessages)
@@ -446,7 +480,6 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    qInstallMsgHandler(msgHandler);
     qInstallMessageHandler(messageHandler);
 
     app.setStyle(new MegaProxyStyle());
@@ -546,6 +579,8 @@ int main(int argc, char *argv[])
         #endif
     }
 
+    // The megasync.version file update needs to be done AFTER Platform::getInstance()->processSymLinks(),
+    // because it needs the old version number.
     QString appVersionPath = dataDir.filePath(QString::fromUtf8("megasync.version"));
     QFile fappVersionPath(appVersionPath);
     if (fappVersionPath.open(QIODevice::WriteOnly))
@@ -562,22 +597,19 @@ int main(int argc, char *argv[])
     }
     Platform::getInstance()->initialize(argc, argv);
 
-#if !defined(__APPLE__) && !defined (_WIN32)
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Semibold.ttf"));
+    addFonts();
 
-    QFont font(QString::fromUtf8("Open Sans"), 8);
-    app.setFont(font);
-#endif
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Light.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Bold.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Semibold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Bold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Black.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-ExtraBold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-ExtraLight.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Light.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Medium.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-SemiBold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Thin.ttf"));
 
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Light.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Bold.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Semibold.ttf"));
+    app.setWindowIcon(QIcon(QString::fromUtf8(":/images/app_ico.ico")));
 
     app.initialize();
     app.start();
@@ -701,6 +733,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Incomplete");
     QT_TRANSLATE_NOOP("MegaError", "Invalid key/Decryption error");
     QT_TRANSLATE_NOOP("MegaError", "Bad session ID");
+    QT_TRANSLATE_NOOP("MegaError", "File removed as it violated our Terms of Service");
     QT_TRANSLATE_NOOP("MegaError", "Blocked");
     QT_TRANSLATE_NOOP("MegaError", "Over quota");
     QT_TRANSLATE_NOOP("MegaError", "Temporarily not available");
@@ -732,7 +765,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Local path not available");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote node not found");
     QT_TRANSLATE_NOOP("MegaSyncError", "Reached storage quota limit");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Account expired (business or Pro Flexi)");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Your plan has expired");
     QT_TRANSLATE_NOOP("MegaSyncError", "Foreign target storage quota reached");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote path has changed");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote node moved to Rubbish Bin");

@@ -59,6 +59,7 @@ public:
     void setScanningWidgetVisible(bool state);
 
     bool isLoadingViewSet();
+    void setSortCriterion(int sortBy, Qt::SortOrder order);
 
     struct CancelClearButtonInfo
     {
@@ -147,6 +148,7 @@ signals:
 
     void loadingViewVisibilityChanged(bool);
     void disableTransferManager(bool);
+    void sortCriterionChanged(int sortBy, Qt::SortOrder order);
 
 };
 

@@ -359,7 +359,7 @@ background-color: rgba(0,0,0,0.1);
         <item row="2" column="1">
          <widget class="QCheckBox" name="ContactAceptedCheck">
           <property name="text">
-           <string>Someone accepted your contact request</string>
+           <string>Someone has accepted your contact request</string>
           </property>
           <property name="NotificationType" stdset="0">
            <UInt>6</UInt>

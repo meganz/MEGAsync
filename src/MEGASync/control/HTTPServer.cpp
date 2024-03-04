@@ -1,5 +1,5 @@
 #include "HTTPServer.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "AppStatsEvents.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
@@ -7,6 +7,7 @@
 #include <QtConcurrent/QtConcurrent>
 
 #include <iostream>
+#include <algorithm>
 
 
 using namespace mega;
@@ -42,13 +43,11 @@ bool HTTPServer::isFirstWebDownloadDone = false;
 QMultiMap<QString, RequestData*> HTTPServer::webDataRequests;
 QMap<mega::MegaHandle, RequestTransferData*> HTTPServer::webTransferStateRequests;
 
-HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
+HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port)
     : QTcpServer(), disabled(false)
 {
     this->megaApi = megaApi;
-    this->sslEnabled = sslEnabled;
     listen(QHostAddress::LocalHost, port);
-
 
     connect(&mVersionCommandWatcher, &QFutureWatcher<VersionCommandAnswer>::finished,
             this, &HTTPServer::onVersionCommandFinished);
@@ -68,50 +67,13 @@ void HTTPServer::incomingConnection(qintptr socket)
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Incoming webclient connection");
     auto preferences = Preferences::instance();
-    QTcpSocket* s = NULL;
-    QSslSocket *sslSocket = NULL;
-
-    if (sslEnabled)
-    {
-        sslSocket = new QSslSocket(this);;
-        s = sslSocket;
-        connect(sslSocket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrors(QList<QSslError>)));
-        connect(sslSocket, SIGNAL(peerVerifyError(QSslError)), this, SLOT(peerVerifyError(QSslError)));
-    }
-    else
-    {
-        s = new QTcpSocket(this);
-    }
+    QTcpSocket* s = new QTcpSocket(this);
 
     connect(s, SIGNAL(readyRead()), this, SLOT(readClient()));
     connect(s, SIGNAL(disconnected()), this, SLOT(discardClient()));
-    connect(s, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 
     s->setSocketDescriptor(socket);
     requests.insert(s, new HTTPRequest());
-
-    if (sslSocket)
-    {
-        sslSocket->setPeerVerifyMode(QSslSocket::VerifyNone);
-
-        QSslKey key(preferences->getHttpsKey().toUtf8(), QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
-        if (key.isNull())
-        {
-            s->disconnectFromHost();
-            return;
-        }
-
-        QList<QSslCertificate> certificates;
-        certificates.append(QSslCertificate(preferences->getHttpsCert().toUtf8(), QSsl::Pem));
-        QStringList intermediates = preferences->getHttpsCertIntermediate().split(QString::fromUtf8(";"), QString::SkipEmptyParts);
-        for (int i = 0; i < intermediates.size(); i++)
-        {
-            certificates.append(QSslCertificate(intermediates.at(i).toUtf8(), QSsl::Pem));
-        }
-        sslSocket->setLocalCertificateChain(certificates);
-        sslSocket->setPrivateKey(key);
-        sslSocket->startServerEncryption();
-    }
 }
 
 void HTTPServer::pause()
@@ -194,7 +156,7 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
     }
 
     #ifdef WIN32
-    if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (localPath.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         localPath = localPath.mid(4);
     }
@@ -221,7 +183,7 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
 
 void HTTPServer::readClient()
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Processing webclient request via %1").arg(QString::fromUtf8(sslEnabled ? "HTTPS" : "HTTP")).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Processing webclient request via HTTP").toUtf8().constData());
     QAbstractSocket *socket = (QAbstractSocket*)sender();
     HTTPRequest *request = requests.value(socket);
     if (disabled || !request)
@@ -318,6 +280,10 @@ void HTTPServer::processRequest(QPointer<QAbstractSocket> socket, HTTPRequest re
     case EXTERNAL_DOWNLOAD_REQUEST_START:
         externalDownloadRequest(response, request, socket);
         break;
+    case EXTERNAL_REWIND_REQUEST_START:
+        // Set 'undelete' to true
+        externalDownloadRequest(response, request, socket, true);
+        break;
     case EXTERNAL_FILE_UPLOAD_REQUEST_START:
         externalFileUploadRequest(response, request);
         break;
@@ -386,28 +352,6 @@ void HTTPServer::endProcessRequest(QPointer<QAbstractSocket> socket,const HTTPRe
     }
 }
 
-void HTTPServer::error(QAbstractSocket::SocketError)
-{
-    if (!disabled && sslEnabled)
-    {
-        QAbstractSocket *socket = (QAbstractSocket*)sender();
-        HTTPRequest *request = requests.value(socket);
-        if (request && !request->data.size())
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Webclient failed to connect using HTTPS");
-            emit onConnectionError();
-        }
-    }
-}
-
-void HTTPServer::sslErrors(const QList<QSslError> &)
-{
-}
-
-void HTTPServer::peerVerifyError(const QSslError &)
-{
-}
-
 void HTTPServer::versionCommand(const HTTPRequest& request, QPointer<QAbstractSocket> socket)
 {
     auto future = QtConcurrent::run([this, socket, request]() -> VersionCommandAnswer
@@ -423,8 +367,7 @@ void HTTPServer::versionCommand(const HTTPRequest& request, QPointer<QAbstractSo
         else
         {
             answer.response = QString::fromUtf8("{\"v\":\"%1\",\"u\":\"%2\"}")
-                    .arg(Preferences::VERSION_STRING)
-                    .arg(QString::fromUtf8(myHandle));
+                                  .arg(Preferences::VERSION_STRING, QString::fromUtf8(myHandle));
             delete [] myHandle;
         }
 
@@ -459,7 +402,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
 
     if (handle.size() == 8 && key.size() == 43)
     {
-        QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2").arg(handle).arg(key);
+        QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2").arg(handle, key);
         emit onLinkReceived(link, auth);
         response = QString::fromUtf8("0");
 
@@ -491,7 +434,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
     }
 }
 
-void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& request, QAbstractSocket* socket)
+void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& request, QAbstractSocket* socket, bool undelete)
 {
     QPointer<QAbstractSocket> safeSocket = socket;
     QPointer<HTTPServer> safeServer = this;
@@ -524,9 +467,9 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
             int end;
             bool firstnode = true;
 
-            while (request.data[start] == QChar::fromAscii('{'))
+            while (request.data[start] == QChar::fromLatin1('{'))
             {
-                end = request.data.indexOf(QChar::fromAscii('}'), start);
+                end = request.data.indexOf(QChar::fromLatin1('}'), start);
                 if (end < 0)
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error parsing webclient request");
@@ -587,29 +530,37 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                     firstnode = false;
                 }
 
+                const QByteArray nameArray = name.toUtf8();
+                const QByteArray publicAuthArray = publicAuth.toUtf8();
+                const QByteArray privateAuthArray = privateAuth.toUtf8();
+
                 if (type != MegaNode::TYPE_FILE)
                 {
-                    MegaNode *node = megaApi->createForeignFolderNode(h, name.toUtf8().constData(), p,
-                                                                     privateAuth.toUtf8().constData(),
-                                                                     publicAuth.toUtf8().constData());
-                    downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node));
+                    MegaNode *node = megaApi->createForeignFolderNode(h, nameArray.constData(), p,
+                                                                     privateAuthArray.constData(),
+                                                                     publicAuthArray.constData());
+                    downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node, undelete));
                 }
                 else
                 {
                     QString key = Utilities::extractJSONString(file, QString::fromUtf8("k"));
                     if (key.size() == 43)
                     {
+                        const QByteArray keyArray = key.toUtf8();
                         long long size = Utilities::extractJSONNumber(file, QString::fromUtf8("s"));
                         long long mtime = Utilities::extractJSONNumber(file, QString::fromUtf8("ts"));
 
                         QString crc    = Utilities::extractJSONString(file, QString::fromUtf8("c"));
+                        const QByteArray crcArray = crc.toUtf8();
 
-                        MegaNode *node = megaApi->createForeignFileNode(h, key.toUtf8().constData(),
-                                                         name.toUtf8().constData(), size, mtime,
-                                                         crc.isEmpty() ? nullptr : crc.toUtf8().constData(),
-                                                         p, privateAuth.toUtf8().constData(),
-                                                         publicAuth.toUtf8().constData(), chatAuth.isEmpty() ? NULL : chatAuth.toUtf8().constData());
-                        downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node));
+                        const QByteArray chatAuthArray = chatAuth.toUtf8();
+                        MegaNode *node = megaApi->createForeignFileNode(h, keyArray.constData(),
+                                                         nameArray.constData(), size, mtime,
+                                                         crc.isEmpty() ? nullptr : crcArray.constData(),
+                                                         p, privateAuthArray.constData(),
+                                                         publicAuthArray.constData(),
+                                                         chatAuth.isEmpty() ? nullptr :  chatAuthArray.constData());
+                        downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node, undelete));
                         QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(h);
                         if (it != webTransferStateRequests.end())
                         {
@@ -780,7 +731,7 @@ void HTTPServer::externalUploadSelectionStatus(QString &response, const HTTPRequ
         QList<RequestData*> values = webDataRequests.values(bid);
         if (!values.isEmpty())
         {
-            qSort(values.begin(), values.end(), ts_comparator);
+            std::sort(values.begin(), values.end(), ts_comparator);
             for (int i = 0; i < values.size(); ++i)
             {
                 response.append(i == 0 ? QString::fromUtf8("[") : QString::fromUtf8(","));
@@ -931,6 +882,7 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
 {
     static const QString openLinkRequestStart(QLatin1String("{\"a\":\"l\","));
     static const QString externalDownloadRequestStart(QLatin1String("{\"a\":\"d\","));
+    static const QString externalRewindRequestStart(QLatin1String("{\"a\":\"gd\","));
     static const QString externalFileUploadRequestStart(QLatin1String("{\"a\":\"ufi\","));
     static const QString externalFolderUploadRequestStart(QLatin1String("{\"a\":\"ufo\","));
     static const QString externalFolderSyncRequestStart(QLatin1String("{\"a\":\"s\","));
@@ -989,6 +941,10 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
     else if(request.data.startsWith(externalAddBackup))
     {
         return EXTERNAL_ADD_BACKUP;
+    }
+    else if(request.data.startsWith(externalRewindRequestStart))
+    {
+        return EXTERNAL_REWIND_REQUEST_START;
     }
     return UNKNOWN_REQUEST;
 }
@@ -1129,5 +1085,5 @@ bool HTTPServer::isPreFlightCorsRequest(const QStringList& headers)
 
 bool HTTPServer::isRequestOfType(const QStringList& headers, const char* typeName)
 {
-    return headers[0].startsWith(QString::fromAscii(typeName));
+    return headers[0].startsWith(QString::fromLatin1(typeName));
 }

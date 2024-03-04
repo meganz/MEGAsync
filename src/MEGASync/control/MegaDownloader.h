@@ -7,6 +7,7 @@
 #include "FolderTransferListener.h"
 #include "TransferMetaData.h"
 #include <QTMegaRequestListener.h>
+#include "QTMegaTransferListener.h"
 
 #include "megaapi.h"
 
@@ -31,6 +32,8 @@ public:
 
     bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
                               const QString &path);
+    bool processTempDownloadQueue(QQueue<WrappedNode*>* downloadQueue, const QString &path = QString());
+
 protected:
     void download(WrappedNode *parent, QFileInfo info, const std::shared_ptr<DownloadTransferMetaData>& data, mega::MegaCancelToken *cancelToken);
 
@@ -44,6 +47,9 @@ private slots:
     void onAvailableSpaceCheckFinished(bool isDownloadPossible);
 
 private:
+    bool processDownloadQueueImpl(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
+                                  const QString &path, bool createAppDataId);
+
     void startDownload(WrappedNode* parent, const QString &appData,
                        const QString &currentPathWithSep, mega::MegaCancelToken* cancelToken);
     void downloadForeignDir(mega::MegaNode *node, const std::shared_ptr<DownloadTransferMetaData>& data, const QString &currentPathWithSep);
@@ -56,6 +62,7 @@ private:
 
     bool mNoTransferStarted = true;
     std::shared_ptr<FolderTransferListener> mFolderTransferListener;
+    std::shared_ptr<mega::QTMegaTransferListener> mFolderTransferListenerDelegate;
     DownloadQueueController mQueueData;
 };
 

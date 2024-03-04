@@ -1,7 +1,8 @@
 #include "LinkProcessor.h"
-#include "Utilities.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "MegaApplication.h"
+#include "CommonMessages.h"
+
 #include <QDir>
 #include <QDateTime>
 #include <QApplication>
@@ -33,7 +34,7 @@ LinkProcessor::LinkProcessor(QStringList linkList, MegaApi *megaApi, MegaApi *me
 
 LinkProcessor::~LinkProcessor()
 {
-    delete delegateListener;
+    delegateListener->deleteLater();
 }
 
 QString LinkProcessor::getLink(int id)
@@ -139,12 +140,12 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
             QString currentStr = linkList[currentIndex];
             QString splitSeparator;
 
-            if (currentStr.count(QChar::fromAscii('!')) == 3)
+            if (currentStr.count(QChar::fromLatin1('!')) == 3)
             {
                 splitSeparator = QString::fromUtf8("!");
             }
-            else if (currentStr.count(QChar::fromAscii('!')) == 2
-                     && currentStr.count(QChar::fromAscii('?')) == 1)
+            else if (currentStr.count(QChar::fromLatin1('!')) == 2
+                     && currentStr.count(QChar::fromLatin1('?')) == 1)
             {
                 splitSeparator = QString::fromUtf8("?");
             }
@@ -164,7 +165,7 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
             }
             else
             {
-                QStringList linkparts = currentStr.split(splitSeparator, QString::KeepEmptyParts);
+                QStringList linkparts = currentStr.split(splitSeparator, Qt::KeepEmptyParts);
                 MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
                 rootNode.reset(megaApiFolders->getNodeByHandle(handle));
             }
@@ -242,7 +243,8 @@ void LinkProcessor::importLinks(QString megaPath)
         }
 
         mRequestCounter++;
-        megaApi->createFolder("MEGAsync Imports", rootNode.get(), delegateListener);
+        megaApi->createFolder(CommonMessages::getDefaultImportFolderName().toUtf8().constData(),
+                              rootNode.get(), delegateListener);
     }
 }
 
@@ -364,8 +366,10 @@ void LinkProcessor::startDownload(mega::MegaNode* linkNode, const QString &local
     const char* appData = nullptr;
     MegaCancelToken* cancelToken = nullptr; // No cancellation possible
     MegaTransferListener* listener = nullptr;
+    const bool undelete = false;
     megaApi->startDownload(linkNode, path.constData(), name, appData, startFirst, cancelToken,
                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
+                           undelete,
                            listener);
 }

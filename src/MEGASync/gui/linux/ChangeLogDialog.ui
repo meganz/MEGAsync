@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string/>
+   <string notr="true">MEGA</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#ChangeLogDialog
@@ -296,7 +296,7 @@ border-bottom: 1px solid #EFEFEC;
    <item>
     <widget class="QWidget" name="wLinks" native="true">
      <layout class="QVBoxLayout" name="linksLayout">
-      <item>
+      <item alignment="Qt::AlignHCenter">
        <widget class="ClickableLabel" name="bTerms">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -304,11 +304,8 @@ border-bottom: 1px solid #EFEFEC;
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>135</width>
-          <height>0</height>
-         </size>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -323,11 +320,11 @@ border-bottom: 1px solid #EFEFEC;
          <set>Qt::AlignCenter</set>
         </property>
         <property name="wordWrap">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignHCenter">
        <widget class="ClickableLabel" name="bPolicy">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -341,6 +338,9 @@ border-bottom: 1px solid #EFEFEC;
           <height>0</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -351,11 +351,11 @@ border-bottom: 1px solid #EFEFEC;
          <set>Qt::AlignCenter</set>
         </property>
         <property name="wordWrap">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignHCenter">
        <widget class="ClickableLabel" name="bAck">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -365,9 +365,12 @@ border-bottom: 1px solid #EFEFEC;
         </property>
         <property name="minimumSize">
          <size>
-          <width>16777215</width>
-          <height>16777215</height>
+         <width>16777215</width>
+         <height>16777215</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>Credits</string>
@@ -376,7 +379,7 @@ border-bottom: 1px solid #EFEFEC;
          <set>Qt::AlignCenter</set>
         </property>
         <property name="wordWrap">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>

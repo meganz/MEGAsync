@@ -51,7 +51,7 @@ BuildRequires: ffmpeg-mega
         BuildRequires: update-desktop-files
 
     %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
-        BuildRequires: libqt5-qtbase-devel, libqt5-linguist, libqt5-qtsvg-devel, libqt5-qtx11extras-devel
+        BuildRequires: libqt5-qtbase-devel, libqt5-linguist, libqt5-qtsvg-devel, libqt5-qtx11extras-devel, libqt5-qtdeclarative-devel
         Requires: libQt5Core5
     %else
         BuildRequires: libqt4-devel, qt-devel
@@ -102,8 +102,8 @@ BuildRequires: ffmpeg-mega
     %endif
 
     %if 0%{?fedora_version} >= 23
-        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel
-        Requires: qt5-qtbase >= 5.6, qt5-qtsvg
+        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
+        Requires: qt5-qtbase >= 5.6, qt5-qtsvg, qt5-qtdeclarative, qqc2-desktop-style, qt5-qtquickcontrols, qt5-qtquickcontrols2
         BuildRequires: terminus-fonts
     %else
         BuildRequires: qt, qt-x11, qt-devel
@@ -116,10 +116,11 @@ BuildRequires: ffmpeg-mega
     BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, bzip2-devel
     BuildRequires: desktop-file-utils
     BuildRequires: systemd-devel
+    Requires: qt5-qtdeclarative
 
     %if 0%{?centos_version} >= 800
         BuildRequires: bzip2-devel
-        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel
+        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
     %else
         BuildRequires: qt-mega, mesa-libGL-devel
         Requires: freetype >= 2.8
@@ -132,7 +133,7 @@ BuildRequires: ffmpeg-mega
     %if 0%{?rhel_version} < 800
         BuildRequires: qt, qt-x11, qt-devel
     %else
-        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel
+        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, qt5-qtdeclarative-devel
         BuildRequires: bzip2-devel
     %endif
 %endif
@@ -154,6 +155,13 @@ BuildRequires: ffmpeg-mega
 
 %if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?fedora_version}==38 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
     %define flag_disablemediainfo %{nil}
+%endif
+
+#Build sqlite3?
+%define flag_disablesqlite3 -L
+
+%if 0%{?centos_version} == 700
+    %define flag_disablesqlite3 %{nil}
 %endif
 
 #Build cryptopp?
@@ -195,8 +203,8 @@ BuildRequires: ffmpeg-mega
 %setup -q
 
 mega_build_id=`echo %{release} | sed "s/\.[^.]*$//" | sed "s/[^.]*\.//" | sed "s/[^0-9]//g"`
-sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2${mega_build_id}\";/g" MEGASync/control/Preferences.cpp;
-sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${mega_build_id}/g" MEGASync/control/Preferences.cpp;
+sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${mega_build_id}\"/g" MEGASync/control/Version.h
+sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g" MEGASync/control/Version.h
 
 %build
 
@@ -214,7 +222,7 @@ sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${mega_build_id}/g" MEGASync/control
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
-./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
+./configure %{flag_cryptopp} -g %{flag_disablesqlite3} %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
 
 # Link dynamically with freeimage
 ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3
@@ -225,7 +233,7 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=35 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150400 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=37 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150500 )
     %define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
 %else
     %define extraqmake %{nil}
@@ -289,7 +297,6 @@ make install DESTDIR=%{buildroot}%{_bindir}
     install -D /opt/mega/plugins/platforms/libqoffscreen.so %{buildroot}/opt/mega/plugins/platforms/libqoffscreen.so
     install -D /opt/mega/plugins/platforms/libqminimal.so %{buildroot}/opt/mega/plugins/platforms/libqminimal.so
     install -D /opt/mega/plugins/platforms/libqlinuxfb.so %{buildroot}/opt/mega/plugins/platforms/libqlinuxfb.so
-    install -D /opt/mega/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.so
     install -D /opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so
     install -D /opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so
     install -D /opt/mega/plugins/imageformats/libqwebp.so %{buildroot}/opt/mega/plugins/imageformats/libqwebp.so
@@ -306,7 +313,6 @@ make install DESTDIR=%{buildroot}%{_bindir}
     install -D /opt/mega/plugins/bearer/libqgenericbearer.so %{buildroot}/opt/mega/plugins/bearer/libqgenericbearer.so
     install -D /opt/mega/plugins/bearer/libqconnmanbearer.so %{buildroot}/opt/mega/plugins/bearer/libqconnmanbearer.so
 
-    install -D /opt/mega/lib/libQt5VirtualKeyboard.so.*.*.* %{buildroot}/opt/mega/lib/libQt5VirtualKeyboard.so.5
     install -D /opt/mega/lib/libQt5Qml.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Qml.so.5
     install -D /opt/mega/lib/libQt5Quick.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Quick.so.5
 

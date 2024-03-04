@@ -27,6 +27,10 @@ protected:
 
 private:
     void onPathChanged(const QString& path);
+    void updatePath();
+
+    bool mUseDefaultPath;
+    bool mPathChangedByUser;
 
     Ui::DownloadFromMegaDialog *ui;
 };

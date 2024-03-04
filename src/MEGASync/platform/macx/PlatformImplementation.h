@@ -14,7 +14,7 @@ public:
 
     void initialize(int argc, char *argv[]) override;
     void notifyItemChange(const QString& localPath, int newState) override;
-    void notifySyncFileChange(std::string *localPath, int newState) override;
+    void notifySyncFileChange(std::string *localPath, int newState, bool) override;
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
     bool showInFolder(QString pathIn) override;
@@ -28,20 +28,27 @@ public:
     QString getDefaultOpenApp(QString extension) override;
     bool registerUpdateJob() override;
     bool shouldRunHttpServer() override;
-    bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
     void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;
+    QString getSizeStringLocalizedOSbased(qint64 bytes) override;
+    quint64 getBaseUnitsSize() const override;
 
-    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
-    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
-    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    virtual void fileSelector(const SelectorInfo& info) override;
+    virtual void folderSelector(const SelectorInfo& info) override;
+    virtual void fileAndFolderSelector(const SelectorInfo& info) override;
     void raiseFileFolderSelectors() override;
     void closeFileFolderSelectors(QWidget* parent) override;
 
     void addFileManagerExtensionToSystem() override;
     void reloadFileManagerExtension() override;
     void enableFileManagerExtension(bool value) override;
+
+    void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
+    void streamWithApp(const QString& app, const QString& url) override;
+    DriveSpaceData getDriveData(const QString& path) override;
+
+    void processSymLinks() override;
 
 private:
     void disableSignalHandler();

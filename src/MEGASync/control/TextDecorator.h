@@ -11,14 +11,14 @@ class Decorator : public QObject
     Q_OBJECT
 public:
     explicit Decorator(QObject* parent);
-    virtual void process(QString& input);
+    virtual void process(QString& input) const;
 };
 
 class Link : public Decorator
 {
 public:
    explicit Link(const QString& link, QObject* parent = nullptr);
-   void process(QString& input) override;
+   void process(QString& input) const override;
 private:
    QString mLinkAddress;
 };
@@ -27,14 +27,14 @@ class ClearLink : public Decorator
 {
 public:
    explicit ClearLink(QObject* parent = nullptr);
-   void process(QString& input) override;
+   void process(QString& input) const override;
 };
 
 class Bold : public Decorator
 {
 public:
    explicit Bold(QObject* parent = nullptr);
-   void process(QString& input) override;
+   void process(QString& input) const override;
 };
 }
 

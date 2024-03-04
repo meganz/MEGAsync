@@ -6,6 +6,7 @@
 
 #include <QDialog>
 #include <QPointer>
+#include <QTimer>
 
 namespace Ui {
 class DuplicatedNodeDialog;
@@ -19,7 +20,7 @@ public:
     explicit DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node);
     ~DuplicatedNodeDialog();
 
-    void checkUpload(const QString& nodePath, std::shared_ptr<mega::MegaNode> parentNode);
+    void checkUploads(QQueue<QString> &nodePath, std::shared_ptr<mega::MegaNode> parentNode);
 
     void addNodeItem(DuplicatedNodeItem* item);
     void setHeader(const QString& baseText, const QString &nodeName);
@@ -33,6 +34,8 @@ public:
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
+    bool event(QEvent *event) override;
+    void resizeEvent(QResizeEvent *) override;
 
 private:
     void setConflictItems(int count);
@@ -44,6 +47,8 @@ private:
 
     void processFolderConflicts();
     void processFileConflicts();
+    void processFileNameConflicts();
+    void processFolderNameConflicts();
     void startWithNewCategoryOfConflicts();
 
     void updateHeader();
@@ -58,12 +63,16 @@ private:
     QList<std::shared_ptr<DuplicatedNodeInfo>> mResolvedUploads;
     QList<std::shared_ptr<DuplicatedNodeInfo>> mFileConflicts;
     QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFileNameConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderNameConflicts;
     bool mApplyToAll;
 
     QString mHeaderBaseName;
     QString mCurrentNodeName;
 
     std::shared_ptr<mega::MegaNode> mNode;
+
+    QTimer mSizeAdjustTimer;
 };
 
 #endif // DUPLICATEDNODEDIALOG_H

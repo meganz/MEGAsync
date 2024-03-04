@@ -1,7 +1,9 @@
 #include "VerifyLockMessage.h"
+
 #ifdef __APPLE__
-#include "macx/MacXFunctions.h"
+    #include "platform/macx/LockedPopOver.h"
 #endif
+
 #include "ui_VerifyLockMessage.h"
 
 #include <QTimer>
@@ -29,14 +31,9 @@ VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable,
     QStyle *style = QApplication::style();
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
     m_ui->bWarning->setIcon(tmpIcon);
+    m_ui->bWarning->installEventFilter(this);
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(unblocked()), this, SLOT(close()));
-
-#ifdef __APPLE__
-    QSize size = m_nativeWidget->size();
-    m_popover = allocatePopOverWithView(m_nativeWidget->nativeView(), size);
-    m_nativeWidget->show();
-#endif
 }
 
 void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
@@ -45,7 +42,8 @@ void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
             m_ui->lWhySeenThis->rect().contains(m_ui->lWhySeenThis->mapFrom(this, event->pos())))
     {
 #ifdef __APPLE__
-        showPopOverRelativeToRect(winId(), m_popover, event->localPos());
+
+        mPopOver.show(this, new LockedPopOver(), event->localPos(), NativeMacPopover::PopOverColor::WHITE, NativeMacPopover::PopOverEdge::EdgeMinY);
 #else
 
         QPoint pos = event->globalPos();
@@ -109,18 +107,6 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
 
             break;
         }
-        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
-        {
-            QString title = m_haveMainDialog ? tr("Verify your account") : tr("Locked account");
-            setWindowTitle(title);
-            m_ui->lVerifyEmailTitle->setText(title);
-            m_ui->lVerifyEmailDesc->setText(tr("Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."));
-            m_ui->lWhySeenThis->setVisible(false);
-            m_ui->lEmailSent->setVisible(false);
-            m_ui->bResendEmail->setText(tr("Verify now"));
-            break;
-        }
-
     }
 }
 
@@ -167,9 +153,6 @@ VerifyLockMessage::~VerifyLockMessage()
 {
     delete delegateListener;
     delete m_ui;
-#ifdef __APPLE__
-    releaseIdObject(m_popover);
-#endif
 }
 
 void VerifyLockMessage::on_bLogout_clicked()
@@ -190,9 +173,14 @@ void VerifyLockMessage::on_bResendEmail_clicked()
             megaApi->resendVerificationEmail(delegateListener);
             break;
         }
-        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
-        {
-            static_cast<MegaApplication *>(qApp)->goToMyCloud();
-        }
     }
+}
+
+bool VerifyLockMessage::eventFilter(QObject *obj, QEvent *event)
+{
+    if(obj == m_ui->bWarning && event->type() != QEvent::Paint && event->type() != QEvent::Polish)
+    {
+        return true;
+    }
+    return QDialog::eventFilter(obj, event);
 }

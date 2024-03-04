@@ -19,12 +19,17 @@ class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
 public:
     explicit NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent = nullptr);
 
+    void setShowEmptyView(bool newShowEmptyView);
+
 private:
     QString getRootText() override;
     void onRootIndexChanged(const QModelIndex& idx) override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     void modelLoaded() override;
     QIcon getEmptyIcon() override;
+    bool showEmptyView() override {return mShowEmptyView;}
+
+    bool mShowEmptyView = true;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget
@@ -69,6 +74,13 @@ public:
 signals:
     void nodeDoubleClicked(std::shared_ptr<mega::MegaNode> node, bool goToInit);
 
+protected:
+    bool newNodeCanBeAdded(mega::MegaNode* node) override;
+    QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle) override;
+
+protected slots:
+    bool containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle&) override;
+
 private slots:
     void onBackupsSearchClicked();
     void onIncomingSharesSearchClicked();
@@ -83,6 +95,7 @@ private:
     QIcon getEmptyIcon() override;
     void modelLoaded() override;
     bool newFolderBtnCanBeVisisble() override {return false;}
+    bool mHasRows;
 };
 
 #endif // NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H

@@ -51,12 +51,15 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
     QMessageBox* msgBox = new QMegaMessageBox(info.parent);
 
     msgBox->setIcon(icon);
-    msgBox->setWindowTitle(info.title);
+    msgBox->setWindowTitle(info.title.isEmpty() ? QString::fromLatin1("MEGA") : info.title);
     msgBox->setText(info.text);
     msgBox->setInformativeText(info.informativeText);
     msgBox->setTextFormat(info.textFormat);
     msgBox->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-
+    if (info.checkBox)
+    {
+        msgBox->setCheckBox(info.checkBox);
+    }
     QDialogButtonBox *buttonBox = msgBox->findChild<QDialogButtonBox*>();
     Q_ASSERT(buttonBox != 0);
 
@@ -68,7 +71,10 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
          continue;
      StandardButton buttonType = static_cast<StandardButton>(sb);
      QPushButton *button = msgBox->addButton(buttonType);
-
+#ifdef Q_OS_MACOS
+     // Work-around for default buttons not highlighted correctly in MacOS(
+     button->setFixedHeight(32);
+#endif
      //Change button text if needed
      if(info.buttonsText.contains(buttonType))
      {
@@ -90,5 +96,11 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         msgBox->setIconPixmap(info.iconPixmap);
     }
 
-    DialogOpener::showMessageBox(msgBox, info.finishFunc, info.enqueue);
+    if (!info.checkboxText.isEmpty())
+    {
+        QCheckBox* checkbox = new QCheckBox(info.checkboxText);
+        msgBox->setCheckBox(checkbox);
+    }
+
+    DialogOpener::showMessageBox(msgBox, info);
 }

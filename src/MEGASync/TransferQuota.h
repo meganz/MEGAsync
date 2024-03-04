@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "DesktopNotifications.h"
 #include <memory>
 #include "UpgradeDialog.h"

@@ -17,8 +17,8 @@ class NotificationHandler : public QObject
 public:
     NotificationHandler();
 
-    virtual void showNotification(MegaNotification *notification) = 0;
-    virtual void hideNotification(MegaNotification *notification) = 0;
+    virtual void showNotification(DesktopAppNotification *notification) = 0;
+    virtual void hideNotification(DesktopAppNotification *notification) = 0;
     virtual bool acceptsMultipleSelection() = 0;
 
     /** executes AppleScript */

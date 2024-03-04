@@ -59,7 +59,7 @@ private:
     LastStreamingSelection lastStreamSelection;
     QString mPublicLink;
 
-    void generateStreamURL();
+    bool generateStreamURL();
     void updateFileInfo(QString fileName, LinkStatus status);
     void openStreamWithApp(QString app);
     void showStreamingError();

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="id" sourcelanguage="en">
 <context>
@@ -50,6 +50,14 @@
     </message>
 </context>
 <context>
+    <name>AccountStatusController</name>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
+        <translation>Akun anda telah dinonaktifkan oleh administrator anda. Anda dapat menghubungi administrator akun bisnis anda untuk rincian lebih lanjut.</translation>
+    </message>
+</context>
+<context>
     <name>AddBackupDialog</name>
     <message>
         <source>Add backup folder</source>
@@ -77,6 +85,11 @@
         <translation>Cadangkan ke:</translation>
     </message>
     <message>
+        <source>Add exclusions</source>
+        <translatorcomment>Button that allows users to add exclusion rules for their new backups.SNC-2565</translatorcomment>
+        <translation>Tambahkan pengecualian</translation>
+    </message>
+    <message>
         <source>Add</source>
         <translatorcomment>Button text to add a backup</translatorcomment>
         <translation>Tambah</translation>
@@ -102,7 +115,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Masukkan nama, path absolut (wildcard * dan ? diizinkan) atau pilih file atau folder yang ingin anda kecualikan dari sinkronisasi.</translation>
+        <translation>Masukkan nama, path absolut (wildcard * dan ? diizinkan) atau pilih file atau folder yang ingin anda kecualikan dari sinkronisasi</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -128,11 +141,6 @@
         <source>Choose</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
         <translation>Pilih</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation>Peringatan</translation>
     </message>
     <message>
         <source>Please enter a valid file name or absolute path.</source>
@@ -183,7 +191,7 @@
     <message>
         <source>NEW</source>
         <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
-        <translation>BARU</translation>
+        <translation>Baru</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -276,11 +284,6 @@
         <translation>[A] telah dihapus atau dinonaktifkan</translation>
     </message>
     <message>
-        <source>[A] established you as a contact</source>
-        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A] menerima permintaan kontak anda</translation>
-    </message>
-    <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
         <translation>[A] memblokir anda sebagai kontak</translation>
@@ -302,7 +305,7 @@
     </message>
     <message>
         <source>[A] accepted your contact request</source>
-        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request. (SNC-3341)</translatorcomment>
         <translation>[A] menerima permintaan kontak anda</translation>
     </message>
     <message>
@@ -404,11 +407,6 @@
 <context>
     <name>BackupItemModel</name>
     <message>
-        <source>Sort by state</source>
-        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by check state</translatorcomment>
-        <translation>Urutkan berdasarkan negara bagian</translation>
-    </message>
-    <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
         <translation>Folder lokal</translation>
@@ -417,6 +415,26 @@
         <source>Sort by name</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
         <translation>Diurutkan berdasarkan nama</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translatorcomment>backup state column header name for backlups table in settings dialog.SNC-2565</translatorcomment>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <source>Sort by backup state</source>
+        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by backup state.SNC-2565</translatorcomment>
+        <translation>Urutkan berdasarkan status cadangan</translation>
+    </message>
+    <message>
+        <source>Backup is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled).SNC-4208</translatorcomment>
+        <translation>Pencadangan diaktifkan</translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled).SNC-4208</translatorcomment>
+        <translation>Pencadangan dinonaktifkan</translation>
     </message>
 </context>
 <context>
@@ -471,34 +489,100 @@
     </message>
 </context>
 <context>
-    <name>BackupTableView</name>
+    <name>BackupSettingsUI</name>
     <message>
-        <source>Open in MEGA</source>
-        <translatorcomment>Menu action that opens MEGA webclient to show this backup</translatorcomment>
-        <translation>Buka di MEGA</translation>
+        <source>Backups</source>
+        <translatorcomment>Title for backups tab in the settings.SNC-2565</translatorcomment>
+        <translation>Pencadangan</translation>
     </message>
     <message>
-        <source>Remove backup</source>
-        <translatorcomment>Menu action removes the backup</translatorcomment>
-        <translation>Hapus cadangan</translation>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
+        <translation>Terjadi kesalahan saat memindahkan atau menghapus folder cadangan jarak jauh</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
+        <translation>Gagal memindahkan atau menghapus folder cadangan jarak jauh. Alasan: %1</translation>
+    </message>
+    <message>
+        <source>Sync operation failed</source>
+        <translatorcomment>Title for error dialog shown when a  sync fails.SNC-2565</translatorcomment>
+        <translation>Tidak dapat melakukan sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
+        <translatorcomment>text for error dialog shown when a  sync fails, folder path and reason are given during runtime in the placeholders.SNC-2565</translatorcomment>
+        <translation>Folder anda”%1” tidak dapat menyinkronkan. Alasan: %2</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
+        <translation>Terjadi kesalahan saat menambahkan sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
+        <translation>Terjadi kesalahan saat menghapus cadangan</translation>
+    </message>
+    <message>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder.SNC-4208</translatorcomment>
+        <translation>Sinkronisasi anda tidak dapat dihapus. Alasan: %1</translation>
+    </message>
+    <message>
+        <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
+        <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.SNC-2565</translatorcomment>
+        <translation>Beberapa folder belum dicadangkan. Untuk informasi lebih lanjut, arahkan kursor ke ikon merah.</translation>
     </message>
 </context>
 <context>
-    <name>BackupTableViewTooltips</name>
+    <name>BackupSyncsMenu</name>
     <message>
-        <source>Backup is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation>Pencadangan diaktifkan</translation>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups;SNC-3654</translatorcomment>
+        <translation>Tambahkan cadangan</translation>
     </message>
     <message>
-        <source>Backup is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation>Pencadangan dinonaktifkan</translation>
+        <source>Backups</source>
+        <translatorcomment>Menu option that shows backups menu;SNC-3654</translatorcomment>
+        <translation>Backups</translation>
+    </message>
+</context>
+<context>
+    <name>BackupTableView</name>
+    <message>
+        <source>Stop backup</source>
+        <translatorcomment>Menu action that stops the backup.SNC-2565</translatorcomment>
+        <translation>Hentikan cadangan</translation>
+    </message>
+</context>
+<context>
+    <name>BackupsModel</name>
+    <message numerus="yes">
+        <source>Folder wasn&apos;t backed up. Try again.</source>
+        <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
+        <translation><numerusform>Folder ini tidak dicadangkan. Coba lagi.</numerusform></translation>
     </message>
     <message>
-        <source>Click menu for more Backup actions</source>
-        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>Klik menu tiga titik untuk tindakan pencadangan lainnya</translation>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Anda tidak dapat mencadangkan folder dengan nama yang sama. Ganti namanya untuk melanjutkan pencadangan. Nama folder tidak akan berubah di komputer anda.</translation>
+    </message>
+    <message numerus="yes">
+        <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
+        <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
+        <translation><numerusform>Beberapa folder dengan nama yang sama sudah ada di Cadangan anda. Ganti nama folder baru untuk melanjutkan dengan cadangan. Nama folder tidak akan berubah di komputer anda.</numerusform></translation>
+    </message>
+    <message>
+        <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
+        <translatorcomment>Warning message stating that a backup can´t contain another backup CON-468</translatorcomment>
+        <translation>Folder cadangan tidak dapat berisi atau terkandung oleh folder cadangan lainnya.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
+        <translation>Folder tidak dapat dicadangkan karena tidak dapat ditemukan. Mungkin telah dipindahkan atau dihapus, atau anda mungkin tidak memiliki akses.</translation>
     </message>
 </context>
 <context>
@@ -757,7 +841,7 @@
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>Harap pilih folder lokal dan folder MEGA</translation>
+        <translation>Pilih folder lokal dan folder MEGA</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -773,6 +857,11 @@
         <source>Add synchronised folder</source>
         <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
         <translation>Tambah folder yang disinkronkan</translation>
+    </message>
+    <message>
+        <source>Add exclusions</source>
+        <translatorcomment>Button to allow users to add exclusion rules for new syncs.SNC-2565</translatorcomment>
+        <translation>Tambahkan pengecualian</translation>
     </message>
     <message>
         <source>Add</source>
@@ -855,12 +944,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Masalah Anda tidak dapat diunggah karena terjadi kesalahan. Silakan coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.nz[/A] jika masalah terus berlanjut.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>OK</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
@@ -919,6 +1003,32 @@
         <source>Cancelling…</source>
         <translatorcomment>Message displayed while transfers cancelling is in progress</translatorcomment>
         <translation>Membatalkan…</translation>
+    </message>
+</context>
+<context>
+    <name>CannotCreateFolderHeader</name>
+    <message>
+        <source>Cannot create [B]%1[/B]</source>
+        <translatorcomment>itle for the header widget sync stall that occurs when a folder cannot be created in the local drive, will be followed with the folder path, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat membuat [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Filesystem error preventing folder access.</source>
+        <translatorcomment>Subtitle for the header widget  sync stall that occurs when a folder cannot be created in the local drive.SNC-2565</translatorcomment>
+        <translation>Kesalahan lokal mencegah akses folder</translation>
+    </message>
+</context>
+<context>
+    <name>CannotPerformDeletionHeader</name>
+    <message>
+        <source>Filesystem error preventing folder access.</source>
+        <translatorcomment>Subtitle for the header widget  sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync).SNC-2565</translatorcomment>
+        <translation>Kesalahan lokal mencegah akses folder</translation>
+    </message>
+    <message>
+        <source>Cannot perform deletion [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync), [B] is for Bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat menghapus [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -982,14 +1092,9 @@
         <translation>OK</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>Please enter your password</source>
         <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>Harap masukkan password anda</translation>
+        <translation>Masukkan password anda</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -999,7 +1104,7 @@
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
-        <translation>Harap masukan password yang lebih kuat</translation>
+        <translation>Masukkan kata sandi yang lebih kuat</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1011,6 +1116,24 @@
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
         <translation>Anda telah memasukkan kata sandi saat ini, silakan masukkan kata sandi baru.</translation>
     </message>
+    <message>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
+        <translation>Kata sandi diubah</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
+        <translation>Kata sandi anda telah dirubah.</translation>
+    </message>
+</context>
+<context>
+    <name>ChooseLocalFolder</name>
+    <message>
+        <source>Select local folder</source>
+        <translatorcomment>Label indicating the user that he has to select a local folder. CON-467</translatorcomment>
+        <translation>Pilih folder lokal</translation>
+    </message>
 </context>
 <context>
     <name>CircularUsageProgressBar</name>
@@ -1018,6 +1141,80 @@
         <source>[A]%</source>
         <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
         <translation>[A]%</translation>
+    </message>
+</context>
+<context>
+    <name>CloudFingerprintMissingHeader</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button to discard fixing the stalled issue.FM-1615</translatorcomment>
+        <translation>Batal</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
+        <translation>Terapkan</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box to allow user to apply a fix to all similar stall issues.FM-1615</translatorcomment>
+        <translation>Terapkan untuk semua</translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to solve the issue?</source>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
+        <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]Please, resume your transfers to fix the issue[/B]</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Can´t download [B]%1[/B] to the selected location</source>
+        <translatorcomment>Title for the header widget sync stall that occurs when a file cannot be downloaded for not having a fingerprint,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat mengunduh [B]%1[/B] ke lokasi yang dipilih</translation>
+    </message>
+    <message>
+        <source>File fingerprint missing</source>
+        <translatorcomment>Subtitle for the header widget sync stall that occurs when a file cannot be downloaded for not having a fingerprint.SNC-2565</translatorcomment>
+        <translation>File sidik jari hilang</translation>
+    </message>
+    <message>
+        <source>Solve</source>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CloudNodeUndecryptedHeader</name>
+    <message>
+        <source>Cloude node undecrypted [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget sync stall thatoccurs when the node being synced cannot be decrypted.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Item di MEGA tidak dapat didekripsi [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</source>
+        <translatorcomment>Subtitle for the header widget sync stall thatoccurs when the node being synced cannot be decrypted, [A] will be replaced by Mega link, [A1] will be replaced by support link. SNC-2565</translatorcomment>
+        <translation>Proses dekripsi tidak dapat diselesaikan. Muat ulang akun anda di [A]MEGA[/A] atau kontak [A1]Bantuan[/A1].</translation>
+    </message>
+</context>
+<context>
+    <name>CloudStalledIssueChooseWidget</name>
+    <message>
+        <source>Moved to MEGA Bin</source>
+        <translatorcomment>Title of the solved issue showing what happened to the files when the user had to choose between a local and a remote versions of a file.SNC-2565</translatorcomment>
+        <translation>Dipindahkan ke Tempat sampah</translation>
+    </message>
+    <message>
+        <source>Remote Copy</source>
+        <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
+        <translation>Salinan jarak jauh</translation>
     </message>
 </context>
 <context>
@@ -1043,6 +1240,26 @@
         <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
         <translation>Karakter berikut tidak diperbolehkan:
 %1</translation>
+    </message>
+    <message>
+        <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
+        <translation>Akun anda telah dinonaktifkan karena kegagalan pembayaran atau langganan yang dibatalkan. Silakan bayar dan aktifkan kembali sekarang untuk mengakses data anda.</translation>
+    </message>
+    <message>
+        <source>MEGA Uploads</source>
+        <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
+        <translation>Unggahan MEGA</translation>
+    </message>
+    <message>
+        <source>MEGA Downloads</source>
+        <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
+        <translation>Unduhan MEGA</translation>
+    </message>
+    <message>
+        <source>MEGA Imports</source>
+        <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
+        <translation>Impor MEGA</translation>
     </message>
 </context>
 <context>
@@ -1090,6 +1307,45 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Yesterday at %1</source>
         <translatorcomment>Label to indicate the yesterday time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
         <translation>Kemarin jam %1</translation>
+    </message>
+</context>
+<context>
+    <name>DefaultHeader</name>
+    <message>
+        <source>Error detected with [B]%1[/B]</source>
+        <translatorcomment>Title for the header widgetof the default stall issue shown if the reason of the stall is unknown. file path will be added to the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Kesalahan terdeteksi untuk [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Reason not found.</source>
+        <translatorcomment>Subtitle for the header widget of the default stall issue shown if the reason of the stall is unknown.SNC-2565</translatorcomment>
+        <translation>Kesalahan tidak diketahui</translation>
+    </message>
+</context>
+<context>
+    <name>DeleteOrMoveWaitingOnScanningHeader</name>
+    <message>
+        <source>Can´t find [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of a sync stall when a file or folder cannot be found,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat menemukan [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Waiting to finish scan to see if the file was moved or deleted.</source>
+        <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
+        <translation>Menunggu pemindaian selesai untuk melihat apakah file dipindahkan atau dihapus.</translation>
+    </message>
+</context>
+<context>
+    <name>DeleteWaitingOnMovesHeader</name>
+    <message>
+        <source>Waiting to move [B]%1[/B]</source>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&amp;amp;apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Menunggu untuk pindah [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Waiting for other processes to complete.</source>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translation>Menunggu proses lain selesai.</translation>
     </message>
 </context>
 <context>
@@ -1142,7 +1398,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>Kontak baru dengan [A] telah dibuat</translation>
+        <translation>Kontak baru [A] telah ditambahkan</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1252,7 +1508,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Harap selesaikan masalah pembayaran anda sesegera mungkin untuk menghindari penangguhan akun bisnis anda</translation>
+        <translation>Harap selesaikan masalah pembayaran anda sesegera mungkin untuk menghindari penangguhan akun Bisnis anda</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1262,7 +1518,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Akun Bisnis anda telah kedaluwarsa</translation>
+        <translation>Akun anda telah kedaluwarsa</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -1277,7 +1533,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Hubungi administrator akun bisnis anda untuk menyelesaikan masalah dan mengaktifkan akun anda.</translation>
+        <translation>Hubungi administrator akun bisnis anda untuk menyelesaikan masalah dan aktifkan akun anda.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1319,6 +1575,11 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
         <translation><numerusform>[A] memperbarui %n item</numerusform></translation>
     </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Akun Pro&#xa0;Flexi dinonaktifkan</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -1330,7 +1591,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Harap pilih folder download untuk file anda:</translation>
+        <translation>Pilih folder unduhan untuk file anda:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1363,14 +1624,22 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Pilih folder lokal</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
+    </message>
+</context>
+<context>
+    <name>DownloadIssueHeader</name>
+    <message>
+        <source>Can´t download [B]%1[/B] to the selected location</source>
+        <translatorcomment>Subtitle for the header widget of a sync stall when a file or cannot be downloaded, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat mengunduh [B]%1[/B] ke lokasi yang dipilih</translation>
+    </message>
+    <message>
+        <source>A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location.</source>
+        <translatorcomment>Title for the header widget of a sync stall when a file or cannot be downloaded.SNC-2565</translatorcomment>
+        <translation>Terjadi kesalahan saat mengunduh file, atau memindahkan file sementara yang diunduh ke lokasi terakhirnya.</translation>
     </message>
 </context>
 <context>
@@ -1379,11 +1648,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Download</source>
         <translatorcomment>Window title for download node selector</translatorcomment>
         <translation>Unduh</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -1512,19 +1776,45 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Perbarui</translation>
     </message>
     <message>
-        <source>loading time…</source>
-        <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>memuat waktu…</translation>
-    </message>
-    <message>
-        <source>loading size…</source>
-        <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>memuat ukuran…</translation>
-    </message>
-    <message>
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>Pelajari lebih lanjut</translation>
+    </message>
+    <message>
+        <source>loading time…</source>
+        <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
+        <translation>mengambil tanggal&#8230;</translation>
+    </message>
+    <message>
+        <source>loading size…</source>
+        <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
+        <translation>menghitung ukuran…</translation>
+    </message>
+</context>
+<context>
+    <name>FastLoginController</name>
+    <message>
+        <source>Login error: %1</source>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message. SNC-4122</translatorcomment>
+        <translation>Kesalahan masuk: %1</translation>
+    </message>
+</context>
+<context>
+    <name>FileIssueHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat menyinkronkan [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>A single file had an issue that needs a user decision to solve</source>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A single folder had an issue that needs a user decision to solve.</source>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1611,14 +1901,9 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Pilih</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>Anda tidak dapat men-sync folder berbagi tanpa Full Access permissions</translation>
+        <translation>Anda tidak dapat men-sinkronkan folder berbagi tanpa izin Akses Penuh</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1627,176 +1912,92 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     </message>
 </context>
 <context>
-    <name>GuestWidget</name>
+    <name>FolderMatchedAgainstFileHeader</name>
     <message>
-        <source>Login</source>
-        <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Masuk</translation>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat menyinkronkan [B]%1[/B]</translation>
     </message>
     <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation>Buat akun</translation>
+        <source>Cannot sync folders against files.</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translation>File yang anda coba sinkronkan tidak memiliki ekstensi dan memiliki nama yang sama dengan folder yang ada</translation>
+    </message>
+</context>
+<context>
+    <name>GuestStrings</name>
+    <message>
+        <source>About MEGA</source>
+        <translatorcomment>Menu entry that opens the about MEGA dialog. CON-472</translatorcomment>
+        <translation>Tentang MEGA</translation>
     </message>
     <message>
-        <source>Email address</source>
-        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation>Alamat email</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation>Sandi</translation>
-    </message>
-    <message>
-        <source>Forgot password?</source>
-        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation>Lupa password?</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation>Batal</translation>
-    </message>
-    <message>
-        <source>Setting up your account...</source>
-        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>Menyiapkan akun anda…</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>Masuk…</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Mengambil list file…</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Email atau kata sandi tidak valid.</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation>Harap cek email anda dan klik link untuk mengkonfirmasi akun anda.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>Anda telah mencoba untuk masuk terlalu banyak.[BR]Harap tunggu sampai %1 dan coba kembali.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation>Akun anda telah diblok. Harap kontak support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>Harap masukkan alamat email anda</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>Harap masukan alamat email yang valid</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation>Harap masukan password anda</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Keluar…</translation>
-    </message>
-    <message>
-        <source>Locked Account</source>
-        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>Akun terkunci</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>Akun anda telah dikunci sementara untuk keselamatan anda. Harap verifikasi email anda dan ikuti langkah-langkahnya untuk membuka akun anda kembali.</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account.</translatorcomment>
+        <source>Quit</source>
+        <translatorcomment>Menu entry that quits the application for mac. CON-472</translatorcomment>
         <translation>Keluar</translation>
     </message>
     <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation>Akun anda telah dikunci sementara untuk kemungkinan penyalahgunaan. Harap verifikasi nomor telepon anda untuk membuka akun anda kembali.</translation>
+        <source>Exit</source>
+        <translatorcomment>Menu entry that quits the application for linux and windows. CON-472</translatorcomment>
+        <translation>Keluar</translation>
     </message>
     <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation>Verifikasi sekarang</translation>
+        <source>Settings</source>
+        <translatorcomment>Menu entry that opens the settings dialog. CON-472</translatorcomment>
+        <translation>Pengaturan</translation>
     </message>
     <message>
-        <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation>Membuat akun…</translation>
+        <source>Log in or sign up to MEGA</source>
+        <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
+        <translation>Masuk atau daftar ke MEGA</translation>
     </message>
     <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Mengapa saya melihat ini?</translation>
+        <source>Account temporarily locked</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>Akun terkunci sementara</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>Akun anda telah dikunci sementara demi keselamatan anda. Ini karena potensi pelanggaran data. Untuk membuka kunci akun anda, ikuti langkah-langkah dalam email yang kami kirimkan kepada anda.</translation>
     </message>
     <message>
         <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>Kirim ulang email</translation>
+        <translatorcomment>Button text, on click the email to verify the account is resent CON-465</translatorcomment>
+        <translation>Kirim ulang e-mail</translation>
     </message>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>Email terkirim</translation>
+        <source>Log out</source>
+        <translatorcomment>Button text to logout CON-465</translatorcomment>
+        <translation>Keluar</translation>
     </message>
     <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Silakan masukkan kode yang dihasilkan oleh aplikasi otentikasi anda</translation>
+        <source>Setting up your account…</source>
+        <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
+        <translation>Menyiapkan akun anda…</translation>
     </message>
     <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>Kode 6 digit:</translation>
+        <source>Waiting for email confirmation…</source>
+        <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
+        <translation>Menunggu konfirmasi email…</translation>
+    </message>
+</context>
+<context>
+    <name>GuiUtilities</name>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account. SNC-3019</translatorcomment>
+        <translation>Bayar sekarang</translation>
     </message>
     <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Kode salah</translation>
+        <source>Pay and reactivate</source>
+        <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>Bayar dan aktifkan kembali</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation>Berikut</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Kehilangan perangkat autentikator anda?[/A]</translation>
-    </message>
-    <message>
-        <source>Log into MEGA</source>
-        <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
-        <translation>Masuk ke MEGA</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>Kunci SSL kami tidak dapat diverifikasi. Anda dapat terpengaruh oleh serangan man-in-the-middle atau perangkat lunak antivirus anda dapat menyadap komunikasi anda dan menyebabkan masalah ini. Nonaktifkan dan coba lagi.</translation>
+        <source>Dismiss</source>
+        <translatorcomment>Label of the button used to dismiss the error message the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>Hilangkan</translation>
     </message>
 </context>
 <context>
@@ -1808,10 +2009,153 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     </message>
 </context>
 <context>
+    <name>HeaderCaseIssueChecker</name>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
+        <translation>Muat ulang</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>IgnoredStalledIssue</name>
+    <message>
+        <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
+        <translatorcomment>Text in message box shown when a failure in adding rules in the file containing ignore rules.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>IgnoresEditingDialog</name>
+    <message>
+        <source>Edit exclusions</source>
+        <translatorcomment>window name for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation>Ubah pengecualian</translation>
+    </message>
+    <message>
+        <source>Manage exclusions</source>
+        <translatorcomment>window title for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation>Atur pengecualian</translation>
+    </message>
+    <message>
+        <source>by size</source>
+        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
+        <translation>Kecualikan berdasarkan ukuran</translation>
+    </message>
+    <message>
+        <source>Exclude files smaller than</source>
+        <translatorcomment>Check box text responsible for the lower size limit of included files in the sync.SNC-4208</translatorcomment>
+        <translation>Kecualikan file yang lebih kecil dari</translation>
+    </message>
+    <message>
+        <source>Exclude files bigger than</source>
+        <translatorcomment>Check box text responsible for the upper size limit of included files in the sync.SNC-4208</translatorcomment>
+        <translation>Kecualikan file yang lebih besar dari</translation>
+    </message>
+    <message>
+        <source>by name</source>
+        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
+        <translation>Kecualikan berdasarkan nama</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from synchronisation.</source>
+        <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button to add new ignore rule in the sync ignores file.SNC-2565</translatorcomment>
+        <translation>Tambah</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button to delete selected ignore rules in the sync ignores dialog.SNC-2565</translatorcomment>
+        <translation>Hapus</translation>
+    </message>
+    <message>
+        <source>by file type</source>
+        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
+        <translation>Kecualikan berdasarkan jenis file</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
+        <translation>Lanjutan</translation>
+    </message>
+    <message>
+        <source>Open .megaignore</source>
+        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
+        <translation>Buka .megaignore</translation>
+    </message>
+    <message>
+        <source>by size:</source>
+        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
+        <translation>Kecualikan berdasarkan ukuran:</translation>
+    </message>
+    <message>
+        <source>by name:</source>
+        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
+        <translation>Kecualikan berdasarkan nama:</translation>
+    </message>
+    <message>
+        <source>by file type:</source>
+        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
+        <translation>Kecualikan berdasarkan jenis file:</translation>
+    </message>
+    <message>
+        <source>Edit .megaignore</source>
+        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
+        <translation>Ubah .megaignore</translation>
+    </message>
+    <message>
+        <source>Advanced:</source>
+        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
+        <translation>Lanjutan:</translation>
+    </message>
+    <message>
+        <source>Rule already exists.</source>
+        <translatorcomment>Text in a message box shown when the user adds a new rule identical to existing one.SNC-2565</translatorcomment>
+        <translation>Aturan sudah ada</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translatorcomment>Title for message box shown when an external chane detected in the ignore rules file.SNC-2565</translatorcomment>
+        <translation>Muat ulang</translation>
+    </message>
+    <message>
+        <source>Current file has been modified by another program. it will be reloaded</source>
+        <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
+        <translation>File .megaignore saat ini telah dimodifikasi oleh program lain, itu akan dimuat ulang</translation>
+    </message>
+    <message>
+        <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
+        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can change the associated .megaignore file on a text editor.
+This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
+        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive.
+This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
+</source>
+        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
-        <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
+        <translatorcomment>Label to indicate the user that needs to wait until the app fetches link information from the server</translatorcomment>
         <translation>Mohon tunggu…</translation>
     </message>
 </context>
@@ -1853,11 +2197,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Pilih</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
@@ -1866,6 +2205,54 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Open links</source>
         <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
         <translation>Buka tautan</translation>
+    </message>
+</context>
+<context>
+    <name>InfoAccount</name>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Label to refer Free tier CON-467</translatorcomment>
+        <translation>Gratis</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
+        <translation>Pro&#xa0;I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;III</translation>
+    </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
+        <translation>Bisnis</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Flexi</translation>
+    </message>
+    <message>
+        <source>Available storage:</source>
+        <translatorcomment>Label indicating that the number in the right is the available storage CON-467</translatorcomment>
+        <translation>Penyimpanan yang tersedia:</translation>
+    </message>
+    <message>
+        <source>Storage space:</source>
+        <translatorcomment>Label indicating that the number in the right is the storage space CON-467</translatorcomment>
+        <translation>Ruang penyimpanan:</translation>
     </message>
 </context>
 <context>
@@ -1881,11 +2268,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Pengaturan</translation>
     </message>
     <message>
-        <source>Blocked file: %1</source>
-        <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation>File terblok: %1</translation>
-    </message>
-    <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
         <translation>Upgrade akun</translation>
@@ -1899,11 +2281,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
         <translation>Tampilkan opsi</translation>
-    </message>
-    <message>
-        <source>The process is taking longer than expected. Please wait...</source>
-        <translatorcomment>Message displayed in the InfoDialog when a process is busy for a longer time than normal due to Mega servers being busy</translatorcomment>
-        <translation>Proses ini memakan waktu lebih lama dari yang diperkirakan. Mohon tunggu.</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -1983,7 +2360,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Jeda/Lanjutkan</translation>
+        <translation>Jeda atau lanjutkan</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2009,11 +2386,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>Tidak ada pemberitahuan untuk pembayaran</translation>
-    </message>
-    <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 digunakan</translation>
     </message>
     <message>
         <source>Upgrade account</source>
@@ -2066,11 +2438,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation><numerusform>Anda memiliki [A]%n jam[/A] sisa untuk meningkatkan. Setelah itu, data anda dapat dihapus.</numerusform></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
-    </message>
-    <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
         <translation>Beberapa sinkronisasi dan pencadangan telah dinonaktifkan</translation>
@@ -2089,11 +2456,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Something went wrong while trying to backup your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
         <translation>Terjadi kesalahan saat mencoba mencadangkan folder anda.</translation>
-    </message>
-    <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>Terjadi kesalahan saat menambahkan %1:</translation>
     </message>
     <message>
         <source>Add Backup</source>
@@ -2159,74 +2521,21 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Salin tautan ke file</translation>
     </message>
     <message>
-        <source>Added [A]</source>
-        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
-        <translation>Menambahkan [A]</translation>
-    </message>
-    <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
         <translation>File yang dihapus atau dipindahkan</translation>
     </message>
 </context>
 <context>
-    <name>InfoWizard</name>
-    <message>
-        <source>You are not logged in</source>
-        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
-        <translation>Anda belum login</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>Masuk</translation>
-    </message>
-    <message>
-        <source>Create Account</source>
-        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
-        <translation>Buat akun</translation>
-    </message>
-    <message>
-        <source>MEGA Desktop app</source>
-        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>Aplikasi Desktop MEGA</translation>
-    </message>
-    <message>
-        <source>Login or create an account to start using MEGA Desktop app.</source>
-        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Masuk atau buat akun untuk mulai menggunakan Aplikasi Desktop MEGA.</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>Anda harus masuk ke akun MEGA untuk menggunakan aplikasi desktop MEGA.</translation>
-    </message>
-    <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
-        <translation>Buat akun</translation>
-    </message>
-    <message>
-        <source>Create account to join MEGA collaboration platform.</source>
-        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>Buat akun untuk bergabung dengan platform kolaborasi MEGA.</translation>
-    </message>
-    <message>
-        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
-        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Pelajari lebih lanjut tentang Aplikasi Desktop MEGA. [A]Baca selengkapnya[/A]</translation>
-    </message>
-</context>
-<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app.</translatorcomment>
         <translation>Pilih pengguna</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app. Preserve $(^NameDA) code</translatorcomment>
         <translation>Pilih untuk pengguna mana anda ingin menginstall $(^NameDA).</translation>
     </message>
     <message>
@@ -2243,6 +2552,284 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>Install hanya untuk saya</translation>
+    </message>
+</context>
+<context>
+    <name>LoadingSceneMessageHandler</name>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Loading message showing the progress of stalled issues being solved in smart mode, placeholders are filled in runtime with the number of solved issues and the total number of issues.SNC-2565</translatorcomment>
+        <translation>%1 dari %2</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translatorcomment>stop button in the loading scene of stalled issues dialog shown during stalled issues are solved in smart mode to stop the solving.SNC-2565</translatorcomment>
+        <translation>Berhenti</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Confirmation button inthe loading scene of stalled issues dialog shown when all issues have been solved in the smart mode.SNC-2565</translatorcomment>
+        <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteChangedSinceLastSyncedStateHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced changed oth locally and remotely, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat menyinkronkan [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>This file has been changed both in MEGA and locally since it it was last synced.</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file being synced changed oth locally and remotely.SNC-2565</translatorcomment>
+        <translation>File ini telah diubah baik di MEGA maupun lokal sejak terakhir disinkronkan</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteDifferentWidget</name>
+    <message>
+        <source>Please select which version you want to keep</source>
+        <translatorcomment>Title for the solve options in a local remote changed stalled issue.SNC-2565</translatorcomment>
+        <translation>Pilih versi mana yang ingin anda simpan</translation>
+    </message>
+    <message>
+        <source>Choose both</source>
+        <translatorcomment>Button text to choose both local and remote versions in the local remote changed stall body widget.SNC-2565</translatorcomment>
+        <translation>Pilih keduanya</translation>
+    </message>
+    <message>
+        <source>Chosen</source>
+        <translatorcomment>TText shown on the choosen version (local, remote, both) in a solved local remote stall.SNC-2565</translatorcomment>
+        <translation>Dipilih</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text to choose either local or remote versions in the local remote changed stall body widget. will be follwed by &quot;Local&quot; or &quot;Remote&quot;.SNC-2565</translatorcomment>
+        <translation>Pilih</translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local file %1</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup, %1 placeholder will have the file name.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local folder %1</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup,%1 placeholder will have the folder name.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Keep both[/B]</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]Simpan keduanya[/B]</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]local file[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
+Please wait for the upload to complete.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]Please, resume your transfers to fix the issue[/B]</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>File lokal [B]%1[/B] akan dipindahkan ke folder .rubbish atau .di lokasi sinkronisasi lokal anda.</translation>
+    </message>
+    <message>
+        <source>The [B]local folder[/B] %1 will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Folder lokal [B]%1[/B] akan dipindahkan ke folder .rubbish atau .di lokasi sinkronisasi lokal anda.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to choose the latest modified side?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the last modified version of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation>Pilih item modifikasi terbaru?</translation>
+    </message>
+    <message>
+        <source>This action will choose the local side</source>
+        <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
+        <translation>Tindakan ini akan memilih item lokal.</translation>
+    </message>
+    <message>
+        <source>This action will choose the remote side</source>
+        <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
+        <translation>Muat ulang</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.FM-1615</translatorcomment>
+        <translation>Batalkan</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>Terapkan</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>Terapkan untuk semua</translation>
+    </message>
+    <message>
+        <source>Keep both files?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep both folders</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Keep last modified[/B] (local)</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Keep last modified[/B] (remote)</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the [B]local files[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
+Please wait for the upload to complete.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote files[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote folders[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote items[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]local folders[/B] will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local files</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local folders</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep all files?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep all folders</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>The [B]remote file[/B] will have a suffix like (1) added</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Keep the [B]local folders[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemotePreviouslyUnsyncedDifferHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat menyinkronkan [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>This file has conflicting copies</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version.SNC-2565</translatorcomment>
+        <translation>Item ini memiliki salinan yang saling bertentangan</translation>
+    </message>
+</context>
+<context>
+    <name>LocalStalledIssueChooseWidget</name>
+    <message>
+        <source>Local Copy</source>
+        <translatorcomment>Title in the choosing widget used to offer the user the option to choose local version when conflicts occur.SNC-2565</translatorcomment>
+        <translation>Salinan lokal</translation>
     </message>
 </context>
 <context>
@@ -2302,6 +2889,52 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     </message>
 </context>
 <context>
+    <name>LoginController</name>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
+        <translation>Mohon cek kotak email anda dan klik linknya untuk mengonfirmasi akun anda.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
+        <translation>Anda telah mencoba untuk masuk terlalu banyak.[BR]Harap tunggu sampai %1 dan coba kembali.</translation>
+    </message>
+    <message>
+        <source>Invalid email or password. Please try again.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
+        <translation>Alamat email atau kata sandi tidak valid. Silakan coba lagi.</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
+        <translation>Aplikasi tidak dapat tersambung. Silakan periksa konektivitas Internet anda dan konfigurasi firewall lokal. Perhatikan bahwa sebagian besar perangkat lunak antivirus menyertakan firewall.</translation>
+    </message>
+    <message>
+        <source>Email address already in use.</source>
+        <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. CON-465</translatorcomment>
+        <translation>Alamat e-mail telah terpakai.</translation>
+    </message>
+</context>
+<context>
+    <name>LogoutController</name>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
+        <translation>Anda telah keluar dari komputer ini dari lokasi lain</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
+        <translation>Kunci SSL kami tidak dapat diverifikasi. Anda dapat terpengaruh oleh serangan man-in-the-middle atau perangkat lunak antivirus anda dapat menyadap komunikasi anda dan menyebabkan masalah ini. Nonaktifkan dan coba lagi.</translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
+        <translation>Anda telah keluar karena kesalahan ini: %1</translation>
+    </message>
+</context>
+<context>
     <name>LowDiskSpaceDialog</name>
     <message>
         <source>Low disk space</source>
@@ -2337,11 +2970,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
 <context>
     <name>MegaApplication</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-    <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>Memasukkan</translation>
@@ -2357,11 +2985,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Error: Folder tujuan salah. Unggahan telah dibatalkan</translation>
     </message>
     <message>
-        <source>About MEGAsync</source>
-        <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>Tentang</translation>
-    </message>
-    <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
         <translation>Link telah disalin ke clipboard</translation>
@@ -2372,33 +2995,28 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Link telah disalin ke clipboard</translation>
     </message>
     <message>
-        <source>Logging in...</source>
-        <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Masuk …</translation>
-    </message>
-    <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
         <translation>Tentang</translation>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Terkini</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a paused state.</translatorcomment>
         <translation>Berhenti sementara</translation>
     </message>
     <message>
         <source>Scanning</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a scanning state.</translatorcomment>
         <translation>Memindai</translation>
     </message>
     <message>
         <source>Syncing</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a syncing state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>Mensinkronisasikan</translation>
     </message>
     <message>
@@ -2408,8 +3026,13 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     </message>
     <message>
         <source>Waiting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a waiting state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>Menunggu</translation>
+    </message>
+    <message>
+        <source>Stalled</source>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -2444,7 +3067,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
+        <translatorcomment>Notification message launched when an update for MEGA is being downloaded.</translatorcomment>
         <translation>Update tersedia. Sedang mendownload…</translation>
     </message>
     <message>
@@ -2454,19 +3077,13 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Error</source>
-        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
         <translation>Error</translation>
     </message>
     <message>
         <source>Starting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is starting.</translatorcomment>
         <translation>Memulai</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Tidak bisa mendapatkan filesystem. Tolong coba lagi. Jika masalah berlanjut, harap hubungi kami di bug@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -2480,7 +3097,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Show status</source>
-        <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translatorcomment>Label displayed to let the user displays the Information dialog of the app. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation>Tampilkan status</translation>
     </message>
     <message>
@@ -2489,64 +3106,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Config anda rusak, harap ulang kembali</translation>
     </message>
     <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>Aplikasi tidak dapat tersambung. Silakan periksa konektivitas Internet anda dan konfigurasi firewall lokal. Perhatikan bahwa sebagian besar perangkat lunak antivirus menyertakan firewall.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sync “%1” anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sync “%1” anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>Akun anda telah di-blok. Harap kontak support@mega.nz</translation>
-    </message>
-    <message>
-        <source>Login error: %1</source>
-        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation>Kesalahan login: %1</translation>
-    </message>
-    <message>
-        <source>You have been logged out on this computer from another location</source>
-        <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation>Anda telah keluar dari komputer ini dari lokasi yang lain</translation>
-    </message>
-    <message>
-        <source>You have been logged out because of this error: %1</source>
-        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation>Anda telah keluar karena error ini: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync anda “%1” telah dibatalkan karena folder remote ada di Tempat sampah</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync “%1” anda telah di non-aktifkan karena folder lokal telah berubah</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sinkronisasi anda “%1” telah dinonaktifkan. Folder jarak jauh (atau sebagian darinya) tidak memiliki akses penuh</translation>
-    </message>
-    <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation>Kuota terlebihi</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync anda “%1” telah dibatalkan karena sinkronisasi folder berbagi VirtualBox tidak didukung karena defisiensi pada filesystem tersebut.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2569,14 +3131,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Error: Folder tujuan tidak sah. Download telah dibatalkan.</translation>
     </message>
     <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>Kunci SSL kami tidak dapat diverifikasi. Anda dapat terpengaruh oleh serangan man-in-the-middle atau perangkat lunak antivirus anda dapat menyadap komunikasi anda dan menyebabkan masalah ini. Nonaktifkan dan coba lagi.</translation>
-    </message>
-    <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>Tidak ada koneksi Internet</translation>
+        <translation>Tidak ada koneksi internet</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -2616,7 +3173,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please consider updating your operating system.</source>
         <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
-        <translation>Harap update operating system anda.</translation>
+        <translation>Pertimbangkan untuk memperbarui sistem operasi anda.</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -2629,29 +3186,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Aplikasi akan terus berfungsi, namun anda mungkin tidak menerima pembaruan baru.</translation>
     </message>
     <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>Kata sandi diubah</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>Kata sandi anda telah dirubah.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Penyimpanan cloud</translation>
-    </message>
-    <message>
-        <source>Pay Now</source>
-        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation>Bayar sekarang</translation>
-    </message>
-    <message>
-        <source>Your Business account is expired</source>
-        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Akun Bisnis anda telah kedaluwarsa</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2666,7 +3203,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Penting:[/A] Hubungi administrator akun bisnis anda untuk menyelesaikan masalah dan mengaktifkan akun anda.</translation>
+        <translation>[A]Penting:[/A] Hubungi administrator akun Bisnis anda untuk menyelesaikan masalah dan mengaktifkan akun anda. </translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2709,11 +3246,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Buka tautan</translation>
     </message>
     <message>
-        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
-        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Akun anda telah dinonaktifkan oleh administrator anda. Silahkan hubungi administrator akun bisnis anda untuk detail lebih lanjut.</translation>
-    </message>
-    <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation>Aplikasi akan terus berfungsi, namun pembaruan tidak lagi didukung untuk versi Windows Vista dan versi sebelumnya.</translation>
@@ -2727,26 +3259,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Satu atau lebih sinkronisasi telah dinonaktifkan</translation>
-    </message>
-    <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
-        <translation>Terjadi kesalahan saat menambahkan sinkronisasi</translation>
-    </message>
-    <message>
-        <source>This sync can&apos;t be added: %1. Reason: %2</source>
-        <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
-        <translation>Sinkronisasi ini tidak dapat ditambahkan: %1. Alasan: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Sinkronisasi anda “%1” telah dinonaktifkan. Alasan: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been enabled</source>
-        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>Sinkronisasi anda “%1” telah diaktifkan</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -2796,46 +3308,6 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <translation>Satu atau lebih cadangan telah dinonaktifkan</translation>
     </message>
     <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>Terjadi kesalahan saat menambahkan %1:</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda ”%1“ telah dinonaktifkan karena folder lokal tidak ada.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda “%1” telah dinonaktifkan karena sinkronisasi folder bersama VirtualBox tidak didukung karena kekurangan dalam sistem file tersebut.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda “%1” telah dinonaktifkan karena folder jarak jauh ada di Tempat Sampah.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda “%1” telah dinonaktifkan. Anda tidak memiliki akses penuh ke folder MEGA (atau sebagian darinya).</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda “%1” telah dinonaktifkan karena folder lokal telah berubah</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda “%1” telah dinonaktifkan karena folder jarak jauh telah diubah</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Cadangan anda “%1” telah dinonaktifkan. Alasan: %2</translation>
-    </message>
-    <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>Peningkatan keamanan</translation>
@@ -2881,34 +3353,24 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <translation>Pengaturan</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Sinkronisasi dan pencadangan anda telah dinonaktifkan: %1</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Cadangan anda telah dinonaktifkan: %1</translation>
-    </message>
-    <message>
-        <source>Your syncs have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Sinkronisasi anda telah dinonaktifkan: %1</translation>
-    </message>
-    <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
         <translation>Gagal mendapatkan tautan: %1</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Sinkronisasi anda “%1” telah dinonaktifkan sementara: %2</translation>
+        <source>Warning</source>
+        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
+        <translation>Peringatan</translation>
     </message>
     <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Cadangan anda “%1” telah dinonaktifkan sementara: %2</translation>
+        <source>Account deactivated</source>
+        <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
+        <translation>Akun Bisnis anda telah kedaluwarsa</translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Akun Pro&#xa0;Flexi dinonaktifkan</translation>
     </message>
 </context>
 <context>
@@ -2986,7 +3448,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Key salah/Decryption error</translation>
+        <translation>Kesalahan dekripsi</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3056,7 +3518,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Transfer gagal karena struktur direktori rekursif</translation>
+        <translation>Transfer gagal karena struktur folder rekursif</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -3071,12 +3533,20 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Akun anda telah ditangguhkan karena pelanggaran hak cipta. Silakan periksa kotak masuk email anda.</translation>
+        <translation>Akun MEGA anda telah ditangguhkan karena tuduhan pelanggaran hak cipta berulang kali. Ini berarti anda tidak dapat mengakses akun atau data anda di dalamnya.
+
+Periksa email anda untuk informasi lebih lanjut tentang cara mengajukan pemberitahuan tanggapan.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Akun dihentikan karena pelanggaran Persyaratan Layanan MEGA, seperti penyalahgunaan hak orang lain, berbagi dan mengimpor data ilegal, atau penyalahgunaan sistem.</translation>
+        <translation>Akun anda dihentikan karena pelanggaran Ketentuan Layanan MEGA.
+Anda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftarkan akun MEGA baru.</translation>
+    </message>
+    <message>
+        <source>File removed as it violated our Terms of Service</source>
+        <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
+        <translation>Persyaratan Layanan yang Dilanggar.</translation>
     </message>
 </context>
 <context>
@@ -3090,21 +3560,6 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <source>Close</source>
         <translatorcomment>Button label to close current message box</translatorcomment>
         <translation>Tutup</translation>
-    </message>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>Akun terkunci</translation>
-    </message>
-    <message>
-        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>Ada kemungkinan bahwa anda menggunakan kata sandi yang sama untuk akun MEGA anda seperti untuk layanan lain, dan bahwa setidaknya salah satu dari layanan lain ini telah mengalami pelanggaran data.</translation>
-    </message>
-    <message>
-        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>Kata sandi anda bocor dan sekarang digunakan oleh aktor jahat untuk masuk ke akun anda, termasuk, namun tidak terbatas pada, akun MEGA anda.</translation>
     </message>
 </context>
 <context>
@@ -3127,11 +3582,6 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
 </context>
 <context>
     <name>MegaProgressCustomDialog</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
@@ -3286,9 +3736,9 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <translation>Anda tidak dapat menjalankan aplikasi desktop dari lokasi ini. Pindahkan ke folder Aplikasi lalu jalankan.</translation>
     </message>
     <message>
-        <source>Account expired (business or Pro Flexi)</source>
-        <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Akun dinonaktifkan</translation>
+        <source>Your plan has expired</source>
+        <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
+        <translation>Paket anda telah kedaluwarsa</translation>
     </message>
 </context>
 <context>
@@ -3337,11 +3787,6 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <source>Open in MEGA</source>
         <translatorcomment>Context menu action to open the transfer in MEGA webclient</translatorcomment>
         <translation>Buka di MEGA</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Error messagebox title</translatorcomment>
-        <translation>Kesalahan</translation>
     </message>
     <message>
         <source>Error opening file</source>
@@ -3472,19 +3917,255 @@ Transfer sinkronisasi tidak lengkap yang anda pilih tidak akan dibatalkan. Semua
         <translation><numerusform>Batalkan dan hapus transfer</numerusform></translation>
     </message>
     <message>
-        <source>Yes, cancel</source>
-        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>Ya, batalkan</translation>
+        <source>Cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>Batal</translation>
     </message>
     <message>
-        <source>No, continue</source>
-        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
-        <translation>Tidak, lanjutkan</translation>
+        <source>Don&apos;t cancel</source>
+        <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>Jangan batalkan</translation>
     </message>
     <message>
-        <source>Yes, clear</source>
-        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation>Ya, hapus</translation>
+        <source>Don&apos;t clear</source>
+        <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
+        <translation>Jangan hapus</translation>
+    </message>
+</context>
+<context>
+    <name>MoveOrRenameCannotOccurHeader</name>
+    <message>
+        <source>Cannot move or rename [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the item cannot be moved ore renamed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat memindahkan atau mengganti nama [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
+        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
+        <translation>Pindahan atau penggantian nama terdeteksi di MEGA, tetapi tidak dapat direplikasi secara lokal.</translation>
+    </message>
+    <message>
+        <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
+        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Solve</source>
+        <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MultiQFileDialog</name>
+    <message>
+        <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
+        <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
+        <translation>Terlalu banyak item terpilih. Untuk melanjutkan, batalkan beberapa pilihan atau pilih folder induk sebagai gantinya</translation>
+    </message>
+</context>
+<context>
+    <name>NameConflict</name>
+    <message>
+        <source>Removed</source>
+        <translatorcomment>Label in solved name conflict sync stalls by removing the file.SNC-2565</translatorcomment>
+        <translation>Dihapus</translation>
+    </message>
+    <message>
+        <source>Renamed to &quot;%1&quot;</source>
+        <translatorcomment>Label in solved name conflict sync stalls by renaming the file.SNC-2565</translatorcomment>
+        <translation>Mengganti nama menjadi ”%1”</translation>
+    </message>
+    <message>
+        <source>Merged</source>
+        <translatorcomment>Label in solved name conflict sync stalls when folders are merged.SNC-2565</translatorcomment>
+        <translation>Digabung</translation>
+    </message>
+    <message>
+        <source>Modified externally</source>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
+        <translation>Dimodifikasi secara eksternal</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Solve option for name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Ubah nama</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to refresh sync stalls when an external change to sync stalls is detected.SNC-2565</translatorcomment>
+        <translation>Muat ulang</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Confirmation text when a name conflict has been resolved externally.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.
+Please refresh the view</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by renamming the local file and the file is actually deleted.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation>Ini akan dipindahkan ke folder .rubbish atau .di lokasi sinkronisasi lokal anda.[BR]Anda akan dapat memulihkan folder dari sana.[/BR]</translation>
+    </message>
+    <message>
+        <source>No action needed</source>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
+        <translation>Tidak ada tindakan yang diperlukan</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the remote file %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the remote folder %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the local file %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the local folder %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NameConflictsHeader</name>
+    <message>
+        <source>Remove duplicates</source>
+        <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
+        <translation>Hapus duplikat</translation>
+    </message>
+    <message>
+        <source>Remove duplicates, merge folders and rename the rest</source>
+        <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove duplicates and rename the rest</source>
+        <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge folders and rename the rest</source>
+        <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Gabungkan folder dan ganti nama sisanya</translation>
+    </message>
+    <message>
+        <source>Rename all items</source>
+        <translatorcomment>Button to solve a name conflict sync stall by renaming items.SNC-2565</translatorcomment>
+        <translation>Ganti nama semua item</translation>
+    </message>
+    <message>
+        <source>Merge folders</source>
+        <translatorcomment>Button to solve a name conflict sync stall by merging folders.SNC-2565</translatorcomment>
+        <translation>Gabungkan folder</translation>
+    </message>
+    <message>
+        <source>Solve options</source>
+        <translatorcomment>Button text to show the solve action of sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name Conflicts: [B]%1[/B]</source>
+        <translatorcomment>Title for name conflict sync stall header widget .[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Konflik nama: [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>These items contain multiple names on one side, that would all become the same single name on the other side.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>These files contain multiple names on one side, that would all become the same single name on the other side.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>These folders contain multiple names on one side, that would all become the same single name on the other side.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button to discard fixing the stalled issue.SNC-2565</translatorcomment>
+        <translation>Batalkan</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
+        <translation>Terapkan</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts.FM-1615</translatorcomment>
+        <translation>Terapkan untuk semua</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to solve the issue?</source>
+        <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action will rename the conflicted items (adding a suffix like (1)).</source>
+        <translatorcomment>Info text for confirmation message of rename action in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Tindakan ini akan mengganti nama item yang berkonflik dengan menambahkan akhiran seperti (1).</translation>
+    </message>
+    <message>
+        <source>This action will merge all folders into a single one. We will skip duplicated files
+and rename the files with the same name but different content (adding a suffix like (1))</source>
+        <translatorcomment>Info text for confirmation message of merge folder action in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Tindakan ini akan menggabungkan semua folder menjadi satu folder. File duplikat akan dilewati, dan file dengan nama yang sama tetapi konten yang berbeda akan diganti namanya dengan menambahkan akhiran seperti (1).</translation>
+    </message>
+    <message>
+        <source>This action will delete the duplicate files.</source>
+        <translatorcomment>Info text for confirmation message of remove duplicates action in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Tindakan ini akan menghapus file duplikat.</translation>
+    </message>
+    <message>
+        <source>This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
+        <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
+        <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Tindakan ini akan menghapus file duplikat, menggabungkan semua folder menjadi satu, dan mengganti nama item yang tersisa jika terjadi konflik nama dengan menambahkan akhiran seperti (1).</translation>
+    </message>
+</context>
+<context>
+    <name>NameDuplicatedContainer</name>
+    <message>
+        <source>Duplicated</source>
+        <translatorcomment>Title for list showing all dublicated items in a conflicted name sync stall.SNC-2565</translatorcomment>
+        <translation>Item duplikat</translation>
     </message>
 </context>
 <context>
@@ -3526,11 +4207,6 @@ Masukkan nama yang berbeda.</translation>
 </context>
 <context>
     <name>NodeSelector</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Error</translation>
-    </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
@@ -3603,21 +4279,6 @@ Masukkan nama yang berbeda.</translation>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Urutkan berdasarkan nama</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Hari ini jam %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Kemarin jam %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 jam %2</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3738,18 +4399,13 @@ Masukkan nama yang berbeda.</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>Seseorang telah menerima permintaan kontak anda</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>Info</translation>
-    </message>
-    <message>
-        <source>Someone accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Seseorang menerima permintaan kontak anda</translation>
     </message>
     <message>
         <source>Info:</source>
@@ -3793,11 +4449,569 @@ Masukkan nama yang berbeda.</translation>
     </message>
 </context>
 <context>
-    <name>Notificator</name>
+    <name>OnboardingStrings</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGA</translation>
+        <source>Add folder</source>
+        <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
+        <translation>Tambah folder</translation>
+    </message>
+    <message>
+        <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
+        <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
+        <translation>Saya telah membaca dan menyetujui [B][A]Ketentuan Layanan[/A][/B] MEGA</translation>
+    </message>
+    <message>
+        <source>Back up</source>
+        <translatorcomment>Button text to configure the selected backups CON-468</translatorcomment>
+        <translation>Cadangkan</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Button title, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>Cadangkan</translation>
+    </message>
+    <message>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>Data dari perangkat anda akan secara otomatis dan konsisten dicadangkan ke MEGA secara real-time.</translation>
+    </message>
+    <message>
+        <source>Backup: Confirm</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup confirm step CON-468</translatorcomment>
+        <translation>Cadangan: Konfirmasikan</translation>
+    </message>
+    <message>
+        <source>Backup Folders</source>
+        <translatorcomment>Backup folders table title CON-468</translatorcomment>
+        <translation>Folder cadangan</translation>
+    </message>
+    <message>
+        <source>Backup: Select folders</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
+        <translation>Cadangan: Pilih folder</translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
+        <translation>Cadangkan ke:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
+        <translation>Batal</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>Pilih</translation>
+    </message>
+    <message>
+        <source>Change folder</source>
+        <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
+        <translation>Ubah folder</translation>
+    </message>
+    <message>
+        <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
+        <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
+        <translation>Masukkan alamat email baru dan klik Kirim Ulang. Kami kemudian akan mengirimkan email verifikasi ke alamat email baru ini agar anda dapat mengaktifkan akun anda.</translation>
+    </message>
+    <message>
+        <source>Change your email address</source>
+        <translatorcomment>Change email window title CON-466</translatorcomment>
+        <translation>Ubah alamat email anda</translation>
+    </message>
+    <message>
+        <source>Device name</source>
+        <translatorcomment>Device name window title CON-467</translatorcomment>
+        <translation>Nama perangkat</translation>
+    </message>
+    <message>
+        <source>Add the name of your device.</source>
+        <translatorcomment>Device name window secondary title CON-467</translatorcomment>
+        <translation>Tambahkan nama perangkat anda.</translation>
+    </message>
+    <message>
+        <source>Add device name</source>
+        <translatorcomment>Device name text input box title CON-467</translatorcomment>
+        <translation>Tambahkan nama perangkat</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translatorcomment>Button text to confirm the current action CON-467</translatorcomment>
+        <translation>Konfirmasi</translation>
+    </message>
+    <message>
+        <source>There is already a folder with the same name in this backup</source>
+        <translatorcomment>Error text indicating that it can´t create a backup with duplicated names CON-468</translatorcomment>
+        <translation>Sudah ada folder dengan nama yang sama di cadangan ini</translation>
+    </message>
+    <message>
+        <source>A folder with the same name already exists on your backups</source>
+        <translatorcomment>Error text indicating that a backup with the same name already exists CON-468</translatorcomment>
+        <translation>Folder dengan nama yang sama sudah ada di cadangan anda</translation>
+    </message>
+    <message>
+        <source>Confirm folders to back up</source>
+        <translatorcomment>Confirm backups table title CON-468</translatorcomment>
+        <translation>Konfirmasikan folder untuk dicadangkan</translation>
+    </message>
+    <message>
+        <source>Account created</source>
+        <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
+        <translation>Akun dibuat</translation>
+    </message>
+    <message>
+        <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
+        <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
+        <translation>Untuk mengaktifkan akun anda, anda perlu memeriksa alamat email anda. Kami telah mengirimi anda email dengan tautan konfirmasi. Klik tautan untuk memeriksa alamat email anda, maka anda akan dapat masuk.</translation>
+    </message>
+    <message>
+        <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
+        <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>Jika anda tidak menerima email dalam waktu 1 jam, periksa folder spam anda. Jika anda masih tidak dapat menemukannya, [B][A]hubungi bantuan[/A][/B].</translation>
+    </message>
+    <message>
+        <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
+        <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>Jika anda salah mengeja alamat email anda, [B][A]Ubah disini[/A][/B].</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
+        <translation>Konfirmasi password</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
+        <translation>Selesai</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translatorcomment>Email text input title CON-466</translatorcomment>
+        <translation>Alamat email</translation>
+    </message>
+    <message>
+        <source>Please confirm your password</source>
+        <translatorcomment>Confirm password text input title CON-466</translatorcomment>
+        <translation>Konfirmasi kata sandi anda</translation>
+    </message>
+    <message>
+        <source>Enter your password</source>
+        <translatorcomment>Password text input title CON-466</translatorcomment>
+        <translation>Masukkan password anda</translation>
+    </message>
+    <message>
+        <source>Please enter your name</source>
+        <translatorcomment>Name text input title CON-466</translatorcomment>
+        <translation>Masukkan nama depan anda</translation>
+    </message>
+    <message>
+        <source>Please enter your last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>Masukkan nama belakang anda</translation>
+    </message>
+    <message>
+        <source>Passwords don&apos;t match. Check and try again.</source>
+        <translatorcomment>Error label indicating that password and confirm password content is not the same CON-466</translatorcomment>
+        <translation>Kata sandi tidak cocok. Periksa dan coba lagi.</translation>
+    </message>
+    <message>
+        <source>Enter a valid email address</source>
+        <translatorcomment>Error label indicating that the email is not valid CON-466</translatorcomment>
+        <translation>Masukkan alamat email yang valid</translation>
+    </message>
+    <message>
+        <source>Your backup is set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Cadangan anda sudah diatur</translation>
+    </message>
+    <message>
+        <source>What else do you want to do?</source>
+        <translatorcomment>Text suggesting the user to create another backup or sync CON-468</translatorcomment>
+        <translation>Apa lagi yang ingin anda lakukan?</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
+        <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
+        <translation>Sinkronisasi anda telah diatur dan akan secara otomatis menyinkronkan data yang dipilih setiap kali aplikasi desktop berjalan.</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-467</translatorcomment>
+        <translation>Sinkronisasi anda sudah diatur</translation>
+    </message>
+    <message>
+        <source>First name</source>
+        <translatorcomment>First name text input title CON-466</translatorcomment>
+        <translation>Nama depan</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA account with your local device.</source>
+        <translatorcomment>Full sync button description CON-467</translatorcomment>
+        <translation>Sinkronkan seluruh akun MEGA anda dengan perangkat lokal anda.</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translatorcomment>Full sync button title CON-467</translatorcomment>
+        <translation>Sync menyeluruh</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Full sync page title CON-467</translatorcomment>
+        <translation>Sinkronkan seluruh drive MEGA Cloud anda dengan perangkat lokal.</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
+        <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena anda tidak memiliki izin untuk membuat folder baru. Untuk melanjutkan, pilih folder yang ada.</translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
+        <translation>Lupa password?</translation>
+    </message>
+    <message>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a local folder CON-467</translatorcomment>
+        <translation>Pilih folder lokal untuk disinkronkan</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a MEGA folder CON-467</translatorcomment>
+        <translation>Pilih folder MEGA untuk disinkronkan</translation>
+    </message>
+    <message>
+        <source>Setup options</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the Setup options step CON-467</translatorcomment>
+        <translation>Opsi penyiapan</translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
+        <translation>Pilih:</translation>
+    </message>
+    <message>
+        <source>Welcome to MEGA</source>
+        <translatorcomment>Label wellcoming the user to MEGA CON-467</translatorcomment>
+        <translation>Selamat datang di MEGA</translation>
+    </message>
+    <message>
+        <source>Last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>Nama belakang</translation>
+    </message>
+    <message>
+        <source>Log in</source>
+        <translatorcomment>Log in button text CON-465</translatorcomment>
+        <translation>Masuk</translation>
+    </message>
+    <message>
+        <source>Log in to your [B]MEGA account[/B]</source>
+        <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
+        <translation>Masuk ke [B]akun MEGA[/B]</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
+        <translation>Berikutnya</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
+        <translation>Lewati</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>Lihat di Pengaturan</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Password input field title CON-465</translatorcomment>
+        <translation>Kata Sandi</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
+        <translation>Sebelumnya</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Button to rename a backup CON-468</translatorcomment>
+        <translation>Ubah nama</translation>
+    </message>
+    <message>
+        <source>Resend</source>
+        <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
+        <translation>Kirim lagi</translation>
+    </message>
+    <message>
+        <source>[B]Select all[/B]</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>[B]Pilih semua[/B]</translation>
+    </message>
+    <message>
+        <source>Select folders to back up</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>Pilih folder untuk dicadangkan</translation>
+    </message>
+    <message>
+        <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
+        <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
+        <translation>Folder yang dipilih akan secara otomatis dicadangkan ke MEGA saat aplikasi desktop berjalan.</translation>
+    </message>
+    <message>
+        <source>Select a local folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a local folder CON-467</translatorcomment>
+        <translation>Pilih folder lokal</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
+        <translation>Pilih folder MEGA</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA account with your local device.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>Sinkronkan folder yang dipilih di akun MEGA anda dengan perangkat lokal anda.</translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
+        <translation>Sinkronkan folder tertentu di drive MEGA Cloud anda dengan perangkat lokal anda.</translation>
+    </message>
+    <message>
+        <source>Selective sync</source>
+        <translatorcomment>Selective sync button title text CON-467</translatorcomment>
+        <translation>Sync selektif</translation>
+    </message>
+    <message>
+        <source>Set up MEGA</source>
+        <translatorcomment>Onboarding window title CON-467</translatorcomment>
+        <translation>Siapkan MEGA</translation>
+    </message>
+    <message>
+        <source>Sign up</source>
+        <translatorcomment>Sign up button text CON-465</translatorcomment>
+        <translation>Daftar</translation>
+    </message>
+    <message>
+        <source>Create your [B]MEGA account[/B]</source>
+        <translatorcomment>Sign up page title CON-466</translatorcomment>
+        <translation>Buat [B]akun MEGA[/B] milik anda</translation>
+    </message>
+    <message>
+        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>Sinkronkan perangkat anda dengan MEGA, dan setiap perubahan lokal akan secara otomatis dan instan berlaku untuk MEGA dan sebaliknya.</translation>
+    </message>
+    <message>
+        <source>Choose sync type</source>
+        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
+        <translation>Pilih jenis sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Button title that forwards the user to the syncs flow CON-467</translatorcomment>
+        <translation>Sinkronkan</translation>
+    </message>
+    <message>
+        <source>Sync: Choose type</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the choose sync type step CON-467</translatorcomment>
+        <translation>Sinkronisasi: Pilih jenis</translation>
+    </message>
+    <message>
+        <source>Sync set up</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
+        <translation>Pengaturan sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Problem with two-factor authentication?</source>
+        <translatorcomment>Text that the user has to click in case he has problems with 2FA CON-465</translatorcomment>
+        <translation>Masalah dengan otentikasi dua faktor?</translation>
+    </message>
+    <message>
+        <source>Enter the 6-digit code generated by your authenticator app.</source>
+        <translatorcomment>2FA page secondary title CON-465</translatorcomment>
+        <translation>Masukkan kode 6 digit yang dihasilkan oleh aplikasi otentikator anda.</translation>
+    </message>
+    <message>
+        <source>Continue with [B]two-factor authentication[/B]</source>
+        <translatorcomment>2FA page title CON-465</translatorcomment>
+        <translation>Lanjutkan dengan [B]otentikasi dua faktor[/B]</translation>
+    </message>
+    <message>
+        <source>Logging in…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Masuk&#8230;</translation>
+    </message>
+    <message>
+        <source>Fetching file list…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Mengambil daftar file&#8230;</translation>
+    </message>
+    <message>
+        <source>Creating account…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
+        <translation>Membuat akun&#8230;</translation>
+    </message>
+    <message>
+        <source>Validating 2FA code…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>Memvalidasi kode 2FA&#8230;</translation>
+    </message>
+    <message>
+        <source>Stop logging in?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Berhenti masuk?</translation>
+    </message>
+    <message>
+        <source>Closing this window will stop you logging in.</source>
+        <translatorcomment>Dialog body text. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Menutup jendela ini akan menghentikan anda masuk.</translation>
+    </message>
+    <message>
+        <source>Stop Loggin in</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Berhenti masuk</translation>
+    </message>
+    <message>
+        <source>Don’t stop</source>
+        <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>Jangan berhenti</translation>
+    </message>
+    <message>
+        <source>Cancel account creation?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Batalkan pembuatan akun?</translation>
+    </message>
+    <message>
+        <source>Closing this window will cancel the sign up process.</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Menutup jendela ini akan membatalkan proses pendaftaran.</translation>
+    </message>
+    <message>
+        <source>Cancel account</source>
+        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Batalkan pembuatan</translation>
+    </message>
+    <message>
+        <source>Don’t cancel</source>
+        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>Jangan batalkan</translation>
+    </message>
+    <message>
+        <source>Password needs to be at least 8 characters</source>
+        <translatorcomment>Hint text that tells the user minimum requirement for the passwords CON-466</translatorcomment>
+        <translation>Kata sandi harus minimal 8 karakter</translation>
+    </message>
+    <message>
+        <source>It’s better to have:</source>
+        <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Lebih baik memiliki:</translation>
+    </message>
+    <message>
+        <source>Upper and lower case letters</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Huruf besar dan kecil</translation>
+    </message>
+    <message>
+        <source>At least one number or special character</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>Setidaknya satu angka atau karakter khusus</translation>
+    </message>
+    <message>
+        <source>Enter a minimum of 8 characters.</source>
+        <translatorcomment>Error text to force the user to fill minimum character requirement CON-466</translatorcomment>
+        <translation>Masukkan minimal 8 karakter.</translation>
+    </message>
+    <message>
+        <source>Your password is too easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>Kata sandi anda terlalu mudah ditebak. Anda harus membuatnya lebih kuat.</translation>
+    </message>
+    <message>
+        <source>Your password is easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>Kata sandi anda mudah ditebak. Anda harus membuatnya lebih kuat.</translation>
+    </message>
+    <message>
+        <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
+        <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
+        <translation>Secara otomatis memperbarui file anda dari komputer anda ke MEGA. Jika anda memilih untuk menghapus cadangan anda di MEGA, file lokal anda tidak akan dihapus.</translation>
+    </message>
+    <message>
+        <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
+        <translation>Sinkronkan folder yang dipilih antara komputer anda dengan MEGA; setiap perubahan dari satu sisi akan berlaku ke sisi lain.</translation>
+    </message>
+    <message>
+        <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
+        <translation>Sinkronkan file anda antara komputer anda dengan MEGA; setiap perubahan dari satu sisi akan berlaku ke sisi lain.</translation>
+    </message>
+    <message>
+        <source>Let&apos;s get you set up</source>
+        <translatorcomment>Page title for new accounts in set device name page CON-467</translatorcomment>
+        <translation>Mari kita siapkan</translation>
+    </message>
+    <message>
+        <source>Confirm your email and password</source>
+        <translatorcomment>Page title for new accounts in login page CON-465</translatorcomment>
+        <translation>Konfirmasikan alamat email dan kata sandi anda</translation>
+    </message>
+    <message>
+        <source>Once confirmed, your account will be activated.</source>
+        <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
+        <translation>Setelah dikonfirmasi, akun anda akan diaktifkan.</translation>
+    </message>
+    <message>
+        <source>Enter your email address</source>
+        <translatorcomment>Login error if user didn´t enter the email CON-465</translatorcomment>
+        <translation>Masukkan alamat email anda</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Device name text input field title CON-467</translatorcomment>
+        <translation>Masukkan nama perangkat</translation>
+    </message>
+    <message>
+        <source>Names longer than 32 characters are not supported</source>
+        <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
+        <translation>Nama yang lebih panjang dari 32 karakter tidak didukung</translation>
+    </message>
+    <message>
+        <source>Incorrect 2FA code</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>Kode 2FA salah</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>Cadangan anda telah diatur dan data yang dipilih akan secara otomatis dicadangkan setiap kali aplikasi desktop berjalan. Anda dapat melihat cadangan dan statusnya di bawah tab Cadangan di Pengaturan.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>Coba lagi</translation>
+    </message>
+</context>
+<context>
+    <name>OpenBackupsFolder</name>
+    <message>
+        <source>Backup Folder</source>
+        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
+        <translation>Folder cadangan</translation>
+    </message>
+    <message>
+        <source>View in MEGA</source>
+        <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
+        <translation>Lihat di MEGA</translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
+        <translation>Folder cadangan:</translation>
     </message>
 </context>
 <context>
@@ -3943,11 +5157,6 @@ Masukkan nama yang berbeda.</translation>
         <translation>Batal</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Peringatan</translation>
-    </message>
-    <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
         <translation>Masukkan satu atau lebih link MEGA</translation>
@@ -4073,12 +5282,12 @@ Masukkan nama yang berbeda.</translation>
     </message>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
         <translation>Penyimpanan tambahan dikenakan biaya sebesar %1 per %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
         <translation>Tambahan kuota transfer dikenakan biaya sebesar %1 per %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
@@ -4100,6 +5309,11 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>PlatformStrings</name>
     <message>
+        <source>Moved to OS Trash</source>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
         <translation>Tampilkan di dalam folder</translation>
@@ -4108,6 +5322,11 @@ Masukkan nama yang berbeda.</translation>
         <source>Exit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Windows or Linux</translatorcomment>
         <translation>Keluar</translation>
+    </message>
+    <message>
+        <source>Moved to OS Rubbish Bin</source>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -4120,6 +5339,11 @@ Masukkan nama yang berbeda.</translation>
         <translation>Keluar</translation>
     </message>
     <message>
+        <source>Moved to OS Recycle Bin</source>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
         <translation>Tampilkan di File Explorer</translation>
@@ -4128,14 +5352,16 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced system notifications.
-- We've enhanced the UI.
-- We've fixed the detected crashes on Windows, Linux, and macOS.
+        <source>- Sync Rework Beta V1 version.
+- New Exclusions dialog for syncs.
+- New header for undecrypted cloud issues.
+- Minor changes in issues description. 
+- Auto solve reparse points and hard/sym links in Smart Mode. 
+- Minor bugs fixed. 
+- Performance improved. 
 </source>
-        <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation>- Kami telah meningkatkan notifikasi sistem.
-- Kami telah meningkatkan UI.
-- Kami telah memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.</translation>
+        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4154,16 +5380,6 @@ Masukkan nama yang berbeda.</translation>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
         <translation>Pengaturan proxy:</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translatorcomment>HTTP proxy type</translatorcomment>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>SOCK5H</source>
-        <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -4219,11 +5435,6 @@ Masukkan nama yang berbeda.</translation>
         <source>Update</source>
         <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
         <translation>Perbarui</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
-        <translation>Kesalahan</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -4294,12 +5505,12 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Direktori induk</translation>
+        <translation>Folder induk</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Pergi ke direktori induk</translation>
+        <translation>Pergi ke folder induk</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4359,7 +5570,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Temukan direktori</translation>
+        <translation>Temukan folder</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4374,7 +5585,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Direktori:</translation>
+        <translation>Folder:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4394,7 +5605,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Direktori</translation>
+        <translation>Folder</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4409,7 +5620,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Tidak dapat menghapus direktori.</translation>
+        <translation>Tidak dapat menghapus folder.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4464,7 +5675,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>Tidak diketahui</translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -4517,8 +5728,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Direktori tidak ditemukan.
-Harap verifikasi nama direktori yang diberikan dengan benar.</translation>
+Folder tidak ditemukan.
+Harap verifikasi nama folder yang benar telah diberikan.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -4638,6 +5849,24 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button in message boxes</translatorcomment>
         <translation>Batal</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteItemUi</name>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
+        <translation>Izin</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button to add new syncs or backups from settings window.SNC-2565</translatorcomment>
+        <translation>Tambah</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
+        <translation>Hapus</translation>
     </message>
 </context>
 <context>
@@ -4763,6 +5992,11 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
         <translation><numerusform>%n file</numerusform></translation>
     </message>
+    <message>
+        <source>Adding transfers…</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
+        <translation>Menambahkan transfer&#8230;</translation>
+    </message>
 </context>
 <context>
     <name>SearchLineEdit</name>
@@ -4820,51 +6054,14 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Upgrade</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translatorcomment>Button label to delete a synchronization. String as short as possible.</translatorcomment>
-        <translation>Hapus</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>Tambah</translation>
-    </message>
-    <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>Data sementara tidak tersedia</translation>
     </message>
     <message>
-        <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) dari %3 terpakai</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
-        <translation>Peringatan</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Hapus</translation>
-    </message>
-    <message>
-        <source>Full scan</source>
-        <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
-        <translation>Scan menyeluruh</translation>
-    </message>
-    <message>
-        <source>MEGAsync will perform a full scan of your synced folders when it starts.
-
-Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>Aplikasi ini akan melakukan pemindaian penuh terhadap folder yang disinkronkan saat dimulai. Apakah anda ingin memulai ulang aplikasi sekarang?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4912,16 +6109,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Selalu pertahankan kontrol fisik Kunci Pemulihan anda (misalnya pada perangkat klien, penyimpanan eksternal, atau cetak).</translation>
     </message>
     <message>
-        <source>Exclude by size</source>
-        <translatorcomment>Section title for controls to let the user exclude files from being synced by size.</translatorcomment>
-        <translation>Kecualikan berdasarkan ukuran</translation>
-    </message>
-    <message>
-        <source>Excluded file and folder names</source>
-        <translatorcomment>Section title for controls to indicate the file and folder names excluded from synchronization.</translatorcomment>
-        <translation>Nama file dan folder terkecuali</translation>
-    </message>
-    <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
         <translation>Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek folder cadangan anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan:</translation>
@@ -4930,16 +6117,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
         <translation>Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek [A] folder pada kotak Sampah akun MEGA anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan.</translation>
-    </message>
-    <message>
-        <source>Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation>Apakah anda ingin memulai ulang aplikasi sekarang?</translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation>Izin</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -4962,11 +6139,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Apakah anda ingin menghapus backup remote anda sekarang?</translation>
     </message>
     <message>
-        <source>Restart</source>
-        <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
-        <translation>Restart</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Folder lokal dengan cadangan file dihapus di MEGA</translation>
@@ -4987,24 +6159,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Anda akan secara permanen menghapus semua versi file. Apakah anda ingin melanjutkan?</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 digunakan</translation>
-    </message>
-    <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
         <translation>MEGA-KUNCIPEMULIHAN</translation>
-    </message>
-    <message>
-        <source>Error enabling sync</source>
-        <translatorcomment>Title error message shown when an error occurs while trying to enable a sync.</translatorcomment>
-        <translation>Terjadi kesalahan saat mengaktifkan sinkronisasi</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
-        <translation>Sinkronisasi anda “%1” tidak dapat diaktifkan. Alasan: %2</translation>
     </message>
     <message>
         <source>General</source>
@@ -5030,11 +6187,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Network</source>
         <translatorcomment>Title for the Settings -&gt; Network pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Jaringan</translation>
-    </message>
-    <message>
-        <source>Enable overlay icons</source>
-        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>Aktifkan ikon hamparan</translation>
     </message>
     <message>
         <source>Check for Updates</source>
@@ -5092,21 +6244,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Kuota transfer</translation>
     </message>
     <message>
-        <source>Synced folders</source>
-        <translatorcomment>Section title for Synchronized folders table view.</translatorcomment>
-        <translation>Folder disinkronkan</translation>
-    </message>
-    <message>
-        <source>Purchase more storage</source>
-        <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.</translatorcomment>
-        <translation>Beli lebih banyak penyimpanan</translation>
-    </message>
-    <message>
-        <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
-        <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>Beberapa folder belum disinkronkan. Untuk informasi lebih lanjut, silakan arahkan kursor ke ikon peringatan kuning.</translation>
-    </message>
-    <message>
         <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
         <translation>Kunci pemulihan</translation>
@@ -5134,22 +6271,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Pindah…</translation>
-    </message>
-    <message>
-        <source>Exclude files smaller than</source>
-        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, smaller than the specified size.</translatorcomment>
-        <translation>Jangan masukan file lebih kecil dari</translation>
-    </message>
-    <message>
-        <source>Exclude files bigger than</source>
-        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, bigger than the specified size.</translatorcomment>
-        <translation>Jangan masukan file lebih besar dari</translation>
-    </message>
-    <message>
-        <source>Restart MEGA Desktop App to apply changes.</source>
-        <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Mulai ulang Aplikasi Desktop MEGA untuk menerapkan perubahan.</translation>
+        <translation>Pilih</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -5207,24 +6329,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Kuota transfer:</translation>
     </message>
     <message>
-        <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
-        <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation>Akun MEGA anda penuh. Unggahan dinonaktifkan dan sinkronisasi folder dijeda.</translation>
-    </message>
-    <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
         <translation>Keamanan akun anda bergantung pada kekuatan kata sandi anda. Kata sandi harus unik dan tidak mungkin ditebak. Kami merekomendasikan menggunakan pengelola kata sandi.</translation>
-    </message>
-    <message>
-        <source>Excluded file and folder names:</source>
-        <translatorcomment>Label for controls to indicate the file and folder names excluded from synchronization.(macOS)</translatorcomment>
-        <translation>Nama file dan folder yang dikecualikan:</translation>
-    </message>
-    <message>
-        <source>Exclude by size:</source>
-        <translatorcomment>Label for controls to let the user exclude files from being synced by size.(macOS)</translatorcomment>
-        <translation>Kecualikan menurut ukuran:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
@@ -5244,27 +6351,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Aktifkan integrasi Windows File Explorer</translation>
-    </message>
-    <message>
-        <source>B</source>
-        <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>B</translation>
-    </message>
-    <message>
-        <source>KB</source>
-        <translatorcomment>Kilo-Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>KB</translation>
-    </message>
-    <message>
-        <source>MB</source>
-        <translatorcomment>Mega-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>MB</translation>
-    </message>
-    <message>
-        <source>GB</source>
-        <translatorcomment>Giga-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>GB</translation>
+        <translation>Aktifkan integrasi File Explorer</translation>
     </message>
     <message>
         <source>Install Update</source>
@@ -5285,11 +6372,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Business</source>
         <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Bisnis</translation>
-    </message>
-    <message>
-        <source>Restart MEGAsync</source>
-        <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation>Mulai ulang</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -5320,16 +6402,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
         <translation>Laporan masalah</translation>
-    </message>
-    <message>
-        <source>Choose which files or folders you want to exclude from synchronisation.</source>
-        <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation>Pilih folder atau file yang ingin anda kecualikan dari sinkronisasi</translation>
-    </message>
-    <message>
-        <source>Saving synchronised folders…</source>
-        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>Menyimpan folder yang disinkronkan…</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -5397,36 +6469,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Cadangkan</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Backups table title</translatorcomment>
-        <translation>Cadangan</translation>
-    </message>
-    <message>
-        <source>Backup Folder</source>
-        <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
-        <translation>Folder cadangan</translation>
-    </message>
-    <message>
-        <source>View in MEGA</source>
-        <translatorcomment>Button text that opens backups folder in webclient</translatorcomment>
-        <translation>Lihat di MEGA</translation>
-    </message>
-    <message>
-        <source>Saving backups…</source>
-        <translatorcomment>Label text displayed while backups settings are being saved</translatorcomment>
-        <translation>Menyimpan cadangan&#8230;</translation>
-    </message>
-    <message>
-        <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
-        <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation>Beberapa folder belum dicadangkan. Untuk informasi selengkapnya, arahkan kursor ke ikon peringatan kuning.</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Line edit title, remote backup folder path will be displayed (macOS)</translatorcomment>
-        <translation>Folder cadangan:</translation>
-    </message>
-    <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
         <translation>Sinkronisasi dan pencadangan akan berhenti berfungsi.</translation>
@@ -5447,79 +6489,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Anda yakin?</translation>
     </message>
     <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
-        <translation>Terjadi kesalahan saat menambahkan sinkronisasi</translation>
-    </message>
-    <message>
-        <source>Error removing sync</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a sync.</translatorcomment>
-        <translation>Terjadi kesalahan saat menghapus sinkronisasi</translation>
-    </message>
-    <message>
-        <source>Your sync can&apos;t be removed. Reason: %1</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>Sinkronisasi anda tidak dapat dihapus. Alasan: %1</translation>
-    </message>
-    <message>
-        <source>Error disabling sync</source>
-        <translatorcomment>Warning message title indicating that an error happened disabling a sync.</translatorcomment>
-        <translation>Terjadi kesalahan saat menonaktifkan sinkronisasi</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>Sinkronisasi anda ”%1“ tidak dapat dinonaktifkan. Alasan: %2</translation>
-    </message>
-    <message>
-        <source>Error adding backup %1</source>
-        <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
-        <translation>Terjadi kesalahan saat menambahkan cadangan %1</translation>
-    </message>
-    <message>
-        <source>Error removing backup</source>
-        <translatorcomment>Error message dialog title</translatorcomment>
-        <translation>Terjadi kesalahan saat menghapus cadangan</translation>
-    </message>
-    <message>
-        <source>Your backup can&apos;t be removed. Reason: %1</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>Pencadangan anda tidak dapat dihentikan. Alasan: %1</translation>
-    </message>
-    <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>Terjadi kesalahan saat memindahkan atau menghapus folder cadangan jarak jauh</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>Gagal memindahkan atau menghapus folder cadangan jarak jauh. Alasan: %1</translation>
-    </message>
-    <message>
-        <source>Error enabling backup</source>
-        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>Terjadi kesalahan saat mengaktifkan pencadangan</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Cadangan anda ”%1“ tidak dapat diaktifkan. Alasan: %2</translation>
-    </message>
-    <message>
-        <source>Error disabling backup</source>
-        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>Terjadi kesalahan saat menonaktifkan pencadangan</translation>
-    </message>
-    <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Pro&#xa0;Flexi</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Cadangan anda ”%1“ tidak dapat dinonaktifkan. Alasan: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5530,6 +6502,21 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Mencegah komputer dari tidur saat transfer atau sinkronisasi sedang berlangsung.</translation>
+    </message>
+    <message>
+        <source>Enable sync status icons</source>
+        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
+        <translation>Aktifkan ikon status sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Enabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>Mengaktifkan ikon status sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Disabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>Menonaktifkan ikon status sinkronisasi</translation>
     </message>
 </context>
 <context>
@@ -5546,355 +6533,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Auto</source>
         <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
         <translation>Otomatis</translation>
-    </message>
-</context>
-<context>
-    <name>SetupWizard</name>
-    <message>
-        <source>Create a new MEGA account</source>
-        <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>Buat akun MEGA</translation>
-    </message>
-    <message>
-        <source>Email:</source>
-        <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>Email:</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>Password:</translation>
-    </message>
-    <message>
-        <source>Repeat password:</source>
-        <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>Ulangi password:</translation>
-    </message>
-    <message>
-        <source>Log in to your MEGA account</source>
-        <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Masuk ke akun MEGA anda</translation>
-    </message>
-    <message>
-        <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Harap verifikasi akun anda dengan link konfirmasi yang telah kami kirim ke email anda</translation>
-    </message>
-    <message>
-        <source>Choose install type</source>
-        <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>Pilih tipe penginstall an</translation>
-    </message>
-    <message>
-        <source> Sync your entire cloud drive</source>
-        <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sinkronisasikan seluruh cloud drive anda</translation>
-    </message>
-    <message>
-        <source>Selective sync</source>
-        <translatorcomment>Label displayed to show Selective sync mode. Max 18 characters.</translatorcomment>
-        <translation>Sync selektif</translation>
-    </message>
-    <message>
-        <source>Local folder:</source>
-        <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>Folder lokal:</translation>
-    </message>
-    <message>
-        <source>MEGA folder:</source>
-        <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>Folder MEGA:</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>Ganti</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>Kembali</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Berikut</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Batal</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label of error.</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <source>User already exists</source>
-        <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>Pengguna sudah terdaftar</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Mengambil list file…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Email atau kata sandi tidak valid.</translation>
-    </message>
-    <message>
-        <source>MEGA folder doesn&apos;t exist</source>
-        <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>Folder MEGA tidak ada</translation>
-    </message>
-    <message>
-        <source>Finish</source>
-        <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>Selesai</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Harap masukkan alamat email anda</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Harap, masukan alamat email yang valid</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Harap masukan password anda</translation>
-    </message>
-    <message>
-        <source>Please, enter your name</source>
-        <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Harap masukan nama anda</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Harap masukan password yang lebih kuat</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>Kata sandi yang dimasukkan tidak cocok</translation>
-    </message>
-    <message>
-        <source>You have to accept our terms of service</source>
-        <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Anda harus menyetujui Kebijakan Pelayanan</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Membuat akun…</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label warning.</translatorcomment>
-        <translation>Peringatan</translation>
-    </message>
-    <message>
-        <source>Please, select a local folder</source>
-        <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Harap pilih satu folder lokal</translation>
-    </message>
-    <message>
-        <source>Please, select a MEGA folder</source>
-        <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Harap pilih satu folder MEGA</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Pilih folder lokal</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Masuk …</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Tidak bisa mendapatkan filesystem. Tolong coba lagi. Jika masalah berlanjut, harap hubungi kami di bug@mega.nz</translation>
-    </message>
-    <message>
-        <source>Set up Assistant - MEGAsync</source>
-        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Siapkan asisten</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
-        <translation>Sync menyeluruh</translation>
-    </message>
-    <message>
-        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Folder lokal anda dan MEGA Cloud Drive akan secara otomatis disinkronisasi.</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>Apakah anda ingin melanjutkan?</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation>Akun anda telah di-blok. Harap kontak support@mega.nz</translation>
-    </message>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Ingin membatalkan wizard ini dan membatalkan semua perubahan?</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
-        <translation>Lewati</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Keluar…</translation>
-    </message>
-    <message>
-        <source>Very Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation>Sangat lemah</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation>Lemah</translation>
-    </message>
-    <message>
-        <source>Medium</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation>Sedang</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation>Bagus</translation>
-    </message>
-    <message>
-        <source>Strong</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation>Kuat</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
-        <translation>Mohon cek kotak surel anda dan klik pranalanya untuk mengonfirmasi akun anda.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
-        <translation>Anda telah mencoba untuk masuk terlalu banyak.[BR]Harap tunggu sampai %1 dan coba kembali.</translation>
-    </message>
-    <message>
-        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
-        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>First name:</source>
-        <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation>Nama depan:</translation>
-    </message>
-    <message>
-        <source>Last name:</source>
-        <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation>Nama belakang:</translation>
-    </message>
-    <message>
-        <source>Check your inbox</source>
-        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation>Periksa kotak masuk anda</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your cloud drive</source>
-        <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Sync folder tertentu dalam cloud drive anda</translation>
-    </message>
-    <message>
-        <source>Selective sync:</source>
-        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
-        <translation>Sync selektif</translation>
-    </message>
-    <message>
-        <source>Please, enter your last name</source>
-        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation>Silakan masukkan nama belakang anda</translation>
-    </message>
-    <message>
-        <source>Set up selective sync</source>
-        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Siapkan sinkronisasi selektif</translation>
-    </message>
-    <message>
-        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Folder tertentu di Drive Cloud anda akan disinkronkan dengan folder lokal yang cocok.</translation>
-    </message>
-    <message>
-        <source>Select Local folder:</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Pilih folder lokal</translation>
-    </message>
-    <message>
-        <source>Set up full sync</source>
-        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Siapkan sinkronisasi penuh</translation>
-    </message>
-    <message>
-        <source>Full Sync</source>
-        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation>Sync menyeluruh</translation>
-    </message>
-    <message>
-        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Seluruh Cloud Drive anda akan disinkronkan dengan folder lokal.</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Masuk</translation>
-    </message>
-    <message>
-        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
-        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
-        <translation>Saya menerima [A]Ketentuan Penggunaan[/A] MEGA</translation>
-    </message>
-    <message>
-        <source>Enjoy MEGAsync</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Nikmati aplikasi kami</translation>
-    </message>
-    <message>
-        <source>We are all done</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>Kita semua sudah selesai</translation>
-    </message>
-    <message>
-        <source>Creating folder…</source>
-        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Membuat folder …</translation>
     </message>
 </context>
 <context>
@@ -5956,6 +6594,450 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>Sizes</name>
+    <message>
+        <source>B</source>
+        <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane..SNC-4208</translatorcomment>
+        <translation>B</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Kilo Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane..SNC-4208</translatorcomment>
+        <translation>KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Mega Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.SNC-4208</translatorcomment>
+        <translation>MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Giga Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.SNC-4208</translatorcomment>
+        <translation>GB</translation>
+    </message>
+</context>
+<context>
+    <name>SomeIssuesOccurredMessage</name>
+    <message>
+        <source>Some issues ocurred.</source>
+        <translatorcomment>Label that appeaers when sync stalls are detected.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View...</source>
+        <translatorcomment>Button to show the sync stalls.SNC-2565</translatorcomment>
+        <translation>Lihat</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueActionTitle</name>
+    <message>
+        <source>Loading user…</source>
+        <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
+        <translation>mengambil pengguna&#8230;</translation>
+    </message>
+    <message>
+        <source>Upload by:</source>
+        <translatorcomment>Label indicating uploader for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Diunggah oleh:</translation>
+    </message>
+    <message>
+        <source>Versions:</source>
+        <translatorcomment>Label indicating number of versions for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Versi:</translation>
+    </message>
+    <message>
+        <source>Loading size</source>
+        <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translatorcomment>Label indicating size for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Ukuran:</translation>
+    </message>
+    <message>
+        <source>CRC:</source>
+        <translatorcomment>Label indicating fingerprint for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading time…</source>
+        <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last modified:</source>
+        <translatorcomment>Label indicating last modification time for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Terakhir diubah:</translation>
+    </message>
+    <message>
+        <source>Upload at:</source>
+        <translatorcomment>Label indicating upload time for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Diunggah:</translation>
+    </message>
+    <message>
+        <source>Created at:</source>
+        <translatorcomment>Label indicating creation time for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>Dibuat:</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueChooseWidget</name>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button to choose either remote or local version.SNC-2565</translatorcomment>
+        <translation>Pilih</translation>
+    </message>
+    <message>
+        <source>Local file is being uploaded</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
+        <translation>File lokal sedang diunggah</translation>
+    </message>
+    <message>
+        <source>Renamed to %1</source>
+        <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
+        <translation>Nama terganti</translation>
+    </message>
+    <message>
+        <source>Chosen</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
+        <translation>Dipilih</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueFilePath</name>
+    <message>
+        <source>move</source>
+        <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>on MEGA:</source>
+        <translatorcomment>Label descriping where the sync stall is originating.SNC-2565</translatorcomment>
+        <translation>Dalam MEGA:</translation>
+    </message>
+    <message>
+        <source>Local:</source>
+        <translatorcomment>Subtitle for the section containg local file details of the sync stall.SNC-2565</translatorcomment>
+        <translation>Lokal:</translation>
+    </message>
+    <message>
+        <source>File is being frequently changing.</source>
+        <translatorcomment>Label descriping the error causing sync stall. SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore rules unknown.</source>
+        <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detected Sym link.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detected special file.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a special file and cannot be synced.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Different file or folder is already present.</source>
+        <translatorcomment>Label descriping a sync stall is happening because an item with this name already exists.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parent folder does not exist.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud parent folder is removed.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filesystem error during operation.</source>
+        <translatorcomment>Label descriping a sync stall is happening because of filesystem failed operation ( Eg. folder creation).SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name too long for filesystem.</source>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot fingerprint file.</source>
+        <translatorcomment>Label descriping a sync stall is happening because MEGA cannot create a fingerprint for it.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hard link or Reparse Point detected.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a hard link and cannot be synced.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder could not be found. Ensure that the path is correct and try again.</source>
+        <translatorcomment>Label descriping the sync sall is caused by removed path.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MAC verification failure.</source>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleted or moved by user.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleted by user.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud node is deleted by the user.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to debris folder failed.</source>
+        <translatorcomment>Label descriping a sync stall is happening because MEGA could not move the item to sync debris folder.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore file malformed.</source>
+        <translatorcomment>Label descriping a sync stall is happening because exclusion rules file is malformed (.megaignore).SNC-2565</translatorcomment>
+        <translation>Ada kesalahan dalam file .megaignore. Ubah file untuk memperbaikinya.</translation>
+    </message>
+    <message>
+        <source>Error Listing folder in filesystem.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be read.SNC-2565</translatorcomment>
+        <translation>Tidak dapat mengambil metadata untuk folder ini. Periksa izin dan pindai ulang.</translation>
+    </message>
+    <message>
+        <source>Error identifying folder content in filesystem.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cloud node undecrypted.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the node cannot be decrypted( not owned by the user).SNC-2565</translatorcomment>
+        <translation>Item di drive Cloud tidak dapat didekripsi.</translation>
+    </message>
+    <message>
+        <source>Waiting for scanning to complete.</source>
+        <translatorcomment>Label descriping the sync sall is caused by ongoing scan operation.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for another move to complete.</source>
+        <translatorcomment>Label descriping the sync sall is caused by ongoing move operation.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source was moved elsewhere.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud version was move.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local filesystem cannot store this name.</source>
+        <translatorcomment>Label descriping a sync stall is happening because MEGA cannot store the file ( possible reasons: filenames with trailing spaces).SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fingerprint is missing or invalid.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file fingerprint is missing.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error not detected</source>
+        <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>
+        <translation>Kesalahan tidak diketahui</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueHeader</name>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>Terapkan</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>Terapkan untuk semua</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to ignore this issue?</source>
+        <translatorcomment>Text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action will ignore this issue and it will not be synced.</source>
+        <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translatorcomment>Ignore option for the file causing stall.SNC-2565</translatorcomment>
+        <translation>Abaikan</translation>
+    </message>
+    <message>
+        <source>Ignored</source>
+        <translatorcomment>Resolution message shown on item when the file has been ignored.SNC-2565</translatorcomment>
+        <translation>Diabaikan</translation>
+    </message>
+    <message>
+        <source>Solved</source>
+        <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssuesDialog</name>
+    <message>
+        <source>Stalled Issues</source>
+        <translatorcomment>Window tittle of sync stalls window.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync issues</source>
+        <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All issues:</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name conflicts:</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>Konflik nama:</translation>
+    </message>
+    <message>
+        <source>Item type conflicts:</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
+        <translation>Konflik jenis item:</translation>
+    </message>
+    <message>
+        <source>Other:</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>Lainnya:</translation>
+    </message>
+    <message>
+        <source>Solved:</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>Muat ulang</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button to close sync stalls dialog</translatorcomment>
+        <translation>Tutup</translation>
+    </message>
+    <message>
+        <source>Sync stall mode</source>
+        <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translatorcomment>Label tellong the user to choose the sync stall mode.DNS-1388</translatorcomment>
+        <translation>Pilih:</translation>
+    </message>
+    <message>
+        <source>Smart mode</source>
+        <translatorcomment>Button for choosing smart (automatic) mode for solving stalled issues.DNS-1388</translatorcomment>
+        <translation>Mode pintar</translation>
+    </message>
+    <message>
+        <source>Let Mega solve sync issues
+automatically</source>
+        <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced mode</source>
+        <translatorcomment>Button for choosing advanced (manual) mode for solving stalled issues. DNS-1388</translatorcomment>
+        <translation>Mode lanjutan</translation>
+    </message>
+    <message>
+        <source>Get full control of the sync issues</source>
+        <translatorcomment>Description of the advanced mode of sync stalls.DNS-1388</translatorcomment>
+        <translation>Dapatkan kontrol penuh atas masalah sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Solve issues</source>
+        <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No issues</source>
+        <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
+        <translation>[A]Pelajari lebih lanjut[/A]</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssuesModel</name>
+    <message>
+        <source>Processing issues</source>
+        <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Message box button to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
+        <translation>Muat ulang</translation>
+    </message>
+    <message>
+        <source>Some external changes were detected. Please, refresh the view.</source>
+        <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
+        <translation>Beberapa perubahan eksternal terdeteksi.
+Muat ulang tampilan.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n issues fixed</source>
+        <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Fixing issues</source>
+        <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some issues can&apos;t be fixed.
+Verify the permissions of the .megaignore file on your local sync folder locations.</source>
+        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issues can&apos;t be fixed.
+Verify the permissions of the .megaignore on file your local sync folder locations.</source>
+        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
+        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
+        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>StatusInfo</name>
     <message>
         <source>Starting</source>
@@ -6000,11 +7082,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 </context>
 <context>
     <name>StreamNodeSelector</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
-    </message>
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
@@ -6069,11 +7146,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Apakah anda yakin ingin menghentikan streaming?</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>File not found</source>
         <translatorcomment>Error message shown when a file is not found</translatorcomment>
         <translation>File tidak ditemukan</translation>
@@ -6133,26 +7205,87 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>SyncController</name>
+    <name>SymLinkHeader</name>
     <message>
-        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation>Anda tidak dapat mencadangkan folder ini karena sudah disinkronkan.</translation>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.SNC-2565</translatorcomment>
+        <translation>Batalkan</translation>
     </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button to confirm ignoring symlinks in all syncs.FM-1615</translatorcomment>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>Terapkan</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>Terapkan untuk semua</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to ignore all symlinks in all syncs?</source>
+        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action will ignore all present and future symlinks in all your syncs.</source>
+        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to ignore this symlink?</source>
+        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
+        <translation>Abaikan tautan simbolis ini?</translation>
+    </message>
+    <message>
+        <source>This action will ignore this symlink and it will not be synced.</source>
+        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translation>Tindakan ini akan mengabaikan tautan simbolis ini dan tidak akan disinkronkan.</translation>
+    </message>
+    <message>
+        <source>Detected sym link: [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced is a sym link.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tautan simbolis yang terdeteksi: [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Ignore symlink</source>
+        <translatorcomment>Button text to ignore the sym link causing sync stall.SNC-2565</translatorcomment>
+        <translation>Abaikan tautan simbolis</translation>
+    </message>
+    <message>
+        <source>Ignore all symlinks in all syncs</source>
+        <translatorcomment>Button text to ignore all sym link causing sync stall.SNC-2565</translatorcomment>
+        <translation>Abaikan tautan simbolik di semua sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translatorcomment>Title for solve actions for a sync stall.SNC-2565</translatorcomment>
+        <translation>Abaikan</translation>
+    </message>
+</context>
+<context>
+    <name>SyncAccountFullMessage</name>
+    <message>
+        <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
+        <translatorcomment>Warning text message shown in Sync pane when account storage is full.SNC-4208</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purchase more storage</source>
+        <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.SNC-4208</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SyncController</name>
     <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
         <translation>Folder sudah dicadangkan. Pilih yang lain.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation>Anda tidak dapat menyinkronkan folder ini karena sudah disinkronkan.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation>Anda tidak dapat menyinkronkan folder ini karena sudah dicadangkan.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
@@ -6160,39 +7293,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Anda tidak dapat mencadangkan folder ini karena berada di dalam folder yang disinkronkan.</translation>
     </message>
     <message>
-        <source>You can&apos;t sync folders that are inside synced folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>Anda tidak dapat menyinkronkan folder yang ada di dalam folder yang disinkronkan.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that are inside backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation>Anda tidak dapat menyinkronkan folder yang ada di dalam folder yang dicadangkan.</translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
         <translation>Anda tidak dapat mencadangkan folder ini karena berisi folder yang disinkronkan.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain synced folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>Anda tidak dapat menyinkronkan folder yang berisi folder yang disinkronkan.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation>Anda tidak dapat menyinkronkan folder yang berisi folder cadangan.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>Aplikasi tidak akan dapat mengunduh apa pun di sini.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6225,20 +7328,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Tidak dapat membuat cadangan. Untuk informasi lebih lanjut, hubungi [A]Bantuan[/A].</translation>
     </message>
     <message>
-        <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation>Anda tidak dapat mencadangkan “%1” karena itu folder root. Folder root adalah; folder tingkat teratas di perangkat atau komputer anda yang menampung semua folder dan file anda atau folder tempat sistem atau program diinstal. Kami tidak mengizinkan pengguna untuk mencadangkan folder root karena dapat menyebabkan konflik file atau kesalahan.
-.Untuk melanjutkan, pilih folder lain</translation>
-    </message>
-    <message>
-        <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation>Anda tidak dapat menyinkronkan “%1” karena itu folder root. Folder root adalah; folder tingkat teratas di perangkat atau komputer anda yang menampung semua folder dan file anda atau folder tempat sistem atau program diinstal. Kami tidak mengizinkan pengguna menyinkronkan folder akar karena dapat menyebabkan konflik atau kesalahan file.
-Untuk melanjutkan, pilih folder lain.</translation>
-    </message>
-    <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
         <translation>Anda tidak memiliki izin akses penuh ke folder bersama ini dan tidak dapat menyinkronkannya.</translation>
@@ -6249,11 +7338,6 @@ Untuk melanjutkan, pilih folder lain.</translation>
         <translation>Folder MEGA ini tidak dapat disinkronkan.</translation>
     </message>
     <message>
-        <source>The selected MEGA folder is already synced.</source>
-        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation>Folder MEGA yang dipilih sudah disinkronkan.</translation>
-    </message>
-    <message>
         <source>Folder contents already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
         <translation>Konten folder sudah disinkronkan.</translation>
@@ -6262,6 +7346,66 @@ Untuk melanjutkan, pilih folder lain.</translation>
         <source>Folder already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
         <translation>Folder sudah disinkronkan.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it is already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
+        <translation>Folder tidak dapat dicadangkan karena sudah disinkronkan</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s already synced</source>
+        <translatorcomment>Warning message indicating that the folder is already synced. CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena sudah disinkronkan</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as is already backed up</source>
+        <translatorcomment>Warning message indicating that the selected folder is a backup. CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena sudah dicadangkan</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a sync folder. CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena berada di dalam folder yang disinkronkan</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena berada di dalam folder yang dicadangkan</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains synced folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains synced folders. CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena berisi folder yang disinkronkan</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains backed up folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains backed up folders. CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena berisi folder yang dicadangkan</translation>
+    </message>
+    <message>
+        <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
+        <translation>Tidak dapat membuat cadangan”%1” karena ini adalah folder root. Untuk melanjutkan, pilih folder yang berbeda.</translation>
+    </message>
+    <message>
+        <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
+        <translation>Tidak dapat menyinkronkan”%1” karena ini adalah folder root. Untuk melanjutkan, pilih folder yang berbeda.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
+        <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena ada di tempat sampah MEGA</translation>
+    </message>
+    <message>
+        <source>This selection can&apos;t be synced as it’s a file.</source>
+        <translatorcomment>Warning message indicating that the selection is a file and files can´t be synced. CON-467</translatorcomment>
+        <translation>Pilihan ini tidak dapat disinkronkan karena ini adalah file</translation>
+    </message>
+    <message>
+        <source>This folder is already being synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
+        <translation>Folder ini sudah disinkronkan</translation>
     </message>
 </context>
 <context>
@@ -6276,51 +7420,226 @@ Untuk melanjutkan, pilih folder lain.</translation>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
         <translation>Anda menyinkronkan folder lokal yang dibagikan dengan VMWare. Folder ini tidak mendukung notifikasi sistem file, jadi untuk mendeteksi perubahan dan sinkronisasi, aplikasi harus terus memindai folder dan file di dalamnya. Jika memungkinkan, gunakan folder lain untuk mengurangi penggunaan CPU.</translation>
     </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Sinkronisasi dan pencadangan anda telah dinonaktifkan: %1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Cadangan anda telah dinonaktifkan: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>Sinkronisasi anda telah dinonaktifkan: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>Sinkronisasi “%1” anda telah dinonaktifkan karena folder lokal tidak tersedia atau anda tidak memiliki izin membaca dan menulis.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>Sinkronisasi “%1” anda telah dinonaktifkan karena folder lokal tidak tersedia atau anda tidak memiliki izin membaca dan menulis.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Sinkronisasi anda”%1” telah dinonaktifkan karena MEGA tidak dapat menyinkronkan atau mencadangkan folder VirtualBox.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Sync anda “%1” telah dibatalkan karena folder remote ada di Tempat sampah</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Sinkronisasi anda”%1” telah dinonaktifkan. Anda tidak memiliki akses penuh ke folder jarak jauh (atau sebagian darinya).</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>Sync “%1” anda telah di non-aktifkan karena folder lokal telah berubah</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>Sinkronisasi anda”%1” telah dinonaktifkan. Alasan: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason.SNC-3654</translatorcomment>
+        <translation>Cadangan anda “%1” telah dinonaktifkan sementara: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>Cadangan anda”%1” telah dinonaktifkan karena folder lokal tidak tersedia atau anda tidak memiliki izin baca dan tulis.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>Cadangan anda “%1” telah dinonaktifkan karena sinkronisasi folder bersama VirtualBox tidak didukung karena kekurangan dalam sistem file tersebut.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Cadangan anda”%1” telah dinonaktifkan karena folder MEGA ada di tempat sampah.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Cadangan anda “%1” telah dinonaktifkan. Anda tidak memiliki akses penuh ke folder MEGA (atau sebagian darinya).</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Cadangan anda”%1” telah dinonaktifkan karena folder lokal telah berubah.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>Cadangan anda”%1” telah dinonaktifkan karena folder MEGA telah berubah.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>Cadangan anda”%1” telah dinonaktifkan. Alasan: %2</translation>
+    </message>
+</context>
+<context>
+    <name>SyncItemExceedsSupoortedTreeDepthHeader</name>
+    <message>
+        <source>Unable to sync [B]%1[/B]</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file is more than 64 folders deep.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat melakukan sinkronisasi [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Target is too deep on your folder structure.
+Please move it to a location that is less than 64 folders deep.</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
+        <translation>Target terlalu dalam dalam struktur folder anda.
+Pindahkan ke lokasi yang kedalaman kurang dari 64 folder.</translation>
+    </message>
 </context>
 <context>
     <name>SyncItemModel</name>
     <message>
         <source>Sort by state</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by state in case the user clicks.</translatorcomment>
-        <translation>Urutkan berdasarkan negara bagian</translation>
+        <translation>Urutkan berdasarkan status</translation>
     </message>
     <message>
-        <source>Local Folder</source>
-        <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>Folder lokal</translation>
+        <source>Sync Name</source>
+        <translatorcomment>Syncs table column header, it shows sync name.SNC-2565</translatorcomment>
+        <translation>Sinkronisasi nama</translation>
     </message>
     <message>
-        <source>Sort by folder name</source>
-        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.</translatorcomment>
-        <translation>Urutkan berdasarkan nama folder</translation>
+        <source>Sort by sync name</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Urutkan berdasarkan nama sinkronisasi</translation>
     </message>
     <message>
-        <source>MEGA Folder</source>
-        <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>Folder MEGA</translation>
+        <source>State</source>
+        <translatorcomment>Syncs table column header, it shows sync state.SNC-2565</translatorcomment>
+        <translation>Status</translation>
     </message>
     <message>
-        <source>Sort by MEGA folder name</source>
-        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
-        <translation>Urutkan berdasarkan nama folder MEGA</translation>
+        <source>Sort by sync state</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by sync state in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Urutkan berdasarkan status sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Syncs table  column name, it shows number of files in a sync.SNC-2565</translatorcomment>
+        <translation>File</translation>
+    </message>
+    <message>
+        <source>Sort by file count</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by file count in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Urutkan berdasarkan jumlah file</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Syncs table column name, it shows number of folders in a sync.SNC-2565</translatorcomment>
+        <translation>Folder</translation>
+    </message>
+    <message>
+        <source>Sort by folder count</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder count in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Urutkan berdasarkan jumlah folder</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Syncs table column name, it shows number of downloads.SNC-2565</translatorcomment>
+        <translation>Unduhan</translation>
+    </message>
+    <message>
+        <source>Sort by Downloads</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by downloads in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Urutkan berdasarkan unduhan</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Syncs table column header, it shows number of uploads.SNC-2565</translatorcomment>
+        <translation>Unggahan</translation>
+    </message>
+    <message>
+        <source>Sort by Uploads</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by uploads in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Urutkan berdasarkan unggahan</translation>
+    </message>
+    <message>
+        <source>Loading</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Memuat</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Berhenti sementara</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Dibatalkan</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Memindai</translation>
+    </message>
+    <message>
+        <source>Syncing</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Menyinkronkan</translation>
+    </message>
+    <message>
+        <source>Monitoring</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Memantau</translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table).SNC-4208</translatorcomment>
+        <translation>Klik menu untuk tindakan sinkronisasi lainnya</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Berhenti</translation>
     </message>
 </context>
 <context>
     <name>SyncNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
-    </message>
-    <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
         <translation>Untuk menyinkronkan folder ini, anda harus memiliki izin akses penuh ke folder tersebut.</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Peringatan</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -6330,34 +7649,135 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>SyncSettingsUI</name>
+    <message>
+        <source>Synced Folders</source>
+        <translatorcomment>Section title for Synchronized folders table view.SNC-4208</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
+        <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.SNC-2565</translatorcomment>
+        <translation>Beberapa folder belum disinkronkan. Untuk informasi lebih lanjut, arahkan kursor ke ikon merah.</translation>
+    </message>
+    <message>
+        <source>Sync operation failed</source>
+        <translatorcomment>Title for message box shown when an error occurs in a sync.SNC-2565</translatorcomment>
+        <translation>Tidak dapat melakukan sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
+        <translatorcomment>Text in message box shown when an error occurs when removing a sync.SNC-2565</translatorcomment>
+        <translation>Folder anda”%1” tidak dapat menyinkronkan. Alasan: %2</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
+        <translation>Terjadi kesalahan saat menambahkan sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
+        <translation>Terjadi kesalahan saat menghapus cadangan</translation>
+    </message>
+    <message>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>MEssage box text shown when an error occurs when removing sync.SNC-4208</translatorcomment>
+        <translation>Sinkronisasi anda tidak dapat dihapus. Alasan: %1</translation>
+    </message>
+</context>
+<context>
+    <name>SyncSettingsUIBase</name>
+    <message>
+        <source>Saving synchronised folders…</source>
+        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
+        <translation>Menyimpan folder yang disinkronkan&#8230;</translation>
+    </message>
+    <message>
+        <source>Error opening megaignore file</source>
+        <translatorcomment>Text in message box shown when the ignore rules file cannot be opened.SNC-2565</translatorcomment>
+        <translation>Galat saat membuka file .megaignore</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
+        <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
+        <translation>[B]%1[/B] tidak dapat ditambahkan karena akun Pro&#xa0;Flexi anda telah dinonaktifkan karena kegagalan pembayaran atau anda telah membatalkan langganan anda. Untuk melanjutkan, lakukan pembayaran dan aktifkan kembali langganan anda.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncStallModeSelector</name>
+    <message>
+        <source>Sync stall mode</source>
+        <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smart</source>
+        <translatorcomment>Stalled issues solve mode to allow mega to try solve stalled issues when it can.SNC-2565</translatorcomment>
+        <translation>Cerdas</translation>
+    </message>
+    <message>
+        <source>Let MEGA solve sync issues automatically</source>
+        <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
+        <translation>Lanjutan</translation>
+    </message>
+    <message>
+        <source>Get full control of the sync issues</source>
+        <translatorcomment>Description for the advanced solve mode of stalled issues.SNC-2565</translatorcomment>
+        <translation>Dapatkan kontrol penuh atas masalah sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.SNC-2565</translatorcomment>
+        <translation>Pelajari selengkapnya</translation>
+    </message>
+</context>
+<context>
     <name>SyncTableView</name>
     <message>
         <source>Open in MEGA</source>
-        <translatorcomment>Context menu option that opens the folder in MEGA webclient.</translatorcomment>
+        <translatorcomment>Context menu option that opens the folder in MEGA webclient.SNC-2565</translatorcomment>
         <translation>Buka di MEGA</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
-        <translatorcomment>Context menu option that removes the sync.</translatorcomment>
+        <translatorcomment>Context menu option that removes the sync.SNC-2565</translatorcomment>
         <translation>Hapus folder yang disinkronkan</translation>
     </message>
-</context>
-<context>
-    <name>SyncTableViewTooltips</name>
     <message>
-        <source>Sync is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(sync enabled)</translatorcomment>
-        <translation>Sinkronisasi diaktifkan</translation>
+        <source>Run</source>
+        <translatorcomment>Menu action to resume syncing for syncs or backups.SNC-2565</translatorcomment>
+        <translation>Lanjutkan</translation>
     </message>
     <message>
-        <source>Sync is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(sync disabled)</translatorcomment>
-        <translation>Sinkronisasi dinonaktifkan</translation>
+        <source>Pause</source>
+        <translatorcomment>Menu action to pause syncing for syncs or backups.SNC-2565</translatorcomment>
+        <translation>Hentikan sementara</translation>
     </message>
     <message>
-        <source>Click menu for more Sync actions</source>
-        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>Klik menu tiga titik untuk tindakan sinkronisasi lainnya</translation>
+        <source>Add exclusions</source>
+        <translatorcomment>Button to allow adding exclusion rules for new syncs &amp; backups.SNC-2565</translatorcomment>
+        <translation>Tambahkan pengecualian</translation>
+    </message>
+    <message>
+        <source>Quick Rescan</source>
+        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
+        <translation>Pindai ulang cepat</translation>
+    </message>
+    <message>
+        <source>Deep Rescan</source>
+        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
+        <translation>Pemindaian ulang mendalam</translation>
+    </message>
+    <message>
+        <source>Edit .megaignore</source>
+        <translatorcomment>Menu action to open and start adding ignore rules file for a sync or backup folder.SNC-2565</translatorcomment>
+        <translation>Ubah .megaignore</translation>
     </message>
 </context>
 <context>
@@ -6374,26 +7794,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
-    <name>SyncsMenu</name>
+    <name>Syncs</name>
     <message>
-        <source>Add Sync</source>
-        <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>Tambah sync</translation>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
+        <translation>Pilih folder lokal untuk disinkronkan</translation>
     </message>
     <message>
-        <source>Syncs</source>
-        <translatorcomment>Menu option that shows syncs menu</translatorcomment>
-        <translation>Syncs</translation>
+        <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
+        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena anda tidak memiliki izin menulis</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation>Cadangan</translation>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
+        <translation>Pilih folder MEGA untuk disinkronkan</translation>
     </message>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>Tambahkan cadangan</translation>
+        <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
+        <translation>Folder tidak dapat disinkronkan karena tidak dapat ditemukan. Mungkin telah dipindahkan atau dihapus, atau anda mungkin tidak memiliki akses.</translation>
+    </message>
+    <message>
+        <source>%1 folder doesn&apos;t exist</source>
+        <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
+        <translation>”%1” folder tidak ada</translation>
     </message>
 </context>
 <context>
@@ -6666,7 +8091,7 @@ Untuk mendapatkan lebih banyak kuota, upgrade ke akun Pro atau tunggu [A] hingga
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>Masalah ditemukan</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7152,6 +8577,19 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     </message>
 </context>
 <context>
+    <name>TwoWaySyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu option used to add sync;SNC-3654</translatorcomment>
+        <translation>Tambah sync</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu option that shows syncs menu;SNC-3654</translatorcomment>
+        <translation>Sinkronisasi</translation>
+    </message>
+</context>
+<context>
     <name>UpgradeDialog</name>
     <message>
         <source>Depleted transfer quota</source>
@@ -7171,7 +8609,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Harga mata uang lokal hanya perkiraan. Semua transaksi yang ditampilkan dibebankan dalam Euro.</translation>
+        <translation>* Perkiraan harga dalam mata uang lokal anda. Akun anda akan ditagih dalam euro untuk semua transaksi.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7214,7 +8652,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Harga mata uang lokal hanya perkiraan. Semua transaksi yang ditampilkan dibebankan dalam Euro.</translation>
+        <translation>* Perkiraan harga dalam mata uang lokal anda. Akun anda akan ditagih dalam euro untuk semua transaksi.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7228,12 +8666,20 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     </message>
 </context>
 <context>
-    <name>UploadNodeSelector</name>
+    <name>UploadIssueHeader</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Kesalahan</translation>
+        <source>Can´t upload [B]%1[/B] to the selected location</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>Tidak dapat mengunggah [B]%1[/B] ke lokasi yang dipilih</translation>
     </message>
+    <message>
+        <source>Cannot reach the destination folder.</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UploadNodeSelector</name>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
@@ -7250,7 +8696,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Harap pilih unggah folder untuk file anda:</translation>
+        <translation>Pilih folder unggah untuk file anda:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -7288,11 +8734,6 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
 </context>
 <context>
     <name>Utilities</name>
-    <message>
-        <source>just now</source>
-        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>sekarang</translation>
-    </message>
     <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
@@ -7338,36 +8779,6 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro&#xa0;III</translation>
     </message>
-    <message numerus="yes">
-        <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation><numerusform>%n beberapa detik lalu </numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation><numerusform>%n beberapa menit lalu</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation><numerusform>%n beberapa jam lalu</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation><numerusform>%n beberapa hari lalu</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation><numerusform>%n beberapa bulan lalu</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation><numerusform>%n beberapa jam lalu</numerusform></translation>
-    </message>
     <message>
         <source>[DAYS] [HOURS]</source>
         <translatorcomment>String used to control formatting of time intervals. [DAYS] will be replaced by the days count and [HOURS] by the hours. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
@@ -7403,6 +8814,51 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1&#xa0;[A]d[/A]</translation>
     </message>
+    <message numerus="yes">
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 terpakai</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 (%2%) dari %3 terpakai</numerusform></translation>
+    </message>
+    <message>
+        <source>Added just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
+        <translation>Transfer baru saja selesai</translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Transfer selesai %n detik yang lalu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Transfer selesai %n menit yang lalu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Transfer selesai %n jam yang lalu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Transfer selesai %n hari yang lalu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Transfer selesai %n bulan lalu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
+        <translation><numerusform>Transfer selesai %n tahun lalu</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -7437,24 +8893,17 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
         <translation>Kirim ulang email</translation>
     </message>
     <message>
-        <source>Verify your account</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation>Verifikasi akun anda</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation>Akun anda telah dikunci sementara untuk kemungkinan penyalahgunaan. Harap verifikasi nomor telepon anda untuk membuka akun anda kembali.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation>Verifikasi sekarang</translation>
-    </message>
-    <message>
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
         <translation>Email terkirim</translation>
+    </message>
+</context>
+<context>
+    <name>ViewLoadingSceneUI</name>
+    <message>
+        <source>Stop</source>
+        <translatorcomment>button in auto solve view of stalled issues to stop the auto solve process.SNC-2565</translatorcomment>
+        <translation>Berhenti</translation>
     </message>
 </context>
 <context>

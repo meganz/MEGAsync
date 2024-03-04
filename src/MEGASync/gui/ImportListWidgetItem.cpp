@@ -38,7 +38,7 @@ void ImportListWidgetItem::updateGui()
     QString name;
     if (fileSize)
     {
-        name = fileName + QString::fromAscii(" (") + Utilities::getSizeString(fileSize) + QString::fromAscii(")");
+        name = fileName + QString::fromLatin1(" (") + Utilities::getSizeString(fileSize) + QString::fromLatin1(")");
     }
     else
     {

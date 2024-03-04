@@ -2,7 +2,7 @@
 #include "ui_OverQuotaDialog.h"
 #include "mega/types.h"
 #include "Utilities.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 
 #include <QtConcurrent/QtConcurrent>
 #include <QDesktopServices>
@@ -185,9 +185,7 @@ void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
 
 void OverQuotaDialog::onUpgradeClicked()
 {
-    QString url{QString::fromUtf8("mega://#pro")};
-    Utilities::getPROurlWithParameters(url);
-    Utilities::openUrl(QUrl(url));
+    Utilities::upgradeClicked();
     QDialog::accept();
 }
 

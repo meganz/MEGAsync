@@ -38,7 +38,7 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 {
     QString text = ui->eLinks->toPlainText();
     links = extractLinks(text);
-    links = links.toSet().toList();
+    links = links.toSet().values();
     if (links.size() == 0)
     {
         QMegaMessageBox::MessageBoxInfo info;
@@ -76,11 +76,11 @@ QStringList PasteMegaLinksDialog::extractLinks(QString text)
 {
     QStringList finalLinks;
     QString separator;
-    separator.append(QString::fromAscii("mega://").append(QString::fromUtf8("|")));
-    separator.append(QString::fromAscii("https://mega.co.nz/").append(QString::fromUtf8("|")));
-    separator.append(QString::fromAscii("https://mega.nz/").append(QString::fromUtf8("|")));
-    separator.append(QString::fromAscii("http://mega.co.nz/").append(QString::fromUtf8("|")));
-    separator.append(QString::fromAscii("http//mega.nz/"));
+    separator.append(QString::fromLatin1("mega://").append(QString::fromUtf8("|")));
+    separator.append(QString::fromLatin1("https://mega.co.nz/").append(QString::fromUtf8("|")));
+    separator.append(QString::fromLatin1("https://mega.nz/").append(QString::fromUtf8("|")));
+    separator.append(QString::fromLatin1("http://mega.co.nz/").append(QString::fromUtf8("|")));
+    separator.append(QString::fromLatin1("http//mega.nz/"));
 
     QStringList tempLinks = text.split(QRegExp(separator));
     tempLinks.removeAt(0);
@@ -100,7 +100,7 @@ QStringList PasteMegaLinksDialog::extractLinks(QString text)
 QString PasteMegaLinksDialog::checkLink(QString link)
 {
     link = QUrl::fromPercentEncoding(link.toUtf8());
-    link.replace(QChar::fromAscii(' '), QChar::fromAscii('+'));
+    link.replace(QChar::fromLatin1(' '), QChar::fromLatin1('+'));
 
     QString urlLink = QString::fromUtf8("https://mega.nz/");
 

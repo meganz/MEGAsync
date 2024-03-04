@@ -85,8 +85,7 @@ void ConnectivityChecker::onTestFinished(QNetworkReply *reply)
                 .arg(proxy.user()).arg(proxy.password().size()).arg(statusCode.toInt()).arg(reply->errorString());
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
 
-        emit testError();
-        emit testFinished();
+        emit testFinished(false);
         return;
     }
 
@@ -97,13 +96,11 @@ void ConnectivityChecker::onTestFinished(QNetworkReply *reply)
                 .arg(proxy.user()).arg(proxy.password().size()).arg(data);
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
 
-        emit testError();
-        emit testFinished();
+        emit testFinished(false);
         return;
     }
 
-    emit testSuccess();
-    emit testFinished();
+    emit testFinished(true);
 }
 
 void ConnectivityChecker::onTestTimeout()

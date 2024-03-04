@@ -1,12 +1,13 @@
 #include "mega/types.h"
 #include "StreamingFromMegaDialog.h"
 #include "ui_StreamingFromMegaDialog.h"
-#include "node_selector/gui/NodeSelector.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "DialogOpener.h"
 
 #include "QMegaMessageBox.h"
 #include "platform/Platform.h"
 #include "control/Utilities.h"
+#include "Platform.h"
 #include <MegaNodeNames.h>
 
 #include <QCloseEvent>
@@ -301,11 +302,11 @@ void StreamingFromMegaDialog::updateStreamingState()
     }
 }
 
-void StreamingFromMegaDialog::generateStreamURL()
+bool StreamingFromMegaDialog::generateStreamURL()
 {
     if (!mSelectedMegaNode)
     {
-        return;
+        return false;
     }
 
     std::unique_ptr<char[]> link(megaApi->httpServerGetLocalLink(mSelectedMegaNode.get()));
@@ -318,10 +319,13 @@ void StreamingFromMegaDialog::generateStreamURL()
         msgInfo.parent = this;
 
         QMegaMessageBox::warning(msgInfo);
+
+        return false;
     }
     else
     {
         streamURL = QString::fromUtf8(link.get());
+        return true;
     }
 }
 
@@ -333,19 +337,7 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
         return;
     }
 
-#ifndef __APPLE__
-#ifdef _WIN32
-    QString command = QString::fromUtf8("\"%1\" \"%2\"").arg(QDir::toNativeSeparators(app)).arg(streamURL);
-#else
-    QString command = QString::fromUtf8("%1 \"%2\"").arg(QDir::toNativeSeparators(app)).arg(streamURL);
-#endif
-    QProcess::startDetached(command);
-#else
-    QString args;
-    args = QString::fromUtf8("-a ");
-    args += QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromAscii(" \"%1\"").arg(streamURL);
-    QProcess::startDetached(QString::fromAscii("open ") + args);
-#endif
+    Platform::getInstance()->streamWithApp(app, streamURL);
 }
 
 void StreamingFromMegaDialog::showStreamingError()
@@ -374,11 +366,13 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
     }
     else
     {
-        lastStreamSelection = LastStreamingSelection::FROM_LOCAL_NODE;
         mSelectedMegaNode = std::shared_ptr<MegaNode>(node);
-        updateFileInfo(MegaNodeNames::getNodeName(node), LinkStatus::CORRECT);
-        generateStreamURL();
-        hideStreamingError();
+        if(generateStreamURL())
+        {
+            lastStreamSelection = LastStreamingSelection::FROM_LOCAL_NODE;
+            updateFileInfo(MegaNodeNames::getNodeName(node), LinkStatus::CORRECT);
+            hideStreamingError();
+        }
     }
 }
 
@@ -414,7 +408,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
             ui->bOpenOther->setEnabled(true);
             ui->bCopyLink->setEnabled(true);
             ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                           "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
+                                                           "stop: 0 rgb(246,247,250), stop: 1 rgb(232,233,235));"));
         }
         else if(LinkStatus::TRANSFER_OVER_QUOTA == status)
         {
@@ -423,7 +417,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
             ui->bOpenOther->setEnabled(true);
             ui->bCopyLink->setEnabled(true);
             ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                           "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
+                                                           "stop: 0 rgb(246,247,250), stop: 1 rgb(232,233,235));"));
         }
         else
         {

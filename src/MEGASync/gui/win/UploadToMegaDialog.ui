@@ -111,6 +111,9 @@ font-size: 11px;
         <property name="readOnly">
          <bool>true</bool>
         </property>
+        <property name="placeholderText">
+         <string notr="true"/>
+        </property>
        </widget>
       </item>
       <item>

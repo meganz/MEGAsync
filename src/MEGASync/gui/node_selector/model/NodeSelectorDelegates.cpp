@@ -97,7 +97,7 @@ bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, cons
         {
             margin = ICON_MARGIN;
         }
-        if (rect.width() < (fm.width(tooltipText) + margin))
+        if (rect.width() < (fm.horizontalAdvance(tooltipText) + margin))
         {
                 QToolTip::showText(event->globalPos(), tooltipText);
                 return true;
@@ -164,7 +164,7 @@ bool DateColumnDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, c
         QString tooltipText = index.data(Qt::DisplayRole).toString();
         QFontMetrics fm = option.fontMetrics;
 
-        if (rect.width() < (fm.width(tooltipText)))
+        if (rect.width() < (fm.horizontalAdvance(tooltipText)))
         {
                 QToolTip::showText(event->globalPos(), tooltipText);
                 return true;

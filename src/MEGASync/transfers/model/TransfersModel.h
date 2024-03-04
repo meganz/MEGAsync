@@ -5,7 +5,7 @@
 #include "TransferItem.h"
 #include "TransferMetaData.h"
 #include "TransferRemainingTime.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 
 #include <megaapi.h>
 
@@ -132,10 +132,11 @@ public:
 
     TransfersToProcess processTransfers();
     void clear();
+    void clearTransfersCount();
 
 public slots:
     void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);
-    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*e);
+    void onTransferFinish(mega::MegaApi* megaApi, mega::MegaTransfer* transfer, mega::MegaError* e);
     void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferTemporaryError(mega::MegaApi*,mega::MegaTransfer* transfer,mega::MegaError*);
 
@@ -144,6 +145,7 @@ private:
     bool isRetriedFolder(mega::MegaTransfer* transfer);
     bool isCompletedFromFolderRetry(mega::MegaTransfer* transfer);
     bool isIgnored(mega::MegaTransfer* transfer, bool removeCache = false);
+    bool isTempTransfer(mega::MegaTransfer* transfer, bool removeCache = false);
     void updateFailedTransfer(QExplicitlySharedDataPointer<TransferData> data, mega::MegaTransfer* transfer,
                               mega::MegaError* e);
 
@@ -183,6 +185,18 @@ private:
 
     QList<int> mRetriedFolder;
     QList<int> mIgnoredFiles;
+};
+
+struct DownloadTransferInfo
+{
+    mega::MegaHandle nodeHandle;
+};
+
+struct UploadTransferInfo
+{
+    QString localPath;
+    QString filename;
+    mega::MegaHandle parentHandle;
 };
 
 class TransfersModel : public QAbstractItemModel
@@ -264,6 +278,10 @@ public:
 
     bool areAllPaused() const;
 
+
+    const QExplicitlySharedDataPointer<const TransferData> activeDownloadTransferFound(DownloadTransferInfo *info) const;
+    const QExplicitlySharedDataPointer<const TransferData> activeUploadTransferFound(UploadTransferInfo* info) const;
+
     const QExplicitlySharedDataPointer<const TransferData> getTransferByTag(int tag) const;
     QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag);
 
@@ -330,8 +348,9 @@ private:
     void removeTransfer(int row);
     void sendDataChanged(int row);
     void restoreTagsByRow();
+    QList<QExplicitlySharedDataPointer<TransferData>> getTransfersToIterate() const;
 
-    void retryTransfers(const QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>>& transfersToRetry);
+    void retryTransfers(const QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> &transfersToRetry);
 
     bool isUiBlockedModeActive() const ;
     void setUiBlockedMode(bool state);
@@ -380,7 +399,7 @@ private:
 
     QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
     QList<TransferTag> mRowsToCancel;
-    QWidget* mCancelledFrom;
+    QPointer<QWidget> mCancelledFrom;
     bool mSyncsInRowsToCancel;
 
     QList<TransferTag> mFailedTransferToClear;

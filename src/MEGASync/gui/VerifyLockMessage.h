@@ -8,7 +8,7 @@
 #include "QTMegaRequestListener.h"
 
 #ifdef __APPLE__
-    #include "macx/LockedPopOver.h"
+    #include "platform/macx/NativeMacPopover.h"
     #import <objc/runtime.h>
 #else
     #include "LockedPopOver.h"
@@ -42,6 +42,7 @@ private slots:
 protected:
     mega::MegaApi *megaApi;
     mega::QTMegaRequestListener *delegateListener;
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
     void mousePressEvent(QMouseEvent *event);
     void changeEvent(QEvent *event);
@@ -52,8 +53,7 @@ private:
     bool m_haveMainDialog;
 
 #ifdef __APPLE__
-    std::unique_ptr<LockedPopOver> m_nativeWidget{new LockedPopOver()};
-    id m_popover;
+    NativeMacPopover mPopOver;
 #else
     std::unique_ptr<LockedPopOver> mLockedPopOver{new LockedPopOver(this)};
 #endif

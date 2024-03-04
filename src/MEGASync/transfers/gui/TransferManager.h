@@ -3,7 +3,7 @@
 
 #include "TransferScanCancelUi.h"
 #include "megaapi.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "MenuItemAction.h"
 #include "Utilities.h"
 #include "TransferItem.h"
@@ -25,10 +25,6 @@ class TransferManager;
 namespace Ui {
 class TransferManagerDragBackDrop;
 }
-
-#include <QObject>
-#include <QPushButton>
-#include <QEvent>
 
 class TransferManager : public QDialog
 {
@@ -89,6 +85,7 @@ private:
     QMap<TransfersWidget::TM_TAB, QFrame*> mTabFramesToggleGroup;
     QMap<TransfersWidget::TM_TAB, QLabel*> mNumberLabelsGroup;
     QMap<TransfersWidget::TM_TAB, QWidget*> mTabNoItem;
+    QMap<TransfersWidget::TM_TAB, QPair<int, Qt::SortOrder>> mTabSortCriterion;
 
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
@@ -108,6 +105,7 @@ private:
     QuotaState mTransferQuotaState;
     bool hasOverQuotaErrors();
 
+    bool mFoundStalledIssues;
     ButtonIconManager mButtonIconManager;
 
     void refreshStateStats();
@@ -147,6 +145,8 @@ private slots:
     void on_bPause_toggled();
     void pauseResumeTransfers(bool isPaused);
 
+    void onStalledIssuesStateChanged();
+    void checkContentInfo();
     void on_bOpenLinks_clicked();
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
@@ -172,11 +172,14 @@ private slots:
 
     void refreshSpeed();
     void refreshView();
+    void disableTransferManager(bool state);
 
     void updateTransferWidget(QWidget* widgetToShow);
     void onScanningAnimationUpdate();
 
     void onTransferQuotaExceededUpdate();
+
+    void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
 };
 
 #endif // TRANSFERMANAGER_H

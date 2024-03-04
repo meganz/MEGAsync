@@ -7,7 +7,7 @@
 #include <QPointer>
 #include <QMutex>
 
-#include <Preferences.h>
+#include "Preferences/Preferences.h"
 #include "TransferItem.h"
 
 namespace mega
@@ -17,7 +17,7 @@ namespace mega
     class MegaNode;
 }
 
-class MegaNotification;
+class DesktopAppNotification;
 class TransferItem;
 
 struct TransferMetaDataItemId
@@ -262,7 +262,7 @@ public:
     virtual bool finish(mega::MegaTransfer*, mega::MegaError *);
 
     void setInitialTransfers(int newTotalTransfers);
-    void setNotification(MegaNotification* newNotification);
+    void setNotification(DesktopAppNotification* newNotification);
     void unlinkNotification();
 
     unsigned long long getAppId() const;
@@ -345,7 +345,7 @@ private:
     void addInitialPendingTopLevelTransfer();
     void increaseFinishedTopLevelTransfers(mega::MegaTransfer* transfer);
 
-    QPointer<MegaNotification> mNotification;
+    QPointer<DesktopAppNotification> mNotification;
     QMetaObject::Connection mNotificationDestroyedConnection;
     unsigned long long mNonExistsFailAppId;
 };

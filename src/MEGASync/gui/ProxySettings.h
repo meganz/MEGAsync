@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "MegaProgressCustomDialog.h"
 #include "MegaApplication.h"
 #include "ConnectivityChecker.h"
@@ -21,8 +21,7 @@ public:
     ~ProxySettings();
 
 private slots:
-    void onProxyTestError();
-    void onProxyTestSuccess();
+    void onProxyTestFinished(bool success);
 
     void on_bUpdate_clicked();
     void on_bCancel_clicked();

@@ -94,8 +94,7 @@ void TransfersSummaryWidget::paintEvent(QPaintEvent*)
     QPainter painter(this);
 
     painter.setRenderHints(QPainter::Antialiasing
-                           | QPainter::SmoothPixmapTransform
-                           | QPainter::HighQualityAntialiasing);
+                           | QPainter::SmoothPixmapTransform);
 
     // 1 - draw white background
     painter.setPen(Qt::NoPen);
@@ -454,7 +453,7 @@ void TransfersSummaryWidget::adjustFontSizeToText(QFont *font, int maxWidth, QSt
     {
         font->setPixelSize(fontsize);
         QFontMetrics fm(*font);
-        measuredWidth=fm.width(uploadText);
+        measuredWidth=fm.horizontalAdvance(uploadText);
         fontsize--;
     } while (measuredWidth > maxWidth  && fontsize > 1);
 }
@@ -471,7 +470,7 @@ int TransfersSummaryWidget::adjustSizeToText(QFont *font, int maxWidth, int minW
     int measuredWidth;
     font->setPixelSize(fontsize);
     QFontMetrics fm(*font);
-    measuredWidth=fm.width(text);
+    measuredWidth=fm.horizontalAdvance(text);
     int widthtoreturn = measuredWidth;
     int textMaxWidth = maxWidth - margins;
 
@@ -500,7 +499,7 @@ int TransfersSummaryWidget::adjustSizeToText(QFont *font, int maxWidth, int minW
         }
 
         text = QString::fromUtf8("%1/%2").arg(spartial).arg(stotal);
-        measuredWidth=fm.width(text);
+        measuredWidth=fm.horizontalAdvance(text);
     }
 
     return qMax(minWidth, qMin(maxWidth, widthtoreturn + margins));

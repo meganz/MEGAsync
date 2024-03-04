@@ -1,0 +1,16 @@
+module onboard.syncs_types
+MainFlow 1.0 MainFlow.qml
+Header 1.0 Header.qml
+Footer 1.0 Footer.qml
+InfoAccount 1.0 InfoAccount.qml
+SyncsPage 1.0 SyncsPage.qml
+SyncsType 1.0 SyncsType.qml
+SyncsVerticalButton 1.0 SyncsVerticalButton.qml
+SyncsHorizontalButton 1.0 SyncsHorizontalButton.qml
+ResumePage 1.0 ResumePage.qml
+ResumePageForm 1.0 ResumePageForm.ui.qml
+DeviceNamePage 1.0 DeviceNamePage.qml
+DeviceNamePageForm 1.0 DeviceNamePageForm.ui.qml
+InstallationTypePage 1.0 InstallationTypePage.qml
+InstallationTypePageForm 1.0 InstallationTypePageForm.ui.qml
+NavigationInfo 1.0 NavigationInfo.qml

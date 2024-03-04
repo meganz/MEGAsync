@@ -58,6 +58,11 @@ tags
 build-MEGA*
 build-cmake*
 build-x??-*/
+built64/
+built32/
+sign64/
+sign32/
+qt-deploy-*
 
 .vs
 
@@ -83,3 +88,6 @@ src/.qmake.stash
 *.stash
 *.Debug
 *.Release
+
+# qml
+*.qtds

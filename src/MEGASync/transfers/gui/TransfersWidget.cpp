@@ -46,6 +46,13 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     }
 }
 
+TransfersWidget::~TransfersWidget()
+{
+    delete ui;
+    if (tDelegate) delete tDelegate;
+    if (mProxyModel) delete mProxyModel;
+}
+
 void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersManagerSortFilterProxyModel(ui->tvTransfers);
@@ -64,13 +71,6 @@ void TransfersWidget::setupTransfers()
     connect(app->getTransfersModel(), &TransfersModel::rowsAboutToBeMoved, this, &TransfersWidget::onRowsAboutToBeMoved);
 
     configureTransferView();
-}
-
-TransfersWidget::~TransfersWidget()
-{
-    delete ui;
-    if (tDelegate) delete tDelegate;
-    if (mProxyModel) delete mProxyModel;
 }
 
 void TransfersWidget::configureTransferView()
@@ -100,6 +100,7 @@ TransfersModel* TransfersWidget::getModel()
 void TransfersWidget::onHeaderItemClicked(int sortBy, Qt::SortOrder order)
 {
     mProxyModel->sort(sortBy, order);
+    emit sortCriterionChanged(sortBy, order);
 }
 
 void TransfersWidget::on_tCancelClearVisible_clicked()
@@ -777,4 +778,18 @@ QString TransfersWidget::getPauseTooltip(TM_TAB tab)
             return tr("Pause all transfers");
         }
     }
+}
+
+void TransfersWidget::setSortCriterion(int sortBy, Qt::SortOrder order)
+{
+    auto columns = ui->wTableHeader->findChildren<TransferWidgetHeaderItem*>();
+    foreach(auto column, columns)
+    {
+        if(column->sortCriterion() == sortBy)
+        {
+            column->setSortOrder(order);
+            break;
+        }
+    }
+    mProxyModel->sort(sortBy, order);
 }

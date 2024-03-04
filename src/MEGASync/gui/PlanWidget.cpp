@@ -1,7 +1,7 @@
 #include "PlanWidget.h"
 #include "ui_PlanWidget.h"
 #include "Utilities.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
 
@@ -226,6 +226,7 @@ bool PlanWidget::eventFilter(QObject* obj, QEvent* event)
             QString url = getProURL();
             Utilities::getPROurlWithParameters(url);
             Utilities::openUrl(QUrl(url));
+
             return true;
         }
         else if (event->type() == QEvent::ToolTip)

@@ -2,7 +2,7 @@
 #include "DialogOpener.h"
 
 #include <TransfersModel.h>
-#include <Preferences.h>
+#include "Preferences/Preferences.h"
 #include <QMegaMessageBox.h>
 
 #include <QCloseEvent>
@@ -99,7 +99,7 @@ void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     }
 }
 
-void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error)
+void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaError* error)
 {
     if(mHadGlobalPause)
     {
@@ -117,7 +117,17 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error
     mTransferError = error->getErrorCode();
     mTransferFinished = true;
 
-    if (!warningShown)
+    if(transfer->getState() == mega::MegaTransfer::STATE_CANCELLED)
+    {
+        preparing = false;
+        warningShown = false;
+
+        if(mSendProgress)
+        {
+            mSendProgress->close();
+        }
+    }
+    else if (!warningShown)
     {
         postUpload();
     }
@@ -127,8 +137,10 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error
 
 void BugReportDialog::onTransferTemporaryError(MegaApi*, MegaTransfer*, MegaError *e)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Temporary error at report dialog: %1")
-                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                 QString::fromUtf8("Temporary error at report dialog: %1")
+                     .arg(QString::fromUtf8(mega::MegaError::getErrorString(e->getErrorCode(), mega::MegaError::API_EC_UPLOAD)))
+                     .toUtf8().constData());
 }
 
 void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
@@ -145,7 +157,7 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
             if (e->getErrorCode() == MegaError::API_OK)
             {
                 QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.parent = this;
+                msgInfo.parent = this->parentWidget();
                 msgInfo.title = tr("Bug report");
                 msgInfo.text = tr("Bug report success!");
                 msgInfo.informativeText = tr("Your bug report has been submitted, a confirmation email will sent to you accordingly.");
@@ -153,11 +165,8 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
                 msgInfo.buttons = QMessageBox::Ok;
                 msgInfo.iconPixmap = QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/bug_report_success.png")
                                                                             : QString::fromUtf8(":/images/bug_report_success@2x.png"));
-                msgInfo.finishFunc = [this](QPointer<QMessageBox>)
-                {
-                    close();
-                };
 
+                accept();
                 QMegaMessageBox::information(msgInfo);
             }
             else
@@ -189,10 +198,9 @@ void BugReportDialog::showErrorMessage()
     msgInfo.buttons = QMessageBox::Ok;
     msgInfo.finishFunc = [this](QPointer<QMessageBox>)
     {
+        preparing = false;
         errorShown = false;
-        close();
     };
-
 
     if (mTransferFinished && mTransferError == MegaError::API_EEXIST)
     {
@@ -207,7 +215,7 @@ void BugReportDialog::showErrorMessage()
                     tr("Bug report can't be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]")
                         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                         + QString::fromAscii("\n");
+                         + QString::fromLatin1("\n");
 
         QMegaMessageBox::warning(msgInfo);
     }
@@ -321,6 +329,10 @@ void BugReportDialog::cancelSendReport()
     warningShown = true;
 
     MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, true);
+    if(mSendProgress)
+    {
+        mSendProgress->close();
+    }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = this;
@@ -340,7 +352,6 @@ void BugReportDialog::cancelSendReport()
             cancelCurrentReportUpload();
             preparing = false;
             warningShown = false;
-            reject();
         }
         else
         {

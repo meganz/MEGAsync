@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ko" sourcelanguage="en">
 <context>
@@ -50,6 +50,14 @@
     </message>
 </context>
 <context>
+    <name>AccountStatusController</name>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him. SNC-4122</translatorcomment>
+        <translation>당신의 계정은 관리자에 의해 정지되었습니다. 자세한 사항은 비즈니스 계정 관리자에게 연락하세요.</translation>
+    </message>
+</context>
+<context>
     <name>AddBackupDialog</name>
     <message>
         <source>Add backup folder</source>
@@ -77,6 +85,11 @@
         <translation>백업 저장 위치:</translation>
     </message>
     <message>
+        <source>Add exclusions</source>
+        <translatorcomment>Button that allows users to add exclusion rules for their new backups.SNC-2565</translatorcomment>
+        <translation>제외 추가</translation>
+    </message>
+    <message>
         <source>Add</source>
         <translatorcomment>Button text to add a backup</translatorcomment>
         <translation>추가</translation>
@@ -102,7 +115,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>이름을 입력하거나, 절대 경로(와일드카드 *와 ?가 허용됩니다)또는 동기화에서 제외할 파일 또는 폴더를 선택하세요.</translation>
+        <translation>이름을 입력하거나, 절대 경로(와일드카드 *와 ?가 허용됩니다) 또는 동기화에서 제외할 파일 또는 폴더를 선택하세요</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -128,11 +141,6 @@
         <source>Choose</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
         <translation>선택</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation>경고</translation>
     </message>
     <message>
         <source>Please enter a valid file name or absolute path.</source>
@@ -276,11 +284,6 @@
         <translation>[A]는 삭제 또는 비활성화 되었습니다</translation>
     </message>
     <message>
-        <source>[A] established you as a contact</source>
-        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A]님이 당신의 연락처 요청을 허용하였습니다</translation>
-    </message>
-    <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
         <translation>[A]님이 당신을 연락처에서 차단하였습니다</translation>
@@ -302,7 +305,7 @@
     </message>
     <message>
         <source>[A] accepted your contact request</source>
-        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request. (SNC-3341)</translatorcomment>
         <translation>[A]님이 당신의 연락처 요청을 허용하였습니다</translation>
     </message>
     <message>
@@ -398,16 +401,11 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[X]님이 항목 #개를 수정하였습니다</numerusform></translation>
+        <translation><numerusform>[A]님이 항목 %n개를 수정하였습니다</numerusform></translation>
     </message>
 </context>
 <context>
     <name>BackupItemModel</name>
-    <message>
-        <source>Sort by state</source>
-        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by check state</translatorcomment>
-        <translation>상태로 정렬</translation>
-    </message>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
@@ -417,6 +415,26 @@
         <source>Sort by name</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
         <translation>이름으로 정렬</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translatorcomment>backup state column header name for backlups table in settings dialog.SNC-2565</translatorcomment>
+        <translation>상태</translation>
+    </message>
+    <message>
+        <source>Sort by backup state</source>
+        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by backup state.SNC-2565</translatorcomment>
+        <translation>백업 상태로 정렬</translation>
+    </message>
+    <message>
+        <source>Backup is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled).SNC-4208</translatorcomment>
+        <translation>백업 활성화됨</translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled).SNC-4208</translatorcomment>
+        <translation>백업 비활성화됨</translation>
     </message>
 </context>
 <context>
@@ -429,7 +447,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>&quot;%1&#8221; 폴더는 이미 백업에 존재합니다. 백업을 계속하려면 새 폴더의 이름을 바꾸세요. 컴퓨터의 폴더 이름은 바뀌지 않습니다.</translation>
+        <translation>&quot;%1&quot; 폴더는 이미 백업에 존재합니다. 백업을 계속하려면 새 폴더의 이름을 바꾸세요. 컴퓨터의 폴더 이름은 바뀌지 않습니다.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
@@ -467,38 +485,104 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>&quot;%1&#8221; 폴더는 이미 백업에 존재합니다. 백업을 계속하려면 새 폴더의 이름을 바꾸세요.</translation>
+        <translation>&quot;%1&quot; 폴더는 이미 백업에 존재합니다. 백업을 계속하려면 새 폴더의 이름을 바꾸세요.</translation>
+    </message>
+</context>
+<context>
+    <name>BackupSettingsUI</name>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Title for backups tab in the settings.SNC-2565</translatorcomment>
+        <translation>백업</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
+        <translation>MEGA 백업 폴더를 이동 또는 삭제하던 중 오류</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
+        <translation>MEGA 백업 폴더를 이동 또는 삭제할 수 없습니다. 사유: %1</translation>
+    </message>
+    <message>
+        <source>Sync operation failed</source>
+        <translatorcomment>Title for error dialog shown when a  sync fails.SNC-2565</translatorcomment>
+        <translation>동기화 불가</translation>
+    </message>
+    <message>
+        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
+        <translatorcomment>text for error dialog shown when a  sync fails, folder path and reason are given during runtime in the placeholders.SNC-2565</translatorcomment>
+        <translation>“%1” 폴더를 동기화할 수 없습니다. 사유: %2</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
+        <translation>동기화 추가 중 오류</translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
+        <translation>백업 중지 중 오류</translation>
+    </message>
+    <message>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder.SNC-4208</translatorcomment>
+        <translation>동기화를 제거할 수 없습니다. 사유: %1</translation>
+    </message>
+    <message>
+        <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
+        <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.SNC-2565</translatorcomment>
+        <translation>일부 폴더가 백업 되지 않았습니다. 자세한 정보는 빨간 아이콘에 커서를 올려놓으세요.</translation>
+    </message>
+</context>
+<context>
+    <name>BackupSyncsMenu</name>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups;SNC-3654</translatorcomment>
+        <translation>백업 추가</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Menu option that shows backups menu;SNC-3654</translatorcomment>
+        <translation>백업</translation>
     </message>
 </context>
 <context>
     <name>BackupTableView</name>
     <message>
-        <source>Open in MEGA</source>
-        <translatorcomment>Menu action that opens MEGA webclient to show this backup</translatorcomment>
-        <translation>MEGA에서 열기</translation>
-    </message>
-    <message>
-        <source>Remove backup</source>
-        <translatorcomment>Menu action removes the backup</translatorcomment>
+        <source>Stop backup</source>
+        <translatorcomment>Menu action that stops the backup.SNC-2565</translatorcomment>
         <translation>백업 중지</translation>
     </message>
 </context>
 <context>
-    <name>BackupTableViewTooltips</name>
-    <message>
-        <source>Backup is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation>백업 활성화됨</translation>
+    <name>BackupsModel</name>
+    <message numerus="yes">
+        <source>Folder wasn&apos;t backed up. Try again.</source>
+        <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
+        <translation><numerusform>이 폴더들은 백업되지 않았습니다. 다시 시도하세요.</numerusform></translation>
     </message>
     <message>
-        <source>Backup is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation>백업 비활성화됨</translation>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>같은 이름을 가진 폴더는 백업할 수 없습니다. 백업을 진행하려면 이름을 바꾸세요. 컴퓨터의 폴더 이름은 바뀌지 않습니다.</translation>
+    </message>
+    <message numerus="yes">
+        <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
+        <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
+        <translation><numerusform>같은 이름을 가진 일부 폴더가 백업에 존재합니다. 백업을 진행하려면 이름을 변경하세요. 폴더 이름은 컴퓨터에서는 바뀌지 않습니다.</numerusform></translation>
     </message>
     <message>
-        <source>Click menu for more Backup actions</source>
-        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>더 많은 백업 행동은 점 3개 메뉴를 클릭하세요</translation>
+        <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
+        <translatorcomment>Warning message stating that a backup can´t contain another backup CON-468</translatorcomment>
+        <translation>백업 폴더는 다른 백업 폴더를 포함하거나 포함될 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Warning message stating that the selected folder can´t be reached. CON-468</translatorcomment>
+        <translation>폴더를 찾을 수 없어서 백업할 수 없습니다. 폴더가 이동, 삭제, 또는 접근 권한이 없을 수 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -775,6 +859,11 @@
         <translation>동기화 폴더 추가</translation>
     </message>
     <message>
+        <source>Add exclusions</source>
+        <translatorcomment>Button to allow users to add exclusion rules for new syncs.SNC-2565</translatorcomment>
+        <translation>제외 추가</translation>
+    </message>
+    <message>
         <source>Add</source>
         <translatorcomment>Button label to confirm and add the selected folders for a sync</translatorcomment>
         <translation>추가</translation>
@@ -795,7 +884,7 @@
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation>문제 보고</translation>
+        <translation>문제 신고</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
@@ -858,11 +947,6 @@
         <translation>오류로 인해 문제를 업로드할 수 없습니다. 나중에 다시 시도하거나 문제가 지속될 경우 [A]support@mega.nz[/A]를 통해 지원 팀에 연락하세요.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
         <translation>보고한 문제의 업로드를 취소하시겠습니까?</translation>
@@ -918,7 +1002,33 @@
     <message>
         <source>Cancelling…</source>
         <translatorcomment>Message displayed while transfers cancelling is in progress</translatorcomment>
-        <translation>취소 중&#8230;</translation>
+        <translation>취소 중…</translation>
+    </message>
+</context>
+<context>
+    <name>CannotCreateFolderHeader</name>
+    <message>
+        <source>Cannot create [B]%1[/B]</source>
+        <translatorcomment>itle for the header widget sync stall that occurs when a folder cannot be created in the local drive, will be followed with the folder path, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B]을/를 생성할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Filesystem error preventing folder access.</source>
+        <translatorcomment>Subtitle for the header widget  sync stall that occurs when a folder cannot be created in the local drive.SNC-2565</translatorcomment>
+        <translation>폴더 접근을 막는 로컬 오류 발생</translation>
+    </message>
+</context>
+<context>
+    <name>CannotPerformDeletionHeader</name>
+    <message>
+        <source>Filesystem error preventing folder access.</source>
+        <translatorcomment>Subtitle for the header widget  sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync).SNC-2565</translatorcomment>
+        <translation>폴더 접근을 막는 로컬 오류 발생</translation>
+    </message>
+    <message>
+        <source>Cannot perform deletion [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync), [B] is for Bold.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B]을/를 삭제할 수 없습니다</translation>
     </message>
 </context>
 <context>
@@ -982,11 +1092,6 @@
         <translation>OK</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>Please enter your password</source>
         <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
         <translation>암호를 입력하세요</translation>
@@ -1011,6 +1116,24 @@
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
         <translation>현재 비밀번호를 입력하셨습니다, 새 비밀번호를 입력해주세요.</translation>
     </message>
+    <message>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
+        <translation>암호 변경됨</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
+        <translation>암호가 변경되었습니다.</translation>
+    </message>
+</context>
+<context>
+    <name>ChooseLocalFolder</name>
+    <message>
+        <source>Select local folder</source>
+        <translatorcomment>Label indicating the user that he has to select a local folder. CON-467</translatorcomment>
+        <translation>로컬 폴더 선택</translation>
+    </message>
 </context>
 <context>
     <name>CircularUsageProgressBar</name>
@@ -1018,6 +1141,80 @@
         <source>[A]%</source>
         <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
         <translation>[A]%</translation>
+    </message>
+</context>
+<context>
+    <name>CloudFingerprintMissingHeader</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button to discard fixing the stalled issue.FM-1615</translatorcomment>
+        <translation>취소</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
+        <translation>적용</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box to allow user to apply a fix to all similar stall issues.FM-1615</translatorcomment>
+        <translation>모두 적용</translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to solve the issue?</source>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translation><numerusform>문제를 해결할까요?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
+        <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
+        <translation><numerusform>이 행동은 파일을 임시 위치에 다운로드하고, 문제를 수정한 뒤 삭제합니다.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]Please, resume your transfers to fix the issue[/B]</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
+        <translation><numerusform>문제를 수정하려면 전송을 재개하세요.</numerusform></translation>
+    </message>
+    <message>
+        <source>Can´t download [B]%1[/B] to the selected location</source>
+        <translatorcomment>Title for the header widget sync stall that occurs when a file cannot be downloaded for not having a fingerprint,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>선택한 위치로 [B]%1[/B]을/를 다운로드할 수 없음</translation>
+    </message>
+    <message>
+        <source>File fingerprint missing</source>
+        <translatorcomment>Subtitle for the header widget sync stall that occurs when a file cannot be downloaded for not having a fingerprint.SNC-2565</translatorcomment>
+        <translation>파일 지문 손실</translation>
+    </message>
+    <message>
+        <source>Solve</source>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
+        <translation>해결</translation>
+    </message>
+</context>
+<context>
+    <name>CloudNodeUndecryptedHeader</name>
+    <message>
+        <source>Cloude node undecrypted [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget sync stall thatoccurs when the node being synced cannot be decrypted.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>MEGA의 항목을 복호화할 수 없습니다 [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</source>
+        <translatorcomment>Subtitle for the header widget sync stall thatoccurs when the node being synced cannot be decrypted, [A] will be replaced by Mega link, [A1] will be replaced by support link. SNC-2565</translatorcomment>
+        <translation>복호화 과정을 완료할 수 없었습니다. [A]MEGA[/A]의 계정을 다시 불러오거나 [A1]지원[/A1]에 연락하세요.</translation>
+    </message>
+</context>
+<context>
+    <name>CloudStalledIssueChooseWidget</name>
+    <message>
+        <source>Moved to MEGA Bin</source>
+        <translatorcomment>Title of the solved issue showing what happened to the files when the user had to choose between a local and a remote versions of a file.SNC-2565</translatorcomment>
+        <translation>휴지통으로 옮겨짐</translation>
+    </message>
+    <message>
+        <source>Remote Copy</source>
+        <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
+        <translation>원격 사본</translation>
     </message>
 </context>
 <context>
@@ -1044,13 +1241,33 @@
         <translation>다음의 문자는 허용되지 않습니다:
 %1</translation>
     </message>
+    <message>
+        <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
+        <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
+        <translation>당신의 계정은 결제 실패 또는 취소된 구독으로 인하여 비활성화 되었습니다. 데이터에 접근하려면 결제하고 지금 재활성화 하세요.</translation>
+    </message>
+    <message>
+        <source>MEGA Uploads</source>
+        <translatorcomment>Default folder for uploads to the cloud drive. SNC-4139</translatorcomment>
+        <translation>MEGA 업로드</translation>
+    </message>
+    <message>
+        <source>MEGA Downloads</source>
+        <translatorcomment>Default folder for downloads to the local drive. SNC-4139</translatorcomment>
+        <translation>MEGA 다운로드</translation>
+    </message>
+    <message>
+        <source>MEGA Imports</source>
+        <translatorcomment>Default folder for imports from MEGA links to the cloud drive. SNC-4139</translatorcomment>
+        <translation>MEGA 들여오기</translation>
+    </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>오류 보고</translation>
+        <translation>오류 신고</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
@@ -1090,6 +1307,45 @@
         <source>Yesterday at %1</source>
         <translatorcomment>Label to indicate the yesterday time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
         <translation>어제 %1</translation>
+    </message>
+</context>
+<context>
+    <name>DefaultHeader</name>
+    <message>
+        <source>Error detected with [B]%1[/B]</source>
+        <translatorcomment>Title for the header widgetof the default stall issue shown if the reason of the stall is unknown. file path will be added to the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B]에 대한 오류 감지됨</translation>
+    </message>
+    <message>
+        <source>Reason not found.</source>
+        <translatorcomment>Subtitle for the header widget of the default stall issue shown if the reason of the stall is unknown.SNC-2565</translatorcomment>
+        <translation>알 수 없는 오류</translation>
+    </message>
+</context>
+<context>
+    <name>DeleteOrMoveWaitingOnScanningHeader</name>
+    <message>
+        <source>Can´t find [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of a sync stall when a file or folder cannot be found,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B]을/를 찾을 수 없음</translation>
+    </message>
+    <message>
+        <source>Waiting to finish scan to see if the file was moved or deleted.</source>
+        <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
+        <translation>파일이 이동되거나 삭제되었는지 확인하기 위해 스캔이 완료되는 것을 기다리는 중</translation>
+    </message>
+</context>
+<context>
+    <name>DeleteWaitingOnMovesHeader</name>
+    <message>
+        <source>Waiting to move [B]%1[/B]</source>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when we&amp;amp;apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>이동 대기 중 [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Waiting for other processes to complete.</source>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translation>다른 프로세스가 완료되기를 기다리는 중입니다.</translation>
     </message>
 </context>
 <context>
@@ -1142,7 +1398,7 @@
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>[A]님과 새로운 연락처 관계가 수립되었습니다</translation>
+        <translation>새 연락처 [A] 님이 추가되었습니다</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1252,7 +1508,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>비즈니스 계정의 보류를 피하려면 결제 문제를 최대한 빨리 해결하세요</translation>
+        <translation>비즈니스 계정의 정지를 피하려면 결제 문제를 최대한 빨리 해결하세요</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1277,7 +1533,7 @@
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>문제를 해결하고 계정을 활성화하려면 당신의 비즈니스 계정 관리자에게 연락하세요.</translation>
+        <translation>문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1318,6 +1574,11 @@
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
         <translation><numerusform>[X]님이 항목 #개를 수정하였습니다</numerusform></translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Pro&#xa0;Flexi 계정이 비활성화되었습니다</translation>
     </message>
 </context>
 <context>
@@ -1363,14 +1624,22 @@
         <translation>로컬 폴더 선택</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
+    </message>
+</context>
+<context>
+    <name>DownloadIssueHeader</name>
+    <message>
+        <source>Can´t download [B]%1[/B] to the selected location</source>
+        <translatorcomment>Subtitle for the header widget of a sync stall when a file or cannot be downloaded, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>선택한 위치로 [B]%1[/B]을/를 다운로드할 수 없음</translation>
+    </message>
+    <message>
+        <source>A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location.</source>
+        <translatorcomment>Title for the header widget of a sync stall when a file or cannot be downloaded.SNC-2565</translatorcomment>
+        <translation>파일을 다운로드, 또는 다운로드한 임시 파일을 최종 위치로 이동하던 중 오류가 발생하였습니다.</translation>
     </message>
 </context>
 <context>
@@ -1379,11 +1648,6 @@
         <source>Download</source>
         <translatorcomment>Window title for download node selector</translatorcomment>
         <translation>다운로드</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -1512,19 +1776,45 @@
         <translation>업데이트</translation>
     </message>
     <message>
-        <source>loading time…</source>
-        <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>시간 계산 중&#8230;</translation>
-    </message>
-    <message>
-        <source>loading size…</source>
-        <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>크기 계산 중&#8230;</translation>
-    </message>
-    <message>
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
         <translation>더 알아보기</translation>
+    </message>
+    <message>
+        <source>loading time…</source>
+        <translatorcomment>Placeholder used meanwhile the last modified time is being calculated. SNC-3972</translatorcomment>
+        <translation>날짜를 가져오는 중…</translation>
+    </message>
+    <message>
+        <source>loading size…</source>
+        <translatorcomment>Placeholder used meanwhile the size time is being calculated. SNC-3972</translatorcomment>
+        <translation>크기 계산 중…</translation>
+    </message>
+</context>
+<context>
+    <name>FastLoginController</name>
+    <message>
+        <source>Login error: %1</source>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message. SNC-4122</translatorcomment>
+        <translation>로그인 오류: %1</translation>
+    </message>
+</context>
+<context>
+    <name>FileIssueHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B]을/를 동기화할 수 없음</translation>
+    </message>
+    <message>
+        <source>A single file had an issue that needs a user decision to solve</source>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translation>해결하기 위해 당신의 결정이 필요한 문제가 있는 파일이 있습니다</translation>
+    </message>
+    <message>
+        <source>A single folder had an issue that needs a user decision to solve.</source>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translation>해결하기 위해 당신의 결정이 필요한 문제가 있는 폴더가 있습니다</translation>
     </message>
 </context>
 <context>
@@ -1611,11 +1901,6 @@
         <translation>선택</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation>전체 액세스 권한 없이 공유된 폴더를 동기화할 수 없습니다</translation>
@@ -1627,177 +1912,92 @@
     </message>
 </context>
 <context>
-    <name>GuestWidget</name>
+    <name>FolderMatchedAgainstFileHeader</name>
     <message>
-        <source>Login</source>
-        <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>로그인</translation>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B]을/를 동기화할 수 없음</translation>
     </message>
     <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation>계정 생성</translation>
+        <source>Cannot sync folders against files.</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translation>동기화하려는 파일에 확장자가 없고 존재하는 폴더와 이름이 같습니다</translation>
+    </message>
+</context>
+<context>
+    <name>GuestStrings</name>
+    <message>
+        <source>About MEGA</source>
+        <translatorcomment>Menu entry that opens the about MEGA dialog. CON-472</translatorcomment>
+        <translation>MEGA에 대하여</translation>
     </message>
     <message>
-        <source>Email address</source>
-        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation>이메일 주소</translation>
+        <source>Quit</source>
+        <translatorcomment>Menu entry that quits the application for mac. CON-472</translatorcomment>
+        <translation>나가기</translation>
     </message>
     <message>
-        <source>Password</source>
-        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation>암호</translation>
+        <source>Exit</source>
+        <translatorcomment>Menu entry that quits the application for linux and windows. CON-472</translatorcomment>
+        <translation>종료</translation>
     </message>
     <message>
-        <source>Forgot password?</source>
-        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation>암호를 잊었나요?</translation>
+        <source>Settings</source>
+        <translatorcomment>Menu entry that opens the settings dialog. CON-472</translatorcomment>
+        <translation>설정</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation>취소</translation>
+        <source>Log in or sign up to MEGA</source>
+        <translatorcomment>Label that indicates to the user that he should login or register in order to proceed CON-465</translatorcomment>
+        <translation>MEGA에 로그인 또는 가입</translation>
     </message>
     <message>
-        <source>Setting up your account...</source>
-        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>계정 설정중…</translation>
+        <source>Account temporarily locked</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>계정이 일시적으로 잠겼습니다</translation>
     </message>
     <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>로그인 중…</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>파일 목록 불러오는 중…</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>잘못된 이메일 또는 암호입니다.</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation>계정을 인증하려면 이메일을 확인하고 링크를 클릭하세요.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>로그인 시도를 너무 많이 했습니다.
-[BR]%1까지 기다렸다가 다시 시도하세요.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation>계정이 막혔습니다. support@mega.nz로 연락하세요</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>이메일 주소를 입력하세요</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>유효한 이메일 주소를 입력하세요</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation>암호를 입력하세요</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>로그아웃 중…</translation>
-    </message>
-    <message>
-        <source>Locked Account</source>
-        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>잠긴 계정</translation>
-    </message>
-    <message>
-        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>당신의 안전을 위해 계정을 일시적으로 잠갔습니다. 계정을 잠금 해제하려면 이메일을 인증하고 절차를 따라주세요.</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>로그아웃</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation>당신의 계정이 잠재적 오남용으로 인하여 잠겼습니다. 계정을 해제하려면 전화번호를 인증하세요.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation>지금 인증</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation>계정 생성 중…</translation>
-    </message>
-    <message>
-        <source>Why am I seeing this?</source>
-        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>이게 왜 보여지나요?</translation>
+        <source>Your account has been temporarily locked for your safety. This is due to a potential data breach. To unlock your account, follow the steps in the email we&apos;ve sent you.</source>
+        <translatorcomment>Label that indicates to the user that the account has been blocked CON-465</translatorcomment>
+        <translation>당신의 계정은 당신의 안전을 위해 일시적으로 잠겼습니다. 이것은 잠재적 데이터 유출로 인한 것입니다. 계정을 잠금 해제하려면, 보내드린 이메일의 절차를 따르세요.</translation>
     </message>
     <message>
         <source>Resend email</source>
-        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translatorcomment>Button text, on click the email to verify the account is resent CON-465</translatorcomment>
         <translation>이메일 재발송</translation>
     </message>
     <message>
-        <source>Email sent</source>
-        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>이메일 발송됨</translation>
+        <source>Log out</source>
+        <translatorcomment>Button text to logout CON-465</translatorcomment>
+        <translation>로그아웃</translation>
     </message>
     <message>
-        <source>Please enter the code generated by your authentication app</source>
-        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>인증 앱에서 생성된 코드를 입력하세요</translation>
+        <source>Setting up your account…</source>
+        <translatorcomment>Label that indicates that the account is being setting up CON-465</translatorcomment>
+        <translation>계정을 설정하는 중입니다…</translation>
     </message>
     <message>
-        <source>6 digit code:</source>
-        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6자리 코드:</translation>
+        <source>Waiting for email confirmation…</source>
+        <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
+        <translation>이메일 확인 기다리는 중…</translation>
+    </message>
+</context>
+<context>
+    <name>GuiUtilities</name>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account. SNC-3019</translatorcomment>
+        <translation>지금 결제</translation>
     </message>
     <message>
-        <source>Invalid code</source>
-        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>잘못된 코드</translation>
+        <source>Pay and reactivate</source>
+        <translatorcomment>Label of the button used to proceed to payment and reactivate the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>결제하고 재활성화</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation>다음</translation>
-    </message>
-    <message>
-        <source>[A]Lost your authenticator device?[/A]</source>
-        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]인증 기기를 잃어버렸나요?[/A]</translation>
-    </message>
-    <message>
-        <source>Log into MEGA</source>
-        <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
-        <translation>MEGA에 로그인</translation>
-    </message>
-    <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>우리의 SSL 키를 검증할 수 없습니다. 당신이 중간자 공격을 받고 있거나 당신의 안티바이러스 소프트웨어가 통신을 방해하고 이러한 문제를 일으키고 있을 수 있습니다. 해제하고 다시 시도하세요.</translation>
+        <source>Dismiss</source>
+        <translatorcomment>Label of the button used to dismiss the error message the account in case of deactivated account. SNC-3019</translatorcomment>
+        <translation>해제</translation>
     </message>
 </context>
 <context>
@@ -1809,10 +2009,155 @@
     </message>
 </context>
 <context>
+    <name>HeaderCaseIssueChecker</name>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
+        <translation>새로 고침</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
+        <translation>문제가 외부에서 해결되었습니다.
+목록을 새로 고침하세요.</translation>
+    </message>
+</context>
+<context>
+    <name>IgnoredStalledIssue</name>
+    <message>
+        <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
+        <translatorcomment>Text in message box shown when a failure in adding rules in the file containing ignore rules.SNC-2565</translatorcomment>
+        <translation>.megaignore 파일을 수정할 수 없습니다. 이 파일에 쓰기 권한이 있는지 확인하세요.</translation>
+    </message>
+</context>
+<context>
+    <name>IgnoresEditingDialog</name>
+    <message>
+        <source>Edit exclusions</source>
+        <translatorcomment>window name for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation>제외 편집</translation>
+    </message>
+    <message>
+        <source>Manage exclusions</source>
+        <translatorcomment>window title for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation>제외 관리</translation>
+    </message>
+    <message>
+        <source>by size</source>
+        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
+        <translation>크기에 따라 제외</translation>
+    </message>
+    <message>
+        <source>Exclude files smaller than</source>
+        <translatorcomment>Check box text responsible for the lower size limit of included files in the sync.SNC-4208</translatorcomment>
+        <translation>다음보다 작은 파일 제외</translation>
+    </message>
+    <message>
+        <source>Exclude files bigger than</source>
+        <translatorcomment>Check box text responsible for the upper size limit of included files in the sync.SNC-4208</translatorcomment>
+        <translation>다음보다 큰 파일 제외</translation>
+    </message>
+    <message>
+        <source>by name</source>
+        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
+        <translation>이름에 따라 제외</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from synchronisation.</source>
+        <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
+        <translation>동기화에서 제외될 파일 또는 폴더:</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button to add new ignore rule in the sync ignores file.SNC-2565</translatorcomment>
+        <translation>추가</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button to delete selected ignore rules in the sync ignores dialog.SNC-2565</translatorcomment>
+        <translation>삭제</translation>
+    </message>
+    <message>
+        <source>by file type</source>
+        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
+        <translation>파일 형식에 따라 제외</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
+        <translation>고급</translation>
+    </message>
+    <message>
+        <source>Open .megaignore</source>
+        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
+        <translation>.megaignore 열기</translation>
+    </message>
+    <message>
+        <source>by size:</source>
+        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
+        <translation>크기에 따라 제외:</translation>
+    </message>
+    <message>
+        <source>by name:</source>
+        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
+        <translation>이름에 따라 제외:</translation>
+    </message>
+    <message>
+        <source>by file type:</source>
+        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
+        <translation>파일 형식에 따라 제외:</translation>
+    </message>
+    <message>
+        <source>Edit .megaignore</source>
+        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
+        <translation>.megaignore 편집</translation>
+    </message>
+    <message>
+        <source>Advanced:</source>
+        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
+        <translation>고급:</translation>
+    </message>
+    <message>
+        <source>Rule already exists.</source>
+        <translatorcomment>Text in a message box shown when the user adds a new rule identical to existing one.SNC-2565</translatorcomment>
+        <translation>규칙이 이미 존재합니다</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translatorcomment>Title for message box shown when an external chane detected in the ignore rules file.SNC-2565</translatorcomment>
+        <translation>다시 불러오기</translation>
+    </message>
+    <message>
+        <source>Current file has been modified by another program. it will be reloaded</source>
+        <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
+        <translation>현재 .megaignore 파일은 다른 프로그램에 의해 수정되었습니다, 다시 불러올 것입니다</translation>
+    </message>
+    <message>
+        <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
+        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
+        <translation>관련된 .megaignore 파일을 텍스트 편집기로 수정할 수 있습니다. 이것은 정규 표현식이 편한 이용자에게 적합합니다.</translation>
+    </message>
+    <message>
+        <source>You can change the associated .megaignore file on a text editor.
+This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
+        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
+        <translation>관련된 .megaignore 파일을 텍스트 편집기로 수정할 수 있습니다. 이것은 정규 표현식이 편한 이용자에게 적합합니다.</translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive.
+This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
+</source>
+        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
+        <translation>특정 파일과 폴더가 클라우드 드라이브와 동기화 되는 것에서 제외할 수 있습니다.
+큰 파일, 모든 장치에서 필요하지 않은 파일이나, 동기화가 필요하지 않은 특정 파일 형식에 유용합니다.</translation>
+    </message>
+</context>
+<context>
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
-        <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
+        <translatorcomment>Label to indicate the user that needs to wait until the app fetches link information from the server</translatorcomment>
         <translation>잠시만 기다리세요…</translation>
     </message>
 </context>
@@ -1854,11 +2199,6 @@
         <translation>선택</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
@@ -1867,6 +2207,54 @@
         <source>Open links</source>
         <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
         <translation>링크 열기</translation>
+    </message>
+</context>
+<context>
+    <name>InfoAccount</name>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Label to refer Free tier CON-467</translatorcomment>
+        <translation>무료</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
+        <translation>Pro&#xa0;I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;III</translation>
+    </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Lite</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
+        <translation>기업용</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
+        <translation>Pro&#xa0;Flexi</translation>
+    </message>
+    <message>
+        <source>Available storage:</source>
+        <translatorcomment>Label indicating that the number in the right is the available storage CON-467</translatorcomment>
+        <translation>이용 가능한 저장소:</translation>
+    </message>
+    <message>
+        <source>Storage space:</source>
+        <translatorcomment>Label indicating that the number in the right is the storage space CON-467</translatorcomment>
+        <translation>저장소 공간:</translation>
     </message>
 </context>
 <context>
@@ -1882,11 +2270,6 @@
         <translation>설정</translation>
     </message>
     <message>
-        <source>Blocked file: %1</source>
-        <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation>차단된 파일: %1</translation>
-    </message>
-    <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
         <translation>계정 업그레이드</translation>
@@ -1900,11 +2283,6 @@
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
         <translation>옵션 보기</translation>
-    </message>
-    <message>
-        <source>The process is taking longer than expected. Please wait...</source>
-        <translatorcomment>Message displayed in the InfoDialog when a process is busy for a longer time than normal due to Mega servers being busy</translatorcomment>
-        <translation>과정이 예상보다 오래 걸립니다. 기다려주세요.</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -1984,7 +2362,7 @@
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>일시중지/재개</translation>
+        <translation>일시정지 또는 재개</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2010,11 +2388,6 @@
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>결제에 대한 알림 없음</translation>
-    </message>
-    <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 사용됨</translation>
     </message>
     <message>
         <source>Upgrade account</source>
@@ -2067,11 +2440,6 @@
         <translation><numerusform>업그레이드까지 [A]%n시간[/A] 남았습니다. 그 후, 당신의 데이터는 삭제 대상이 됩니다.</numerusform></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
         <translation>일부 동기화와 백업이 비활성화 되었습니다</translation>
@@ -2090,11 +2458,6 @@
         <source>Something went wrong while trying to backup your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
         <translation>폴더를 백업하던 중 무언가 잘못 되었습니다.</translation>
-    </message>
-    <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>%1 추가 중 오류:</translation>
     </message>
     <message>
         <source>Add Backup</source>
@@ -2160,74 +2523,21 @@
         <translation>클립보드로 링크 복사</translation>
     </message>
     <message>
-        <source>Added [A]</source>
-        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
-        <translation>[A] 추가됨</translation>
-    </message>
-    <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
         <translation>삭제되거나 이동된 파일</translation>
     </message>
 </context>
 <context>
-    <name>InfoWizard</name>
-    <message>
-        <source>You are not logged in</source>
-        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
-        <translation>로그인하지 않은 상태입니다</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>로그인</translation>
-    </message>
-    <message>
-        <source>Create Account</source>
-        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
-        <translation>계정 생성</translation>
-    </message>
-    <message>
-        <source>MEGA Desktop app</source>
-        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>MEGA 데스크톱 앱</translation>
-    </message>
-    <message>
-        <source>Login or create an account to start using MEGA Desktop app.</source>
-        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>앱을 사용하려면 로그인하거나 계정을 생성하세요.</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>앱을 사용하려면 MEGA 계정으로 로그인하세요.</translation>
-    </message>
-    <message>
-        <source>Create account</source>
-        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
-        <translation>계정 생성</translation>
-    </message>
-    <message>
-        <source>Create account to join MEGA collaboration platform.</source>
-        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>MEGA 협업 플랫폼에 참여하려면 계정을 생성하세요.</translation>
-    </message>
-    <message>
-        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
-        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>앱에 대해 자세히 알아보세요. [A]더 읽어보기[/A]</translation>
-    </message>
-</context>
-<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app.</translatorcomment>
         <translation>사용자 선택</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
+        <translatorcomment>Label to indicate for which users you want to install the app. Preserve $(^NameDA) code</translatorcomment>
         <translation>어떤 이용자를 위해 설치할지 선택하세요 $(^NameDA).</translation>
     </message>
     <message>
@@ -2244,6 +2554,286 @@
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>나만을 위해 설치</translation>
+    </message>
+</context>
+<context>
+    <name>LoadingSceneMessageHandler</name>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Loading message showing the progress of stalled issues being solved in smart mode, placeholders are filled in runtime with the number of solved issues and the total number of issues.SNC-2565</translatorcomment>
+        <translation>%2 중 %1</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translatorcomment>stop button in the loading scene of stalled issues dialog shown during stalled issues are solved in smart mode to stop the solving.SNC-2565</translatorcomment>
+        <translation>정지</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Confirmation button inthe loading scene of stalled issues dialog shown when all issues have been solved in the smart mode.SNC-2565</translatorcomment>
+        <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteChangedSinceLastSyncedStateHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced changed oth locally and remotely, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B]을/를 동기화할 수 없음</translation>
+    </message>
+    <message>
+        <source>This file has been changed both in MEGA and locally since it it was last synced.</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file being synced changed oth locally and remotely.SNC-2565</translatorcomment>
+        <translation>이 파일은 지난 동기화 이후 MEGA와 로컬 모두에서 수정되었습니다</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteDifferentWidget</name>
+    <message>
+        <source>Please select which version you want to keep</source>
+        <translatorcomment>Title for the solve options in a local remote changed stalled issue.SNC-2565</translatorcomment>
+        <translation>유지하고 싶은 버전을 선택하세요</translation>
+    </message>
+    <message>
+        <source>Choose both</source>
+        <translatorcomment>Button text to choose both local and remote versions in the local remote changed stall body widget.SNC-2565</translatorcomment>
+        <translation>모두 선택</translation>
+    </message>
+    <message>
+        <source>Chosen</source>
+        <translatorcomment>TText shown on the choosen version (local, remote, both) in a solved local remote stall.SNC-2565</translatorcomment>
+        <translation>선택됨</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text to choose either local or remote versions in the local remote changed stall body widget. will be follwed by &quot;Local&quot; or &quot;Remote&quot;.SNC-2565</translatorcomment>
+        <translation>선택</translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local file %1</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup, %1 placeholder will have the file name.SNC-2565</translatorcomment>
+        <translation>로컬 파일 [B]%1[/B]을/를 보호하기 위해 백업이 비활성화됩니다</translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local folder %1</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup,%1 placeholder will have the folder name.SNC-2565</translatorcomment>
+        <translation>로컬 폴더 [B]%1[/B]을/를 보호하기 위해 백업이 비활성화됩니다</translation>
+    </message>
+    <message>
+        <source>[B]Keep both[/B]</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]모두 유지[/B]</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]local file[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>로컬 파일 [B]%1[/B]을/를 유지할까요?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>로컬 폴더 [B]%1[/B]을/를 유지할까요?</translation>
+    </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
+Please wait for the upload to complete.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>로컬 파일 [B]%1[/B]이/가 MEGA로 업로드 되고 MEGA에 존재하는 파일의 버전으로 추가됩니다.</translation>
+    </message>
+    <message>
+        <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>원격 폴더 [B]%1[/B]이/가 MEGA 휴지통으로 이동됩니다.[BR]그 곳에서 폴더를 복원할 수 있습니다.</translation>
+    </message>
+    <message numerus="yes">
+        <source>[B]Please, resume your transfers to fix the issue[/B]</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
+        <translation><numerusform>문제를 수정하려면 전송을 재개하세요.</numerusform></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>MEGA의 파일 [B]%1[/B]을/를 유지할까요?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>원격 폴더 [B]%1[/B]을/를 유지할까요?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>원격 항목 [B]%1[/B]을/를 유지할까요?</translation>
+    </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>로컬 파일 [B]%1[/B]이/가 로컬 동기화 위치의 /rubbish 또는 .debris 폴더로 이동됩니다.</translation>
+    </message>
+    <message>
+        <source>The [B]local folder[/B] %1 will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>로컬 폴더 [B]%1[/B]이/가 로컬 동기화 위치의 /rubbish 또는 .debris 폴더로 이동됩니다.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to choose the latest modified side?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the last modified version of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation>최근에 수정된 항목을 선택할까요?</translation>
+    </message>
+    <message>
+        <source>This action will choose the local side</source>
+        <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
+        <translation>이 행동은 로컬 항목을 선택합니다.</translation>
+    </message>
+    <message>
+        <source>This action will choose the remote side</source>
+        <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
+        <translation>이 행동은 이미 MEGA에 저장된 항목을 선택합니다.</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
+        <translation>새로 고침</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
+        <translation>문제가 외부에서 해결되었습니다.
+목록을 새로 고침하세요.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.FM-1615</translatorcomment>
+        <translation>취소</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>적용</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>모두 적용</translation>
+    </message>
+    <message>
+        <source>Keep both files?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation>모든 파일을 유지할까요?</translation>
+    </message>
+    <message>
+        <source>Keep both folders</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
+        <translation>모든 폴더를 유지할까요?</translation>
+    </message>
+    <message>
+        <source>[B]Keep last modified[/B] (local)</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]마지막에 수정된 것을 유지[/B] (로컬)</translation>
+    </message>
+    <message>
+        <source>[B]Keep last modified[/B] (remote)</source>
+        <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]마지막에 수정된 것을 유지[/B] (원격)</translation>
+    </message>
+    <message>
+        <source>Keep the [B]local files[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]로컬[/B] 파일을 유지할까요?</translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
+Please wait for the upload to complete.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]로컬[/B] 파일이 MEGA에 업로드 되어 원격 파일의 버전으로 추가됩니다.
+업로드가 완료될 때까지 기다리세요.</translation>
+    </message>
+    <message>
+        <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]원격[/B] 폴더가 MEGA 휴지통으로 이동됩니다.[BR]그 곳에서 폴더를 복원할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote files[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]원격[/B] 파일을 유지할까요?</translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote folders[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]원격[/B] 폴더를 유지할까요?</translation>
+    </message>
+    <message>
+        <source>Keep the [B]remote items[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]원격[/B] 항목을 유지할까요?</translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]로컬[/B] 파일이 로컬 동기화 폴더 안의 숨겨진 .rubbish 또는 .debris 폴더로 이동됩니다.</translation>
+    </message>
+    <message>
+        <source>The [B]local folders[/B] will be moved to the sync debris folder</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]로컬[/B] 폴더가 로컬 동기화 폴더 안의 .debris 또는 .rubbish 폴더로 이동됩니다.</translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local files</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
+        <translation>로컬 파일을 보호하기 위해 백업이 비활성화됩니다.</translation>
+    </message>
+    <message>
+        <source>The backup will be disabled in order to protect the local folders</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
+        <translation>로컬 폴더를 보호하기 위해 백업이 비활성화됩니다.</translation>
+    </message>
+    <message>
+        <source>Keep all files?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
+        <translation>모든 파일을 유지할까요?</translation>
+    </message>
+    <message>
+        <source>Keep all folders</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
+        <translation>모든 폴더를 유지할까요?</translation>
+    </message>
+    <message numerus="yes">
+        <source>The [B]remote file[/B] will have a suffix like (1) added</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
+        <translation><numerusform>[B]원격[/B] 파일에 (1) 같은 접미사가 추가됩니다.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
+        <translation><numerusform>[B]원격[/B] 폴더에 (1) 같은 접미사가 추가됩니다.</numerusform></translation>
+    </message>
+    <message>
+        <source>Keep the [B]local folders[/B]?</source>
+        <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]로컬[/B] 폴더를 유지할까요?</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemotePreviouslyUnsyncedDifferHeader</name>
+    <message>
+        <source>Can´t sync [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B]을/를 동기화할 수 없음</translation>
+    </message>
+    <message>
+        <source>This file has conflicting copies</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version.SNC-2565</translatorcomment>
+        <translation>이 항목은 충돌하는 사본이 있습니다</translation>
+    </message>
+</context>
+<context>
+    <name>LocalStalledIssueChooseWidget</name>
+    <message>
+        <source>Local Copy</source>
+        <translatorcomment>Title in the choosing widget used to offer the user the option to choose local version when conflicts occur.SNC-2565</translatorcomment>
+        <translation>로컬 사본</translation>
     </message>
 </context>
 <context>
@@ -2303,6 +2893,52 @@
     </message>
 </context>
 <context>
+    <name>LoginController</name>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
+        <translation>당신의 이메일을 확인하고 계정 확인을 위한 링크를 클릭하세요.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
+        <translation>로그인 시도를 너무 많이 했습니다.[Br][BR]%1까지 기다렸다가 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Invalid email or password. Please try again.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
+        <translation>잘못된 이메일 주소 또는 암호입니다. 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
+        <translation>앱이 연결할 수 없습니다. 인터넷 연결과 로컬 방화벽 구성을 확인하세요. 대부분의 안티바이러스 소프트웨어가 방화벽을 포함하고 있음을 참조하세요.</translation>
+    </message>
+    <message>
+        <source>Email address already in use.</source>
+        <translatorcomment>Error message indicating that the email the user is trying to sign up is already used. CON-465</translatorcomment>
+        <translation>이미 사용중인 이메일 주소입니다.</translation>
+    </message>
+</context>
+<context>
+    <name>LogoutController</name>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
+        <translation>다른 위치에서 이 컴퓨터를 로그아웃 하였습니다</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
+        <translation>우리의 SSL 키를 검증할 수 없습니다. 당신이 중간자 공격을 받고 있거나 당신의 안티바이러스 소프트웨어가 통신을 방해하고 이러한 문제를 일으키고 있을 수 있습니다. 해제하고 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
+        <translation>이 오류로 인해 로그아웃 되었습니다: %1</translation>
+    </message>
+</context>
+<context>
     <name>LowDiskSpaceDialog</name>
     <message>
         <source>Low disk space</source>
@@ -2338,11 +2974,6 @@
 <context>
     <name>MegaApplication</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-    <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>로그인하는 중</translation>
@@ -2358,11 +2989,6 @@
         <translation>오류: 대상 폴더가 잘못되었습니다. 업로드가 취소되었습니다</translation>
     </message>
     <message>
-        <source>About MEGAsync</source>
-        <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>대하여</translation>
-    </message>
-    <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
         <translation>링크가 클립보드로 복사되었습니다</translation>
@@ -2373,33 +2999,28 @@
         <translation>링크들이 클립보드로 복사되었습니다</translation>
     </message>
     <message>
-        <source>Logging in...</source>
-        <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>로그인 중…</translation>
-    </message>
-    <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
         <translation>대하여</translation>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>최신 버전</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a paused state.</translatorcomment>
         <translation>일시정지됨</translation>
     </message>
     <message>
         <source>Scanning</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a scanning state.</translatorcomment>
         <translation>탐색중</translation>
     </message>
     <message>
         <source>Syncing</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a syncing state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a syncing state.</translatorcomment>
         <translation>동기화중</translation>
     </message>
     <message>
@@ -2409,8 +3030,13 @@
     </message>
     <message>
         <source>Waiting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a waiting state.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is in a waiting state.</translatorcomment>
         <translation>대기중</translation>
+    </message>
+    <message>
+        <source>Stalled</source>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
+        <translation>문제 감지됨</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -2445,7 +3071,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
+        <translatorcomment>Notification message launched when an update for MEGA is being downloaded.</translatorcomment>
         <translation>업데이트가 가능합니다. 다운로드중…</translation>
     </message>
     <message>
@@ -2455,19 +3081,13 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Error</source>
-        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
         <translation>오류</translation>
     </message>
     <message>
         <source>Starting</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is starting.</translatorcomment>
         <translation>시작중</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -2481,7 +3101,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Show status</source>
-        <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translatorcomment>Label displayed to let the user displays the Information dialog of the app. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation>상태 보기</translation>
     </message>
     <message>
@@ -2490,64 +3110,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>설정이 훼손되었습니다, 다시 시작하세요</translation>
     </message>
     <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>앱이 연결할 수 없습니다. 인터넷 연결과 로컬 방화벽 구성을 확인하세요. 대부분의 안티바이러스 소프트웨어가 방화벽을 포함하고 있음을 참조하세요.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>원격 폴더가 존재하지 않아서 동기화 &#8220;%1&quot;이 비활성화 되었습니다.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>로컬 폴더가 존재하지 않아서 동기화 &#8220;%1&quot;가 해제되었습니다.</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>계정이 막혔습니다. support@mega.nz로 연락하세요</translation>
-    </message>
-    <message>
-        <source>Login error: %1</source>
-        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation>로그인 오류: %1</translation>
-    </message>
-    <message>
-        <source>You have been logged out on this computer from another location</source>
-        <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation>다른 위치에서 이 컴퓨터를 로그아웃 시켰습니다</translation>
-    </message>
-    <message>
-        <source>You have been logged out because of this error: %1</source>
-        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation>이 오류 때문에 로그아웃 되었습니다: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>원격 폴더가 휴지통에 있어서 &#8220;%1&quot;의 동기화가 해제되었습니다</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>로컬 폴더가 변경되어서 동기화 &#8220;%1&quot;가 해제되었습니다</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>동기화 “%1”이/가 비활성화 되었습니다. 원격 폴더 (또는 그 일부)에 전체 권한이 없습니다</translation>
-    </message>
-    <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation>할당량 초과</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>VirtualBox의 공유된 폴더의 동기화는 파일 시스템의 결점으로 인하여 지원되지 않기 때문에 동기화 ”%1″은/는 해제되었습니다.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2570,14 +3135,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>오류: 잘못된 대상 폴더. 다운로드가 취소되었습니다.</translation>
     </message>
     <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
-        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>우리의 SSL 키를 검증할 수 없습니다. 당신이 중간자 공격을 받고 있거나 당신의 안티바이러스 소프트웨어가 통신을 방해하고 이러한 문제를 일으키고 있을 수 있습니다. 해제하고 다시 시도하세요.</translation>
-    </message>
-    <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>인터넷 연결 없음</translation>
+        <translation>인터넷 연결이 없습니다</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -2617,7 +3177,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please consider updating your operating system.</source>
         <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
-        <translation>운영 체제 업데이트를 고려하세요.</translation>
+        <translation>운영 체제를 업데이트하는 것을 고려하세요.</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -2630,29 +3190,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>앱이 계속 작동할 것이지만, 새로운 업데이트를 받지 못 할 수 있습니다.</translation>
     </message>
     <message>
-        <source>Password changed</source>
-        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>암호 변경됨</translation>
-    </message>
-    <message>
-        <source>Your password has been changed.</source>
-        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>암호가 변경되었습니다.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>클라우드 드라이브</translation>
-    </message>
-    <message>
-        <source>Pay Now</source>
-        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation>지금 결제</translation>
-    </message>
-    <message>
-        <source>Your Business account is expired</source>
-        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>계정이 비활성화됨</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2667,7 +3207,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]중요:[/A] 문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.</translation>
+        <translation>[A]중요:[/A]문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -2710,11 +3250,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>링크 열기</translation>
     </message>
     <message>
-        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
-        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>당신의 계정이 관리자에 의해 비활성화 되었습니다. 자세한 사항은 당신의 비즈니스 계정 관리자에게 문의하세요.</translation>
-    </message>
-    <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation>앱은 계속 작동할 것이지만, 업데이트가 Windows 7 이전 버전에 대하여 지원하지 않을 것입니다.</translation>
@@ -2728,26 +3263,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>하나 이상의 동기화가 해제되었습니다</translation>
-    </message>
-    <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
-        <translation>동기화 추가 오류</translation>
-    </message>
-    <message>
-        <source>This sync can&apos;t be added: %1. Reason: %2</source>
-        <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
-        <translation>이 동기화를 추가할 수 없습니다: %1. 사유: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>당신의 동기화 “%1”가 일시적으로 해제되었습니다. 이유: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been enabled</source>
-        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>당신의 동기화 “%1”가 활성화되었습니다</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -2797,46 +3312,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>1개 이상의 백업이 비활성화 되었습니다</translation>
     </message>
     <message>
-        <source>Error adding %1:</source>
-        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>%1 추가 중 오류:</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>로컬 폴더가 존재하지 않아서 백업 “%1”이/가 비활성화 되었습니다.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>파일 시스템의 결함으로 VirtualBox의 공유된 폴더에 대한 동기화를 지원하지 않기 때문에 백업 &#8220;%1&quot;이/가 비활성화 되었습니다.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>MEGA 폴더가 휴지통에 있어서 백업 “%1”이/가 비활성화 되었습니다.</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>백업 “%1”이/가 비활성화 되었습니다. MEGA 폴더 (또는 그 일부)에 완전한 접근 권한이 없습니다</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>로컬 폴더가 변경되어서 백업 &#8220;%1&quot;이/가 비활성화 되었습니다</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>MEGA 폴더가 변경되어서 백업 &#8220;%1&quot;이/가 비활성화 되었습니다</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>백업 &#8220;%1&quot;이/가 비활성화 되었습니다. 사유: %2</translation>
-    </message>
-    <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>보안 업그레이드</translation>
@@ -2882,34 +3357,24 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>설정</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>동기화와 백업이 비활성화 되었습니다: %1</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>백업이 비활성화 되었습니다: %1</translation>
-    </message>
-    <message>
-        <source>Your syncs have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>동기화 비활성화 되었습니다: %1</translation>
-    </message>
-    <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
         <translation>링크 가져오던 중 오류: %1</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>동기화 “%1”이/가 일시적으로 비활성화 되었습니다: %2</translation>
+        <source>Warning</source>
+        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
+        <translation>경고</translation>
     </message>
     <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>백업 “%1”이/가 일시적으로 비활성화 되었습니다: %2</translation>
+        <source>Account deactivated</source>
+        <translatorcomment>Title of the error message displayed when an account (Business or Pro Flexi) has been deactivated.</translatorcomment>
+        <translation>계정이 비활성화됨</translation>
+    </message>
+    <message>
+        <source>Pro Flexi Account deactivated</source>
+        <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
+        <translation>Pro&#xa0;Flexi 계정이 비활성화되었습니다</translation>
     </message>
 </context>
 <context>
@@ -2987,7 +3452,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>잘못된 키/복호화 오류</translation>
+        <translation>복호화 오류</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3057,7 +3522,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>재귀적 경로 구조로 인하여 전송 실패</translation>
+        <translation>재귀적 폴더 구조로 인하여 전송 실패</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -3072,12 +3537,20 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>계정이 저작권 침해로 인해 정지되었습니다. 이메일로 이것에 대한 자세한 정보를 보냈습니다.</translation>
+        <translation>당신의 MEGA 계정이 반복된 저작권 침해 혐의로 인해 정지 되었습니다. 이것은 당신의 계정이나 그 안의 데이터에 접근할 수 없다는 뜻입니다.
+
+이의 제기를 접수하는 방법에 대한 자세한 정보는 이메일을 확인하세요.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>타인의 권리 침해, 불법 데이터의 공유 및 내보내기, 시스템 오용 등의 MEGA 이용 약관 위반으로 계정이 제거되었습니다.</translation>
+        <translation>당신의 계정이 MEGA의 이용 약관 위반으로 삭제되었습니다.
+저장된 데이터에 대한 접근 또는 새 MEGA 계정을 등록하는 것이 금지됩니다.</translation>
+    </message>
+    <message>
+        <source>File removed as it violated our Terms of Service</source>
+        <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
+        <translation>이용 약관 위반.</translation>
     </message>
 </context>
 <context>
@@ -3091,21 +3564,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Close</source>
         <translatorcomment>Button label to close current message box</translatorcomment>
         <translation>닫기</translation>
-    </message>
-    <message>
-        <source>Locked Accounts</source>
-        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>잠긴 계정들</translation>
-    </message>
-    <message>
-        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
-        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>MEGA와 다른 서비스들에서 같은 비밀번호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.</translation>
-    </message>
-    <message>
-        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
-        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -3128,11 +3586,6 @@ Transfer will automatically resume when you re-open the app.</source>
 </context>
 <context>
     <name>MegaProgressCustomDialog</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
@@ -3287,9 +3740,9 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>이 위치에서 데스크톱 앱을 실행할 수 없습니다. 응용 프로그램 폴더로 이동한 후 실행하세요.</translation>
     </message>
     <message>
-        <source>Account expired (business or Pro Flexi)</source>
-        <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>계정 비활성화됨</translation>
+        <source>Your plan has expired</source>
+        <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
+        <translation>요금제가 만료되었습니다.</translation>
     </message>
 </context>
 <context>
@@ -3338,11 +3791,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu action to open the transfer in MEGA webclient</translatorcomment>
         <translation>MEGA에서 열기</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Error messagebox title</translatorcomment>
-        <translation>오류</translation>
     </message>
     <message>
         <source>Error opening file</source>
@@ -3475,19 +3923,257 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translation><numerusform>전송 취소하고 지우기</numerusform></translation>
     </message>
     <message>
-        <source>Yes, cancel</source>
-        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>네, 취소합니다</translation>
+        <source>Cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>취소</translation>
     </message>
     <message>
-        <source>No, continue</source>
-        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
-        <translation>아니오, 계속합니다</translation>
+        <source>Don&apos;t cancel</source>
+        <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
+        <translation>취소하지 마세요</translation>
     </message>
     <message>
-        <source>Yes, clear</source>
-        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation>네, 삭제합니다.</translation>
+        <source>Don&apos;t clear</source>
+        <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
+        <translation>비우지 마세요</translation>
+    </message>
+</context>
+<context>
+    <name>MoveOrRenameCannotOccurHeader</name>
+    <message>
+        <source>Cannot move or rename [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the item cannot be moved ore renamed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>이동 또는 이름 변경을 할 수 없습니다 [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
+        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
+        <translation>MEGA에서 이동 또는 이름 변경을 감지하였지만, 로컬에서 반영할 수 없었습니다</translation>
+    </message>
+    <message>
+        <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
+        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
+        <translation>로컬 파일시스템에서 이동 또는 이름 변경을 감지하였지만, MEGA에 반영할 수 없었습니다.</translation>
+    </message>
+    <message>
+        <source>Solve</source>
+        <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
+        <translation>해결</translation>
+    </message>
+</context>
+<context>
+    <name>MultiQFileDialog</name>
+    <message>
+        <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
+        <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
+        <translation>너무 많은 항목이 선택 되었습니다. 계속 하려면 일부를 선택 해제하거나 부모 폴더를 선택하세요.</translation>
+    </message>
+</context>
+<context>
+    <name>NameConflict</name>
+    <message>
+        <source>Removed</source>
+        <translatorcomment>Label in solved name conflict sync stalls by removing the file.SNC-2565</translatorcomment>
+        <translation>제거됨</translation>
+    </message>
+    <message>
+        <source>Renamed to &quot;%1&quot;</source>
+        <translatorcomment>Label in solved name conflict sync stalls by renaming the file.SNC-2565</translatorcomment>
+        <translation>“%1”(으)로 이름 변경됨</translation>
+    </message>
+    <message>
+        <source>Merged</source>
+        <translatorcomment>Label in solved name conflict sync stalls when folders are merged.SNC-2565</translatorcomment>
+        <translation>병합됨</translation>
+    </message>
+    <message>
+        <source>Modified externally</source>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
+        <translation>외부에서 수정됨</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Solve option for name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>이름 바꾸기</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to refresh sync stalls when an external change to sync stalls is detected.SNC-2565</translatorcomment>
+        <translation>새로 고침</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Confirmation text when a name conflict has been resolved externally.SNC-2565</translatorcomment>
+        <translation>문제가 외부에서 해결되었습니다.
+목록을 새로 고침하세요.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.
+Please refresh the view</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by renamming the local file and the file is actually deleted.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B]은/는 더 이상 존재하지 않습니다.
+보기를 새로 고침하세요.</translation>
+    </message>
+    <message>
+        <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation>파일이 MEGA 휴지통의 SyncDebris 폴더로 이동됩니다.[BR]그 곳에서 파일과 파일 버전을 복원할 수 있습니다.[/BR]</translation>
+    </message>
+    <message>
+        <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation>폴더가 MEGA 휴지통의 SyncDebris 폴더로 이동됩니다.[BR]그 곳에서 폴더를 복원할 수 있습니다.[/BR]</translation>
+    </message>
+    <message>
+        <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation>파일이 로컬 동기화 위치의 .rubbish 또는 .debris 폴더로 이동됩니다.[BR]그 곳에서 파일을 복원할 수 있습니다.[/BR]</translation>
+    </message>
+    <message>
+        <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
+        <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
+        <translation>이것은 로컬 동기화 위치의 .rubbish 또는 .debris 폴더로 이동됩니다.[BR]그 곳에서 폴더를 복원할 수 있습니다.[/BR]</translation>
+    </message>
+    <message>
+        <source>No action needed</source>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
+        <translation>조치가 필요하지 않음</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the remote file %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
+        <translation>원격 파일 [B]%1[/B]을/를 삭제할까요?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the remote folder %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
+        <translation>원격 폴더 [B]%1[/B]을/를 삭제할까요?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the local file %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
+        <translation>로컬 파일 [B]%1[/B]을/를 삭제할까요?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the local folder %1?</source>
+        <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
+        <translation>로컬 폴더 [B]%1[/B]을/를 삭제할까요?</translation>
+    </message>
+</context>
+<context>
+    <name>NameConflictsHeader</name>
+    <message>
+        <source>Remove duplicates</source>
+        <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
+        <translation>중복 제거</translation>
+    </message>
+    <message>
+        <source>Remove duplicates, merge folders and rename the rest</source>
+        <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>중복을 제거하고, 폴더를 합치고 나머지의 이름을 변경</translation>
+    </message>
+    <message>
+        <source>Remove duplicates and rename the rest</source>
+        <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>중복을 제거하고 나머지의 이름을 변경</translation>
+    </message>
+    <message>
+        <source>Merge folders and rename the rest</source>
+        <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>폴더를 합치고 나머지의 이름을 변경</translation>
+    </message>
+    <message>
+        <source>Rename all items</source>
+        <translatorcomment>Button to solve a name conflict sync stall by renaming items.SNC-2565</translatorcomment>
+        <translation>모든 항목 이름 변경</translation>
+    </message>
+    <message>
+        <source>Merge folders</source>
+        <translatorcomment>Button to solve a name conflict sync stall by merging folders.SNC-2565</translatorcomment>
+        <translation>폴더 병합</translation>
+    </message>
+    <message>
+        <source>Solve options</source>
+        <translatorcomment>Button text to show the solve action of sync stall.SNC-2565</translatorcomment>
+        <translation>해결 옵션</translation>
+    </message>
+    <message>
+        <source>Name Conflicts: [B]%1[/B]</source>
+        <translatorcomment>Title for name conflict sync stall header widget .[B] is for bold.SNC-2565</translatorcomment>
+        <translation>이름 충돌: [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>These items contain multiple names on one side, that would all become the same single name on the other side.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>동기화의 한 쪽에 같은 이름을 가진 여러 항목이 동기화의 다른 쪽에서는 하나의 모두 항목이 됩니다</translation>
+    </message>
+    <message>
+        <source>These files contain multiple names on one side, that would all become the same single name on the other side.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>동기화의 한 쪽에 같은 이름을 가진 여러 항목이 동기화의 다른 쪽에서는 하나의 모두 항목이 됩니다</translation>
+    </message>
+    <message>
+        <source>These folders contain multiple names on one side, that would all become the same single name on the other side.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>동기화의 한 쪽에 같은 이름을 가진 여러 항목이 동기화의 다른 쪽에서는 하나의 항목이 됩니다</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button to discard fixing the stalled issue.SNC-2565</translatorcomment>
+        <translation>취소</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
+        <translation>적용</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts.FM-1615</translatorcomment>
+        <translation>모두 적용</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to solve the issue?</source>
+        <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
+        <translation>이 문제를 해결할까요?</translation>
+    </message>
+    <message>
+        <source>This action will rename the conflicted items (adding a suffix like (1)).</source>
+        <translatorcomment>Info text for confirmation message of rename action in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>이 행동은 충돌하는 항목에 (1) 같은 접미사를 추가하는 방식으로 이름을 변경합니다.</translation>
+    </message>
+    <message>
+        <source>This action will merge all folders into a single one. We will skip duplicated files
+and rename the files with the same name but different content (adding a suffix like (1))</source>
+        <translatorcomment>Info text for confirmation message of merge folder action in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>이 행동은 모든 폴더를 하나로 합칩니다. 중복된 파일들은 건너뛰게 되고, 이름은 같지만 내용물이 다른 파일들은 (1) 같은 접미사를 추가하는 방식으로 이름이 변경됩니다.</translation>
+    </message>
+    <message>
+        <source>This action will delete the duplicate files.</source>
+        <translatorcomment>Info text for confirmation message of remove duplicates action in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>이 행동은 중복 파일들을 삭제합니다.</translation>
+    </message>
+    <message>
+        <source>This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
+        <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>이 행동은 중복 파일들을 삭제하고, 남은 항목들에 (1) 같은 접미사를 추가하는 방식으로 이름을 바꿉니다.</translation>
+    </message>
+    <message>
+        <source>This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
+        <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>이 행동은 중복 파일들을 삭제하고, 모든 폴더를 하나로 합치며, 이름이 충돌하는 남은 항목들은 (1) 같은 접미사를 추가하는 방식으로 이름이 변경됩니다.</translation>
+    </message>
+</context>
+<context>
+    <name>NameDuplicatedContainer</name>
+    <message>
+        <source>Duplicated</source>
+        <translatorcomment>Title for list showing all dublicated items in a conflicted name sync stall.SNC-2565</translatorcomment>
+        <translation>중복된 항목</translation>
     </message>
 </context>
 <context>
@@ -3529,11 +4215,6 @@ Enter a different name</source>
 </context>
 <context>
     <name>NodeSelector</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>오류</translation>
-    </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
@@ -3606,21 +4287,6 @@ Enter a different name</source>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>이름으로 정렬</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>오늘 %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>어제 %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 %2</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3741,18 +4407,13 @@ Enter a different name</source>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>누군가 당신의 연락처 요청을 승인</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>정보</translation>
-    </message>
-    <message>
-        <source>Someone accepted your contact request</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>누군가 당신의 연락처 요청을 승인</translation>
     </message>
     <message>
         <source>Info:</source>
@@ -3796,11 +4457,569 @@ Enter a different name</source>
     </message>
 </context>
 <context>
-    <name>Notificator</name>
+    <name>OnboardingStrings</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGA</translation>
+        <source>Add folder</source>
+        <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
+        <translation>폴더 추가</translation>
+    </message>
+    <message>
+        <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
+        <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
+        <translation>MEGA의 [B][A]이용 약관[/A][/B]을 읽었고 이에 동의합니다</translation>
+    </message>
+    <message>
+        <source>Back up</source>
+        <translatorcomment>Button text to configure the selected backups CON-468</translatorcomment>
+        <translation>백업</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Button title, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>백업</translation>
+    </message>
+    <message>
+        <source>Data from your device will automatically and consistently back up to MEGA in real-time.</source>
+        <translatorcomment>Button description, on click it goes to the backups section CON-468</translatorcomment>
+        <translation>당신의 장치의 데이터가 자동으로 지속적으로 MEGA에 실시간으로 백업됩니다.</translation>
+    </message>
+    <message>
+        <source>Backup: Confirm</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup confirm step CON-468</translatorcomment>
+        <translation>백업: 확인</translation>
+    </message>
+    <message>
+        <source>Backup Folders</source>
+        <translatorcomment>Backup folders table title CON-468</translatorcomment>
+        <translation>백업 폴더</translation>
+    </message>
+    <message>
+        <source>Backup: Select folders</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the backup select folders step CON-468</translatorcomment>
+        <translation>백업: 폴더 선택</translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
+        <translation>백업 저장 위치:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
+        <translation>취소</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>선택</translation>
+    </message>
+    <message>
+        <source>Change folder</source>
+        <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
+        <translation>폴더 변경</translation>
+    </message>
+    <message>
+        <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
+        <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
+        <translation>새 이메일 주소를 입력하고 재전송을 클릭하세요. 계정을 활성화할 수 있도록 새 이메일 주소로 인증 메일을 보낼 것입니다.</translation>
+    </message>
+    <message>
+        <source>Change your email address</source>
+        <translatorcomment>Change email window title CON-466</translatorcomment>
+        <translation>이메일 주소 변경</translation>
+    </message>
+    <message>
+        <source>Device name</source>
+        <translatorcomment>Device name window title CON-467</translatorcomment>
+        <translation>장치 이름</translation>
+    </message>
+    <message>
+        <source>Add the name of your device.</source>
+        <translatorcomment>Device name window secondary title CON-467</translatorcomment>
+        <translation>장치의 이름을 추가하세요.</translation>
+    </message>
+    <message>
+        <source>Add device name</source>
+        <translatorcomment>Device name text input box title CON-467</translatorcomment>
+        <translation>장치 이름 추가</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translatorcomment>Button text to confirm the current action CON-467</translatorcomment>
+        <translation>확인</translation>
+    </message>
+    <message>
+        <source>There is already a folder with the same name in this backup</source>
+        <translatorcomment>Error text indicating that it can´t create a backup with duplicated names CON-468</translatorcomment>
+        <translation>이 백업에 이미 같은 이름을 가진 폴더가 있습니다</translation>
+    </message>
+    <message>
+        <source>A folder with the same name already exists on your backups</source>
+        <translatorcomment>Error text indicating that a backup with the same name already exists CON-468</translatorcomment>
+        <translation>백업에 같은 이름을 가진 폴더가 이미 존재합니다</translation>
+    </message>
+    <message>
+        <source>Confirm folders to back up</source>
+        <translatorcomment>Confirm backups table title CON-468</translatorcomment>
+        <translation>백업할 폴더 확인</translation>
+    </message>
+    <message>
+        <source>Account created</source>
+        <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
+        <translation>계정이 생성되었습니다</translation>
+    </message>
+    <message>
+        <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
+        <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
+        <translation>계정을 활성화하려면, 이메일 주소를 인증해야 합니다. 확인 링크가 있는 이메일을 보내드렸습니다. 이메일 주소를 인증하려면 링크를 클릭하세요, 그 후 로그인이 가능합니다.</translation>
+    </message>
+    <message>
+        <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
+        <translatorcomment>Indications about what to do if the user didn´t receive the email [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>만약 1시간 내에 이메일을 받지 못 했다면, 스팸 폴더를 확인하세요. 만약 여전히 찾지 못 하였다면, [B][A]지원에 연락하세요[/A][/B]</translation>
+    </message>
+    <message>
+        <source>If you have misspelled your email address, [B][A]change it here[/A][/B].</source>
+        <translatorcomment>Text indicating what to do to change the email address. [B] is for bold and [A] is for link. Do not change [A] and [B] orders CON-466</translatorcomment>
+        <translation>이메일 주소를 잘못 적었다면, [B][A]여기서 바꾸세요[/A][/B].</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
+        <translation>암호 확인</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
+        <translation>완료</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translatorcomment>Email text input title CON-466</translatorcomment>
+        <translation>이메일 주소</translation>
+    </message>
+    <message>
+        <source>Please confirm your password</source>
+        <translatorcomment>Confirm password text input title CON-466</translatorcomment>
+        <translation>암호를 확인하세요</translation>
+    </message>
+    <message>
+        <source>Enter your password</source>
+        <translatorcomment>Password text input title CON-466</translatorcomment>
+        <translation>암호를 입력하세요</translation>
+    </message>
+    <message>
+        <source>Please enter your name</source>
+        <translatorcomment>Name text input title CON-466</translatorcomment>
+        <translation>이름을 입력하세요</translation>
+    </message>
+    <message>
+        <source>Please enter your last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>성을 입력하세요</translation>
+    </message>
+    <message>
+        <source>Passwords don&apos;t match. Check and try again.</source>
+        <translatorcomment>Error label indicating that password and confirm password content is not the same CON-466</translatorcomment>
+        <translation>암호가 일치하지 않습니다. 확인하시고 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Enter a valid email address</source>
+        <translatorcomment>Error label indicating that the email is not valid CON-466</translatorcomment>
+        <translation>유효한 이메일 주소를 입력하세요</translation>
+    </message>
+    <message>
+        <source>Your backup is set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>백업이 설정되었습니다</translation>
+    </message>
+    <message>
+        <source>What else do you want to do?</source>
+        <translatorcomment>Text suggesting the user to create another backup or sync CON-468</translatorcomment>
+        <translation>다른 어떤 것을 원하시나요?</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
+        <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
+        <translation>동기화가 설정되었으며 데스크톱 앱이 실행 중일 때 선택된 데이터가 자동으로 동기화될 것입니다.</translation>
+    </message>
+    <message>
+        <source>Your sync has been set up</source>
+        <translatorcomment>Title indicating that the backup was successfully configured CON-467</translatorcomment>
+        <translation>동기화가 설정되었습니다</translation>
+    </message>
+    <message>
+        <source>First name</source>
+        <translatorcomment>First name text input title CON-466</translatorcomment>
+        <translation>이름</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA account with your local device.</source>
+        <translatorcomment>Full sync button description CON-467</translatorcomment>
+        <translation>전체 MEGA 계정을 로컬 장치와 동기화</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translatorcomment>Full sync button title CON-467</translatorcomment>
+        <translation>전체 동기화</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Full sync page title CON-467</translatorcomment>
+        <translation>전체 MEGA 클라우드 드라이브를 로컬 장치와 동기화</translation>
+    </message>
+    <message>
+        <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
+        <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
+        <translation>새 폴더를 만들 권한이 없기 때문에 폴더를 동기화할 수 없습니다. 계속 하려면, 존재하는 폴더를 선택하세요.</translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translatorcomment>Button text that user have to click in case he forgot the password. Button has no borders and it looks like a label CON-465</translatorcomment>
+        <translation>암호를 잊었나요?</translation>
+    </message>
+    <message>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a local folder CON-467</translatorcomment>
+        <translation>동기화할 로컬 폴더를 선택하세요</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Text input title indicating the user to select a MEGA folder CON-467</translatorcomment>
+        <translation>동기화할 MEGA 폴더를 선택하세요</translation>
+    </message>
+    <message>
+        <source>Setup options</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the Setup options step CON-467</translatorcomment>
+        <translation>설정 옵션</translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translatorcomment>Label that indicates the user to choose between different options CON-467</translatorcomment>
+        <translation>선택:</translation>
+    </message>
+    <message>
+        <source>Welcome to MEGA</source>
+        <translatorcomment>Label wellcoming the user to MEGA CON-467</translatorcomment>
+        <translation>MEGA에 오신 것을 환영합니다</translation>
+    </message>
+    <message>
+        <source>Last name</source>
+        <translatorcomment>Last name text input title CON-466</translatorcomment>
+        <translation>성</translation>
+    </message>
+    <message>
+        <source>Log in</source>
+        <translatorcomment>Log in button text CON-465</translatorcomment>
+        <translation>로그인</translation>
+    </message>
+    <message>
+        <source>Log in to your [B]MEGA account[/B]</source>
+        <translatorcomment>Login window title [B] is for bold CON-465</translatorcomment>
+        <translation>[B]MEGA 계정[/B]에 로그인</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
+        <translation>다음</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
+        <translation>건너뛰기</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>설정에서 보기</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Password input field title CON-465</translatorcomment>
+        <translation>암호</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
+        <translation>이전</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Button to rename a backup CON-468</translatorcomment>
+        <translation>이름 바꾸기</translation>
+    </message>
+    <message>
+        <source>Resend</source>
+        <translatorcomment>Button text to resend the email for account confirmation CON-466</translatorcomment>
+        <translation>재발송</translation>
+    </message>
+    <message>
+        <source>[B]Select all[/B]</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>[B]모두 선택[/B]</translation>
+    </message>
+    <message>
+        <source>Select folders to back up</source>
+        <translatorcomment>Backups table checkbox text to select all lines in the table CON-466</translatorcomment>
+        <translation>백업할 폴더 선택</translation>
+    </message>
+    <message>
+        <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
+        <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
+        <translation>데스크톱 앱이 실행 중일 때 선택된 폴더가 자동으로 MEGA에 백업됩니다.</translation>
+    </message>
+    <message>
+        <source>Select a local folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a local folder CON-467</translatorcomment>
+        <translation>로컬 폴더를 선택하세요</translation>
+    </message>
+    <message>
+        <source>Select a MEGA folder</source>
+        <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
+        <translation>MEGA 폴더를 선택하세요</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA account with your local device.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>MEGA 계정의 선택된 폴더를 로컬 장치와 동기화합니다.</translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
+        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
+        <translation>MEGA 클라우드 드라이브의 특정 폴더를 로컬 장치와 동기화합니다.</translation>
+    </message>
+    <message>
+        <source>Selective sync</source>
+        <translatorcomment>Selective sync button title text CON-467</translatorcomment>
+        <translation>선택적 동기화</translation>
+    </message>
+    <message>
+        <source>Set up MEGA</source>
+        <translatorcomment>Onboarding window title CON-467</translatorcomment>
+        <translation>MEGA 설정</translation>
+    </message>
+    <message>
+        <source>Sign up</source>
+        <translatorcomment>Sign up button text CON-465</translatorcomment>
+        <translation>가입</translation>
+    </message>
+    <message>
+        <source>Create your [B]MEGA account[/B]</source>
+        <translatorcomment>Sign up page title CON-466</translatorcomment>
+        <translation>[B]MEGA 계정[/B] 만들기</translation>
+    </message>
+    <message>
+        <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
+        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
+        <translation>장치를 MEGA와 동기화하고, 모든 로컬의 변경사항은 자동으로 즉시 MEGA에 적응되며 반대로도 마찬가지입니다.</translation>
+    </message>
+    <message>
+        <source>Choose sync type</source>
+        <translatorcomment>Text indicating the user to choose between different available sync types CON-467</translatorcomment>
+        <translation>동기화 유형 선택</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Button title that forwards the user to the syncs flow CON-467</translatorcomment>
+        <translation>동기화</translation>
+    </message>
+    <message>
+        <source>Sync: Choose type</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the choose sync type step CON-467</translatorcomment>
+        <translation>동기화: 유형 선택</translation>
+    </message>
+    <message>
+        <source>Sync set up</source>
+        <translatorcomment>Onboarding step text indicating the user that he is in the sync setup step CON-467</translatorcomment>
+        <translation>동기화 설정</translation>
+    </message>
+    <message>
+        <source>Problem with two-factor authentication?</source>
+        <translatorcomment>Text that the user has to click in case he has problems with 2FA CON-465</translatorcomment>
+        <translation>2단계 인증에 문제가 있나요?</translation>
+    </message>
+    <message>
+        <source>Enter the 6-digit code generated by your authenticator app.</source>
+        <translatorcomment>2FA page secondary title CON-465</translatorcomment>
+        <translation>인증기 앱에서 생성된 6자리 코드를 입력하세요.</translation>
+    </message>
+    <message>
+        <source>Continue with [B]two-factor authentication[/B]</source>
+        <translatorcomment>2FA page title CON-465</translatorcomment>
+        <translation>[B]2단계 인증[/B]으로 계속하기</translation>
+    </message>
+    <message>
+        <source>Logging in…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>로그인하는 중…</translation>
+    </message>
+    <message>
+        <source>Fetching file list…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>파일 목록 가져오는 중…</translation>
+    </message>
+    <message>
+        <source>Creating account…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-466</translatorcomment>
+        <translation>계정 생성 중…</translation>
+    </message>
+    <message>
+        <source>Validating 2FA code…</source>
+        <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
+        <translation>2단계 인증 코드 검증 중…</translation>
+    </message>
+    <message>
+        <source>Stop logging in?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>로그인을 멈출까요?</translation>
+    </message>
+    <message>
+        <source>Closing this window will stop you logging in.</source>
+        <translatorcomment>Dialog body text. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>이 창을 닫는 것은 로그인을 중단하게 됩니다.</translation>
+    </message>
+    <message>
+        <source>Stop Loggin in</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>로그인 중단</translation>
+    </message>
+    <message>
+        <source>Don’t stop</source>
+        <translatorcomment>Cancel button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
+        <translation>중단하지 않기</translation>
+    </message>
+    <message>
+        <source>Cancel account creation?</source>
+        <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>계정 생성을 취소할까요?</translation>
+    </message>
+    <message>
+        <source>Closing this window will cancel the sign up process.</source>
+        <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>이 창을 닫는 것은 가입 과정을 취소하게 됩니다.</translation>
+    </message>
+    <message>
+        <source>Cancel account</source>
+        <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>생성 취소</translation>
+    </message>
+    <message>
+        <source>Don’t cancel</source>
+        <translatorcomment>Dialog cancel button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
+        <translation>취소하지 마세요</translation>
+    </message>
+    <message>
+        <source>Password needs to be at least 8 characters</source>
+        <translatorcomment>Hint text that tells the user minimum requirement for the passwords CON-466</translatorcomment>
+        <translation>암호는 8자 이상이어야 합니다</translation>
+    </message>
+    <message>
+        <source>It’s better to have:</source>
+        <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>다음이 포함하는 것이 좋습니다:</translation>
+    </message>
+    <message>
+        <source>Upper and lower case letters</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>영문 대소문자</translation>
+    </message>
+    <message>
+        <source>At least one number or special character</source>
+        <translatorcomment>Suggestions to have a stronger password CON-466</translatorcomment>
+        <translation>최소 하나의 숫자 또는 특수 문자</translation>
+    </message>
+    <message>
+        <source>Enter a minimum of 8 characters.</source>
+        <translatorcomment>Error text to force the user to fill minimum character requirement CON-466</translatorcomment>
+        <translation>최소 8개의 글자를 입력하세요.</translation>
+    </message>
+    <message>
+        <source>Your password is too easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>당신의 암호는 너무 쉽게 추측이 가능합니다. 더 강하게 만들어야 합니다.</translation>
+    </message>
+    <message>
+        <source>Your password is easily guessed. You need to make it stronger.</source>
+        <translatorcomment>Error text that tells the user to make the password stronger CON-466</translatorcomment>
+        <translation>당신의 암호는 쉽게 추측할 수 있습니다. 더 강하게 만드는 것이 좋습니다.</translation>
+    </message>
+    <message>
+        <source>Automatically update your files from your computers to MEGA cloud. Backup items in MEGA cloud can&apos;t be modified or deleted from MEGA cloud.</source>
+        <translatorcomment>Final page go to backup button description CON-468</translatorcomment>
+        <translation>자동으로 컴퓨터에서 MEGA로 파일을 업데이트 합니다. 만약 MEGA에서 백업을 삭제하기로 했다면, 로컬 파일은 삭제되지 않습니다.</translation>
+    </message>
+    <message>
+        <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
+        <translation>컴퓨터와 MEGA 사이의 선택된 폴더를 동기화합니다; 한쪽에서 바뀐 내용이 다른 쪽에 적용됩니다.</translation>
+    </message>
+    <message>
+        <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
+        <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
+        <translation>컴퓨터들과 MEGA 사이의 파일을 동기화합니다; 한쪽에서 바뀐 내용이 다른 쪽에 적용됩니다.</translation>
+    </message>
+    <message>
+        <source>Let&apos;s get you set up</source>
+        <translatorcomment>Page title for new accounts in set device name page CON-467</translatorcomment>
+        <translation>설정을 진행하겠습니다</translation>
+    </message>
+    <message>
+        <source>Confirm your email and password</source>
+        <translatorcomment>Page title for new accounts in login page CON-465</translatorcomment>
+        <translation>이메일 주소와 암호를 확인하세요</translation>
+    </message>
+    <message>
+        <source>Once confirmed, your account will be activated.</source>
+        <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
+        <translation>한번 확인 되면, 계정이 활성화됩니다.</translation>
+    </message>
+    <message>
+        <source>Enter your email address</source>
+        <translatorcomment>Login error if user didn´t enter the email CON-465</translatorcomment>
+        <translation>이메일 주소를 입력하세요</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Device name text input field title CON-467</translatorcomment>
+        <translation>장치 이름을 입력하세요</translation>
+    </message>
+    <message>
+        <source>Names longer than 32 characters are not supported</source>
+        <translatorcomment>Error shown in case the user types a name larger than 32 characters in the device name field CON-467</translatorcomment>
+        <translation>32자를 초과하는 이름은 지원되지 않습니다</translation>
+    </message>
+    <message>
+        <source>Incorrect 2FA code</source>
+        <translatorcomment>Error shown in case the 2FA fails CON-467</translatorcomment>
+        <translation>잘못된 2단계 인증 코드</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
+        <translation>백업이 설정되었으며 데스크톱 앱이 실행 중일 때 선택된 데이터가 자동으로 백업될 것입니다. 백업과 백업 상태를 설정의 백업 택에서 볼 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
+        <translation>다시 시도</translation>
+    </message>
+</context>
+<context>
+    <name>OpenBackupsFolder</name>
+    <message>
+        <source>Backup Folder</source>
+        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
+        <translation>백업 폴더</translation>
+    </message>
+    <message>
+        <source>View in MEGA</source>
+        <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
+        <translation>MEGA에서 보기</translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
+        <translation>백업 폴더:</translation>
     </message>
 </context>
 <context>
@@ -3946,11 +5165,6 @@ Enter a different name</source>
         <translation>취소</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>경고</translation>
-    </message>
-    <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
         <translation>하나 이상의 MEGA 파일 링크를 입력하세요</translation>
@@ -4076,12 +5290,12 @@ Enter a different name</source>
     </message>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
         <translation>추가 저장소는 %2TB당 %1(으)로 청구됩니다.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
         <translation>추가 전송 할당량은 %2TB당 %1(으)로 청구됩니다.</translation>
     </message>
     <message numerus="yes">
@@ -4103,6 +5317,11 @@ Enter a different name</source>
 <context>
     <name>PlatformStrings</name>
     <message>
+        <source>Moved to OS Trash</source>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
+        <translation>휴지통으로 이동됨</translation>
+    </message>
+    <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
         <translation>폴더에서 보기</translation>
@@ -4111,6 +5330,11 @@ Enter a different name</source>
         <source>Exit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Windows or Linux</translatorcomment>
         <translation>종료</translation>
+    </message>
+    <message>
+        <source>Moved to OS Rubbish Bin</source>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
+        <translation>휴지통으로 이동됨</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -4123,6 +5347,11 @@ Enter a different name</source>
         <translation>나가기</translation>
     </message>
     <message>
+        <source>Moved to OS Recycle Bin</source>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
+        <translation>휴지통으로 이동됨</translation>
+    </message>
+    <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
         <translation>파일 탐색기에서 보기</translation>
@@ -4131,14 +5360,21 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced system notifications.
-- We've enhanced the UI.
-- We've fixed the detected crashes on Windows, Linux, and macOS.
+        <source>- Sync Rework Beta V1 version.
+- New Exclusions dialog for syncs.
+- New header for undecrypted cloud issues.
+- Minor changes in issues description. 
+- Auto solve reparse points and hard/sym links in Smart Mode. 
+- Minor bugs fixed. 
+- Performance improved. 
 </source>
-        <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation>- 시스템 알림을 향상하였습니다.
-- UI를 향상하였습니다.
-- Windows, Linux, 그리고 macOS에서 감지된 충돌을 수정하였습니다.</translation>
+        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
+        <translation>동기화 재작업 베타 V1.
+- 동기화를 위한 새 제외 대화창.
+- 문제 설명에 대한 작은 변화.
+- 스마트 모드에서 재분석 지점, 하드 링크와 심볼릭 링크 자동 해결 가능.
+- 작은 버그 수정.
+- 성능 향상.</translation>
     </message>
 </context>
 <context>
@@ -4157,16 +5393,6 @@ Enter a different name</source>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
         <translation>프록시 설정:</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translatorcomment>HTTP proxy type</translatorcomment>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>SOCK5H</source>
-        <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -4222,11 +5448,6 @@ Enter a different name</source>
         <source>Update</source>
         <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
         <translation>업데이트</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
-        <translation>오류</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -4297,12 +5518,12 @@ Enter a different name</source>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>상위 디렉토리</translation>
+        <translation>부모 폴더</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>상위 디렉토리로 가기</translation>
+        <translation>부모 폴더로 가기</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4362,7 +5583,7 @@ Enter a different name</source>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>디렉토리 찾기</translation>
+        <translation>폴더 찾기</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4377,7 +5598,7 @@ Enter a different name</source>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>디렉토리:</translation>
+        <translation>폴더:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4397,7 +5618,7 @@ Enter a different name</source>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>디렉토리</translation>
+        <translation>폴더</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4412,7 +5633,7 @@ Enter a different name</source>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>디렉토리를 삭제할 수 없습니다.</translation>
+        <translation>폴더를 삭제할 수 없습니다.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4467,7 +5688,7 @@ Enter a different name</source>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>알 수 없음</translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -4520,8 +5741,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-경로를 찾을 수 없습니다.
-올바른 경로명을 입력하였는지 확인하세요.</translation>
+폴더를 찾지 못하였습니다.
+올바른 폴더 이름을 입력했는지 확인하세요.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -4644,6 +5865,24 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>RemoteItemUi</name>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
+        <translation>권한</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button to add new syncs or backups from settings window.SNC-2565</translatorcomment>
+        <translation>추가</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
+        <translation>삭제</translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Stop backup</source>
@@ -4744,7 +5983,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Creating folders</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
-        <translation>폴더 생성 중&#8230;</translation>
+        <translation>폴더 생성 중…</translation>
     </message>
     <message>
         <source>%1/%2</source>
@@ -4765,6 +6004,11 @@ Do you want to delete it anyway?</source>
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
         <translation><numerusform>파일 %n개</numerusform></translation>
+    </message>
+    <message>
+        <source>Adding transfers…</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Adding transfers&quot; step.con-429</translatorcomment>
+        <translation>전송 추가 중…</translation>
     </message>
 </context>
 <context>
@@ -4823,51 +6067,14 @@ Do you want to delete it anyway?</source>
         <translation>업그레이드</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translatorcomment>Button label to delete a synchronization. String as short as possible.</translatorcomment>
-        <translation>삭제</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>추가</translation>
-    </message>
-    <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>데이터가 일시적으로 사용 불가능합니다</translation>
     </message>
     <message>
-        <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%3 중 %1(%2%)사용됨</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
-        <translation>경고</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>비우기</translation>
-    </message>
-    <message>
-        <source>Full scan</source>
-        <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
-        <translation>전체 검색</translation>
-    </message>
-    <message>
-        <source>MEGAsync will perform a full scan of your synced folders when it starts.
-
-Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync가 재시작할 때 동기화된 폴더를 전체 검사합니다. 지금 MEGAsync를 재시작할까요?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4915,16 +6122,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>항상 복구 키에 대한 물리적 관리를 유지하세요 (예를 들어 컴퓨터, 외부 저장소, 또는 인쇄).</translation>
     </message>
     <message>
-        <source>Exclude by size</source>
-        <translatorcomment>Section title for controls to let the user exclude files from being synced by size.</translatorcomment>
-        <translation>용량으로 제외</translation>
-    </message>
-    <message>
-        <source>Excluded file and folder names</source>
-        <translatorcomment>Section title for controls to indicate the file and folder names excluded from synchronization.</translatorcomment>
-        <translation>제외된 파일과 폴더명</translation>
-    </message>
-    <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
         <translation>당신의 컴퓨터에 이전에 동기화된 파일의 백업 버전이 영구적으로 삭제될 것입니다. 진행하기 전에 건질 것이 없는지 백업 폴더를 확인하시기 바랍니다:</translation>
@@ -4933,16 +6130,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
         <translation>당신의 컴퓨터에 이전에 동기화된 파일의 백업 버전이 영구적으로 삭제될 것입니다. 진행하기 전에 건질 것이 없는지 MEGA 계정의 휴지통 안의 [A] 폴더를 확인하시기 바랍니다.</translation>
-    </message>
-    <message>
-        <source>Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation>지금 앱을 다시 시작할까요?</translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation>권한</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -4965,11 +6152,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>원격 백업을 지금 삭제하시겠습니까?</translation>
     </message>
     <message>
-        <source>Restart</source>
-        <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
-        <translation>재시작</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>MEGA에서 파일의 백업이 삭제된 로컬 폴더</translation>
@@ -4990,24 +6172,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>모든 파일 버전 기록을 삭제하려고 합니다. 계속하시겠습니까?</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 사용됨</translation>
-    </message>
-    <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
         <translation>MEGA-복구키</translation>
-    </message>
-    <message>
-        <source>Error enabling sync</source>
-        <translatorcomment>Title error message shown when an error occurs while trying to enable a sync.</translatorcomment>
-        <translation>동기화 활성화중 오류</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
-        <translation>동기화 “%1”을/를 활성화할 수 없습니다. 사유: %2</translation>
     </message>
     <message>
         <source>General</source>
@@ -5033,11 +6200,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Network</source>
         <translatorcomment>Title for the Settings -&gt; Network pane tab button. Keep as short as possible.</translatorcomment>
         <translation>네트워크</translation>
-    </message>
-    <message>
-        <source>Enable overlay icons</source>
-        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>오버레이 아이콘 활성화</translation>
     </message>
     <message>
         <source>Check for Updates</source>
@@ -5077,7 +6239,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>문제 보고</translation>
+        <translation>문제 신고</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -5093,21 +6255,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>전송 할당량</translation>
-    </message>
-    <message>
-        <source>Synced folders</source>
-        <translatorcomment>Section title for Synchronized folders table view.</translatorcomment>
-        <translation>동기화된 폴더</translation>
-    </message>
-    <message>
-        <source>Purchase more storage</source>
-        <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.</translatorcomment>
-        <translation>더 많은 저장소 결제</translation>
-    </message>
-    <message>
-        <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
-        <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>일부 폴더가 동기화 되지 않았습니다. 자세한 정보는 노란 경고 아이콘에 커서를 올려놓으세요.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -5137,22 +6284,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>이동…</translation>
-    </message>
-    <message>
-        <source>Exclude files smaller than</source>
-        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, smaller than the specified size.</translatorcomment>
-        <translation>이 크기보다 작은 파일은 제외</translation>
-    </message>
-    <message>
-        <source>Exclude files bigger than</source>
-        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, bigger than the specified size.</translatorcomment>
-        <translation>이 크기보다 큰 파일은 제외</translation>
-    </message>
-    <message>
-        <source>Restart MEGA Desktop App to apply changes.</source>
-        <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>변경 사항을 적용하려면 앱을 재시작하세요.</translation>
+        <translation>선택</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -5197,7 +6329,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report:</source>
         <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>문제 보고:</translation>
+        <translation>문제 신고:</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -5210,24 +6342,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>전송 할당량:</translation>
     </message>
     <message>
-        <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
-        <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation>MEGA 계정이 가득 찼습니다. 업로드가 비활성화 되고 폴더 동기화가 일시정지 됩니다.</translation>
-    </message>
-    <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
         <translation>계정 보안은 암호의 강력함에 달려있습니다. 암호는 유일하면서 추측하기 어려워야 합니다. 우리는 암호 관리자를 사용할 것을 권장합니다.</translation>
-    </message>
-    <message>
-        <source>Excluded file and folder names:</source>
-        <translatorcomment>Label for controls to indicate the file and folder names excluded from synchronization.(macOS)</translatorcomment>
-        <translation>제외된 파일과 폴더명:</translation>
-    </message>
-    <message>
-        <source>Exclude by size:</source>
-        <translatorcomment>Label for controls to let the user exclude files from being synced by size.(macOS)</translatorcomment>
-        <translation>크기로 제외:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
@@ -5247,27 +6364,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Windows 파일 탐색기 통합 활성화</translation>
-    </message>
-    <message>
-        <source>B</source>
-        <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>B</translation>
-    </message>
-    <message>
-        <source>KB</source>
-        <translatorcomment>Kilo-Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>KB</translation>
-    </message>
-    <message>
-        <source>MB</source>
-        <translatorcomment>Mega-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>MB</translation>
-    </message>
-    <message>
-        <source>GB</source>
-        <translatorcomment>Giga-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>GB</translation>
+        <translation>파일 탐색기 통합 활성화</translation>
     </message>
     <message>
         <source>Install Update</source>
@@ -5288,11 +6385,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Business</source>
         <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>기업용</translation>
-    </message>
-    <message>
-        <source>Restart MEGAsync</source>
-        <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation>다시 시작</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -5322,17 +6414,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-        <translation>문제 보고</translation>
-    </message>
-    <message>
-        <source>Choose which files or folders you want to exclude from synchronisation.</source>
-        <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation>동기화에서 제외할 파일 또는 폴더를 선택하세요</translation>
-    </message>
-    <message>
-        <source>Saving synchronised folders…</source>
-        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>동기화 폴더 저장 중…</translation>
+        <translation>문제 신고</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -5400,36 +6482,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>백업</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Backups table title</translatorcomment>
-        <translation>백업</translation>
-    </message>
-    <message>
-        <source>Backup Folder</source>
-        <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
-        <translation>백업 폴더</translation>
-    </message>
-    <message>
-        <source>View in MEGA</source>
-        <translatorcomment>Button text that opens backups folder in webclient</translatorcomment>
-        <translation>MEGA에서 보기</translation>
-    </message>
-    <message>
-        <source>Saving backups…</source>
-        <translatorcomment>Label text displayed while backups settings are being saved</translatorcomment>
-        <translation>백업 저장 중&#8230;</translation>
-    </message>
-    <message>
-        <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
-        <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation>일부 폴더가 백업 되지 않았습니다. 자세한 정보는 노란 경고 아이콘에 커서를 올려놓으세요.</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Line edit title, remote backup folder path will be displayed (macOS)</translatorcomment>
-        <translation>백업 폴더:</translation>
-    </message>
-    <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
         <translation>동기화와 백업이 비활성화 됩니다.</translation>
@@ -5450,79 +6502,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>확실하십니까?</translation>
     </message>
     <message>
-        <source>Error adding sync</source>
-        <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
-        <translation>동기화 추가 오류</translation>
-    </message>
-    <message>
-        <source>Error removing sync</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a sync.</translatorcomment>
-        <translation>동기화 제거 중 오류</translation>
-    </message>
-    <message>
-        <source>Your sync can&apos;t be removed. Reason: %1</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>동기화를 제거할 수 없습니다. 사유: %1</translation>
-    </message>
-    <message>
-        <source>Error disabling sync</source>
-        <translatorcomment>Warning message title indicating that an error happened disabling a sync.</translatorcomment>
-        <translation>동기화 비활성화 중 오류</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>동기화 “%1”을/를 비활성화할 수 없습니다. 사유: %2</translation>
-    </message>
-    <message>
-        <source>Error adding backup %1</source>
-        <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
-        <translation>백업 %1 추가 중 오류</translation>
-    </message>
-    <message>
-        <source>Error removing backup</source>
-        <translatorcomment>Error message dialog title</translatorcomment>
-        <translation>백업 중지 중 오류</translation>
-    </message>
-    <message>
-        <source>Your backup can&apos;t be removed. Reason: %1</source>
-        <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>백업을 중지할 수 없습니다. 사유: %1</translation>
-    </message>
-    <message>
-        <source>Error moving or removing remote backup folder</source>
-        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>MEGA 백업 폴더를 이동 또는 삭제하던 중 오류</translation>
-    </message>
-    <message>
-        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
-        <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>MEGA 백업 폴더를 이동 또는 삭제할 수 없습니다. 사유: %1</translation>
-    </message>
-    <message>
-        <source>Error enabling backup</source>
-        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>백업 활성화 중 오류</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>백업 “%1”을/를 활성화할 수 없습니다. 사유: %2</translation>
-    </message>
-    <message>
-        <source>Error disabling backup</source>
-        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>백업 비활성화 중 오류</translation>
-    </message>
-    <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Pro&#xa0;Flexi</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>백업 “%1”을/를 비활성화할 수 없습니다. 사유: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5533,6 +6515,21 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>전송 또는 동기화가 진행 중일 때 컴퓨터가 절전 모드에 들어가는 것을 방지합니다.</translation>
+    </message>
+    <message>
+        <source>Enable sync status icons</source>
+        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders. SNC-4039.</translatorcomment>
+        <translation>동기화 상태 아이콘 활성화</translation>
+    </message>
+    <message>
+        <source>Enabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being enabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>동기화 상태 아이콘 활성화하는 중</translation>
+    </message>
+    <message>
+        <source>Disabling sync status icons</source>
+        <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
+        <translation>동기화 상태 아이콘 비활성화하는 중</translation>
     </message>
 </context>
 <context>
@@ -5549,356 +6546,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Auto</source>
         <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
         <translation>자동</translation>
-    </message>
-</context>
-<context>
-    <name>SetupWizard</name>
-    <message>
-        <source>Create a new MEGA account</source>
-        <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>새 MEGA 계정 만들기</translation>
-    </message>
-    <message>
-        <source>Email:</source>
-        <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>이메일:</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>암호:</translation>
-    </message>
-    <message>
-        <source>Repeat password:</source>
-        <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>암호 재입력:</translation>
-    </message>
-    <message>
-        <source>Log in to your MEGA account</source>
-        <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>MEGA 계정에 로그인</translation>
-    </message>
-    <message>
-        <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>우리가 당신의 이메일 계정으로 보내드린 확인 링크를 사용하여 계정을 확인하세요</translation>
-    </message>
-    <message>
-        <source>Choose install type</source>
-        <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>설치 유형 선택</translation>
-    </message>
-    <message>
-        <source> Sync your entire cloud drive</source>
-        <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>클라우드 드라이브 전체 동기화</translation>
-    </message>
-    <message>
-        <source>Selective sync</source>
-        <translatorcomment>Label displayed to show Selective sync mode. Max 18 characters.</translatorcomment>
-        <translation>선택적 동기화</translation>
-    </message>
-    <message>
-        <source>Local folder:</source>
-        <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>로컬 폴더:</translation>
-    </message>
-    <message>
-        <source>MEGA folder:</source>
-        <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>MEGA 폴더:</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>변경</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>뒤로</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>다음</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>취소</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label of error.</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
-        <source>User already exists</source>
-        <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>이용자가 이미 존재합니다</translation>
-    </message>
-    <message>
-        <source>Fetching file list...</source>
-        <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>파일 목록 불러오는 중…</translation>
-    </message>
-    <message>
-        <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>잘못된 이메일 또는 암호입니다.</translation>
-    </message>
-    <message>
-        <source>MEGA folder doesn&apos;t exist</source>
-        <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>MEGA 폴더가 존재하지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Finish</source>
-        <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>완료</translation>
-    </message>
-    <message>
-        <source>Please, enter your e-mail address</source>
-        <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>이메일 주소를 입력하세요</translation>
-    </message>
-    <message>
-        <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>유효한 이메일 주소를 입력하세요</translation>
-    </message>
-    <message>
-        <source>Please, enter your password</source>
-        <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>암호를 입력하세요</translation>
-    </message>
-    <message>
-        <source>Please, enter your name</source>
-        <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>이름을 입력하세요</translation>
-    </message>
-    <message>
-        <source>Please, enter a stronger password</source>
-        <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>더 강력한 암호를 입력하세요</translation>
-    </message>
-    <message>
-        <source>The entered passwords don&apos;t match</source>
-        <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>입력한 암호가 일치하지 않습니다</translation>
-    </message>
-    <message>
-        <source>You have to accept our terms of service</source>
-        <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>이용 약관에 동의하여야 합니다</translation>
-    </message>
-    <message>
-        <source>Creating account...</source>
-        <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>계정 생성 중…</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label warning.</translatorcomment>
-        <translation>경고</translation>
-    </message>
-    <message>
-        <source>Please, select a local folder</source>
-        <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>로컬 폴더를 선택하세요</translation>
-    </message>
-    <message>
-        <source>Please, select a MEGA folder</source>
-        <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>MEGA 폴더를 선택하세요</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>로컬 폴더 선택</translation>
-    </message>
-    <message>
-        <source>Logging in...</source>
-        <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>로그인 중…</translation>
-    </message>
-    <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요</translation>
-    </message>
-    <message>
-        <source>Set up Assistant - MEGAsync</source>
-        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>설치 도우미</translation>
-    </message>
-    <message>
-        <source>Full sync</source>
-        <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
-        <translation>전체 동기화</translation>
-    </message>
-    <message>
-        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>당신의 로컬 폴더와 MEGA 클라우드 드라이브가 곧 자동으로 동기화됩니다.</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>계속하시겠습니까?</translation>
-    </message>
-    <message>
-        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation>계정이 막혔습니다. support@mega.nz로 연락하세요</translation>
-    </message>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>마법사를 취소하고 모든 변경사항을 되돌릴까요?</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
-        <translation>넘기기</translation>
-    </message>
-    <message>
-        <source>Logging out...</source>
-        <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>로그아웃 중…</translation>
-    </message>
-    <message>
-        <source>Very Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation>매우 약함</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation>약함</translation>
-    </message>
-    <message>
-        <source>Medium</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation>보통</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation>좋음</translation>
-    </message>
-    <message>
-        <source>Strong</source>
-        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation>강함</translation>
-    </message>
-    <message>
-        <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
-        <translation>당신의 이메일을 확인하고 계정 확인을 위한 링크를 클릭하세요.</translation>
-    </message>
-    <message>
-        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
-        <translation>로그인 시도를 너무 많이 했습니다.
-[BR]%1까지 기다렸다가 다시 시도하세요.</translation>
-    </message>
-    <message>
-        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
-        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>First name:</source>
-        <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation>이름:</translation>
-    </message>
-    <message>
-        <source>Last name:</source>
-        <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation>성씨:</translation>
-    </message>
-    <message>
-        <source>Check your inbox</source>
-        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation>수신함을 확인하세요</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your cloud drive</source>
-        <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>클라우드 드라이브에서 동기화할 폴더 선택</translation>
-    </message>
-    <message>
-        <source>Selective sync:</source>
-        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
-        <translation>선택적 동기화</translation>
-    </message>
-    <message>
-        <source>Please, enter your last name</source>
-        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation>이름을 입력하세요</translation>
-    </message>
-    <message>
-        <source>Set up selective sync</source>
-        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>선택적 동기화 설정</translation>
-    </message>
-    <message>
-        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>당신의 클라우드 드라이브 내의 특정 폴더가 일치하는 로컬 폴더와 동기화될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Select Local folder:</source>
-        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>로컬 폴더 선택</translation>
-    </message>
-    <message>
-        <source>Set up full sync</source>
-        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>전체 동기화 설정</translation>
-    </message>
-    <message>
-        <source>Full Sync</source>
-        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation>전체 동기화</translation>
-    </message>
-    <message>
-        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>전체 클라우드 드라이브가 로컬 폴더와 동기화될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>로그인</translation>
-    </message>
-    <message>
-        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
-        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
-        <translation>MEGA [A]이용 약관[/A]에 동의합니다</translation>
-    </message>
-    <message>
-        <source>Enjoy MEGAsync</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>앱을 즐기세요</translation>
-    </message>
-    <message>
-        <source>We are all done</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>완료했습니다</translation>
-    </message>
-    <message>
-        <source>Creating folder…</source>
-        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>폴더 생성중…</translation>
     </message>
 </context>
 <context>
@@ -5960,6 +6607,453 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>Sizes</name>
+    <message>
+        <source>B</source>
+        <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane..SNC-4208</translatorcomment>
+        <translation>영</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Kilo Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane..SNC-4208</translatorcomment>
+        <translation>KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Mega Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.SNC-4208</translatorcomment>
+        <translation>MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Giga Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.SNC-4208</translatorcomment>
+        <translation>GB</translation>
+    </message>
+</context>
+<context>
+    <name>SomeIssuesOccurredMessage</name>
+    <message>
+        <source>Some issues ocurred.</source>
+        <translatorcomment>Label that appeaers when sync stalls are detected.SNC-2565</translatorcomment>
+        <translation>문제 감지됨</translation>
+    </message>
+    <message>
+        <source>View...</source>
+        <translatorcomment>Button to show the sync stalls.SNC-2565</translatorcomment>
+        <translation>보기</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueActionTitle</name>
+    <message>
+        <source>Loading user…</source>
+        <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
+        <translation>이용자 가져오는 중&#8230;</translation>
+    </message>
+    <message>
+        <source>Upload by:</source>
+        <translatorcomment>Label indicating uploader for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>업로드한 이용자:</translation>
+    </message>
+    <message>
+        <source>Versions:</source>
+        <translatorcomment>Label indicating number of versions for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>버전:</translation>
+    </message>
+    <message>
+        <source>Loading size</source>
+        <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
+        <translation>크기 불러오는 중&#8230;</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translatorcomment>Label indicating size for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>크기:</translation>
+    </message>
+    <message>
+        <source>CRC:</source>
+        <translatorcomment>Label indicating fingerprint for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>CRC:</translation>
+    </message>
+    <message>
+        <source>Loading time…</source>
+        <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
+        <translation>타임스탬프 불러오는 중&#8230;</translation>
+    </message>
+    <message>
+        <source>Last modified:</source>
+        <translatorcomment>Label indicating last modification time for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>최종 수정일:</translation>
+    </message>
+    <message>
+        <source>Upload at:</source>
+        <translatorcomment>Label indicating upload time for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>업로드됨:</translation>
+    </message>
+    <message>
+        <source>Created at:</source>
+        <translatorcomment>Label indicating creation time for the file causing sync stall. SNC-2565</translatorcomment>
+        <translation>생성일:</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueChooseWidget</name>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button to choose either remote or local version.SNC-2565</translatorcomment>
+        <translation>선택</translation>
+    </message>
+    <message>
+        <source>Local file is being uploaded</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
+        <translation>로컬 파일이 업로드 되는 중</translation>
+    </message>
+    <message>
+        <source>Renamed to %1</source>
+        <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
+        <translation>이름 변경됨</translation>
+    </message>
+    <message>
+        <source>Chosen</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
+        <translation>선택됨</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueFilePath</name>
+    <message>
+        <source>move</source>
+        <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
+        <translation>다음으로 이동됨</translation>
+    </message>
+    <message>
+        <source>on MEGA:</source>
+        <translatorcomment>Label descriping where the sync stall is originating.SNC-2565</translatorcomment>
+        <translation>MEGA에서:</translation>
+    </message>
+    <message>
+        <source>Local:</source>
+        <translatorcomment>Subtitle for the section containg local file details of the sync stall.SNC-2565</translatorcomment>
+        <translation>로컬:</translation>
+    </message>
+    <message>
+        <source>File is being frequently changing.</source>
+        <translatorcomment>Label descriping the error causing sync stall. SNC-2565</translatorcomment>
+        <translation>파일이 수시로 수정되고 있습니다</translation>
+    </message>
+    <message>
+        <source>Ignore rules unknown.</source>
+        <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
+        <translation>제외 규칙을 계산 중입니다, 기다렸다가 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>Detected Sym link.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.SNC-2565</translatorcomment>
+        <translation>심볼릭 링크 감지됨</translation>
+    </message>
+    <message>
+        <source>Detected special file.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a special file and cannot be synced.SNC-2565</translatorcomment>
+        <translation>특별한 파일 감지됨</translation>
+    </message>
+    <message>
+        <source>Different file or folder is already present.</source>
+        <translatorcomment>Label descriping a sync stall is happening because an item with this name already exists.SNC-2565</translatorcomment>
+        <translation>같은 이름을 가진 항목이 이미 존재합니다</translation>
+    </message>
+    <message>
+        <source>Parent folder does not exist.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud parent folder is removed.SNC-2565</translatorcomment>
+        <translation>부모 폴더가 존재하지 않습니다</translation>
+    </message>
+    <message>
+        <source>Filesystem error during operation.</source>
+        <translatorcomment>Label descriping a sync stall is happening because of filesystem failed operation ( Eg. folder creation).SNC-2565</translatorcomment>
+        <translation>작업 중 로컬 오류 발생</translation>
+    </message>
+    <message>
+        <source>Name too long for filesystem.</source>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
+        <translation>이름이 파일시스템에서 이용하기에 너무 깁니다</translation>
+    </message>
+    <message>
+        <source>Cannot fingerprint file.</source>
+        <translatorcomment>Label descriping a sync stall is happening because MEGA cannot create a fingerprint for it.SNC-2565</translatorcomment>
+        <translation>파일 지문을 생성할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Hard link or Reparse Point detected.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a hard link and cannot be synced.SNC-2565</translatorcomment>
+        <translation>하드 링크 또는 재분석 지점이 감지되었습니다. 이 위치에 하드 링크 또는 재분석 지점이 없다면 지원에 연락하세요.</translation>
+    </message>
+    <message>
+        <source>The folder could not be found. Ensure that the path is correct and try again.</source>
+        <translatorcomment>Label descriping the sync sall is caused by removed path.SNC-2565</translatorcomment>
+        <translation>폴더를 찾을 수 없습니다. 올바른 경로를 입력하였는지 확인하고 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <source>MAC verification failure.</source>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
+        <translation>MAC 인증 실패</translation>
+    </message>
+    <message>
+        <source>Deleted or moved by user.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
+        <translation>MEGA에서 삭제되거나 이동됨</translation>
+    </message>
+    <message>
+        <source>Deleted by user.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud node is deleted by the user.SNC-2565</translatorcomment>
+        <translation>MEGA에서 삭제됨</translation>
+    </message>
+    <message>
+        <source>Move to debris folder failed.</source>
+        <translatorcomment>Label descriping a sync stall is happening because MEGA could not move the item to sync debris folder.SNC-2565</translatorcomment>
+        <translation>로컬 동기화 위치 안의 .debris 또는 .rubbish 폴더로 이동을 실패하였습니다</translation>
+    </message>
+    <message>
+        <source>Ignore file malformed.</source>
+        <translatorcomment>Label descriping a sync stall is happening because exclusion rules file is malformed (.megaignore).SNC-2565</translatorcomment>
+        <translation>.megaignore 파일에 오류가 있습니다. 수정하려면 파일을 편집하세요.</translation>
+    </message>
+    <message>
+        <source>Error Listing folder in filesystem.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be read.SNC-2565</translatorcomment>
+        <translation>이 폴더의 메타데이터를 가져올 수 없습니다. 권한을 확인하고 다시 스캔하세요.</translation>
+    </message>
+    <message>
+        <source>Error identifying folder content in filesystem.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
+        <translation>로컬 파일시스템에서 폴더 내용물을 식별하던 중 오류</translation>
+    </message>
+    <message>
+        <source>Cloud node undecrypted.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the node cannot be decrypted( not owned by the user).SNC-2565</translatorcomment>
+        <translation>클라우드 드라이브의 항목을 복호화할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Waiting for scanning to complete.</source>
+        <translatorcomment>Label descriping the sync sall is caused by ongoing scan operation.SNC-2565</translatorcomment>
+        <translation>스캔이 완료되기를 기다리는 중</translation>
+    </message>
+    <message>
+        <source>Waiting for another move to complete.</source>
+        <translatorcomment>Label descriping the sync sall is caused by ongoing move operation.SNC-2565</translatorcomment>
+        <translation>다른 이동이 완료되기를 기다리는 중</translation>
+    </message>
+    <message>
+        <source>Source was moved elsewhere.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the cloud version was move.SNC-2565</translatorcomment>
+        <translation>MEGA의 파일 또는 폴더가 다른 곳으로 이동되었습니다</translation>
+    </message>
+    <message>
+        <source>Local filesystem cannot store this name.</source>
+        <translatorcomment>Label descriping a sync stall is happening because MEGA cannot store the file ( possible reasons: filenames with trailing spaces).SNC-2565</translatorcomment>
+        <translation>로컬 파일시스템이 이 파일 이름을 쓸 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Fingerprint is missing or invalid.</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file fingerprint is missing.SNC-2565</translatorcomment>
+        <translation>지문이 분실되었거나 유효하지 않습니다</translation>
+    </message>
+    <message>
+        <source>Error not detected</source>
+        <translatorcomment>Label descripiwith default error of sync stall .SNC-2565</translatorcomment>
+        <translation>알 수 없는 오류</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueHeader</name>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>적용</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>모두 적용</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to ignore this issue?</source>
+        <translatorcomment>Text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
+        <translation>이 문제를 무시할까요?</translation>
+    </message>
+    <message>
+        <source>This action will ignore this issue and it will not be synced.</source>
+        <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
+        <translation>이 행동은 이 문제를 무시하고 문제가 해결될 때까지 항목이 동기화되지 않습니다.</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translatorcomment>Ignore option for the file causing stall.SNC-2565</translatorcomment>
+        <translation>무시</translation>
+    </message>
+    <message>
+        <source>Ignored</source>
+        <translatorcomment>Resolution message shown on item when the file has been ignored.SNC-2565</translatorcomment>
+        <translation>무시됨</translation>
+    </message>
+    <message>
+        <source>Solved</source>
+        <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
+        <translation>해결됨</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssuesDialog</name>
+    <message>
+        <source>Stalled Issues</source>
+        <translatorcomment>Window tittle of sync stalls window.DNS-1388</translatorcomment>
+        <translation>문제</translation>
+    </message>
+    <message>
+        <source>Sync issues</source>
+        <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>동기화 문제</translation>
+    </message>
+    <message>
+        <source>All issues:</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>모든 문제:</translation>
+    </message>
+    <message>
+        <source>Name conflicts:</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>이름 충돌:</translation>
+    </message>
+    <message>
+        <source>Item type conflicts:</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
+        <translation>항목 형식 충돌:</translation>
+    </message>
+    <message>
+        <source>Other:</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>기타:</translation>
+    </message>
+    <message>
+        <source>Solved:</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>해결됨:</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
+        <translation>새로 고침</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button to close sync stalls dialog</translatorcomment>
+        <translation>닫기</translation>
+    </message>
+    <message>
+        <source>Sync stall mode</source>
+        <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
+        <translation>문제 해결 모드</translation>
+    </message>
+    <message>
+        <source>Choose:</source>
+        <translatorcomment>Label tellong the user to choose the sync stall mode.DNS-1388</translatorcomment>
+        <translation>선택:</translation>
+    </message>
+    <message>
+        <source>Smart mode</source>
+        <translatorcomment>Button for choosing smart (automatic) mode for solving stalled issues.DNS-1388</translatorcomment>
+        <translation>스마트 모드</translation>
+    </message>
+    <message>
+        <source>Let Mega solve sync issues
+automatically</source>
+        <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
+        <translation>MEGA가 자동으로 동기화 문제를 해결하게 합니다</translation>
+    </message>
+    <message>
+        <source>Advanced mode</source>
+        <translatorcomment>Button for choosing advanced (manual) mode for solving stalled issues. DNS-1388</translatorcomment>
+        <translation>고급 모드</translation>
+    </message>
+    <message>
+        <source>Get full control of the sync issues</source>
+        <translatorcomment>Description of the advanced mode of sync stalls.DNS-1388</translatorcomment>
+        <translation>동기화 문제에 대한 완전한 제어</translation>
+    </message>
+    <message>
+        <source>Solve issues</source>
+        <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
+        <translation>문제 해결</translation>
+    </message>
+    <message>
+        <source>No issues</source>
+        <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
+        <translation>문제 없음</translation>
+    </message>
+    <message>
+        <source>[A]Learn more[/A]</source>
+        <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
+        <translation>[A]더 알아보기[/A]</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssuesModel</name>
+    <message>
+        <source>Processing issues</source>
+        <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translation>문제 해결 중&#8230;</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Message box button to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
+        <translation>새로 고침</translation>
+    </message>
+    <message>
+        <source>Some external changes were detected. Please, refresh the view.</source>
+        <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
+        <translation>일부 외부 변경점이 감지되었습니다.
+보기를 새로 고침하세요.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n issues fixed</source>
+        <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translation><numerusform>%n개의 문제 해결됨</numerusform></translation>
+    </message>
+    <message>
+        <source>Fixing issues</source>
+        <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translation>문제 해결 중&#8230;</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
+        <translation>문제가 외부에서 해결되었습니다.
+목록을 새로 고침하세요.</translation>
+    </message>
+    <message>
+        <source>Some issues can&apos;t be fixed.
+Verify the permissions of the .megaignore file on your local sync folder locations.</source>
+        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
+        <translation>일부 문제를 해결할 수 없었습니다.
+로컬 동기화 폴더 위치의 .megaignore 파일의 권한을 확인하세요.</translation>
+    </message>
+    <message>
+        <source>Issues can&apos;t be fixed.
+Verify the permissions of the .megaignore on file your local sync folder locations.</source>
+        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
+        <translation>일부 문제를 해결할 수 없었습니다.
+로컬 동기화 폴더 위치의 .megaignore 파일의 권한을 확인하세요.</translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
+        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
+        <translation>“%1” 파일이 “%2”(으)로 이동되었습니다</translation>
+    </message>
+    <message>
+        <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
+        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
+        <translation>“%1” 폴더가 “%2”(으)로 이동되었습니다</translation>
+    </message>
+</context>
+<context>
     <name>StatusInfo</name>
     <message>
         <source>Starting</source>
@@ -6004,11 +7098,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 </context>
 <context>
     <name>StreamNodeSelector</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
@@ -6073,11 +7162,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>스트리밍을 중단하시겠습니까?</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>File not found</source>
         <translatorcomment>Error message shown when a file is not found</translatorcomment>
         <translation>파일이 발견되지 않음</translation>
@@ -6137,26 +7221,87 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>SyncController</name>
+    <name>SymLinkHeader</name>
     <message>
-        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation>이미 동기화된 폴더를 백업할 수 없습니다.</translation>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.SNC-2565</translatorcomment>
+        <translation>취소</translation>
     </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button to confirm ignoring symlinks in all syncs.FM-1615</translatorcomment>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>적용</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>모두 적용</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to ignore all symlinks in all syncs?</source>
+        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
+        <translation>모든 동기화에서 심볼릭 링크를 무시할까요?</translation>
+    </message>
+    <message>
+        <source>This action will ignore all present and future symlinks in all your syncs.</source>
+        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translation>이 행동은 모든 동기화에서 모든 현존하거나 앞으로 발생할 심볼릭 링크를 무시합니다.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to ignore this symlink?</source>
+        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
+        <translation>이 심볼릭 링크를 무시할까요?</translation>
+    </message>
+    <message>
+        <source>This action will ignore this symlink and it will not be synced.</source>
+        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translation>이 행동은 심볼릭 링크를 무시하고 동기화되지 않게 합니다.</translation>
+    </message>
+    <message>
+        <source>Detected sym link: [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced is a sym link.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>감지된 심볼릭 링크: [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Ignore symlink</source>
+        <translatorcomment>Button text to ignore the sym link causing sync stall.SNC-2565</translatorcomment>
+        <translation>심볼릭 링크 무시</translation>
+    </message>
+    <message>
+        <source>Ignore all symlinks in all syncs</source>
+        <translatorcomment>Button text to ignore all sym link causing sync stall.SNC-2565</translatorcomment>
+        <translation>모든 동기화에서 심볼릭 링크 무시</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translatorcomment>Title for solve actions for a sync stall.SNC-2565</translatorcomment>
+        <translation>무시</translation>
+    </message>
+</context>
+<context>
+    <name>SyncAccountFullMessage</name>
+    <message>
+        <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
+        <translatorcomment>Warning text message shown in Sync pane when account storage is full.SNC-4208</translatorcomment>
+        <translation>당신의 MEGA 계정이 가득 찼습니다. 업로드가 비활성화 되고 폴더 동기화가 일시정지 됩니다.</translation>
+    </message>
+    <message>
+        <source>Purchase more storage</source>
+        <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.SNC-4208</translatorcomment>
+        <translation>저장소 더 구입하기</translation>
+    </message>
+</context>
+<context>
+    <name>SyncController</name>
     <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
         <translation>폴더가 이미 백업 되었습니다. 다른 것을 선택하세요.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation>이미 동기화된 폴더를 동기화할 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation>이미 백업된 폴더를 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
@@ -6164,39 +7309,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>동기화된 폴더 안에 있는 폴더를 백업할 수 없습니다.</translation>
     </message>
     <message>
-        <source>You can&apos;t sync folders that are inside synced folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>동기화된 폴더 안에 있는 폴더를 동기화할 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that are inside backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation>백업된 폴더 안에 있는 폴더를 동기화할 수 없습니다.</translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
         <translation>동기화된 폴더를 담고 있는 폴더를 백업할 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain synced folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>동기화된 폴더를 담고 있는 폴더를 동기화할 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain backed up folders.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation>백업된 폴더를 담고 있는 폴더를 동기화할 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>MEGAsync가 여기에 아무 것도 다운로드할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6229,20 +7344,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>백업을 만들 수 없습니다. 자세한 정보는, [A]지원[/A]에 연락하세요.</translation>
     </message>
     <message>
-        <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation>“%1”은/는 루트 폴더이기 때문에 백업할 수 없습니다. 백업 폴더는 컴퓨터의 최상위 폴더이자 시스템 또는 프로그램이 설치된 폴더 또는 당신의 모든 폴더와 파일을 가지고 있습니다. 우리는 파일 충돌 또는 오류가 발생할 수 있기 때문에 루트 폴더 백업을 지원하지 않습니다.
-계속 하려면, 다른 폴더를 선택하세요.</translation>
-    </message>
-    <message>
-        <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</source>
-        <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation>“%1”은/는 루트 폴더이기 때문에 동기화할 수 없습니다. 백업 폴더는 컴퓨터의 최상위 폴더이자 시스템 또는 프로그램이 설치된 폴더 또는 당신의 모든 폴더와 파일을 가지고 있습니다. 우리는 파일 충돌 또는 오류가 발생할 수 있기 때문에 루트 폴더 동기화를 지원하지 않습니다.
-계속 하려면, 다른 폴더를 선택하세요.</translation>
-    </message>
-    <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
         <translation>이 공유된 폴더에 전체 권한이 없기 때문에 동기화할 수 없습니다.</translation>
@@ -6253,11 +7354,6 @@ To continue, select a different folder.</source>
         <translation>이 MEGA 폴더는 동기화할 수 없습니다.</translation>
     </message>
     <message>
-        <source>The selected MEGA folder is already synced.</source>
-        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation>선택한 MEGA 폴더가 이미 동기화 되었습니다.</translation>
-    </message>
-    <message>
         <source>Folder contents already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
         <translation>폴더 내용물이 이미 동기화 되었습니다.</translation>
@@ -6266,6 +7362,66 @@ To continue, select a different folder.</source>
         <source>Folder already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
         <translation>폴더가 이미 동기화 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be backed up as it is already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced. CON-468</translatorcomment>
+        <translation>이미 동기화된 폴더는 백업을 할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s already synced</source>
+        <translatorcomment>Warning message indicating that the folder is already synced. CON-467</translatorcomment>
+        <translation>이미 동기화된 폴더는 동기화할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as is already backed up</source>
+        <translatorcomment>Warning message indicating that the selected folder is a backup. CON-467</translatorcomment>
+        <translation>이미 백업된 폴더는 동기화할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a sync folder. CON-467</translatorcomment>
+        <translation>동기화된 폴더 안의 폴더는 동기화할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
+        <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
+        <translation>백업된 폴더 안의 폴더는 동기화할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains synced folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains synced folders. CON-467</translatorcomment>
+        <translation>동기화된 폴더를 포함한 폴더는 동기화할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it contains backed up folders</source>
+        <translatorcomment>Warning message indicating that the selected is contains backed up folders. CON-467</translatorcomment>
+        <translation>백업된 폴더를 포함한 폴더는 동기화할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Can&apos;t backup “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be backed up. CON-468</translatorcomment>
+        <translation>“%1” 폴더는 루트 폴더이므로 백업할 수 없습니다. 계속 하려면, 다른 폴더를 선택하세요.</translation>
+    </message>
+    <message>
+        <source>Can&apos;t sync “%1” as it&apos;s the root folder. To continue, select a different folder</source>
+        <translatorcomment>Warning message indicating that the selected folder can´t be synced. CON-467</translatorcomment>
+        <translation>“%1” 폴더는 루트 폴더이므로 동기화할 수 없습니다. 계속 하려면, 다른 폴더를 선택하세요.</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be synced as it&apos;s in the MEGA Rubbish bin.</source>
+        <translatorcomment>Warning message indicating that the folder is in the rubbish bin. CON-467</translatorcomment>
+        <translation>폴더가 MEGA 휴지통에 있어서 동기화할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>This selection can&apos;t be synced as it’s a file.</source>
+        <translatorcomment>Warning message indicating that the selection is a file and files can´t be synced. CON-467</translatorcomment>
+        <translation>이 선택은 파일이기 때문에 동기화할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>This folder is already being synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
+        <translation>이 폴더는 이미 동기화되어 있습니다</translation>
     </message>
 </context>
 <context>
@@ -6280,6 +7436,111 @@ To continue, select a different folder.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
         <translation>당신은 VMWare와 공유된 로컬 폴더를 동기화하려고 합니다. 이 폴더는 파일 시스템 알림을 지원하지 않아서 폴더와 파일의 변화 탐지와 동기화를 위해, 앱이 지속적으로 스캔할 것입니다. 가능하다면, CPU 사용량을 줄이기 위해 다른 폴더를 이용하세요.</translation>
     </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>동기화와 백업이 비활성화 되었습니다: %1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>백업이 비활성화 되었습니다: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;SNC-3654</translatorcomment>
+        <translation>동기화 비활성화 되었습니다: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>로컬 폴더를 이용할 수 없거나 읽기와 쓰기 권한이 없어서 “%1” 동기화가 해제되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
+        <translation>로컬 폴더를 이용할 수 없거나 읽기와 쓰기 권한이 없어서 “%1” 동기화가 해제되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>MEGA는 VirtualBox 폴더를 동기화하거나 백업할 수 없기 때문에 “%1” 동기화가 비활성화 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>원격 폴더가 휴지통에 있어서 &quot;%1&quot;의 동기화가 해제되었습니다</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>“%1” 동기화가 비활성화 되었습니다. 원격 폴더 (또는 그 일부)에 완전한 접근 권한이 없습니다.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
+        <translation>로컬 폴더가 변경되어서 “%1” 백업이 비활성화 되었습니다</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>“%1” 동기화가 비활성화 되었습니다. 이유: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason.SNC-3654</translatorcomment>
+        <translation>백업 “%1”이/가 일시적으로 비활성화 되었습니다: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>로컬 폴더를 이용할 수 없거나 읽기와 쓰기 권한이 없어서 “%1” 백업이 해제되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name.SNC-3654</translatorcomment>
+        <translation>파일 시스템의 결함으로 VirtualBox의 공유된 폴더에 대한 동기화를 지원하지 않기 때문에 백업 &quot;%1&quot;이/가 비활성화 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>MEGA 폴더가 휴지통에 있어서 백업 “%1”이/가 비활성화 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>백업 “%1”이/가 비활성화 되었습니다. MEGA 폴더 (또는 그 일부)에 완전한 접근 권한이 없습니다</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>로컬 폴더가 변경되어서 “%1” 백업이 비활성화 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name;SNC-3654</translatorcomment>
+        <translation>MEGA 폴더가 변경되어서 백업 “%1”이/가 비활성화 되었습니다</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.SNC-3654</translatorcomment>
+        <translation>백업 “%1”이/가 비활성화 되었습니다. 사유: %2</translation>
+    </message>
+</context>
+<context>
+    <name>SyncItemExceedsSupoortedTreeDepthHeader</name>
+    <message>
+        <source>Unable to sync [B]%1[/B]</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file is more than 64 folders deep.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>[B]%1[/B] 동기화를 할 수 없음</translation>
+    </message>
+    <message>
+        <source>Target is too deep on your folder structure.
+Please move it to a location that is less than 64 folders deep.</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
+        <translation>대상이 폴더 구조에서 너무 깊은 곳에 있습니다.
+64단계 이하 위치로 이동하세요.</translation>
+    </message>
 </context>
 <context>
     <name>SyncItemModel</name>
@@ -6289,42 +7550,112 @@ To continue, select a different folder.</source>
         <translation>상태로 정렬</translation>
     </message>
     <message>
-        <source>Local Folder</source>
-        <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>로컬 폴더</translation>
+        <source>Sync Name</source>
+        <translatorcomment>Syncs table column header, it shows sync name.SNC-2565</translatorcomment>
+        <translation>동기화 이름</translation>
     </message>
     <message>
-        <source>Sort by folder name</source>
-        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.</translatorcomment>
-        <translation>폴더 이름으로 정렬</translation>
+        <source>Sort by sync name</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.SNC-2565</translatorcomment>
+        <translation>동기화 이름으로 정렬</translation>
     </message>
     <message>
-        <source>MEGA Folder</source>
-        <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>MEGA 폴더</translation>
+        <source>State</source>
+        <translatorcomment>Syncs table column header, it shows sync state.SNC-2565</translatorcomment>
+        <translation>상태</translation>
     </message>
     <message>
-        <source>Sort by MEGA folder name</source>
-        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
-        <translation>MEGA 폴더 이름으로 정렬</translation>
+        <source>Sort by sync state</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by sync state in case the user clicks.SNC-2565</translatorcomment>
+        <translation>동기화 상태로 정렬</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Syncs table  column name, it shows number of files in a sync.SNC-2565</translatorcomment>
+        <translation>파일</translation>
+    </message>
+    <message>
+        <source>Sort by file count</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by file count in case the user clicks.SNC-2565</translatorcomment>
+        <translation>파일 수로 정렬</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Syncs table column name, it shows number of folders in a sync.SNC-2565</translatorcomment>
+        <translation>폴더</translation>
+    </message>
+    <message>
+        <source>Sort by folder count</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder count in case the user clicks.SNC-2565</translatorcomment>
+        <translation>폴더 수로 정렬</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Syncs table column name, it shows number of downloads.SNC-2565</translatorcomment>
+        <translation>다운로드</translation>
+    </message>
+    <message>
+        <source>Sort by Downloads</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by downloads in case the user clicks.SNC-2565</translatorcomment>
+        <translation>다운로드로 정렬</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Syncs table column header, it shows number of uploads.SNC-2565</translatorcomment>
+        <translation>업로드</translation>
+    </message>
+    <message>
+        <source>Sort by Uploads</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by uploads in case the user clicks.SNC-2565</translatorcomment>
+        <translation>업로드로 정렬</translation>
+    </message>
+    <message>
+        <source>Loading</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>불러오는 중</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>일시정지 중</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>해제됨</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>탐색중</translation>
+    </message>
+    <message>
+        <source>Syncing</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>동기화 중</translation>
+    </message>
+    <message>
+        <source>Monitoring</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>감시 중</translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table).SNC-4208</translatorcomment>
+        <translation>더 많은 동기화 행동은 메뉴를 클릭하세요</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>정지됨</translation>
     </message>
 </context>
 <context>
     <name>SyncNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
         <translation>이 폴더를 동기화 하려면, 폴더에 대한 전체 권한이 필요합니다.</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>경고</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -6334,34 +7665,135 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>SyncSettingsUI</name>
+    <message>
+        <source>Synced Folders</source>
+        <translatorcomment>Section title for Synchronized folders table view.SNC-4208</translatorcomment>
+        <translation>동기화된 폴더</translation>
+    </message>
+    <message>
+        <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
+        <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.SNC-2565</translatorcomment>
+        <translation>일부 폴더가 동기화되지 않았습니다. 자세한 정보는, 빨간 아이콘에 커서를 올려놓으세요.</translation>
+    </message>
+    <message>
+        <source>Sync operation failed</source>
+        <translatorcomment>Title for message box shown when an error occurs in a sync.SNC-2565</translatorcomment>
+        <translation>동기화 불가</translation>
+    </message>
+    <message>
+        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
+        <translatorcomment>Text in message box shown when an error occurs when removing a sync.SNC-2565</translatorcomment>
+        <translation>“%1” 폴더를 동기화할 수 없습니다. 사유: %2</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
+        <translation>동기화 추가 중 오류</translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
+        <translation>백업 중지 중 오류</translation>
+    </message>
+    <message>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>MEssage box text shown when an error occurs when removing sync.SNC-4208</translatorcomment>
+        <translation>동기화를 제거할 수 없습니다. 사유: %1</translation>
+    </message>
+</context>
+<context>
+    <name>SyncSettingsUIBase</name>
+    <message>
+        <source>Saving synchronised folders…</source>
+        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
+        <translation>동기화된 폴더 저장 중&#8230;</translation>
+    </message>
+    <message>
+        <source>Error opening megaignore file</source>
+        <translatorcomment>Text in message box shown when the ignore rules file cannot be opened.SNC-2565</translatorcomment>
+        <translation>.megaignore 파일 여는 중 오류</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
+        <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
+        <translation>[B]%1[/B]은/는 당신의 Pro&#xa0;Flexi 계정이 결제를 실패했거나 구독을 취소했기 때문에 추가될 수 없습니다. 계속 하려면, 결제를 하고 구독을 재활성화 하세요.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncStallModeSelector</name>
+    <message>
+        <source>Sync stall mode</source>
+        <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
+        <translation>문제 해결 모드</translation>
+    </message>
+    <message>
+        <source>Smart</source>
+        <translatorcomment>Stalled issues solve mode to allow mega to try solve stalled issues when it can.SNC-2565</translatorcomment>
+        <translation>스마트</translation>
+    </message>
+    <message>
+        <source>Let MEGA solve sync issues automatically</source>
+        <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
+        <translation>MEGA가 자동으로 동기화 문제를 해결하게 합니다</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
+        <translation>고급</translation>
+    </message>
+    <message>
+        <source>Get full control of the sync issues</source>
+        <translatorcomment>Description for the advanced solve mode of stalled issues.SNC-2565</translatorcomment>
+        <translation>동기화 문제에 대한 완전한 제어</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.SNC-2565</translatorcomment>
+        <translation>더 알아보기</translation>
+    </message>
+</context>
+<context>
     <name>SyncTableView</name>
     <message>
         <source>Open in MEGA</source>
-        <translatorcomment>Context menu option that opens the folder in MEGA webclient.</translatorcomment>
+        <translatorcomment>Context menu option that opens the folder in MEGA webclient.SNC-2565</translatorcomment>
         <translation>MEGA에서 열기</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
-        <translatorcomment>Context menu option that removes the sync.</translatorcomment>
+        <translatorcomment>Context menu option that removes the sync.SNC-2565</translatorcomment>
         <translation>동기화 폴더 삭제</translation>
     </message>
-</context>
-<context>
-    <name>SyncTableViewTooltips</name>
     <message>
-        <source>Sync is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(sync enabled)</translatorcomment>
-        <translation>동기화 활성화됨</translation>
+        <source>Run</source>
+        <translatorcomment>Menu action to resume syncing for syncs or backups.SNC-2565</translatorcomment>
+        <translation>재개</translation>
     </message>
     <message>
-        <source>Sync is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(sync disabled)</translatorcomment>
-        <translation>동기화 비활성화됨</translation>
+        <source>Pause</source>
+        <translatorcomment>Menu action to pause syncing for syncs or backups.SNC-2565</translatorcomment>
+        <translation>일시정지</translation>
     </message>
     <message>
-        <source>Click menu for more Sync actions</source>
-        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>더 많은 동기화 행동은 점 3개 메뉴를 클릭하세요</translation>
+        <source>Add exclusions</source>
+        <translatorcomment>Button to allow adding exclusion rules for new syncs &amp; backups.SNC-2565</translatorcomment>
+        <translation>예외 추가</translation>
+    </message>
+    <message>
+        <source>Quick Rescan</source>
+        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
+        <translation>빠른 재검사</translation>
+    </message>
+    <message>
+        <source>Deep Rescan</source>
+        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
+        <translation>심층 재검사</translation>
+    </message>
+    <message>
+        <source>Edit .megaignore</source>
+        <translatorcomment>Menu action to open and start adding ignore rules file for a sync or backup folder.SNC-2565</translatorcomment>
+        <translation>.megaignore 편집</translation>
     </message>
 </context>
 <context>
@@ -6378,26 +7810,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
-    <name>SyncsMenu</name>
+    <name>Syncs</name>
     <message>
-        <source>Add Sync</source>
-        <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>동기화 추가</translation>
+        <source>Select a local folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a local folder in order to create a sync. CON-467</translatorcomment>
+        <translation>동기화할 로컬 폴더를 선택하세요</translation>
     </message>
     <message>
-        <source>Syncs</source>
-        <translatorcomment>Menu option that shows syncs menu</translatorcomment>
-        <translation>동기화</translation>
+        <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
+        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
+        <translation>쓰기 권한이 없어서 폴더를 동기화할 수 없습니다</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation>백업</translation>
+        <source>Select a MEGA folder to sync.</source>
+        <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
+        <translation>동기화할 MEGA 폴더를 선택하세요</translation>
     </message>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>백업 추가</translation>
+        <source>Folder can&apos;t be synced as it can&apos;t be located. It may have been moved or deleted, or you might not have access.</source>
+        <translatorcomment>Error message indicating that the selected folder is unreachable. CON-467</translatorcomment>
+        <translation>폴더를 찾을 수 없어서 동기화할 수 없습니다. 폴더가 이동, 삭제, 또는 접근 권한이 없을 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>%1 folder doesn&apos;t exist</source>
+        <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
+        <translation>“%1” 폴더가 존재하지 않습니다</translation>
     </message>
 </context>
 <context>
@@ -6425,7 +7862,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation>동기화 중&#8230;</translation>
+        <translation>동기화 중…</translation>
     </message>
     <message>
         <source>Completing</source>
@@ -6670,7 +8107,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>문제 발견</numerusform></translation>
+        <translation><numerusform>문제 감지됨</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7155,6 +8592,19 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
+    <name>TwoWaySyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu option used to add sync;SNC-3654</translatorcomment>
+        <translation>동기화 추가</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu option that shows syncs menu;SNC-3654</translatorcomment>
+        <translation>동기화</translation>
+    </message>
+</context>
+<context>
     <name>UpgradeDialog</name>
     <message>
         <source>Depleted transfer quota</source>
@@ -7174,7 +8624,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* 현지 통화 가격은 예측치입니다. 모든 거래는 유로화로 청구됩니다.</translation>
+        <translation>* 현지 통화로 예상한 가격. 모든 결제는 유로화로 결제됩니다.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -7217,7 +8667,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* 현지 통화 가격은 예측치입니다. 모든 거래는 유로화로 청구됩니다.</translation>
+        <translation>* 현지 통화로 예상한 가격. 모든 결제는 유로화로 결제됩니다.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -7231,12 +8681,20 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
-    <name>UploadNodeSelector</name>
+    <name>UploadIssueHeader</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>오류</translation>
+        <source>Can´t upload [B]%1[/B] to the selected location</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translation>선택한 위치로 [B]%1[/B]을/를 업로드할 수 없음</translation>
     </message>
+    <message>
+        <source>Cannot reach the destination folder.</source>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translation>대상 폴더에 도달할 수 없음</translation>
+    </message>
+</context>
+<context>
+    <name>UploadNodeSelector</name>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
@@ -7292,11 +8750,6 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>Utilities</name>
     <message>
-        <source>just now</source>
-        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>방금 전</translation>
-    </message>
-    <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
         <translation>TB</translation>
@@ -7341,36 +8794,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro&#xa0;III</translation>
     </message>
-    <message numerus="yes">
-        <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation><numerusform>%n초 전</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation><numerusform>%n분 전</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation><numerusform>%n시간 전</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation><numerusform>%n일 전</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation><numerusform>%n개월 전</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation><numerusform>%n년 전</numerusform></translation>
-    </message>
     <message>
         <source>[DAYS] [HOURS]</source>
         <translatorcomment>String used to control formatting of time intervals. [DAYS] will be replaced by the days count and [HOURS] by the hours. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
@@ -7406,6 +8829,51 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1[A]초[/A]</translation>
     </message>
+    <message numerus="yes">
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation><numerusform>%1 사용됨</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation><numerusform>%3 중 %1 (%2%) 사용됨</numerusform></translation>
+    </message>
+    <message>
+        <source>Added just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now (less than 2 seconds ago). SNC-4131</translatorcomment>
+        <translation>전송이 방금 전에 완료됨</translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
+        <translation><numerusform>전송이 %n초 전에 완료됨</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
+        <translation><numerusform>전송이 %n분 전에 완료됨</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
+        <translation><numerusform>전송이 %n시간 전에 완료됨</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
+        <translation><numerusform>전송이 %n일 전에 완료됨</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
+        <translation><numerusform>전송이 %n개월 전에 완료됨</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Added %n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
+        <translation><numerusform>전송이 %n년 전에 완료됨</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -7440,24 +8908,17 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>이메일 재발송</translation>
     </message>
     <message>
-        <source>Verify your account</source>
-        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation>계정을 인증하세요</translation>
-    </message>
-    <message>
-        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
-        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation>당신의 계정이 잠재적 오남용으로 인하여 잠겼습니다. 계정을 해제하려면 전화번호를 인증하세요.</translation>
-    </message>
-    <message>
-        <source>Verify now</source>
-        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation>지금 인증</translation>
-    </message>
-    <message>
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
         <translation>이메일 발송됨</translation>
+    </message>
+</context>
+<context>
+    <name>ViewLoadingSceneUI</name>
+    <message>
+        <source>Stop</source>
+        <translatorcomment>button in auto solve view of stalled issues to stop the auto solve process.SNC-2565</translatorcomment>
+        <translation>정지</translation>
     </message>
 </context>
 <context>

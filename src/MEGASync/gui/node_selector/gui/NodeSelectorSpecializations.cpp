@@ -11,6 +11,7 @@ UploadNodeSelector::UploadNodeSelector(QWidget *parent) : NodeSelector(parent)
     SelectTypeSPtr selectType = SelectTypeSPtr(new UploadType);
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    mCloudDriveWidget->setShowEmptyView(false);
     ui->stackedWidget->addWidget(mCloudDriveWidget);
     mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(selectType);
     mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
@@ -113,6 +114,7 @@ SyncNodeSelector::SyncNodeSelector(QWidget *parent) : NodeSelector(parent)
     SelectTypeSPtr selectType = SelectTypeSPtr(new SyncType);
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    mCloudDriveWidget->setShowEmptyView(false);
     ui->stackedWidget->addWidget(mCloudDriveWidget);
     mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(selectType);
     mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
@@ -203,3 +205,19 @@ void StreamNodeSelector::checkSelection()
     }
 }
 
+
+MoveBackupNodeSelector::MoveBackupNodeSelector(QWidget *parent) : NodeSelector(parent)
+{
+    ui->fBackups->hide();
+    ui->fIncomingShares->hide();
+    SelectTypeSPtr selectType = SelectTypeSPtr(new UploadType);
+    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
+    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    mCloudDriveWidget->setShowEmptyView(false);
+    ui->stackedWidget->addWidget(mCloudDriveWidget);
+    makeConnections(selectType);
+}
+void MoveBackupNodeSelector::checkSelection()
+{
+    accept();
+}

@@ -20,6 +20,7 @@ SyncSettings::SyncSettings(const SyncSettings& a) :
     mSyncID(a.getSyncID()),
     mMegaFolder(a.mMegaFolder)
 {
+    qRegisterMetaType<std::shared_ptr<SyncSettings>>("std::shared_ptr<SyncSettings>");
 }
 
 SyncSettings& SyncSettings::operator=(const SyncSettings& a)
@@ -59,7 +60,7 @@ SyncSettings::SyncSettings(MegaSync *sync)
 QString SyncSettings::name(bool removeUnsupportedChars, bool normalizeDisplay) const
 {
     //Provide name removing ':' to avoid possible issues during communications with shell extension
-    QString toret = removeUnsupportedChars ? QString::fromUtf8(mSync->getName()).remove(QChar::fromAscii(':'))
+    QString toret = removeUnsupportedChars ? QString::fromUtf8(mSync->getName()).remove(QChar::fromLatin1(':'))
                                   : QString::fromUtf8(mSync->getName());
     return normalizeDisplay ? toret.normalized(QString::NormalizationForm_C) : toret;
 }
@@ -134,17 +135,12 @@ QString SyncSettings::getLocalFolder(bool normalizeDisplay) const
     auto toret = QString::fromUtf8(mSync->getLocalFolder());
 
 #ifdef WIN32
-    if (toret.startsWith(QString::fromAscii("\\\\?\\")))
+    if (toret.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         toret = toret.mid(4);
     }
 #endif
     return normalizeDisplay ? toret.normalized(QString::NormalizationForm_C) : toret;
-}
-
-long long SyncSettings::getLocalFingerprint()  const
-{
-    return mSync->getLocalFingerprint();
 }
 
 QString SyncSettings::getMegaFolder()  const
@@ -163,19 +159,26 @@ MegaHandle SyncSettings::getMegaHandle()  const
     return mSync->getMegaHandle();
 }
 
-bool SyncSettings::isEnabled()  const
-{
-    return getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING;
-}
-
 bool SyncSettings::isActive()  const
 {
-    return getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING;
+    return getSync()->getRunState() <= ::mega::MegaSync::RUNSTATE_RUNNING;
 }
 
 int SyncSettings::getError() const
 {
     return mSync->getError();
+}
+
+int SyncSettings::getWarning() const
+{
+    return mSync->getWarning();
+}
+
+int SyncSettings::getRunState() const
+{
+    assert(mSync);
+
+    return mSync->getRunState();
 }
 
 MegaHandle SyncSettings::backupId() const

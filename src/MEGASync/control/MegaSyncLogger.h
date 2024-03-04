@@ -48,6 +48,7 @@ signals:
     void logCleaned();
 
 private:
+
     QString mDesktopPath;
     std::unique_ptr<LoggingThread> g_loggingThread;
 };

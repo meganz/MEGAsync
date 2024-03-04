@@ -5,6 +5,7 @@
 #include "Utilities.h"
 #include "Platform.h"
 #include "DialogOpener.h"
+#include "syncs/gui/Twoways/IgnoresEditingDialog.h"
 
 #include "QMegaMessageBox.h"
 
@@ -47,7 +48,7 @@ QString AddBackupDialog::getBackupName()
 
 void AddBackupDialog::on_changeButton_clicked()
 {
-    auto processPath = [this](QStringList folderPaths)
+    auto processPath = [this](const QStringList& folderPaths)
     {
         if (!folderPaths.isEmpty())
         {
@@ -62,6 +63,7 @@ void AddBackupDialog::on_changeButton_clicked()
                 {
                     mSelectedFolder = candidateDir;
                     mUi->folderLineEdit->setText(folderPath);
+                    mUi->bAddExclusions->setEnabled(true);
                     mUi->addButton->setEnabled(true);
                 }
             };
@@ -92,21 +94,33 @@ void AddBackupDialog::on_changeButton_clicked()
         }
     };
 
-    QString defaultPath = mUi->folderLineEdit->text().trimmed();
-    if (!defaultPath.size())
+    SelectorInfo info;
+    info.title = tr("Choose folder");
+    info.parent = this;
+    info.func = processPath;
+    info.canCreateDirectories = true;
+
+    info.defaultDir = mUi->folderLineEdit->text().trimmed();
+    if (!info.defaultDir.size())
     {
-        defaultPath = Utilities::getDefaultBasePath();
+        info.defaultDir = Utilities::getDefaultBasePath();
     }
 
-    defaultPath = QDir::toNativeSeparators(defaultPath);
-    Platform::getInstance()->folderSelector(tr("Choose folder"), defaultPath,false, this, processPath);
+    info.defaultDir = QDir::toNativeSeparators(info.defaultDir);
+    Platform::getInstance()->folderSelector(info);
 }
 
 void AddBackupDialog::onDeviceNameSet(const QString &devName)
 {
-    mUi->backupToLabel->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
-                                + QLatin1Char('/')
-                                + devName);
+    QString textToElide = UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
+                          + QLatin1Char('/')
+                          + devName;
+    QString text = mUi->backupToLabel->fontMetrics().elidedText(textToElide, Qt::ElideMiddle, mUi->folderLineEdit->width() + mUi->changeButton->width());
+    mUi->backupToLabel->setText(text);
+    if(textToElide != text)
+    {
+        mUi->backupToLabel->setToolTip(textToElide);
+    }
 }
 
 void AddBackupDialog::checkNameConflict()
@@ -136,4 +150,10 @@ void AddBackupDialog::onConflictSolved(QPointer<BackupNameConflictDialog> dialog
         }
         accept();
     }
+}
+
+void AddBackupDialog::on_bAddExclusions_clicked()
+{
+	QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(getSelectedFolder(), true, this);
+	DialogOpener::showDialog(exclusionRules);
 }

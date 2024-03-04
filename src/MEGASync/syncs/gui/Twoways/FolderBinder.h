@@ -29,6 +29,7 @@ public:
 
 signals:
     void selectionDone();
+    void localPathSelected();
 
 private slots:
     void on_bLocalFolder_clicked();

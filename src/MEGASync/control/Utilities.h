@@ -14,6 +14,8 @@
 #include <QIcon>
 #include <QLabel>
 #include <QQueue>
+#include <QEventLoop>
+#include <QMetaEnum>
 
 #include <QEasingCurve>
 
@@ -304,9 +306,12 @@ public:
     Q_DECLARE_FLAGS(FileTypes, FileType)
     static const QString SUPPORT_URL;
     static const QString BACKUP_CENTER_URL;
+    static const QString SYNC_SUPPORT_URL;
 
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
+    static QString getSizeStringLocalized(quint64 bytes);
+    static int toNearestUnit(long long bytes);
     struct ProgressSize
     {
         QString transferredBytes;
@@ -315,9 +320,12 @@ public:
     };
     static ProgressSize getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes);
 
+    static QString createSimpleUsedString(long long usedData);
+    static QString createSimpleUsedStringWithoutReplacement(long long usedData);
+    static QString createCompleteUsedString(long long usedData, long long totalData, int percentage);
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
-    static QString getFinishedTimeString(long long secs);
+    static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
@@ -340,7 +348,11 @@ public:
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
     static void getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
+    static QString getNonDuplicatedNodeName(mega::MegaNode* node, mega::MegaNode* parentNode, const QString& currentName, bool unescapeName, const QStringList &itemsBeingRenamed);
+    static QString getNonDuplicatedLocalName(const QFileInfo& currentFile, bool unescapeName, const QStringList &itemsBeingRenamed);
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
+
+    static void upgradeClicked();
 
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
@@ -370,14 +382,18 @@ private:
 
     static QString cleanedTimeString(const QString& timeString);
 
+    static unsigned long long getNearestUnit(long long bytes);
+
 //Platform dependent functions
 public:
     static QString languageCodeToString(QString code);
     static QString getAvatarPath(QString email);
+    static void removeAvatars();
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
 
     static void queueFunctionInAppThread(std::function<void()> fun);
+    static void queueFunctionInObjectThread(QObject* object, std::function<void()> fun);
 
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
@@ -408,7 +424,28 @@ public:
 Q_DECLARE_METATYPE(Utilities::FileType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
 
+template <class EnumType>
+class EnumConversions
+{
+public:
+    EnumConversions()
+        : mMetaEnum(QMetaEnum::fromType<EnumType>())
+    {
+    }
 
+    QString getString(EnumType type)
+    {
+        return QString::fromUtf8(mMetaEnum.valueToKey(static_cast<int>(type)));
+    }
+
+    EnumType  getEnum(const QString& typeAsString)
+    {
+        return static_cast<EnumType>(mMetaEnum.keyToValue(typeAsString.toStdString().c_str()));
+    }
+
+private:
+    QMetaEnum mMetaEnum;
+};
 
 // This class encapsulates a MEGA node and adds useful information, like the origin
 // of the transfer.
@@ -423,8 +460,11 @@ public:
     };
 
     // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
+    // @param undelete Indicates a special request for a node that has been completely deleted
+    // (even from Rubbish Bin); allowed only for accounts with PRO level
     WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
-                mega::MegaNode* node = nullptr);
+                mega::MegaNode* node = nullptr,
+                bool undelete = false);
 
     // Destructor
     ~WrappedNode()
@@ -445,14 +485,79 @@ public:
         return mNode;
     }
 
+    bool getUndelete() const
+    {
+        return mUndelete;
+    }
+
 private:
     // Keep track of transfer origin
     WrappedNode::TransferOrigin  mTransfersFrom;
 
     // Wrapped MEGA node
     mega::MegaNode* mNode;
+
+    bool mUndelete;
 };
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
+
+//This class is used to create complex paths in MEGA
+class PathCreator : public QObject
+{
+public:
+    PathCreator() = default;
+    std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path);
+
+private:
+    std::shared_ptr<mega::MegaNode> createFolder(mega::MegaNode *parentNode, const QString& folderName);
+
+    QStringList mPathCreated;
+    QEventLoop mEventLoop;
+    bool mResult = false;
+};
+
+//This class is used to move a handle to the MEGA bin
+class MoveToCloudBinUtilities : public QObject
+{
+public:
+    MoveToCloudBinUtilities(){}
+
+    bool moveToBin(const QList<mega::MegaHandle>& handles, const QString& binFolderName, bool addDateFolder);
+
+private:
+    QList<mega::MegaHandle> mHandles;
+    QEventLoop mEventLoop;
+    bool mResult = false;
+};
+
+//This class is use to merge two remote folders
+class CloudFoldersMerge : public QObject
+{
+    Q_OBJECT
+
+public:
+    CloudFoldersMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge)
+        : mFolderTarget(folderTarget),
+          mFolderToMerge(folderToMerge),
+          mDepth(0)
+    {}
+
+    enum ActionForDuplicates
+    {
+        Rename,
+        IgnoreAndRemove,
+        IgnoreAndMoveToBin,
+    };
+    void merge(ActionForDuplicates action);
+
+signals:
+    void progressIndicator(const QString& nodeName);
+
+private:
+    mega::MegaNode* mFolderTarget;
+    mega::MegaNode* mFolderToMerge;
+    int mDepth;
+};
 
 #endif // UTILITIES_H

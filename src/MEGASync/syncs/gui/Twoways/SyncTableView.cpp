@@ -3,15 +3,20 @@
 #include "platform/Platform.h"
 #include "PlatformStrings.h"
 #include "MenuItemAction.h"
+#include "syncs/model/SyncItemModel.h"
 
 #include <QHeaderView>
 #include <QMenu>
+#include <QToolTip>
+#include <QPainter>
 #include <QtConcurrent/QtConcurrent>
 
 SyncTableView::SyncTableView(QWidget *parent)
     : QTableView(parent),
     mSyncController(this),
-    mIsFirstTime(true)
+    mIsFirstTime(true),
+    mContextMenuName("SyncContextMenu"),
+    mType(mega::MegaSync::TYPE_TWOWAY)
 {
     setIconSize(QSize(24, 24));
 
@@ -58,23 +63,40 @@ void SyncTableView::showEvent(QShowEvent *event)
 
 void SyncTableView::initTable()
 {
+    setItemDelegateForColumn(SyncItemModel::Column::ENABLED, new BackgroundColorDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::MENU, new MenuItemDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::RNAME, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::STATE, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::FILES, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::FOLDERS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::DOWNLOADS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::UPLOADS, new ElideMiddleDelegate(this));
+
+    setFont(QFont().defaultFamily());
+    auto StateColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::STATE, Qt::Horizontal).toString()) + 6;
+    auto FilesColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::FILES, Qt::Horizontal).toString()) + 6;
+    auto FoldersColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::FOLDERS, Qt::Horizontal).toString()) + 6;
+    auto DownloadsColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::DOWNLOADS, Qt::Horizontal).toString()) + 6;
+    auto UploadsColumnWidth = horizontalHeader()->fontMetrics().horizontalAdvance(model()->headerData(SyncItemModel::Column::UPLOADS, Qt::Horizontal).toString()) + 6;
 
     horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
+
+    //6 is the padding left of the header (set on RemoteItemUI stylesheet)
+    horizontalHeader()->resizeSection(SyncItemModel::Column::STATE, 3*StateColumnWidth);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::FILES, 2*FilesColumnWidth);
+    //10 is an arbitrary padding for these two categories
+    horizontalHeader()->resizeSection(SyncItemModel::Column::FOLDERS, FoldersColumnWidth + 10);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::DOWNLOADS, DownloadsColumnWidth + 10);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::UPLOADS, UploadsColumnWidth + 10);
 
     horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::ENABLED, QHeaderView::Fixed);
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::MENU, QHeaderView::Fixed);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::LNAME, (width() - FIXED_COLUMN_WIDTH * 2) / 2);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::LNAME, (width() - FIXED_COLUMN_WIDTH * 11));
 
-    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::LNAME, QHeaderView::Interactive);
-    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::RNAME, QHeaderView::Stretch);
-
-    setFont(QFont().defaultFamily());
+    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::LNAME, QHeaderView::Stretch); //QHeaderView::Interactive);
+    horizontalHeader()->setTextElideMode(Qt::ElideMiddle);
 
     // Hijack the sorting on the dots MENU column and hide the sort indicator,
     // instead of showing a bogus sort on that column;
@@ -105,58 +127,176 @@ void SyncTableView::onCellClicked(const QModelIndex &index)
         showContextMenu(QCursor().pos(), index);
 }
 
+mega::MegaSync::SyncType SyncTableView::getType() const
+{
+    return mType;
+}
+
 void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 {
     QMenu *menu(new QMenu(this));
-    Platform::getInstance()->initMenu(menu, "SyncContextMenu");
+    Platform::getInstance()->initMenu(menu, mContextMenuName);
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
+    auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
+
     // Show in file explorer action
-    auto showLocalAction (new MenuItemAction(PlatformStrings::fileExplorer(),
-                                             QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
-    connect(showLocalAction, &MenuItemAction::triggered, this, [index]()
+    MenuItemAction* showLocalAction(nullptr);
+    QFileInfo localFolder(sync->getLocalFolder());
+    if(localFolder.exists())
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
-        Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
-    });
+        showLocalAction  = new MenuItemAction(PlatformStrings::fileExplorer(),
+                                                 QLatin1String("://images/sync_context_menu/folder-small.png"), menu);
+        connect(showLocalAction, &MenuItemAction::triggered, this, [sync]()
+        {
+            Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
+        });
+    }
 
     // Show in Mega web action
     auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
-                                              QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    connect(showRemoteAction, &MenuItemAction::triggered, this, [index]()
+                                             QLatin1String("://images/sync_context_menu/MEGA-small.png"), menu));
+    connect(showRemoteAction, &MenuItemAction::triggered, this, [sync]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         Utilities::openInMega(sync->getMegaHandle());
     });
 
     // Remove Sync action
-    auto delAction (new MenuItemAction(tr("Remove synced folder"),
-                                       QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
-    delAction->setAccent(true);
-    connect(delAction, &MenuItemAction::triggered, this, [this, index]()
+    auto delAction (new MenuItemAction(getRemoveActionString(),
+                                       QLatin1String("://images/sync_context_menu/minus-circle.png"), menu));
+    connect(delAction, &MenuItemAction::triggered, this, [this, sync]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
-        emit removeSync(sync);
+        removeActionClicked(sync);
     });
 
+    if(showLocalAction)
+    {
+        showLocalAction->setParent(menu);
+    }
 
-    showLocalAction->setParent(menu);
-    showRemoteAction->setParent(menu);
-    delAction->setParent(menu);
-
-    menu->addAction(showLocalAction);
+    if(showLocalAction)
+    {
+        menu->addAction(showLocalAction);
+    }
     menu->addAction(showRemoteAction);
     menu->addSeparator();
+
+    createStatesContextActions(menu, sync);
+    menu->addSeparator();
+
     menu->addAction(delAction);
 
-    menu->popup(pos);
+    if(!menu->actions().isEmpty())
+    {
+        menu->popup(pos);
+    }
 }
 
-MenuItemDelegate::MenuItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
+QString SyncTableView::getRemoveActionString()
 {
+    return tr("Remove synced folder");
 }
 
-MenuItemDelegate::~MenuItemDelegate()
+void SyncTableView::removeActionClicked(std::shared_ptr<SyncSettings> settings)
+{
+    emit signalRemoveSync(settings);
+}
+
+void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<SyncSettings> sync)
+{
+    auto addRun = [this, sync, menu]()
+    {
+        auto syncRun (new MenuItemAction(tr("Run"), QLatin1String("://images/sync_context_menu/play-circle.png")));
+        connect(syncRun, &MenuItemAction::triggered, this, [this, sync]() { emit signalRunSync(sync); });
+        syncRun->setParent(menu);
+        menu->addAction(syncRun);
+    };
+
+    if(sync->getSync()->getError())
+    {
+        addRun();
+    }
+    else
+    {
+        if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_DISABLED &&
+           sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_SUSPENDED)
+        {
+            auto syncSuspend (new MenuItemAction(tr("Pause"), QLatin1String("://images/sync_states/pause-circle.png")));
+            connect(syncSuspend, &MenuItemAction::triggered, this, [this, sync]() { emit signalSuspendSync(sync); });
+            syncSuspend->setParent(menu);
+            menu->addAction(syncSuspend);
+        }
+        else if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_RUNNING)
+        {
+           addRun();
+        }
+    }
+
+    QFileInfo syncDir(sync->getLocalFolder());
+    if(syncDir.exists())
+    {
+        auto addExclusions(new MenuItemAction(tr("Add exclusions"), QLatin1String("://images/sync_context_menu/slash-circle.png")));
+        connect(addExclusions, &MenuItemAction::triggered, this, [this, sync]() { emit signaladdExclusions(sync); });
+
+        auto openMegaignore (new MenuItemAction(tr("Edit .megaignore"), QLatin1String("://images/sync_context_menu/edit-small.png")));
+        connect(openMegaignore, &MenuItemAction::triggered, this, [this, sync]() { emit signalOpenMegaignore(sync); });
+        openMegaignore->setParent(menu);
+        menu->addSeparator();
+        menu->addAction(addExclusions);
+        menu->addAction(openMegaignore);
+    }
+
+    if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
+    {
+        auto rescanQuick (new MenuItemAction(tr("Quick Rescan"), QLatin1String("://images/sync_context_menu/search-small.png")));
+        connect(rescanQuick, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanQuick(sync); });
+        rescanQuick->setParent(menu);
+
+        auto rescanDeep (new MenuItemAction(tr("Deep Rescan"), QLatin1String("://images/sync_context_menu/search-dark-small.png")));
+        connect(rescanDeep, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanDeep(sync); });
+        rescanDeep->setParent(menu);
+
+        menu->addSeparator();
+        menu->addAction(rescanQuick);
+        menu->addAction(rescanDeep);
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+BackgroundColorDelegate::BackgroundColorDelegate(QObject *parent) : QStyledItemDelegate(parent)
+{
+
+}
+
+void BackgroundColorDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QStyleOptionViewItem opt(option);
+
+    QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
+            ? QPalette::Normal : QPalette::Disabled;
+
+    if (option.state & QStyle::State_Selected)
+    {
+        painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
+    }
+    else
+    {
+        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
+        if(sync->getError())
+        {
+            painter->fillRect(option.rect, QColor(QLatin1String("#FFE4E8")));
+            painter->setPen(QColor(QLatin1String("#E31B57")));
+        }
+        else
+        {
+            painter->setPen(option.palette.color(cg, QPalette::Text));
+        }
+    }
+
+    QStyledItemDelegate::paint(painter, opt, index);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+MenuItemDelegate::MenuItemDelegate(QObject *parent) : BackgroundColorDelegate(parent)
 {
 }
 
@@ -169,26 +309,25 @@ void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     {
         opt.state.setFlag(QStyle::State_Enabled, true);
     }
-    QStyledItemDelegate::paint(painter, opt, index);
+    BackgroundColorDelegate::paint(painter, opt, index);
 }
+
+const int ICON_SPACE_SIZE = 60;
 
 IconMiddleDelegate::IconMiddleDelegate(QObject* parent) :
-    QStyledItemDelegate(parent)
-{
-}
-
-IconMiddleDelegate::~IconMiddleDelegate()
+    BackgroundColorDelegate(parent)
 {
 }
 
 void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QStyledItemDelegate::paint(painter, option, index);
+    BackgroundColorDelegate::paint(painter, option, index);
+
     QStyleOptionViewItem opt(option);
     opt.decorationAlignment = Qt::AlignVCenter | Qt::AlignHCenter;
     opt.decorationPosition = QStyleOptionViewItem::Top;
     QRect rect = option.rect;
-    rect.setRight(60);
+    rect.setRight(ICON_SPACE_SIZE);
     QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
 
     QIcon::Mode iconMode = QIcon::Normal;
@@ -199,23 +338,14 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     icon.paint(painter, rect, Qt::AlignVCenter | Qt::AlignHCenter, iconMode);
     QString text = index.data(Qt::DisplayRole).toString();
     QRect textRect = option.rect;
-    textRect.setLeft(60);
+    textRect.setLeft(rect.right());
     QTextOption textOption;
+    textOption.setWrapMode(QTextOption::WrapMode::NoWrap);
     textOption.setAlignment(Qt::AlignVCenter);
-
-    QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
-                          ? QPalette::Normal : QPalette::Disabled;
-
-    if (option.state & QStyle::State_Selected) {
-        painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
-    } else {
-        painter->setPen(option.palette.color(cg, QPalette::Text));
-    }
 
     QString elidedText = option.fontMetrics.elidedText(text, Qt::ElideMiddle, textRect.width());
 
     painter->drawText(textRect, elidedText, textOption);
-
 }
 
 void IconMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
@@ -225,32 +355,38 @@ void IconMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QMo
     option->text = QString();
 }
 
+bool IconMiddleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
+    if(sync->getError())
+    {
+        QRect rect = option.rect;
+        rect.setRight(ICON_SPACE_SIZE);
+        if(rect.contains(event->pos()))
+        {
+           QToolTip::showText(event->globalPos(), index.data(SyncItemModel::ErrorTooltipRole).toString());
+           return true;
+        }
+    }
+
+    return QStyledItemDelegate::helpEvent(event, view, option,index);
+}
+
+///////////////////////////////
 ElideMiddleDelegate::ElideMiddleDelegate(QObject *parent) :
-    QStyledItemDelegate(parent)
+    BackgroundColorDelegate(parent)
 {
 
-}
-
-ElideMiddleDelegate::~ElideMiddleDelegate()
-{
-
-}
-
-void ElideMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-    QStyledItemDelegate::paint(painter, option, index);
-
-    QString elidedText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, option.rect.width());
-
-    QTextOption textAlign;
-    textAlign.setAlignment(Qt::AlignVCenter);
-    QRect textRect = option.rect;
-    textRect.setLeft(option.rect.left() + 6);
-    painter->drawText(textRect, elidedText, textAlign);
 }
 
 void ElideMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
-    option->text = QString();
+#ifdef Q_OS_MACOS
+    //On the stylesheet, the header is moved 6 pixels to the left, so we use this magical number
+    //To align the header with the cell
+    option->rect.setLeft(option->rect.left() - 2);
+#endif
+    option->features = option->features & ~QStyleOptionViewItem::WrapText;
+    option->textElideMode = Qt::ElideMiddle;
 }

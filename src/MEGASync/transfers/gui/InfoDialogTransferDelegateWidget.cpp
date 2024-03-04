@@ -30,6 +30,7 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
 
     mUi->lFileNameCompleted->installEventFilter(this);
     mUi->lFileName->installEventFilter(this);
+    mUi->lElapsedTime->installEventFilter(this);
 }
 
 InfoDialogTransferDelegateWidget::~InfoDialogTransferDelegateWidget()
@@ -144,12 +145,12 @@ void InfoDialogTransferDelegateWidget::setFileNameAndType()
 {
     mUi->lFileName->ensurePolished();
     mUi->lFileName->setText(getData()->mFilename);
-    mUi->lFileName->setToolTip(getData()->mFilename);
+    mUi->lFileName->setToolTip(getData()->mFilename.toHtmlEscaped());
     mUi->lFileName->adjustSize();
 
     mUi->lFileNameCompleted->ensurePolished();
     mUi->lFileNameCompleted->setText(getData()->mFilename);
-    mUi->lFileNameCompleted->setToolTip(getData()->mFilename);
+    mUi->lFileNameCompleted->setToolTip(getData()->mFilename.toHtmlEscaped());
     mUi->lFileNameCompleted->adjustSize();
 
     QIcon icon = Utilities::getExtensionPixmapMedium(getData()->mFilename);
@@ -254,11 +255,11 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 else
                 {
                     update = setActionTransferIcon(mUi->lActionTransfer,
-                                                   QString::fromAscii("://images/error.png"));
+                                                   QString::fromLatin1("://images/error.png"));
                     //Double check that the mFailedTransfer is OK
                     if(getData()->isFailed())
                     {
-                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(QString::fromStdString(getData()->mFailedTransfer->getLastError().getErrorString())));
+                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(getErrorInContext()));
                     }
 
                     if(update)
@@ -277,7 +278,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     update = setActionTransferIcon(mUi->lActionTransfer,
-                                                   QString::fromAscii("://images/link%1.png").arg(QString::fromAscii(inAction ? "-hover" : "")));
+                                                   QString::fromLatin1("://images/link%1.png").arg(QString::fromLatin1(inAction ? "-hover" : "")));
                     mUi->lActionTransfer->setToolTip(tr("Copy link to file"));
                 }
                 else
@@ -293,7 +294,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 bool fileExists = QFile(getData()->path()).exists();
 
                 const char* baseIconName = (fileExists) ? "://images/file-search%1.png" : "://images/file-question%1.png";
-                update |= setActionTransferIcon(mUi->lShowInFolder, QString::fromAscii(baseIconName).arg(QString::fromAscii(inShowFolder?"-hover":"")));
+                update |= setActionTransferIcon(mUi->lShowInFolder, QString::fromLatin1(baseIconName).arg(QString::fromLatin1(inShowFolder?"-hover":"")));
                 QString tooltipText = (fileExists) ? tr("Show in folder") : tr("Deleted or moved file");
                 mUi->lShowInFolder->setToolTip(tooltipText);
 
@@ -303,7 +304,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
         else
         {
             const char* iconName = (getData()->mErrorCode < 0) ? "://images/error.png" : "://images/success.png";
-            update = setActionTransferIcon(mUi->lActionTransfer, QString::fromAscii(iconName));
+            update = setActionTransferIcon(mUi->lActionTransfer, QString::fromLatin1(iconName));
             mUi->lActionTransfer->setIconSize(QSize(24,24));
 
             if(update)
@@ -327,26 +328,16 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
     mUi->sTransferState->setCurrentWidget(mUi->completedTransfer);
     if (getData()->mErrorCode < 0)
     {
-        mUi->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/error.png")));
+        mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1("://images/error.png")));
         mUi->lActionTransfer->setIconSize(QSize(24,24));
         mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
 
-        //Check if transfer finishes while the account was blocked, in order to provide the right context for failed error
-        bool blockedTransfer = MegaSyncApp->finishedTransfersWhileBlocked(getData()->mTag);
-        if (blockedTransfer)
-        {
-            MegaSyncApp->removeFinishedBlockedTransfer(getData()->mTag);
-        }
-
-        mUi->lElapsedTime->setText(getState(TRANSFER_STATES::STATE_FAILED) + QStringLiteral(": ") + QCoreApplication::translate("MegaError",
-                                                                                                       MegaError::getErrorString(getData()->mErrorCode,
-                                                                                                                                 getData()->mType == TransferData::TransferType::TRANSFER_DOWNLOAD && !blockedTransfer
-                                                                                                                                 ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
+        mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorInContext()));
         updateFinishedIco(getData()->mType, true);
     }
     else
     {
-        mUi->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/success.png")));
+        mUi->lActionTransfer->setIcon(QIcon(QString::fromLatin1("://images/success.png")));
         mUi->lActionTransfer->setIconSize(QSize(24,24));
         updateFinishedIco(getData()->mType, false);
     }
@@ -362,7 +353,7 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
     }
 
     mUi->lElapsedTime->setStyleSheet(QLatin1String("color: #999999"));
-    mUi->lElapsedTime->setText(tr("Added [A]").replace(QLatin1String("[A]"), Utilities::getFinishedTimeString(finishedTime)));
+    mUi->lElapsedTime->setText(Utilities::getAddedTimeString(finishedTime));
 }
 
 QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const
@@ -401,6 +392,30 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
                                                          availableSize));
             nameLabel->updateGeometry();
             nameLabel->parentWidget()->updateGeometry();
+        }
+    }
+
+    if(watched == mUi->lElapsedTime && getData()->mErrorCode < 0 && (event->type() == QEvent::Resize || event->type() == QEvent::Paint))
+    {
+        int leftMargin;
+        int rightMargin;
+
+        mUi->wContainerCompletedData->layout()->getContentsMargins(&leftMargin, 0, &rightMargin, 0);
+
+        int availableWidth = mUi->wContainerCompletedData->width() - mUi->lFileTypeCompleted->width() - mUi->wOptions->width()
+                        - mUi->wContainerCompletedData->layout()->spacing() * 2 - rightMargin - leftMargin
+                        - mUi->horizontalLayout_5->spacing() - 3;
+
+        QString text = tr("Failed: %1").arg(getErrorInContext());
+        QString elidedText = mUi->lElapsedTime->fontMetrics().elidedText(text, Qt::ElideMiddle, availableWidth);
+        if(text != elidedText)
+        {
+            mUi->lElapsedTime->setText(elidedText);
+            mUi->lElapsedTime->setToolTip(text);
+        }
+        else
+        {
+            mUi->lElapsedTime->setToolTip(QString());
         }
     }
 

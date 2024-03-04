@@ -57,7 +57,7 @@ signals:
     void backupFolderCreated(mega::MegaHandle h);
 
 private:
-    mega::QTMegaRequestListener *mDelegateListener;
+    QPointer<mega::QTMegaRequestListener> mDelegateListener;
 };
 }
 

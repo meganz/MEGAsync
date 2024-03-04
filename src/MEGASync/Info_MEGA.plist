@@ -15,13 +15,13 @@
     <key>CFBundleIdentifier</key>
     <string>mega.mac</string>
     <key>CFBundleShortVersionString</key>
-    <string></string>
+    <string>@MACOSX_BUNDLE_SHORT_VERSION_STRING@</string>
     <key>LSUIElement</key>
     <string>1</string>
     <key>NSRequiresAquaSystemAppearance</key>
     <true/>
     <key>LSMinimumSystemVersion</key>
-    <string>10.12</string>
+    <string>10.13</string>
     <key>NSHighResolutionCapable</key>
     <string>True</string>
     <key>NSUserNotificationAlertStyle</key>

@@ -4,14 +4,9 @@
 #include "AccountDetailsDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "control/Utilities.h"
-#include "syncs/model/SyncItemModel.h"
-#include "syncs/model/BackupItemModel.h"
-#include "syncs/gui/Backups/BackupTableViewTooltips.h"
-#include "syncs/gui/Twoways/SyncTableViewTooltips.h"
 
-#include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
 #include "megaapi.h"
 
@@ -37,7 +32,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum {
+    enum Tabs{
         GENERAL_TAB  = 0,
         ACCOUNT_TAB  = 1,
         SYNCS_TAB    = 2,
@@ -46,7 +41,8 @@ public:
         FOLDERS_TAB  = 5,
         NETWORK_TAB  = 6,
         NOTIFICATIONS_TAB = 7
-        };
+    };
+    Q_ENUM(Tabs)
 
     explicit SettingsDialog(MegaApplication* app, bool proxyOnly = false, QWidget* parent = nullptr);
     ~SettingsDialog();
@@ -54,7 +50,6 @@ public:
     void setProxyOnly(bool proxyOnly);
 
     // General
-    void setOverQuotaMode(bool mode);
     void setUpdateAvailable(bool updateAvailable);
     void storageChanged();
 
@@ -64,13 +59,6 @@ public:
     void updateAccountElements() override;
 
     // Syncs
-    enum SyncStateInformation
-    {
-        SAVING_SYNCS = 0,
-        SAVING_BACKUPS,
-        SAVING_SYNCS_FINISHED,
-        SAVING_BACKUPS_FINISHED,
-    };
     void addSyncFolder(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
 
     // Folders
@@ -79,12 +67,6 @@ public:
 
 signals:
     void userActivity();
-#ifdef Q_OS_MACOS
-    // Due to issues with QT and window manager on macOS, menus are not closing when
-    // you close settings dialog using close toolbar button. To fix it, emit a signal when about to close
-    // and force to close the sync menu (if visible)
-    void closeMenus();
-#endif
 
 public slots:
     // Network
@@ -94,10 +76,11 @@ public slots:
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
 
-    // Account
-    void storageStateChanged(int state);
+    //Enable/Disable controls
+    void setEnabledAllControls(const bool enabled);
 
 private slots:
+    void on_bBackupCenter_clicked();
     void on_bHelp_clicked();
 #ifdef Q_OS_MACOS
     void onAnimationFinished();
@@ -128,32 +111,15 @@ private slots:
     void on_bAccount_clicked();
     void on_lAccountType_clicked();
     void on_bUpgrade_clicked();
-    void on_bBuyMoreSpace_clicked();
     void on_bMyAccount_clicked();
     void on_bStorageDetails_clicked();
     void on_bLogout_clicked();
 
     // Syncs
-
     void on_bSyncs_clicked();
-    void on_bAddSync_clicked();
-    void on_bDeleteSync_clicked();
-#ifndef WIN32
-    void on_bPermissions_clicked();
-#endif
-
-    void onSavingSyncsCompleted(SyncStateInformation value);
 
     // Backup
     void on_bBackup_clicked();
-    void on_bAddBackup_clicked();
-    void on_bDeleteBackup_clicked();
-    void removeBackup(std::shared_ptr<SyncSettings> backup);
-    void removeSync(std::shared_ptr<SyncSettings> sync);
-    void on_bOpenBackupFolder_clicked();
-    void openHandleInMega(mega::MegaHandle handle);
-    void on_bBackupCenter_clicked();
-    void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
     // Security
     void on_bSecurity_clicked();
@@ -165,15 +131,6 @@ private slots:
     void on_bFolders_clicked();
     void on_bUploadFolder_clicked();
     void on_bDownloadFolder_clicked();
-    void on_bAddName_clicked();
-    void on_bDeleteName_clicked();
-    void on_cExcludeUpperThan_clicked();
-    void on_cExcludeLowerThan_clicked();
-    void on_eUpperThan_valueChanged(int i);
-    void on_eLowerThan_valueChanged(int i);
-    void on_cbExcludeUpperUnit_currentIndexChanged(int index);
-    void on_cbExcludeLowerUnit_currentIndexChanged(int index);
-    void on_bRestart_clicked();
 
     // Network
     void on_bNetwork_clicked();
@@ -189,27 +146,26 @@ protected:
     void closeEvent(QCloseEvent * event);
 #endif
 
-    void restartApp();
-
 private slots:
     void onShellNotificationsProcessed();
+#ifdef Q_OS_MACOS
+    // Due to issues with QT and window manager on macOS, menus are not closing when
+    // you close settings dialog using close toolbar button. To fix it, emit a signal when about to close
+    // and force to close the sync menu (if visible)
+    void closeMenus();
+#endif
 
 private:
-    void connectSyncHandlers();
-    void loadSyncSettings();
-    void connectBackupHandlers();
-    void loadBackupSettings();
-
     void loadSettings();
     void onCacheSizeAvailable();
     void saveExcludeSyncNames();
     void updateNetworkTab();
     void setShortCutsForToolBarItems();
+    void showUnexpectedSyncError(const QString& message);
     void updateCacheSchedulerDaysLabel();
 
-    void syncsStateInformation(SyncStateInformation state);
-
-    void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
+    void setGeneralTabEnabled(const bool enabled);
+    void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();
@@ -218,22 +174,20 @@ private:
     QPropertyAnimation* mMinHeightAnimation;
     QPropertyAnimation* mMaxHeightAnimation;
     QParallelAnimationGroup* mAnimationGroup;
-    std::unique_ptr<QCustomMacToolbar> mToolBar;
-    std::unique_ptr<QMacToolBarItem> bGeneral;
-    std::unique_ptr<QMacToolBarItem> bAccount;
-    std::unique_ptr<QMacToolBarItem> bSyncs;
-    std::unique_ptr<QMacToolBarItem> bBackup;
-    std::unique_ptr<QMacToolBarItem> bSecurity;
-    std::unique_ptr<QMacToolBarItem> bFolders;
-    std::unique_ptr<QMacToolBarItem> bNetwork;
-    std::unique_ptr<QMacToolBarItem> bNotifications;
+    QCustomMacToolbar* mToolBar;
+    QMacToolBarItem *bGeneral;
+    QMacToolBarItem *bAccount;
+    QMacToolBarItem *bSyncs;
+    QMacToolBarItem *bBackup;
+    QMacToolBarItem *bSecurity;
+    QMacToolBarItem *bFolders;
+    QMacToolBarItem* bNetwork;
+    QMacToolBarItem* bNotifications;
 #endif
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
     std::shared_ptr<Preferences> mPreferences;
-    SyncController mSyncController;
-    SyncController mBackupController;
     SyncInfo* mModel;
     mega::MegaApi* mMegaApi;
     bool mProxyOnly;
@@ -248,7 +202,5 @@ private:
     QStringList mSyncNames;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
-    std::unique_ptr<SyncTableViewTooltips> mSyncTableEventFilter;
-    std::unique_ptr<BackupTableViewTooltips> mBackupTableEventFilter;
 };
 #endif // SETTINGSDIALOG_H

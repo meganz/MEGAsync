@@ -1,9 +1,13 @@
 #ifndef ALERTITEM_H
 #define ALERTITEM_H
 
-#include <QWidget>
+#include "MegaUserAlertExt.h"
+
 #include "megaapi.h"
+
+#include <QWidget>
 #include <QFutureWatcher>
+
 #include <memory>
 
 namespace Ui {
@@ -22,14 +26,13 @@ public:
     explicit AlertItem(QWidget *parent = 0);
     ~AlertItem();
 
-    void setAlertData(mega::MegaUserAlert *alert);
+    void setAlertData(MegaUserAlertExt* alert);
     void setAlertType(int type);
-    void setAlertHeading(mega::MegaUserAlert *alert);
-    void setAlertContent(mega::MegaUserAlert *alert);
+    void setAlertHeading(MegaUserAlertExt* alert);
+    void setAlertContent(MegaUserAlertExt* alert);
     void setAlertTimeStamp(int64_t ts);
-
+    void contactEmailChanged();
     QString getHeadingString();
-
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 
@@ -44,14 +47,15 @@ private slots:
 
 private:
     QString formatRichString(QString str);
-    QString getUserFullName(mega::MegaUserAlert *alert);
+    QString getUserFullName();
+    void requestFullName();
+    void updateAlertData();
 
-private:
     Ui::AlertItem *ui;
     mega::MegaApi *megaApi;
     QString mNotificationHeading;
+    MegaUserAlertExt* mAlertUser;
     std::unique_ptr<mega::MegaNode> mAlertNode;
-    std::unique_ptr<mega::MegaUserAlert> mAlertUser;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
 };

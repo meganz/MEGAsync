@@ -32,7 +32,7 @@ public:
     void prepareForSync() override;
     bool enableTrayIcon(QString executable) override;
     void notifyItemChange(const QString& localPath, int newState) override;
-    void notifySyncFileChange(std::string *localPath, int newState) override;
+    void notifySyncFileChange(std::string *localPath, int newState, bool stringIsPlatformEncoded) override;
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
     bool showInFolder(QString pathIn) override;
@@ -51,7 +51,6 @@ public:
     bool registerUpdateJob() override;
     void uninstall() override;
     bool shouldRunHttpServer() override;
-    bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
 
@@ -59,13 +58,37 @@ public:
     void removeAllSyncsFromLeftPane() override;
     bool makePubliclyReadable(const QString &fileName) override;
 
+    void streamWithApp(const QString& app, const QString& url) override;
+    void processSymLinks() override;
+    DriveSpaceData getDriveData(const QString &path) override;
+
     static void notify(const std::string& path);
+
+    void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) override;
 
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
 
     void notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier);
-    QString getPreparedPath(std::string *localPath);
+    QString getPreparedPath(std::string *localPath, bool stringIsPlatformEncoded);  // on windows, that means UTF16 but in a std::string buffer
+
+    QString findMimeType(const QString& extensionWithDot);
+    QString findAssociatedExecutable(const QString& extensionWithDot);
+    QString findAssociatedModernApp(const QString& extensionWithDot);
+    QString getDefaultVideoPlayer();
+
+    static bool isTraditionalApp(const QString& app);
+    QString buildWindowsModernAppCommand(const QString& app);
+
+    QString findAssociatedData(const ASSOCSTR type, const QString& extensionWithDot);
+    static QString buildAssociatedRegKey(const QString& extensionWithDot);
+    static QString buildEditCommandRegKey(const QString& appId);
+    static QString readEditCommand(const QString& regKey);
+
+    static QString readAppIdFromRegistry(const QString& regKey);
+    static int getRegKeyValuesCount(HKEY regKey);
+    static QString getRegKeyValue(HKEY regKey, const int valueIndex);
+    static bool openRegistry(HKEY baseKey, const QString& regKeyPath, HKEY& openedKey);
 
     WinShellDispatcherTask *shellDispatcherTask = nullptr;
     std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;

@@ -25,10 +25,10 @@ void FolderTransferListener::onFolderTransferUpdate(mega::MegaApi *, mega::MegaT
         event.foldercount = foldercount;
         event.createdfoldercount = createdfoldercount;
         event.filecount = filecount;
+        event.appData = std::string(transfer->getAppData());
 
         if(stage >= mega::MegaTransfer::STAGE_TRANSFERRING_FILES)
         {
-            event.appData = std::string(transfer->getAppData());
             event.transferName = Utilities::getNodePath(transfer);
             emit folderTransferUpdated(event);
         }

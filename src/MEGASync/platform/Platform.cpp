@@ -18,6 +18,7 @@ void Platform::create()
 void Platform::destroy()
 {
     delete mInstance;
+    mInstance = nullptr;
 }
 
 AbstractPlatform *Platform::getInstance()

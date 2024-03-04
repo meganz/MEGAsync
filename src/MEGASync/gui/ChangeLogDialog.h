@@ -1,7 +1,7 @@
 #ifndef CHANGELOGDIALOG_H
 #define CHANGELOGDIALOG_H
 
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 #include <QDialog>
 
 namespace Ui {

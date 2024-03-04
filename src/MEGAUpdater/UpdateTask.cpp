@@ -552,6 +552,7 @@ bool UpdateTask::checkSignature(string value)
 
 bool UpdateTask::performUpdate()
 {
+    string symlinksPath;
     LOG(LOG_LEVEL_INFO, "Applying update...");
     for (vector<string>::size_type i = 0; i < localPaths.size(); i++)
     {
@@ -588,8 +589,21 @@ bool UpdateTask::performUpdate()
         }
         setPermissions(origFile.c_str());
 
+
+        auto pos = origFile.find_last_of("/");
+        if (pos != string::npos)
+        {
+            if (origFile.substr(pos + 1) == "mega.links")
+            {
+                symlinksPath = origFile;
+            }
+        }
+
         LOG(LOG_LEVEL_INFO, "File correctly installed: %s",  localPaths[i].c_str());
     }
+
+    if (!symlinksPath.empty())
+        processSymLinks(symlinksPath);
 
     LOG(LOG_LEVEL_INFO, "Update successfully installed");
     return true;
@@ -618,6 +632,64 @@ void UpdateTask::finalCleanup()
     removeRecursively(updateFolder);
     MEGA_SET_PERMISSIONS;
     writeVersion();
+}
+
+void UpdateTask::processSymLinks(string symlinksPath)
+{
+#ifndef _WIN32
+    FILE * pFile;
+    pFile = mega_fopen(symlinksPath.c_str(), "r");
+    if (!pFile)
+    {
+        LOG(LOG_LEVEL_ERROR, "Error opening sym links file %s", symlinksPath.c_str());
+        return;
+    }
+
+    if (!processSymLinksFile(pFile))
+    {
+        LOG(LOG_LEVEL_INFO, "Error applying sym links");
+    }
+
+    fclose(pFile);
+}
+
+bool UpdateTask::processSymLinksFile(FILE *fd)
+{
+    LOG(LOG_LEVEL_INFO, "Reading symlinks update info");
+
+    bool success = true;
+    string version = readNextLine(fd);
+    if (version.empty())
+    {
+        LOG(LOG_LEVEL_WARNING, "Invalid update sym links info");
+        return false;
+    }
+
+    LOG(LOG_LEVEL_INFO, "Processing symlinks");
+
+    while (true)
+    {
+        string target = readNextLine(fd);
+        string symLinkRelativePath = readNextLine(fd);
+        if (target.empty() || symLinkRelativePath.empty())
+        {
+            break;
+        }
+
+        std::string linkPath = appFolder + symLinkRelativePath;
+        LOG(LOG_LEVEL_INFO,"First origin link %s", target.c_str());
+        LOG(LOG_LEVEL_INFO,"Second target link %s", linkPath.c_str());
+
+        if (symlink(target.c_str(), linkPath.c_str()) != 0 && errno != EEXIST)
+        {
+            LOG(LOG_LEVEL_ERROR, "Error creating symlinks");
+            std::cerr << "Failed to create symlink " << linkPath << " -> " << target << ": " << strerror(errno) << std::endl;
+            success = false;
+        }
+    }
+
+    return success;
+#endif
 }
 
 bool UpdateTask::setPermissions(const char *path)

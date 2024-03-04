@@ -1,52 +1,71 @@
-Guide to generate MEGASync installers on Windows
+Guide to generate MEGA Desktop App installers on Windows
 ==============
 
-Required tools
---------------
+[[_TOC_]]
 
-**NSIS** (Nullsoft Scriptable Install System)
-Download and install the tool to create installers.
+# Requirements
 
-[Binary](https://unsis.googlecode.com/files/nsis-2.46.5-Unicode-setup.exe)
-[Website](http://www.scratchpaper.com/)
+## NSIS (Nullsoft Scriptable Install System)
+[Website](https://nsis.sourceforge.io/Download)
 
-*Note*: some plugins and extra translations for NSIS are required. You can directly overwrite the content of your NSIS folder in "Program files x86" with the following files [Download here](https://mega.nz/#!uwNGEZwa!sQLO33UVNWuM8evVr7yyUKM99WvdpihahbfycdmcCp0)
+## Extra plug-ins:
+Extract archive in NSIS install dir, should be C:\Program Files (x86)\NSIS\
+[Archive](https://mega.nz/file/YwFmTD5K#wni6lOitZlTAVxxlbfV0UaW1PmleeITH0Za_ti7GB6g)
 
-**HM NIS EDIT**
-Download and install this graphical user interface to edit and configure NSIS.
+## Qt 5.15
+And the environment variable `MEGA_QTPATH` set to the Qt install dir. Example: `C:\Qt\5.15.11\x64` for the 64 bit version, or `C:\Qt\5.15.11\x86` for the 32 bit version.
 
-[Binary](http://prdownloads.sourceforge.net/hmne/nisedit2.0.3.exe?download)
-[Website](http://hmne.sourceforge.net/)
+## The third party libs installed (with VCPKG)
+And the environment variables
+- `MEGA_VCPKGPATH` set to the install dir. Example: `C:\mega\3rdParty_desktop`
+- `MEGA_THIRD_PARTY_DLL_DIR` set to the subdirectory where the dlls are stored. Example: `bin`
 
-Configure the installer
---------------
+## The Desktop App sources
+Open a terminal and clone the Desktop repository:
+```
+$ mkdir c:\mega\
+$ cd c:\mega\
+$ git clone --recursive https://github.com/meganz/MEGAsync.git desktop
+```
 
- - Open the tool HM NIS Edit and load the file "installer.nsi" located in the <project_folder>.
- - Update the "Product version" if necessary.
- - Set the variable `QT_PATH` to point to the path where your QT SDK is installed.
- - Set the variables `BUILDPATH_X86` and `BUILDPATH_X64` to point to the paths where your binaries were built. Note that you need to set both variables despite you are building a MEGASync installer for x86, since both versions x86 and x64 of the MEGAShellExt are required to create the installer.
+# Steps
 
-Extra info: in order to generate the 64 bits version, you will need the VC2010_x64 compiler. QT libs for 64 bits are not mandatory, since MEGAShellExt does not use QT at all.
-If you are using QT Creator to build the DLL for 64 bits, you need to add "Additional arguments" to the "Build Steps" in the "Projects" section: `CONFIG+=BUILDX64`. This way, the x64 version of SDK libraries will be properly linked.
+## Get the sources
+## Call the one-step script
+Open a terminal, set the environment variables if necessary, cd to the sources root dir, and run `full_build_process.cmd`:
 
-Create the uninstaller
---------------
+Usage:
+```
+"Usage: C:\mega\desktop\full_build_process.cmd [-help] [64|32/64 sign|nosign <cores number> [<suffix>]]"
+Script building, signing and creating the installer(s)
+It can take 0, 1, 3 or 4 arguments:
+        - -help: this message
+        - 0 arguments: use these settings: 32/64 sign 1
+        - Architecture : 64 or 32/64 to build either for 64 bit or both 32 and 64 bit
+        - Sign: sign or nosign if the binaries must be signed or not
+        - Cores: the number of cores to build the project, or 0 for default value (4)
+        - Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
+MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
+MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.15.11\x64
+```
 
- - In the HM NIS Edit, search for the define `BUILD_UNINSTALLER` and uncomment the line by deleting the #
-	`!define BUILD_UNINSTALLER`
- - Click on **Compile** under the menu NSIS to create the Uninstaller generator.
- - Generate the "uninst.exe" by executing the file "UninstallerGenerator.exe". It should have been created in your <project_folder> after successfull compilation.
- - Undo the change by commenting back the line above.
+### Unsigned build:
+```
+$ .\full_build_process 64 nosign 8 myBuild
+```
+This will build only the 64 bit installer, using 8 cores, with version suffix "myBuild", and not sign the binaries.
 
-Create the installer
---------------
+### Signed build:
+Work in progress. For now, please use the following scripts sequentially:
+```
+$ .\production_build.cmd
+$ .\gather_built_products.cmd
+$ .\make_uninstallers.cmd
+```
+Now, sign the files in the folders `sign64` and `sign32`, then copy the signed binaries to `built64` and `built32` respectively.
 
- - In the HM NIS Edit, click on **Compile** under the menu NSIS to create the Uninstaller generator.
- - The "MEGAsyncSetup.exe" file should be in your <project_folder> now.
- - Note that "MEGAsyncSetup.exe" support silent installation passing `/S` as parameter. Although using it requires admin rights.
+Then run:
+```
+$ .\make_installers.cmd
+```
 
-Final comments
---------------
-
- - If the new installer is intended to be a public version (instead of a debug version for customers or internal usage), the file must be signed by using the MEGA certificate.
- 

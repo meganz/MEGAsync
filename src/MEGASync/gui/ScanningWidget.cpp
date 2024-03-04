@@ -4,6 +4,7 @@
 #include <QMovie>
 #include "BlurredShadowEffect.h"
 #include "Utilities.h"
+#include "TransferMetaData.h"
 
 ScanningWidget::ScanningWidget(QWidget *parent) :
     QWidget(parent),
@@ -67,19 +68,29 @@ void ScanningWidget::updateAnimation()
 
 void ScanningWidget::onReceiveStatusUpdate(const FolderTransferUpdateEvent &event)
 {
-    switch (event.stage)
+    const auto metaData = TransferMetaDataContainer::getAppDataByAppData(event.appData.c_str());
+    if (metaData && (metaData->getPendingFiles() + metaData->getFileTransfersOK()) > 0)
     {
-        case mega::MegaTransfer::STAGE_SCAN:
+        const auto addedTransfers = metaData->getPendingFiles() + metaData->getFileTransfersOK();
+        mUi->lStepTitle->setText(tr("Adding transfers…"));
+        mUi->lStepDescription->setText(tr("%1/%2").arg(addedTransfers).arg(event.filecount));
+    }
+    else
+    {
+        switch (event.stage)
         {
-            mUi->lStepTitle->setText(tr("Scanning"));
-            mUi->lStepDescription->setText(buildScanDescription(event.foldercount, event.filecount));
-            break;
-        }
-        case mega::MegaTransfer::STAGE_CREATE_TREE:
-        {
-            mUi->lStepTitle->setText(tr("Creating folders"));
-            mUi->lStepDescription->setText(tr("%1/%2").arg(event.createdfoldercount).arg(event.foldercount));
-            break;
+            case mega::MegaTransfer::STAGE_SCAN:
+            {
+                mUi->lStepTitle->setText(tr("Scanning"));
+                mUi->lStepDescription->setText(buildScanDescription(event.foldercount, event.filecount));
+                break;
+            }
+            case mega::MegaTransfer::STAGE_CREATE_TREE:
+            {
+                mUi->lStepTitle->setText(tr("Creating folders"));
+                mUi->lStepDescription->setText(tr("%1/%2").arg(event.createdfoldercount).arg(event.foldercount));
+                break;
+            }
         }
     }
     mPreviousStage = event.stage;

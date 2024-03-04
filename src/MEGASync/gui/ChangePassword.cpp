@@ -54,6 +54,8 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
                 info.text = QCoreApplication::translate("MegaError", e->getErrorString());
                 info.parent = this;
                 QMegaMessageBox::critical(info);
+
+                setEnabled(true);
             }
             break;
         }
@@ -61,8 +63,16 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                mUi->bOk->setEnabled(true);
-                accept();
+                hide();
+
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = parentWidget();
+                msgInfo.title =  tr("Password changed");
+                msgInfo.text =   tr("Your password has been changed.");
+                msgInfo.finishFunc = [this](QPointer<QMessageBox>){
+                    accept();
+                };
+                QMegaMessageBox::information(msgInfo);
             }
             else if (e->getErrorCode() == MegaError::API_EFAILED
                      || e->getErrorCode() == MegaError::API_EEXPIRED)
@@ -71,7 +81,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
             }
             else if (e->getErrorCode() == MegaError::API_ETOOMANY)
             {
-                mUi->bOk->setEnabled(true);
+                setEnabled(true);
 
                 QMegaMessageBox::MessageBoxInfo info;
                 info.title = QMegaMessageBox::errorTitle();
@@ -81,7 +91,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
             }
             else
             {
-                mUi->bOk->setEnabled(true);
+                setEnabled(true);
 
                 QMegaMessageBox::MessageBoxInfo info;
                 info.title = QMegaMessageBox::errorTitle();
@@ -104,6 +114,7 @@ void ChangePassword::show2FA(bool invalidCode)
         if (verification->result() == QDialog::Accepted)//need to check if verificaiton is valid??
         {
             QString pin = verification->pinCode();
+            setDisabled(true);
 
             mMegaApi->multiFactorAuthChangePassword(nullptr,
                                                     newPassword().toUtf8().constData(),
@@ -112,7 +123,7 @@ void ChangePassword::show2FA(bool invalidCode)
         }
         else
         {
-            mUi->bOk->setEnabled(true);
+            setEnabled(true);
         }
     });
 }
@@ -158,7 +169,7 @@ void ChangePassword::on_bOk_clicked()
     }
     else
     {
-        mUi->bOk->setEnabled(false);
+        setDisabled(true);
 
         char* email = mMegaApi->getMyEmail();
         if (email)
