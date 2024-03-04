@@ -4016,7 +4016,9 @@ void MegaApplication::officialWeb()
 
 void MegaApplication::goToMyCloud()
 {
-    QString url = QString::fromUtf8("");
+    std::unique_ptr<char[]> rootBase64Handle(getRootNode()->getBase64Handle());
+    const QString rootID(QString::fromUtf8(rootBase64Handle.get()));
+    const QString url(QString::fromUtf8("fm/%1").arg(rootID));
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
@@ -4616,7 +4618,6 @@ void MegaApplication::shellViewOnMega(MegaHandle handle, bool versions)
     const QString versionsArgument{versions ? QString::fromUtf8("/versions") : QString::fromUtf8("")};
     const QString url{QString::fromUtf8("fm%1/%2").arg(versionsArgument).arg(handleArgument)};
     megaApi->getSessionTransferURL(url.toUtf8().constData());
-
 }
 
 void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extraLinks)
