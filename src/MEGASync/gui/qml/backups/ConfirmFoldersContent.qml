@@ -33,6 +33,7 @@ Column {
             left: parent.left
             right: parent.right
         }
+        showBorder: true
         type: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
                 ? Constants.MessageType.ERROR
                 : Constants.MessageType.WARNING

@@ -19,7 +19,9 @@ Item {
     property int type: Constants.MessageType.NONE
     property int margin: 12
     property int radius: 8
+    property int borderWidth: 1
     property bool topBorderRect: false
+    property bool showBorder: false
 
     height: backgroundRect.height
     Layout.preferredHeight: backgroundRect.height
@@ -55,6 +57,10 @@ Item {
         }
         height: hint.height + 2 * root.margin
         radius: root.radius
+        border {
+            color: colorStyle.borderSubtle
+            width: root.showBorder ? root.borderWidth : 0
+        }
 
         MouseArea {
             id: backgroundMouseArea
