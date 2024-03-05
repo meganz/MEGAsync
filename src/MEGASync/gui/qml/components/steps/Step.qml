@@ -13,9 +13,10 @@ Item {
         DISABLED = 0,
         CURRENT = 1,
         CURRENT_SUBSTEP = 2,
-        DONE = 3,
-        WARNING = 4,
-        ERROR = 5
+        CURRENT_DONE = 3,
+        DONE = 4,
+        WARNING = 5,
+        ERROR = 6
     }
 
     property alias text: stepText.text
@@ -35,17 +36,19 @@ Item {
     Rectangle {
         id: stepContent
 
-        readonly property string stateDisabled: "DISABLED"
-        readonly property string stateCurrent: "CURRENT"
-        readonly property string stateCurrentSubstep: "SUBSTEP"
-        readonly property string stateDone: "DONE"
-        readonly property string stateWarning: "WARNING"
-        readonly property string stateError: "ERROR"
+        readonly property string stateDisabled: "stateDisabled"
+        readonly property string stateCurrent: "stateCurrent"
+        readonly property string stateCurrentSubstep: "stateCurrentSubstep"
+        readonly property string stateCurrentDone: "stateCurrentDone"
+        readonly property string stateDone: "stateDone"
+        readonly property string stateWarning: "stateWarning"
+        readonly property string stateError: "stateError"
 
         property var statesMap: new Map([
             [Step.ToStates.DISABLED, stateDisabled],
             [Step.ToStates.CURRENT, stateCurrent],
             [Step.ToStates.CURRENT_SUBSTEP, stateCurrentSubstep],
+            [Step.ToStates.CURRENT_DONE, stateCurrentDone],
             [Step.ToStates.DONE, stateDone],
             [Step.ToStates.WARNING, stateWarning],
             [Step.ToStates.ERROR, stateError]
@@ -103,29 +106,26 @@ Item {
                 PropertyChanges { target: stepText; color: colorStyle.iconButton; }
             },
             State {
+                name: stepContent.stateCurrentDone
+                extend: stepContent.stateDone
+                PropertyChanges { target: stepContent; color: colorStyle.iconButtonPressedBackground; }
+            },
+            State {
                 name: stepContent.stateWarning
+                extend: stepContent.stateDone
                 PropertyChanges { target: stepContent; color: colorStyle.notificationWarning; }
-                PropertyChanges { target: stepCircle; color: "transparent"; border.width: 0; }
                 PropertyChanges {
                     target: stepCircleImage;
-                    visible: true;
                     source: Images.alertCircleFilled;
                     color: colorStyle.textWarning;
                 }
-                PropertyChanges { target: stepCircleText; visible: false; }
                 PropertyChanges { target: stepText; color: colorStyle.textWarning; }
             },
             State {
                 name: stepContent.stateError
+                extend: stepContent.stateWarning
                 PropertyChanges { target: stepContent; color: colorStyle.notificationError; }
-                PropertyChanges { target: stepCircle; color: "transparent"; border.width: 0; }
-                PropertyChanges {
-                    target: stepCircleImage;
-                    visible: true;
-                    source: Images.alertCircleFilled;
-                    color: colorStyle.textError;
-                }
-                PropertyChanges { target: stepCircleText; visible: false; }
+                PropertyChanges { target: stepCircleImage; color: colorStyle.textError; }
                 PropertyChanges { target: stepText; color: colorStyle.textError; }
             }
         ]

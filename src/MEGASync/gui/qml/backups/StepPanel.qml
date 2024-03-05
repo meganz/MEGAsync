@@ -13,6 +13,7 @@ Rectangle {
     readonly property string step2: "step2"
     readonly property string step2Warning: "step2Warning"
     readonly property string step2Error: "step2Error"
+    readonly property string stepCurrentDone: "stepCurrentDone"
     readonly property string stepAllDone: "stepAllDone"
 
     readonly property int contentMargin: 36
@@ -48,6 +49,11 @@ Rectangle {
             name: root.step2Error
             extend: root.step2
             PropertyChanges { target: step2; toState: Step.ToStates.ERROR; }
+        },
+        State {
+            name: root.stepCurrentDone
+            extend: root.step2
+            PropertyChanges { target: step2; toState: Step.ToStates.CURRENT_DONE; }
         },
         State {
             name: root.stepAllDone

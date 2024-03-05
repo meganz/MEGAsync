@@ -53,7 +53,7 @@ BackupsQmlDialog {
                     StateChangeScript {
                         script: stackView.replace(resumePage);
                     }
-                    PropertyChanges { target: stepPanelItem; state: stepPanelItem.stepAllDone; }
+                    PropertyChanges { target: stepPanelItem; state: stepPanelItem.stepCurrentDone; }
                 }
             ]
 
