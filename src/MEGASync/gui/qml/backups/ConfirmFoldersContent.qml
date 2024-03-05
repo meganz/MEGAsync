@@ -26,7 +26,7 @@ Column {
         backupsProxyModelRef: root.backupsProxyModelRef
     }
 
-    Texts.NotificationText {
+    Texts.BannerText {
         id: notificationItem
 
         anchors {

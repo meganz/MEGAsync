@@ -72,6 +72,7 @@
         <file>components/texts/ElidedText.qml</file>
         <file>components/texts/HighlightedText.qml</file>
         <file>components/texts/Sizes.qml</file>
+        <file>components/texts/BannerText.qml</file>
         <file>components/toolTips/qmldir</file>
         <file>components/toolTips/ToolTip.qml</file>
         <file>components/views/qmldir</file>
