@@ -28,7 +28,6 @@ BackupsQmlDialog {
             id: stepPanelItem
 
             width: parent.width
-            height: 104
         }
 
         Rectangle {
@@ -61,14 +60,11 @@ BackupsQmlDialog {
             StackViewBase {
                 id: stackView
 
-                readonly property int contentMargin: 48
+                readonly property int contentMargin: 36
 
                 anchors {
                     fill: parent
-                    topMargin: stackView.contentMargin / 2
-                    leftMargin: stackView.contentMargin
-                    rightMargin: stackView.contentMargin
-                    bottomMargin: stackView.contentMargin
+                    margins: stackView.contentMargin
                 }
 
                 Component {

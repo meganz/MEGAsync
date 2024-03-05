@@ -148,6 +148,7 @@
         <file>backups/BackupsDialog.qml</file>
         <file>backups/BackupsFlow.qml</file>
         <file>backups/BackupsStrings.qml</file>
+        <file>backups/ConfirmFoldersContent.qml</file>
         <file>backups/ConfirmFoldersPage.qml</file>
         <file>backups/ConfirmFoldersPageForm.ui.qml</file>
         <file>backups/ConfirmTable.qml</file>

@@ -1,9 +1,7 @@
-import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.textFields 1.0
 import components.pages 1.0
 
 import backups 1.0
@@ -12,7 +10,6 @@ import onboard 1.0
 
 import BackupsProxyModel 1.0
 import BackupsModel 1.0
-import QmlDeviceName 1.0
 
 FooterButtonsPage {
     id: root
@@ -38,7 +35,7 @@ FooterButtonsPage {
             left: parent.left
             right: parent.right
         }
-        spacing: 24
+        spacing: root.spacing
 
         HeaderTexts {
             id: confirmHeader
@@ -46,33 +43,11 @@ FooterButtonsPage {
             title: OnboardingStrings.confirmBackupFoldersTitle
         }
 
-        ColumnLayout {
-            id: mainLayout
+        ConfirmFoldersContent {
+            id: contentItem
 
             Layout.preferredWidth: parent.width
-            spacing: 24
-
-            ConfirmTable {
-                id: confirmFoldersTable
-
-                backupsProxyModelRef: root.backupsProxyModelRef
-            }
-
-            TextField {
-                id: deviceField
-
-                colors.text: colorStyle.textPlaceholder
-                Layout.preferredWidth: parent.width + 2 * deviceField.sizes.focusBorderWidth
-                Layout.leftMargin: -deviceField.sizes.focusBorderWidth
-                title: BackupsStrings.backupTo
-                leftIconSource: Images.database
-                textField.readOnly: true
-                textField.text: "/" + deviceName.name
-
-                QmlDeviceName {
-                    id: deviceName
-                }
-            }
+            backupsProxyModelRef: root.backupsProxyModelRef
         }
     }
 

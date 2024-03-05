@@ -21,6 +21,7 @@ Rectangle {
     readonly property int lineHeight: 2
     readonly property int lineRadius: 1
 
+    height: 104
     color: colorStyle.pageBackground
 
     state: root.step1
