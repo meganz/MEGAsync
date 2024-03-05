@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
+import components.buttons 1.0
 import components.steps 1.0
 
 Rectangle {
@@ -14,7 +15,7 @@ Rectangle {
     readonly property string step2Error: "step2Error"
     readonly property string stepAllDone: "stepAllDone"
 
-    readonly property int contentLeftMargin: 48
+    readonly property int contentMargin: 36
     readonly property int contentSpacing: 8
     readonly property int lineWidth: 127
     readonly property int lineHeight: 2
@@ -54,37 +55,60 @@ Rectangle {
         }
     ]
 
-    RowLayout {
-        id: stepsLayout
+    Item {
+        id: contentItem
 
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        anchors.leftMargin: root.contentLeftMargin
-        spacing: root.contentSpacing
-
-        Step {
-            id: step1
-
-            number: 1
-            text: BackupsStrings.selectFolders
+        anchors {
+            fill: parent
+            margins: root.contentMargin
         }
 
-        Rectangle {
-            id: line
+        RowLayout {
+            id: stepsLayout
 
-            Layout.preferredWidth: root.lineWidth
-            Layout.preferredHeight: root.lineHeight
-            color: colorStyle.buttonSecondaryPressed
-            radius: root.lineRadius
+            anchors.left: parent.left
+            spacing: root.contentSpacing
+
+            Step {
+                id: step1
+
+                number: 1
+                text: BackupsStrings.selectFolders
+            }
+
+            Rectangle {
+                id: line
+
+                Layout.preferredWidth: root.lineWidth
+                Layout.preferredHeight: root.lineHeight
+                color: colorStyle.buttonSecondaryPressed
+                radius: root.lineRadius
+            }
+
+            Step {
+                id: step2
+
+                number: 2
+                text: BackupsStrings.confirmFolders
+            }
+
+        } // RowLayout: stepsLayout
+
+        IconButton {
+            id: helpButton
+
+            anchors {
+                top: parent.top
+                right: parent.right
+                rightMargin: -helpButton.sizes.focusBorderWidth
+                topMargin: -helpButton.sizes.focusBorderWidth
+            }
+            icons.source: Images.helpCircle
+            onClicked: {
+                Qt.openUrlExternally(Links.desktopSyncApp);
+            }
         }
 
-        Step {
-            id: step2
-
-            number: 2
-            text: BackupsStrings.confirmFolders
-        }
-
-    } // RowLayout: stepsLayout
+    } // Item: contentItem
 
 }

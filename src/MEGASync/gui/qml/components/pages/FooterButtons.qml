@@ -9,28 +9,39 @@ import components.buttons 1.0
 RowLayout {
     id: root
 
-    property alias leftIcon: leftIconButton
-    property alias leftSecondary: leftSecondaryButton
-    property alias rightTertiary: rightTertiaryButton
-    property alias rightSecondary: rightSecondaryButton
-    property alias rightPrimary: rightPrimaryButton
+    property alias leftPrimary: leftPrimaryButton // 1st
+    property alias leftSecondary: leftSecondaryButton // 2nd
+
+    property alias rightTertiary: rightTertiaryButton // 3rd
+    property alias rightSecondary: rightSecondaryButton // 2nd
+    property alias rightPrimary: rightPrimaryButton // 1st
+
+    readonly property int focusBorderMargin: -rightPrimary.sizes.focusBorderWidth
 
     anchors {
         bottom: parent.bottom
         right: parent.right
         left: parent.left
-        leftMargin: -leftSecondary.sizes.focusBorderWidth
-        bottomMargin: -leftSecondary.sizes.focusBorderWidth
-        rightMargin: -rightPrimary.sizes.focusBorderWidth
+        leftMargin: root.focusBorderMargin
+        bottomMargin: root.focusBorderMargin
+        rightMargin: root.focusBorderMargin
     }
 
-    //        left               |                    right
-    // +------+ +-----------+        +----------+ +-----------+ +---------+
-    // | icon | | secondary |        | tertiary | | secundary | | primary |
-    // +------+ +-----------+        +----------+ +-----------+ +---------+
+    //       left        |             right
+    // +-----+ +-----+        +-----+ +-----+ +-----+
+    // | 1st | | 2nd |   |    | 3rd | | 2nd | | 1st |
+    // +-----+ +-----+        +-----+ +-----+ +-----+
+    //                   |
+    // Type:
+    //    Out     Sec    |      Out     Out    Prim
+    //
+    // Out = Outline ; Sec = Secondary ; Prim = Primary
     //
     // Default visibility:
-    //    NO         YES                  NO           YES          YES
+    //   YES      NO     |      NO      YES     YES
+    //
+    // Default onClicked:
+    //   YES      NO     |      YES      NO     NO
 
     RowLayout {
         id: leftButtonsLayout
@@ -38,20 +49,19 @@ RowLayout {
         spacing: 0
         Layout.alignment: Qt.AlignLeft
 
-        IconButton {
-            id: leftIconButton
-
-            icons.source: Images.helpCircle
-            visible: false
-        }
-
         OutlineButton {
-            id: leftSecondaryButton
+            id: leftPrimaryButton
 
             text: Strings.skip
             onClicked: {
                 window.close();
             }
+        }
+
+        SecondaryButton {
+            id: leftSecondaryButton
+
+            visible: false
         }
     }
 

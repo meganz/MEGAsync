@@ -28,7 +28,7 @@ BackupsQmlDialog {
             id: stepPanelItem
 
             width: parent.width
-            height: 128
+            height: 104
         }
 
         Rectangle {

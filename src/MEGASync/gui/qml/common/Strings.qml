@@ -11,5 +11,6 @@ QtObject {
     readonly property string previous: qsTr("Previous")
     readonly property string tryAgain: qsTr("Try again")
     readonly property string viewInSettings: qsTr("View in Settings")
+    readonly property string setExclusions: qsTr("Set Exclusions")
 
 }

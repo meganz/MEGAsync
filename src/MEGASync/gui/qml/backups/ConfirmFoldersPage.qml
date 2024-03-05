@@ -11,8 +11,8 @@ ConfirmFoldersPageForm {
     signal confirmFoldersMoveToFinal(bool success)
 
     footerButtons {
-        leftIcon.onClicked: {
-            Qt.openUrlExternally(Links.desktopSyncApp);
+        leftSecondary.onClicked: {
+            // Open exclusions dialog
         }
 
         rightSecondary.onClicked: {

@@ -6,10 +6,6 @@ ResumePageForm {
     id: root
 
     footerButtons {
-        leftIcon.onClicked: {
-            Qt.openUrlExternally(Links.desktopSyncApp);
-        }
-
         rightSecondary.onClicked: {
             backupsAccess.openBackupsTabInPreferences();
             window.accept();

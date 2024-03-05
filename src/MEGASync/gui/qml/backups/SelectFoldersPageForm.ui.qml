@@ -16,8 +16,7 @@ FooterButtonsPage {
     readonly property int spacing: 24
 
     footerButtons {
-        leftIcon.visible: true
-        leftSecondary.visible: false
+        leftPrimary.visible: false
         rightSecondary.text: Strings.cancel
         rightPrimary {
             text: Strings.next

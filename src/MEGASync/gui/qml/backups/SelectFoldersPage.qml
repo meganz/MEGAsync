@@ -8,10 +8,6 @@ SelectFoldersPageForm {
     signal selectFolderMoveToConfirm
 
     footerButtons {
-        leftIcon.onClicked: {
-            Qt.openUrlExternally(Links.desktopSyncApp);
-        }
-
         rightSecondary.onClicked: {
             window.close();
         }

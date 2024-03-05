@@ -12,8 +12,7 @@ FooterButtonsPage {
     id: root
 
     footerButtons {
-        leftIcon.visible: true
-        leftSecondary.visible: false
+        leftPrimary.visible: false
         rightSecondary {
             text: Strings.viewInSettings
             visible: backupsAccess != null ? !backupsAccess.comesFromSettings : false
