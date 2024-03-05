@@ -32,8 +32,6 @@ signals:
 private:
     Preferences();
 
-    std::map<QString, QVariant> cache;
-
 public:
     //NOT thread-safe. Must be called before creating threads.
     static std::shared_ptr<Preferences> instance();
@@ -555,9 +553,6 @@ protected:
     //Not all prefeerences need this, that´s why by default it is set to false
     void setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
     void setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
-    void setCachedValue(const QString &key, const QVariant &value);
-    void cleanCache();
-    void removeFromCache(const QString &key);
 
     std::unique_ptr<EncryptedSettings> mSettings;
 

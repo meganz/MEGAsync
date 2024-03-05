@@ -407,7 +407,6 @@ void Preferences::setEmail(QString email)
     mutex.lock();
     login(email);
     mSettings->setValue(emailKey, email);
-    setCachedValue(emailKey, email);
     mutex.unlock();
     emit stateChanged();
 }
@@ -460,7 +459,6 @@ void Preferences::storeSessionInGeneral(QString session)
     }
 
     mSettings->setValue(sessionKey, session);
-    setCachedValue(sessionKey, session);
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
@@ -510,7 +508,6 @@ void Preferences::removeEphemeralCredentials()
 {
     QMutexLocker lock(&mutex);
     mSettings->remove(ephemeralSessionKey);
-    removeFromCache(ephemeralSessionKey);
 }
 
 void Preferences::setEphemeralCredentials(const EphemeralCredentials& cred)
@@ -520,7 +517,6 @@ void Preferences::setEphemeralCredentials(const EphemeralCredentials& cred)
     QDataStream stream(&array, QIODevice::WriteOnly);
     stream << cred;
     mSettings->setValue(ephemeralSessionKey, array.toBase64());
-    setCachedValue(ephemeralSessionKey, array.toBase64());
 }
 
 EphemeralCredentials Preferences::getEphemeralCredentials()
@@ -541,7 +537,6 @@ unsigned long long Preferences::transferIdentifier()
     auto value = getValue<unsigned long long>(transferIdentifierKey, defaultTransferIdentifier);
     value++;
     mSettings->setValue(transferIdentifierKey, value);
-    setCachedValue(transferIdentifierKey, value);
     mutex.unlock();
     return value;
 }
@@ -874,31 +869,18 @@ void Preferences::setTimePoint(const QString& key, const std::chrono::system_clo
     assert(logged());
     auto timePointMillis = std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count();
     mSettings->setValue(key, static_cast<long long>(timePointMillis));
-    setCachedValue(key, static_cast<long long>(timePointMillis));
 }
 
 template<typename T>
 T Preferences::getValue(const QString &key)
 {
-    auto cf = cache.find(key);
-    if (cf != cache.end())
-    {
-        assert(cf->second.value<T>() == mSettings->value(key).value<T>());
-        return cf->second.value<T>();
-    }
-    else return mSettings->value(key).value<T>();
+    return mSettings->value(key).value<T>();
 }
 
 template<typename T>
 T Preferences::getValue(const QString &key, const T &defaultValue)
 {
-    auto cf = cache.find(key);
-    if (cf != cache.end())
-    {
-        assert(cf->second.value<T>() == mSettings->value(key, defaultValue).template value<T>());
-        return cf->second.value<T>();
-    }
-    else return mSettings->value(key, defaultValue).template value<T>();
+    return mSettings->value(key, defaultValue).template value<T>();
 }
 
 template<typename T>
@@ -918,7 +900,6 @@ T Preferences::getValueConcurrent(const QString &key, const T &defaultValue)
 void Preferences::setAndCachedValue(const QString &key, const QVariant &value)
 {
     mSettings->setValue(key, value);
-    setCachedValue(key, value);
 }
 
 void Preferences::setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange)
@@ -939,24 +920,6 @@ void Preferences::setValueConcurrent(const QString &key, const QVariant &value, 
     {
         emit valueChanged(key);
     }
-}
-
-void Preferences::setCachedValue(const QString &key, const QVariant &value)
-{
-    if (!key.isEmpty())
-    {
-        cache[key] = value;
-    }
-}
-
-void Preferences::cleanCache()
-{
-    cache.clear();
-}
-
-void Preferences::removeFromCache(const QString &key)
-{
-    cache.erase(key);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDialogLastExecution()
@@ -1250,7 +1213,6 @@ void Preferences::recoverDeprecatedNotificationsSettings()
 
         QMutexLocker locker(&mutex);
         mSettings->remove(showDeprecatedNotificationsKey);
-        removeFromCache(showDeprecatedNotificationsKey);
     }
 }
 
@@ -1372,7 +1334,6 @@ void Preferences::setSSLcertificateException(bool value)
         currentAccount = mSettings->value(currentAccountKey).toString();
     }
     mSettings->setValue(SSLcertificateExceptionKey, value);
-    setCachedValue(SSLcertificateExceptionKey, value);
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
@@ -1484,7 +1445,6 @@ void Preferences::setAccountStateInGeneral(int value)
     }
 
     mSettings->setValue(currentAccountStatusKey, value);
-    setCachedValue(currentAccountStatusKey, value);
 
     if (!currentAccount.isEmpty())
     {
@@ -1526,7 +1486,6 @@ void Preferences::setNeedsFetchNodesInGeneral(bool value)
     }
 
     mSettings->setValue(needsFetchNodesKey, value);
-    setCachedValue(needsFetchNodesKey, value);
 
     if (!currentAccount.isEmpty())
     {
@@ -2078,7 +2037,6 @@ void Preferences::setOneTimeActionDone(int action, bool done)
     }
 
     mSettings->setValue(oneTimeActionDoneKey + QString::number(action), done);
-    setCachedValue(oneTimeActionDoneKey + QString::number(action), done);
 
     if (!currentAccount.isEmpty())
     {
@@ -2122,7 +2080,6 @@ void Preferences::setOneTimeActionUserDone(int action, bool done)
     assert(logged());
 
     mSettings->setValue(oneTimeActionUserDoneKey + QString::number(action), done);
-    setCachedValue(oneTimeActionUserDoneKey + QString::number(action), done);
 }
 
 
@@ -2159,12 +2116,10 @@ void Preferences::setPreviousCrashes(QStringList crashes)
     if (!crashes.size())
     {
         mSettings->remove(previousCrashesKey);
-        removeFromCache(previousCrashesKey);
     }
     else
     {
         mSettings->setValue(previousCrashesKey, crashes.join(QString::fromLatin1("\n")));
-        setCachedValue(previousCrashesKey, crashes.join(QString::fromLatin1("\n")));
     }
 
     if (!currentAccount.isEmpty())
@@ -2206,7 +2161,6 @@ void Preferences::setLastReboot(long long value)
     }
 
     mSettings->setValue(lastRebootKey, value);
-    setCachedValue(lastRebootKey, value);
 
     if (!currentAccount.isEmpty())
     {
@@ -2247,7 +2201,6 @@ void Preferences::setLastExit(long long value)
     }
 
     mSettings->setValue(lastExitKey, value);
-    setCachedValue(lastExitKey, value);
 
     if (!currentAccount.isEmpty())
     {
@@ -2317,11 +2270,8 @@ void Preferences::setLastPublicHandle(MegaHandle handle, int type)
     mutex.lock();
     assert(logged());
     mSettings->setValue(lastPublicHandleKey, (unsigned long long) handle);
-    setCachedValue(lastPublicHandleKey, (unsigned long long) handle);
     mSettings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
-    setCachedValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
     mSettings->setValue(lastPublicHandleTypeKey, type);
-    setCachedValue(lastPublicHandleTypeKey, type);
     mutex.unlock();
 }
 
@@ -2402,7 +2352,6 @@ void Preferences::resetGlobalSettings()
     {
         mSettings->beginGroup(currentAccount);
     }
-    cleanCache();
     mutex.unlock();
 
     emit stateChanged();
@@ -2598,7 +2547,6 @@ void Preferences::login(QString account)
     mutex.lock();
     logout();
     mSettings->setValue(currentAccountKey, account);
-    setCachedValue(currentAccountKey, account);
     mSettings->beginGroup(account);
     readFolders();
     int lastVersion = mSettings->value(lastVersionKey).toInt();
@@ -2609,7 +2557,6 @@ void Preferences::login(QString account)
             emit updated(lastVersion);
         }
         mSettings->setValue(lastVersionKey, Preferences::VERSION_CODE);
-        setCachedValue(lastVersionKey, Preferences::VERSION_CODE);
     }
     mutex.unlock();
 }
@@ -2652,7 +2599,6 @@ void Preferences::logout()
         mSettings->endGroup();
     }
     clearTemporalBandwidth();
-    cleanCache();
     mutex.unlock();
 }
 
