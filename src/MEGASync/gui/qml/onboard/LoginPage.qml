@@ -185,6 +185,8 @@ LoginPageForm {
         loginButton.clicked();
     }
 
+    helpButton.url: Links.recovery + (email.valid() ? "?email=" + Qt.btoa(email.text) : "")
+
     Component.onDestruction: {
         resetLoginControllerStatus();
     }
@@ -237,14 +239,4 @@ LoginPageForm {
         }
     }
 
-    Connections {
-        target: helpButton
-
-        function onLinkActionTriggered() {
-            helpButton.url = Links.recovery + (email.valid() ? "?email="+Qt.btoa(email.text) : "");
-            helpButton.visited = true;
-
-            Qt.openUrlExternally(helpButton.url);
-        }
-    }
 }

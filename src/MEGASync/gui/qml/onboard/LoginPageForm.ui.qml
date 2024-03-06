@@ -107,7 +107,6 @@ StackViewPage {
         }
         visible: !loginControllerAccess.newAccount
         sizes: SmallSizes { borderLess: true }
-        defaultHandleLinkAction: false
     }
 
     RowLayout {
