@@ -30,7 +30,6 @@ bool Utilities::createDirectory(const QString& dirPath)
 
     if (directory.exists())
     {
-        qDebug() << "Utilities::createDirectory - Directory already exists:" << dirPath;
         return true;
     }
 
@@ -332,7 +331,8 @@ bool Utilities::addToResources(const QString& filePath,
 bool Utilities::addToResourcesBatch(const QStringList &filePaths, const QString &qrcPath, const QString &directoryPath)
 {
     QFile qrcFile(qrcPath);
-    if (!qrcFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
+    if (!qrcFile.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
         return false;
     }
 
@@ -342,9 +342,9 @@ bool Utilities::addToResourcesBatch(const QStringList &filePaths, const QString 
 
     bool modified = false;
     QDir baseDir(QFileInfo(qrcPath).absolutePath());
-    for (const QString& filePath : filePaths) {
+    for (const QString& filePath : filePaths)
+    {
         QString relativePath = baseDir.relativeFilePath(filePath);
-        qDebug() << "relativePath" << relativePath ;
 
         if (!qrcContent.contains(relativePath))
         {
@@ -360,8 +360,10 @@ bool Utilities::addToResourcesBatch(const QStringList &filePaths, const QString 
         }
     }
 
-    if (modified) {
-        if (!qrcFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    if (modified)
+    {
+        if (!qrcFile.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
             return false;
         }
         stream << qrcContent;
@@ -461,10 +463,6 @@ bool Utilities::insertQRCPathInCMakeListsFile(const QString &fileDirPath, const 
 
     // Copy content to the CMakeLists.txt temporary file with the qrc path inserted at the determined position
     QString lineEnding = "\n";
-#ifdef _WIN32
-    lineEnding = "\r\n";
-#endif
-
     int tabWidth = 4;
     QString fourSpaces = QString(tabWidth, ' ');
     QTextStream out(&tempFile);
@@ -860,6 +858,16 @@ QString Utilities::resolvePath(const QString &basePath, const QString &relativeP
     QString resolvedAbsolutePath = QDir(combinedPath).absolutePath();
 
     return resolvedAbsolutePath;
+}
+
+QString Utilities::targetToString(Targets target)
+{
+    static const QMap<Targets, QLatin1String> targetsMap = {
+        {Targets::ColorStyle, QLatin1String("ColorStyle")},
+        {Targets::ImageStyle, QLatin1String("ImageStyle")}
+    };
+
+    return targetsMap.value(target);
 }
 
 bool Utilities::writeStyleSheetToFile(const QString& css, const QString& filePath)
