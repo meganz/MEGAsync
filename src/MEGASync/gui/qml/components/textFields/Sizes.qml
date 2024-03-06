@@ -13,8 +13,8 @@ QtObject {
     property int iconWidth: 16
     property size iconSize: Qt.size(iconWidth, iconWidth)
     property int iconTextSeparation: 6
-    property int focusBorderRadius: 11
-    property int focusBorderWidth: 3
+    property int focusBorderRadius: 12
+    property int focusBorderWidth: 4
     property int borderRadius: 8
     property int borderWidth: 1
     property int hintTextSize: Texts.Text.Size.NORMAL
