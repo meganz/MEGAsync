@@ -47,9 +47,9 @@ FooterButtonsPage {
         TextField {
             id: deviceNameTextFieldComp
 
-            Layout.leftMargin: -sizes.focusBorderWidth
-            Layout.rightMargin: -sizes.focusBorderWidth
-            Layout.preferredWidth: parent.width + 2 * sizes.focusBorderWidth
+            Layout.leftMargin: Constants.focusAdjustment
+            Layout.rightMargin: Constants.focusAdjustment
+            Layout.preferredWidth: parent.width + 2 * Constants.focusBorderWidth
             title: OnboardingStrings.deviceName
             hint.icon: ""
             sizes: LargeSizes {}

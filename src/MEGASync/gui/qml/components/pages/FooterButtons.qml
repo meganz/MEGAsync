@@ -16,15 +16,13 @@ RowLayout {
     property alias rightSecondary: rightSecondaryButton // 2nd
     property alias rightPrimary: rightPrimaryButton // 1st
 
-    readonly property int focusBorderMargin: -rightPrimary.sizes.focusBorderWidth
-
     anchors {
         bottom: parent.bottom
         right: parent.right
         left: parent.left
-        leftMargin: root.focusBorderMargin
-        bottomMargin: root.focusBorderMargin
-        rightMargin: root.focusBorderMargin
+        leftMargin: Constants.focusAdjustment
+        bottomMargin: Constants.focusAdjustment
+        rightMargin: Constants.focusAdjustment
     }
 
     //       left        |             right

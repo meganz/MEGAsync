@@ -106,8 +106,8 @@ Rectangle {
             anchors {
                 top: parent.top
                 right: parent.right
-                rightMargin: -helpButton.sizes.focusBorderWidth
-                topMargin: -helpButton.sizes.focusBorderWidth
+                rightMargin: Constants.focusAdjustment
+                topMargin: Constants.focusAdjustment
             }
             icons.source: Images.helpCircle
             onClicked: {

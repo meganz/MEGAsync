@@ -53,9 +53,9 @@ StackViewPage {
             left: root.left
             right: root.right
             bottom: root.bottom
-            leftMargin: -loginButtonItem.sizes.focusBorderWidth
-            rightMargin: -loginButtonItem.sizes.focusBorderWidth
-            bottomMargin: Constants.defaultWindowMargin - loginButtonItem.sizes.focusBorderWidth
+            leftMargin: Constants.focusAdjustment
+            rightMargin: Constants.focusAdjustment
+            bottomMargin: Constants.defaultWindowMargin + Constants.focusAdjustment
         }
 
         OutlineButton {

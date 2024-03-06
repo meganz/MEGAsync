@@ -113,7 +113,7 @@ Item {
 
                     anchors {
                         verticalCenter: parent.verticalCenter
-                        topMargin: -checkbox.sizes.focusBorderWidth + 1
+                        topMargin: Constants.focusAdjustment + 1
                     }
                     width: backupsProxyModelRef.selectedFilterEnabled ? 0 : selectRoot.checkboxWidth
                     checked: selected
@@ -316,7 +316,7 @@ Item {
                     top: parent.top
                     bottom: parent.bottom
                 }
-                width: leftButton.width + removeButton.width - leftButton.sizes.focusBorderWidth
+                width: leftButton.width + removeButton.width + Constants.focusAdjustment
 
                 Buttons.SecondaryButton {
                     id: leftButton
@@ -325,7 +325,7 @@ Item {
                         right: removeButton.left
                         top: parent.top
                         bottom: parent.bottom
-                        rightMargin: -sizes.focusBorderWidth
+                        rightMargin: Constants.focusAdjustment
                     }
                     text: conflictRoot.showChange ? BackupsStrings.changeFolder : BackupsStrings.rename
                     sizes: Buttons.SmallSizes {}

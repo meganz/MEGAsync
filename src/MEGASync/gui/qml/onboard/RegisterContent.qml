@@ -73,7 +73,7 @@ Column {
         termsCheckBoxItem.checked = false;
     }
 
-    spacing: contentMargin / 2 - termsCheckBoxItem.sizes.focusBorderWidth
+    spacing: contentMargin / 2 + Constants.focusAdjustment
 
     Component.onDestruction: {
         loginControllerAccess.createAccountErrorMsg = "";
@@ -85,8 +85,8 @@ Column {
         anchors {
             left: root.left
             right: root.right
-            leftMargin: -firstNameItem.sizes.focusBorderWidth
-            rightMargin: -firstNameItem.sizes.focusBorderWidth
+            leftMargin: Constants.focusAdjustment
+            rightMargin: Constants.focusAdjustment
         }
         spacing: mainFormLayoutSpacing
 
@@ -189,7 +189,7 @@ Column {
         id: termsCheckBoxItem
 
         anchors.left: root.left
-        anchors.leftMargin: -termsCheckBoxItem.sizes.focusBorderWidth
+        anchors.leftMargin: Constants.focusAdjustment
         url: Links.terms
         text: OnboardingStrings.agreeTerms
         KeyNavigation.tab: contentItem

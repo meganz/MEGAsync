@@ -14,7 +14,6 @@ TextField {
 
     height: 72 + 2 * sizes.focusBorderWidth
     width: 60 + 2 * sizes.focusBorderWidth
-    sizes.focusBorderWidth: 4
 
     textField {
         height: root.height

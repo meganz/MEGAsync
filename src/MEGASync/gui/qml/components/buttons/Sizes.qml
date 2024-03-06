@@ -1,5 +1,7 @@
 import QtQuick 2.15
 
+import common 1.0
+
 import components.texts 1.0 as Texts
 
 QtObject {
@@ -14,7 +16,7 @@ QtObject {
     property real radius: 6
     property int maskBorderRadius: 8
     property real focusBorderRadius: 10.5
-    property int focusBorderWidth: 4
+    property int focusBorderWidth: Constants.focusBorderWidth
     property int borderWidth: 2
     property int iconWidth: 16
     property size iconSize: Qt.size(iconWidth, iconWidth)

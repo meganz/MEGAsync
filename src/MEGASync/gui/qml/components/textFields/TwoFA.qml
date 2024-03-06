@@ -34,7 +34,7 @@ FocusScope {
         digit6.text = pin.charAt(5);
     }
 
-    Layout.leftMargin: -digit1.sizes.focusBorderWidth
+    Layout.leftMargin: Constants.focusAdjustment
 
     onKeyChanged: {
         if(key.length === 6) {
@@ -126,8 +126,8 @@ FocusScope {
         Texts.NotificationText {
             id: notification
 
-            Layout.leftMargin: digit1.sizes.focusBorderWidth
-            Layout.preferredWidth: root.width - digit1.sizes.focusBorderWidth
+            Layout.leftMargin: Constants.focusAdjustment
+            Layout.preferredWidth: root.width + Constants.focusAdjustment
             Layout.preferredHeight: notification.height
             title: qsTr("Incorrect 2FA code")
             text: Strings.tryAgain

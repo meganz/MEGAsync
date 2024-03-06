@@ -44,8 +44,8 @@ StackViewPage {
             id: emailTextField
 
             title: OnboardingStrings.email
-            Layout.preferredWidth: layout.width + 2 * emailTextField.sizes.focusBorderWidth
-            Layout.leftMargin: -emailTextField.sizes.focusBorderWidth
+            Layout.preferredWidth: layout.width + 2 * Constants.focusBorderWidth
+            Layout.leftMargin: Constants.focusAdjustment
         }
     }
 
@@ -55,8 +55,8 @@ StackViewPage {
         anchors {
             right: root.right
             bottom: root.bottom
-            rightMargin: -resendButton.sizes.focusBorderWidth
-            bottomMargin: Constants.defaultWindowMargin - resendButton.sizes.focusBorderWidth
+            rightMargin: Constants.focusAdjustment
+            bottomMargin: Constants.defaultWindowMargin + Constants.focusAdjustment
         }
         spacing: 0
 

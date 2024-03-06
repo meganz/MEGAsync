@@ -14,7 +14,7 @@ Column {
 
     required property BackupsProxyModel backupsProxyModelRef
 
-    spacing: notificationItem.visible ? 8 : (24 - deviceField.sizes.focusBorderWidth)
+    spacing: notificationItem.visible ? 8 : (24 - Constants.focusBorderWidth)
 
     ConfirmTable {
         id: confirmFoldersTable
@@ -47,8 +47,8 @@ Column {
         anchors {
             left: parent.left
             right: parent.right
-            leftMargin: -deviceField.sizes.focusBorderWidth
-            rightMargin: -deviceField.sizes.focusBorderWidth
+            leftMargin: Constants.focusAdjustment
+            rightMargin: Constants.focusAdjustment
         }
         colors.text: colorStyle.textPlaceholder
         title: BackupsStrings.backupTo
