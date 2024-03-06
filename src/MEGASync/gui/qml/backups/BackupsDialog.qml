@@ -60,11 +60,9 @@ BackupsQmlDialog {
             StackViewBase {
                 id: stackView
 
-                readonly property int contentMargin: 36
-
                 anchors {
                     fill: parent
-                    margins: stackView.contentMargin
+                    margins: Constants.defaultWindowMargin
                 }
 
                 Component {

@@ -23,8 +23,6 @@ Rectangle {
     readonly property string resume: "resume"
 
     readonly property int stepPanelWidth: 304
-    readonly property int contentMargin: 48
-    readonly property int contentHeight: 464
     readonly property int lineWidth: 2
 
     property NavigationInfo navInfo: NavigationInfo {}
@@ -133,9 +131,7 @@ Rectangle {
 
             anchors {
                 fill: parent
-                topMargin: contentMargin
-                bottomMargin: contentMargin
-                leftMargin: contentMargin
+                margins: Constants.defaultWindowMargin
             }
         }
 
@@ -145,10 +141,11 @@ Rectangle {
             anchors {
                 right: leftPanel.right
                 top: parent.top
-                topMargin: contentMargin
+                bottom: parent.bottom
+                topMargin: Constants.defaultWindowMargin
+                bottomMargin: Constants.defaultWindowMargin
             }
             width: lineWidth
-            height: contentHeight
             radius: lineWidth
             color: colorStyle.borderDisabled
         }
@@ -162,7 +159,7 @@ Rectangle {
             right: parent.right
             top: parent.top
             bottom: parent.bottom
-            margins: contentMargin
+            margins: Constants.defaultWindowMargin
         }
 
         onCurrentItemChanged: {

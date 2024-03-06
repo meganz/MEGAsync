@@ -16,7 +16,6 @@ Rectangle {
     readonly property string stepCurrentDone: "stepCurrentDone"
     readonly property string stepAllDone: "stepAllDone"
 
-    readonly property int contentMargin: 36
     readonly property int contentSpacing: 8
     readonly property int lineWidth: 127
     readonly property int lineHeight: 2
@@ -67,7 +66,7 @@ Rectangle {
 
         anchors {
             fill: parent
-            margins: root.contentMargin
+            margins: Constants.defaultWindowMargin
         }
 
         RowLayout {

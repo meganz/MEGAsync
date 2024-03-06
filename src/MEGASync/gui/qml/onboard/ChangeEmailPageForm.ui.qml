@@ -10,8 +10,6 @@ import components.textFields 1.0
 StackViewPage {
     id: root
 
-    readonly property int buttonsLayoutSpacing: 2
-
     property alias emailTextField: emailTextField
     property alias cancelButton: cancelButton
     property alias resendButton: resendButton
@@ -58,9 +56,9 @@ StackViewPage {
             right: root.right
             bottom: root.bottom
             rightMargin: -resendButton.sizes.focusBorderWidth
-            bottomMargin: buttonsBottomMargin
+            bottomMargin: Constants.defaultWindowMargin - resendButton.sizes.focusBorderWidth
         }
-        spacing: buttonsLayoutSpacing
+        spacing: 0
 
         OutlineButton {
             id: cancelButton

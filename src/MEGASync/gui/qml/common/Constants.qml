@@ -13,4 +13,6 @@ QtObject {
 
     readonly property string mega: "MEGA"
 
+    readonly property int defaultWindowMargin: 36
+
 }
