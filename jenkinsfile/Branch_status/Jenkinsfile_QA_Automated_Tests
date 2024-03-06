@@ -22,7 +22,8 @@ pipeline {
                             booleanParam(name: 'IS_RELEASE_CANDIDATE', value: true),
                             string(name: 'RELEASE_CANDIDATE_NAME', value: 'QA-automated-tests'),
                             booleanParam(name: 'ARM64', value: true),
-                            booleanParam(name: 'X86_64', value: true)
+                            booleanParam(name: 'X86_64', value: true),
+                            string(name: 'SDK_BRANCH', value: "develop")
                         ]
                     }
                 }               
