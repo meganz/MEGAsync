@@ -117,7 +117,7 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
 
     if (g_hInst)
     {
-        hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+        hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 1024, 1024, LR_DEFAULTCOLOR);
         if (hIcon)
         {
             m_hMenuBmp = legacyIcon ? getBitmapLegacy(hIcon) : getBitmap(hIcon);
@@ -984,7 +984,7 @@ IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, 
 
         if (!hIcon)
         {
-            hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+            hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 1024, 1024, LR_DEFAULTCOLOR);
             if (!hIcon)
             {
                 return E_FAIL;
