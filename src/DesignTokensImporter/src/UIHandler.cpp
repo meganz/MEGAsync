@@ -1,6 +1,8 @@
-#include "UIClass.h"
+#include "UIHandler.h"
 #include "StylesheetParser.h"
-#include "StyleDefinitions.h"
+#include "utilities.h"
+#include "Types.h"
+#include "PathProvider.h"
 
 #include <QDebug>
 #include <QFile>
@@ -11,40 +13,37 @@
 
 namespace DTI
 {
-    static const QString UI_TOKEN_IDENTIFIER = QString::fromLatin1("/*token_");
-    static const QString UI_EXTENSION = QString::fromLatin1(".ui");
-
-    UIClass::UIClass(const QString& filePath) :
+    UIHandler::UIHandler(const QString& filePath) :
         mFilePath(filePath)
     {
         mStyleSheetInfo = parseUiFile(filePath);
     }
 
-    bool UIClass::containsTokens() const
+    bool UIHandler::containsTokens() const
     {
         return (!mStyleSheetInfo.isEmpty());
     }
 
-    QString UIClass::getFilePath() const
+    QString UIHandler::getFilePath() const
     {
         return mFilePath;
     }
 
-    QVector<UIClass::WidgetStyleInfo> UIClass::parseUiFile(const QString& filePath)
+    QVector<UIHandler::WidgetStyleInfo> UIHandler::parseUiFile(const QString& filePath)
     {
         QVector<WidgetStyleInfo> widgetInfoList;
 
         // Check if the file has a ".ui" extension
-        if (!filePath.endsWith(UI_EXTENSION, Qt::CaseInsensitive))
+        if (!filePath.endsWith(PathProvider::UI_FILE_EXTENSION, Qt::CaseInsensitive))
         {
-            qDebug() << "UIClass::parseUiFile - ERROR! File does not have a '" << UI_EXTENSION <<"' extension:" << filePath;
+            qDebug() << "UIHandler::parseUiFile - ERROR! File does not have a '" << PathProvider::UI_FILE_EXTENSION <<"' extension:" << filePath;
             return widgetInfoList;
         }
 
         QFile file(filePath);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
-            qDebug() << "UIClass::parseUiFile - ERROR! Failed to open file for reading:" << filePath;
+            qDebug() << "UIHandler::parseUiFile - ERROR! Failed to open file for reading:" << filePath;
             return widgetInfoList;
         }
 
@@ -101,29 +100,35 @@ namespace DTI
         return widgetInfoList;
     }
 
-    void UIClass::updateCurrentWidgetInfo(WidgetStyleInfo& currentWidgetInfo, const StylesheetParser& parser)
+    void UIHandler::updateCurrentWidgetInfo(WidgetStyleInfo& currentWidgetInfo, const StylesheetParser& parser)
     {
         auto tokenStyles = parser.tokenStyles();
-        for (auto it = tokenStyles.constBegin(); it != tokenStyles.constEnd(); ++it)
+        if (tokenStyles)
         {
-            Style tokenStyle;
-            tokenStyle.cssSelectors = it.key();
-            tokenStyle.properties = it.value();
-            currentWidgetInfo.tokenStyles.append(tokenStyle);
+            for (auto it = tokenStyles->constBegin(); it != tokenStyles->constEnd(); ++it)
+            {
+                Style tokenStyle;
+                tokenStyle.cssSelectors = it.key();
+                tokenStyle.properties = it.value();
+                currentWidgetInfo.tokenStyles.append(tokenStyle);
+            }
         }
 
-        auto imageStyle = parser.getImageStyles();
-        for (auto it = imageStyle.constBegin(); it != imageStyle.constEnd(); ++it)
+        auto imageStyles = parser.getImageStyles();
+        if (imageStyles)
         {
-            ButtonStyle buttonStyle;
-            buttonStyle.cssSelectors = it->cssSelector;
-            buttonStyle.properties = it->styleMap;
+            for (auto it = imageStyles->constBegin(); it != imageStyles->constEnd(); ++it)
+            {
+                ButtonStyle buttonStyle;
+                buttonStyle.cssSelectors = it->cssSelector;
+                buttonStyle.properties = it->styleMap;
 
-            currentWidgetInfo.imageStyles.append(qMakePair(it->key, buttonStyle));
+                currentWidgetInfo.imageStyles.append(qMakePair(it->key, buttonStyle));
+            }
         }
     }
 
-    QString UIClass::createStyleBlock(const QString& cssSelectors, const QString& objectName, const QMap<QString, QString>& properties)
+    QString UIHandler::createStyleBlock(const QString& cssSelectors, const QString& objectName, const QMap<QString, QString>& properties)
     {
         QString styleBlock;
         QTextStream stream(&styleBlock);
@@ -139,7 +144,7 @@ namespace DTI
         return styleBlock;
     }
 
-    QString UIClass::determinePseudoClass(const QString& state)
+    QString UIHandler::determinePseudoClass(const QString& state)
     {
         if (state.contains("Pressed", Qt::CaseInsensitive))
         {
@@ -152,7 +157,7 @@ namespace DTI
         return "";
     }
 
-    QString UIClass::getStyleSheet(const QMap<QString, QString>& colourMap,  const QString& themeDirectoryName)
+    QString UIHandler::getStyleSheet(const QMap<QString, QString>& colourMap,  const QString& themeDirectoryName)
     {
         auto deepCopyStyleSheetInfo = [](const QVector<WidgetStyleInfo>& source) {
             QVector<WidgetStyleInfo> result;

@@ -2,7 +2,7 @@
 #define SVGICON_H
 
 #include "SVGRenderer.h"
-#include "StyleDefinitions.h"
+#include "Types.h"
 #include "utilities.h"
 
 #include <QMap>
@@ -56,7 +56,7 @@ public:
 
     bool generateSVGImageBasedOnState();
 
-    const ImageThemeStyleInfo& getImageStyle() const;
+    const ImageThemeStyleData& getImageStyle() const;
 
 private:
 
@@ -76,12 +76,12 @@ private:
     QString constructImageName(const QString& stateAsString);
     QString getImageDirectoryName();
     void addButtonStyle(const ButtonStyle& buttonStyle);
-    const ImageThemeStyleInfo& getButtonStyles() const;
+    const ImageThemeStyleData& getButtonStyles() const;
 
     SvgIconInfo mSvgIconInfo;
     const QString mUiFilename;
     SVGRenderer mSVGRenderer;
-    ImageThemeStyleInfo mButtonStyles;
+    ImageThemeStyleData mButtonStyles;
 };
 } // namespace DTI
 

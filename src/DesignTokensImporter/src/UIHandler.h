@@ -1,15 +1,17 @@
 #ifndef UICLASS_H
 #define UICLASS_H
 
-#include "utilities.h"
+#include <QStringList>
+#include <QString>
+#include <QMap>
 
 namespace DTI
 {
 class StylesheetParser;
-class UIClass
+class UIHandler
 {
 public:
-    UIClass(const QString& filePath);
+    UIHandler(const QString& filePath);
 
     bool containsTokens() const;
     QString getFilePath() const;

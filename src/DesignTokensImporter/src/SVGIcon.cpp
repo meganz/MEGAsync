@@ -87,7 +87,7 @@ bool SVGIcon::generateSVGImageBasedOnState()
     return ret;
 }
 
-const ImageThemeStyleInfo& SVGIcon::getImageStyle() const
+const ImageThemeStyleData& SVGIcon::getImageStyle() const
 {
     return getButtonStyles();
 }
@@ -98,7 +98,8 @@ bool SVGIcon::createAndSaveSVGImage(const ButtonStyle& buttonStyle, Utilities::T
     const QString separator = QDir::separator();
     const QString themePath = Utilities::themeToString(theme);
 
-    const QString fullPath = basePath % separator % getImageDirectoryName() % separator % themePath;
+    const QString preNativePath   = basePath % separator % getImageDirectoryName() % separator % themePath;
+    const QString fullPath  = QDir::fromNativeSeparators(preNativePath);
 
     // Create directory if it doesn't exist
     if (!Utilities::createDirectory(fullPath))
@@ -395,7 +396,7 @@ void SVGIcon::addButtonStyle(const ButtonStyle& buttonStyle)
     mButtonStyles.insert(key, stateStyleMap);
 }
 
-const ImageThemeStyleInfo& SVGIcon::getButtonStyles() const
+const ImageThemeStyleData& SVGIcon::getButtonStyles() const
 {
     return mButtonStyles;
 }

@@ -1,10 +1,13 @@
 #ifndef STYLESHEETPARSER_H
 #define STYLESHEETPARSER_H
 
-#include "StyleDefinitions.h"
+#include "Types.h"
+#include "IQTWIDGETStyleTarget.h"
 
 #include <QMap>
 #include <QString>
+
+#include <memory>
 
 namespace DTI
 {
@@ -12,18 +15,9 @@ class StylesheetParser
 {
 public:
 
-    struct ImageThemeStyleInfo
-    {
-        QString key;
-        QString cssSelector;
-        ButtonStateStyleMap styleMap;
-    };
-
     StylesheetParser(const QString& styleSheet, const QString& uiFilePath);
-
-    const QMultiMap<QString, PropertiesMap>& tokenStyles() const;
-
-    const QVector<ImageThemeStyleInfo>& getImageStyles() const;
+    const std::shared_ptr<QMultiMap<QString, PropertiesMap>> tokenStyles() const;
+    std::shared_ptr<QVector<ImageThemeStyleInfo>> getImageStyles() const;
 
 private:
 
@@ -53,13 +47,14 @@ private:
 
     void processStyleSheet();
     bool parseCurrentStyleBlock(CurrentStyleBlock& currentStyleSheetLine);
-    void processCurrentStyleBlockForTokens(const CurrentStyleBlock& currentBlock);
-    void processCurrentStyleBlockForSVGIcons(const CurrentStyleBlock& currentBlock);
+    void processStyleTokens(const CurrentStyleBlock& currentBlock, Targets style);
+    std::shared_ptr<IQTWIDGETStyleTarget> getStyleTarget(const QString& styleTargetId) const;
 
     const QString& mStyleSheet;
     const QString& mUiFilePath;
     QMultiMap<QString, PropertiesMap> mTokenStyles;
     QVector<ImageThemeStyleInfo>  mImageStyles;
+    QMap<QString,  std::shared_ptr<IQTWIDGETStyleTarget>> styleTargetMap;
 };
 }
 #endif // STYLESHEETPARSER_H

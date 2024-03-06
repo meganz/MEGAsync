@@ -16,13 +16,14 @@ set(SOURCES ${SOURCES}
     main.cpp
     utilities.cpp utilities.h
     TokenManager.h TokenManager.cpp
-    UIClass.h UIClass.cpp
+    UIHandler.h UIHandler.cpp
     SVGIcon.h SVGIcon.cpp
     SVGRenderer.h SVGRenderer.cpp
     PathProvider.h PathProvider.cpp
     Resources.qrc
     StylesheetParser.h StylesheetParser.cpp
-    StyleDefinitions.h
+    IStyleGenerator.h
+    Types.h
 )
 
 set(INCLUDE_DIRECTORIES ${INCLUDE_DIRECTORIES}
@@ -30,6 +31,7 @@ set(INCLUDE_DIRECTORIES ${INCLUDE_DIRECTORIES}
 )
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/qml)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/qtwidget)
 
 include_directories(${INCLUDE_DIRECTORIES})
 

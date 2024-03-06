@@ -1,7 +1,8 @@
+#include "TokenManager.h"
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
-#include "TokenManager.h"
 
 static const QString RELATIVE_MEGASYNC_PATH = QString::fromLatin1("../../MEGASync");
 

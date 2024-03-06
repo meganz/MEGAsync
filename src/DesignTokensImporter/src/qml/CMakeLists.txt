@@ -7,7 +7,6 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/targets)
 set(SOURCES ${SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/QMLStyleGenerator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/QMLStyleGenerator.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/IQMLStyleGenerator.h
 
     PARENT_SCOPE
 )

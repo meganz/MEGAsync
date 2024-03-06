@@ -1,6 +1,8 @@
 #include "StylesheetParser.h"
+#include "QTWIDGETColorStyleTarget.h"
+#include "QTWIDGETStyleTargetFactory.h"
+#include "QTWIDGETImageStyleTarget.h"
 #include "utilities.h"
-#include "SVGIcon.h"
 
 #include <QStringList>
 
@@ -27,12 +29,12 @@ void StylesheetParser::processStyleSheet()
         {
             if(currentBlock.hasTokens)
             {
-                processCurrentStyleBlockForTokens(currentBlock);
+                processStyleTokens(currentBlock, Targets::ColorStyle);
             }
 
             if (currentBlock.hasSvgIcon)
             {
-                processCurrentStyleBlockForSVGIcons(currentBlock);
+                processStyleTokens(currentBlock, Targets::ImageStyle);
             }
 
             currentBlock.clear();
@@ -93,76 +95,71 @@ bool StylesheetParser::parseCurrentStyleBlock(CurrentStyleBlock& currentBlock)
     return false;
 }
 
-void StylesheetParser::processCurrentStyleBlockForTokens(const CurrentStyleBlock& currentBlock)
+void StylesheetParser::processStyleTokens(const CurrentStyleBlock& currentBlock, Targets style)
 {
-    QStringList styleSheetLines = currentBlock.content.split(QChar('\n'), Qt::SkipEmptyParts);
+    IQTWIDGETStyleTarget::CurrentStyleBlockInfo currentBlockInfo;
+    currentBlockInfo.content = currentBlock.content;
+    currentBlockInfo.selector = currentBlock.selector;
+    currentBlockInfo.filePath = mUiFilePath;
 
-    PropertiesMap tokenProperties;
-    for (const QString& styleSheetLine : styleSheetLines)
+    auto targetString = Utilities::targetToString(style);
+    std::shared_ptr<IQTWIDGETStyleTarget> qtwidgetTargetStyle;
+
+    auto it = styleTargetMap.find(targetString);
+    if (it != styleTargetMap.end())
     {
-        if (styleSheetLine.contains(UI_TOKEN_IDENTIFIER))
+        qtwidgetTargetStyle = it.value();
+    }
+    else
+    {
+        qtwidgetTargetStyle = getStyleTarget(targetString);
+        if (qtwidgetTargetStyle)
         {
-            // Found a line in format: "/*token_background-color: {{surface-1}};*/"
-            QString key = Utilities::getSubStringBetweenMarkers(styleSheetLine, UI_TOKEN_IDENTIFIER, ":");
-            QString value = Utilities::getSubStringBetweenMarkers(styleSheetLine, "{{", "}}");
-
-            // Skip lines with empty keys or values
-            if (!key.isEmpty() && !value.isEmpty())
-            {
-                tokenProperties.insert(key,value);
-            }
+            styleTargetMap.insert(targetString, qtwidgetTargetStyle);
         }
     }
 
-    mTokenStyles.insert(currentBlock.selector, tokenProperties);
+    if(qtwidgetTargetStyle)
+    {
+        qtwidgetTargetStyle->process(currentBlockInfo);
+    }
 }
 
-void StylesheetParser::processCurrentStyleBlockForSVGIcons(const CurrentStyleBlock& currentBlock)
+std::shared_ptr<IQTWIDGETStyleTarget> StylesheetParser::getStyleTarget(const QString &styleTargetId) const
 {
-    QString uiFileName = Utilities::extractFileNameNoExtension(mUiFilePath);
+    return std::shared_ptr<IQTWIDGETStyleTarget>(QTWIDGETStyleTargetFactory::getQTWIDGETStyleTarget(styleTargetId));
+}
 
-    SVGIcon svgIcon(uiFileName);
-
-    bool isProcessCurrentStyleSheetBlockSuccess = svgIcon.processStylesheet(currentBlock.content);
-    if(!isProcessCurrentStyleSheetBlockSuccess)
+std::shared_ptr<QVector<ImageThemeStyleInfo>> StylesheetParser::getImageStyles() const
+{
+    auto retMap = std::make_shared<QVector<ImageThemeStyleInfo>>();
+    auto it = styleTargetMap.find(Utilities::targetToString(Targets::ImageStyle));
+    if (it != styleTargetMap.end())
     {
-        return;
-    }
-
-
-    bool isGenerateSvgImagSuccess = svgIcon.generateSVGImageBasedOnState();
-    if(!isGenerateSvgImagSuccess)
-    {
-        return;
-    }
-
-    const auto& imageStyleInfo = svgIcon.getImageStyle();
-    for (auto it = imageStyleInfo.constBegin(); it != imageStyleInfo.constEnd(); ++it)
-    {
-        const QString& key = it.key();
-        const ButtonStateStyleMap& styleMap = it.value();
-
-        if (!key.isEmpty() && !styleMap.isEmpty())
+        auto& qtwidgetTargetStyle = it.value();
+        auto imageStyleTarget = dynamic_cast<QTWIDGETImageStyleTarget*>(qtwidgetTargetStyle.get());
+        if (imageStyleTarget)
         {
-            ImageThemeStyleInfo imageStyle;
-            imageStyle.key = key;
-            imageStyle.styleMap = styleMap;
-            imageStyle.cssSelector = currentBlock.selector;
-
-            mImageStyles.append(imageStyle);
+            *retMap = imageStyleTarget->getImageStyles();
         }
     }
+    return retMap;
 }
 
-const QVector<StylesheetParser::ImageThemeStyleInfo>& StylesheetParser::getImageStyles() const
+const std::shared_ptr<QMultiMap<QString, PropertiesMap>> StylesheetParser::tokenStyles() const
 {
-    return mImageStyles;
-}
+    auto retMap = std::make_shared< QMultiMap<QString, PropertiesMap>>();
+    auto it = styleTargetMap.find(Utilities::targetToString(Targets::ColorStyle));
+    if (it != styleTargetMap.end())
+    {
+        auto& qtwidgetTargetStyle = it.value();
+        auto colorStyleTarget = dynamic_cast<QTWIDGETColorStyleTarget*>(qtwidgetTargetStyle.get());
+        if (colorStyleTarget)
+        {
+            *retMap = colorStyleTarget->getTokenStyles();
+        }
+    }
 
-const QMultiMap<QString, PropertiesMap>& StylesheetParser::tokenStyles() const
-{
-    return mTokenStyles;
+    return retMap;
 }
-
 }
-

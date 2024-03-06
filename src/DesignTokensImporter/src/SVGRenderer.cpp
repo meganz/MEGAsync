@@ -22,7 +22,6 @@ QPixmap SVGRenderer::getPixmapImage(const QString& name, const QSize& size, cons
     if(checkImageCache(name))
     {
         QByteArray data = colourSVG(mImages[name], color);
-        qDebug()<< "data:" << data;
         return renderSVGPixmap(data, size);
     }
     return QPixmap();
@@ -33,7 +32,6 @@ QPixmap SVGRenderer::getPixmapImage(const QString& name, const QSize& size, cons
     if(checkImageCache(name))
     {
         QByteArray data = colourSVG(mImages[name], colors);
-        qDebug()<< "Gradient Data:" << data;
         return renderSVGPixmap(data, size);
     }
     return QPixmap();
@@ -44,7 +42,6 @@ QString SVGRenderer::getSVGImageData(const QString &name, const QSize &size, con
     if(checkImageCache(name))
     {
         QByteArray data = colourSVG(mImages[name], color);
-        qDebug()<< "data:" << data;
         return renderSVGData(data, size);
     }
     return QString();
@@ -55,7 +52,6 @@ QString SVGRenderer::getSVGImageData(const QString& name, const QSize& size, con
     if(checkImageCache(name))
     {
         QByteArray data = colourSVG(mImages[name], colors);
-        qDebug()<< "Gradient Data:" << data;
         return renderSVGData(data, size);
     }
     return QString();
