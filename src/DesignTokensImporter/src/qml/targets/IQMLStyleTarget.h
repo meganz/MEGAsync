@@ -1,7 +1,7 @@
 #ifndef IQML_STYLE_TARGET_H
 #define IQML_STYLE_TARGET_H
 
-#include "StyleDefinitions.h"
+#include "Types.h"
 
 #include <QString>
 

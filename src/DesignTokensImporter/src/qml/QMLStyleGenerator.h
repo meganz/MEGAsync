@@ -1,14 +1,14 @@
 #ifndef QML_STYLE_GENERATOR_H
 #define QML_STYLE_GENERATOR_H
 
-#include "IQMLStyleGenerator.h"
-#include "StyleDefinitions.h"
+#include "IStyleGenerator.h"
+#include "Types.h"
 
 #include <QObject>
 
 namespace DTI
 {
-    class QmlStyleGenerator : public QObject, public IQMLStyleGenerator
+    class QmlStyleGenerator : public QObject, public IStyleGenerator
     {
         Q_OBJECT
 
