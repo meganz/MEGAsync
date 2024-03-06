@@ -100,7 +100,6 @@ StackViewPage {
         anchors.leftMargin: -sizes.horizontalAlignWidth
         anchors.topMargin: contentSpacing - sizes.verticalAlignWidth
         text: OnboardingStrings.forgotPassword
-        url: Links.recovery
         icons {
             source: Images.helpCircle
             position: Icon.Position.LEFT

@@ -118,12 +118,11 @@ Rectangle {
         }
     ]
 
-    Rectangle {
+    Item {
         id: leftPanel
 
         width: stepPanelWidth
         height: parent.height
-        color: colorStyle.surface1
         z: 2
 
         StepPanel {
