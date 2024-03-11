@@ -66,7 +66,8 @@ CVE-2023-38197-qtbase-5.15.diff \
 CVE-2023-4863-5.15.patch \
 CVE-2023-43114-5.15.patch \
 0001-CVE-2023-51714-qtbase-5.15.diff \
-0002-CVE-2023-51714-qtbase-5.15.diff
+0002-CVE-2023-51714-qtbase-5.15.diff \
+CVE-2024-25580-qtbase-5.15.diff
 do
   if [ ! -f patches/$p ]; then
     wget https://download.qt.io/official_releases/qt/5.15/$p -O patches/$p
@@ -87,7 +88,8 @@ if ! echo 7426b1eaab52ed169ce53804bdd05dfe364f761468f888a0f15a308dc1dc2951 src.t
 || ! echo 39f3e17514063de568b91e3265f6ef8212600cca777e38b9324dd9d1bdec616d patches/CVE-2023-4863-5.15.patch | sha256sum -c - \
 || ! echo 14cc26aa465ec9a5cac6f6b4c91b2f802b12a8134a6ab897a45449c418ca98c1 patches/CVE-2023-43114-5.15.patch | sha256sum -c - \
 || ! echo 2129058a5e24d98ee80a776c49a58c2671e06c338dffa7fc0154e82eef96c9d4 patches/0001-CVE-2023-51714-qtbase-5.15.diff | sha256sum -c - \
-|| ! echo 99d5d32527e767d6ab081ee090d92e0b11f27702619a4af8966b711db4f23e42 patches/0002-CVE-2023-51714-qtbase-5.15.diff | sha256sum -c -
+|| ! echo 99d5d32527e767d6ab081ee090d92e0b11f27702619a4af8966b711db4f23e42 patches/0002-CVE-2023-51714-qtbase-5.15.diff | sha256sum -c - \
+|| ! echo 7cc9bf74f696de8ec5386bb80ce7a2fed5aa3870ac0e2c7db4628621c5c1a731 patches/CVE-2024-25580-qtbase-5.15.diff | sha256sum -c -
 
 then
 exit 1
@@ -108,7 +110,8 @@ CVE-2023-37369-qtbase-5.15.diff \
 CVE-2023-38197-qtbase-5.15.diff \
 CVE-2023-43114-5.15.patch \
 0001-CVE-2023-51714-qtbase-5.15.diff \
-0002-CVE-2023-51714-qtbase-5.15.diff
+0002-CVE-2023-51714-qtbase-5.15.diff \
+CVE-2024-25580-qtbase-5.15.diff
 do
   if ! patch -f --verbose -p1 -d src/qtbase < patches/$p ; then
     exit 1
