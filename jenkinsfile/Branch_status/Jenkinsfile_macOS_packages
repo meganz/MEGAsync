@@ -104,6 +104,7 @@ pipeline {
                         script: '''awk -F'"' '/VER_PRODUCTVERSION_STR/ {split(\$2, a, "."); print a[1]"."a[2]"."a[3]}' src/MEGASync/control/Version.h''',
                         returnStdout: true 
                         ).trim()
+                        sh "echo $MEGASYNC_VERSION > version.txt"
                         if (params.ARM64 == true){
                             sh "jf rt del MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64"
                             sh "cd Release_arm64 && zip -r MEGAsync.app.dSYM.zip MEGAsync.app.dSYM && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64/"                       
@@ -113,6 +114,7 @@ pipeline {
                             sh "cd Release_x86_64 && zip -r MEGAsync.app.dSYM.zip MEGAsync.app.dSYM && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64/"
                         } 
                     }
+                    archiveArtifacts artifacts: 'version.txt', onlyIfSuccessful: true
                 }
             }
             post {
