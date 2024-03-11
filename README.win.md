@@ -66,7 +66,7 @@ https://www.qt.io/download-qt-installer
 You will have to create an account, even if you only install the Community
 Editions.
 
-We are currently using Qt 5.15.12, for which the Qt Company does not provide pre-built
+We are currently using Qt 5.15.13, for which the Qt Company does not provide pre-built
 binaries. You can build Qt using:
 ```
 $ cd contrib\build_qt\windows
@@ -100,7 +100,7 @@ proceed to build those, the SDK and MEGA Desktop in that order, via CMake.
 
 ```
 $ cd c:\mega\desktop\contrib\cmake
-$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=C:\Qt\5.15.12\x64" -DEXTRA_ARGS="-DQT_DIR=C:\Qt\5.15.12\x64" -DTARGET=MEGAsync -DTRIPLET=x64-windows-mega -P build_from_scratch.cmake
+$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=C:\Qt\5.15.13\x64" -DEXTRA_ARGS="-DQT_DIR=C:\Qt\5.15.13\x64" -DTARGET=MEGAsync -DTRIPLET=x64-windows-mega -P build_from_scratch.cmake
 ```
 
 To change the target (to x86 for e.g.), choose another triplet name from:
@@ -120,7 +120,7 @@ in both IDE's should be fine too.
 If needed, add the Qt version you built.
 
 Open `desktop\src\MEGAsync\MEGAsync.pro` in Qt Creator.
-Set it up as any other Qt QMake based project, using the Qt 5.15.12 kit you built/installed
+Set it up as any other Qt QMake based project, using the Qt 5.15.13 kit you built/installed
 and set matching target architecture. 
 
 Some recommended options:
@@ -146,6 +146,6 @@ go to Tools -> External -> Linguist and click on Release Translations action.
 You can achieve the same, from the command-line:
 ```
 $ cd c:\mega\desktop\src
-$ c:\Qt\5.15.12\x64\bin\lrelease.exe MEGASync/MEGASync.pro
+$ c:\Qt\5.15.13\x64\bin\lrelease.exe MEGASync/MEGASync.pro
 ```
 
