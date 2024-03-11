@@ -33,7 +33,7 @@ pipeline {
         stage('Get MEGAsync version') {
             steps {
                 script {
-                    copyArtifacts(projectName: 'MEGASync-winx64-Packages/SNC-4337-Create-MEGAsync-Automated-tests-pipeline', selector: specific("${env.WINDOWS_BUILD_ID}"), filter: 'version.txt', target: 'version-info', flatten: true)
+                    copyArtifacts(projectName: 'MEGASync-winx64-Packages/develop', selector: specific("${env.WINDOWS_BUILD_ID}"), filter: 'version.txt', target: 'version-info', flatten: true)
                     env.MEGASYNC_VERSION = readFile('version-info/version.txt').trim()
                     echo "MEGAsync Version: ${env.MEGASYNC_VERSION}"
                 }
