@@ -3287,11 +3287,6 @@ https://mega.co.nz/#sync</source>
         <translation>Your config is corrupted, please start over</translation>
     </message>
     <message>
-        <source>Over quota</source>
-        <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation>Over quota</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>Error getting link information</translation>
@@ -3559,6 +3554,14 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
         <translation>Pro&#xa0;Flexi account deactivated</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translation type="unfinished">Storage full</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
 </context>
 <context>
@@ -8154,6 +8157,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
         <translation>Transfer quota exceeded</translation>
+    </message>
+    <message>
+        <source>Destination storage is full.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
