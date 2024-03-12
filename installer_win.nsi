@@ -64,7 +64,7 @@ VIAddVersionKey "ProductName" "MEGAsync"
 
 !define VcRedistBasePath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133"
 !define VcRedist32BasePath "${VcRedistBasePath}\x86"
-!define VcRedist32Path "${VcRedistBase32Path}\Microsoft.VC142.CRT"
+!define VcRedist32Path "${VcRedist32BasePath}\Microsoft.VC142.CRT"
 !define VcRedist64BasePath "${VcRedistBasePath}\x64"
 !define VcRedist64Path "${VcRedist64BasePath}\Microsoft.VC142.CRT"
 
@@ -587,7 +587,7 @@ modeselected:
     !insertmacro Install3264DLL "${VcRedist32Path}\msvcp140_codecvt_ids.dll" "$INSTDIR\msvcp140_codecvt_ids.dll"
     !insertmacro Install3264DLL "${VcRedist32Path}\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "${VcRedist32Path}\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
-    !insertmacro Install3264DLL "${VcRedistBase32Path}\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
+    !insertmacro Install3264DLL "${VcRedist32BasePath}\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
