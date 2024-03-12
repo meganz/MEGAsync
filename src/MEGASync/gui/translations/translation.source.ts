@@ -3557,10 +3557,12 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Storage full</source>
+        <translatorcomment>Label to indicate the full storage for the current account is full. CON-561</translatorcomment>
         <translation type="unfinished">Storage full</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that the current account transfer quota has been exceeded. CON-561</translatorcomment>
         <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
 </context>
@@ -3838,8 +3840,8 @@ You will not be able to regain access to your stored data or be authorised to re
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
-        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>The sync folder owner’s account has exceeded their storage quota.</translation>
+        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation. CON-561</translatorcomment>
+        <translation>Folder can’t be synced as the user who shared this folder has reached their storage quota.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -8160,7 +8162,8 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Destination storage is full.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
+        <translation type="unfinished">Destination storage is full.</translation>
     </message>
 </context>
 <context>
