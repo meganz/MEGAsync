@@ -46,7 +46,7 @@ const unsigned long long TB = 1024 * GB;
 
 // Human-friendly list of forbidden chars for New Remote Folder
 const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");
-// Forbidden chars inside a capture list: [\\/:"\*<>?|]
+// Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
 const QRegularExpression Utilities::FORBIDDEN_CHARS_RX(QLatin1String("[\\\\/:\"*<>\?|]"));
 
 void Utilities::initializeExtensions()

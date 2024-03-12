@@ -42,7 +42,7 @@ cd ..
 mkdir build-x64
 cd build-x64
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64
-call ..\Src\configure -nomake examples -nomake tests -opensource -schannel -confirm-license -prefix %MEGA_WORK_DIR%\x64 -force-debug-info -separate-debug-info -qt-zlib -no-jasper -qt-libjpeg -qt-libpng -qt-freetype -qt-harfbuzz
+call ..\Src\configure -nomake examples -nomake tests -opensource -schannel -confirm-license -prefix %MEGA_WORK_DIR%\x64 -force-debug-info -separate-debug-info -qt-zlib -no-jasper -qt-libjpeg -qt-libpng -qt-freetype -qt-pcre -qt-harfbuzz
 call jom
 call jom install
 
