@@ -185,8 +185,17 @@ QString TransferBaseDelegateWidget::getErrorInContext()
         }
     }
 
-    return QCoreApplication::translate("MegaError",
-                                       mega::MegaError::getErrorString(getData()->mErrorCode, context));
+    // SNC-4190/CON-556
+    const char* errorStr = mega::MegaError::getErrorString(getData()->mErrorCode, context);
+    const char* BUSINESS_ACCOUNT_EXPIRED_STR = "Business account has expired";
+
+    if (strcmp(errorStr, BUSINESS_ACCOUNT_EXPIRED_STR) == 0)
+    {
+        // Change "Business account" to a more generic string, to also cover Pro-Flexi accounts
+        return QCoreApplication::translate("MegaError", "Your account has expired");
+    }
+
+    return QCoreApplication::translate("MegaError", errorStr);
 }
 
 void TransferBaseDelegateWidget::onTransferRemoved(const QModelIndex &parent, int first, int last)
