@@ -826,13 +826,11 @@ void MegaApplication::updateTrayIcon()
     #endif
         };
 
-    const bool isOverQuotaOrPaywall{appliedStorageState == MegaApi::STORAGE_STATE_RED ||
-                mTransferQuota->isOverQuota() ||
-                appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL};
-    if (isOverQuotaOrPaywall)
+    const bool isStorageOverQuotaOrPaywall = appliedStorageState == MegaApi::STORAGE_STATE_RED
+                                                || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
+    if (isStorageOverQuotaOrPaywall || mTransferQuota->isOverQuota())
     {
-        tooltipState = tr("Over quota");
-
+        tooltipState = isStorageOverQuotaOrPaywall ? tr("Storage full") : tr("Transfer quota exceeded");
         icon = icons["warning"];
 
 #ifdef __APPLE__
