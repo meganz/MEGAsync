@@ -395,7 +395,7 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
         }
     }
 
-    if(watched == mUi->lElapsedTime && getData()->mErrorCode < 0 && (event->type() == QEvent::Resize || event->type() == QEvent::Paint))
+    if(getData() && watched == mUi->lElapsedTime && getData()->mErrorCode < 0 && (event->type() == QEvent::Resize || event->type() == QEvent::Paint))
     {
         int leftMargin;
         int rightMargin;
