@@ -169,7 +169,7 @@ int TransferBaseDelegateWidget::getNameAvailableSize(QWidget *nameContainer, QWi
 
 QString TransferBaseDelegateWidget::getErrorText()
 {
-    return (getData() && getData()->mFailedTransfer->isForeignOverquota())
+    return (getData() && getData()->mFailedTransfer && getData()->mFailedTransfer->isForeignOverquota())
                 ? tr("Destination storage is full.")
                 : getErrorInContext();
 }
