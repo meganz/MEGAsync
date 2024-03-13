@@ -195,19 +195,19 @@ QString InfoDialogTransferDelegateWidget::getTransferName()
     return mUi->lFileName->text();
 }
 
-void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int errorCode)
+void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, bool error)
 {
     QIcon iconCompleted;
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/transfer_manager/transfers_states/download_fail_item_ico.png")
-                                                                  : QString::fromLatin1(":/images/transfer_manager/transfers_states/downloaded_item_ico.png"));
+        iconCompleted = Utilities::getCachedPixmap(error ? QString::fromLatin1(":/images/transfer_manager/transfers_states/download_fail_item_ico.png")
+                                                         : QString::fromLatin1(":/images/transfer_manager/transfers_states/downloaded_item_ico.png"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_fail_item_ico.png")
-                                                                  : QString::fromLatin1(":/images/transfer_manager/transfers_states/uploaded_item_ico.png"));
+        iconCompleted = Utilities::getCachedPixmap(error ? QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_fail_item_ico.png")
+                                                         : QString::fromLatin1(":/images/transfer_manager/transfers_states/uploaded_item_ico.png"));
     }
 
     mUi->lTransferTypeCompleted->setPixmap(iconCompleted.pixmap(mUi->lTransferTypeCompleted->size()));
