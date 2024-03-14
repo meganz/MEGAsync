@@ -3287,11 +3287,6 @@ https://mega.co.nz/#sync</source>
         <translation>Your config is corrupted, please start over</translation>
     </message>
     <message>
-        <source>Over quota</source>
-        <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation>Over quota</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>Error getting link information</translation>
@@ -3559,6 +3554,16 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
         <translation>Pro&#xa0;Flexi account deactivated</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Label to indicate the full storage for the current account is full. CON-561</translatorcomment>
+        <translation type="unfinished">Storage full</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that the current account transfer quota has been exceeded. CON-561</translatorcomment>
+        <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
 </context>
 <context>
@@ -3835,8 +3840,8 @@ You will not be able to regain access to your stored data or be authorised to re
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
-        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>The sync folder owner’s account has exceeded their storage quota.</translation>
+        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation. CON-561</translatorcomment>
+        <translation>Folder can’t be synced as the user who shared this folder has reached their storage quota.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -8154,6 +8159,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
         <translation>Transfer quota exceeded</translation>
+    </message>
+    <message>
+        <source>Destination storage is full.</source>
+        <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
+        <translation type="unfinished">Destination storage is full.</translation>
     </message>
 </context>
 <context>
