@@ -413,7 +413,7 @@ public:
 
     // Human-friendly list of forbidden chars for New Remote Folder
     static const QLatin1String FORBIDDEN_CHARS;
-    // Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
+    // Forbidden chars PCRE
     static const QRegularExpression FORBIDDEN_CHARS_RX;
     // Time to show the new remote folder input error in milliseconds
     static constexpr int ERROR_DISPLAY_TIME_MS = 10000; //10s in milliseconds
