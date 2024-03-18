@@ -6,6 +6,7 @@
 #include "QMegaMessageBox.h"
 #include "mega/types.h"
 #include "AppStatsEvents.h"
+#include "TextDecorator.h"
 
 #include <QQmlContext>
 
@@ -919,7 +920,18 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text =tr("You have been logged out because of this error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+            if(errorCode != mega::MegaError::API_OK)
+            {
+                msgInfo.text =tr("You have been logged out because of this error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+            }
+            else
+            {
+                Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
+                QString text = tr("You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.");
+                link.process(text);
+                msgInfo.text = text;
+                msgInfo.textFormat = Qt::RichText;
+            }
             msgInfo.ignoreCloseAll = true;
 
             QMegaMessageBox::information(msgInfo);
