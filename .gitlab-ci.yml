@@ -1,0 +1,14 @@
+variables:
+  GIT_STRATEGY: clone
+
+stages:
+  - scan
+  - wait_for_jenkins # This is a workaround until DevOps moves our gitleaks step to Jenkins. This will not impact CI/CD times, as this is running in parallel.
+
+scan:
+  stage: scan
+  image:
+    name: mega-docker.artifactory.developers.mega.co.nz:8443/gitleaks:v8.18.2-mega-1.0
+    entrypoint: [""]
+  script:
+    - gitleaks detect -v --redact -c .gitleaks/gitleaks.toml
