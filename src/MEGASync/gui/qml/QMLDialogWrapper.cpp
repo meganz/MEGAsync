@@ -1,8 +1,10 @@
 #include "QmlDialogWrapper.h"
+#include "QmlManager.h"
+
 #include "MegaApplication.h"
+
 #include <QQmlProperty>
 #include <QWindow>
-
 
 QMLComponent::QMLComponent(QObject *parent)
     : QObject(parent)
@@ -16,7 +18,7 @@ QMLComponent::~QMLComponent()
 
 QQmlEngine *QMLComponent::getEngine()
 {
-    return MegaSyncApp->qmlEngine();
+    return QmlManager::instance()->qmlEngine();
 }
 
 QmlDialogWrapperBase::QmlDialogWrapperBase(QWidget *parent)

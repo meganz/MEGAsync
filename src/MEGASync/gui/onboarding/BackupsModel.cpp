@@ -1,12 +1,14 @@
-
 #include "BackupsModel.h"
 
-#include "megaapi.h"
-#include "Utilities.h"
 #include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
-#include "MegaApplication.h"
 #include "qml/StandardIconProvider.h"
+#include "qml/QmlManager.h"
+
+#include "MegaApplication.h"
+#include "Utilities.h"
+
+#include "megaapi.h"
 
 #include <QQmlContext>
 
@@ -114,9 +116,9 @@ BackupsModel::BackupsModel(QObject* parent)
             this, &BackupsModel::onBackupFinished);
     connect(&mCheckDirsTimer, &QTimer::timeout, this, &BackupsModel::checkDirectories);
 
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("backupsModelAccess"), this);
+    QmlManager::instance()->setRootContextProperty(this);
 
-    MegaSyncApp->qmlEngine()->addImageProvider(QLatin1String("standardicons"), new StandardIconProvider);
+    QmlManager::instance()->qmlEngine()->addImageProvider(QLatin1String("standardicons"), new StandardIconProvider);
 
     mCheckDirsTimer.setInterval(CHECK_DIRS_TIME);
     mCheckDirsTimer.start();
@@ -124,9 +126,9 @@ BackupsModel::BackupsModel(QObject* parent)
 
 BackupsModel::~BackupsModel()
 {
-    if(auto engine = MegaSyncApp->qmlEngine())
+    if(auto engine = QmlManager::instance()->qmlEngine())
     {
-        engine->removeImageProvider(QLatin1String("standardicons"));
+        QmlManager::instance()->qmlEngine()->removeImageProvider(QLatin1String("standardicons"));
     }
 }
 

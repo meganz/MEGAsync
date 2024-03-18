@@ -32,11 +32,9 @@
 #include "qml/QmlDialog.h"
 #include "onboarding/GuestQmlDialog.h"
 #include "qml/QmlDialogWrapper.h"
-#include "qml/ApiEnums.h"
-#include "qml/QmlClipboard.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
-#include "qml/ColorTheme.h"
+#include "qml/QmlManager.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -129,8 +127,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mIsFirstFileBackedUp(false),
     mLoginController(nullptr),
     scanStageController(this),
-    mDisableGfx (false),
-    mEngine(new QQmlEngine())
+    mDisableGfx (false)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!getenv("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -453,8 +450,6 @@ void MegaApplication::initialize()
     QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
 
-    registerCommonQMLElements();
-
     qRegisterMetaTypeStreamOperators<EphemeralCredentials>("EphemeralCredentials");
 
     preferences = Preferences::instance();
@@ -560,7 +555,7 @@ void MegaApplication::initialize()
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
     mStatusController = new AccountStatusController(this);
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("accountStatusControllerAccess"), mStatusController);
+    QmlManager::instance()->setRootContextProperty(mStatusController);
 
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
@@ -712,9 +707,9 @@ void MegaApplication::initialize()
     connect(Platform::getInstance()->getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
             this, &MegaApplication::onNotificationProcessed);
 
-    mLogoutController = new LogoutController(mEngine);
+    mLogoutController = new LogoutController(QmlManager::instance()->qmlEngine());
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("logoutControllerAccess"), mLogoutController);
+    QmlManager::instance()->setRootContextProperty(mLogoutController);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -762,9 +757,9 @@ void MegaApplication::changeLanguage(QString languageCode)
         currentLanguageCode = languageCode;
     }
 
-    if(mEngine)
+    if(QmlManager::instance()->qmlEngine())
     {
-        mEngine->retranslate();
+        QmlManager::instance()->qmlEngine()->retranslate();
     }
 
     createTrayIcon();
@@ -1184,7 +1179,7 @@ void MegaApplication::start()
             createTrayIcon();
         }
 
-        mLoginController = new LoginController(mEngine);
+        mLoginController = new LoginController(QmlManager::instance()->qmlEngine());
         if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(AppStatsEvents::EVENT_1ST_START, "MEGAsync first start", false, nullptr);
@@ -1198,7 +1193,7 @@ void MegaApplication::start()
     }
     else //Otherwise, login in the account
     {
-        mLoginController = new FastLoginController(mEngine);
+        mLoginController = new FastLoginController(QmlManager::instance()->qmlEngine());
         if (mLoginController == nullptr || !static_cast<FastLoginController*>(mLoginController)->fastLogin()) //In case preferences are corrupt with empty session, just unlink and remove associated data.
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "MEGAsync preferences logged but empty session. Unlink account and fresh start.");
@@ -1211,7 +1206,9 @@ void MegaApplication::start()
         }
     }
 
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("loginControllerAccess"), mLoginController);
+    // The same name is used for fast login
+    QmlManager::instance()->setRootContextProperty(QString::fromUtf8("loginControllerAccess"),
+                                                   mLoginController);
 
     if (preferences->getSession().isEmpty())
     {
@@ -2202,8 +2199,7 @@ void MegaApplication::cleanAll()
 
     delete mStalledIssuesModel;
     mStalledIssuesModel = nullptr;
-    delete mEngine;
-    mEngine = nullptr;
+    QmlManager::instance()->deleteEngine();
     delete httpServer;
     httpServer = nullptr;
     delete uploader;
@@ -3062,19 +3058,6 @@ void MegaApplication::processUpgradeSecurityEvent()
     };
 
     QMegaMessageBox::information(msgInfo);
-}
-
-void MegaApplication::registerCommonQMLElements()
-{
-    mEngine->addImportPath(QString::fromUtf8("qrc:/"));
-
-    qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
-    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
-    qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
-                                     QString::fromUtf8("Cannot create ApiEnums in QML"));
-    qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
-    
-    mEngine->rootContext()->setContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, this));
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const

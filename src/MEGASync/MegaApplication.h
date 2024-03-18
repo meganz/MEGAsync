@@ -14,7 +14,6 @@
 #include <QFutureWatcher>
 
 #include <memory>
-#include <QQmlEngine>
 
 #include "gui/TransferManager.h"
 #include "gui/InfoDialog.h"
@@ -131,7 +130,6 @@ public:
     void migrateSyncConfToSdk(QString email = QString());
 
     mega::MegaApi *getMegaApi() { return megaApi; }
-    QQmlEngine *qmlEngine() { return mEngine;}
     mega::MegaApi *getMegaApiFolders() { return megaApiFolders; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
@@ -597,12 +595,8 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
-    QQmlEngine* mEngine;
-
     void processUpgradeSecurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;
-
-    void registerCommonQMLElements();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

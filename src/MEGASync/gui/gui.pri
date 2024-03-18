@@ -84,6 +84,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/qml/QmlClipboard.cpp \
     $$PWD/qml/QmlDialog.cpp \
     $$PWD/qml/QmlDialogWrapper.cpp \
+    $$PWD/qml/QmlManager.cpp \
     $$PWD/qml/StandardIconProvider.cpp \
     $$PWD/onboarding/ChooseFolder.cpp \
     $$PWD/onboarding/Onboarding.cpp \
@@ -179,6 +180,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/qml/QmlDialog.h \
     $$PWD/qml/QmlDialogWrapper.h \
     $$PWD/qml/ApiEnums.h \
+    $$PWD/qml/QmlManager.h \
     $$PWD/qml/StandardIconProvider.h \
     $$PWD/onboarding/ChooseFolder.h \
     $$PWD/onboarding/Onboarding.h \

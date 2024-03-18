@@ -32,7 +32,7 @@ public:
     };
     Q_ENUM(AccountType)
 
-    static AccountInfoData* instance(QQmlEngine* qmlEngine, QJSEngine*);
+    static AccountInfoData* instance(QQmlEngine* qmlEngine, QJSEngine* jsEngine);
 
 public slots:
     void requestAccountInfoData();
