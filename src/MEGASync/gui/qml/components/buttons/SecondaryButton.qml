@@ -1,6 +1,7 @@
 import common 1.0
 
 Button {
+    id: root
 
     icons {
         colorEnabled: Styles.iconSecondary

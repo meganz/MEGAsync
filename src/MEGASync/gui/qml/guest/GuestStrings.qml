@@ -5,10 +5,6 @@ import common 1.0
 
 QtObject {
 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!
-    //   Sorted alphabetically
-    // !!!!!!!!!!!!!!!!!!!!!!!!!
-
     readonly property string menuAboutMEGA: qsTr("About MEGA")
     readonly property string menuExit: OS.isMac() ? qsTr("Quit") : qsTr("Exit")
     readonly property string menuSettings: qsTr("Settings")

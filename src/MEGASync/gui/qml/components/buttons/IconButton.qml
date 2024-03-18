@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.15
 import common 1.0
 
 Button {
+    id: root
 
     icons {
         colorEnabled: Styles.iconButton

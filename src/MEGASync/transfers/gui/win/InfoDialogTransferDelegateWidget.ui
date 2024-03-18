@@ -110,7 +110,7 @@
       <number>0</number>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="completedTransfer">
       <property name="minimumSize">
@@ -788,13 +788,13 @@ background-color: rgba(0, 0, 0, 8%);
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>15</height>
+                       <height>16</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>15</height>
+                       <height>16</height>
                       </size>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -816,21 +816,21 @@ background-color: rgba(0, 0, 0, 8%);
                       <item>
                        <widget class="QLabel" name="lTransferType">
                         <property name="sizePolicy">
-                         <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
                         <property name="minimumSize">
                          <size>
-                          <width>10</width>
-                          <height>12</height>
+                          <width>16</width>
+                          <height>16</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>10</width>
-                          <height>12</height>
+                          <width>16</width>
+                          <height>16</height>
                          </size>
                         </property>
                         <property name="focusPolicy">
@@ -849,13 +849,13 @@ background-color: rgba(0, 0, 0, 8%);
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
-                          <height>15</height>
+                          <height>16</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
                           <width>16777215</width>
-                          <height>15</height>
+                          <height>16</height>
                          </size>
                         </property>
                         <property name="styleSheet">

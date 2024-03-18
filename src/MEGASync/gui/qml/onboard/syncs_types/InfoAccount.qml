@@ -13,6 +13,7 @@ import onboard 1.0
 import AccountInfoData 1.0
 
 Item {
+    id: root
 
     readonly property string accountTypeFree: qsTr("Free")
     readonly property string accountTypeProI: qsTr("Pro I")
@@ -23,13 +24,6 @@ Item {
     readonly property string accountTypeProFlexi: qsTr("Pro Flexi")
     readonly property string availableStorage: qsTr("Available storage:")
     readonly property string storageSpace: qsTr("Storage space:")
-
-    width: parent.width
-    height: 48
-
-    Component.onCompleted: {
-        AccountInfoData.requestAccountInfoData();
-    }
 
     function getAccountTypeImage() {
         switch(AccountInfoData.type) {
@@ -67,10 +61,17 @@ Item {
             case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
                 return accountTypeBusiness;
             case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
-                return accountTypeProFlexi
+                return accountTypeProFlexi;
             default:
                 return "";
         }
+    }
+
+    width: parent.width
+    height: 48
+
+    Component.onCompleted: {
+        AccountInfoData.requestAccountInfoData();
     }
 
     Rectangle {
@@ -78,16 +79,22 @@ Item {
 
         anchors.fill: parent
         color: Styles.pageBackground
-        border.color: Styles.borderDisabled
-        border.width: 1
         radius: 8
+        border {
+            color: Styles.borderDisabled
+            width: 1
+        }
 
         RowLayout {
+            id: internalLayout
+
             anchors.fill: parent
             spacing: 0
             visible: AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
 
             RowLayout {
+                id: leftLayout
+
                 Layout.alignment: Qt.AlignLeft
                 Layout.leftMargin: 20
                 spacing: 7
@@ -107,13 +114,14 @@ Item {
 
                     Layout.alignment: Qt.AlignLeft
                     font.weight: Font.DemiBold
-                    font.pixelSize: Texts.Text.Size.Normal
+                    font.pixelSize: Texts.Text.Size.NORMAL
                     text: getAccountTypeText()
                 }
-
             }
 
             RowLayout {
+                id: rightLayout
+
                 Layout.alignment: Qt.AlignRight
                 Layout.rightMargin: 18
                 visible: AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_BUSINESS
@@ -121,25 +129,31 @@ Item {
                          && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_NOT_SET
 
                 Texts.Text {
+                    id: constantText
+
                     text: AccountInfoData.belowMinUsedStorageThreshold
                           ? availableStorage
                           : storageSpace
                     font.weight: Font.DemiBold
-                    font.pixelSize: Texts.Text.Size.Small
+                    font.pixelSize: Texts.Text.Size.SMALL
                 }
 
                 Texts.Text {
+                    id: usedStorageText
+
                     font.weight: Font.DemiBold
                     text: AccountInfoData.usedStorage
                     visible: !AccountInfoData.belowMinUsedStorageThreshold
-                    font.pixelSize: Texts.Text.Size.Small
+                    font.pixelSize: Texts.Text.Size.SMALL
                 }
 
                 Texts.SecondaryText {
+                    id: separatorText
+
                     font.weight: Font.DemiBold
                     text: "/"
                     visible: !AccountInfoData.belowMinUsedStorageThreshold
-                    font.pixelSize: Texts.Text.Size.Small
+                    font.pixelSize: Texts.Text.Size.SMALL
                 }
 
                 Texts.SecondaryText {
@@ -147,13 +161,17 @@ Item {
 
                     font.weight: Font.DemiBold
                     text: AccountInfoData.totalStorage
-                    font.pixelSize: Texts.Text.Size.Small
+                    font.pixelSize: Texts.Text.Size.SMALL
                 }
             }
-        }
-    }
+
+        } // RowLayout: internalLayout
+
+    } // Rectangle: background
 
     DropShadow {
+        id: shadow
+
         anchors.fill: parent
         horizontalOffset: 0
         verticalOffset: 5

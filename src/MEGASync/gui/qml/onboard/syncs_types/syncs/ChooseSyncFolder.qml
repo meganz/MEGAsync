@@ -17,11 +17,11 @@ import ChooseRemoteFolder 1.0
 FocusScope {
     id: root
 
+    readonly property int textEditMargin: 2
+
     property alias choosenPath: folderItem.text
     property bool local: true
     property alias folderField: folderItem
-
-    readonly property int textEditMargin: 2
 
     function reset() {
         if(!local) {
@@ -33,48 +33,57 @@ FocusScope {
         var defaultFolder = "";
 
         if (local) {
-            defaultFolder = localFolderChooser.getDefaultFolder(syncsCpp.defaultMegaFolder)
+            defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
         }
         else {
-            defaultFolder = syncsCpp.defaultMegaPath;
+            defaultFolder = syncs.defaultMegaPath;
         }
 
-        if ((local && !syncsCpp.checkLocalSync(defaultFolder)) || (!local && !syncsCpp.checkRemoteSync(defaultFolder)))
-        {
-            defaultFolder = ""
+        if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder))) {
+            defaultFolder = "";
         }
 
         return defaultFolder;
     }
 
-    Layout.preferredWidth: width
-    Layout.preferredHeight: folderItem.height
     width: parent.width
     height: folderItem.height
+    Layout.preferredWidth: width
+    Layout.preferredHeight: folderItem.height
+
+    Syncs {
+        id: syncs
+    }
 
     TextField {
         id: folderItem
 
-        anchors.left: parent.left
-        anchors.right: changeButtonItem.left
-        anchors.top: parent.top
-        anchors.rightMargin: textEditMargin
+        anchors {
+            left: parent.left
+            right: changeButtonItem.left
+            top: parent.top
+            rightMargin: textEditMargin
+        }
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: getFolder()
         leftIconSource: local ? Images.pc : Images.megaOutline
         leftIconColor: enabled ? Styles.iconSecondary : Styles.iconDisabled
         textField.readOnly: true
-        toolTip.leftIconSource: leftIconSource
-        toolTip.timeout: 5000
+        toolTip {
+            leftIconSource: leftIconSource
+            timeout: 5000
+        }
     }
 
     OutlineButton {
         id: changeButtonItem
 
         height: folderItem.textField.height
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 15
+        anchors {
+            right: parent.right
+            top: parent.top
+            topMargin: 15
+        }
         focus: true
         text: OnboardingStrings.choose
         onClicked: {
@@ -97,18 +106,7 @@ FocusScope {
         enabled: root.local
 
         function onFolderChoosen(folderPath) {
-            folderItem.text = folderPath
-        }
-    }
-
-    Connections {
-        id: remoteFolderChooserConnection
-
-        target: remoteFolderChooser
-        enabled: !root.local
-
-        function onFolderChoosen(remoteFolderPath) {
-            folderItem.text = remoteFolderPath
+            folderItem.text = folderPath;
         }
     }
 
@@ -118,5 +116,16 @@ FocusScope {
 
     ChooseRemoteFolder {
         id: remoteFolderChooser
+    }
+
+    Connections {
+        id: remoteFolderChooserConnection
+
+        target: remoteFolderChooser
+        enabled: !root.local
+
+        function onFolderChoosen(remoteFolderPath) {
+            folderItem.text = remoteFolderPath;
+        }
     }
 }

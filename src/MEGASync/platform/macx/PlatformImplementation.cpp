@@ -284,7 +284,7 @@ void PlatformImplementation::notifyItemChange(const QString& path, int newState)
     }
 }
 
-void PlatformImplementation::notifySyncFileChange(string* localPath, int newState)
+void PlatformImplementation::notifySyncFileChange(string* localPath, int newState, bool)
 {
     notifyItemChange(QString::fromStdString(*localPath), newState);
 }
@@ -356,6 +356,15 @@ bool PlatformImplementation::isUserActive()
 double PlatformImplementation::getUpTime()
 {
     return uptime();
+}
+
+DriveSpaceData PlatformImplementation::getDriveData(const QString&)
+{
+    DriveSpaceData data;
+    data.mAvailableSpace = 0;
+    data.mTotalSpace = 0;
+    data.mIsReady = false;
+    return data;
 }
 
 void PlatformImplementation::disableSignalHandler()

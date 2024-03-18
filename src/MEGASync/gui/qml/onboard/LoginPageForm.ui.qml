@@ -35,7 +35,7 @@ StackViewPage {
                 left: parent.left
                 right: parent.right
             }
-            font.pixelSize: Texts.Text.Size.Large
+            font.pixelSize: Texts.Text.Size.LARGE
             rawText: loginControllerAccess.newAccount
                      ? OnboardingStrings.confirmEmailAndPassword
                      : OnboardingStrings.loginTitle
@@ -49,7 +49,7 @@ StackViewPage {
                 right: parent.right
             }
             visible: loginControllerAccess.newAccount
-            font.pixelSize: Texts.Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.MEDIUM
             rawText: OnboardingStrings.accountWillBeActivated
         }
 

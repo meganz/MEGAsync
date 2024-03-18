@@ -136,6 +136,19 @@ color:#dadada;
       <number>15</number>
      </property>
      <item>
+      <widget class="QPushButton" name="bAddExclusions">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Add exclusions</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

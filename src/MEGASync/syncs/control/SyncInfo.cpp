@@ -109,10 +109,7 @@ void SyncInfo::removeAllFolders()
 
     for (auto it = configuredSyncsMap.begin(); it != configuredSyncsMap.end(); it++)
     {
-        if (it.value()->isActive())
-        {
-            deactivateSync(it.value());
-        }
+        deactivateSync(it.value());
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
@@ -162,7 +159,11 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     msgInfo.title =  MegaSyncApp->getMEGAString();
 
     // TODO: extract the QMegaMessageBoxes from the model, use signal to send message
-    if (!preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
+
+    // TODO: this never would have worked, comparing an error code to a warning code.
+    // maybe implement properly, not as warning but specifically is-on-fat or not, etc.
+
+    if (!preferences->isFatWarningShown() && syncSetting->getWarning() == MegaSync::Warning::LOCAL_IS_FAT)
     {
         msgInfo.text = tr("You are syncing a local folder formatted with a FAT filesystem. "
                           "That filesystem has deficiencies managing big files and modification"
@@ -218,8 +219,6 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
     QMutexLocker qm(&syncMutex);
 
     std::shared_ptr<SyncSettings> cs;
-    bool wasActive = false;
-    bool wasInactive = false;
 
     auto oldcsitr = syncsSettingPickedFromOldConfig.find(sync->getBackupId());
 
@@ -242,9 +241,6 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
     if (cs)
     {
-        wasActive = cs->isActive();
-        wasInactive = !wasActive;
-
         cs->setSync(sync);
     }
     else //new configuration (new or resumed)
@@ -272,18 +268,17 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
     });// end of thread pool function
 
-    if (cs->isActive() && wasInactive)
+
+    if (cs->getSync()->getRunState() == MegaSync::RUNSTATE_RUNNING)
     {
         activateSync(cs);
     }
-
-    if (!cs->isActive() && wasActive)
+    else
     {
         deactivateSync(cs);
     }
 
     preferences->writeSyncSetting(cs); // we store MEGAsync specific fields into cache
-
     emit syncStateChanged(cs);
     return cs;
 }
@@ -590,24 +585,18 @@ void SyncInfo::checkUnattendedDisabledSyncsForErrors()
 
 void SyncInfo::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    if(unattendedDisabledSyncs.contains(type))
-    {
-        unattendedDisabledSyncs[type].insert(tag);
-        saveUnattendedDisabledSyncs();
-        emit syncDisabledListUpdated();
+    unattendedDisabledSyncs[type].insert(tag);
+    saveUnattendedDisabledSyncs();
+    emit syncDisabledListUpdated();
 
-        mShowErrorTimer.start();
-    }
+    mShowErrorTimer.start();
 }
 
 void SyncInfo::removeUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    if(unattendedDisabledSyncs.contains(type))
-    {
-        unattendedDisabledSyncs[type].remove(tag);
-        saveUnattendedDisabledSyncs();
-        emit syncDisabledListUpdated();
-    }
+    unattendedDisabledSyncs[type].remove(tag);
+    saveUnattendedDisabledSyncs();
+    emit syncDisabledListUpdated();
 }
 
 void SyncInfo::setUnattendedDisabledSyncs(const QSet<MegaHandle>& tags)
@@ -655,7 +644,8 @@ void SyncInfo::onSyncStateChanged(mega::MegaApi*, mega::MegaSync *sync)
         return;
     }
 
-    if(!syncSettings->isActive() && sync->getRunState() == MegaSync::RUNSTATE_DISABLED)
+    if(!syncSettings->isActive() && (sync->getRunState() == MegaSync::RUNSTATE_DISABLED ||
+                                     sync->getRunState() == MegaSync::RUNSTATE_SUSPENDED))
     {
         return;
     }
@@ -666,7 +656,8 @@ void SyncInfo::onSyncStateChanged(mega::MegaApi*, mega::MegaSync *sync)
     {
         mLastError = sync->getError();
 
-        if (sync->getRunState() == MegaSync::RUNSTATE_DISABLED)
+        if (sync->getRunState() == MegaSync::RUNSTATE_DISABLED ||
+            sync->getRunState() == MegaSync::RUNSTATE_SUSPENDED)
         {
             addUnattendedDisabledSync(sync->getBackupId(),
                                       static_cast<MegaSync::SyncType>(sync->getType()));
@@ -674,7 +665,8 @@ void SyncInfo::onSyncStateChanged(mega::MegaApi*, mega::MegaSync *sync)
     }
     else
     {
-        if (sync->getRunState() != MegaSync::RUNSTATE_DISABLED)
+        if (sync->getRunState() != MegaSync::RUNSTATE_DISABLED &&
+            sync->getRunState() != MegaSync::RUNSTATE_SUSPENDED)
         {
             removeUnattendedDisabledSync(sync->getBackupId(),
                                          static_cast<MegaSync::SyncType>(sync->getType()));
@@ -699,7 +691,15 @@ void SyncInfo::onSyncFileStateChanged(MegaApi*, MegaSync*, std::string *localPat
         return;
     }
 
-    Platform::getInstance()->notifySyncFileChange(localPath, newState);
+    Platform::getInstance()->notifySyncFileChange(localPath, newState, false);
+}
+
+void SyncInfo::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats *syncStats)
+{
+    std::shared_ptr<::mega::MegaSyncStats> sp(syncStats->copy());
+    mSyncStatsMap[sp->getBackupId()] = sp;
+
+    emit syncStatsUpdated(sp);
 }
 
 void SyncInfo::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting)
@@ -777,7 +777,7 @@ void SyncInfo::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> 
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
                 QString::fromUtf8("Backup \"%1\" Path: %2 disabled: %3")
                 .arg(syncName, syncSetting->getLocalFolder(), QString::number(errorCode)).toUtf8().constData());
-            if (!syncSetting->isEnabled()
+            if (!syncSetting->isActive()
                 && errorCode != MegaSync::Error::LOGGED_OUT)
             {
                 QString errMsg(tr("Your backup \"%1\" has been temporarily disabled: %2")

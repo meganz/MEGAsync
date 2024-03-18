@@ -14,6 +14,7 @@ SyncsPage {
     footerButtons.rightPrimary.enabled: false
 
     ColumnLayout {
+        id: column
 
         anchors {
             top: parent.top
@@ -23,10 +24,14 @@ SyncsPage {
         spacing: 32
 
         Header {
+            id: header
+
             title: OnboardingStrings.syncTitle
         }
 
         Rectangle {
+            id: spacer
+
             Layout.preferredHeight: 208
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignLeft
@@ -37,6 +42,8 @@ SyncsPage {
             }
 
             RowLayout {
+                id: row
+
                 spacing: 15
                 anchors.fill: parent
 
@@ -45,7 +52,7 @@ SyncsPage {
 
                     Layout.leftMargin: -fullSyncButtonItem.focusBorderWidth
                     title: OnboardingStrings.fullSync
-                    type: SyncsType.Types.FullSync
+                    type: SyncsType.Types.FULL_SYNC
                     description: OnboardingStrings.fullSyncButtonDescription
                     imageSource: Images.fullSync
                     imageSourceSize: Qt.size(172, 100)
@@ -55,11 +62,11 @@ SyncsPage {
                 }
 
                 SyncTypeButton {
-                    id: backupsButton
+                    id: selectiveSyncButton
 
-                    Layout.rightMargin: -backupsButton.focusBorderWidth
+                    Layout.rightMargin: -selectiveSyncButton.focusBorderWidth
                     title: OnboardingStrings.selectiveSync
-                    type: SyncsType.Types.SelectiveSync
+                    type: SyncsType.Types.SELECTIVE_SYNC
                     description: OnboardingStrings.selectiveSyncButtonDescription
                     imageSource: Images.selectiveSync
                     imageSourceSize: Qt.size(172, 100)

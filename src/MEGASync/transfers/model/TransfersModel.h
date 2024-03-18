@@ -186,6 +186,18 @@ private:
     QList<int> mIgnoredFiles;
 };
 
+struct DownloadTransferInfo
+{
+    mega::MegaHandle nodeHandle;
+};
+
+struct UploadTransferInfo
+{
+    QString localPath;
+    QString filename;
+    mega::MegaHandle parentHandle;
+};
+
 class TransfersModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -265,6 +277,10 @@ public:
 
     bool areAllPaused() const;
 
+
+    const QExplicitlySharedDataPointer<const TransferData> activeDownloadTransferFound(DownloadTransferInfo *info) const;
+    const QExplicitlySharedDataPointer<const TransferData> activeUploadTransferFound(UploadTransferInfo* info) const;
+
     const QExplicitlySharedDataPointer<const TransferData> getTransferByTag(int tag) const;
     QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag);
 
@@ -331,6 +347,7 @@ private:
     void removeTransfer(int row);
     void sendDataChanged(int row);
     void restoreTagsByRow();
+    QList<QExplicitlySharedDataPointer<TransferData>> getTransfersToIterate() const;
 
     void retryTransfers(const QMultiMap<unsigned long long, QExplicitlySharedDataPointer<TransferData>> &transfersToRetry);
 

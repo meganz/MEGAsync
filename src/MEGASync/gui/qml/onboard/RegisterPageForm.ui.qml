@@ -32,7 +32,7 @@ StackViewPage {
                 left: parent.left
                 right: parent.right
             }
-            font.pixelSize: Texts.Text.Size.Large
+            font.pixelSize: Texts.Text.Size.LARGE
             rawText: OnboardingStrings.signUpTitle
         }
 

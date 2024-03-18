@@ -2,7 +2,6 @@
 #include "Notificator.h"
 #include "NotificationDelayer.h"
 #include "Preferences/Preferences.h"
-#include "QTMegaRequestListener.h"
 
 #include <QObject>
 
@@ -29,6 +28,9 @@ public:
     };
     DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon);
     void addUserAlertList(mega::MegaUserAlertList *alertList);
+    void sendAlert(mega::MegaUserAlert* alert);
+    void requestFullName(mega::MegaUserAlert* alert, QString email);
+    void requestEmail(mega::MegaUserAlert* alert);
     void sendOverStorageNotification(int state) const;
     void sendOverTransferNotification(const QString& title) const;
     void sendFinishedTransferNotification(unsigned long long appDataId) const;
@@ -64,7 +66,7 @@ private:
     QString createTakeDownMessage(mega::MegaUserAlert* alert, bool isReinstated = false) const;
     int countUnseenAlerts(mega::MegaUserAlertList *alertList);
 
-    void processAlert(mega::MegaUserAlert* alert);
+    void processAlert(mega::MegaUserAlert* alert, const QString& email = QString());
     MegaNotification* CreateContactNotification(const QString& title,
                                                const QString& message,
                                                const QString& email, const QStringList &actions = QStringList());

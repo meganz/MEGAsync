@@ -6,8 +6,8 @@
 
 #include <QFileIconProvider>
 
-LowDiskSpaceDialog::LowDiskSpaceDialog(qint64 neededSize, qint64 freeSize,
-                                       qint64 driveSize, const QString& driveName,
+LowDiskSpaceDialog::LowDiskSpaceDialog(qint64 neededSize, qint64 freeSize, qint64 driveSize,
+                                       const DriveDisplayData &driveDisplayData,
                                        QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LowDiskSpaceDialog)
@@ -16,11 +16,14 @@ LowDiskSpaceDialog::LowDiskSpaceDialog(qint64 neededSize, qint64 freeSize,
     setupShadowEffect();
 
     auto message = tr("There is not enough space on %1. You need an additional %2 to download these files.");
-    ui->lExplanation->setText(message.arg(driveName, toString(neededSize-freeSize)));
+    ui->lExplanation->setText(message.arg(driveDisplayData.name, toString(neededSize-freeSize)));
 
-    ui->lDiskName->setText(driveName);
+    ui->lDiskName->setText(driveDisplayData.name);
     ui->lFreeSpace->setText(tr("Free space: %1").arg(toString(freeSize)));
     ui->lTotalSize->setText(tr("Total size: %1").arg(toString(driveSize)));
+
+    QIcon driveIcon(driveDisplayData.icon);
+    ui->lDriveIcon->setPixmap(driveIcon.pixmap(64, 64));
 
     connect(ui->bTryAgain, &QPushButton::clicked, this, &QDialog::accept);
     connect(ui->bCancel, &QPushButton::clicked, this, &QDialog::reject);

@@ -11,10 +11,6 @@ GuestContent::GuestContent(QObject *parent)
     qmlRegisterType<GuestQmlDialog>("GuestQmlDialog", 1, 0, "GuestQmlDialog");
 }
 
-GuestContent::~GuestContent()
-{
-}
-
 void GuestContent::onInitialPageButtonClicked()
 {
 #ifndef WIN32
@@ -40,11 +36,6 @@ void GuestContent::onExitClicked()
 void GuestContent::onVerifyEmailClicked()
 {
     MegaSyncApp->getMegaApi()->resendVerificationEmail();
-}
-
-void GuestContent::onVerifyPhoneClicked()
-{
-    MegaSyncApp->goToMyCloud();
 }
 
 void GuestContent::onLogoutClicked()

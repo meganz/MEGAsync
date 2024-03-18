@@ -4,7 +4,6 @@
 #include "ui_SettingsDialog.h"
 #include "control/Utilities.h"
 #include "platform/Platform.h"
-#include "AddExclusionDialog.h"
 #include "BandwidthSettings.h"
 #include "BugReportDialog.h"
 #include "ProxySettings.h"
@@ -13,14 +12,13 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
 #include "syncs/gui/Backups/BackupsWizard.h"
-#include "syncs/gui/Backups/AddBackupDialog.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
-
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -99,8 +97,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi (new Ui::SettingsDialog),
     mApp (app),
     mPreferences (Preferences::instance()),
-    mSyncController (),
-    mBackupController (),
     mModel (SyncInfo::instance()),
     mMegaApi (app->getMegaApi()),
     mLoadingSettings (0),
@@ -109,11 +105,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mRemoteCacheSize (-1),
     mDebugCounter (0)
 {
-    mSyncTableEventFilter = std::unique_ptr<SyncTableViewTooltips>(new SyncTableViewTooltips());
-    mBackupTableEventFilter = std::unique_ptr<BackupTableViewTooltips>(new BackupTableViewTooltips());
     mUi->setupUi(this);
-
-    mUi->bOpenBackupFolder->setEnabled(false);
 
     // override whatever indexes might be set in .ui files (frequently checked in by mistake)
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
@@ -138,8 +130,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 #ifdef Q_OS_LINUX
     mUi->wUpdateSection->hide();
 #endif
-
-    mUi->gExcludedFilesInfo->hide();
 
 #ifdef Q_OS_WINDOWS
     mUi->cFinderIcons->hide();
@@ -216,28 +206,14 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     macOSretainSizeWhenHidden();
 #endif
 
-    mUi->bRestart->hide();
-
     mApp->attachStorageObserver(*this);
     mApp->attachBandwidthObserver(*this);
     mApp->attachAccountObserver(*this);
-
-    connect(mApp, &MegaApplication::storageStateChanged, this, &SettingsDialog::storageStateChanged);
-    storageStateChanged(app->getAppliedStorageState());
-
-    syncsStateInformation(SyncStateInformation::SAVING_SYNCS_FINISHED);
-    syncsStateInformation(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-
-    connectSyncHandlers();
-    connectBackupHandlers();
 
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
     setOverlayCheckboxEnabled(!mApp->isShellNotificationProcessingOngoing(),
                               mUi->cOverlayIcons->isChecked());
-
-    mUi->syncTableView->installEventFilter(mSyncTableEventFilter.get());
-    mUi->backupTableView->installEventFilter(mBackupTableEventFilter.get());
 }
 
 SettingsDialog::~SettingsDialog()
@@ -423,11 +399,13 @@ void SettingsDialog::initializeNativeUIComponents()
 
     bSyncs=mToolBar->addItem(QIcon(), tr("Sync"));
     mToolBar->customizeIconToolBarItem(bSyncs, syncs);
+    mUi->syncSettings->setToolBarItem(bSyncs);
     connect(bSyncs, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSyncs_clicked);
 
     bBackup=mToolBar->addItem(QIcon(), tr("Backup"));
     mToolBar->customizeIconToolBarItem(bBackup, backup);
+    mUi->backupSettings->setToolBarItem(bBackup);
     connect(bBackup, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bBackup_clicked);
 
@@ -458,25 +436,6 @@ void SettingsDialog::initializeNativeUIComponents()
     // Attach to the window according Qt docs
     this->window()->winId(); // create window->windowhandle()
     mToolBar->attachToWindowWithStyle(window()->windowHandle(), QCustomMacToolbar::StylePreference);
-
-    // Configure segmented control for +/- syncs
-    mUi->wSyncsSegmentedControl->configureTableSegment();
-    connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::addButtonClicked,
-            this, &SettingsDialog::on_bAddSync_clicked);
-    connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::removeButtonClicked,
-            this, &SettingsDialog::on_bDeleteSync_clicked);
-
-    mUi->wBackupSegmentedControl->configureTableSegment();
-    connect(mUi->wBackupSegmentedControl, &QSegmentedControl::addButtonClicked,
-            this, &SettingsDialog::on_bAddBackup_clicked);
-    connect(mUi->wBackupSegmentedControl, &QSegmentedControl::removeButtonClicked,
-            this, &SettingsDialog::on_bDeleteBackup_clicked);
-
-    mUi->wExclusionsSegmentedControl->configureTableSegment();
-    connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked,
-            this, &SettingsDialog::on_bAddName_clicked);
-    connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked,
-            this, &SettingsDialog::on_bDeleteName_clicked);
 }
 #endif
 
@@ -598,11 +557,6 @@ void SettingsDialog::loadSettings()
     updateUploadFolder();
     updateDownloadFolder();
 
-    //Syncs
-    loadSyncSettings();
-
-    loadBackupSettings();
-
 #ifdef Q_OS_WINDOWS
     mUi->cFinderIcons->setChecked(!mPreferences->leftPaneIconsDisabled());
 #endif
@@ -610,43 +564,14 @@ void SettingsDialog::loadSettings()
     updateNetworkTab();
 
     // Folders tab
-    mUi->lExcludedNames->clear();
-    QStringList excludedNames = mPreferences->getExcludedSyncNames();
-    for (int i = 0; i < excludedNames.size(); i++)
-    {
-        mUi->lExcludedNames->addItem(excludedNames[i]);
-    }
+    mUi->syncSettings->setParentDialog(this);
+    mUi->backupSettings->setParentDialog(this);
 
-    QStringList excludedPaths = mPreferences->getExcludedSyncPaths();
-    for (int i = 0; i < excludedPaths.size(); i++)
-    {
-        mUi->lExcludedNames->addItem(excludedPaths[i]);
-    }
-
-    for (auto cb : {mUi->cbExcludeUpperUnit, mUi->cbExcludeLowerUnit})
-    {
-        cb->clear();
-        cb->addItem(tr("B"));
-        cb->addItem(tr("KB"));
-        cb->addItem(tr("MB"));
-        cb->addItem(tr("GB"));
-    }
-
-    bool upperSizeLimit (mPreferences->upperSizeLimit());
-    mUi->eLowerThan->setMaximum(NETWORK_LIMITS_MAX);
-    mUi->cExcludeUpperThan->setChecked(upperSizeLimit);
-    mUi->eUpperThan->setEnabled(upperSizeLimit);
-    mUi->cbExcludeUpperUnit->setEnabled(upperSizeLimit);
-    mUi->eUpperThan->setValue(static_cast<int>(mPreferences->upperSizeLimitValue()));
-    mUi->cbExcludeUpperUnit->setCurrentIndex(mPreferences->upperSizeLimitUnit());
-
-    bool lowerSizeLimit (mPreferences->lowerSizeLimit());
-    mUi->eUpperThan->setMaximum(NETWORK_LIMITS_MAX);
-    mUi->cExcludeLowerThan->setChecked(lowerSizeLimit);
-    mUi->eLowerThan->setEnabled(lowerSizeLimit);
-    mUi->cbExcludeLowerUnit->setEnabled(lowerSizeLimit);
-    mUi->eLowerThan->setValue(static_cast<int>(mPreferences->lowerSizeLimitValue()));
-    mUi->cbExcludeLowerUnit->setCurrentIndex(mPreferences->lowerSizeLimitUnit());
+    //Syncs and backups
+#ifndef Q_OS_MACOS
+    mUi->syncSettings->setToolBarItem(mUi->bSyncs);
+    mUi->backupSettings->setToolBarItem(mUi->bBackup);
+#endif
 
     mLoadingSettings--;
 }
@@ -663,20 +588,6 @@ void deleteRemoteCache(MegaApi* mMegaApi)
     MegaNode* n = mMegaApi->getNodeByPath("//bin/SyncDebris");
     mMegaApi->remove(n);
     delete n;
-}
-
-void SettingsDialog::setOverQuotaMode(bool mode)
-{
-    if (mode)
-    {
-        mUi->wOQError->show();
-    }
-    else
-    {
-        mUi->wOQError->hide();
-    }
-
-    return;
 }
 
 void SettingsDialog::setUpdateAvailable(bool updateAvailable)
@@ -706,24 +617,6 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 {
     mRemoteCacheSize = mRemoteCacheSizeWatcher.result();
     onCacheSizeAvailable();
-}
-
-void SettingsDialog::onSavingSyncsCompleted(SyncStateInformation value)
-{
-    qint64 startTime(0);
-    if(value == SyncStateInformation::SAVING_SYNCS_FINISHED)
-    {
-       startTime =  mUi->wSpinningIndicatorSyncs->getStartTime();
-    }
-    else if(value == SyncStateInformation::SAVING_BACKUPS_FINISHED)
-    {
-        startTime =  mUi->wSpinningIndicatorBackups->getStartTime();
-    }
-    auto closeDelay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
-                                                 - startTime));
-    QTimer::singleShot(closeDelay, this, [this, value] () {
-        syncsStateInformation(value);
-    });
 }
 
 void SettingsDialog::on_bHelp_clicked()
@@ -804,10 +697,6 @@ void SettingsDialog::closeEvent(QCloseEvent *event)
 
 void SettingsDialog::macOSretainSizeWhenHidden()
 {
-    QSizePolicy spExcludedFiles = mUi->gExcludedFilesInfo->sizePolicy();
-    spExcludedFiles.setRetainSizeWhenHidden(true);
-    mUi->gExcludedFilesInfo->setSizePolicy(spExcludedFiles);
-
     QSizePolicy spStorageQuota = mUi->pStorageQuota->sizePolicy();
     spStorageQuota.setRetainSizeWhenHidden(true);
     mUi->pStorageQuota->setSizePolicy(spStorageQuota);
@@ -835,8 +724,6 @@ void SettingsDialog::changeEvent(QEvent* event)
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
-        QString backupsDirPath = UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath();
-        mUi->lBackupFolder->setText(backupsDirPath);
 
 #ifdef Q_OS_MACOS
         reloadToolBarItemNames();
@@ -1178,24 +1065,7 @@ void SettingsDialog::on_bUpdate_clicked()
 
 void SettingsDialog::on_bFullCheck_clicked()
 {
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = tr("Full scan");
-    msgInfo.text = tr("MEGAsync will perform a full scan of your synced folders"
-                      " when it starts.\n\nDo you want to restart MEGAsync now?");
-    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::No;
-    msgInfo.parent = this;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
-    {
-        if(msg->result() == QMessageBox::Yes)
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: full re-scan requested");
-            mPreferences->setDeleteSdkCacheAtStartup(true);
-            MegaSyncApp->rebootApplication(false);
-        }
-    };
-
-    QMegaMessageBox::warning(msgInfo);
+    mMegaApi->rescanSync(INVALID_HANDLE, true);
 }
 
 void SettingsDialog::on_bSendBug_clicked()
@@ -1355,12 +1225,6 @@ void SettingsDialog::updateAccountElements()
     mUi->lAccountType->setIcon(icon);
 }
 
-void SettingsDialog::storageStateChanged(int newStorageState)
-{
-     setOverQuotaMode(newStorageState == MegaApi::STORAGE_STATE_RED
-                      || newStorageState == MegaApi::STORAGE_STATE_PAYWALL);
-}
-
 void SettingsDialog::on_bAccount_clicked()
 {
     emit userActivity();
@@ -1391,14 +1255,7 @@ void SettingsDialog::on_lAccountType_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
-    QString url = QString::fromUtf8("mega://#pro");
-    Utilities::getPROurlWithParameters(url);
-    Utilities::openUrl(QUrl(url));
-}
-
-void SettingsDialog::on_bBuyMoreSpace_clicked()
-{
-    on_bUpgrade_clicked();
+    Utilities::upgradeClicked();
 }
 
 void SettingsDialog::on_bMyAccount_clicked()
@@ -1475,131 +1332,9 @@ void SettingsDialog::on_bLogout_clicked()
 }
 
 // Syncs -------------------------------------------------------------------------------------------
-void SettingsDialog::connectSyncHandlers()
-{
-    connect(mUi->syncTableView, &BackupTableView::removeSync, this, &SettingsDialog::removeSync);
-
-    connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
-    {
-        onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = this;
-        msgInfo.title = tr("Error removing sync");
-        msgInfo.text = tr("Your sync can't be removed. Reason: %1")
-                .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
-        QMegaMessageBox::warning(msgInfo);
-    });
-
-    connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
-    {
-        onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = this;
-        msgInfo.title = tr("Error enabling sync");
-        msgInfo.text = tr("Your sync \"%1\" can't be enabled. Reason: %2")
-                .arg(sync->name())
-                .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode)));
-        QMegaMessageBox::warning(msgInfo);
-    });
-
-    connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
-    {
-        onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = this;
-        msgInfo.title = tr("Error disabling sync");
-        msgInfo.text = tr("Your sync \"%1\" can't be disabled. Reason: %2")
-                .arg(sync->name())
-                .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode)));
-        QMegaMessageBox::warning(msgInfo);
-    });
-}
-
-void SettingsDialog::loadSyncSettings()
-{
-    SyncItemModel *model(new SyncItemModel(mUi->syncTableView));
-    model->fillData();
-    connect(model, &SyncItemModel::enableSync, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
-        mSyncController.enableSync(sync);
-    });
-    connect(model, &SyncItemModel::disableSync, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
-        mSyncController.disableSync(sync);
-    });
-    connect(model, &SyncItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
-    {
-        if(syncSetting->getType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
-        {
-            onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        }
-    });
-    connectAddSyncHandler();
-
-    SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
-    sortModel->setSourceModel(model);
-    mUi->syncTableView->setModel(sortModel);
-    mSyncTableEventFilter->setSourceModel(model);
-}
-
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 {
-    auto overQuotaDialog = mApp->showSyncOverquotaDialog();
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, [megaFolderHandle, overQuotaDialog, this]()
-        {
-            if(overQuotaDialog->result() == QDialog::Rejected)
-            {
-                addSyncFolderAfterOverQuotaCheck(megaFolderHandle);
-            }
-        });
-    }
-    else
-    {
-        addSyncFolderAfterOverQuotaCheck(megaFolderHandle);
-    }
-}
-
-void SettingsDialog::addSyncFolderAfterOverQuotaCheck(MegaHandle megaFolderHandle)
-{
-    QPointer<BindFolderDialog> dialog = new BindFolderDialog(mApp, this);
-
-    if (megaFolderHandle != mega::INVALID_HANDLE)
-    {
-        dialog->setMegaFolder(megaFolderHandle);
-    }
-
-    DialogOpener::showDialog<BindFolderDialog>(dialog, [dialog, this]()
-    {
-        QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder())
-                                                           .canonicalPath());
-        
-
-    if (localFolderPath.isEmpty() || dialog->getMegaPath().isEmpty()
-        || dialog->getSyncName().isEmpty() || !dialog->getMegaFolder())
-    {
-        return;
-    }
-
-    syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
-    mSyncController.addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName(), MegaSync::TYPE_TWOWAY);
-    });
-
-}
-
-void SettingsDialog::connectAddSyncHandler()
-{
-    GuiUtilities::connectAddSyncDefaultHandler(&mSyncController, mPreferences->accountType());
-    connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, int, const QString, const QString)
-    {
-        if (errorCode != MegaError::API_OK)
-        {
-            onSavingSyncsCompleted(SyncStateInformation::SAVING_SYNCS_FINISHED);
-        }
-    });
+    mUi->syncSettings->addButtonClicked(megaFolderHandle);
 }
 
 void SettingsDialog::setEnabledAllControls(const bool enabled)
@@ -1686,218 +1421,7 @@ void SettingsDialog::on_bSyncs_clicked()
     SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
 }
 
-
-#ifndef WIN32
-void SettingsDialog::on_bPermissions_clicked()
-{
-    mMegaApi->setDefaultFolderPermissions(mPreferences->folderPermissionsValue());
-    int folderPermissions = mMegaApi->getDefaultFolderPermissions();
-    mMegaApi->setDefaultFilePermissions(mPreferences->filePermissionsValue());
-    int filePermissions = mMegaApi->getDefaultFilePermissions();
-
-    QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
-    dialog->setFolderPermissions(folderPermissions);
-    dialog->setFilePermissions(filePermissions);
-    DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions, this](){
-        if (dialog->result() == QDialog::Accepted)
-        {
-            filePermissions = dialog->filePermissions();
-            folderPermissions = dialog->folderPermissions();
-
-            if (filePermissions != mPreferences->filePermissionsValue()
-                    || folderPermissions != mPreferences->folderPermissionsValue())
-            {
-                mPreferences->setFilePermissionsValue(filePermissions);
-                mPreferences->setFolderPermissionsValue(folderPermissions);
-            }
-        }
-    });
-}
-#endif
-
-void SettingsDialog::on_bAddSync_clicked()
-{
-    addSyncFolder(mega::INVALID_HANDLE);
-}
-
-void SettingsDialog::on_bDeleteSync_clicked()
-{
-    if(mUi->syncTableView->selectionModel()->hasSelection())
-    {
-        QModelIndex index = mUi->syncTableView->selectionModel()->selectedRows().first();
-        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
-    }
-}
-
-void SettingsDialog::syncsStateInformation(SyncStateInformation state)
-{
-    switch (state)
-    {
-        case SAVING_SYNCS:
-            setEnabledAllControls(false);
-            //if we are on sync tab
-            mUi->wSpinningIndicatorSyncs->start();
-            mUi->sSyncsState->setCurrentWidget(mUi->pSavingSyncs);
-            break;
-        case SAVING_BACKUPS:
-            setEnabledAllControls(false);
-            mUi->wSpinningIndicatorBackups->start();
-            mUi->sBackupsState->setCurrentWidget(mUi->pSavingBackups);
-            break;
-        case SAVING_SYNCS_FINISHED:
-            setEnabledAllControls(true);
-            mUi->wSpinningIndicatorSyncs->stop();
-            // If any sync is disabled, shows warning message
-            if (mModel->syncWithErrorExist(mega::MegaSync::SyncType::TYPE_TWOWAY))
-            {
-                mUi->sSyncsState->setCurrentWidget(mUi->pSyncsDisabled);
-
-    #ifdef Q_OS_MACOS
-                QString syncs(QString::fromUtf8("settings-syncs-error"));
-                mToolBar->customizeIconToolBarItem(bSyncs, syncs);
-    #else
-               mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs-warn.png")));
-    #endif
-             }
-             else
-             {
-                 mUi->sSyncsState->setCurrentWidget(mUi->pNoErrorsSyncs);
-
-    #ifdef Q_OS_MACOS
-                QString syncs(QString::fromUtf8("settings-syncs"));
-                mToolBar->customizeIconToolBarItem(bSyncs, syncs);
-    #else
-                 mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs.png")));
-    #endif
-             }
-            break;
-    case SAVING_BACKUPS_FINISHED:
-        setEnabledAllControls(true);
-        mUi->wSpinningIndicatorBackups->stop();
-        // If any sync is disabled, shows warning message
-        if (mModel->syncWithErrorExist(mega::MegaSync::SyncType::TYPE_BACKUP))
-        {
-            mUi->sBackupsState->setCurrentWidget(mUi->pBackupsDisabled);
-
-#ifdef Q_OS_MACOS
-            QString backup(QString::fromUtf8("settings-backups-error"));
-            mToolBar->customizeIconToolBarItem(bBackup, backup);
-#else
-            mUi->bBackup->setIcon(QIcon(QString::fromUtf8(":/images/settings-backups-warn.png")));
-#endif
-         }
-         else
-         {
-            mUi->sBackupsState->setCurrentWidget(mUi->pNoErrorsBackups);
-
-#ifdef Q_OS_MACOS
-            QString backup(QString::fromUtf8("settings-backup"));
-            mToolBar->customizeIconToolBarItem(bBackup, backup);
-#else
-            mUi->bBackup->setIcon(QIcon(QString::fromUtf8(":/images/settings-backup.png")));
-#endif
-         }
-        }
-}
-
 // Backup ----------------------------------------------------------------------------------------
-void SettingsDialog::connectBackupHandlers()
-{
-    connect(mUi->backupTableView, &BackupTableView::removeBackup, this, &SettingsDialog::removeBackup);
-    connect(mUi->backupTableView, &BackupTableView::openInMEGA, this, &SettingsDialog::openHandleInMega);
-
-    auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-    connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
-            this, &SettingsDialog::onMyBackupsFolderHandleSet);
-    onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
-
-    connect(&mBackupController, &SyncController::syncAddStatus, this, [this](const int errorCode, const int, const QString errorMsg, QString name)
-    {
-        if (errorCode != MegaError::API_OK)
-        {
-            onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.parent = this;
-            msgInfo.title = tr("Error adding backup %1").arg(name);
-            msgInfo.text = GuiUtilities::decoratedWithSupportUrl(errorMsg);
-            QMegaMessageBox::critical(msgInfo);
-        }
-    });
-
-    connect(&mBackupController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
-    {
-        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = this;
-        msgInfo.title = tr("Error removing backup");
-        msgInfo.text = tr("Your backup can't be removed. Reason: %1")
-                .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
-        QMegaMessageBox::warning(msgInfo);
-    });
-
-    connect(&mBackupController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
-    {
-        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = this;
-        msgInfo.title = tr("Error moving or removing remote backup folder");
-        msgInfo.text = tr("Failed to move or remove the remote backup folder. Reason: %1")
-                .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
-        QMegaMessageBox::warning(msgInfo);
-    });
-
-    connect(&mBackupController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
-    {
-        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = this;
-        msgInfo.title =  tr("Error enabling backup");
-        msgInfo.text = tr("Your backup \"%1\" can't be enabled. Reason: %2")
-                .arg(sync->name())
-                .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode)));
-        QMegaMessageBox::warning(msgInfo);
-    });
-
-    connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
-    {
-        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = this;
-        msgInfo.title =  tr("Error disabling backup");
-        msgInfo.text = tr("Your backup \"%1\" can't be disabled. Reason: %2")
-                .arg(sync->name())
-                .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode)));
-        QMegaMessageBox::warning(msgInfo);
-    });
-}
-
-void SettingsDialog::loadBackupSettings()
-{
-    BackupItemModel *model(new BackupItemModel(mUi->backupTableView));
-    model->fillData();
-    connect(model, &BackupItemModel::enableSync, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        mBackupController.enableSync(sync);
-    });
-    connect(model, &BackupItemModel::disableSync, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        mBackupController.disableSync(sync);
-    });
-    connect(model, &BackupItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
-    {
-        if(syncSetting->getType() == mega::MegaSync::SyncType::TYPE_BACKUP)
-        {
-            onSavingSyncsCompleted(SAVING_BACKUPS_FINISHED);
-        }
-    });
-    SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
-    sortModel->setSourceModel(model);
-    mUi->backupTableView->setModel(sortModel);
-    mBackupTableEventFilter->setSourceModel(model);
-}
-
 void SettingsDialog::on_bBackup_clicked()
 {
     emit userActivity();
@@ -1918,81 +1442,9 @@ void SettingsDialog::on_bBackup_clicked()
     SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
 }
 
-void SettingsDialog::on_bAddBackup_clicked()
-{
-    QPointer<AddBackupDialog> addBackup = new AddBackupDialog(this);
-    DialogOpener::showDialog(addBackup,[this, addBackup]()
-    {
-        if(addBackup->result() == QDialog::Accepted)
-        {
-            mBackupController.addBackup(addBackup->getSelectedFolder(), addBackup->getBackupName());
-            syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        }
-    });
-}
-
-void SettingsDialog::on_bDeleteBackup_clicked()
-{
-    if(!mUi->backupTableView->selectionModel()->hasSelection())
-        return;
-
-    QModelIndex index = mUi->backupTableView->selectionModel()->selectedRows().first();
-    std::shared_ptr<SyncSettings> backup = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
-
-    if(backup == nullptr)
-        return;
-
-    removeBackup(backup);
-}
-
-void SettingsDialog::removeBackup(std::shared_ptr<SyncSettings> backup)
-{
-    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(backup, this);
-
-    DialogOpener::showDialog(dialog,[this, dialog]()
-    {
-        if(dialog->result() == QDialog::Accepted)
-        {
-            syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-            mBackupController.removeSync(dialog->backupToRemove(), dialog->targetFolder());
-        }
-    });
-}
-
-void SettingsDialog::removeSync(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
-    mSyncController.removeSync(sync);
-}
-
-void SettingsDialog::on_bOpenBackupFolder_clicked()
-{
-    auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-    Utilities::openInMega(myBackupsHandle->getMyBackupsHandle());
-}
-
-void SettingsDialog::openHandleInMega(MegaHandle handle)
-{
-    Utilities::openInMega(handle);
-}
-
 void SettingsDialog::on_bBackupCenter_clicked()
 {
     Utilities::openBackupCenter();
-}
-
-void SettingsDialog::onMyBackupsFolderHandleSet(mega::MegaHandle h)
-{
-    mUi->lBackupFolder->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath());
-
-    if (h == mega::INVALID_HANDLE)
-    {
-        mUi->bOpenBackupFolder->setEnabled(false);
-    }
-    else
-    {
-        mUi->bOpenBackupFolder->setEnabled(true);
-    }
 }
 
 // Security ----------------------------------------------------------------------------------------
@@ -2209,173 +1661,9 @@ void SettingsDialog::on_bDownloadFolder_clicked()
     });
 }
 
-void SettingsDialog::on_bAddName_clicked()
-{
-    QPointer<AddExclusionDialog> add(new AddExclusionDialog(this));
-    DialogOpener::showDialog<AddExclusionDialog>(add, [add, this]()
-    {
-        if (add->result() == QDialog::Accepted)
-        {
-            QString text = add->textValue();
-
-            if (!text.isEmpty())
-            {
-                for (int i = 0; i < mUi->lExcludedNames->count(); i++)
-                {
-                    if (mUi->lExcludedNames->item(i)->text() == text)
-                    {
-                        return;
-                    }
-                    else if (mUi->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive) > 0)
-                    {
-                        mUi->lExcludedNames->insertItem(i, text);
-                        saveExcludeSyncNames();
-                        return;
-                    }
-                }
-
-                mUi->lExcludedNames->addItem(text);
-                saveExcludeSyncNames();
-            }
-        }
-    });
-}
-
-void SettingsDialog::on_bDeleteName_clicked()
-{
-    QList<QListWidgetItem*> selected = mUi->lExcludedNames->selectedItems();
-    if (selected.size() == 0)
-    {
-        return;
-    }
-
-    for (int i = 0; i < selected.size(); i++)
-    {
-        delete selected[i];
-    }
-
-    saveExcludeSyncNames();
-}
-
-void SettingsDialog::on_cExcludeUpperThan_clicked()
-{
-    if (mLoadingSettings) return;
-    bool enable (mUi->cExcludeUpperThan->isChecked());
-    mPreferences->setUpperSizeLimit(enable);
-    mUi->eUpperThan->setEnabled(enable);
-    mUi->cbExcludeUpperUnit->setEnabled(enable);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (upper than toggled)");
-    mPreferences->setDeleteSdkCacheAtStartup(true);
-}
-
-void SettingsDialog::on_cExcludeLowerThan_clicked()
-{
-    if (mLoadingSettings) return;
-    bool enable (mUi->cExcludeLowerThan->isChecked());
-    mPreferences->setLowerSizeLimit(enable);
-    mUi->eLowerThan->setEnabled(enable);
-    mUi->cbExcludeLowerUnit->setEnabled(enable);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (lower than toggled)");
-    mPreferences->setDeleteSdkCacheAtStartup(true);
-}
-
-void SettingsDialog::on_eUpperThan_valueChanged(int i)
-{
-    if (mLoadingSettings) return;
-    mPreferences->setUpperSizeLimitValue(i);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (upper than updated)");
-    mPreferences->setDeleteSdkCacheAtStartup(true);
-}
-
-void SettingsDialog::on_eLowerThan_valueChanged(int i)
-{
-    if (mLoadingSettings) return;
-    mPreferences->setLowerSizeLimitValue(i);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (lower than updated)");
-    mPreferences->setDeleteSdkCacheAtStartup(true);
-}
-
-void SettingsDialog::on_cbExcludeUpperUnit_currentIndexChanged(int index)
-{
-    if (mLoadingSettings) return;
-    mPreferences->setUpperSizeLimitUnit(index);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (upper unit updated)");
-    mPreferences->setDeleteSdkCacheAtStartup(true);
-}
-
-void SettingsDialog::on_cbExcludeLowerUnit_currentIndexChanged(int index)
-{
-    if (mLoadingSettings) return;
-    mPreferences->setLowerSizeLimitUnit(index);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (lower unit updated)");
-    mPreferences->setDeleteSdkCacheAtStartup(true);
-}
-
-void SettingsDialog::saveExcludeSyncNames()
-{
-    QStringList excludedNames;
-    QStringList excludedPaths;
-    for (int i = 0; i < mUi->lExcludedNames->count(); i++)
-    {
-        if (mUi->lExcludedNames->item(i)->text().contains(QDir::separator())) // Path exclusion
-        {
-            excludedPaths.append(mUi->lExcludedNames->item(i)->text());
-        }
-        else // File name exclusion
-        {
-            excludedNames.append(mUi->lExcludedNames->item(i)->text());
-        }
-    }
-
-    mPreferences->setExcludedSyncNames(excludedNames);
-    mPreferences->setExcludedSyncPaths(excludedPaths);
-
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (names)");
-    mPreferences->setDeleteSdkCacheAtStartup(true);
-}
-
 void SettingsDialog::onShellNotificationsProcessed()
 {
     setOverlayCheckboxEnabled(true, mUi->cOverlayIcons->isChecked());
-}
-
-void SettingsDialog::on_bRestart_clicked()
-{
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = this;
-    msgInfo.title =  tr("Restart MEGAsync");
-    msgInfo.text =   tr("Do you want to restart MEGAsync now?");
-    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::No;
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
-        if(msg->result() == QMessageBox::Yes)
-        {
-            mPreferences->setDeleteSdkCacheAtStartup(true);
-            MegaSyncApp->rebootApplication(false);
-        }
-    };
-    QMegaMessageBox::warning(msgInfo);
 }
 
 // Network -----------------------------------------------------------------------------------------
@@ -2488,6 +1776,24 @@ void SettingsDialog::updateNetworkTab()
             mUi->lProxySettings->setText(tr("Manual"));
             break;
     }
+}
+
+void SettingsDialog::showUnexpectedSyncError(const QString& message)
+{
+    QObject temporary;
+
+    auto completion = [message]() {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = QMegaMessageBox::errorTitle();
+        msgInfo.text = message;
+        QMegaMessageBox::critical(msgInfo);
+    };
+
+    QObject::connect(&temporary,
+                     &QObject::destroyed,
+                     this,
+                     std::move(completion),
+                     Qt::QueuedConnection);
 }
 
 void SettingsDialog::setShortCutsForToolBarItems()

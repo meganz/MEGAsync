@@ -62,6 +62,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp \
     $$PWD/CancelConfirmWidget.cpp \
+    $$PWD/RemoteItemUi.cpp \
     $$PWD/WordWrapLabel.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
@@ -153,6 +154,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SwitchButton.h \
     $$PWD/GuiUtilities.h \
     $$PWD/CancelConfirmWidget.h \
+    $$PWD/RemoteItemUi.h \
     $$PWD/WordWrapLabel.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
@@ -212,6 +214,7 @@ win32 {
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
+                $$PWD/win/RemoteItemUI.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
@@ -259,6 +262,7 @@ macx {
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/PSAwidget.ui \
+                $$PWD/macx/RemoteItemUI.ui\
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \
@@ -347,6 +351,7 @@ unix:!macx {
                 $$PWD/linux/NodeNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui \
                 $$PWD/linux/LowDiskSpaceDialog.ui \
+                $$PWD/linux/RemoteItemUi.ui \
                 $$PWD/linux/ViewLoadingScene.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
@@ -358,5 +363,3 @@ unix:!macx {
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
-
-

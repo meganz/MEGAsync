@@ -55,7 +55,7 @@ prepare() {
 build() {
 	_bindir=$pkgdir/usr/bin
 	cd "$pkgname-$pkgver"
-	./configure -e -q -g
+	./configure -e -q -g -L
 	# Link dynamically with freeimage if pdfium is required.
 	ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3; \
 	ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so; \

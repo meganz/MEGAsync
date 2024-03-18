@@ -8,14 +8,6 @@ class BackupItemModel : public SyncItemModel
     Q_OBJECT
 
 public:
-    typedef enum
-    {
-        ENABLED = 0,
-        LNAME,
-        MENU
-    } Column;
-    const unsigned int kColumns = 3;
-
     explicit BackupItemModel(QObject *parent = nullptr);
 
     // Header

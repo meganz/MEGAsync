@@ -3,7 +3,7 @@ import QtQuick 2.15
 import common 1.0
 
 QtObject {
-    id: colorsRoot
+    id: root
 
     property color selection: Styles.focus
     property color placeholder: Styles.textPlaceholder

@@ -9,6 +9,7 @@ class QmlDialog : public QQuickWindow
 
 public:
     explicit QmlDialog(QWindow* parent = nullptr);
+
     ~QmlDialog() = default;
 
 signals:

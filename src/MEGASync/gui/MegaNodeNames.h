@@ -50,11 +50,16 @@ public:
             }
             else
             {
-                return QCoreApplication::translate("MegaError", "Decryption error");
+                return getUndecryptedName();
             }
         }
 
         return QString();
+    }
+
+    static QString getUndecryptedName()
+    {
+        return QCoreApplication::translate("MegaError", "Decryption error");
     }
 };
 

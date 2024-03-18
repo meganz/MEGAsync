@@ -6,22 +6,17 @@ import common 1.0
 import components.images 1.0
 
 Qml.ScrollBar {
-    id: scrollbar
+    id: root
 
     enum Direction {
-        None = 0,
-        Vertical = 1,
-        Horizontal = 2
+        NONE = 0,
+        VERTICAL,
+        HORIZONTAL
     }
 
-    property int direction: ScrollBar.Direction.None
-
+    property int direction: ScrollBar.Direction.NONE
     property int scrollBarAnchor: 8
     property int scrollBarRadius: 10
-    property real scrollBarPressedOpacity: 0.6
-    property real scrollBarBackgroundOpacity: 0.2
-    property real backgroundContentHeight: scrollbar.height - 2 * backgroundSpacing - 2 * iconSize
-    property real backgroundContentWidth: scrollbar.width - 2 * backgroundSpacing - 2 * iconSize
     property int backgroundSpacing: 4
     property int backgroundMargin: 8
     property int iconSize: 16
@@ -30,9 +25,13 @@ Qml.ScrollBar {
     property int buttonSize: iconSize + buttonFocusBorder
     property int backgroundContentIconMargin: iconSize + backgroundSpacing
     property int backgroundContentMargin: scrollBarAnchor / 2 + buttonFocusBorder / 2
+    property real scrollBarPressedOpacity: 0.6
+    property real scrollBarBackgroundOpacity: 0.2
+    property real backgroundContentHeight: root.height - 2 * backgroundSpacing - 2 * iconSize
+    property real backgroundContentWidth: root.width - 2 * backgroundSpacing - 2 * iconSize
 
-    height: direction === ScrollBar.Direction.Vertical ? parent.height : scrollBarAnchor
-    width: direction === ScrollBar.Direction.Vertical ? scrollBarAnchor : parent.width
+    height: direction === ScrollBar.Direction.VERTICAL ? parent.height : scrollBarAnchor
+    width: direction === ScrollBar.Direction.VERTICAL ? scrollBarAnchor : parent.width
     visible: visualSize < 1.0
 
     contentItem: Loader { id: contentLoader }
@@ -40,36 +39,37 @@ Qml.ScrollBar {
     background: Loader { id: backgroundLoader }
 
     onDirectionChanged: {
-        if(direction === ScrollBar.Direction.Vertical) {
+        if(direction === ScrollBar.Direction.VERTICAL) {
             backgroundLoader.sourceComponent = verticalBackground;
             contentLoader.sourceComponent = verticalContent;
-        } else if(direction === ScrollBar.Direction.Horizontal) {
+        }
+        else if(direction === ScrollBar.Direction.HORIZONTAL) {
             backgroundLoader.sourceComponent = horizontalBackground;
             contentLoader.sourceComponent = horizontalContent;
         }
     }
 
     Keys.onUpPressed: {
-        if(direction === ScrollBar.Direction.Vertical) {
-            scrollbar.decrease();
+        if(direction === ScrollBar.Direction.VERTICAL) {
+            root.decrease();
         }
     }
 
     Keys.onDownPressed: {
-        if(direction === ScrollBar.Direction.Vertical) {
-            scrollbar.increase();
+        if(direction === ScrollBar.Direction.VERTICAL) {
+            root.increase();
         }
     }
 
     Keys.onLeftPressed: {
-        if(direction === ScrollBar.Direction.Horizontal) {
-            scrollbar.decrease();
+        if(direction === ScrollBar.Direction.HORIZONTAL) {
+            root.decrease();
         }
     }
 
     Keys.onRightPressed: {
-        if(direction === ScrollBar.Direction.Horizontal) {
-            scrollbar.increase();
+        if(direction === ScrollBar.Direction.HORIZONTAL) {
+            root.increase();
         }
     }
 
@@ -77,12 +77,14 @@ Qml.ScrollBar {
         id: verticalContent
 
         Loader {
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: backgroundContentMargin
-            anchors.topMargin: backgroundContentIconMargin
-            anchors.bottomMargin: backgroundContentIconMargin - 4
+            anchors {
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+                leftMargin: backgroundContentMargin
+                topMargin: backgroundContentIconMargin
+                bottomMargin: backgroundContentIconMargin - 4
+            }
             sourceComponent: contentComponent
         }
     }
@@ -91,12 +93,14 @@ Qml.ScrollBar {
         id: horizontalContent
 
         Loader {
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.topMargin: backgroundContentMargin
-            anchors.leftMargin: backgroundContentIconMargin
-            anchors.rightMargin: backgroundContentIconMargin
+            anchors {
+                left: parent.left
+                top: parent.top
+                right: parent.right
+                topMargin: backgroundContentMargin
+                leftMargin: backgroundContentIconMargin
+                rightMargin: backgroundContentIconMargin
+            }
             sourceComponent: contentComponent
         }
     }
@@ -107,7 +111,7 @@ Qml.ScrollBar {
         Rectangle {
             radius: scrollBarRadius
             color: Styles.iconPrimary
-            opacity: scrollbar.pressed ? scrollBarPressedOpacity : 1.0
+            opacity: root.pressed ? scrollBarPressedOpacity : 1.0
         }
     }
 
@@ -115,21 +119,31 @@ Qml.ScrollBar {
         id: verticalBackground
 
         Column {
+            id: verticalBackgroundColumn
+
+            width: root.width
+            height: root.height
             spacing: backgroundSpacing
-            width: scrollbar.width
-            height: scrollbar.height
 
             Loader {
+                id: verticalDecreaseArrowLoader
+
                 sourceComponent: decreaseArrow
             }
 
             Loader {
-                anchors.left: parent.left
-                anchors.leftMargin: backgroundMargin
+                id: verticalBackgroundLoader
+
+                anchors {
+                    left: parent.left
+                    leftMargin: backgroundMargin
+                }
                 sourceComponent: backgroundRectangle
             }
 
             Loader {
+                id: verticalIncreaseArrowLoader
+
                 sourceComponent: increaseArrow
             }
         }
@@ -139,21 +153,31 @@ Qml.ScrollBar {
         id: horizontalBackground
 
         Row {
+            id: verticalBackgroundRow
+
+            width: root.width
+            height: root.height
             spacing: backgroundSpacing
-            width: scrollbar.width
-            height: scrollbar.height
 
             Loader {
+                id: horizontalDecreaseArrowLoader
+
                 sourceComponent: decreaseArrow
             }
 
             Loader {
-                anchors.top: parent.top
-                anchors.topMargin: backgroundMargin
+                id: horizontalBackgroundLoader
+
+                anchors {
+                    top: parent.top
+                    topMargin: backgroundMargin
+                }
                 sourceComponent: backgroundRectangle
             }
 
             Loader {
+                id: horizontalIncreaseArrowLoader
+
                 sourceComponent: increaseArrow
             }
         }
@@ -163,23 +187,27 @@ Qml.ScrollBar {
         id: decreaseArrow
 
         Loader {
-            property var buttonRotation: direction === ScrollBar.Direction.Vertical ? -90 : 180
+            id: decreaseArrowLoader
 
-            enabled: scrollbar.visualPosition !== 0
+            property var buttonRotation: direction === ScrollBar.Direction.VERTICAL ? -90 : 180
+
+            enabled: root.visualPosition !== 0
             sourceComponent: button
 
             Keys.onEnterPressed: {
-                scrollbar.decrease();
+                root.decrease();
             }
 
             Keys.onReturnPressed: {
-                scrollbar.decrease();
+                root.decrease();
             }
 
             MouseArea {
+                id: decreaseArrowMouseArea
+
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
-                onClicked: scrollbar.decrease()
+                onClicked: root.decrease()
             }
         }
     }
@@ -190,8 +218,8 @@ Qml.ScrollBar {
         Rectangle {
             id: backgroundPainted
 
-            height: direction === ScrollBar.Direction.Vertical ? backgroundContentHeight : 2
-            width: direction === ScrollBar.Direction.Vertical ? 2 : backgroundContentWidth
+            height: direction === ScrollBar.Direction.VERTICAL ? backgroundContentHeight : 2
+            width: direction === ScrollBar.Direction.VERTICAL ? 2 : backgroundContentWidth
             radius: scrollBarRadius
             color: Styles.iconButton
             opacity: scrollBarBackgroundOpacity
@@ -203,23 +231,27 @@ Qml.ScrollBar {
         id: increaseArrow
 
         Loader {
-            property var buttonRotation: direction === ScrollBar.Direction.Vertical ? 90 : 0
+            id: increaseArrowLoader
+
+            property var buttonRotation: direction === ScrollBar.Direction.VERTICAL ? 90 : 0
 
             enabled: visualPosition + visualSize < 1.0
             sourceComponent: button
 
             Keys.onEnterPressed: {
-                scrollbar.increase();
+                root.increase();
             }
 
             Keys.onReturnPressed: {
-                scrollbar.increase();
+                root.increase();
             }
 
             MouseArea {
+                id: increaseArrowMouseArea
+
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
-                onClicked: scrollbar.increase()
+                onClicked: root.increase()
             }
         }
     }
@@ -228,24 +260,31 @@ Qml.ScrollBar {
         id: button
 
         Rectangle {
-            border.color: enabled && activeFocus ? Styles.focus : "transparent"
-            border.width: buttonFocusBorder
-            color: "transparent"
+            id: buttonRect
+
             width: buttonSize
             height: buttonSize
+            color: "transparent"
             radius: buttonFocusRadius
-
             activeFocusOnTab: true
+            border {
+                color: enabled && activeFocus ? Styles.focus : "transparent"
+                width: buttonFocusBorder
+            }
 
             SvgImage {
+                id: image
+
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                    topMargin: buttonFocusBorder / 2
+                    leftMargin: buttonFocusBorder / 2
+                }
                 source: Images.arrowRight
                 sourceSize: Qt.size(iconSize, iconSize)
                 color: enabled ? Styles.iconButton : Styles.iconButtonDisabled
                 rotation: buttonRotation
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.topMargin: buttonFocusBorder / 2
-                anchors.leftMargin: buttonFocusBorder / 2
             }
         }
     }

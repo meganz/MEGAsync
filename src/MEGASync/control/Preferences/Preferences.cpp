@@ -1,9 +1,11 @@
 #include "Preferences/Preferences.h"
 #include "Version.h"
 #include "platform/Platform.h"
+#include "AppStatsEvents.h"
 #include "UserAttributesRequests/FullName.h"
 
 #include <QDesktopServices>
+#include <QDir>
 #include <assert.h>
 
 using namespace mega;
@@ -149,6 +151,13 @@ const bool Preferences::defaultShowNotifications = true;
 const bool Preferences::defaultDeprecatedNotifications      = true;
 const QString Preferences::showDeprecatedNotificationsKey   = QString::fromLatin1("showNotifications");
 
+//Stalled Issues
+const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::None;
+const QString Preferences::stalledIssuesModeKey   = QString::fromLatin1("stalledIssuesSmartMode");
+
+const QString Preferences::stalledIssuesEventDateKey = QString::fromLatin1("stalledIssuesEventDate");
+//End of Stalled Issues
+
 const QString Preferences::accountTypeKey           = QString::fromLatin1("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromLatin1("proExpirityTime");
 const QString Preferences::startOnStartupKey        = QString::fromLatin1("startOnStartup");
@@ -198,15 +207,11 @@ const QString Preferences::hasDefaultUploadFolderKey    = QString::fromLatin1("h
 const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromLatin1("hasDefaultDownloadFolder");
 const QString Preferences::hasDefaultImportFolderKey    = QString::fromLatin1("hasDefaultImportFolder");
 const QString Preferences::localFingerprintKey      = QString::fromLatin1("localFingerprint");
-const QString Preferences::deleteSdkCacheAtStartupKey = QString::fromLatin1("deleteSdkCacheAtStartup");
-const int     Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG = 4904;
 const QString Preferences::isCrashedKey             = QString::fromLatin1("isCrashed");
 const QString Preferences::wasPausedKey             = QString::fromLatin1("wasPaused");
 const QString Preferences::wasUploadsPausedKey      = QString::fromLatin1("wasUploadsPaused");
 const QString Preferences::wasDownloadsPausedKey    = QString::fromLatin1("wasDownloadsPaused");
 const QString Preferences::lastExecutionTimeKey     = QString::fromLatin1("lastExecutionTime");
-const QString Preferences::excludedSyncNamesKey     = QString::fromLatin1("excludedSyncNames");
-const QString Preferences::excludedSyncPathsKey     = QString::fromLatin1("excludedSyncPaths");
 const QString Preferences::lastVersionKey           = QString::fromLatin1("lastVersion");
 const QString Preferences::lastStatsRequestKey      = QString::fromLatin1("lastStatsRequest");
 const QString Preferences::lastUpdateTimeKey        = QString::fromLatin1("lastUpdateTime");
@@ -261,6 +266,7 @@ const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
 const long long Preferences::defaultTimeStamp       = 0;
+
 //The default appDataId starts from 1, as 0 will be used for invalid appDataId
 const unsigned long long  Preferences::defaultTransferIdentifier   = 1;
 const int  Preferences::defaultParallelUploadConnections      = 3;
@@ -1257,6 +1263,68 @@ QString Preferences::notificationsTypeToString(NotificationsTypes type)
     return QString::fromUtf8(metaEnum.valueToKey(notificationsTypeUT(type)));
 }
 
+/************ STALLED ISSUES **********************************/
+
+Preferences::StalledIssuesModeType Preferences::stalledIssuesMode()
+{
+    auto value = getValueConcurrent<int>(stalledIssuesModeKey, static_cast<int>(defaultStalledIssuesMode));
+    return static_cast<StalledIssuesModeType>(value);
+}
+
+void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
+{
+    auto currentValue(stalledIssuesMode());
+    if(value != currentValue)
+    {
+        QString eventMessage;
+        int eventType(0);
+
+        if(value == StalledIssuesModeType::Smart)
+        {
+            if(currentValue == StalledIssuesModeType::None)
+            {
+                eventMessage = QString::fromLatin1("Smart mode selected by default");
+                eventType = AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED;
+            }
+            else
+            {
+                eventMessage = QString::fromLatin1("Smart mode selected");
+                eventType = AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE;
+            }
+        }
+        else
+        {
+            if(currentValue == StalledIssuesModeType::None)
+            {
+                eventMessage = QString::fromLatin1("Advanced mode selected by default");
+                eventType = AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED;
+            }
+            else
+            {
+                eventMessage = QString::fromLatin1("Advanced mode selected");
+                eventType = AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE;
+            }
+        }
+
+        if(eventType != 0)
+        {
+            MegaSyncApp->getMegaApi()->sendEvent(eventType, eventMessage.toUtf8().constData(), false, nullptr);
+        }
+
+        setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value), true);
+    }
+}
+
+QDate Preferences::stalledIssuesEventLastDate()
+{
+    return getValueConcurrent<QDate>(stalledIssuesEventDateKey, QDate());
+}
+
+void Preferences::updateStalledIssuesEventLastDate()
+{
+    setValueAndSyncConcurrent(stalledIssuesEventDateKey, QDate::currentDate());
+}
+
 /************ END OF NOTIFICATIONS GETTERS/SETTERS ************/
 
 bool Preferences::startOnStartup()
@@ -1986,65 +2054,6 @@ void Preferences::removeAllFolders()
     mSettings->sync();
 }
 
-QStringList Preferences::getExcludedSyncNames()
-{
-    mutex.lock();
-    assert(logged());
-    QStringList value = excludedSyncNames;
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setExcludedSyncNames(QStringList names)
-{
-    mutex.lock();
-    assert(logged());
-    excludedSyncNames = names;
-    if (!excludedSyncNames.size())
-    {
-        mSettings->remove(excludedSyncNamesKey);
-        removeFromCache(excludedSyncNamesKey);
-    }
-    else
-    {
-        mSettings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QLatin1String("\n")));
-        setCachedValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromLatin1("\n")));
-    }
-
-    mSettings->sync();
-    mutex.unlock();
-}
-
-QStringList Preferences::getExcludedSyncPaths()
-{
-    mutex.lock();
-    assert(logged());
-    QStringList value = excludedSyncPaths;
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setExcludedSyncPaths(QStringList paths)
-{
-    mutex.lock();
-    assert(logged());
-    excludedSyncPaths = paths;
-    if (!excludedSyncPaths.size())
-    {
-        mSettings->remove(excludedSyncPathsKey);
-        removeFromCache(excludedSyncPathsKey);
-    }
-    else
-    {
-        mSettings->setValue(excludedSyncPathsKey, excludedSyncPaths.join(QString::fromLatin1("\n")));
-        setCachedValue(excludedSyncPathsKey, excludedSyncPaths.join(QString::fromLatin1("\n")));
-    }
-
-    mSettings->sync();
-    mutex.unlock();
-}
-
-
 bool Preferences::isOneTimeActionDone(int action)
 {
     mutex.lock();
@@ -2395,19 +2404,6 @@ void Preferences::resetGlobalSettings()
     emit stateChanged();
 }
 
-bool Preferences::mustDeleteSdkCacheAtStartup()
-{
-    mutex.lock();
-    bool value = getValue<bool>(deleteSdkCacheAtStartupKey, false);
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setDeleteSdkCacheAtStartup(bool value)
-{
-    setValueAndSyncConcurrent(deleteSdkCacheAtStartupKey, value);
-}
-
 bool Preferences::isCrashed()
 {
     mutex.lock();
@@ -2624,7 +2620,6 @@ void Preferences::login(QString account)
     setCachedValue(currentAccountKey, account);
     mSettings->beginGroup(account);
     readFolders();
-    loadExcludedSyncNames();
     int lastVersion = mSettings->value(lastVersionKey).toInt();
     if (lastVersion != Preferences::VERSION_CODE)
     {
@@ -2685,59 +2680,6 @@ static bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
 {
     return s1.toLower() < s2.toLower();
 }
-
-void Preferences::loadExcludedSyncNames()
-{
-    mutex.lock();
-    excludedSyncNames = getValue<QString>(excludedSyncNamesKey).split(QString::fromLatin1("\n", Qt::SkipEmptyParts));
-    if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
-    {
-        excludedSyncNames.clear();
-    }
-
-    excludedSyncPaths = getValue<QString>(excludedSyncPathsKey).split(QString::fromLatin1("\n", Qt::SkipEmptyParts));
-    if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
-    {
-        excludedSyncPaths.clear();
-    }
-
-    if (getValue<int>(lastVersionKey) < 108)
-    {
-        excludedSyncNames.clear();
-        excludedSyncNames.append(QString::fromUtf8("Thumbs.db"));
-        excludedSyncNames.append(QString::fromUtf8("desktop.ini"));
-        excludedSyncNames.append(QString::fromUtf8("~*"));
-        excludedSyncNames.append(QString::fromUtf8(".*"));
-        excludedSyncNames.append(QString::fromLatin1("*.crdownload"));
-    }
-
-    if (getValue<int>(lastVersionKey) < 3400)
-    {
-        excludedSyncNames.append(QString::fromUtf8("*~.*"));
-        // Avoid trigraph replacement by some pre-processors by splitting the string.("??-" --> "~").
-        excludedSyncNames.append(QString::fromUtf8("*.sb-????????""-??????"));
-        excludedSyncNames.append(QString::fromUtf8("*.tmp"));
-    }
-
-    if (getValue<int>(lastVersionKey) < 2907)
-    {
-        //This string is no longer excluded by default since 2907
-        excludedSyncNames.removeAll(QString::fromUtf8("Icon?"));
-    }
-
-    QSet<QString> excludedSyncNamesSet = QSet<QString>(excludedSyncNames.begin(), excludedSyncNames.end());
-    excludedSyncNames = excludedSyncNamesSet.values();
-    std::sort(excludedSyncNames.begin(), excludedSyncNames.end(), caseInsensitiveLessThan);
-
-    QSet<QString> excludedSyncPathsSet = QSet<QString>(excludedSyncPaths.begin(), excludedSyncPaths.end());
-    excludedSyncPaths = excludedSyncPathsSet.values();
-    std::sort(excludedSyncPaths.begin(), excludedSyncPaths.end(), caseInsensitiveLessThan);
-
-    setExcludedSyncNames(excludedSyncNames);
-    setExcludedSyncPaths(excludedSyncPaths);
-    mutex.unlock();
-}
-
 
 QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > Preferences::getLoadedSyncsMap() const
 {

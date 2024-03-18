@@ -36,7 +36,7 @@ StackViewPage {
             title: OnboardingStrings.twoFATitle
             description: OnboardingStrings.twoFASubtitle
             titleWeight: Font.Normal
-            descriptionFontSize: Texts.Text.Size.Normal
+            descriptionFontSize: Texts.Text.Size.NORMAL
         }
 
         TwoFA {

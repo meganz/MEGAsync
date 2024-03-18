@@ -8,6 +8,9 @@
 #include "MegaTransferView.h"
 #include "OverQuotaDialog.h"
 #include "DialogOpener.h"
+#include "StalledIssuesDialog.h"
+#include "StalledIssuesModel.h"
+#include "Platform.h"
 
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -50,7 +53,8 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mStatsRefreshTimer(new QTimer(this)),
     mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
     mStorageQuotaState(MegaApi::STORAGE_STATE_UNKNOWN),
-    mTransferQuotaState(QuotaState::OK)
+    mTransferQuotaState(QuotaState::OK),
+    mFoundStalledIssues(false)
 {
     mUi->setupUi(this);
 
@@ -183,23 +187,14 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     connect(mUi->wTransfers, &TransfersWidget::sortCriterionChanged,
         this, &TransferManager::onSortCriterionChanged);
 
-    connect(mUi->wTransfers,
-            &TransfersWidget::loadingViewVisibilityChanged,[this](bool state)
-    {
-        refreshView();
-    });
+    connect(mUi->wTransfers, &TransfersWidget::loadingViewVisibilityChanged, this, &TransferManager::refreshView);
+    connect(mUi->wTransfers,&TransfersWidget::disableTransferManager,this, &TransferManager::disableTransferManager);
 
-    connect(mUi->wTransfers,
-            &TransfersWidget::disableTransferManager,[this](bool state)
-    {
-        setDisabled(state);
+    connect(MegaSyncApp->getStalledIssuesModel(),
+            &StalledIssuesModel::stalledIssuesChanged,
+            this, &TransferManager::onStalledIssuesStateChanged);
 
-        if(!state && mSearchFieldReturnPressed)
-        {
-            mUi->leSearchField->setFocus();
-            mSearchFieldReturnPressed = false;
-        }
-    });
+    onStalledIssuesStateChanged();
 
     mScanningTimer.setInterval(60);
     connect(&mScanningTimer, &QTimer::timeout, this, &TransferManager::onScanningAnimationUpdate);
@@ -258,7 +253,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
 
     setAttribute(Qt::WA_DeleteOnClose, true);
 }
-
 
 TransferManager::~TransferManager()
 {
@@ -460,6 +454,7 @@ void TransferManager::on_tFailed_clicked()
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::FAILED_TAB)
     {
         emit userActivity();
+        checkContentInfo();
         toggleTab(TransfersWidget::FAILED_TAB);
     }
 }
@@ -593,7 +588,7 @@ void TransferManager::refreshStateStats()
 
     // If we don't have transfers, stop refresh timer and show "Up to date",
     // and if current tab is ALL TRANSFERS, show empty.
-    if (processedNumber == 0 && failedNumber == 0)
+    if (processedNumber == 0 && failedNumber == 0 && MegaSyncApp->getStalledIssuesModel()->isEmpty())
     {
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
         {
@@ -623,7 +618,7 @@ void TransferManager::refreshStateStats()
         {
             leftFooterWidget = mUi->pScanning;
         }
-        else if(failedNumber != 0)
+        else if(failedNumber != 0 || !MegaSyncApp->getStalledIssuesModel()->isEmpty())
         {
             leftFooterWidget = mUi->pSomeIssues;
             mUi->bSomeIssues->setText(tr("Issue found", "", failedNumber));
@@ -941,9 +936,7 @@ void TransferManager::on_tActionButton_clicked()
 
 void TransferManager::on_tSeePlans_clicked()
 {
-    QString url = QString::fromUtf8("mega://#pro");
-    Utilities::getPROurlWithParameters(url);
-    Utilities::openUrl(QUrl(url));
+    Utilities::upgradeClicked();
 }
 
 void TransferManager::on_bPause_toggled()
@@ -958,12 +951,24 @@ void TransferManager::pauseResumeTransfers(bool isPaused)
 {
     mModel->pauseResumeAllTransfers(isPaused);
     onUpdatePauseState(isPaused);
+}
 
-    //Use to repaint and update the transfers state
-    auto transfersView = findChild<MegaTransferView*>();
-    if(transfersView)
+void TransferManager::onStalledIssuesStateChanged()
+{
+    mFoundStalledIssues = !MegaSyncApp->getStalledIssuesModel()->isEmpty();
+    checkContentInfo();
+    refreshStateStats();
+}
+
+void TransferManager::checkContentInfo()
+{
+    if(mFoundStalledIssues)
     {
-        transfersView->update();
+        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStalledIssuesHeaderInfo);
+    }
+    else
+    {
+        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
     }
 }
 
@@ -1047,7 +1052,7 @@ void TransferManager::on_tClearSearchResult_clicked()
     if (mUi->wTransfers->getCurrentTab() == TransfersWidget::SEARCH_TAB)
     {
         mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
-        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
+        checkContentInfo();
         on_tAllTransfers_clicked();
     }
 }
@@ -1237,7 +1242,7 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
         else
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
-            mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
+            checkContentInfo();
             updateCurrentCategoryTitle();
             mUi->wTransfers->textFilterChanged(QString());
         }
@@ -1265,6 +1270,17 @@ void TransferManager::refreshView()
 
         //In case the media group // actions buttons must be hidden
         checkActionAndMediaVisibility();
+    }
+}
+
+void TransferManager::disableTransferManager(bool state)
+{
+    setDisabled(state);
+
+    if(!state && mSearchFieldReturnPressed)
+    {
+        mUi->leSearchField->setFocus();
+        mSearchFieldReturnPressed = false;
     }
 }
 
@@ -1446,8 +1462,11 @@ void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &trans
     }
     else
     {
-        mScanningTimer.stop();
-        mScanningAnimationIndex = 1;
+        if(mScanningTimer.isActive())
+        {
+            mScanningTimer.stop();
+            mScanningAnimationIndex = 1;
+        }
         refreshStateStats();
     }
 }

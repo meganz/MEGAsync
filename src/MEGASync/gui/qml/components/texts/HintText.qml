@@ -14,10 +14,12 @@ Item {
     property alias iconColor: hintIcon.color
     property alias titleColor: hintTitle.color
     property alias textColor: hintText.color
-    property alias textSpacing: col.spacing
+    property alias textSpacing: textColumn.spacing
 
     property int type: Constants.MessageType.NONE
-    property int textSize: Texts.Text.Size.Normal
+    property int textSize: Texts.Text.Size.NORMAL
+
+    implicitHeight: mainRow.height
 
     onTypeChanged: {
         switch(type) {
@@ -48,12 +50,10 @@ Item {
         }
     }
 
-    implicitHeight: row.height
-
     Row {
-        id: row
+        id: mainRow
 
-        height: root.visible ? col.implicitHeight : 0
+        height: root.visible ? textColumn.implicitHeight : 0
         spacing: root.icon !== "" ? 8 : 0
         width: root.width
 
@@ -65,10 +65,10 @@ Item {
         }
 
         Column {
-            id: col
+            id: textColumn
 
             anchors.top: parent.top
-            width: row.width - hintIcon.width - row.spacing
+            width: mainRow.width - hintIcon.width - mainRow.spacing
 
             Texts.RichText {
                 id: hintTitle
@@ -76,9 +76,11 @@ Item {
                 height: rawText !== "" ? implicitHeight : 0
                 width: parent.width
                 opacity: enabled ? 1.0 : 0.2
-                font.bold: true
-                font.pixelSize: root.textSize
                 wrapMode: Text.WordWrap
+                font{
+                    bold: true
+                    pixelSize: root.textSize
+                }
             }
 
             Texts.RichText {
@@ -93,5 +95,7 @@ Item {
                 manageMouse: true
             }
         }
-    }
+
+    } // Row: mainRow
+
 }

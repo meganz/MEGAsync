@@ -144,7 +144,7 @@ void WordWrapLabel::onAdaptHeight(bool parentConstrained)
 
                 if(elidedText != mText)
                 {
-                    setToolTip(mText.toHtmlEscaped());
+                    setToolTip(stripHtmlTags(mText));
                 }
 
                 break;
@@ -236,4 +236,10 @@ void WordWrapLabel::setCursor(const QCursor& cursor)
 {
     QTextEdit::setCursor(cursor);
     viewport()->setCursor(cursor);
+}
+
+QString WordWrapLabel::stripHtmlTags(const QString &text)
+{
+    mTextDocument.setHtml(text);
+    return mTextDocument.toPlainText();
 }

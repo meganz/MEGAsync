@@ -10,12 +10,14 @@ import components.images 1.0
 import onboard 1.0
 
 SyncsPage {
+    id: root
 
     property alias deviceNameTextField: deviceNameTextFieldComp
 
     footerButtons.rightSecondary.visible: false
 
     ColumnLayout {
+        id: mainLayout
 
         anchors {
             top: parent.top
@@ -25,12 +27,16 @@ SyncsPage {
         spacing: 12
 
         Header {
+            id: headerItem
+
             Layout.preferredWidth: parent.width
             title: OnboardingStrings.deviceNameTitle
             description: OnboardingStrings.deviceNameDescription
         }
 
         SvgImage {
+            id: image
+
             Layout.topMargin: 20
             source: Images.pcMega
             sourceSize: Qt.size(48, 48)
@@ -44,11 +50,12 @@ SyncsPage {
             Layout.rightMargin: -sizes.focusBorderWidth
             Layout.preferredWidth: parent.width + 2 * sizes.focusBorderWidth
             title: OnboardingStrings.deviceName
-            textField.text: deviceName.name
-            textField.maximumLength: 32//32 is non-technical length limit for device name
-                                       //UX choice
             hint.icon: ""
             sizes: LargeSizes {}
+            textField {
+                text: deviceName.name
+                maximumLength: 32 // It is non-technical length limit for device name => UX choice
+            }
         }
     }
 }

@@ -17,8 +17,160 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string notr="true"/>
+   <string/>
   </property>
+  <widget class="QWidget" name="wMessageContainer" native="true">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>120</y>
+     <width>300</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>300</width>
+     <height>150</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#wMessageContainer
+{
+border: 1px solid white;
+border-radius: 10px;
+background-color: white;
+}
+
+#lMessageLabel
+{
+  font-size:16px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #666666;
+}
+
+#lProgressLabel
+{
+  font-size:12px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #303233;
+}
+
+QPushButton 
+{ 
+font-size: 14px; font-weight:400;
+line-height: 20px;
+padding-top : 5px; padding-bottom : 8px; padding-left : 10px; padding-right : 10px;
+background-color : #AAAAAA;
+border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 3px;
+color: #FFFFFF;
+}
+
+QProgressBar 
+{
+ border: none;
+     background-color: rgba(0,0,0,0.10);
+}
+
+QProgressBar::chunk 
+{
+    background-color: #04101E;
+}</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>20</number>
+    </property>
+    <property name="leftMargin">
+     <number>48</number>
+    </property>
+    <property name="topMargin">
+     <number>10</number>
+    </property>
+    <property name="rightMargin">
+     <number>48</number>
+    </property>
+    <property name="bottomMargin">
+     <number>25</number>
+    </property>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item alignment="Qt::AlignVCenter">
+     <widget class="QLabel" name="lMessageLabel">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item alignment="Qt::AlignVCenter">
+     <widget class="QProgressBar" name="pbProgressBar">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>2</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>2</height>
+       </size>
+      </property>
+      <property name="value">
+       <number>24</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+     <widget class="QLabel" name="lProgressLabel"/>
+    </item>
+    <item>
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
+     <widget class="QPushButton" name="bStopButton">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+      <property name="autoDefault">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QStackedWidget" name="swLoadingViewContainer">
    <property name="geometry">
     <rect>

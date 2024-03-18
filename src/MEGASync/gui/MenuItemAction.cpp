@@ -6,7 +6,7 @@
 const QString MenuItemAction::Colors::Normal = QLatin1String("#777777");
 const QString MenuItemAction::Colors::Highlight = QLatin1String("#000000");
 const QString MenuItemAction::Colors::Accent = QLatin1String("#F46265");
-static constexpr int ENTRY_MAX_WIDTH_PX = 240;
+static constexpr int ENTRY_MAX_WIDTH_PX = 400;
 
 MenuItemAction::MenuItemAction(const QString& title, const QString& iconName,
                                QObject *parent)

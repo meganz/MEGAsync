@@ -31,7 +31,7 @@ StackViewPage {
             wrapMode: Text.WordWrap
             color: Styles.textPrimary
             font {
-                pixelSize: Texts.Text.Size.Large
+                pixelSize: Texts.Text.Size.LARGE
                 bold: true
             }
             Layout.fillWidth: true
@@ -42,14 +42,14 @@ StackViewPage {
 
             Layout.preferredWidth: layout.width
             text: OnboardingStrings.confirmEmailBodyText
-            font.pixelSize: Texts.Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.MEDIUM
         }
 
         Texts.RichText {
             id: bodyText2Item
 
             rawText: OnboardingStrings.confirmEmailBodyText2
-            font.pixelSize: Texts.Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.MEDIUM
             url: Links.contact
             manageMouse: true
             Layout.preferredWidth: layout.width
@@ -79,7 +79,7 @@ StackViewPage {
                 lineHeightMode: Text.FixedHeight
                 lineHeight: 20
                 font {
-                    pixelSize: Texts.Text.Size.Medium
+                    pixelSize: Texts.Text.Size.MEDIUM
                     bold: true
                 }
                 Layout.preferredWidth: parent.width - mailImage.width - parent.spacing
@@ -90,7 +90,7 @@ StackViewPage {
         Texts.RichText {
             id: changeEmailLinkTextItem
 
-            font.pixelSize: Texts.Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.MEDIUM
             rawText: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
             color: Styles.textPrimary

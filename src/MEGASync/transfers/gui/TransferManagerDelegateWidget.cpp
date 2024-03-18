@@ -12,7 +12,11 @@
 #include <QPainterPath>
 
 constexpr uint PB_PRECISION = 1000;
+#ifdef Q_OS_MACOS
+const QColor HOVER_COLOR = QColor("#F7F7F7");
+#else
 const QColor HOVER_COLOR = QColor("#FAFAFA");
+#endif
 const QColor SELECTED_BORDER_COLOR = QColor("#E9E9E9");
 
 using namespace mega;

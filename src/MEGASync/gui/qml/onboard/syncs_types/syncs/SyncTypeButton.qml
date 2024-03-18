@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 import onboard.syncs_types 1.0
 
 SyncsVerticalButton {
-    id: fullSyncButton
+    id: root
 
     Layout.preferredWidth: width
     Layout.preferredHeight: height

@@ -5,7 +5,7 @@ import common 1.0
 Item {
     id: root
 
-    property double value: 0 // from 0 to 1
+    property double value: 0.0 // from 0 to 1
 
     Rectangle {
         id: progressBarRect

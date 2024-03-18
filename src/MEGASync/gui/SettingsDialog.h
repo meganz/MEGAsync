@@ -6,12 +6,7 @@
 #include "ChangePassword.h"
 #include "Preferences/Preferences.h"
 #include "control/Utilities.h"
-#include "syncs/model/SyncItemModel.h"
-#include "syncs/model/BackupItemModel.h"
-#include "syncs/gui/Backups/BackupTableViewTooltips.h"
-#include "syncs/gui/Twoways/SyncTableViewTooltips.h"
 
-#include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
 #include "megaapi.h"
 
@@ -55,7 +50,6 @@ public:
     void setProxyOnly(bool proxyOnly);
 
     // General
-    void setOverQuotaMode(bool mode);
     void setUpdateAvailable(bool updateAvailable);
     void storageChanged();
 
@@ -65,13 +59,6 @@ public:
     void updateAccountElements() override;
 
     // Syncs
-    enum SyncStateInformation
-    {
-        SAVING_SYNCS = 0,
-        SAVING_BACKUPS,
-        SAVING_SYNCS_FINISHED,
-        SAVING_BACKUPS_FINISHED,
-    };
     void addSyncFolder(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
 
     // Folders
@@ -89,10 +76,11 @@ public slots:
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
 
-    // Account
-    void storageStateChanged(int state);
+    //Enable/Disable controls
+    void setEnabledAllControls(const bool enabled);
 
 private slots:
+    void on_bBackupCenter_clicked();
     void on_bHelp_clicked();
 #ifdef Q_OS_MACOS
     void onAnimationFinished();
@@ -123,32 +111,15 @@ private slots:
     void on_bAccount_clicked();
     void on_lAccountType_clicked();
     void on_bUpgrade_clicked();
-    void on_bBuyMoreSpace_clicked();
     void on_bMyAccount_clicked();
     void on_bStorageDetails_clicked();
     void on_bLogout_clicked();
 
     // Syncs
-
     void on_bSyncs_clicked();
-    void on_bAddSync_clicked();
-    void on_bDeleteSync_clicked();
-#ifndef WIN32
-    void on_bPermissions_clicked();
-#endif
-
-    void onSavingSyncsCompleted(SyncStateInformation value);
 
     // Backup
     void on_bBackup_clicked();
-    void on_bAddBackup_clicked();
-    void on_bDeleteBackup_clicked();
-    void removeBackup(std::shared_ptr<SyncSettings> backup);
-    void removeSync(std::shared_ptr<SyncSettings> sync);
-    void on_bOpenBackupFolder_clicked();
-    void openHandleInMega(mega::MegaHandle handle);
-    void on_bBackupCenter_clicked();
-    void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
     // Security
     void on_bSecurity_clicked();
@@ -160,15 +131,6 @@ private slots:
     void on_bFolders_clicked();
     void on_bUploadFolder_clicked();
     void on_bDownloadFolder_clicked();
-    void on_bAddName_clicked();
-    void on_bDeleteName_clicked();
-    void on_cExcludeUpperThan_clicked();
-    void on_cExcludeLowerThan_clicked();
-    void on_eUpperThan_valueChanged(int i);
-    void on_eLowerThan_valueChanged(int i);
-    void on_cbExcludeUpperUnit_currentIndexChanged(int index);
-    void on_cbExcludeLowerUnit_currentIndexChanged(int index);
-    void on_bRestart_clicked();
 
     // Network
     void on_bNetwork_clicked();
@@ -194,24 +156,14 @@ private slots:
 #endif
 
 private:
-    void connectSyncHandlers();
-    void loadSyncSettings();
-    void connectBackupHandlers();
-    void loadBackupSettings();
-
     void loadSettings();
     void onCacheSizeAvailable();
     void saveExcludeSyncNames();
     void updateNetworkTab();
     void setShortCutsForToolBarItems();
+    void showUnexpectedSyncError(const QString& message);
     void updateCacheSchedulerDaysLabel();
 
-    void syncsStateInformation(SyncStateInformation state);
-
-    void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
-    void connectAddSyncHandler();
-
-    void setEnabledAllControls(const bool enabled);
     void setGeneralTabEnabled(const bool enabled);
     void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
 
@@ -236,8 +188,6 @@ private:
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
     std::shared_ptr<Preferences> mPreferences;
-    SyncController mSyncController;
-    SyncController mBackupController;
     SyncInfo* mModel;
     mega::MegaApi* mMegaApi;
     bool mProxyOnly;
@@ -252,7 +202,5 @@ private:
     QStringList mSyncNames;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
-    std::unique_ptr<SyncTableViewTooltips> mSyncTableEventFilter;
-    std::unique_ptr<BackupTableViewTooltips> mBackupTableEventFilter;
 };
 #endif // SETTINGSDIALOG_H

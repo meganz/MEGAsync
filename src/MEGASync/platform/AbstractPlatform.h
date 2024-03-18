@@ -1,6 +1,7 @@
 #ifndef ABSTRACTPLATFORM_H
 #define ABSTRACTPLATFORM_H
 
+#include "drivedata.h"
 #include "MegaApplication.h"
 #include "ShellNotifier.h"
 
@@ -38,7 +39,7 @@ public:
     virtual void prepareForSync();
     virtual bool enableTrayIcon(QString executable);
     virtual void notifyItemChange(const QString& localPath, int newState) = 0;
-    virtual void notifySyncFileChange(std::string *localPath, int newState) = 0;
+    virtual void notifySyncFileChange(std::string *localPath, int newState, bool stringIsPlatformEncoded) = 0;
     virtual bool startOnStartup(bool value) = 0;
     virtual bool isStartOnStartupActive() = 0;
     virtual bool isTilingWindowManager();
@@ -88,6 +89,7 @@ public:
     virtual void processSymLinks() = 0;
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
+    virtual DriveSpaceData getDriveData(const QString& path) = 0;
 
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;

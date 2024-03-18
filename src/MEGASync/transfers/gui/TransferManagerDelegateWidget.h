@@ -6,6 +6,7 @@
 
 
 #include <QDateTime>
+#include <QUrl>
 
 namespace Ui {
 class TransferManagerDelegateWidget;

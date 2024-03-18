@@ -12,6 +12,7 @@
 #include <QQueue>
 #include <QNetworkInterface>
 #include <QFutureWatcher>
+#include <QQmlFileSelector>
 
 #include <memory>
 #include <QQmlEngine>
@@ -47,6 +48,7 @@
 #include "BlockingStageProgressController.h"
 
 class TransfersModel;
+class StalledIssuesModel;
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -58,11 +60,8 @@ class TransfersModel;
 Q_DECLARE_METATYPE(QQueue<QString>)
 
 class LogoutController;
-class NotificatorBase;
-class ShellNotifier;
 class TransferMetadata;
 class DuplicatedNodeDialog;
-class LinkProcessor;
 class LoginController;
 class AccountStatusController;
 
@@ -104,7 +103,6 @@ public:
     static QString applicationDataPath();
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
-    void updateTrayIcon();
 
     QString getFormattedDateByCurrentLanguage(const QDateTime& datetime, QLocale::FormatType format = QLocale::FormatType::LongFormat) const;
 
@@ -164,15 +162,7 @@ public:
     // Create menus for the "..." menu in InfoDialog view.
     void createInfoDialogMenus();
     void toggleLogging();
-    QList<mega::MegaTransfer* > getFinishedTransfers();
-    int getNumUnviewedTransfers();
-    void removeFinishedTransfer(int transferTag);
-    void removeAllFinishedTransfers();
 
-    void removeFinishedBlockedTransfer(int transferTag);
-    bool finishedTransfersWhileBlocked(int transferTag);
-
-    mega::MegaTransfer* getFinishedTransferByTag(int tag);
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
@@ -189,6 +179,7 @@ public:
     void pushToThreadPool(std::function<void()> functor);
 
     TransfersModel* getTransfersModel(){return mTransfersModel;}
+    StalledIssuesModel* getStalledIssuesModel(){return mStalledIssuesModel;}
 
     /**
      * @brief migrates sync configuration and fetches nodes
@@ -226,7 +217,6 @@ signals:
     void tryUpdate();
     void installUpdate();
     void clearAllFinishedTransfers();
-    void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
     void unblocked();
     void nodeMoved(mega::MegaHandle handle);
@@ -238,6 +228,7 @@ signals:
     void shellNotificationsProcessed();
 
 public slots:
+    void updateTrayIcon();
     void unlink(bool keepLogs = false);
     void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -280,7 +271,6 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
-    void deleteSdkCache();
     void tryExitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
@@ -308,9 +298,6 @@ public slots:
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
     void clearUserAttributes();
-    void clearViewedTransfers();
-    void onCompletedTransfersTabActive(bool active);
-    void checkFirstTransfer();
     void checkOperatingSystem();
     void notifyChangeToAllFolders();
     int getPrevVersion();
@@ -448,7 +435,6 @@ protected:
     long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;
-    int syncState;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;
     QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
@@ -458,7 +444,6 @@ protected:
     QTimer *periodicTasksTimer;
     QTimer *networkCheckTimer;
     QTimer *infoDialogTimer;
-    QTimer *firstTransferTimer;
     std::unique_ptr<std::thread> mMutexStealerThread;
 
     QTranslator translator;
@@ -478,19 +463,15 @@ protected:
     QMap<QString, QString> pendingLinks;
     std::unique_ptr<MegaSyncLogger> logger;
     QPointer<TransferManager> mTransferManager;
-    bool mTransferManagerFullScreen;
-    QMap<int, mega::MegaTransfer*> finishedTransfers;
-    QList<mega::MegaTransfer*> finishedTransferOrder;
-    QSet<int> finishedBlockedTransfers;
 
     bool reboot;
-    bool syncActive;
     bool paused;
-    bool indexing;
-    bool waiting;
-    bool syncing; //if any sync is in syncing state
+    bool mIndexing;
+    bool mWaiting;
+    bool mSyncing; //if any sync is in syncing state
+    bool mSyncStalled = false;
     bool updated;
-    bool transferring; //if there is any regular transfer in progress
+    bool mTransferring; //if there is any regular transfer in progress
     bool checkupdate;
     bool updateBlocked;
     long long lastExit;
@@ -500,8 +481,6 @@ protected:
     bool mIsFirstFileTwoWaySynced;
     bool mIsFirstFileBackedUp;
     bool networkConnectivity;
-    int nUnviewedTransfers;
-    bool completedTabActive;
     int prevVersion;
     bool isPublic;
     bool nodescurrent;
@@ -526,6 +505,7 @@ protected:
     std::shared_ptr<FolderTransferListener> mFolderTransferListener;
 
     bool mDisableGfx;
+    StalledIssuesModel* mStalledIssuesModel;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
@@ -624,6 +604,7 @@ private:
     QQueue<QString> createQueue(const QStringList& newUploads) const;
 
     void registerCommonQMLElements();
+    void addStyleSelector(const QStringList& args);
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

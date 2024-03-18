@@ -14,7 +14,7 @@ public:
 
     void initialize(int argc, char *argv[]) override;
     void notifyItemChange(const QString& localPath, int newState) override;
-    void notifySyncFileChange(std::string *localPath, int newState) override;
+    void notifySyncFileChange(std::string *localPath, int newState, bool) override;
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
     bool showInFolder(QString pathIn) override;
@@ -46,6 +46,7 @@ public:
 
     void calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy) override;
     void streamWithApp(const QString& app, const QString& url) override;
+    DriveSpaceData getDriveData(const QString& path) override;
 
     void processSymLinks() override;
 

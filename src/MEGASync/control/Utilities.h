@@ -14,6 +14,8 @@
 #include <QIcon>
 #include <QLabel>
 #include <QQueue>
+#include <QEventLoop>
+#include <QMetaEnum>
 
 #include <QEasingCurve>
 
@@ -304,6 +306,7 @@ public:
     Q_DECLARE_FLAGS(FileTypes, FileType)
     static const QString SUPPORT_URL;
     static const QString BACKUP_CENTER_URL;
+    static const QString SYNC_SUPPORT_URL;
 
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
@@ -347,8 +350,9 @@ public:
 
     static QString getNonDuplicatedNodeName(mega::MegaNode* node, mega::MegaNode* parentNode, const QString& currentName, bool unescapeName, const QStringList &itemsBeingRenamed);
     static QString getNonDuplicatedLocalName(const QFileInfo& currentFile, bool unescapeName, const QStringList &itemsBeingRenamed);
-
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
+
+    static void upgradeClicked();
 
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
@@ -388,6 +392,7 @@ public:
     static void copyRecursively(QString srcPath, QString dstPath);
 
     static void queueFunctionInAppThread(std::function<void()> fun);
+    static void queueFunctionInObjectThread(QObject* object, std::function<void()> fun);
 
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
@@ -418,7 +423,28 @@ public:
 Q_DECLARE_METATYPE(Utilities::FileType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
 
+template <class EnumType>
+class EnumConversions
+{
+public:
+    EnumConversions()
+        : mMetaEnum(QMetaEnum::fromType<EnumType>())
+    {
+    }
 
+    QString getString(EnumType type)
+    {
+        return QString::fromUtf8(mMetaEnum.valueToKey(static_cast<int>(type)));
+    }
+
+    EnumType  getEnum(const QString& typeAsString)
+    {
+        return static_cast<EnumType>(mMetaEnum.keyToValue(typeAsString.toStdString().c_str()));
+    }
+
+private:
+    QMetaEnum mMetaEnum;
+};
 
 // This class encapsulates a MEGA node and adds useful information, like the origin
 // of the transfer.
@@ -474,5 +500,63 @@ private:
 };
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
+
+//This class is used to create complex paths in MEGA
+class PathCreator : public QObject
+{
+public:
+    PathCreator() = default;
+    std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path);
+
+private:
+    std::shared_ptr<mega::MegaNode> createFolder(mega::MegaNode *parentNode, const QString& folderName);
+
+    QStringList mPathCreated;
+    QEventLoop mEventLoop;
+    bool mResult = false;
+};
+
+//This class is used to move a handle to the MEGA bin
+class MoveToCloudBinUtilities : public QObject
+{
+public:
+    MoveToCloudBinUtilities(){}
+
+    bool moveToBin(const QList<mega::MegaHandle>& handles, const QString& binFolderName, bool addDateFolder);
+
+private:
+    QList<mega::MegaHandle> mHandles;
+    QEventLoop mEventLoop;
+    bool mResult = false;
+};
+
+//This class is use to merge two remote folders
+class CloudFoldersMerge : public QObject
+{
+    Q_OBJECT
+
+public:
+    CloudFoldersMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge)
+        : mFolderTarget(folderTarget),
+          mFolderToMerge(folderToMerge),
+          mDepth(0)
+    {}
+
+    enum ActionForDuplicates
+    {
+        Rename,
+        IgnoreAndRemove,
+        IgnoreAndMoveToBin,
+    };
+    void merge(ActionForDuplicates action);
+
+signals:
+    void progressIndicator(const QString& nodeName);
+
+private:
+    mega::MegaNode* mFolderTarget;
+    mega::MegaNode* mFolderToMerge;
+    int mDepth;
+};
 
 #endif // UTILITIES_H

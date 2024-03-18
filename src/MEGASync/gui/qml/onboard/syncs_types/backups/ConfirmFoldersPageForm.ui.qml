@@ -25,6 +25,7 @@ SyncsPage {
     }
 
     ColumnLayout {
+        id: externalLayout
 
         anchors {
             top: parent.top

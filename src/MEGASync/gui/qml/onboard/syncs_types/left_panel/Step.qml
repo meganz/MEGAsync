@@ -10,24 +10,25 @@ Item {
     id: root
 
     enum ToStates {
-        Disabled = 0,
-        Current = 1,
-        CurrentSubstep = 2,
-        Done = 3
+        DISABLED = 0,
+        CURRENT = 1,
+        CURRENT_SUBSTEP = 2,
+        DONE = 3
     }
+
+    property alias text: stepText.text
 
     property int number: 0
-    property alias text: stepText.text
-    property int toState: Step.ToStates.Disabled
-
-    onToStateChanged: {
-        stepContent.state = stepContent.statesMap.get(toState);
-    }
+    property int toState: Step.ToStates.DISABLED
 
     height: stepContent.height
     width: stepContent.width
     Layout.preferredWidth: stepContent.width
     Layout.preferredHeight: stepContent.height
+
+    onToStateChanged: {
+        stepContent.state = stepContent.statesMap.get(toState);
+    }
 
     Rectangle {
         id: stepContent
@@ -38,11 +39,18 @@ Item {
         readonly property string stateDone: "DONE"
 
         property var statesMap: new Map([
-            [Step.ToStates.Disabled, stateDisabled],
-            [Step.ToStates.Current, stateCurrent],
-            [Step.ToStates.CurrentSubstep, stateCurrentSubstep],
-            [Step.ToStates.Done, stateDone]
+            [Step.ToStates.DISABLED, stateDisabled],
+            [Step.ToStates.CURRENT, stateCurrent],
+            [Step.ToStates.CURRENT_SUBSTEP, stateCurrentSubstep],
+            [Step.ToStates.DONE, stateDone]
         ])
+
+        width: content.width + 17
+        height: 32
+        Layout.preferredWidth: width
+        Layout.preferredHeight: height
+        radius: 16
+        color: Styles.iconButtonPressedBackground
 
         state: stateDisabled
         states: [
@@ -62,11 +70,7 @@ Item {
             State {
                 name: stepContent.stateCurrent
                 PropertyChanges { target: stepContent; color: Styles.iconButtonPressedBackground; }
-                PropertyChanges {
-                    target: stepCircle;
-                    color: Styles.iconButton;
-                    border.width: 0;
-                }
+                PropertyChanges { target: stepCircle; color: Styles.iconButton;  border.width: 0; }
                 PropertyChanges { target: stepCircleImage; visible: false; }
                 PropertyChanges { target: stepCircleText; color: Styles.textInverseAccent; }
                 PropertyChanges { target: stepText; color: Styles.iconButton; }
@@ -74,11 +78,7 @@ Item {
             State {
                 name: stepContent.stateCurrentSubstep
                 PropertyChanges { target: stepContent; color: "transparent"; }
-                PropertyChanges {
-                    target: stepCircle;
-                    color: Styles.iconButton;
-                    border.width: 0;
-                }
+                PropertyChanges { target: stepCircle; color: Styles.iconButton; border.width: 0; }
                 PropertyChanges { target: stepCircleImage; visible: false; }
                 PropertyChanges { target: stepCircleText; color: Styles.textInverseAccent; }
                 PropertyChanges { target: stepText; color: Styles.iconButton; }
@@ -86,38 +86,25 @@ Item {
             State {
                 name: stepContent.stateDone
                 PropertyChanges { target: stepContent; color: "transparent"; }
-                PropertyChanges {
-                    target: stepCircle;
-                    color: Styles.supportSuccess;
-                    border.width: 0;
-                }
+                PropertyChanges { target: stepCircle; color: Styles.supportSuccess; border.width: 0; }
                 PropertyChanges { target: stepCircleImage; visible: true; }
-                PropertyChanges {
-                    target: stepCircleText;
-                    color: Styles.textInverseAccent;
-                    visible: false;
-                }
+                PropertyChanges { target: stepCircleText; color: Styles.textInverseAccent; visible: false; }
                 PropertyChanges { target: stepText; color: Styles.iconButton; }
             }
         ]
 
-        radius: 16
-        color: Styles.iconButtonPressedBackground
-        height: 32
-        width: content.width + 17
-        Layout.preferredWidth: width
-        Layout.preferredHeight: height
-
         RowLayout {
             id: content
 
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 5
-            anchors.topMargin: 5
-            anchors.bottomMargin: 5
-            anchors.rightMargin: 12
+            anchors {
+                top: parent.top
+                left: parent.left
+                bottom: parent.bottom
+                leftMargin: 5
+                topMargin: 5
+                bottomMargin: 5
+                rightMargin: 12
+            }
             spacing: 8
 
             Rectangle {
@@ -156,7 +143,9 @@ Item {
                 color: Styles.iconButton
                 font.weight: Font.DemiBold
             }
-        }
-    }
+
+        } // RowLayout: content
+
+    } // Rectangle: stepContent
 
 }

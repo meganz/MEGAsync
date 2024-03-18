@@ -3,6 +3,10 @@ INCLUDEPATH += $$PWD
 
 QT       += network
 
+# recreate source folder tree for object files. Needed to build OS utilities,
+# otherwise all obj files are placed into same directory, causing overwrite.
+CONFIG += object_parallel_to_source
+
 SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/AccountStatusController.cpp \
     $$PWD/DialogOpener.cpp \
@@ -26,6 +30,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/ConnectivityChecker.cpp \
     $$PWD/TransferBatch.cpp \
     $$PWD/TextDecorator.cpp \
+    $$PWD/EmailRequester.cpp \
     $$PWD/qrcodegen.c
 
 HEADERS  +=  $$PWD/HTTPServer.h \
@@ -54,5 +59,6 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/TransferBatch.h \
     $$PWD/TextDecorator.h \
     $$PWD/Version.h \
+    $$PWD/EmailRequester.h \
     $$PWD/qrcodegen.h \
     $$PWD/gzjoin.h

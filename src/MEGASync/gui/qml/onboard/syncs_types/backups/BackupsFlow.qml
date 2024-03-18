@@ -9,15 +9,14 @@ import BackupsProxyModel 1.0
 Item {
     id: root
 
-    signal backupFlowMoveToFinal
-    signal backupFlowMoveToBack
-
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
 
-    // added to avoid qml warning.
-    function setInitialFocusPosition() {
-    }
+    // Added to avoid qml warning.
+    function setInitialFocusPosition() {}
+
+    signal backupFlowMoveToFinal
+    signal backupFlowMoveToBack
 
     state: selectBackup
     states: [
@@ -73,39 +72,42 @@ Item {
     }
 
     /*
-    * Navigation connections
-    */
+     * Navigation connections
+     */
+
     Connections {
         id: confirmFolderBackupNavigationConnection
+
         target: view.currentItem
         ignoreUnknownSignals: true
 
         function onConfirmFoldersMoveToSelect() {
-            root.state = root.selectBackup
+            root.state = root.selectBackup;
             backupsProxyModel.selectedFilterEnabled = false;
         }
 
         function onConfirmFoldersMoveToSuccess() {
-            root.backupFlowMoveToFinal()
+            root.backupFlowMoveToFinal();
         }
     }
 
     Connections {
         id: selectFolderBackupNavigationConnection
+
         target: view.currentItem
         ignoreUnknownSignals: true
 
         function onSelectFolderMoveToBack() {
             if(syncsPanel.navInfo.comesFromResumePage) {
                 syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                root.backupFlowMoveToFinal()
+                root.backupFlowMoveToFinal();
             } else {
-                root.backupFlowMoveToBack()
+                root.backupFlowMoveToBack();
             }
         }
 
         function onSelectFolderMoveToConfirm() {
-            root.state = root.confirmBackup
+            root.state = root.confirmBackup;
         }
     }
 }

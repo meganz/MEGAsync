@@ -9,7 +9,7 @@ display_help() {
     local app=$(basename "$0")
     echo ""
     echo "Usage:"
-    echo " $app [-e] [-f] [-g] [-q] [-z]"
+    echo " $app [-e] [-f] [-g] [-i] [-L] [-q] [-z] [-W]"
     echo ""
     echo "Configure MEGA SDK (creates config.h file)"
     echo ""
@@ -18,19 +18,24 @@ display_help() {
     echo " -f : Force software packages rebuild."
     echo " -g : Download and link CURL statically."
     echo " -i : Do not download and link LIBMEDIAINFO statically."
+    echo " -L : Do not download and link sqlite3 statically."
     echo " -q : Download and link CRYPTOPP statically."
     echo " -z : Do not download and link ZLIB statically."
     echo " -W : Download and link LIBRAW statically."
     echo ""
 }
 
+FLAG_SQLITE=""
 FLAG_CRYPTOPP=""
 FLAG_CARES=""
 FLAG_CURL=""
 FLAG_DISABLE_ZLIB=""
 
-while getopts ":efgiqzW" opt; do
+while getopts ":efgiLqzW" opt; do
     case $opt in
+        L) 
+            FLAG_SQLITE="-L"; 
+            ;;
         q) 
             FLAG_CRYPTOPP="-q"; 
             ;;
@@ -73,12 +78,13 @@ shift $((OPTIND-1))
 # if archives are not yet downloaded
 if [ ! -d "$archives" ]; then
     mkdir $archives
-    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n -N $FLAG_CARES $FLAG_LIBMEDIA $FLAG_CURL $FLAG_DISABLE_ZLIB $FLAG_RAW -w -s -v -u -o $archives
+    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_SQLITE $FLAG_CRYPTOPP -n -N $FLAG_CARES $FLAG_LIBMEDIA $FLAG_CURL $FLAG_DISABLE_ZLIB $FLAG_RAW -w -s -v -u -o $archives
     rm_archives=1
 fi
 
 cd MEGASync/mega
 ./contrib/build_sdk.sh \
+    $FLAG_SQLITE \
     $FLAG_CRYPTOPP \
     -o $archives \
     $FLAG_CARES $FLAG_CURL $FLAG_LIBMEDIA $FLAG_DISABLE_ZLIB $FLAG_RAW \

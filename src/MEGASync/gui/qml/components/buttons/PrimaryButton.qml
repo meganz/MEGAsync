@@ -1,6 +1,8 @@
 import common 1.0
 
 Button {
+    id: root
+
     colors {
         background: Styles.buttonPrimary
         border: colors.background

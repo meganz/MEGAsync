@@ -20,20 +20,20 @@ Item {
     property int time: 0
     property int margin: 12
     property int radius: 8
-
     property bool topBorderRect: false
 
     signal visibilityTimerFinished
 
-    visible: false
     height: backgroundRect.height
     Layout.preferredHeight: backgroundRect.height
+    visible: false
 
     onVisibleChanged: {
         if(visible && root.time > 0) {
             animationToVisible.start();
             visibilityTimer.start();
-        } else if(visibilityTimer.running) {
+        }
+        else if(visibilityTimer.running) {
             visibilityTimer.stop();
         }
     }
@@ -62,12 +62,16 @@ Item {
     Rectangle {
         id: backgroundRect
 
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
         height: hint.height + 2 * root.margin
         radius: root.radius
 
         MouseArea {
+            id: backgroundMouseArea
+
             anchors.fill: parent
             hoverEnabled: true
         }
@@ -75,20 +79,26 @@ Item {
         Texts.HintText {
             id: hint
 
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: root.margin
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                margins: root.margin
+            }
             textSpacing: 4
         }
     }
 
     Rectangle {
+        id: topBorderRectangle
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
         height: root.radius
         color: backgroundRect.color
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
         visible: root.topBorderRect
     }
 
@@ -96,6 +106,8 @@ Item {
         id: animationToVisible
 
         NumberAnimation {
+            id: animationStart
+
             target: root
             property: "visible"
             from: 0
@@ -104,6 +116,8 @@ Item {
         }
 
         NumberAnimation {
+            id: animationFinal
+
             target: root
             property: "opacity"
             from: 0
@@ -116,6 +130,8 @@ Item {
         id: animationToInvisible
 
         NumberAnimation {
+            id: animationStartInvisible
+
             target: root
             property: "opacity"
             from: 1
@@ -124,6 +140,8 @@ Item {
         }
 
         NumberAnimation {
+            id: animationFinalInvisible
+
             target: root
             property: "visible"
             from: 1

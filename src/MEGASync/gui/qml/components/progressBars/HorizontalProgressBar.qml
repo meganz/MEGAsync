@@ -10,13 +10,19 @@ Qml.ProgressBar {
     value: 0.0
 
     background: Rectangle {
+        id: backgroundRect
+
         anchors.fill: parent
         radius: height
         color: Styles.indicatorBackground
     }
 
     contentItem: Item {
+        id: content
+
         Rectangle {
+            id: contentRect
+
             width: root.visualPosition * parent.width
             height: parent.height
             radius: height
@@ -33,10 +39,14 @@ Qml.ProgressBar {
             visible: indeterminate
 
             SequentialAnimation {
+                id: animation
+
                 running: true
                 loops: Animation.Infinite
 
                 XAnimator {
+                    id: animatorStart
+
                     target: indeterminateRect
                     from: 0
                     to: root.width - indeterminateRect.width
@@ -44,6 +54,8 @@ Qml.ProgressBar {
                 }
 
                 XAnimator {
+                    id: animatorFinal
+
                     target: indeterminateRect
                     from: root.width - indeterminateRect.width
                     to: 0
@@ -51,5 +63,7 @@ Qml.ProgressBar {
                 }
             }
         }
-    }
+
+    } // Item: content
+
 }

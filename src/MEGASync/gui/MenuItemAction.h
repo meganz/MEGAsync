@@ -21,7 +21,6 @@ public:
     bool getAccent() const;
     void setAccent(bool enabled);
 
-
     void setManagesHoverStates(bool managesHoverStates);
 
     void setTreeDepth(int treeDepth);

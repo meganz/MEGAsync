@@ -6,17 +6,19 @@ Qml.Text {
     id: root
 
     enum Size {
-        Small = 10,
-        Normal = 12,
-        Medium = 14,
-        MediumLarge = 16,
-        Large = 20,
-        Huge = 48
+        SMALL = 10,
+        NORMAL = 12,
+        MEDIUM = 14,
+        MEDIUM_LARGE = 16,
+        LARGE = 20,
+        HUGE = 48
     }
 
-    font.family: Styles.fontFamily
-    font.styleName: Styles.fontStyleName
-    font.pixelSize: Text.Size.Normal
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     wrapMode: Text.WordWrap
+    font {
+        family: Styles.fontFamily
+        styleName: Styles.fontStyleName
+        pixelSize: Text.Size.NORMAL
+    }
 }

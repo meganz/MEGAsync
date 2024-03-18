@@ -23,6 +23,7 @@ public:
         QString informativeText;
         StandardButtons buttons;
         StandardButton defaultButton;
+        QCheckBox* checkBox;
         QMap<StandardButton, QString> buttonsText;
         Qt::TextFormat textFormat;
         QPixmap iconPixmap;
@@ -34,6 +35,7 @@ public:
               parent(nullptr),
               buttons(Ok),
               defaultButton(NoButton),
+              checkBox(nullptr),
               textFormat(Qt::PlainText),
               enqueue(false),
               ignoreCloseAll(false)

@@ -14,6 +14,7 @@
 #include "GuiUtilities.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
+#include "StalledIssuesModel.h"
 #include "TransferMetaData.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
@@ -35,10 +36,11 @@
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
 
-#include <QQmlApplicationEngine>
 #include "DialogOpener.h"
 #include "PowerOptions.h"
 #include "DateTimeFormatter.h"
+#include <StalledIssuesDialog.h>
+#include <DialogOpener.h>
 
 #include "mega/types.h"
 
@@ -156,6 +158,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #if defined(LOG_TO_STDOUT)
     logToStdout = true;
 #endif
+
     // Collect program arguments
     QStringList args;
     for (int i=0; i < argc; ++i)
@@ -212,6 +215,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
                       ));
 #endif
 
+    addStyleSelector(args);
+
     // For some reason this doesn't work on Windows (done in stylesheet above)
     // TODO: re-try with Qt > 5.12.15
     QPalette palette = QToolTip::palette();
@@ -267,6 +272,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     isPublic = false;
     prevVersion = 0;
     mTransfersModel = nullptr;
+    mStalledIssuesModel = nullptr;
     mStatusController = nullptr;
 
     notificationsModel = nullptr;
@@ -318,10 +324,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     downloadAction = nullptr;
     streamAction = nullptr;
     myCloudAction = nullptr;
-    waiting = false;
+    mWaiting = false;
     updated = false;
-    syncing = false;
-    transferring = false;
+    mSyncing = false;
+    mSyncStalled = false;
+    mTransferring = false;
     checkupdate = false;
     updateAction = nullptr;
     aboutAction = nullptr;
@@ -339,8 +346,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     lastTsBusinessWarning = 0;
     lastTsErrorMessageShown = 0;
     maxMemoryUsage = 0;
-    nUnviewedTransfers = 0;
-    completedTabActive = false;
     nodescurrent = false;
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
@@ -369,6 +374,27 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
     setAttribute(Qt::AA_DisableWindowContextHelpButton);
+}
+
+void MegaApplication::addStyleSelector(const QStringList& args)
+{
+    /*
+     * Forced to use --theme instead of --style due to Qt is already using it
+     * for its own style selection (Material, Universal, etc.)
+    */
+    static const QString themeArg = QString::fromUtf8("--theme");
+
+    auto qmlFileSelector(new QQmlFileSelector(mEngine, mEngine));
+    if (qmlFileSelector != nullptr && args.contains(themeArg))
+    {
+        auto styleValueIndex = args.indexOf(themeArg) + 1;
+        if (styleValueIndex < args.size())
+        {
+            QStringList style;
+            style << args.at(styleValueIndex);
+            qmlFileSelector->setExtraSelectors(style);
+        }
+    }
 }
 
 MegaApplication::~MegaApplication()
@@ -438,7 +464,7 @@ void MegaApplication::initialize()
     }
 
     paused = false;
-    indexing = false;
+    mIndexing = false;
 
 #ifdef Q_OS_LINUX
     isLinux = true;
@@ -487,19 +513,6 @@ void MegaApplication::initialize()
         toggleLogging();
     }
 
-    // TODO: This is legacy behavior and should be deleted when SRW is merged
-    // We also handle here the case where the user changed the exclusions with a
-    // version not using the mustDeleteSdkCacheAtStartup flag, did not restart
-    // from the settings dialog to activate the new exclusions, and the app got (auto) updated.
-    if (preferences->mustDeleteSdkCacheAtStartup()
-        || (updated && prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
-            && preferences->isCrashed()))
-    {
-        preferences->setDeleteSdkCacheAtStartup(false);
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "deleteSdkCacheAtStartup is true: force reload");
-        deleteSdkCache();
-    }
-
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
     megaApi->disableGfxFeatures(mDisableGfx);
@@ -507,6 +520,7 @@ void MegaApplication::initialize()
     model = SyncInfo::instance();
     connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncRemoved, this, &MegaApplication::onSyncModelUpdated);
+    connect(model, &SyncInfo::syncDisabledListUpdated, this, &MegaApplication::updateTrayIcon);
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
     megaApiFolders->disableGfxFeatures(mDisableGfx);
@@ -608,7 +622,7 @@ void MegaApplication::initialize()
     }
 
     if (preferences->isCrashed())
-    {       
+    {
         preferences->setCrashed(false);
         QStringList reports = CrashHandler::instance()->getPendingCrashReports();
         if (reports.size())
@@ -692,11 +706,6 @@ void MegaApplication::initialize()
     infoDialogTimer->setSingleShot(true);
     connect(infoDialogTimer, SIGNAL(timeout()), this, SLOT(showInfoDialog()));
 
-    firstTransferTimer = new QTimer(this);
-    firstTransferTimer->setSingleShot(true);
-    firstTransferTimer->setInterval(200);
-    connect(firstTransferTimer, &QTimer::timeout, this, &MegaApplication::checkFirstTransfer);
-
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
     if (preferences->logged() && preferences->getGlobalPaused())
@@ -720,9 +729,9 @@ void MegaApplication::initialize()
     }
 
     mTransfersModel = new TransfersModel(nullptr);
-
     connect(mTransfersModel.data(), &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 
+    mStalledIssuesModel = new StalledIssuesModel(this);
     connect(Platform::getInstance()->getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
             this, &MegaApplication::onNotificationProcessed);
 
@@ -932,6 +941,18 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
+    else if (mSyncStalled && !mStalledIssuesModel->isEmpty())
+    {
+        tooltipState = tr("Stalled");
+        icon = icons["alert"];
+
+#ifdef __APPLE__
+        if (scanningTimer->isActive())
+        {
+            scanningTimer->stop();
+        }
+#endif
+    }
     else if (paused)
     {
         long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
@@ -954,17 +975,17 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
-    else if (indexing || waiting || syncing || transferring)
+    else if (mIndexing || mWaiting || mSyncing || mTransferring)
     {
-        if (indexing)
+        if (mIndexing)
         {
             tooltipState = tr("Scanning");
         }
-        else if (syncing)
+        else if (mSyncing)
         {
             tooltipState = tr("Syncing");
         }
-        else if (waiting)
+        else if (mWaiting)
         {
             tooltipState = tr("Waiting");
         }
@@ -1068,14 +1089,13 @@ void MegaApplication::start()
         return;
     }
 
-    indexing = false;
+    mIndexing = false;
     paused = false;
     nodescurrent = false;
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     receivedStorageSum = 0;
-    finishedBlockedTransfers.clear();
     mSyncController.reset();
 
     for (unsigned i = 3; i--; )
@@ -1217,7 +1237,6 @@ void MegaApplication::start()
     }
 
     mEngine->rootContext()->setContextProperty(QString::fromUtf8("loginControllerAccess"), mLoginController);
-    qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 
     if (preferences->getSession().isEmpty())
     {
@@ -1380,11 +1399,17 @@ if (!preferences->lastExecutionTime())
         bool haveSyncs (false);
         bool haveBackups (false);
 
-        // Check if we have syncs and backups
-        if (model)
+        unique_ptr<MegaSyncList> syncList(megaApi->getSyncs());
+        for (int i = 0; i < syncList->size(); ++i)
         {
-            haveSyncs = model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
-            haveBackups = model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
+            if (syncList->get(i)->getType() == MegaSync::TYPE_BACKUP)
+            {
+                haveBackups = true;
+            }
+            else
+            {
+                haveSyncs = true;
+            }
         }
 
         // Set text according to situation
@@ -1510,6 +1535,7 @@ void MegaApplication::onLogout()
     }
     model->reset();
     mTransfersModel->resetModel();
+    mStalledIssuesModel->fullReset();
     mStatusController->reset();
 
     // Queue processing of logout cleanup to avoid race conditions
@@ -1525,8 +1551,6 @@ void MegaApplication::onLogout()
                 {
                     clearUserAttributes();
                     preferences->unlink();
-                    removeAllFinishedTransfers();
-                    clearViewedTransfers();
                     preferences->setFirstStartDone();
                 }
                 else
@@ -1687,7 +1711,7 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         {
             QString filePath = uploadInfo->getLocalPath();
             uploader->upload(filePath, uploadInfo->getNewName(), checkDialog->getNode(), data->getAppId(), batch);
-            
+
             //Do not update the last items, leave Qt to do it in its natural way
             //If you update them, the flag mProcessingUploadQueue will be false and the scanning widget
             //will be stuck forever
@@ -1775,26 +1799,6 @@ void MegaApplication::rebootApplication(bool update)
 
     trayIcon->hide();
     QApplication::exit();
-}
-
-// TODO: This is legacy behavior and should be deleted when SRW is merged
-void MegaApplication::deleteSdkCache()
-{
-    QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
-    while (di.hasNext())
-    {
-        di.next();
-        const QFileInfo& fi = di.fileInfo();
-        if (!fi.fileName().contains(QString::fromUtf8("transfers_"))
-            && !fi.fileName().contains(QString::fromUtf8("syncconfigsv2_"))
-            && (fi.fileName().endsWith(QString::fromUtf8(".db"))
-                || fi.fileName().endsWith(QString::fromUtf8(".db-wal"))
-                || fi.fileName().endsWith(QString::fromUtf8(".db-shm"))))
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Deleting local cache: %1").arg(di.filePath()).toUtf8().constData());
-            QFile::remove(di.filePath());
-        }
-    }
 }
 
 int* testCrashPtr = nullptr;
@@ -2204,8 +2208,6 @@ void MegaApplication::cleanAll()
     PowerOptions::appShutdown();
     mSyncController.reset();
 
-    removeAllFinishedTransfers();
-    clearViewedTransfers();
     DialogOpener::closeAllDialogs();
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
     {
@@ -2217,6 +2219,8 @@ void MegaApplication::cleanAll()
         mBlockingBatch.cancelTransfer();
     }
 
+    delete mStalledIssuesModel;
+    mStalledIssuesModel = nullptr;
     delete mEngine;
     mEngine = nullptr;
     delete httpServer;
@@ -2619,7 +2623,10 @@ QList<QNetworkInterface> MegaApplication::findNewNetworkInterfaces()
         QNetworkInterface::InterfaceFlags flags = networkInterface.flags();
         if (isActiveNetworkInterface(interfaceName, flags))
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Active network interface: %1").arg(interfaceName).toUtf8().constData());
+            if (logger->isDebug())
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Active network interface: %1").arg(interfaceName).toUtf8().constData());
+            }
 
             const int numActiveIPs = countActiveIps(networkInterface.addressEntries());
             if (numActiveIPs > 0)
@@ -2628,7 +2635,7 @@ QList<QNetworkInterface> MegaApplication::findNewNetworkInterfaces()
                 newInterfaces.append(networkInterface);
             }
         }
-        else
+        else if (logger->isDebug())
         {
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Ignored network interface: %1 Flags: %2")
                          .arg(interfaceName)
@@ -2772,9 +2779,15 @@ bool MegaApplication::isLocalIpv6(const QString &address)
 
 void MegaApplication::logIpAddress(const char* message, const QHostAddress &ipAddress) const
 {
-    const QString logMessage = QString::fromUtf8(message) + QString::fromUtf8(": %1");
-    const QString addressToLog = obfuscateIfNecessary(ipAddress);
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, logMessage.arg(addressToLog).toUtf8().constData());
+    if (logger->isDebug())
+    {
+        // these are quite frequent (30s) and usually there are around 10.
+        // so, just log when debug logging has been activated (ie, file to desktop)
+        // otherwise, it's quite distracting
+        const QString logMessage = QString::fromUtf8(message) + QString::fromUtf8(": %1");
+        const QString addressToLog = obfuscateIfNecessary(ipAddress);
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, logMessage.arg(addressToLog).toUtf8().constData());
+    }
 }
 
 QString MegaApplication::obfuscateIfNecessary(const QHostAddress &ipAddress) const
@@ -3053,7 +3066,7 @@ void MegaApplication::processUpgradeSecurityEvent()
                 if (isContextValid && e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMessage = tr("Failed to ugrade security. Error: %1")
-                                               .arg(tr(e.getErrorString()));
+                            .arg(tr(e.getErrorString()));
                     showErrorMessage(errorMessage, QMegaMessageBox::errorTitle());
                     exitApplication();
                 }
@@ -3076,6 +3089,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
     qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
                                      QString::fromUtf8("Cannot create ApiEnums in QML"));
+    qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController", QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
 
 QQueue<QString> MegaApplication::createQueue(const QStringList &newUploads) const
@@ -3595,69 +3609,6 @@ void MegaApplication::clearUserAttributes()
     UserAttributes::UserAttributesManager::instance().reset();
 }
 
-void MegaApplication::clearViewedTransfers()
-{
-    nUnviewedTransfers = 0;
-}
-
-void MegaApplication::onCompletedTransfersTabActive(bool active)
-{
-    completedTabActive = active;
-}
-
-void MegaApplication::checkFirstTransfer()
-{
-    if (appfinished || !megaApi)
-    {
-        return;
-    }
-
-    //Its a single shot timer, delete it forever
-    firstTransferTimer->deleteLater();
-    firstTransferTimer = nullptr;
-
-    auto TransfersStats = mTransfersModel->getTransfersCount();
-
-    if (TransfersStats.pendingDownloads)
-    {
-        mThreadPool->push([=]()
-        {//thread pool function
-
-            MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
-
-            Utilities::queueFunctionInAppThread([=]()
-            {//queued function
-
-                if (nextTransfer)
-                {
-                    onTransferUpdate(megaApi, nextTransfer);
-                    delete nextTransfer;
-                }
-            });//end of queued function
-
-        });// end of thread pool function
-    }
-
-    if (TransfersStats.pendingUploads)
-    {
-        mThreadPool->push([=]()
-        {//thread pool function
-
-            MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
-            if (nextTransfer)
-            {
-                Utilities::queueFunctionInAppThread([=]()
-                {//queued function
-
-                    onTransferUpdate(megaApi, nextTransfer);
-                    delete nextTransfer;
-
-                });//end of queued function
-            }
-        });// end of thread pool function
-    }
-}
-
 void MegaApplication::checkOperatingSystem()
 {
     if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD))
@@ -3835,9 +3786,10 @@ void MegaApplication::onTransfersModelUpdate()
     }
 
     auto TransfersStats = mTransfersModel->getTransfersCount();
-    //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!TransfersStats.pendingDownloads
-            && !TransfersStats.pendingUploads)
+    //If there are no pending transfers or we have the first ones, reset the statics and update the state of the tray icon
+    if ((!TransfersStats.pendingDownloads
+         && !TransfersStats.pendingUploads) ||
+        !mTransferring)
     {
         onGlobalSyncStateChanged(megaApi);
     }
@@ -4048,6 +4000,7 @@ void MegaApplication::toggleLogging()
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
         logger->setDebug(false);
         showInfoMessage(tr("DEBUG mode disabled"));
+        if (megaApi) megaApi->setLogExtraForModules(false, false);
     }
     else
     {
@@ -4056,78 +4009,12 @@ void MegaApplication::toggleLogging()
         showInfoMessage(tr("DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)"));
         if (megaApi)
         {
+            megaApi->setLogExtraForModules(true, true);
+
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
                      .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
         }
     }
-}
-
-void MegaApplication::removeFinishedTransfer(int transferTag)
-{
-    QMap<int, MegaTransfer*>::iterator it = finishedTransfers.find(transferTag);
-    if (it != finishedTransfers.end())
-    {
-        for (QList<MegaTransfer*>::iterator it2 = finishedTransferOrder.begin(); it2 != finishedTransferOrder.end(); it2++)
-        {
-            if ((*it2)->getTag() == transferTag)
-            {
-                finishedTransferOrder.erase(it2);
-                break;
-            }
-        }
-        delete it.value();
-        finishedTransfers.erase(it);
-
-        emit clearFinishedTransfer(transferTag);
-
-        if (!finishedTransfers.size() && infoDialog)
-        {
-            infoDialog->updateDialogState();
-        }
-    }
-}
-
-void MegaApplication::removeFinishedBlockedTransfer(int transferTag)
-{
-    finishedBlockedTransfers.remove(transferTag);
-}
-
-bool MegaApplication::finishedTransfersWhileBlocked(int transferTag)
-{
-    return finishedBlockedTransfers.contains(transferTag);
-}
-
-void MegaApplication::removeAllFinishedTransfers()
-{
-    qDeleteAll(finishedTransfers);
-    finishedTransferOrder.clear();
-    finishedTransfers.clear();
-
-    emit clearAllFinishedTransfers();
-
-    if (infoDialog)
-    {
-        infoDialog->updateDialogState();
-    }
-}
-
-QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
-{
-    return finishedTransferOrder;
-}
-
-int MegaApplication::getNumUnviewedTransfers()
-{
-    return nUnviewedTransfers;
-}
-
-MegaTransfer* MegaApplication::getFinishedTransferByTag(int tag)
-{
-    if (!finishedTransfers.contains(tag))
-    {
-        return nullptr;
-    }
-    return finishedTransfers.value(tag);
 }
 
 void MegaApplication::pauseTransfers()
@@ -4848,7 +4735,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     folderUploadTarget = targetFolder;
 
-    auto processUpload = [this](QStringList foldersSelected){
+    auto processUpload = [this](const QStringList& foldersSelected){
         if (!foldersSelected.isEmpty())
         {
             QFuture<NodeCount> future;
@@ -5182,7 +5069,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         const auto syncSettings (model->getAllSyncSettings());
         auto firstActiveSyncSetting (std::find_if(syncSettings.cbegin(), syncSettings.cend(),
                                                   [](std::shared_ptr<SyncSettings> s)
-                                     {return s->isActive();}));
+                                     {return s->getRunState() == MegaSync::RUNSTATE_RUNNING;}));
         if (firstActiveSyncSetting != syncSettings.cend())
         {
             infoDialogTimer->stop();
@@ -5797,10 +5684,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     {
         manageBusinessStatus(event->getNumber());
     }
-//    else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
-//    {
-//        processUpgradeSecurityEvent();
-//    }
+    else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
+    {
+        processUpgradeSecurityEvent();
+    }
 }
 
 //Called when a request has finished
@@ -6283,31 +6170,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     DeferPreferencesSyncForScope deferrer(this);
 
-    if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
-    {
-        MegaTransfer *t = transfer->copy();
-        if (finishedTransfers.count(transfer->getTag()))
-        {
-            assert(false);
-            megaApi->sendEvent(AppStatsEvents::EVENT_DUP_FINISHED_TRSF,
-                               QString::fromUtf8("Duplicated finished transfer: %1").arg(QString::number(transfer->getTag())).toUtf8().constData(), false, nullptr);
-            removeFinishedTransfer(transfer->getTag());
-        }
-
-        finishedTransfers.insert(transfer->getTag(), t);
-        finishedTransferOrder.push_back(t);
-
-        if (!mTransferManager)
-        {
-            completedTabActive = false;
-        }
-
-        if (!completedTabActive)
-        {
-            ++nUnviewedTransfers;
-        }
-    }
-
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
         HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
@@ -6316,16 +6178,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed(),
                                              QString::fromUtf8(transfer->getPath()));
-    }
-
-    if (mStatusController->isAccountBlocked())
-    {
-        finishedBlockedTransfers.insert(transfer->getTag());
-    }
-
-    if (finishedTransferOrder.size() > (int)Preferences::MAX_COMPLETED_ITEMS)
-    {
-        removeFinishedTransfer(finishedTransferOrder.first()->getTag());
     }
 
     if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
@@ -6398,11 +6250,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
         }
     }
-
-    if (firstTransferTimer && !firstTransferTimer->isActive())
-    {
-        firstTransferTimer->start();
-    }
 }
 
 //Called when a transfer has been updated
@@ -6429,11 +6276,6 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed(),
                                              QString::fromUtf8(transfer->getPath()));
-    }
-
-    if (firstTransferTimer && !firstTransferTimer->isActive())
-    {
-        firstTransferTimer->start();
     }
 }
 
@@ -6676,55 +6518,38 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         return;
     }
 
-    if (megaApi && infoDialog)
+    if (megaApi && infoDialog && mTransfersModel)
     {
-        mThreadPool->push([this]() {
+        mIndexing = megaApi->isScanning();
+        mSyncStalled = megaApi->isSyncStalled();
+        mWaiting = megaApi->isWaiting() || mSyncStalled;
+        mSyncing = megaApi->isSyncing();
 
-        auto model = getTransfersModel();
-        if (!megaApi || !model)
+        auto transferCount = mTransfersModel->getTransfersCount();
+        mTransferring = transferCount.pendingUploads || transferCount.pendingDownloads;
+
+        int pendingUploads = transferCount.pendingUploads;
+        int pendingDownloads = transferCount.pendingDownloads;
+
+        if (pendingUploads)
         {
-            return;
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
         }
 
-        indexing = megaApi->isScanning();
-        waiting = megaApi->isWaiting();
-        syncing = megaApi->isSyncing();
+        if (pendingDownloads)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
+        }
 
-        auto transferCount = model->getTransfersCount();
-        transferring = transferCount.pendingUploads || transferCount.pendingDownloads;
+        infoDialog->setIndexing(mIndexing);
+        infoDialog->setWaiting(mWaiting);
+        infoDialog->setSyncing(mSyncing);
+        infoDialog->setTransferring(mTransferring);
+        infoDialog->updateDialogState();
 
-        Utilities::queueFunctionInAppThread([=](){
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4 Stalled = %5")
+                                                  .arg(paused).arg(mIndexing).arg(mWaiting).arg(mSyncing).arg(mSyncStalled).toUtf8().constData());
 
-            if (!infoDialog)
-            {
-                return;
-            }
-
-            int pendingUploads = transferCount.pendingUploads;
-            int pendingDownloads = transferCount.pendingDownloads;
-
-            if (pendingUploads)
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
-            }
-
-            if (pendingDownloads)
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
-            }
-
-            infoDialog->setIndexing(indexing);
-            infoDialog->setWaiting(waiting);
-            infoDialog->setSyncing(syncing);
-            infoDialog->setTransferring(transferring);
-            infoDialog->updateDialogState();
-            });
-
-       });
+        updateTrayIcon();
     }
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4")
-                 .arg(paused).arg(indexing).arg(waiting).arg(syncing).toUtf8().constData());
-
-    updateTrayIcon();
 }

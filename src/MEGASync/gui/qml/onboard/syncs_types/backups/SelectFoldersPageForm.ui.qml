@@ -9,6 +9,7 @@ import onboard.syncs_types 1.0
 import BackupsModel 1.0
 
 SyncsPage {
+    id: root
 
     footerButtons.rightPrimary {
         text: OnboardingStrings.backUp
@@ -24,9 +25,11 @@ SyncsPage {
             left: parent.left
             right: parent.right
         }
-        spacing: 24 // value by design
+        spacing: 24
 
         Header {
+            id: headerItem
+
             title: OnboardingStrings.selectBackupFoldersTitle
             description: OnboardingStrings.selectBackupFoldersDescription
         }

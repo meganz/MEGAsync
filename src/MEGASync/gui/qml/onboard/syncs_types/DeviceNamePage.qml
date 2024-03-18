@@ -11,8 +11,7 @@ DeviceNamePageForm {
 
     footerButtons.rightPrimary.onClicked: {
         var emptyText = deviceNameTextField.text.length === 0;
-        if(emptyText)
-        {
+        if(emptyText) {
             deviceNameTextField.hint.textColor = Styles.textError;
         }
         deviceNameTextField.error = emptyText;
@@ -24,7 +23,7 @@ DeviceNamePageForm {
         }
 
         if(!deviceName.setDeviceName(deviceNameTextField.text)) {
-            root.deviceNameMoveToSyncType()
+            root.deviceNameMoveToSyncType();
         }
     }
 
@@ -33,8 +32,7 @@ DeviceNamePageForm {
         deviceNameTextField.hint.text = "";
         deviceNameTextField.hint.visible = false;
 
-        if(deviceNameTextField.text.length >= deviceNameTextField.textField.maximumLength)
-        {
+        if(deviceNameTextField.text.length >= deviceNameTextField.textField.maximumLength) {
             deviceNameTextField.hint.textColor = Styles.textSecondary;
             deviceNameTextField.hint.text = OnboardingStrings.errorDeviceNameLimit;
             deviceNameTextField.hint.visible = true;
@@ -45,7 +43,7 @@ DeviceNamePageForm {
         id: deviceName
 
         onDeviceNameSet: {
-            root.deviceNameMoveToSyncType()
+            root.deviceNameMoveToSyncType();
         }
     }
 

@@ -51,7 +51,7 @@ void MacXExtServer::acceptConnection(QPointer<MacXLocalSocket> client)
         for (auto syncSetting : model->getAllSyncSettings())
         {
             QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
-            if (syncPath.size() && syncSetting->isActive())
+            if (syncPath.size() && syncSetting->getRunState() == MegaSync::RUNSTATE_RUNNING)
             {
                 QString message = QString::fromUtf8("A:") + syncPath
                         + QChar::fromAscii(':') + syncSetting->name(true);
@@ -234,7 +234,8 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
 
             addOverlayIconsDisabledToCommand(response);
-            addIsIncomingShareToCommand(&tmpPath, response);
+            const bool isIncomingShare = false;
+            addIsIncomingShareToCommand(&tmpPath, response, isIncomingShare);
 
             return true;
         }
@@ -319,7 +320,8 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
         addOverlayIconsDisabledToCommand(&command);
 
         std::string pathString(localPath.toStdString());
-        addIsIncomingShareToCommand(&pathString, &command);
+        const bool isIncomingShare = false;
+        addIsIncomingShareToCommand(&pathString, &command, isIncomingShare);
 
         doSendToAll(QByteArray(command.data()));
     }
@@ -360,7 +362,7 @@ void MacXExtServer::notifyAllClients(int op)
     for (auto syncSetting : model->getAllSyncSettings())
     {
         QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
-        if (!syncPath.size() || !syncSetting->isActive())
+        if (!syncPath.size() || syncSetting->getRunState() != MegaSync::RUNSTATE_RUNNING)
         {
             continue;
         }

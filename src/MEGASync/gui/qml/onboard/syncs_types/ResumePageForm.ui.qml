@@ -13,18 +13,19 @@ import onboard 1.0
 SyncsPage {
     id: root
 
-    property string title
-    property string description
-    property bool fullSyncDone
-    property bool selectiveSyncDone
-    property alias buttonGroup: buttonGroupItem
-    property alias syncButton: syncButtonItem
-
     readonly property string stateFullSync: "FULL"
     readonly property string stateSelectiveSync: "SELECTIVE"
     readonly property string stateBackup: "BACKUP"
     readonly property int maxSizeDescription: 80
     readonly property int buttonQuestionMargin: 24
+
+    property alias buttonGroup: buttonGroupItem
+    property alias syncButton: syncButtonItem
+
+    property string title
+    property string description
+    property bool fullSyncDone
+    property bool selectiveSyncDone
 
     footerButtons {
         leftSecondary.visible: false
@@ -48,7 +49,7 @@ SyncsPage {
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
             PropertyChanges {
                 target: syncButtonItem;
-                type: SyncsType.SelectiveSync;
+                type: SyncsType.Types.SELECTIVE_SYNC;
                 visible: true;
             }
         },
@@ -58,15 +59,22 @@ SyncsPage {
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
             PropertyChanges {
                 target: syncButtonItem;
-                type: !fullSyncDone && !selectiveSyncDone ? SyncsType.Sync : SyncsType.SelectiveSync;
-                visible: !fullSyncDone
-                title: !fullSyncDone && !selectiveSyncDone ? OnboardingStrings.sync : OnboardingStrings.selectiveSync
-                description: !fullSyncDone && !selectiveSyncDone ? OnboardingStrings.finalPageButtonSync : OnboardingStrings.finalPageButtonSelectiveSync
+                type: !fullSyncDone && !selectiveSyncDone
+                      ? SyncsType.Types.SYNC
+                      : SyncsType.Types.SELECTIVE_SYNC;
+                visible: !fullSyncDone;
+                title: !fullSyncDone && !selectiveSyncDone
+                       ? OnboardingStrings.sync
+                       : OnboardingStrings.selectiveSync;
+                description: !fullSyncDone && !selectiveSyncDone
+                             ? OnboardingStrings.finalPageButtonSync
+                             : OnboardingStrings.finalPageButtonSelectiveSync;
             }
         }
     ]
 
     ColumnLayout {
+        id: mainLayout
 
         anchors {
             top: parent.top
@@ -79,8 +87,10 @@ SyncsPage {
 
             Layout.preferredWidth: parent.width
             text: title
-            font.pixelSize: Texts.Text.Size.Large
-            font.weight: Font.Bold
+            font {
+                pixelSize: Texts.Text.Size.LARGE
+                weight: Font.Bold
+            }
             wrapMode: Text.Wrap
         }
 
@@ -90,71 +100,84 @@ SyncsPage {
             Layout.preferredWidth: parent.width
             Layout.topMargin: 8
             text: description
-            font.pixelSize: Texts.Text.Size.Medium
+            font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
         }
 
         Texts.Text {
+            id: finalStepQuestionText
+
             Layout.preferredWidth: parent.width
             Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
             text: OnboardingStrings.finalStepQuestion
-            font.pixelSize: Texts.Text.Size.MediumLarge
-            font.weight: Font.DemiBold
+            font {
+                pixelSize: Texts.Text.Size.MEDIUM_LARGE
+                weight: Font.DemiBold
+            }
         }
 
-        Rectangle {
+        Item {
+            id: buttons
+
             Layout.preferredWidth: parent.width + 8
             Layout.topMargin: (descriptionItem.height > maxSizeDescription) ? (buttonQuestionMargin * 0.5) : buttonQuestionMargin
-            color: "transparent"
 
             ButtonGroup {
                 id: buttonGroupItem
             }
 
             RowLayout {
+                id: buttonsLayout
+
+                anchors {
+                    fill: parent
+                    leftMargin: -syncButtonItem.focusBorderWidth
+                    rightMargin: backupsButton.focusBorderWidth
+                }
                 spacing: 12
-                anchors.fill: parent
-                anchors.leftMargin: -syncButtonItem.focusBorderWidth
-                anchors.rightMargin: backupsButton.focusBorderWidth
 
                 SyncsVerticalButton {
                     id: syncButtonItem
 
-                    title: OnboardingStrings.selectiveSync
-                    description: OnboardingStrings.finalPageButtonSelectiveSync
-                    imageSource: Images.sync
-                    ButtonGroup.group: buttonGroupItem
-                    checkable: false
                     width: (parent.width - parent.spacing) / 2
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
-                    imageSourceSize: Qt.size(22, 20)
                     contentMargin: 24
                     contentSpacing: 8
+                    imageSourceSize: Qt.size(22, 20)
+                    title: OnboardingStrings.selectiveSync
+                    description: OnboardingStrings.finalPageButtonSelectiveSync
+                    imageSource: Images.sync
+                    checkable: false
                     focus: true
                     useMaxSiblingHeight: true
+                    ButtonGroup.group: buttonGroupItem
                 }
 
                 SyncsVerticalButton {
                     id: backupsButton
 
-                    title: OnboardingStrings.backup
-                    description: OnboardingStrings.finalPageButtonBackup
-                    imageSource: Images.installationTypeBackups
-                    ButtonGroup.group: buttonGroupItem
-                    type: SyncsType.Backup
-                    checkable: false
                     width: !syncButtonItem.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
-                    imageSourceSize: Qt.size(22, 20)
                     contentMargin: 24
                     contentSpacing: 8
+                    imageSourceSize: Qt.size(22, 20)
+                    title: OnboardingStrings.backup
+                    description: OnboardingStrings.finalPageButtonBackup
+                    imageSource: Images.installationTypeBackups
+                    type: SyncsType.Types.BACKUP
+                    checkable: false
                     useMaxSiblingHeight: syncButtonItem.visible
+                    ButtonGroup.group: buttonGroupItem
                 }
-            }
-        }
-    }
+
+            } // RowLayout: buttonsLayout
+
+        } // Item: buttons
+
+    } // ColumnLayout: mainLayout
+
 }

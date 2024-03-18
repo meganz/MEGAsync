@@ -60,7 +60,7 @@ void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList>
     }
 }
 
-bool NodeSelectorModelItem::areChildrenInitialized()
+bool NodeSelectorModelItem::areChildrenInitialized() const
 {
     return mChildrenAreInit;
 }
@@ -222,7 +222,7 @@ QIcon NodeSelectorModelItem::getStatusIcons()
     return statusIcons;
 }
 
-NodeSelectorModelItem::Status NodeSelectorModelItem::getStatus()
+NodeSelectorModelItem::Status NodeSelectorModelItem::getStatus() const
 {
     return mStatus;
 }
@@ -241,6 +241,19 @@ QPointer<NodeSelectorModelItem> NodeSelectorModelItem::addNode(std::shared_ptr<M
     mChildItems.append(item);
     return item;
 }
+
+QList<QPointer<NodeSelectorModelItem>> NodeSelectorModelItem::addNodes(QList<std::shared_ptr<MegaNode>> nodes)
+{
+    QList<QPointer<NodeSelectorModelItem>> items;
+    foreach(auto& node, nodes)
+    {
+        auto item = createModelItem(std::unique_ptr<MegaNode>(node->copy()), mShowFiles, this);
+        items.append(item);
+        mChildItems.append(item);
+    }
+    return items;
+}
+
 
 QPointer<NodeSelectorModelItem> NodeSelectorModelItem::findChildNode(std::shared_ptr<MegaNode> node)
 {
@@ -329,7 +342,7 @@ void NodeSelectorModelItem::calculateSyncStatus()
     }
 }
 
-bool NodeSelectorModelItem::isCloudDrive()
+bool NodeSelectorModelItem::isCloudDrive() const
 {
     return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
 }
@@ -343,8 +356,6 @@ NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::M
     : NodeSelectorModelItem(std::move(node), false, parentItem),
       mType(type)
 {
-    qRegisterMetaType<NodeSelectorModelItemSearch::Types>("NodeSelectorModelItemSearch::Types");
-
     if(mType & NodeSelectorModelItemSearch::Type::INCOMING_SHARE)
     {
         auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(mNode.get(), true));
