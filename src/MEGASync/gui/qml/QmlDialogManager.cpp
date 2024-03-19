@@ -41,21 +41,23 @@ void QmlDialogManager::openGuestDialog()
     DialogOpener::showDialog(dialogWrapper->getDialog());
 }
 
-void QmlDialogManager::openOnboardingDialog()
+bool QmlDialogManager::openOnboardingDialog()
 {
-    if(MegaSyncApp->finished())
+    if(MegaSyncApp->finished() || Preferences::instance()->logged())
     {
-        return;
+        return false;
     }
 
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
     {
         DialogOpener::showDialog(dialog->getDialog());
-        return;
     }
-
-    QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-    DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
+    else
+    {
+        QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
+        DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
+    }
+    return true;
 }
 
 bool QmlDialogManager::raiseGuestDialog()

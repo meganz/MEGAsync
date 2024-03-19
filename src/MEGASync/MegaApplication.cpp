@@ -3970,9 +3970,8 @@ void MegaApplication::importLinks()
     mTransferQuota->checkImportLinksAlertDismissed([this](int result){
         if(result == QDialog::Rejected)
         {
-            if (!preferences->logged())
+            if (QmlDialogManager::instance()->openOnboardingDialog())
             {
-                QmlDialogManager::instance()->openOnboardingDialog();
                 return;
             }
 
@@ -4338,9 +4337,8 @@ void MegaApplication::processUploads()
         return;
     }
 
-    if (!preferences->logged())
+    if (QmlDialogManager::instance()->openOnboardingDialog())
     {
-        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4410,9 +4408,8 @@ void MegaApplication::processDownloads()
         return;
     }
 
-    if (!preferences->logged())
+    if (QmlDialogManager::instance()->openOnboardingDialog())
     {
-        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4591,26 +4588,16 @@ void MegaApplication::externalLinkDownload(QString megaLink, QString auth)
 
     pendingLinks.insert(megaLink, auth);
 
-    if (preferences->logged())
+    if (!QmlDialogManager::instance()->openOnboardingDialog())
     {
         megaApi->getPublicNode(megaLink.toUtf8().constData());
-    }
-    else
-    {
-        QmlDialogManager::instance()->openOnboardingDialog();
     }
 }
 
 void MegaApplication::externalFileUpload(qlonglong targetFolder)
 {
-    if (appfinished)
+    if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
-        return;
-    }
-
-    if (!preferences->logged())
-    {
-        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4647,14 +4634,8 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
 void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 {
-    if (appfinished)
+    if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
-        return;
-    }
-
-    if (!preferences->logged())
-    {
-        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4699,14 +4680,8 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
 void MegaApplication::externalFolderSync(qlonglong targetFolder)
 {
-    if (appfinished)
+    if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
-        return;
-    }
-
-    if (!preferences->logged())
-    {
-        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4718,14 +4693,8 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
 void MegaApplication::externalAddBackup()
 {
-    if (appfinished)
+    if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
-        return;
-    }
-
-    if (!preferences->logged())
-    {
-        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4737,14 +4706,8 @@ void MegaApplication::externalAddBackup()
 
 void MegaApplication::externalOpenTransferManager(int tab)
 {
-    if (appfinished || !infoDialog)
+    if (appfinished || !infoDialog || QmlDialogManager::instance()->openOnboardingDialog())
     {
-        return;
-    }
-
-    if (!preferences->logged())
-    {
-        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 

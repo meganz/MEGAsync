@@ -16,7 +16,7 @@ public:
     QmlDialogManager& operator=(const QmlDialogManager&) = delete;
 
     void openGuestDialog();
-    void openOnboardingDialog();
+    bool openOnboardingDialog();
 
     bool raiseGuestDialog();
     void raiseOnboardingDialog();
