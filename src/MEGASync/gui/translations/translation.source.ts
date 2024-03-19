@@ -3114,6 +3114,10 @@ Please wait for the upload to complete.</translation>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
         <translation>You have been logged out because of this error: %1</translation>
     </message>
+    <message>
+        <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LowDiskSpaceDialog</name>
