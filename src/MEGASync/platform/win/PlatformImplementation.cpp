@@ -28,6 +28,7 @@
 #include <QOperatingSystemVersion>
 #include <QScreen>
 #include <QDesktopWidget>
+#include <QHostInfo>
 
 #if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
@@ -78,6 +79,7 @@ using namespace std;
 using namespace mega;
 
 bool WindowsPlatform_exiting = false;
+static const QString NotAllowedDefaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
 
 void PlatformImplementation::initialize(int, char *[])
 {
@@ -1413,16 +1415,12 @@ QString PlatformImplementation::getDeviceName()
                                    QLatin1Literal("0")).toString());
     QString model (settings.value(QLatin1String("SystemProductName"),
                                   QLatin1Literal("0")).toString());
-    QString deviceName;
-    // If failure or empty strings, give hostname
-    if (vendor.isEmpty() && model.isEmpty())
+
+    QString deviceName = vendor + QLatin1Literal(" ") + model;
+    // If failure, empty strings or defaultFactoryBiosName, give hostname.
+    if ((vendor.isEmpty() && model.isEmpty()) || deviceName.contains(NotAllowedDefaultFactoryBiosName))
     {
-        deviceName = QSysInfo::machineHostName();
-        deviceName.remove(QLatin1Literal(".local"));
-    }
-    else
-    {
-        deviceName = vendor + QLatin1Literal(" ") + model;
+        deviceName = QHostInfo::localHostName();
     }
 
     return deviceName;

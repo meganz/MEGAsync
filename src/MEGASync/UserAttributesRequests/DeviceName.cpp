@@ -4,8 +4,6 @@
 #include "MegaApplication.h"
 #include "platform/Platform.h"
 
-#include <QHostInfo>
-
 namespace UserAttributes
 {
 // DEVICE NAME REQUEST
@@ -19,8 +17,6 @@ namespace UserAttributes
 // The request will fail only if we can't complete the process.
 // The name is emitted on device name change (for instance after setting it).
 //
-
-static const QString defaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
 
 DeviceName::DeviceName(const QString& userEmail) : AttributeRequest(userEmail),
     mDeviceName(getDefaultDeviceName()),
@@ -117,25 +113,10 @@ void DeviceName::processGetDeviceNameCallback(mega::MegaRequest* incoming_reques
 
     if (errorCode == mega::MegaError::API_OK)
     {
-        auto deviceName = QString::fromUtf8(incoming_request->getName());
-        if (deviceName.isEmpty())
-        {
-            deviceName = getDefaultDeviceName();
-        }
-        else {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
-                               QString::fromUtf8("Got device name from remote: \"%1\"").arg(mDeviceName)
+        mDeviceName = QString::fromUtf8(incoming_request->getName());
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
+                           QString::fromUtf8("Got device name from remote: \"%1\"").arg(mDeviceName)
                                .toUtf8().constData());
-        }
-
-        if (deviceName.contains(defaultFactoryBiosName))
-        {
-            deviceName = QHostInfo::localHostName();
-            setDeviceName(deviceName);
-            return;
-        }
-
-        mDeviceName = deviceName;
         emit attributeReady(mDeviceName);
     }
     else
