@@ -72,3 +72,11 @@ void QmlManager::setRootContextProperty(const QString& name, const QVariant& val
 {
     mEngine->rootContext()->setContextProperty(name, value);
 }
+
+void QmlManager::retranslate()
+{
+    if(mEngine && mEngine != nullptr)
+    {
+        mEngine->retranslate();
+    }
+}

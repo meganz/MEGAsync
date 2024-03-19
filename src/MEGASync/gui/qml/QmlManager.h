@@ -22,6 +22,8 @@ public:
     void setRootContextProperty(const QString& name, QObject* value);
     void setRootContextProperty(const QString& name, const QVariant& value);
 
+    void retranslate();
+
 private:
     QQmlEngine* mEngine;
 

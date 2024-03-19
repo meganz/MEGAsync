@@ -757,10 +757,7 @@ void MegaApplication::changeLanguage(QString languageCode)
         currentLanguageCode = languageCode;
     }
 
-    if(QmlManager::instance()->qmlEngine())
-    {
-        QmlManager::instance()->qmlEngine()->retranslate();
-    }
+    QmlManager::instance()->retranslate();
 
     createTrayIcon();
 }
