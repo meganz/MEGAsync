@@ -22,6 +22,9 @@ public:
     void setRootContextProperty(const QString& name, QObject* value);
     void setRootContextProperty(const QString& name, const QVariant& value);
 
+    void addImageProvider(const QString& id, QQmlImageProviderBase*);
+    void removeImageProvider(const QString& id);
+
     void retranslate();
 
 private:

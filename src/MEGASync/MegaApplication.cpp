@@ -707,7 +707,7 @@ void MegaApplication::initialize()
     connect(Platform::getInstance()->getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
             this, &MegaApplication::onNotificationProcessed);
 
-    mLogoutController = new LogoutController(QmlManager::instance()->qmlEngine());
+    mLogoutController = new LogoutController(QmlManager::instance().get());
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
     QmlManager::instance()->setRootContextProperty(mLogoutController);
 }
@@ -1176,7 +1176,7 @@ void MegaApplication::start()
             createTrayIcon();
         }
 
-        mLoginController = new LoginController(QmlManager::instance()->qmlEngine());
+        mLoginController = new LoginController(QmlManager::instance().get());
         if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(AppStatsEvents::EVENT_1ST_START, "MEGAsync first start", false, nullptr);
@@ -1190,7 +1190,7 @@ void MegaApplication::start()
     }
     else //Otherwise, login in the account
     {
-        mLoginController = new FastLoginController(QmlManager::instance()->qmlEngine());
+        mLoginController = new FastLoginController(QmlManager::instance().get());
         if (mLoginController == nullptr || !static_cast<FastLoginController*>(mLoginController)->fastLogin()) //In case preferences are corrupt with empty session, just unlink and remove associated data.
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "MEGAsync preferences logged but empty session. Unlink account and fresh start.");

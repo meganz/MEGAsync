@@ -117,8 +117,7 @@ BackupsModel::BackupsModel(QObject* parent)
     connect(&mCheckDirsTimer, &QTimer::timeout, this, &BackupsModel::checkDirectories);
 
     QmlManager::instance()->setRootContextProperty(this);
-
-    QmlManager::instance()->qmlEngine()->addImageProvider(QLatin1String("standardicons"), new StandardIconProvider);
+    QmlManager::instance()->addImageProvider(QLatin1String("standardicons"), new StandardIconProvider);
 
     mCheckDirsTimer.setInterval(CHECK_DIRS_TIME);
     mCheckDirsTimer.start();
@@ -126,10 +125,7 @@ BackupsModel::BackupsModel(QObject* parent)
 
 BackupsModel::~BackupsModel()
 {
-    if(auto engine = QmlManager::instance()->qmlEngine())
-    {
-        QmlManager::instance()->qmlEngine()->removeImageProvider(QLatin1String("standardicons"));
-    }
+    QmlManager::instance()->removeImageProvider(QLatin1String("standardicons"));
 }
 
 QHash<int, QByteArray> BackupsModel::roleNames() const

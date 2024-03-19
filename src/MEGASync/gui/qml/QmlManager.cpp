@@ -53,7 +53,7 @@ void QmlManager::registerCommonQMLElements()
 void QmlManager::setRootContextProperty(QObject* value)
 {
     QString name(QString::fromUtf8(value->metaObject()->className()));
-    if (name.isEmpty())
+    if (name.isEmpty() || !mEngine)
     {
         return;
     }
@@ -65,17 +65,39 @@ void QmlManager::setRootContextProperty(QObject* value)
 
 void QmlManager::setRootContextProperty(const QString& name, QObject* value)
 {
-    mEngine->rootContext()->setContextProperty(name, value);
+    if(mEngine)
+    {
+        mEngine->rootContext()->setContextProperty(name, value);
+    }
 }
 
 void QmlManager::setRootContextProperty(const QString& name, const QVariant& value)
 {
-    mEngine->rootContext()->setContextProperty(name, value);
+    if(mEngine)
+    {
+        mEngine->rootContext()->setContextProperty(name, value);
+    }
+}
+
+void QmlManager::addImageProvider(const QString& id, QQmlImageProviderBase* provider)
+{
+    if(mEngine)
+    {
+        mEngine->addImageProvider(id, provider);
+    }
+}
+
+void QmlManager::removeImageProvider(const QString& id)
+{
+    if(mEngine)
+    {
+        mEngine->removeImageProvider(id);
+    }
 }
 
 void QmlManager::retranslate()
 {
-    if(mEngine && mEngine != nullptr)
+    if(mEngine)
     {
         mEngine->retranslate();
     }
