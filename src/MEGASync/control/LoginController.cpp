@@ -487,7 +487,7 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
             && !(mPreferences->isFirstBackupDone() || mPreferences->isFirstSyncDone())) //Onboarding don´t has to be shown to users that
                                                                                         //doesn´t have one_time_action_onboarding_shown
         {                                                                               //and they have first backup or first sync done
-            MegaSyncApp->openOnboardingDialog();
+            QmlDialogManager::instance()->openOnboardingDialog();
             setState(FETCH_NODES_FINISHED_ONBOARDING);
             mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
         }

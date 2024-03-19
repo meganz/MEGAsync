@@ -15,6 +15,7 @@
 #include <QPointer>
 #include <QDialog>
 #include <QApplication>
+#include <QScreen> // Implicitly included
 
 #include <memory>
 

@@ -45,6 +45,7 @@
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
 #include "qml/QmlManager.h"
+#include "qml/QmlDialogManager.h"
 
 class TransfersModel;
 class StalledIssuesModel;
@@ -202,13 +203,11 @@ public:
     void reloadSyncsInSettings();
 
     void raiseInfoDialog();
-    bool raiseGuestDialog();
-    void raiseOnboardingDialog();
-    void raiseOrHideInfoGuestDialog();
     bool isShellNotificationProcessingOngoing();
 
     QSystemTrayIcon* getTrayIcon();
     LoginController* getLoginController();
+    AccountStatusController* getAccountStatusController();
 
 signals:
     void startUpdaterThread();
@@ -234,8 +233,6 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
-    void openGuestDialog();
-    void openOnboardingDialog();
     void importLinks();
     void officialWeb();
     void goToMyCloud();

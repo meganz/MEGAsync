@@ -18,7 +18,6 @@
 #include "TransferMetaData.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
-#include "onboarding/OnboardingQmlDialog.h"
 #include "PlatformStrings.h"
 
 #include "UserAttributesManager.h"
@@ -28,12 +27,6 @@
 #include "syncs/gui/SyncsMenu.h"
 #include "gui/UploadToMegaDialog.h"
 #include "EmailRequester.h"
-
-#include "qml/QmlDialog.h"
-#include "onboarding/GuestQmlDialog.h"
-#include "qml/QmlDialogWrapper.h"
-#include "onboarding/Onboarding.h"
-#include "onboarding/GuestContent.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -1208,7 +1201,7 @@ void MegaApplication::start()
 
     if (preferences->getSession().isEmpty())
     {
-        openOnboardingDialog();
+        QmlDialogManager::instance()->openOnboardingDialog();
     }
 }
 
@@ -2183,10 +2176,7 @@ void MegaApplication::cleanAll()
     mSyncController.reset();
 
     DialogOpener::closeAllDialogs();
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-    {
-        static_cast<OnboardingQmlDialog*>(dialog->getDialog()->window())->forceClose();
-    }
+    QmlDialogManager::instance()->forceCloseOnboardingDialog();
     QmlManager::instance()->finish();
 
     if(mBlockingBatch.isValid())
@@ -2302,23 +2292,9 @@ QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &date
     return DateTimeFormatter::create(currentLanguageCode, datetime, format);
 }
 
-bool MegaApplication::raiseGuestDialog()
-{
-    bool raisedGuestDialog = false;
-
-    if(mStatusController->isAccountBlocked() || mLoginController->getState() != LoginController::FETCH_NODES_FINISHED)
-    {
-        openGuestDialog();
-
-        raisedGuestDialog = true;
-    }
-
-    return raisedGuestDialog;
-}
-
 void MegaApplication::raiseInfoDialog()
 {
-    if (raiseGuestDialog())
+    if (QmlDialogManager::instance()->raiseGuestDialog())
     {
         return;
     }
@@ -2336,23 +2312,6 @@ void MegaApplication::raiseInfoDialog()
         infoDialog->raise();
         infoDialog->activateWindow();
         infoDialog->highDpiResize.queueRedraw();
-    }
-}
-
-void MegaApplication::raiseOnboardingDialog()
-{
-    if(mStatusController->isAccountBlocked()
-        || (mLoginController && mLoginController->getState() != LoginController::FETCH_NODES_FINISHED))
-    {
-        if (preferences->getSession().isEmpty())
-        {
-            openOnboardingDialog();
-        }
-        else if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-        {
-            DialogOpener::showDialog(dialog->getDialog());
-            dialog->getDialog()->raise();
-        }
     }
 }
 
@@ -3683,6 +3642,11 @@ LoginController *MegaApplication::getLoginController()
     return mLoginController;
 }
 
+AccountStatusController* MegaApplication::getAccountStatusController()
+{
+    return mStatusController;
+}
+
 void MegaApplication::openFolderPath(QString localPath)
 {
     if (!localPath.isEmpty())
@@ -4008,7 +3972,7 @@ void MegaApplication::importLinks()
         {
             if (!preferences->logged())
             {
-                openOnboardingDialog();
+                QmlDialogManager::instance()->openOnboardingDialog();
                 return;
             }
 
@@ -4376,7 +4340,7 @@ void MegaApplication::processUploads()
 
     if (!preferences->logged())
     {
-        openOnboardingDialog();
+        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4448,7 +4412,7 @@ void MegaApplication::processDownloads()
 
     if (!preferences->logged())
     {
-        openOnboardingDialog();
+        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4633,7 +4597,7 @@ void MegaApplication::externalLinkDownload(QString megaLink, QString auth)
     }
     else
     {
-        openOnboardingDialog();
+        QmlDialogManager::instance()->openOnboardingDialog();
     }
 }
 
@@ -4646,7 +4610,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     if (!preferences->logged())
     {
-        openOnboardingDialog();
+        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4690,7 +4654,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     if (!preferences->logged())
     {
-        openOnboardingDialog();
+        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4742,7 +4706,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
     if (!preferences->logged())
     {
-        openOnboardingDialog();
+        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4761,7 +4725,7 @@ void MegaApplication::externalAddBackup()
 
     if (!preferences->logged())
     {
-        openOnboardingDialog();
+        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4780,7 +4744,7 @@ void MegaApplication::externalOpenTransferManager(int tab)
 
     if (!preferences->logged())
     {
-        openOnboardingDialog();
+        QmlDialogManager::instance()->openOnboardingDialog();
         return;
     }
 
@@ -4997,7 +4961,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                 }
                 else
                 {
-                    openGuestDialog();
+                    QmlDialogManager::instance()->openGuestDialog();
                 }
             }
             return;
@@ -5018,8 +4982,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #endif
 
         DialogOpener::raiseAllDialogs();
-        raiseOnboardingDialog();
-        raiseOrHideInfoGuestDialog();
+        QmlDialogManager::instance()->raiseOnboardingDialog();
+        QmlDialogManager::instance()->raiseOrHideInfoGuestDialog(infoDialogTimer, 200);
 
     }
 #ifndef __APPLE__
@@ -5028,23 +4992,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         showTrayMenu();
     }
 #endif
-}
-
-void MegaApplication::raiseOrHideInfoGuestDialog()
-{
-    auto guestDialogWrapper = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>();
-
-    if(guestDialogWrapper == nullptr) //dialog still not built
-    {
-        infoDialogTimer->start(200);
-        return;
-    }
-
-    auto dialog = dynamic_cast<GuestQmlDialog*>(guestDialogWrapper->getDialog()->window());
-    if(dialog && dialog->isHiddenForLongTime())
-    {
-        infoDialogTimer->start(200);
-    }
 }
 
 void MegaApplication::onMessageClicked()
@@ -5062,41 +5009,6 @@ void MegaApplication::onMessageClicked()
     {
         trayIconActivated(QSystemTrayIcon::Trigger);
     }
-}
-
-void MegaApplication::openGuestDialog()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    auto dialogWrapper = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>();
-    if(dialogWrapper == nullptr)
-    {
-        QPointer<QmlDialogWrapper<GuestContent>> guest = new QmlDialogWrapper<GuestContent>();
-        DialogOpener::addDialog(guest)->setIgnoreRaiseAllAction(true);
-        dialogWrapper = DialogOpener::findDialog<QmlDialogWrapper<GuestContent>>();
-    }
-
-    DialogOpener::showDialog(dialogWrapper->getDialog());
-}
-
-void MegaApplication::openOnboardingDialog()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-    {
-        DialogOpener::showDialog(dialog->getDialog());
-        return;
-    }
-
-    QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-    DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
 }
 
 void MegaApplication::openSettings(int tab)
@@ -5233,7 +5145,7 @@ void MegaApplication::createTrayIconMenus()
         showStatusAction = new QAction(tr("Show status"), this);
         connect(showStatusAction, &QAction::triggered, this, [this](){
             DialogOpener::raiseAllDialogs();
-            raiseOnboardingDialog();
+            QmlDialogManager::instance()->raiseOnboardingDialog();
             infoDialogTimer->start(200);
         });
 
