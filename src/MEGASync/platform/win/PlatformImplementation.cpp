@@ -1411,12 +1411,12 @@ QString PlatformImplementation::getDeviceName()
     // First, try to read maker and model
     QSettings settings (QLatin1String("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),
                         QSettings::NativeFormat);
-    QString vendor (settings.value(QLatin1Literal("BaseBoardManufacturer"),
-                                   QLatin1Literal("0")).toString());
+    QString vendor (settings.value(QLatin1String("BaseBoardManufacturer"),
+                                   QLatin1String("0")).toString());
     QString model (settings.value(QLatin1String("SystemProductName"),
-                                  QLatin1Literal("0")).toString());
+                                  QLatin1String("0")).toString());
 
-    QString deviceName = vendor + QLatin1Literal(" ") + model;
+    QString deviceName = vendor + QLatin1String(" ") + model;
     // If failure, empty strings or defaultFactoryBiosName, give hostname.
     if ((vendor.isEmpty() && model.isEmpty()) || deviceName.contains(NotAllowedDefaultFactoryBiosName))
     {
