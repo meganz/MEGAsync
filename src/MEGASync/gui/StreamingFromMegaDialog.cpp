@@ -12,11 +12,7 @@
 
 #include <QCloseEvent>
 #include <QInputDialog>
-
-
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
-#endif
 
 #define MAX_STREAMING_BUFFER_SIZE 8242880 // 8 MB
 
@@ -253,15 +249,11 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
         }
     #else
         #ifdef __APPLE__
-            #if QT_VERSION < 0x050000
-                defaultPath = QDesktopServices::storageLocation(QDesktopServices::ApplicationsLocation);
-            #else
                 QStringList paths = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
                 if (paths.size())
                 {
                     defaultPath = paths.at(0);
                 }
-            #endif
         #else
             defaultPath = QString::fromUtf8("/usr/bin");
         #endif

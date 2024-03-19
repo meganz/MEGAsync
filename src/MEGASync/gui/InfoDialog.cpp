@@ -105,11 +105,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     setUnseenNotifications(0);
 
-#if QT_VERSION > 0x050200
     QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
-#endif
+
     ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
 
