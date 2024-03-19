@@ -21,10 +21,7 @@
 #include <dpapi.h>
 #include <shellapi.h>
 
-#if QT_VERSION >= 0x050200
 #include <QtWin>
-#endif
-
 #include <QOperatingSystemVersion>
 #include <QScreen>
 #include <QDesktopWidget>
@@ -1094,14 +1091,12 @@ void PlatformImplementation::enableDialogBlur(QDialog*)
         FreeLibrary(hModule);
     }
 
-#if QT_VERSION >= 0x050200
     if (!win10)
     {
         QtWin::setCompositionEnabled(true);
         QtWin::extendFrameIntoClientArea(dialog, -1, -1, -1, -1);
         QtWin::enableBlurBehindWindow(dialog);
     }
-#endif
 #endif
 }
 

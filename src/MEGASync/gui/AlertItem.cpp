@@ -8,10 +8,7 @@
 #include <QDateTime>
 #include <QFutureWatcher>
 #include <QFuture>
-
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
-#endif
 
 using namespace mega;
 

@@ -5,10 +5,7 @@
 #include <QString>
 #include <QUrl>
 #include <QScrollBar>
-
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
-#endif
 
 QString getArchitectureString()
 {
