@@ -44,6 +44,7 @@
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
+#include "qml/QmlManager.h"
 
 class TransfersModel;
 class StalledIssuesModel;
@@ -604,6 +605,7 @@ private slots:
 
 private:
     QFutureWatcher<NodeCount> mWatcher;
+
 };
 
 class DeferPreferencesSyncForScope

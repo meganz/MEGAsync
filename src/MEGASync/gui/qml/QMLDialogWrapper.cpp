@@ -16,11 +16,6 @@ QMLComponent::~QMLComponent()
 
 }
 
-QQmlEngine *QMLComponent::getEngine()
-{
-    return QmlManager::instance()->qmlEngine();
-}
-
 QmlDialogWrapperBase::QmlDialogWrapperBase(QWidget *parent)
     : QWidget(parent)
     , mWindow(nullptr)

@@ -34,7 +34,6 @@
 #include "qml/QmlDialogWrapper.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
-#include "qml/QmlManager.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -2188,6 +2187,7 @@ void MegaApplication::cleanAll()
     {
         static_cast<OnboardingQmlDialog*>(dialog->getDialog()->window())->forceClose();
     }
+    QmlManager::instance()->finish();
 
     if(mBlockingBatch.isValid())
     {
@@ -2196,7 +2196,6 @@ void MegaApplication::cleanAll()
 
     delete mStalledIssuesModel;
     mStalledIssuesModel = nullptr;
-    QmlManager::instance()->deleteEngine();
     delete httpServer;
     httpServer = nullptr;
     delete uploader;

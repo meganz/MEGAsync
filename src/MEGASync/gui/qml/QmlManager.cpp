@@ -16,7 +16,13 @@ QmlManager::QmlManager()
     : QObject()
     , mEngine(new QQmlEngine())
 {
-    registerCommonQMLElements();
+    QObject::connect(mEngine, &QQmlEngine::warnings, [](const QList<QQmlError>& warnings) {
+        for (const QQmlError& e : warnings) {
+            qDebug() << "Qml error: " << e.toString();
+        }
+    });
+
+    registerCommonQmlElements();
 }
 
 std::shared_ptr<QmlManager> QmlManager::instance()
@@ -25,18 +31,14 @@ std::shared_ptr<QmlManager> QmlManager::instance()
     return manager;
 }
 
-QQmlEngine* QmlManager::qmlEngine()
-{
-    return mEngine;
-}
-
-void QmlManager::deleteEngine()
+void QmlManager::finish()
 {
     delete mEngine;
     mEngine = nullptr;
+    qDeleteAll(children());
 }
 
-void QmlManager::registerCommonQMLElements()
+void QmlManager::registerCommonQmlElements()
 {
     mEngine->addImportPath(QString::fromUtf8("qrc:/"));
 

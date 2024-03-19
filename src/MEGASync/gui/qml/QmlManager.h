@@ -1,10 +1,13 @@
 #ifndef QMLMANAGER_H
 #define QMLMANAGER_H
 
-#include <memory>
-
 #include <QQmlEngine>
 #include <QObject>
+
+#include <memory>
+
+template <class Type>
+class QmlDialogWrapper;
 
 class QmlManager : public QObject
 {
@@ -12,11 +15,11 @@ class QmlManager : public QObject
 
 public:
     static std::shared_ptr<QmlManager> instance();
+
     QmlManager(const QmlManager&) = delete;
     QmlManager& operator=(const QmlManager&) = delete;
 
-    QQmlEngine* qmlEngine();
-    void deleteEngine();
+    void finish();
 
     void setRootContextProperty(QObject* value);
     void setRootContextProperty(const QString& name, QObject* value);
@@ -28,10 +31,14 @@ public:
     void retranslate();
 
 private:
+    template <class Type>
+    friend class QmlDialogWrapper;
+
     QQmlEngine* mEngine;
 
     QmlManager();
-    void registerCommonQMLElements();
+    void registerCommonQmlElements();
+
 };
 
 #endif // QMLMANAGER_H
