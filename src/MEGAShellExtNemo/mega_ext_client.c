@@ -2,6 +2,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <string.h>
 
 const gchar OP_PATH_STATE  = 'P'; //Path state
