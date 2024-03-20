@@ -1533,7 +1533,7 @@ void MegaApplication::onLogout()
                 {
                     preferences->resetGlobalSettings();
                 }
-                delete mLoginController;
+                mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
                 start();
