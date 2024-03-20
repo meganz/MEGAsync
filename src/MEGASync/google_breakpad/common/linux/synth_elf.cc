@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include "common/linux/synth_elf.h"
 
 #include <assert.h>
@@ -118,7 +122,7 @@ int ELF::AddSection(const string& name, const Section& section,
   return index;
 }
 
-void ELF::AppendSection(ElfSection &section) {
+void ELF::AppendSection(ElfSection& section) {
   // NULL and NOBITS sections have no content, so they
   // don't need to be written to the file.
   if (section.type_ == SHT_NULL) {
@@ -213,8 +217,10 @@ void ELF::Finish() {
 SymbolTable::SymbolTable(Endianness endianness,
                          size_t addr_size,
                          StringTable& table) : Section(endianness),
-                                               addr_size_(addr_size),
                                                table_(table) {
+#ifndef NDEBUG
+  addr_size_ = addr_size;
+#endif
   assert(addr_size_ == 4 || addr_size_ == 8);
 }
 
@@ -240,7 +246,7 @@ void SymbolTable::AddSymbol(const string& name, uint64_t value,
   D64(size);
 }
 
-void Notes::AddNote(int type, const string &name, const uint8_t* desc_bytes,
+void Notes::AddNote(int type, const string& name, const uint8_t* desc_bytes,
                     size_t desc_size) {
   // Elf32_Nhdr and Elf64_Nhdr are exactly the same.
   Elf32_Nhdr note_header;

@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -36,17 +35,8 @@
 // signal and return EINTR. See man 7 signal.
 //
 
-
-#if __cplusplus >= 201103L
-#include <type_traits>
-#define TYPEOF(x) std::remove_reference<decltype(x)>::type
-#else
-#define TYPEOF(x) typeof(x)
-#endif
-
-
 #define HANDLE_EINTR(x) ({ \
-  TYPEOF(x) eintr_wrapper_result; \
+  __typeof__(x) eintr_wrapper_result; \
   do { \
     eintr_wrapper_result = (x); \
   } while (eintr_wrapper_result == -1 && errno == EINTR); \
@@ -54,7 +44,7 @@
 })
 
 #define IGNORE_EINTR(x) ({ \
-  typeof(x) eintr_wrapper_result; \
+  __typeof__(x) eintr_wrapper_result; \
   do { \
     eintr_wrapper_result = (x); \
     if (eintr_wrapper_result == -1 && errno == EINTR) { \

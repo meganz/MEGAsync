@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -65,7 +64,7 @@ class CrashReportSender {
   // If checkpoint_file is non-empty, breakpad will persist crash report
   // state to this file.  A checkpoint file is required for
   // set_max_reports_per_day() to function properly.
-  explicit CrashReportSender(const wstring &checkpoint_file);
+  explicit CrashReportSender(const wstring& checkpoint_file);
   ~CrashReportSender() {}
 
   // Sets the maximum number of crash reports that will be sent in a 24-hour
@@ -77,7 +76,7 @@ class CrashReportSender {
 
   int max_reports_per_day() const { return max_reports_per_day_; }
 
-  // Sends the specified minidump file, along with the map of
+  // Sends the specified files, along with the map of
   // name value pairs, as a multipart POST request to the given URL.
   // Parameter names must contain only printable ASCII characters,
   // and may not contain a quote (") character.
@@ -87,14 +86,14 @@ class CrashReportSender {
   // the return value is RESULT_SUCCEEDED), a code uniquely identifying the
   // report will be returned in report_code.
   // (Otherwise, report_code will be unchanged.)
-  ReportResult SendCrashReport(const wstring &url,
-                               const map<wstring, wstring> &parameters,
-                               const wstring &dump_file_name,
-                               wstring *report_code);
+  ReportResult SendCrashReport(const wstring& url,
+                               const map<wstring, wstring>& parameters,
+                               const map<wstring, wstring>& files,
+                               wstring* report_code);
 
  private:
   // Reads persistent state from a checkpoint file.
-  void ReadCheckpoint(FILE *fd);
+  void ReadCheckpoint(FILE* fd);
 
   // Called when a new report has been sent, to update the checkpoint state.
   void ReportSent(int today);
@@ -104,7 +103,7 @@ class CrashReportSender {
 
   // Opens the checkpoint file with the specified mode.
   // Returns zero on success, or an error code on failure.
-  int OpenCheckpointFile(const wchar_t *mode, FILE **fd);
+  int OpenCheckpointFile(const wchar_t* mode, FILE** fd);
 
   wstring checkpoint_file_;
   int max_reports_per_day_;
@@ -114,8 +113,8 @@ class CrashReportSender {
   int reports_sent_;
 
   // Disallow copy constructor and operator=
-  explicit CrashReportSender(const CrashReportSender &);
-  void operator=(const CrashReportSender &);
+  explicit CrashReportSender(const CrashReportSender&);
+  void operator=(const CrashReportSender&);
 };
 
 }  // namespace google_breakpad

@@ -1,4 +1,4 @@
-// Copyright 2008 Google Inc. All Rights Reserved.
+// Copyright 2008 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -10,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -30,7 +30,9 @@
 #ifndef COMMON_DWARF_LINE_STATE_MACHINE_H__
 #define COMMON_DWARF_LINE_STATE_MACHINE_H__
 
-namespace dwarf2reader {
+#include <stdint.h>
+
+namespace google_breakpad {
 
 // This is the format of a DWARF2/3 line state machine that we process
 // opcodes using.  There is no need for anything outside the lineinfo
@@ -46,16 +48,16 @@ struct LineStateMachine {
     end_sequence = false;
   }
 
-  uint32 file_num;
-  uint64 address;
-  uint32 line_num;
-  uint32 column_num;
+  uint32_t file_num;
+  uint64_t address;
+  uint32_t line_num;
+  uint32_t column_num;
   bool is_stmt;  // stmt means statement.
   bool basic_block;
   bool end_sequence;
 };
 
-}  // namespace dwarf2reader
+}  // namespace google_breakpad
 
 
 #endif  // COMMON_DWARF_LINE_STATE_MACHINE_H__

@@ -1,5 +1,4 @@
-// Copyright 2009, Google Inc.
-// All rights reserved.
+// Copyright 2009 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -26,6 +25,10 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <windows.h>
 #include <dbghelp.h>
@@ -52,7 +55,7 @@ const char kSuccessIndicator[] = "success";
 const char kFailureIndicator[] = "failure";
 
 // Utility function to test for a path's existence.
-BOOL DoesPathExist(const TCHAR *path_name);
+BOOL DoesPathExist(const TCHAR* path_name);
 
 enum OutOfProcGuarantee {
   OUT_OF_PROC_GUARANTEED,
@@ -82,7 +85,7 @@ void ExceptionHandlerDeathTest::SetUp() {
   // The test case name is exposed as a c-style string,
   // convert it to a wchar_t string.
   int dwRet = MultiByteToWideChar(CP_ACP, 0, test_info->name(),
-                                  strlen(test_info->name()),
+                                  static_cast<int>(strlen(test_info->name())),
                                   test_name_wide,
                                   MAX_PATH);
   if (!dwRet) {
@@ -92,7 +95,7 @@ void ExceptionHandlerDeathTest::SetUp() {
   CreateDirectory(temp_path_, NULL);
 }
 
-BOOL DoesPathExist(const TCHAR *path_name) {
+BOOL DoesPathExist(const TCHAR* path_name) {
   DWORD flags = GetFileAttributes(path_name);
   if (flags == INVALID_FILE_ATTRIBUTES) {
     return FALSE;
@@ -135,15 +138,15 @@ TEST_F(ExceptionHandlerDeathTest, InProcTest) {
   // Disable GTest SEH handler
   testing::DisableExceptionHandlerInScope disable_exception_handler;
 
-  int *i = NULL;
+  int* i = NULL;
   ASSERT_DEATH((*i)++, kSuccessIndicator);
 }
 
 static bool gDumpCallbackCalled = false;
 
-void clientDumpCallback(void *dump_context,
-                        const google_breakpad::ClientInfo *client_info,
-                        const std::wstring *dump_path) {
+void clientDumpCallback(void* dump_context,
+                        const google_breakpad::ClientInfo* client_info,
+                        const std::wstring* dump_path) {
   gDumpCallbackCalled = true;
 }
 
@@ -152,7 +155,7 @@ void ExceptionHandlerDeathTest::DoCrashAccessViolation(
   scoped_ptr<google_breakpad::ExceptionHandler> exc;
 
   if (out_of_proc_guarantee == OUT_OF_PROC_GUARANTEED) {
-    google_breakpad::CrashGenerationClient *client =
+    google_breakpad::CrashGenerationClient* client =
         new google_breakpad::CrashGenerationClient(kPipeName,
                                                    MiniDumpNormal,
                                                    NULL);  // custom_info
@@ -184,7 +187,7 @@ void ExceptionHandlerDeathTest::DoCrashAccessViolation(
   // if it's not true we'll still get an error rather than the crash
   // being expected.
   ASSERT_TRUE(exc->IsOutOfProcess());
-  int *i = NULL;
+  int* i = NULL;
   printf("%d\n", (*i)++);
 }
 
@@ -283,7 +286,7 @@ TEST_F(ExceptionHandlerDeathTest, PureVirtualCallTest) {
   EXPECT_EXIT(DoCrashPureVirtualCall(), ::testing::ExitedWithCode(0), "");
 }
 
-wstring find_minidump_in_directory(const wstring &directory) {
+wstring find_minidump_in_directory(const wstring& directory) {
   wstring search_path = directory + L"\\*";
   WIN32_FIND_DATA find_data;
   HANDLE find_handle = FindFirstFileW(search_path.c_str(), &find_data);
@@ -293,8 +296,8 @@ wstring find_minidump_in_directory(const wstring &directory) {
   wstring filename;
   do {
     const wchar_t extension[] = L".dmp";
-    const int extension_length = sizeof(extension) / sizeof(extension[0]) - 1;
-    const int filename_length = wcslen(find_data.cFileName);
+    const size_t extension_length = sizeof(extension) / sizeof(extension[0]) - 1;
+    const size_t filename_length = wcslen(find_data.cFileName);
     if (filename_length > extension_length &&
     wcsncmp(extension,
             find_data.cFileName + filename_length - extension_length,
@@ -357,8 +360,8 @@ TEST_F(ExceptionHandlerDeathTest, InstructionPointerMemory) {
 
   // Read the minidump. Locate the exception record and the
   // memory list, and then ensure that there is a memory region
-  // in the memory list that covers the instruction pointer from
-  // the exception record.
+  // in the memory list that covers at least 128 bytes on either
+  // side of the instruction pointer from the exception record.
   {
     Minidump minidump(minidump_filename);
     ASSERT_TRUE(minidump.Read());
@@ -379,18 +382,23 @@ TEST_F(ExceptionHandlerDeathTest, InstructionPointerMemory) {
         memory_list->GetMemoryRegionForAddress(instruction_pointer);
     ASSERT_TRUE(region);
 
-    EXPECT_EQ(kMemorySize, region->GetSize());
+    EXPECT_LE(kMemorySize, region->GetSize());
     const uint8_t* bytes = region->GetMemory();
     ASSERT_TRUE(bytes);
+
+    uint64_t ip_offset = instruction_pointer - region->GetBase();
+    EXPECT_GE(region->GetSize() - kOffset, ip_offset);
+    EXPECT_LE(kOffset, ip_offset);
 
     uint8_t prefix_bytes[kOffset];
     uint8_t suffix_bytes[kMemorySize - kOffset - sizeof(instructions)];
     memset(prefix_bytes, 0, sizeof(prefix_bytes));
     memset(suffix_bytes, 0, sizeof(suffix_bytes));
-    EXPECT_EQ(0, memcmp(bytes, prefix_bytes, sizeof(prefix_bytes)));
-    EXPECT_EQ(0, memcmp(bytes + kOffset, instructions, sizeof(instructions)));
-    EXPECT_EQ(0, memcmp(bytes + kOffset + sizeof(instructions),
-                        suffix_bytes, sizeof(suffix_bytes)));
+    EXPECT_EQ(0, memcmp(bytes + ip_offset - kOffset, prefix_bytes,
+                        sizeof(prefix_bytes)));
+    EXPECT_EQ(0, memcmp(bytes + ip_offset, instructions, sizeof(instructions)));
+    EXPECT_EQ(0, memcmp(bytes + ip_offset + sizeof(instructions), suffix_bytes,
+                        sizeof(suffix_bytes)));
   }
 
   DeleteFileW(minidump_filename_wide.c_str());

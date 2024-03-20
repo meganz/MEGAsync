@@ -1,5 +1,4 @@
-// Copyright (c) 2007, Google Inc.
-// All rights reserved.
+// Copyright 2007 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -108,7 +107,7 @@ uint32_t GetFileTypeFromHeader(DynamicImage& image);
 // Represents a single dynamically loaded mach-o image
 class DynamicImage {
  public:
-  DynamicImage(uint8_t *header,     // data is copied
+  DynamicImage(uint8_t* header,     // data is copied
                size_t header_size,  // includes load commands
                uint64_t load_address,
                string file_path,
@@ -163,7 +162,7 @@ class DynamicImage {
 
   uint32_t GetVersion() {return version_;}
   // For sorting
-  bool operator<(const DynamicImage &inInfo) {
+  bool operator<(const DynamicImage& inInfo) {
     return GetLoadAddress() < inInfo.GetLoadAddress();
   }
 
@@ -171,8 +170,8 @@ class DynamicImage {
   bool IsValid() {return GetVMSize() != 0;}
 
  private:
-  DynamicImage(const DynamicImage &);
-  DynamicImage &operator=(const DynamicImage &);
+  DynamicImage(const DynamicImage&);
+  DynamicImage& operator=(const DynamicImage&);
 
   friend class DynamicImages;
   template<typename MachBits>
@@ -205,26 +204,27 @@ class DynamicImage {
 //
 class DynamicImageRef {
  public:
-  explicit DynamicImageRef(DynamicImage *inP) : p(inP) {}
+  explicit DynamicImageRef(DynamicImage* inP) : p(inP) {}
   // The copy constructor is required by STL
-  DynamicImageRef(const DynamicImageRef &inRef) : p(inRef.p) {}
+  DynamicImageRef(const DynamicImageRef& inRef) = default;
+  DynamicImageRef& operator=(const DynamicImageRef& inRef) = default;
 
-  bool operator<(const DynamicImageRef &inRef) const {
+  bool operator<(const DynamicImageRef& inRef) const {
     return (*const_cast<DynamicImageRef*>(this)->p)
       < (*const_cast<DynamicImageRef&>(inRef).p);
   }
 
-  bool operator==(const DynamicImageRef &inInfo) const {
+  bool operator==(const DynamicImageRef& inInfo) const {
     return (*const_cast<DynamicImageRef*>(this)->p).GetLoadAddress() ==
         (*const_cast<DynamicImageRef&>(inInfo)).GetLoadAddress();
   }
 
   // Be just like DynamicImage*
-  DynamicImage  *operator->() {return p;}
+  DynamicImage* operator->() {return p;}
   operator DynamicImage*() {return p;}
 
  private:
-  DynamicImage  *p;
+  DynamicImage* p;
 };
 
 // Helper function to deal with 32-bit/64-bit Mach-O differences.
@@ -250,7 +250,7 @@ class DynamicImages {
   int GetImageCount() const {return static_cast<int>(image_list_.size());}
 
   // Returns an individual image.
-  DynamicImage *GetImage(int i) {
+  DynamicImage* GetImage(int i) {
     if (i < (int)image_list_.size()) {
       return image_list_[i];
     }
@@ -258,7 +258,7 @@ class DynamicImages {
   }
 
   // Returns the image corresponding to the main executable.
-  DynamicImage *GetExecutableImage();
+  DynamicImage* GetExecutableImage();
   int GetExecutableImageIndex();
 
   // Returns the task which we're looking at.
@@ -285,7 +285,7 @@ class DynamicImages {
     return CPU_TYPE_POWERPC64;
 #elif defined(__arm__)
     return CPU_TYPE_ARM;
-#elif defined(__arm64__)
+#elif defined(__aarch64__)
     return CPU_TYPE_ARM64;
 #else
 #error "GetNativeCPUType not implemented for this architecture"
@@ -312,7 +312,7 @@ class DynamicImages {
 kern_return_t ReadTaskMemory(task_port_t target_task,
                              const uint64_t address,
                              size_t length,
-                             vector<uint8_t> &bytes);
+                             vector<uint8_t>& bytes);
 
 }   // namespace google_breakpad
 

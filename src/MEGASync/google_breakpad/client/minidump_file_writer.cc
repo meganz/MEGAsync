@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,6 +30,10 @@
 //
 // See minidump_file_writer.h for documentation.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include <fcntl.h>
 #include <limits.h>
 #include <stdio.h>
@@ -40,9 +43,50 @@
 #include "client/minidump_file_writer-inl.h"
 #include "common/linux/linux_libc_support.h"
 #include "common/string_conversion.h"
-#if __linux__
+#if defined(__linux__) && __linux__
 #include "third_party/lss/linux_syscall_support.h"
 #endif
+
+#if defined(__ANDROID__)
+#include <errno.h>
+
+namespace {
+
+bool g_need_ftruncate_workaround = false;
+bool g_checked_need_ftruncate_workaround = false;
+
+void CheckNeedsFTruncateWorkAround(int file) {
+  if (g_checked_need_ftruncate_workaround) {
+    return;
+  }
+  g_checked_need_ftruncate_workaround = true;
+
+  // Attempt an idempotent truncate that chops off nothing and see if we
+  // run into any sort of errors.
+  off_t offset = sys_lseek(file, 0, SEEK_END);
+  if (offset == -1) {
+    // lseek failed. Don't apply work around. It's unlikely that we can write
+    // to a minidump with either method.
+    return;
+  }
+
+  int result = ftruncate(file, offset);
+  if (result == -1 && errno == EACCES) {
+    // It very likely that we are running into the kernel bug in M devices.
+    // We are going to deploy the workaround for writing minidump files
+    // without uses of ftruncate(). This workaround should be fine even
+    // for kernels without the bug.
+    // See http://crbug.com/542840 for more details.
+    g_need_ftruncate_workaround = true;
+  }
+}
+
+bool NeedsFTruncateWorkAround() {
+  return g_need_ftruncate_workaround;
+}
+
+}  // namespace
+#endif  // defined(__ANDROID__)
 
 namespace google_breakpad {
 
@@ -60,9 +104,9 @@ MinidumpFileWriter::~MinidumpFileWriter() {
     Close();
 }
 
-bool MinidumpFileWriter::Open(const char *path) {
+bool MinidumpFileWriter::Open(const char* path) {
   assert(file_ == -1);
-#if __linux__
+#if defined(__linux__) && __linux__
   file_ = sys_open(path, O_WRONLY | O_CREAT | O_EXCL, 0600);
 #else
   file_ = open(path, O_WRONLY | O_CREAT | O_EXCL, 0600);
@@ -75,16 +119,25 @@ void MinidumpFileWriter::SetFile(const int file) {
   assert(file_ == -1);
   file_ = file;
   close_file_when_destroyed_ = false;
+#if defined(__ANDROID__)
+  CheckNeedsFTruncateWorkAround(file);
+#endif
 }
 
 bool MinidumpFileWriter::Close() {
   bool result = true;
 
   if (file_ != -1) {
-    if (-1 == ftruncate(file_, position_)) {
+#if defined(__ANDROID__)
+    if (!NeedsFTruncateWorkAround() && ftruncate(file_, position_)) {
        return false;
     }
-#if __linux__
+#else
+    if (ftruncate(file_, position_)) {
+       return false;
+    }
+#endif
+#if defined(__linux__) && __linux__
     result = (sys_close(file_) == 0);
 #else
     result = (close(file_) == 0);
@@ -95,9 +148,9 @@ bool MinidumpFileWriter::Close() {
   return result;
 }
 
-bool MinidumpFileWriter::CopyStringToMDString(const wchar_t *str,
+bool MinidumpFileWriter::CopyStringToMDString(const wchar_t* str,
                                               unsigned int length,
-                                              TypedMDRVA<MDString> *mdstring) {
+                                              TypedMDRVA<MDString>* mdstring) {
   bool result = true;
   if (sizeof(wchar_t) == sizeof(uint16_t)) {
     // Shortcut if wchar_t is the same size as MDString's buffer
@@ -128,9 +181,9 @@ bool MinidumpFileWriter::CopyStringToMDString(const wchar_t *str,
   return result;
 }
 
-bool MinidumpFileWriter::CopyStringToMDString(const char *str,
+bool MinidumpFileWriter::CopyStringToMDString(const char* str,
                                               unsigned int length,
-                                              TypedMDRVA<MDString> *mdstring) {
+                                              TypedMDRVA<MDString>* mdstring) {
   bool result = true;
   uint16_t out[2];
   int out_idx = 0;
@@ -155,9 +208,9 @@ bool MinidumpFileWriter::CopyStringToMDString(const char *str,
 }
 
 template <typename CharType>
-bool MinidumpFileWriter::WriteStringCore(const CharType *str,
+bool MinidumpFileWriter::WriteStringCore(const CharType* str,
                                          unsigned int length,
-                                         MDLocationDescriptor *location) {
+                                         MDLocationDescriptor* location) {
   assert(str);
   assert(location);
   // Calculate the mdstring length by either limiting to |length| as passed in
@@ -190,18 +243,18 @@ bool MinidumpFileWriter::WriteStringCore(const CharType *str,
   return result;
 }
 
-bool MinidumpFileWriter::WriteString(const wchar_t *str, unsigned int length,
-                 MDLocationDescriptor *location) {
+bool MinidumpFileWriter::WriteString(const wchar_t* str, unsigned int length,
+                                     MDLocationDescriptor* location) {
   return WriteStringCore(str, length, location);
 }
 
-bool MinidumpFileWriter::WriteString(const char *str, unsigned int length,
-                 MDLocationDescriptor *location) {
+bool MinidumpFileWriter::WriteString(const char* str, unsigned int length,
+                                     MDLocationDescriptor* location) {
   return WriteStringCore(str, length, location);
 }
 
-bool MinidumpFileWriter::WriteMemory(const void *src, size_t size,
-                                     MDMemoryDescriptor *output) {
+bool MinidumpFileWriter::WriteMemory(const void* src, size_t size,
+                                     MDMemoryDescriptor* output) {
   assert(src);
   assert(output);
   UntypedMDRVA mem(this);
@@ -220,6 +273,20 @@ bool MinidumpFileWriter::WriteMemory(const void *src, size_t size,
 MDRVA MinidumpFileWriter::Allocate(size_t size) {
   assert(size);
   assert(file_ != -1);
+#if defined(__ANDROID__)
+  if (NeedsFTruncateWorkAround()) {
+    // If ftruncate() is not available. We simply increase the size beyond the
+    // current file size. sys_write() will expand the file when data is written
+    // to it. Because we did not over allocate to fit memory pages, we also
+    // do not need to ftruncate() the file once we are done.
+    size_ += size;
+
+    // We don't need to seek since the file is unchanged.
+    MDRVA current_position = position_;
+    position_ += static_cast<MDRVA>(size);
+    return current_position;
+  }
+#endif
   size_t aligned_size = (size + 7) & ~7;  // 64-bit alignment
 
   if (position_ + aligned_size > size_) {
@@ -243,7 +310,7 @@ MDRVA MinidumpFileWriter::Allocate(size_t size) {
   return current_position;
 }
 
-bool MinidumpFileWriter::Copy(MDRVA position, const void *src, ssize_t size) {
+bool MinidumpFileWriter::Copy(MDRVA position, const void* src, ssize_t size) {
   assert(src);
   assert(size);
   assert(file_ != -1);
@@ -253,17 +320,19 @@ bool MinidumpFileWriter::Copy(MDRVA position, const void *src, ssize_t size) {
     return false;
 
   // Seek and write the data
-#if __linux__
+#if defined(__linux__) && __linux__
   if (sys_lseek(file_, position, SEEK_SET) == static_cast<off_t>(position)) {
     if (sys_write(file_, src, size) == size) {
-#else
-  if (lseek(file_, position, SEEK_SET) == static_cast<off_t>(position)) {
-    if (write(file_, src, size) == size) {
-#endif
       return true;
     }
   }
-
+#else
+  if (lseek(file_, position, SEEK_SET) == static_cast<off_t>(position)) {
+    if (write(file_, src, size) == size) {
+      return true;
+    }
+  }
+#endif
   return false;
 }
 
@@ -274,7 +343,7 @@ bool UntypedMDRVA::Allocate(size_t size) {
   return position_ != MinidumpFileWriter::kInvalidMDRVA;
 }
 
-bool UntypedMDRVA::Copy(MDRVA pos, const void *src, size_t size) {
+bool UntypedMDRVA::Copy(MDRVA pos, const void* src, size_t size) {
   assert(src);
   assert(size);
   assert(pos + size <= position_ + size_);

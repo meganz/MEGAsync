@@ -1,5 +1,4 @@
-// Copyright (c) 2010, Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,6 +30,10 @@
 // threads. The first word of each thread's stack is set to the thread
 // id.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include <pthread.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -43,32 +46,37 @@
 
 #if defined(__ARM_EABI__)
 #define TID_PTR_REGISTER "r3"
+#elif defined(__aarch64__)
+#define TID_PTR_REGISTER "x3"
 #elif defined(__i386)
 #define TID_PTR_REGISTER "ecx"
 #elif defined(__x86_64)
 #define TID_PTR_REGISTER "rcx"
 #elif defined(__mips__)
 #define TID_PTR_REGISTER "$1"
+#elif defined(__riscv)
+#define TID_PTR_REGISTER "x4"
 #else
 #error This test has not been ported to this platform.
 #endif
 
-void *thread_function(void *data) {
-  int pipefd = *static_cast<int *>(data);
-  volatile pid_t thread_id = syscall(__NR_gettid);
+void* thread_function(void* data) {
+  int pipefd = *static_cast<int*>(data);
+  volatile pid_t* thread_id = new pid_t;
+  *thread_id = syscall(__NR_gettid);
   // Signal parent that a thread has started.
   uint8_t byte = 1;
   if (write(pipefd, &byte, sizeof(byte)) != sizeof(byte)) {
     perror("ERROR: parent notification failed");
     return NULL;
   }
-  register volatile pid_t *thread_id_ptr asm(TID_PTR_REGISTER) = &thread_id;
+  register volatile pid_t* thread_id_ptr asm(TID_PTR_REGISTER) = thread_id;
   while (true)
     asm volatile ("" : : "r" (thread_id_ptr));
   return NULL;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   if (argc < 3) {
     fprintf(stderr,
             "usage: linux_dumper_unittest_helper <pipe fd> <# of threads>\n");

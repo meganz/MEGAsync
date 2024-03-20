@@ -1,7 +1,6 @@
 // -*- mode: c++ -*-
 
-// Copyright (c) 2010, Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -13,7 +12,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -36,6 +35,7 @@
 #ifndef COMMON_MAC_BYTESWAP_H_
 #define COMMON_MAC_BYTESWAP_H_
 
+#ifdef __APPLE__
 #include <libkern/OSByteOrder.h>
 
 static inline uint16_t ByteSwap(uint16_t v) { return OSSwapInt16(v); }
@@ -44,5 +44,29 @@ static inline uint64_t ByteSwap(uint64_t v) { return OSSwapInt64(v); }
 static inline int16_t  ByteSwap(int16_t  v) { return OSSwapInt16(v); }
 static inline int32_t  ByteSwap(int32_t  v) { return OSSwapInt32(v); }
 static inline int64_t  ByteSwap(int64_t  v) { return OSSwapInt64(v); }
+
+#elif defined(__linux__)
+// For NXByteOrder
+#include <architecture/byte_order.h>
+#include <stdint.h>
+#include <endian.h>
+#include_next <byteswap.h>
+
+static inline uint16_t ByteSwap(uint16_t v) { return bswap_16(v); }
+static inline uint32_t ByteSwap(uint32_t v) { return bswap_32(v); }
+static inline uint64_t ByteSwap(uint64_t v) { return bswap_64(v); }
+static inline int16_t  ByteSwap(int16_t  v) { return bswap_16(v); }
+static inline int32_t  ByteSwap(int32_t  v) { return bswap_32(v); }
+static inline int64_t  ByteSwap(int64_t  v) { return bswap_64(v); }
+
+static inline NXByteOrder NXHostByteOrder() {
+#ifdef __LITTLE_ENDIAN
+  return NX_LittleEndian;
+#else
+  return NX_BigEndian;
+#endif
+}
+
+#endif  // __APPLE__
 
 #endif  // COMMON_MAC_BYTESWAP_H_

@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -30,6 +29,10 @@
 // Original author: Jim Blandy <jimb@mozilla.com> <jimb@red-bean.com>
 
 // dump_stabs_unittest.cc: Unit tests for StabsToModule.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <vector>
 
@@ -58,13 +61,13 @@ TEST(StabsToModule, SimpleCU) {
   Module::File *file = m.FindExistingFile("source-file-name");
   ASSERT_TRUE(file != NULL);
 
-  vector<Module::Function *> functions;
+  vector<Module::Function*> functions;
   m.GetFunctions(&functions, functions.end());
   ASSERT_EQ((size_t) 1, functions.size());
   Module::Function *function = functions[0];
-  EXPECT_STREQ("function", function->name.c_str());
+  EXPECT_STREQ("function", function->name.str().c_str());
   EXPECT_EQ(0xfde4abbed390c394LL, function->address);
-  EXPECT_EQ(0x10U, function->size);
+  EXPECT_EQ(0x10U, function->ranges[0].size);
   EXPECT_EQ(0U, function->parameter_size);
   ASSERT_EQ((size_t) 1, function->lines.size());
   Module::Line *line = &function->lines[0];
@@ -88,7 +91,7 @@ TEST(StabsToModule, Externs) {
   h.Finalize();
 
   // Now check to see what has been added to the Module.
-  vector<Module::Extern *> externs;
+  vector<Module::Extern*> externs;
   m.GetExterns(&externs, externs.end());
   ASSERT_EQ((size_t) 3, externs.size());
   Module::Extern *extern1 = externs[0];
@@ -124,13 +127,13 @@ TEST(StabsToModule, DuplicateFunctionNames) {
   Module::File *file = m.FindExistingFile("compilation-unit");
   ASSERT_TRUE(file != NULL);
 
-  vector<Module::Function *> functions;
+  vector<Module::Function*> functions;
   m.GetFunctions(&functions, functions.end());
   ASSERT_EQ(1U, functions.size());
 
   Module::Function *function = functions[0];
   EXPECT_EQ(0xf2cfda36ecf7f46dLL, function->address);
-  EXPECT_LT(0U, function->size);  // should have used dummy size
+  EXPECT_LT(0U, function->ranges[0].size); // should have used dummy size
   EXPECT_EQ(0U, function->parameter_size);
   ASSERT_EQ(0U, function->lines.size());
 }
@@ -159,14 +162,14 @@ TEST(InferSizes, LineSize) {
   Module::File *file2 = m.FindExistingFile("source-file-name-2");
   ASSERT_TRUE(file2 != NULL);
 
-  vector<Module::Function *> functions;
+  vector<Module::Function*> functions;
   m.GetFunctions(&functions, functions.end());
   ASSERT_EQ((size_t) 1, functions.size());
 
   Module::Function *function = functions[0];
-  EXPECT_STREQ("function", function->name.c_str());
+  EXPECT_STREQ("function", function->name.str().c_str());
   EXPECT_EQ(0xb4513962eff94e92LL, function->address);
-  EXPECT_EQ(0x1000100000000ULL, function->size); // inferred from CU end
+  EXPECT_EQ(0x1000100000000ULL, function->ranges[0].size); // inferred from CU end
   EXPECT_EQ(0U, function->parameter_size);
   ASSERT_EQ((size_t) 2, function->lines.size());
 
@@ -204,19 +207,18 @@ TEST(FunctionNames, Mangled) {
   Module::File *file = m.FindExistingFile("compilation-unit");
   ASSERT_TRUE(file != NULL);
 
-  vector<Module::Function *> functions;
+  vector<Module::Function*> functions;
   m.GetFunctions(&functions, functions.end());
   ASSERT_EQ(1U, functions.size());
 
   Module::Function *function = functions[0];
   // This is GCC-specific, but we shouldn't be seeing STABS data anywhere
   // but Linux.
-  EXPECT_STREQ("std::vector<unsigned long long, "
-               "std::allocator<unsigned long long> >::"
-               "push_back(unsigned long long const&)",
-               function->name.c_str());
+  EXPECT_THAT(function->name.str(), ::testing::ContainsRegex(
+    "std::vector<unsigned long long, std::allocator<unsigned long long>\\s?>::"
+    "push_back\\(unsigned long long const&\\)"));
   EXPECT_EQ(0xf2cfda63cef7f46dLL, function->address);
-  EXPECT_LT(0U, function->size); // should have used dummy size
+  EXPECT_LT(0U, function->ranges[0].size); // should have used dummy size
   EXPECT_EQ(0U, function->parameter_size);
   ASSERT_EQ(0U, function->lines.size());
 }

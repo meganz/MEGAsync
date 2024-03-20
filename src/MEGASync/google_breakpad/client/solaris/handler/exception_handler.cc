@@ -1,5 +1,4 @@
-// Copyright (c) 2007, Google Inc.
-// All rights reserved.
+// Copyright 2007 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -28,6 +27,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Author: Alfred Peng
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <signal.h>
 #include <sys/stat.h>
@@ -54,15 +57,15 @@ static const int kSigTable[] = {
   SIGBUS
 };
 
-std::vector<ExceptionHandler*> *ExceptionHandler::handler_stack_ = NULL;
+std::vector<ExceptionHandler*>* ExceptionHandler::handler_stack_ = NULL;
 int ExceptionHandler::handler_stack_index_ = 0;
 pthread_mutex_t ExceptionHandler::handler_stack_mutex_ =
   PTHREAD_MUTEX_INITIALIZER;
 
-ExceptionHandler::ExceptionHandler(const string &dump_path,
+ExceptionHandler::ExceptionHandler(const string& dump_path,
                                    FilterCallback filter,
                                    MinidumpCallback callback,
-                                   void *callback_context,
+                                   void* callback_context,
                                    bool install_handler)
     : filter_(filter),
       callback_(callback),
@@ -79,7 +82,7 @@ ExceptionHandler::ExceptionHandler(const string &dump_path,
     pthread_mutex_lock(&handler_stack_mutex_);
 
     if (handler_stack_ == NULL)
-      handler_stack_ = new std::vector<ExceptionHandler *>;
+      handler_stack_ = new std::vector<ExceptionHandler*>;
     handler_stack_->push_back(this);
     pthread_mutex_unlock(&handler_stack_mutex_);
   }
@@ -92,7 +95,7 @@ ExceptionHandler::~ExceptionHandler() {
     handler_stack_->pop_back();
   } else {
     print_message1(2, "warning: removing Breakpad handler out of order\n");
-    for (std::vector<ExceptionHandler *>::iterator iterator =
+    for (std::vector<ExceptionHandler*>::iterator iterator =
          handler_stack_->begin();
          iterator != handler_stack_->end();
          ++iterator) {
@@ -116,9 +119,9 @@ bool ExceptionHandler::WriteMinidump() {
 }
 
 // static
-bool ExceptionHandler::WriteMinidump(const string &dump_path,
+bool ExceptionHandler::WriteMinidump(const string& dump_path,
                                      MinidumpCallback callback,
-                                     void *callback_context) {
+                                     void* callback_context) {
   ExceptionHandler handler(dump_path, NULL, callback,
                            callback_context, false);
   return handler.InternalWriteMinidump(0, 0, NULL);
@@ -166,7 +169,7 @@ void ExceptionHandler::TeardownAllHandlers() {
 
 // static
 void ExceptionHandler::HandleException(int signo) {
-//void ExceptionHandler::HandleException(int signo, siginfo_t *sip, ucontext_t *sig_ctx) {
+//void ExceptionHandler::HandleException(int signo, siginfo_t* sip, ucontext_t* sig_ctx) {
   // The context information about the signal is put on the stack of
   // the signal handler frame as value parameter. For some reasons, the
   // prototype of the handler doesn't declare this information as parameter, we
@@ -181,14 +184,14 @@ void ExceptionHandler::HandleException(int signo) {
   uintptr_t current_ebp = (uintptr_t)_getfp();
 
   pthread_mutex_lock(&handler_stack_mutex_);
-  ExceptionHandler *current_handler =
+  ExceptionHandler* current_handler =
     handler_stack_->at(handler_stack_->size() - ++handler_stack_index_);
   pthread_mutex_unlock(&handler_stack_mutex_);
 
   // Restore original handler.
   current_handler->TeardownHandler(signo);
 
-  ucontext_t *sig_ctx = NULL;
+  ucontext_t* sig_ctx = NULL;
   if (current_handler->InternalWriteMinidump(signo, current_ebp, &sig_ctx)) {
 //  if (current_handler->InternalWriteMinidump(signo, &sig_ctx)) {
     // Fully handled this exception, safe to exit.
@@ -218,7 +221,7 @@ void ExceptionHandler::HandleException(int signo) {
 
 bool ExceptionHandler::InternalWriteMinidump(int signo,
                                              uintptr_t sighandler_ebp,
-                                             ucontext_t **sig_ctx) {
+                                             ucontext_t** sig_ctx) {
   if (filter_ && !filter_(callback_context_))
     return false;
 

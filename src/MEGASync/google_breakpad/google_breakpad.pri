@@ -16,7 +16,7 @@ macx {
   SOURCES += $$PWD/common/md5.cc
   SOURCES += $$PWD/common/string_conversion.cc
   SOURCES += $$PWD/common/linux/linux_libc_support.cc
-  SOURCES += $$PWD/common/convert_UTF.c
+  SOURCES += $$PWD/common/convert_UTF.cc
 
   OBJECTIVE_SOURCES += $$PWD/common/mac/MachIPC.mm
 
@@ -31,6 +31,7 @@ unix:!macx {
   SOURCES += $$PWD/client/linux/handler/exception_handler.cc
   SOURCES += $$PWD/client/linux/handler/minidump_descriptor.cc
   SOURCES += $$PWD/client/linux/minidump_writer/minidump_writer.cc
+  SOURCES += $$PWD/client/linux/minidump_writer/pe_file.cc
   SOURCES += $$PWD/client/linux/minidump_writer/linux_dumper.cc
   SOURCES += $$PWD/client/linux/minidump_writer/linux_ptrace_dumper.cc
   SOURCES += $$PWD/client/linux/log/log.cc
@@ -42,7 +43,7 @@ unix:!macx {
   SOURCES += $$PWD/common/linux/guid_creator.cc
   SOURCES += $$PWD/common/linux/elfutils.cc
   SOURCES += $$PWD/common/string_conversion.cc
-  SOURCES += $$PWD/common/convert_UTF.c
+  SOURCES += $$PWD/common/convert_UTF.cc
 
   QMAKE_CXXFLAGS+=-g
 }

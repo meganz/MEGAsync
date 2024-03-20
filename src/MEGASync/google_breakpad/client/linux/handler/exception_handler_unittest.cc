@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -27,11 +26,16 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
+#include <poll.h>
+#include <pthread.h>
 #include <stdint.h>
 #include <unistd.h>
 #include <signal.h>
 #include <sys/mman.h>
-#include <sys/poll.h>
 #include <sys/socket.h>
 #include <sys/uio.h>
 #include <sys/wait.h>
@@ -45,7 +49,6 @@
 #include "client/linux/handler/exception_handler.h"
 #include "client/linux/minidump_writer/minidump_writer.h"
 #include "common/linux/eintr_wrapper.h"
-#include "common/linux/file_id.h"
 #include "common/linux/ignore_ret.h"
 #include "common/linux/linux_libc_support.h"
 #include "common/tests/auto_tempdir.h"
@@ -80,7 +83,11 @@ void FlushInstructionCache(const char* memory, uint32_t memory_size) {
   // Provided by Android's <unistd.h>
   long begin = reinterpret_cast<long>(memory);
   long end = begin + static_cast<long>(memory_size);
+#if _MIPS_SIM == _ABIO32
   cacheflush(begin, end, 0);
+#else
+  syscall(__NR_cacheflush, begin, end, ICACHE);
+#endif
 # elif defined(__linux__)
   // See http://www.linux-mips.org/wiki/Cacheflush_Syscall.
   cacheflush(const_cast<char*>(memory), memory_size, ICACHE);
@@ -89,10 +96,6 @@ void FlushInstructionCache(const char* memory, uint32_t memory_size) {
 # endif
 #endif
 }
-
-// Length of a formatted GUID string =
-// sizeof(MDGUID) * 2 + 4 (for dashes) + 1 (null terminator)
-const int kGUIDStringSize = 37;
 
 void sigchld_handler(int signo) { }
 
@@ -193,6 +196,20 @@ static bool DoneCallback(const MinidumpDescriptor& descriptor,
 
 #ifndef ADDRESS_SANITIZER
 
+// This is a replacement for "*reinterpret_cast<volatile int*>(NULL) = 0;"
+// It is needed because GCC is allowed to assume that the program will
+// not execute any undefined behavior (UB) operation. Further, when GCC
+// observes that UB statement is reached, it can assume that all statements
+// leading to the UB one are never executed either, and can completely
+// optimize them out. In the case of ExceptionHandlerTest::ExternalDumper,
+// GCC-4.9 optimized out the entire set up of ExceptionHandler, causing
+// test failure.
+volatile int* p_null;  // external linkage, so GCC can't tell that it
+                       // remains NULL. Volatile just for a good measure.
+static void DoNullPointerDereference() {
+  *p_null = 1;
+}
+
 void ChildCrash(bool use_fd) {
   AutoTempDir temp_dir;
   int fds[2] = {0};
@@ -219,7 +236,7 @@ void ChildCrash(bool use_fd) {
                                            true, -1));
       }
       // Crash with the exception handler in scope.
-      *reinterpret_cast<volatile int*>(NULL) = 0;
+      DoNullPointerDereference();
     }
   }
   if (!use_fd)
@@ -244,7 +261,79 @@ TEST(ExceptionHandlerTest, ChildCrashWithFD) {
   ASSERT_NO_FATAL_FAILURE(ChildCrash(true));
 }
 
-#endif  // !ADDRESS_SANITIZER
+#if !defined(__ANDROID_API__) || __ANDROID_API__ >= __ANDROID_API_N__
+static void* SleepFunction(void* unused) {
+  while (true) usleep(1000000);
+  return NULL;
+}
+
+static void* CrashFunction(void* b_ptr) {
+  pthread_barrier_t* b = reinterpret_cast<pthread_barrier_t*>(b_ptr);
+  pthread_barrier_wait(b);
+  DoNullPointerDereference();
+  return NULL;
+}
+
+// Tests that concurrent crashes do not enter a loop by alternately triggering
+// the signal handler.
+TEST(ExceptionHandlerTest, ParallelChildCrashesDontHang) {
+  AutoTempDir temp_dir;
+  const pid_t child = fork();
+  if (child == 0) {
+    google_breakpad::scoped_ptr<ExceptionHandler> handler(
+      new ExceptionHandler(MinidumpDescriptor(temp_dir.path()), NULL, NULL,
+                            NULL, true, -1));
+
+    // We start a number of threads to make sure handling the signal takes
+    // enough time for the second thread to enter the signal handler.
+    int num_sleep_threads = 100;
+    google_breakpad::scoped_array<pthread_t> sleep_threads(
+        new pthread_t[num_sleep_threads]);
+    for (int i = 0; i < num_sleep_threads; ++i) {
+      ASSERT_EQ(0, pthread_create(&sleep_threads[i], NULL, SleepFunction,
+                                  NULL));
+    }
+
+    int num_crash_threads = 2;
+    google_breakpad::scoped_array<pthread_t> crash_threads(
+        new pthread_t[num_crash_threads]);
+    // Barrier to synchronize crashing both threads at the same time.
+    pthread_barrier_t b;
+    ASSERT_EQ(0, pthread_barrier_init(&b, NULL, num_crash_threads + 1));
+    for (int i = 0; i < num_crash_threads; ++i) {
+      ASSERT_EQ(0, pthread_create(&crash_threads[i], NULL, CrashFunction, &b));
+    }
+    pthread_barrier_wait(&b);
+    for (int i = 0; i < num_crash_threads; ++i) {
+      ASSERT_EQ(0, pthread_join(crash_threads[i], NULL));
+    }
+  }
+
+  // Poll the child to see if it crashed.
+  int status, wp_pid;
+  for (int i = 0; i < 100; i++) {
+    wp_pid = HANDLE_EINTR(waitpid(child, &status, WNOHANG));
+    ASSERT_NE(-1, wp_pid);
+    if (wp_pid > 0) {
+      ASSERT_TRUE(WIFSIGNALED(status));
+      // If the child process terminated by itself,
+      // it will have returned SIGSEGV.
+      ASSERT_EQ(SIGSEGV, WTERMSIG(status));
+      return;
+    } else {
+      usleep(100000);
+    }
+  }
+
+  // Kill the child if it is still running.
+  kill(child, SIGKILL);
+
+  // If the child process terminated by itself, it will have returned SIGSEGV.
+  // If however it got stuck in a loop, it will have been killed by the
+  // SIGKILL.
+  ASSERT_NO_FATAL_FAILURE(WaitForProcessToTerminate(child, SIGSEGV));
+}
+#endif  // !defined(__ANDROID_API__) || __ANDROID_API__ >= __ANDROID_API_N__
 
 static bool DoneCallbackReturnFalse(const MinidumpDescriptor& descriptor,
                                     void* context,
@@ -287,15 +376,13 @@ static bool InstallRaiseSIGKILL() {
   return sigaction(SIGSEGV, &sa, NULL) != -1;
 }
 
-#ifndef ADDRESS_SANITIZER
-
 static void CrashWithCallbacks(ExceptionHandler::FilterCallback filter,
                                ExceptionHandler::MinidumpCallback done,
                                string path) {
   ExceptionHandler handler(
       MinidumpDescriptor(path), filter, done, NULL, true, -1);
   // Crash with the exception handler in scope.
-  *reinterpret_cast<volatile int*>(NULL) = 0;
+  DoNullPointerDereference();
 }
 
 TEST(ExceptionHandlerTest, RedeliveryOnFilterCallbackFalse) {
@@ -351,6 +438,10 @@ TEST(ExceptionHandlerTest, RedeliveryToDefaultHandler) {
 
   const pid_t child = fork();
   if (child == 0) {
+    // Custom signal handlers, which may have been installed by a test launcher,
+    // are undesirable in this child.
+    signal(SIGSEGV, SIG_DFL);
+
     CrashWithCallbacks(FilterCallbackReturnFalse, NULL, temp_dir.path());
   }
 
@@ -386,7 +477,7 @@ TEST(ExceptionHandlerTest, RedeliveryOnBadSignalHandlerFlag) {
               reinterpret_cast<void*>(SIG_ERR));
 
     // Crash with the exception handler in scope.
-    *reinterpret_cast<volatile int*>(NULL) = 0;
+    DoNullPointerDereference();
   }
   // SIGKILL means Breakpad's signal handler didn't crash.
   ASSERT_NO_FATAL_FAILURE(WaitForProcessToTerminate(child, SIGKILL));
@@ -454,6 +545,29 @@ TEST(ExceptionHandlerTest, StackedHandlersUnhandledToBottom) {
     CrashWithCallbacks(NULL, DoneCallbackReturnFalse, temp_dir.path());
   }
   ASSERT_NO_FATAL_FAILURE(WaitForProcessToTerminate(child, SIGKILL));
+}
+
+namespace {
+const int kSimpleFirstChanceReturnStatus = 42;
+bool SimpleFirstChanceHandler(int, siginfo_t*, void*) {
+  _exit(kSimpleFirstChanceReturnStatus);
+}
+}
+
+TEST(ExceptionHandlerTest, FirstChanceHandlerRuns) {
+  AutoTempDir temp_dir;
+
+  const pid_t child = fork();
+  if (child == 0) {
+    ExceptionHandler handler(
+        MinidumpDescriptor(temp_dir.path()), NULL, NULL, NULL, true, -1);
+    google_breakpad::SetFirstChanceExceptionHandler(SimpleFirstChanceHandler);
+    DoNullPointerDereference();
+  }
+  int status;
+  ASSERT_NE(HANDLE_EINTR(waitpid(child, &status, 0)), -1);
+  ASSERT_TRUE(WIFEXITED(status));
+  ASSERT_EQ(kSimpleFirstChanceReturnStatus, WEXITSTATUS(status));
 }
 
 #endif  // !ADDRESS_SANITIZER
@@ -756,8 +870,13 @@ TEST(ExceptionHandlerTest, InstructionPointerMemoryNullPointer) {
                              true, -1);
     // Try calling a NULL pointer.
     typedef void (*void_function)(void);
-    void_function memory_function = reinterpret_cast<void_function>(NULL);
+    // Volatile markings are needed to keep Clang from generating invalid
+    // opcodes.  See http://crbug.com/498354 for details.
+    volatile void_function memory_function =
+      reinterpret_cast<void_function>(NULL);
     memory_function();
+    // not reached
+    exit(1);
   }
   close(fds[1]);
 
@@ -771,17 +890,37 @@ TEST(ExceptionHandlerTest, InstructionPointerMemoryNullPointer) {
   ASSERT_GT(st.st_size, 0);
 
   // Read the minidump. Locate the exception record and the
-  // memory list, and then ensure that there is a memory region
+  // memory list, and then ensure that there is no memory region
   // in the memory list that covers the instruction pointer from
   // the exception record.
   Minidump minidump(minidump_path);
   ASSERT_TRUE(minidump.Read());
 
   MinidumpException* exception = minidump.GetException();
-  MinidumpMemoryList* memory_list = minidump.GetMemoryList();
   ASSERT_TRUE(exception);
+
+  MinidumpContext* exception_context = exception->GetContext();
+  ASSERT_TRUE(exception_context);
+
+  uint64_t instruction_pointer;
+  ASSERT_TRUE(exception_context->GetInstructionPointer(&instruction_pointer));
+  EXPECT_EQ(instruction_pointer, 0u);
+
+  MinidumpMemoryList* memory_list = minidump.GetMemoryList();
   ASSERT_TRUE(memory_list);
-  ASSERT_EQ(static_cast<unsigned int>(1), memory_list->region_count());
+
+  unsigned int region_count = memory_list->region_count();
+  ASSERT_GE(region_count, 1u);
+
+  for (unsigned int region_index = 0;
+       region_index < region_count;
+       ++region_index) {
+    MinidumpMemoryRegion* region =
+        memory_list->GetMemoryRegionAtIndex(region_index);
+    uint64_t region_base = region->GetBase();
+    EXPECT_FALSE(instruction_pointer >= region_base &&
+                 instruction_pointer < region_base + region->GetSize());
+  }
 
   unlink(minidump_path.c_str());
 }
@@ -798,19 +937,7 @@ TEST(ExceptionHandlerTest, ModuleInfo) {
     0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
     0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF
   };
-  char module_identifier_buffer[kGUIDStringSize];
-  FileID::ConvertIdentifierToString(kModuleGUID,
-                                    module_identifier_buffer,
-                                    sizeof(module_identifier_buffer));
-  string module_identifier(module_identifier_buffer);
-  // Strip out dashes
-  size_t pos;
-  while ((pos = module_identifier.find('-')) != string::npos) {
-    module_identifier.erase(pos, 1);
-  }
-  // And append a zero, because module IDs include an "age" field
-  // which is always zero on Linux.
-  module_identifier += "0";
+  const string module_identifier = "33221100554477668899AABBCCDDEEFF0";
 
   // Get some memory.
   char* memory =
@@ -855,6 +982,8 @@ TEST(ExceptionHandlerTest, ModuleInfo) {
   unlink(minidump_desc.path());
 }
 
+#ifndef ADDRESS_SANITIZER
+
 static const unsigned kControlMsgSize =
     CMSG_SPACE(sizeof(int)) + CMSG_SPACE(sizeof(struct ucred));
 
@@ -882,7 +1011,7 @@ CrashHandler(const void* crash_context, size_t crash_context_size,
   msg.msg_control = cmsg;
   msg.msg_controllen = sizeof(cmsg);
 
-  struct cmsghdr *hdr = CMSG_FIRSTHDR(&msg);
+  struct cmsghdr* hdr = CMSG_FIRSTHDR(&msg);
   hdr->cmsg_level = SOL_SOCKET;
   hdr->cmsg_type = SCM_RIGHTS;
   hdr->cmsg_len = CMSG_LEN(sizeof(int));
@@ -891,7 +1020,7 @@ CrashHandler(const void* crash_context, size_t crash_context_size,
   hdr->cmsg_level = SOL_SOCKET;
   hdr->cmsg_type = SCM_CREDENTIALS;
   hdr->cmsg_len = CMSG_LEN(sizeof(struct ucred));
-  struct ucred *cred = reinterpret_cast<struct ucred*>(CMSG_DATA(hdr));
+  struct ucred* cred = reinterpret_cast<struct ucred*>(CMSG_DATA(hdr));
   cred->uid = getuid();
   cred->gid = getgid();
   cred->pid = getpid();
@@ -907,8 +1036,6 @@ CrashHandler(const void* crash_context, size_t crash_context_size,
   return true;
 }
 
-#ifndef ADDRESS_SANITIZER
-
 TEST(ExceptionHandlerTest, ExternalDumper) {
   int fds[2];
   ASSERT_NE(socketpair(AF_UNIX, SOCK_DGRAM, 0, fds), -1);
@@ -922,7 +1049,7 @@ TEST(ExceptionHandlerTest, ExternalDumper) {
     ExceptionHandler handler(MinidumpDescriptor("/tmp1"), NULL, NULL,
                              reinterpret_cast<void*>(fds[1]), true, -1);
     handler.set_crash_handler(CrashHandler);
-    *reinterpret_cast<volatile int*>(NULL) = 0;
+    DoNullPointerDereference();
   }
   close(fds[1]);
   struct msghdr msg = {0};
@@ -941,12 +1068,12 @@ TEST(ExceptionHandlerTest, ExternalDumper) {
   const ssize_t n = HANDLE_EINTR(recvmsg(fds[0], &msg, 0));
   ASSERT_EQ(static_cast<ssize_t>(kCrashContextSize), n);
   ASSERT_EQ(kControlMsgSize, msg.msg_controllen);
-  ASSERT_EQ(static_cast<typeof(msg.msg_flags)>(0), msg.msg_flags);
+  ASSERT_EQ(static_cast<__typeof__(msg.msg_flags)>(0), msg.msg_flags);
   ASSERT_EQ(0, close(fds[0]));
 
   pid_t crashing_pid = -1;
   int signal_fd = -1;
-  for (struct cmsghdr *hdr = CMSG_FIRSTHDR(&msg); hdr;
+  for (struct cmsghdr* hdr = CMSG_FIRSTHDR(&msg); hdr;
        hdr = CMSG_NXTHDR(&msg, hdr)) {
     if (hdr->cmsg_level != SOL_SOCKET)
       continue;
@@ -956,7 +1083,7 @@ TEST(ExceptionHandlerTest, ExternalDumper) {
       ASSERT_EQ(sizeof(int), len);
       signal_fd = *(reinterpret_cast<int*>(CMSG_DATA(hdr)));
     } else if (hdr->cmsg_type == SCM_CREDENTIALS) {
-      const struct ucred *cred =
+      const struct ucred* cred =
           reinterpret_cast<struct ucred*>(CMSG_DATA(hdr));
       crashing_pid = cred->pid;
     }

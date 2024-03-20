@@ -1,5 +1,4 @@
-// Copyright (c) 2009, Google Inc.
-// All rights reserved.
+// Copyright 2009 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -61,7 +60,7 @@ class LineReader {
   //
   // One must call |PopLine| after this function, otherwise you'll continue to
   // get the same line over and over.
-  bool GetNextLine(const char **line, unsigned *len) {
+  bool GetNextLine(const char** line, unsigned* len) {
     for (;;) {
       if (buf_used_ == 0 && hit_eof_)
         return false;
@@ -102,7 +101,7 @@ class LineReader {
       } else if (n == 0) {
         hit_eof_ = true;
       } else {
-        buf_used_ += static_cast<unsigned>(n);
+        buf_used_ += n;
       }
 
       // At this point, we have either set the hit_eof_ flag, or we have more

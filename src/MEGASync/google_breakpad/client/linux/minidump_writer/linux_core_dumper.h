@@ -1,5 +1,4 @@
-// Copyright (c) 2012, Google Inc.
-// All rights reserved.
+// Copyright 2012 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -47,7 +46,9 @@ class LinuxCoreDumper : public LinuxDumper {
   // its proc files at |procfs_path|. If |procfs_path| is a copy of
   // /proc/<pid>, it should contain the following files:
   //     auxv, cmdline, environ, exe, maps, status
-  LinuxCoreDumper(pid_t pid, const char* core_path, const char* procfs_path);
+  // See LinuxDumper for the purpose of |root_prefix|.
+  LinuxCoreDumper(pid_t pid, const char* core_path, const char* procfs_path,
+                  const char* root_prefix = "");
 
   // Implements LinuxDumper::BuildProcPath().
   // Builds a proc path for a certain pid for a node (/proc/<pid>/<node>).
@@ -68,8 +69,9 @@ class LinuxCoreDumper : public LinuxDumper {
   // Copies content of |length| bytes from a given process |child|,
   // starting from |src|, into |dest|. This method extracts the content
   // the core dump and fills |dest| with a sequence of marker bytes
-  // if the expected data is not found in the core dump.
-  virtual void CopyFromProcess(void* dest, pid_t child, const void* src,
+  // if the expected data is not found in the core dump. Returns true if
+  // the expected data is found in the core dump.
+  virtual bool CopyFromProcess(void* dest, pid_t child, const void* src,
                                size_t length);
 
   // Implements LinuxDumper::GetThreadInfoByIndex().

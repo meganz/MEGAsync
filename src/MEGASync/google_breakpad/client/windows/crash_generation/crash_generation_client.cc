@@ -1,5 +1,4 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved.
+// Copyright 2008 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -26,6 +25,10 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include "client/windows/crash_generation/crash_generation_client.h"
 #include <cassert>
@@ -96,14 +99,14 @@ CrashGenerationClient::CrashGenerationClient(
     const CustomClientInfo* custom_info)
         : pipe_name_(pipe_name),
           pipe_handle_(NULL),
+          custom_info_(),
           dump_type_(dump_type),
-          thread_id_(0),
-          server_process_id_(0),
           crash_event_(NULL),
           crash_generated_(NULL),
           server_alive_(NULL),
-          exception_pointers_(NULL),
-          custom_info_() {
+          server_process_id_(0),
+          thread_id_(0),
+          exception_pointers_(NULL) {
   memset(&assert_info_, 0, sizeof(assert_info_));
   if (custom_info) {
     custom_info_ = *custom_info;
@@ -116,14 +119,14 @@ CrashGenerationClient::CrashGenerationClient(
     const CustomClientInfo* custom_info)
         : pipe_name_(),
           pipe_handle_(pipe_handle),
+          custom_info_(),
           dump_type_(dump_type),
-          thread_id_(0),
-          server_process_id_(0),
           crash_event_(NULL),
           crash_generated_(NULL),
           server_alive_(NULL),
-          exception_pointers_(NULL),
-          custom_info_() {
+          server_process_id_(0),
+          thread_id_(0),
+          exception_pointers_(NULL) {
   memset(&assert_info_, 0, sizeof(assert_info_));
   if (custom_info) {
     custom_info_ = *custom_info;

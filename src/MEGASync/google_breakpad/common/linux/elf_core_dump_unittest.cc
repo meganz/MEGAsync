@@ -1,5 +1,4 @@
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -28,6 +27,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // elf_core_dump_unittest.cc: Unit tests for google_breakpad::ElfCoreDump.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <sys/procfs.h>
 
@@ -70,7 +73,7 @@ TEST(ElfCoreDumpTest, TestElfHeader) {
   ElfCoreDump core;
 
   ASSERT_TRUE(WriteFile(core_file, &header, sizeof(header) - 1));
-  ASSERT_TRUE(mapped_core_file.Map(core_file));
+  ASSERT_TRUE(mapped_core_file.Map(core_file, 0));
   core.SetContent(mapped_core_file.content());
   EXPECT_FALSE(core.IsValid());
   EXPECT_EQ(NULL, core.GetHeader());
@@ -80,49 +83,49 @@ TEST(ElfCoreDumpTest, TestElfHeader) {
   EXPECT_FALSE(core.GetFirstNote().IsValid());
 
   ASSERT_TRUE(WriteFile(core_file, &header, sizeof(header)));
-  ASSERT_TRUE(mapped_core_file.Map(core_file));
+  ASSERT_TRUE(mapped_core_file.Map(core_file, 0));
   core.SetContent(mapped_core_file.content());
   EXPECT_FALSE(core.IsValid());
 
   header.e_ident[0] = ELFMAG0;
   ASSERT_TRUE(WriteFile(core_file, &header, sizeof(header)));
-  ASSERT_TRUE(mapped_core_file.Map(core_file));
+  ASSERT_TRUE(mapped_core_file.Map(core_file, 0));
   core.SetContent(mapped_core_file.content());
   EXPECT_FALSE(core.IsValid());
 
   header.e_ident[1] = ELFMAG1;
   ASSERT_TRUE(WriteFile(core_file, &header, sizeof(header)));
-  ASSERT_TRUE(mapped_core_file.Map(core_file));
+  ASSERT_TRUE(mapped_core_file.Map(core_file, 0));
   core.SetContent(mapped_core_file.content());
   EXPECT_FALSE(core.IsValid());
 
   header.e_ident[2] = ELFMAG2;
   ASSERT_TRUE(WriteFile(core_file, &header, sizeof(header)));
-  ASSERT_TRUE(mapped_core_file.Map(core_file));
+  ASSERT_TRUE(mapped_core_file.Map(core_file, 0));
   core.SetContent(mapped_core_file.content());
   EXPECT_FALSE(core.IsValid());
 
   header.e_ident[3] = ELFMAG3;
   ASSERT_TRUE(WriteFile(core_file, &header, sizeof(header)));
-  ASSERT_TRUE(mapped_core_file.Map(core_file));
+  ASSERT_TRUE(mapped_core_file.Map(core_file, 0));
   core.SetContent(mapped_core_file.content());
   EXPECT_FALSE(core.IsValid());
 
   header.e_ident[4] = ElfCoreDump::kClass;
   ASSERT_TRUE(WriteFile(core_file, &header, sizeof(header)));
-  ASSERT_TRUE(mapped_core_file.Map(core_file));
+  ASSERT_TRUE(mapped_core_file.Map(core_file, 0));
   core.SetContent(mapped_core_file.content());
   EXPECT_FALSE(core.IsValid());
 
   header.e_version = EV_CURRENT;
   ASSERT_TRUE(WriteFile(core_file, &header, sizeof(header)));
-  ASSERT_TRUE(mapped_core_file.Map(core_file));
+  ASSERT_TRUE(mapped_core_file.Map(core_file, 0));
   core.SetContent(mapped_core_file.content());
   EXPECT_FALSE(core.IsValid());
 
   header.e_type = ET_CORE;
   ASSERT_TRUE(WriteFile(core_file, &header, sizeof(header)));
-  ASSERT_TRUE(mapped_core_file.Map(core_file));
+  ASSERT_TRUE(mapped_core_file.Map(core_file, 0));
   core.SetContent(mapped_core_file.content());
   EXPECT_TRUE(core.IsValid());
 }
@@ -130,30 +133,38 @@ TEST(ElfCoreDumpTest, TestElfHeader) {
 TEST(ElfCoreDumpTest, ValidCoreFile) {
   CrashGenerator crash_generator;
   if (!crash_generator.HasDefaultCorePattern()) {
-    fprintf(stderr, "ElfCoreDumpTest.ValidCoreFile test is skipped "
-            "due to non-default core pattern");
-    return;
+    GTEST_SKIP() << "ElfCoreDumpTest.ValidCoreFile test is skipped "
+                    "due to non-default core pattern";
+  }
+
+  if (!crash_generator.HasResourceLimitsAmenableToCrashCollection()) {
+    GTEST_SKIP() << "ElfCoreDumpTest.ValidCoreFile test is skipped "
+                    "due to inadequate system resource limits";
   }
 
   const unsigned kNumOfThreads = 3;
   const unsigned kCrashThread = 1;
   const int kCrashSignal = SIGABRT;
-  // TODO(benchan): Revert to use ASSERT_TRUE once the flakiness in
-  // CrashGenerator is identified and fixed.
-  if (!crash_generator.CreateChildCrash(kNumOfThreads, kCrashThread,
-                                        kCrashSignal, NULL)) {
-    fprintf(stderr, "ElfCoreDumpTest.ValidCoreFile test is skipped "
-            "due to no core dump generated");
-    return;
-  }
+  ASSERT_TRUE(crash_generator.CreateChildCrash(kNumOfThreads, kCrashThread,
+                                               kCrashSignal, NULL));
   pid_t expected_crash_thread_id = crash_generator.GetThreadId(kCrashThread);
   set<pid_t> expected_thread_ids;
   for (unsigned i = 0; i < kNumOfThreads; ++i) {
     expected_thread_ids.insert(crash_generator.GetThreadId(i));
   }
 
+#if defined(__ANDROID__)
+  struct stat st;
+  if (stat(crash_generator.GetCoreFilePath().c_str(), &st) != 0) {
+    fprintf(stderr, "ElfCoreDumpTest.ValidCoreFile test is skipped "
+            "due to no core file being generated");
+    return;
+  }
+#endif
+
   MemoryMappedFile mapped_core_file;
-  ASSERT_TRUE(mapped_core_file.Map(crash_generator.GetCoreFilePath().c_str()));
+  ASSERT_TRUE(
+      mapped_core_file.Map(crash_generator.GetCoreFilePath().c_str(), 0));
 
   ElfCoreDump core;
   core.SetContent(mapped_core_file.content());
@@ -182,6 +193,7 @@ TEST(ElfCoreDumpTest, ValidCoreFile) {
 
   size_t num_nt_prpsinfo = 0;
   size_t num_nt_prstatus = 0;
+  size_t num_pr_fpvalid = 0;
 #if defined(__i386__) || defined(__x86_64__)
   size_t num_nt_fpregset = 0;
 #endif
@@ -213,6 +225,8 @@ TEST(ElfCoreDumpTest, ValidCoreFile) {
           EXPECT_EQ(kCrashSignal, status->pr_info.si_signo);
         }
         ++num_nt_prstatus;
+        if (status->pr_fpvalid)
+          ++num_pr_fpvalid;
         break;
       }
 #if defined(__i386__) || defined(__x86_64__)
@@ -237,13 +251,22 @@ TEST(ElfCoreDumpTest, ValidCoreFile) {
     note = note.GetNextNote();
   }
 
-  EXPECT_TRUE(expected_thread_ids == actual_thread_ids);
+#if defined(THREAD_SANITIZER)
+  for (std::set<pid_t>::const_iterator expected = expected_thread_ids.begin();
+       expected != expected_thread_ids.end();
+       ++expected) {
+    EXPECT_NE(actual_thread_ids.find(*expected), actual_thread_ids.end());
+  }
+  EXPECT_GE(num_nt_prstatus, kNumOfThreads);
+#else
+  EXPECT_EQ(actual_thread_ids, expected_thread_ids);
+  EXPECT_EQ(num_nt_prstatus, kNumOfThreads);
+#endif
   EXPECT_EQ(1U, num_nt_prpsinfo);
-  EXPECT_EQ(kNumOfThreads, num_nt_prstatus);
 #if defined(__i386__) || defined(__x86_64__)
-  EXPECT_EQ(kNumOfThreads, num_nt_fpregset);
+  EXPECT_EQ(num_pr_fpvalid, num_nt_fpregset);
 #endif
 #if defined(__i386__)
-  EXPECT_EQ(kNumOfThreads, num_nt_prxfpreg);
+  EXPECT_EQ(num_pr_fpvalid, num_nt_prxfpreg);
 #endif
 }

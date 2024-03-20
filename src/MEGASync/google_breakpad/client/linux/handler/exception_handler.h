@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -30,14 +29,12 @@
 #ifndef CLIENT_LINUX_HANDLER_EXCEPTION_HANDLER_H_
 #define CLIENT_LINUX_HANDLER_EXCEPTION_HANDLER_H_
 
-#include <string>
-#include <vector>
-
-#include <pthread.h>
 #include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/ucontext.h>
+
+#include <string>
 
 #include "client/linux/crash_generation/crash_generation_client.h"
 #include "client/linux/handler/minidump_descriptor.h"
@@ -45,6 +42,15 @@
 #include "common/scoped_ptr.h"
 #include "common/using_std_string.h"
 #include "google_breakpad/common/minidump_format.h"
+
+#if !defined(__ARM_EABI__) && !defined(__mips__) && !defined(__riscv)
+// FP state is not part of user ABI for Linux ARM.
+// In case of MIPS and RISCV Linux FP state is already part of ucontext_t
+// so 'float_state' is not required.
+# define GOOGLE_BREAKPAD_CRASH_CONTEXT_HAS_FLOAT_STATE 1
+#else
+# define GOOGLE_BREAKPAD_CRASH_CONTEXT_HAS_FLOAT_STATE 0
+#endif
 
 namespace google_breakpad {
 
@@ -84,7 +90,7 @@ class ExceptionHandler {
   // attempting to write a minidump.  If a FilterCallback returns false,
   // Breakpad  will immediately report the exception as unhandled without
   // writing a minidump, allowing another handler the opportunity to handle it.
-  typedef bool (*FilterCallback)(void *context);
+  typedef bool (*FilterCallback)(void* context);
 
   // A callback function to run after the minidump has been written.
   // |descriptor| contains the file descriptor or file path containing the
@@ -129,7 +135,7 @@ class ExceptionHandler {
   ExceptionHandler(const MinidumpDescriptor& descriptor,
                    FilterCallback filter,
                    MinidumpCallback callback,
-                   void *callback_context,
+                   void* callback_context,
                    bool install_handler,
                    const int server_fd);
   ~ExceptionHandler();
@@ -144,6 +150,10 @@ class ExceptionHandler {
 
   void set_crash_handler(HandlerCallback callback) {
     crash_handler_ = callback;
+  }
+
+  void set_crash_generation_client(CrashGenerationClient* client) {
+    crash_generation_client_.reset(client);
   }
 
   // Writes a minidump immediately.  This can be used to capture the execution
@@ -190,17 +200,14 @@ class ExceptionHandler {
     siginfo_t siginfo;
     pid_t tid;  // the crashing thread.
     ucontext_t context;
-#if !defined(__ARM_EABI__) && !defined(__mips__)
-    // #ifdef this out because FP state is not part of user ABI for Linux ARM.
-    // In case of MIPS Linux FP state is already part of struct ucontext
-    // so 'float_state' is not required.
-    struct _libc_fpstate float_state;
+#if GOOGLE_BREAKPAD_CRASH_CONTEXT_HAS_FLOAT_STATE
+    fpstate_t float_state;
 #endif
   };
 
   // Returns whether out-of-process dump generation is used or not.
   bool IsOutOfProcess() const {
-      return crash_generation_client_.get() != NULL;
+    return crash_generation_client_.get() != NULL;
   }
 
   // Add information about a memory mapping. This can be used if
@@ -221,6 +228,10 @@ class ExceptionHandler {
 
   // Force signal handling for the specified signal.
   bool SimulateSignalDelivery(int sig);
+
+  // Report a crash signal from an SA_SIGINFO signal handler.
+  bool HandleSignal(int sig, siginfo_t* info, void* uc);
+
  private:
   // Save the old signal handlers and install new ones.
   static bool InstallHandlersLocked();
@@ -228,12 +239,11 @@ class ExceptionHandler {
   static void RestoreHandlersLocked();
 
   void PreresolveSymbols();
-  bool GenerateDump(CrashContext *context);
+  bool GenerateDump(CrashContext* context);
   void SendContinueSignalToChild();
   void WaitForContinueSignal();
 
   static void SignalHandler(int sig, siginfo_t* info, void* uc);
-  bool HandleSignal(int sig, siginfo_t* info, void* uc);
   static int ThreadEntry(void* arg);
   bool DoDump(pid_t crashing_process, const void* context,
               size_t context_size);
@@ -246,20 +256,18 @@ class ExceptionHandler {
 
   MinidumpDescriptor minidump_descriptor_;
 
-  HandlerCallback crash_handler_;
-
-  // The global exception handler stack. This is need becuase there may exist
-  // multiple ExceptionHandler instances in a process. Each will have itself
-  // registered in this stack.
-  static std::vector<ExceptionHandler*> *handler_stack_;
-  static pthread_mutex_t handler_stack_mutex_;
+  // Must be volatile. The compiler is unaware of the code which runs in
+  // the signal handler which reads this variable. Without volatile the
+  // compiler is free to optimise away writes to this variable which it
+  // believes are never read.
+  volatile HandlerCallback crash_handler_;
 
   // We need to explicitly enable ptrace of parent processes on some
   // kernels, but we need to know the PID of the cloned process before we
   // can do this. We create a pipe which we can use to block the
-  // cloned process after creating it, until we have explicitly enabled 
+  // cloned process after creating it, until we have explicitly enabled
   // ptrace. This is used to store the file descriptors for the pipe
-  int fdes[2];
+  int fdes[2] = {-1, -1};
 
   // Callers can add extra info about mappings for cases where the
   // dumper code cannot extract enough information from /proc/<pid>/maps.
@@ -269,6 +277,9 @@ class ExceptionHandler {
   // the dump.
   AppMemoryList app_memory_list_;
 };
+
+typedef bool (*FirstChanceHandler)(int, siginfo_t*, void*);
+void SetFirstChanceExceptionHandler(FirstChanceHandler callback);
 
 }  // namespace google_breakpad
 

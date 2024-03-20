@@ -1,5 +1,4 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved.
+// Copyright 2008 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -29,6 +28,10 @@
 
 // crash_generation_app.cpp : Defines the entry point for the application.
 //
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include "client/windows/tests/crash_generation_app/crash_generation_app.h"
 
@@ -73,7 +76,7 @@ BOOL InitInstance(HINSTANCE, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
 
-static int kCustomInfoCount = 2;
+static size_t kCustomInfoCount = 2;
 static CustomInfoEntry kCustomInfoEntries[] = {
     CustomInfoEntry(L"prod", L"CrashTestApp"),
     CustomInfoEntry(L"ver", L"1.0"),
@@ -197,8 +200,8 @@ bool ShowDumpResults(const wchar_t* dump_path,
   return succeeded;
 }
 
-static void _cdecl ShowClientConnected(void* context,
-                                       const ClientInfo* client_info) {
+static void ShowClientConnected(void* context,
+                                const ClientInfo* client_info) {
   TCHAR* line = new TCHAR[kMaximumLineLength];
   line[0] = _T('\0');
   int result = swprintf_s(line,
@@ -214,9 +217,9 @@ static void _cdecl ShowClientConnected(void* context,
   QueueUserWorkItem(AppendTextWorker, line, WT_EXECUTEDEFAULT);
 }
 
-static void _cdecl ShowClientCrashed(void* context,
-                                     const ClientInfo* client_info,
-                                     const wstring* dump_path) {
+static void ShowClientCrashed(void* context,
+                              const ClientInfo* client_info,
+                              const wstring* dump_path) {
   TCHAR* line = new TCHAR[kMaximumLineLength];
   line[0] = _T('\0');
   int result = swprintf_s(line,
@@ -259,8 +262,8 @@ static void _cdecl ShowClientCrashed(void* context,
   QueueUserWorkItem(AppendTextWorker, line, WT_EXECUTEDEFAULT);
 }
 
-static void _cdecl ShowClientExited(void* context,
-                                    const ClientInfo* client_info) {
+static void ShowClientExited(void* context,
+                             const ClientInfo* client_info) {
   TCHAR* line = new TCHAR[kMaximumLineLength];
   line[0] = _T('\0');
   int result = swprintf_s(line,
@@ -283,6 +286,12 @@ void CrashServerStart() {
   }
 
   std::wstring dump_path = L"C:\\Dumps\\";
+
+  if (_wmkdir(dump_path.c_str()) && (errno != EEXIST)) {
+    MessageBoxW(NULL, L"Unable to create dump directory", L"Dumper", MB_OK);
+    return;
+  }
+
   crash_server = new CrashGenerationServer(kPipeName,
                                            NULL,
                                            ShowClientConnected,
@@ -357,13 +366,7 @@ LRESULT CALLBACK WndProc(HWND wnd,
   PAINTSTRUCT ps;
   HDC hdc;
 
-#pragma warning(push)
-#pragma warning(disable:4312)
-  // Disable warning C4312: 'type cast' : conversion from 'LONG' to
-  // 'HINSTANCE' of greater size.
-  // The value returned by GetwindowLong in the case below returns unsigned.
-  HINSTANCE instance = (HINSTANCE)GetWindowLong(wnd, GWL_HINSTANCE);
-#pragma warning(pop)
+  HINSTANCE instance = (HINSTANCE)GetWindowLongPtr(wnd, GWLP_HINSTANCE);
 
   switch (message) {
     case WM_COMMAND:

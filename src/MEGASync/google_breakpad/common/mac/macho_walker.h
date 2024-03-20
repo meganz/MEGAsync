@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -49,12 +48,12 @@ class MachoWalker {
   // beginning of the file (not header) where the command was read.  If |swap|
   // is set, then any command data (other than the returned load_command) should
   // be swapped when read
-  typedef bool (*LoadCommandCallback)(MachoWalker *walker, load_command *cmd,
-                                      off_t offset, bool swap, void *context);
+  typedef bool (*LoadCommandCallback)(MachoWalker* walker, load_command* cmd,
+                                      off_t offset, bool swap, void* context);
 
-  MachoWalker(const char *path, LoadCommandCallback callback, void *context);
-  MachoWalker(void *memory, size_t size, LoadCommandCallback callback,
-              void *context);
+  MachoWalker(const char* path, LoadCommandCallback callback, void* context);
+  MachoWalker(void* memory, size_t size, LoadCommandCallback callback,
+              void* context);
   ~MachoWalker();
 
   // Begin walking the header for |cpu_type| and |cpu_subtype|.  If |cpu_type|
@@ -67,17 +66,17 @@ class MachoWalker {
   bool WalkHeader(cpu_type_t cpu_type, cpu_subtype_t cpu_subtype);
 
   // Read |size| bytes from the opened file at |offset| into |buffer|
-  bool ReadBytes(void *buffer, size_t size, off_t offset);
+  bool ReadBytes(void* buffer, size_t size, off_t offset);
 
   // Return the current header and header offset
-  bool CurrentHeader(struct mach_header_64 *header, off_t *offset);
+  bool CurrentHeader(struct mach_header_64* header, off_t* offset);
 
  private:
   // Locate (if any) the header offset for |cpu_type| and return in |offset|.
   // Return true if found, false otherwise.
   bool FindHeader(cpu_type_t cpu_type,
                   cpu_subtype_t cpu_subtype,
-                  off_t &offset);
+                  off_t& offset);
 
   // Process an individual header starting at |offset| from the start of the
   // file.  Return true if successful, false otherwise.
@@ -91,27 +90,27 @@ class MachoWalker {
   int file_;
 
   // Memory location to read from.
-  void *memory_;
+  void* memory_;
 
   // Size of the memory segment we can read from.
   size_t memory_size_;
 
   // User specified callback & context
   LoadCommandCallback callback_;
-  void *callback_context_;
+  void* callback_context_;
 
   // Current header, size, and offset.  The mach_header_64 is used for both
   // 32-bit and 64-bit headers because they only differ in their last field
   // (reserved).  By adding the |current_header_size_| and the
   // |current_header_offset_|, you can determine the offset in the file just
   // after the header.
-  struct mach_header_64 *current_header_;
+  struct mach_header_64* current_header_;
   unsigned long current_header_size_;
   off_t current_header_offset_;
 
  private:
-  MachoWalker(const MachoWalker &);
-  MachoWalker &operator=(const MachoWalker &);
+  MachoWalker(const MachoWalker&);
+  MachoWalker& operator=(const MachoWalker&);
 };
 
 }  // namespace MacFileUtilities

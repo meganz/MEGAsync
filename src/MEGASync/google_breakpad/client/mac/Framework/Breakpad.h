@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -45,7 +44,7 @@
 // OnDemandServer and restored in Inspector.
 #define BREAKPAD_BOOTSTRAP_PARENT_PORT    "com.Breakpad.BootstrapParent"
 
-typedef void *BreakpadRef;
+typedef void* BreakpadRef;
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,7 +64,7 @@ extern "C" {
 typedef bool (*BreakpadFilterCallback)(int exception_type,
                                        int exception_code,
                                        mach_port_t crashing_thread,
-                                       void *context);
+                                       void* context);
 
 // Create a new BreakpadRef object and install it as an exception
 // handler.  The |parameters| will typically be the contents of your
@@ -158,6 +157,11 @@ typedef bool (*BreakpadFilterCallback)(int exception_type,
 //                                but pass as URL parameters when
 //                                uploading theminidump to the crash
 //                                server.
+//
+// BREAKPAD_IN_PROCESS            A boolean NSNumber value. If YES, Breakpad
+//                                will write the dump file in-process and then
+//                                launch the reporter executable as a child
+//                                process.
 //=============================================================================
 // The BREAKPAD_PRODUCT, BREAKPAD_VERSION and BREAKPAD_URL are
 // required to have non-NULL values.  By default, the BREAKPAD_PRODUCT
@@ -221,7 +225,7 @@ typedef bool (*BreakpadFilterCallback)(int exception_type,
 //                                   Only used in crash_report_sender.
 
 // Returns a new BreakpadRef object on success, NULL otherwise.
-BreakpadRef BreakpadCreate(NSDictionary *parameters);
+BreakpadRef BreakpadCreate(NSDictionary* parameters);
 
 // Uninstall and release the data associated with |ref|.
 void BreakpadRelease(BreakpadRef ref);
@@ -233,7 +237,7 @@ void BreakpadRelease(BreakpadRef ref);
 // Context is a pointer to arbitrary data to make the callback with.
 void BreakpadSetFilterCallback(BreakpadRef ref,
                                BreakpadFilterCallback callback,
-                               void *context);
+                               void* context);
 
 // User defined key and value string storage.  Generally this is used
 // to configure Breakpad's internal operation, such as whether the
@@ -254,23 +258,23 @@ void BreakpadSetFilterCallback(BreakpadRef ref,
 // TODO (nealsid): separate server parameter dictionary from the
 // dictionary used to configure Breakpad, and document limits for each
 // independently.
-void BreakpadSetKeyValue(BreakpadRef ref, NSString *key, NSString *value);
-NSString *BreakpadKeyValue(BreakpadRef ref, NSString *key);
-void BreakpadRemoveKeyValue(BreakpadRef ref, NSString *key);
+void BreakpadSetKeyValue(BreakpadRef ref, NSString* key, NSString* value);
+NSString* BreakpadKeyValue(BreakpadRef ref, NSString* key);
+void BreakpadRemoveKeyValue(BreakpadRef ref, NSString* key);
 
 // You can use this method to specify parameters that will be uploaded
 // to the crash server.  They will be automatically encoded as
 // necessary.  Note that as mentioned above there are limits on both
 // the number of keys and their length.
-void BreakpadAddUploadParameter(BreakpadRef ref, NSString *key,
-                                NSString *value);
+void BreakpadAddUploadParameter(BreakpadRef ref, NSString* key,
+                                NSString* value);
 
 // This method will remove a previously-added parameter from the
 // upload parameter set.
-void BreakpadRemoveUploadParameter(BreakpadRef ref, NSString *key);
+void BreakpadRemoveUploadParameter(BreakpadRef ref, NSString* key);
 
 // Add a log file for Breakpad to read and send upon crash dump
-void BreakpadAddLogFile(BreakpadRef ref, NSString *logPathname);
+void BreakpadAddLogFile(BreakpadRef ref, NSString* logPathname);
 
 // Generate a minidump and send
 void BreakpadGenerateAndSendReport(BreakpadRef ref);

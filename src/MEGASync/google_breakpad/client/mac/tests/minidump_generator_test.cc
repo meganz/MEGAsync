@@ -1,5 +1,4 @@
-// Copyright (c) 2010, Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -29,6 +28,10 @@
 
 // minidump_generator_test.cc: Unit tests for google_breakpad::MinidumpGenerator
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include <AvailabilityMacros.h>
 #ifndef MAC_OS_X_VERSION_10_6
 #define MAC_OS_X_VERSION_10_6 1060
@@ -42,6 +45,7 @@
 #include "breakpad_googletest_includes.h"
 #include "client/mac/handler/minidump_generator.h"
 #include "client/mac/tests/spawn_child_process.h"
+#include "common/linux/ignore_ret.h"
 #include "common/mac/MachIPC.h"
 #include "common/tests/auto_tempdir.h"
 #include "google_breakpad/processor/minidump.h"
@@ -78,7 +82,7 @@ class MinidumpGeneratorTest : public Test {
   AutoTempDir tempDir;
 };
 
-static void *Junk(void* data) {
+static void* Junk(void* data) {
   bool* wait = reinterpret_cast<bool*>(data);
   while (!*wait) {
     usleep(10000);
@@ -190,7 +194,7 @@ TEST_F(MinidumpGeneratorTest, OutOfProcess) {
 
   // Unblock child process
   uint8_t data = 1;
-  (void)write(fds[1], &data, 1);
+  IGNORE_RET(write(fds[1], &data, 1));
 
   // Child process should have exited with a zero status.
   int ret;

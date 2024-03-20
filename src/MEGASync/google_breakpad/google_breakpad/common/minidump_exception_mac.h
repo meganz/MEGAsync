@@ -1,5 +1,4 @@
-/* Copyright (c) 2006, Google Inc.
- * All rights reserved.
+/* Copyright 2006 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- *     * Neither the name of Google Inc. nor the names of its
+ *     * Neither the name of Google LLC nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
  *
@@ -34,7 +33,7 @@
  *
  * Author: Mark Mentovai
  * Split into its own file: Neal Sidhwaney */
- 
+
 
 #ifndef GOOGLE_BREAKPAD_COMMON_MINIDUMP_EXCEPTION_MAC_H__
 #define GOOGLE_BREAKPAD_COMMON_MINIDUMP_EXCEPTION_MAC_H__
@@ -65,8 +64,16 @@ typedef enum {
       /* EXC_SYSCALL */
   MD_EXCEPTION_MAC_MACH_SYSCALL    = 8,
       /* EXC_MACH_SYSCALL */
-  MD_EXCEPTION_MAC_RPC_ALERT       = 9
+  MD_EXCEPTION_MAC_RPC_ALERT       = 9,
+      /* EXC_RESOURCE */
+  MD_EXCEPTION_MAC_RESOURCE        = 11,
+      /* EXC_GUARD */
+  MD_EXCEPTION_MAC_GUARD           = 12,
       /* EXC_RPC_ALERT */
+  MD_EXCEPTION_MAC_SIMULATED       = 0x43507378,
+      /* Fake exception code used by Crashpad's SimulateCrash ('CPsx'). */
+  MD_NS_EXCEPTION_SIMULATED       = 0x43506E78
+      /* Fake exception code used by Crashpad's uncaught exceptions ('CPnx'). */
 } MDExceptionMac;
 
 /* For (MDException).exception_flags.  Breakpad minidump extension for Mac OS X
@@ -85,6 +92,8 @@ typedef enum {
       /* KERN_MEMORY_FAILURE */
   MD_EXCEPTION_CODE_MAC_MEMORY_ERROR       = 10,
       /* KERN_MEMORY_ERROR */
+  MD_EXCEPTION_CODE_MAC_CODESIGN_ERROR     = 50,
+      /* KERN_CODESIGN_ERROR */
 
   /* With MD_EXCEPTION_SOFTWARE */
   MD_EXCEPTION_CODE_MAC_BAD_SYSCALL  = 0x00010000,  /* Mach SIGSYS */

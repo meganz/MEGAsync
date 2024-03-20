@@ -1,5 +1,4 @@
-// Copyright 2013 Google Inc.
-// All rights reserved.
+// Copyright 2013 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -34,7 +33,7 @@
 
 // The purpose of this file is to work around the fact that ucontext_t's
 // uc_mcontext member is an mcontext_t rather than an mcontext64_t on ARM64.
-#if defined(__arm64__)
+#if defined(__aarch64__)
 // <sys/ucontext.h> doesn't include the below file.
 #include <sys/_types/_ucontext64.h>
 typedef ucontext64_t breakpad_ucontext_t;
@@ -42,6 +41,6 @@ typedef ucontext64_t breakpad_ucontext_t;
 #else
 typedef ucontext_t breakpad_ucontext_t;
 #define breakpad_uc_mcontext uc_mcontext
-#endif  // defined(__arm64__)
+#endif  // defined(__aarch64__)
 
 #endif  // CLIENT_MAC_HANDLER_UCONTEXT_COMPAT_H_

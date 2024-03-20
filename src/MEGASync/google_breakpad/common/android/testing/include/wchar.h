@@ -1,5 +1,4 @@
-// Copyright (c) 2012, Google Inc.
-// All rights reserved.
+// Copyright 2012 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -37,6 +36,9 @@
 #define GOOGLEBREAKPAD_COMMON_ANDROID_INCLUDE_WCHAR_H
 
 #include_next <wchar.h>
+
+#if !defined(__aarch64__) && !defined(__x86_64__) && \
+    !(defined(__mips__) && _MIPS_SIM == _ABI64)
 
 // This needs to be in an extern "C" namespace, or Googletest will not
 // compile against it.
@@ -68,5 +70,6 @@ static int inline wcscasecmp(const wchar_t* s1, const wchar_t* s2) {
 #ifdef __cplusplus
 }  // extern "C"
 #endif  // __cplusplus
+#endif
 
 #endif  // GOOGLEBREAKPAD_COMMON_ANDROID_INCLUDE_WCHAR_H

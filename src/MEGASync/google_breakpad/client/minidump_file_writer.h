@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -74,10 +73,10 @@ public:
   MinidumpFileWriter();
   ~MinidumpFileWriter();
 
-  // Open |path| as the destination of the minidump data.  Any existing file
-  // will be overwritten.
+  // Open |path| as the destination of the minidump data. If |path| already
+  // exists, then Open() will fail.
   // Return true on success, or false on failure.
-  bool Open(const char *path);
+  bool Open(const char* path);
 
   // Sets the file descriptor |file| as the destination of the minidump data.
   // Can be used as an alternative to Open() when a file descriptor is
@@ -98,20 +97,20 @@ public:
   // entire NULL terminated string.  Copying will stop at the first NULL.
   // |location| the allocated location
   // Return true on success, or false on failure
-  bool WriteString(const wchar_t *str, unsigned int length,
-                   MDLocationDescriptor *location);
+  bool WriteString(const wchar_t* str, unsigned int length,
+                   MDLocationDescriptor* location);
 
   // Same as above, except with |str| as a UTF-8 string
-  bool WriteString(const char *str, unsigned int length,
-                   MDLocationDescriptor *location);
+  bool WriteString(const char* str, unsigned int length,
+                   MDLocationDescriptor* location);
 
   // Write |size| bytes starting at |src| into the current position.
   // Return true on success and set |output| to position, or false on failure
-  bool WriteMemory(const void *src, size_t size, MDMemoryDescriptor *output);
+  bool WriteMemory(const void* src, size_t size, MDMemoryDescriptor* output);
 
   // Copies |size| bytes from |src| to |position|
   // Return true on success, or false on failure
-  bool Copy(MDRVA position, const void *src, ssize_t size);
+  bool Copy(MDRVA position, const void* src, ssize_t size);
 
   // Return the current position for writing to the minidump
   inline MDRVA position() const { return position_; }
@@ -141,21 +140,21 @@ public:
   // variant may need to create a MDString that has more characters than the
   // source |str|, whereas the UTF-8 variant may coalesce characters to form
   // a single UTF-16 character.
-  bool CopyStringToMDString(const wchar_t *str, unsigned int length,
-                            TypedMDRVA<MDString> *mdstring);
-  bool CopyStringToMDString(const char *str, unsigned int length,
-                            TypedMDRVA<MDString> *mdstring);
+  bool CopyStringToMDString(const wchar_t* str, unsigned int length,
+                            TypedMDRVA<MDString>* mdstring);
+  bool CopyStringToMDString(const char* str, unsigned int length,
+                            TypedMDRVA<MDString>* mdstring);
 
   // The common templated code for writing a string
   template <typename CharType>
-  bool WriteStringCore(const CharType *str, unsigned int length,
-                       MDLocationDescriptor *location);
+  bool WriteStringCore(const CharType* str, unsigned int length,
+                       MDLocationDescriptor* location);
 };
 
 // Represents an untyped allocated chunk
 class UntypedMDRVA {
  public:
-  explicit UntypedMDRVA(MinidumpFileWriter *writer)
+  explicit UntypedMDRVA(MinidumpFileWriter* writer)
       : writer_(writer),
         position_(writer->position()),
         size_(0) {}
@@ -179,16 +178,16 @@ class UntypedMDRVA {
 
   // Copy |size| bytes starting at |src| into the minidump at |position|
   // Return true on success, or false on failure
-  bool Copy(MDRVA position, const void *src, size_t size);
+  bool Copy(MDRVA position, const void* src, size_t size);
 
   // Copy |size| bytes from |src| to the current position
-  inline bool Copy(const void *src, size_t size) {
+  inline bool Copy(const void* src, size_t size) {
     return Copy(position_, src, size);
   }
 
  protected:
   // Writer we associate with
-  MinidumpFileWriter *writer_;
+  MinidumpFileWriter* writer_;
 
   // Position of the start of the data
   MDRVA position_;
@@ -206,7 +205,7 @@ template<typename MDType>
 class TypedMDRVA : public UntypedMDRVA {
  public:
   // Constructs an unallocated MDRVA
-  explicit TypedMDRVA(MinidumpFileWriter *writer)
+  explicit TypedMDRVA(MinidumpFileWriter* writer)
       : UntypedMDRVA(writer),
         data_(),
         allocation_state_(UNALLOCATED) {}
@@ -220,7 +219,7 @@ class TypedMDRVA : public UntypedMDRVA {
   // Address of object data_ of MDType.  This is not declared const as the
   // typical usage will be to access the underlying |data_| object as to
   // alter its contents.
-  MDType *get() { return &data_; }
+  MDType* get() { return &data_; }
 
   // Allocates minidump_size<MDType>::size() bytes.
   // Must not call more than once.
@@ -245,12 +244,12 @@ class TypedMDRVA : public UntypedMDRVA {
   // Copy |item| to |index|
   // Must have been allocated using AllocateArray().
   // Return true on success, or false on failure
-  bool CopyIndex(unsigned int index, MDType *item);
+  bool CopyIndex(unsigned int index, MDType* item);
 
   // Copy |size| bytes starting at |str| to |index|
   // Must have been allocated using AllocateObjectAndArray().
   // Return true on success, or false on failure
-  bool CopyIndexAfterObject(unsigned int index, const void *src, size_t size);
+  bool CopyIndexAfterObject(unsigned int index, const void* src, size_t size);
 
   // Write data_
   bool Flush();

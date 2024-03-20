@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -45,9 +44,9 @@ using std::map;
 
 class HTTPUpload {
  public:
-  // Sends the given set of parameters, along with the contents of
-  // upload_file, as a multipart POST request to the given URL.
-  // file_part_name contains the name of the file part of the request
+  // Sends the given sets of parameters and files as a multipart POST
+  // request to the given URL.
+  // Each key in |files| is the name of the file part of the request
   // (i.e. it corresponds to the name= attribute on an <input type="file">.
   // Parameter names must contain only printable ASCII characters,
   // and may not contain a quote (") character.
@@ -58,28 +57,30 @@ class HTTPUpload {
   // received (or 0 if the request failed before getting an HTTP response).
   // If the send fails, a description of the error will be
   // returned in error_description.
-  static bool SendRequest(const string &url,
-                          const map<string, string> &parameters,
-                          const string &upload_file,
-                          const string &file_part_name,
-                          const string &proxy,
-                          const string &proxy_user_pwd,
-                          const string &ca_certificate_file,
-                          string *response_body,
-                          long *response_code,
-                          string *error_description);
+  static bool SendRequest(const string& url,
+                          const map<string, string>& parameters,
+                          const map<string, string>& files,
+                          const string& proxy,
+                          const string& proxy_user_pwd,
+                          const string& ca_certificate_file,
+                          string* response_body,
+                          long* response_code,
+                          string* error_description);
 
  private:
   // Checks that the given list of parameters has only printable
   // ASCII characters in the parameter name, and does not contain
   // any quote (") characters.  Returns true if so.
-  static bool CheckParameters(const map<string, string> &parameters);
+  static bool CheckParameters(const map<string, string>& parameters);
+
+  // Checks the curl_lib parameter points to a valid curl lib.
+  static bool CheckCurlLib(void* curl_lib);
 
   // No instances of this class should be created.
   // Disallow all constructors, destructors, and operator=.
   HTTPUpload();
-  explicit HTTPUpload(const HTTPUpload &);
-  void operator=(const HTTPUpload &);
+  explicit HTTPUpload(const HTTPUpload&);
+  void operator=(const HTTPUpload&);
   ~HTTPUpload();
 };
 

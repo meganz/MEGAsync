@@ -1,4 +1,4 @@
-// Copyright 2006 Google Inc. All Rights Reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -10,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -32,18 +32,17 @@
 #include "common/dwarf/bytereader.h"
 
 #include <assert.h>
+#include <stdint.h>
 
-namespace dwarf2reader {
+namespace google_breakpad {
 
-inline uint8 ByteReader::ReadOneByte(const char* buffer) const {
+inline uint8_t ByteReader::ReadOneByte(const uint8_t* buffer) const {
   return buffer[0];
 }
 
-inline uint16 ByteReader::ReadTwoBytes(const char* signed_buffer) const {
-  const unsigned char *buffer
-    = reinterpret_cast<const unsigned char *>(signed_buffer);
-  const uint16 buffer0 = buffer[0];
-  const uint16 buffer1 = buffer[1];
+inline uint16_t ByteReader::ReadTwoBytes(const uint8_t* buffer) const {
+  const uint16_t buffer0 = buffer[0];
+  const uint16_t buffer1 = buffer[1];
   if (endian_ == ENDIANNESS_LITTLE) {
     return buffer0 | buffer1 << 8;
   } else {
@@ -51,13 +50,22 @@ inline uint16 ByteReader::ReadTwoBytes(const char* signed_buffer) const {
   }
 }
 
-inline uint64 ByteReader::ReadFourBytes(const char* signed_buffer) const {
-  const unsigned char *buffer
-    = reinterpret_cast<const unsigned char *>(signed_buffer);
-  const uint32 buffer0 = buffer[0];
-  const uint32 buffer1 = buffer[1];
-  const uint32 buffer2 = buffer[2];
-  const uint32 buffer3 = buffer[3];
+inline uint64_t ByteReader::ReadThreeBytes(const uint8_t* buffer) const {
+  const uint32_t buffer0 = buffer[0];
+  const uint32_t buffer1 = buffer[1];
+  const uint32_t buffer2 = buffer[2];
+  if (endian_ == ENDIANNESS_LITTLE) {
+    return buffer0 | buffer1 << 8 | buffer2 << 16;
+  } else {
+    return buffer2 | buffer1 << 8 | buffer0 << 16;
+  }
+}
+
+inline uint64_t ByteReader::ReadFourBytes(const uint8_t* buffer) const {
+  const uint32_t buffer0 = buffer[0];
+  const uint32_t buffer1 = buffer[1];
+  const uint32_t buffer2 = buffer[2];
+  const uint32_t buffer3 = buffer[3];
   if (endian_ == ENDIANNESS_LITTLE) {
     return buffer0 | buffer1 << 8 | buffer2 << 16 | buffer3 << 24;
   } else {
@@ -65,17 +73,15 @@ inline uint64 ByteReader::ReadFourBytes(const char* signed_buffer) const {
   }
 }
 
-inline uint64 ByteReader::ReadEightBytes(const char* signed_buffer) const {
-  const unsigned char *buffer
-    = reinterpret_cast<const unsigned char *>(signed_buffer);
-  const uint64 buffer0 = buffer[0];
-  const uint64 buffer1 = buffer[1];
-  const uint64 buffer2 = buffer[2];
-  const uint64 buffer3 = buffer[3];
-  const uint64 buffer4 = buffer[4];
-  const uint64 buffer5 = buffer[5];
-  const uint64 buffer6 = buffer[6];
-  const uint64 buffer7 = buffer[7];
+inline uint64_t ByteReader::ReadEightBytes(const uint8_t* buffer) const {
+  const uint64_t buffer0 = buffer[0];
+  const uint64_t buffer1 = buffer[1];
+  const uint64_t buffer2 = buffer[2];
+  const uint64_t buffer3 = buffer[3];
+  const uint64_t buffer4 = buffer[4];
+  const uint64_t buffer5 = buffer[5];
+  const uint64_t buffer6 = buffer[6];
+  const uint64_t buffer7 = buffer[7];
   if (endian_ == ENDIANNESS_LITTLE) {
     return buffer0 | buffer1 << 8 | buffer2 << 16 | buffer3 << 24 |
       buffer4 << 32 | buffer5 << 40 | buffer6 << 48 | buffer7 << 56;
@@ -89,18 +95,18 @@ inline uint64 ByteReader::ReadEightBytes(const char* signed_buffer) const {
 // information, plus one bit saying whether the number continues or
 // not.
 
-inline uint64 ByteReader::ReadUnsignedLEB128(const char* buffer,
+inline uint64_t ByteReader::ReadUnsignedLEB128(const uint8_t* buffer,
                                              size_t* len) const {
-  uint64 result = 0;
+  uint64_t result = 0;
   size_t num_read = 0;
   unsigned int shift = 0;
-  unsigned char byte;
+  uint8_t byte;
 
   do {
     byte = *buffer++;
     num_read++;
 
-    result |= (static_cast<uint64>(byte & 0x7f)) << shift;
+    result |= (static_cast<uint64_t>(byte & 0x7f)) << shift;
 
     shift += 7;
 
@@ -114,54 +120,54 @@ inline uint64 ByteReader::ReadUnsignedLEB128(const char* buffer,
 // Read a signed LEB128 number.  These are like regular LEB128
 // numbers, except the last byte may have a sign bit set.
 
-inline int64 ByteReader::ReadSignedLEB128(const char* buffer,
+inline int64_t ByteReader::ReadSignedLEB128(const uint8_t* buffer,
                                           size_t* len) const {
-  int64 result = 0;
+  int64_t result = 0;
   unsigned int shift = 0;
   size_t num_read = 0;
-  unsigned char byte;
+  uint8_t byte;
 
   do {
       byte = *buffer++;
       num_read++;
-      result |= (static_cast<uint64>(byte & 0x7f) << shift);
+      result |= (static_cast<uint64_t>(byte & 0x7f) << shift);
       shift += 7;
   } while (byte & 0x80);
 
   if ((shift < 8 * sizeof (result)) && (byte & 0x40))
-    result |= -((static_cast<int64>(1)) << shift);
+    result |= -((static_cast<int64_t>(1)) << shift);
   *len = num_read;
   return result;
 }
 
-inline uint64 ByteReader::ReadOffset(const char* buffer) const {
+inline uint64_t ByteReader::ReadOffset(const uint8_t* buffer) const {
   assert(this->offset_reader_);
   return (this->*offset_reader_)(buffer);
 }
 
-inline uint64 ByteReader::ReadAddress(const char* buffer) const {
+inline uint64_t ByteReader::ReadAddress(const uint8_t* buffer) const {
   assert(this->address_reader_);
   return (this->*address_reader_)(buffer);
 }
 
-inline void ByteReader::SetCFIDataBase(uint64 section_base,
-                                       const char *buffer_base) {
+inline void ByteReader::SetCFIDataBase(uint64_t section_base,
+                                       const uint8_t* buffer_base) {
   section_base_ = section_base;
   buffer_base_ = buffer_base;
   have_section_base_ = true;
 }
 
-inline void ByteReader::SetTextBase(uint64 text_base) {
+inline void ByteReader::SetTextBase(uint64_t text_base) {
   text_base_ = text_base;
   have_text_base_ = true;
 }
 
-inline void ByteReader::SetDataBase(uint64 data_base) {
+inline void ByteReader::SetDataBase(uint64_t data_base) {
   data_base_ = data_base;
   have_data_base_ = true;
 }
 
-inline void ByteReader::SetFunctionBase(uint64 function_base) {
+inline void ByteReader::SetFunctionBase(uint64_t function_base) {
   function_base_ = function_base;
   have_function_base_ = true;
 }
@@ -170,6 +176,6 @@ inline void ByteReader::ClearFunctionBase() {
   have_function_base_ = false;
 }
 
-}  // namespace dwarf2reader
+}  // namespace google_breakpad
 
 #endif  // UTIL_DEBUGINFO_BYTEREADER_INL_H__

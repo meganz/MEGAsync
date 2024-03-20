@@ -1,4 +1,4 @@
-// Copyright 2013 Google Inc. All rights reserved.
+// Copyright 2013 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -10,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -99,6 +99,10 @@
 // other option is to properly transform the symbols (updating length as well as
 // position) so that resolution will work as expected for translated addresses.
 // This is transparent to the rest of the toolchain.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include "common/windows/omap.h"
 
@@ -210,7 +214,7 @@ bool FindAndLoadOmapTable(const wchar_t* name,
                           reinterpret_cast<BYTE*>(&table->at(0)),
                           &count_read))) {
     fprintf(stderr, "IDiaEnumDebugStreamData::Next failed while reading "
-                    "data from stream \"%ws\"\n");
+                    "data from stream \"%ws\"\n", name);
     return false;
   }
 
@@ -449,6 +453,27 @@ void BuildEndpointIndexMap(ImageMap* image_map) {
   }
 }
 
+void BuildSubsequentRVAMap(const OmapData& omap_data,
+                           std::map<DWORD, DWORD>* subsequent) {
+  assert(subsequent->empty());
+  const OmapFromTable& orig2tran =
+      reinterpret_cast<const OmapFromTable&>(omap_data.omap_from);
+
+  if (orig2tran.empty())
+    return;
+
+  for (size_t i = 0; i < orig2tran.size() - 1; ++i) {
+    // Expect that orig2tran is sorted.
+    if (orig2tran[i].rva_original >= orig2tran[i + 1].rva_original) {
+      fprintf(stderr, "OMAP 'from' table unexpectedly unsorted\n");
+      subsequent->clear();
+      return;
+    }
+    subsequent->insert(std::make_pair(orig2tran[i].rva_original,
+                                      orig2tran[i + 1].rva_original));
+  }
+}
+
 // Clips the given mapped range.
 void ClipMappedRangeOriginal(const AddressRange& clip_range,
                              MappedRange* mapped_range) {
@@ -576,6 +601,7 @@ void BuildImageMap(const OmapData& omap_data, ImageMap* image_map) {
 
   BuildMapping(omap_data, &image_map->mapping);
   BuildEndpointIndexMap(image_map);
+  BuildSubsequentRVAMap(omap_data, &image_map->subsequent_rva_block);
 }
 
 void MapAddressRange(const ImageMap& image_map,

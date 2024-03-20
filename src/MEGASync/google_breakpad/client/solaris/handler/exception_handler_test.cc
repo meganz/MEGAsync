@@ -1,5 +1,4 @@
-// Copyright (c) 2007, Google Inc.
-// All rights reserved.
+// Copyright 2007 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -28,6 +27,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Author: Alfred Peng
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <pthread.h>
 #include <unistd.h>
@@ -49,7 +52,7 @@ static int foo2(int arg) {
   // Stack variable, used for debugging stack dumps.
   int c = 0xcccccccc;
   fprintf(stderr, "Thread trying to crash: %x\n", getpid());
-  c = *reinterpret_cast<int *>(0x5);
+  c = *reinterpret_cast<int*>(0x5);
   return c;
 }
 
@@ -60,7 +63,7 @@ static int foo(int arg) {
   return b;
 }
 
-static void *thread_crash(void *) {
+static void* thread_crash(void*) {
   // Stack variable, used for debugging stack dumps.
   int a = 0xaaaaaaaa;
   sleep(3);
@@ -69,7 +72,7 @@ static void *thread_crash(void *) {
   return NULL;
 }
 
-static void *thread_main(void *) {
+static void* thread_main(void*) {
   while (!should_exit)
     sleep(1);
   return NULL;
@@ -91,9 +94,9 @@ static void CreateThread(int num) {
 }
 
 // Callback when minidump written.
-static bool MinidumpCallback(const char *dump_path,
-                             const char *minidump_id,
-                             void *context,
+static bool MinidumpCallback(const char* dump_path,
+                             const char* minidump_id,
+                             void* context,
                              bool succeeded) {
   int index = reinterpret_cast<int>(context);
   if (index == 0) {
@@ -104,7 +107,7 @@ static bool MinidumpCallback(const char *dump_path,
   return false;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int handler_index = 1;
   ExceptionHandler handler_ignore(".", NULL, MinidumpCallback,
                                   (void*)handler_index, true);

@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,6 +30,10 @@
 
 // macho_reader_unittest.cc: Unit tests for google_breakpad::Mach_O::FatReader
 // and google_breakpad::Mach_O::Reader.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <map>
 #include <string>
@@ -75,7 +78,7 @@ using testing::_;
 
 class MockFatReaderReporter: public FatReader::Reporter {
  public:
-  MockFatReaderReporter(const string &filename)
+  MockFatReaderReporter(const string& filename)
       : FatReader::Reporter(filename) { }
   MOCK_METHOD0(BadHeader, void());
   MOCK_METHOD0(MisplacedObjectFile, void());
@@ -84,7 +87,7 @@ class MockFatReaderReporter: public FatReader::Reporter {
 
 class MockReaderReporter: public Reader::Reporter {
  public:
-  MockReaderReporter(const string &filename) : Reader::Reporter(filename) { }
+  MockReaderReporter(const string& filename) : Reader::Reporter(filename) { }
   MOCK_METHOD0(BadHeader, void());
   MOCK_METHOD4(CPUTypeMismatch, void(cpu_type_t cpu_type,
                                      cpu_subtype_t cpu_subtype,
@@ -95,24 +98,24 @@ class MockReaderReporter: public Reader::Reporter {
   MOCK_METHOD3(LoadCommandsOverrun, void(size_t claimed, size_t i,
                                          LoadCommandType type));
   MOCK_METHOD2(LoadCommandTooShort, void(size_t i, LoadCommandType type));
-  MOCK_METHOD1(SectionsMissing, void(const string &name));
-  MOCK_METHOD1(MisplacedSegmentData, void(const string &name));
-  MOCK_METHOD2(MisplacedSectionData, void(const string &section,
-                                          const string &segment));
+  MOCK_METHOD1(SectionsMissing, void(const string& name));
+  MOCK_METHOD1(MisplacedSegmentData, void(const string& name));
+  MOCK_METHOD2(MisplacedSectionData, void(const string& section,
+                                          const string& segment));
   MOCK_METHOD0(MisplacedSymbolTable, void());
   MOCK_METHOD1(UnsupportedCPUType, void(cpu_type_t cpu_type));
 };
 
 class MockLoadCommandHandler: public Reader::LoadCommandHandler {
  public:
-  MOCK_METHOD2(UnknownCommand, bool(LoadCommandType, const ByteBuffer &));
-  MOCK_METHOD1(SegmentCommand, bool(const Segment &));
-  MOCK_METHOD2(SymtabCommand,  bool(const ByteBuffer &, const ByteBuffer &));
+  MOCK_METHOD2(UnknownCommand, bool(LoadCommandType, const ByteBuffer&));
+  MOCK_METHOD1(SegmentCommand, bool(const Segment&));
+  MOCK_METHOD2(SymtabCommand,  bool(const ByteBuffer&, const ByteBuffer&));
 };
 
 class MockSectionHandler: public Reader::SectionHandler {
  public:
-  MOCK_METHOD1(HandleSection, bool(const Section &section));
+  MOCK_METHOD1(HandleSection, bool(const Section& section));
 };
 
 
@@ -196,7 +199,7 @@ struct FatReaderFixture {
   FatReaderFixture()
       : fat(kBigEndian),
         reporter("reporter filename"),
-        reader(&reporter), object_files(), object_files_size() { 
+        reader(&reporter), object_files() {
     EXPECT_CALL(reporter, BadHeader()).Times(0);
     EXPECT_CALL(reporter, TooShort()).Times(0);
 
@@ -221,10 +224,15 @@ struct FatReaderFixture {
   }
   void ReadFat(bool expect_parse_success = true) {
     ASSERT_TRUE(fat.GetContents(&contents));
-    fat_bytes = reinterpret_cast<const uint8_t *>(contents.data());
+    fat_bytes = reinterpret_cast<const uint8_t*>(contents.data());
     if (expect_parse_success) {
       EXPECT_TRUE(reader.Read(fat_bytes, contents.size()));
-      object_files = reader.object_files(&object_files_size);
+      size_t fat_files_count;
+      const SuperFatArch* fat_files = reader.object_files(&fat_files_count);
+      object_files.resize(fat_files_count);
+      for (size_t i = 0; i < fat_files_count; ++i) {
+        EXPECT_TRUE(fat_files[i].ConvertToFatArch(&object_files[i]));
+      }
     }
     else
       EXPECT_FALSE(reader.Read(fat_bytes, contents.size()));
@@ -233,9 +241,8 @@ struct FatReaderFixture {
   MockFatReaderReporter reporter;
   FatReader reader;
   string contents;
-  const uint8_t *fat_bytes;
-  const struct fat_arch *object_files;
-  size_t object_files_size;
+  const uint8_t* fat_bytes;
+  vector<struct fat_arch> object_files;
 };
 
 class FatReaderTest: public FatReaderFixture, public Test { };
@@ -289,7 +296,7 @@ TEST_F(FatReaderTest, NoObjectFiles) {
       .B32(0xcafebabe)              // magic number
       .B32(0);                      // number of architectures
   ReadFat();
-  EXPECT_EQ(0U, object_files_size);
+  EXPECT_EQ(0U, object_files.size());
 }
 
 TEST_F(FatReaderTest, OneObjectFile) {
@@ -304,7 +311,7 @@ TEST_F(FatReaderTest, OneObjectFile) {
       .Mark(&obj1_offset)           
       .Append(0x42, '*');           // dummy contents
   ReadFat();
-  ASSERT_EQ(1U, object_files_size);
+  ASSERT_EQ(1U, object_files.size());
   EXPECT_EQ(0x5e3a6e91, object_files[0].cputype);
   EXPECT_EQ(0x52ccd852, object_files[0].cpusubtype);
   EXPECT_EQ(obj1_offset.Value(), object_files[0].offset);
@@ -334,7 +341,7 @@ TEST_F(FatReaderTest, ThreeObjectFiles) {
   
   ReadFat();
 
-  ASSERT_EQ(3U, object_files_size);
+  ASSERT_EQ(3U, object_files.size());
 
   // First object file.
   EXPECT_EQ(0x0cb92c30, object_files[0].cputype);
@@ -373,7 +380,7 @@ TEST_F(FatReaderTest, BigEndianMachO32) {
 
   // FatReader should treat a Mach-O file as if it were a fat binary file
   // containing one object file --- the whole thing.
-  ASSERT_EQ(1U, object_files_size);
+  ASSERT_EQ(1U, object_files.size());
   EXPECT_EQ(0x1a9d0518, object_files[0].cputype);
   EXPECT_EQ(0x1b779357, object_files[0].cpusubtype);
   EXPECT_EQ(0U, object_files[0].offset);
@@ -395,7 +402,7 @@ TEST_F(FatReaderTest, BigEndianMachO64) {
 
   // FatReader should treat a Mach-O file as if it were a fat binary file
   // containing one object file --- the whole thing.
-  ASSERT_EQ(1U, object_files_size);
+  ASSERT_EQ(1U, object_files.size());
   EXPECT_EQ(0x5aff8487, object_files[0].cputype);
   EXPECT_EQ(0x4c6a57f7, object_files[0].cpusubtype);
   EXPECT_EQ(0U, object_files[0].offset);
@@ -417,7 +424,7 @@ TEST_F(FatReaderTest, LittleEndianMachO32) {
 
   // FatReader should treat a Mach-O file as if it were a fat binary file
   // containing one object file --- the whole thing.
-  ASSERT_EQ(1U, object_files_size);
+  ASSERT_EQ(1U, object_files.size());
   EXPECT_EQ(0x1a9d0518, object_files[0].cputype);
   EXPECT_EQ(0x1b779357, object_files[0].cpusubtype);
   EXPECT_EQ(0U, object_files[0].offset);
@@ -439,7 +446,7 @@ TEST_F(FatReaderTest, LittleEndianMachO64) {
 
   // FatReader should treat a Mach-O file as if it were a fat binary file
   // containing one object file --- the whole thing.
-  ASSERT_EQ(1U, object_files_size);
+  ASSERT_EQ(1U, object_files.size());
   EXPECT_EQ(0x5aff8487, object_files[0].cputype);
   EXPECT_EQ(0x4c6a57f7, object_files[0].cpusubtype);
   EXPECT_EQ(0U, object_files[0].offset);
@@ -483,16 +490,16 @@ class WithConfiguration {
  private:
   // The innermost WithConfiguration in whose dynamic scope we are
   // currently executing.
-  static WithConfiguration *current_;
+  static WithConfiguration* current_;
 
   // The innermost WithConfiguration whose dynamic scope encloses this
   // WithConfiguration.
   Endianness endianness_;
   size_t word_size_;
-  WithConfiguration *saved_;
+  WithConfiguration* saved_;
 };
 
-WithConfiguration *WithConfiguration::current_ = NULL;
+WithConfiguration* WithConfiguration::current_ = NULL;
 
 // A test_assembler::Section with a size that we can cite. The start(),
 // Here() and Mark() member functions of a SizedSection always represent
@@ -523,7 +530,7 @@ class SizedSection: public test_assembler::Section {
 
   // Append SECTION to the end of this section, and call its Finish member.
   // Return a reference to this section.
-  SizedSection &Place(SizedSection *section) {
+  SizedSection& Place(SizedSection* section) {
     assert(section->endianness() == endianness());
     section->Finish();
     section->start() = Here();
@@ -559,7 +566,7 @@ class LoadedSection: public SizedSection {
 
   // Placing a loaded section within a loaded section sets the relationship
   // between their addresses.
-  LoadedSection &Place(LoadedSection *section) {
+  LoadedSection& Place(LoadedSection* section) {
     section->address() = address() + Size();
     SizedSection::Place(section);
     return *this;
@@ -579,7 +586,7 @@ class SegmentLoadCommand: public SizedSection {
   // The load command will refer to CONTENTS, which must be Placed in the
   // file separately, at the desired position. Return a reference to this
   // section.
-  SegmentLoadCommand &Header(const string &name, const LoadedSection &contents,
+  SegmentLoadCommand& Header(const string& name, const LoadedSection& contents,
                              uint32_t maxprot, uint32_t initprot,
                              uint32_t flags) {
     assert(contents.word_size() == word_size());
@@ -604,16 +611,16 @@ class SegmentLoadCommand: public SizedSection {
   // memory. If this label is still undefined by the time we place this
   // segment, it defaults to the final size of the segment's in-file
   // contents. Return a reference to this load command.
-  Label &vmsize() { return vmsize_; }
+  Label& vmsize() { return vmsize_; }
 
   // Add a section entry with the given characteristics to this segment
   // load command. Return a reference to this. The section entry will refer
   // to CONTENTS, which must be Placed in the segment's contents
   // separately, at the desired position.
-  SegmentLoadCommand &AppendSectionEntry(const string &section_name,
-                                         const string &segment_name,
+  SegmentLoadCommand& AppendSectionEntry(const string& section_name,
+                                         const string& segment_name,
                                          uint32_t alignment, uint32_t flags,
-                                         const LoadedSection &contents) {
+                                         const LoadedSection& contents) {
     AppendCString(section_name, 16);
     AppendCString(segment_name, 16);
     Append(endianness(), word_size() / 8, contents.address());
@@ -667,14 +674,14 @@ class LoadCommands: public SizedSection {
   Label final_command_count() const { return final_command_count_; }
 
   // Increment the command count; return a reference to this section.
-  LoadCommands &CountCommand() {
+  LoadCommands& CountCommand() {
     command_count_++;
     return *this;
   }
 
   // Place COMMAND, containing a load command, at the end of this section.
   // Return a reference to this section.
-  LoadCommands &Place(SizedSection *section) {
+  LoadCommands& Place(SizedSection* section) {
     SizedSection::Place(section);
     CountCommand();
     return *this;
@@ -706,7 +713,7 @@ class MachOFile: public SizedSection {
   // Create a Mach-O file header using the given characteristics and load
   // command list. This Places COMMANDS immediately after the header.
   // Return a reference to this section.
-  MachOFile &Header(LoadCommands *commands,
+  MachOFile& Header(LoadCommands* commands,
                     cpu_type_t cpu_type = CPU_TYPE_X86,
                     cpu_subtype_t cpu_subtype = CPU_SUBTYPE_I386_ALL,
                     FileType file_type = MH_EXECUTE,
@@ -748,12 +755,12 @@ struct ReaderFixture {
     EXPECT_CALL(load_command_handler, SegmentCommand(_)).Times(0);
   }
 
-  void ReadFile(MachOFile *file,
+  void ReadFile(MachOFile* file,
                 bool expect_parse_success,
                 cpu_type_t expected_cpu_type,
                 cpu_subtype_t expected_cpu_subtype) {
     ASSERT_TRUE(file->GetContents(&file_contents));
-    file_bytes = reinterpret_cast<const uint8_t *>(file_contents.data());
+    file_bytes = reinterpret_cast<const uint8_t*>(file_contents.data());
     if (expect_parse_success) {
       EXPECT_TRUE(reader.Read(file_bytes,
                               file_contents.size(),
@@ -768,7 +775,7 @@ struct ReaderFixture {
   }
 
   string file_contents;
-  const uint8_t *file_bytes;
+  const uint8_t* file_bytes;
   MockReaderReporter reporter;
   Reader reader;
   MockLoadCommandHandler load_command_handler;
@@ -1110,7 +1117,7 @@ TEST_F(LoadCommand, SegmentBE32) {
                     Return(true)));
   EXPECT_TRUE(reader.WalkLoadCommands(&load_command_handler));
 
-  EXPECT_EQ(false,                        actual_segment.bits_64);
+  EXPECT_FALSE(actual_segment.bits_64);
   EXPECT_EQ("froon",                      actual_segment.name);
   EXPECT_EQ(0x1891139cU,                  actual_segment.vmaddr);
   EXPECT_EQ(0xcb76584fU,                  actual_segment.vmsize);
@@ -1147,7 +1154,7 @@ TEST_F(LoadCommand, SegmentLE32) {
                     Return(true)));
   EXPECT_TRUE(reader.WalkLoadCommands(&load_command_handler));
 
-  EXPECT_EQ(false,                        actual_segment.bits_64);
+  EXPECT_FALSE(actual_segment.bits_64);
   EXPECT_EQ("sixteenprecisely",           actual_segment.name);
   EXPECT_EQ(0x4b877866U,                  actual_segment.vmaddr);
   EXPECT_EQ(0xcb76584fU,                  actual_segment.vmsize);
@@ -1339,14 +1346,14 @@ TEST_F(LoadCommand, ThreeLoadCommands) {
   EXPECT_TRUE(reader.WalkLoadCommands(&load_command_handler));
 }
 
-static inline Matcher<const Section &> MatchSection(
+static inline Matcher<const Section&> MatchSection(
     Matcher<bool> bits_64,
-    Matcher<const string &> section_name,
-    Matcher<const string &> segment_name,
+    Matcher<const string&> section_name,
+    Matcher<const string&> segment_name,
     Matcher<uint64_t> address,
     Matcher<uint32_t> alignment,
     Matcher<uint32_t> flags,
-    Matcher<const ByteBuffer &> contents) {
+    Matcher<const ByteBuffer&> contents) {
   return AllOf(AllOf(Field(&Section::bits_64, bits_64),
                      Field(&Section::section_name, section_name),
                      Field(&Section::segment_name, segment_name),
@@ -1356,10 +1363,10 @@ static inline Matcher<const Section &> MatchSection(
                      Field(&Section::contents, contents)));
 }
 
-static inline Matcher<const Section &> MatchSection(
+static inline Matcher<const Section&> MatchSection(
     Matcher<bool> bits_64,
-    Matcher<const string &> section_name,
-    Matcher<const string &> segment_name,
+    Matcher<const string&> section_name,
+    Matcher<const string&> segment_name,
     Matcher<uint64_t> address) {
   return AllOf(Field(&Section::bits_64, bits_64),
                Field(&Section::section_name, section_name),
@@ -1406,7 +1413,7 @@ TEST_F(LoadCommand, OneSegmentTwoSections) {
     contents1.start = file_bytes + section1.start().Value();
     contents1.end = contents1.start + section1.final_size().Value();
     EXPECT_EQ("buddha's hand",
-              string(reinterpret_cast<const char *>(contents1.start),
+              string(reinterpret_cast<const char*>(contents1.start),
                      contents1.Size()));
     EXPECT_CALL(section_handler,
                 HandleSection(MatchSection(true, "mandarin", "kishu",
@@ -1418,7 +1425,7 @@ TEST_F(LoadCommand, OneSegmentTwoSections) {
     contents2.start = file_bytes + section2.start().Value();
     contents2.end = contents2.start + section2.final_size().Value();
     EXPECT_EQ("kumquat",
-              string(reinterpret_cast<const char *>(contents2.start),
+              string(reinterpret_cast<const char*>(contents2.start),
                      contents2.Size()));
     EXPECT_CALL(section_handler,
                 HandleSection(MatchSection(true, "bergamot", "cara cara",
@@ -1513,6 +1520,51 @@ TEST_F(LoadCommand, MisplacedSectionAfter) {
 }
 
 TEST_F(LoadCommand, MisplacedSectionTooBig) {
+  WithConfiguration config(kLittleEndian, 64);
+
+  // The segment.
+  LoadedSection segment;
+  segment.address() = 0x696d83cc;
+  segment.Append(10, '0');
+
+  // The contents of the following sections don't matter, because
+  // we're not really going to Place them in segment; we're just going
+  // to set all their labels by hand to get the (impossible)
+  // configurations we want.
+
+  // A section with 0 as is start address.
+  LoadedSection empty;
+  empty.Append(10, '4');
+  empty.start() = 0;
+  empty.address() = segment.address() + 1;
+  empty.final_size() = empty.Size();
+
+  SegmentLoadCommand command;
+  command.Header("segment", segment, 0x173baa29, 0x8407275d, 0xed8f7057)
+      .AppendSectionEntry("empty", "segment", 0, 0x8b53ae5c, empty);
+
+  LoadCommands commands;
+  commands.Place(&command);
+
+  MachOFile file;
+  file.Header(&commands).Place(&segment);
+
+  ReadFile(&file, true, CPU_TYPE_ANY, 0);
+
+  Segment actual_segment;
+  EXPECT_TRUE(reader.FindSegment("segment", &actual_segment));
+
+  EXPECT_CALL(reporter, MisplacedSectionData("empty", "segment")).Times(0);
+
+  EXPECT_CALL(section_handler,
+              HandleSection(MatchSection(true, "empty", "segment",
+                                         empty.address().Value())))
+      .WillOnce(Return(true));
+
+  EXPECT_TRUE(reader.WalkSegmentSections(actual_segment, &section_handler));
+}
+
+TEST_F(LoadCommand, MisplacedSectionButSectionIsEmpty) {
   WithConfiguration config(kLittleEndian, 64);
 
   // The segment.
@@ -1712,7 +1764,7 @@ class StringAssembler: public SizedSection {
  public:
   // Add the string S to this StringAssembler, and return the string's
   // offset within this compilation unit's strings.
-  size_t Add(const string &s) {
+  size_t Add(const string& s) {
     size_t offset = Size();
     AppendCString(s);
     return offset;
@@ -1724,7 +1776,7 @@ class StringAssembler: public SizedSection {
 class SymbolAssembler: public SizedSection {
  public:
   // Create a SymbolAssembler that uses StringAssembler for its strings.
-  explicit SymbolAssembler(StringAssembler *string_assembler) 
+  explicit SymbolAssembler(StringAssembler* string_assembler)
       : string_assembler_(string_assembler),
         entry_count_(0) { }
 
@@ -1733,7 +1785,7 @@ class SymbolAssembler: public SizedSection {
   // its compilation unit's portion of the .stabstr section; this can be a
   // value generated by a StringAssembler. Return a reference to this
   // SymbolAssembler.
-  SymbolAssembler &Symbol(uint8_t type, uint8_t other, Label descriptor,
+  SymbolAssembler& Symbol(uint8_t type, uint8_t other, Label descriptor,
                           Label value, Label name) {
     D32(name);
     D8(type);
@@ -1745,14 +1797,14 @@ class SymbolAssembler: public SizedSection {
   }
 
   // As above, but automatically add NAME to our StringAssembler.
-  SymbolAssembler &Symbol(uint8_t type, uint8_t other, Label descriptor,
-                       Label value, const string &name) {
+  SymbolAssembler& Symbol(uint8_t type, uint8_t other, Label descriptor,
+                          Label value, const string& name) {
     return Symbol(type, other, descriptor, value, string_assembler_->Add(name));
   }
 
  private:
   // The strings for our STABS entries.
-  StringAssembler *string_assembler_;
+  StringAssembler* string_assembler_;
 
   // The number of entries in this compilation unit so far.
   size_t entry_count_;

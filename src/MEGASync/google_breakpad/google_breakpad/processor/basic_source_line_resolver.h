@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -40,6 +39,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 #include "common/using_std_string.h"
 #include "google_breakpad/processor/source_line_resolver_base.h"
@@ -84,27 +84,64 @@ class BasicSourceLineResolver : public SourceLineResolverBase {
 // Helper class, containing useful methods for parsing of Breakpad symbol files.
 class SymbolParseHelper {
  public:
+  using MemAddr = SourceLineResolverInterface::MemAddr;
+
   // Parses a |file_line| declaration.  Returns true on success.
   // Format: FILE <id> <filename>.
   // Notice, that this method modifies the input |file_line| which is why it
   // can't be const.  On success, <id>, and <filename> are stored in |*index|,
   // and |*filename|.  No allocation is done, |*filename| simply points inside
   // |file_line|.
-  static bool ParseFile(char *file_line,   // in
-                        long *index,       // out
-                        char **filename);  // out
+  static bool ParseFile(char* file_line,   // in
+                        long* index,       // out
+                        char** filename);  // out
+
+  // Parses a |inline_origin_line| declaration.  Returns true on success.
+  // Old Format: INLINE_ORIGIN <origin_id> <file_id> <name>.
+  // New Format: INLINE_ORIGIN <origin_id> <name>.
+  // Notice, that this method modifies the input |inline_origin_line| which is
+  // why it can't be const.  On success, <has_file_id>, <origin_id>, <file_id>
+  // and <name> are stored in |*has_file_id*|, |*origin_id|, |*file_id|, and
+  // |*name|.  No allocation is done, |*name| simply points inside
+  // |inline_origin_line|.
+  static bool ParseInlineOrigin(char* inline_origin_line,  // in
+                                bool* has_file_id,       // out
+                                long* origin_id,           // out
+                                long* file_id,             // out
+                                char** name);              // out
+
+  // Parses a |inline| declaration.  Returns true on success.
+  // Old Format: INLINE <inline_nest_level> <call_site_line> <origin_id>
+  // [<address> <size>]+
+  // New Format: INLINE <inline_nest_level> <call_site_line> <call_site_file_id>
+  // <origin_id> [<address> <size>]+
+  // Notice, that this method modifies the input |inline|
+  // which is why it can't be const.  On success, <has_call_site_file_id>,
+  // <inline_nest_level>, <call_site_line> and <origin_id> are stored in
+  // |*has_call_site_file_id*|, |*inline_nest_level|, |*call_site_line|, and
+  // |*origin_id|, and all pairs of (<address>, <size>) are added into ranges.
+  static bool ParseInline(
+      char* inline_line,                                  // in
+      bool* has_call_site_file_id,                        // out
+      long* inline_nest_level,                            // out
+      long* call_site_line,                               // out
+      long* call_site_file_id,                            // out
+      long* origin_id,                                    // out
+      std::vector<std::pair<MemAddr, MemAddr>>* ranges);  // out
 
   // Parses a |function_line| declaration.  Returns true on success.
-  // Format:  FUNC <address> <size> <stack_param_size> <name>.
+  // Format:  FUNC [<multiple>] <address> <size> <stack_param_size> <name>.
   // Notice, that this method modifies the input |function_line| which is why it
-  // can't be const.  On success, <address>, <size>, <stack_param_size>, and
-  // <name> are stored in |*address|, |*size|, |*stack_param_size|, and |*name|.
-  // No allocation is done, |*name| simply points inside |function_line|.
-  static bool ParseFunction(char *function_line,     // in
-                            uint64_t *address,       // out
-                            uint64_t *size,          // out
-                            long *stack_param_size,  // out
-                            char **name);            // out
+  // can't be const.  On success, the presence of <multiple>, <address>, <size>,
+  // <stack_param_size>, and <name> are stored in |*is_multiple|, |*address|,
+  // |*size|, |*stack_param_size|, and |*name|.  No allocation is done, |*name|
+  // simply points inside |function_line|.
+  static bool ParseFunction(char* function_line,     // in
+                            bool* is_multiple,       // out
+                            uint64_t* address,       // out
+                            uint64_t* size,          // out
+                            long* stack_param_size,  // out
+                            char** name);            // out
 
   // Parses a |line| declaration.  Returns true on success.
   // Format:  <address> <size> <line number> <source file id>
@@ -112,26 +149,28 @@ class SymbolParseHelper {
   // it can't be const.  On success, <address>, <size>, <line number>, and
   // <source file id> are stored in |*address|, |*size|, |*line_number|, and
   // |*source_file|.
-  static bool ParseLine(char *line_line,     // in
-                        uint64_t *address,   // out
-                        uint64_t *size,      // out
-                        long *line_number,   // out
-                        long *source_file);  // out
+  static bool ParseLine(char* line_line,     // in
+                        uint64_t* address,   // out
+                        uint64_t* size,      // out
+                        long* line_number,   // out
+                        long* source_file);  // out
 
   // Parses a |public_line| declaration.  Returns true on success.
-  // Format:  PUBLIC <address> <stack_param_size> <name>
+  // Format:  PUBLIC [<multiple>] <address> <stack_param_size> <name>
   // Notice, that this method modifies the input |function_line| which is why
-  // it can't be const.  On success, <address>, <stack_param_size>, <name>
-  // are stored in |*address|, |*stack_param_size|, and |*name|.
-  // No allocation is done, |*name| simply points inside |public_line|.
-  static bool ParsePublicSymbol(char *public_line,       // in
-                                uint64_t *address,       // out
-                                long *stack_param_size,  // out
-                                char **name);            // out
+  // it can't be const.  On success, the presence of <multiple>, <address>,
+  // <stack_param_size>, <name> are stored in |*is_multiple|, |*address|,
+  // |*stack_param_size|, and |*name|.  No allocation is done, |*name| simply
+  // points inside |public_line|.
+  static bool ParsePublicSymbol(char* public_line,       // in
+                                bool* is_multiple,       // out
+                                uint64_t* address,       // out
+                                long* stack_param_size,  // out
+                                char** name);            // out
 
  private:
   // Used for success checks after strtoull and strtol.
-  static bool IsValidAfterNumber(char *after_number);
+  static bool IsValidAfterNumber(char* after_number);
 
   // Only allow static methods.
   SymbolParseHelper();

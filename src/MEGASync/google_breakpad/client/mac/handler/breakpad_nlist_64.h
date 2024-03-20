@@ -1,5 +1,4 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved
+// Copyright 2008 Google LLC
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
@@ -10,7 +9,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -32,16 +31,17 @@
 // nlist function implemented to work on 64-bit.
 
 #ifndef CLIENT_MAC_HANDLER_BREAKPAD_NLIST_H__
+#define CLIENT_MAC_HANDLER_BREAKPAD_NLIST_H__
 
 #include <mach/machine.h>
 
-int breakpad_nlist(const char *name,
-                   struct nlist *list,
-                   const char **symbolNames,
+int breakpad_nlist(const char* name,
+                   struct nlist* list,
+                   const char** symbolNames,
                    cpu_type_t cpu_type);
-int breakpad_nlist(const char *name,
-                   struct nlist_64 *list,
-                   const char **symbolNames,
+int breakpad_nlist(const char* name,
+                   struct nlist_64* list,
+                   const char** symbolNames,
                    cpu_type_t cpu_type);
 
 #endif  /* CLIENT_MAC_HANDLER_BREAKPAD_NLIST_H__ */

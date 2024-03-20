@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -54,7 +53,7 @@
 namespace google_breakpad {
 
 class CallStack;
-class MinidumpContext;
+class DumpContext;
 class StackFrameSymbolizer;
 
 using std::set;
@@ -86,10 +85,12 @@ class Stackwalker {
   // argument.  If no suitable concrete subclass exists, returns NULL.
   static Stackwalker* StackwalkerForCPU(
      const SystemInfo* system_info,
-     MinidumpContext* context,
+     DumpContext* context,
      MemoryRegion* memory,
      const CodeModules* modules,
+     const CodeModules* unloaded_modules,
      StackFrameSymbolizer* resolver_helper);
+
 
   static void set_max_frames(uint32_t max_frames) {
     max_frames_ = max_frames;
@@ -124,7 +125,15 @@ class Stackwalker {
   // * This address is within a loaded module for which we have symbols,
   //   and falls inside a function in that module.
   // Returns false otherwise.
-  bool InstructionAddressSeemsValid(uint64_t address);
+  bool InstructionAddressSeemsValid(uint64_t address) const;
+
+  // Checks whether we should stop the stack trace.
+  // (either we reached the end-of-stack or we detected a
+  //  broken callstack invariant)
+  bool TerminateWalk(uint64_t caller_ip,
+                     uint64_t caller_sp,
+                     uint64_t callee_sp,
+                     bool first_unwind) const;
 
   // The default number of words to search through on the stack
   // for a return address.
@@ -166,8 +175,12 @@ class Stackwalker {
       if (!memory_->GetMemoryAtAddress(location, &ip))
         break;
 
-      if (modules_ && modules_->GetModuleForAddress(ip) &&
-          InstructionAddressSeemsValid(ip)) {
+      // The return address points to the instruction after a call. If the
+      // caller was a no return function, this might point past the end of the
+      // function. Subtract one from the instruction pointer so it points into
+      // the call instruction instead.
+      if (modules_ && modules_->GetModuleForAddress(ip  - 1) &&
+          InstructionAddressSeemsValid(ip - 1)) {
         *ip_found = ip;
         *location_found = location;
         return true;
@@ -188,6 +201,11 @@ class Stackwalker {
   // A list of modules, for populating each StackFrame's module information.
   // This field is optional and may be NULL.
   const CodeModules* modules_;
+
+  // A list of unloaded modules, for populating frames which aren't matched
+  // to any loaded modules.
+  // This field is optional and may be NULL.
+  const CodeModules* unloaded_modules_;
 
  protected:
   // The StackFrameSymbolizer implementation.
@@ -210,6 +228,13 @@ class Stackwalker {
   // the caller.  |stack_scan_allowed| controls whether stack scanning is
   // an allowable frame-recovery method, since it is desirable to be able to
   // disable stack scanning in performance-critical use cases.
+  //
+  // CONSIDER: a way to differentiate between:
+  //  - full stack traces
+  //  - explicitly truncated traces (max_frames_)
+  //  - stopping after max scanned frames
+  //  - failed stack walk (breaking one of the stack walk invariants)
+  //
   virtual StackFrame* GetCallerFrame(const CallStack* stack,
                                      bool stack_scan_allowed) = 0;
 
