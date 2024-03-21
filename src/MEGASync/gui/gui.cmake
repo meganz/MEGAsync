@@ -1,0 +1,312 @@
+find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
+
+set(DESKTOP_APP_GUI_HEADERS
+    gui/SettingsDialog.h
+    gui/AutoResizeStackedWidget.h
+    gui/BalloonToolTip.h
+    gui/BlurredShadowEffect.h
+    gui/ButtonIconManager.h
+    gui/DateTimeFormatter.h
+    gui/LowDiskSpaceDialog.h
+    gui/EventHelper.h
+    gui/InfoDialog.h
+    gui/MegaDelegateHoverManager.h
+    gui/MegaNodeNames.h
+    gui/MegaUserAlertExt.h
+    gui/NotificationsSettings.h
+    gui/OverQuotaDialog.h
+    gui/ScanningWidget.h
+    gui/QtPositioningBugFixer.h
+    gui/PasswordLineEdit.h
+    gui/UploadToMegaDialog.h
+    gui/PasteMegaLinksDialog.h
+    gui/ImportMegaLinksDialog.h
+    gui/ImportListWidgetItem.h
+    gui/CrashReportDialog.h
+    gui/MultiQFileDialog.h
+    gui/MegaProxyStyle.h
+    gui/AccountDetailsDialog.h
+    gui/DownloadFromMegaDialog.h
+    gui/ChangeLogDialog.h
+    gui/StreamingFromMegaDialog.h
+    gui/MegaProgressCustomDialog.h
+    gui/UpgradeDialog.h
+    gui/PlanWidget.h
+    gui/QMegaMessageBox.h
+    gui/AvatarWidget.h
+    gui/MenuItemAction.h
+    gui/AddExclusionDialog.h
+    gui/StatusInfo.h
+    gui/PSAwidget.h
+    gui/ElidedLabel.h
+    gui/UpgradeOverStorage.h
+    gui/ChangePassword.h
+    gui/Login2FA.h
+    gui/QRWidget.h
+    gui/CircularUsageProgressBar.h
+    gui/HighDpiResize.h
+    gui/AlertItem.h
+    gui/QAlertsModel.h
+    gui/MegaAlertDelegate.h
+    gui/QFilterAlertsModel.h
+    gui/FilterAlertWidget.h
+    gui/AlertFilterType.h
+    gui/BugReportDialog.h
+    gui/VerifyLockMessage.h
+    gui/ViewLoadingScene.h
+    gui/MegaInfoMessage.h
+    gui/WaitingSpinnerWidget.h
+    gui/ProxySettings.h
+    gui/BandwidthSettings.h
+    gui/SwitchButton.h
+    gui/GuiUtilities.h
+    gui/CancelConfirmWidget.h
+    gui/RemoteItemUi.h
+    gui/WordWrapLabel.h
+    gui/NodeNameSetterDialog/NodeNameSetterDialog.h
+    gui/NodeNameSetterDialog/NewFolderDialog.h
+    gui/NodeNameSetterDialog/RenameNodeDialog.h
+    gui/node_selector/model/NodeSelectorDelegates.h
+    gui/node_selector/model/NodeSelectorProxyModel.h
+    gui/node_selector/model/NodeSelectorModel.h
+    gui/node_selector/model/NodeSelectorModelSpecialised.h
+    gui/node_selector/model/NodeSelectorModelItem.h
+    gui/node_selector/gui/NodeSelectorTreeView.h
+    gui/node_selector/gui/NodeSelectorTreeViewWidget.h
+    gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
+    gui/node_selector/gui/NodeSelector.h
+    gui/node_selector/gui/NodeSelectorLoadingDelegate.h
+    gui/node_selector/gui/SearchLineEdit.h
+    gui/node_selector/gui/NodeSelectorSpecializations.h
+    gui/qml/ColorTheme.h
+    gui/qml/QmlClipboard.h
+    gui/qml/QmlDialog.h
+    gui/qml/QmlDialogWrapper.h
+    gui/qml/ApiEnums.h
+    gui/qml/StandardIconProvider.h
+    gui/onboarding/ChooseFolder.h
+    gui/onboarding/Onboarding.h
+    gui/onboarding/AccountInfoData.h
+    gui/onboarding/BackupsModel.h
+    gui/onboarding/Syncs.h
+    gui/onboarding/QmlDeviceName.h
+    gui/onboarding/PasswordStrengthChecker.h
+    gui/onboarding/BackupsController.h
+    gui/onboarding/GuestQmlDialog.h
+    gui/onboarding/OnboardingQmlDialog.h
+    gui/onboarding/GuestContent.h
+)
+
+set(DESKTOP_APP_GUI_SOURCES
+    gui/SettingsDialog.cpp
+    gui/BalloonToolTip.cpp
+    gui/BlurredShadowEffect.cpp
+    gui/ButtonIconManager.cpp
+    gui/LowDiskSpaceDialog.cpp
+    gui/DateTimeFormatter.cpp
+    gui/EventHelper.cpp
+    gui/InfoDialog.cpp
+    gui/MegaDelegateHoverManager.cpp
+    gui/MegaUserAlertExt.cpp
+    gui/NotificationsSettings.cpp
+    gui/OverQuotaDialog.cpp
+    gui/ScanningWidget.cpp
+    gui/QtPositioningBugFixer.cpp
+    gui/PasswordLineEdit.cpp
+    gui/UploadToMegaDialog.cpp
+    gui/PasteMegaLinksDialog.cpp
+    gui/ImportMegaLinksDialog.cpp
+    gui/ImportListWidgetItem.cpp
+    gui/CrashReportDialog.cpp
+    gui/MultiQFileDialog.cpp
+    gui/MegaProxyStyle.cpp
+    gui/AccountDetailsDialog.cpp
+    gui/DownloadFromMegaDialog.cpp
+    gui/ChangeLogDialog.cpp
+    gui/StreamingFromMegaDialog.cpp
+    gui/MegaProgressCustomDialog.cpp
+    gui/UpgradeDialog.cpp
+    gui/PlanWidget.cpp
+    gui/QMegaMessageBox.cpp
+    gui/AvatarWidget.cpp
+    gui/MenuItemAction.cpp
+    gui/AddExclusionDialog.cpp
+    gui/StatusInfo.cpp
+    gui/ChangePassword.cpp
+    gui/PSAwidget.cpp
+    gui/ElidedLabel.cpp
+    gui/UpgradeOverStorage.cpp
+    gui/Login2FA.cpp
+    gui/QRWidget.cpp
+    gui/CircularUsageProgressBar.cpp
+    gui/AlertItem.cpp
+    gui/QAlertsModel.cpp
+    gui/MegaAlertDelegate.cpp
+    gui/QFilterAlertsModel.cpp
+    gui/FilterAlertWidget.cpp
+    gui/AlertFilterType.cpp
+    gui/BugReportDialog.cpp
+    gui/VerifyLockMessage.cpp
+    gui/MegaInfoMessage.cpp
+    gui/ViewLoadingScene.cpp
+    gui/WaitingSpinnerWidget.cpp
+    gui/ProxySettings.cpp
+    gui/BandwidthSettings.cpp
+    gui/SwitchButton.cpp
+    gui/GuiUtilities.cpp
+    gui/CancelConfirmWidget.cpp
+    gui/RemoteItemUi.cpp
+    gui/WordWrapLabel.cpp
+    gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
+    gui/NodeNameSetterDialog/NewFolderDialog.cpp
+    gui/NodeNameSetterDialog/RenameNodeDialog.cpp
+    gui/node_selector/model/NodeSelectorDelegates.cpp
+    gui/node_selector/model/NodeSelectorProxyModel.cpp
+    gui/node_selector/model/NodeSelectorModel.cpp
+    gui/node_selector/model/NodeSelectorModelSpecialised.cpp
+    gui/node_selector/model/NodeSelectorModelItem.cpp
+    gui/node_selector/gui/NodeSelectorTreeView.cpp
+    gui/node_selector/gui/NodeSelectorTreeViewWidget.cpp
+    gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
+    gui/node_selector/gui/NodeSelector.cpp
+    gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
+    gui/node_selector/gui/SearchLineEdit.cpp
+    gui/node_selector/gui/NodeSelectorSpecializations.cpp
+    gui/qml/ColorTheme.cpp
+    gui/qml/QmlClipboard.cpp
+    gui/qml/QmlDialog.cpp
+    gui/qml/QmlDialogWrapper.cpp
+    gui/qml/StandardIconProvider.cpp
+    gui/onboarding/ChooseFolder.cpp
+    gui/onboarding/Onboarding.cpp
+    gui/onboarding/AccountInfoData.cpp
+    gui/onboarding/BackupsModel.cpp
+    gui/onboarding/Syncs.cpp
+    gui/onboarding/QmlDeviceName.cpp
+    gui/onboarding/PasswordStrengthChecker.cpp
+    gui/onboarding/BackupsController.cpp
+    gui/onboarding/GuestQmlDialog.cpp
+    gui/onboarding/OnboardingQmlDialog.cpp
+    gui/onboarding/GuestContent.cpp
+)
+
+set(DESKTOP_APP_GUI_UI
+    gui/macx/InfoDialog.ui
+    gui/macx/UploadToMegaDialog.ui
+    gui/macx/PasteMegaLinksDialog.ui
+    gui/macx/ImportMegaLinksDialog.ui
+    gui/macx/ImportListWidgetItem.ui
+    gui/macx/CrashReportDialog.ui
+    gui/macx/SettingsDialog.ui
+    gui/macx/AccountDetailsDialog.ui
+    gui/macx/DownloadFromMegaDialog.ui
+    gui/macx/ChangeLogDialog.ui
+    gui/macx/StreamingFromMegaDialog.ui
+    gui/macx/PermissionsDialog.ui
+    gui/macx/PermissionsWidget.ui
+    gui/macx/MegaProgressCustomDialog.ui
+    gui/macx/PlanWidget.ui
+    gui/macx/UpgradeDialog.ui
+    gui/macx/AddExclusionDialog.ui
+    gui/macx/StatusInfo.ui
+    gui/macx/PSAwidget.ui
+    gui/macx/RemoteItemUI.ui
+    gui/macx/UpgradeOverStorage.ui
+    gui/macx/ChangePassword.ui
+    gui/macx/Login2FA.ui
+    gui/macx/AlertItem.ui
+    gui/macx/FilterAlertWidget.ui
+    gui/macx/AlertFilterType.ui
+    gui/macx/BugReportDialog.ui
+    gui/macx/VerifyLockMessage.ui
+    gui/macx/MegaInfoMessage.ui
+    gui/macx/OverQuotaDialog.ui
+    gui/macx/ProxySettings.ui
+    gui/macx/BandwidthSettings.ui
+    gui/macx/ScanningWidget.ui
+    gui/macx/CancelConfirmWidget.ui
+    gui/macx/NodeNameSetterDialog.ui
+    gui/macx/NotificationsSettings.ui
+    gui/macx/LowDiskSpaceDialog.ui
+    gui/macx/ViewLoadingScene.ui
+    gui/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
+    gui/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
+    gui/node_selector/gui/macx/NodeSelector.ui
+    gui/node_selector/gui/macx/SearchLineEdit.ui
+)
+
+set (DESKTOP_APP_TS_FILES
+    gui/translations/MEGASyncStrings_ar.ts
+    gui/translations/MEGASyncStrings_de.ts
+    gui/translations/MEGASyncStrings_en.ts
+    gui/translations/MEGASyncStrings_es.ts
+    gui/translations/MEGASyncStrings_fr.ts
+    gui/translations/MEGASyncStrings_id.ts
+    gui/translations/MEGASyncStrings_it.ts
+    gui/translations/MEGASyncStrings_ja.ts
+    gui/translations/MEGASyncStrings_ko.ts
+    gui/translations/MEGASyncStrings_nl.ts
+    gui/translations/MEGASyncStrings_pl.ts
+    gui/translations/MEGASyncStrings_pt.ts
+    gui/translations/MEGASyncStrings_ro.ts
+    gui/translations/MEGASyncStrings_ru.ts
+    gui/translations/MEGASyncStrings_th.ts
+    gui/translations/MEGASyncStrings_vi.ts
+    gui/translations/MEGASyncStrings_zh_CN.ts
+    gui/translations/MEGASyncStrings_zh_TW.ts
+)
+
+set_source_files_properties(${DESKTOP_APP_TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/gui/translations)
+qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
+
+set(DESKTOP_APP_GUI_RESOURCES
+    gui/Resources_qml.qrc
+    gui/qml/qml.qrc
+)
+
+set_property(TARGET MEGAsync
+    APPEND PROPERTY AUTOUIC_SEARCH_PATHS gui/macx gui/node_selector/gui/macx
+)
+
+target_sources_conditional(MEGAsync
+   FLAG APPLE
+   PRIVATE
+   gui/Resources_macx.qrc
+   gui/CocoaHelpButton.mm
+   gui/CocoaSwitchButton.mm
+   gui/MegaSystemTrayIcon.mm
+   gui/QMacSpinningProgressIndicator.mm
+   gui/QSegmentedControl.mm
+   gui/PermissionsDialog.cpp
+   gui/PermissionsWidget.cpp
+   gui/PermissionsDialog.h
+   gui/PermissionsWidget.h
+   gui/QMacSpinningProgressIndicator.h
+   gui/CocoaHelpButton.h
+   gui/CocoaSwitchButton.h
+   gui/MegaSystemTrayIcon.h
+   gui/QSegmentedControl.h
+   gui/images/Images.xcassets
+   gui/macx/LockedPopOver.ui
+)
+
+if (CMAKE_HOST_APPLE)
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND xcrun actool --compile "$<TARGET_FILE_DIR:MEGAsync>/../Resources" --output-format human-readable-text --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} "${CMAKE_CURRENT_SOURCE_DIR}/gui/images/Images.xcassets"
+            COMMENT "Building Assets.car in Resources..."
+            VERBATIM
+            )
+endif()
+
+target_sources(MEGAsync
+    PRIVATE
+    ${DESKTOP_APP_GUI_HEADERS}
+    ${DESKTOP_APP_GUI_SOURCES}
+    ${DESKTOP_APP_GUI_UI}
+    ${DESKTOP_APP_GUI_RESOURCES}
+    ${DESKTOP_APP_QM_FILES}
+)
+
+target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR})
