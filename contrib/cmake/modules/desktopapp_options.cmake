@@ -1,5 +1,7 @@
+#
+# MEGA Desktop app project specific options
+#
 
-#Desktop specific options
 if(WIN32)
     option(ENABLE_EXPLORER_EXT "desc" ON)
 else()
@@ -19,7 +21,7 @@ option(ENABLE_DESKTOP_APP_WERROR "Enable warnings as errors" OFF)
 # MEGAsdk options
 # Configure MEGAsdk specific options for MEGAchat and then load the rest of MEGAsdk configuration
 if (ENABLE_DESKTOP_APP)
-    set(USE_LIBUV ON) # Used by the QtApp: Includes the library and turns on internal web and ftp server functionality in the SDK.
+    set(USE_LIBUV ON) # Used by the Qt Desktop App: Includes the library and turns on internal web and ftp server functionality in the SDK.
     set(ENABLE_LOG_PERFORMANCE ON)
     set(ENABLE_QT_BINDINGS ON)
     set(ENABLE_LOG_PERFORMANCE ON)

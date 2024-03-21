@@ -1,5 +1,5 @@
 #
-# Golbal CMake configuration for the MEGAchat project
+# Global CMake configuration for the MEGA Desktop app project
 #
 
 # Build the project with C++17
