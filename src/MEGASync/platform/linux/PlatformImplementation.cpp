@@ -20,8 +20,8 @@ using namespace mega;
 
 PlatformImplementation::PlatformImplementation()
 {
-    autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
-    desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
+    autostart_dir = QDir::homePath() + QString::fromLatin1("/.config/autostart/");
+    desktop_file = autostart_dir + QString::fromLatin1("megasync.desktop");
     set_icon = QString::fromUtf8("gio set -t string \"%1\" metadata::custom-icon file://%2");
     remove_icon = QString::fromUtf8("gio set -t unset \"%1\" metadata::custom-icon");
     custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
@@ -75,7 +75,7 @@ bool PlatformImplementation::startOnStartup(bool value)
                     return false;
                 }
             }
-            QString app_desktop = QString::fromAscii("/usr/share/applications/megasync.desktop");
+            QString app_desktop = QString::fromLatin1("/usr/share/applications/megasync.desktop");
             if (QFile(app_desktop).exists())
             {
                 return QFile::copy(app_desktop, desktop_file);
