@@ -25,7 +25,7 @@ target_sources(MEGAupdater
 )
 
 
-# Load and link needed libraries for the CHATlib target
+# Load and link needed libraries for the MEGAupdater target
 find_package(cryptopp CONFIG REQUIRED)
 target_link_libraries(MEGAupdater PRIVATE cryptopp::cryptopp)
 
