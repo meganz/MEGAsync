@@ -102,7 +102,7 @@ bool PlatformImplementation::isFileManagerExtensionEnabled()
         return false;
     }
 
-    if (out.at(0) != QChar::fromAscii('?') && out.at(0) != QChar::fromAscii('+'))
+    if (out.at(0) != QLatin1Char('?') && out.at(0) != QLatin1Char('+'))
     {
         return false;
     }
