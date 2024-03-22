@@ -9193,6 +9193,11 @@ Please delete the folder sync from settings to cancel them.</source>
             <numerusform>Transfer completed %n years ago</numerusform>
         </translation>
     </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>This translated separator template with placeholders "%1" and "%2" is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as "15,2 Go/400 Go", without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
+        <translation type="unfinished">%1/%2</translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
