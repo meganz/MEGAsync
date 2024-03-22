@@ -32,11 +32,28 @@ set(MEGA_DESKTOP_APP_SOURCES
     main.cpp
 )
 
+set(RESOURCE_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/app.icns
+    ${CMAKE_CURRENT_SOURCE_DIR}/folder.icns
+    ${CMAKE_CURRENT_SOURCE_DIR}/folder_yosemite.icns
+    ${CMAKE_CURRENT_SOURCE_DIR}/folder_bigsur.icns
+    ${CMAKE_CURRENT_SOURCE_DIR}/appicon32.tiff
+)
+
 target_sources(MEGAsync
     PRIVATE
     ${MEGA_DESKTOP_APP_HEADERS}
     ${MEGA_DESKTOP_APP_SOURCES}
+    ${RESOURCE_FILES}
 )
+
+if (APPLE)
+    set_target_properties(MEGAsync PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info_MEGA.plist
+        RESOURCE "${RESOURCE_FILES}"
+    )
+endif()
 
 # Activate properties for Qt code
 set_target_properties(MEGAsync
