@@ -774,6 +774,11 @@ int Utilities::toNearestUnit(long long bytes)
     return static_cast<int>(inNearestUnit);
 }
 
+QString Utilities::getTranslatedSeparatorTemplate()
+{
+    return QCoreApplication::translate("Utilities", "%1/%2");
+}
+
 Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)
 {
     ProgressSize sizes;
