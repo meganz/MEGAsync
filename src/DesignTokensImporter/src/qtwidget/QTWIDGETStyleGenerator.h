@@ -6,6 +6,7 @@
 #include "Types.h"
 
 #include <QObject>
+#include <QSharedPointer>
 
 namespace DTI
 {

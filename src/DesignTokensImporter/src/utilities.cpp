@@ -852,7 +852,7 @@ QString Utilities::themeToString(Theme theme)
     return themeMap.value(theme, QLatin1String("Light"));
 }
 
-QString Utilities::resolvePath(const QString &basePath, const QString &relativePath)
+QString Utilities::resolvePath(const QString& basePath, const QString& relativePath)
 {
     QString combinedPath = QDir::cleanPath(basePath + '/' + relativePath);
     QString resolvedAbsolutePath = QDir(combinedPath).absolutePath();
