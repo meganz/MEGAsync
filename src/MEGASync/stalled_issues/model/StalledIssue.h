@@ -406,7 +406,11 @@ public:
 
     QSize getDelegateSize(StalledIssue::Type type) const
     {
-        return mData->getDelegateSize(type);
+        if(mData)
+        {
+            return mData->getDelegateSize(type);
+        }
+        return QSize();
     }
     void setDelegateSize(const QSize &newDelegateSize, StalledIssue::Type type)
     {
