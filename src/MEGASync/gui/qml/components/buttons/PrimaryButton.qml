@@ -5,7 +5,6 @@ Button {
 
     colors {
         background: ColorTheme.buttonPrimary
-        //background: CategoryTheme.primaryButton.background
         border: colors.background        
         pressed: ColorTheme.buttonPrimaryPressed
         borderPressed: colors.pressed
