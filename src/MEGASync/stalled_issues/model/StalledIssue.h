@@ -443,7 +443,7 @@ private:
         return std::dynamic_pointer_cast<Type>(mData);
     }
 
-   std::shared_ptr<StalledIssue> mData;
+   std::shared_ptr<StalledIssue> mData = nullptr;
 };
 
 Q_DECLARE_METATYPE(StalledIssueVariant)

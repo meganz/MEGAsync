@@ -455,7 +455,10 @@ QVariant StalledIssuesModel::data(const QModelIndex& index, int role) const
     else if(role == ADAPTATIVE_HEIGHT_ROLE)
     {
         auto issue = getStalledIssueByRow(index.row());
-        return StalledIssuesDelegateWidgetsCache::adaptativeHeight(issue.getData()->getReason());
+        if(issue.consultData())
+        {
+            return StalledIssuesDelegateWidgetsCache::adaptativeHeight(issue.consultData()->getReason());
+        }
     }
 
     return QVariant();
