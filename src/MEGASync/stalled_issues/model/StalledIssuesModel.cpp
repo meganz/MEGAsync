@@ -363,7 +363,7 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
                             if(item.getData()->containsHandle(node->getHandle()))
                             {
                                 auto parentFound(false);
-                                while (!parentFound)
+                                while (!parentFound || !parentNode)
                                 {
                                     auto currentParentHandle(parentNode->getHandle());
                                     auto parentNodeRaw(MegaSyncApp->getMegaApi()->getParentNode(parentNode.get()));
