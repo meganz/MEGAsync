@@ -46,10 +46,10 @@ Item {
                 console.warn("NotificationText: Constants.MessageType -> " + type + " not defined yet");
                 break;
             case Constants.MessageType.WARNING:
-                backgroundColor = colorStyle.notificationWarning;
+                backgroundColor = ColorTheme.notificationWarning;
                 break;
             case Constants.MessageType.ERROR:
-                backgroundColor = colorStyle.notificationError;
+                backgroundColor = ColorTheme.notificationError;
                 break;
             default:
                 console.error("NotificationText: Constants.MessageType -> " + type + " does not exist");

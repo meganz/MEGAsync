@@ -8,9 +8,9 @@ Button {
     sizes.borderLess: true
 
     icons {
-        colorEnabled: colorStyle.buttonOutline
-        colorHovered: colorStyle.buttonOutlineHover
-        colorPressed: colorStyle.buttonOutlinePressed
+        colorEnabled: ColorTheme.buttonOutline
+        colorHovered: ColorTheme.buttonOutlineHover
+        colorPressed: ColorTheme.buttonOutlinePressed
     }
 
     colors {
@@ -20,9 +20,9 @@ Button {
         border: "transparent"
         borderHover: "transparent"
         borderDisabled: "transparent"
-        text: colorStyle.buttonOutline
-        textHover: colorStyle.buttonOutlineHover
-        textPressed: colorStyle.buttonOutlinePressed
+        text: ColorTheme.buttonOutline
+        textHover: ColorTheme.buttonOutlineHover
+        textPressed: ColorTheme.buttonOutlinePressed
         pressed: "transparent"
         borderPressed: "transparent"
     }

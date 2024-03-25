@@ -32,7 +32,7 @@ QtObject {
     readonly property color iconButtonPressed: "#8004101E"
     readonly property color iconButtonPressedBackground: "#0D04101E"
     readonly property color iconButtonDisabled: "#1A04101E"
-    readonly property color focus: "#BDD9FF"
+    readonly property color focusColor: "#BDD9FF"
     readonly property color pageBackground: "#FFFFFF"
     readonly property color surface1: "#FAFAFA"
     readonly property color surface2: "#F3F4F4"

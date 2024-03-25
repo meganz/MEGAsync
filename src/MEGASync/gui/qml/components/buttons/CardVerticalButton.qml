@@ -88,7 +88,7 @@ CardButton {
                     rightMargin: root.textHorizontalExtraMargin
                 }
                 font.pixelSize: Texts.Text.Size.SMALL
-                color: colorStyle.textSecondary
+                color: ColorTheme.textSecondary
                 lineHeight: textLineHeight
                 lineHeightMode: Text.FixedHeight
                 text: description

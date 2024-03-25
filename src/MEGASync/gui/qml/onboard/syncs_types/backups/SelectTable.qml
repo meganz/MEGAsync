@@ -29,7 +29,7 @@ Item {
         id: backgroundRectangle
 
         anchors.fill: parent
-        color: colorStyle.pageBackground
+        color: ColorTheme.pageBackground
         radius: tableRadius
     }
 
@@ -72,7 +72,7 @@ Item {
                 right: parent.right
             }
             height: headerFooterHeight
-            color: colorStyle.pageBackground
+            color: ColorTheme.pageBackground
             radius: tableRadius
             z: 2
 
@@ -133,7 +133,7 @@ Item {
                     right: parent.right
                 }
                 height: borderRectangle.border.width
-                color: colorStyle.borderSubtle
+                color: ColorTheme.borderSubtle
             }
 
         } // Rectangle: headerRectangle
@@ -185,7 +185,7 @@ Item {
         }
         height: headerFooterHeight - 2 * borderRectangle.border.width
         radius: tableRadius
-        color: colorStyle.pageBackground
+        color: ColorTheme.pageBackground
         z: 2
 
         MouseArea {
@@ -252,7 +252,7 @@ Item {
 
         anchors.fill: parent
         color: "transparent"
-        border.color: colorStyle.borderStrong
+        border.color: ColorTheme.borderStrong
         border.width: 1
         radius: tableRadius
         z: 4

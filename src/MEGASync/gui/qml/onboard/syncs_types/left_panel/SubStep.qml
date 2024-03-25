@@ -56,21 +56,21 @@ Item {
                 }
                 PropertyChanges {
                     target: stepCircleSmall;
-                    border.color: colorStyle.iconButtonDisabled;
+                    border.color: ColorTheme.iconButtonDisabled;
                     color: "transparent";
                     visible: true;
                 }
                 PropertyChanges { target: outlinedCircle; visible: false; }
-                PropertyChanges { target: stepText; color: colorStyle.iconButtonDisabled; }
+                PropertyChanges { target: stepText; color: ColorTheme.iconButtonDisabled; }
             },
             State {
                 name: substepContent.stateCurrent
-                PropertyChanges { target: background; color: colorStyle.iconButtonPressedBackground; }
+                PropertyChanges { target: background; color: ColorTheme.iconButtonPressedBackground; }
                 PropertyChanges { target: content; spacing: 12; }
                 PropertyChanges { target: stepCircleSmall; visible: false; }
-                PropertyChanges { target: stepCircleBig; color: colorStyle.iconButton; }
+                PropertyChanges { target: stepCircleBig; color: ColorTheme.iconButton; }
                 PropertyChanges { target: outlinedCircle; visible: true; }
-                PropertyChanges { target: stepText; color: colorStyle.iconButton; }
+                PropertyChanges { target: stepText; color: ColorTheme.iconButton; }
             },
             State {
                 name: substepContent.stateDone
@@ -82,30 +82,30 @@ Item {
                 }
                 PropertyChanges {
                     target: stepCircleSmall;
-                    border.color: colorStyle.supportSuccess;
-                    color: colorStyle.supportSuccess;
+                    border.color: ColorTheme.supportSuccess;
+                    color: ColorTheme.supportSuccess;
                     visible: true;
                 }
                 PropertyChanges { target: outlinedCircle; visible: false; }
-                PropertyChanges { target: stepText; color: colorStyle.iconButton; }
+                PropertyChanges { target: stepText; color: ColorTheme.iconButton; }
             },
             State {
                 name: substepContent.stateWarning
-                PropertyChanges { target: background; color: colorStyle.notificationWarning; }
+                PropertyChanges { target: background; color: ColorTheme.notificationWarning; }
                 PropertyChanges { target: content; spacing: 12; }
                 PropertyChanges { target: stepCircleSmall; visible: false; }
-                PropertyChanges { target: stepCircleBig; color: colorStyle.textWarning; }
+                PropertyChanges { target: stepCircleBig; color: ColorTheme.textWarning; }
                 PropertyChanges { target: outlinedCircle; visible: true; }
-                PropertyChanges { target: stepText; color: colorStyle.textWarning; }
+                PropertyChanges { target: stepText; color: ColorTheme.textWarning; }
             },
             State {
                 name: substepContent.stateError
-                PropertyChanges { target: background; color: colorStyle.notificationError; }
+                PropertyChanges { target: background; color: ColorTheme.notificationError; }
                 PropertyChanges { target: content; spacing: 12; }
                 PropertyChanges { target: stepCircleSmall; visible: false; }
-                PropertyChanges { target: stepCircleBig; color: colorStyle.textError; }
+                PropertyChanges { target: stepCircleBig; color: ColorTheme.textError; }
                 PropertyChanges { target: outlinedCircle; visible: true; }
-                PropertyChanges { target: stepText; color: colorStyle.textError; }
+                PropertyChanges { target: stepText; color: ColorTheme.textError; }
             }
         ]
 
@@ -116,7 +116,7 @@ Item {
             id: background
 
             radius: 12
-            color: colorStyle.iconButtonPressedBackground
+            color: ColorTheme.iconButtonPressedBackground
             anchors.left: parent.left
             width: stepText.contentWidth + 40
             height: content.height + 10
@@ -144,7 +144,7 @@ Item {
 
                 border {
                     width: 2
-                    color: colorStyle.iconButtonDisabled
+                    color: ColorTheme.iconButtonDisabled
                 }
 
                 anchors.verticalCenter: parent.verticalCenter
@@ -162,7 +162,7 @@ Item {
 
                     anchors.fill: parent
                     radius: 8
-                    color: colorStyle.iconButton
+                    color: ColorTheme.iconButton
                     opacity: 0.4
                 }
 
@@ -181,7 +181,7 @@ Item {
                 id: stepText
 
                 width: stepText.implicitWidth > (substepContent.width - 40) ? (substepContent.width - 40) : stepText.implicitWidth
-                color: colorStyle.iconButton
+                color: ColorTheme.iconButton
                 font {
                     pixelSize: Texts.Text.Size.SMALL
                     weight: Font.DemiBold

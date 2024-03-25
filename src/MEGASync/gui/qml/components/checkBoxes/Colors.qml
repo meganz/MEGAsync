@@ -6,17 +6,17 @@ QtObject {
     id: root
 
     property color backgroundUnchecked: "transparent"
-    property color background: colorStyle.buttonPrimary
-    property color backgroundHover: colorStyle.buttonPrimaryHover
-    property color backgroundPressed: colorStyle.buttonPrimaryPressed
-    property color backgroundDisabled: colorStyle.iconButtonDisabled
-    property color border: colorStyle.buttonPrimary
-    property color borderHover: colorStyle.buttonPrimaryHover
-    property color borderPressed: colorStyle.buttonPrimaryPressed
-    property color borderDisabled: colorStyle.iconButtonDisabled
-    property color icon: colorStyle.iconInverseAccent
-    property color text: colorStyle.textPrimary
-    property color textDisabled: colorStyle.textDisabled
-    property color textHover: colorStyle.buttonPrimaryHover
-    property color textPressed: colorStyle.buttonPrimaryPressed
+    property color background: ColorTheme.buttonPrimary
+    property color backgroundHover: ColorTheme.buttonPrimaryHover
+    property color backgroundPressed: ColorTheme.buttonPrimaryPressed
+    property color backgroundDisabled: ColorTheme.iconButtonDisabled
+    property color border: ColorTheme.buttonPrimary
+    property color borderHover: ColorTheme.buttonPrimaryHover
+    property color borderPressed: ColorTheme.buttonPrimaryPressed
+    property color borderDisabled: ColorTheme.iconButtonDisabled
+    property color icon: ColorTheme.iconInverseAccent
+    property color text: ColorTheme.textPrimary
+    property color textDisabled: ColorTheme.textDisabled
+    property color textHover: ColorTheme.buttonPrimaryHover
+    property color textPressed: ColorTheme.buttonPrimaryPressed
 }
