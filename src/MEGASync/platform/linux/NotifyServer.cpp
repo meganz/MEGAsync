@@ -11,7 +11,7 @@ NotifyServer::NotifyServer(): QObject(),
     m_localServer(0)
 {
     // construct local socket path
-    sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromAscii("notify.socket");
+    sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromLatin1("notify.socket");
 
     //LOG_info << "Starting Notify server";
 

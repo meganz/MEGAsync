@@ -182,7 +182,14 @@ pipeline {
                     }
                     steps {
                         dir(windows_sources_workspace){
-                            bat "full_build_process.cmd ${env.ARCHITECTURE} nosign 2" //architecture can be 64 or 32/64
+                            bat """
+                                mkdir tmp
+                                set _MSPDBSRV_ENDPOINT_= ${BUILD_TAG}
+                                set TMP=${Workspace}\\tmp
+                                set TEMP=${Workspace}\\tmp
+                                set TMPDIR=${Workspace}\\tmp   
+                                full_build_process.cmd ${env.ARCHITECTURE} nosign 2                     
+                            """
                         }
                     }
                 }

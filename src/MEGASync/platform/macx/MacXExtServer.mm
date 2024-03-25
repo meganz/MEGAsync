@@ -54,7 +54,7 @@ void MacXExtServer::acceptConnection(QPointer<MacXLocalSocket> client)
             if (syncPath.size() && syncSetting->getRunState() == MegaSync::RUNSTATE_RUNNING)
             {
                 QString message = QString::fromUtf8("A:") + syncPath
-                        + QChar::fromAscii(':') + syncSetting->name(true);
+                        + QLatin1Char(':') + syncSetting->name(true);
                 if(!client->writeData(message.toUtf8().constData(), message.length()))
                 {
                     clientDisconnected(client);
@@ -137,7 +137,7 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
 
             bool ok;
-            QStringList parameters = QString::fromAscii(content).split(QChar::fromAscii(':'));
+            QStringList parameters = QString::fromLatin1(content).split(QLatin1Char(':'));
             if (parameters.size() != 3)
             {
                 break;
@@ -331,7 +331,7 @@ void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 {
     doSendToAll((QString::fromUtf8("A:")
                    + path
-                   + QChar::fromAscii(':')
+                   + QLatin1Char(':')
                    + syncName).toUtf8());
 }
 
@@ -339,7 +339,7 @@ void MacXExtServer::notifySyncDel(QString path, QString syncName)
 {
     doSendToAll((QString::fromUtf8("D:")
                    + path
-                   + QChar::fromAscii(':')
+                   + QLatin1Char(':')
                    + syncName).toUtf8());
 }
 
@@ -367,7 +367,7 @@ void MacXExtServer::notifyAllClients(int op)
             continue;
         }
 
-        QString message = command + syncPath + QChar::fromAscii(':') + syncSetting->name(true);
+        QString message = command + syncPath + QLatin1Char(':') + syncSetting->name(true);
 
         doSendToAll(message.toUtf8());
     }

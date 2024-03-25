@@ -149,9 +149,9 @@ QString EncryptedSettings::encrypt(const QString key, const QString value) const
         return value;
     }
 
-    QByteArray k = hash(key).toAscii();
+    QByteArray k = hash(key).toLatin1();
     QByteArray xValue = XOR(k, value.toUtf8());
-    QByteArray xKey = XOR(k, group().toAscii());
+    QByteArray xKey = XOR(k, group().toLatin1());
     QByteArray xEncrypted = XOR(k, Platform::getInstance()->encrypt(xValue, xKey));
     return QString::fromLatin1(xEncrypted.toBase64());
 }
@@ -163,9 +163,9 @@ QString EncryptedSettings::decrypt(const QString key, const QString value) const
         return value;
     }
 
-    QByteArray k = hash(key).toAscii();
-    QByteArray xValue = XOR(k, QByteArray::fromBase64(value.toAscii()));
-    QByteArray xKey = XOR(k, group().toAscii());
+    QByteArray k = hash(key).toLatin1();
+    QByteArray xValue = XOR(k, QByteArray::fromBase64(value.toLatin1()));
+    QByteArray xKey = XOR(k, group().toLatin1());
     QByteArray xDecrypted = XOR(k, Platform::getInstance()->decrypt(xValue, xKey));
     return QString::fromUtf8(xDecrypted);
 }

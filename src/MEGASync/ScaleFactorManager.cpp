@@ -144,7 +144,7 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
         if(mOsName == "Deepin 20")
         {
             const auto scale = getDpiOnLinux() / 96.0;
-            qputenv("QT_SCALE_FACTOR", QString::number(scale).toAscii());
+            qputenv("QT_SCALE_FACTOR", QString::number(scale).toLatin1());
             return;
         }
 
@@ -156,7 +156,7 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
                 if(mOsName == "Deepin 20")
                 {
                     const auto minCalculatedScale = *std::min_element(mCalculatedScales.begin(), mCalculatedScales.end());
-                    const auto minCalculatedScaleString = QString::number(minCalculatedScale).toAscii();
+                    const auto minCalculatedScaleString = QString::number(minCalculatedScale).toLatin1();
                     qputenv("QT_SCALE_FACTOR", minCalculatedScaleString);
                     mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + minCalculatedScaleString);
                 }
@@ -169,7 +169,7 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
             }
             else
             {
-                const auto scaleString = QString::number(mCalculatedScales.front()).toAscii();
+                const auto scaleString = QString::number(mCalculatedScales.front()).toLatin1();
                 qputenv("QT_SCALE_FACTOR", scaleString);
                 mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + scaleString);
             }

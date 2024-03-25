@@ -4,7 +4,7 @@
 #include <QSet>
 #include <QX11Info>
 #include <QScreen>
-
+#include <QHostInfo>
 
 #include <cstdlib>
 #include <cstring>
@@ -18,10 +18,12 @@
 using namespace std;
 using namespace mega;
 
+static const QString NotAllowedDefaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
+
 PlatformImplementation::PlatformImplementation()
 {
-    autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
-    desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
+    autostart_dir = QDir::homePath() + QString::fromLatin1("/.config/autostart/");
+    desktop_file = autostart_dir + QString::fromLatin1("megasync.desktop");
     set_icon = QString::fromUtf8("gio set -t string \"%1\" metadata::custom-icon file://%2");
     remove_icon = QString::fromUtf8("gio set -t unset \"%1\" metadata::custom-icon");
     custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
@@ -75,7 +77,7 @@ bool PlatformImplementation::startOnStartup(bool value)
                     return false;
                 }
             }
-            QString app_desktop = QString::fromAscii("/usr/share/applications/megasync.desktop");
+            QString app_desktop = QString::fromLatin1("/usr/share/applications/megasync.desktop");
             if (QFile(app_desktop).exists())
             {
                 return QFile::copy(app_desktop, desktop_file);
@@ -399,31 +401,26 @@ QString PlatformImplementation::getDeviceName()
 {
     // First, try to read maker and model
     QString vendor;
-    QFile vendorFile(QLatin1Literal("/sys/devices/virtual/dmi/id/board_vendor"));
+    QFile vendorFile(QLatin1String("/sys/devices/virtual/dmi/id/board_vendor"));
     if (vendorFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-            vendor = QString::fromUtf8(vendorFile.readLine()).trimmed();
+        vendor = QString::fromUtf8(vendorFile.readLine()).trimmed();
     }
     vendorFile.close();
 
     QString model;
-    QFile modelFile(QLatin1Literal("/sys/devices/virtual/dmi/id/product_name"));
+    QFile modelFile(QLatin1String("/sys/devices/virtual/dmi/id/product_name"));
     if (modelFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-            model = QString::fromUtf8(modelFile.readLine()).trimmed();
+        model = QString::fromUtf8(modelFile.readLine()).trimmed();
     }
     modelFile.close();
 
-    QString deviceName;
-    // If failure or empty strings, give hostname
-    if (vendor.isEmpty() && model.isEmpty())
+    QString deviceName = vendor + QLatin1String(" ") + model;
+    // If failure, empty strings or defaultFactoryBiosName, give hostname.
+    if ((vendor.isEmpty() && model.isEmpty()) || deviceName.contains(NotAllowedDefaultFactoryBiosName))
     {
-        deviceName = QSysInfo::machineHostName();
-        deviceName.remove(QLatin1Literal(".local"));
-    }
-    else
-    {
-        deviceName = vendor + QLatin1Literal(" ") + model;
+        deviceName = QHostInfo::localHostName();
     }
 
     return deviceName;

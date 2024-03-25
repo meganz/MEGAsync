@@ -1,6 +1,7 @@
 #include "PlatformImplementation.h"
 
 #include <QScreen>
+#include <QHostInfo>
 
 #include <unistd.h>
 #include <pwd.h>
@@ -13,6 +14,7 @@ using namespace mega;
 
 static const QString kFinderSyncBundleId = QString::fromLatin1("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromLatin1("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
+static const QString NotAllowedDefaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
 
 void PlatformImplementation::initialize(int /*argc*/, char *[] /*argv*/)
 {
@@ -102,7 +104,7 @@ bool PlatformImplementation::isFileManagerExtensionEnabled()
         return false;
     }
 
-    if (out.at(0) != QChar::fromAscii('?') && out.at(0) != QChar::fromAscii('+'))
+    if (out.at(0) != QLatin1Char('?') && out.at(0) != QLatin1Char('+'))
     {
         return false;
     }
@@ -389,10 +391,9 @@ QString PlatformImplementation::getDeviceName()
     proc.waitForFinished();
     deviceName = QString::fromStdString(proc.readAll().toStdString());
 
-    if (deviceName.isEmpty())
+    if (deviceName.isEmpty() || deviceName.contains(NotAllowedDefaultFactoryBiosName))
     {
-        deviceName = QSysInfo::machineHostName();
-        deviceName.remove(QLatin1Literal(".local"));
+        deviceName = QHostInfo::localHostName();
     }
 
     return deviceName;
