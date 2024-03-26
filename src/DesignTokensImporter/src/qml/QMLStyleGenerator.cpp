@@ -13,7 +13,7 @@ QmlStyleGenerator::QmlStyleGenerator(QObject *parent)
     : QObject{parent}
 {}
 
-void QmlStyleGenerator::start(const FilePathColourMap& styleData)
+void QmlStyleGenerator::start(const ThemedColourMap& styleData)
 {
     for (auto themeIt = styleData.constBegin(); themeIt != styleData.constEnd(); ++themeIt)
     {
@@ -22,9 +22,7 @@ void QmlStyleGenerator::start(const FilePathColourMap& styleData)
         /*
          * In future we will get the theme straight from the argument.
         */
-        auto theme = Utilities::themeToString(Utilities::getTheme(themeIt.key()));
-        theme = theme.toLower();
-
+        auto theme = themeIt.key().toLower();
         if (!theme.isEmpty() && !styleData.isEmpty())
         {
             foreach (const auto& styleTargetId, QMLStyleTargetFactory::getRegisteredStyleTargets())

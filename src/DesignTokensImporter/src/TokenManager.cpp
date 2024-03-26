@@ -27,12 +27,12 @@ namespace DTI
 
     void TokenManager::run()
     {
-        // Load core.json file
+        // load core.json file
         QString pathToCoreFile = Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_CORE_FILE_PATH);
         QFile coreFile(pathToCoreFile);
         if (!coreFile.exists())
         {
-            qCritical() << "TokenManager::run - ERROR! No core.json file found in  " << pathToCoreFile;
+            qCritical() << __PRETTY_FUNCTION__ << " Error : No core.json file found in  " << pathToCoreFile;
             return;
         }
 
@@ -50,7 +50,7 @@ namespace DTI
         }
 
         // Parse .json token files and create colour map
-        FilePathColourMap fileToColourMap = parseTokenJSON(colorThemedPathFiles);
+        ThemedColourMap fileToColourMap = parseColorTokenJSON(colorThemedPathFiles, coreMap);
         if(!generateTokenFiles(fileToColourMap))
         {
             qDebug() << "TokenManager::run - ERROR! Unable to generate token files";
@@ -68,29 +68,20 @@ namespace DTI
 
     void TokenManager::recurseCore(QString category, const QJsonObject& categoryObject, CoreMap& returnValue)
     {
-        // Use an index-based loop to avoid detachment warning
         const QStringList tokenKeys = categoryObject.keys();
 
         if (tokenKeys.contains(QLatin1String("$value")) && tokenKeys.contains(QLatin1String("$type")))
         {
-            QJsonValue typeValue = categoryObject["$type"];
-            QJsonValue valueValue = categoryObject["$value"];
+            QJsonValue jType = categoryObject["$type"];
+            QJsonValue jValue = categoryObject["$value"];
 
-            if (typeValue.isString() && valueValue.isString())
+            if (!jType.isNull() && jValue.isString())
             {
-                QString type = typeValue.toString();
-                QString value = valueValue.toString();
+                QString type = jType.toString();
 
                 if (type == "color")
                 {
-                    /*
-                    QColor color = stringToColor(value);
-                    // Strip "--color-" from beginning of token
-                    colourMap.insert(token.mid(COLOUR_TOKEN_START.size()),
-                                     color.name(QColor::HexArgb));
-                    */
-
-                    returnValue.insert(category, categoryObject["$value"].toString());
+                    returnValue.insert(category, jValue.toString());
                 }
             }
         }
@@ -115,7 +106,7 @@ namespace DTI
         QFile inputFile(coreFilePath);
         if (!inputFile.open(QIODevice::ReadOnly | QIODevice::Text))
         {
-            qDebug() << __PRETTY_FUNCTION__ << " Error opening core file " << coreFilePath;
+            qDebug() << __PRETTY_FUNCTION__ << " Error : opening core file " << coreFilePath;
             return returnValue;
         }
 
@@ -123,7 +114,7 @@ namespace DTI
         QJsonDocument jsonDocument = QJsonDocument::fromJson(inputFile.readAll());
         if (jsonDocument.isNull())
         {
-            qDebug() << __PRETTY_FUNCTION__ << " Error parsing core file " << coreFilePath;
+            qDebug() << __PRETTY_FUNCTION__ << " Error : parsing core file " << coreFilePath;
             return returnValue;
         }
 
@@ -143,25 +134,40 @@ namespace DTI
         return returnValue;
     }
 
-    FilePathColourMap TokenManager::parseTokenJSON(const QStringList& tokenFilePathsList)
+    ThemedColourMap TokenManager::parseColorTokenJSON(const QStringList& colorTokenFilePathsList, const CoreMap& coreMap)
     {
-        FilePathColourMap retMap;
+        ThemedColourMap retMap;
 
-        if (tokenFilePathsList.isEmpty())
+        if (colorTokenFilePathsList.isEmpty())
         {
+            qDebug() << __PRETTY_FUNCTION__ << " Error : colorTokenFilePathsList is empty.";
             return retMap;
         }
 
-        foreach (const QString& filePath, tokenFilePathsList)
+        foreach (const QString& colorTokenFilePath, colorTokenFilePathsList)
         {
-            ColourMap colourMap = Utilities::parseTokenJSON(filePath);
-            retMap.insert(filePath, colourMap);
+            ColourMap colourMap = Utilities::parseColorThemeJSON(colorTokenFilePath, coreMap);
+            if (colourMap.isEmpty())
+            {
+                qDebug() << __PRETTY_FUNCTION__ << " Error : ColourMap is empty on file " << colorTokenFilePath;
+                continue;
+            }
+
+            QString theme = Utilities::themeToString(Utilities::getTheme(colorTokenFilePath));
+            if (theme.isEmpty())
+            {
+                qDebug() << __PRETTY_FUNCTION__ << " Error : No valid theme found on " << colorTokenFilePath;
+
+                continue;
+            }
+
+            retMap.insert(theme, colourMap);
         }
 
         return retMap;
     }
 
-    bool TokenManager::generateTokenFiles(const FilePathColourMap& fileToColourMap)
+    bool TokenManager::generateTokenFiles(const ThemedColourMap& fileToColourMap)
     {
         // Create Generated Directory
         Utilities::createDirectory(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_GENERATED_PATH));

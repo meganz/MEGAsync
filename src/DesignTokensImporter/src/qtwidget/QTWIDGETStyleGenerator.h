@@ -26,7 +26,7 @@ namespace DTI
 
     public:
         explicit QTWIDGETStyleGenerator(QObject* parent = nullptr);
-        void start(const FilePathColourMap& fileToColourMap) override;
+        void start(const ThemedColourMap& fileToColourMap) override;
 
     private:
         void initialize();
@@ -42,7 +42,7 @@ namespace DTI
                             const QMap<QString, QString>& hashMap);
         bool areHashesMatching(const QStringList& filePathList,
                                const QMap<QString, QString>& hashMap);
-        void generateStyleSheet(const FilePathColourMap& fileToColourMap);
+        void generateStyleSheet(const ThemedColourMap& fileToColourMap);
         QStringList generateStylesheets(const ColourMap& colourMap,
                                         const QVector<QSharedPointer<UIHandler>>& uiClassList,
                                         const QString& saveDirectory);

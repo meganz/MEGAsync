@@ -24,7 +24,7 @@ QTWIDGETStyleGenerator::QTWIDGETStyleGenerator(QObject* parent)
     mCurrentDir = QDir::currentPath();
 }
 
-void QTWIDGETStyleGenerator::start(const FilePathColourMap& fileToColourMap)
+void QTWIDGETStyleGenerator::start(const ThemedColourMap& fileToColourMap)
 {    
     initialize();
 
@@ -288,7 +288,7 @@ bool QTWIDGETStyleGenerator::areHashesMatching(const QStringList& filePathList, 
     return true;
 }
 
-void QTWIDGETStyleGenerator::generateStyleSheet(const FilePathColourMap& fileToColourMap)
+void QTWIDGETStyleGenerator::generateStyleSheet(const ThemedColourMap& fileToColourMap)
 {
     // Generate .css stylesheets for all platforms
     for (auto it = fileToColourMap.constBegin(); it != fileToColourMap.constEnd(); ++it)

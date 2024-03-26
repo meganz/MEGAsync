@@ -14,7 +14,7 @@ namespace DTI
 
     public:
         explicit QmlStyleGenerator(QObject *parent = nullptr);
-        void start(const FilePathColourMap& styleData) override;
+        void start(const ThemedColourMap& styleData) override;
 
     signals:
         void finished();

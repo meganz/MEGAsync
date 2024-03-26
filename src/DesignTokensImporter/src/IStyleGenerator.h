@@ -9,8 +9,8 @@ namespace DTI
     {
     public:
         virtual ~IStyleGenerator() = default;
-
-        virtual void start(const FilePathColourMap& styleData) = 0;
+        
+        virtual void start(const ThemedColourMap& styleData) = 0;
     };
 }
 

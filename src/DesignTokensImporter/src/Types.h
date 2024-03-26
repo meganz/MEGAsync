@@ -11,7 +11,7 @@ typedef QMap<QString, PropertiesMap> ButtonStateStyleMap;
 typedef QMap<QString, ButtonStateStyleMap> ImageThemeStyleData;
 typedef QMap<QString, QString> ColourMap;
 typedef QMap<QString, QString> CoreMap;
-typedef QMap<QString, ColourMap> FilePathColourMap;
+typedef QMap<QString, ColourMap> ThemedColourMap;
 
 struct ImageThemeStyleInfo
 {
