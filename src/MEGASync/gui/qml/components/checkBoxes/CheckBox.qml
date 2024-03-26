@@ -78,7 +78,7 @@ Qml.CheckBox {
         radius: sizes.focusBorderRadius
         border {
             color: root.enabled
-                   ? (root.activeFocus ? colorStyle.focus : "transparent")
+                   ? (root.activeFocus ? ColorTheme.focusColor : "transparent")
                    : "transparent"
             width: sizes.focusBorderWidth
         }
@@ -136,7 +136,7 @@ Qml.CheckBox {
                 visible: indeterminate() || checked
                 source: indeterminate() ? icons.indeterminate : icons.checked
                 sourceSize: indeterminate() ? sizes.iconSizeIndeterminate : sizes.iconSize
-                color: colorStyle.iconInverseAccent
+                color: ColorTheme.iconInverseAccent
             }
 
         } // Rectangle: checkBoxOutRect

@@ -32,17 +32,17 @@ Item {
                 if(icon.length === 0) {
                     icon = Images.alertTriangle;
                 }
-                iconColor = colorStyle.textWarning;
-                titleColor = colorStyle.textWarning;
-                textColor = colorStyle.textWarning;
+                iconColor = ColorTheme.textWarning;
+                titleColor = ColorTheme.textWarning;
+                textColor = ColorTheme.textWarning;
                 break;
             case Constants.MessageType.ERROR:
                 if(icon.length === 0) {
                     icon = Images.xCircle;
                 }
-                iconColor = colorStyle.textError;
-                titleColor = colorStyle.textError;
-                textColor = colorStyle.textError;
+                iconColor = ColorTheme.textError;
+                titleColor = ColorTheme.textError;
+                textColor = ColorTheme.textError;
                 break;
             default:
                 console.error("HintText: Constants.MessageType -> " + type + " does not exist");

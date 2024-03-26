@@ -53,7 +53,7 @@ SyncsPage {
             TextField {
                 id: deviceField
 
-                colors.text: colorStyle.textPlaceholder
+                colors.text: ColorTheme.textPlaceholder
                 Layout.preferredWidth: parent.width
                 Layout.leftMargin: -deviceField.sizes.focusBorderWidth
                 title: OnboardingStrings.backupTo
