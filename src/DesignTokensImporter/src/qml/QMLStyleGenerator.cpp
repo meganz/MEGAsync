@@ -1,6 +1,6 @@
 #include "QMLStyleGenerator.h"
 
-#include "utilities.h"
+#include "Utilities.h"
 #include "IQMLStyleTarget.h"
 #include "QMLStyleTargetFactory.h"
 

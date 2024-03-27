@@ -1,6 +1,6 @@
 #include "QTWIDGETStyleGenerator.h"
 
-#include "utilities.h"
+#include "Utilities.h"
 #include "PathProvider.h"
 
 #include <QDir>

@@ -14,7 +14,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Svg Xml)
 
 set(SOURCES ${SOURCES}
     main.cpp
-    utilities.cpp utilities.h
+    Utilities.cpp Utilities.h
     TokenManager.h TokenManager.cpp
     UIHandler.h UIHandler.cpp
     SVGIcon.h SVGIcon.cpp

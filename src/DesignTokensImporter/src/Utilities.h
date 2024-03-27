@@ -29,13 +29,10 @@ namespace DTI
 
         static bool createDirectory(const QString& path);
         static QStringList findFilesInDir(const QString& dirPath,
-                                         const QString& nameFilter = QString::fromLatin1("*.*"),
+                                          const QString& nameFilter = QString::fromLatin1("*.*"),
                                           bool findInSubfolders = false);
         static bool isFileValid(const QString& path);
         static QMap<QString, QString> parseColorThemeJSON(const QString& themedColorTokenFilePath, const CoreMap& coreMap);
-        static QMap<QString, QString> parseColorTokenJSON(const QString& path);
-        static bool writeColourMapToJSON(const QMap<QString, QString>& colourMap,
-                                        const QString& filePath);
         static bool createNewQrcFile(const QString& qrcPath);
         static void traverseDirectory(const QString& directoryPath,
                                       const QStringList& filters,
@@ -64,8 +61,7 @@ namespace DTI
         static QString getSubStringBetweenMarkers(const QString& str,
                                                   const QString& startMarker,
                                                   const QString& stopMarker);
-        static bool areAllStringsPresent(const QStringList& list1,
-                                         const QStringList& list2);
+        static bool areAllStringsPresent(const QStringList& list1, const QStringList& list2);
         static QMap<Theme, QMap<QString, QString> > getColourMapInfo();
         static bool writeStyleSheetToFile(const QString& css, const QString& filePath);
         static Theme getTheme(const QString& filePath);

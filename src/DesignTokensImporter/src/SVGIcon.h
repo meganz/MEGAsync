@@ -3,7 +3,7 @@
 
 #include "SVGRenderer.h"
 #include "Types.h"
-#include "utilities.h"
+#include "Utilities.h"
 
 #include <QMap>
 #include <QString>

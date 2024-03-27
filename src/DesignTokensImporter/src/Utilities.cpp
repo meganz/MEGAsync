@@ -1,4 +1,4 @@
-#include "utilities.h"
+#include "Utilities.h"
 #include "PathProvider.h"
 
 #include <QByteArray>
@@ -35,11 +35,11 @@ bool Utilities::createDirectory(const QString& dirPath)
 
     if (directory.mkpath("."))
     {
-        qDebug() << "Utilities::createDirectory - Directory created successfully:" << dirPath;
+        qDebug() << __PRETTY_FUNCTION__ << " Directory created successfully: " << dirPath;
         return true;
     }
 
-    qDebug() << "Utilities::createDirectory - ERROR! Failed to create directory:" << dirPath;
+    qDebug() << __PRETTY_FUNCTION__ << " ERROR! Failed to create directory: " << dirPath;
     return false;
 }
 
@@ -48,16 +48,14 @@ bool Utilities::createDirectory(const QString& dirPath)
 //! \param dirPath: path to directory containing .json files
 //! \returns list of full paths to all .json files in @dirPath
 //!
-QStringList Utilities::findFilesInDir(const QString& dirPath,
-                                      const QString& nameFilter,
-                                      bool findInSubfolders)
+QStringList Utilities::findFilesInDir(const QString& dirPath, const QString& nameFilter, bool findInSubfolders)
 {
     QStringList files;
     QDir directory(dirPath);
 
     if (!directory.exists())
     {
-        qWarning("Utilities::findFilesInDir - Directory does not exist: %s", qPrintable(dirPath));
+        qWarning() << __PRETTY_FUNCTION__ << " Directory does not exist: " << qPrintable(dirPath);
         return files;
     }
 
@@ -66,7 +64,7 @@ QStringList Utilities::findFilesInDir(const QString& dirPath,
 
     QStringList fileList = directory.entryList(nameFilters, QDir::Files | QDir::NoDotAndDotDot);
 
-    for (const QString &file : fileList)
+    for (const QString& file : fileList)
     {
         QString filePath = directory.filePath(file);
         if (isFileValid(filePath))
@@ -79,7 +77,7 @@ QStringList Utilities::findFilesInDir(const QString& dirPath,
     if (findInSubfolders)
     {
         QStringList subdirectories = directory.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-        for (const QString &subdir : subdirectories)
+        for (const QString& subdir : subdirectories)
         {
             QString subdirectoryPath = directory.filePath(subdir);
             QStringList subdirectoryFiles = findFilesInDir(subdirectoryPath, nameFilter, true);
@@ -101,7 +99,7 @@ bool Utilities::isFileValid(const QString& path)
     // Check if the file path is not empty
     if (path.isEmpty())
     {
-        qDebug() << "Utilities::isFileValid - File path is empty.";
+        qDebug() << __PRETTY_FUNCTION__ << " File path is empty.";
         return false;
     }
 
@@ -111,7 +109,7 @@ bool Utilities::isFileValid(const QString& path)
     // Check if the file exists and is not empty
     if (!fileInfo.exists() || fileInfo.size() == 0)
     {
-        qDebug() << "Utilities::isFileValid - File does not exist or is empty: " << path;
+        qDebug() << __PRETTY_FUNCTION__ << " File does not exist or is empty: " << path;
         return false;
     }
 
@@ -184,112 +182,6 @@ QMap<QString, QString> Utilities::parseColorThemeJSON(const QString& themedColor
     }
 
     return colourMap;
-}
-
-QMap<QString, QString> Utilities::parseColorTokenJSON(const QString& path)
-{
-    QMap<QString, QString> colourMap;
-
-    if (!isFileValid(path))
-    {
-        return colourMap;
-    }
-
-    auto stringToColor = [](const QString& str) -> QColor {
-        // Static regular expression to match RGBA color format
-        static const QRegularExpression regex("^rgba\\((?<red>\\d+),\\s*(?<green>\\d+),\\s*(?<blue>\\d+),\\s*(?<alpha>\\d+(\\.\\d+)?)\\)$");
-
-        QRegularExpressionMatch match = regex.match(str);
-
-        // Check if the string matches the expected format
-        if (match.hasMatch())
-        {
-            // Extract color components from the named capture groups
-            int red = match.captured("red").toInt();
-            int green = match.captured("green").toInt();
-            int blue = match.captured("blue").toInt();
-            int alpha = static_cast<int>(match.captured("alpha").toDouble() * 255);
-
-            // Create and return a QColor
-            return QColor(red, green, blue, alpha);
-        }
-
-        // Format does not match, return an invalid QColor
-        return QColor();
-    };
-
-    QFile inputFile(path);
-
-    if (!inputFile.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qDebug() << "Utilities::convertJSON - Error opening input file " << path;
-        return colourMap;
-    }
-
-    // Parse the input JSON document
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(inputFile.readAll());
-    inputFile.close();
-
-    if (jsonDocument.isNull())
-    {
-        qDebug() << "Utilities::convertJSON - Error parsing JSON document";
-        return colourMap;
-    }
-
-    // Process the JSON document and convert RGBA values to HEX
-    QJsonObject jsonObject = jsonDocument.object();
-
-    // Use an index-based loop to avoid detachment warning
-    const QStringList categoryKeys = jsonObject.keys();
-    for (int i = 0; i < categoryKeys.size(); ++i)
-    {
-        const QString& category = categoryKeys[i];
-        QJsonObject categoryObject = jsonObject.value(category).toObject();
-
-        // Use an index-based loop to avoid detachment warning
-        const QStringList tokenKeys = categoryObject.keys();
-        for (int i = 0; i < tokenKeys.size(); ++i)
-        {
-            const QString& token = tokenKeys[i];
-
-            QJsonObject tokenObject = categoryObject[token].toObject();
-            QJsonValue typeValue = tokenObject["$type"];
-            QJsonValue valueValue = tokenObject["$value"];
-
-            if (typeValue.isString() && valueValue.isString())
-            {
-                QString type = typeValue.toString();
-                QString value = valueValue.toString();
-
-                if (type == "color")
-                {
-                    QColor color = stringToColor(value);
-                    // Strip "--color-" from beginning of token
-                    colourMap.insert(token.mid(COLOUR_TOKEN_START.size()),
-                                     color.name(QColor::HexArgb));
-                }
-            }
-        }
-    }
-
-    return colourMap;
-}
-
-bool Utilities::writeColourMapToJSON(const QMap<QString, QString>& colourMap,
-                                     const QString& filePath)
-{
-    QJsonObject dataObject;
-
-    // Iterate over the QMap and add key-value pairs to the JSON object
-    for (auto it = colourMap.begin(); it != colourMap.end(); ++it)
-    {
-        dataObject.insert(it.key(), it.value());
-    }
-
-    QJsonObject jsonObject;
-    jsonObject.insert("data", dataObject);
-
-    return writeJSONToFile(QJsonDocument(jsonObject), filePath);
 }
 
 bool Utilities::createNewQrcFile(const QString &qrcPath)
@@ -527,7 +419,6 @@ bool Utilities::insertQRCPathInCMakeListsFile(const QString &fileDirPath, const 
         qWarning() << "Failed to open a created CMakeListsText temporary file for writing.";
         return false;
     }
-
 
     // Copy content to the CMakeLists.txt temporary file with the qrc path inserted at the determined position
     QString lineEnding = "\n";

@@ -1,5 +1,5 @@
 #include "TokenManager.h"
-#include "utilities.h"
+#include "Utilities.h"
 #include "PathProvider.h"
 #include "IStyleGenerator.h"
 #include "QMLStyleGenerator.h"
@@ -16,7 +16,7 @@ namespace DTI
     TokenManager::TokenManager()
     {
         mCurrentDir = QDir::currentPath();
-        qDebug() << "TokenManager::TokenManager - Current working directory = " << mCurrentDir;
+        qDebug() << __PRETTY_FUNCTION__ << " Current working directory : " << mCurrentDir;
     }
 
     TokenManager* TokenManager::instance()
@@ -27,7 +27,7 @@ namespace DTI
 
     void TokenManager::run()
     {
-        // load core.json file
+        // find core.json file
         QString pathToCoreFile = Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_CORE_FILE_PATH);
         QFile coreFile(pathToCoreFile);
         if (!coreFile.exists())
@@ -36,26 +36,22 @@ namespace DTI
             return;
         }
 
+        // load core.json file
         CoreMap coreMap = parseCore(pathToCoreFile);
 
-        // Load .json colors themed files token files
+        // find json colors themed files
         QString pathToColorThemedFiles = Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_COLOR_TOKENS_PATH);
         QStringList colorThemedPathFiles = Utilities::findFilesInDir(pathToColorThemedFiles, PathProvider::JSON_NAME_FILTER);
 
-        // Stop if there are no Design Token files
+        // stop if there are no Design Token files
         if (colorThemedPathFiles.isEmpty())
         {
-            qCritical() << "TokenManager::run - ERROR! No Design Token .JSON files found in folder " << pathToColorThemedFiles;
+            qCritical() << __PRETTY_FUNCTION__ << " ERROR! No color themed files found in folder " << pathToColorThemedFiles;
             return;
         }
 
-        // Parse .json token files and create colour map
+        // parse json color themed files.
         ThemedColourMap fileToColourMap = parseColorTokenJSON(colorThemedPathFiles, coreMap);
-        if(!generateTokenFiles(fileToColourMap))
-        {
-            qDebug() << "TokenManager::run - ERROR! Unable to generate token files";
-            return;
-        }
 
         // qml style generator entry point.
         std::unique_ptr<IStyleGenerator> styleGenerator{new QmlStyleGenerator()};
@@ -66,7 +62,7 @@ namespace DTI
         qtWidgetStyleGenerator->start(fileToColourMap);
     }
 
-    void TokenManager::recurseCore(QString category, const QJsonObject& categoryObject, CoreMap& returnValue)
+    void TokenManager::recurseCore(QString category, const QJsonObject& categoryObject, CoreMap& coreMap)
     {
         const QStringList tokenKeys = categoryObject.keys();
 
@@ -81,7 +77,7 @@ namespace DTI
 
                 if (type == "color")
                 {
-                    returnValue.insert(category, jValue.toString());
+                    coreMap.insert(category, jValue.toString());
                 }
             }
         }
@@ -92,7 +88,7 @@ namespace DTI
                 QString subCategory = category + "." + tokenKeys[index];
                 QJsonObject categoryObj = categoryObject.value(tokenKeys[index]).toObject();
 
-                recurseCore(subCategory, categoryObj, returnValue);
+                recurseCore(subCategory, categoryObj, coreMap);
             }
         }
     }
@@ -165,29 +161,6 @@ namespace DTI
         }
 
         return retMap;
-    }
-
-    bool TokenManager::generateTokenFiles(const ThemedColourMap& fileToColourMap)
-    {
-        // Create Generated Directory
-        Utilities::createDirectory(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_GENERATED_PATH));
-
-        bool ret = true;
-
-        // Save colourMaps .JSON files
-        // Generate token values in hex format
-        for (auto it = fileToColourMap.constBegin(); it != fileToColourMap.constEnd(); ++it)
-        {
-            const QString& filePath = it.key();
-            const ColourMap& colourMap = it.value();
-            QString fileName = Utilities::extractFileName(filePath);
-            if(!Utilities::writeColourMapToJSON(colourMap, Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_GENERATED_PATH) + "/" + fileName))
-            {
-                ret = false;
-            }
-        }
-
-        return ret;
     }
 
 } // namespace DTI
