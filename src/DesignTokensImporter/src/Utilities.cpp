@@ -167,7 +167,7 @@ QMap<QString, QString> Utilities::parseColorThemeJSON(const QString& themedColor
                     {
                         QString coreColor = coreMap[value];
                         QString alphaString = QString::number(static_cast<uint>(alpha * 255), 16).rightJustified(2, '0');
-                        QString color = coreColor + alphaString;
+                        QString color = "#" + alphaString + coreColor;
 
                         // Strip "--color-" from beginning of token
                         colourMap.insert(token.mid(COLOUR_TOKEN_START.size()), color);

@@ -83,7 +83,7 @@ void TokenManager::recurseCore(QString category, const QJsonObject& categoryObje
 
             if (type == "color")
             {
-                coreMap.insert(category, jValue.toString());
+                coreMap.insert(category, jValue.toString().remove(QChar('#')));
             }
         }
     }

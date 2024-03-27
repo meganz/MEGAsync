@@ -89,24 +89,4 @@ Item {
     readonly property color indicatorOrange: loader.item.indicatorOrange
     readonly property color toastBackground: loader.item.toastBackground
     readonly property color divider: loader.item.divider
-    readonly property color gradientRedTop: loader.item.gradientRedTop
-    readonly property color gradientRedBottom: loader.item.gradientRedBottom
-    readonly property color gradientGreyTop: loader.item.gradientGreyTop
-    readonly property color gradientGreyBottom: loader.item.gradientGreyBottom
-    readonly property color gradientPinkTop: loader.item.gradientPinkTop
-    readonly property color gradientPinkBottom: loader.item.gradientPinkBottom
-    readonly property color gradientYellowTop:loader.item.gradientYellowTop
-    readonly property color gradientYellowBottom: loader.item.gradientYellowBottom
-    readonly property color gradientGreenTop: loader.item.gradientGreenTop
-    readonly property color gradientGreenBottom: loader.item.gradientGreenBottom
-    readonly property color gradientIndigoTop: loader.item.gradientIndigoTop
-    readonly property color gradientIndigoBottom: loader.item.gradientIndigoBottom
-    readonly property color gradientMagentaTop: loader.item.gradientMagentaTop
-    readonly property color gradientMagentaBottom: loader.item.gradientMagentaBottom
-    readonly property color gradientOrangeTop: loader.item.gradientOrangeTop
-    readonly property color gradientOrangeBottom: loader.item.gradientOrangeBottom
-    readonly property color gradientBlueTop: loader.item.gradientBlueTop
-    readonly property color gradientBlueBottom: loader.item.gradientBlueBottom
-    readonly property color gradientContrastTop: loader.item.gradientContrastTop
-    readonly property color gradientContrastBottom: loader.item.gradientContrastBottom
 }

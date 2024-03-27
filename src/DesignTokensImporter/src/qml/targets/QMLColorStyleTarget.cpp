@@ -14,7 +14,7 @@ using namespace DTI;
 static const QString qmlColorStyleTargetPath = "%1/gui/qml/common/themes/%2";
 static const QString qmlColorStyleFileName = "%1/Colors.qml";
 static const QString colorStyleHeader = QString::fromUtf8("import QtQuick 2.15\n\nQtObject {\n\n");
-static const QString colorStyleLine = QString::fromUtf8("\treadonly property color %1: \"%2\" \n");
+static const QString colorStyleLine = QString::fromUtf8("\treadonly property color %1: \"%2\"\n");
 static const QString colorStyleFooter = QString::fromUtf8("}\n");
 
 bool QMLColorStyleTarget::registered = ConcreteQMLStyleFactory<QMLColorStyleTarget>::Register("qmlColorStyle");
@@ -40,7 +40,7 @@ void QMLColorStyleTarget::deploy(QString theme, const ColourMap& colourMap) cons
         for (auto it = colourMap.constBegin(); it != colourMap.constEnd(); ++it)
         {
             const auto& tokenId = it.key();
-            const auto& color = it.value();
+            const auto& color = it.value().toUpper();
             stream << colorStyleLine.arg(normalizeTokenId(tokenId), color);
         }
         stream << colorStyleFooter;
