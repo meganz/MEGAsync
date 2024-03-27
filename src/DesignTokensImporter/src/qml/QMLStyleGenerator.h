@@ -21,4 +21,4 @@ namespace DTI
     };
 }
 
-#endif // QML_STYLE_GENERATOR_H
+#endif

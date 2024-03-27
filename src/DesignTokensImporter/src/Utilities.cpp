@@ -209,6 +209,23 @@ bool Utilities::createNewQrcFile(const QString &qrcPath)
     return true;
 }
 
+bool Utilities::writeColourMapToJSON(const QMap<QString, QString>& colourMap,
+                                     const QString& filePath)
+{
+    QJsonObject dataObject;
+
+    // Iterate over the QMap and add key-value pairs to the JSON object
+    for (auto it = colourMap.begin(); it != colourMap.end(); ++it)
+    {
+        dataObject.insert(it.key(), it.value());
+    }
+
+    QJsonObject jsonObject;
+    jsonObject.insert("data", dataObject);
+
+    return writeJSONToFile(QJsonDocument(jsonObject), filePath);
+}
+
 void Utilities::traverseDirectory(const QString &directoryPath, const QStringList &filters, QStringList &filePaths)
 {
     QDir dir(directoryPath);
@@ -516,7 +533,6 @@ QString Utilities::extractFileNameNoExtension(const QString& filePath)
     QFileInfo fileInfo(filePath);
     return fileInfo.baseName();
 }
-
 
 //!
 //! \brief Utilities::getFileHash

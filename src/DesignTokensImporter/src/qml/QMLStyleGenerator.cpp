@@ -1,6 +1,5 @@
 #include "QMLStyleGenerator.h"
 
-#include "Utilities.h"
 #include "IQMLStyleTarget.h"
 #include "QMLStyleTargetFactory.h"
 
@@ -19,9 +18,6 @@ void QmlStyleGenerator::start(const ThemedColourMap& styleData)
     {
         const auto& styleData = themeIt.value();
 
-        /*
-         * In future we will get the theme straight from the argument.
-        */
         auto theme = themeIt.key().toLower();
         if (!theme.isEmpty() && !styleData.isEmpty())
         {

@@ -8,9 +8,6 @@
 #include <QJsonObject>
 #include <QVector>
 
-#include <iomanip>
-#include <sstream>
-
 namespace DTI
 {
     class Utilities
@@ -32,6 +29,8 @@ namespace DTI
                                           const QString& nameFilter = QString::fromLatin1("*.*"),
                                           bool findInSubfolders = false);
         static bool isFileValid(const QString& path);
+        static bool writeColourMapToJSON(const QMap<QString, QString>& colourMap,
+                                         const QString& filePath);
         static QMap<QString, QString> parseColorThemeJSON(const QString& themedColorTokenFilePath, const CoreMap& coreMap);
         static bool createNewQrcFile(const QString& qrcPath);
         static void traverseDirectory(const QString& directoryPath,
