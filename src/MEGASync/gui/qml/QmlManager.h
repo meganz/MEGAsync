@@ -2,17 +2,11 @@
 #define QMLMANAGER_H
 
 #include <QQmlEngine>
-#include <QObject>
 
 #include <memory>
 
-template <class Type>
-class QmlDialogWrapper;
-
-class QmlManager : public QObject
+class QmlManager
 {
-    Q_OBJECT
-
 public:
     static std::shared_ptr<QmlManager> instance();
 
@@ -30,10 +24,9 @@ public:
 
     void retranslate();
 
-private:
-    template <class Type>
-    friend class QmlDialogWrapper;
+    QQmlEngine* getEngine();
 
+private:
     QQmlEngine* mEngine;
 
     QmlManager();

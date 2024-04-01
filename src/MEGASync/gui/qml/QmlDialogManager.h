@@ -1,14 +1,12 @@
 #ifndef QMLDIALOGMANAGER_H
 #define QMLDIALOGMANAGER_H
 
-#include <QObject>
+#include <QTimer>
 
 #include <memory>
 
-class QmlDialogManager : public QObject
+class QmlDialogManager
 {
-    Q_OBJECT
-
 public:
     static std::shared_ptr<QmlDialogManager> instance();
 

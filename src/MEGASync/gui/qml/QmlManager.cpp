@@ -13,8 +13,7 @@
 static const QString DEFAULT_QML_INSTANCES_SUFFIX = QString::fromUtf8("Access");
 
 QmlManager::QmlManager()
-    : QObject()
-    , mEngine(new QQmlEngine())
+    : mEngine(new QQmlEngine())
 {
     QObject::connect(mEngine, &QQmlEngine::warnings, [](const QList<QQmlError>& warnings) {
         for (const QQmlError& e : warnings) {
@@ -33,9 +32,9 @@ std::shared_ptr<QmlManager> QmlManager::instance()
 
 void QmlManager::finish()
 {
+    qDeleteAll(mEngine->children());
     delete mEngine;
     mEngine = nullptr;
-    qDeleteAll(children());
 }
 
 void QmlManager::registerCommonQmlElements()
@@ -49,7 +48,7 @@ void QmlManager::registerCommonQmlElements()
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController",
                                                 QString::fromUtf8("Cannot create WarningLevel in QML"));
 
-    setRootContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, this));
+    setRootContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, mEngine));
 }
 
 void QmlManager::setRootContextProperty(QObject* value)
@@ -103,4 +102,9 @@ void QmlManager::retranslate()
     {
         mEngine->retranslate();
     }
+}
+
+QQmlEngine* QmlManager::getEngine()
+{
+    return mEngine;
 }

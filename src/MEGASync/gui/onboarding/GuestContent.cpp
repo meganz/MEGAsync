@@ -14,7 +14,7 @@ GuestContent::GuestContent(QObject *parent)
 void GuestContent::onInitialPageButtonClicked()
 {
 #ifndef WIN32
-    MegaSyncApp->openOnboardingDialog();
+    QmlDialogManager::instance()->openOnboardingDialog();
 #endif
 }
 

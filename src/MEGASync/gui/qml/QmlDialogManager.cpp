@@ -1,6 +1,5 @@
 #include "QmlDialogManager.h"
 
-#include "QmlDialog.h"
 #include "QmlDialogWrapper.h"
 
 #include "onboarding/Onboarding.h"
@@ -13,7 +12,6 @@
 #include "AccountStatusController.h"
 
 QmlDialogManager::QmlDialogManager()
-    : QObject()
 {
 }
 

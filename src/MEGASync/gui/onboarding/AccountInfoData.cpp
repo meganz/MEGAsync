@@ -1,7 +1,5 @@
 #include "AccountInfoData.h"
 
-#include "qml/QmlManager.h"
-
 #include "MegaApplication.h"
 
 using namespace mega;
@@ -24,8 +22,8 @@ AccountInfoData::AccountInfoData(QObject *parent)
 
 AccountInfoData* AccountInfoData::instance(QQmlEngine* qmlEngine, QJSEngine* jsEngine)
 {
+    Q_UNUSED(jsEngine)
     AccountInfoData* accountInfoData = new AccountInfoData(qmlEngine);
-
     return accountInfoData;
 }
 

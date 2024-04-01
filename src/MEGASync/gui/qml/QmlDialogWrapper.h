@@ -100,7 +100,7 @@ public:
         Q_ASSERT((std::is_base_of<QMLComponent, Type>::value));
 
         mWrapper = new Type(parent);
-        QQmlEngine* engine = QmlManager::instance()->mEngine;
+        QQmlEngine* engine = QmlManager::instance()->getEngine();
         QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
 
