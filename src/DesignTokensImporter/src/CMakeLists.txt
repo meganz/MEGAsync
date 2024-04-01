@@ -22,7 +22,7 @@ set(SOURCES ${SOURCES}
     PathProvider.h PathProvider.cpp
     Resources.qrc
     StylesheetParser.h StylesheetParser.cpp
-    IStyleGenerator.h
+    IThemeGenerator.h
     Types.h
 )
 

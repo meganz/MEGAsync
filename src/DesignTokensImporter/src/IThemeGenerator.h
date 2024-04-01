@@ -1,14 +1,14 @@
-#ifndef I_STYLE_GENERATOR_H
-#define I_STYLE_GENERATOR_H
+#ifndef I_THEME_GENERATOR_H
+#define I_THEME_GENERATOR_H
 
 #include "Types.h"
 
 namespace DTI
 {
-    class IStyleGenerator
+    class IThemeGenerator
     {
     public:
-        virtual ~IStyleGenerator() = default;
+        virtual ~IThemeGenerator() = default;
         
         virtual void start(const ThemedColourMap& styleData) = 0;
     };

@@ -1,8 +1,8 @@
 #include "TokenManager.h"
 #include "Utilities.h"
 #include "PathProvider.h"
-#include "IStyleGenerator.h"
-#include "QMLStyleGenerator.h"
+#include "IThemeGenerator.h"
+#include "QMLThemeGenerator.h"
 #include "QTWIDGETStyleGenerator.h"
 
 #include <QDebug>
@@ -60,11 +60,11 @@ void TokenManager::run()
     }
 
     // qml style generator entry point.
-    std::unique_ptr<IStyleGenerator> styleGenerator{new QmlStyleGenerator()};
+    std::unique_ptr<IThemeGenerator> styleGenerator{new QmlThemeGenerator()};
     styleGenerator->start(fileToColourMap);
 
     // qtwidget style generator entry point.
-    std::unique_ptr<IStyleGenerator> qtWidgetStyleGenerator{new QTWIDGETStyleGenerator()};
+    std::unique_ptr<IThemeGenerator> qtWidgetStyleGenerator{new QTWIDGETStyleGenerator()};
     qtWidgetStyleGenerator->start(fileToColourMap);
 }
 

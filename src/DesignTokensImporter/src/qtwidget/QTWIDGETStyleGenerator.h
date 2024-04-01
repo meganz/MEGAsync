@@ -1,7 +1,7 @@
 #ifndef QTWIDGET_STYLE_GENERATOR_H
 #define QTWIDGET_STYLE_GENERATOR_H
 
-#include "IStyleGenerator.h"
+#include "IThemeGenerator.h"
 #include "UIHandler.h"
 #include "Types.h"
 
@@ -10,7 +10,7 @@
 
 namespace DTI
 {
-    class QTWIDGETStyleGenerator : public QObject, public IStyleGenerator
+    class QTWIDGETStyleGenerator : public QObject, public IThemeGenerator
     {
         Q_OBJECT
 
