@@ -1,22 +1,30 @@
 #
-# MEGA Update
+# MEGA Updater
 # Binary to perform updates in a separate process registered in target systems.
 #
 
-add_executable(MEGAupdater)
+if (WIN32)
+    add_executable(MEGAupdater WIN32)
+elseif (APPLE)
+    add_executable(MEGAupdater MACOSX_BUNDLE)
+else()
+endif()
 
 set(UPDATER_HEADERS
-    MacUtils.h
     Preferences.h
     UpdateTask.h
 )
 
 set(UPDATER_SOURCES
-    MacUtils.mm
     MegaUpdater.cpp
     UpdateTask.cpp
 )
 
+if (APPLE)
+    list(APPEND UPDATER_SOURCES
+        MacUtils.mm
+    )
+endif()
 
 target_sources(MEGAupdater
     PRIVATE
@@ -24,12 +32,10 @@ target_sources(MEGAupdater
     ${UPDATER_SOURCES}
 )
 
-
 # Load and link needed libraries for the MEGAupdater target
 find_package(cryptopp CONFIG REQUIRED)
-target_link_libraries(MEGAupdater PRIVATE cryptopp::cryptopp)
 
-if(WIN32)
+if (WIN32)
     # target_link_libraries(MEGAupdater PRIVATE
     #     ws2_32 winhttp Shlwapi Secur32.lib crypt32.lib
     #     $<$<BOOL:${USE_CURL}>:Wldap32.lib>
@@ -37,23 +43,27 @@ if(WIN32)
     #     $<$<BOOL:${USE_FFMPEG}>:Mfplat.lib mfuuid.lib strmiids.lib>
     #     $<$<BOOL:${ENABLE_DRIVE_NOTIFICATIONS}>:wbemuuid>
     # )
-else()
-    if(APPLE)
+    target_compile_definitions(MEGAupdater
+        PUBLIC
+        UNICODE
+    )
+
+    target_link_libraries(MEGAupdater PRIVATE
+        cryptopp::cryptopp
+        urlmon Shlwapi
+    )
+
+elseif (APPLE)
         target_link_libraries(MEGAupdater PRIVATE
+            cryptopp::cryptopp
             "-framework CoreServices"
             "-framework Cocoa"
         )
-    endif()
+else()
+
 endif()
 
-
-## Adjust compilation flags for warnings and errors ##
-# target_platform_compile_options(
-#     TARGET MEGAupdater
-#     UNIX $<$<CONFIG:Debug>:-ggdb3> -Wall -Wextra -Wconversion -Wno-unused-parameter
-# )
-
-if(ENABLE_DESKTOP_APP_WERROR)
+if (ENABLE_DESKTOP_APP_WERROR)
     target_platform_compile_options(
         TARGET MEGAupdater
         UNIX  $<$<CONFIG:Debug>: -Werror
