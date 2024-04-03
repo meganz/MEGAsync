@@ -20,16 +20,23 @@ static const QString colorThemeFooter = QString::fromUtf8("}\n");
 
 bool QMLColorThemeTarget::registered = ConcreteQMLThemeFactory<QMLColorThemeTarget>::Register("qmlColorTheme");
 
-void QMLColorThemeTarget::deploy(const ThemedColourMap& themeData) const
+void QMLColorThemeTarget::deploy(const ThemedColourMap& themeColorData) const
 {
-    for (auto themeIt = themeData.constBegin(); themeIt != themeData.constEnd(); ++themeIt)
+    if (themeColorData.isEmpty())
     {
-        const auto& themeData = themeIt.value();
+        qWarning() << "Error : No themed colour data to deploy/process.";
 
-        auto theme = themeIt.key().toLower();
-        if (!theme.isEmpty() && !themeData.isEmpty())
+        return;
+    }
+
+    for (auto themeIt = themeColorData.constBegin(); themeIt != themeColorData.constEnd(); ++themeIt)
+    {
+        const auto& colourMap = themeIt.value();
+
+        auto themeName = themeIt.key().toLower();
+        if (!themeName.isEmpty() && !colourMap.isEmpty())
         {
-            auto qmlColorStyleFilePath = qmlColorThemeTargetPath.arg(QDir::currentPath(), theme);
+            auto qmlColorStyleFilePath = qmlColorThemeTargetPath.arg(QDir::currentPath(), themeName);
 
             QDir dir(qmlColorStyleFilePath);
             if (!dir.exists() && !dir.mkpath(qmlColorStyleFilePath))
@@ -43,16 +50,15 @@ void QMLColorThemeTarget::deploy(const ThemedColourMap& themeData) const
             if (data.open(QFile::WriteOnly | QFile::Truncate))
             {
                 QTextStream stream(&data);
-
-                const auto& colourMap = themeIt.value();
-
                 stream << colorThemeHeader;
+
                 for (auto it = colourMap.constBegin(); it != colourMap.constEnd(); ++it)
                 {
                     const auto& tokenId = it.key();
                     const auto& color = it.value().toUpper();
                     stream << colorThemeLine.arg(normalizeTokenId(tokenId), color);
                 }
+
                 stream << colorThemeFooter;
             }
         }

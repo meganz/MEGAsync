@@ -6,18 +6,16 @@
 */
 QString DTI::normalizeTokenId(QString tokenId)
 {
-    while(tokenId.indexOf('-') != -1)
+    auto index = tokenId.indexOf('-');
+    while (index != -1)
     {
-        auto index = tokenId.indexOf('-');
         tokenId.remove(index, 1);
-
         if (index < tokenId.size())
         {
-            auto afterSeparatorChar = tokenId.at(index);
-            tokenId[index] = afterSeparatorChar.toUpper();
+            tokenId[index] = tokenId[index].toUpper();
         }
+        index = tokenId.indexOf('-', index);
     }
-
     return tokenId;
 }
 

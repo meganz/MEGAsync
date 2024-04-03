@@ -34,10 +34,8 @@ namespace DTI
             {
                 return foundIt->second->makeQMLThemeTarget();
             }
-            else
-            {
-                return nullptr;
-            }
+
+            return nullptr;
         }
 
         static bool registerThemeTargetFactory(const std::string& ThemeTargetId, IConcreteThemeTargetFactory* ThemeTargetFactory)
@@ -48,10 +46,8 @@ namespace DTI
                 auto result = ThemeTargetFactories.emplace(ThemeTargetId, ThemeTargetFactory);
                 return result.second;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         static QStringList getRegisteredThemeTargets()

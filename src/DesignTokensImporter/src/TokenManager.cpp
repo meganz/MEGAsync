@@ -16,7 +16,7 @@ using namespace DTI;
 TokenManager::TokenManager()
 {
     mCurrentDir = QDir::currentPath();
-    qDebug() << __PRETTY_FUNCTION__ << " Current working directory : " << mCurrentDir;
+    qDebug() << __func__ << " Current working directory : " << mCurrentDir;
 }
 
 TokenManager* TokenManager::instance()
@@ -32,7 +32,7 @@ void TokenManager::run()
     QFile coreFile(pathToCoreFile);
     if (!coreFile.exists())
     {
-        qCritical() << __PRETTY_FUNCTION__ << " Error : No core.json file found in  " << pathToCoreFile;
+        qCritical() << __func__ << " Error : No core.json file found in  " << pathToCoreFile;
         return;
     }
 
@@ -46,7 +46,7 @@ void TokenManager::run()
     // stop if there are no Design Token files
     if (colorThemedPathFiles.isEmpty())
     {
-        qCritical() << __PRETTY_FUNCTION__ << " ERROR! No color themed files found in folder " << pathToColorThemedFiles;
+        qCritical() << __func__ << " ERROR! No color themed files found in folder " << pathToColorThemedFiles;
         return;
     }
 
@@ -55,7 +55,7 @@ void TokenManager::run()
 
     if(!generateTokenFiles(fileToColourMap))
     {
-        qDebug() << __PRETTY_FUNCTION__ << " ERROR! Unable to generate token files";
+        qDebug() << __func__ << " ERROR! Unable to generate token files";
         return;
     }
 
@@ -108,7 +108,7 @@ CoreMap TokenManager::parseCore(const QString& coreFilePath)
     QFile inputFile(coreFilePath);
     if (!inputFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << __PRETTY_FUNCTION__ << " Error : opening core file " << coreFilePath;
+        qDebug() << __func__ << " Error : opening core file " << coreFilePath;
         return returnValue;
     }
 
@@ -116,7 +116,7 @@ CoreMap TokenManager::parseCore(const QString& coreFilePath)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(inputFile.readAll());
     if (jsonDocument.isNull())
     {
-        qDebug() << __PRETTY_FUNCTION__ << " Error : parsing core file " << coreFilePath;
+        qDebug() << __func__ << " Error : parsing core file " << coreFilePath;
         return returnValue;
     }
 
@@ -142,7 +142,7 @@ ThemedColourMap TokenManager::parseColorTokenJSON(const QStringList& colorTokenF
 
     if (colorTokenFilePathsList.isEmpty())
     {
-        qDebug() << __PRETTY_FUNCTION__ << " Error : colorTokenFilePathsList is empty.";
+        qDebug() << __func__ << " Error : colorTokenFilePathsList is empty.";
         return retMap;
     }
 
@@ -151,14 +151,14 @@ ThemedColourMap TokenManager::parseColorTokenJSON(const QStringList& colorTokenF
         ColourMap colourMap = Utilities::parseColorThemeJSON(colorTokenFilePath, coreMap);
         if (colourMap.isEmpty())
         {
-            qDebug() << __PRETTY_FUNCTION__ << " Error : ColourMap is empty on file " << colorTokenFilePath;
+            qDebug() << __func__ << " Error : ColourMap is empty on file " << colorTokenFilePath;
             continue;
         }
 
         QString theme = Utilities::themeToString(Utilities::getTheme(colorTokenFilePath));
         if (theme.isEmpty())
         {
-            qDebug() << __PRETTY_FUNCTION__ << " Error : No valid theme found on " << colorTokenFilePath;
+            qDebug() << __func__ << " Error : No valid theme found on " << colorTokenFilePath;
 
             continue;
         }

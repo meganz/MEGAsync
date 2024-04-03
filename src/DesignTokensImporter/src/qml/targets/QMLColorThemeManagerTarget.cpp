@@ -21,16 +21,22 @@ bool QMLColorThemeManagerTarget::registered = ConcreteQMLThemeFactory<QMLColorTh
 
 void QMLColorThemeManagerTarget::deploy(const ThemedColourMap& themeData) const
 {
-    if (themeData.isEmpty() || !checkThemeData(themeData))
+    if (themeData.isEmpty())
     {
+        qWarning() << __func__ << " Error : empty theme data.";
         return;
     }
+    else if (!checkThemeData(themeData))
+    {
+        qWarning() << __func__ << " Error : themes have different tokens.";
+        return;
+    }
+
 
     QFile data(qmlColorThemeManagerTargetPath.arg(QDir::currentPath()));
     if (data.open(QFile::WriteOnly | QFile::Truncate))
     {
         QTextStream stream(&data);
-
         stream << colorThemeManagerHeader;
 
         // we just need the first theme, all themes should have the same tokens, verified in checkThemeData.
@@ -62,17 +68,15 @@ bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColourMap& themeData
 {
     QStringList tokens;
 
-    auto itFound = std::find_if(themeData.constBegin(), themeData.constEnd(), [&tokens](const QMap<QString, QString>& colorMap){
+    auto itFound = std::find_if(themeData.constBegin(), themeData.constEnd(), [&tokens](const QMap<QString, QString>& colorMap)
+    {
         if (tokens.isEmpty())
         {
             tokens = colorMap.keys();
         }
-        else {
-            if (tokens != colorMap.keys())
-            {
-                qWarning() << __PRETTY_FUNCTION__ << " Error : themes have different tokens";
-                return true;
-            }
+        else if (tokens != colorMap.keys())
+        {
+            return true;
         }
 
         return false;

@@ -35,11 +35,11 @@ bool Utilities::createDirectory(const QString& dirPath)
 
     if (directory.mkpath("."))
     {
-        qDebug() << __PRETTY_FUNCTION__ << " Directory created successfully: " << dirPath;
+        qDebug() << __func__ << " Directory created successfully: " << dirPath;
         return true;
     }
 
-    qDebug() << __PRETTY_FUNCTION__ << " ERROR! Failed to create directory: " << dirPath;
+    qDebug() << __func__ << " ERROR! Failed to create directory: " << dirPath;
     return false;
 }
 
@@ -55,7 +55,7 @@ QStringList Utilities::findFilesInDir(const QString& dirPath, const QString& nam
 
     if (!directory.exists())
     {
-        qWarning() << __PRETTY_FUNCTION__ << " Directory does not exist: " << qPrintable(dirPath);
+        qWarning() << __func__ << " Directory does not exist: " << qPrintable(dirPath);
         return files;
     }
 
@@ -99,7 +99,7 @@ bool Utilities::isFileValid(const QString& path)
     // Check if the file path is not empty
     if (path.isEmpty())
     {
-        qDebug() << __PRETTY_FUNCTION__ << " File path is empty.";
+        qDebug() << __func__ << " File path is empty.";
         return false;
     }
 
@@ -109,7 +109,7 @@ bool Utilities::isFileValid(const QString& path)
     // Check if the file exists and is not empty
     if (!fileInfo.exists() || fileInfo.size() == 0)
     {
-        qDebug() << __PRETTY_FUNCTION__ << " File does not exist or is empty: " << path;
+        qDebug() << __func__ << " File does not exist or is empty: " << path;
         return false;
     }
 
@@ -123,7 +123,7 @@ QMap<QString, QString> Utilities::parseColorThemeJSON(const QString& themedColor
     QFile inputFile(themedColorTokenFilePath);
     if (!inputFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << __PRETTY_FUNCTION__ << " Error : opening input file " << themedColorTokenFilePath;
+        qDebug() << __func__ << " Error : opening input file " << themedColorTokenFilePath;
         return colourMap;
     }
 
@@ -132,7 +132,7 @@ QMap<QString, QString> Utilities::parseColorThemeJSON(const QString& themedColor
 
     if (jsonDocument.isNull())
     {
-        qDebug() << __PRETTY_FUNCTION__ << " Error : parsing JSON document " << themedColorTokenFilePath;
+        qDebug() << __func__ << " Error : parsing JSON document " << themedColorTokenFilePath;
         return colourMap;
     }
 
@@ -174,7 +174,7 @@ QMap<QString, QString> Utilities::parseColorThemeJSON(const QString& themedColor
                     }
                     else
                     {
-                        qDebug() << __PRETTY_FUNCTION__ << " Core map doesn't contain the color id " << value << " on file : " << themedColorTokenFilePath;
+                        qDebug() << __func__ << " Core map doesn't contain the color id " << value << " on file : " << themedColorTokenFilePath;
                     }
                 }
             }
