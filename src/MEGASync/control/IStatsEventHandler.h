@@ -10,7 +10,7 @@ class IStatsEventHandler
 public:
     virtual ~IStatsEventHandler() = default;
 
-    virtual void sendEvent(int eventType, const char *message, bool addJourneyId, const char *viewId, mega::MegaRequestListener *listener = nullptr) = 0;
+    virtual void sendEvent(int eventType, const char* message, bool addJourneyId, const char* viewId, mega::MegaRequestListener* listener = nullptr) = 0;
 };
 
 #endif // ISTATSEVENTHANDLER_H

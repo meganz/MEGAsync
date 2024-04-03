@@ -5,7 +5,7 @@
 
 #include <QProcessEnvironment>
 
-void ProxyStatsEventHandler::sendEvent(int eventType, const char *message, bool addJourneyId, const char *viewId, mega::MegaRequestListener *listener)
+void ProxyStatsEventHandler::sendEvent(int eventType, const char* message, bool addJourneyId, const char* viewId, mega::MegaRequestListener* listener)
 {
     if(canSend())
     {
