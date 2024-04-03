@@ -45,6 +45,7 @@
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
+#include "IStatsEventHandler.h"
 
 class TransfersModel;
 class StalledIssuesModel;
@@ -173,6 +174,8 @@ public:
     void onboardingFinished(bool fastLogin);
     void onLoginFinished();
     void onLogout();
+
+    IStatsEventHandler* getStatsEventHandler() const;
 
     MegaSyncLogger& getLogger() const;
     void pushToThreadPool(std::function<void()> functor);
@@ -505,6 +508,7 @@ protected:
 
     bool mDisableGfx;
     StalledIssuesModel* mStalledIssuesModel;
+    IStatsEventHandler* mStatsEventHandler;
 
 private:
     void loadSyncExclusionRules(QString email = QString());

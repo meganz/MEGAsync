@@ -115,7 +115,7 @@ void TransferQuota::checkExecuteDialog()
     if(dialogExecutionEnabled)
     {
         mPreferences->setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::now());
-        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_DIAL,
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_DIAL,
                             EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG, false, nullptr);
         if (!mUpgradeDialog)
         {
@@ -141,7 +141,7 @@ void TransferQuota::checkExecuteNotification()
     if (notificationExecutionEnabled)
     {
         mPreferences->setTransferOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
-        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_NOTIF,
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_NOTIF,
                             EVENT_MESSAGE_TRANSFER_OVER_QUOTA_OS_NOTIFICATION, false, nullptr);
         sendOverQuotaOsNotification();
     }
@@ -155,7 +155,7 @@ void TransferQuota::checkExecuteUiMessage()
     {
         if (!overQuotaAlertVisible) //We only want to send the event when transitioning from non-visible alert message
         {
-            mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_MSG,
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_MSG,
                             EVENT_MESSAGE_TRANSFER_OVER_QUOTA_UI_ALERTST_OVER_QUOTA_UI_ALERT, false, nullptr);
         }
 
@@ -170,7 +170,7 @@ void TransferQuota::checkExecuteWarningOsNotification()
     if (notificationExecutionEnabled)
     {
         mPreferences->setTransferAlmostOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
-        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_ALMOST_OVERQUOTA_NOTIF,
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_TRSF_ALMOST_OVERQUOTA_NOTIF,
                            EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION, false, nullptr);
         sendQuotaWarningOsNotification();
     }
@@ -184,7 +184,7 @@ void TransferQuota::checkExecuteWarningUiMessage()
     {
         if (!almostQuotaAlertVisible)
         {
-            mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_ALMOST_OVER_QUOTA_MSG,
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_TRSF_ALMOST_OVER_QUOTA_MSG,
                                 EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT, false, nullptr);
         }
 
