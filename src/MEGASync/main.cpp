@@ -277,7 +277,7 @@ int main(int argc, char *argv[])
                 base64stats.resize(base64stats.size() - 1);
             }
 
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_INSTALL_STATS, base64stats.constData(), false, nullptr);
+            megaApi->sendEvent(AppStatsEvents::EVENT_INSTALL_STATS, base64stats.constData(), false, nullptr);
             Sleep(5000);
         }
 #endif

@@ -18,11 +18,9 @@ bool ProxyStatsEventHandler::canSend() const
     /*
     * Usage : declare the list of not allowed conditions to send stats.
     */
-
 #if defined QT_DEBUG
-        return false;
-#endif
-
+    return false;
+#else
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
     bool inTestEnvironment = QVariant(env.value(QLatin1String("MEGA_TESTS"), QLatin1String("false"))).toBool();
 
@@ -32,4 +30,5 @@ bool ProxyStatsEventHandler::canSend() const
     }
 
     return true;
+#endif
 }
