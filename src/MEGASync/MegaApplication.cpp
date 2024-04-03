@@ -719,7 +719,7 @@ void MegaApplication::initialize()
     mLogoutController = new LogoutController(mEngine);
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
     mEngine->rootContext()->setContextProperty(QString::fromUtf8("logoutControllerAccess"), mLogoutController);
-    mStatsEventHandler = new ProxyStatsEventHandler(this);
+    mStatsEventHandler = new ProxyStatsEventHandler();
 }
 
 QString MegaApplication::applicationFilePath()
