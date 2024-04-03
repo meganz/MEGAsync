@@ -390,6 +390,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.h
     ${MEGAsyncDir}/gui/qml/StandardIconProvider.h
     ${MEGAsyncDir}/gui/qml/ApiEnums.h
+    ${MEGAsyncDir}/gui/qml/QmlDialogManager.h
+    ${MEGAsyncDir}/gui/qml/QmlManager.h
     ${MEGAsyncDir}/gui/onboarding/ChooseFolder.h
     ${MEGAsyncDir}/gui/onboarding/Onboarding.h
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.h
@@ -662,6 +664,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/qml/QmlDialog.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.cpp
     ${MEGAsyncDir}/gui/qml/StandardIconProvider.cpp
+    ${MEGAsyncDir}/gui/qml/QmlDialogManager.cpp
+    ${MEGAsyncDir}/gui/qml/QmlManager.cpp
     ${MEGAsyncDir}/gui/onboarding/ChooseFolder.cpp
     ${MEGAsyncDir}/gui/onboarding/Onboarding.cpp
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.cpp

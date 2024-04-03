@@ -14,7 +14,6 @@
 #include <QFutureWatcher>
 
 #include <memory>
-#include <QQmlEngine>
 
 #include "gui/TransferManager.h"
 #include "gui/InfoDialog.h"
@@ -46,6 +45,8 @@
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
 #include "IStatsEventHandler.h"
+#include "qml/QmlManager.h"
+#include "qml/QmlDialogManager.h"
 
 class TransfersModel;
 class StalledIssuesModel;
@@ -132,7 +133,6 @@ public:
     void migrateSyncConfToSdk(QString email = QString());
 
     mega::MegaApi *getMegaApi() { return megaApi; }
-    QQmlEngine *qmlEngine() { return mEngine;}
     mega::MegaApi *getMegaApiFolders() { return megaApiFolders; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
@@ -206,13 +206,11 @@ public:
     void reloadSyncsInSettings();
 
     void raiseInfoDialog();
-    bool raiseGuestDialog();
-    void raiseOnboardingDialog();
-    void raiseOrHideInfoGuestDialog();
     bool isShellNotificationProcessingOngoing();
 
     QSystemTrayIcon* getTrayIcon();
     LoginController* getLoginController();
+    AccountStatusController* getAccountStatusController();
 
 signals:
     void startUpdaterThread();
@@ -238,8 +236,6 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
-    void openGuestDialog();
-    void openOnboardingDialog();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -601,12 +597,8 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
-    QQmlEngine* mEngine;
-
     void processUpgradeSecurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;
-
-    void registerCommonQMLElements();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
@@ -614,6 +606,7 @@ private slots:
 
 private:
     QFutureWatcher<NodeCount> mWatcher;
+
 };
 
 class DeferPreferencesSyncForScope
