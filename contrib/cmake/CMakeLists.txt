@@ -310,6 +310,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/LoginController.h
     ${MEGAsyncDir}/control/AccountStatusController.h
     ${MEGAsyncDir}/control/EmailRequester.h
+    ${MEGAsyncDir}/control/IStatsEventHandler.h
+    ${MEGAsyncDir}/control/ProxyStatsEventHandler.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -760,6 +762,7 @@ set (SRCS
     ${MEGAsyncDir}/control/AccountStatusController.cpp
     ${MEGAsyncDir}/control/FileFolderAttributes.cpp
     ${MEGAsyncDir}/control/EmailRequester.cpp
+    ${MEGAsyncDir}/control/ProxyStatsEventHandler.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp
