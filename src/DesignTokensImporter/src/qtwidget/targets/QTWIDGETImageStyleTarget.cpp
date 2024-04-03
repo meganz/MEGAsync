@@ -1,7 +1,7 @@
 #include "QTWIDGETImageStyleTarget.h"
 #include "QTWIDGETStyleTargetFactory.h"
 
-#include "utilities.h"
+#include "Utilities.h"
 #include "SVGIcon.h"
 
 #include <QDir>
