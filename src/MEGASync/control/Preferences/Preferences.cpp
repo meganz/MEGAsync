@@ -251,6 +251,7 @@ const QString Preferences::importMegaLinksEnabledKey = QString::fromLatin1("impo
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromLatin1("downloadMegaLinksEnabled");
 const QString Preferences::systemTrayPromptSuppressed = QString::fromLatin1("systemTrayPromptSuppressed");
 const QString Preferences::systemTrayLastPromptTimestamp = QString::fromLatin1("systemTrayLastPromptTimestamp");
+const QString Preferences::themeKey = QString::fromLatin1("theme");
 
 
 //Sleep settings
@@ -301,6 +302,7 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 const bool Preferences::defaultSystemTrayPromptSuppressed = false;
+const int Preferences::defaultTheme = static_cast<int>(Preferences::Theme::LIGHT_THEME);
 
 std::shared_ptr<Preferences> Preferences::instance()
 {
@@ -2602,6 +2604,16 @@ bool Preferences::needsDeferredSync()
     bool b = mSettings->needsDeferredSync();
     mutex.unlock();
     return b;
+}
+
+void Preferences::setTheme(int value)
+{
+    setValueAndSyncConcurrent(themeKey, value);
+}
+
+int Preferences::getTheme()
+{
+    return getValueConcurrent<int>(themeKey, defaultTheme);
 }
 
 void Preferences::setEmailAndGeneralSettings(const QString &email)

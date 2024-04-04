@@ -736,7 +736,7 @@ margin-top: 4px;
            <number>10</number>
           </property>
           <item>
-           <widget class="QComboBox" name="cLanguage_2"/>
+           <widget class="QComboBox" name="cbTheme"/>
           </item>
          </layout>
         </widget>

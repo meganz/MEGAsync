@@ -403,6 +403,9 @@ public:
     void deferSyncs(bool b);  // this must receive balanced calls with true and false, as it maintains a count (to support threads).
     bool needsDeferredSync();
 
+    void setTheme(int value);
+    int getTheme();
+
     enum {
         PROXY_TYPE_NONE = 0,
         PROXY_TYPE_AUTO   = 1,
@@ -456,6 +459,14 @@ public:
         STATE_FETCHNODES_OK = 3,
         STATE_FETCHNODES_FAILED = 4
     };
+
+    enum class Theme
+    {
+        LIGHT_THEME = 0,
+        DARK_THEME = 1,
+        LAST
+    };
+    Q_ENUM(Theme)
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
@@ -729,6 +740,7 @@ protected:
     static const QString downloadMegaLinksEnabledKey;
     static const QString systemTrayPromptSuppressed;
     static const QString systemTrayLastPromptTimestamp;
+    static const QString themeKey;
 
     //Sleep mode
     static const QString awakeIfActiveKey;
@@ -782,6 +794,7 @@ protected:
     static const bool defaultImportMegaLinksEnabled;
     static const bool defaultDownloadMegaLinksEnabled;
     static const bool defaultSystemTrayPromptSuppressed;
+    static const int defaultTheme;
 
 private:
     void updateFullName();
