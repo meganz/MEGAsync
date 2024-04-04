@@ -2,11 +2,13 @@
 
 #include "MegaApplication.h"
 
+#include <QQmlEngine>
+
 using namespace mega;
 
 static const long long MIN_USED_STORAGE_THRESHOLD = 1000000;
 
-AccountInfoData::AccountInfoData(QObject *parent)
+AccountInfoData::AccountInfoData(QObject* parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
