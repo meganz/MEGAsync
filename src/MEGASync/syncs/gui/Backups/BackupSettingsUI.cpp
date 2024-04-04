@@ -4,6 +4,7 @@
 #include "syncs/model/BackupItemModel.h"
 
 #include "qml/QmlDialogWrapper.h"
+#include "qml/QmlDialogManager.h"
 #include "backups/Backups.h"
 #include "onboarding/Onboarding.h"
 
@@ -53,19 +54,10 @@ BackupSettingsUI::~BackupSettingsUI()
 {
 }
 
-void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
+void BackupSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {
-    QPointer<QmlDialogWrapper<Backups>> backupsDialog;
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
-    {
-        backupsDialog = dialog->getDialog();
-    }
-    else
-    {
-        backupsDialog = new QmlDialogWrapper<Backups>();
-    }
-    DialogOpener::showDialog(backupsDialog);
-    backupsDialog->wrapper()->setComesFromSettings(true);
+    Q_UNUSED(megaFolderHandle)
+    QmlDialogManager::instance()->openBackupsDialog(true);
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)

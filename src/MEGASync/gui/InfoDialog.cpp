@@ -26,8 +26,7 @@
 
 #include "control/Utilities.h"
 #include "platform/Platform.h"
-#include "qml/QmlDialogWrapper.h"
-#include "backups/Backups.h"
+#include "qml/QmlDialogManager.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
 
 #ifdef _WIN32
@@ -1034,17 +1033,7 @@ void InfoDialog::addBackup()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
-            {
-                DialogOpener::showDialog(dialog->getDialog());
-                dialog->getDialog()->wrapper()->setComesFromSettings(false);
-            }
-            else
-            {
-                QPointer<QmlDialogWrapper<Backups>> backupsDialog = new QmlDialogWrapper<Backups>();
-                DialogOpener::showDialog(backupsDialog);
-                backupsDialog->wrapper()->setComesFromSettings(false);
-            }
+            QmlDialogManager::instance()->openBackupsDialog();
         }
     };
 

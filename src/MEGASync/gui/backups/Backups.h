@@ -20,7 +20,7 @@ public:
     Q_INVOKABLE void openBackupsTabInPreferences() const;
     Q_INVOKABLE void openExclusionsDialog(const QString& folder) const;
 
-    void setComesFromSettings(bool value);
+    void setComesFromSettings(bool value = false);
     bool getComesFromSettings() const;
 
 signals:
