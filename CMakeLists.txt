@@ -30,8 +30,12 @@ if(NOT PROJECT_NAME)
     endif()
 endif()
 
+# Get MEGA Desktop App version to use it as the CMake project version.
+include(desktopapp_load_version)
+read_desktop_app_version(MEGA_DESKTOP_APP_VERSION ${CMAKE_CURRENT_LIST_DIR}/src/MEGASync/control/Version.h)
+
 project(desktop
-    VERSION 5.2.0
+    VERSION ${MEGA_DESKTOP_APP_VERSION}
     DESCRIPTION "MEGA Desktop app project"
     )
 
