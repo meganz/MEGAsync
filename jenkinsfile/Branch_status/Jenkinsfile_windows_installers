@@ -45,7 +45,7 @@ pipeline {
                         branchToCheckout = env.SDK_BRANCH
                         shouldCloneSDK = true
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
-                        branchToCheckout = "develop"
+                        branchToCheckout = "release/v6.0.0"
                         shouldCloneSDK = true
                     } else {
                         def status = sh(script: "git submodule status", returnStdout: true).trim()

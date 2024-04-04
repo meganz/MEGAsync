@@ -10,7 +10,7 @@ pipeline {
                                 booleanParam(name: 'IS_RELEASE_CANDIDATE', value: true),
                                 string(name: 'RELEASE_CANDIDATE_NAME', value: 'QA-automated-tests'),
                                 string(name: 'ARCHITECTURE', value: "32/64"),
-                                string(name: 'SDK_BRANCH', value: "develop")
+                                string(name: 'SDK_BRANCH', value: "release/v6.0.0")
                             ]
                             env.WINDOWS_BUILD_ID = 	triggeredBuild.getId()                
                         }
@@ -23,7 +23,7 @@ pipeline {
                             string(name: 'RELEASE_CANDIDATE_NAME', value: 'QA-automated-tests'),
                             booleanParam(name: 'ARM64', value: true),
                             booleanParam(name: 'X86_64', value: true),
-                            string(name: 'SDK_BRANCH', value: "develop")
+                            string(name: 'SDK_BRANCH', value: "release/v6.0.0")
                         ]
                     }
                 }               
