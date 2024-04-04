@@ -74,11 +74,19 @@ target_sources_conditional(MEGAsync
    transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
 )
 
-set_property(TARGET MEGAsync
-    APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-    transfers/gui/macx
-    transfers/gui/DuplicatedNodeDialogs/macx
-)
+if (APPLE)
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        transfers/gui/macx
+        transfers/gui/DuplicatedNodeDialogs/macx
+    )
+else()
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        transfers/gui/win
+        transfers/gui/DuplicatedNodeDialogs/win
+    )
+endif()
 
 target_sources(MEGAsync
     PRIVATE

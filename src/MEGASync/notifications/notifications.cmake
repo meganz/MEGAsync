@@ -30,17 +30,35 @@ target_sources_conditional(MEGAsync
    notifications/macx/NSUserNotificationHandler.h
 )
 
+target_sources_conditional(MEGAsync
+   FLAG WIN32
+   PRIVATE
+   notifications/../gui/Resources_win.qrc
+   notifications/win/Notificator.h
+   notifications/win/Notificator.cpp   
+)
+
 target_sources(MEGAsync
     PRIVATE
     ${DESKTOP_APP_NOTIFICATIONS_HEADERS}
     ${DESKTOP_APP_NOTIFICATIONS_SOURCES}
 )
 
-target_link_libraries(MEGAsync
-    PRIVATE
-    "-framework UserNotifications"
-)
+if (WIN32)
+    target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}/win
+    )
+elseif (APPLE)
+    target_link_libraries(MEGAsync
+        PRIVATE
+        "-framework UserNotifications"
+    )
 
-target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/macx
-)
+    target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}/macx
+    )
+else()
+
+endif()
+
+
