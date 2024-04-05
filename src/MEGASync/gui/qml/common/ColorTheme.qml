@@ -36,6 +36,7 @@ Item {
 	readonly property color buttonSecondaryHover: loader.item.buttonSecondaryHover
 	readonly property color buttonSecondaryPressed: loader.item.buttonSecondaryPressed
 	readonly property color divider: loader.item.divider
+	readonly property color extInverse: loader.item.extInverse
 	readonly property color focusColor: loader.item.focusColor
 	readonly property color iconAccent: loader.item.iconAccent
 	readonly property color iconButton: loader.item.iconButton
@@ -83,7 +84,6 @@ Item {
 	readonly property color textDisabled: loader.item.textDisabled
 	readonly property color textError: loader.item.textError
 	readonly property color textInfo: loader.item.textInfo
-	readonly property color textInverse: loader.item.textInverse
 	readonly property color textInverseAccent: loader.item.textInverseAccent
 	readonly property color textInverseAccentHover: loader.item.textInverseAccentHover
 	readonly property color textInverseAccentPlaceholder: loader.item.textInverseAccentPlaceholder

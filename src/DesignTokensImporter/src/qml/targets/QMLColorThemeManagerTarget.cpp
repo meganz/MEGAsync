@@ -32,7 +32,6 @@ void QMLColorThemeManagerTarget::deploy(const ThemedColourMap& themeData) const
         return;
     }
 
-
     QFile data(qmlColorThemeManagerTargetPath.arg(QDir::currentPath()));
     if (data.open(QFile::WriteOnly | QFile::Truncate))
     {
@@ -67,20 +66,71 @@ void QMLColorThemeManagerTarget::deploy(const ThemedColourMap& themeData) const
 bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColourMap& themeData) const
 {
     QStringList tokens;
+    QString themeName;
 
-    auto itFound = std::find_if(themeData.constBegin(), themeData.constEnd(), [&tokens](const QMap<QString, QString>& colorMap)
+    for (auto itTheme = themeData.constBegin(); itTheme != themeData.constEnd(); ++itTheme)
     {
-        if (tokens.isEmpty())
+        auto currentThemeName = itTheme.key();
+        auto currentThemeData = itTheme.value();
+
+        if (tokens.empty() && themeName.isEmpty())
         {
-            tokens = colorMap.keys();
+            themeName = currentThemeName;
+            tokens = currentThemeData.keys();
         }
-        else if (tokens != colorMap.keys())
+        else
         {
-            return true;
+            QStringList currentTokens = currentThemeData.keys();
+
+            // if we detect differences between les token_id list, we will go into find the exact differences.
+            if (tokens != currentTokens)
+            {
+                auto list1VsList2 = areDifferents(themeName, tokens, currentThemeName, currentTokens);
+                auto list2VsList1 = areDifferents(currentThemeName, currentTokens, themeName, tokens);
+
+                if (list1VsList2 || list2VsList1)
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+
+    return true;
+}
+
+
+bool QMLColorThemeManagerTarget::areDifferents(QString& themeName1, const QStringList& list1, QString& themeName2, const QStringList& list2) const
+{
+    bool error = false;
+
+    if (list1.size() != list2.size())
+    {
+        qWarning() << __func__ << " Error on themes : " << themeName1 << " & " << themeName2 << " have different sizes.";
+        error = true;
+    }
+
+    for (auto list1Index = 0U; list1Index < list1.size(); ++list1Index)
+    {
+        auto value1 = list1[list1Index];
+        bool found = false;
+
+        for (auto list2Index = 0U; list2Index < list2.size() && !found; ++list2Index)
+        {
+            if (value1 == list2[list2Index])
+            {
+                found = true;
+            }
         }
 
-        return false;
-    });
+        if (!found)
+        {
+            // log error, i don't want to stop the main loop, i want to check all tokens.
+            error = true;
+            qWarning() << "Couldn't find tokendId " << value1 << " from theme " << themeName1  << " in theme " << themeName2;
+        }
+    }
 
-    return itFound == themeData.constEnd();
+    return error;
 }
