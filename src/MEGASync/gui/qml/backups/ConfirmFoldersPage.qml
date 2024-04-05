@@ -12,7 +12,8 @@ ConfirmFoldersPageForm {
 
     footerButtons {
         leftSecondary.onClicked: {
-            // Open exclusions dialog
+            var folderPaths = backupsProxyModelRef.getSelectedFolders();
+            backupsAccess.openExclusionsDialog(folderPaths);
         }
 
         rightSecondary.onClicked: {

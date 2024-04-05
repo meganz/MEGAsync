@@ -186,10 +186,11 @@ class BackupsProxyModel : public QSortFilterProxyModel
                WRITE setSelectedFilterEnabled NOTIFY selectedFilterEnabledChanged)
 
 public:
-
     explicit BackupsProxyModel(QObject* parent = nullptr);
     bool selectedFilterEnabled() const;
     void setSelectedFilterEnabled(bool enabled);
+
+    Q_INVOKABLE QStringList getSelectedFolders() const;
 
 public slots:
     void createBackups();

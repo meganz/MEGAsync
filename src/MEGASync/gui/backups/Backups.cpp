@@ -55,12 +55,13 @@ void Backups::setComesFromSettings(bool value)
     mComesFromSettings = value;
 }
 
-void Backups::openExclusionsDialog(const QString &folder) const
+void Backups::openExclusionsDialog(const QStringList& folderPaths) const
 {
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
     {
+        // TODO: Change the code to pass the full list to the exclusions dialog
         QWidget* parentWidget = static_cast<QWidget*>(dialog->getDialog().data());
-        QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(folder, true, parentWidget);
+        QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(folderPaths.at(0), true, parentWidget);
         DialogOpener::showDialog(exclusionRules);
     }
 }

@@ -1057,6 +1057,20 @@ bool BackupsProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourc
     return index.data(BackupsModel::BackupFolderRoles::SELECTED_ROLE).toBool();
 }
 
+QStringList BackupsProxyModel::getSelectedFolders() const
+{
+    QStringList selectedFolders;
+    for (int row = 0; row < rowCount(); row++)
+    {
+        if(!index(row, 0).data(BackupsModel::BackupFolderRoles::DONE_ROLE).toBool())
+        {
+            QString folderPath(index(row, 0).data(BackupsModel::BackupFolderRoles::FOLDER_ROLE).toString());
+            selectedFolders.append(folderPath);
+        }
+    }
+    return selectedFolders;
+}
+
 void BackupsProxyModel::createBackups()
 {
     if(!backupsModel()->checkDirectories())
