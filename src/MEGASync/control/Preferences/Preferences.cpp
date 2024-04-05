@@ -1279,39 +1279,24 @@ void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
     auto currentValue(stalledIssuesMode());
     if(value != currentValue)
     {
-        QString eventMessage;
-        int eventType(0);
+        AppStatsEvents::EventTypes type(AppStatsEvents::NONE);
 
         if(value == StalledIssuesModeType::Smart)
         {
-            if(currentValue == StalledIssuesModeType::None)
-            {
-                eventMessage = QString::fromLatin1("Smart mode selected by default");
-                eventType = AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED;
-            }
-            else
-            {
-                eventMessage = QString::fromLatin1("Smart mode selected");
-                eventType = AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE;
-            }
+            type = (currentValue == StalledIssuesModeType::None)
+                    ? AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED
+                    : AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE;
         }
         else
         {
-            if(currentValue == StalledIssuesModeType::None)
-            {
-                eventMessage = QString::fromLatin1("Advanced mode selected by default");
-                eventType = AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED;
-            }
-            else
-            {
-                eventMessage = QString::fromLatin1("Advanced mode selected");
-                eventType = AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE;
-            }
+            type = (currentValue == StalledIssuesModeType::None)
+                    ? AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED
+                    : AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE;
         }
 
-        if(eventType != 0)
+        if(type != AppStatsEvents::NONE)
         {
-            MegaSyncApp->getMegaApi()->sendEvent(eventType, eventMessage.toUtf8().constData(), false, nullptr);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(type);
         }
 
         setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value), true);

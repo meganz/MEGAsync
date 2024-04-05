@@ -1159,7 +1159,7 @@ void MegaApplication::start()
         initLocalServer();
         if (updated)
         {
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_UPDATE, "MEGAsync update", false, nullptr);
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_UPDATE);
             checkupdate = true;
         }
         updated = false;
@@ -1176,7 +1176,7 @@ void MegaApplication::start()
         mLoginController = new LoginController(QmlManager::instance()->getEngine());
         if (!preferences->isFirstStartDone())
         {
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_1ST_START, "MEGAsync first start", false, nullptr);
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_1ST_START);
         }
         else if (!QSystemTrayIcon::isSystemTrayAvailable() && !getenv("START_MEGASYNC_IN_BACKGROUND"))
         {
@@ -1195,7 +1195,7 @@ void MegaApplication::start()
         }
         if (updated)
         {
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_UPDATE, "MEGAsync update", false, nullptr);
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_UPDATE);
             checkupdate = true;
         }
     }
@@ -1947,10 +1947,11 @@ void MegaApplication::checkMemoryUsage()
         {
             preferences->setMaxMemoryUsage(maxMemoryUsage);
             preferences->setMaxMemoryReportTime(currentTime);
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MEM_USAGE, QString::fromUtf8("%1 %2 %3")
-                               .arg(maxMemoryUsage)
-                               .arg(numNodes)
-                               .arg(numLocalNodes).toUtf8().constData(), false, nullptr);
+            const char* eventMemUsageMessage = QString::fromUtf8("%1 %2 %3")
+                                                   .arg(maxMemoryUsage)
+                                                   .arg(numNodes)
+                                                   .arg(numLocalNodes).toUtf8().constData();
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MEM_USAGE, eventMemUsageMessage);
         }
     }
 }
@@ -1968,8 +1969,7 @@ void MegaApplication::checkOverStorageStates()
                 || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_DIALOG_INTERVAL_MS))
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_OVER_STORAGE_DIAL,
-                               "Overstorage dialog shown", false, nullptr);
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_OVER_STORAGE_DIAL);
             if (!mStorageOverquotaDialog)
             {
                 mStorageOverquotaDialog = new UpgradeOverStorage(megaApi, mPricing, mCurrency);
@@ -1979,8 +1979,7 @@ void MegaApplication::checkOverStorageStates()
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
         {
             preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_OVER_STORAGE_NOTIF,
-                               "Overstorage notification shown", false, nullptr);
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_OVER_STORAGE_NOTIF);
             mOsNotifications->sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
         }
 
@@ -1991,8 +1990,7 @@ void MegaApplication::checkOverStorageStates()
             {
                 if (infoDialog->updateOverStorageState(Preferences::STATE_OVER_STORAGE))
                 {
-                    mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_OVER_STORAGE_MSG,
-                                       "Overstorage warning shown", false, nullptr);
+                    mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_OVER_STORAGE_MSG);
                 }
             }
             else
@@ -2010,8 +2008,7 @@ void MegaApplication::checkOverStorageStates()
             {
                 if (infoDialog->updateOverStorageState(Preferences::STATE_ALMOST_OVER_STORAGE))
                 {
-                    mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_ALMOST_OVER_STORAGE_MSG,
-                                       "Almost overstorage warning shown", false, nullptr);
+                    mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_ALMOST_OVER_STORAGE_MSG);
                 }
             }
             else
@@ -2028,8 +2025,7 @@ void MegaApplication::checkOverStorageStates()
                               && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS))
         {
             preferences->setAlmostOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_ALMOST_OVER_STORAGE_NOTIF,
-                               "Almost overstorage notification shown", false, nullptr);
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_ALMOST_OVER_STORAGE_NOTIF);
             mOsNotifications->sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
 
@@ -2054,8 +2050,7 @@ void MegaApplication::checkOverStorageStates()
                 if (remainDaysOut > 0) //Only show notification if at least there is one day left
                 {
                     preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
-                    mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_PAYWALL_NOTIF,
-                                       "Paywall notification shown", false, nullptr);
+                    mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_PAYWALL_NOTIF);
                     mOsNotifications->sendOverStorageNotification(Preferences::STATE_PAYWALL);
                 }
             }
@@ -2125,7 +2120,7 @@ void MegaApplication::periodicTasks()
             if (checkupdate)
             {
                 checkupdate = false;
-                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_UPDATE_OK, "MEGAsync updated OK", false, nullptr);
+                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_UPDATE_OK);
             }
 
             checkMemoryUsage();
@@ -2380,13 +2375,11 @@ void MegaApplication::showInfoDialog()
         {
             if (storageState == MegaApi::STORAGE_STATE_RED)
             {
-                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MAIN_DIAL_WHILE_OVER_QUOTA,
-                                   "Main dialog shown while overquota", false, nullptr);
+                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MAIN_DIAL_WHILE_OVER_QUOTA);
             }
             else if (storageState == MegaApi::STORAGE_STATE_ORANGE)
             {
-                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MAIN_DIAL_WHILE_ALMOST_OVER_QUOTA,
-                                   "Main dialog shown while almost overquota", false, nullptr);
+                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MAIN_DIAL_WHILE_ALMOST_OVER_QUOTA);
             }
 
             raiseInfoDialog();
@@ -5789,8 +5782,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
             {
-                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_RED_LIGHT_USED_STORAGE_MISMATCH,
-                                   "Red light does not match used storage", false, nullptr);
+                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_RED_LIGHT_USED_STORAGE_MISMATCH);
                 preferences->setUsedStorage(preferences->totalStorage());
             }
             else
@@ -5929,8 +5921,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_EACCESS)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Sync addition returns API_EACCESS").toUtf8().constData());
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_SYNC_ADD_FAIL_API_EACCESS,
-                               "Sync addition fails with API_EACCESS", false, nullptr); //this would enforce a fetchNodes in the past
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_SYNC_ADD_FAIL_API_EACCESS);
+            //this would enforce a fetchNodes in the past
         }
         break;
     }
@@ -5944,7 +5936,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         const char *url = request->getText();
         if (url && !memcmp(url, "pro", 3))
         {
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_PRO_REDIRECT, "Redirection to PRO", false, nullptr);
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_PRO_REDIRECT);
         }
 
         Utilities::openUrl(QUrl(QString::fromUtf8(request->getLink())));
@@ -6145,8 +6137,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         {
             if (!mIsFirstFileTwoWaySynced && !preferences->isFirstFileSynced())
             {
-                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_1ST_SYNCED_FILE,
-                                   "MEGAsync first synced file", false, nullptr);
+                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_1ST_SYNCED_FILE);
             }
             mIsFirstFileTwoWaySynced = true;
             break;
@@ -6155,8 +6146,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         {
             if (!mIsFirstFileBackedUp && !preferences->isFirstFileBackedUp())
             {
-                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_1ST_BACKED_UP_FILE,
-                                   "MEGAsync first backed-up file", false, nullptr);
+                mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_1ST_BACKED_UP_FILE);
             }
             mIsFirstFileBackedUp = true;
             break;
