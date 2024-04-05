@@ -434,7 +434,7 @@ void NameConflict::onActionClicked(int actionId)
             QPointer<NameConflict> context = this;
             DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
                                                        [this, context, issueData, titleFileName, conflictIndex, renameDialog](){
-                if(context)
+                if(!context)
                 {
                     return;
                 }
