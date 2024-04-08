@@ -96,9 +96,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/GuestQmlDialog.cpp \
     $$PWD/onboarding/OnboardingQmlDialog.cpp \
     $$PWD/onboarding/GuestContent.cpp \
-    $$PWD/themes/ThemeIconManager.cpp \
-    $$PWD/themes/ThemeManager.cpp \
-    $$PWD/themes/ThemeStylesheetParser.cpp
+    $$PWD/themes/ThemeManager.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -194,9 +192,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/GuestQmlDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \
     $$PWD/onboarding/GuestContent.h \
-    $$PWD/themes/ThemeIconManager.h \
-    $$PWD/themes/ThemeManager.h \
-    $$PWD/themes/ThemeStylesheetParser.h
+    $$PWD/themes/ThemeManager.h
 
 INCLUDEPATH += $$PWD
 
