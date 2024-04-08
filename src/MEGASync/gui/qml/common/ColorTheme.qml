@@ -84,6 +84,7 @@ Item {
 	readonly property color textDisabled: loader.item.textDisabled
 	readonly property color textError: loader.item.textError
 	readonly property color textInfo: loader.item.textInfo
+	readonly property color textInverse: loader.item.textInverse
 	readonly property color textInverseAccent: loader.item.textInverseAccent
 	readonly property color textInverseAccentHover: loader.item.textInverseAccentHover
 	readonly property color textInverseAccentPlaceholder: loader.item.textInverseAccentPlaceholder

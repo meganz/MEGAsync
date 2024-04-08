@@ -76,6 +76,7 @@ QtObject {
 	readonly property color textDisabled: "#19F4F4F5"
 	readonly property color textError: "#FFFD6F90"
 	readonly property color textInfo: "#FF05BAF1"
+	readonly property color textInverse: "#FF303233"
 	readonly property color textInverseAccent: "#FF04101E"
 	readonly property color textInverseAccentHover: "#FF39424E"
 	readonly property color textInverseAccentPlaceholder: "#3304101E"
