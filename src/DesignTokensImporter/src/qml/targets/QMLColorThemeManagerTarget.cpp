@@ -85,8 +85,8 @@ bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColourMap& themeData
             // if we detect differences between les token_id list, we will go into find the exact differences.
             if (tokens != currentTokens)
             {
-                auto list1VsList2 = areDifferents(themeName, tokens, currentThemeName, currentTokens);
-                auto list2VsList1 = areDifferents(currentThemeName, currentTokens, themeName, tokens);
+                auto list1VsList2 = areDifferent(themeName, tokens, currentThemeName, currentTokens);
+                auto list2VsList1 = areDifferent(currentThemeName, currentTokens, themeName, tokens);
 
                 if (list1VsList2 || list2VsList1)
                 {
@@ -101,7 +101,7 @@ bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColourMap& themeData
 }
 
 
-bool QMLColorThemeManagerTarget::areDifferents(QString& themeName1, const QStringList& list1, QString& themeName2, const QStringList& list2) const
+bool QMLColorThemeManagerTarget::areDifferent(QString& themeName1, const QStringList& list1, QString& themeName2, const QStringList& list2) const
 {
     bool error = false;
 
