@@ -536,7 +536,7 @@ void SettingsDialog::loadSettings()
     mUi->cLanguage->setCurrentIndex(currentIndex);
 
     mUi->cbTheme->addItems(ThemeManager::instance()->themesAvailable());
-    mUi->cbTheme->setCurrentIndex(mPreferences->getTheme());
+    mUi->cbTheme->setCurrentText(mPreferences->getTheme());
 
     //Account
     mUi->lEmail->setText(mPreferences->email());
@@ -1034,14 +1034,14 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
     mApp->notifyChangeToAllFolders();
 }
 
-void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
+void SettingsDialog::on_cbTheme_currentTextChanged(QString value)
 {
     if (mLoadingSettings)
     {
         return;
     }
 
-    ThemeManager::instance()->setTheme(static_cast<Preferences::Theme>(index));
+    ThemeManager::instance()->setTheme(value);
 }
 
 #ifdef Q_OS_WINDOWS

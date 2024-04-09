@@ -302,7 +302,7 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 const bool Preferences::defaultSystemTrayPromptSuppressed = false;
-const int Preferences::defaultTheme = static_cast<int>(Preferences::Theme::LIGHT_THEME);
+const QString Preferences::defaultTheme = QString::fromLatin1("Light");
 
 std::shared_ptr<Preferences> Preferences::instance()
 {
@@ -2606,14 +2606,14 @@ bool Preferences::needsDeferredSync()
     return b;
 }
 
-void Preferences::setTheme(int value)
+void Preferences::setTheme(QString theme)
 {
-    setValueAndSyncConcurrent(themeKey, value);
+    setValueAndSyncConcurrent(themeKey, theme);
 }
 
-int Preferences::getTheme()
+QString Preferences::getTheme()
 {
-    return getValueConcurrent<int>(themeKey, defaultTheme);
+    return getValueConcurrent<QString>(themeKey, defaultTheme);
 }
 
 void Preferences::setEmailAndGeneralSettings(const QString &email)

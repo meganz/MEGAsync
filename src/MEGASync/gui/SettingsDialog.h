@@ -100,7 +100,7 @@ private slots:
     void on_cFileVersioning_toggled(bool checked);
     void on_cbSleepMode_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
-    void on_cbTheme_currentIndexChanged(int index);
+    void on_cbTheme_currentTextChanged(QString value);
 #ifdef Q_OS_WINDOWS
     void on_cFinderIcons_toggled(bool checked);
 #endif

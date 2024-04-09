@@ -403,8 +403,8 @@ public:
     void deferSyncs(bool b);  // this must receive balanced calls with true and false, as it maintains a count (to support threads).
     bool needsDeferredSync();
 
-    void setTheme(int value);
-    int getTheme();
+    void setTheme(QString theme);
+    QString getTheme();
 
     enum {
         PROXY_TYPE_NONE = 0,
@@ -794,7 +794,7 @@ protected:
     static const bool defaultImportMegaLinksEnabled;
     static const bool defaultDownloadMegaLinksEnabled;
     static const bool defaultSystemTrayPromptSuppressed;
-    static const int defaultTheme;
+    static const QString defaultTheme;
 
 private:
     void updateFullName();

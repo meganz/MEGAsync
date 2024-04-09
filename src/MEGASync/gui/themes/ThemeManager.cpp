@@ -1,23 +1,16 @@
 #include "ThemeManager.h"
 
-#include <QMetaEnum>
+#include "Preferences/Preferences.h"
 
-QMap<Preferences::Theme, QString> ThemeManager::mThemesMap = {
-    {Preferences::Theme::LIGHT_THEME, QLatin1String("Light")},
-    {Preferences::Theme::DARK_THEME, QLatin1String("Dark")}
-};
-
-ThemeManager::ThemeManager() :
-    mCurrentStyle(Preferences::Theme::LAST),
-    mThemePaths{{Preferences::Theme::LIGHT_THEME, QLatin1String("light_tokens/")},
-               {Preferences::Theme::DARK_THEME, QLatin1String("dark_tokens/")}}
+ThemeManager::ThemeManager()
+    : QObject(nullptr)
 {
-    setTheme(static_cast<Preferences::Theme>(Preferences::instance()->getTheme()));
+    setTheme(Preferences::instance()->getTheme());
 }
 
-Preferences::Theme ThemeManager::getSelectedTheme()
+QString ThemeManager::getSelectedTheme() const
 {
-    return static_cast<Preferences::Theme>(Preferences::instance()->getTheme());
+    return Preferences::instance()->getTheme();
 }
 
 ThemeManager* ThemeManager::instance()
@@ -29,37 +22,20 @@ ThemeManager* ThemeManager::instance()
 
 QStringList ThemeManager::themesAvailable() const
 {
-    static QStringList themes;
-    if (themes.isEmpty())
-    {
-        QMetaEnum metaEnum = QMetaEnum::fromType<Preferences::Theme>();
-        for(int index = 0; index < static_cast<std::underlying_type<Preferences::Theme>::type>(Preferences::Theme::LAST); ++index)
-        {
-            Preferences::Theme theme = static_cast<Preferences::Theme>(metaEnum.value(index));
-            if (theme != Preferences::Theme::LAST)
-            {
-                themes.append(themeToString(theme));
-            }
-        }
-    }
+    static QStringList themes{ QLatin1String("Light"), QLatin1String("Dark")};
 
     return themes;
 }
 
-QString ThemeManager::themeToString(Preferences::Theme theme) const
+void ThemeManager::setTheme(QString theme)
 {
-    return mThemesMap.value(theme, QLatin1String("Light"));
-}
-
-void ThemeManager::setTheme(Preferences::Theme newTheme)
-{
-    if (mCurrentStyle != newTheme)
+    if (mCurrentTheme != theme)
     {
-        mCurrentStyle = newTheme;
+        mCurrentTheme = theme;
 
-        Preferences::instance()->setTheme(static_cast<int>(mCurrentStyle));
+        Preferences::instance()->setTheme(mCurrentTheme);
 
-        emit themeChanged(mCurrentStyle);
+        emit themeChanged(mCurrentTheme);
     }
 }
 
