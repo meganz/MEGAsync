@@ -16,7 +16,7 @@ namespace DTI
         static bool registered;
 
         bool checkThemeData(const ThemedColourMap& themeData) const;
-        bool areDifferent(QString& themeName1, const QStringList& list1, QString& themeName2, const QStringList& list2) const;
+        void logColorTokensDifferences(const QString& themeName1, QStringList theme1ColorTokenList, const QString& themeName2, QStringList theme2ColorTokenList) const;
     };
 }
 

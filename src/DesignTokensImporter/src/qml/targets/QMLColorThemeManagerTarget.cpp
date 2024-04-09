@@ -8,8 +8,6 @@
 #include <QFileInfo>
 #include <QTextStream>
 
-#include <iostream>
-
 using namespace DTI;
 
 static const QString qmlColorThemeManagerTargetPath = "%1/gui/qml/common/ColorTheme.qml";
@@ -65,6 +63,8 @@ void QMLColorThemeManagerTarget::deploy(const ThemedColourMap& themeData) const
  */
 bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColourMap& themeData) const
 {
+    bool returnValue = true;
+
     QStringList tokens;
     QString themeName;
 
@@ -82,55 +82,48 @@ bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColourMap& themeData
         {
             QStringList currentTokens = currentThemeData.keys();
 
-            // if we detect differences between les token_id list, we will go into find the exact differences.
+            // if we detect differences between token_id list, we log them.
             if (tokens != currentTokens)
             {
-                auto list1VsList2 = areDifferent(themeName, tokens, currentThemeName, currentTokens);
-                auto list2VsList1 = areDifferent(currentThemeName, currentTokens, themeName, tokens);
-
-                if (list1VsList2 || list2VsList1)
-                {
-                    return false;
-                }
+                returnValue = false;
+                logColorTokensDifferences(themeName, tokens, currentThemeName, currentTokens);
             }
         }
     }
 
-
-    return true;
+    return returnValue;
 }
 
-
-bool QMLColorThemeManagerTarget::areDifferent(QString& themeName1, const QStringList& list1, QString& themeName2, const QStringList& list2) const
+void QMLColorThemeManagerTarget::logColorTokensDifferences(const QString& themeName1, QStringList theme1ColorTokenList, const QString& themeName2, QStringList theme2ColorTokenList) const
 {
-    bool error = false;
-
-    if (list1.size() != list2.size())
+    if (theme1ColorTokenList.size() != theme2ColorTokenList.size())
     {
         qWarning() << __func__ << " Error on themes : " << themeName1 << " & " << themeName2 << " have different sizes.";
-        error = true;
     }
 
-    for (auto list1Index = 0U; list1Index < list1.size(); ++list1Index)
+    auto itEndFoundDifferences = std::partition(theme1ColorTokenList.begin(), theme1ColorTokenList.end(), [&theme2ColorTokenList](const QString& tokenId)
     {
-        auto value1 = list1[list1Index];
-        bool found = false;
+        return std::find(theme2ColorTokenList.cbegin(), theme2ColorTokenList.cend(), tokenId) == theme2ColorTokenList.cend();
+    });
 
-        for (auto list2Index = 0U; list2Index < list2.size() && !found; ++list2Index)
+    if (itEndFoundDifferences != theme1ColorTokenList.end())
+    {
+        std::for_each(theme1ColorTokenList.begin(), itEndFoundDifferences, [&themeName1, &themeName2](const QString& tokenId)
         {
-            if (value1 == list2[list2Index])
-            {
-                found = true;
-            }
-        }
-
-        if (!found)
-        {
-            // log error, i don't want to stop the main loop, i want to check all tokens.
-            error = true;
-            qWarning() << "Couldn't find tokendId " << value1 << " from theme " << themeName1  << " in theme " << themeName2;
-        }
+            qWarning() << "Error: couldn't find token " << tokenId << " from theme " << themeName1 << " in theme " << themeName2 << ".";
+        });
     }
 
-    return error;
+    itEndFoundDifferences = std::partition(theme2ColorTokenList.begin(), theme2ColorTokenList.end(), [&theme1ColorTokenList](const QString& tokenId)
+    {
+        return std::find(theme1ColorTokenList.cbegin(), theme1ColorTokenList.cend(), tokenId) == theme1ColorTokenList.cend();
+    });
+
+    if (itEndFoundDifferences != theme2ColorTokenList.end())
+    {
+        std::for_each(theme2ColorTokenList.begin(), itEndFoundDifferences, [&themeName1, &themeName2](const QString& tokenId)
+        {
+            qWarning() << "Error: couldn't find token " << tokenId << " from theme " << themeName2 << " in theme " << themeName1 << ".";
+        });
+    }
 }
