@@ -705,6 +705,8 @@ void MegaApplication::initialize()
     QmlManager::instance()->setRootContextProperty(mLogoutController);
 
     mStatsEventHandler = new ProxyStatsEventHandler();
+
+    mSetManager = ::mega::make_unique<SetManager>(megaApi, megaApiFolders);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -2914,6 +2916,7 @@ void MegaApplication::ConnectServerSignals(HTTPServer* server)
     connect(server, &HTTPServer::onExternalOpenTransferManagerRequested, this, &MegaApplication::externalOpenTransferManager, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalShowInFolderRequested, this, &MegaApplication::openFolderPath, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalAddBackup, this, &MegaApplication::externalAddBackup, Qt::QueuedConnection);
+    connect(server, &HTTPServer::onExternalDownloadSetRequested, this, &MegaApplication::processSetDownload, Qt::QueuedConnection);
 }
 
 bool MegaApplication::dontAskForExitConfirmation(bool force)
@@ -4397,12 +4400,7 @@ void MegaApplication::processUploads()
 
 void MegaApplication::processDownloads()
 {
-    if (appfinished || !megaApi->isLoggedIn())
-    {
-        return;
-    }
-
-    if (!downloadQueue.size())
+    if (appfinished || !megaApi->isLoggedIn() || !downloadQueue.size())
     {
         return;
     }
@@ -4421,33 +4419,101 @@ void MegaApplication::processDownloads()
         return;
     }
 
-    QString defaultPath = preferences->downloadFolder();
-    if (preferences->hasDefaultDownloadFolder()
-            && QDir(defaultPath).exists())
+    if (hasDefaultDownloadFolder())
     {
-        QString qFilePath = QDir::fromNativeSeparators(defaultPath); // QFile always wants `/` as separator
-        QTemporaryFile *test = new QTemporaryFile(qFilePath + QDir::separator());
-        if (test->open())
-        {
-            delete test;
-
-            HTTPServer *webCom = qobject_cast<HTTPServer *>(sender());
-            if (webCom)
-            {
-                showInfoDialog();
-            }
-
-            processDownloadQueue(defaultPath);
-            return;
-        }
-        delete test;
-
-        preferences->setHasDefaultDownloadFolder(false);
-        preferences->setDownloadFolder(QString());
+        showInfoDialogIfHTTPServerSender();
+        processDownloadQueue(preferences->downloadFolder());
+        return;
     }
 
     auto downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
     DialogOpener::showDialog<DownloadFromMegaDialog, TransferManager>(downloadFolderSelector, false, this, &MegaApplication::onDownloadFromMegaFinished);
+}
+
+bool MegaApplication::hasDefaultDownloadFolder() const
+{
+    bool hasDefaultDownloadFolder = false;
+
+    QString defaultPath = preferences->downloadFolder();
+    if (preferences->hasDefaultDownloadFolder() && QDir(defaultPath).exists())
+    {
+        // QFile always wants `/` as separator
+        QString qFilePath = QDir::fromNativeSeparators(defaultPath);
+        QTemporaryFile *test = new QTemporaryFile(qFilePath + QDir::separator());
+        if (test->open())
+        {
+            hasDefaultDownloadFolder = true;
+        }
+        else
+        {
+            // There is no default download folder
+            preferences->setHasDefaultDownloadFolder(false);
+            preferences->setDownloadFolder(QString());
+        }
+
+        delete test;
+    }
+
+    return hasDefaultDownloadFolder;
+}
+
+void MegaApplication::showInfoDialogIfHTTPServerSender()
+{
+    if (qobject_cast<HTTPServer*>(sender()))
+    {
+        showInfoDialog();
+    }
+}
+
+void MegaApplication::processSetDownload(const QString& publicLink,
+                                         const QList<MegaHandle>& elementHandleList)
+{
+    if (appfinished || !megaApi->isLoggedIn() || publicLink.isEmpty())
+    {
+        return;
+    }
+
+    if (mStatusController->isAccountBlocked())
+    {
+        if (infoDialog)
+        {
+            raiseInfoDialog();
+        }
+        return;
+    }
+
+    if (QmlDialogManager::instance()->openOnboardingDialog())
+    {
+        return;
+    }
+
+    // -----
+
+    if (hasDefaultDownloadFolder())
+    {
+        showInfoDialogIfHTTPServerSender();
+
+        // Request to download Set
+        if (mSetManager)
+        {
+            mSetManager->requestDownloadSetFromLink(publicLink,
+                                                    preferences->downloadFolder(),
+                                                    elementHandleList);
+        }
+
+        return;
+    }
+
+    mLinkToPublicSet = publicLink;
+    mElementHandleList = elementHandleList;
+
+    // There is no default download folder; ask user
+    auto downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
+    DialogOpener::showDialog<DownloadFromMegaDialog, TransferManager>(
+        downloadFolderSelector,
+        false,
+        this,
+        &MegaApplication::onDownloadSetFolderDialogFinished);
 }
 
 void MegaApplication::onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog> dialog)
@@ -4465,12 +4531,7 @@ void MegaApplication::onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog
                 mSettingsDialog->updateDownloadFolder(); // this could use observer pattern
             }
 
-            HTTPServer *webCom = qobject_cast<HTTPServer *>(sender());
-            if (webCom)
-            {
-                showInfoDialog();
-            }
-
+            showInfoDialogIfHTTPServerSender();
             processDownloadQueue(path);
         }
         else
@@ -4485,6 +4546,39 @@ void MegaApplication::onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog
             qDeleteAll(downloadQueue);
             downloadQueue.clear();
         }
+    }
+}
+
+void MegaApplication::onDownloadSetFolderDialogFinished(QPointer<DownloadFromMegaDialog> dialog)
+{
+    if (!dialog) { return; }
+
+    if (dialog->result()==QDialog::Accepted)
+    {
+        // If the dialog is accepted, get the destination node (download folder)
+        QString path = dialog->getPath();
+        preferences->setHasDefaultDownloadFolder(dialog->isDefaultDownloadOption());
+        preferences->setDownloadFolder(path);
+        if (mSettingsDialog)
+        {
+            mSettingsDialog->updateDownloadFolder(); // this could use observer pattern
+        }
+
+        showInfoDialogIfHTTPServerSender();
+
+        // Request to download Set
+        if (mSetManager)
+        {
+            mSetManager->requestDownloadSetFromLink(mLinkToPublicSet,
+                                                    preferences->downloadFolder(),
+                                                    mElementHandleList);
+        }
+    }
+    else
+    {
+        // Reset
+        mLinkToPublicSet = QString::fromUtf8("");
+        mElementHandleList.clear();
     }
 }
 

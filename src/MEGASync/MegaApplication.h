@@ -33,6 +33,7 @@
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
 #include "control/Utilities.h"
+#include "control/SetManager.h"
 #include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
 #include "megaapi.h"
@@ -248,6 +249,7 @@ public slots:
     void transferManagerActionClicked(int tab = 0);
     void logoutActionClicked();
     void processDownloads();
+    void processSetDownload(const QString& publicLink, const QList<mega::MegaHandle>& elementHandleList);
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
@@ -325,6 +327,7 @@ protected slots:
     void onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog);
     void onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog>);
     void onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog> dialog);
+    void onDownloadSetFolderDialogFinished(QPointer<DownloadFromMegaDialog> dialog);
 
 protected:
     void createTrayIcon();
@@ -506,6 +509,10 @@ protected:
     StalledIssuesModel* mStalledIssuesModel;
     IStatsEventHandler* mStatsEventHandler;
 
+    std::unique_ptr<SetManager> mSetManager;
+    QString mLinkToPublicSet;
+    QList<mega::MegaHandle> mElementHandleList;
+
 private:
     void loadSyncExclusionRules(QString email = QString());
 
@@ -599,6 +606,9 @@ private:
 
     void processUpgradeSecurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;
+
+    bool hasDefaultDownloadFolder() const;
+    void showInfoDialogIfHTTPServerSender();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
