@@ -453,8 +453,6 @@ void MegaApplication::initialize()
     QDesktopServices::setUrlHandler(SCHEME_MEGA_URL, this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(SCHEME_LOCAL_URL, this, "handleLocalPath");
 
-    registerCommonQMLElements();
-
     qRegisterMetaTypeStreamOperators<EphemeralCredentials>("EphemeralCredentials");
 
     preferences = Preferences::instance();
@@ -473,6 +471,8 @@ void MegaApplication::initialize()
         msgInfo.enqueue = true;
         QMegaMessageBox::critical(msgInfo);
     }
+
+    registerCommonQMLElements();
 
     preferences->setLastStatsRequest(0);
     lastExit = preferences->getLastExit();

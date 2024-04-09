@@ -35,7 +35,7 @@ void ThemeManager::setTheme(QString theme)
 
         Preferences::instance()->setTheme(mCurrentTheme);
 
-        emit themeChanged(mCurrentTheme);
+        emit themeChanged(mCurrentTheme.toLower());
     }
 }
 
