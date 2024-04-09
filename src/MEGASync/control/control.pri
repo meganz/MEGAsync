@@ -18,6 +18,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/Preferences/EncryptedSettings.cpp \
     $$PWD/LinkProcessor.cpp \
     $$PWD/MegaUploader.cpp \
+    $$PWD/SetManager.cpp \
     $$PWD/ProxyStatsEventHandler.cpp \
     $$PWD/TransferRemainingTime.cpp \
     $$PWD/UpdateTask.cpp \
@@ -37,6 +38,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
 HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/AccountStatusController.h \
     $$PWD/AppStatsEvents.h \
+    $$PWD/AsyncHandler.h \
     $$PWD/DialogOpener.h \
     $$PWD/FileFolderAttributes.h \
     $$PWD/DownloadQueueController.h \
@@ -48,7 +50,9 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/FileFolderAttributes.h \
     $$PWD/LinkProcessor.h \
     $$PWD/MegaUploader.h \
+    $$PWD/ProtectedQueue.h \
     $$PWD/ProxyStatsEventHandler.h \
+    $$PWD/SetManager.h \
     $$PWD/TransferRemainingTime.h \
     $$PWD/UpdateTask.h \
     $$PWD/CrashHandler.h \
