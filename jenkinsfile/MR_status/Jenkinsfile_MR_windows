@@ -128,7 +128,7 @@ pipeline {
             }
             environment {
                 VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
-                MEGAQTPATH = "C:\\Qt\\Qt5.15.12\\5.15.12\\x64"
+                MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
             }
             steps{
                 sh "echo ${params.SDK_BRANCH}"
@@ -177,7 +177,7 @@ pipeline {
                     }
                     environment{
                         MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
-                        MEGAQTPATH = "C:\\Qt\\Qt5.15.12\\5.15.12\\x64"
+                        MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
                         MEGA_THIRD_PARTY_DLL_DIR = "bin"
                     }
                     steps {
