@@ -12,10 +12,5 @@ QmlTheme::QmlTheme(QObject *parent)
 
 QString QmlTheme::getTheme() const
 {
-    return ThemeManager::instance()->getSelectedTheme();
-}
-
-QStringList QmlTheme::getThemes() const
-{
-    return ThemeManager::instance()->themesAvailable();
+    return ThemeManager::instance()->getSelectedTheme().toLower();
 }

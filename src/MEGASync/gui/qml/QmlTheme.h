@@ -11,7 +11,6 @@ class QmlTheme : public QObject
 public:
     explicit QmlTheme(QObject *parent = nullptr);
     QString getTheme() const;
-    Q_INVOKABLE QStringList getThemes() const;
 
 signals:
     void themeChanged(QString theme);
