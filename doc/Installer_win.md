@@ -13,7 +13,7 @@ Extract archive in NSIS install dir, should be C:\Program Files (x86)\NSIS\
 [Archive](https://mega.nz/file/YwFmTD5K#wni6lOitZlTAVxxlbfV0UaW1PmleeITH0Za_ti7GB6g)
 
 ## Qt 5.15
-And the environment variable `MEGA_QTPATH` set to the Qt install dir. Example: `C:\Qt\5.15.11\x64` for the 64 bit version, or `C:\Qt\5.15.11\x86` for the 32 bit version.
+And the environment variable `MEGA_QTPATH` set to the Qt install dir. Example: `C:\Qt\5.15.12\x64` for the 64 bit version, or `C:\Qt\5.15.12\x86` for the 32 bit version.
 
 ## The third party libs installed (with VCPKG)
 And the environment variables
@@ -46,7 +46,7 @@ It can take 0, 1, 3 or 4 arguments:
         - Cores: the number of cores to build the project, or 0 for default value (4)
         - Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
 MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
-MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.15.11\x64
+MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.15.12\x64
 ```
 
 ### Unsigned build:

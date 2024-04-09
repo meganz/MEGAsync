@@ -44,7 +44,7 @@ echo "#### Qt build ####"
 ##this is our working directory
 #cd $BUILD_DIR
 
-ver=5.15.11
+ver=5.15.12
 mainver=`echo $ver | awk -F"." '{print $1"."$2}'`
 
 #download and extract package
@@ -64,7 +64,9 @@ CVE-2023-34410-qtbase-5.15.diff \
 CVE-2023-37369-qtbase-5.15.diff \
 CVE-2023-38197-qtbase-5.15.diff \
 CVE-2023-4863-5.15.patch \
-CVE-2023-43114-5.15.patch
+CVE-2023-43114-5.15.patch \
+0001-CVE-2023-51714-qtbase-5.15.diff \
+0002-CVE-2023-51714-qtbase-5.15.diff
 do
   if [ ! -f patches/$p ]; then
     wget https://download.qt.io/official_releases/qt/5.15/$p -O patches/$p
@@ -83,7 +85,10 @@ if ! echo 7426b1eaab52ed169ce53804bdd05dfe364f761468f888a0f15a308dc1dc2951 src.t
 || ! echo 279c520ec96994d2b684ddd47a4672a6fdfc7ac49a9e0bdb719db1e058d9e5c0 patches/CVE-2023-37369-qtbase-5.15.diff | sha256sum -c - \
 || ! echo 382c10ec8f42e2a34ac645dc4f57cd6b717abe6a3807b7d5d9312938f91ce3dc patches/CVE-2023-38197-qtbase-5.15.diff | sha256sum -c - \
 || ! echo 39f3e17514063de568b91e3265f6ef8212600cca777e38b9324dd9d1bdec616d patches/CVE-2023-4863-5.15.patch | sha256sum -c - \
-|| ! echo 14cc26aa465ec9a5cac6f6b4c91b2f802b12a8134a6ab897a45449c418ca98c1 patches/CVE-2023-43114-5.15.patch | sha256sum -c -
+|| ! echo 14cc26aa465ec9a5cac6f6b4c91b2f802b12a8134a6ab897a45449c418ca98c1 patches/CVE-2023-43114-5.15.patch | sha256sum -c - \
+|| ! echo 2129058a5e24d98ee80a776c49a58c2671e06c338dffa7fc0154e82eef96c9d4 patches/0001-CVE-2023-51714-qtbase-5.15.diff | sha256sum -c - \
+|| ! echo 99d5d32527e767d6ab081ee090d92e0b11f27702619a4af8966b711db4f23e42 patches/0002-CVE-2023-51714-qtbase-5.15.diff | sha256sum -c -
+
 then
 exit 1
 fi
@@ -101,7 +106,9 @@ CVE-2023-33285-qtbase-5.15.diff \
 CVE-2023-34410-qtbase-5.15.diff \
 CVE-2023-37369-qtbase-5.15.diff \
 CVE-2023-38197-qtbase-5.15.diff \
-CVE-2023-43114-5.15.patch
+CVE-2023-43114-5.15.patch \
+0001-CVE-2023-51714-qtbase-5.15.diff \
+0002-CVE-2023-51714-qtbase-5.15.diff
 do
   if ! patch -f --verbose -p1 -d src/qtbase < patches/$p ; then
     exit 1

@@ -69,7 +69,7 @@ pipeline {
             environment{
                 MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
                 //QT path is automatically changed to x86 with nsis when needed
-                MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
+                MEGAQTPATH = "C:\\Qt\\Qt5.15.12\\5.15.12\\x64"
                 MEGA_THIRD_PARTY_DLL_DIR = "bin"
 
             }
