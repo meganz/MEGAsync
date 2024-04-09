@@ -14,7 +14,7 @@ set(VCPKG_ROOT "" CACHE PATH "If set, it will build and use the VCPKG packages d
 
 # Load global CMake configuration for the project
 include(desktopapp_options)
-include(desktopapp_configuration)
+include(desktopapp_initial_configuration)
 
 if(NOT PROJECT_NAME)
     if(VCPKG_ROOT)
@@ -52,6 +52,9 @@ message(STATUS "Building MEGA Desktop App project v${PROJECT_VERSION}")
 
 include(target_sources_conditional) # function to add files to the project without building them
 include(target_platform_compile_options) # To add compile options depeding on the platform
+
+# Load common and per platform configuration for the project
+include(desktopapp_configuration)
 
 # Load the MEGA targets
 add_subdirectory(src)
