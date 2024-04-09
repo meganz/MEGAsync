@@ -363,7 +363,7 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
                             if(item.getData()->containsHandle(node->getHandle()))
                             {
                                 auto parentFound(false);
-                                while (!parentFound)
+                                while (!parentFound || !parentNode)
                                 {
                                     auto currentParentHandle(parentNode->getHandle());
                                     auto parentNodeRaw(MegaSyncApp->getMegaApi()->getParentNode(parentNode.get()));
@@ -455,7 +455,10 @@ QVariant StalledIssuesModel::data(const QModelIndex& index, int role) const
     else if(role == ADAPTATIVE_HEIGHT_ROLE)
     {
         auto issue = getStalledIssueByRow(index.row());
-        return StalledIssuesDelegateWidgetsCache::adaptativeHeight(issue.getData()->getReason());
+        if(issue.consultData())
+        {
+            return StalledIssuesDelegateWidgetsCache::adaptativeHeight(issue.consultData()->getReason());
+        }
     }
 
     return QVariant();
