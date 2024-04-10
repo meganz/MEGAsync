@@ -388,13 +388,13 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorSpecializations.h
     ${MEGAsyncDir}/gui/qml/QmlClipboard.h
-    ${MEGAsyncDir}/gui/qml/ColorTheme.h
     ${MEGAsyncDir}/gui/qml/QmlDialog.h
     ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.h
     ${MEGAsyncDir}/gui/qml/StandardIconProvider.h
     ${MEGAsyncDir}/gui/qml/ApiEnums.h
     ${MEGAsyncDir}/gui/qml/QmlDialogManager.h
     ${MEGAsyncDir}/gui/qml/QmlManager.h
+    ${MEGAsyncDir}/gui/qml/QmlTheme.h
     ${MEGAsyncDir}/gui/onboarding/ChooseFolder.h
     ${MEGAsyncDir}/gui/onboarding/Onboarding.h
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.h
@@ -663,12 +663,12 @@ set (SRCS
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
     ${MEGAsyncDir}/gui/qml/QmlClipboard.cpp
-    ${MEGAsyncDir}/gui/qml/ColorTheme.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialog.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.cpp
     ${MEGAsyncDir}/gui/qml/StandardIconProvider.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialogManager.cpp
     ${MEGAsyncDir}/gui/qml/QmlManager.cpp
+    ${MEGAsyncDir}/gui/qml/QmlTheme.cpp
     ${MEGAsyncDir}/gui/onboarding/ChooseFolder.cpp
     ${MEGAsyncDir}/gui/onboarding/Onboarding.cpp
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.cpp
