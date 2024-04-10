@@ -94,36 +94,35 @@ bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColourMap& themeData
     return returnValue;
 }
 
-void QMLColorThemeManagerTarget::logColorTokensDifferences(const QString& themeName1, QStringList theme1ColorTokenList, const QString& themeName2, QStringList theme2ColorTokenList) const
+void QMLColorThemeManagerTarget::logColorTokensDifferences(const QString& themeName1, QStringList theme1ColorTokens, const QString& themeName2, QStringList theme2ColorTokens) const
 {
-    if (theme1ColorTokenList.size() != theme2ColorTokenList.size())
+    if (theme1ColorTokens.size() != theme2ColorTokens.size())
     {
-        qWarning() << __func__ << " Error on themes : " << themeName1 << " & " << themeName2 << " have different sizes.";
+        qWarning() << __func__ << " Error: Themes " << themeName1 << " and " << themeName2 << " have different numbers of color tokens.";
+        // Note: Do not return early here, as the purpose of this function is to log the reason why the tokens are different
     }
 
-    auto itEndFoundDifferences = std::partition(theme1ColorTokenList.begin(), theme1ColorTokenList.end(), [&theme2ColorTokenList](const QString& tokenId)
+    auto notFoundInTheme2It = std::partition(theme1ColorTokens.begin(), theme1ColorTokens.end(), [&theme2ColorTokens](const QString& tokenId)
     {
-        return std::find(theme2ColorTokenList.cbegin(), theme2ColorTokenList.cend(), tokenId) == theme2ColorTokenList.cend();
+       return std::find(theme2ColorTokens.cbegin(), theme2ColorTokens.cend(), tokenId) == theme2ColorTokens.cend();
     });
 
-    if (itEndFoundDifferences != theme1ColorTokenList.end())
+    auto notFoundInTheme1It = std::partition(theme2ColorTokens.begin(), theme2ColorTokens.end(), [&theme1ColorTokens](const QString& tokenId)
     {
-        std::for_each(theme1ColorTokenList.begin(), itEndFoundDifferences, [&themeName1, &themeName2](const QString& tokenId)
-        {
-            qWarning() << "Error: couldn't find token " << tokenId << " from theme " << themeName1 << " in theme " << themeName2 << ".";
-        });
-    }
-
-    itEndFoundDifferences = std::partition(theme2ColorTokenList.begin(), theme2ColorTokenList.end(), [&theme1ColorTokenList](const QString& tokenId)
-    {
-        return std::find(theme1ColorTokenList.cbegin(), theme1ColorTokenList.cend(), tokenId) == theme1ColorTokenList.cend();
+       return std::find(theme1ColorTokens.cbegin(), theme1ColorTokens.cend(), tokenId) == theme1ColorTokens.cend();
     });
 
-    if (itEndFoundDifferences != theme2ColorTokenList.end())
+    logMissingTokens(themeName1, themeName2, theme1ColorTokens.begin(), notFoundInTheme2It);
+    logMissingTokens(themeName2, themeName1, theme2ColorTokens.begin(), notFoundInTheme1It);
+}
+
+void QMLColorThemeManagerTarget::logMissingTokens(const QString& sourceTheme, const QString& targetTheme, QStringList::const_iterator begin, QStringList::const_iterator end) const
+{
+    if (begin != end)
     {
-        std::for_each(theme2ColorTokenList.begin(), itEndFoundDifferences, [&themeName1, &themeName2](const QString& tokenId)
+        std::for_each(begin, end, [&sourceTheme, &targetTheme](const QString& tokenId)
         {
-            qWarning() << "Error: couldn't find token " << tokenId << " from theme " << themeName2 << " in theme " << themeName1 << ".";
+            qWarning() << "Error: Token " << tokenId << " from theme " << sourceTheme << " not found in theme " << targetTheme << ".";
         });
     }
 }
