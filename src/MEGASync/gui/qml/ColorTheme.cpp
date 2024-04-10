@@ -5,8 +5,6 @@
 #include <QQmlComponent>
 #include <QDir>
 
-#include <iostream>
-
 static const QString ColorStyleFilePath = QString::fromUtf8("qrc:/common/themes/%1/Colors.qml");
 
 ColorTheme::ColorTheme(QQmlEngine *engine, QObject *parent):
