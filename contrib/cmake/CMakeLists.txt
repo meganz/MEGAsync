@@ -286,6 +286,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/notifications/NotificatorBase.h
     ${MEGAsyncDir}/notifications/${UiDir}/Notificator.h
 
+    ${MEGAsyncDir}/control/AsyncHandler.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/ExportProcessor.h
@@ -295,6 +296,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/DownloadQueueController.h
     ${MEGAsyncDir}/control/MegaSyncLogger.h
     ${MEGAsyncDir}/control/MegaUploader.h
+    ${MEGAsyncDir}/control/ProtectedQueue.h
     ${MEGAsyncDir}/control/Preferences/Preferences.h
     ${MEGAsyncDir}/control/Preferences/EncryptedSettings.h
     ${MEGAsyncDir}/control/Preferences/EphemeralCredentials.h
@@ -302,6 +304,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
+    ${MEGAsyncDir}/control/SetManager.h
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/DialogOpener.h
@@ -310,6 +313,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/LoginController.h
     ${MEGAsyncDir}/control/AccountStatusController.h
     ${MEGAsyncDir}/control/EmailRequester.h
+    ${MEGAsyncDir}/control/IStatsEventHandler.h
+    ${MEGAsyncDir}/control/ProxyStatsEventHandler.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -383,11 +388,13 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorSpecializations.h
     ${MEGAsyncDir}/gui/qml/QmlClipboard.h
-    ${MEGAsyncDir}/gui/qml/ColorTheme.h
     ${MEGAsyncDir}/gui/qml/QmlDialog.h
     ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.h
     ${MEGAsyncDir}/gui/qml/StandardIconProvider.h
     ${MEGAsyncDir}/gui/qml/ApiEnums.h
+    ${MEGAsyncDir}/gui/qml/QmlDialogManager.h
+    ${MEGAsyncDir}/gui/qml/QmlManager.h
+    ${MEGAsyncDir}/gui/qml/QmlTheme.h
     ${MEGAsyncDir}/gui/onboarding/ChooseFolder.h
     ${MEGAsyncDir}/gui/onboarding/Onboarding.h
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.h
@@ -658,10 +665,12 @@ set (SRCS
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
     ${MEGAsyncDir}/gui/qml/QmlClipboard.cpp
-    ${MEGAsyncDir}/gui/qml/ColorTheme.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialog.cpp
     ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.cpp
     ${MEGAsyncDir}/gui/qml/StandardIconProvider.cpp
+    ${MEGAsyncDir}/gui/qml/QmlDialogManager.cpp
+    ${MEGAsyncDir}/gui/qml/QmlManager.cpp
+    ${MEGAsyncDir}/gui/qml/QmlTheme.cpp
     ${MEGAsyncDir}/gui/onboarding/ChooseFolder.cpp
     ${MEGAsyncDir}/gui/onboarding/Onboarding.cpp
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.cpp
@@ -741,6 +750,7 @@ set (SRCS
     ${MEGAsyncDir}/control/HTTPServer.cpp
     ${MEGAsyncDir}/control/LinkProcessor.cpp
     ${MEGAsyncDir}/control/MegaUploader.cpp
+    ${MEGAsyncDir}/control/SetManager.cpp
     ${MEGAsyncDir}/control/UpdateTask.cpp
     ${MEGAsyncDir}/control/ThreadPool.cpp
     ${MEGAsyncDir}/control/CrashHandler.cpp
@@ -759,6 +769,7 @@ set (SRCS
     ${MEGAsyncDir}/control/AccountStatusController.cpp
     ${MEGAsyncDir}/control/FileFolderAttributes.cpp
     ${MEGAsyncDir}/control/EmailRequester.cpp
+    ${MEGAsyncDir}/control/ProxyStatsEventHandler.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp

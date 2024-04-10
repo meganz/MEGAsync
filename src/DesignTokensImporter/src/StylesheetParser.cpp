@@ -2,7 +2,7 @@
 #include "QTWIDGETColorStyleTarget.h"
 #include "QTWIDGETStyleTargetFactory.h"
 #include "QTWIDGETImageStyleTarget.h"
-#include "utilities.h"
+#include "Utilities.h"
 
 #include <QStringList>
 

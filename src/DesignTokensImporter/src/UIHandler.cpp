@@ -1,6 +1,6 @@
 #include "UIHandler.h"
 #include "StylesheetParser.h"
-#include "utilities.h"
+#include "Utilities.h"
 #include "Types.h"
 #include "PathProvider.h"
 

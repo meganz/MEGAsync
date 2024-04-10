@@ -5,6 +5,8 @@
 
 #include <QMap>
 #include <QStringList>
+#include <QJsonArray>
+#include <QJsonDocument>
 
 namespace DTI
 {
@@ -13,10 +15,13 @@ namespace DTI
     public:
         static TokenManager* instance();
         void run();
+
     private:
         TokenManager();
-        FilePathColourMap parseTokenJSON(const QStringList& tokenFilePathsList);
-        bool generateTokenFiles(const FilePathColourMap& fileToColourMap);
+        bool generateTokenFiles(const ThemedColourMap& fileToColourMap);
+        ThemedColourMap parseColorTokenJSON(const QStringList& colorTokenFilePathsList, const CoreMap& coreMap);
+        CoreMap parseCore(const QString& coreFilePath);
+        void recurseCore(QString category, const QJsonObject& categoryObject, CoreMap& coreMap);
 
         QString mCurrentDir;
     };

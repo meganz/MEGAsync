@@ -431,8 +431,13 @@ void NameConflict::onActionClicked(int actionId)
 
             renameDialog->init();
 
+            QPointer<NameConflict> context = this;
             DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
-                                                       [this, issueData, titleFileName, conflictIndex, renameDialog](){
+                                                       [this, context, issueData, titleFileName, conflictIndex, renameDialog](){
+                if(!context)
+                {
+                    return;
+                }
 
                 if(renameDialog->result() == QDialog::Accepted)
                 {
@@ -537,8 +542,14 @@ void NameConflict::onActionClicked(int actionId)
             msgInfo.informativeText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("<br>"));
             msgInfo.informativeText.replace(QString::fromUtf8("[/BR]"), QString::fromUtf8("</br>"));
 
-            msgInfo.finishFunc = [this, issueData, handle, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
+            QPointer<NameConflict> context = this;
+            msgInfo.finishFunc = [this, context, issueData, handle, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
             {
+                if(!context)
+                {
+                    return;
+                }
+
                 if (msgBox->result() == QDialogButtonBox::Yes)
                 {
                     bool areAllSolved(false);

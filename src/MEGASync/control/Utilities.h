@@ -329,6 +329,7 @@ public:
     static QString getQuantityString(unsigned long long quantity);
     static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
+    static QStringList extractJSONStringList(const QString& json, const QString& name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
     static void getPROurlWithParameters(QString &url);

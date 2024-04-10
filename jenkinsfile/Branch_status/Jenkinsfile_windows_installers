@@ -45,7 +45,7 @@ pipeline {
                         branchToCheckout = env.SDK_BRANCH
                         shouldCloneSDK = true
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
-                        branchToCheckout = "develop"
+                        branchToCheckout = "release/v6.0.0"
                         shouldCloneSDK = true
                     } else {
                         def status = sh(script: "git submodule status", returnStdout: true).trim()
@@ -69,7 +69,7 @@ pipeline {
             environment{
                 MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
                 //QT path is automatically changed to x86 with nsis when needed
-                MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
+                MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
                 MEGA_THIRD_PARTY_DLL_DIR = "bin"
 
             }

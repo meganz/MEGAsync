@@ -1,7 +1,7 @@
 #include "QTWIDGETColorStyleTarget.h"
 #include "QTWIDGETStyleTargetFactory.h"
 
-#include "utilities.h"
+#include "Utilities.h"
 
 #include <QDir>
 #include <QDebug>
