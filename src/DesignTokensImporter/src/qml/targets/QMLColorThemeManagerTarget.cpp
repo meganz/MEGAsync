@@ -58,9 +58,11 @@ void QMLColorThemeManagerTarget::deploy(const ThemedColourMap& themeData) const
     }
 }
 
-/*
- * All themes should have the same size and the same elements.
- */
+//!
+//! \brief QMLColorThemeManagerTarget::checkThemeData
+//! \param themeData: Colour information of all themes
+//! Returns true if all themes have the same size and identical elements, false otherwise
+//!
 bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColourMap& themeData) const
 {
     bool returnValue = true;
@@ -112,8 +114,8 @@ void QMLColorThemeManagerTarget::logColorTokensDifferences(const QString& themeN
        return std::find(theme1ColorTokens.cbegin(), theme1ColorTokens.cend(), tokenId) == theme1ColorTokens.cend();
     });
 
-    logMissingTokens(themeName1, themeName2, theme1ColorTokens.begin(), notFoundInTheme2It);
-    logMissingTokens(themeName2, themeName1, theme2ColorTokens.begin(), notFoundInTheme1It);
+    logMissingTokens(themeName1, themeName2, theme1ColorTokens.cbegin(), notFoundInTheme2It);
+    logMissingTokens(themeName2, themeName1, theme2ColorTokens.cbegin(), notFoundInTheme1It);
 }
 
 void QMLColorThemeManagerTarget::logMissingTokens(const QString& sourceTheme, const QString& targetTheme, QStringList::const_iterator begin, QStringList::const_iterator end) const
