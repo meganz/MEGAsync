@@ -556,7 +556,12 @@ sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf
 
 
 %preun
-[ "$1" == "1" ] && killall -s SIGUSR1 megasync 2> /dev/null || true
+if [ "$1" == "1" ]; then
+    killall -s SIGUSR1 megasync 2> /dev/null || true
+else
+    killall megasync 2> /dev/null || true
+    megasync "--send-uninstall-event" 2> /dev/null || true
+fi
 sleep 2
 
 
