@@ -32,7 +32,6 @@ std::shared_ptr<QmlManager> QmlManager::instance()
 
 void QmlManager::finish()
 {
-    qDeleteAll(mEngine->children());
     delete mEngine;
     mEngine = nullptr;
 }
