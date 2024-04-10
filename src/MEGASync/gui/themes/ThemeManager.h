@@ -13,15 +13,15 @@ class ThemeManager : public QObject
 public:
     static ThemeManager* instance();
     QStringList themesAvailable() const;
-    Preferences::Theme getSelectedTheme() const;
-    void setTheme(Preferences::Theme theme);
+    Preferences::ThemeType getSelectedTheme() const;
+    void setTheme(Preferences::ThemeType theme);
 
 signals:
-    void themeChanged(Preferences::Theme theme);
+    void themeChanged(Preferences::ThemeType theme);
 
 private:
-    Preferences::Theme mCurrentTheme;
-    static QMap<Preferences::Theme, QString> mThemesMap;
+    Preferences::ThemeType mCurrentTheme;
+    static QMap<Preferences::ThemeType, QString> mThemesMap;
 
     ThemeManager();
 };

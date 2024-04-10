@@ -536,7 +536,7 @@ void SettingsDialog::loadSettings()
     mUi->cLanguage->setCurrentIndex(currentIndex);
 
     mUi->cbTheme->addItems(ThemeManager::instance()->themesAvailable());
-    mUi->cbTheme->setCurrentIndex(mPreferences->getTheme());
+    mUi->cbTheme->setCurrentIndex(static_cast<int>(mPreferences->getThemeType()));
 
     //Account
     mUi->lEmail->setText(mPreferences->email());
@@ -1041,7 +1041,7 @@ void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
         return;
     }
 
-    ThemeManager::instance()->setTheme(static_cast<Preferences::Theme>(index));
+    ThemeManager::instance()->setTheme(static_cast<Preferences::ThemeType>(index));
 }
 
 #ifdef Q_OS_WINDOWS

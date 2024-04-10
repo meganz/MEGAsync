@@ -5,9 +5,9 @@
 #include <QTimer>
 
 // note : this map is a conversion from theme enum to folder names that hold the color theme files.
-QMap<Preferences::Theme, QString> QmlTheme::mThemesQmlMap = {
-    {Preferences::Theme::LIGHT_THEME, QLatin1String("light")},
-    {Preferences::Theme::DARK_THEME, QLatin1String("dark")}
+QMap<Preferences::ThemeType, QString> QmlTheme::mThemesQmlMap = {
+    {Preferences::ThemeType::LIGHT_THEME, QLatin1String("light")},
+    {Preferences::ThemeType::DARK_THEME, QLatin1String("dark")}
 };
 
 QmlTheme::QmlTheme(QObject *parent)
@@ -16,7 +16,7 @@ QmlTheme::QmlTheme(QObject *parent)
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &QmlTheme::onThemeChanged);
 }
 
-void QmlTheme::onThemeChanged(Preferences::Theme theme)
+void QmlTheme::onThemeChanged(Preferences::ThemeType theme)
 {
     Q_UNUSED(theme);
 
@@ -33,7 +33,7 @@ QString QmlTheme::getTheme() const
     }
     else
     {
-        returnValue = mThemesQmlMap[Preferences::Theme::LIGHT_THEME];
+        returnValue = mThemesQmlMap[Preferences::ThemeType::LIGHT_THEME];
     }
 
     return returnValue;

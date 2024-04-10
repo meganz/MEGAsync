@@ -2,18 +2,18 @@
 
 #include "Preferences/Preferences.h"
 
-QMap<Preferences::Theme, QString> ThemeManager::mThemesMap = {
-    {Preferences::Theme::LIGHT_THEME, tr("Light")},
-    {Preferences::Theme::DARK_THEME, tr("Dark")}
+QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
+    {Preferences::ThemeType::LIGHT_THEME,  QObject::tr("Light")},
+    {Preferences::ThemeType::DARK_THEME,  QObject::tr("Dark")}
 };
 
 ThemeManager::ThemeManager()
     : QObject(nullptr)
 {
-    setTheme(static_cast<Preferences::Theme>(Preferences::instance()->getTheme()));
+    setTheme(Preferences::instance()->getThemeType());
 }
 
-Preferences::Theme ThemeManager::getSelectedTheme() const
+Preferences::ThemeType ThemeManager::getSelectedTheme() const
 {
     return mCurrentTheme;
 }
@@ -30,13 +30,13 @@ QStringList ThemeManager::themesAvailable() const
     return mThemesMap.values();
 }
 
-void ThemeManager::setTheme(Preferences::Theme theme)
+void ThemeManager::setTheme(Preferences::ThemeType theme)
 {
     if (mCurrentTheme != theme)
     {
         mCurrentTheme = theme;
 
-        Preferences::instance()->setTheme(static_cast<std::underlying_type<Preferences::Theme>::type>(mCurrentTheme));
+        Preferences::instance()->setThemeType(mCurrentTheme);
 
         emit themeChanged(theme);
     }

@@ -17,9 +17,9 @@ signals:
     void themeChanged(QString theme);
 
 private:
-    static QMap<Preferences::Theme, QString> mThemesQmlMap;
+    static QMap<Preferences::ThemeType, QString> mThemesQmlMap;
 
-    void onThemeChanged(Preferences::Theme theme);
+    void onThemeChanged(Preferences::ThemeType theme);
 };
 
 #endif // QMLTHEME_H
