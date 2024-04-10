@@ -2,6 +2,7 @@
 #define QMLTHEME_H
 
 #include <QObject>
+#include "Preferences/Preferences.h"
 
 class QmlTheme : public QObject
 {
@@ -14,6 +15,11 @@ public:
 
 signals:
     void themeChanged(QString theme);
+
+private:
+    static QMap<Preferences::Theme, QString> mThemesQmlMap;
+
+    void onThemeChanged(Preferences::Theme theme);
 };
 
 #endif // QMLTHEME_H

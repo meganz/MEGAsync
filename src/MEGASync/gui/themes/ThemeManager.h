@@ -1,6 +1,8 @@
 #ifndef THEMEMANAGER_H
 #define THEMEMANAGER_H
 
+#include "Preferences/Preferences.h"
+
 #include <QObject>
 #include <QString>
 
@@ -11,14 +13,15 @@ class ThemeManager : public QObject
 public:
     static ThemeManager* instance();
     QStringList themesAvailable() const;
-    QString getSelectedTheme() const;
-    void setTheme(QString theme);
+    Preferences::Theme getSelectedTheme() const;
+    void setTheme(Preferences::Theme theme);
 
 signals:
-    void themeChanged(QString theme);
+    void themeChanged(Preferences::Theme theme);
 
 private:
-    QString mCurrentTheme;
+    Preferences::Theme mCurrentTheme;
+    static QMap<Preferences::Theme, QString> mThemesMap;
 
     ThemeManager();
 };
