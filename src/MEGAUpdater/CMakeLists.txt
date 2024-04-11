@@ -20,11 +20,11 @@ set(UPDATER_SOURCES
     UpdateTask.cpp
 )
 
-if (APPLE)
-    list(APPEND UPDATER_SOURCES
-        MacUtils.mm
-    )
-endif()
+target_sources_conditional(MEGAupdater
+   FLAG APPLE
+   PRIVATE
+   MacUtils.mm
+)
 
 target_sources(MEGAupdater
     PRIVATE
@@ -36,32 +36,19 @@ target_sources(MEGAupdater
 find_package(cryptopp CONFIG REQUIRED)
 
 if (WIN32)
-    # target_link_libraries(MEGAupdater PRIVATE
-    #     ws2_32 winhttp Shlwapi Secur32.lib crypt32.lib
-    #     $<$<BOOL:${USE_CURL}>:Wldap32.lib>
-    #     $<$<BOOL:${USE_LIBUV}>:Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib>
-    #     $<$<BOOL:${USE_FFMPEG}>:Mfplat.lib mfuuid.lib strmiids.lib>
-    #     $<$<BOOL:${ENABLE_DRIVE_NOTIFICATIONS}>:wbemuuid>
-    # )
     target_compile_definitions(MEGAupdater
         PUBLIC
         UNICODE
     )
-
-    target_link_libraries(MEGAupdater PRIVATE
-        cryptopp::cryptopp
-        urlmon Shlwapi
-    )
-
-elseif (APPLE)
-        target_link_libraries(MEGAupdater PRIVATE
-            cryptopp::cryptopp
-            "-framework CoreServices"
-            "-framework Cocoa"
-        )
-else()
-
 endif()
+
+target_link_libraries(MEGAupdater
+    PRIVATE
+    cryptopp::cryptopp
+    $<$<BOOL:${WIN32}>:urlmon Shlwapi>
+    $<$<BOOL:${APPLE}>:"-framework CoreServices">
+    $<$<BOOL:${APPLE}>:"-framework Cocoa">
+)
 
 if (ENABLE_DESKTOP_APP_WERROR)
     target_platform_compile_options(

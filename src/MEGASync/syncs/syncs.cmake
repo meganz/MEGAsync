@@ -71,17 +71,17 @@ target_sources_conditional(MEGAsync
    syncs/gui/Backups/macx/OpenBackupsFolder.ui
 )
 
-if (APPLE)
-    set_property(TARGET MEGAsync
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
-        syncs/gui/Twoways/macx
-        syncs/gui/Backups/macx
-    )
-else()
+if (WIN32)
     set_property(TARGET MEGAsync
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         syncs/gui/Twoways/win
         syncs/gui/Backups/win
+    )
+elseif (APPLE)
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        syncs/gui/Twoways/macx
+        syncs/gui/Backups/macx
     )
 endif()
 

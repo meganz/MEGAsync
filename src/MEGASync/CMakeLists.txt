@@ -97,29 +97,20 @@ message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5
 if (WIN32)
     target_compile_definitions(MEGAsync
         PUBLIC
-            NOMINMAX
-            WIN32_LEAN_AND_MEAN
-            UNICODE
+        NOMINMAX
+        WIN32_LEAN_AND_MEAN
+        UNICODE
     )
-
     find_package(Qt5 REQUIRED COMPONENTS WinExtras)
-    target_link_libraries(MEGAsync
-        PRIVATE
-        Qt5::WinExtras
-    )
 elseif (APPLE)
     find_package(Qt5 REQUIRED COMPONENTS MacExtras)
-    target_link_libraries(MEGAsync
-        PRIVATE
-        Qt5::MacExtras
-    )
-else()
-
 endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick)
 target_link_libraries(MEGAsync
-    PRIVATE
+    PUBLIC
+    $<$<BOOL:${WIN32}>:Qt5::WinExtras>
+    $<$<BOOL:${APPLE}>:Qt5::MacExtras>
     Qt5::Widgets
     Qt5::Core
     Qt5::Gui

@@ -44,21 +44,16 @@ target_sources(MEGAsync
     ${DESKTOP_APP_NOTIFICATIONS_SOURCES}
 )
 
-if (WIN32)
-    target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
-        ${CMAKE_CURRENT_LIST_DIR}/win
-    )
-elseif (APPLE)
+if (APPLE)
     target_link_libraries(MEGAsync
         PRIVATE
         "-framework UserNotifications"
     )
-
-    target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
-        ${CMAKE_CURRENT_LIST_DIR}/macx
-    )
-else()
-
 endif()
 
-
+target_include_directories(MEGAsync
+    PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}
+    $<$<BOOL:${WIN32}>:${CMAKE_CURRENT_LIST_DIR}/win>
+    $<$<BOOL:${APPLE}>:${CMAKE_CURRENT_LIST_DIR}/macx>
+)
