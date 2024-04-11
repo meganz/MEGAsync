@@ -196,6 +196,7 @@ void MegaProxyStyle::polish(QWidget *widget)
     {
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
     }
+
     QProxyStyle::polish(widget);
 }
 

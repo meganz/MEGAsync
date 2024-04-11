@@ -1,55 +1,40 @@
 #include "QmlTheme.h"
 
+#include "themes/ThemeManager.h"
+
 #include <QTimer>
 
+// note : this map is a conversion from theme enum to folder names that hold the color theme files.
+QMap<Preferences::ThemeType, QString> QmlTheme::mThemesQmlMap = {
+    {Preferences::ThemeType::LIGHT_THEME, QLatin1String("light")},
+    {Preferences::ThemeType::DARK_THEME, QLatin1String("dark")}
+};
+
 QmlTheme::QmlTheme(QObject *parent)
-    : QObject{parent},
-    mTheme(QString::fromUtf8("light"))
+    : QObject{parent}
 {
-    // uncomment to trigger a cyclic theme change.
-    //startDemoChange();
+    connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &QmlTheme::onThemeChanged);
+}
+
+void QmlTheme::onThemeChanged(Preferences::ThemeType theme)
+{
+    Q_UNUSED(theme);
+
+    emit themeChanged(getTheme());
 }
 
 QString QmlTheme::getTheme() const
 {
-    return mTheme;
-}
+    QString returnValue;
 
-void QmlTheme::setTheme(const QString& theme)
-{
-    if (!theme.isEmpty() && theme != mTheme)
+    if (mThemesQmlMap.contains(ThemeManager::instance()->getSelectedTheme()))
     {
-        mTheme = theme;
-        emit themeChanged(mTheme);
+        returnValue = mThemesQmlMap[ThemeManager::instance()->getSelectedTheme()];
     }
-}
+    else
+    {
+        returnValue = mThemesQmlMap[Preferences::ThemeType::LIGHT_THEME];
+    }
 
-QStringList QmlTheme::getThemes() const
-{
-    static QStringList themes = {QString::fromUtf8("light"), QString::fromUtf8("dark")};
-
-    return themes;
-}
-
-void QmlTheme::startDemoChange()
-{
-    // @jsubi.
-    // TODO : get theme list.
-    // TODO : get current theme.
-    // TODO : set connection to capture theme changed event.
-
-    // snipet to check theme change from light to dark.
-    static QTimer timer;
-    timer.start(5000);
-    connect(&timer, &QTimer::timeout, this, [this](){
-        time_t t;
-        srand((unsigned) time(&t));
-
-        if (rand() % 2) {
-            setTheme(QString::fromUtf8("dark"));
-        }
-        else {
-            setTheme(QString::fromUtf8("light"));
-        }
-    });
+    return returnValue;
 }
