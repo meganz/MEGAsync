@@ -462,8 +462,6 @@ void MegaApplication::initialize()
         QMegaMessageBox::critical(msgInfo);
     }
 
-    registerCommonQMLElements();
-
     preferences->setLastStatsRequest(0);
     lastExit = preferences->getLastExit();
 
