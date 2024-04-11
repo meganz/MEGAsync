@@ -4,6 +4,7 @@
 #include "QmlClipboard.h"
 
 #include "LoginController.h"
+#include "QmlTheme.h"
 
 #include <QQmlContext>
 #include <QQueue>
@@ -45,6 +46,8 @@ void QmlManager::registerCommonQmlElements()
                                      QString::fromUtf8("Cannot create ApiEnums in QML"));
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController",
                                                 QString::fromUtf8("Cannot create WarningLevel in QML"));
+
+    setRootContextProperty(QString::fromUtf8("themeManager"), new QmlTheme(mEngine));
 }
 
 void QmlManager::setRootContextProperty(QObject* value)
