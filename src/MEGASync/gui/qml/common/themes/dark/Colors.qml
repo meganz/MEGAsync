@@ -81,7 +81,7 @@ QtObject {
 	readonly property color textInverseAccentHover: "#FF39424E"
 	readonly property color textInverseAccentPlaceholder: "#3304101E"
 	readonly property color textInverseAccentPress: "#FF6E747D"
-	readonly property color textOnColor: "#FFFAFAFA"
+	readonly property color textOnColor: "#FF04101E"
 	readonly property color textOnColorDisabled: "#7FFAFAFA"
 	readonly property color textPlaceholder: "#7FF4F4F5"
 	readonly property color textPrimary: "#FFF3F4F4"
