@@ -322,10 +322,12 @@ int main(int argc, char *argv[])
         keyFile.close();
 
         //Initialize AsymmCypher
-        string privks;
-        privks.resize(privk.size()/4*3+3);
-        privks.resize(Base64::atob(privk.data(), (::mega::byte *)privks.data(), privks.size()));
-        aprivk.setkey(AsymmCipher::PRIVKEY,(::mega::byte*)privks.data(), privks.size());
+        string privks = Base64::atob(privk);
+        if (!aprivk.setkey(AsymmCipher::PRIVKEY,(::mega::byte*)privks.data(), privks.size()))
+        {
+            cerr << "Priv RSA key problem during initialization.";
+            return 0;
+        }
 
         //Generate update file signature
         vector<string> filesVector;
