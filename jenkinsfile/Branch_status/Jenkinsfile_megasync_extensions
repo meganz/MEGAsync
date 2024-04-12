@@ -1,0 +1,218 @@
+pipeline {
+    agent { label 'linux-testing-package-builder' }
+
+    options { 
+        buildDiscarder(logRotator(numToKeepStr: '25', daysToKeepStr: '30'))
+        gitLabConnection('GitLabConnectionJenkins')
+    }
+
+
+    parameters {
+        booleanParam(name: 'IS_RELEASE_CANDIDATE', defaultValue: false, description: 'Is it a Release Candidate?')        
+        string(name: 'RELEASE_CANDIDATE_NAME', defaultValue: '', description: 'i.e: RC2, RC3 (only needed if IS_RELEASE_CANDIDATE is true)')
+        booleanParam(name: 'BUILD_NEMO', defaultValue: false, description: 'BUILD NEMO?')
+        booleanParam(name: 'BUILD_THUNAR', defaultValue: false, description: 'BUILD THUNAR?')
+        booleanParam(name: 'BUILD_NAUTILUS', defaultValue: false, description: 'BUILD NAUTILUS')
+        booleanParam(name: 'BUILD_DOLPHIN', defaultValue: false, description: 'BUILD DOLPHIN')
+        string(name: 'MEGASYNC_BRANCH', defaultValue: 'release/v4.9.1', description: 'Which version of MEGAsync should we build?')
+        string(name: 'SDK_BRANCH', defaultValue: ' ', description: 'Optionally, define a custom SDK branch')
+    }
+
+    environment {
+        gitlab_token = credentials('jenkins_sdk_token')
+        linux_sources_workspace = ''
+        MEGASYNC_BRANCH = "${params.MEGASYNC_BRANCH}"
+        SDK_BRANCH = "${params.SDK_BRANCH}"
+    }
+
+    stages {
+        stage('Clean previous runs'){
+            steps{
+                deleteDir()
+            }
+        }
+
+        stage('Checkout linux'){
+            steps {
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: "${env.MEGASYNC_BRANCH}"]],
+                    userRemoteConfigs: [[ url: "${env.GIT_URL_DESKTOP}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
+                    extensions: [
+                        [$class: "UserIdentity",name: "jenkins", email: "jenkins@jenkins"]
+                        ]
+                ])
+                script {
+                    linux_sources_workspace = WORKSPACE
+                    def branchToCheckout = ''
+
+                    if (env.SDK_BRANCH != ' ') {
+                        branchToCheckout = env.SDK_BRANCH
+                    } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
+                        branchToCheckout = "release/v6.0.0"
+                    } else {
+                        def status = sh(script: "git submodule status", returnStdout: true).trim()
+                        branchToCheckout = status.tokenize(' ')[0].substring(1)
+                    }
+                    dir('src/MEGASync/mega') {
+                        sh "echo Cloning SDK branch ${branchToCheckout}"
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: branchToCheckout]],
+                            userRemoteConfigs: [[url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1"]],
+                            extensions: [
+                                [$class: "UserIdentity", name: "jenkins", email: "jenkins@jenkins"]
+                            ]
+                        ])
+                    }
+                    linux_sources_workspace = WORKSPACE
+                }
+            }
+        }
+        stage("Run Linux full build extensions"){
+            matrix {
+                axes {
+                    axis {
+                        name 'ARCHITECTURE'
+                        values 'amd64', '386'
+                    }
+                    axis {
+                        name 'DISTRO'
+                        values  'xUbuntu_23.10', 'xUbuntu_23.04', 'xUbuntu_22.04', 'xUbuntu_20.04', 'xUbuntu_18.04',
+                                'Debian_10','Debian_11','Debian_testing',
+                                'DEB_Arch_Extra',
+                                'Fedora_36', 'Fedora_37','Fedora_38', 'Fedora_39',
+                                'openSUSE_Leap_15.4','openSUSE_Tumbleweed'
+                    }
+                }
+                excludes {
+                    exclude {
+                        axis {
+                            name 'ARCHITECTURE'
+                            values '386'
+                        }
+                        axis {
+                            name 'DISTRO'
+                            values  'xUbuntu_23.10', 'xUbuntu_23.04', 'xUbuntu_22.04', 'xUbuntu_20.04',
+                                    'Debian_11','Debian_testing',
+                                    'DEB_Arch_Extra',
+                                    'Fedora_37','Fedora_38', 'Fedora_39',
+                                    'openSUSE_Leap_15.4','openSUSE_Tumbleweed'
+                        }
+                    }
+                }
+                stages {
+                    stage('Build Dolphin') {
+                        when {
+                            beforeAgent true
+                            expression { params.BUILD_DOLPHIN == true }
+                        }
+                        agent { label 'linux-testing-package-builder' }
+                        steps {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                echo "Do Build for ${DISTRO} - ${ARCHITECTURE}"
+                                dir(linux_sources_workspace){
+                                    lock(resource: "${DISTRO}-${ARCHITECTURE}-MEGAsync-build", quantity: 1, ){
+                                        sh "/opt/buildTools/build/buildManager.sh -a $ARCHITECTURE -j 1 build $DISTRO . dolphin-megasync"
+                                        sh "/opt/buildTools/repo/repoManager.sh add /srv/builder/results/$DISTRO/$ARCHITECTURE/dolphin-megasync/ $DISTRO"
+                                        sh "SIGN_KEY_PATH=/srv/sign_test/ /opt/buildTools/repo/repoManager.sh build -n $DISTRO"
+                                    }
+                                }
+                                script{
+                                    if (params.IS_RELEASE_CANDIDATE == true){
+                                        def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
+                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(dolphin-megasync.*deb\$|dolphin-megasync.*rpm\$|dolphin-megasync.*\\.pkg\\.tar\\.zst\$|dolphin-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/extensions/]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    stage('Build Nemo') {
+                        when {
+                            beforeAgent true
+                            expression { params.BUILD_NEMO == true }
+                        }
+                        agent { label 'linux-testing-package-builder' }
+                        steps {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                echo "Do Build for ${DISTRO} - ${ARCHITECTURE}"
+                                dir(linux_sources_workspace){
+                                    lock(resource: "${DISTRO}-${ARCHITECTURE}-MEGAsync-build", quantity: 1, ){
+                                        sh "/opt/buildTools/build/buildManager.sh -a $ARCHITECTURE -j 1 build $DISTRO . nemo-megasync"
+                                        sh "/opt/buildTools/repo/repoManager.sh add /srv/builder/results/$DISTRO/$ARCHITECTURE/nemo-megasync/ $DISTRO"
+                                        sh "SIGN_KEY_PATH=/srv/sign_test/ /opt/buildTools/repo/repoManager.sh build -n $DISTRO"
+                                    }
+                                }
+                                script{
+                                    if (params.IS_RELEASE_CANDIDATE == true){
+                                        def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
+                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nemo-megasync.*deb\$|nemo-megasync.*rpm\$|nemo-megasync.*\\.pkg\\.tar\\.zst\$|nemo-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/extensions/]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    stage('Build Thunar') {
+                        when {
+                            beforeAgent true
+                            expression { params.BUILD_THUNAR == true }
+                        }
+                        agent { label 'linux-testing-package-builder' }
+                        steps {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                echo "Do Build for ${DISTRO} - ${ARCHITECTURE}"
+                                dir(linux_sources_workspace){
+                                    lock(resource: "${DISTRO}-${ARCHITECTURE}-MEGAsync-build", quantity: 1, ){
+                                        sh "/opt/buildTools/build/buildManager.sh -a $ARCHITECTURE -j 1 build $DISTRO . thunar-megasync"
+                                        sh "/opt/buildTools/repo/repoManager.sh add /srv/builder/results/$DISTRO/$ARCHITECTURE/thunar-megasync/ $DISTRO"
+                                        sh "SIGN_KEY_PATH=/srv/sign_test/ /opt/buildTools/repo/repoManager.sh build -n $DISTRO"
+                                    }
+                                }
+                                script{
+                                    if (params.IS_RELEASE_CANDIDATE == true){
+                                        def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
+                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(thunar-megasync.*deb\$|thunar-megasync.*rpm\$|thunar-megasync.*\\.pkg\\.tar\\.zst\$|thunar-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/extensions/]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    stage('Build nautilus') {
+                        when {
+                            beforeAgent true
+                            expression { params.BUILD_NAUTILUS == true }
+                        }
+                        agent { label 'linux-testing-package-builder' }
+                        steps {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                echo "Do Build for ${DISTRO} - ${ARCHITECTURE}"
+                                dir(linux_sources_workspace){
+                                    lock(resource: "${DISTRO}-${ARCHITECTURE}-MEGAsync-build", quantity: 1, ){
+                                        sh "/opt/buildTools/build/buildManager.sh -a $ARCHITECTURE -j 1 build $DISTRO . nautilus-megasync"
+                                        sh "/opt/buildTools/repo/repoManager.sh add /srv/builder/results/$DISTRO/$ARCHITECTURE/nautilus-megasync/ $DISTRO"
+                                        sh "SIGN_KEY_PATH=/srv/sign_test/ /opt/buildTools/repo/repoManager.sh build -n $DISTRO"
+                                    }
+                                }
+                                script{
+                                    if (params.IS_RELEASE_CANDIDATE == true){
+                                        def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
+                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nautilus-megasync.*deb\$|nautilus-megasync.*rpm\$|nautilus-megasync.*\\.pkg\\.tar\\.zst\$|nautilus-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/extensions/]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }                 
+}
+            
