@@ -24,7 +24,6 @@ if (ENABLE_DESKTOP_APP)
     set(USE_LIBUV ON) # Used by the Qt Desktop App: Includes the library and turns on internal web and ftp server functionality in the SDK.
     set(ENABLE_LOG_PERFORMANCE ON)
     set(ENABLE_QT_BINDINGS ON)
-    set(ENABLE_LOG_PERFORMANCE ON)
 endif()
 
 include(sdklib_options)

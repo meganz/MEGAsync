@@ -2,7 +2,12 @@
 # MEGA Desktop App
 #
 
-add_executable(MEGAsync MACOSX_BUNDLE)
+if (WIN32)
+    add_executable(MEGAsync WIN32)
+elseif (APPLE)
+    add_executable(MEGAsync MACOSX_BUNDLE)
+else()
+endif()
 
 set(MEGA_DESKTOP_APP_HEADERS
     BlockingStageProgressController.h
@@ -32,13 +37,26 @@ set(MEGA_DESKTOP_APP_SOURCES
     main.cpp
 )
 
-set(RESOURCE_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/app.icns
-    ${CMAKE_CURRENT_SOURCE_DIR}/folder.icns
-    ${CMAKE_CURRENT_SOURCE_DIR}/folder_yosemite.icns
-    ${CMAKE_CURRENT_SOURCE_DIR}/folder_bigsur.icns
-    ${CMAKE_CURRENT_SOURCE_DIR}/appicon32.tiff
-)
+if (WIN32)
+    set(RESOURCE_FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/icon.rc
+    )
+elseif (APPLE)
+    set(RESOURCE_FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/app.icns
+        ${CMAKE_CURRENT_SOURCE_DIR}/folder.icns
+        ${CMAKE_CURRENT_SOURCE_DIR}/folder_yosemite.icns
+        ${CMAKE_CURRENT_SOURCE_DIR}/folder_bigsur.icns
+        ${CMAKE_CURRENT_SOURCE_DIR}/appicon32.tiff
+    )
+
+    set_target_properties(MEGAsync PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info_MEGA.plist
+        RESOURCE "${RESOURCE_FILES}"
+    )
+else()
+endif()
 
 target_sources(MEGAsync
     PRIVATE
@@ -46,14 +64,6 @@ target_sources(MEGAsync
     ${MEGA_DESKTOP_APP_SOURCES}
     ${RESOURCE_FILES}
 )
-
-if (APPLE)
-    set_target_properties(MEGAsync PROPERTIES
-        MACOSX_BUNDLE TRUE
-        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info_MEGA.plist
-        RESOURCE "${RESOURCE_FILES}"
-    )
-endif()
 
 # Activate properties for Qt code
 set_target_properties(MEGAsync
@@ -81,17 +91,30 @@ include(transfers/transfers.cmake)
 include(UserAttributesRequests/userattributesrequests.cmake)
 
 # Load and link needed libraries for the Desktop App target
-find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network MacExtras Qml Quick)
 message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5_DIR}")
 
 # Load and link needed libraries for the Desktop App target
+if (WIN32)
+    target_compile_definitions(MEGAsync
+        PUBLIC
+        NOMINMAX
+        WIN32_LEAN_AND_MEAN
+        UNICODE
+    )
+    find_package(Qt5 REQUIRED COMPONENTS WinExtras)
+elseif (APPLE)
+    find_package(Qt5 REQUIRED COMPONENTS MacExtras)
+endif()
+
+find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick)
 target_link_libraries(MEGAsync
-    PRIVATE    
+    PUBLIC
+    $<$<BOOL:${WIN32}>:Qt5::WinExtras>
+    $<$<BOOL:${APPLE}>:Qt5::MacExtras>
     Qt5::Widgets
     Qt5::Core
     Qt5::Gui
     Qt5::Network
-    Qt5::MacExtras
     Qt5::Qml
     Qt5::Quick
     MEGA::SDKlib

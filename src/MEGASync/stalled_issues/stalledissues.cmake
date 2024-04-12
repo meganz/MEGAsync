@@ -55,9 +55,15 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     stalled_issues/model/StalledIssuesProxyModel.cpp
 )
 
-set_property(TARGET MEGAsync
-    APPEND PROPERTY AUTOUIC_SEARCH_PATHS stalled_issues/gui/macx stalled_issues/gui/stalled_issues_cases/macx
-)
+if (WIN32)
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS stalled_issues/gui/win stalled_issues/gui/stalled_issues_cases/win
+    )
+elseif (APPLE)
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS stalled_issues/gui/macx stalled_issues/gui/stalled_issues_cases/macx
+    )
+endif()
 
 target_sources_conditional(MEGAsync
    FLAG APPLE

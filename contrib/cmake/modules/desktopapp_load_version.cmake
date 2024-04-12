@@ -1,0 +1,5 @@
+function(read_desktop_app_version out_var version_file)
+    file(READ ${version_file} FILE_CONTENTS)
+    string(REGEX MATCH "define VER_PRODUCTVERSION_STR[ \t]*\"([0-9\.]*)" _ ${FILE_CONTENTS})
+    set(${out_var} ${CMAKE_MATCH_1} PARENT_SCOPE)
+endfunction()
