@@ -14,7 +14,7 @@ pipeline {
         booleanParam(name: 'BUILD_THUNAR', defaultValue: false, description: 'BUILD THUNAR?')
         booleanParam(name: 'BUILD_NAUTILUS', defaultValue: false, description: 'BUILD NAUTILUS')
         booleanParam(name: 'BUILD_DOLPHIN', defaultValue: false, description: 'BUILD DOLPHIN')
-        string(name: 'MEGASYNC_BRANCH', defaultValue: 'release/v4.9.1', description: 'Which version of MEGAsync should we build?')
+        string(name: 'MEGASYNC_BRANCH', defaultValue: 'release/v5.2.0', description: 'Which version of MEGAsync should we build?')
         string(name: 'SDK_BRANCH', defaultValue: ' ', description: 'Optionally, define a custom SDK branch')
     }
 
@@ -78,11 +78,11 @@ pipeline {
                     }
                     axis {
                         name 'DISTRO'
-                        values  'xUbuntu_23.10', 'xUbuntu_23.04', 'xUbuntu_22.04', 'xUbuntu_20.04', 'xUbuntu_18.04',
-                                'Debian_10','Debian_11','Debian_testing',
+                        values  'xUbuntu_24.04','xUbuntu_23.10', 'xUbuntu_23.04', 'xUbuntu_22.04', 'xUbuntu_20.04',
+                                'Debian_10','Debian_11','Debian_12','Debian_testing',
                                 'DEB_Arch_Extra',
-                                'Fedora_36', 'Fedora_37','Fedora_38', 'Fedora_39',
-                                'openSUSE_Leap_15.4','openSUSE_Tumbleweed'
+                                'Fedora_38', 'Fedora_39','Fedora_40',
+                                'openSUSE_Leap_15.5','openSUSE_Leap_15.6','openSUSE_Tumbleweed'
                     }
                 }
                 excludes {
@@ -93,11 +93,11 @@ pipeline {
                         }
                         axis {
                             name 'DISTRO'
-                            values  'xUbuntu_23.10', 'xUbuntu_23.04', 'xUbuntu_22.04', 'xUbuntu_20.04',
-                                    'Debian_11','Debian_testing',
+                            values  'xUbuntu_24.04','xUbuntu_23.10', 'xUbuntu_23.04', 'xUbuntu_22.04', 'xUbuntu_20.04',
+                                    'Debian_11','Debian_12','Debian_testing',
                                     'DEB_Arch_Extra',
-                                    'Fedora_37','Fedora_38', 'Fedora_39',
-                                    'openSUSE_Leap_15.4','openSUSE_Tumbleweed'
+                                    'Fedora_37','Fedora_38', 'Fedora_39','Fedora_40',
+                                    'openSUSE_Leap_15.5','openSUSE_Leap_15.6','openSUSE_Tumbleweed'
                         }
                     }
                 }
