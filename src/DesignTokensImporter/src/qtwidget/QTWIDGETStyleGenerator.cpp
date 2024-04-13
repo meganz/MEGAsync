@@ -57,7 +57,7 @@ void QTWIDGETStyleGenerator::initialize()
     mCSSFiles = Utilities::findFilesInDir(mCurrentDir + PathProvider::RELATIVE_STYLES_DIR_PATH, PathProvider::CSS_NAME_FILTER, true);
 
     // Load .json token files
-    mTokenFilePathsList = Utilities::findFilesInDir(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_TOKENS_PATH), PathProvider::JSON_NAME_FILTER);
+    mTokenFilePathsList = Utilities::findFilesInDir(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_COLOR_TOKENS_PATH), PathProvider::JSON_NAME_FILTER);
 }
 
 void QTWIDGETStyleGenerator::createDirectories()
@@ -293,9 +293,15 @@ void QTWIDGETStyleGenerator::generateStyleSheet(const ThemedColourMap& fileToCol
     // Generate .css stylesheets for all platforms
     for (auto it = fileToColourMap.constBegin(); it != fileToColourMap.constEnd(); ++it)
     {
-        const QString& filePath = it.key();
+        const QString& themeName = it.key();
         const ColourMap& colourMap = it.value();
-        QString directory = Utilities::extractFileNameNoExtension(filePath);
+
+        const QStringList& filteredList = mTokenFilePathsList.filter(themeName);
+        QString directory;
+        if (!filteredList.isEmpty())
+        {
+            directory = Utilities::extractFileNameNoExtension(filteredList.first());
+        }
 
         mWinCSSFiles << generateStylesheets(colourMap,
                                             mWinDesignTokenUIs,
