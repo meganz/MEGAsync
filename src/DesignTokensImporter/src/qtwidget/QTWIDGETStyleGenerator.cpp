@@ -63,6 +63,7 @@ void QTWIDGETStyleGenerator::initialize()
 void QTWIDGETStyleGenerator::createDirectories()
 {
     // Set up directory structure
+    Utilities::createDirectory(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_GENERATED_PATH));
     Utilities::createDirectory(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_TOKENS_PATH));
     Utilities::createDirectory(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_THEMES_DIR_PATH));
     Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_STYLES_DIR_PATH);

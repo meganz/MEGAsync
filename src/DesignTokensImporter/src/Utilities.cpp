@@ -13,11 +13,12 @@
 #include <QTextStream>
 #include <QTemporaryFile>
 
-static const QString COLOUR_TOKEN_START = QString::fromLatin1("--color-");
-static const qint64 FILE_READ_BUFFER_SIZE = 8192;
-
 namespace DTI
 {
+static const QString COLOUR_TOKEN_START = QString::fromLatin1("--color-");
+static const qint64 FILE_READ_BUFFER_SIZE = 8192;
+static QMap<Utilities::Theme, ColourMap> themedColourMaps;
+
 //!
 //! \brief Utilities::createDirectory
 //! \param dirPath: path to directory
@@ -209,21 +210,10 @@ bool Utilities::createNewQrcFile(const QString &qrcPath)
     return true;
 }
 
-bool Utilities::writeColourMapToJSON(const QMap<QString, QString>& colourMap,
-                                     const QString& filePath)
+void Utilities::writeColourMapToMemory(const QString& themeName, const ColourMap& colourMap)
 {
-    QJsonObject dataObject;
-
-    // Iterate over the QMap and add key-value pairs to the JSON object
-    for (auto it = colourMap.begin(); it != colourMap.end(); ++it)
-    {
-        dataObject.insert(it.key(), it.value());
-    }
-
-    QJsonObject jsonObject;
-    jsonObject.insert("data", dataObject);
-
-    return writeJSONToFile(QJsonDocument(jsonObject), filePath);
+    Theme theme = getTheme(themeName);
+    themedColourMaps[theme] = colourMap;
 }
 
 void Utilities::traverseDirectory(const QString &directoryPath, const QStringList &filters, QStringList &filePaths)
@@ -608,34 +598,17 @@ QMap<QString, QMap<QString, QString>> Utilities::readHashesJSONFile(const QStrin
 
     return result;
 }
-
-QMap<QString, QString> Utilities::readColourMapJSONFile(const QString &filePath)
+const ColourMap& Utilities::readColourMapFromMemory(Theme theme)
 {
-    QMap<QString, QString> colourMap;
+    static const ColourMap emptyColourMap;
 
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Utilities::readColourMapJSONFile - Error opening file" << filePath;
-        return colourMap;
+    auto it = themedColourMaps.find(theme);
+    if (it != themedColourMaps.end())
+    {
+        return it.value();
     }
 
-    QByteArray jsonData = file.readAll();
-    file.close();
-
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
-    if (!jsonDoc.isObject()) {
-        qDebug() << "Utilities::readColourMapJSONFile - ERROR! Invalid JSON format";
-        return colourMap;
-    }
-
-    QJsonObject rootObj = jsonDoc.object();
-    QJsonObject dataObj = rootObj.value("data").toObject();
-
-    for (auto it = dataObj.begin(); it != dataObj.end(); ++it) {
-        colourMap.insert(it.key(), it.value().toString());
-    }
-
-    return colourMap;
+    return emptyColourMap;
 }
 
 bool Utilities::writeHashesJsonFile(const QList<QStringList> &filePaths,
@@ -770,37 +743,6 @@ bool Utilities::areAllStringsPresent(const QStringList& list1,
 
     // Check if all strings from list1 are present in list2
     return (set1 - set2).isEmpty();
-}
-
-
-QMap<Utilities::Theme, QMap<QString, QString>> Utilities::getColourMapInfo()
-{
-    static QMap<Utilities::Theme, QMap<QString, QString>> cachedColourMap;
-    static bool isCached = false;
-
-    if (!isCached)
-    {
-        QString currentDir = QDir::currentPath();
-        QDir dir(resolvePath(currentDir, PathProvider::RELATIVE_GENERATED_PATH));
-
-        QStringList tokenFilePathsList = Utilities::findFilesInDir(resolvePath(currentDir, PathProvider::RELATIVE_TOKENS_PATH), PathProvider::JSON_NAME_FILTER);
-
-        QStringList filePathsColourMap;
-        foreach (const QString& filePath, tokenFilePathsList)
-        {
-            QString fileName = Utilities::extractFileName(filePath);
-            filePathsColourMap.append(dir.filePath(fileName));
-        }
-
-        foreach (const QString& filePath, filePathsColourMap)
-        {
-            QMap<QString, QString> colourMap = Utilities::readColourMapJSONFile(filePath);
-            cachedColourMap.insert(Utilities::getTheme(filePath), colourMap);
-        }
-        isCached = true;
-    }
-
-    return cachedColourMap;
 }
 
 Utilities::Theme Utilities::getTheme(const QString& filePath)

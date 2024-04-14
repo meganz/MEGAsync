@@ -192,7 +192,7 @@ QSize SVGIcon::getSize() const
 
 QString SVGIcon::getColor(SVGIcon::ButtonState state, Utilities::Theme theme) const
 {
-    QMap<QString, QString> themeColourInfo =  Utilities::getColourMapInfo().value(theme);
+    QMap<QString, QString> themeColourInfo = Utilities::readColourMapFromMemory(theme);
     QString colorKey = getColorKeyForState(state);
 
     if (!colorKey.isEmpty() && mSvgIconInfo.properties.contains(colorKey))
