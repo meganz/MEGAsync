@@ -13,7 +13,6 @@ public:
     //paths
     static const QString RELATIVE_GENERATED_PATH;
     static const QString RELATIVE_CORE_FILE_PATH;
-    static const QString RELATIVE_TOKENS_PATH;
     static const QString RELATIVE_COLOR_TOKENS_PATH;
     static const QString RELATIVE_UI_PATH;
     static const QString RELATIVE_IMAGES_PATH;

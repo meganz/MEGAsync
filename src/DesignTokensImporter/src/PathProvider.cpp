@@ -6,7 +6,6 @@ using namespace DTI;
 const QString PathProvider::RELATIVE_GENERATED_PATH = QString::fromLatin1("../DesignTokensImporter/generated");
 const QString PathProvider::RELATIVE_CORE_FILE_PATH = QString::fromLatin1("../DesignTokensImporter/megadesignassets/core.json");
 const QString PathProvider::RELATIVE_COLOR_TOKENS_PATH = QString::fromLatin1("../DesignTokensImporter/megadesignassets/colors");
-const QString PathProvider::RELATIVE_TOKENS_PATH = QString::fromLatin1("../DesignTokensImporter/tokens");
 const QString PathProvider::RELATIVE_UI_PATH = QString::fromLatin1("/gui");
 const QString PathProvider::RELATIVE_IMAGES_PATH = PathProvider::RELATIVE_UI_PATH + QString::fromLatin1("/images");
 const QString PathProvider::RELATIVE_SVG_PATH = PathProvider::RELATIVE_IMAGES_PATH + QString::fromLatin1("/svg");
