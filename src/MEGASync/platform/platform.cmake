@@ -85,7 +85,7 @@ endif()
 target_link_libraries(MEGAsync
     PRIVATE
     $<$<BOOL:${WIN32}>:Shell32 Shlwapi Powrprof taskschd>
-    $<$<BOOL:${APPLE}>:"-framework IOKit">
+    "$<$<BOOL:${APPLE}>:-framework IOKit>"
 )
 
 target_sources(MEGAsync

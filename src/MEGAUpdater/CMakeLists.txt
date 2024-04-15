@@ -46,8 +46,7 @@ target_link_libraries(MEGAupdater
     PRIVATE
     cryptopp::cryptopp
     $<$<BOOL:${WIN32}>:urlmon Shlwapi>
-    $<$<BOOL:${APPLE}>:"-framework CoreServices">
-    $<$<BOOL:${APPLE}>:"-framework Cocoa">
+    "$<$<BOOL:${APPLE}>:-framework CoreServices -framework Cocoa>"
 )
 
 if (ENABLE_DESKTOP_APP_WERROR)
