@@ -656,6 +656,63 @@ void DesktopNotifications::sendFinishedTransferNotification(unsigned long long a
     }
 }
 
+void DesktopNotifications::sendFinishedSetDownloadNotification(const QString& setName,
+                                                               const QStringList& succeededDownloadedElements,
+                                                               const QStringList& failedDownloadedElements,
+                                                               const QString& destinationPath)
+{
+    (void) setName;
+    QString title = TransferNotificationBuilder::getDownloadFailedTitle();
+    QString msg = QString::fromUtf8("");
+    int nrSuccessItems = succeededDownloadedElements.size();
+    int nrFailedItems = failedDownloadedElements.size();
+    QStringList actions;
+
+    mPreferences->setLastTransferNotificationTimestamp();
+    mSetDownloadPath = destinationPath;
+
+    // Extract the directory out of the full destinationPath
+    QDir dir(destinationPath);
+    QString directory = dir.dirName();
+
+    // Title
+    if (nrSuccessItems == 0)
+    {
+        // All have failed
+        if (nrFailedItems == 1)
+        {
+            // Single file failure
+            msg = TransferNotificationBuilder::getSingleDownloadFailed(failedDownloadedElements.front(), directory);
+        }
+        else
+        {
+            // Multiple files failed
+            msg = TransferNotificationBuilder::getDownloadFailedText(nrFailedItems, directory);
+        }
+    }
+    else if (nrFailedItems > 0)
+    {
+        // Some have failed
+        title = TransferNotificationBuilder::getDownloadSomeFailedTitle();
+        msg = TransferNotificationBuilder::getSomeDownloadFailedText(nrSuccessItems, nrFailedItems);
+        actions << TransferNotificationBuilder::getShowInFolderText();
+    }
+    else // All files successfully downloaded
+    {
+        title = TransferNotificationBuilder::getDownloadSuccessTitle();
+        msg = TransferNotificationBuilder::getDownloadSuccessText(nrSuccessItems, directory);
+        actions << TransferNotificationBuilder::getShowInFolderText();
+    }
+
+    auto notification = new DesktopAppNotification();
+    notification->setText(msg);
+    notification->setActions(actions);
+    notification->setTitle(title);
+
+    connect(notification, &DesktopAppNotification::activated, this, &DesktopNotifications::actionPressedOnDownloadSetFinished);
+    mNotificator->notify(notification);
+}
+
 void DesktopNotifications::redirectToUpgrade(DesktopAppNotification::Action activationButton) const
 {
     if (checkIfActionIsValid(activationButton))
@@ -813,6 +870,15 @@ void DesktopNotifications::actionPressedOnDownloadFinishedTransferNotification(D
             }
         }
     }
+}
+
+void DesktopNotifications::actionPressedOnDownloadSetFinished(DesktopAppNotification::Action action)
+{
+    if (mSetDownloadPath.isEmpty()) { return; }
+    Platform::getInstance()->showInFolder(mSetDownloadPath);
+
+    // Reset
+    mSetDownloadPath = QString::fromUtf8("");
 }
 
 void DesktopNotifications::actionPressedOnUploadFinishedTransferNotification(DesktopAppNotification::Action action) const

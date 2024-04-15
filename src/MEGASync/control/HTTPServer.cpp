@@ -3,9 +3,11 @@
 #include "AppStatsEvents.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
+#include "mega/setandelement.h"
+
 #include <QtConcurrent/QtConcurrent>
 
-#include <iostream>
+
 #include <algorithm>
 
 
@@ -13,7 +15,6 @@ using namespace mega;
 
 const unsigned int HTTPServer::MAX_REQUEST_TIME_SECS = 1800;
 const QString PUBLIC_LINK_START = QString::fromUtf8("https://mega.nz/collection/");
-const int SET_ELEMENT_HANDLE_SIZE = 8;
 
 bool ts_comparator(RequestData* i, RequestData *j)
 {
@@ -618,7 +619,7 @@ void HTTPServer::externalDownloadSetRequest(QString &response, const HTTPRequest
     {
         QByteArray ba = eId.toLocal8Bit();
         const char *c_str2 = ba.data();
-        size_t size = SET_ELEMENT_HANDLE_SIZE;
+        size_t size = mega::SetElement::HANDLESIZE;
         unsigned char* result;
         megaApi->base64ToBinary(c_str2, &result, &size);
         const mega::MegaHandle* myHandlePtr = reinterpret_cast<mega::MegaHandle*>(result);

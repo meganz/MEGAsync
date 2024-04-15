@@ -303,6 +303,10 @@ public slots:
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
+    void setDownloadFinished(const QString& setName,
+                             const QStringList& succeededDownloadedElements,
+                             const QStringList& failedDownloadedElements,
+                             const QString& destinationPath);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();

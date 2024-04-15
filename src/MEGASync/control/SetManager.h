@@ -66,7 +66,7 @@ struct CallbackAction
     CallbackType type = CallbackType::UNDEFINED;
     QString link;
     AlbumCollection set;
-     QList<mega::MegaHandle> elementHandleList;
+    QList<mega::MegaHandle> elementHandleList;
     QString downloadPath;
 };
 
@@ -80,7 +80,10 @@ public:
 
 signals:
     void onFetchSetFromLink(const AlbumCollection& collection);
-    void onSetDownloaded(const QString& setName, int nrDownloadedElements);
+    void onSetDownloadFinished(const QString& setName,
+                               const QStringList& succeededDownloadedElements,
+                               const QStringList& failedDownloadedElements,
+                               const QString& destinationPath);
 
 public slots:
     void requestFetchSetFromLink(const QString& link);
@@ -122,8 +125,8 @@ private:
     AlbumCollection mCurrentSet;
     QList<mega::MegaHandle> mCurrentElementHandleList;
     QString mCurrentDownloadPath;
-
-    int mNrDownloadedElements;
+    QStringList mFailedDownloadedElements;
+    QStringList mSucceededDownloadedElements;
 };
 
 #endif // SET_MANAGER_H
