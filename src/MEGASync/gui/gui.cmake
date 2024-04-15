@@ -193,6 +193,7 @@ set(DESKTOP_APP_GUI_SOURCES
 # UI files additions
 target_sources_conditional(MEGAsync
    FLAG WIN32
+   QT_AWARE
    PRIVATE
     gui/win/InfoDialog.ui
     gui/win/UploadToMegaDialog.ui
@@ -239,6 +240,7 @@ target_sources_conditional(MEGAsync
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
+   QT_AWARE
    PRIVATE
    gui/macx/InfoDialog.ui
    gui/macx/UploadToMegaDialog.ui
@@ -288,6 +290,7 @@ target_sources_conditional(MEGAsync
 # Resources and platform-specific additions
 target_sources_conditional(MEGAsync
    FLAG WIN32
+   QT_AWARE
    PRIVATE
    gui/Resources_win.qrc
    gui/LockedPopOver.h
@@ -296,6 +299,7 @@ target_sources_conditional(MEGAsync
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
+   QT_AWARE
    PRIVATE
    gui/Resources_macx.qrc
    gui/CocoaHelpButton.mm

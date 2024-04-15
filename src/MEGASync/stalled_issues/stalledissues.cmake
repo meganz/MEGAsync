@@ -67,6 +67,7 @@ endif()
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
+   QT_AWARE
    PRIVATE
    stalled_issues/../gui/Resources_macx.qrc
    stalled_issues/gui/macx/StalledIssueHeader.ui

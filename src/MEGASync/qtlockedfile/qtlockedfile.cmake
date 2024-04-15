@@ -9,12 +9,14 @@ set(DESKTOP_APP_LOCKED_FILE_SOURCES
 
 target_sources_conditional(MEGAsync
    FLAG UNIX
+   QT_AWARE
    PRIVATE
    qtlockedfile/qtlockedfile_unix.cpp
 )
 
 target_sources_conditional(MEGAsync
    FLAG WIN32
+   QT_AWARE
    PRIVATE
    qtlockedfile/qtlockedfile_win.cpp
 )

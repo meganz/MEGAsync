@@ -14,6 +14,7 @@ set(DESKTOP_APP_PLATFORM_SOURCES
 
 target_sources_conditional(MEGAsync
    FLAG WIN32
+   QT_AWARE
    PRIVATE
    platform/win/PlatformImplementation.h
    platform/win/RecursiveShellNotifier.h
@@ -35,6 +36,7 @@ target_sources_conditional(MEGAsync
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
+   QT_AWARE
    PRIVATE
    platform/macx/PlatformImplementation.h
    platform/macx/MacXFunctions.h

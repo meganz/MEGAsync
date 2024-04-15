@@ -56,6 +56,7 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
+   QT_AWARE
    PRIVATE
    transfers/../gui/Resources_macx.qrc
    transfers/gui/macx/TransferWidgetHeaderItem.ui

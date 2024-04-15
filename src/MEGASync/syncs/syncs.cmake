@@ -55,6 +55,7 @@ set(DESKTOP_APP_SYNCS_SOURCES
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
+   QT_AWARE
    PRIVATE
    syncs/../gui/Resources_macx.qrc
    syncs/gui/Twoways/macx/FolderBinder.ui

@@ -15,6 +15,7 @@ set(DESKTOP_APP_NOTIFICATIONS_SOURCES
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
+   QT_AWARE
    PRIVATE
    notifications/../gui/Resources_macx.qrc
    notifications/macx/NotificationHandler.mm
@@ -32,6 +33,7 @@ target_sources_conditional(MEGAsync
 
 target_sources_conditional(MEGAsync
    FLAG WIN32
+   QT_AWARE
    PRIVATE
    notifications/../gui/Resources_win.qrc
    notifications/win/Notificator.h
