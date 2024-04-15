@@ -75,18 +75,21 @@ void WordWrapLabel::resetSizeLimits()
 
 void WordWrapLabel::setText(const QString& text)
 {
-    mText = text;
-
-    if (mFormat == Qt::PlainText)
+    if (mText != text)
     {
-        QTextBrowser::setPlainText(mText);
-    }
-    else
-    {
-        QTextBrowser::setText(mText);
-    }
+        mText = text;
 
-    onAdaptHeight();
+        if (mFormat == Qt::PlainText)
+        {
+            QTextBrowser::setPlainText(mText);
+        }
+        else
+        {
+            QTextBrowser::setText(mText);
+        }
+
+        onAdaptHeight();
+    }
 }
 
 void WordWrapLabel::setTextFormat(Qt::TextFormat format)
