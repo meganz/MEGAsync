@@ -9,8 +9,7 @@ SetManager::SetManager(MegaApi* megaApi, MegaApi* megaApiFolders) :
     mMegaApiFolders(megaApiFolders),
     mDelegateListener(std::make_shared<QTMegaRequestListener>(megaApi, this)),
     mDelegateTransferListener(std::make_shared<QTMegaTransferListener>(megaApi, this)),
-    mSetManagerState(SetManagerState::INIT),
-    mNrDownloadedElements(0)
+    mSetManagerState(SetManagerState::INIT)
 {
 }
 
@@ -117,21 +116,27 @@ void SetManager::onTransferFinish(MegaApi* api, MegaTransfer* transfer, MegaErro
     (void) api;
     (void) transfer;
 
-     if (error->getErrorCode() != MegaError::API_OK)
+    if (error->getErrorCode() == MegaError::API_OK)
     {
-        // Something is wrong: abort downloads by returning to INIT state
-        reset();
-        return;
+        mSucceededDownloadedElements.push_back(QString::fromUtf8(transfer->getFileName()));
+    }
+    else
+    {
+        mFailedDownloadedElements.push_back(QString::fromUtf8(transfer->getFileName()));
     }
 
     // Successful download
     int nrElementsToDownload = mCurrentSet.elementHandleList.size();
+    int nrDownloadedElements = mSucceededDownloadedElements.size() + mFailedDownloadedElements.size();
 
-    if (++mNrDownloadedElements == nrElementsToDownload)
+
+    if (nrDownloadedElements == nrElementsToDownload)
     {
         // Notify observers about the successful download: pass Set name and nr downloaded Elements
-        emit onSetDownloaded(mCurrentSet.name,
-                             static_cast<int>(nrElementsToDownload));
+        emit onSetDownloadFinished(mCurrentSet.name,
+                                   mSucceededDownloadedElements,
+                                   mFailedDownloadedElements,
+                                   mCurrentDownloadPath);
 
         // End preview
         mMegaApi->stopPublicSetPreview();
@@ -433,8 +438,8 @@ void SetManager::reset()
     mCurrentSet.reset();
     mCurrentElementHandleList.clear();
     mCurrentDownloadPath = QString::fromUtf8("");
-    mNrDownloadedElements = 0;
-
+    mFailedDownloadedElements.clear();
+    mSucceededDownloadedElements.clear();
 }
 
 void SetManager::startDownload(MegaNode* linkNode, const QString& localPath)

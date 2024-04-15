@@ -2917,6 +2917,7 @@ void MegaApplication::ConnectServerSignals(HTTPServer* server)
     connect(server, &HTTPServer::onExternalShowInFolderRequested, this, &MegaApplication::openFolderPath, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalAddBackup, this, &MegaApplication::externalAddBackup, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalDownloadSetRequested, this, &MegaApplication::processSetDownload, Qt::QueuedConnection);
+    connect(mSetManager.get(), &SetManager::onSetDownloadFinished, this, &MegaApplication::setDownloadFinished);
 }
 
 bool MegaApplication::dontAskForExitConfirmation(bool force)
@@ -3631,6 +3632,20 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
     if (mOsNotifications)
     {
         mOsNotifications->sendFinishedTransferNotification(appDataId);
+    }
+}
+
+void MegaApplication::setDownloadFinished(const QString& setName,
+                                          const QStringList& succeededDownloadedElements,
+                                          const QStringList& failedDownloadedElements,
+                                          const QString& destinationPath)
+{
+    if (mOsNotifications)
+    {
+        mOsNotifications->sendFinishedSetDownloadNotification(setName,
+                                                              succeededDownloadedElements,
+                                                              failedDownloadedElements,
+                                                              destinationPath);
     }
 }
 
