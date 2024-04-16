@@ -1,6 +1,7 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
 #include "control/HTTPServer.h"
+#include "themes/ThemeManager.h"
 
 #include <EventHelper.h>
 #include <QStyleOption>
@@ -188,6 +189,11 @@ QIcon MegaProxyStyle::standardIcon(QStyle::StandardPixmap standardIcon, const QS
 
 void MegaProxyStyle::polish(QWidget *widget)
 {
+    if (!widget)
+    {
+        return;
+    }
+
     if(auto spinBox = qobject_cast<QSpinBox*>(widget))
     {
         EventManager::addEvent(spinBox, QEvent::Wheel, EventHelper::BLOCK);
@@ -195,6 +201,11 @@ void MegaProxyStyle::polish(QWidget *widget)
     else if(auto comboBox = qobject_cast<QComboBox*>(widget))
     {
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
+    }
+
+    if (ThemeManager::instance()->addClassToThemeManager(widget))
+    {
+        widget->installEventFilter(this);
     }
 
     QProxyStyle::polish(widget);
@@ -223,5 +234,21 @@ void MegaProxyStyle::unpolish(QApplication *app)
 bool MegaProxyStyle::event(QEvent *e)
 {
     return QProxyStyle::event(e);
+}
+
+bool MegaProxyStyle::eventFilter(QObject *watched, QEvent *event)
+{
+    if (event->type() == QEvent::Paint)
+    {
+        QWidget *widget = qobject_cast<QWidget*>(watched);
+        if (widget && !widget->property("stylesheetApplied").toBool())
+        {
+            ThemeManager::instance()->applyStyleSheet(widget);
+            widget->setProperty("stylesheetApplied", true);
+            widget->removeEventFilter(this);
+        }
+    }
+
+    return QProxyStyle::eventFilter(watched, event);
 }
 
