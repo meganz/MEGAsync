@@ -3909,7 +3909,7 @@ You will not be able to regain access to your stored data or be authorised to si
     </message>
     <message>
         <source>Undecrypted file</source>
-        <translatorcomment>Text shown when active file is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translatorcomment>Text shown when a file is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
