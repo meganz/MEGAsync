@@ -89,6 +89,11 @@ pre_upgrade() {
 killall -s SIGUSR1 megasync 2> /dev/null || true
 }
 
+pre_remove() {
+killall megasync 2> /dev/null || true
+megasync "--send-uninstall-event" 2> /dev/null || true
+}
+
 post_remove() {
 /bin/touch --no-create /usr/share/icons/hicolor &>/dev/null
 /bin/touch --no-create /usr/share/icons/ubuntu-mono-dark &>/dev/null
