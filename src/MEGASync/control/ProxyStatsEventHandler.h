@@ -6,10 +6,11 @@
 class ProxyStatsEventHandler : public IStatsEventHandler
 {
 public:
-    void sendEvent(int eventType, const char* message, bool addJourneyId, const char* viewId, mega::MegaRequestListener* listener = nullptr) override;
+    void sendEvent(AppStatsEvents::EventTypes type) override;
+    void sendEvent(AppStatsEvents::EventTypes type, const char* message) override;
 
 private:
     bool canSend() const;
 };
 
-#endif
+#endif // PROXYSTATSEVENTHANDLER_H
