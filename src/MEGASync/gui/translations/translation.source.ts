@@ -3677,11 +3677,6 @@ https://mega.co.nz/#sync</source>
         <translation>Critical system files required by this app are unable to be reached, possibly due to folder permissions. Try restarting the app and checking the system folder permissions. If the problem persists, please [A]contact Support[/A].</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
-        <translation>Decryption error</translation>
-    </message>
-    <message>
         <source>Destination storage is full.</source>
         <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
         <translation>Destination storage is full</translation>
@@ -3911,6 +3906,16 @@ You will not be able to regain access to your stored data or be authorised to si
         <source>Rubbish bin</source>
         <translatorcomment>Title of the Rubbish section. SAT-426</translatorcomment>
         <translation>Rubbish bin</translation>
+    </message>
+    <message>
+        <source>Undecrypted file</source>
+        <translatorcomment>Text shown when active file is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undecrypted folder</source>
+        <translatorcomment>Text shown when a folder is undecrypted and the name can´t be known. SNC-4420</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

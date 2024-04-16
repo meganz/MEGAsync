@@ -974,7 +974,7 @@ QString UploadTransferMetaData::getDestinationNodePathByData(const std::shared_p
 
         return path;
     }
-    return QCoreApplication::translate("MegaError", "Decryption error");
+    return MegaNodeNames::getUndecryptedFolderName();
 }
 
 bool UploadTransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError *e)

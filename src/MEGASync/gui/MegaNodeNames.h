@@ -75,11 +75,6 @@ public:
 
         return QString();
     }
-
-    // static QString getUndecryptedName()
-    // {
-    //     return QCoreApplication::translate("MegaError", "Decryption error");
-    // }
 };
 
 #endif // MEGANODENAMES_H
