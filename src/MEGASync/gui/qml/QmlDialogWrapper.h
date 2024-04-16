@@ -2,6 +2,8 @@
 #define QMLCOMPONENTWRAPPER_H
 
 #include "QmlDialog.h"
+#include "QmlManager.h"
+
 #include "megaapi.h"
 
 #include <QQmlComponent>
@@ -13,12 +15,9 @@
 #include <QPointer>
 #include <QDialog>
 #include <QApplication>
+#include <QScreen> // Implicitly included
 
 #include <memory>
-
-#if DEBUG
-#include <iostream>
-#endif
 
 class QMLComponent : public QObject
 {
@@ -30,7 +29,6 @@ public:
     virtual QString contextName(){return QString();}
     virtual QVector<QQmlContext::PropertyPair> contextProperties() {return QVector<QQmlContext::PropertyPair>();};
 
-    QQmlEngine* getEngine();
 };
 
 class QmlDialogWrapperBase : public QWidget
@@ -100,20 +98,15 @@ public:
         : QmlDialogWrapperBase(parent)
     {
         Q_ASSERT((std::is_base_of<QMLComponent, Type>::value));
-        QObject::connect(mWrapper->getEngine(), &QQmlEngine::warnings, [](const QList<QQmlError>& warnings) {
-                    for (const QQmlError& e : warnings) {
-                        qDebug() << "error: " << e.toString();
-                    }
-                });
 
         mWrapper = new Type(parent);
-        QQmlEngine* engine = mWrapper->getEngine();
+        QQmlEngine* engine = QmlManager::instance()->getEngine();
         QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
 
         if (qmlComponent.isReady())
         {
-            QQmlContext *context = new QQmlContext(engine->rootContext(), this);
+            QQmlContext* context = new QQmlContext(engine->rootContext(), this);
             if(!mWrapper->contextName().isEmpty())
             {
                 context->setContextProperty(mWrapper->contextName(), mWrapper);

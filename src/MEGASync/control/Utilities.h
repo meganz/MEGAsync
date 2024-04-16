@@ -312,6 +312,8 @@ public:
     static QString getSizeString(long long bytes);
     static QString getSizeStringLocalized(quint64 bytes);
     static int toNearestUnit(long long bytes);
+    static QString getTranslatedSeparatorTemplate();
+
     struct ProgressSize
     {
         QString transferredBytes;
@@ -327,6 +329,7 @@ public:
     static QString getQuantityString(unsigned long long quantity);
     static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
+    static QStringList extractJSONStringList(const QString& json, const QString& name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
     static void getPROurlWithParameters(QString &url);

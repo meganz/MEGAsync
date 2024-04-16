@@ -774,6 +774,11 @@ int Utilities::toNearestUnit(long long bytes)
     return static_cast<int>(inNearestUnit);
 }
 
+QString Utilities::getTranslatedSeparatorTemplate()
+{
+    return QCoreApplication::translate("Utilities", "%1/%2");
+}
+
 Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)
 {
     ProgressSize sizes;
@@ -857,6 +862,37 @@ QString Utilities::extractJSONString(QString json, QString name)
     }
 
     return json.mid(pos + pattern.size(), end - pos - pattern.size());
+}
+
+QStringList Utilities::extractJSONStringList(const QString& json, const QString& name)
+{
+    QStringList resultList;
+
+    QString pattern = name + QString::fromUtf8("\":[\"");
+    int startPos = json.indexOf(pattern);
+    if (startPos < 0)
+    {
+        return resultList;
+    }
+
+    startPos += pattern.size(); // Move to the beginning of the first string
+
+    int endPos = json.indexOf(QString::fromUtf8("\"]"), startPos);
+    if (endPos < 0)
+    {
+        return resultList;
+    }
+
+    QString substr = json.mid(startPos, endPos - startPos);
+    QStringList parts = substr.remove(QString::fromUtf8("\"")).split(QString::fromUtf8(","));
+
+    // Trim whitespace from each part and add it to the result list
+    for (const QString& part : parts)
+    {
+        resultList.append(part.trimmed());
+    }
+
+    return resultList;
 }
 
 long long Utilities::extractJSONNumber(QString json, QString name)

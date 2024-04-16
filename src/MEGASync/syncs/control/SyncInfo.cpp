@@ -134,7 +134,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         // Send event for the first sync
         if (!mIsFirstTwoWaySyncDone && !preferences->isFirstSyncDone())
         {
-            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC,
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC,
                                                  "MEGAsync first sync", false, nullptr);
         }
         mIsFirstTwoWaySyncDone = true;
@@ -145,7 +145,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         // Send event for the first backup
         if (!mIsFirstBackupDone && !preferences->isFirstBackupDone())
         {
-            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_BACKUP,
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_1ST_BACKUP,
                                                  "MEGAsync first backup", false, nullptr);
         }
         mIsFirstBackupDone = true;

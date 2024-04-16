@@ -24,6 +24,18 @@ public:
 
     FinishedTransferNotificationInfo buildNotification();
 
+    static QString getDownloadFailedTitle();
+    static QString getDownloadSomeFailedTitle();
+    static QString getDownloadSuccessTitle();
+
+    static QString getDownloadFailedText(int num, const QString &destPath);
+    static QString getSomeDownloadFailedText(int completed, int failed);
+    static QString getDownloadSuccessText(int num, const QString& destPath);
+    static QString getSingleDownloadFailed(const QString& fileName, const QString& destPath);
+
+    static QString getShowInFolderText();
+
+
 protected:
     QString buildUploadTitle();
     QString buildDownloadTitle();

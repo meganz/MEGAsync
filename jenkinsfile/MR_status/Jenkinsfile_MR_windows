@@ -128,7 +128,7 @@ pipeline {
             }
             environment {
                 VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
-                MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64"
+                MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
             }
             steps{
                 sh "echo ${params.SDK_BRANCH}"
@@ -177,12 +177,19 @@ pipeline {
                     }
                     environment{
                         MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
-                        MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
+                        MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
                         MEGA_THIRD_PARTY_DLL_DIR = "bin"
                     }
                     steps {
                         dir(windows_sources_workspace){
-                            bat "full_build_process.cmd ${env.ARCHITECTURE} nosign 2" //architecture can be 64 or 32/64
+                            bat """
+                                mkdir tmp
+                                set _MSPDBSRV_ENDPOINT_= ${BUILD_TAG}
+                                set TMP=${Workspace}\\tmp
+                                set TEMP=${Workspace}\\tmp
+                                set TMPDIR=${Workspace}\\tmp   
+                                full_build_process.cmd ${env.ARCHITECTURE} nosign 2                     
+                            """
                         }
                     }
                 }

@@ -116,7 +116,7 @@ void DeviceName::processGetDeviceNameCallback(mega::MegaRequest* incoming_reques
         mDeviceName = QString::fromUtf8(incoming_request->getName());
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                            QString::fromUtf8("Got device name from remote: \"%1\"").arg(mDeviceName)
-                           .toUtf8().constData());
+                               .toUtf8().constData());
         emit attributeReady(mDeviceName);
     }
     else

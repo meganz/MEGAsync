@@ -18,7 +18,8 @@ public:
     typedef enum {
            TYPE_FILE = 0,
            TYPE_FOLDER = 1,
-           TYPE_UNKNOWN = 2
+           TYPE_NOTFOUND = 2,
+           TYPE_UNKNOWN = 3
     } FileType;
 
     typedef enum {
