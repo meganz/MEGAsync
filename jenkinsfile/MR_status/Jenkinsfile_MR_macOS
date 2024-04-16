@@ -8,7 +8,7 @@ pipeline {
     
 
     environment {
-        VCPKGPATH = "${env.HOME}/jenkins/3rdparty_cmake/vcpkg"
+        VCPKGPATH = "${env.HOME}/jenkins/vcpkg"
     }
 
     stages {
