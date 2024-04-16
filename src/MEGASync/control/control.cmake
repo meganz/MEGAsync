@@ -2,11 +2,14 @@
 set(DESKTOP_APP_CONTROL_HEADERS
     control/AccountStatusController.h
     control/AppStatsEvents.h
+    control/AsyncHandler.h
     control/ConnectivityChecker.h
     control/CrashHandler.h
     control/DialogOpener.h
     control/DownloadQueueController.h
     control/EmailRequester.h
+    control/IStatsEventHandler.h
+    control/ProxyStatsEventHandler.h
     control/ExportProcessor.h
     control/FileFolderAttributes.h
     control/HTTPServer.h
@@ -15,12 +18,14 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/MegaDownloader.h
     control/MegaSyncLogger.h
     control/MegaUploader.h
+    control/ProtectedQueue.h
     control/TextDecorator.h
     control/ThreadPool.h
     control/TransferBatch.h
     control/TransferRemainingTime.h
     control/UpdateTask.h
     control/UserAttributesManager.h
+    control/SetManager.h
     control/Utilities.h
     control/Version.h
     control/gzjoin.h
@@ -37,6 +42,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/DialogOpener.cpp
     control/DownloadQueueController.cpp
     control/EmailRequester.cpp
+    control/ProxyStatsEventHandler.cpp
     control/ExportProcessor.cpp
     control/FileFolderAttributes.cpp
     control/HTTPServer.cpp
@@ -45,6 +51,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/MegaDownloader.cpp
     control/MegaSyncLogger.cpp
     control/MegaUploader.cpp
+    control/SetManager.cpp
     control/TextDecorator.cpp
     control/ThreadPool.cpp
     control/TransferBatch.cpp

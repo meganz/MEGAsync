@@ -82,6 +82,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/QmlClipboard.h
     gui/qml/QmlDialog.h
     gui/qml/QmlDialogWrapper.h
+    gui/qml/QmlDialogManager.h
+    gui/qml/QmlManager.h
     gui/qml/ApiEnums.h
     gui/qml/StandardIconProvider.h
     gui/onboarding/ChooseFolder.h
@@ -176,6 +178,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/QmlClipboard.cpp
     gui/qml/QmlDialog.cpp
     gui/qml/QmlDialogWrapper.cpp
+    gui/qml/QmlDialogManager.cpp
+    gui/qml/QmlManager.cpp
     gui/qml/StandardIconProvider.cpp
     gui/onboarding/ChooseFolder.cpp
     gui/onboarding/Onboarding.cpp

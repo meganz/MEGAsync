@@ -706,7 +706,7 @@ void MegaApplication::initialize()
 
     mStatsEventHandler = new ProxyStatsEventHandler();
 
-    mSetManager = ::mega::make_unique<SetManager>(megaApi, megaApiFolders);
+    mSetManager = std::make_unique<SetManager>(megaApi, megaApiFolders);
 }
 
 QString MegaApplication::applicationFilePath()
