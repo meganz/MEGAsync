@@ -370,6 +370,8 @@ public:
 
     static bool isIncommingShare(mega::MegaNode* node);
 
+    static bool dayHasChangedSince(qint64 msecs);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

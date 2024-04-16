@@ -2143,6 +2143,8 @@ void MegaApplication::periodicTasks()
         onGlobalSyncStateChanged(megaApi);
     }
 
+    sendPeriodicStats();
+
     if (trayIcon)
     {
 #ifdef Q_OS_LINUX
@@ -4494,6 +4496,19 @@ void MegaApplication::showInfoDialogIfHTTPServerSender()
     if (qobject_cast<HTTPServer*>(sender()))
     {
         showInfoDialog();
+    }
+}
+
+void MegaApplication::sendPeriodicStats() const
+{
+    if(Utilities::dayHasChangedSince(preferences->lastDailyStatTime()))
+    {
+        bool loggedin = preferences->logged();
+        QString message = QString::fromUtf8("Daily Active User (DAU) - loggedin: %1 - acctype: %2")
+                              .arg(QString::number(loggedin))
+                              .arg(QString::number(loggedin ? preferences->accountType() : -1));
+        mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_DAILY_ACTIVE_USER, message.toUtf8().constData());
+        preferences->setLastDailyStatTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
     }
 }
 

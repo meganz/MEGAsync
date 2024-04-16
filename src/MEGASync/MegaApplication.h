@@ -615,6 +615,8 @@ private:
     bool hasDefaultDownloadFolder() const;
     void showInfoDialogIfHTTPServerSender();
 
+    void sendPeriodicStats() const;
+
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();

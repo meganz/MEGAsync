@@ -251,7 +251,7 @@ const QString Preferences::importMegaLinksEnabledKey = QString::fromLatin1("impo
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromLatin1("downloadMegaLinksEnabled");
 const QString Preferences::systemTrayPromptSuppressed = QString::fromLatin1("systemTrayPromptSuppressed");
 const QString Preferences::systemTrayLastPromptTimestamp = QString::fromLatin1("systemTrayLastPromptTimestamp");
-
+const QString Preferences::lastDailyStatTimeKey = QString::fromLatin1("lastDailyStatTimeKey");
 
 //Sleep settings
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
@@ -1928,7 +1928,20 @@ void Preferences::setMaxMemoryReportTime(long long timestamp)
     setValueAndSyncConcurrent(maxMemoryReportTimeKey, timestamp);
 }
 
-void Preferences::setLastExecutionTime(qint64 time)
+long long Preferences::lastDailyStatTime()
+{
+    mutex.lock();
+    long long value = getValue<long long>(lastDailyStatTimeKey, 0);
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastDailyStatTime(long long time)
+{
+    setValueAndSyncConcurrent(lastDailyStatTimeKey, time);
+}
+
+void Preferences::setLastExecutionTime(long long time)
 {
     setValueAndSyncConcurrent(lastExecutionTimeKey, time);
 }

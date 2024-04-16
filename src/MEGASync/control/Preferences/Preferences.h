@@ -293,6 +293,8 @@ public:
     void setMaxMemoryUsage(long long value);
     long long getMaxMemoryReportTime();
     void setMaxMemoryReportTime(long long timestamp);
+    long long lastDailyStatTime();
+    void setLastDailyStatTime(long long time);
 
     long long lastUpdateTime();
     void setLastUpdateTime(long long time);
@@ -729,6 +731,7 @@ protected:
     static const QString downloadMegaLinksEnabledKey;
     static const QString systemTrayPromptSuppressed;
     static const QString systemTrayLastPromptTimestamp;
+    static const QString lastDailyStatTimeKey;
 
     //Sleep mode
     static const QString awakeIfActiveKey;
