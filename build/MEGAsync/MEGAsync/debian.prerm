@@ -1,3 +1,9 @@
 #!/bin/bash
 
-[ "$1" == "upgrade" ] && killall -s SIGUSR1 megasync 2> /dev/null || true
+if [ "$1" == "upgrade" ]; then
+    killall -s SIGUSR1 megasync 2> /dev/null || true
+elif [ "$1" == "remove" ]; then
+    killall megasync 2> /dev/null || true
+    megasync "--send-uninstall-event" 2> /dev/null || true
+fi
+
