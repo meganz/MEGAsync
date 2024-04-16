@@ -1,6 +1,7 @@
 #include "StalledIssue.h"
 
 #include "MegaApplication.h"
+#include "MegaNodeNames.h"
 #include "StalledIssuesUtilities.h"
 #include "TransfersModel.h"
 
@@ -286,7 +287,16 @@ void StalledIssue::fillSourceCloudPath(const mega::MegaSyncStall* stall)
     if(cloudSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudSourcePath.isEmpty())
     {
         initCloudIssue();
-        getCloudData()->mPath.path = cloudSourcePath;
+        auto splittedIndexPath = cloudSourcePath.split(QString::fromUtf8("/"));
+        QString lastPath = splittedIndexPath.last();
+        if (lastPath.contains(QString::fromUtf8("NO_NAME")))
+        {
+            lastPath = MegaNodeNames::getUndecryptedFolderName();
+            splittedIndexPath.removeLast();
+        }
+        QString fullPath = splittedIndexPath.join(QString::fromUtf8("/"))
+                               .append(QString::fromUtf8("/") + lastPath);
+        getCloudData()->mPath.path = fullPath;
         getCloudData()->mPathHandle = stall->cloudNodeHandle(0);
         getCloudData()->mPath.pathProblem = cloudSourcePathProblem;
         //In order to show the filepath or the directory path when the path is used for a hyperlink
