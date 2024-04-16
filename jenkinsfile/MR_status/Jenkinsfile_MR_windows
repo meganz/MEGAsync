@@ -136,7 +136,7 @@ pipeline {
                 dir(windows_sources_workspace){
                     sh "mkdir build_dir"
                     sh "cmake ${env.BUILD_OPTIONS} -DCMAKE_GENERATOR_PLATFORM=x64 -DCMAKE_PREFIX_PATH='${MEGAQTPATH}' -DVCPKG_ROOT='${VCPKGPATH}' -S '${windows_sources_workspace}' -B '${windows_sources_workspace}'\\\\build_dir\\\\"
-                    sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGASync -j 1"
+                    sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAsync -j 1"
                     sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAupdater -j 1"
                     sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAShellExt -j 1"            
                 }
