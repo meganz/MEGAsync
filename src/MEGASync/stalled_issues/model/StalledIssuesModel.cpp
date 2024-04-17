@@ -193,19 +193,13 @@ bool StalledIssuesModel::issuesRequested() const
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 {
     auto isSyncStalled(api->isSyncStalled());
-    if(isSyncStalled)
+    if (isSyncStalled && mStalledIssues.size() == mSolvedStalledIssues.size() &&
+        mIsStalled != isSyncStalled)
     {
-        if ((mStalledIssues.size() == mSolvedStalledIssues.size() && mIsStalled != isSyncStalled)
-            || (isSyncStalled && api->isSyncStalledChanged()))
-        {
-            //For Smart mode -> resolve problems as soon as they are received
-            updateStalledIssues();
-        }
-    }
-    else if(!mStalledIssues.isEmpty()) // Sync not stalled but we still have some old issues (reset them)
-    {
+        //For Smart mode -> resolve problems as soon as they are received
         updateStalledIssues();
     }
+
     mIsStalled = isSyncStalled;
     emit stalledIssuesChanged();
 }
@@ -363,7 +357,7 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
                             if(item.getData()->containsHandle(node->getHandle()))
                             {
                                 auto parentFound(false);
-                                while (!parentFound || !parentNode)
+                                while (!parentFound)
                                 {
                                     auto currentParentHandle(parentNode->getHandle());
                                     auto parentNodeRaw(MegaSyncApp->getMegaApi()->getParentNode(parentNode.get()));
