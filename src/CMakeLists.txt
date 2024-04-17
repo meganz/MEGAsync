@@ -19,7 +19,7 @@ if(ENABLE_DESKTOP_UPDATER)
 endif()
 
 if(ENABLE_EXPLORER_EXT)
-    # add_subdirectory(MEGAShellExt) build ext with cmake, check out.
+    add_subdirectory(MEGAShellExt)
 endif()
 
 if(ENABLE_FINDER_EXT)
