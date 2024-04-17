@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>กรุณากรอกชื่อไฟล์หรือเส้นทางแบบเต็มที่ถูกต้อง</translation>
+        <translation>กรอกชื่อไฟล์ที่ถูกต้องหรือเส้นทางแบบเต็ม</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -889,7 +889,7 @@
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>กรุณาอธิบายปัญหาที่คุณพบโดยละเอียด ยิ่งคุณให้รายละเอียดมากเท่าไหร่เราก็จะยิ่งแก้ไขได้ง่ายขึ้นเท่านั้น การส่งรายงานปัญหาของคุณจะถูกตรวจสอบโดยทีมพัฒนาของเรา</translation>
+        <translation>อธิบายปัญหาที่คุณพบโดยละเอียด ยิ่งคุณให้รายละเอียดมากเท่าไหร่เราก็จะยิ่งแก้ไขได้ง่ายขึ้นเท่านั้น การส่งรายงานปัญหาของคุณจะถูกตรวจสอบโดยทีมพัฒนาของเรา</translation>
     </message>
     <message>
         <source>Title</source>
@@ -974,7 +974,7 @@
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>กรุณารอจนกว่าการอัปโหลดปัจจุบันจะเสร็จสมบูรณ์</translation>
+        <translation>รอจนกว่าการอัปโหลดปัจจุบันจะเสร็จสมบูรณ์</translation>
     </message>
 </context>
 <context>
@@ -1114,7 +1114,7 @@
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>คุณกรอกรหัสผ่านเดิมที่เคยใช้มาแล้ว กรุณากรอกรหัสผ่านใหม่</translation>
+        <translation>คุณกรอกรหัสผ่านเดิมที่เคยใช้มาแล้ว กรอกรหัสผ่านใหม่</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -1332,7 +1332,7 @@
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation>กำลังรอการสแกนเสร็จสิ้น เพื่อตรวจสอบว่าไฟล์ถูกย้ายหรือลบไปแล้วหรือไม่</translation>
+        <translation>กำลังรอการสแกนเพื่อดูว่าไฟล์ถูกย้ายหรือลบไปหรือไม่</translation>
     </message>
 </context>
 <context>
@@ -1508,7 +1508,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>กรุณาแก้ไขปัญหาการชำระเงินโดยเร็วที่สุดเพื่อหลีกเลี่ยงการระงับบัญชีธุรกิจของคุณ</translation>
+        <translation>แก้ไขปัญหาการชำระเงินโดยเร็วที่สุด เพื่อหลีกเลี่ยงการระงับบัญชีธุรกิจของคุณ</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2332,7 +2332,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>กรุณาอัปเกรดบัญชีของคุณ</translation>
+        <translation>อัปเกรดบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2668,12 +2668,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>เก็บโฟลเดอร์ [B]%1[/B] ที่ถูกเก็บไว้ใน MEGA หรือไม่</translation>
+        <translation>ต้องการเก็บโฟลเดอร์ [B]%1[/B] ที่มีอยู่แล้วใน MEGA หรือไม่</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>คุณต้องการเก็บรายการ [B]%1[/B] ที่อยู่ใน MEGA ไว้หรือไม่</translation>
+        <translation>ต้องการเก็บรายการ [B]%1[/B] ที่มีอยู่แล้วใน MEGA หรือไม่</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2693,12 +2693,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>การดำเนินการนี้จะเลือกรายการในเครื่อง</translation>
+        <translation>การดำเนินการนี้ ระบบจะเลือกรายการในเครื่องโดยอัตโนมัติ</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>การดำเนินการนี้จะเป็นการเลือกไฟล์ที่เก็บไว้ใน MEGA อยู่แล้ว</translation>
+        <translation>การดำเนินการนี้ ระบบจะเลือกรายการที่ถูกจัดเก็บใน MEGA โดยอัตโนมัติ</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2874,7 +2874,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>กรุณากรอกรหัสที่สร้างโดยแอปตัวรับรองความถูกต้องของคุณ</translation>
+        <translation>กรอกรหัสที่แอปตัวรับรองความถูกต้องของคุณสร้างขึ้น</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2907,12 +2907,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>กรุณาตรวจสอบอีเมลของคุณและคลิกที่ลิงก์เพื่อยืนยันการเปิดบัญชีของคุณ</translation>
+        <translation>ตรวจสอบกล่องกล่องจดหมายอีเมลของคุณและคลิกที่ลิงก์เพื่อยืนยันการเปิดบัญชีของคุณ</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>คุณได้พยายามเข้าสู่ระบบหลายครั้งเกินไป [BR]กรุณารอจนกว่า %1 และลองใหม่อีกครั้ง</translation>
+        <translation>คุณพยายามลงชื่อเข้าใช้หลายครั้งเกินไป[BR]กรุณารอสักครู่จนถึง %1 แล้วลองใหม่</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
@@ -2922,7 +2922,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>แอปไม่สามารถเชื่อมต่อได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและการกำหนดค่าไฟร์วอลล์ภายในของคุณ โปรดทราบว่าซอฟต์แวร์ป้องกันไวรัสส่วนใหญ่จะมีไฟร์วอลล์มาให้อยู่แล้ว</translation>
+        <translation>แอปพลิเคชันไม่สามารถเชื่อมต่อได้ ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและการตั้งค่าไฟร์วอลล์บนอุปกรณ์ของคุณ โปรดทราบว่าโปรแกรมป้องกันไวรัสส่วนใหญ่มีไฟร์วอลล์รวมอยู่ด้วย</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -2940,7 +2940,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>ไม่สามารถยืนยันคีย์ SSL ของเราได้ คุณอาจถูกโจมตีจากการลักลอบดักข้อมูลหรือโปรแกรมป้องกันไวรัสของคุณอาจจะขัดขวางการสื่อสารของคุณและทำให้เกิดปัญหานี้ได้ กรุณาปิดโปรแกรมป้องกันไวรัสและลองอีกครั้ง</translation>
+        <translation>ไม่สามารถยืนยันคีย์ SSL ของเราได้ คุณอาจถูกโจมตีจากการลักลอบดักข้อมูลหรือโปรแกรมป้องกันไวรัสของคุณอาจจะขัดขวางการสื่อสารของคุณและทำให้เกิดปัญหานี้ได้ ปิดโปรแกรมป้องกันไวรัสและลองอีกครั้ง</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3077,7 +3077,7 @@ Please wait for the upload to complete.</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>เกิดปัญหาในการติดตั้งการอัปเดต กรุณาลองอีกครั้งในภายหลังหรือดาวน์โหลดเวอร์ชันล่าสุดจาก: https://mega.nz/sync</translation>
+        <translation>มีปัญหาในการติดตั้งการอัปเดต ลองใหม่อีกครั้งภายหลังหรือดาวน์โหลดเวอร์ชันล่าสุดได้จาก: https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3537,7 +3537,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>พื้นที่จัดเก็บของคุณเต็มแล้ว กรุณาอัปเกรดทันที</translation>
+        <translation>พื้นที่เก็บข้อมูลเต็มแล้ว อัปเกรดเลย</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3549,7 +3549,7 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
         <translation>บัญชี MEGA ของคุณถูกระงับการใช้งานเนื่องจากมีบุคคลได้แจ้งว่าพบเนื้อหาละเมิดลิขสิทธิ์ในบัญชีของคุณ ขณะนี้คุณไม่สามารถเข้าถึงบัญชีหรือข้อมูลภายในบัญชีของคุณได้
 
-กรุณาตรวจสอบอีเมลของคุณเพื่อดูข้อมูลเพิ่มเติมเรื่องวิธีการยื่นคำคัดค้านได้</translation>
+กรุณาตรวจสอบกล่องจดหมายอีเมลของคุณเพื่อดูข้อมูลเพิ่มเติมเรื่องวิธีการยื่นคำคัดค้านได้</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -4051,22 +4051,22 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>คุณต้องการลบไฟล์ [B]%1[/B] ที่อยู่ใน MEGA ออกหรือไม่</translation>
+        <translation>ต้องการแทนที่ไฟล์ [B]%1[/B] ที่มีอยู่แล้วใน MEGA หรือไม่</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>คุณต้องการลบโฟลเดอร์ [B]%1[/B] ที่อยู่ใน MEGA ออกหรือไม่</translation>
+        <translation>ต้องการแทนที่โฟลเดอร์ [B]%1[/B] ที่มีอยู่แล้วใน MEGA หรือไม่</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>เอาไฟล์ [B]%1[/B] ที่อยู่ในเครื่องออกหรือไม่</translation>
+        <translation>ต้องการแทนที่ไฟล์ [B]%1[/B] ที่มีอยู่แล้วในเครื่องหรือไม่</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>เอาโฟลเดอร์ [B]%1[/B] ที่อยู่ในเครื่องออกหรือไม่</translation>
+        <translation>ต้องการแทนที่โฟลเดอร์ [B]%1[/B] ที่มีอยู่แล้วในเครื่องหรือไม่</translation>
     </message>
 </context>
 <context>
@@ -5221,7 +5221,7 @@ Enter a different name</source>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>ไฟล์และโฟลเดอร์มีเจ้าของและอยู่ในกลุ่มผู้ใช้ เมื่อใช้กล่องโต้ตอบนี้ คุณจะให้สิทธิ์การเข้าถึงไฟล์และโฟลเดอร์ใหม่ที่สร้างโดยแอปเดสก์ท็อปที่แตกต่างกันให้กับสมาชิกในกลุ่มเดียวกันกับคุณ หากคุณไม่ต้องการเปลี่ยน ให้ใช้การตั้งค่าเริ่มต้นเพื่อความปลอดภัย</translation>
+        <translation>ไฟล์และโฟลเดอร์มีเจ้าของและกลุ่มผู้ใช้ที่สามารถเข้าถึงได้ กล่องโต้ตอบนี้ช่วยให้คุณตั้งค่าสิทธิ์การเข้าถึงไฟล์และโฟลเดอร์ใหม่ที่สร้างโดยแอปพลิเคชันบนเดสก์ท็อป แยกตามผู้ใช้ในกลุ่มเดียวกัน และผู้ใช้คนอื่นบนคอมพิวเตอร์ โดยปกติไม่จำเป็นต้องเปลี่ยนการตั้งค่าเหล่านี้</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5746,9 +5746,8 @@ Enter a different name</source>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-ไม่พบโฟลเดอร์
-กรุณาตรวจสอบชื่อโฟลเดอร์ว่าถูกต้องหรือไม่</translation>
+        <translation>ไม่พบโฟลเดอร์ %1
+ตรวจสอบชื่อโฟลเดอร์ว่าถูกต้องหรือไม่</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5762,9 +5761,8 @@ Do you want to replace it?</source>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-ไม่พบไฟล์
-กรุณาตรวจสอบชื่อไฟล์ให้ถูกต้อง</translation>
+        <translation>ไม่พบไฟล์ %1
+ตรวจสอบชื่อไฟล์ว่าถูกต้องหรือไม่</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6130,12 +6128,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>การสำรองข้อมูลของไฟล์ที่ซิงค์บนคอมพิวเตอร์ก่อนหน้านี้จะถูกลบอย่างถาวร กรุณาตรวจสอบโฟลเดอร์สำรองข้อมูลของคุณเพื่อดูว่าคุณต้องการความช่วยเหลือบางอย่างก่อนที่จะดำเนินการต่อหรือไม่:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>การสำรองข้อมูลของไฟล์ที่ซิงค์บน MEGA ก่อนหน้านี้จะถูกลบอย่างถาวร กรุณาตรวจสอบโฟลเดอร์ [A] ในถังขยะของบัญชี MEGA เพื่อดูว่าคุณต้องการความช่วยเหลือบางอย่างก่อนที่จะดำเนินการต่อหรือไม่</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -8626,7 +8624,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>กรุณาอัปเกรดเป็นบัญชี Pro เพื่อดำเนินการต่อทันทีหรือรออีก %1 ถึงจะใช้แบบฟรีต่อได้</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8659,7 +8657,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>กรุณาอัปเกรดบัญชีของคุณ เพื่อให้มีพื้นที่เก็บข้อมูลมากขึ้น (การอัปโหลดของคุณจะกลับมาทำงานต่อโดยอัตโนมัติ)</translation>
+        <translation>อัปเกรดบัญชีของคุณ เพื่อให้มีพื้นที่เก็บข้อมูลมากขึ้น (การอัปโหลดของคุณจะกลับมาทำงานต่อโดยอัตโนมัติ)</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8907,7 +8905,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>บัญชีของคุณถูกล็อกไว้ชั่วคราวเพื่อรักษาความปลอดภัย กรุณาตรวจสอบอีเมลของคุณและทำตามขั้นตอนที่อยู่ในอีเมลเพื่อปลดล็อกบัญชีของคุณ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>
