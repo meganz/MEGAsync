@@ -6,7 +6,6 @@ set_property(TARGET google_breakpad PROPERTY CXX_STANDARD 11)
 
 target_sources_conditional(google_breakpad
    FLAG WIN32
-   QT_AWARE
    PRIVATE
    client/windows/handler/exception_handler.cc
    client/windows/crash_generation/crash_generation_client.cc
@@ -16,7 +15,6 @@ target_sources_conditional(google_breakpad
 
 target_sources_conditional(google_breakpad
    FLAG APPLE
-   QT_AWARE
    PRIVATE
    client/mac/handler/exception_handler.cc
    client/mac/crash_generation/crash_generation_client.cc

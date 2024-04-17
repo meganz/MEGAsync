@@ -4,14 +4,13 @@
 
 if(WIN32)
     option(ENABLE_EXPLORER_EXT "desc" ON)
+elseif(APPLE)
+    option(ENABLE_FINDER_EXT "desc" ON)
 else()
-    if(APPLE)
-        option(ENABLE_FINDER_EXT "desc" ON)
-    else()
-        #LINUX
-        option(ENABLE_LINUX_EXT "desc" ON)
-    endif()
+    #LINUX
+    option(ENABLE_LINUX_EXT "desc" ON)
 endif()
+
 
 option(ENABLE_DESKTOP_APP "Enable desktop app build" ON)
 option(ENABLE_DESKTOP_UPDATER "Enable desktop updater tool build" ON)

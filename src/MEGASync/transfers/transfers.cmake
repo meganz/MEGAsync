@@ -54,6 +54,28 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     transfers/gui/TransfersWidget.cpp
 )
 
+
+target_sources_conditional(MEGAsync
+   FLAG WIN32
+   QT_AWARE
+   PRIVATE
+   transfers/../gui/Resources_win.qrc
+   transfers/gui/win/TransferWidgetHeaderItem.ui
+   transfers/gui/win/TransferManagerDelegateWidget.ui
+   transfers/gui/win/TransferManager.ui
+   transfers/gui/win/TransfersWidget.ui
+   transfers/gui/win/TransferManagerLoadingItem.ui
+   transfers/gui/win/TransferManagerDragBackDrop.ui
+   transfers/gui/win/InfoDialogTransfersWidget.ui
+   transfers/gui/win/InfoDialogTransferDelegateWidget.ui
+   transfers/gui/win/InfoDialogTransferLoadingItem.ui
+   transfers/gui/win/TransfersStatusWidget.ui
+   transfers/gui/win/TransfersSummaryWidget.ui
+   transfers/gui/win/SomeIssuesOccurredMessage.ui
+   transfers/gui/DuplicatedNodeDialogs/win/DuplicatedNodeDialog.ui
+   transfers/gui/DuplicatedNodeDialogs/win/DuplicatedNodeItem.ui
+)
+
 target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
