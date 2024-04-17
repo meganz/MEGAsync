@@ -9,18 +9,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui Svg Xml)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Svg Xml)
+find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui Xml)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Xml)
 
 set(SOURCES ${SOURCES}
     main.cpp
     Utilities.cpp Utilities.h
     TokenManager.h TokenManager.cpp
     UIHandler.h UIHandler.cpp
-    SVGIcon.h SVGIcon.cpp
-    SVGRenderer.h SVGRenderer.cpp
     PathProvider.h PathProvider.cpp
-    Resources.qrc
+
     StylesheetParser.h StylesheetParser.cpp
     IThemeGenerator.h
     Types.h
@@ -40,7 +38,6 @@ add_executable(DesignTokensImporter ${SOURCES})
 target_link_libraries(DesignTokensImporter
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
-    Qt${QT_VERSION_MAJOR}::Svg
     Qt${QT_VERSION_MAJOR}::Xml
 )
 

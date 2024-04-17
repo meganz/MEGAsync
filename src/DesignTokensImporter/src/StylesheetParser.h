@@ -17,7 +17,6 @@ public:
 
     StylesheetParser(const QString& styleSheet, const QString& uiFilePath);
     const std::shared_ptr<QMultiMap<QString, PropertiesMap>> tokenStyles() const;
-    std::shared_ptr<QVector<ImageThemeStyleInfo>> getImageStyles() const;
 
 private:
 
@@ -27,7 +26,6 @@ private:
         QString content;
         QString selector;
         QString objectName;
-        bool hasSvgIcon = false;
         bool hasTokens = false;
         bool isBlockOpen = false;
         int braceLevel = 0;
@@ -38,7 +36,6 @@ private:
             content.clear();
             selector.clear();
             objectName.clear();
-            hasSvgIcon = false;
             hasTokens = false;
             isBlockOpen = false;
             braceLevel = 0;
@@ -53,7 +50,6 @@ private:
     const QString& mStyleSheet;
     const QString& mUiFilePath;
     QMultiMap<QString, PropertiesMap> mTokenStyles;
-    QVector<ImageThemeStyleInfo>  mImageStyles;
     QMap<QString,  std::shared_ptr<IQTWIDGETStyleTarget>> styleTargetMap;
 };
 }

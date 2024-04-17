@@ -29,22 +29,12 @@ namespace DTI
                                           const QString& nameFilter = QString::fromLatin1("*.*"),
                                           bool findInSubfolders = false);
         static bool isFileValid(const QString& path);
-        static void writeColourMapToMemory(const QString& themeName, const ColourMap& colourMap);
-        static const ColourMap& readColourMapFromMemory(Theme themeName);
         static QMap<QString, QString> parseColorThemeJSON(const QString& themedColorTokenFilePath, const CoreMap& coreMap);
-        static bool createNewQrcFile(const QString& qrcPath);
         static void traverseDirectory(const QString& directoryPath,
                                       const QStringList& filters,
                                       QStringList& filePaths);
         static bool addToResources(const QString& filePath,
                                    const QString& qrcPath);
-        static bool addToResourcesBatch(const QStringList& filePaths,
-                                        const QString& qrcPath,
-                                        const QString& directoryPath);
-        static bool includeQrcInPriFile(const QString& priFilePath,
-                                        const QString& qrcRelativePath);
-        static bool insertQRCPathInCMakeListsFile(const QString& fileDirPath, const QString& newQRCPath);
-        static int calculateQRCPathInsertPosition(const QStringList& lines, const QRegularExpression& sectionStartRegex);
         static QString extractFileName(const QString& filePath);
         static QString extractFileNameNoExtension(const QString& filePath);
         static QString getFileHash(const QString& filePath);

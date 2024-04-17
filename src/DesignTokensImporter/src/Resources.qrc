@@ -1,6 +1,1 @@
-<RCC>
-    <qresource prefix="/">
-        <file>StyleSheet/Light/ApplicationStyles.json</file>
-        <file>StyleSheet/Dark/ApplicationStyles.json</file>
-    </qresource>
-</RCC>
+<RCC/>

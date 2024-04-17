@@ -53,9 +53,6 @@ void TokenManager::run()
     // parse json color themed files.
     ThemedColourMap fileToColourMap = parseColorTokenJSON(colorThemedPathFiles, coreMap);
 
-    // Save colourMaps in Memory
-    preserveThemedColourMapsInMemory(fileToColourMap);
-
     // qml style generator entry point.
     std::unique_ptr<IThemeGenerator> styleGenerator{new QmlThemeGenerator()};
     styleGenerator->start(fileToColourMap);
@@ -166,14 +163,4 @@ ThemedColourMap TokenManager::parseColorTokenJSON(const QStringList& colorTokenF
     return retMap;
 }
 
-void TokenManager::preserveThemedColourMapsInMemory(const ThemedColourMap& fileToColourMap)
-{
-    for (auto it = fileToColourMap.constBegin(); it != fileToColourMap.constEnd(); ++it)
-    {
-        const QString& themeName = it.key();
-        const ColourMap& colourMap = it.value();
-
-        Utilities::writeColourMapToMemory(themeName, colourMap);
-    }
-}
 

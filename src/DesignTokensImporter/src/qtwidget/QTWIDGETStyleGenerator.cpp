@@ -41,8 +41,6 @@ void QTWIDGETStyleGenerator::start(const ThemedColourMap& fileToColourMap)
 
     addStyleSheetToResource();
 
-    addSvgImagesToResource();
-
     writeHashFile();
 }
 
@@ -69,9 +67,6 @@ void QTWIDGETStyleGenerator::createDirectories()
     Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH);
     Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH);
     Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH);
-
-    // SVG
-    Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_SVG_PATH);
 
     // Create a directory for every theme for every platform
     foreach (const QString& filePath, mTokenFilePathsList)
@@ -313,9 +308,6 @@ void QTWIDGETStyleGenerator::generateStyleSheet(const ThemedColourMap& fileToCol
                                             mMacDesignTokenUIs,
                                             mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH + "/" + directory);
     }
-
-    //Generate ApplicationStyles Json File For Windows
-    mWinCSSFiles << generateWinApplicationStyleJsonFile();
 }
 
 QStringList QTWIDGETStyleGenerator::generateStylesheets(const ColourMap& colourMap,
@@ -346,63 +338,6 @@ QStringList QTWIDGETStyleGenerator::generateStylesheets(const ColourMap& colourM
     return cssPaths;
 }
 
-QStringList QTWIDGETStyleGenerator::generateWinApplicationStyleJsonFile()
-{
-    QStringList cssPaths;
-
-    const QString resourcePathDTI = ":/StyleSheet";
-    const QString applicationStylesJsonFileName = "ApplicationStyles.json";
-    const QString winDirectoryPath = mCurrentDir % PathProvider::RELATIVE_CSS_WIN_PATH;
-
-    //Copy the Application Style Json File to the MegaSync App for global styling.
-    for (const QString& filePath : qAsConst(mTokenFilePathsList))
-    {
-        // Get the Application Style Json File based on Theme
-        Utilities::Theme theme =  Utilities::getTheme(filePath);
-        const QString themeDirName = Utilities::themeToString(theme);
-        const QString sourcePath = resourcePathDTI  % QDir::separator() % themeDirName % QDir::separator() % applicationStylesJsonFileName;
-        const QString sourceResourcePath = QDir::fromNativeSeparators(sourcePath);
-
-        // Destination Path in MegaSync Application for storing Application Style Json File
-        const QString tokenDirName = Utilities::extractFileNameNoExtension(filePath);
-        const QString winTokenDirectoryPath = winDirectoryPath  % QDir::separator() % tokenDirName;
-        const QString destinationPath = winTokenDirectoryPath % QDir::separator() % applicationStylesJsonFileName;
-        const QString destinationResourcePath = QDir::fromNativeSeparators(destinationPath);
-
-        // Check if the resource file exists and is readable.
-        QFile resourceFile(sourceResourcePath);
-        if (!resourceFile.exists() || !resourceFile.open(QIODevice::ReadOnly))
-        {
-            qWarning() << "Resource file not found or not accessible: " << sourceResourcePath;
-            continue;
-        }
-
-        // Ensure the target directory exists.
-        QDir().mkpath(QDir::fromNativeSeparators(winTokenDirectoryPath));
-
-        // Check and delete the existing file at the destination path if it exists.
-        QFile destinationFile(destinationResourcePath);
-        destinationFile.setPermissions(QFile::WriteOwner | QFile::ReadOwner |
-                                       QFile::WriteUser | QFile::ReadUser);
-
-        if (destinationFile.exists() && !destinationFile.remove())
-        {
-            qWarning() << "Failed to delete the existing file at:" << destinationResourcePath;
-        }
-
-        if (!QFile::copy(sourceResourcePath, destinationResourcePath))
-        {
-            qWarning() << "Failed to copy ApplicationStyles.json from " << sourceResourcePath << " to " << destinationResourcePath;
-
-        }
-        else
-        {
-            cssPaths.append(destinationResourcePath);
-        }
-    }
-    return cssPaths;
-}
-
 void QTWIDGETStyleGenerator::addStyleSheetToResource()
 {
     // Add .css files to .qrc files
@@ -423,45 +358,6 @@ void QTWIDGETStyleGenerator::addStyleSheetToResource()
     processCSSFiles(mWinCSSFiles, PathProvider::RELATIVE_QRC_WINDOWS_PATH);
     processCSSFiles(mLinuxCSSFiles, PathProvider::RELATIVE_QRC_LINUX_PATH);
     processCSSFiles(mMacCSSFiles, PathProvider::RELATIVE_QRC_MAC_PATH);
-}
-
-void QTWIDGETStyleGenerator::addSvgImagesToResource()
-{
-    //Add svg images to svg.qrc resource file
-    QString qrcPath = mCurrentDir + PathProvider::RELATIVE_SVG_QRC_PATH;
-    if (!Utilities::createNewQrcFile(qrcPath))
-    {
-        qDebug() << "Failed to create QRC file. " << qrcPath;
-        return;
-    }
-
-    QString directoryPath = mCurrentDir + PathProvider::RELATIVE_GENERATED_SVG_DIR_PATH;
-    QStringList filters = {PathProvider::SVG_NAME_FILTER};
-    QStringList filePaths;
-    Utilities::traverseDirectory(directoryPath, filters, filePaths);
-
-    if (!Utilities::addToResourcesBatch(filePaths, qrcPath, directoryPath))
-    {
-        qDebug() << "Failed to add resources to QRC file." << qrcPath;
-        return;
-    }
-
-    QString priFilePath = mCurrentDir + PathProvider::RELATIVE_GUI_PRI_PATH;
-    QString qrcRelativePath = QFileInfo(priFilePath).absoluteDir()
-                                  .relativeFilePath(mCurrentDir + PathProvider::RELATIVE_SVG_QRC_PATH);
-    if (!Utilities::includeQrcInPriFile(priFilePath, qrcRelativePath))
-    {
-        qDebug() << "Failed to include svg.qrc in gui.pri";
-        return;
-    }
-
-    //Insert newly created qrc file path in CMakeLists.txt file
-    QString cMakeListsFileDirPath = Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_CMAKE_FILE_LIST_DIR_PATH);
-    if (!Utilities::insertQRCPathInCMakeListsFile(cMakeListsFileDirPath, PathProvider::RELATIVE_SVG_QRC_PATH))
-    {
-        qDebug() << "Failed to insert qrc path in CMakeLists.txt file";
-        return;
-    }
 }
 
 bool QTWIDGETStyleGenerator::writeHashFile()

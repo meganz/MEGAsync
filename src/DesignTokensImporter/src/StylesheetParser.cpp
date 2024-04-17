@@ -1,7 +1,6 @@
 #include "StylesheetParser.h"
 #include "QTWIDGETColorStyleTarget.h"
 #include "QTWIDGETStyleTargetFactory.h"
-#include "QTWIDGETImageStyleTarget.h"
 #include "Utilities.h"
 
 #include <QStringList>
@@ -25,16 +24,11 @@ void StylesheetParser::processStyleSheet()
     for (const QString& styleSheetLine : styleSheetLines)
     {
         currentBlock.styleSheetLine = styleSheetLine;
-        if(parseCurrentStyleBlock(currentBlock))
+        if (parseCurrentStyleBlock(currentBlock))
         {
-            if(currentBlock.hasTokens)
+            if (currentBlock.hasTokens)
             {
                 processStyleTokens(currentBlock, Targets::ColorStyle);
-            }
-
-            if (currentBlock.hasSvgIcon)
-            {
-                processStyleTokens(currentBlock, Targets::ImageStyle);
             }
 
             currentBlock.clear();
@@ -53,7 +47,6 @@ bool StylesheetParser::parseCurrentStyleBlock(CurrentStyleBlock& currentBlock)
         {
             currentBlock.selector = braceIndex > 0 ? trimmedLine.left(braceIndex).trimmed() : currentBlock.content.trimmed();// The current line, or the part before the '{', is the identifier
             currentBlock.content.clear();
-            currentBlock.hasSvgIcon = false;
             currentBlock.isBlockOpen = true;
             currentBlock.braceLevel = 1;
             if (braceIndex < trimmedLine.length() - 1)
@@ -74,11 +67,6 @@ bool StylesheetParser::parseCurrentStyleBlock(CurrentStyleBlock& currentBlock)
         currentBlock.braceLevel -= trimmedLine.count('}');
 
         currentBlock.content += trimmedLine + "\n";
-
-        if (trimmedLine.contains(".svg"))
-        {
-            currentBlock.hasSvgIcon = true;
-        }
 
         if (trimmedLine.contains(UI_TOKEN_IDENTIFIER))
         {
@@ -128,22 +116,6 @@ void StylesheetParser::processStyleTokens(const CurrentStyleBlock& currentBlock,
 std::shared_ptr<IQTWIDGETStyleTarget> StylesheetParser::getStyleTarget(const QString &styleTargetId) const
 {
     return std::shared_ptr<IQTWIDGETStyleTarget>(QTWIDGETStyleTargetFactory::getQTWIDGETStyleTarget(styleTargetId));
-}
-
-std::shared_ptr<QVector<ImageThemeStyleInfo>> StylesheetParser::getImageStyles() const
-{
-    auto retMap = std::make_shared<QVector<ImageThemeStyleInfo>>();
-    auto it = styleTargetMap.find(Utilities::targetToString(Targets::ImageStyle));
-    if (it != styleTargetMap.end())
-    {
-        auto& qtwidgetTargetStyle = it.value();
-        auto imageStyleTarget = dynamic_cast<QTWIDGETImageStyleTarget*>(qtwidgetTargetStyle.get());
-        if (imageStyleTarget)
-        {
-            *retMap = imageStyleTarget->getImageStyles();
-        }
-    }
-    return retMap;
 }
 
 const std::shared_ptr<QMultiMap<QString, PropertiesMap>> StylesheetParser::tokenStyles() const
