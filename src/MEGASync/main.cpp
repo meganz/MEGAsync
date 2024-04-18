@@ -722,7 +722,6 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Failed permanently");
     QT_TRANSLATE_NOOP("MegaError", "Too many concurrent connections or transfers");
     QT_TRANSLATE_NOOP("MegaError", "Terms of Service breached");
-    QT_TRANSLATE_NOOP("MegaError", "Not accessible due to ToS/AUP violation");
     QT_TRANSLATE_NOOP("MegaError", "Out of range");
     QT_TRANSLATE_NOOP("MegaError", "Expired");
     QT_TRANSLATE_NOOP("MegaError", "Not found");
@@ -770,7 +769,6 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote path has changed");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote node moved to Rubbish Bin");
     QT_TRANSLATE_NOOP("MegaSyncError", "Share without full access");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Local fingerprint mismatch");
     QT_TRANSLATE_NOOP("MegaSyncError", "Put nodes error");
     QT_TRANSLATE_NOOP("MegaSyncError", "Active sync below path");
     QT_TRANSLATE_NOOP("MegaSyncError", "Active sync above path");
@@ -790,7 +788,6 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Active sync same path");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unknown drive path.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Local filesystem mismatch");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Unable to figure out some node correspondence");
     QT_TRANSLATE_NOOP("MegaSyncError", "Backup externally modified");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to move cloud nodes.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to create initial ignore file.");
