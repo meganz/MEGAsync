@@ -560,7 +560,10 @@ if [ "$1" == "1" ]; then
     killall -s SIGUSR1 megasync 2> /dev/null || true
 else
     killall megasync 2> /dev/null || true
-    megasync "--send-uninstall-event" 2> /dev/null || true
+    username=$SUDO_USER 2> /dev/null || true
+    # Check if the variable is empty (e.g. if the script is not executed with sudo)
+    [ -z "$username" ] && username=$(whoami) 2> /dev/null || true
+    su -c 'megasync "--send-uninstall-event"' $username 2> /dev/null || true
 fi
 sleep 2
 
