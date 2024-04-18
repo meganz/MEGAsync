@@ -9,6 +9,7 @@ CONFIG += object_parallel_to_source
 
 SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/AccountStatusController.cpp \
+    $$PWD/AppStatsEvents.cpp \
     $$PWD/DialogOpener.cpp \
     $$PWD/DownloadQueueController.cpp \
     $$PWD/FileFolderAttributes.cpp \

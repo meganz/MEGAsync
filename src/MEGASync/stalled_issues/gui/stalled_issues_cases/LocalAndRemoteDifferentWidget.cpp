@@ -272,14 +272,8 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     }
     textDecorator.process(info.msgInfo.informativeText);
 
-    QPointer<LocalAndRemoteDifferentWidget> context = this;
-    info.msgInfo.finishFunc = [this, context, info](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [this, info](QMessageBox* msgBox)
     {
-        if(!context)
-        {
-            return;
-        }
-
         if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
