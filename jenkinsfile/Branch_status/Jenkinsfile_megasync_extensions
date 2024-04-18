@@ -122,7 +122,7 @@ pipeline {
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
                                         sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(dolphin-megasync.*deb\$|dolphin-megasync.*rpm\$|dolphin-megasync.*\\.pkg\\.tar\\.zst\$|dolphin-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
-                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/extensions/]"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/]"
                                     }
                                 }
                             }
@@ -149,7 +149,7 @@ pipeline {
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
                                         sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nemo-megasync.*deb\$|nemo-megasync.*rpm\$|nemo-megasync.*\\.pkg\\.tar\\.zst\$|nemo-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
-                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/extensions/]"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/]"
                                     }
                                 }
                             }
@@ -176,7 +176,7 @@ pipeline {
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
                                         sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(thunar-megasync.*deb\$|thunar-megasync.*rpm\$|thunar-megasync.*\\.pkg\\.tar\\.zst\$|thunar-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
-                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/extensions/]"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/]"
                                     }
                                 }
                             }
@@ -203,7 +203,7 @@ pipeline {
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
                                         sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nautilus-megasync.*deb\$|nautilus-megasync.*rpm\$|nautilus-megasync.*\\.pkg\\.tar\\.zst\$|nautilus-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
-                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/extensions/]"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/]"
                                     }
                                 }
                             }
