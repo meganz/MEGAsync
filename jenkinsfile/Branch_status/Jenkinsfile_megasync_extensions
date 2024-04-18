@@ -216,3 +216,7 @@ pipeline {
     }                 
 }
             
+def getVersionFromHeader(String versionFilePath) {
+    return sh(script: "awk -F'\"' '/VER_PRODUCTVERSION_STR/ {split(\$2, a, \".\"); print a[1]\".\"a[2]\".\"a[3]}' ${versionFilePath}", returnStdout: true).trim()
+}
+
