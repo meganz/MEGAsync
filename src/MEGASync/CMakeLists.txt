@@ -91,9 +91,6 @@ include(transfers/transfers.cmake)
 include(UserAttributesRequests/userattributesrequests.cmake)
 
 # Load and link needed libraries for the Desktop App target
-message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5_DIR}")
-
-# Load and link needed libraries for the Desktop App target
 if (WIN32)
     target_compile_definitions(MEGAsync
         PUBLIC
@@ -107,6 +104,8 @@ elseif (APPLE)
 endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick)
+message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5_DIR}")
+
 target_link_libraries(MEGAsync
     PUBLIC
     $<$<BOOL:${WIN32}>:Qt5::WinExtras>

@@ -18,7 +18,6 @@ include(desktopapp_initial_configuration)
 
 if(NOT PROJECT_NAME)
     if(VCPKG_ROOT)
-        message(STATUS "Using VCPKG ROOT dependencies")
         # Include VCPKG management tools.
         include(vcpkg_management)
         list(APPEND vcpkg_overlay ${CMAKE_CURRENT_LIST_DIR}/src/MEGASync/mega/contrib/cmake) # MEGAsdk overlays

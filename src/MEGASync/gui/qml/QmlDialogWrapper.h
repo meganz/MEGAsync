@@ -94,12 +94,14 @@ class QmlDialogWrapper : public QmlDialogWrapperBase
 {
 
 public:
-    QmlDialogWrapper(QWidget* parent = nullptr)
+
+    template <typename... A>
+    QmlDialogWrapper(QWidget* parent = nullptr, A&&... args)
         : QmlDialogWrapperBase(parent)
     {
         Q_ASSERT((std::is_base_of<QMLComponent, Type>::value));
 
-        mWrapper = new Type(parent);
+        mWrapper = new Type(parent, std::forward<A>(args)...);
         QQmlEngine* engine = QmlManager::instance()->getEngine();
         QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());

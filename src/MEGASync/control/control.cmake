@@ -37,6 +37,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
 
 set(DESKTOP_APP_CONTROL_SOURCES
     control/AccountStatusController.cpp
+    control/AppStatsEvents.cpp
     control/ConnectivityChecker.cpp
     control/CrashHandler.cpp
     control/DialogOpener.cpp

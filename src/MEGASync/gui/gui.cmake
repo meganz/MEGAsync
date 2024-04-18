@@ -196,9 +196,9 @@ set(DESKTOP_APP_GUI_SOURCES
 
 # UI files additions
 target_sources_conditional(MEGAsync
-   FLAG WIN32
-   QT_AWARE
-   PRIVATE
+    FLAG WIN32
+    QT_AWARE
+    PRIVATE
     gui/win/InfoDialog.ui
     gui/win/UploadToMegaDialog.ui
     gui/win/PasteMegaLinksDialog.ui

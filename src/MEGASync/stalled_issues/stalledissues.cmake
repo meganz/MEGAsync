@@ -55,15 +55,23 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     stalled_issues/model/StalledIssuesProxyModel.cpp
 )
 
-if (WIN32)
-    set_property(TARGET MEGAsync
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS stalled_issues/gui/win stalled_issues/gui/stalled_issues_cases/win
-    )
-elseif (APPLE)
-    set_property(TARGET MEGAsync
-        APPEND PROPERTY AUTOUIC_SEARCH_PATHS stalled_issues/gui/macx stalled_issues/gui/stalled_issues_cases/macx
-    )
-endif()
+target_sources_conditional(MEGAsync
+   FLAG WIN32
+   QT_AWARE
+   PRIVATE
+   stalled_issues/../gui/Resources_win.qrc
+   stalled_issues/gui/win/StalledIssueHeader.ui
+   stalled_issues/gui/win/StalledIssueChooseWidget.ui
+   stalled_issues/gui/win/StalledIssuesDialog.ui
+   stalled_issues/gui/win/StalledIssueFilePath.ui
+   stalled_issues/gui/win/StalledIssueTab.ui
+   stalled_issues/gui/win/StalledIssueLoadingItem.ui
+   stalled_issues/gui/win/StalledIssueActionTitle.ui
+   stalled_issues/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui
+   stalled_issues/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
+   stalled_issues/gui/stalled_issues_cases/win/NameConflict.ui
+   stalled_issues/gui/stalled_issues_cases/win/LocalAndRemoteNameConflicts.ui
+)
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
@@ -82,6 +90,20 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/stalled_issues_cases/macx/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/macx/LocalAndRemoteNameConflicts.ui
 )
+
+if (WIN32)
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        stalled_issues/gui/win
+        stalled_issues/gui/stalled_issues_cases/win
+    )
+elseif (APPLE)
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        stalled_issues/gui/macx
+        stalled_issues/gui/stalled_issues_cases/macx
+    )
+endif()
 
 target_sources(MEGAsync
     PRIVATE
