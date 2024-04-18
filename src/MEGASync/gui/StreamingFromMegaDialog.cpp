@@ -23,7 +23,7 @@ using namespace mega;
 
 StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::MegaApi* megaApiFolders, QWidget *parent) :
     QDialog(parent),
-    ui(::mega::make_unique<Ui::StreamingFromMegaDialog>()),
+    ui(std::make_unique<Ui::StreamingFromMegaDialog>()),
     mLinkProcessor(nullptr),
     lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
@@ -47,7 +47,7 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     ui->bCopyLink->setEnabled(false);
     ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
     ui->bCopyLink->setDisabled(true);
-    delegateTransferListener = ::mega::make_unique<QTMegaTransferListener>(this->megaApi, this);
+    delegateTransferListener = std::make_unique<QTMegaTransferListener>(this->megaApi, this);
     megaApi->addTransferListener(delegateTransferListener.get());
     hideStreamingError();
 }
