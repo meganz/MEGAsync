@@ -120,3 +120,13 @@ target_link_libraries(MEGAsync
     MEGA::SDKQtBindings
     MEGA::google_breakpad
 )
+
+# Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
+if (MSVC)
+    add_custom_command(
+        TARGET MEGAsync
+        POST_BUILD
+        COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\MEGAsync.exe.manifest\" -inputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1 -outputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1
+        COMMENT "Adding display aware manifest..."
+    )
+endif()
