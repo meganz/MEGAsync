@@ -90,14 +90,14 @@ include(syncs/syncs.cmake)
 include(transfers/transfers.cmake)
 include(UserAttributesRequests/userattributesrequests.cmake)
 
+target_compile_definitions(MEGAsync
+    PUBLIC
+    $<$<CONFIG:Debug>:LOG_TO_STDOUT LOG_TO_LOGGER CREATE_COMPATIBLE_MINIDUMPS>
+    $<$<BOOL:${WIN32}>:PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN UNICODE>
+)
+
 # Load and link needed libraries for the Desktop App target
 if (WIN32)
-    target_compile_definitions(MEGAsync
-        PUBLIC
-        NOMINMAX
-        WIN32_LEAN_AND_MEAN
-        UNICODE
-    )
     find_package(Qt5 REQUIRED COMPONENTS WinExtras)
 elseif (APPLE)
     find_package(Qt5 REQUIRED COMPONENTS MacExtras)
