@@ -110,11 +110,11 @@ IF EXIST build-x86-windows-mega (
     rmdir /s /q build-x86-windows-mega
 )
 
-call production_build.cmd
-call deploy_qt.cmd
-call gather_built_products.cmd
-call make_uninstallers.cmd
-call make_installers.cmd
+call production_build.cmd  || exit 1 /b
+call deploy_qt.cmd  || exit 1 /b
+call gather_built_products.cmd  || exit 1 /b
+call make_uninstallers.cmd  || exit 1 /b
+call make_installers.cmd  || exit 1 /b
 
 exit /B
 
