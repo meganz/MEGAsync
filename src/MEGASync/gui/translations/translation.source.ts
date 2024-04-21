@@ -2274,11 +2274,6 @@ This can be useful for large files, files that you don’t need on all of your d
         <translation>Select local folder</translation>
     </message>
     <message>
-        <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
-        <translation>Not found</translation>
-    </message>
-    <message>
         <source>Choose</source>
         <translatorcomment>Label button for Choose action</translatorcomment>
         <translation>Choose</translation>
@@ -2648,6 +2643,14 @@ This can be useful for large files, files that you don’t need on all of your d
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>Install just for me</translation>
+    </message>
+</context>
+<context>
+    <name>LinkObject</name>
+    <message>
+        <source>Not found</source>
+        <translatorcomment>Label to indicate that the name of a Public Link (for example a folder or a Set) was not found. JIRA ticket CON-638</translatorcomment>
+        <translation type="unfinished">Not found</translation>
     </message>
 </context>
 <context>
@@ -9200,7 +9203,7 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message>
         <source>%1/%2</source>
-        <translatorcomment>This translated separator template with placeholders "%1" and "%2" is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as "15,2 Go/400 Go", without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
         <translation type="unfinished">%1/%2</translation>
     </message>
 </context>
