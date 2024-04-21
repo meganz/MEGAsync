@@ -2,142 +2,181 @@
 #include "Preferences/Preferences.h"
 #include "MegaApplication.h"
 #include "CommonMessages.h"
-
 #include <QDir>
-#include <QDateTime>
-#include <QApplication>
 
 using namespace mega;
 
-LinkProcessor::LinkProcessor(QStringList linkList, MegaApi *megaApi, MegaApi *megaApiFolders)
-    : mParentHandler(nullptr),
-      mRequestCounter(0)
+LinkProcessor::LinkProcessor(const QStringList& linkList, MegaApi* megaApi, MegaApi* megaApiFolders)
+    : mMegaApi(megaApi)
+    , mMegaApiFolders(megaApiFolders)
+    , mLinkList(linkList)
+    , mImportParentFolder(mega::INVALID_HANDLE)
+    , mDelegateListener(std::make_shared<QTMegaRequestListener>(megaApi, this))
+    , mDelegateTransferListener(std::make_shared<QTMegaTransferListener>(megaApi, this))
+    , mParentHandler(nullptr)
+    , mRequestCounter(0)
+    , mCurrentIndex(0)
 {
-    this->megaApi = megaApi;
-    this->megaApiFolders = megaApiFolders;
-    this->linkList = linkList;
     for (int i = 0; i < linkList.size(); i++)
     {
-        linkSelected.append(false);
-        mLinkNode.append(nullptr);
-        linkError.append(MegaError::API_ENOENT);
+        mLinkObjects.append(std::make_shared<LinkInvalid>());
     }
-
-    importParentFolder = mega::INVALID_HANDLE;
-    currentIndex = 0;
-    remainingNodes = 0;
-    importSuccess = 0;
-    importFailed = 0;
-
-    delegateListener = new QTMegaRequestListener(megaApi, this);
 }
 
 LinkProcessor::~LinkProcessor()
 {
-    delegateListener->deleteLater();
 }
 
-QString LinkProcessor::getLink(int id)
+QString LinkProcessor::getLink(int index) const
 {
-    return linkList[id];
+    if (!(isValidIndex(mLinkList, index))) { return QString::fromUtf8(""); }
+
+    return mLinkList[index];
 }
 
-bool LinkProcessor::isSelected(int id)
+inline bool LinkProcessor::isLinkObjectValid(int index) const
 {
-    return linkSelected[id];
+    return (isValidIndex(mLinkObjects, index) && mLinkObjects[index]);
 }
 
-int LinkProcessor::getError(int id)
+bool LinkProcessor::isSelected(int index) const
 {
-    return linkError[id];
+    if (!isLinkObjectValid(index)) { return false; }
+
+    return mLinkObjects[index]->isSelected();
 }
 
-std::shared_ptr<MegaNode> LinkProcessor::getNode(int id)
+MegaNodeSPtr LinkProcessor::getNode(int index) const
 {
-    return mLinkNode[id];
+    if (!isLinkObjectValid(index)) { return nullptr; }
+
+    return mLinkObjects[index]->getMegaNode();
 }
 
-int LinkProcessor::size() const
+void LinkProcessor::sendLinkInfoAvailableSignal(int index)
 {
-    return linkList.size();
+    if (!isLinkObjectValid(index)) { return; }
+
+    std::shared_ptr<LinkObject> linkObject = mLinkObjects[index];
+
+    emit onLinkInfoAvailable(index,
+                             linkObject->getName(),
+                             linkObject->getLinkStatus(),
+                             linkObject->getSize(),
+                             linkObject->showFolderIcon());
+}
+
+void LinkProcessor::continueOrFinishLinkInfoReq()
+{
+    if (mCurrentIndex == mLinkList.size())
+    {
+        emit onLinkInfoRequestFinish();
+    }
+    else
+    {
+        requestLinkInfo();
+    }
+}
+
+void LinkProcessor::createInvalidLinkObject(int index, int error)
+{
+    if (!isValidIndex(mLinkObjects, index)) { return; }
+
+    mLinkObjects[index] = std::make_shared<LinkInvalid>();
+
+    if (error == MegaError::API_ETOOMANY) { return; }
+
+    mLinkObjects[index]->setName(QCoreApplication::translate("MegaError",
+                                                             MegaError::getErrorString(error, MegaError::API_EC_IMPORT)));
+    mLinkObjects[index]->setLinkStatus((error == MegaError::API_ETEMPUNAVAIL) ?
+                                           linkStatus::WARNING :
+                                           linkStatus::FAILED);
 }
 
 void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
 {
-    if (request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
+    const int error = e->getErrorCode();
+
+    switch (request->getType())
     {
-        if (e->getErrorCode() != MegaError::API_OK)
+    case MegaRequest::TYPE_GET_PUBLIC_NODE:
+    {
+        if (!isValidIndex(mLinkObjects, mCurrentIndex)) { return; }
+
+        if (error != MegaError::API_OK)
         {
-            mLinkNode[currentIndex].reset();
+            // Invalid Link
+            createInvalidLinkObject(mCurrentIndex, error);
         }
-        else
+        else    // API_OK
         {
-            mLinkNode[currentIndex] = std::shared_ptr<mega::MegaNode>(request->getPublicMegaNode());
+            MegaNode* node = request->getPublicMegaNode();
+
+            if (!node)
+            {
+                // Invalid Link
+                createInvalidLinkObject(mCurrentIndex, error);
+            }
+            else    // Valid Link
+            {
+                mLinkObjects[mCurrentIndex] = std::make_shared<LinkNode>(mMegaApi,
+                                                                         MegaNodeSPtr(node),
+                                                                         mLinkList[mCurrentIndex]);
+            }
         }
 
-        linkError[currentIndex] = e->getErrorCode();
-        currentIndex++;
-        emit onLinkInfoAvailable(currentIndex-1);
-        if (currentIndex == linkList.size())
-        {
-            emit onLinkInfoRequestFinish();
-        }
-        else
-        {
-            requestLinkInfo();
-        }
+        mCurrentIndex++;
+        sendLinkInfoAvailableSignal(mCurrentIndex - 1);
+        continueOrFinishLinkInfoReq();
+        break;
     }
-    else if (request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
-    {
-        std::unique_ptr<MegaNode>n(megaApi->getNodeByHandle(request->getNodeHandle()));
-        importLinks(n.get());
-    }
-    else if (request->getType() == MegaRequest::TYPE_COPY)
-    {
-        remainingNodes--;
-        if (e->getErrorCode()==MegaError::API_OK)
-        {
-            importSuccess++;
-        }
-        else
-        {
-            importFailed++;
-        }
 
-        if (!remainingNodes)
-        {
-            emit onLinkImportFinish();
-        }
-    }
-    else if (request->getType() == MegaRequest::TYPE_LOGIN)
+    // Response to MegaApi::createFolder() request
+    case MegaRequest::TYPE_CREATE_FOLDER:
     {
-        if (e->getErrorCode() == MegaError::API_OK)
+        // The created Node is the importParentNode
+        MegaNodeSPtr createdNode (mMegaApi->getNodeByHandle(request->getNodeHandle()));
+
+        if (createdNode)
+        {
+            setImportParentNode(createdNode);
+            mImportParentFolder = createdNode->getHandle();
+            addTransfersAndStartIfNotStartedYet(LinkTransferType::IMPORT);
+        }
+        break;
+    }
+
+    case MegaRequest::TYPE_COPY:
+        processNextTransfer();
+        break;
+
+    case MegaRequest::TYPE_LOGIN:
+    {
+        if (!isValidIndex(mLinkObjects, mCurrentIndex)) { return; }
+
+        if (error == MegaError::API_OK)
         {
             mRequestCounter++;
-            megaApiFolders->fetchNodes(this);
+            mMegaApiFolders->fetchNodes(this);
         }
         else
         {
-            mLinkNode[currentIndex].reset();
-            linkError[currentIndex] = e->getErrorCode();
-            currentIndex++;
-            emit onLinkInfoAvailable(currentIndex - 1);
-            if (currentIndex == linkList.size())
-            {
-                emit onLinkInfoRequestFinish();
-            }
-            else
-            {
-                requestLinkInfo();
-            }
+            createInvalidLinkObject(mCurrentIndex, error);
+            mCurrentIndex++;
+            sendLinkInfoAvailableSignal(mCurrentIndex - 1);
+            continueOrFinishLinkInfoReq();
         }
+        break;
     }
-    else if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
+
+    case MegaRequest::TYPE_FETCH_NODES:
     {
-        if (e->getErrorCode() == MegaError::API_OK)
+        if (!isValidIndex(mLinkObjects, mCurrentIndex)) { return; }
+
+        if (error == MegaError::API_OK)
         {
             std::unique_ptr<MegaNode> rootNode(nullptr);
-            QString currentStr = linkList[currentIndex];
+            QString currentStr = mLinkList[mCurrentIndex];
             QString splitSeparator;
 
             if (currentStr.count(QChar::fromLatin1('!')) == 3)
@@ -161,39 +200,66 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
 
             if (splitSeparator.isEmpty())
             {
-                rootNode.reset(megaApiFolders->getRootNode());
+                rootNode.reset(mMegaApiFolders->getRootNode());
             }
             else
             {
                 QStringList linkparts = currentStr.split(splitSeparator, Qt::KeepEmptyParts);
                 MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
-                rootNode.reset(megaApiFolders->getNodeByHandle(handle));
+                rootNode.reset(mMegaApiFolders->getNodeByHandle(handle));
             }
 
             Preferences::instance()->setLastPublicHandle(request->getNodeHandle(), MegaApi::AFFILIATE_TYPE_FILE_FOLDER);
-            mLinkNode[currentIndex] = std::shared_ptr<mega::MegaNode>(megaApiFolders->authorizeNode(rootNode.get()));
+            mega::MegaNode* node = mMegaApiFolders->authorizeNode(rootNode.get());
+            mLinkObjects[mCurrentIndex] = std::make_shared<LinkNode>(mMegaApi,
+                                                                     MegaNodeSPtr(node),
+                                                                     mLinkList[mCurrentIndex]);
         }
         else
         {
-            mLinkNode[currentIndex].reset();
+            // Invalid Link
+            createInvalidLinkObject(mCurrentIndex, error);
         }
 
-        linkError[currentIndex] = e->getErrorCode();
-        currentIndex++;
-        emit onLinkInfoAvailable(currentIndex-1);
-        if (currentIndex == linkList.size())
-        {
-            emit onLinkInfoRequestFinish();
-        }
-        else
-        {
-            requestLinkInfo();
-        }
+        mCurrentIndex++;
+        sendLinkInfoAvailableSignal(mCurrentIndex - 1);
+        continueOrFinishLinkInfoReq();
+
+        break;
+    }
+
+    default:
+        break;
     }
 
     mRequestCounter--;
+    markForDeletionIfNoMoreRequests();
+}
 
-    if(!mParentHandler && mRequestCounter == 0)
+void LinkProcessor::addTransfersAndStartIfNotStartedYet(LinkTransferType transferType)
+{
+    bool noTransferInProgress = mTransferQueue.isEmpty();
+
+    for (int i = 0; i < mLinkObjects.size(); i++)
+    {
+        if (isSelected(i))
+        {
+            mTransferQueue.push_back({mLinkObjects[i], transferType});
+        }
+    }
+
+    if (noTransferInProgress)
+    {
+        // Start transfers
+        processNextTransfer();
+    }
+}
+
+void LinkProcessor::markForDeletionIfNoMoreRequests()
+{
+    // If this instance of LinkProcessor does not need to wait for
+    // responses to outstanding requests, then it can be destroyed
+    if (!mParentHandler && mRequestCounter == 0)
     {
         deleteLater();
     }
@@ -201,39 +267,118 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
 
 void LinkProcessor::requestLinkInfo()
 {
-    if (currentIndex < 0 || currentIndex >= linkList.size())
-    {
-        return;
-    }
+    if (!isValidIndex(mLinkList, mCurrentIndex)) { return; }
 
-    QString link = linkList[currentIndex];
-    if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!"))
-            || link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/folder/")))
+    const QString link = mLinkList[mCurrentIndex];
+    if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!")) ||
+        link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/folder/")))
     {
-        std::unique_ptr<char []> authToken(megaApi->getAccountAuth());
+        std::unique_ptr<char []> authToken(mMegaApi->getAccountAuth());
         if (authToken)
         {
-            megaApiFolders->setAccountAuth(authToken.get());
+            mMegaApiFolders->setAccountAuth(authToken.get());
         }
 
         mRequestCounter++;
-        megaApiFolders->loginToFolder(link.toUtf8().constData(), delegateListener);
+        mMegaApiFolders->loginToFolder(link.toUtf8().constData(), mDelegateListener.get());
+    }
+    else if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/collection/")))
+    {
+        mRequestCounter++;
+        emit requestFetchSetFromLink(link);
     }
     else
     {
         mRequestCounter++;
-        megaApi->getPublicNode(link.toUtf8().constData(), delegateListener);
+        mMegaApi->getPublicNode(link.toUtf8().constData(), mDelegateListener.get());
     }
 }
 
-void LinkProcessor::importLinks(QString megaPath)
+// ----------------------------------------------------------------------------
+//
+// Callbacks from Sets & Elements
+//
+// ----------------------------------------------------------------------------
+void LinkProcessor::onFetchSetFromLink(const AlbumCollection& collection)
 {
-    std::unique_ptr<MegaNode>node(megaApi->getNodeByPath(megaPath.toUtf8().constData()));
-    if (node)
+    // We received a response to a request
+    mRequestCounter--;
+
+    if (mCurrentIndex >= mLinkObjects.size()) { return; }
+
+    mLinkObjects[mCurrentIndex] = std::make_shared<LinkSet>(mMegaApi, collection);
+    mCurrentIndex++;
+
+    sendLinkInfoAvailableSignal(mCurrentIndex - 1);
+    continueOrFinishLinkInfoReq();
+    markForDeletionIfNoMoreRequests();
+}
+
+void LinkProcessor::onSetDownloadFinished(const QString& setName,
+                                          const QStringList& succeededDownloadedElements,
+                                          const QStringList& failedDownloadedElements,
+                                          const QString& destinationPath)
+{
+    (void) setName;
+    (void) succeededDownloadedElements;
+    (void) failedDownloadedElements;
+    (void) destinationPath;
+
+    // We received a response to a request
+    mRequestCounter--;
+
+    // A public link (to a Set) has been downloaded, proceed to the next one
+    processNextTransfer();
+    markForDeletionIfNoMoreRequests();
+}
+
+void LinkProcessor::onSetImportFinished(const QString& setName,
+                                        const QStringList& succeededImportElements,
+                                        const QStringList& failedImportElements,
+                                        const QStringList& alreadyExistingImportElements,
+                                        const SetImportParams& sip)
+{
+    (void) setName;
+    (void) succeededImportElements;
+    (void) failedImportElements;
+    (void) alreadyExistingImportElements;
+    (void) sip;
+
+    // We received a response to a request
+    mRequestCounter--;
+
+    // A public link (to a Set) has been imported, proceed to the next one
+    processNextTransfer();
+    markForDeletionIfNoMoreRequests();
+}
+
+// ----------------------------------------------------------------------------
+//
+// IMPORT
+//
+// ----------------------------------------------------------------------------
+
+//!
+//! \brief LinkProcessor::importLinks
+//! \param megaPath: path to import parent destination folder on Cloud Drive
+//! \If @megaPath is a valid MegaNode, then:
+//! \ * An attempt is made to create import folders for all sets
+//! \ * Then if all nodes and sets have import folders, an ImportQueue will
+//! \   be created and the actual import will be kicked off
+//! \If @megaPath is NOT a valid MegaNode, then:
+//!   * An attempt will be made to create an import parent destination folder
+//!
+void LinkProcessor::importLinks(const QString& megaPath)
+{
+    MegaNodeSPtr importParentNode(mMegaApi->getNodeByPath(megaPath.toUtf8().constData()));
+
+    if (importParentNode)
     {
-        importLinks(node.get());
+        setImportParentNode(importParentNode);
+        mImportParentFolder = importParentNode->getHandle();        
+        addTransfersAndStartIfNotStartedYet(LinkTransferType::IMPORT);
     }
-    else
+    else    // No parent import folder, try to create it
     {
         auto rootNode = ((MegaApplication*)qApp)->getRootNode();
         if (!rootNode)
@@ -243,107 +388,257 @@ void LinkProcessor::importLinks(QString megaPath)
         }
 
         mRequestCounter++;
-        megaApi->createFolder(CommonMessages::getDefaultImportFolderName().toUtf8().constData(),
-                              rootNode.get(), delegateListener);
+        mMegaApi->createFolder(CommonMessages::getDefaultImportFolderName().toUtf8().constData(),
+                               rootNode.get(), mDelegateListener.get());
     }
 }
 
-void LinkProcessor::importLinks(MegaNode* node)
+//!
+//! \brief LinkProcessor::setImportParentNode
+//! \param importParentNode: import parent destination folder on Cloud Drive
+//! \Iterates over all NODEs in LinkObjects and store the @importParentNode
+//!
+void LinkProcessor::setImportParentNode(MegaNodeSPtr importParentNode)
 {
-    if (!node)
-    {
-        return;
-    }
+    if (!importParentNode) { return; }
 
-    std::unique_ptr<MegaNodeList> children(megaApi->getChildren(node));
-    importParentFolder = node->getHandle();
-
-    for (int i = 0; i < linkList.size(); i++)
+    for (const auto& linkObjectPtr : mLinkObjects)
     {
-        if (!mLinkNode[i])
+        // Verify that linkObjectPtr is selected and without errors
+        if (!linkObjectPtr ||
+            !linkObjectPtr->readyForProcessing())
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Trying to import a NULL node");
+            continue;
         }
 
-        if (mLinkNode[i] && linkSelected[i] && !linkError[i])
+        linkObjectPtr->setImportNode(importParentNode);
+    }
+}
+
+//!
+//! \brief SetManager::copyNode
+//! \param linkNode: the source node to copy
+//! \param importParentNode: import parent destination folder on Cloud Drive
+//! \Copies @linkNode to @importParentNode, if a node with the same name and
+//! \size doesn't already exist at the destination.
+//! \Returns true if a copy/import request was made to SDK, false otherwise
+//!
+bool LinkProcessor::copyNode(MegaNodeSPtr linkNode, MegaNodeSPtr importParentNode)
+{
+    if (!linkNode || !importParentNode) { return false; }
+
+    // Returns true if a similar node to @node, with the same name and size,
+    // already exists in import folder @importNode. Returns false otherwise.
+    auto alreadyExists = [&](MegaNodeSPtr node, MegaNodeSPtr importNode) -> bool {
+        std::unique_ptr<MegaNodeList> children(mMegaApi->getChildren(importNode.get()));
+        const char* srcName = node->getName();
+        const long long srcSize = node->getSize();
+        const int nrChildren = children->size();
+
+        for (int i = 0; i < nrChildren; i++)
         {
-            bool dupplicate = false;
-            MegaHandle duplicateHandle = INVALID_HANDLE;
-            const char* name = mLinkNode[i]->getName();
-            long long size = mLinkNode[i]->getSize();
-
-            for (int j = 0; j < children->size(); j++)
+            MegaNode* child = children->get(i);
+            if (!strcmp(srcName, child->getName()) && (srcSize == child->getSize()))
             {
-                MegaNode *child = children->get(j);
-                if (!strcmp(name, child->getName()) && (size == child->getSize()))
-                {
-                    dupplicate = true;
-                    duplicateHandle = child->getHandle();
-                }
-            }
-
-            if (!dupplicate)
-            {
-                remainingNodes++;
-                mRequestCounter++;
-                megaApi->copyNode(mLinkNode[i].get(), node, delegateListener);
+                return true;
             }
         }
+
+        return false;
+    };
+
+    if (!alreadyExists(linkNode, importParentNode))
+    {
+        mRequestCounter++;
+        mMegaApi->copyNode(linkNode.get(), importParentNode.get(), mDelegateListener.get());
+        return true;
     }
 
-    if(remainingNodes == 0)
-    {
-        emit onLinkImportFinish();
-    }
+    return false;
 }
 
 MegaHandle LinkProcessor::getImportParentFolder()
 {
-    return importParentFolder;
+    return mImportParentFolder;
 }
 
+// ----------------------------------------------------------------------------
+//
+// DOWNLOAD
+//
+// ----------------------------------------------------------------------------
+//!
+//! \brief LinkProcessor::downloadLinks
+//! \param localPath: download destination folder on local pc
+//! \Sets the download paths for all LinkObjects and kicks off the download for each of them
+//!
 void LinkProcessor::downloadLinks(const QString& localPath)
 {
-    for (int i = 0; i < linkList.size(); i++)
+    setDownloadPaths(localPath);
+    addTransfersAndStartIfNotStartedYet(LinkTransferType::DOWNLOAD);
+}
+
+//!
+//! \brief LinkProcessor::setDownloadPaths
+//! \param downloadPath: download destination folder on local pc
+//! \Iterates over all LinkObjects and sets the download path for every NODE or SET:
+//! \In case of a SET, a directory with the name of the set is created.
+//!
+void LinkProcessor::setDownloadPaths(const QString& downloadPath)
+{
+    for (int i = 0; i < mLinkObjects.size(); i++)
     {
-        if (mLinkNode[i] && linkSelected[i])
+        if (!isSelected(i)) { continue; }
+
+        auto linkObject = mLinkObjects[i];
+
+        switch (linkObject->getLinkType())
         {
-            startDownload(mLinkNode[i].get(), localPath);
+        case linkType::NODE:
+            linkObject->setDownloadPath(downloadPath);
+            break;
+
+        case linkType::SET:
+        {
+            auto set = std::dynamic_pointer_cast<LinkSet>(linkObject);
+            if (set)
+            {
+                QString setDownloadPath = downloadPath + QDir::separator() + set->getName();
+                set->setDownloadPath(setDownloadPath);
+            }
+            break;
+        }
+
+        default:
+            break;
         }
     }
 }
 
-void LinkProcessor::setSelected(int linkId, bool selected)
+void LinkProcessor::processNextTransfer()
 {
-    linkSelected[linkId] = selected;
-}
-
-int LinkProcessor::numSuccessfullImports()
-{
-    return importSuccess;
-}
-
-int LinkProcessor::numFailedImports()
-{
-    return importFailed;
-}
-
-int LinkProcessor::getCurrentIndex()
-{
-    return currentIndex;
-}
-
-bool LinkProcessor::atLeastOneLinkValidAndSelected() const
-{
-    for (int iLink = 0; iLink < size(); iLink++)
+    if (mTransferQueue.isEmpty())
     {
-        const bool isSelected{linkSelected.at(iLink)};
-        if(mLinkNode.at(iLink) && isSelected)
-        {
-            return true;
-        }
+        markForDeletionIfNoMoreRequests();
+        return;
     }
-    return false;
+
+    LinkTransfer firstItem = mTransferQueue.dequeue();
+    auto linkObject = firstItem.linkObject;
+
+    switch (linkObject->getLinkType())
+    {
+    case linkType::NODE:
+    {
+        auto linkNodePtr = std::dynamic_pointer_cast<LinkNode>(linkObject);
+        if (linkNodePtr)
+        {
+            if (firstItem.transferType == LinkTransferType::DOWNLOAD)
+            {
+                startDownload(linkNodePtr->getMegaNode(), linkNodePtr->getDownloadPath());
+                return;
+            }
+            else if ((firstItem.transferType == LinkTransferType::IMPORT) &&
+                       (copyNode(linkNodePtr->getMegaNode(), linkNodePtr->getImportNode())))
+            {
+                return;
+            }
+        }
+        break;
+    }
+
+    case linkType::SET:
+    {
+        auto set = std::dynamic_pointer_cast<LinkSet>(linkObject);
+        if (set)
+        {
+            if (firstItem.transferType == LinkTransferType::DOWNLOAD)
+            {
+                // Request to put this set in preview and download all its elements
+                mRequestCounter++;
+                emit requestDownloadSet(set->getSet(),
+                                        set->getDownloadPath(),
+                                        QList<mega::MegaHandle>()); // Empty list, request all Elements
+                return;
+            }
+            else if (firstItem.transferType == LinkTransferType::IMPORT)
+            {
+                // Request to put this set in preview and import all its elements
+                mRequestCounter++;
+                emit requestImportSet(set->getSet(),
+                                      {set->getImportNode()},
+                                      QList<mega::MegaHandle>());
+                return;
+            }
+        }
+        break;
+    }
+
+    default:
+        break;
+    }
+
+    // There's something wrong with this link, try the next one
+    processNextTransfer();
+}
+
+//!
+//! \brief LinkProcessor::startDownload
+//! \param linkNode: MegaNode to download
+//! \param localPath: download destination folder on local pc
+//! \Requests the SDK to download @linkNode to @localPath
+//!
+void LinkProcessor::startDownload(MegaNodeSPtr linkNode, const QString &localPath)
+{
+    if (!linkNode || localPath.isEmpty()) { return; }
+
+    const bool startFirst = false;
+    QByteArray path = (localPath + QDir::separator()).toUtf8();
+    const char* name = nullptr;
+    const char* appData = nullptr;
+    MegaCancelToken* cancelToken = nullptr; // No cancellation possible
+    const bool undelete = false;
+
+    mRequestCounter++;
+    mMegaApi->startDownload(linkNode.get(), path.constData(), name, appData, startFirst, cancelToken,
+                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
+                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
+                            undelete,
+                            mDelegateTransferListener.get());
+}
+
+//!
+//! \brief LinkProcessor::onTransferFinish
+//! \Callback after downloading a folder, file or set element
+//!
+void LinkProcessor::onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* error)
+{
+    (void) api;
+    (void) transfer;
+    (void) error;
+
+    // We received a response to a request
+    mRequestCounter--;
+
+    processNextTransfer();
+    markForDeletionIfNoMoreRequests();
+}
+
+// ----------------------------------------------------------------------------
+
+//!
+//! \brief LinkProcessor::onLinkSelected
+//! \param index: the index of the link
+//! \param selected: whether or not the user selected the link at @index
+//! \Called when a user checked or unchecked the box next to a link:
+//! \Book keeping: marks the LinkObject at index @index as @selected
+//!
+void LinkProcessor::onLinkSelected(int index, bool selected)
+{
+    if (isLinkObjectValid(index))
+    {
+        mLinkObjects[index]->setSelected(selected);
+    }
 }
 
 void LinkProcessor::setParentHandler(QObject *parent)
@@ -358,18 +653,18 @@ void LinkProcessor::setParentHandler(QObject *parent)
     mParentHandler = parent;
 }
 
-void LinkProcessor::startDownload(mega::MegaNode* linkNode, const QString &localPath)
+//!
+//! \brief LinkProcessor::refreshLinkInfo
+//! \I'm not sure why this is required, but copied this
+//! \mechanism from the previous developer...
+//!
+void LinkProcessor::refreshLinkInfo()
 {
-    const bool startFirst = false;
-    QByteArray path = (localPath + QDir::separator()).toUtf8();
-    const char* name = nullptr;
-    const char* appData = nullptr;
-    MegaCancelToken* cancelToken = nullptr; // No cancellation possible
-    MegaTransferListener* listener = nullptr;
-    const bool undelete = false;
-    megaApi->startDownload(linkNode, path.constData(), name, appData, startFirst, cancelToken,
-                           MegaTransfer::COLLISION_CHECK_FINGERPRINT,
-                           MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
-                           undelete,
-                           listener);
+    for (int i = 0; i < mCurrentIndex; i++)
+    {
+        sendLinkInfoAvailableSignal(i);
+    }
 }
+
+
+

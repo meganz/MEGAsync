@@ -314,6 +314,7 @@ public slots:
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
+    void requestFetchSetFromLink(const QString& link);
 
 private slots:
     void openFolderPath(QString path);
@@ -513,7 +514,7 @@ protected:
     StalledIssuesModel* mStalledIssuesModel;
     IStatsEventHandler* mStatsEventHandler;
 
-    std::unique_ptr<SetManager> mSetManager;
+    SetManager* mSetManager;
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
 
