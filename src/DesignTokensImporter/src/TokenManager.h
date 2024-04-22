@@ -18,7 +18,6 @@ namespace DTI
 
     private:
         TokenManager();
-        bool generateTokenFiles(const ThemedColourMap& fileToColourMap);
         ThemedColourMap parseColorTokenJSON(const QStringList& colorTokenFilePathsList, const CoreMap& coreMap);
         CoreMap parseCore(const QString& coreFilePath);
         void recurseCore(QString category, const QJsonObject& categoryObject, CoreMap& coreMap);

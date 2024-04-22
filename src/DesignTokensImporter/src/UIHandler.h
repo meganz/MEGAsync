@@ -19,31 +19,21 @@ public:
 
 
 private:
-    typedef QMap<QString, QMap<QString, QString>> styleMap;
-
     struct Style
     {
         QString cssSelectors;
         QMap<QString, QString> properties;
     };
 
-    struct ButtonStyle
-    {
-        QString cssSelectors;
-        styleMap properties;
-    };
-
     struct WidgetStyleInfo
     {
         QString objectName;
         QList<Style> tokenStyles;
-        QVector<QPair<QString, ButtonStyle>> imageStyles;
     };
 
     QVector<WidgetStyleInfo> parseUiFile(const QString& filePath);
     void updateCurrentWidgetInfo(WidgetStyleInfo& currentWidgetInfo, const StylesheetParser& parser);
     QString createStyleBlock(const QString& cssSelectors, const QString& objectName, const QMap<QString, QString>& properties);
-    QString determinePseudoClass(const QString& state);
 
     QString mFilePath;
     QVector<WidgetStyleInfo> mStyleSheetInfo;

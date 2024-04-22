@@ -53,12 +53,6 @@ void TokenManager::run()
     // parse json color themed files.
     ThemedColourMap fileToColourMap = parseColorTokenJSON(colorThemedPathFiles, coreMap);
 
-    if(!generateTokenFiles(fileToColourMap))
-    {
-        qDebug() << __func__ << " ERROR! Unable to generate token files";
-        return;
-    }
-
     // qml style generator entry point.
     std::unique_ptr<IThemeGenerator> styleGenerator{new QmlThemeGenerator()};
     styleGenerator->start(fileToColourMap);
@@ -169,26 +163,4 @@ ThemedColourMap TokenManager::parseColorTokenJSON(const QStringList& colorTokenF
     return retMap;
 }
 
-bool TokenManager::generateTokenFiles(const ThemedColourMap& fileToColourMap)
-{
-    // Create Generated Directory
-    Utilities::createDirectory(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_GENERATED_PATH));
-
-    bool ret = true;
-
-    // Save colourMaps .JSON files
-    // Generate token values in hex format
-    for (auto it = fileToColourMap.constBegin(); it != fileToColourMap.constEnd(); ++it)
-    {
-        const QString& filePath = it.key();
-        const ColourMap& colourMap = it.value();
-        QString fileName = Utilities::extractFileName(filePath);
-        if(!Utilities::writeColourMapToJSON(colourMap, Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_GENERATED_PATH) + "/" + fileName))
-        {
-            ret = false;
-        }
-    }
-
-    return ret;
-}
 

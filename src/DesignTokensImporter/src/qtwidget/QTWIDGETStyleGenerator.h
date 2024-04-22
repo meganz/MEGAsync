@@ -46,10 +46,7 @@ namespace DTI
         QStringList generateStylesheets(const ColourMap& colourMap,
                                         const QVector<QSharedPointer<UIHandler>>& uiClassList,
                                         const QString& saveDirectory);
-
-        QStringList generateWinApplicationStyleJsonFile();
         void addStyleSheetToResource();
-        void addSvgImagesToResource();
         bool writeHashFile();
 
         QString mCurrentDir;

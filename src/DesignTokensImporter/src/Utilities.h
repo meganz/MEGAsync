@@ -29,27 +29,16 @@ namespace DTI
                                           const QString& nameFilter = QString::fromLatin1("*.*"),
                                           bool findInSubfolders = false);
         static bool isFileValid(const QString& path);
-        static bool writeColourMapToJSON(const QMap<QString, QString>& colourMap,
-                                         const QString& filePath);
         static QMap<QString, QString> parseColorThemeJSON(const QString& themedColorTokenFilePath, const CoreMap& coreMap);
-        static bool createNewQrcFile(const QString& qrcPath);
         static void traverseDirectory(const QString& directoryPath,
                                       const QStringList& filters,
                                       QStringList& filePaths);
         static bool addToResources(const QString& filePath,
                                    const QString& qrcPath);
-        static bool addToResourcesBatch(const QStringList& filePaths,
-                                        const QString& qrcPath,
-                                        const QString& directoryPath);
-        static bool includeQrcInPriFile(const QString& priFilePath,
-                                        const QString& qrcRelativePath);
-        static bool insertQRCPathInCMakeListsFile(const QString& fileDirPath, const QString& newQRCPath);
-        static int calculateQRCPathInsertPosition(const QStringList& lines, const QRegularExpression& sectionStartRegex);
         static QString extractFileName(const QString& filePath);
         static QString extractFileNameNoExtension(const QString& filePath);
         static QString getFileHash(const QString& filePath);
         static QMap<QString, QMap<QString, QString>> readHashesJSONFile(const QString& filePath);
-        static QMap<QString, QString> readColourMapJSONFile(const QString& filePath);
         static bool writeHashesJsonFile(const QList<QStringList> &filePaths,
                                        const QStringList &jsonObjectNames,
                                        const QString &outputFilePath);
@@ -61,7 +50,6 @@ namespace DTI
                                                   const QString& startMarker,
                                                   const QString& stopMarker);
         static bool areAllStringsPresent(const QStringList& list1, const QStringList& list2);
-        static QMap<Theme, QMap<QString, QString> > getColourMapInfo();
         static bool writeStyleSheetToFile(const QString& css, const QString& filePath);
         static Theme getTheme(const QString& filePath);
         static QString themeToString(Utilities::Theme theme);

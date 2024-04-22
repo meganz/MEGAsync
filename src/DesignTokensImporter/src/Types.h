@@ -7,23 +7,13 @@
 namespace DTI
 {
 typedef QMap<QString, QString> PropertiesMap;
-typedef QMap<QString, PropertiesMap> ButtonStateStyleMap;
-typedef QMap<QString, ButtonStateStyleMap> ImageThemeStyleData;
 typedef QMap<QString, QString> ColourMap;
 typedef QMap<QString, QString> CoreMap;
 typedef QMap<QString, ColourMap> ThemedColourMap;
 
-struct ImageThemeStyleInfo
-{
-    QString key;
-    QString cssSelector;
-    ButtonStateStyleMap styleMap;
-};
-
 enum class Targets
 {
-    ColorStyle,
-    ImageStyle
+    ColorStyle
 };
 }
 

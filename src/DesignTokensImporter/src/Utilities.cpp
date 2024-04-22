@@ -13,11 +13,11 @@
 #include <QTextStream>
 #include <QTemporaryFile>
 
+namespace DTI
+{
 static const QString COLOUR_TOKEN_START = QString::fromLatin1("--color-");
 static const qint64 FILE_READ_BUFFER_SIZE = 8192;
 
-namespace DTI
-{
 //!
 //! \brief Utilities::createDirectory
 //! \param dirPath: path to directory
@@ -184,48 +184,6 @@ QMap<QString, QString> Utilities::parseColorThemeJSON(const QString& themedColor
     return colourMap;
 }
 
-bool Utilities::createNewQrcFile(const QString &qrcPath)
-{
-    QFile qrcFile(qrcPath);
-
-    if (qrcFile.exists()) {
-        qDebug() << "QRC file already exists:" << qrcPath;
-        return true;
-    }
-
-    if (!qrcFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Unable to open file for writing:" << qrcPath;
-        return false;
-    }
-
-    QTextStream stream(&qrcFile);
-    stream << "<RCC>\n";
-    stream << "    <qresource prefix=\"/\">\n";
-    stream << "    </qresource>\n";
-    stream << "</RCC>\n";
-
-    qrcFile.close();
-    qDebug() << "QRC file created successfully at" << qrcPath;
-    return true;
-}
-
-bool Utilities::writeColourMapToJSON(const QMap<QString, QString>& colourMap,
-                                     const QString& filePath)
-{
-    QJsonObject dataObject;
-
-    // Iterate over the QMap and add key-value pairs to the JSON object
-    for (auto it = colourMap.begin(); it != colourMap.end(); ++it)
-    {
-        dataObject.insert(it.key(), it.value());
-    }
-
-    QJsonObject jsonObject;
-    jsonObject.insert("data", dataObject);
-
-    return writeJSONToFile(QJsonDocument(jsonObject), filePath);
-}
-
 void Utilities::traverseDirectory(const QString &directoryPath, const QStringList &filters, QStringList &filePaths)
 {
     QDir dir(directoryPath);
@@ -303,213 +261,6 @@ bool Utilities::addToResources(const QString& filePath,
     qDebug() << "Utilities::addToResources - Successfully added " << filePath << " to " << qrcPath;
 
     return true;
-}
-
-bool Utilities::addToResourcesBatch(const QStringList &filePaths, const QString &qrcPath, const QString &directoryPath)
-{
-    QFile qrcFile(qrcPath);
-    if (!qrcFile.open(QIODevice::ReadWrite | QIODevice::Text))
-    {
-        return false;
-    }
-
-    QTextStream stream(&qrcFile);
-    QString qrcContent = stream.readAll();
-    qrcFile.close();
-
-    bool modified = false;
-    QDir baseDir(QFileInfo(qrcPath).absolutePath());
-    for (const QString& filePath : filePaths)
-    {
-        QString relativePath = baseDir.relativeFilePath(filePath);
-
-        if (!qrcContent.contains(relativePath))
-        {
-            QRegularExpression re(QString("(\\s*)") + QRegularExpression::escape("</qresource>"));
-            auto match = re.match(qrcContent);
-            if (!match.isValid())
-            {
-                return false;
-            }
-            QString newFileEntry = match.captured(1) + "    <file>" + relativePath + "</file>";
-            qrcContent.insert(match.capturedStart(), newFileEntry);
-            modified = true;
-        }
-    }
-
-    if (modified)
-    {
-        if (!qrcFile.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            return false;
-        }
-        stream << qrcContent;
-        qrcFile.close();
-    }
-
-    return true;
-}
-
-bool Utilities::includeQrcInPriFile(const QString &priFilePath, const QString &qrcRelativePath)
-{
-    QFile priFile(priFilePath);
-    if (!priFile.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qDebug() << "Unable to open PRI file for reading:" << priFilePath;
-        return false;
-    }
-
-    bool lineExists = false;
-    QString content;
-    QTextStream in(&priFile);
-    QString lineToInclude = "RESOURCES += $$PWD/" + qrcRelativePath;
-
-    while (!in.atEnd())
-    {
-        QString line = in.readLine();
-        if (line.trimmed() == lineToInclude.trimmed())
-        {
-            lineExists = true;
-        }
-        content += line + "\n";
-    }
-    priFile.close();
-
-    if (!lineExists)
-    {
-        if (!priFile.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            qDebug() << "Unable to open PRI file for writing:" << priFilePath;
-            return false;
-        }
-        QTextStream out(&priFile);
-        out << content << lineToInclude << "\n";
-        priFile.close();
-    }
-
-    return true;
-}
-
-bool Utilities::insertQRCPathInCMakeListsFile(const QString &fileDirPath, const QString &newQRCPath)
-{
-    QString fileName = "CMakeLists.txt";
-    QDir dir(fileDirPath);
-    QString filePath = dir.filePath(fileName);
-
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qWarning() << "Failed to open the CMakeListsText file for reading:" << filePath;
-        return false;
-    }
-
-    QStringList lines;
-    QTextStream in(&file);
-    while (!in.atEnd())
-    {
-        lines.append(in.readLine());
-    }
-    file.close();
-
-    // Check if newQRCPath already exists in the file
-    QString lineToInclude = "${MEGAsyncDir}" + newQRCPath;
-    for (const QString &line : lines)
-    {
-        if (line.contains(lineToInclude))
-        {
-            qInfo() << "The QRC path already exists in the CMakeLists.txt file:" << lineToInclude;
-            return true;
-        }
-    }
-
-    // Determine where to insert qrc path in CMakeListsText file
-    QRegularExpression regexSetSrcs(R"(set\s*\(\s*SRCS)", QRegularExpression::CaseInsensitiveOption);
-    int insertPosition =  calculateQRCPathInsertPosition(lines, regexSetSrcs);
-
-    // Create and Open a CMakeLists.txt temporary file for writing
-    QString tempFilePattern = QDir(fileDirPath).absoluteFilePath("XXXXXXCMakeLists.txt");
-    QTemporaryFile tempFile(tempFilePattern);
-    tempFile.setAutoRemove(false);
-
-    if (!tempFile.open())
-    {
-        qWarning() << "Failed to open a created CMakeListsText temporary file for writing.";
-        return false;
-    }
-
-    // Copy content to the CMakeLists.txt temporary file with the qrc path inserted at the determined position
-    QString lineEnding = "\n";
-    int tabWidth = 4;
-    QString fourSpaces = QString(tabWidth, ' ');
-    QTextStream out(&tempFile);
-
-    for (int i = 0; i < lines.size(); ++i)
-    {
-        if (i == insertPosition)
-        {
-            out << fourSpaces << lineToInclude << lineEnding;
-        }
-        out << lines[i] << lineEnding;
-    }
-
-    // Handle the case where the insert position is at the end of the file
-    if (insertPosition == lines.size())
-    {
-        out  << fourSpaces << lineToInclude << lineEnding;
-    }
-
-    // Replace the original CMakeLists.txt file with the temporary CMakeListsText file
-    tempFile.close();
-    if (!QFile::remove(filePath))
-    {
-        qWarning() << "Failed to remove the original CMakeLists.txt file  file:" << filePath;
-        return false;
-    }
-    if (!tempFile.rename(filePath))
-    {
-        qWarning() << "Failed to rename the temporary created CMakeLists.txt file to the original CMakeLists.txt file location:" << filePath;
-
-        // Fallback: Manually copy the temporary file's content to the new CMakeLists.txt
-        QFile::copy(tempFile.fileName(), filePath); // Attempt to copy directly as a fallback
-        return false;
-    }
-
-    qDebug() << "Successfully updated CMakeLists.txt with new qrc path in location: " << filePath;
-    return true;
-}
-
-int Utilities::calculateQRCPathInsertPosition(const QStringList &lines, const QRegularExpression &sectionStartRegex)
-{
-    bool inSectionBlock = false;
-    int lastQRCIndex = -1, firstCPPAfterQRCIndex = -1, insertPosition = -1;
-
-    for (int i = 0; i < lines.size(); ++i)
-    {
-        const QString& line = lines.at(i);
-        QRegularExpressionMatch match = sectionStartRegex.match(line);
-        if (match.hasMatch())
-        {
-            inSectionBlock = true;
-        }
-        else if (inSectionBlock && line.contains(')'))
-        {
-            break;
-        }
-        else if (inSectionBlock)
-        {
-            if (line.contains(".qrc"))
-            {
-                lastQRCIndex = i;
-                firstCPPAfterQRCIndex = -1;
-            }
-            else if (line.contains(".cpp") && firstCPPAfterQRCIndex == -1 && lastQRCIndex != -1)
-            {
-                insertPosition = lastQRCIndex + 1;
-            }
-        }
-    }
-
-    return insertPosition;
 }
 
 //!
@@ -607,35 +358,6 @@ QMap<QString, QMap<QString, QString>> Utilities::readHashesJSONFile(const QStrin
     }
 
     return result;
-}
-
-QMap<QString, QString> Utilities::readColourMapJSONFile(const QString &filePath)
-{
-    QMap<QString, QString> colourMap;
-
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Utilities::readColourMapJSONFile - Error opening file" << filePath;
-        return colourMap;
-    }
-
-    QByteArray jsonData = file.readAll();
-    file.close();
-
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
-    if (!jsonDoc.isObject()) {
-        qDebug() << "Utilities::readColourMapJSONFile - ERROR! Invalid JSON format";
-        return colourMap;
-    }
-
-    QJsonObject rootObj = jsonDoc.object();
-    QJsonObject dataObj = rootObj.value("data").toObject();
-
-    for (auto it = dataObj.begin(); it != dataObj.end(); ++it) {
-        colourMap.insert(it.key(), it.value().toString());
-    }
-
-    return colourMap;
 }
 
 bool Utilities::writeHashesJsonFile(const QList<QStringList> &filePaths,
@@ -772,37 +494,6 @@ bool Utilities::areAllStringsPresent(const QStringList& list1,
     return (set1 - set2).isEmpty();
 }
 
-
-QMap<Utilities::Theme, QMap<QString, QString>> Utilities::getColourMapInfo()
-{
-    static QMap<Utilities::Theme, QMap<QString, QString>> cachedColourMap;
-    static bool isCached = false;
-
-    if (!isCached)
-    {
-        QString currentDir = QDir::currentPath();
-        QDir dir(resolvePath(currentDir, PathProvider::RELATIVE_GENERATED_PATH));
-
-        QStringList tokenFilePathsList = Utilities::findFilesInDir(resolvePath(currentDir, PathProvider::RELATIVE_TOKENS_PATH), PathProvider::JSON_NAME_FILTER);
-
-        QStringList filePathsColourMap;
-        foreach (const QString& filePath, tokenFilePathsList)
-        {
-            QString fileName = Utilities::extractFileName(filePath);
-            filePathsColourMap.append(dir.filePath(fileName));
-        }
-
-        foreach (const QString& filePath, filePathsColourMap)
-        {
-            QMap<QString, QString> colourMap = Utilities::readColourMapJSONFile(filePath);
-            cachedColourMap.insert(Utilities::getTheme(filePath), colourMap);
-        }
-        isCached = true;
-    }
-
-    return cachedColourMap;
-}
-
 Utilities::Theme Utilities::getTheme(const QString& filePath)
 {
     Theme theme = Theme::LIGHT;
@@ -836,8 +527,7 @@ QString Utilities::resolvePath(const QString& basePath, const QString& relativeP
 QString Utilities::targetToString(Targets target)
 {
     static const QMap<Targets, QLatin1String> targetsMap = {
-        {Targets::ColorStyle, QLatin1String("ColorStyle")},
-        {Targets::ImageStyle, QLatin1String("ImageStyle")}
+        {Targets::ColorStyle, QLatin1String("ColorStyle")}
     };
 
     return targetsMap.value(target);
