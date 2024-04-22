@@ -52,6 +52,8 @@ public:
     void setFirstName(QString firstName);
     QString lastName();
     void setLastName(QString lastName);
+    QString fileHash(const QString& filePath);
+    void setFileHash(const QString& filePath, const QString& fileHash);
     void setSession(QString session);
     void setSessionInUserGroup(QString session);
     QString getSession();
