@@ -30,6 +30,8 @@ protected:
     QString getErrorRemovingTitle() const override;
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
 
+    void changeEvent(QEvent *) override;
+
 private slots:
     void storageStateChanged(int newStorageState);
 

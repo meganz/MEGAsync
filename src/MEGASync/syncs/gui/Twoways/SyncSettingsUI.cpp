@@ -77,6 +77,16 @@ QString SyncSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> er
         .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
 }
 
+void SyncSettingsUI::changeEvent(QEvent* event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        mSyncElement.retranslateUi();
+    }
+
+    SyncSettingsUIBase::changeEvent(event);
+}
+
 void SyncSettingsUI::storageStateChanged(int newStorageState)
 {
     mSyncElement.setOverQuotaMode(newStorageState == mega::MegaApi::STORAGE_STATE_RED

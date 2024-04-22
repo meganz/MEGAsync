@@ -28,6 +28,7 @@ private:
     void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
     Ui::OpenBackupsFolder* openFolderUi;
+    QWidget* mOpenBackupsFolder;
 };
 
 #endif // BACKUPSETTINGSELEMENTS_H

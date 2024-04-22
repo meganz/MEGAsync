@@ -7,6 +7,7 @@
 BackupSettingsElements::BackupSettingsElements(QObject *parent)
     :QObject(parent)
     ,openFolderUi(new Ui::OpenBackupsFolder)
+    ,mOpenBackupsFolder(nullptr)
 {
 }
 
@@ -17,8 +18,8 @@ BackupSettingsElements::~BackupSettingsElements()
 
 void BackupSettingsElements::initElements(SyncSettingsUIBase *syncSettingsUi)
 {
-    QWidget* openBackupsFolder(new QWidget());
-    openFolderUi->setupUi(openBackupsFolder);
+    mOpenBackupsFolder = new QWidget();
+    openFolderUi->setupUi(mOpenBackupsFolder);
     openFolderUi->bOpenBackupFolder->setEnabled(false);
     openFolderUi->bOpenBackupFolder->setAutoDefault(false);
     connect(openFolderUi->bOpenBackupFolder, &QPushButton::clicked, this, &BackupSettingsElements::onOpenBackupFolderClicked);
@@ -28,13 +29,14 @@ void BackupSettingsElements::initElements(SyncSettingsUIBase *syncSettingsUi)
             this, &BackupSettingsElements::onMyBackupsFolderHandleSet);
     onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
 
-    syncSettingsUi->insertUIElement(openBackupsFolder, 0);
+    syncSettingsUi->insertUIElement(mOpenBackupsFolder, 0);
 }
 
 void BackupSettingsElements::updateUI()
 {
     QString backupsDirPath = UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath();
     openFolderUi->lBackupFolder->setText(backupsDirPath);
+    openFolderUi->retranslateUi(mOpenBackupsFolder);
 }
 
 void BackupSettingsElements::onOpenBackupFolderClicked()
