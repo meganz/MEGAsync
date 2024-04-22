@@ -414,6 +414,8 @@ public:
     // Compute the part per <ref> of <part> from <total>. Defaults to %
     static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
 
+    static QString getFileHash(const QString& filePath);
+
     // Human-friendly list of forbidden chars for New Remote Folder
     static const QLatin1String FORBIDDEN_CHARS;
     // Forbidden chars PCRE

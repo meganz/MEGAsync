@@ -434,6 +434,17 @@ void Preferences::setLastName(QString lastName)
     setValueAndSyncConcurrent(lastNameKey, lastName);
 }
 
+QString Preferences::fileHash(const QString& filePath)
+{
+    assert(logged());
+    return getValueConcurrent<QString>(filePath, QString());
+}
+
+void Preferences::setFileHash(const QString& filePath, const QString& fileHash)
+{
+    setValueAndSyncConcurrent(filePath, fileHash, true);
+}
+
 void Preferences::setSession(QString session)
 {
     mutex.lock();

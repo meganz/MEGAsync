@@ -6,10 +6,12 @@
 #include "megaapi.h"
 #include "mega/types.h"
 #include <assert.h>
+#include <QMap>
 
 
 namespace UserAttributes
 {
+
 UserAttributesManager::UserAttributesManager() :
     mDelegateListener(new mega::QTMegaListener(MegaSyncApp->getMegaApi(), this))
 {
@@ -68,20 +70,30 @@ void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *us
             if(user->isOwnChange() <= 0)
             {
                 auto userEmail = QString::fromUtf8(user->getEmail());
-                foreach(auto request, mRequests.values(getKey(userEmail)))
+                bool handledRequest = false;
+
+                for(auto& request : mRequests.values(getKey(userEmail)))
                 {
-                    foreach(auto changeType, request->getRequestInfo().mChangedTypes.keys())
+                    auto keys = request->getRequestInfo().mChangedTypes.keys();
+                    for(auto& changeType : keys)
                     {
-                        if(user->getChanges() & changeType)
+                        if(user->hasChanged(changeType))
                         {
                             auto paramType = request->getRequestInfo().mChangedTypes.value(changeType, -1);
                             if(paramType >= 0)
                             {
                                 request->getRequestInfo().mParamInfo.value(paramType)->mNeedsRetry = true;
                                 request->requestUserAttribute(paramType);
+                                handledRequest = true;
                             }
                         }
                     }
+                }
+
+                if (!handledRequest)
+                {
+                    // Not possible to handle the update yet: store for future processing
+                    mUnhandledRequests.insert(userEmail, user->getChanges());
                 }
             }
         }
@@ -92,7 +104,8 @@ void UserAttributesManager::forceRequestAttribute(const AttributeRequest* reques
 {
     if(request)
     {
-        foreach(auto paramType, request->getRequestInfo().mParamInfo.keys())
+        auto paramTypeKeys = request->getRequestInfo().mParamInfo.keys();
+        foreach(auto& paramType, paramTypeKeys)
         {
             auto paramInfo = request->getRequestInfo().mParamInfo.value(paramType);
             paramInfo->mNeedsRetry = true;
