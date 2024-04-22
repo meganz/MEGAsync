@@ -14,11 +14,11 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/FileFolderAttributes.h
     control/HTTPServer.h
     control/LinkProcessor.h
+    control/LinkObject.h
     control/LoginController.h
     control/MegaDownloader.h
     control/MegaSyncLogger.h
     control/MegaUploader.h
-    control/ProtectedQueue.h
     control/TextDecorator.h
     control/ThreadPool.h
     control/TransferBatch.h
@@ -26,6 +26,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/UpdateTask.h
     control/UserAttributesManager.h
     control/SetManager.h
+    control/SetTypes.h
     control/Utilities.h
     control/Version.h
     control/gzjoin.h
@@ -48,6 +49,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/FileFolderAttributes.cpp
     control/HTTPServer.cpp
     control/LinkProcessor.cpp
+    control/LinkObject.cpp
     control/LoginController.cpp
     control/MegaDownloader.cpp
     control/MegaSyncLogger.cpp
