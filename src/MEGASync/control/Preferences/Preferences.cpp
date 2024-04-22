@@ -1791,10 +1791,7 @@ QString Preferences::proxyHostAndPort()
 
 long long Preferences::lastExecutionTime()
 {
-    mutex.lock();
-    long long value = getValue<long long>(lastExecutionTimeKey, 0);
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(lastExecutionTimeKey, 0);
 }
 
 long long Preferences::installationTime()
@@ -1930,10 +1927,7 @@ void Preferences::setMaxMemoryReportTime(long long timestamp)
 
 long long Preferences::lastDailyStatTime()
 {
-    mutex.lock();
-    long long value = getValue<long long>(lastDailyStatTimeKey, 0);
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(lastDailyStatTimeKey, 0);
 }
 
 void Preferences::setLastDailyStatTime(long long time)

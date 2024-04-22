@@ -4504,21 +4504,17 @@ void MegaApplication::sendPeriodicStats() const
     auto lastTime = preferences->lastDailyStatTime();
     if(Utilities::dayHasChangedSince(lastTime) && !mStatusController->isAccountBlocked())
     {
-        int accountType = preferences->logged() ? preferences->accountType() : -1;
-        QString messageArg(QString::fromUtf8(" - acctype: %1").arg(QString::number(accountType)));
-
+        QString accountType = QString::number(preferences->logged() ? preferences->accountType() : -1);
         mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_DAILY_ACTIVE_USER,
-                                      (QString::fromUtf8("Daily Active Users (DAU)") + messageArg).toUtf8().constData());
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                     (QString::fromUtf8("Daily Active Users (DAU)") + messageArg).toUtf8().constData());
+                                      QString::fromUtf8("Daily Active Users (DAU) - acctype: %1")
+                                          .arg(accountType).toUtf8().constData());
         preferences->setLastDailyStatTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
         if(Utilities::monthHasChangedSince(lastTime))
         {
             mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MONTHLY_ACTIVE_USER,
-                                          (QString::fromUtf8("Monthly Active Users (MAU)") + messageArg).toUtf8().constData());
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                         (QString::fromUtf8("Monthly Active Users (MAU)") + messageArg).toUtf8().constData());
+                                          QString::fromUtf8("Monthly Active Users (MAU) - acctype: %1")
+                                              .arg(accountType).toUtf8().constData());
         }
     }
 }
