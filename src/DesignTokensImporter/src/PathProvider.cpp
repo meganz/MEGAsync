@@ -15,10 +15,9 @@ const QString PathProvider::RELATIVE_QRC_MAC_PATH = RELATIVE_UI_PATH + QString::
 const QString PathProvider::RELATIVE_QRC_WINDOWS_PATH =  RELATIVE_UI_PATH + QString::fromLatin1("/Resources_win.qrc");
 const QString PathProvider::RELATIVE_QRC_LINUX_PATH = RELATIVE_UI_PATH +  QString::fromLatin1("/Resources_linux.qrc");
 const QString PathProvider::RELATIVE_THEMES_DIR_PATH = RELATIVE_UI_PATH + QString::fromLatin1("/themes");
-const QString PathProvider::RELATIVE_STYLES_DIR_PATH = RELATIVE_UI_PATH + QString::fromLatin1("/themes/styles");
-const QString PathProvider::RELATIVE_CSS_WIN_PATH = RELATIVE_STYLES_DIR_PATH + QString::fromLatin1("/win");
-const QString PathProvider::RELATIVE_CSS_LINUX_PATH = RELATIVE_STYLES_DIR_PATH + QString::fromLatin1("/linux");
-const QString PathProvider::RELATIVE_CSS_MAC_PATH = RELATIVE_STYLES_DIR_PATH + QString::fromLatin1("/macx");
+const QString PathProvider::RELATIVE_CSS_WIN_PATH = RELATIVE_THEMES_DIR_PATH + QString::fromLatin1("/win");
+const QString PathProvider::RELATIVE_CSS_LINUX_PATH = RELATIVE_THEMES_DIR_PATH + QString::fromLatin1("/linux");
+const QString PathProvider::RELATIVE_CSS_MAC_PATH = RELATIVE_THEMES_DIR_PATH + QString::fromLatin1("/macx");
 const QString PathProvider::RELATIVE_HASHES_PATH = RELATIVE_GENERATED_PATH + QString::fromLatin1("/hashes.json");
 const QString PathProvider::RELATIVE_CMAKE_FILE_LIST_DIR_PATH =  QString::fromLatin1("../../contrib/cmake");
 
