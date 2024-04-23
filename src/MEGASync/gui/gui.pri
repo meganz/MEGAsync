@@ -99,6 +99,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/OnboardingQmlDialog.cpp \
     $$PWD/onboarding/GuestContent.cpp \
     $$PWD/themes/ThemeManager.cpp \
+    $$PWD/themes/ThemeWidget.cpp \
     $$PWD/themes/ThemeStylesheetParser.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
@@ -198,6 +199,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \
     $$PWD/onboarding/GuestContent.h \
     $$PWD/themes/ThemeManager.h \
+    $$PWD/themes/ThemeWidget.h \
     $$PWD/themes/ThemeStylesheetParser.h
 
 INCLUDEPATH += $$PWD

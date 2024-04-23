@@ -7,14 +7,14 @@
 class ThemeStylesheetParser
 {
 public:
-    ThemeStylesheetParser();
+    ThemeStylesheetParser() = default;
     void parseStyleSheet(const QString& stylesheet, const QString& uiFileName);
     QString getThemeStylesheet(const QString &key) const;
-    QSet<QString> getObjectNamesInUICSSFile(const QString& themeKey) const;
+    QSet<QString> getObjectNamesInCSSFile(const QString& widgetThemeKey) const;
 
 private:
-    QMap<QString, QSet<QString>> mObjectNameToUiCSSFileNameMap;
-    QMultiMap<QString, QString> mObjectNameToUiCSSFileStyleSheetsMap;
+    QMap<QString, QSet<QString>> mObjectNameToCSSFileNameMap;
+    QMultiMap<QString, QString> mObjectNameToCSSFileStyleSheetsMap;
 };
 
 #endif // THEMESTYLESHEETPARSER_H

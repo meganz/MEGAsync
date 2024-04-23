@@ -5,11 +5,6 @@
 #include <QSet>
 #include <QStringBuilder>
 
-ThemeStylesheetParser::ThemeStylesheetParser()
-{
-
-}
-
 void ThemeStylesheetParser::parseStyleSheet(const QString &stylesheet, const QString &uiFileName)
 {
     static const QRegularExpression blockStartRegex(QLatin1String(R"(([^{]+){?)"));
@@ -58,7 +53,7 @@ void ThemeStylesheetParser::parseStyleSheet(const QString &stylesheet, const QSt
                     QString key = uiFileName % QLatin1String("_") % objectName;
 
                     // Store the parsed stylesheet block in memory associated with its corresponding object name
-                    mObjectNameToUiCSSFileStyleSheetsMap.insert(key, currentBlock); // Cache the parsed stylesheet in memory
+                    mObjectNameToCSSFileStyleSheetsMap.insert(key, currentBlock); // Cache the parsed stylesheet in memory
 
                     objectNames.insert(objectName);
                 }
@@ -68,12 +63,12 @@ void ThemeStylesheetParser::parseStyleSheet(const QString &stylesheet, const QSt
         }
     }
 
-    mObjectNameToUiCSSFileNameMap.insert(uiFileName, objectNames);  // Associate objectNames with their respective CSS files
+    mObjectNameToCSSFileNameMap.insert(uiFileName, objectNames);  // Associate objectNames with their respective CSS files
 }
 
 QString ThemeStylesheetParser::getThemeStylesheet(const QString& key) const
 {
-    QStringList valuesList = mObjectNameToUiCSSFileStyleSheetsMap.values(key);
+    QStringList valuesList = mObjectNameToCSSFileStyleSheetsMap.values(key);
 
     if (valuesList.isEmpty())
     {
@@ -83,9 +78,9 @@ QString ThemeStylesheetParser::getThemeStylesheet(const QString& key) const
     return valuesList.join(QLatin1String("\n"));
 }
 
-QSet<QString> ThemeStylesheetParser::getObjectNamesInUICSSFile(const QString& themeKey) const
+QSet<QString> ThemeStylesheetParser::getObjectNamesInCSSFile(const QString& widgetThemeKey) const
 {
-    return mObjectNameToUiCSSFileNameMap.value(themeKey);
+    return mObjectNameToCSSFileNameMap.value(widgetThemeKey);
 }
 
 

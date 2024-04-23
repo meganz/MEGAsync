@@ -2,6 +2,7 @@
 #include "gui/MegaTransferView.h"
 #include "control/HTTPServer.h"
 #include "themes/ThemeManager.h"
+#include "themes/ThemeWidget.h"
 
 #include <EventHelper.h>
 #include <QStyleOption>
@@ -203,7 +204,8 @@ void MegaProxyStyle::polish(QWidget *widget)
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
     }
 
-    if (ThemeManager::instance()->addClassToThemeManager(widget))
+    ThemeWidget* themeWidget = ThemeManager::instance()->getThemeWidget();
+    if (themeWidget && themeWidget->registerWidgetForTheming(widget))
     {
         widget->installEventFilter(this);
     }
@@ -238,15 +240,23 @@ bool MegaProxyStyle::event(QEvent *e)
 
 bool MegaProxyStyle::eventFilter(QObject *watched, QEvent *event)
 {
-    if (event->type() == QEvent::Paint)
+    if (event->type() != QEvent::Paint)
     {
-        QWidget *widget = qobject_cast<QWidget*>(watched);
-        if (widget && !widget->property("stylesheetApplied").toBool())
-        {
-            ThemeManager::instance()->applyStyleSheet(widget);
-            widget->setProperty("stylesheetApplied", true);
-            widget->removeEventFilter(this);
-        }
+        return QProxyStyle::eventFilter(watched, event);
+    }
+
+    QWidget *widget = qobject_cast<QWidget*>(watched);
+    if (!widget || widget->property("stylesheetApplied").toBool())
+    {
+        return QProxyStyle::eventFilter(watched, event);
+    }
+
+    ThemeWidget* themeWidget = ThemeManager::instance()->getThemeWidget();
+    if (themeWidget)
+    {
+        themeWidget->applyStyleSheet(widget);
+        widget->setProperty("stylesheetApplied", true);
+        widget->removeEventFilter(this);
     }
 
     return QProxyStyle::eventFilter(watched, event);
