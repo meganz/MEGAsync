@@ -20,17 +20,6 @@ class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
 public:
-    struct StalledIssuesReceived
-    {
-        StalledIssuesVariantList stalledIssues;
-
-        bool isEmpty(){return stalledIssues.isEmpty();}
-        void clear()
-        {
-            stalledIssues.clear();
-        }
-    };
-
     explicit StalledIssuesReceiver(QObject* parent = nullptr);
     ~StalledIssuesReceiver(){}
 
@@ -38,7 +27,7 @@ public slots:
     void onSetIsEventRequest();
 
 signals:
-    void stalledIssuesReady(StalledIssuesReceiver::StalledIssuesReceived);
+    void stalledIssuesReady(StalledIssuesVariantList);
     void solvingIssues(int issueCount, int total);
 
 protected:
@@ -46,11 +35,9 @@ protected:
 
 private:
     QMutex mCacheMutex;
-    StalledIssuesReceived mCacheStalledIssues;
+    StalledIssuesVariantList mStalledIssues;
     std::atomic_bool mIsEventRequest { false };
 };
-
-Q_DECLARE_METATYPE(StalledIssuesReceiver::StalledIssuesReceived);
 
 class StalledIssuesModel : public QAbstractItemModel, public mega::MegaGlobalListener
 {
@@ -156,7 +143,7 @@ protected slots:
     void onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes) override;
 
 private slots:
-    void onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived);
+    void onProcessStalledIssues(StalledIssuesVariantList issuesReceived);
     void onSendEvent();
 
 private:

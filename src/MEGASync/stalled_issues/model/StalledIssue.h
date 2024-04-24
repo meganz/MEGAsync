@@ -378,9 +378,11 @@ class StalledIssueVariant
 public:
     StalledIssueVariant(){}
     StalledIssueVariant(const StalledIssueVariant& tdr) : mData(tdr.mData) {}
-    StalledIssueVariant(const std::shared_ptr<StalledIssue> data)
+    StalledIssueVariant(std::shared_ptr<StalledIssue> data, const mega::MegaSyncStall* stall)
         : mData(data)
-    {}
+    {
+        mData->fillIssue(stall);
+    }
 
     const std::shared_ptr<const StalledIssue> consultData() const
     {
@@ -434,7 +436,7 @@ public:
 
 private:
     friend class StalledIssuesModel;
-    friend class StalledIssuesReceiver;
+    friend class StalledIssuesFactory;
 
     std::shared_ptr<StalledIssue>& getData()
     {
