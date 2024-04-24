@@ -102,7 +102,7 @@ if (WIN32)
     )
 elseif (UNIX AND NOT APPLE)
     find_package(Qt5 REQUIRED COMPONENTS X11Extras)
-    target_link_libraries(
+    target_link_libraries(MEGAsync
         PRIVATE
         Qt5::X11Extras
         xcb

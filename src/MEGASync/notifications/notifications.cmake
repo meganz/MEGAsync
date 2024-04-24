@@ -63,7 +63,7 @@ if (APPLE)
 endif()
 
 if (UNIX AND NOT APPLE)
-    target_include_directories(
+    target_include_directories(MEGAsync
         PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/linux
     )
