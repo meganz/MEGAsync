@@ -20,7 +20,7 @@ static const QString colorThemeFooter = QString::fromUtf8("}\n");
 
 bool QMLColorThemeTarget::registered = ConcreteQMLThemeFactory<QMLColorThemeTarget>::Register("qmlColorTheme");
 
-void QMLColorThemeTarget::deploy(const ThemedColourMap& themeColorData) const
+void QMLColorThemeTarget::deploy(const ThemedColorData& themeColorData) const
 {
     if (themeColorData.isEmpty())
     {

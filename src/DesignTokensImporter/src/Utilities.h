@@ -13,11 +13,9 @@ namespace DTI
     class Utilities
     {
 
-    private:
-         Utilities() = default;
-        ~Utilities() = default;
-
     public:
+         Utilities() = delete;
+
         enum class Theme
         {
             LIGHT,
@@ -29,12 +27,11 @@ namespace DTI
                                           const QString& nameFilter = QString::fromLatin1("*.*"),
                                           bool findInSubfolders = false);
         static bool isFileValid(const QString& path);
-        static QMap<QString, QString> parseColorThemeJSON(const QString& themedColorTokenFilePath, const CoreMap& coreMap);
+        static QMap<QString, QString> parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& coreMap);
         static void traverseDirectory(const QString& directoryPath,
                                       const QStringList& filters,
                                       QStringList& filePaths);
-        static bool addToResources(const QString& filePath,
-                                   const QString& qrcPath);
+        static bool addToResources(const QString& filePath, const QString& qrcPath);
         static QString extractFileName(const QString& filePath);
         static QString extractFileNameNoExtension(const QString& filePath);
         static QString getFileHash(const QString& filePath);
@@ -43,7 +40,7 @@ namespace DTI
                                        const QStringList &jsonObjectNames,
                                        const QString &outputFilePath);
         static QJsonObject createWidgetStyleSheet(const QString& objectName,
-                                                 const QMap<QString, QString>& properties);
+                                                  const QMap<QString, QString>& properties);
         static bool writeJSONToFile(const QJsonDocument& jsonDoc,
                                     const QString& filePath);
         static QString getSubStringBetweenMarkers(const QString& str,
@@ -62,13 +59,13 @@ namespace DTI
         //! \returns the value if found, or default-constructed value if not found
         //!
         template <typename Key, typename Value>
-        static Value findValueByKey(const QMap<Key, Value>& myMap, const Key& key)
+        static Value findValueByKey(const QMap<Key, Value>& map, const Key& key)
         {
-            auto it = myMap.find(key);
-            return (it != myMap.end()) ? it.value() : Value();
+            auto it = map.find(key);
+            return (it != map.end()) ? it.value() : Value();
         }
     };
-} // namespace DTI
+}
 
 
 #endif // UTILITIES

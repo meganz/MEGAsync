@@ -10,7 +10,7 @@ namespace DTI
     public:
         virtual ~IThemeGenerator() = default;
         
-        virtual void start(const ThemedColourMap& styleData) = 0;
+        virtual void start(const ThemedColorData& styleData) = 0;
     };
 }
 

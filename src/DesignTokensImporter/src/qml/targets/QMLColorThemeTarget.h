@@ -10,7 +10,7 @@ namespace DTI
     class QMLColorThemeTarget : public IQMLThemeTarget
     {
     public:
-        void deploy(const ThemedColourMap& themedColourMap) const override;
+        void deploy(const ThemedColorData& themedColourMap) const override;
 
     private:
         static bool registered;

@@ -24,7 +24,7 @@ QTWIDGETStyleGenerator::QTWIDGETStyleGenerator(QObject* parent)
     mCurrentDir = QDir::currentPath();
 }
 
-void QTWIDGETStyleGenerator::start(const ThemedColourMap& fileToColourMap)
+void QTWIDGETStyleGenerator::start(const ThemedColorData& fileToColourMap)
 {    
     initialize();
 
@@ -53,9 +53,6 @@ void QTWIDGETStyleGenerator::initialize()
 
     // Load .css files
     mCSSFiles = Utilities::findFilesInDir(mCurrentDir + PathProvider::RELATIVE_STYLES_DIR_PATH, PathProvider::CSS_NAME_FILTER, true);
-
-    // Load .json token files
-    mTokenFilePathsList = Utilities::findFilesInDir(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_COLOR_TOKENS_PATH), PathProvider::JSON_NAME_FILTER);
 }
 
 void QTWIDGETStyleGenerator::createDirectories()
@@ -283,7 +280,7 @@ bool QTWIDGETStyleGenerator::areHashesMatching(const QStringList& filePathList, 
     return true;
 }
 
-void QTWIDGETStyleGenerator::generateStyleSheet(const ThemedColourMap& fileToColourMap)
+void QTWIDGETStyleGenerator::generateStyleSheet(const ThemedColorData& fileToColourMap)
 {
     // Generate .css stylesheets for all platforms
     for (auto it = fileToColourMap.constBegin(); it != fileToColourMap.constEnd(); ++it)

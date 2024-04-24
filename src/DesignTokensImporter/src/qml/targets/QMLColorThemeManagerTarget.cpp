@@ -17,7 +17,7 @@ static const QString colorThemeManagerFooter = QString::fromUtf8("}\n");
 
 bool QMLColorThemeManagerTarget::registered = ConcreteQMLThemeFactory<QMLColorThemeManagerTarget>::Register("qmlColorThemeManager");
 
-void QMLColorThemeManagerTarget::deploy(const ThemedColourMap& themeData) const
+void QMLColorThemeManagerTarget::deploy(const ThemedColorData& themeData) const
 {
     if (themeData.isEmpty())
     {
@@ -63,7 +63,7 @@ void QMLColorThemeManagerTarget::deploy(const ThemedColourMap& themeData) const
 //! \param themeData: Colour information of all themes
 //! Returns true if all themes have the same size and identical elements, false otherwise
 //!
-bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColourMap& themeData) const
+bool QMLColorThemeManagerTarget::checkThemeData(const ThemedColorData& themeData) const
 {
     bool returnValue = true;
 

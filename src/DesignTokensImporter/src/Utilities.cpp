@@ -116,33 +116,15 @@ bool Utilities::isFileValid(const QString& path)
     return true;
 }
 
-QMap<QString, QString> Utilities::parseColorThemeJSON(const QString& themedColorTokenFilePath, const CoreMap& coreMap)
+QMap<QString, QString> Utilities::parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& coreMap)
 {
     QMap<QString, QString> colourMap;
 
-    QFile inputFile(themedColorTokenFilePath);
-    if (!inputFile.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qDebug() << __func__ << " Error : opening input file " << themedColorTokenFilePath;
-        return colourMap;
-    }
-
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(inputFile.readAll());
-    inputFile.close();
-
-    if (jsonDocument.isNull())
-    {
-        qDebug() << __func__ << " Error : parsing JSON document " << themedColorTokenFilePath;
-        return colourMap;
-    }
-
-    QJsonObject jsonObject = jsonDocument.object();
-
-    const QStringList categoryKeys = jsonObject.keys();
+    const QStringList categoryKeys = jsonThemeObject.keys();
     for (int index = 0; index < categoryKeys.size(); ++index)
     {
         const QString& category = categoryKeys[index];
-        QJsonObject categoryObject = jsonObject.value(category).toObject();
+        QJsonObject categoryObject = jsonThemeObject.value(category).toObject();
 
         const QStringList tokenKeys = categoryObject.keys();
         for (int index = 0; index < tokenKeys.size(); ++index)
@@ -150,23 +132,25 @@ QMap<QString, QString> Utilities::parseColorThemeJSON(const QString& themedColor
             const QString& token = tokenKeys[index];
 
             QJsonObject tokenObject = categoryObject[token].toObject();
-            QJsonValue jType = tokenObject["$type"];
-            QJsonValue jValue = tokenObject["$value"];
-            QJsonValue jAlpha = tokenObject["$alpha"];
+            QJsonValue jType = tokenObject["type"];
+            QJsonValue jValue = tokenObject["value"];
+            //QJsonValue jAlpha = tokenObject["alpha"];
 
-            if (!jType.isNull() && !jValue.isNull() && !jAlpha.isNull())
+            if (!jType.isNull() && !jValue.isNull()) // && !jAlpha.isNull())
             {
                 QString type = jType.toString();
 
                 if (type == "color")
                 {
                     QString value = jValue.toString();
-                    float alpha = jAlpha.toString().toFloat();
+                    value.remove("{").remove("}");
+                    //float alpha = jAlpha.toString().toFloat();
 
                     if (coreMap.contains(value))
                     {
                         QString coreColor = coreMap[value];
-                        QString alphaString = QString::number(static_cast<uint>(alpha * 255), 16).rightJustified(2, '0');
+                        //QString alphaString = QString::number(static_cast<uint>(alpha * 255), 16).rightJustified(2, '0');
+                        QString alphaString = "FF";
                         QString color = "#" + alphaString + coreColor;
 
                         // Strip "--color-" from beginning of token
@@ -174,7 +158,7 @@ QMap<QString, QString> Utilities::parseColorThemeJSON(const QString& themedColor
                     }
                     else
                     {
-                        qDebug() << __func__ << " Core map doesn't contain the color id " << value << " on file : " << themedColorTokenFilePath;
+                        qDebug() << __func__ << " Core map doesn't contain the color id " << value;
                     }
                 }
             }
