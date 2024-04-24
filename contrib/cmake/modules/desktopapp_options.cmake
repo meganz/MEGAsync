@@ -23,6 +23,11 @@ if (ENABLE_DESKTOP_APP)
     set(USE_LIBUV ON) # Used by the Qt Desktop App: Includes the library and turns on internal web and ftp server functionality in the SDK.
     set(ENABLE_LOG_PERFORMANCE ON)
     set(ENABLE_QT_BINDINGS ON)
+
+    if (CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS "10.15")
+        set(ENABLE_ISOLATED_GFX OFF) #Disable isolated GFX processing on x86_64 due to problems with macOS 10.13
+    endif()
+
 endif()
 
 include(sdklib_options)
