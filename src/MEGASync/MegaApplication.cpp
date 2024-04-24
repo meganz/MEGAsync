@@ -701,7 +701,7 @@ void MegaApplication::initialize()
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
     QmlManager::instance()->setRootContextProperty(mLogoutController);
 
-    mStatsEventHandler = new ProxyStatsEventHandler();
+    mStatsEventHandler = new ProxyStatsEventHandler(megaApi);
 
     //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
     //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
@@ -1946,11 +1946,10 @@ void MegaApplication::checkMemoryUsage()
         {
             preferences->setMaxMemoryUsage(maxMemoryUsage);
             preferences->setMaxMemoryReportTime(currentTime);
-            const char* eventMemUsageMessage = QString::fromUtf8("%1 %2 %3")
-                                                   .arg(maxMemoryUsage)
-                                                   .arg(numNodes)
-                                                   .arg(numLocalNodes).toUtf8().constData();
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MEM_USAGE, eventMemUsageMessage);
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MEM_USAGE,
+                                          { QString::number(maxMemoryUsage),
+                                            QString::number(numNodes),
+                                            QString::number(numLocalNodes) });
         }
     }
 }
@@ -4503,16 +4502,12 @@ void MegaApplication::sendPeriodicStats() const
     if(Utilities::dayHasChangedSince(lastTime) && !mStatusController->isAccountBlocked())
     {
         QString accountType = QString::number(preferences->logged() ? preferences->accountType() : -1);
-        mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_DAILY_ACTIVE_USER,
-                                      QString::fromUtf8("Daily Active Users (DAU) - acctype: %1")
-                                          .arg(accountType).toUtf8().constData());
+        mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_DAILY_ACTIVE_USER, { accountType });
         preferences->setLastDailyStatTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
         if(Utilities::monthHasChangedSince(lastTime))
         {
-            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MONTHLY_ACTIVE_USER,
-                                          QString::fromUtf8("Monthly Active Users (MAU) - acctype: %1")
-                                              .arg(accountType).toUtf8().constData());
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MONTHLY_ACTIVE_USER, { accountType });
         }
     }
 }

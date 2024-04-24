@@ -6,13 +6,13 @@ QHash<AppStatsEvents::EventTypes, const char*> AppStatsEvents::statsMap = {
     { AppStatsEvents::EVENT_1ST_SYNC, "MEGAsync first sync" },
     { AppStatsEvents::EVENT_1ST_SYNCED_FILE, "MEGAsync first synced file" },
     { AppStatsEvents::EVENT_1ST_WEBCLIENT_DL, "MEGAsync first webclient download" },
-    // AppStatsEvents::EVENT_INSTALL_STATS needs a parameterised message
+    { AppStatsEvents::EVENT_UNINSTALL_STATS, "{\"it\":%1,\"act\":%2,\"lt\":%3}" },
     { AppStatsEvents::EVENT_ACC_CREATION_START, "MEGAsync account creation start" },
     { AppStatsEvents::EVENT_PRO_REDIRECT, "Redirection to PRO" },
-    // AppStatsEvents::EVENT_MEM_USAGE needs a parameterised message
+    { AppStatsEvents::EVENT_MEM_USAGE, "%1 %2 %3"},
     { AppStatsEvents::EVENT_UPDATE, "MEGAsync update" },
     { AppStatsEvents::EVENT_UPDATE_OK, "MEGAsync updated OK" },
-    // AppStatsEvents::EVENT_DUP_FINISHED_TRSF needs a parameterised message
+    { AppStatsEvents::EVENT_DUP_FINISHED_TRSF, "Duplicated finished transfer: %1" },
     { AppStatsEvents::EVENT_OVER_STORAGE_DIAL, "Overstorage dialog shown" },
     { AppStatsEvents::EVENT_OVER_STORAGE_NOTIF, "Overstorage notification shown" },
     { AppStatsEvents::EVENT_OVER_STORAGE_MSG, "Overstorage warning shown" },
@@ -37,13 +37,15 @@ QHash<AppStatsEvents::EventTypes, const char*> AppStatsEvents::statsMap = {
     { AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY, "Local/Remote issue solved automatically" },
     { AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_SEMI_AUTOMATICALLY, "Local/Remote issue solved semi-automatically" },
     { AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY, "Issue ignored manually" },
-    // AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED needs a parameterised message
+    { AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, "Stalled issue received: Type %1" },
     { AppStatsEvents::EVENT_SI_IGNORE_ALL_SYMLINK, "All symlink ignored" },
     { AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED, "Smart mode selected by default" },
     { AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED, "Advanced mode selected by default" },
     { AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE, "Smart mode selected" },
     { AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE, "Advanced mode selected" },
-    { AppStatsEvents::EVENT_SI_FINGERPRINT_MISSING_SOLVED_MANUALLY, "Cloud fingerprint missing solved manually" }
+    { AppStatsEvents::EVENT_SI_FINGERPRINT_MISSING_SOLVED_MANUALLY, "Cloud fingerprint missing solved manually" },
+    { AppStatsEvents::EVENT_DAILY_ACTIVE_USER, "Daily Active Users (DAU) - acctype: %1" },
+    { AppStatsEvents::EVENT_MONTHLY_ACTIVE_USER, "Monthly Active Users (MAU) - acctype: %1" }
 };
 
 const char* AppStatsEvents::getEventMessage(EventTypes event)

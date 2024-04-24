@@ -1256,11 +1256,8 @@ void TransfersModel::processUpdateTransfers()
             else
             {
                 assert(false);
-                const char* eventMessage = QString::fromUtf8("Duplicated finished transfer: %1")
-                                               .arg(QString::number(itValue->mTag))
-                                               .toUtf8().constData();
                 MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_DUP_FINISHED_TRSF,
-                                                                     eventMessage);
+                                                               { QString::number(itValue->mTag) });
             }
         }
     }

@@ -84,8 +84,8 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
                     {
                         if(!variant.getData()->isSolvable())
                         {
-                            QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1").arg(QString::number(stall->reason())));
-                            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, eventMessage.toUtf8().constData());
+                            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED,
+                                                                           { QString::number(stall->reason()) });
                         }
                     }
                     else
