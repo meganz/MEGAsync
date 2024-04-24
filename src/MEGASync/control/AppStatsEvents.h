@@ -76,7 +76,9 @@ public:
         // (Stalled issues reserved)                       = 99562,
         // (Stalled issues reserved)                       = 99563,
         // (Stalled issues reserved)                       = 99564,
-        // (Stalled issues reserved)                       = 99565
+        // (Stalled issues reserved)                       = 99565,
+        EVENT_DAILY_ACTIVE_USER                         = 99566,
+        EVENT_MONTHLY_ACTIVE_USER                       = 99567
     };
 
     static const char* getEventMessage(EventTypes event);

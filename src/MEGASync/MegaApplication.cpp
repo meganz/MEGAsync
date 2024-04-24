@@ -2142,6 +2142,8 @@ void MegaApplication::periodicTasks()
         onGlobalSyncStateChanged(megaApi);
     }
 
+    sendPeriodicStats();
+
     if (trayIcon)
     {
 #ifdef Q_OS_LINUX
@@ -4495,6 +4497,26 @@ void MegaApplication::showInfoDialogIfHTTPServerSender()
     if (qobject_cast<HTTPServer*>(sender()))
     {
         showInfoDialog();
+    }
+}
+
+void MegaApplication::sendPeriodicStats() const
+{
+    auto lastTime = preferences->lastDailyStatTime();
+    if(Utilities::dayHasChangedSince(lastTime) && !mStatusController->isAccountBlocked())
+    {
+        QString accountType = QString::number(preferences->logged() ? preferences->accountType() : -1);
+        mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_DAILY_ACTIVE_USER,
+                                      QString::fromUtf8("Daily Active Users (DAU) - acctype: %1")
+                                          .arg(accountType).toUtf8().constData());
+        preferences->setLastDailyStatTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
+
+        if(Utilities::monthHasChangedSince(lastTime))
+        {
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MONTHLY_ACTIVE_USER,
+                                          QString::fromUtf8("Monthly Active Users (MAU) - acctype: %1")
+                                              .arg(accountType).toUtf8().constData());
+        }
     }
 }
 

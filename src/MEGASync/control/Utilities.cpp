@@ -1531,6 +1531,20 @@ bool Utilities::isIncommingShare(MegaNode *node)
     return false;
 }
 
+bool Utilities::dayHasChangedSince(qint64 msecs)
+{
+    QDate currentDate = QDateTime::currentDateTime().date();
+    QDate lastExecutionDate = QDateTime::fromMSecsSinceEpoch(msecs).date();
+    return lastExecutionDate.daysTo(currentDate) > 0;
+}
+
+bool Utilities::monthHasChangedSince(qint64 msecs)
+{
+    QDate currentDate = QDateTime::currentDateTime().date();
+    QDate lastExecutionDate = QDateTime::fromMSecsSinceEpoch(msecs).date();
+    return lastExecutionDate.month() < currentDate.month();
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;
