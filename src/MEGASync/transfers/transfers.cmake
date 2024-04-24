@@ -130,6 +130,12 @@ elseif (APPLE)
         transfers/gui/macx
         transfers/gui/DuplicatedNodeDialogs/macx
     )
+else()
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        transfers/gui/linux
+        transfers/gui/DuplicatedNodeDialogs/linux
+    )
 endif()
 
 target_sources(MEGAsync
