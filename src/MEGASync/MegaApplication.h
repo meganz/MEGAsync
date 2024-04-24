@@ -121,7 +121,6 @@ public:
     void onReloadNeeded(mega::MegaApi* api) override;
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
-    virtual void onCheckDeferredPreferencesSync(bool timeout);
     void onGlobalSyncStateChangedImpl(mega::MegaApi* api, bool timeout);
 
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
@@ -309,7 +308,6 @@ public slots:
                              const QString& destinationPath);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
     void onGlobalSyncStateChangedTimeout();
-    void onCheckDeferredPreferencesSyncTimeout();
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
@@ -400,7 +398,6 @@ protected:
 #endif
 
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
-    std::unique_ptr<QTimer> onDeferredPreferencesSyncTimer;
     QTimer proExpirityTimer;
     int scanningAnimationIndex;
     QPointer<SettingsDialog> mSettingsDialog;
@@ -622,27 +619,6 @@ private slots:
 private:
     QFutureWatcher<NodeCount> mWatcher;
 
-};
-
-class DeferPreferencesSyncForScope
-{
-    // This class is provided as an easy way to avoid updating the preferences file so often that it becomes a performance issue
-    // eg. when 1000 transfers all have a temporary error callback at once.
-    // It causes sync() to set a flag instead of actually rewriting the file, and the app will start a timer
-    // to do the actual sync() in 100ms instead.   Any other sync() calls (that are also protected by this class) in the meantime are effectively skipped.
-    MegaApplication* app;
-
-public:
-    DeferPreferencesSyncForScope(MegaApplication* a) : app(a)
-    {
-        app->preferences->deferSyncs(true);
-    }
-
-    ~DeferPreferencesSyncForScope()
-    {
-        app->preferences->deferSyncs(false);
-        app->onCheckDeferredPreferencesSync(false);
-    }
 };
 
 #endif // MEGAAPPLICATION_H

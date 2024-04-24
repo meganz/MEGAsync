@@ -1472,7 +1472,6 @@ if (!preferences->lastExecutionTime())
     {
         preferences->setUsedStorage(receivedStorageSum);
     }
-    preferences->sync();
     refreshStorageUIs();
 
     onGlobalSyncStateChanged(megaApi);
@@ -2229,9 +2228,12 @@ void MegaApplication::cleanAll()
     mSyncs2waysMenu->deleteLater();
     mBackupsMenu->deleteLater();
 
+    preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
+
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after
     // their deletion
+    // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
 
     delete megaApi;
@@ -2240,7 +2242,6 @@ void MegaApplication::cleanAll()
     delete megaApiFolders;
     megaApiFolders = nullptr;
 
-    preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
     trayIcon->deleteLater();
     trayIcon = nullptr;
 
@@ -5587,7 +5588,6 @@ void MegaApplication::manageBusinessStatus(int64_t event)
 
 void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
 {
-    DeferPreferencesSyncForScope deferrer(this);
     const int eventNumber = static_cast<int>(event->getNumber());
 
     if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
@@ -5621,7 +5621,6 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
         {
             preferences->setUsedStorage(receivedStorageSum);
         }
-        preferences->sync();
 
         refreshStorageUIs();
     }
@@ -5642,8 +5641,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         return;
     }
-
-    DeferPreferencesSyncForScope deferrer(this);
 
     if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
@@ -5913,8 +5910,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
-        preferences->sync();
-
         if (infoDialog)
         {
             infoDialog->setUsage();
@@ -6088,8 +6083,6 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
-    DeferPreferencesSyncForScope deferrer(this);
-
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
         HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
@@ -6111,8 +6104,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         return;
     }
-
-    DeferPreferencesSyncForScope deferrer(this);
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
@@ -6207,8 +6198,6 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
         return;
     }
 
-    DeferPreferencesSyncForScope deferrer(this);
-
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
@@ -6229,8 +6218,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         return;
     }
 
-    DeferPreferencesSyncForScope deferrer(this);
-
     onTransferUpdate(api, transfer);
 
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
@@ -6249,41 +6236,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
             megaApi->getPricing();
             updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
             mTransferQuota->setOverQuota(waitTime);
-        }
-    }
-}
-
-void MegaApplication::onCheckDeferredPreferencesSyncTimeout()
-{
-    onCheckDeferredPreferencesSync(true);
-}
-
-void MegaApplication::onCheckDeferredPreferencesSync(bool timeout)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    // don't execute too often or the dialog locks up, eg. queueing a folder with 1k items for upload/download
-    if (timeout)
-    {
-        onDeferredPreferencesSyncTimer.reset();
-        if (preferences->needsDeferredSync())
-        {
-            preferences->sync();
-        }
-    }
-    else
-    {
-        if (!onDeferredPreferencesSyncTimer)
-        {
-            onDeferredPreferencesSyncTimer.reset(new QTimer(this));
-            connect(onDeferredPreferencesSyncTimer.get(), SIGNAL(timeout()), this, SLOT(onCheckDeferredPreferencesSyncTimeout()));
-
-            onDeferredPreferencesSyncTimer->setSingleShot(true);
-            onDeferredPreferencesSyncTimer->setInterval(100);
-            onDeferredPreferencesSyncTimer->start();
         }
     }
 }
@@ -6363,8 +6315,6 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
         return;
     }
 
-    DeferPreferencesSyncForScope deferrer(this);
-
     MegaHandle myHandle = megaApi->getMyUserHandleBinary();
     for (int i = 0; i < userList->size(); i++)
     {
@@ -6387,8 +6337,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     {
         return;
     }
-
-    DeferPreferencesSyncForScope deferrer(this);
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
