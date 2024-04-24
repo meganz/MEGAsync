@@ -54,10 +54,13 @@ void QTWIDGETStyleGenerator::initialize(const ThemedColourMap& fileToColourMap)
     // Load .css files
     mCSSFiles = Utilities::findFilesInDir(mCurrentDir + PathProvider::RELATIVE_THEMES_DIR_PATH, PathProvider::CSS_NAME_FILTER, true);
 
-    //Append list of css theming file paths
+    // Load css theming file paths
+    mCSSThemeFilePathsList = Utilities::findFilesInDir(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_COLOR_TOKENS_PATH), PathProvider::JSON_NAME_FILTER);
+
+    // Append css theme folder name list
     for (auto it = fileToColourMap.cbegin(); it != fileToColourMap.cend(); ++it)
     {
-        mCSSThemeFilePathsList.append(it.key().toLower());
+        mCSSThemeFolderNameList.append(it.key().toLower());
     }
 }
 
@@ -71,11 +74,11 @@ void QTWIDGETStyleGenerator::createDirectories()
     Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH);
 
     // Create a directory for every theme for every platform
-    foreach (const QString& filePath, mCSSThemeDirectoryNames)
+    foreach (const QString& folderName, mCSSThemeFolderNameList)
     {
-        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH + "/" + filePath);
-        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH + "/" + filePath);
-        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH + "/" + filePath);
+        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH + "/" + folderName);
+        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH + "/" + folderName);
+        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH + "/" + folderName);
     }
 }
 
@@ -171,7 +174,7 @@ bool QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange(const QMap<QString, QMap
         {
         case QTWIDGETStyleGenerator::ObjectNamesID::TOKEN:
         {
-            if (didFilesChange(mCSSThemeDirectoryNames, hashMap))
+            if (didFilesChange(mCSSThemeFilePathsList, hashMap))
             {
                 qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Token file change detected!";
                 return true;
@@ -291,17 +294,17 @@ void QTWIDGETStyleGenerator::generateStyleSheet(const ThemedColourMap& fileToCol
     {
         const QString& themeName = it.key();
         const ColourMap& colourMap = it.value();
-        QString cssDirectoryName = themeName.toLower();
+        QString cssThemeFolderName = themeName.toLower();
 
         mWinCSSFiles << generateStylesheets(colourMap,
                                             mWinDesignTokenUIs,
-                                            mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH + "/" + cssDirectoryName);
+                                            mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH + "/" + cssThemeFolderName);
         mLinuxCSSFiles << generateStylesheets(colourMap,
                                               mLinuxDesignTokenUIs,
-                                              mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH + "/" + cssDirectoryName);
+                                              mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH + "/" + cssThemeFolderName);
         mMacCSSFiles << generateStylesheets(colourMap,
                                             mMacDesignTokenUIs,
-                                            mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH + "/" + cssDirectoryName);
+                                            mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH + "/" + cssThemeFolderName);
     }
 }
 
@@ -358,7 +361,7 @@ void QTWIDGETStyleGenerator::addStyleSheetToResource()
 bool QTWIDGETStyleGenerator::writeHashFile()
 {
     QList<QStringList> listOfStringLists;
-    listOfStringLists.append(mCSSThemeDirectoryNames);
+    listOfStringLists.append(mCSSThemeFilePathsList);
     listOfStringLists.append(mWinUIFilePathsList);
     listOfStringLists.append(mLinuxUIFilePathsList);
     listOfStringLists.append(mMacUIFilePathsList);

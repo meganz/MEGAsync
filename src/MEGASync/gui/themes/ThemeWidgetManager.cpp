@@ -1,4 +1,4 @@
-#include "ThemeWidget.h"
+#include "ThemeWidgetManager.h"
 
 #include "themes/ThemeManager.h"
 
@@ -6,19 +6,25 @@
 #include <QWidget>
 #include <QtConcurrent/QtConcurrent>
 
-const QMap<Preferences::ThemeType, QString> ThemeWidget::mThemePaths = {
+const QMap<Preferences::ThemeType, QString> ThemeWidgetManager::mThemePaths = {
     {Preferences::ThemeType::LIGHT_THEME,  QObject::tr("light/")},
     {Preferences::ThemeType::DARK_THEME,  QObject::tr("dark/")}
 };
 
-ThemeWidget::ThemeWidget(QObject *parent)
+ThemeWidgetManager::ThemeWidgetManager(QObject *parent)
     : QObject{parent}
 {
-    connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &ThemeWidget::onThemeChanged);
+    connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &ThemeWidgetManager::onThemeChanged);
     loadStylesheets();
 }
 
-bool ThemeWidget::registerWidgetForTheming(QWidget *widget)
+std::shared_ptr<ThemeWidgetManager> ThemeWidgetManager::instance()
+{
+    static std::shared_ptr<ThemeWidgetManager> manager(new ThemeWidgetManager());
+    return manager;
+}
+
+bool ThemeWidgetManager::registerWidgetForTheming(QWidget *widget)
 {
     static QSet<QString> cssFiles = [this]()
     {
@@ -42,7 +48,7 @@ bool ThemeWidget::registerWidgetForTheming(QWidget *widget)
     return false;
 }
 
-void ThemeWidget::loadStylesheets()
+void ThemeWidgetManager::loadStylesheets()
 {
     QStringList cssFiles = getCSSFiles();
 
@@ -63,7 +69,7 @@ void ThemeWidget::loadStylesheets()
     }
 }
 
-QStringList ThemeWidget::getCSSFiles() const
+QStringList ThemeWidgetManager::getCSSFiles() const
 {
     QStringList fileNames;
     QDir directory(getCSSPath());
@@ -83,7 +89,7 @@ QStringList ThemeWidget::getCSSFiles() const
     return fileNames;
 }
 
-QString ThemeWidget::getCSSPath() const
+QString ThemeWidgetManager::getCSSPath() const
 {
     QString basePath;
 
@@ -98,10 +104,9 @@ QString ThemeWidget::getCSSPath() const
 #endif
 
     return basePath + mThemePaths.value(Preferences::instance()->getThemeType(), mThemePaths.value(Preferences::ThemeType::LIGHT_THEME));
-
 }
 
-QString ThemeWidget::getFilePath(const QString &themeFilePath) const
+QString ThemeWidgetManager::getFilePath(const QString &themeFilePath) const
 {
     QString basePath;
 
@@ -117,12 +122,12 @@ QString ThemeWidget::getFilePath(const QString &themeFilePath) const
     return basePath + themeFilePath + QLatin1String(".css");
 }
 
-QString ThemeWidget::themeToString(Preferences::ThemeType theme) const
+QString ThemeWidgetManager::themeToString(Preferences::ThemeType theme) const
 {
     return mThemePaths.value(theme, QLatin1String("light"));
 }
 
-void ThemeWidget::loadStylesheetAsync(const QString &filename, const QString &key)
+void ThemeWidgetManager::loadStylesheetAsync(const QString &filename, const QString &key)
 {
     QtConcurrent::run([=]() {
         QFile file(filename);
@@ -136,12 +141,12 @@ void ThemeWidget::loadStylesheetAsync(const QString &filename, const QString &ke
     });
 }
 
-void ThemeWidget::parseStyleSheet(const QString &stylesheet, const QString &uiFileName)
+void ThemeWidgetManager::parseStyleSheet(const QString &stylesheet, const QString &uiFileName)
 {
     mThemeStylesheetParser.parseStyleSheet(stylesheet, uiFileName);
 }
 
-void ThemeWidget::addToStyleCache(QObject *item)
+void ThemeWidgetManager::addToStyleCache(QObject *item)
 {
     if(!mWidgetsStyledByCSSFile.contains(item))
     {
@@ -152,7 +157,7 @@ void ThemeWidget::addToStyleCache(QObject *item)
     }
 }
 
-void ThemeWidget::applyStyleSheet(QWidget *widget)
+void ThemeWidgetManager::applyStyleSheet(QWidget *widget)
 {
     if (!widget)
     {
@@ -181,17 +186,17 @@ void ThemeWidget::applyStyleSheet(QWidget *widget)
     }
 }
 
-QSet<QString> ThemeWidget::getObjectNamesInCSSFile(const QString &widgetThemeKey) const
+QSet<QString> ThemeWidgetManager::getObjectNamesInCSSFile(const QString &widgetThemeKey) const
 {
     return mThemeStylesheetParser.getObjectNamesInCSSFile(widgetThemeKey);
 }
 
-QString ThemeWidget::getThemeStylesheet(const QString &key) const
+QString ThemeWidgetManager::getThemeStylesheet(const QString &key) const
 {
     return mThemeStylesheetParser.getThemeStylesheet(key);
 }
 
-void ThemeWidget::onThemeChanged(Preferences::ThemeType theme)
+void ThemeWidgetManager::onThemeChanged(Preferences::ThemeType theme)
 {
     Q_UNUSED(theme)
 

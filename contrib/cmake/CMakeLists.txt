@@ -414,7 +414,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.h
 
     ${MEGAsyncDir}/gui/themes/ThemeManager.h
-    ${MEGAsyncDir}/gui/themes/ThemeWidget.h
+    ${MEGAsyncDir}/gui/themes/ThemeWidgetManager.h
     ${MEGAsyncDir}/gui/themes/ThemeStylesheetParser.h
 
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.h
@@ -685,7 +685,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.cpp
     ${MEGAsyncDir}/gui/onboarding/BackupsController.cpp
     ${MEGAsyncDir}/gui/themes/ThemeManager.cpp
-    ${MEGAsyncDir}/gui/themes/ThemeWidget.cpp
+    ${MEGAsyncDir}/gui/themes/ThemeWidgetManager.cpp
     ${MEGAsyncDir}/gui/themes/ThemeStylesheetParser.cpp
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp

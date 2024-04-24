@@ -1,5 +1,4 @@
 #include "ThemeManager.h"
-#include "ThemeWidget.h"
 #include "Preferences/Preferences.h"
 
 const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
@@ -9,7 +8,6 @@ const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
 
 ThemeManager::ThemeManager()
     : QObject(nullptr)
-    , mThemeWidget(std::make_unique<ThemeWidget>())
 {
     setTheme(Preferences::instance()->getThemeType());
 }
@@ -42,11 +40,4 @@ void ThemeManager::setTheme(Preferences::ThemeType theme)
         emit themeChanged(theme);
     }
 }
-
-ThemeWidget* ThemeManager::getThemeWidget()
-{
-    return mThemeWidget.get();
-}
-
-
 

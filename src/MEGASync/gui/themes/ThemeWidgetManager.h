@@ -6,17 +6,19 @@
 
 #include <QObject>
 
-class ThemeWidget : public QObject
+class ThemeWidgetManager : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ThemeWidget(QObject *parent = nullptr);
+    static std::shared_ptr<ThemeWidgetManager> instance();
 
     bool registerWidgetForTheming(QWidget* widget);
     void applyStyleSheet(QWidget* widget);
 
 private:
+    explicit ThemeWidgetManager(QObject *parent = nullptr);
+
     void loadStylesheets();
     QStringList getCSSFiles() const;
     QString getCSSPath() const;
@@ -24,19 +26,14 @@ private:
     QString themeToString(Preferences::ThemeType theme) const;
     void loadStylesheetAsync(const QString& filename, const QString& key);
     void parseStyleSheet(const QString& stylesheet, const QString& uiFileName);
-
     void addToStyleCache(QObject* item);
-
     QSet<QString> getObjectNamesInCSSFile(const QString& widgetThemeKey) const;
     QString getThemeStylesheet(const QString& key) const;
+    void onThemeChanged(Preferences::ThemeType theme);
 
     static const QMap<Preferences::ThemeType, QString> mThemePaths;
     ThemeStylesheetParser mThemeStylesheetParser;
     QList<QObject*> mWidgetsStyledByCSSFile;
-
-private slots:
-    void onThemeChanged(Preferences::ThemeType theme);
-
 };
 
 #endif // THEMEWIDGET_H
