@@ -260,6 +260,7 @@ CloudNodeUndecryptedHeader::CloudNodeUndecryptedHeader(StalledIssueHeader* heade
 
 void CloudNodeUndecryptedHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
+    //Do not fix the typo as it would incurre in translation costs, its already fixed in translations.source.ts
     QString headerText =tr("Cloude node undecrypted [B]%1[/B]");
     textDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
