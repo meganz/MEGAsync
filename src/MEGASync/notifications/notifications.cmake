@@ -40,6 +40,15 @@ target_sources_conditional(MEGAsync
    notifications/win/Notificator.cpp   
 )
 
+target_sources_conditional(MEGAsync
+    FLAG (UNIX AND NOT APPLE)
+    QT_AWARE
+    PRIVATE
+    notifications/../gui/Resources_linux.qrc
+    notifications/linux/Notificator.h
+    notifications/linux/Notificator.cpp
+)
+
 target_sources(MEGAsync
     PRIVATE
     ${DESKTOP_APP_NOTIFICATIONS_HEADERS}
@@ -50,6 +59,13 @@ if (APPLE)
     target_link_libraries(MEGAsync
         PRIVATE
         "-framework UserNotifications"
+    )
+endif()
+
+if (UNIX AND NOT APPLE)
+    target_include_directories(
+        PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR}/linux
     )
 endif()
 

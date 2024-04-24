@@ -199,6 +199,7 @@ target_sources_conditional(MEGAsync
     FLAG WIN32
     QT_AWARE
     PRIVATE
+    gui/Resources_win.qrc
     gui/win/InfoDialog.ui
     gui/win/UploadToMegaDialog.ui
     gui/win/PasteMegaLinksDialog.ui
@@ -216,7 +217,7 @@ target_sources_conditional(MEGAsync
     gui/win/AddExclusionDialog.ui
     gui/win/StatusInfo.ui
     gui/win/PSAwidget.ui
-    gui/win/RemoteItemUI.ui
+    gui/win/RemoteItemUi.ui
     gui/win/UpgradeOverStorage.ui
     gui/win/ChangePassword.ui
     gui/win/Login2FA.ui
@@ -246,6 +247,7 @@ target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
+   gui/Resources_macx.qrc
    gui/macx/InfoDialog.ui
    gui/macx/UploadToMegaDialog.ui
    gui/macx/PasteMegaLinksDialog.ui
@@ -265,7 +267,7 @@ target_sources_conditional(MEGAsync
    gui/macx/AddExclusionDialog.ui
    gui/macx/StatusInfo.ui
    gui/macx/PSAwidget.ui
-   gui/macx/RemoteItemUI.ui
+   gui/macx/RemoteItemUi.ui
    gui/macx/UpgradeOverStorage.ui
    gui/macx/ChangePassword.ui
    gui/macx/Login2FA.ui
@@ -291,37 +293,94 @@ target_sources_conditional(MEGAsync
    gui/macx/LockedPopOver.ui
 )
 
+
+target_sources_conditional(MEGAsync
+    FLAG UNIX AND NOT APPLE
+    QT_AWARE
+    PRIVATE
+    gui/Resources_linux.qrc
+    gui/linux/InfoDialog.ui
+    gui/linux/UploadToMegaDialog.ui
+    gui/linux/PasteMegaLinksDialog.ui
+    gui/linux/ImportMegaLinksDialog.ui
+    gui/linux/ImportListWidgetItem.ui
+    gui/linux/CrashReportDialog.ui
+    gui/linux/SettingsDialog.ui
+    gui/linux/AccountDetailsDialog.ui
+    gui/linux/DownloadFromMegaDialog.ui
+    gui/linux/ChangeLogDialog.ui
+    gui/linux/StreamingFromMegaDialog.ui
+    gui/linux/PermissionsDialog.ui
+    gui/linux/PermissionsWidget.ui
+    gui/linux/MegaProgressCustomDialog.ui
+    gui/linux/PlanWidget.ui
+    gui/linux/UpgradeDialog.ui
+    gui/linux/AddExclusionDialog.ui
+    gui/linux/StatusInfo.ui
+    gui/linux/PSAwidget.ui
+    gui/linux/UpgradeOverStorage.ui
+    gui/linux/ChangePassword.ui
+    gui/linux/Login2FA.ui
+    gui/linux/AlertItem.ui
+    gui/linux/FilterAlertWidget.ui
+    gui/linux/AlertFilterType.ui
+    gui/linux/BugReportDialog.ui
+    gui/linux/LockedPopOver.ui
+    gui/linux/VerifyLockMessage.ui
+    gui/linux/MegaInfoMessage.ui
+    gui/linux/OverQuotaDialog.ui
+    gui/linux/ProxySettings.ui
+    gui/linux/BandwidthSettings.ui
+    gui/linux/CancelConfirmWidget.ui
+    gui/linux/ScanningWidget.ui
+    gui/linux/NodeNameSetterDialog.ui
+    gui/linux/NotificationsSettings.ui
+    gui/linux/LowDiskSpaceDialog.ui
+    gui/linux/RemoteItemUi.ui
+    gui/linux/ViewLoadingScene.ui
+    gui/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
+    gui/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
+    gui/node_selector/gui/linux/NodeSelector.ui
+    gui/node_selector/gui/linux/SearchLineEdit.ui
+)
+
+
 # Resources and platform-specific additions
 target_sources_conditional(MEGAsync
-   FLAG WIN32
-   QT_AWARE
-   PRIVATE
-   gui/Resources_win.qrc
-   gui/LockedPopOver.h
-   gui/LockedPopOver.cpp
+    FLAG WIN32 OR (UNIX AND NOT APPLE)
+    QT_AWARE
+    PRIVATE
+    gui/LockedPopOver.h
+    gui/LockedPopOver.cpp
 )
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   gui/Resources_macx.qrc
    gui/CocoaHelpButton.mm
    gui/CocoaSwitchButton.mm
    gui/MegaSystemTrayIcon.mm
    gui/QMacSpinningProgressIndicator.mm
    gui/QSegmentedControl.mm
-   gui/PermissionsDialog.cpp
-   gui/PermissionsWidget.cpp
-   gui/PermissionsDialog.h
-   gui/PermissionsWidget.h
    gui/QMacSpinningProgressIndicator.h
    gui/CocoaHelpButton.h
    gui/CocoaSwitchButton.h
    gui/MegaSystemTrayIcon.h
    gui/QSegmentedControl.h
    gui/images/Images.xcassets
+   gui/macx/LockedPopOver.ui
 )
+
+target_sources_conditional(MEGAsync
+   FLAG UNIX
+   PRIVATE
+   gui/PermissionsDialog.cpp
+   gui/PermissionsWidget.cpp
+   gui/PermissionsDialog.h
+   gui/PermissionsWidget.h
+)
+
 
 # Not using expression generator due to autouic not able to resolve them causing errors
 if (WIN32)
@@ -334,6 +393,11 @@ elseif (APPLE)
         PROPERTY AUTOUIC_SEARCH_PATHS
         gui/macx gui/node_selector/gui/macx
     )
+    elseif(UNIX)
+        set_property(TARGET MEGAsync
+            PROPERTY AUTOUIC_SEARCH_PATHS
+            gui/linux gui/node_selector/gui/linux
+        )
 endif()
 
 
@@ -384,4 +448,6 @@ target_sources(MEGAsync
     ${DESKTOP_APP_QM_FILES}
 )
 
-target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(MEGAsync PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/..)

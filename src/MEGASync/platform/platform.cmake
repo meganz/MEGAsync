@@ -77,16 +77,41 @@ target_sources_conditional(MEGAsync
    platform/macx/LockedPopOver.mm
 )
 
+target_sources_conditional(MEGAsync
+   FLAG UNIX AND NOT APPLE
+   QT_AWARE
+   PRIVATE
+   platform/linux/PlatformImplementation.h
+   platform/linux/ExtServer.h
+   platform/linux/NotifyServer.h
+   platform/linux/DolphinFileManager.h
+   platform/linux/NautilusFileManager.h
+   platform/linux/PlatformImplementation.cpp
+   platform/linux/ExtServer.cpp
+   platform/linux/NotifyServer.cpp
+   platform/linux/PowerOptions.cpp
+   platform/linux/PlatformStrings.cpp
+   platform/linux/DolphinFileManager.cpp
+   platform/linux/NautilusFileManager.cpp
+)
+
 if (WIN32)
     target_compile_definitions(MEGAsync
         PUBLIC
         _UNICODE
     )
+elseif (UNIX AND NOT APPLE)
+    find_package(Qt5 REQUIRED COMPONENTS X11Extras)
+    target_link_libraries(
+        PRIVATE
+        Qt5::X11Extras
+        xcb
+    )
 endif()
 
 target_link_libraries(MEGAsync
     PRIVATE
-    $<$<BOOL:${WIN32}>:Shell32 Shlwapi Powrprof taskschd>
+    "$<$<BOOL:${WIN32}>:Shell32 Shlwapi Powrprof taskschd>"
     "$<$<BOOL:${APPLE}>:-framework IOKit>"
 )
 

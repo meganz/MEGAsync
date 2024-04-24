@@ -7,7 +7,6 @@ if (WIN32)
     add_executable(MEGAupdater WIN32)
 elseif (APPLE)
     add_executable(MEGAupdater MACOSX_BUNDLE)
-else()
 endif()
 
 set(UPDATER_HEADERS
