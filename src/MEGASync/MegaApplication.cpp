@@ -28,6 +28,7 @@
 #include "syncs/gui/SyncsMenu.h"
 #include "gui/UploadToMegaDialog.h"
 #include "EmailRequester.h"
+#include "themes/ThemeWidgetManager.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -549,6 +550,7 @@ void MegaApplication::initialize()
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
     mStatusController = new AccountStatusController(this);
     QmlManager::instance()->setRootContextProperty(mStatusController);
+    ThemeWidgetManager::instance();
 
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);

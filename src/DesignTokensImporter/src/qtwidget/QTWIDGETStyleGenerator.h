@@ -29,7 +29,7 @@ namespace DTI
         void start(const ThemedColourMap& fileToColourMap) override;
 
     private:
-        void initialize();
+        void initialize(const ThemedColourMap &fileToColourMap);
         void createDirectories();
         void parseAndStoreUIDesignTokens();
         void parseUiFiles(const QStringList& uiFilePathsList,
@@ -57,7 +57,8 @@ namespace DTI
         QStringList mWinCSSFiles;
         QStringList mLinuxCSSFiles;
         QStringList mMacCSSFiles;
-        QStringList mTokenFilePathsList;
+        QStringList mCSSThemeFilePathsList;
+        QStringList mCSSThemeFolderNameList;
         QVector<QSharedPointer<UIHandler>> mWinDesignTokenUIs;
         QVector<QSharedPointer<UIHandler>> mLinuxDesignTokenUIs;
         QVector<QSharedPointer<UIHandler>> mMacDesignTokenUIs;

@@ -24,7 +24,6 @@ public:
     static const QString RELATIVE_QRC_WINDOWS_PATH;
     static const QString RELATIVE_QRC_LINUX_PATH;
     static const QString RELATIVE_THEMES_DIR_PATH;
-    static const QString RELATIVE_STYLES_DIR_PATH;
     static const QString RELATIVE_CSS_WIN_PATH;
     static const QString RELATIVE_CSS_LINUX_PATH;
     static const QString RELATIVE_CSS_MAC_PATH;
