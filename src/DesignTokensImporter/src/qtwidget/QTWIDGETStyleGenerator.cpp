@@ -24,9 +24,10 @@ QTWIDGETStyleGenerator::QTWIDGETStyleGenerator(QObject* parent)
     mCurrentDir = QDir::currentPath();
 }
 
+
 void QTWIDGETStyleGenerator::start(const ThemedColorData& fileToColourMap)
-{    
-    initialize();
+{
+    initialize(fileToColourMap);
 
     if (fileToColourMap.isEmpty() || !checkInitialFileConditions())
     {
@@ -44,7 +45,7 @@ void QTWIDGETStyleGenerator::start(const ThemedColorData& fileToColourMap)
     writeHashFile();
 }
 
-void QTWIDGETStyleGenerator::initialize()
+void QTWIDGETStyleGenerator::initialize(const ThemedColorData& fileToColourMap)
 {
     // Load gui .ui files
     mWinUIFilePathsList = Utilities::findFilesInDir(mCurrentDir + PathProvider::RELATIVE_UI_WIN_PATH, PathProvider::UI_NAME_FILTER);
@@ -52,7 +53,13 @@ void QTWIDGETStyleGenerator::initialize()
     mMacUIFilePathsList = Utilities::findFilesInDir(mCurrentDir + PathProvider::RELATIVE_UI_MAC_PATH, PathProvider::UI_NAME_FILTER);
 
     // Load .css files
-    mCSSFiles = Utilities::findFilesInDir(mCurrentDir + PathProvider::RELATIVE_STYLES_DIR_PATH, PathProvider::CSS_NAME_FILTER, true);
+    mCSSFiles = Utilities::findFilesInDir(mCurrentDir + PathProvider::RELATIVE_THEMES_DIR_PATH, PathProvider::CSS_NAME_FILTER, true);
+
+    // Append css theme folder name list
+    for (auto it = fileToColourMap.cbegin(); it != fileToColourMap.cend(); ++it)
+    {
+        mCSSThemeFolderNameList.append(it.key().toLower());
+    }
 }
 
 void QTWIDGETStyleGenerator::createDirectories()
@@ -60,18 +67,16 @@ void QTWIDGETStyleGenerator::createDirectories()
     // Set up directory structure
     Utilities::createDirectory(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_GENERATED_PATH));
     Utilities::createDirectory(Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_THEMES_DIR_PATH));
-    Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_STYLES_DIR_PATH);
     Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH);
     Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH);
     Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH);
 
     // Create a directory for every theme for every platform
-    foreach (const QString& filePath, mTokenFilePathsList)
+    foreach (const QString& folderName, mCSSThemeFolderNameList)
     {
-        QString fileName = Utilities::extractFileNameNoExtension(filePath);
-        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH + "/" + fileName);
-        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH + "/" + fileName);
-        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH + "/" + fileName);
+        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH + "/" + folderName);
+        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH + "/" + folderName);
+        Utilities::createDirectory(mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH + "/" + folderName);
     }
 }
 
@@ -167,7 +172,7 @@ bool QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange(const QMap<QString, QMap
         {
         case QTWIDGETStyleGenerator::ObjectNamesID::TOKEN:
         {
-            if (didFilesChange(mTokenFilePathsList, hashMap))
+            if (didFilesChange(mCSSThemeFilePathsList, hashMap))
             {
                 qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Token file change detected!";
                 return true;
@@ -287,23 +292,17 @@ void QTWIDGETStyleGenerator::generateStyleSheet(const ThemedColorData& fileToCol
     {
         const QString& themeName = it.key();
         const ColourMap& colourMap = it.value();
-
-        const QStringList& filteredList = mTokenFilePathsList.filter(themeName);
-        QString directory;
-        if (!filteredList.isEmpty())
-        {
-            directory = Utilities::extractFileNameNoExtension(filteredList.first());
-        }
+        QString cssThemeFolderName = themeName.toLower();
 
         mWinCSSFiles << generateStylesheets(colourMap,
                                             mWinDesignTokenUIs,
-                                            mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH + "/" + directory);
+                                            mCurrentDir + PathProvider::RELATIVE_CSS_WIN_PATH + "/" + cssThemeFolderName);
         mLinuxCSSFiles << generateStylesheets(colourMap,
                                               mLinuxDesignTokenUIs,
-                                              mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH + "/" + directory);
+                                              mCurrentDir + PathProvider::RELATIVE_CSS_LINUX_PATH + "/" + cssThemeFolderName);
         mMacCSSFiles << generateStylesheets(colourMap,
                                             mMacDesignTokenUIs,
-                                            mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH + "/" + directory);
+                                            mCurrentDir + PathProvider::RELATIVE_CSS_MAC_PATH + "/" + cssThemeFolderName);
     }
 }
 
@@ -360,7 +359,7 @@ void QTWIDGETStyleGenerator::addStyleSheetToResource()
 bool QTWIDGETStyleGenerator::writeHashFile()
 {
     QList<QStringList> listOfStringLists;
-    listOfStringLists.append(mTokenFilePathsList);
+    listOfStringLists.append(mCSSThemeFilePathsList);
     listOfStringLists.append(mWinUIFilePathsList);
     listOfStringLists.append(mLinuxUIFilePathsList);
     listOfStringLists.append(mMacUIFilePathsList);

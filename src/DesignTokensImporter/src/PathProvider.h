@@ -14,7 +14,6 @@ namespace DTI
         static const QString RELATIVE_DESIGN_TOKENS_FILE_PATH;
         static const QString RELATIVE_UI_PATH;
         static const QString RELATIVE_GUI_PRI_PATH;
-        static const QString RELATIVE_RESOURCE_FILE_IMAGES_PATH;
         static const QString RELATIVE_UI_WIN_PATH;
         static const QString RELATIVE_UI_LINUX_PATH;
         static const QString RELATIVE_UI_MAC_PATH;
@@ -22,7 +21,6 @@ namespace DTI
         static const QString RELATIVE_QRC_WINDOWS_PATH;
         static const QString RELATIVE_QRC_LINUX_PATH;
         static const QString RELATIVE_THEMES_DIR_PATH;
-        static const QString RELATIVE_STYLES_DIR_PATH;
         static const QString RELATIVE_CSS_WIN_PATH;
         static const QString RELATIVE_CSS_LINUX_PATH;
         static const QString RELATIVE_CSS_MAC_PATH;
