@@ -8,8 +8,6 @@
 #include <QFileInfo>
 #include <QTextStream>
 
-#include <iostream>
-
 using namespace DTI;
 
 static const QString qmlColorThemeTargetPath = "%1/gui/qml/common/themes/%2";
