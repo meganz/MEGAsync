@@ -15,6 +15,7 @@ using namespace DTI;
 
 static const QString CoreMain = "Core/Main";
 static const QString CoreColors = "Colors";
+static const QString SemanticTokens = "Semantic tokens";
 
 TokenManager::TokenManager()
 {
@@ -153,7 +154,7 @@ ThemedColorData TokenManager::parseTheme(QFile& designTokensFile, const CoreData
     QStringList childKeys = jsonObject.keys();
     std::for_each(childKeys.constBegin(), childKeys.constEnd(), [&](const QString& key)
     {
-        if (key.contains("Semantic tokens"))
+        if (key.contains(SemanticTokens))
         {
             QJsonObject themeObject = jsonObject.value(key).toObject();
 

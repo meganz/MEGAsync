@@ -50,6 +50,7 @@ namespace DTI
         bool writeHashFile();
 
         QString mCurrentDir;
+        QString mTokenFilePath;
         QStringList mWinUIFilePathsList;
         QStringList mLinuxUIFilePathsList;
         QStringList mMacUIFilePathsList;

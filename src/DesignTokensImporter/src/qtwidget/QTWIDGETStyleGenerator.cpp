@@ -55,6 +55,8 @@ void QTWIDGETStyleGenerator::initialize(const ThemedColorData& fileToColourMap)
     // Load .css files
     mCSSFiles = Utilities::findFilesInDir(mCurrentDir + PathProvider::RELATIVE_THEMES_DIR_PATH, PathProvider::CSS_NAME_FILTER, true);
 
+    mTokenFilePath = Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_DESIGN_TOKENS_FILE_PATH);
+
     // Append css theme folder name list
     for (auto it = fileToColourMap.cbegin(); it != fileToColourMap.cend(); ++it)
     {
@@ -170,67 +172,67 @@ bool QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange(const QMap<QString, QMap
         // If they are not, then that means that that file has since been deleted
         switch (myObjectID)
         {
-        case QTWIDGETStyleGenerator::ObjectNamesID::TOKEN:
-        {
-            if (didFilesChange(mCSSThemeFilePathsList, hashMap))
+            case QTWIDGETStyleGenerator::ObjectNamesID::TOKEN:
             {
-                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Token file change detected!";
+                if (didFilesChange(mCSSThemeFilePathsList, hashMap))
+                {
+                    qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Token file change detected!";
+                    return true;
+                }
+
+                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Token files are identical...";
+                break;
+            }
+            case QTWIDGETStyleGenerator::ObjectNamesID::GUI_WIN:
+            {
+                if (didFilesChange(mWinUIFilePathsList, hashMap))
+                {
+                    qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Windows UI file change detected!";
+                    return true;
+                }
+
+                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Windows UI files are identical...";
+                break;
+            }
+            case QTWIDGETStyleGenerator::ObjectNamesID::GUI_LINUX:
+            {
+                if (didFilesChange(mLinuxUIFilePathsList, hashMap))
+                {
+                    qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Linux UI file change detected!";
+                    return true;
+                }
+
+                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Linux UI files are identical...";
+                break;
+            }
+            case QTWIDGETStyleGenerator::ObjectNamesID::GUI_MAC:
+            {
+                if (didFilesChange(mMacUIFilePathsList, hashMap))
+                {
+                    qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - MAC UI file change detected!";
+                    return true;
+                }
+
+                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - MAC UI files are identical...";
+                break;
+            }
+            case QTWIDGETStyleGenerator::ObjectNamesID::CSS_STYLESHEETS:
+            {
+                if (didFilesChange(mCSSFiles, hashMap))
+                {
+                    qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - CSS file change detected!";
+                    return true;
+                }
+
+                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - CSS files are identical...";
+                break;
+            }
+            case QTWIDGETStyleGenerator::ObjectNamesID::INVALID_ID:
+            default:
+            {
+                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - ERROR! Object not found or Unknown object";
                 return true;
             }
-
-            qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Token files are identical...";
-            break;
-        }
-        case QTWIDGETStyleGenerator::ObjectNamesID::GUI_WIN:
-        {
-            if (didFilesChange(mWinUIFilePathsList, hashMap))
-            {
-                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Windows UI file change detected!";
-                return true;
-            }
-
-            qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Windows UI files are identical...";
-            break;
-        }
-        case QTWIDGETStyleGenerator::ObjectNamesID::GUI_LINUX:
-        {
-            if (didFilesChange(mLinuxUIFilePathsList, hashMap))
-            {
-                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Linux UI file change detected!";
-                return true;
-            }
-
-            qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Linux UI files are identical...";
-            break;
-        }    
-        case QTWIDGETStyleGenerator::ObjectNamesID::GUI_MAC:
-        {
-            if (didFilesChange(mMacUIFilePathsList, hashMap))
-            {
-                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - MAC UI file change detected!";
-                return true;
-            }
-
-            qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - MAC UI files are identical...";
-            break;
-        }        
-        case QTWIDGETStyleGenerator::ObjectNamesID::CSS_STYLESHEETS:
-        {
-            if (didFilesChange(mCSSFiles, hashMap))
-            {
-                qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - CSS file change detected!";
-                return true;
-            }
-
-            qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - CSS files are identical...";
-            break;
-        }      
-        case QTWIDGETStyleGenerator::ObjectNamesID::INVALID_ID:
-        default:
-        {
-            qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - ERROR! Object not found or Unknown object";
-            return true;
-        }
         }
     }
 
