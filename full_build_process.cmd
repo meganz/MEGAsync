@@ -94,14 +94,8 @@ REM Clean up any previous leftovers
 IF EXIST built32 (
     rmdir /s /q built32
 )
-IF EXIST sign32 (
-    rmdir /s /q sign32
-)
 IF EXIST built64 (
     rmdir /s /q built64
-)
-IF EXIST sign64 (
-    rmdir /s /q sign64
 )
 IF EXIST build-x64-windows-mega (
     rmdir /s /q build-x64-windows-mega
@@ -125,7 +119,7 @@ echo It can take 0, 1, 3 or 4 arguments:
 echo 	- -help: this message
 echo 	- 0 arguments: use these settings: 32/64 sign 1
 echo 	- Architecture : 64 or 32/64 to build either for 64 bit or both 32 and 64 bit
-echo 	- Sign: sign or nosign if the binaries must be signed or not
+echo 	- Sign (obsolete): sign or nosign if the binaries must be signed or not
 echo 	- Cores: the number of cores to build the project, or 0 for default value (number of logical cores on the machine)
 echo 	- Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.

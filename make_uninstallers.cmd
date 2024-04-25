@@ -14,8 +14,7 @@ IF [%MEGA_QTPATH%]==[] (
 "C:\Program Files (x86)\NSIS\makensis.exe" /DBUILD_UNINSTALLER /DBUILD_X64_VERSION %SUFFIX_DEF% /DMEGA_QTPATH=%MEGA_QTPATH% installer_win.nsi || exit 1 /b
 UninstallerGenerator.exe
 erase UninstallerGenerator.exe
-copy uninst.exe built64
-move uninst.exe sign64
+move uninst.exe built64 || exit 1 /b
 
 IF "%MEGA_SKIP_32_BIT_BUILD%" == "true" (
 	GOTO :EOF
@@ -24,5 +23,4 @@ IF "%MEGA_SKIP_32_BIT_BUILD%" == "true" (
 "C:\Program Files (x86)\NSIS\makensis.exe" /DBUILD_UNINSTALLER %SUFFIX_DEF% /DMEGA_QTPATH=%MEGA_QTPATH% installer_win.nsi || exit 1 /b
 UninstallerGenerator.exe
 erase UninstallerGenerator.exe
-copy uninst.exe built32
-move uninst.exe sign32
+move uninst.exe built32 || exit 1 /b
