@@ -36,6 +36,11 @@ void BackupSettingsElements::updateUI()
 {
     QString backupsDirPath = UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath();
     openFolderUi->lBackupFolder->setText(backupsDirPath);
+}
+
+void BackupSettingsElements::retranslateUI()
+{
+    updateUI();
     openFolderUi->retranslateUi(mOpenBackupsFolder);
 }
 

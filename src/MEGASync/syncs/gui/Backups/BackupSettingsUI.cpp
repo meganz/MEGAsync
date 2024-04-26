@@ -52,7 +52,7 @@ void BackupSettingsUI::changeEvent(QEvent *event)
 {    
     if(event->type() == QEvent::LanguageChange)
     {
-        mElements.updateUI();
+        mElements.retranslateUI();
         ui->retranslateUi(this);
         setBackupsTitle();
     }
