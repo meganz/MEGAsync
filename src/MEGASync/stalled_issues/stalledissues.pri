@@ -18,6 +18,7 @@ SOURCES +=  \
     $$PWD/gui/StalledIssuesDialog.cpp \
     $$PWD/gui/StalledIssueHeader.cpp \
     $$PWD/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp \
+    $$PWD/gui/stalled_issues_cases/MoveOrRenameCannotOccur.cpp \
     $$PWD/gui/stalled_issues_cases/NameConflict.cpp \
     $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp \
@@ -46,6 +47,7 @@ HEADERS  +=   \
     $$PWD/gui/StalledIssueHeader.h \
     $$PWD/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.h \
     $$PWD/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.h \
+    $$PWD/gui/stalled_issues_cases/MoveOrRenameCannotOccur.h \
     $$PWD/gui/stalled_issues_cases/NameConflict.h \
     $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h \
@@ -88,7 +90,8 @@ macx {
                 $$PWD/gui/stalled_issues_cases/macx/LocalAndRemoteDifferentWidget.ui \
                 $$PWD/gui/stalled_issues_cases/macx/OtherSideMissingOrBlocked.ui \
                 $$PWD/gui/stalled_issues_cases/macx/NameConflict.ui \
-                $$PWD/gui/stalled_issues_cases/macx/LocalAndRemoteNameConflicts.ui
+                $$PWD/gui/stalled_issues_cases/macx/LocalAndRemoteNameConflicts.ui \
+                $$PWD/gui/stalled_issues_cases/macx/MoveOrRenameCannotOccur.ui
 }
 
 unix:!macx {

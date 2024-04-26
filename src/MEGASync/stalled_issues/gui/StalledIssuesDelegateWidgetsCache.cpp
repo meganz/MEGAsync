@@ -4,6 +4,7 @@
 #include "stalled_issues_cases/LocalAndRemoteNameConflicts.h"
 #include "stalled_issues_cases/OtherSideMissingOrBlocked.h"
 #include "stalled_issues_cases/StalledIssuesCaseHeaders.h"
+#include "stalled_issues_cases/MoveOrRenameCannotOccur.h"
 #include "StalledIssuesProxyModel.h"
 #include "StalledIssueFilePath.h"
 
@@ -147,8 +148,12 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
             item = new LocalAndRemoteNameConflicts(parent);
             break;
         }
-        case mega::MegaSyncStall::SyncStallReason::FileIssue:
         case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:
+        {
+            item = new MoveOrRenameCannotOccur(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::FileIssue:
         case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
         case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
         case mega::MegaSyncStall::SyncStallReason::UploadIssue:
