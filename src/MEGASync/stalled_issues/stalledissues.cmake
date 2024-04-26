@@ -59,7 +59,6 @@ target_sources_conditional(MEGAsync
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   stalled_issues/../gui/Resources_win.qrc
    stalled_issues/gui/win/StalledIssueHeader.ui
    stalled_issues/gui/win/StalledIssueChooseWidget.ui
    stalled_issues/gui/win/StalledIssuesDialog.ui
@@ -77,7 +76,6 @@ target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   stalled_issues/../gui/Resources_macx.qrc
    stalled_issues/gui/macx/StalledIssueHeader.ui
    stalled_issues/gui/macx/StalledIssueChooseWidget.ui
    stalled_issues/gui/macx/StalledIssuesDialog.ui
@@ -95,7 +93,6 @@ target_sources_conditional(MEGAsync
    FLAG UNIX AND NOT APPLE
    QT_AWARE
    PRIVATE
-   stalled_issues/../gui/Resources_linux.qrc
    stalled_issues/gui/linux/StalledIssueHeader.ui
    stalled_issues/gui/linux/StalledIssueChooseWidget.ui
    stalled_issues/gui/linux/StalledIssuesDialog.ui

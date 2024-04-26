@@ -347,7 +347,7 @@ target_sources_conditional(MEGAsync
 
 # Resources and platform-specific additions
 target_sources_conditional(MEGAsync
-    FLAG WIN32 OR (UNIX AND NOT APPLE)
+    FLAG NOT APPLE
     QT_AWARE
     PRIVATE
     gui/LockedPopOver.h
@@ -450,4 +450,4 @@ target_sources(MEGAsync
 
 target_include_directories(MEGAsync PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/..)
+)

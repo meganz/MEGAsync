@@ -17,7 +17,6 @@ target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   notifications/../gui/Resources_macx.qrc
    notifications/macx/NotificationHandler.mm
    notifications/macx/UNUserNotificationHandler.mm
    notifications/macx/NSUserNotificationHandler.mm
@@ -35,16 +34,14 @@ target_sources_conditional(MEGAsync
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   notifications/../gui/Resources_win.qrc
    notifications/win/Notificator.h
    notifications/win/Notificator.cpp   
 )
 
 target_sources_conditional(MEGAsync
-    FLAG (UNIX AND NOT APPLE)
+    FLAG UNIX AND NOT APPLE
     QT_AWARE
     PRIVATE
-    notifications/../gui/Resources_linux.qrc
     notifications/linux/Notificator.h
     notifications/linux/Notificator.cpp
 )

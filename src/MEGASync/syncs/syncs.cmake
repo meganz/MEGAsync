@@ -57,7 +57,6 @@ target_sources_conditional(MEGAsync
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   syncs/../gui/Resources_win.qrc
    syncs/gui/Twoways/win/FolderBinder.ui
    syncs/gui/Twoways/win/BindFolderDialog.ui
    syncs/gui/Twoways/win/IgnoresEditingDialog.ui
@@ -76,7 +75,6 @@ target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   syncs/../gui/Resources_macx.qrc
    syncs/gui/Twoways/macx/FolderBinder.ui
    syncs/gui/Twoways/macx/BindFolderDialog.ui
    syncs/gui/Twoways/macx/IgnoresEditingDialog.ui
@@ -95,7 +93,6 @@ target_sources_conditional(MEGAsync
    FLAG UNIX AND NOT APPLE
    QT_AWARE
    PRIVATE
-   syncs/../gui/Resources_linux.qrc
    syncs/gui/Twoways/linux/FolderBinder.ui
    syncs/gui/Twoways/linux/BindFolderDialog.ui
    syncs/gui/Twoways/linux/IgnoresEditingDialog.ui

@@ -59,7 +59,6 @@ target_sources_conditional(MEGAsync
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   transfers/../gui/Resources_win.qrc
    transfers/gui/win/TransferWidgetHeaderItem.ui
    transfers/gui/win/TransferManagerDelegateWidget.ui
    transfers/gui/win/TransferManager.ui
@@ -80,7 +79,6 @@ target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   transfers/../gui/Resources_macx.qrc
    transfers/gui/macx/TransferWidgetHeaderItem.ui
    transfers/gui/macx/TransferManagerDelegateWidget.ui
    transfers/gui/macx/TransferManager.ui
@@ -101,7 +99,6 @@ target_sources_conditional(MEGAsync
    FLAG UNIX AND NOT APPLE
    QT_AWARE
    PRIVATE
-   transfers/../gui/Resources_linux.qrc
    transfers/gui/linux/TransferWidgetHeaderItem.ui
    transfers/gui/linux/TransferManagerDelegateWidget.ui
    transfers/gui/linux/TransferManager.ui
