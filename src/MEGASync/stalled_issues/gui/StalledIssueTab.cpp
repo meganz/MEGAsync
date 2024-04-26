@@ -164,3 +164,13 @@ QString StalledIssueTab::createTitle()
             return QString();
     }
 }
+
+void StalledIssueTab::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        ui->title->setText(createTitle());
+    }
+
+    QFrame::changeEvent(event);
+}
