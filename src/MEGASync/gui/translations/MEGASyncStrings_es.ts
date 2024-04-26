@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Por favor, introduce una ruta absoluta o un nombre de archivo válido.</translation>
+        <translation>Introduce una ruta absoluta o un nombre de archivo válido</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -889,7 +889,7 @@
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>Por favor describe claramente el problema que has encontrado. Cuantos más detalles proporciones, más fácil será para nosotros resolverlo.Tu informe será revisado por nuestro equipo de desarrollo.</translation>
+        <translation>Describe claramente el problema que has encontrado. Cuantos más detalles proporciones, más fácil será para nosotros resolverlo. Tu informe será revisado por nuestro equipo de desarrollo.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -974,7 +974,7 @@
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Por favor espera hasta que se complete la subida actual.</translation>
+        <translation>Espera hasta que se complete la subida actual.</translation>
     </message>
 </context>
 <context>
@@ -1114,7 +1114,7 @@
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>Has introducido tu contraseña actual, por favor introduce una nueva contraseña.</translation>
+        <translation>Has introducido tu contraseña actual, introduce una nueva contraseña.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -1277,7 +1277,7 @@
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Puedes ayudarnos a mejorar la aplicación de MEGA enviando este informe de error. No contiene ninguna información personal. Si quieres darnos más detalles, por favor escríbelos a continuación:</translation>
+        <translation>Puedes ayudarnos a mejorar la aplicación de MEGA enviando este informe de error. No contiene ninguna información personal. Si quieres darnos más detalles, escríbelos a continuación:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1332,7 +1332,7 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation>Esperando a que finalice el análisis para ver si el archivo se ha movido o eliminado.</translation>
+        <translation>Esperando a que finalice el análisis para determinar si el archivo se ha movido o eliminado.</translation>
     </message>
 </context>
 <context>
@@ -2332,7 +2332,7 @@ Te puede resultar útil para archivos grandes, archivos que no necesitas en todo
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Por favor amplía tu cuenta.</translation>
+        <translation>Amplía tu cuenta.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2668,12 +2668,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>¿Mantener la carpeta almacenada en MEGA [B]%1[/B]?</translation>
+        <translation>¿Mantener la carpeta [B]%1[/B] almacenada en MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>¿Mantener el elemento almacenado en MEGA [B]%1[/B]?</translation>
+        <translation>¿Mantener el elemento [B]%1[/B] almacenado en MEGA?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2693,12 +2693,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Con esta acción se elegirá el elemento local.</translation>
+        <translation>Con esta acción, se elegirá el elemento local.</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Con esta acción se elegirá el elemento que ya está almacenado en MEGA.</translation>
+        <translation>Con esta acción, se elegirá el elemento que ya está almacenado en MEGA.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2874,7 +2874,7 @@ Espera a que se complete la subida.</translation>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Por favor, introduce el código generado por tu aplicación de autenticación</translation>
+        <translation>Introduce el código generado por tu aplicación de autenticación</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2912,7 +2912,7 @@ Espera a que se complete la subida.</translation>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>Has intentado conectarte demasiadas veces.[Br][BR]Por favor espera hasta las %1 y prueba de nuevo.</translation>
+        <translation>Has intentado conectarte demasiadas veces.[Br][BR]Espera hasta las %1 y prueba de nuevo.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
@@ -2940,7 +2940,7 @@ Espera a que se complete la subida.</translation>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>Nuestra clave de seguridad SSL no se ha podido verificar. Tus comunicaciones podrían estar siendo interceptadas por un atacante o un antivirus. Por favor, desactiva tu antivirus e inténtalo otra vez.</translation>
+        <translation>Nuestra clave SSL no puede ser verificada. Podría verse afectado por un ataque intermediario o su software antivirus podría estar interceptando sus comunicaciones y causando este problema. Desactívala y vuelve a intentarlo.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3077,7 +3077,7 @@ Espera a que se complete la subida.</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>No se ha podido instalar la actualización. Inténtalo de nuevo o descarga la última versión desde: https://mega.nz/sync</translation>
+        <translation>Se ha producido un error al instalar la actualización. Vuelve a intentarlo más tarde o descarga la última versión desde: https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -4053,22 +4053,22 @@ Actualiza la vista.</translation>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>¿Eliminar el archivo almacenado en MEGA [B]%1[/B]?</translation>
+        <translation>¿Reemplazar el elemento [B]%1[/B] almacenado en MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>¿Eliminar la carpeta almacenada en MEGA [B]%1[/B]?</translation>
+        <translation>¿Reemplazar la carpeta [B]%1[/B] almacenada en MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>¿Eliminar el archivo local [B]%1[/B]?</translation>
+        <translation>¿Reemplazar el archivo local [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>¿Eliminar la carpeta local [B]%1[/B]?</translation>
+        <translation>¿Reemplazar la carpeta local [B]%1[/B]?</translation>
     </message>
 </context>
 <context>
@@ -4966,7 +4966,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation>Sincroniza tus archivos entre tus equipos y la Nube de MEGA; cualquier cambio de un lado se aplicará al otro lado.</translation>
+        <translation>Sincroniza tus archivos entre tus equipos y MEGA; cualquier cambio de un lado se aplicará al otro lado.</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
@@ -5752,8 +5752,7 @@ Introduzca un nombre diferente.</translation>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Carpeta no encontrada.
+        <translation>Carpeta %1 no encontrada.
 Asegúrate de que el nombre de la carpeta sea el correcto.</translation>
     </message>
     <message>
@@ -5768,8 +5767,7 @@ Do you want to replace it?</source>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-Archivo no encontrado.
+        <translation>Archivo %1 no encontrado.
 Asegúrate de que el nombre del archivo sea el correcto.</translation>
     </message>
     <message>
@@ -6136,12 +6134,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Los backups de versiones anteriores de tus archivos sincronizados se eliminarán de forma permanente. Por favor, comprueba estas carpetas para ver si necesitas rescatar algo antes de continuar:</translation>
+        <translation>Los backups de las versiones anteriores de tus archivos sincronizados se eliminarán de forma permanente de tu equipo. Por favor comprueba tus carpetas de backup para ver si necesitas rescatar algo antes de continuar.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Los backups de tus archivos sincronizados anteriormente se eliminarán de forma permanente. Por favor comprueba tu carpeta [A] de la Papelera de tu cuenta de MEGA para ver si necesitas rescatar algo antes de continuar.</translation>
+        <translation>Los backups de las versiones anteriores de tus archivos sincronizados se eliminarán de forma permanente de MEGA. Por favor comprueba la [A] carpeta en la Papelera de tu cuenta de MEGA para ver si necesitas rescatar algo antes de continuar.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6246,7 +6244,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>Dinos si tienes algún problema. Ayúdanos proporcionando tanta información como sea posible.</translation>
+        <translation>Haznos saber si tienes algún problema. Ayúdanos proporcionándonos la mayor cantidad de detalles posible.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6936,7 +6934,7 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>Otros: %n</numerusform><numerusform>Otros: %n</numerusform><numerusform>Otros: %n</numerusform></translation>
+        <translation><numerusform>Otro: %n</numerusform><numerusform>Otros: %n</numerusform><numerusform>Otros: %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8634,7 +8632,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Por favor amplía a Pro para continuar ahora, o espera %1 para continuar gratis</translation>
+        <translation>Amplía tu cuenta para continuar ahora mismo, o espera %1 para continuar gratis</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8667,7 +8665,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Amplía tu cuenta para disfrutar de más espacio de almacenamiento (tus subidas se reanudarán automáticamente).</translation>
+        <translation>Amplía tu cuenta para disfrutar de más espacio de almacenamiento. Las subidas se reanudarán automáticamente.</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8915,7 +8913,8 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Tu cuenta ha sido bloqueada temporalmente por seguridad. Revisa la bandeja de entrada de tu correo electrónico y sigue los pasos indicados para desbloquear tu cuenta.</translation>
+        <translation>Tu cuenta ha sido bloqueada para protegerte tras detectar un inicio de sesión malicioso, por lo que requerimos que restablezcas tu contraseña.
+Revisa el correo electrónico que enviamos a tu dirección de correo para obtener instrucciones sobre cómo desbloquear tu cuenta y consejos sobre cómo evitar otro bloqueo.</translation>
     </message>
     <message>
         <source>Resend email</source>

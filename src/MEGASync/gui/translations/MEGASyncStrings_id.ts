@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Harap masukkan nama file yang valid atau path absolut.</translation>
+        <translation>Masukkan nama file yang valid atau lokasi absolut</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -889,7 +889,7 @@
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>Harap jelaskan masalah yang anda temui. Semakin banyak detail yang anda berikan, semakin mudah bagi kami untuk menyelesaikannya. Kiriman anda akan ditinjau oleh tim pengembangan kami.</translation>
+        <translation>Jelaskan dengan jelas masalah yang anda temui. Semakin banyak detail yang anda berikan, semakin mudah bagi kami untuk menyelesaikannya. Kiriman anda akan ditinjau oleh tim pengembangan kami.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -974,7 +974,7 @@
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Harap tunggu hingga unggahan saat ini selesai.</translation>
+        <translation>Tunggu hingga unggahan saat ini selesai.</translation>
     </message>
 </context>
 <context>
@@ -1114,7 +1114,7 @@
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>Anda telah memasukkan kata sandi saat ini, silakan masukkan kata sandi baru.</translation>
+        <translation>Anda telah memasukkan kata sandi anda saat ini, masukkan kata sandi baru.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -1277,7 +1277,7 @@
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Anda dapat membantu kami meningkatkan aplikasi MEGA dengan mengirimkan laporan kesalahan ini. Itu tidak mengandung informasi pribadi apa pun. Jika anda ingin memberi kami detail lebih lanjut, silahkan tulis di bawah ini:</translation>
+        <translation>Anda dapat membantu kami meningkatkan Aplikasi MEGA dengan mengirimkan laporan kesalahan ini. Itu tidak mengandung informasi pribadi apa pun. Jika anda ingin memberi kami detail lebih lanjut, tulis di bawah ini:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1332,7 +1332,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation>Menunggu pemindaian selesai untuk melihat apakah file dipindahkan atau dihapus.</translation>
+        <translation>Menunggu pemindaian selesai untuk menentukan apakah file dipindahkan atau dihapus.</translation>
     </message>
 </context>
 <context>
@@ -1508,7 +1508,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Harap selesaikan masalah pembayaran anda sesegera mungkin untuk menghindari penangguhan akun Bisnis anda</translation>
+        <translation>Selesaikan masalah pembayaran sesegera mungkin untuk menghindari penangguhan akun Bisnis anda</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2332,7 +2332,7 @@ Ini dapat berguna untuk file besar, file yang tidak anda perlukan di semua peran
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Harap tingkatkan ke Pro.</translation>
+        <translation>Tingkatkan akun anda.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2668,12 +2668,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Simpan folder di MEGA [B]%1[/B]?</translation>
+        <translation>Simpan folder [B]%1[/B] sudah disimpan di MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Simpan item yang sudah disimpan di MEGA [B]%1[/B]?</translation>
+        <translation>Simpan item [B]%1[/B] sudah disimpan di MEGA?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2693,12 +2693,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Tindakan ini akan memilih item lokal.</translation>
+        <translation>Dengan tindakan ini, item lokal akan dipilih.</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Tindakan ini akan memilih item yang sudah disimpan di MEGA.</translation>
+        <translation>Dengan tindakan ini, item yang sudah disimpan di MEGA akan dipilih.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2756,8 +2756,8 @@ Muat ulang daftar.</translation>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>File [B]lokal[/B] akan diunggah ke MEGA dan ditambahkan sebagai versi ke file yang sudah ada di MEGA.
-Harap tunggu hingga unggahan selesai.</translation>
+        <translation>File [B]setempat[/B] akan diunggah ke MEGA dan ditambahkan sebagai versi ke file yang sudah ada di MEGA.
+Tunggu hingga unggahan selesai.</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2874,7 +2874,7 @@ Harap tunggu hingga unggahan selesai.</translation>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Silakan masukkan kode yang dihasilkan oleh aplikasi otentikasi anda</translation>
+        <translation>Masukkan kode yang dihasilkan oleh aplikasi otentikasi anda</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2907,22 +2907,22 @@ Harap tunggu hingga unggahan selesai.</translation>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>Mohon cek kotak email anda dan klik linknya untuk mengonfirmasi akun anda.</translation>
+        <translation>Periksa kotak masuk email anda dan klik tautan untuk mengonfirmasi akun anda.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>Anda telah mencoba untuk masuk terlalu banyak.[BR]Harap tunggu sampai %1 dan coba kembali.</translation>
+        <translation>Anda telah mencoba masuk terlalu berkali-kali.[BR]Tunggu sampai %1 dan coba lagi.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
-        <translation>Alamat email atau kata sandi tidak valid. Silakan coba lagi.</translation>
+        <translation>Alamat email atau kata sandi tidak valid. Coba lagi.</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>Aplikasi tidak dapat tersambung. Silakan periksa konektivitas Internet anda dan konfigurasi firewall lokal. Perhatikan bahwa sebagian besar perangkat lunak antivirus menyertakan firewall.</translation>
+        <translation>Aplikasi tidak dapat terhubung. Periksa konektivitas internet dan konfigurasi firewall lokal anda. Perhatikan bahwa sebagian besar perangkat lunak antivirus menyertakan firewall.</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -2940,7 +2940,7 @@ Harap tunggu hingga unggahan selesai.</translation>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>Kunci SSL kami tidak dapat diverifikasi. Anda dapat terpengaruh oleh serangan man-in-the-middle atau perangkat lunak antivirus anda dapat menyadap komunikasi anda dan menyebabkan masalah ini. Nonaktifkan dan coba lagi.</translation>
+        <translation>Kunci SSL kami tidak dapat diverifikasi. Anda dapat terpengaruh oleh serangan man-in-the-middle atau perangkat lunak antivirus anda dapat mencegat komunikasi anda dan menyebabkan masalah ini. Nonaktifkan dan coba lagi.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3077,7 +3077,7 @@ Harap tunggu hingga unggahan selesai.</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Terjadi masalah saat memasang pembaruan. Silakan coba lagi nanti atau unduh versi terbaru dari: https://mega.nz/sync</translation>
+        <translation>Ada masalah saat menginstal pembaruan. Coba lagi nanti atau unduh versi terbaru dari: https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3537,7 +3537,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Kuota penyimpanan terlampaui. Harap tingkatkan sekarang.</translation>
+        <translation>Kuota penyimpanan terlampaui. Tingkatkan sekarang.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3547,9 +3547,9 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Akun MEGA anda telah ditangguhkan karena tuduhan pelanggaran hak cipta berulang kali. Ini berarti anda tidak dapat mengakses akun atau data anda di dalamnya.
+        <translation>Akun MEGA anda telah ditangguhkan karena dugaan berulang pelanggaran hak cipta. Ini berarti anda tidak dapat mengakses akun atau data di dalamnya.
 
-Periksa email anda untuk informasi lebih lanjut tentang cara mengajukan pemberitahuan tanggapan.</translation>
+Periksa kotak masuk email anda untuk informasi lebih lanjut tentang cara mengajukan pemberitahuan balasan.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -4051,22 +4051,22 @@ Muat ulang tampilan.</translation>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>Hapus file yang sudah disimpan di MEGA [B]%1[/B]?</translation>
+        <translation>Ganti file [B]%1[/B] sudah disimpan di MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>Hapus folder yang sudah disimpan di MEGA [B]%1[/B]?</translation>
+        <translation>Ganti folder [B]%1[/B] sudah disimpan di MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>Hapus file lokal [B]%1[/B]?</translation>
+        <translation>Ganti file lokal [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>Hapus folder lokal [B]%1[/B]?</translation>
+        <translation>Ganti folder lokal [B]%1[/B]?</translation>
     </message>
 </context>
 <context>
@@ -5223,7 +5223,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>File dan folder memiliki pemilik dan milik sekelompok pengguna. Dengan menggunakan dialog ini, anda dapat memberikan izin akses yang berbeda untuk file dan folder baru yang dibuat oleh aplikasi desktop kepada pengguna yang tergabung dalam grup yang sama dan pengguna lainnya di komputer. Jika anda tidak perlu mengubahnya, biarkan pada pengaturan default untuk alasan keamanan.</translation>
+        <translation>File dan folder memiliki pemilik dan milik sekelompok pengguna. Dengan menggunakan dialog ini, anda dapat memberikan izin akses yang berbeda untuk file dan folder baru yang dibuat oleh aplikasi desktop kepada pengguna yang termasuk dalam grup yang sama dan kepada pengguna lainnya di komputer. Jika anda tidak perlu mengubahnya, biarkan pada pengaturan default untuk alasan keamanan.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5750,9 +5750,8 @@ Masukkan nama yang berbeda.</translation>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Folder tidak ditemukan.
-Harap verifikasi nama folder yang benar telah diberikan.</translation>
+        <translation>Folder %1 tidak ditemukan.
+Verifikasi nama folder yang benar diberikan.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5766,9 +5765,8 @@ Ingin menggantinya?</translation>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-File tidak ditemukan.
-Harap verifikasi nama file yang diberikan dengan benar.</translation>
+        <translation>Berkas %1 tidak ditemukan.
+Verifikasi nama file yang benar diberikan.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6134,12 +6132,12 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek folder cadangan anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan:</translation>
+        <translation>Cadangan versi sebelumnya dari file yang disinkronkan akan dihapus secara permanen dari komputer anda. Periksa folder cadangan anda untuk melihat apakah anda perlu menyelamatkan sesuatu sebelum melanjutkan.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek [A] folder pada kotak Sampah akun MEGA anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan.</translation>
+        <translation>Cadangan versi sebelumnya dari file yang disinkronkan akan dihapus secara permanen dari MEGA. Periksa [A] folder anda di tempat sampah akun MEGA anda untuk melihat apakah anda perlu menyelamatkan sesuatu sebelum melanjutkan.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6244,7 +6242,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>Harap beri tahu kami jika anda mengalami masalah apa pun. Bantu kami dengan memberikan sedetail mungkin.</translation>
+        <translation>Beri tahu kami jika anda mengalami masalah. Bantu kami dengan memberikan detail sebanyak mungkin.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -8633,7 +8631,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Harap tingkatkan ke Pro untuk segera melanjutkan, atau tunggu %1 untuk melanjutkan secara gratis</translation>
+        <translation>Tingkatkan akun anda untuk segera melanjutkan, atau tunggu %1 untuk melanjutkan secara gratis</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8666,7 +8664,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Tingkatkan ke Pro untuk menikmati lebih banyak ruang penyimpanan (unggahan anda akan dilanjutkan secara otomatis).</translation>
+        <translation>Tingkatkan akun anda untuk menikmati lebih banyak ruang penyimpanan (unggahan anda akan dilanjutkan secara otomatis).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8914,7 +8912,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Akun anda telah dikunci sementara untuk keamanan anda. Silakan periksa email anda dan ikuti langkah-langkahnya untuk membuka kunci akun anda.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>

@@ -1332,7 +1332,7 @@
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation>파일이 이동되거나 삭제되었는지 확인하기 위해 스캔이 완료되는 것을 기다리는 중</translation>
+        <translation>파일이 이동되거나 삭제되었는지 확인하기 위해 스캔이 완료되기를 기다리는 중입니다.</translation>
     </message>
 </context>
 <context>
@@ -2332,7 +2332,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>계정을 업그레이드 하세요.</translation>
+        <translation>계정 업그레이드</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2668,7 +2668,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>MEGA의 [B]%1[/B] 폴더를 유지할까요?</translation>
+        <translation>MEGA에 이미 저장된 [B]%1[/B] 폴더를 유지할까요?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
@@ -2693,12 +2693,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>이 행동은 로컬 항목을 선택합니다.</translation>
+        <translation>이 행동을 하면, 로컬 항목이 선택됩니다</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>이 행동은 이미 MEGA에 저장된 항목을 선택합니다.</translation>
+        <translation>이 행동을 하면 MEGA에 이미 저장된 항목이 선택됩니다.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -3077,7 +3077,7 @@ Please wait for the upload to complete.</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>업데이트 설치 중 문제가 발생했습니다. 나중에 다시 시도하거나 다음에서 최신 버전을 다운로드하세요: https://mega.nz/sync</translation>
+        <translation>업데이트 설치 중 문제가 발생했습니다. 나중에 다시 시도하거나 다음에서 최신 버전을 다운로드하세요: https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -4053,22 +4053,22 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>MEGA에 이미 저장된 [B]%1[/B] 파일을 제거할까요?</translation>
+        <translation>MEGA에 이미 저장된 [B]%1[/B] 파일을 바꿀까요?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>MEGA에 이미 저장된 [B]%1[/B] 폴더를 제거할까요?</translation>
+        <translation>MEGA에 이미 저장된 [B]%1[/B] 폴더를 바꿀까요?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>로컬 파일 [B]%1[/B]을/를 삭제할까요?</translation>
+        <translation>로컬의 [B]%1[/B] 파일을 바꿀까요?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>로컬 폴더 [B]%1[/B]을/를 삭제할까요?</translation>
+        <translation>로컬의 [B]%1[/B] 폴더를 바꿀까요?</translation>
     </message>
 </context>
 <context>
@@ -5751,8 +5751,7 @@ Enter a different name</source>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-폴더를 찾지 못하였습니다.
+        <translation>%1 폴더를 찾지 못하였습니다.
 올바른 폴더 이름을 입력했는지 확인하세요.</translation>
     </message>
     <message>
@@ -5767,9 +5766,8 @@ Do you want to replace it?</source>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-파일을 찾을 수 없습니다.
-올바른 파일명을 입력하였는지 확인하세요.</translation>
+        <translation>%1 파일을 찾지 못하였습니다.
+올바른 폴더 이름을 입력했는지 확인하세요.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6135,12 +6133,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>당신의 컴퓨터에 이전에 동기화된 파일의 백업 버전이 영구적으로 삭제될 것입니다. 진행하기 전에 건질 것이 없는지 백업 폴더를 확인하시기 바랍니다:</translation>
+        <translation>동기화된 파일의 이전 버전의 백업이 컴퓨터에서 영구적으로 삭제될 것입니다. 진행하기 전에 구출해야 할 것이 있는지 백업 폴더를 확인하세요.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>당신의 컴퓨터에 이전에 동기화된 파일의 백업 버전이 영구적으로 삭제될 것입니다. 진행하기 전에 건질 것이 없는지 MEGA 계정의 휴지통 안의 [A] 폴더를 확인하시기 바랍니다.</translation>
+        <translation>동기화된 파일의 이전 버전의 백업이 MEGA에서 영구적으로 삭제될 것입니다. 진행하기 전에 건질 것이 없는지 MEGA 계정의 휴지통 안의 [A] 폴더를 확인하시기 바랍니다.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6245,7 +6243,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>어떠한 문제를 겪으셨다면 저희에게 알려주세요. 최대한 자세히 알려주시는 것이 도움이 됩니다.</translation>
+        <translation>만약 어떤 문제에 부딪혔다면 우리에게 알려주세요. 가능한 자세한 정보를 제공하여 저희를 도와주세요.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -8633,7 +8631,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>즉시 계속하려면 Pro로 업그레이드 하거나 무료로 계속하려면 %1 동안 기다리세요</translation>
+        <translation>즉시 계속하려면 계정을 업그레이드 하거나, 무료로 계속하려면 %1 동안 기다리세요.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8666,7 +8664,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>더 많은 저장 공간을 즐기려면 계정을 업그레이드 하세요(업로드는 자동으로 재개됩니다).</translation>
+        <translation>더 많은 저장 공간을 즐기려면 계정을 업그레이드 하세요 (업로드가 자동으로 재개됩니다).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8914,7 +8912,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>당신의 안전을 위해 일시적으로 계정을 잠갔습니다. 계정 잠금을 해제하려면 이메일 수신함을 확인하고 과정들을 따르시기 바랍니다.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>

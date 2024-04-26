@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Introdu un nume de fișier valid sau o cale absolută.</translation>
+        <translation>Introduceți un nume de fișier valid sau o cale absolută</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -889,7 +889,7 @@
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>Vă rugăm să descrieți clar problema pe care ați întâlnit-o. Cu cât furnizați mai multe detalii, cu atât ne va fi mai ușor să rezolvăm. Trimiterea dvs. va fi revizuită de echipa noastră de dezvoltare.</translation>
+        <translation>Descrieți clar problema pe care ați întâlnit-o. Cu cât furnizați mai multe detalii, cu atât ne va fi mai ușor să rezolvăm. Trimiterea dvs. va fi revizuită de echipa noastră de dezvoltare.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -974,7 +974,7 @@
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Vă rugăm să așteptați până când încărcarea curentă este finalizată.</translation>
+        <translation>Așteptați până când încărcarea curentă este finalizată.</translation>
     </message>
 </context>
 <context>
@@ -1114,7 +1114,7 @@
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>Ați introdus parola curentă, vă rugăm să introduceți o nouă parolă.</translation>
+        <translation>Ați introdus parola curentă, introduceți o nouă parolă.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -1277,7 +1277,7 @@
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Ne puteți ajuta să îmbunătățim aplicația MEGA trimițând acest raport de eroare. Nu conține informații personale. Dacă doriți să ne oferiți mai multe detalii, vă rugăm să le scrieți mai jos:</translation>
+        <translation>Ne puteți ajuta să îmbunătățim aplicația MEGA trimițând acest raport de eroare. Nu conține informații personale. Dacă doriți să ne oferiți mai multe detalii, scrieți-le mai jos:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1332,7 +1332,7 @@
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation>Așteptarea finalizării analizei pentru a vedea dacă fișierul a fost mutat sau șters.</translation>
+        <translation>Așteptarea finalizării scanării pentru a determina dacă fișierul a fost mutat sau șters.</translation>
     </message>
 </context>
 <context>
@@ -1508,7 +1508,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Vă rugăm să rezolvați problema de plată cât mai curând posibil pentru a evita orice suspendare a contului dvs. Business.</translation>
+        <translation>Rezolvați problema de plată cât mai curând posibil pentru a evita orice suspendare a contului dvs. de afaceri</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2332,7 +2332,7 @@ Acest lucru poate fi util pentru fișiere mari, fișiere de care nu aveți nevoi
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Vă rugăm să vă actualizați contul.</translation>
+        <translation>Upgradează-ți contul.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2668,12 +2668,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Păstrați folderul stocat în MEGA [B]%1[/B]?</translation>
+        <translation>Păstrați folderul [B]%1[/B] deja stocat în MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Păstrați elementul deja stocate în MEGA [B]%1[/B]?</translation>
+        <translation>Păstrați elementul [B]%1[/B] deja stocat în MEGA?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2693,12 +2693,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Această acțiune va alege elementul local.</translation>
+        <translation>Cu această acțiune, elementul local va fi ales.</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Această acțiune va alege elementul deja stocat în MEGA.</translation>
+        <translation>Cu această acțiune, elementul deja stocat în MEGA va fi ales.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2757,7 +2757,7 @@ Actualizați lista.</translation>
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
         <translation>Fișierele [B]locale[/B] vor fi încărcate în MEGA și adăugate ca versiune la fișierele în MEGA.
-Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
+Așteptați finalizarea încărcării.</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2874,7 +2874,7 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Vă rugăm să introduceți codul generat de aplicația dvs. de autentificare</translation>
+        <translation>Introduceți codul generat de aplicația dvs. de autentificare</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2907,22 +2907,22 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>Vă rugăm să verificați adresa de e-mail și să faceți clic pe link pentru a vă confirma contul.</translation>
+        <translation>Verificați căsuța de e-mail și faceți clic pe link pentru a vă confirma contul.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>Ați încercat să vă conectați de prea multe ori.[BR]Vă rugăm să așteptați până %1 și încercați din nou.</translation>
+        <translation>Ați încercat să vă conectați de prea multe ori.[BR]Așteptați până la %1 și încercați din nou.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
-        <translation>Adresă de e-mail sau parolă nevalide. Vă rugăm să încercați din nou.</translation>
+        <translation>Adresă de e-mail sau parolă nevalide. Încercați din nou.</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>Aplicația nu se poate conecta. Vă rugăm să verificați conectivitatea la internet și configurația paravanului de protecție local. Rețineți că majoritatea software-urilor antivirus includ un firewall.</translation>
+        <translation>Aplicația nu se poate conecta. Verificați conectivitatea la internet și configurația paravanului de protecție local. Rețineți că majoritatea software-urilor antivirus includ un firewall.</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -2940,7 +2940,7 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>Cheia noastră SSL nu poate fi verificată. Ați putea fi afectat de un atac man-in-the-middle sau software-ul antivirus ar putea să vă intercepteze comunicațiile și să cauzeze această problemă. Vă rugăm să îl dezactivați și să încercați din nou.</translation>
+        <translation>Cheia noastră SSL nu poate fi verificată. Ați putea fi afectat de un atac man-in-the-middle sau software-ul antivirus ar putea să vă intercepteze comunicațiile și să cauzeze această problemă. Dezactivați-l și încercați din nou.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3077,7 +3077,7 @@ Vă rugăm să așteptați ca încărcarea să se finalizeze.</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>A apărut o problemă la instalarea actualizării. Încercați din nou mai târziu sau descărcați cea mai recentă versiune de la: https://mega.nz/sync</translation>
+        <translation>A apărut o problemă la instalarea actualizării. Încercați din nou mai târziu sau descărcați cea mai recentă versiune de la: https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3539,7 +3539,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Cota de stocare a fost depășită. Vă rugăm să actualizați acum.</translation>
+        <translation>Cota de stocare a fost depășită. Upgradați acum.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3549,9 +3549,9 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Contul dvs. MEGA a fost suspendat din cauza acuzațiilor repetate de încălcare a drepturilor de autor. Aceasta înseamnă că nu vă puteți accesa contul sau datele din cadrul acestuia.
+        <translation>Contul dvs. MEGA a fost suspendat din cauza acuzațiilor repetate de încălcare a drepturilor de autor. Aceasta înseamnă că nu vă puteți accesa contul sau datele din acesta.
 
-Verificați-vă e-mailul pentru mai multe informații despre cum să depuneți o contranotificare. </translation>
+Verificați căsuța de e-mail pentru mai multe informații despre cum să depuneți o contranotificare.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -4053,22 +4053,22 @@ Actualizați fereastra.</translation>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>Eliminați fișierul deja stocat în MEGA [B]%1[/B]?</translation>
+        <translation>Înlocuiți fișierul [B]%1[/B] deja stocat în MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>Eliminați folderul deja stocat în MEGA [B]%1[/B]?</translation>
+        <translation>Înlocuiți folderul [B]%1[/B] deja stocat în MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>Eliminați fișierul local [B]%1[/B]?</translation>
+        <translation>Înlocuiți fișierul local [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>Eliminați folderul local [B]%1[/B]?</translation>
+        <translation>Înlocuiți folderul local [B]%1[/B]?</translation>
     </message>
 </context>
 <context>
@@ -4966,7 +4966,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation>Sincronizați-vă fișierele între computerele dvs. cu MEGA; orice modificare dintr-o parte se va aplica în altă parte.</translation>
+        <translation>Sincronizați-vă fișierele între calculatoarele dvs. cu MEGA; orice modificare dintr-o parte se va aplica pe cealaltă parte.</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
@@ -5225,7 +5225,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>Fișierele și folderele au un proprietar și aparțin unui grup de utilizatori. Folosind acest dialog, puteți acorda permisiuni de acces diferite pentru fișierele și folderele noi create de aplicația desktop utilizatorilor care aparțin aceluiași grup și celorlalți utilizatori din calculator. Dacă nu trebuie să le modificați, vă rugăm să le lăsați în setările implicite din motive de securitate.</translation>
+        <translation>Fișierele și folderele au un proprietar și aparțin unui grup de utilizatori. Folosind acest dialog, puteți acorda permisiuni de acces diferite pentru fișierele și folderele noi create de aplicația desktop utilizatorilor care aparțin aceluiași grup și celorlalți utilizatori din calculator. Dacă nu trebuie să le modificați, lăsați-le în setările implicite din motive de securitate.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5752,9 +5752,8 @@ Introdu un alt nume.</translation>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Dosarul nu a fost găsit.
-Vă rugăm să confirmați numele corect al folderului.</translation>
+        <translation>Folderul %1 nu a fost găsit.
+Verificați dacă a fost dat numele corect al folderului.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5768,9 +5767,8 @@ Vrei să îl înlocuiești?</translation>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-Fișierul nu a fost găsit.
-Vă rugăm să confirmați numele corect al fișierului.</translation>
+        <translation>Fișierul %1 nu a fost găsit.
+Verificați dacă a fost dat numele corect al fișierului.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6136,12 +6134,12 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Backup-urile versiunilor anterioare ale fișierelor sincronizate din calculator vor fi șterse definitiv. Vă rugăm să verificați folderele de backup pentru a vedea dacă trebuie să salvați ceva înainte de a continua:</translation>
+        <translation>Backup-urile versiunilor anterioare ale fișierelor sincronizate vor fi șterse definitiv de pe calculator. Verificați folderele de backup pentru a vedea dacă trebuie să salvați ceva înainte de a continua.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Backup-urile versiunilor anterioare ale fișierelor sincronizate în MEGA vor fi șterse definitiv. Vă rugăm să verificați [A] folder în Coșul de gunoi al contului MEGA pentru a vedea dacă trebuie să salvați ceva înainte de a continua.</translation>
+        <translation>Backup-urile versiunilor anterioare ale fișierelor sincronizate vor fi șterse definitiv din MEGA. Verifică-ți folder vs. [A] în Coșul de gunoi al contului MEGA pentru a vedea dacă trebuie să salvați ceva înainte de a continua.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6246,7 +6244,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>Vă rugăm să ne anunțați dacă întâmpinați probleme. Ajutați-ne oferind cât mai multe detalii posibil.</translation>
+        <translation>Spuneți-ne dacă întâmpinați probleme. Ajutați-ne oferind cât mai multe detalii posibil.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6931,7 +6929,7 @@ Vrei să îl ștergi oricum?</translation>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>Conflictul tipului de element: %n</numerusform><numerusform>Conflictele tipului de element: %n</numerusform><numerusform>Conflictele tipului de element: %n</numerusform></translation>
+        <translation><numerusform>Conflict tip de element: %n</numerusform><numerusform>Conflicte tip de element: %n</numerusform><numerusform>Conflicte tip de element: %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
@@ -7816,12 +7814,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Local path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the local path of the sync.</translatorcomment>
-        <translation>Cale locală:</translation>
+        <translation>Calea locală:</translation>
     </message>
     <message>
         <source>MEGA path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the remote path of the sync.</translatorcomment>
-        <translation>Cale MEGA:</translation>
+        <translation>Calea MEGA:</translation>
     </message>
 </context>
 <context>
@@ -8634,7 +8632,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Vă rugăm să actualizați la Pro pentru a continua imediat sau așteptați %1 pentru a continua gratuit</translation>
+        <translation>Upgradați contul dvs. pentru a continua imediat sau așteaptă %1 pentru a continua gratuit</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8667,7 +8665,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Vă rugăm să vă actualizați contul pentru a vă bucura de mai mult spațiu de stocare (încărcările dvs. se vor relua automat).</translation>
+        <translation>Upgradați contul dvs. pentru a te bucura de mai mult spațiu de stocare (încărcările se vor relua automat).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8915,7 +8913,8 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Contul dvs. a fost blocat temporar pentru siguranța dvs. Vă rugăm să verificați adresa de e-mail și să urmați pașii săi pentru a vă debloca contul.</translation>
+        <translation>Contul dvs. a fost blocat pentru protecția dvs. după detectarea unei autentificări rău intenționate, așa că vă solicităm să vă resetați parola. 
+Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului și sfaturi despre cum să preveniți acest lucru să se întâmple din nou.</translation>
     </message>
     <message>
         <source>Resend email</source>

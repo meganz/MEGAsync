@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Xin nhập một đường dẫn hoặc tên tệp tin một cách hợp lệ.</translation>
+        <translation>Nhập một tên tệp&#xa0;tin hợp&#xa0;lệ hoặc đường dẫn chính&#xa0;xác.</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -356,22 +356,22 @@
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Tệp tin chia sẻ công cộng của bạn ([A]) đã bị gỡ bỏ</translation>
+        <translation>Tệp&#xa0;tin chia&#xa0;sẻ công&#xa0;khai của bạn ([A]) đã bị gỡ bỏ</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Thư mục chia sẻ công cộng của bạn ([A]) đã bị gỡ bỏ</translation>
+        <translation>Thư&#xa0;mục chia&#xa0;sẻ công&#xa0;khai của bạn ([A]) đã bị gỡ bỏ</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Tệp tin chia sẻ công cộng của bạn ([A]) đã được hồi phục</translation>
+        <translation>Tệp&#xa0;tin chia&#xa0;sẻ công&#xa0;khai của bạn ([A]) đã được hồi&#xa0;phục</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Thư mục chia sẻ công cộng của bạn ([A]) đã được hồi phục</translation>
+        <translation>Thư&#xa0;mục chia&#xa0;sẻ công&#xa0;khai của bạn ([A]) đã được hồi&#xa0;phục</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -447,7 +447,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>Một thư mục mang tên “%1” đã có trong danh sách Sao Lưu. Đổi tên thư mục mới để tiến hành việc sao lưu. Tên thư mục sẽ không có bị thay đổi trong máy tính của bạn.</translation>
+        <translation>Một thư&#xa0;mục mang tên “%1” đã có trong các Sao&#xa0;Lưu của bạn. Đổi tên thư&#xa0;mục mới này để tiếp&#xa0;tục việc sao&#xa0;lưu. Tên thư&#xa0;mục sẽ không có bị thay đổi trong máy&#xa0;tính của bạn.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
@@ -485,7 +485,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>Một thư mục mang tên “%1” đã có trong danh sách Sao Lưu. Đổi tên thư mục mới để tiến hành việc sao lưu.</translation>
+        <translation>Một thư&#xa0;mục mang tên “%1” đã có trong các Sao&#xa0;Lưu của bạn. Đổi tên thư&#xa0;mục mới này để tiến&#xa0;tục việc sao&#xa0;lưu.</translation>
     </message>
 </context>
 <context>
@@ -533,7 +533,7 @@
     <message>
         <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một số thư&#xa0;mục chưa có được sao&#xa0;lưu lại. Để biết thêm thông&#xa0;tin, rê chuột lên biểu&#xa0;tượng màu đỏ.</translation>
     </message>
 </context>
 <context>
@@ -660,7 +660,7 @@
     <message>
         <source>Setup</source>
         <translatorcomment>Step 2 button text that will initiate the creation of the backups.</translatorcomment>
-        <translation>Cài đặt</translation>
+        <translation>Thiết lập</translation>
     </message>
     <message>
         <source>Collapse</source>
@@ -841,7 +841,7 @@
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chọn một thư&#xa0;mục cục&#xa0;bộ và một thư&#xa0;mục MEGA</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -944,7 +944,7 @@
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Báo&#xa0;cáo lỗi đã không thể gửi đi được do có trục&#xa0;trặc. Hãy thử lại sau hoặc liên&#xa0;hệ với đội trợ&#xa0;giúp qua email [A]support@mega.nz[/A] nếu vấn&#xa0;đề vẫn tiếp&#xa0;diễn.</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
@@ -974,7 +974,7 @@
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Xin chờ cho đến khi việc tải lên được hoàn tất.</translation>
+        <translation>Chờ cho đến khi phiên tải&#xa0;lên hiện&#xa0;tại được hoàn&#xa0;tất.</translation>
     </message>
 </context>
 <context>
@@ -1015,7 +1015,7 @@
     <message>
         <source>Filesystem error preventing folder access.</source>
         <translatorcomment>Subtitle for the header widget  sync stall that occurs when a folder cannot be created in the local drive.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Có lỗi cục&#xa0;bộ ngăn&#xa0;cản truy&#xa0;cập thư&#xa0;mục</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@
     <message>
         <source>Filesystem error preventing folder access.</source>
         <translatorcomment>Subtitle for the header widget  sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Có lỗi cục&#xa0;bộ ngăn&#xa0;cản truy&#xa0;cập thư&#xa0;mục</translation>
     </message>
     <message>
         <source>Cannot perform deletion [B]%1[/B]</source>
@@ -1114,7 +1114,7 @@
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>Mật khẩu vừa nhập trùng với mật khẩu đang sử dụng hiện tại, xin nhập mật khẩu mới.</translation>
+        <translation>Mật&#xa0;khẩu bạn vừa nhập trùng với mật&#xa0;khẩu hiện&#xa0;tại, nhập một mật&#xa0;khẩu mới.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -1163,17 +1163,17 @@
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Giải&#xa0;quyết vấn&#xa0;đề?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Hành&#xa0;động này sẽ tải các tệp&#xa0;tin xuống một vị&#xa0;trí tạm&#xa0;thời, để khắc&#xa0;phục vấn&#xa0;đề và sau đó xóa đi các tệp&#xa0;tin tạm&#xa0;thời.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Tiếp&#xa0;tục các phiên truyền&#xa0;tải của bạn để khắc&#xa0;phục vấn&#xa0;đề.</numerusform></translation>
     </message>
     <message>
         <source>Can´t download [B]%1[/B] to the selected location</source>
@@ -1183,12 +1183,12 @@
     <message>
         <source>File fingerprint missing</source>
         <translatorcomment>Subtitle for the header widget sync stall that occurs when a file cannot be downloaded for not having a fingerprint.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thiếu dấu vân tay tệp tin</translation>
     </message>
     <message>
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giải quyết</translation>
     </message>
 </context>
 <context>
@@ -1196,12 +1196,12 @@
     <message>
         <source>Cloude node undecrypted [B]%1[/B]</source>
         <translatorcomment>Title for the header widget sync stall thatoccurs when the node being synced cannot be decrypted.[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục trên MEGA không thể giải mã được [B]%1[/B]</translation>
     </message>
     <message>
         <source>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</source>
         <translatorcomment>Subtitle for the header widget sync stall thatoccurs when the node being synced cannot be decrypted, [A] will be replaced by Mega link, [A1] will be replaced by support link. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Quá&#xa0;trình giả&#xa0; mã không thể hoàn&#xa0;thành. Hãy tải lại tài&#xa0;khoản của bạn trên [A]MEGA[/A] hoặc liên&#xa0;hệ với [A1]Hỗ&#xa0;trợ[/A1].</translation>
     </message>
 </context>
 <context>
@@ -1272,7 +1272,7 @@
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>App MEGA đã phát hiện ra vấn đề. Dưới đây là chi tiết:</translation>
+        <translation>App MEGA đã phát&#xa0;hiện ra vấn&#xa0;đề. Dưới đây là chi&#xa0;tiết:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
@@ -1314,7 +1314,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Error detected with [B]%1[/B]</source>
         <translatorcomment>Title for the header widgetof the default stall issue shown if the reason of the stall is unknown. file path will be added to the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi phát sinh với [B]%1[/B]</translation>
     </message>
     <message>
         <source>Reason not found.</source>
@@ -1327,12 +1327,12 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Can´t find [B]%1[/B]</source>
         <translatorcomment>Title for the header widget of a sync stall when a file or folder cannot be found,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không tìm thấy [B]%1[/B]</translation>
     </message>
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang chờ quá trình quét kết&#xa0;thúc để xác&#xa0;định xem tệp&#xa0;tin đã di chuyển hay bị xóa.</translation>
     </message>
 </context>
 <context>
@@ -1340,12 +1340,12 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Waiting to move [B]%1[/B]</source>
         <translatorcomment>Subtitle for the header widget of sync stall shown when we&amp;amp;apos;re waiting for a move operation to complete to make sure the file should be deleted.[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang chờ di chuyển [B]%1[/B]</translation>
     </message>
     <message>
         <source>Waiting for other processes to complete.</source>
         <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang chờ các quy&#xa0;trình khác được hoàn&#xa0;tất.</translation>
     </message>
 </context>
 <context>
@@ -1508,7 +1508,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Xin giải&#xa0;quyết vấn&#xa0;đề thanh&#xa0;toán càng sớm càng càng tốt để tránh việc tài&#xa0;khoản Doanh Nghiệp không bị đình&#xa0;chỉ</translation>
+        <translation>Hãy giải&#xa0;quyết vấn&#xa0;đề thanh&#xa0;toán càng sớm càng càng tốt để tránh việc tài&#xa0;khoản Doanh&#xa0;Nghiệp không bị đình&#xa0;chỉ</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1639,7 +1639,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location.</source>
         <translatorcomment>Title for the header widget of a sync stall when a file or cannot be downloaded.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã xảy ra lỗi khi tải xuống hoặc di&#xa0;chuyển tệp&#xa0;tin đã tải xuống tạm&#xa0;thời đến vị&#xa0;trí cuối&#xa0;cùng của nó.</translation>
     </message>
 </context>
 <context>
@@ -1677,17 +1677,17 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Removable drive</source>
         <translatorcomment>Default drive name shown on the low space dialog when the drive is a Removable drive. See SNC-3506.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ổ đĩa rời</translation>
     </message>
     <message>
         <source>Shared drive</source>
         <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ổ đĩa mạng</translation>
     </message>
     <message>
         <source>Local drive</source>
         <translatorcomment>Default drive name shown on the low space dialog when downloading files. See SNC-3506.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ổ đĩa cục bộ</translation>
     </message>
 </context>
 <context>
@@ -1819,12 +1819,12 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
         <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một tệp&#xa0;tin gặp phải vấn&#xa0;đề và cần quyết&#xa0;định của bạn để giải&#xa0;quyết</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
         <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một thư&#xa0;mục gặp phải vấn&#xa0;đề và cần quyết&#xa0;định của bạn để giải&#xa0;quyết</translation>
     </message>
 </context>
 <context>
@@ -1931,7 +1931,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Cannot sync folders against files.</source>
         <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp&#xa0;tin bạn đang cố đồng&#xa0;bộ hóa không có dạng tệp và có cùng tên với một thư&#xa0;mục có sẵn</translation>
     </message>
 </context>
 <context>
@@ -2029,7 +2029,8 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vấn&#xa0;đề có thể đã được giải&#xa0;quyết từ bên ngoài.
+Làm mới danh sách.</translation>
     </message>
 </context>
 <context>
@@ -2037,7 +2038,7 @@ Please, refresh the list.</source>
     <message>
         <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
         <translatorcomment>Text in message box shown when a failure in adding rules in the file containing ignore rules.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể cập&#xa0;nhật tệp .megaignore. Hãy kiểm&#xa0;tra xem bạn có quyền ghi cho tệp&#xa0;tin này không.</translation>
     </message>
 </context>
 <context>
@@ -2045,37 +2046,37 @@ Please, refresh the list.</source>
     <message>
         <source>Edit exclusions</source>
         <translatorcomment>window name for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chỉnh sửa loại trừ</translation>
     </message>
     <message>
         <source>Manage exclusions</source>
         <translatorcomment>window title for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Quản lý loại trừ</translation>
     </message>
     <message>
         <source>by size</source>
         <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại trừ theo kích thước</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
         <translatorcomment>Check box text responsible for the lower size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại trừ các tệp tin nhỏ hơn</translation>
     </message>
     <message>
         <source>Exclude files bigger than</source>
         <translatorcomment>Check box text responsible for the upper size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại trừ các tệp tin lớn hơn</translation>
     </message>
     <message>
         <source>by name</source>
         <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại trừ theo tên</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp&#xa0;tin hoặc thư&#xa0;mục được loại&#xa0;trừ khỏi đồng&#xa0;bộ hóa:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2090,7 +2091,7 @@ Please, refresh the list.</source>
     <message>
         <source>by file type</source>
         <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại trừ theo dạng tệp</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -2110,12 +2111,12 @@ Please, refresh the list.</source>
     <message>
         <source>by name:</source>
         <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại trừ theo tên:</translation>
     </message>
     <message>
         <source>by file type:</source>
         <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại trừ theo dạng tệp:</translation>
     </message>
     <message>
         <source>Edit .megaignore</source>
@@ -2125,12 +2126,12 @@ Please, refresh the list.</source>
     <message>
         <source>Advanced:</source>
         <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nâng cao:</translation>
     </message>
     <message>
         <source>Rule already exists.</source>
         <translatorcomment>Text in a message box shown when the user adds a new rule identical to existing one.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Quy tắc đã tồn tại</translation>
     </message>
     <message>
         <source>Reload</source>
@@ -2140,25 +2141,26 @@ Please, refresh the list.</source>
     <message>
         <source>Current file has been modified by another program. it will be reloaded</source>
         <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp .megaignore hiện&#xa0;tại đã được sửa&#xa0;đổi bởi một chương&#xa0;trình khác, nó sẽ được tải lại</translation>
     </message>
     <message>
         <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
         <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn có thể chỉnh&#xa0;sửa tệp .megaignore bằng công&#xa0;cụ soạn&#xa0;thảo văn&#xa0;bản. Việc này phù&#xa0;hợp hơn cho những người dùng cảm thấy thoải&#xa0;mái với các biểu&#xa0;thức chính&#xa0;quy.</translation>
     </message>
     <message>
         <source>You can change the associated .megaignore file on a text editor.
 This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
         <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn có thể chỉnh&#xa0;sửa tệp .megaignore bằng công&#xa0;cụ soạn&#xa0;thảo văn&#xa0;bản. Việc này phù&#xa0;hợp hơn cho những người dùng cảm thấy thoải&#xa0;mái với các biểu&#xa0;thức chính&#xa0;quy.</translation>
     </message>
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive.
 This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
 </source>
         <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn có thể loại&#xa0;trừ một số tệp&#xa0;tin và thư&#xa0;mục nhất&#xa0;định khỏi đồng&#xa0;bộ hóa với Ổ&#xa0;Mây của mình.
+Điều này có thể hữu ích cho các tệp tin lớn, hoặc tệp tin mà bạn không cần trên tất cả các thiết bị của mình hoặc những dạng tệp không cần phải đồng bộ hóa.</translation>
     </message>
 </context>
 <context>
@@ -2295,7 +2297,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Upload to MEGA now</source>
         <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
-        <translation>Tài lên MEGA ngay bây giờ</translation>
+        <translation>Tải lên MEGA ngay bây giờ</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2330,7 +2332,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Xin nâng cấp hạng tài khoản.</translation>
+        <translation>Nâng&#xa0;cấp tài&#xa0;khoản của bạn</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2592,7 +2594,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>This file has been changed both in MEGA and locally since it it was last synced.</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file being synced changed oth locally and remotely.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp&#xa0;tin này đã được thay&#xa0;đổi cả trên MEGA và cục&#xa0;bộ kể từ lúc nó đã được đồng&#xa0;bộ hóa lần cuối</translation>
     </message>
 </context>
 <context>
@@ -2600,7 +2602,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Please select which version you want to keep</source>
         <translatorcomment>Title for the solve options in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chọn phiên&#xa0;bản bạn muốn giữ lại</translation>
     </message>
     <message>
         <source>Choose both</source>
@@ -2620,12 +2622,12 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>The backup will be disabled in order to protect the local file %1</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup, %1 placeholder will have the file name.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc sao lưu sẽ bị vô&#xa0;hiệu để bảo&#xa0;vệ tệp&#xa0;tin cục&#xa0;bộ [B]%1[/B]</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local folder %1</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup,%1 placeholder will have the folder name.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc sao lưu sẽ bị vô&#xa0;hiệu để bảo&#xa0;vệ thư&#xa0;mục cục&#xa0;bộ [B]%1[/B]</translation>
     </message>
     <message>
         <source>[B]Keep both[/B]</source>
@@ -2635,68 +2637,68 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Are you sure you want to keep the [B]local file[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ tệp&#xa0;tin cục bộ [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn có chắc muốn giữ lại thư&#xa0;mục cục&#xa0;bộ [B]%1[/B] này?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp&#xa0;tin cục&#xa0;bộ [B]%1[/B] sẽ được tải lên MEGA và được thêm vào dưới dạng phiên&#xa0;bản của tệp&#xa0;tin đã có trên MEGA.</translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư&#xa0;mục trên MEGA [B]%1[/B] sẽ bị chuyển vào Thùng&#xa0;Rác MEGA.[BR]Bạn sẽ có thể khôi&#xa0;phục lại thư&#xa0;mục từ trong đó.</translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Tiếp&#xa0;tục các phiên truyền&#xa0;tải của bạn để khắc&#xa0;phục vấn&#xa0;đề.</numerusform></translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ tệp&#xa0;tin trên MEGA [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ thư&#xa0;mục [B]%1[/B] hiện đang có sẵn trên MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ mục [B]%1[/B] hiện đang có sẵn trên MEGA?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp&#xa0;tin cục&#xa0;bộ [B]%1[/B] sẽ di chuyển vào thư&#xa0;mục .rubbish hoặc .debris trong vị&#xa0;trí đồng&#xa0;bộ hóa cục&#xa0;bộ của bạn.</translation>
     </message>
     <message>
         <source>The [B]local folder[/B] %1 will be moved to the sync debris folder</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư&#xa0;mục cục&#xa0;bộ [B]%1[/B] sẽ di chuyển vào thư&#xa0;mục .rubbish hoặc .debris trong vị&#xa0;trí đồng&#xa0;bộ hóa cục&#xa0;bộ của bạn.</translation>
     </message>
     <message>
         <source>Are you sure you want to choose the latest modified side?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the last modified version of a local and remote changed stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chọn mục đã sửa&#xa0;đổi lần cuối&#xa0;cùng?</translation>
     </message>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Với hành&#xa0;động này, mục cục&#xa0;bộ sẽ được chọn.</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Với hành&#xa0;động này, mục đã được lưu&#xa0;trữ trên MEGA sẽ được chọn.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2707,7 +2709,8 @@ Please wait for the upload to complete.</source>
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vấn&#xa0;đề có thể đã được giải&#xa0;quyết từ bên ngoài.
+Làm mới danh sách.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2737,88 +2740,89 @@ Please, refresh the list.</source>
     <message>
         <source>[B]Keep last modified[/B] (local)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Giữ bản sửa đổi lần cuối[/B] (cục&#xa0;bộ)</translation>
     </message>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Giữ bản sửa đổi lần cuối[/B] (trên MEGA)</translation>
     </message>
     <message>
         <source>Keep the [B]local files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ các tệp&#xa0;tin [B]cục&#xa0;bộ[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các tệp&#xa0;tin [B]cục&#xa0;bộ[/B] sẽ được tải lên MEGA và được thêm dưới dạng phiên&#xa0;bản vào các tệp&#xa0;tin đã có trêm MEGA.
+Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư&#xa0;mục đã có sẵn trên MEGA sẽ bị chuyển vào Thùng&#xa0;Rác MEGA của bạn.[BR]Bạn sẽ có thể khôi&#xa0;phục lại các thư&#xa0;mục từ trong đó.</translation>
     </message>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ các tệp&#xa0;tin đã được lưu sẵn [B]trên MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ các thư&#xa0;mục đã được lưu sẵn [B]trên MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ các mục đã được lưu sẵn [B]trên MEGA[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp&#xa0;tin [B]cục&#xa0;bộ[/B] sẽ chuyển vào thư&#xa0;mục ẩn có tên .rubbish hoặc .debris trong vị&#xa0;trí đồng&#xa0;bộ hóa cục&#xa0;bộ của bạn.</translation>
     </message>
     <message>
         <source>The [B]local folders[/B] will be moved to the sync debris folder</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục [B]cục&#xa0;bộ[/B] sẽ chuyển vào thư&#xa0;mục ẩn có tên .rubbish hoặc .debris trong vị&#xa0;trí đồng&#xa0;bộ hóa cục&#xa0;bộ của bạn.</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local files</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc sao lưu sẽ bị vô&#xa0;hiệu để bảo&#xa0;vệ tệp&#xa0;tin cục&#xa0;bộ.</translation>
     </message>
     <message>
         <source>The backup will be disabled in order to protect the local folders</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the remote version in a backup.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc sao lưu sẽ bị vô&#xa0;hiệu để bảo&#xa0;vệ thư&#xa0;mục cục&#xa0;bộ.</translation>
     </message>
     <message>
         <source>Keep all files?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ tất cả các tệp&#xa0;tin?</translation>
     </message>
     <message>
         <source>Keep all folders</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall(multiple stalls selected).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ tất cả các thư&#xa0;mục?</translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Các tệp&#xa0;tin đã được lưu sẵn trên MEGA sẽ có đánh số như (1) vào tên.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Các thư&#xa0;mục đã được lưu sẵn trên MEGA sẽ có đánh số như (1) vào tên.</numerusform></translation>
     </message>
     <message>
         <source>Keep the [B]local folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giữ các thư&#xa0;mục [B]cục&#xa0;bộ[/B]?</translation>
     </message>
 </context>
 <context>
@@ -2831,7 +2835,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This file has conflicting copies</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục này có các bản&#xa0;sao mâu&#xa0;thuẫn với nhau</translation>
     </message>
 </context>
 <context>
@@ -2870,7 +2874,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Xin điền mã được tạo ra từ app lập xác thực mà bạn sử dụng</translation>
+        <translation>Nhập mã số được tạo bởi ứng&#xa0;dụng lập xác&#xa0;thực của bạn</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2903,12 +2907,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>Xin kiểm tra hộp thư e-mail của bạn và click vào đường liên kết để xác thực tài khoản.</translation>
+        <translation>Kiểm tra hộp&#xa0;thư email của bạn và nhấp vào đường liên&#xa0;kết để xác&#xa0;nhận tài&#xa0;khoản.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>Bạn đã cố thử đăng nhập quá nhiều lần. [BR]Xin vui lòng chờ tới %1 rồi thử lại.</translation>
+        <translation>Bạn đã cố thử đăng&#xa0;nhập quá nhiều lần. [BR]Xin chờ tới %1 rồi thử lại.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
@@ -2918,7 +2922,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>Ứng&#xa0;dụng không thể kết&#xa0;nối tới mạng. Xin kiểm&#xa0;tra đường kết&#xa0;nối internet và các cài&#xa0;đặt tường&#xa0;lửa cục&#xa0;bộ của bạn. Lưu&#xa0;ý rằng nhiều phần&#xa0;mềm chống virút cũng có đặt tường&#xa0;lửa.</translation>
+        <translation>Ứng&#xa0;dụng không thể kết&#xa0;nối tới mạng. Kiểm&#xa0;tra đường kết&#xa0;nối internet và các cài&#xa0;đặt tường&#xa0;lửa cục&#xa0;bộ của bạn. Lưu&#xa0;ý rằng nhiều phần&#xa0;mềm chống virút cũng có đặt tường&#xa0;lửa.</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -2936,7 +2940,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>Không thể xác&#xa0;minh chìa&#xa0;khóa SSL của MEGA. Bạn có thể bị ảnh&#xa0;hưởng bởi một hành&#xa0;vi tấn&#xa0;công trung&#xa0;gian hoặc phần&#xa0;mềm chống vi-rút của bạn chặn việc giao&#xa0;tiếp của bạn và gây ra sự&#xa0;cố này. Vui lòng tắt nó và thử lại.</translation>
+        <translation>Không thể xác&#xa0;minh chìa&#xa0;khóa SSL của MEGA. Bạn có thể bị ảnh&#xa0;hưởng bởi một hành&#xa0;vi tấn&#xa0;công trung&#xa0;gian hoặc phần&#xa0;mềm chống vi-rút của bạn chặn việc giao&#xa0;tiếp của bạn và gây ra sự&#xa0;cố này. Hãy tắt nó đi và thử lại.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3042,7 +3046,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Stalled</source>
         <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã phát hiện vấn đề</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -3073,7 +3077,7 @@ Please wait for the upload to complete.</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Có trục trặc khi cài đặt bản cập nhật. Xin thử lại sau, hoặc tải về phiên bản mới nhất tại: https://mega.nz/sync</translation>
+        <translation>Có lỗi phát&#xa0;sinh khi cài&#xa0;đặt bản cập&#xa0;nhật mới. Hãy thử lại sau hoặc lên trang web: https://mega.io/desktop để tải về phiên&#xa0;bản mới nhất.</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3533,7 +3537,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Vượt mức giới hạn lưu trữ. Xin nâng cấp ngay.</translation>
+        <translation>Vượt mức giới&#xa0;hạn lưu&#xa0;trữ. Nâng&#xa0;cấp ngay.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3545,7 +3549,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
         <translation>Tài&#xa0;khoản MEGA của quý&#xa0;vị đã bị đình&#xa0;chỉ do đã nhiều lần bị cáo&#xa0;buộc vi&#xa0;phạm bản&#xa0;quyền. Điều này có nghĩa là quý&#xa0;vị không được phép truy&#xa0;cập tài&#xa0;khoản của mình hoặc bất cứ dữ&#xa0;liệu bên trong.
 
-Kiểm tra email của quý vị để biết thêm thông tin và về cách gửi đơn phản đối.</translation>
+Kiểm tra hộp thư email của quý vị để biết thêm thông tin và về cách gửi đơn phản đối.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -3663,12 +3667,12 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư&#xa0;mục trên MEGA đã bị chuyển vào Thùng&#xa0;Rác</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không có toàn quyền truy&#xa0;cập vào thư&#xa0;mục được chia&#xa0;sẻ trên MEGA</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3698,7 +3702,7 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư&#xa0;mục trên MEGA đang nằm trong Thùng&#xa0;Rác của bạn</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -3946,22 +3950,22 @@ Các phiên truyền tải đồng bộ chưa hoàn tất mà bạn đã ch�
     <message>
         <source>Cannot move or rename [B]%1[/B]</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the item cannot be moved ore renamed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể di chuyển hoặc đổi tên [B]%1[/B]</translation>
     </message>
     <message>
         <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
         <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một hành&#xa0;động di&#xa0;chuyển hoặc đổi tên đã được phát&#xa0;hiện trên MEGA, nhưng không thể phỏng theo được tại cục&#xa0;bộ.</translation>
     </message>
     <message>
         <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
         <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một hành&#xa0;động di&#xa0;chuyển hoặc đổi tên đã được phát&#xa0;hiện tại hệ&#xa0;thống tệp&#xa0;tin cục&#xa0;bộ, nhưng không thể phỏng theo được trên MEGA</translation>
     </message>
     <message>
         <source>Solve</source>
         <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giải quyết</translation>
     </message>
 </context>
 <context>
@@ -3977,7 +3981,7 @@ Các phiên truyền tải đồng bộ chưa hoàn tất mà bạn đã ch�
     <message>
         <source>Removed</source>
         <translatorcomment>Label in solved name conflict sync stalls by removing the file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã loại bỏ</translation>
     </message>
     <message>
         <source>Renamed to &quot;%1&quot;</source>
@@ -3992,7 +3996,7 @@ Các phiên truyền tải đồng bộ chưa hoàn tất mà bạn đã ch�
     <message>
         <source>Modified externally</source>
         <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã sửa từ bên ngoài</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -4008,58 +4012,60 @@ Các phiên truyền tải đồng bộ chưa hoàn tất mà bạn đã ch�
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Confirmation text when a name conflict has been resolved externally.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vấn&#xa0;đề có thể đã được giải&#xa0;quyết từ bên ngoài.
+Làm mới danh sách.</translation>
     </message>
     <message>
         <source>%1 no longer exists.
 Please refresh the view</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by renamming the local file and the file is actually deleted.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]%1[/B] không còn tồn tại.
+Làm mới danh sách.</translation>
     </message>
     <message>
         <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin along with its versions.[BR]You will be able to retrieve the file and its versions from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục sẽ được chuyển đến thư&#xa0;mục SyncDebris trong Thùng&#xa0;Rác MEGA.[BR]Bạn sẽ có thể khôi&#xa0;phục lại tệp&#xa0;tin và bất kỳ phiên bản tệp&#xa0;tin nào từ chỗ đó.[/BR]</translation>
     </message>
     <message>
         <source>It will be moved to the SyncDebris folder on the MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục sẽ được chuyển đến thư&#xa0;mục SyncDebris trong Thùng&#xa0;Rác MEGA.[BR]Bạn sẽ có thể khôi&#xa0;phục lại thư&#xa0;mục từ chỗ đó.[/BR]</translation>
     </message>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục sẽ được chuyển đến thư&#xa0;mục .rubbish hoặc .debris trong vị&#xa0;trí đồng&#xa0;bộ hóa cục&#xa0;bộ của bạn.[BR]Bạn sẽ có thể khôi&#xa0;phục lại tệp&#xa0;tin từ chỗ đó.[/BR]</translation>
     </message>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục sẽ được chuyển đến thư&#xa0;mục .rubbish hoặc .debris trong vị&#xa0;trí đồng&#xa0;bộ hóa cục&#xa0;bộ của bạn.[BR]Bạn sẽ có thể khôi&#xa0;phục lại thư&#xa0;mục từ chỗ đó.[/BR]</translation>
     </message>
     <message>
         <source>No action needed</source>
         <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không cần làm gì thêm</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thay&#xa0;thế tệp&#xa0;tin [B]%1[/B] hiện đang có sẵn trên MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thay&#xa0;thế thư&#xa0;mục [B]%1[/B] hiện đang có sẵn trên MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thay&#xa0;thế tệp&#xa0;tin cục bộ [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thay&#xa0;thế thư&#xa0;mục cục&#xa0;bộ [B]%1[/B]?</translation>
     </message>
 </context>
 <context>
@@ -4067,22 +4073,22 @@ Please refresh the view</source>
     <message>
         <source>Remove duplicates</source>
         <translatorcomment>Button to solve a name conflict sync stall by removing duplicated items.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại bỏ mục trùng lặp</translation>
     </message>
     <message>
         <source>Remove duplicates, merge folders and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại bỏ mục trùng lặp, hợp nhất thư mục và đổi tên những cái còn lại</translation>
     </message>
     <message>
         <source>Remove duplicates and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Loại bỏ mục trùng lặp và đổi tên những cái còn lại</translation>
     </message>
     <message>
         <source>Merge folders and rename the rest</source>
         <translatorcomment>Merge folder action description for a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hợp nhất thư mục và đổi tên những cái còn lại</translation>
     </message>
     <message>
         <source>Rename all items</source>
@@ -4097,30 +4103,30 @@ Please refresh the view</source>
     <message>
         <source>Solve options</source>
         <translatorcomment>Button text to show the solve action of sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cách giải quyết</translation>
     </message>
     <message>
         <source>Name Conflicts: [B]%1[/B]</source>
         <translatorcomment>Title for name conflict sync stall header widget .[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mâu&#xa0;thuẫn tên: [B]%1[/B]</translation>
     </message>
     <message>
         <source>These items contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Có nhiều mục cùng tên trong một bên đồng&#xa0;bộ hóa của bạn và tất cả sẽ trở thành một mục duy&#xa0;nhất ở phiên đồng&#xa0;bộ hóa phía bên kia của bạn</translation>
     </message>
     <message>
         <source>These files contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Có nhiều mục cùng tên trong một bên đồng&#xa0;bộ hóa của bạn và tất cả sẽ trở thành một mục duy&#xa0;nhất ở phiên đồng&#xa0;bộ hóa phía bên kia của bạn</translation>
     </message>
     <message>
         <source>These folders contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Có nhiều mục cùng tên trong một bên đồng&#xa0;bộ hóa của bạn và tất cả sẽ trở thành một mục duy&#xa0;nhất ở phiên đồng&#xa0;bộ hóa phía bên kia của bạn</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4140,33 +4146,33 @@ This may be due to syncing to case insensitive local filesystems, or the effects
     <message>
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giải&#xa0;quyết vấn&#xa0;đề này?</translation>
     </message>
     <message>
         <source>This action will rename the conflicted items (adding a suffix like (1)).</source>
         <translatorcomment>Info text for confirmation message of rename action in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hành&#xa0;động này sẽ đổi tên các mục mâu&#xa0;thuẫn bằng cách thêm đánh số như (1).</translation>
     </message>
     <message>
         <source>This action will merge all folders into a single one. We will skip duplicated files
 and rename the files with the same name but different content (adding a suffix like (1))</source>
         <translatorcomment>Info text for confirmation message of merge folder action in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hành&#xa0;động này sẽ hợp&#xa0;nhất tất cả các thư&#xa0;mục thành một thư&#xa0;mục duy&#xa0;nhất. Các tệp&#xa0;tin trùng&#xa0;lặp sẽ bị bỏ qua và các tệp&#xa0;tin có cùng tên nhưng nội&#xa0;dung khác nhau sẽ được đánh số như (1) trong tên.</translation>
     </message>
     <message>
         <source>This action will delete the duplicate files.</source>
         <translatorcomment>Info text for confirmation message of remove duplicates action in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hành&#xa0;động này sẽ xóa các tệp&#xa0;tin trùng&#xa0;lặp.</translation>
     </message>
     <message>
         <source>This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
         <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hành&#xa0;động này sẽ xóa các tệp&#xa0;tin bị trùng&#xa0;lặp và đổi tên các mục còn lại bằng cách thêm đánh số như (1) vào tên.</translation>
     </message>
     <message>
         <source>This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
         <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hành&#xa0;động này sẽ xóa các tệp&#xa0;tin bị trùng&#xa0;lặp, hợp&#xa0;nhất tất cả thư&#xa0;mục, và đổi tên các mục còn lại nếu có mâu&#xa0;thuẫn tên bằng cách thêm đánh số như (1) vào tên.</translation>
     </message>
 </context>
 <context>
@@ -4642,12 +4648,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
         <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
-        <translation>Đồng&#xa0;bộ hóa của bạn đã được thiết&#xa0;lập và sẽ tự&#xa0;động đồng&#xa0;bộ dữ&#xa0;liệu đã chọn bất cứ khi nào ứng&#xa0;dụng máy tính đang chạy.</translation>
+        <translation>Phiên đồng&#xa0;bộ của bạn đã được thiết&#xa0;lập và sẽ tự&#xa0;động đồng&#xa0;bộ dữ&#xa0;liệu đã chọn bất cứ khi nào ứng&#xa0;dụng máy&#xa0;tính đang chạy.</translation>
     </message>
     <message>
         <source>Your sync has been set up</source>
         <translatorcomment>Title indicating that the backup was successfully configured CON-467</translatorcomment>
-        <translation>Đồng&#xa0;bộ của bạn đã được thiết&#xa0;lập</translation>
+        <translation>Phiên đồng&#xa0;bộ của bạn đã được thiết&#xa0;lập</translation>
     </message>
     <message>
         <source>First name</source>
@@ -4957,7 +4963,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation>Đồng&#xa0;bộ các tệp&#xa0;tin giữa các máy&#xa0;tính của bạn với MEGA; bất&#xa0;kỳ thay&#xa0;đổi nào từ một bên sẽ được áp&#xa0;dụng cho các phía khác.</translation>
+        <translation>Đồng&#xa0;bộ các tệp&#xa0;tin giữa các máy&#xa0;tính của bạn với MEGA; bất&#xa0;kỳ thay&#xa0;đổi nào từ một bên sẽ được áp&#xa0;dụng cho phía bên kia.</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
@@ -5071,7 +5077,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation>Nâng cấp tàI khoản</translation>
+        <translation>Nâng cấp tài khoản</translation>
     </message>
     <message>
         <source>Importing links is temporarily disabled.</source>
@@ -5216,7 +5222,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>Các tệp&#xa0;tin và thư&#xa0;mục đều có chủ sở&#xa0;hữu và thuộc về một nhóm người dùng. Sử&#xa0;dụng hộp&#xa0;thoại này, bạn có thể cấp các quyền truy&#xa0;cập khác nhau cho các tệp&#xa0;tin và thư&#xa0;mục mới do ứng&#xa0;dụng MEGA trên máy&#xa0;tính tạo ra cho người dùng thuộc cùng một nhóm và cho những người dùng còn lại trong máy&#xa0;tính. Nếu bạn không cần thay&#xa0;đổi gì, vui&#xa0;lòng để mọi thứ ở thiết&#xa0;đặt mặc&#xa0;định vì lý&#xa0;do bảo&#xa0;mật.</translation>
+        <translation>Các tệp&#xa0;tin và thư&#xa0;mục đều có chủ sở&#xa0;hữu và thuộc về một nhóm người dùng. Sử&#xa0;dụng hộp&#xa0;thoại này, bạn có thể cấp các quyền truy&#xa0;cập khác nhau cho các tệp&#xa0;tin và thư&#xa0;mục mới do ứng&#xa0;dụng MEGA trên máy&#xa0;tính tạo ra cho người dùng thuộc cùng một nhóm và cho những người dùng còn lại trong máy&#xa0;tính. Nếu bạn không cần thay&#xa0;đổi gì, hãy để mọi thứ ở thiết&#xa0;đặt mặc&#xa0;định vì lý&#xa0;do bảo&#xa0;mật.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5370,7 +5376,14 @@ Nhập một tên khác.</translation>
 - Performance is improved.
 </source>
         <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đồng bộ hóa bản làm lại beta V2
+- Trình hướng dẫn cài đặt mới được giới thiệu cho mọi quy trình đồng bộ hóa hoặc sao lưu mới.
+- Các thay đổi được phát hiện và vấn đề đồng bộ hóa được cập nhật tự động.
+- Hiện sẵn sàng cho tất cả các ngôn ngữ được MEGA hỗ trợ.
+- Trải nghiệm người dùng khi thực hiện giải quyết sự cố đồng bộ hàng loạt được cải thiện.
+- Các lỗi nhỏ đã được sửa.
+- Hiệu suất được cải thiện.
+</translation>
     </message>
 </context>
 <context>
@@ -5736,9 +5749,8 @@ Nhập một tên khác.</translation>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Không tìm thấy thư mục.
-Vui lòng xác nhận tên thư mục đã đưa ra là có chính xác.</translation>
+        <translation>Không tìm thấy thư&#xa0;mục %1.
+Kiểm tra xem tên thư mục đã đưa là có chính xác.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5752,9 +5764,8 @@ Bạn có muốn thay thế không?</translation>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-Không tìm thấy tệp tin.
-Xin kiểm tra lại tên tệp tin cho đúng.</translation>
+        <translation>Không tìm thấy tệp&#xa0;tin %1.
+Kiểm tra xem tên tệp tin đã đưa là có chính xác.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6120,12 +6131,12 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Các phiên bản cũ của nội dung và dữ liệu được sao lưu trước đây trong máy tính của bạn sẽ bị xóa hoàn toàn. Xin kiểm tra thư mục nơi bạn chứa bản lưu dự phòng nếu bạn cần giữ lại thứ gì đó trước khi thực hiện công việc này:</translation>
+        <translation>Các phiên&#xa0;bản cũ của tệp&#xa0;tin đã được sao&#xa0;lưu trước đây sẽ bị xóa hoàn&#xa0;toàn khỏi máy&#xa0;tính của bạn. Kiểm&#xa0;tra các thư&#xa0;mục sao&#xa0;lưu của bạn để xem nếu bạn cần giữ lại thứ gì đó trước khi làm việc này.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Các phiên bản cũ của nội dung và dữ liệu được sao lưu trước đây trên MEGA của bạn sẽ bị xóa hoàn toàn. Xin kiểm tra [A] Thùng Rác để xem nếu bạn cần giữ lại thứ gì đó trước khi thực hiện công việc này.</translation>
+        <translation>Các phiên&#xa0;bản cũ của tệp&#xa0;tin đã được đồng&#xa0;bộ trước đây sẽ bị xóa hoàn&#xa0;toàn khỏi MEGA. Kiểm&#xa0;tra thư&#xa0;mục [A] trong Thùng&#xa0;Rác MEGA của bạn để xem nếu bạn cần giữ lại thứ gì đó trước khi làm việc này.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6230,7 +6241,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>Nếu có trục trặc gì xảy ra khi sử dụng, xin hãy cho chúng tôi biết càng nhiều chi tiết càng tốt.</translation>
+        <translation>Hãy cho chúng&#xa0;tôi biết nếu bạn gặp bất kỳ vấn&#xa0;đề nào. Cho chúng&#xa0;tôi biết càng nhiều chi&#xa0;tiết càng tốt.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6630,7 +6641,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Some issues ocurred.</source>
         <translatorcomment>Label that appeaers when sync stalls are detected.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã phát hiện vấn đề</translation>
     </message>
     <message>
         <source>View...</source>
@@ -6643,12 +6654,12 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Loading user…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>đang lấy tên người dùng…</translation>
     </message>
     <message>
         <source>Upload by:</source>
         <translatorcomment>Label indicating uploader for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã tải lên bởi:</translation>
     </message>
     <message>
         <source>Versions:</source>
@@ -6658,7 +6669,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Loading size</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang tải kích thước…</translation>
     </message>
     <message>
         <source>Size:</source>
@@ -6673,7 +6684,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Loading time…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang tải mốc thời gian…</translation>
     </message>
     <message>
         <source>Last modified:</source>
@@ -6683,7 +6694,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Upload at:</source>
         <translatorcomment>Label indicating upload time for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã tải lên:</translation>
     </message>
     <message>
         <source>Created at:</source>
@@ -6701,7 +6712,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Local file is being uploaded</source>
         <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp&#xa0;tin cục&#xa0;bộ đang được tải lên</translation>
     </message>
     <message>
         <source>Renamed to %1</source>
@@ -6719,7 +6730,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục đã được chuyển tới</translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6734,67 +6745,67 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>File is being frequently changing.</source>
         <translatorcomment>Label descriping the error causing sync stall. SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp tin hiện đang được thay đổi thường xuyên</translation>
     </message>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang tính các quy&#xa0;tắc loại trừ, vấn&#xa0;đề sẽ được giải&#xa0;quyết sau khi tính xong.</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã phát hiện đường liên kết tượng trưng</translation>
     </message>
     <message>
         <source>Detected special file.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a special file and cannot be synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã phát hiện tệp tin đặc biệt</translation>
     </message>
     <message>
         <source>Different file or folder is already present.</source>
         <translatorcomment>Label descriping a sync stall is happening because an item with this name already exists.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một mục cùng tên hiện đã có sẵn</translation>
     </message>
     <message>
         <source>Parent folder does not exist.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud parent folder is removed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục mẹ không có tồn tại</translation>
     </message>
     <message>
         <source>Filesystem error during operation.</source>
         <translatorcomment>Label descriping a sync stall is happening because of filesystem failed operation ( Eg. folder creation).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã xảy ra lỗi cục bộ trong quá trình hoạt động</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
         <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tên quá dài cho hệ thống tệp tin</translation>
     </message>
     <message>
         <source>Cannot fingerprint file.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA cannot create a fingerprint for it.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể tạo vân tay cho tệp tin</translation>
     </message>
     <message>
         <source>Hard link or Reparse Point detected.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a hard link and cannot be synced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã phát hiện ra hard link (đường liên kết cứng) hoặc reparse point (điểm chỉ lại). Liên&#xa0;hệ với bộ&#xa0;phận Hỗ&#xa0;trợ nếu vị trí này không có hard link hoặc reparse point.</translation>
     </message>
     <message>
         <source>The folder could not be found. Ensure that the path is correct and try again.</source>
         <translatorcomment>Label descriping the sync sall is caused by removed path.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể tìm thấy thư&#xa0;mục. Đảm&#xa0;bảo rằng đường dẫn là chính&#xa0;xác và thử lại.</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
         <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi xác minh mã xác thực thông báo</translation>
     </message>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mục bị xóa hoặc di chuyển trên MEGA</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
@@ -6804,22 +6815,22 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Move to debris folder failed.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA could not move the item to sync debris folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể di chuyển đến thư mục .debris hoặc .rubbish trong vị trí đồng bộ cục bộ của bạn</translation>
     </message>
     <message>
         <source>Ignore file malformed.</source>
         <translatorcomment>Label descriping a sync stall is happening because exclusion rules file is malformed (.megaignore).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Có lỗi trong tệp .megaignore. Chỉnh sửa lại tệp tin để khắc phục lỗi.</translation>
     </message>
     <message>
         <source>Error Listing folder in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be read.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể truy xuất siêu dữ liệu của thư mục này. Kiểm tra các quyền hạn và quét lại.</translation>
     </message>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi xác định nội dung thư mục trong hệ thống tệp cục bộ</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
@@ -6829,27 +6840,27 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Waiting for scanning to complete.</source>
         <translatorcomment>Label descriping the sync sall is caused by ongoing scan operation.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang chờ cho việc quét được hoàn tất</translation>
     </message>
     <message>
         <source>Waiting for another move to complete.</source>
         <translatorcomment>Label descriping the sync sall is caused by ongoing move operation.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang chờ việc di chuyển khác được hoàn&#xa0;tất.</translation>
     </message>
     <message>
         <source>Source was moved elsewhere.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud version was move.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tệp tin hoặc thư mục trên MEGA đã chuyển đến nơi khác</translation>
     </message>
     <message>
         <source>Local filesystem cannot store this name.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA cannot store the file ( possible reasons: filenames with trailing spaces).SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hệ thống tệp cục bộ không thể sử dụng tên này</translation>
     </message>
     <message>
         <source>Fingerprint is missing or invalid.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file fingerprint is missing.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vân tay tệp tin bị thiếu hoặc không hợp lệ</translation>
     </message>
     <message>
         <source>Error not detected</source>
@@ -6872,12 +6883,12 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Are you sure you want to ignore this issue?</source>
         <translatorcomment>Text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bỏ qua vấn đề này?</translation>
     </message>
     <message>
         <source>This action will ignore this issue and it will not be synced.</source>
         <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hành&#xa0;động này sẽ bỏ qua vấn&#xa0;đề và mục sẽ không được đồng&#xa0;bộ hóa cho đến khi vấn&#xa0;đề được giải&#xa0;quyết.</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -6900,27 +6911,27 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Đã giải quyết: %n</numerusform></translation>
     </message>
     <message>
         <source>All issues: %1</source>
         <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tất cả vấn đề: %1</translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Mâu&#xa0;thuẫn tên: %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Mâu&#xa0;thuẫn dạng tệp: %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Khác: %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6933,7 +6944,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Sync issues</source>
         <translatorcomment>Title for sync stalls dialog.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các vấn&#xa0;đề đồng&#xa0;bộ</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6943,7 +6954,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chế&#xa0;độ giải&#xa0;quyết vấn&#xa0;đề</translation>
     </message>
     <message>
         <source>Choose:</source>
@@ -6959,7 +6970,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>Let Mega solve sync issues
 automatically</source>
         <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hãy để MEGA giúp bạn giải&#xa0;quyết vấn&#xa0;đề đồng&#xa0;bộ hoàn&#xa0;toàn tự&#xa0;động </translation>
     </message>
     <message>
         <source>Advanced mode</source>
@@ -6974,7 +6985,7 @@ automatically</source>
     <message>
         <source>Solve issues</source>
         <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giải&#xa0;quyết vấn&#xa0;đề</translation>
     </message>
     <message>
         <source>No issues</source>
@@ -6997,7 +7008,7 @@ automatically</source>
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang giải&#xa0;quyết các vấn&#xa0;đề…</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -7013,30 +7024,33 @@ Làm mới chế độ xem.</translation>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n vấn&#xa0;đề được giải&#xa0;quyết</numerusform></translation>
     </message>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang giải&#xa0;quyết các vấn&#xa0;đề…</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
 Please, refresh the list.</source>
         <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vấn&#xa0;đề có thể đã được giải&#xa0;quyết từ bên ngoài.
+Làm mới danh sách.</translation>
     </message>
     <message>
         <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một số vấn&#xa0;đề không thể giải&#xa0;quyết được.
+Kiểm tra quyền của tệp .megaignore trong vị trí thư mục đồng bộ cục bộ của bạn.</translation>
     </message>
     <message>
         <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một số vấn&#xa0;đề không thể giải&#xa0;quyết được.
+Kiểm tra quyền của tệp .megaignore trong vị trí thư mục đồng bộ cục bộ của bạn.</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
@@ -7241,37 +7255,37 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Are you sure you want to ignore all symlinks in all syncs?</source>
         <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bỏ qua các đường liên&#xa0;kết tượng&#xa0;trưng trong tất cả đồng&#xa0;bộ?</translation>
     </message>
     <message>
         <source>This action will ignore all present and future symlinks in all your syncs.</source>
         <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hành&#xa0;động này sẽ bỏ qua tất cả các đường liên&#xa0;kết tượng&#xa0;trưng có lúc hiện&#xa0;tại và tương&#xa0;lai trong tất cả các đồng&#xa0;bộ hóa của bạn.</translation>
     </message>
     <message>
         <source>Are you sure you want to ignore this symlink?</source>
         <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bỏ qua đường liên&#xa0;kết tượng&#xa0;trưng này?</translation>
     </message>
     <message>
         <source>This action will ignore this symlink and it will not be synced.</source>
         <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hành&#xa0;động này sẽ bỏ qua đường liên&#xa0;kết tượng&#xa0;trưng này và nó sẽ không được đồng&#xa0;bộ hóa.</translation>
     </message>
     <message>
         <source>Detected sym link: [B]%1[/B]</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced is a sym link.[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã phát hiện đường liên kết tượng trưng: [B]%1[/B]</translation>
     </message>
     <message>
         <source>Ignore symlink</source>
         <translatorcomment>Button text to ignore the sym link causing sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bỏ qua đường liên kết tượng trưng</translation>
     </message>
     <message>
         <source>Ignore all symlinks in all syncs</source>
         <translatorcomment>Button text to ignore all sym link causing sync stall.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bỏ qua các đường liên kết tượng trưng trong tất cả đồng bộ</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -7284,12 +7298,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tài&#xa0;khoản MEGA của bạn đã đầy. Việc tải lên bị vô&#xa0;hiệu hóa và đồng&#xa0;bộ thư&#xa0;mục bị tạm dừng.</translation>
     </message>
     <message>
         <source>Purchase more storage</source>
         <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mua thêm không&#xa0;gian</translation>
     </message>
 </context>
 <context>
@@ -7450,27 +7464,27 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation>Đồng&#xa0;bộ hóa “%1” của bạn đã bị tắt do thư&#xa0;mục cục&#xa0;bộ không có khả&#xa0;dụng hoặc bạn không có quyền&#xa0;hạn đọc và ghi.</translation>
+        <translation>Phiên đồng&#xa0;bộ “%1” của bạn đã bị vô&#xa0;hiệu do thư&#xa0;mục cục&#xa0;bộ không có khả&#xa0;dụng hoặc bạn không có quyền&#xa0;hạn đọc và ghi.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.SNC-3654</translatorcomment>
-        <translation>Đồng&#xa0;bộ hóa “%1” của bạn đã bị tắt do thư&#xa0;mục cục&#xa0;bộ không có khả&#xa0;dụng hoặc bạn không có quyền&#xa0;hạn đọc và ghi.</translation>
+        <translation>Phiên đồng&#xa0;bộ “%1” của bạn đã bị vô&#xa0;hiệu do thư&#xa0;mục cục&#xa0;bộ không có khả&#xa0;dụng hoặc bạn không có quyền&#xa0;hạn đọc và ghi.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Đồng&#xa0;bộ “%1” của bạn đã bị tắt vì MEGA không thể đồng&#xa0;bộ hóa hoặc sao lưu các thư&#xa0;mục VirtualBox.</translation>
+        <translation>Phiên đồng&#xa0;bộ “%1” của bạn đã bị vô&#xa0;hiệu vì MEGA không thể đồng&#xa0;bộ hóa hoặc sao lưu các thư&#xa0;mục VirtualBox.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu vì thư&#xa0;mục trên MEGA đang nằm Thùng&#xa0;Rác.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên đồng&#xa0;bộ “%1” của bạn đã bị vô&#xa0;hiệu. Bạn không có toàn quyền truy&#xa0;cập vào thư&#xa0;mục trên MEGA (hoặc một phần của nó).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -7528,13 +7542,14 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Unable to sync [B]%1[/B]</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file is more than 64 folders deep.[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể đồng&#xa0;bộ [B]%1[/B] được</translation>
     </message>
     <message>
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Điểm đến quá sâu trong cấu&#xa0;trúc thư&#xa0;mục của bạn.
+Di chuyển mục đến một vị trí sâu ít hơn 64 thư mục.</translation>
     </message>
 </context>
 <context>
@@ -7552,7 +7567,7 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Sort by sync name</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xếp theo tên của đồng bộ</translation>
     </message>
     <message>
         <source>State</source>
@@ -7562,7 +7577,7 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Sort by sync state</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by sync state in case the user clicks.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xếp theo tình trạng của đồng bộ</translation>
     </message>
     <message>
         <source>Files</source>
@@ -7572,7 +7587,7 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Sort by file count</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by file count in case the user clicks.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xếp theo số lượng tệp tin</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -7582,7 +7597,7 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Sort by folder count</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder count in case the user clicks.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xếp theo số lượng thư mục</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -7592,7 +7607,7 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Sort by Downloads</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by downloads in case the user clicks.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xếp theo số lượng tải xuống</translation>
     </message>
     <message>
         <source>Uploads</source>
@@ -7602,7 +7617,7 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Sort by Uploads</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by uploads in case the user clicks.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xếp theo số lượng tải lên</translation>
     </message>
     <message>
         <source>Loading</source>
@@ -7627,22 +7642,22 @@ Please move it to a location that is less than 64 folders deep.</source>
     <message>
         <source>Syncing</source>
         <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang đồng bộ</translation>
     </message>
     <message>
         <source>Monitoring</source>
         <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang giám sát</translation>
     </message>
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table).SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nhấp vào menu để có thêm các hành&#xa0;động đồng&#xa0;bộ hóa</translation>
     </message>
     <message>
         <source>Stopped</source>
         <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã dừng</translation>
     </message>
 </context>
 <context>
@@ -7664,12 +7679,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Synced Folders</source>
         <translatorcomment>Section title for Synchronized folders table view.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thư mục được đồng bộ</translation>
     </message>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một số thư&#xa0;mục chưa có được đồng&#xa0;bộ. Để biết thêm thông&#xa0;tin, rê chuột lên biểu&#xa0;tượng màu đỏ.</translation>
     </message>
     <message>
         <source>Sync operation failed</source>
@@ -7702,12 +7717,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang lưu lại các thư&#xa0;mục đồng&#xa0;bộ&#8230;</translation>
     </message>
     <message>
         <source>Error opening megaignore file</source>
         <translatorcomment>Text in message box shown when the ignore rules file cannot be opened.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi mở tệp .megaignore</translation>
     </message>
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
@@ -7720,7 +7735,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sync stall mode</source>
         <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chế&#xa0;độ giải&#xa0;quyết vấn&#xa0;đề</translation>
     </message>
     <message>
         <source>Smart</source>
@@ -7730,7 +7745,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Let MEGA solve sync issues automatically</source>
         <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hãy để MEGA giúp bạn giải&#xa0;quyết vấn&#xa0;đề đồng&#xa0;bộ hoàn&#xa0;toàn tự&#xa0;động </translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -8102,7 +8117,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Đã phát hiện vấn đề</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8614,7 +8629,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Xin nâng cấp tài khoản lên Pro để tiếp tục sử dụng ngay, hoặc chờ %1 để tiếp tục sử dụng miễn phí</translation>
+        <translation>Nâng&#xa0;cấp tài&#xa0;khoản ngay để tiếp&#xa0;tục sử&#xa0;dụng ngay tức&#xa0;thì, hoặc chờ %1 để chờ băng&#xa0;thông miễn&#xa0;phí</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8647,7 +8662,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Xin nâng cấp lên hạng tài khoản để tận hưởng thêm không gian lưu trữ (các phiên tải lên sẽ tự tiếp tục).</translation>
+        <translation>Nâng&#xa0;cấp tài&#xa0;khoản của bạn để tận&#xa0;hưởng nhiều không&#xa0;gian lưu&#xa0;trữ hơn (các phiên tải lên của bạn sẽ tự&#xa0;động tiếp&#xa0;tục).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8685,7 +8700,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cannot reach the destination folder.</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể truy&#xa0;cập đến thư&#xa0;mục đích</translation>
     </message>
 </context>
 <context>
@@ -8895,7 +8910,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Tài&#xa0;khoản tạm&#xa0;thời bị khóa để đảm&#xa0;bảo an&#xa0;toàn cho bạn. Xin kiểm&#xa0;tra email của bạn và làm theo hướng&#xa0;dẫn để mở khóa tài&#xa0;khoản.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>

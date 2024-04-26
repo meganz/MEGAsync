@@ -30,6 +30,8 @@ const float CORNER_RADIUS = 10.0;
 const int PEN_WIDTH = 2;
 const int UPDATE_SIZE_TIMER = 50;
 
+const QSize DEFAULT_SIZE = QSize(100,60);
+
 StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView *view)
     :QStyledItemDelegate(view),
      mView(view),
@@ -139,6 +141,8 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
     }
 
     StalledIssueVariant stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
+    
+    if(stalledIssueItem.consultData())
     {
         QSize size;
 
@@ -160,7 +164,7 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
                 }
                 else
                 {
-                    size = QSize(100,60);
+                    size = DEFAULT_SIZE;
                 }
 
                 stalledIssueItem.setDelegateSize(size, StalledIssue::Header);

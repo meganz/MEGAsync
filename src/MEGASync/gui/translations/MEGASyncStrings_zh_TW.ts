@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>請輸入有效的檔案名稱或絕對路徑。</translation>
+        <translation>輸入有效的檔案名稱或絕對路徑</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -518,7 +518,7 @@
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
-        <translation>新增同步時出錯</translation>
+        <translation>新增同步時發生錯誤</translation>
     </message>
     <message>
         <source>Error removing backup</source>
@@ -1277,7 +1277,7 @@
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>您可以透過發送此錯誤報告來幫助我們改進MEGA應用程式。此報告不會包含任何個人資訊。如果您想給我們更多的細節，請將它們寫在下面：</translation>
+        <translation>您可以透過發送此錯誤報告來幫助我們改進MEGA應用程式。它不會包含任何個人資訊。如果您提供我們更多細節，請填寫於下方：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1332,7 +1332,7 @@
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation>等待掃描完成以查看檔案是否已移動或刪除。</translation>
+        <translation>等待掃描完成以確定檔案是否已移動或刪除。</translation>
     </message>
 </context>
 <context>
@@ -2332,7 +2332,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>請升級您的帳戶。</translation>
+        <translation>升級您的帳戶。</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2648,7 +2648,7 @@ This can be useful for large files, files that you don't need on all of your dev
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local version, %1 is a placeholder for file name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>本地檔案[B]%1[/B]將上傳到MEGA，並作為MEGA中現有檔案的新增版本。</translation>
+        <translation>本地檔案[B]%1[/B]將上傳到MEGA，並在MEGA中新增為既有檔案的一個版本。</translation>
     </message>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
@@ -2668,12 +2668,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>要保留儲存在MEGA[B]%1[/B]的資料夾嗎？</translation>
+        <translation>要保留已儲存在MEGA中的資料夾[B]%1[/B]嗎？</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>要保留已儲存在MEGA[B]%1[/B]中的項目嗎？</translation>
+        <translation>要保留已儲存在MEGA中的項目[B]%1[/B]嗎？</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2693,12 +2693,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>此操作將選擇本地項目。</translation>
+        <translation>透過此操作，將選擇本地項目。</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>此操作將選擇已儲存在MEGA中的項目。</translation>
+        <translation>過過此操作，將選擇已儲存在MEGA中的項目。</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2756,7 +2756,7 @@ Please, refresh the list.</source>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]本地[/B]檔案將上傳到MEGA，並新增為在MEGA中既有檔案的版本。
+        <translation>[B]本地[/B]檔案將上傳到MEGA，並在MEGA中新增為既有檔案的一個版本。
 請等待上傳完成。</translation>
     </message>
     <message>
@@ -2874,7 +2874,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>請輸入您身份驗證程式所生成的驗證碼</translation>
+        <translation>輸入您身份驗證程式所生成的驗證碼</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2907,22 +2907,22 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>請檢查您的電子郵件，然後點擊信件中的連結來確認您的帳戶。</translation>
+        <translation>檢查您的電子郵件，然後點擊信件中的連結來確認您的帳戶。</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>您嘗試登入的次數過多。[BR]請等待%1並重試。</translation>
+        <translation>您嘗試登入的次數過多。[BR]等到%1再重試。</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
-        <translation>電子郵件地址或密碼無效。請再試一次。</translation>
+        <translation>電子郵件地址或密碼無效。再試一次。</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>應用程式無法連線。請檢查您的網路連線和本地防火牆設定。請注意，大多數防毒軟體都包含防火牆。</translation>
+        <translation>應用程式無法連線。檢查您的網路連線和本地防火牆設定。請注意，大多數防毒軟體都包含防火牆。</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -2940,7 +2940,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>我們的SSL密鑰無法驗證。您可能是受到中間人攻擊的影響，或是您的防毒軟體可能攔截了您的通訊並導致此問題。請停用它並重試。</translation>
+        <translation>我們的SSL密鑰無法驗證。您可能是受到中間人攻擊的影響，或者您的防毒軟體攔截了您的通訊並導致此問題。停用它並重試。</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3077,7 +3077,7 @@ Please wait for the upload to complete.</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>安裝更新時出現問題。請稍後重試或至以下網址下載最新版本：https://mega.nz/sync</translation>
+        <translation>安裝更新時發生問題。請稍後重新或從這裡下載最新版本：https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3537,7 +3537,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>超出儲存空間配額。請立即升級。</translation>
+        <translation>超出儲存配額。立即升級。</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -4051,22 +4051,22 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>要移除已儲存在MEGA[B]%1[/B]中的檔案嗎？</translation>
+        <translation>要替換已儲存在MEGA中的檔案[B]%1[/B]嗎？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>要移除已儲存在MEGA[B]%1[/B]中的資料夾嗎？</translation>
+        <translation>要替換已儲存在MEGA中的資料夾[B]%1[/B]嗎？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>要移除本地檔案[B]%1[/B]嗎？</translation>
+        <translation>要取代本地檔案[B]%1[/B]嗎？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>要移除本地資料夾[B]%1[/B]嗎？</translation>
+        <translation>要取代本地資料夾[B]%1[/B]嗎？</translation>
     </message>
 </context>
 <context>
@@ -4674,7 +4674,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>將您的整個MEGA雲端硬碟與本地裝置同步。</translation>
+        <translation>將您的整個MEGA Cloud硬碟與本地裝置同步。</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4794,7 +4794,7 @@ Enter a different name</source>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>將您MEGA雲端硬碟中的特定資料夾與您的本地裝置同步。</translation>
+        <translation>將您MEGA Cloud硬碟中的特定資料夾與您的本地裝置同步。</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5223,7 +5223,7 @@ Enter a different name</source>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>檔案和資料夾有一個擁有者並且屬於一群使用者的。使用此對話框，對於透過桌面應用程式建立的新檔案和資料夾，您可以為同一群組使用者和電腦中的其他使用者授予不同的存取權限。如果您不需要變更它們，出於安全考量，請將它們保留為預設值。</translation>
+        <translation>檔案和資料夾有一個擁有者，並屬於一群使用者的。使用此對話方塊，您可以將桌面應用程式建立的新檔案和資料夾的不同存取權限授予屬於同一群組使用者和電腦中的其他使用者。如果您不需要更改它們，出於安全考量，請將它們保留在預設值。</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5750,9 +5750,8 @@ Enter a different name</source>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-未找到資料夾。
-請驗證所提供的資料夾名稱是否正確。</translation>
+        <translation>未找到%1資料夾。
+驗證所提供的資料夾名稱是否正確。</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5766,9 +5765,8 @@ Do you want to replace it?</source>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-找不到檔案。
-請核對正確的檔案名稱。</translation>
+        <translation>未找到%1檔案。
+驗證所提供的檔案名稱是否正確。</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6134,12 +6132,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>在您電腦已同步檔案的先前版本的備份將被永久刪除。請檢查您的備份資料夾以查看在繼續此動作前，是否需要先救回一些檔案：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>在MEGA中您已同步檔案的先前版本的備份將永久被刪除。請在您MEGA帳戶的垃圾筒中檢查您的[A]資料夾以查看在繼續前是否需要保留某些檔案。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6244,7 +6242,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>如果您遇到任何問題，請告訴我們，並盡可能的提供更多的細節讓我們協助您。</translation>
+        <translation>如果您遇到任何問題，請告訴我們，並盡可能的提供更多細節好讓我們協助您。</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -8632,7 +8630,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>請升級至Pro帳戶以立即繼續，或者等待%1再繼續使用免費傳輸</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8665,7 +8663,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>請升級您的帳戶以享有更多儲存空間（您的上傳將自動恢復）。</translation>
+        <translation>升級您的帳戶以享有更多儲存空間（您的上傳將自動恢復）。</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8913,7 +8911,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>為了您的帳戶安全起見，您的帳戶已被暫時封鎖。請檢查您的電子郵件並按照提示步驟解鎖您的帳戶。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>
