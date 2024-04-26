@@ -8,8 +8,8 @@ namespace DTI
 {
 typedef QMap<QString, QString> PropertiesMap;
 typedef QMap<QString, QString> ColourMap;
-typedef QMap<QString, QString> CoreMap;
-typedef QMap<QString, ColourMap> ThemedColourMap;
+typedef QMap<QString, QString> CoreData;
+typedef QMap<QString, CoreData> ThemedColorData;
 
 enum class Targets
 {
