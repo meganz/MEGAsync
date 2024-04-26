@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>请输入有效的文件名或路径。</translation>
+        <translation>输入有效的文件名称或绝对路径</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -523,12 +523,12 @@
     <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
-        <translation>停用备份时发生错误</translation>
+        <translation>停用备份时出错</translation>
     </message>
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder.SNC-4208</translatorcomment>
-        <translation>您的同步无法移除。原因：%1</translation>
+        <translation>无法移除您的同步。原因：%1</translation>
     </message>
     <message>
         <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
@@ -1277,7 +1277,7 @@
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>您可以通过发送此错误报告帮助我们改进MEGA应用程序。它不包含任何个人信息。如果您想给我们更多的细节，请写在下面：</translation>
+        <translation>您可以通过发送此错误报告帮助我们改进MEGA应用程序。它不包含任何个人信息。如果您想提供给我们更多细节，请在下面填写：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2658,12 +2658,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>要保留远程文件夹[B]%1[/B]吗？</translation>
+        <translation>要保留已经存储在MEGA的文件夹[B]%1[/B]吗？</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>要保留远程项目[B]%1[/B]吗？</translation>
+        <translation>要保留已经存储在MEGA的项目[B]%1[/B]吗？</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2683,12 +2683,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>此操作将选择本地项目。</translation>
+        <translation>通过此操作，将选择本地项目。</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>此操作将选择已存储在MEGA中的项目。</translation>
+        <translation>通过此操作，将选择已经存储在MEGA中的项目。</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2897,7 +2897,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>请检查您的电子邮件并点击链接以确认您的帐户。</translation>
+        <translation>查看您的电子邮件收件箱，然后点击链接以确认您的帐户。</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3067,7 +3067,7 @@ Please wait for the upload to complete.</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>安装更新时出现问题。请稍后再试或从这里下载最新版本：https://mega.nz/sync</translation>
+        <translation>安装更新时出现问题。请稍后重试或从这里下载最新版本：https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3537,9 +3537,9 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>由于多次被指控侵犯版权，您的MEGA帐户已被暂停。这意味着您无法访问您的帐户或其中的数据。
+        <translation>由于多次被指控侵犯版权，您的MEGA帐户已被停用。这意味着您无法访问您的帐户或其中的数据。
 
-请查看您的电子邮件，了解更多有关如何提交抗辩通知的信息。</translation>
+请查看您的电子邮件收件箱，了解更多有关如何提交抗辩通知的信息。</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -4041,22 +4041,22 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>要移除远程文件[B]%1[/B]吗？</translation>
+        <translation>要替换已经存储在MEGA的文件[B]%1[/B]吗？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>要移除远程文件夹[B]%1[/B]吗？</translation>
+        <translation>要替换已经存储在MEGA的文件夹[B]%1[/B]吗？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>要移除本地文件[B]%1[/B]吗？</translation>
+        <translation>要替换本地文件[B]%1[/B]吗？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>要移除本地文件夹[B]%1[/B]吗？</translation>
+        <translation>要替换本地文件夹[B]%1[/B]吗？</translation>
     </message>
 </context>
 <context>
@@ -4954,7 +4954,7 @@ Enter a different name</source>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation>在您的计算机与MEGA之间同步您的文件，一边的任何更改都将应用于另一遍。</translation>
+        <translation>在您的计算机与MEGA之间同步您的文件，一边的任何更改都将应用于另一边。</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
@@ -5733,8 +5733,7 @@ Enter a different name</source>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-未找到文件夹。
+        <translation>未找到%1文件夹 。
 请验证所提供的文件夹名称是否正确。</translation>
     </message>
     <message>
@@ -5749,9 +5748,8 @@ Do you want to replace it?</source>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-文件未找到。
-请检查文件名是否正确。</translation>
+        <translation>未找到%1文件 。
+请验证所提供的文件名称是否正确。</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6117,12 +6115,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>您计算机中已同步文件的以前版本的备份将被永久删除。在继续之前，请检查您的备份文件夹以查看是否需要保留某些文件：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>MEGA中已同步文件的以前版本的备份将被永久删除。继续此操作前，请在您的MEGA帐户的回收站中检查您的[A]文件夹以查看是否需要保留某些文件。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -8609,7 +8607,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>请立即升级到Pro帐户后继续，或等待%1后继续使用免费传输流量。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8890,7 +8888,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>为了确保帐户安全，您的帐户已被暂时锁定。请查看您的电子邮件并按照所提示步骤解锁您的帐户。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>
