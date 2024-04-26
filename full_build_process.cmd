@@ -89,6 +89,13 @@ IF EXIST build-x86-windows-mega (
     rmdir /s /q build-x86-windows-mega
 )
 
+REM Update the vcpkg repo
+SET MEGA_WD=%cd%
+cd %MEGA_VCPKGPATH%\vcpkg
+git pull
+cd %MEGA_WD%
+
+REM Build installers
 call production_build.cmd  || exit 1 /b
 call deploy_qt.cmd  || exit 1 /b
 call gather_built_products.cmd  || exit 1 /b
