@@ -20,6 +20,7 @@ public:
 
     void initElements(SyncSettingsUIBase* syncSettingsUi);
     void updateUI();
+    void retranslateUI();
 
 private slots:
     void onOpenBackupFolderClicked();
