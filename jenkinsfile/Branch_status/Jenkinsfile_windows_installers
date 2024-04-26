@@ -70,8 +70,6 @@ pipeline {
                 MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
                 //QT path is automatically changed to x86 with nsis when needed
                 MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
-                MEGA_THIRD_PARTY_DLL_DIR = "bin"
-
             }
             steps {
                 gitlabCommitStatus (name: 'Build windows packages'){
@@ -82,7 +80,7 @@ pipeline {
                             set TMP=${Workspace}\\tmp
                             set TEMP=${Workspace}\\tmp
                             set TMPDIR=${Workspace}\\tmp   
-                            full_build_process.cmd ${params.ARCHITECTURE} nosign 2                     
+                            full_build_process.cmd ${params.ARCHITECTURE} 2
                         """
                     }
                 }
@@ -109,10 +107,9 @@ pipeline {
                                 ${JF_PATH}\\jf rt upload MEGAsyncSetup${arch}.exe ${ART_UPLOAD_PATH}
                                 cd ${buildDir}
                                 ${JF_PATH}\\jf rt upload MEGAsync.pdb ${ART_UPLOAD_PATH}
-                                ${JF_PATH}\\jf rt upload Mega.pdb ${ART_UPLOAD_PATH}
+                                ${JF_PATH}\\jf rt upload SDKlib.pdb ${ART_UPLOAD_PATH}
                                 ${JF_PATH}\\jf rt upload MEGAShellExt.pdb ${ART_UPLOAD_PATH}
                                 ${JF_PATH}\\jf rt upload MEGAupdater.pdb ${ART_UPLOAD_PATH}
-                                ${JF_PATH}\\jf rt upload legacy.pdb ${ART_UPLOAD_PATH}
                             """
                         }
                         MEGASYNC_VERSION = powershell (

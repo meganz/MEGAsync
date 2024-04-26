@@ -8,15 +8,13 @@ IF "%1%" EQU "-help" (
 
 SET MEGA_ARCH=32/64
 SET MEGA_SKIP_32_BIT_BUILD=false
-SET MEGA_SIGN=sign
 SET MEGA_CORES=0
 SET MEGA_VERSION_SUFFIX=
 
 IF NOT "%1" == "" (
 	SET MEGA_ARCH=%1
-	SET MEGA_SIGN=%2
-	SET MEGA_CORES=%3
-	SET MEGA_VERSION_SUFFIX=%4
+	SET MEGA_CORES=%2
+	SET MEGA_VERSION_SUFFIX=%3
 	
 	IF [%MEGA_VCPKGPATH%]==[] (
 		echo "Error: VCPKGPATH environment variable is not set. Please set it."
@@ -24,11 +22,11 @@ IF NOT "%1" == "" (
 	)
 	
 	:: CHECK NUMBER OF ARGUMENTS
-	IF "%3" == "" (
+	IF "%2" == "" (
 		echo "Error: too few arguments"
 		goto Usage
 	)
-	IF NOT "%5" == "" (
+	IF NOT "%4" == "" (
 		echo "Error: too many arguments"
 		goto Usage
 	)
@@ -55,19 +53,6 @@ IF "%MEGA_ARCH%" EQU "64" (
 		echo "Info: Building both x64 and x86"
 	) ELSE (
 		echo "Please add the architecture as first parameter: 64 or 32/64"
-		goto Usage
-	)
-)
-
-:: CHECK SIGN
-IF "%MEGA_SIGN%" EQU "sign" (
-	echo "Info: Signed installer(s) will be generated"
-) ELSE (
-	IF "%MEGA_SIGN%" EQU "nosign" (
-	echo "Info: Unsigned installer(s) will be generated"
-	SET MEGA_THIRD_PARTY_DLL_DIR=bin
-	) ELSE (
-		echo "Please add a correct sign argument: sign or nosign"
 		goto Usage
 	)
 )
@@ -113,13 +98,12 @@ call make_installers.cmd  || exit 1 /b
 exit /B
 
 :Usage
-echo "Usage: %~0 [-help] [64|32/64 sign|nosign <cores number> [<suffix>]]"
+echo "Usage: %~0 [-help] [64|32/64 <cores number> [<suffix>]]"
 echo Script building, signing and creating the installer(s)
-echo It can take 0, 1, 3 or 4 arguments:
+echo It can take 0, 1, 2 or 3 arguments:
 echo 	- -help: this message
-echo 	- 0 arguments: use these settings: 32/64 sign 1
+echo 	- 0 arguments: use these settings: 32/64 1
 echo 	- Architecture : 64 or 32/64 to build either for 64 bit or both 32 and 64 bit
-echo 	- Sign (obsolete): sign or nosign if the binaries must be signed or not
 echo 	- Cores: the number of cores to build the project, or 0 for default value (number of logical cores on the machine)
 echo 	- Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
