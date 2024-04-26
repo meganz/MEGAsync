@@ -8,7 +8,7 @@
 namespace DTI
 {
 
-static const QString UI_TOKEN_IDENTIFIER = QString::fromLatin1("/*token_");
+static const QRegularExpression UI_TOKEN_IDENTIFIER(R"(/\*token_\s*([\w-]+)\s*:\s*([^;]+);\s*\*/)");
 
 StylesheetParser::StylesheetParser(const QString& styleSheet, const QString& uiFilePath) : mStyleSheet(styleSheet),
     mUiFilePath(uiFilePath)
@@ -68,7 +68,8 @@ bool StylesheetParser::parseCurrentStyleBlock(CurrentStyleBlock& currentBlock)
 
         currentBlock.content += trimmedLine + "\n";
 
-        if (trimmedLine.contains(UI_TOKEN_IDENTIFIER))
+        QRegularExpressionMatch match = UI_TOKEN_IDENTIFIER.match(trimmedLine);
+        if (match.hasMatch())
         {
             currentBlock.hasTokens = true;
         }
