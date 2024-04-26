@@ -5,16 +5,21 @@
 
 class ProxyStatsEventHandler : public IStatsEventHandler
 {
+    Q_OBJECT
+
 public:
     using IStatsEventHandler::IStatsEventHandler;
 
-    void sendEvent(AppStatsEvents::EventTypes type) override;
     void sendEvent(AppStatsEvents::EventTypes type,
-                   const QStringList& args,
+                   const QStringList& args = QStringList(),
                    bool encode = false) override;
+    void sendTrackedEvent(int type) override;
 
 protected:
-    void sendEvent(AppStatsEvents::EventTypes type, const char* message) override;
+    void sendEvent(AppStatsEvents::EventTypes type,
+                   const char* message,
+                   bool addJourneyId = false,
+                   const char* viewId = nullptr) override;
 
 private:
     bool canSend() const;

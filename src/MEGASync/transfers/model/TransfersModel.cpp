@@ -11,8 +11,8 @@
 #include "TransferMetaData.h"
 #include <QMegaMessageBox.h>
 #include "MegaTransferView.h"
-#include "control/AppStatsEvents.h"
 #include "StalledIssuesUtilities.h"
+#include "IStatsEventHandler.h"
 
 #include <QSharedData>
 

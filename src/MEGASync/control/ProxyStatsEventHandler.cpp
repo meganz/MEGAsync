@@ -5,16 +5,11 @@
 
 #include <QProcessEnvironment>
 
-void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type)
-{
-    sendEvent(type, AppStatsEvents::getEventMessage(type));
-}
-
 void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
                                        const QStringList& args,
                                        bool encode)
 {
-    QString message = QString::fromUtf8(AppStatsEvents::getEventMessage(type));
+    QString message(QString::fromUtf8(AppStatsEvents::getEventMessage(type)));
     for (const QString& arg : args)
     {
         message = message.arg(arg);
@@ -23,18 +18,32 @@ void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
     sendEvent(type, encode ? encodeMessage(message).constData() : message.toUtf8().constData());
 }
 
-void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type, const char* message)
+void ProxyStatsEventHandler::sendTrackedEvent(int type)
+{
+    if(updateViewID)
+    {
+        mViewID = mMegaApi->generateViewId();
+        updateViewID = false;
+    }
+
+    sendEvent(type, AppStatsEvents::getEventMessage(type), true, mViewID);
+}
+
+void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
+                                       const char* message,
+                                       bool addJourneyId,
+                                       const char* viewId)
 {
     if(canSend() && mMegaApi)
     {
         if(QString::fromUtf8(message).isEmpty())
         {
             mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING,
-                          "Trying to send a single event with not valid message");
+                          "Trying to send an event with not valid message");
         }
         else
         {
-            mMegaApi->sendEvent(type, message, false, nullptr);
+            mMegaApi->sendEvent(type, message, addJourneyId, viewId);
         }
     }
 }

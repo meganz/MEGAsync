@@ -1,9 +1,9 @@
 #include "mega/types.h"
 #include "TransferQuota.h"
-#include "control/AppStatsEvents.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 #include "DialogOpener.h"
+#include "IStatsEventHandler.h"
 
 TransferQuota::TransferQuota(std::shared_ptr<DesktopNotifications> desktopNotifications)
     : mMegaApi(MegaSyncApp->getMegaApi()),

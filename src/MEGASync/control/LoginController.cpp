@@ -5,8 +5,8 @@
 #include "Platform.h"
 #include "QMegaMessageBox.h"
 #include "mega/types.h"
-#include "AppStatsEvents.h"
 #include "TextDecorator.h"
+#include "IStatsEventHandler.h"
 
 #include <QQmlContext>
 

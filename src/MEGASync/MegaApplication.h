@@ -45,7 +45,6 @@
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
-#include "IStatsEventHandler.h"
 #include "qml/QmlManager.h"
 #include "qml/QmlDialogManager.h"
 
@@ -66,6 +65,7 @@ class TransferMetadata;
 class DuplicatedNodeDialog;
 class LoginController;
 class AccountStatusController;
+class IStatsEventHandler;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,

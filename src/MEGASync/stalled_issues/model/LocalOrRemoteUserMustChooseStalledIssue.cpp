@@ -4,7 +4,7 @@
 #include <MegaUploader.h>
 #include <TransfersModel.h>
 #include <StalledIssuesUtilities.h>
-#include "AppStatsEvents.h"
+#include "IStatsEventHandler.h"
 
 LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue),

@@ -1,9 +1,9 @@
 #include "HTTPServer.h"
 #include "Preferences/Preferences.h"
-#include "AppStatsEvents.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "mega/setandelement.h"
+#include "IStatsEventHandler.h"
 
 #include <QtConcurrent/QtConcurrent>
 

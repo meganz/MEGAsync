@@ -1,11 +1,11 @@
 
 #include "SyncInfo.h"
 #include "platform/Platform.h"
-#include "control/AppStatsEvents.h"
 #include "QMegaMessageBox.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include <MegaNodeNames.h>
 #include <mega/types.h>
+#include "IStatsEventHandler.h"
 
 #include <assert.h>
 

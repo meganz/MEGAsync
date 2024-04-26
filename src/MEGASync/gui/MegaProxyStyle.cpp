@@ -1,6 +1,8 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
 #include "control/HTTPServer.h"
+#include "MegaApplication.h"
+#include "IStatsEventHandler.h"
 
 #include <EventHelper.h>
 #include <QStyleOption>
@@ -8,6 +10,7 @@
 #include <QSpinBox>
 #include <QComboBox>
 #include <QOperatingSystemVersion>
+#include <QWindow>
 
 const int TOOLTIP_DELAY = 250;
 
@@ -196,6 +199,15 @@ void MegaProxyStyle::polish(QWidget *widget)
     {
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
     }
+    else if(qobject_cast<QDialog*>(widget))
+    {
+        widget->installEventFilter(MegaSyncApp->getStatsEventHandler());
+    }
+    else if(qobject_cast<QWindow*>(widget))
+    {
+        widget->installEventFilter(MegaSyncApp->getStatsEventHandler());
+    }
+
     QProxyStyle::polish(widget);
 }
 

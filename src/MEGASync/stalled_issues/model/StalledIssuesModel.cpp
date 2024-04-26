@@ -6,11 +6,11 @@
 #include "MoveOrRenameCannotOccurIssue.h"
 #include <IgnoredStalledIssue.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
-#include <AppStatsEvents.h>
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
 #include <syncs/control/MegaIgnoreManager.h>
+#include "IStatsEventHandler.h"
 
 #include <QSortFilterProxyModel>
 
