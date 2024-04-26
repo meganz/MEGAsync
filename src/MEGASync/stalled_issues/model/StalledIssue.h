@@ -73,6 +73,7 @@ public:
 protected:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
+    friend class MoveOrRenameCannotOccurIssue;
 
     Path mMovePath;
     Path mPath;
@@ -93,9 +94,6 @@ Q_DECLARE_METATYPE(StalledIssuesDataList)
 class CloudStalledIssueData : public StalledIssueData
 {
 public:
-
-
-
     CloudStalledIssueData()
         : StalledIssueData(),
           mPathHandle(mega::INVALID_HANDLE),
@@ -147,6 +145,7 @@ public:
 private:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
+    friend class MoveOrRenameCannotOccurIssue;
 
     mutable std::shared_ptr<mega::MegaNode> mRemoteNode;
 
@@ -328,6 +327,8 @@ public:
     const std::shared_ptr<mega::MegaSyncStall>& getOriginalStall() const;
 
     virtual void fillIssue(const mega::MegaSyncStall* stall);
+    void fillBasicInfo(const mega::MegaSyncStall* stall);
+
     virtual void endFillingIssue();
 
     template <class Type>
@@ -378,15 +379,22 @@ class StalledIssueVariant
 public:
     StalledIssueVariant(){}
     StalledIssueVariant(const StalledIssueVariant& tdr) : mData(tdr.mData) {}
-    StalledIssueVariant(std::shared_ptr<StalledIssue> data, const mega::MegaSyncStall* stall)
+    StalledIssueVariant(std::shared_ptr<StalledIssue> data, const mega::MegaSyncStall* stall = nullptr)
         : mData(data)
     {
-        mData->fillIssue(stall);
+        if(stall)
+        {
+            mData->fillIssue(stall);
+        }
     }
 
     const std::shared_ptr<const StalledIssue> consultData() const
     {
         return mData;
+    }
+    bool isValid() const
+    {
+        return mData != nullptr;
     }
 
     void updateData(const mega::MegaSyncStall* stallIssue)
@@ -434,9 +442,11 @@ public:
         return StalledIssue::convert<Type>(mData);
     }
 
+
 private:
     friend class StalledIssuesModel;
-    friend class StalledIssuesFactory;
+    friend class StalledIssuesCreator;
+    friend class MoveOrRenameCannotOccurFactory;
 
     std::shared_ptr<StalledIssue>& getData()
     {

@@ -3,11 +3,24 @@
 
 #include <StalledIssue.h>
 
-class StalledIssuesFactory : public QObject
+class MoveOrRenameCannotOccurFactory;
+
+class StalledIssuesFactory
+{
+public:
+    StalledIssuesFactory(){}
+    virtual ~StalledIssuesFactory() = default;
+
+    virtual StalledIssueVariant createIssue(const mega::MegaSyncStall* stall) = 0;
+    virtual void clear() = 0;
+};
+
+class StalledIssuesCreator : public QObject
 {
         Q_OBJECT
 public:
-    StalledIssuesFactory(bool isEventRequest);
+    StalledIssuesCreator(bool isEventRequest);
+    StalledIssuesCreator();
 
     void createIssues(mega::MegaSyncStallList* issues);
 
@@ -16,9 +29,14 @@ public:
 signals:
     void solvingIssues(int current, int total);
 
-private:
+protected:
+    void clear();
+
     StalledIssuesVariantList mIssues;
-    bool mIsEventRequest;
+
+private:
+    std::shared_ptr<MoveOrRenameCannotOccurFactory> mMoveOrRenameCannotOccurFactory;
+    static bool mIsEventRequest;
 };
 
 #endif // STALLEDISSUEFACTORY_H

@@ -7,17 +7,27 @@
 #include <IgnoredStalledIssue.h>
 #include <MoveOrRenameCannotOccurIssue.h>
 
-StalledIssuesFactory::StalledIssuesFactory(bool isEventRequest)
-    : mIsEventRequest(isEventRequest)
+#include <mega/types.h>
+
+bool StalledIssuesCreator::mIsEventRequest = false;
+
+StalledIssuesCreator::StalledIssuesCreator(bool isEventRequest) :
+    mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>())
+{
+    mIsEventRequest = isEventRequest;
+}
+
+StalledIssuesCreator::StalledIssuesCreator()
 {
 }
 
-void StalledIssuesFactory::createIssues(mega::MegaSyncStallList* stalls)
+void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls)
 {
-    StalledIssuesVariantList solvableIssues;
+    clear();
 
     if (stalls)
     {
+        StalledIssuesVariantList solvableIssues;
         auto totalSize(stalls->size());
 
         for (size_t i = 0; i < totalSize; ++i)
@@ -26,54 +36,69 @@ void StalledIssuesFactory::createIssues(mega::MegaSyncStallList* stalls)
             StalledIssueVariant variant;
             std::shared_ptr<StalledIssue> d;
 
-            if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
+            if (stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
             {
-                d = std::make_shared<NameConflictedStalledIssue>(stall);
-            }
-            else if(stall->couldSuggestIgnoreThisPath(false, 0) ||
-                     stall->couldSuggestIgnoreThisPath(false, 1) ||
-                     stall->couldSuggestIgnoreThisPath(true, 0) ||
-                     stall->couldSuggestIgnoreThisPath(true, 1))
-            {
-                d = std::make_shared<IgnoredStalledIssue>(stall);
-            }
-            else if(stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
-                     || stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
-            {
-                d = std::make_shared<LocalOrRemoteUserMustChooseStalledIssue>(stall);
-            }
-            else if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
-            {
-                d = std::make_shared<MoveOrRenameCannotOccurIssue>(stall);
+                variant = mMoveOrRenameCannotOccurFactory->createIssue(stall);
+                if(!variant.isValid())
+                {
+                    continue;
+                }
             }
             else
             {
-                d = std::make_shared<StalledIssue>(stall);
+                if (stall->reason() ==
+                    mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
+                {
+                    d = std::make_shared<NameConflictedStalledIssue>(stall);
+                }
+                else if (stall->couldSuggestIgnoreThisPath(false, 0) ||
+                         stall->couldSuggestIgnoreThisPath(false, 1) ||
+                         stall->couldSuggestIgnoreThisPath(true, 0) ||
+                         stall->couldSuggestIgnoreThisPath(true, 1))
+                {
+                    d = std::make_shared<IgnoredStalledIssue>(stall);
+                }
+                else if (stall->reason() ==
+                             mega::MegaSyncStall::SyncStallReason::
+                                 LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
+                         stall->reason() ==
+                             mega::MegaSyncStall::SyncStallReason::
+                                 LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
+                {
+                    d = std::make_shared<LocalOrRemoteUserMustChooseStalledIssue>(stall);
+                }
+                else
+                {
+                    d = std::make_shared<StalledIssue>(stall);
+                }
+
+                variant = StalledIssueVariant(d, stall);
             }
 
-            variant = StalledIssueVariant(d, stall);
-
-            if(variant.shouldBeIgnored())
+            if (variant.shouldBeIgnored())
             {
                 continue;
             }
 
             //Check if it is being solved...
-            if(!variant.getData()->isSolved())
+            if (!variant.getData()->isSolved())
             {
                 variant.getData()->endFillingIssue();
 
-                if(mIsEventRequest)
+                if (mIsEventRequest)
                 {
-                    if(!variant.getData()->isSolvable())
+                    if (!variant.getData()->isSolvable())
                     {
-                        QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1").arg(QString::number(stall->reason())));
-                        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, eventMessage.toUtf8().constData());
+                        QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1")
+                                                 .arg(QString::number(stall->reason())));
+                        MegaSyncApp->getStatsEventHandler()->sendEvent(
+                            AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED,
+                            eventMessage.toUtf8().constData());
                     }
                 }
                 else
                 {
-                    if(variant.getData()->isSolvable())
+                    if (variant.getData()->isSolvable())
                     {
                         solvableIssues.append(variant);
                     }
@@ -105,7 +130,13 @@ void StalledIssuesFactory::createIssues(mega::MegaSyncStallList* stalls)
     }
 }
 
-StalledIssuesVariantList StalledIssuesFactory::issues() const
+StalledIssuesVariantList StalledIssuesCreator::issues() const
 {
     return mIssues;
+}
+
+void StalledIssuesCreator::clear()
+{
+    mIssues.clear();
+    mMoveOrRenameCannotOccurFactory->clear();
 }

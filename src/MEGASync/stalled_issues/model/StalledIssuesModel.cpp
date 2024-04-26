@@ -27,8 +27,8 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
         mStalledIssues.clear();
         IgnoredStalledIssue::clearIgnoredSyncs();
 
-        StalledIssuesFactory factory(mIsEventRequest);
-        connect(&factory, &StalledIssuesFactory::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
+        StalledIssuesCreator factory(mIsEventRequest);
+        connect(&factory, &StalledIssuesCreator::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
         factory.createIssues(request->getMegaSyncStallList());
         mStalledIssues = factory.issues();
 
@@ -1156,18 +1156,11 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index)
         {
             connect(moveOrRemoveIssue.get(), &MoveOrRenameCannotOccurIssue::issueSolved, this, [this, moveOrRemoveIssue](bool isSolved)
             {
-                QString solveMessage;
-                if(moveOrRemoveIssue->isFile())
-                {
-                    solveMessage = tr("File \"%1\" was moved to \"%2\".").arg(moveOrRemoveIssue->currentPath(), moveOrRemoveIssue->previousPath());
-                }
-                else
-                {
-                    solveMessage = tr("Folder \"%1\" was moved to \"%2\".").arg(moveOrRemoveIssue->currentPath(), moveOrRemoveIssue->previousPath());
-                }
+                QString solveMessage(tr("Issue solved."));
+
                 finishSolvingIssues(isSolved ? 1 : 0, true, solveMessage);
             });
-            moveOrRemoveIssue->solveIssue();
+            moveOrRemoveIssue->solveIssue(MoveOrRenameCannotOccurIssue::SideChosen::REMOTE);
         }
         return true;
     };
