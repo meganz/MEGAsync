@@ -8,11 +8,11 @@
 
 using namespace DTI;
 
-QmlThemeGenerator::QmlThemeGenerator(QObject *parent)
+QmlThemeGenerator::QmlThemeGenerator(QObject* parent)
     : QObject{parent}
 {}
 
-void QmlThemeGenerator::start(const ThemedColourMap& themeData)
+void QmlThemeGenerator::start(const ThemedColorData& themeData)
 {
     /*
      * Deploy qml color targets.

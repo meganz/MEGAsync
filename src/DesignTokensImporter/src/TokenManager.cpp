@@ -13,6 +13,10 @@
 
 using namespace DTI;
 
+static const QString CoreMain = "Core/Main";
+static const QString CoreColors = "Colors";
+static const QString SemanticTokens = "Semantic tokens";
+
 TokenManager::TokenManager()
 {
     mCurrentDir = QDir::currentPath();
@@ -27,49 +31,44 @@ TokenManager* TokenManager::instance()
 
 void TokenManager::run()
 {
-    // find core.json file
-    QString pathToCoreFile = Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_CORE_FILE_PATH);
-    QFile coreFile(pathToCoreFile);
-    if (!coreFile.exists())
+    // look for tokens.json file
+    QString pathToDesignTokensFile = Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_DESIGN_TOKENS_FILE_PATH);
+    QFile designTokensFile(pathToDesignTokensFile);
+    if (!designTokensFile.exists())
     {
-        qCritical() << __func__ << " Error : No core.json file found in  " << pathToCoreFile;
+        qCritical() << __func__ << " Error : No tokens.json file found in " << pathToDesignTokensFile;
         return;
     }
 
-    // load core.json file
-    CoreMap coreMap = parseCore(pathToCoreFile);
-
-    // find json colors themed files
-    QString pathToColorThemedFiles = Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_COLOR_TOKENS_PATH);
-    QStringList colorThemedPathFiles = Utilities::findFilesInDir(pathToColorThemedFiles, PathProvider::JSON_NAME_FILTER);
-
-    // stop if there are no Design Token files
-    if (colorThemedPathFiles.isEmpty())
+    if (!designTokensFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qCritical() << __func__ << " ERROR! No color themed files found in folder " << pathToColorThemedFiles;
+        qDebug() << __func__ << " Error : opening tokens.json file " << pathToDesignTokensFile;
         return;
     }
+
+    // load core data
+    const CoreData& coreData = parseCore(designTokensFile);
 
     // parse json color themed files.
-    ThemedColourMap fileToColourMap = parseColorTokenJSON(colorThemedPathFiles, coreMap);
+    const ThemedColorData& themesData = parseTheme(designTokensFile, coreData);
 
     // qml style generator entry point.
     std::unique_ptr<IThemeGenerator> styleGenerator{new QmlThemeGenerator()};
-    styleGenerator->start(fileToColourMap);
+    styleGenerator->start(themesData);
 
     // qtwidget style generator entry point.
     std::unique_ptr<IThemeGenerator> qtWidgetStyleGenerator{new QTWIDGETStyleGenerator()};
-    qtWidgetStyleGenerator->start(fileToColourMap);
+    qtWidgetStyleGenerator->start(themesData);
 }
 
-void TokenManager::recurseCore(QString category, const QJsonObject& categoryObject, CoreMap& coreMap)
+void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData)
 {
-    const QStringList tokenKeys = categoryObject.keys();
+    const QStringList tokenKeys = coreColors.keys();
 
-    if (tokenKeys.contains(QLatin1String("$value")) && tokenKeys.contains(QLatin1String("$type")))
+    if (tokenKeys.contains(QLatin1String("value")) && tokenKeys.contains(QLatin1String("type")))
     {
-        QJsonValue jType = categoryObject["$type"];
-        QJsonValue jValue = categoryObject["$value"];
+        QJsonValue jType = coreColors["type"];
+        QJsonValue jValue = coreColors["value"];
 
         if (!jType.isNull() && jValue.isString())
         {
@@ -77,7 +76,7 @@ void TokenManager::recurseCore(QString category, const QJsonObject& categoryObje
 
             if (type == "color")
             {
-                coreMap.insert(category, jValue.toString().remove(QChar('#')));
+                coreData.insert(category, jValue.toString().remove(QChar('#')));
             }
         }
     }
@@ -86,81 +85,98 @@ void TokenManager::recurseCore(QString category, const QJsonObject& categoryObje
         for (int index = 0; index < tokenKeys.size(); ++index)
         {
             QString subCategory = category + "." + tokenKeys[index];
-            QJsonObject categoryObj = categoryObject.value(tokenKeys[index]).toObject();
+            QJsonObject categoryObj = coreColors.value(tokenKeys[index]).toObject();
 
-            recurseCore(subCategory, categoryObj, coreMap);
+            recurseCore(subCategory, categoryObj, coreData);
         }
     }
 }
 
-CoreMap TokenManager::parseCore(const QString& coreFilePath)
+CoreData TokenManager::parseCore(QFile& designTokensFile)
 {
-    static QString ColorKey = "Colors";
+    const QString errorPrefix = __func__ + QString(" Error : parsing design tokens file, ");
 
-    CoreMap returnValue;
+    CoreData coreData;
 
-    QFile inputFile(coreFilePath);
-    if (!inputFile.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qDebug() << __func__ << " Error : opening core file " << coreFilePath;
-        return returnValue;
-    }
-
-    // Parse the input JSON document
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(inputFile.readAll());
+    designTokensFile.seek(0);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(designTokensFile.readAll());
     if (jsonDocument.isNull())
     {
-        qDebug() << __func__ << " Error : parsing core file " << coreFilePath;
-        return returnValue;
+        qDebug() << errorPrefix << "couldn't read data.";
+        return coreData;
     }
 
     QJsonObject jsonObject = jsonDocument.object();
-
-    const QStringList categoryKeys = jsonObject.keys();
-    auto foundColorKeyIt = std::find_if(categoryKeys.constBegin(), categoryKeys.constEnd(), [](const QString& key){
-        return key == ColorKey;
+    QStringList childKeys = jsonObject.keys();
+    auto foundMatchingChildKeyIt = std::find_if(childKeys.constBegin(), childKeys.constEnd(), [](const QString& key){
+        return key == CoreMain;
     });
 
-    if (foundColorKeyIt != categoryKeys.constEnd())
+    if (foundMatchingChildKeyIt == childKeys.constEnd())
     {
-        QJsonObject categoryObject = jsonObject.value(ColorKey).toObject();
-        recurseCore(ColorKey, categoryObject, returnValue);
+        qDebug() << errorPrefix << "key not found " << CoreMain;
+        return coreData;
     }
 
-    return returnValue;
+    jsonObject = jsonObject.value(CoreMain).toObject();
+    childKeys = jsonObject.keys();
+    foundMatchingChildKeyIt = std::find_if(childKeys.constBegin(), childKeys.constEnd(), [](const QString& key){
+        return key == CoreColors;
+    });
+
+    if (foundMatchingChildKeyIt == childKeys.constEnd())
+    {
+        qDebug() << errorPrefix << "key not found " << CoreColors;
+        return coreData;
+    }
+
+    QJsonObject coreColors = jsonObject.value(CoreColors).toObject();
+    recurseCore(CoreColors, coreColors, coreData);
+
+    return coreData;
 }
 
-ThemedColourMap TokenManager::parseColorTokenJSON(const QStringList& colorTokenFilePathsList, const CoreMap& coreMap)
+ThemedColorData TokenManager::parseTheme(QFile& designTokensFile, const CoreData& coreData)
 {
-    ThemedColourMap retMap;
+    const QString errorPrefix = __func__ + QString(" Error : parsing design tokens file, ");
 
-    if (colorTokenFilePathsList.isEmpty())
+    ThemedColorData themedColorData;
+
+    designTokensFile.seek(0);
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(designTokensFile.readAll());
+    if (jsonDocument.isNull())
     {
-        qDebug() << __func__ << " Error : colorTokenFilePathsList is empty.";
-        return retMap;
+        qDebug() << errorPrefix << "couldn't read data.";
+        return themedColorData;
     }
 
-    foreach (const QString& colorTokenFilePath, colorTokenFilePathsList)
+    QJsonObject jsonObject = jsonDocument.object();
+    QStringList childKeys = jsonObject.keys();
+    std::for_each(childKeys.constBegin(), childKeys.constEnd(), [&](const QString& key)
     {
-        ColourMap colourMap = Utilities::parseColorThemeJSON(colorTokenFilePath, coreMap);
-        if (colourMap.isEmpty())
+        if (key.contains(SemanticTokens))
         {
-            qDebug() << __func__ << " Error : ColourMap is empty on file " << colorTokenFilePath;
-            continue;
+            QJsonObject themeObject = jsonObject.value(key).toObject();
+
+            ColourMap colourMap = Utilities::parseColorTheme(themeObject, coreData);
+            if (colourMap.isEmpty())
+            {
+                qDebug() << errorPrefix << "no color theme data for " << key;
+                return;
+            }
+
+            QString theme = key.right(key.size() - key.lastIndexOf('/') - 1);
+            if (theme.isEmpty())
+            {
+                qDebug() << errorPrefix << " Error : No valid theme found on key " << key;
+                return;
+            }
+
+            themedColorData.insert(theme, colourMap);
         }
+    });
 
-        QString theme = Utilities::themeToString(Utilities::getTheme(colorTokenFilePath));
-        if (theme.isEmpty())
-        {
-            qDebug() << __func__ << " Error : No valid theme found on " << colorTokenFilePath;
-
-            continue;
-        }
-
-        retMap.insert(theme, colourMap);
-    }
-
-    return retMap;
+    return themedColorData;
 }
 
 

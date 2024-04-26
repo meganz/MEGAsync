@@ -13,8 +13,8 @@ namespace DTI
         Q_OBJECT
 
     public:
-        explicit QmlThemeGenerator(QObject *parent = nullptr);
-        void start(const ThemedColourMap& themeData) override;
+        explicit QmlThemeGenerator(QObject* parent = nullptr);
+        void start(const ThemedColorData& themeData) override;
 
     signals:
         void finished();

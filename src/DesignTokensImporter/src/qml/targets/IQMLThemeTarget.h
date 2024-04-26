@@ -10,7 +10,7 @@ namespace  DTI
     class IQMLThemeTarget
     {
     public:
-        virtual void deploy(const ThemedColourMap& themedColourMap) const = 0;
+        virtual void deploy(const ThemedColorData& themedColourMap) const = 0;
         virtual ~IQMLThemeTarget() = default;
     };
 }

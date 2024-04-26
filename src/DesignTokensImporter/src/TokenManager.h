@@ -4,6 +4,7 @@
 #include "Types.h"
 
 #include <QMap>
+#include <QFile>
 #include <QStringList>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -18,9 +19,9 @@ namespace DTI
 
     private:
         TokenManager();
-        ThemedColourMap parseColorTokenJSON(const QStringList& colorTokenFilePathsList, const CoreMap& coreMap);
-        CoreMap parseCore(const QString& coreFilePath);
-        void recurseCore(QString category, const QJsonObject& categoryObject, CoreMap& coreMap);
+        ThemedColorData parseTheme(QFile& designTokensFile, const CoreData& coreData);
+        CoreData parseCore(QFile& designTokensFile);
+        void recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData);
 
         QString mCurrentDir;
     };

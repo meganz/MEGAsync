@@ -8,8 +8,6 @@
 #include <QFileInfo>
 #include <QTextStream>
 
-#include <iostream>
-
 using namespace DTI;
 
 static const QString qmlColorThemeTargetPath = "%1/gui/qml/common/themes/%2";
@@ -20,7 +18,7 @@ static const QString colorThemeFooter = QString::fromUtf8("}\n");
 
 bool QMLColorThemeTarget::registered = ConcreteQMLThemeFactory<QMLColorThemeTarget>::Register("qmlColorTheme");
 
-void QMLColorThemeTarget::deploy(const ThemedColourMap& themeColorData) const
+void QMLColorThemeTarget::deploy(const ThemedColorData& themeColorData) const
 {
     if (themeColorData.isEmpty())
     {
