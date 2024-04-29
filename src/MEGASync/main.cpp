@@ -195,10 +195,11 @@ void sendUninstallEvent(std::shared_ptr<Preferences> preferences)
 {
     if (preferences->installationTime() != -1)
     {
-        MegaApi* megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *) NULL,
-                                       Preferences::USER_AGENT.toUtf8().constData());
-        StatsEventHandler* statsEventHandler = new ProxyStatsEventHandler(megaApi);
-        statsEventHandler->sendEvent(AppStatsEvents::EventType::UNINSTALL_STATS,
+        auto megaApi = std::make_unique<MegaApi>(Preferences::CLIENT_KEY,
+                                                 (char *)NULL,
+                                                 Preferences::USER_AGENT.toUtf8().constData());
+        auto statsEventHandler = std::make_unique<ProxyStatsEventHandler>(megaApi.get());
+        statsEventHandler->sendEvent(AppStatsEvents::EventType::UNINSTALL,
                                      { QString::number(preferences->installationTime()),
                                        QString::number(preferences->accountCreationTime()),
                                        QString::number(preferences->hasLoggedIn()) },

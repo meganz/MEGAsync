@@ -563,7 +563,7 @@ else
     username=$SUDO_USER 2> /dev/null || true
     # Check if the variable is empty (e.g. if the script is not executed with sudo)
     [ -z "$username" ] && username=$(whoami) 2> /dev/null || true
-    su -c 'megasync "--send-uninstall-event"' $username 2> /dev/null || true
+    su -c 'timeout 1 megasync --send-uninstall-event' $username 2> /dev/null || true
 fi
 sleep 2
 
@@ -579,9 +579,6 @@ sleep 2
         /usr/bin/gtk-update-icon-cache %{_datadir}/icons/* &>/dev/null || :
     fi
 %endif
-
-# kill running MEGAsync instance when uninstall (!upgrade)
-[ "$1" == "0" ] && killall megasync 2> /dev/null || true
 
 
 %posttrans
