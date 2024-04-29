@@ -144,6 +144,11 @@ margin-top: 4px;
        <height>80</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">*{
+/*token_background-color: {{surface-1}};*/
+}</string>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
        <number>0</number>
@@ -547,6 +552,11 @@ margin-top: 4px;
    </item>
    <item>
     <widget class="QStackedWidget" name="wStack">
+     <property name="styleSheet">
+      <string notr="true">*{
+/*token_background-color: {{surface-1}};*/
+}</string>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -2146,6 +2156,11 @@ min-height: 72px;
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">*{
+/*token_background-color: {{surface-1}};*/
+}</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_18">
       <property name="leftMargin">

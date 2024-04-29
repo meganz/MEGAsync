@@ -13,22 +13,23 @@
 
 using namespace DTI;
 
-static const QString UI_TOKEN_IDENTIFIER = QString::fromLatin1("/*token_");
+static const QRegularExpression UI_TOKEN_IDENTIFIER(R"(/\*token_\s*([\w-]+)\s*:\s*([^;]+);\s*\*/)");
 
 bool QTWIDGETColorStyleTarget::registered = QTWIDGETStyleFactory<QTWIDGETColorStyleTarget>::Register(Utilities::targetToString(Targets::ColorStyle).toStdString());
 
 void QTWIDGETColorStyleTarget::process(const CurrentStyleBlockInfo& currentBlockInfo)
 {
     QStringList styleSheetLines = currentBlockInfo.content.split(QChar('\n'), Qt::SkipEmptyParts);
+    static const QRegularExpression braceRegex(R"(\{+\s*|\s*\}+)");
 
     PropertiesMap tokenProperties;
     for (const QString& styleSheetLine : styleSheetLines)
     {
-        if (styleSheetLine.contains(UI_TOKEN_IDENTIFIER))
+        QRegularExpressionMatch match = UI_TOKEN_IDENTIFIER.match(styleSheetLine);
+        if (match.hasMatch() && match.lastCapturedIndex() == 2)
         {
-            // Found a line in format: "/*token_background-color: {{surface-1}};*/"
-            QString key = Utilities::getSubStringBetweenMarkers(styleSheetLine, UI_TOKEN_IDENTIFIER, ":");
-            QString value = Utilities::getSubStringBetweenMarkers(styleSheetLine, "{{", "}}");
+            QString key = match.captured(1).toLower();
+            QString value = match.captured(2).trimmed().remove(braceRegex);
 
             // Skip lines with empty keys or values
             if (!key.isEmpty() && !value.isEmpty())

@@ -174,7 +174,8 @@ bool QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange(const QMap<QString, QMap
         {
             case QTWIDGETStyleGenerator::ObjectNamesID::TOKEN:
             {
-                if (didFilesChange(mCSSThemeFilePathsList, hashMap))
+                QStringList tokenFilePathList = QStringList() << mTokenFilePath;
+                if (didFilesChange(tokenFilePathList, hashMap))
                 {
                     qDebug() << "QTWIDGETStyleGenerator::didTokenUIOrCSSFilesChange - Token file change detected!";
                     return true;
@@ -361,7 +362,8 @@ void QTWIDGETStyleGenerator::addStyleSheetToResource()
 bool QTWIDGETStyleGenerator::writeHashFile()
 {
     QList<QStringList> listOfStringLists;
-    listOfStringLists.append(mCSSThemeFilePathsList);
+    QStringList tokenFilePathList = QStringList() << mTokenFilePath;
+    listOfStringLists.append(tokenFilePathList);
     listOfStringLists.append(mWinUIFilePathsList);
     listOfStringLists.append(mLinuxUIFilePathsList);
     listOfStringLists.append(mMacUIFilePathsList);

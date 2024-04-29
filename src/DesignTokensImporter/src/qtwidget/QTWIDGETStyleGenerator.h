@@ -58,7 +58,6 @@ namespace DTI
         QStringList mWinCSSFiles;
         QStringList mLinuxCSSFiles;
         QStringList mMacCSSFiles;
-        QStringList mCSSThemeFilePathsList;
         QStringList mCSSThemeFolderNameList;
         QVector<QSharedPointer<UIHandler>> mWinDesignTokenUIs;
         QVector<QSharedPointer<UIHandler>> mLinuxDesignTokenUIs;
