@@ -4,16 +4,17 @@
 
 if(WIN32)
     option(ENABLE_EXPLORER_EXT "desc" ON)
+    option(ENABLE_DESKTOP_UPDATER "Enable desktop updater tool build" ON)
 elseif(APPLE)
     option(ENABLE_FINDER_EXT "desc" ON)
+    option(ENABLE_DESKTOP_UPDATER "Enable desktop updater tool build" ON)
 else()
     #LINUX
-    option(ENABLE_LINUX_EXT "desc" ON)
+    option(ENABLE_LINUX_EXT "desc" OFF) #Need to port nautilus and thunar to cmake
+    option(ENABLE_DESKTOP_UPDATER "Enable desktop updater tool build" OFF)
 endif()
 
-
 option(ENABLE_DESKTOP_APP "Enable desktop app build" ON)
-option(ENABLE_DESKTOP_UPDATER "Enable desktop updater tool build" ON)
 option(ENABLE_DESKTOP_UPDATE_GEN "Enable desktop update generator tool" ON)
 option(ENABLE_DESKTOP_APP_WERROR "Enable warnings as errors" OFF)
 

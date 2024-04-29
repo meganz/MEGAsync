@@ -7,6 +7,7 @@ if (WIN32)
 elseif (APPLE)
     add_executable(MEGAsync MACOSX_BUNDLE)
 else()
+    add_executable(MEGAsync)
 endif()
 
 set(MEGA_DESKTOP_APP_HEADERS
@@ -101,6 +102,12 @@ if (WIN32)
     find_package(Qt5 REQUIRED COMPONENTS WinExtras)
 elseif (APPLE)
     find_package(Qt5 REQUIRED COMPONENTS MacExtras)
+else()
+    find_package(Qt5 REQUIRED COMPONENTS Svg)
+    target_link_libraries(MEGAsync
+        PUBLIC
+        Qt5::Svg
+    )
 endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick)

@@ -59,7 +59,6 @@ target_sources_conditional(MEGAsync
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   transfers/../gui/Resources_win.qrc
    transfers/gui/win/TransferWidgetHeaderItem.ui
    transfers/gui/win/TransferManagerDelegateWidget.ui
    transfers/gui/win/TransferManager.ui
@@ -80,7 +79,6 @@ target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   transfers/../gui/Resources_macx.qrc
    transfers/gui/macx/TransferWidgetHeaderItem.ui
    transfers/gui/macx/TransferManagerDelegateWidget.ui
    transfers/gui/macx/TransferManager.ui
@@ -97,6 +95,26 @@ target_sources_conditional(MEGAsync
    transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
 )
 
+target_sources_conditional(MEGAsync
+   FLAG UNIX AND NOT APPLE
+   QT_AWARE
+   PRIVATE
+   transfers/gui/linux/TransferWidgetHeaderItem.ui
+   transfers/gui/linux/TransferManagerDelegateWidget.ui
+   transfers/gui/linux/TransferManager.ui
+   transfers/gui/linux/TransfersWidget.ui
+   transfers/gui/linux/TransferManagerLoadingItem.ui
+   transfers/gui/linux/TransferManagerDragBackDrop.ui
+   transfers/gui/linux/InfoDialogTransfersWidget.ui
+   transfers/gui/linux/InfoDialogTransferDelegateWidget.ui
+   transfers/gui/linux/InfoDialogTransferLoadingItem.ui
+   transfers/gui/linux/TransfersStatusWidget.ui
+   transfers/gui/linux/TransfersSummaryWidget.ui
+   transfers/gui/linux/SomeIssuesOccurredMessage.ui
+   transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeDialog.ui
+   transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeItem.ui
+)
+
 if (WIN32)
     set_property(TARGET MEGAsync
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
@@ -108,6 +126,12 @@ elseif (APPLE)
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         transfers/gui/macx
         transfers/gui/DuplicatedNodeDialogs/macx
+    )
+else()
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        transfers/gui/linux
+        transfers/gui/DuplicatedNodeDialogs/linux
     )
 endif()
 

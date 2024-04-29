@@ -47,6 +47,10 @@ if(ENABLE_DESKTOP_APP AND NOT ENABLE_QT_BINDINGS)
     message(FATAL_ERROR "Qt Destkop App requires Qt bindings to work. Turn on ENABLE_QT_BINDINGS option.")
 endif()
 
+if(ENABLE_DESKTOP_UPDATER AND (UNIX AND NOT APPLE))
+    message(FATAL_ERROR "MEGAUpdater is not available for Linux. Turn off ENABLE_DESKTOP_UPDATER option.")
+endif()
+
 message(STATUS "Building MEGA Desktop App project v${PROJECT_VERSION}")
 
 include(target_sources_conditional) # function to add files to the project without building them

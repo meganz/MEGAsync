@@ -292,7 +292,7 @@ PowerOptions::PowerOptions()
 {
     if(!mPowerOptionsImpl)
     {
-        mPowerOptionsImpl = mega::make_unique<PowerOptionsImpl>();
+        mPowerOptionsImpl = std::make_unique<PowerOptionsImpl>();
     }
 }
 

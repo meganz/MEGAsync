@@ -54,10 +54,27 @@ set(DESKTOP_APP_SYNCS_SOURCES
 )
 
 target_sources_conditional(MEGAsync
+   FLAG WIN32
+   QT_AWARE
+   PRIVATE
+   syncs/gui/Twoways/win/FolderBinder.ui
+   syncs/gui/Twoways/win/BindFolderDialog.ui
+   syncs/gui/Twoways/win/IgnoresEditingDialog.ui
+   syncs/gui/Twoways/win/SyncAccountFullMessage.ui
+   syncs/gui/Twoways/win/SyncSettingsUIBase.ui
+   syncs/gui/Twoways/win/SyncStallModeSelector.ui
+   syncs/gui/Backups/win/BackupsWizard.ui
+   syncs/gui/Backups/win/AddBackupDialog.ui
+   syncs/gui/Backups/win/RemoveBackupDialog.ui
+   syncs/gui/Backups/win/BackupNameConflictDialog.ui
+   syncs/gui/Backups/win/BackupRenameWidget.ui
+   syncs/gui/Backups/win/OpenBackupsFolder.ui
+)
+
+target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   syncs/../gui/Resources_macx.qrc
    syncs/gui/Twoways/macx/FolderBinder.ui
    syncs/gui/Twoways/macx/BindFolderDialog.ui
    syncs/gui/Twoways/macx/IgnoresEditingDialog.ui
@@ -72,6 +89,24 @@ target_sources_conditional(MEGAsync
    syncs/gui/Backups/macx/OpenBackupsFolder.ui
 )
 
+target_sources_conditional(MEGAsync
+   FLAG UNIX AND NOT APPLE
+   QT_AWARE
+   PRIVATE
+   syncs/gui/Twoways/linux/FolderBinder.ui
+   syncs/gui/Twoways/linux/BindFolderDialog.ui
+   syncs/gui/Twoways/linux/IgnoresEditingDialog.ui
+   syncs/gui/Twoways/linux/SyncAccountFullMessage.ui
+   syncs/gui/Twoways/linux/SyncSettingsUIBase.ui
+   syncs/gui/Twoways/linux/SyncStallModeSelector.ui
+   syncs/gui/Backups/linux/BackupsWizard.ui
+   syncs/gui/Backups/linux/AddBackupDialog.ui
+   syncs/gui/Backups/linux/RemoveBackupDialog.ui
+   syncs/gui/Backups/linux/BackupNameConflictDialog.ui
+   syncs/gui/Backups/linux/BackupRenameWidget.ui
+   syncs/gui/Backups/linux/OpenBackupsFolder.ui
+)
+
 if (WIN32)
     set_property(TARGET MEGAsync
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
@@ -83,6 +118,12 @@ elseif (APPLE)
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         syncs/gui/Twoways/macx
         syncs/gui/Backups/macx
+    )
+else()
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        syncs/gui/Twoways/linux
+        syncs/gui/Backups/linux
     )
 endif()
 

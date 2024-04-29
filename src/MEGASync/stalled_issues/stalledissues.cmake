@@ -59,7 +59,6 @@ target_sources_conditional(MEGAsync
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   stalled_issues/../gui/Resources_win.qrc
    stalled_issues/gui/win/StalledIssueHeader.ui
    stalled_issues/gui/win/StalledIssueChooseWidget.ui
    stalled_issues/gui/win/StalledIssuesDialog.ui
@@ -77,7 +76,6 @@ target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   stalled_issues/../gui/Resources_macx.qrc
    stalled_issues/gui/macx/StalledIssueHeader.ui
    stalled_issues/gui/macx/StalledIssueChooseWidget.ui
    stalled_issues/gui/macx/StalledIssuesDialog.ui
@@ -91,6 +89,24 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/stalled_issues_cases/macx/LocalAndRemoteNameConflicts.ui
 )
 
+target_sources_conditional(MEGAsync
+   FLAG UNIX AND NOT APPLE
+   QT_AWARE
+   PRIVATE
+   stalled_issues/gui/linux/StalledIssueHeader.ui
+   stalled_issues/gui/linux/StalledIssueChooseWidget.ui
+   stalled_issues/gui/linux/StalledIssuesDialog.ui
+   stalled_issues/gui/linux/StalledIssueFilePath.ui
+   stalled_issues/gui/linux/StalledIssueTab.ui
+   stalled_issues/gui/linux/StalledIssueLoadingItem.ui
+   stalled_issues/gui/linux/StalledIssueActionTitle.ui
+   stalled_issues/gui/stalled_issues_cases/linux/LocalAndRemoteDifferentWidget.ui
+   stalled_issues/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui
+   stalled_issues/gui/stalled_issues_cases/linux/NameConflict.ui
+   stalled_issues/gui/stalled_issues_cases/linux/LocalAndRemoteNameConflicts.ui
+)
+
+
 if (WIN32)
     set_property(TARGET MEGAsync
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
@@ -102,6 +118,12 @@ elseif (APPLE)
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         stalled_issues/gui/macx
         stalled_issues/gui/stalled_issues_cases/macx
+    )
+elseif (UNIX AND NOT APPLE)
+    set_property(TARGET MEGAsync
+        APPEND PROPERTY AUTOUIC_SEARCH_PATHS
+        stalled_issues/gui/linux
+        stalled_issues/gui/stalled_issues_cases/linux
     )
 endif()
 
