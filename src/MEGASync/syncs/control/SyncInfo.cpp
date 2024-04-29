@@ -689,7 +689,7 @@ void SyncInfo::onSyncFileStateChanged(MegaApi*, MegaSync*, std::string *localPat
         return;
     }
 
-    Platform::getInstance()->notifySyncFileChange(localPath, newState, false);
+    Platform::getInstance()->notifySyncFileChange(localPath, newState);
 }
 
 void SyncInfo::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats *syncStats)
