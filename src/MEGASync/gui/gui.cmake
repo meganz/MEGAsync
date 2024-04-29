@@ -374,6 +374,7 @@ target_sources_conditional(MEGAsync
 
 target_sources_conditional(MEGAsync
    FLAG UNIX
+   QT_AWARE
    PRIVATE
    gui/PermissionsDialog.cpp
    gui/PermissionsWidget.cpp
