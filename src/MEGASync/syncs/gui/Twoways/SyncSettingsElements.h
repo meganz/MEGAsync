@@ -21,6 +21,8 @@ public:
     void initElements(SyncSettingsUIBase* syncSettingsUi);
     void setOverQuotaMode(bool state);
 
+    void retranslateUi();
+
 private slots:
     void onPurchaseMoreStorage();
     void onSmartModeSelected(bool checked);
@@ -31,6 +33,9 @@ private slots:
 private:
     Ui::SyncAccountFullMessage* syncAccountFullMessageUI;
     Ui::SyncStallModeSelector* syncStallModeSelectorUI;
+
+    QWidget* mSyncAccountFull;
+    QWidget* mSyncStallModeSelector;
 };
 
 #endif // SYNCSETTINGSELEMENTS_H

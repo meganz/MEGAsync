@@ -291,20 +291,22 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/ExportProcessor.h
     ${MEGAsyncDir}/control/HTTPServer.h
+    ${MEGAsyncDir}/control/LinkObject.h
     ${MEGAsyncDir}/control/LinkProcessor.h
     ${MEGAsyncDir}/control/MegaDownloader.h
     ${MEGAsyncDir}/control/DownloadQueueController.h
     ${MEGAsyncDir}/control/MegaSyncLogger.h
     ${MEGAsyncDir}/control/MegaUploader.h
-    ${MEGAsyncDir}/control/ProtectedQueue.h
     ${MEGAsyncDir}/control/Preferences/Preferences.h
     ${MEGAsyncDir}/control/Preferences/EncryptedSettings.h
     ${MEGAsyncDir}/control/Preferences/EphemeralCredentials.h
+    ${MEGAsyncDir}/control/ProtectedQueue.h
     ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/control/SetManager.h
+    ${MEGAsyncDir}/control/SetTypes.h
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/DialogOpener.h
@@ -746,6 +748,7 @@ set (SRCS
     ${MEGAsyncDir}/control/Preferences/EphemeralCredentials.cpp
     ${MEGAsyncDir}/control/Preferences/Preferences.cpp
     ${MEGAsyncDir}/control/HTTPServer.cpp
+    ${MEGAsyncDir}/control/LinkObject.cpp
     ${MEGAsyncDir}/control/LinkProcessor.cpp
     ${MEGAsyncDir}/control/MegaUploader.cpp
     ${MEGAsyncDir}/control/SetManager.cpp

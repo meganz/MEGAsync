@@ -706,7 +706,10 @@ void MegaApplication::initialize()
 
     mStatsEventHandler = new ProxyStatsEventHandler();
 
-    mSetManager = ::mega::make_unique<SetManager>(megaApi, megaApiFolders);
+    //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
+    //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
+    mSetManager = new SetManager(megaApi, megaApiFolders);
+    connect(mSetManager, &SetManager::onSetDownloadFinished, this, &MegaApplication::setDownloadFinished);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1469,7 +1472,6 @@ if (!preferences->lastExecutionTime())
     {
         preferences->setUsedStorage(receivedStorageSum);
     }
-    preferences->sync();
     refreshStorageUIs();
 
     onGlobalSyncStateChanged(megaApi);
@@ -2140,6 +2142,8 @@ void MegaApplication::periodicTasks()
         onGlobalSyncStateChanged(megaApi);
     }
 
+    sendPeriodicStats();
+
     if (trayIcon)
     {
 #ifdef Q_OS_LINUX
@@ -2189,6 +2193,8 @@ void MegaApplication::cleanAll()
         mBlockingBatch.cancelTransfer();
     }
 
+    delete mSetManager;
+    mSetManager = nullptr;
     delete mStalledIssuesModel;
     mStalledIssuesModel = nullptr;
     delete httpServer;
@@ -2224,9 +2230,12 @@ void MegaApplication::cleanAll()
     mSyncs2waysMenu->deleteLater();
     mBackupsMenu->deleteLater();
 
+    preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
+
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after
     // their deletion
+    // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
 
     delete megaApi;
@@ -2235,7 +2244,6 @@ void MegaApplication::cleanAll()
     delete megaApiFolders;
     megaApiFolders = nullptr;
 
-    preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
     trayIcon->deleteLater();
     trayIcon = nullptr;
 
@@ -2910,7 +2918,6 @@ void MegaApplication::ConnectServerSignals(HTTPServer* server)
     connect(server, &HTTPServer::onExternalShowInFolderRequested, this, &MegaApplication::openFolderPath, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalAddBackup, this, &MegaApplication::externalAddBackup, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalDownloadSetRequested, this, &MegaApplication::processSetDownload, Qt::QueuedConnection);
-    connect(mSetManager.get(), &SetManager::onSetDownloadFinished, this, &MegaApplication::setDownloadFinished);
 }
 
 bool MegaApplication::dontAskForExitConfirmation(bool force)
@@ -4013,7 +4020,27 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
         auto linkProcessor = new LinkProcessor(linkList, MegaSyncApp->getMegaApi(), MegaSyncApp->getMegaApiFolders());
 
         //Open the import dialog
-        auto importDialog = new ImportMegaLinksDialog(linkProcessor);
+        auto importDialog = new ImportMegaLinksDialog(linkList);
+
+        linkProcessor->setParentHandler(importDialog);
+
+        connect(linkProcessor, &LinkProcessor::onLinkInfoAvailable, importDialog, &ImportMegaLinksDialog::onLinkInfoAvailable);
+        connect(linkProcessor, &LinkProcessor::onLinkInfoRequestFinish, importDialog, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
+        connect(importDialog, &ImportMegaLinksDialog::linkSelected, linkProcessor, &LinkProcessor::onLinkSelected);
+        connect(importDialog, &ImportMegaLinksDialog::onChangeEvent, linkProcessor, &LinkProcessor::refreshLinkInfo);
+
+        if (mSetManager)
+        {
+            connect(linkProcessor, &LinkProcessor::requestFetchSetFromLink, mSetManager, &SetManager::requestFetchSetFromLink, Qt::QueuedConnection);
+            connect(mSetManager, &SetManager::onFetchSetFromLink, linkProcessor, &LinkProcessor::onFetchSetFromLink, Qt::QueuedConnection);
+            connect(linkProcessor, &LinkProcessor::requestDownloadSet, mSetManager, &SetManager::requestDownloadSet, Qt::QueuedConnection);
+            connect(mSetManager, &SetManager::onSetDownloadFinished, linkProcessor, &LinkProcessor::onSetDownloadFinished, Qt::QueuedConnection);
+            connect(linkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet, Qt::QueuedConnection);
+            connect(mSetManager, &SetManager::onSetImportFinished, linkProcessor, &LinkProcessor::onSetImportFinished, Qt::QueuedConnection);
+        }
+
+        linkProcessor->requestLinkInfo();
+
         DialogOpener::showDialog<ImportMegaLinksDialog, TransferManager>(importDialog, true, [this, linkProcessor, importDialog]()
         {
             if (importDialog->result() == QDialog::Accepted)
@@ -4470,6 +4497,26 @@ void MegaApplication::showInfoDialogIfHTTPServerSender()
     if (qobject_cast<HTTPServer*>(sender()))
     {
         showInfoDialog();
+    }
+}
+
+void MegaApplication::sendPeriodicStats() const
+{
+    auto lastTime = preferences->lastDailyStatTime();
+    if(Utilities::dayHasChangedSince(lastTime) && !mStatusController->isAccountBlocked())
+    {
+        QString accountType = QString::number(preferences->logged() ? preferences->accountType() : -1);
+        mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_DAILY_ACTIVE_USER,
+                                      QString::fromUtf8("Daily Active Users (DAU) - acctype: %1")
+                                          .arg(accountType).toUtf8().constData());
+        preferences->setLastDailyStatTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
+
+        if(Utilities::monthHasChangedSince(lastTime))
+        {
+            mStatsEventHandler->sendEvent(AppStatsEvents::EVENT_MONTHLY_ACTIVE_USER,
+                                          QString::fromUtf8("Monthly Active Users (MAU) - acctype: %1")
+                                              .arg(accountType).toUtf8().constData());
+        }
     }
 }
 
@@ -5563,7 +5610,6 @@ void MegaApplication::manageBusinessStatus(int64_t event)
 
 void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
 {
-    DeferPreferencesSyncForScope deferrer(this);
     const int eventNumber = static_cast<int>(event->getNumber());
 
     if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
@@ -5597,7 +5643,6 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
         {
             preferences->setUsedStorage(receivedStorageSum);
         }
-        preferences->sync();
 
         refreshStorageUIs();
     }
@@ -5618,8 +5663,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         return;
     }
-
-    DeferPreferencesSyncForScope deferrer(this);
 
     if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
@@ -5889,8 +5932,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
-        preferences->sync();
-
         if (infoDialog)
         {
             infoDialog->setUsage();
@@ -6064,8 +6105,6 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
-    DeferPreferencesSyncForScope deferrer(this);
-
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
         HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
@@ -6087,8 +6126,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         return;
     }
-
-    DeferPreferencesSyncForScope deferrer(this);
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
@@ -6183,8 +6220,6 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
         return;
     }
 
-    DeferPreferencesSyncForScope deferrer(this);
-
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
@@ -6205,8 +6240,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         return;
     }
 
-    DeferPreferencesSyncForScope deferrer(this);
-
     onTransferUpdate(api, transfer);
 
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
@@ -6225,41 +6258,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
             megaApi->getPricing();
             updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
             mTransferQuota->setOverQuota(waitTime);
-        }
-    }
-}
-
-void MegaApplication::onCheckDeferredPreferencesSyncTimeout()
-{
-    onCheckDeferredPreferencesSync(true);
-}
-
-void MegaApplication::onCheckDeferredPreferencesSync(bool timeout)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    // don't execute too often or the dialog locks up, eg. queueing a folder with 1k items for upload/download
-    if (timeout)
-    {
-        onDeferredPreferencesSyncTimer.reset();
-        if (preferences->needsDeferredSync())
-        {
-            preferences->sync();
-        }
-    }
-    else
-    {
-        if (!onDeferredPreferencesSyncTimer)
-        {
-            onDeferredPreferencesSyncTimer.reset(new QTimer(this));
-            connect(onDeferredPreferencesSyncTimer.get(), SIGNAL(timeout()), this, SLOT(onCheckDeferredPreferencesSyncTimeout()));
-
-            onDeferredPreferencesSyncTimer->setSingleShot(true);
-            onDeferredPreferencesSyncTimer->setInterval(100);
-            onDeferredPreferencesSyncTimer->start();
         }
     }
 }
@@ -6339,8 +6337,6 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
         return;
     }
 
-    DeferPreferencesSyncForScope deferrer(this);
-
     MegaHandle myHandle = megaApi->getMyUserHandleBinary();
     for (int i = 0; i < userList->size(); i++)
     {
@@ -6363,8 +6359,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     {
         return;
     }
-
-    DeferPreferencesSyncForScope deferrer(this);
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
@@ -6470,4 +6464,13 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
 
         updateTrayIcon();
     }
+}
+
+void MegaApplication::requestFetchSetFromLink(const QString& link)
+{
+    if (mSetManager)
+    {
+        mSetManager->requestFetchSetFromLink(link);
+    }
+
 }

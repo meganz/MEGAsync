@@ -30,7 +30,7 @@ void NotificationDelayer::addUserAlert(mega::MegaUserAlert *userAlert, const QSt
     const auto alertClusterFound = alertClusterIterator != mAlertClusters.end();
     if(!alertClusterFound)
     {
-        auto userAlertTimedClustering = ::mega::make_unique<UserAlertTimedClustering>();
+        auto userAlertTimedClustering = std::make_unique<UserAlertTimedClustering>();
         QObject::connect(userAlertTimedClustering.get(), &UserAlertTimedClustering::sendUserAlert,
                          this, &NotificationDelayer::sendClusteredAlert);
         mAlertClusters[userAlert->getId()] = std::move(userAlertTimedClustering);

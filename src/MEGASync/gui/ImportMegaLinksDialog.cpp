@@ -18,29 +18,31 @@
 
 using namespace mega;
 
-ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ImportMegaLinksDialog),
-    mMegaApi(MegaSyncApp->getMegaApi()),
-    mPreferences(Preferences::instance()),
-    mLinkProcessor(linkProcessor),
-    mDownloadPathChangedByUser(false),
-    mUseDefaultImportPath(true),
-    mImportPathChangedByUser(false)
+ImportMegaLinksDialog::ImportMegaLinksDialog(const QStringList& linkList, QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::ImportMegaLinksDialog)
+    , mMegaApi(MegaSyncApp->getMegaApi())
+    , mPreferences(Preferences::instance())
+    , mDownloadPathChangedByUser(false)
+    , mUseDefaultImportPath(true)
+    , mImportPathChangedByUser(false)
 {
     ui->setupUi(this);
 
     static const int MAX_ITEMS_DISPLAYED = 8;
-    const int nbItems (mLinkProcessor->size());
+    const int nbItems (linkList.size());
+    mSelectedItems.resize(nbItems);
 
     for (int i = 0; i < nbItems; i++)
     {
-        ImportListWidgetItem *customItem = new ImportListWidgetItem(mLinkProcessor->getLink(i), i, ui->linkList);
-        connect(customItem, SIGNAL(stateChanged(int,int)), this, SLOT(onLinkStateChanged(int, int)));
+        // Note: QWidget parents (in this case ui->linkList) will take ownership
+        ImportListWidgetItem* customItem = new ImportListWidgetItem(linkList[i], i, ui->linkList);
+        connect(customItem, &ImportListWidgetItem::stateChanged, this, &ImportMegaLinksDialog::onLinkStateChanged);
         QListWidgetItem *item = new QListWidgetItem(ui->linkList);
         ui->linkList->addItem(item);
         item->setSizeHint(customItem->size());
         ui->linkList->setItemWidget(item, customItem);
+        mSelectedItems[i] = false;
     }
 
     int extraSlots = std::min(MAX_ITEMS_DISPLAYED, nbItems) - 1;
@@ -61,12 +63,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
         initUiAsUnlogged();
     }
 
-    mLinkProcessor->setParentHandler(this);
-    connect(mLinkProcessor, &LinkProcessor::onLinkInfoAvailable, this, &ImportMegaLinksDialog::onLinkInfoAvailable);
-    connect(mLinkProcessor, &LinkProcessor::onLinkInfoRequestFinish, this, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
-
     mFinished = false;
-    mLinkProcessor->requestLinkInfo();
     ui->bOk->setDefault(true);
 }
 
@@ -186,42 +183,29 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
     });
 }
 
-void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
+void ImportMegaLinksDialog::setSelectedItem(int index, bool selected)
 {
-    ImportListWidgetItem *item = (ImportListWidgetItem *)ui->linkList->itemWidget(ui->linkList->item(id));
-    std::shared_ptr<MegaNode> node = mLinkProcessor->getNode(id);
+    if (index >= 0 && index < mSelectedItems.size())
+    {
+        mSelectedItems[index] = selected;
+    }
 
-    int e = mLinkProcessor->getError(id);
-    if (node && (e == MegaError::API_OK))
-    {
-        if (!node->isNodeKeyDecrypted())
-        {
-            item->setData(MegaNodeNames::getNodeName(node.get()), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
-        }
-        else
-        {
-            item->setData(QString::fromUtf8(node->getName()), ImportListWidgetItem::CORRECT, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
-        }
-    }
-    else
-    {
-        if ((e != MegaError::API_OK) && (e != MegaError::API_ETOOMANY))
-        {
-            ImportListWidgetItem::linkstatus status = ImportListWidgetItem::FAILED;
-            if (e == MegaError::API_ETEMPUNAVAIL)
-            {
-                status = ImportListWidgetItem::WARNING;
-            }
-            item->setData(QCoreApplication::translate("MegaError", MegaError::getErrorString(e, MegaError::API_EC_IMPORT)), status);
-        }
-        else
-        {
-            item->setData(tr("Not found"), ImportListWidgetItem::FAILED);
-        }
-    }
-    item->updateGui();
-    mLinkProcessor->setSelected(id, item->isSelected());
 }
+
+void ImportMegaLinksDialog::onLinkInfoAvailable(int index,
+                                                const QString& name,
+                                                int status,
+                                                long long size,
+                                                bool isFolder)
+{
+    ImportListWidgetItem *item = (ImportListWidgetItem *)ui->linkList->itemWidget(ui->linkList->item(index));
+    item->setData(name, static_cast<ImportListWidgetItem::linkstatus>(status), size, isFolder);
+    item->updateGui();
+
+    setSelectedItem(index, item->isSelected());
+    emit linkSelected(index, item->isSelected());
+}
+
 
 void ImportMegaLinksDialog::onLinkInfoRequestFinish()
 {
@@ -229,9 +213,11 @@ void ImportMegaLinksDialog::onLinkInfoRequestFinish()
     checkLinkValidAndSelected();
 }
 
-void ImportMegaLinksDialog::onLinkStateChanged(int id, int state)
+void ImportMegaLinksDialog::onLinkStateChanged(int index, int state)
 {
-    mLinkProcessor->setSelected(id, state);
+    setSelectedItem(index, state);
+
+    emit linkSelected(index, state);
     checkLinkValidAndSelected();
 }
 
@@ -272,9 +258,14 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
         updateDownloadPath();
         updateImportPath();
 
-        int totalImports = mLinkProcessor->getCurrentIndex();
-        for (int i = 0; i < totalImports; i++)
-            this->onLinkInfoAvailable(i);
+        emit onChangeEvent();
+        //! This mechanism was kept, but moved to LinkProcessor.cpp
+        //! Not sure why this is needed?!
+//!        int totalImports = mLinkProcessor->getCurrentIndex();
+//!        for (int i = 0; i < totalImports; i++)
+//!        {
+//!            this->onLinkInfoAvailable(i);
+//!        }
     }
     QDialog::changeEvent(event);
 }
@@ -327,7 +318,7 @@ void ImportMegaLinksDialog::setInvalidImportFolder()
 void ImportMegaLinksDialog::enableOkButton() const
 {
     const bool downloadOrImportChecked{ui->cDownload->isChecked() || ui->cImport->isChecked()};
-    const bool enable{mFinished && downloadOrImportChecked && mLinkProcessor->atLeastOneLinkValidAndSelected()};
+    const bool enable{mFinished && downloadOrImportChecked && (mSelectedItems.contains(true))};
     ui->bOk->setEnabled(enable);
 }
 
@@ -345,7 +336,8 @@ void ImportMegaLinksDialog::enableMegaFolder(bool enable)
 
 void ImportMegaLinksDialog::checkLinkValidAndSelected()
 {
-    const bool enable{mLinkProcessor->atLeastOneLinkValidAndSelected()};
+    // Set enable to true if at least one item is selected
+    bool enable = mSelectedItems.contains(true);
     ui->cDownload->setEnabled(enable);
     ui->cImport->setEnabled(enable);
     enableOkButton();

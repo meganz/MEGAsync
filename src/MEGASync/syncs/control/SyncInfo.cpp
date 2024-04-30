@@ -37,7 +37,7 @@ SyncInfo::SyncInfo() : QObject(),
     mIsFirstTwoWaySyncDone (preferences->isFirstSyncDone()),
     mIsFirstBackupDone (preferences->isFirstBackupDone()),
     syncMutex (QMutex::Recursive),
-    delegateListener(mega::make_unique<QTMegaListener>(MegaSyncApp->getMegaApi(), this))
+    delegateListener(std::make_unique<QTMegaListener>(MegaSyncApp->getMegaApi(), this))
 {
     MegaSyncApp->getMegaApi()->addListener(delegateListener.get());
 
@@ -689,7 +689,7 @@ void SyncInfo::onSyncFileStateChanged(MegaApi*, MegaSync*, std::string *localPat
         return;
     }
 
-    Platform::getInstance()->notifySyncFileChange(localPath, newState, false);
+    Platform::getInstance()->notifySyncFileChange(localPath, newState);
 }
 
 void SyncInfo::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats *syncStats)
