@@ -123,7 +123,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
         echo "Please set MEGAQTPATH env variable to a valid QT installation path!"
         exit 1;
     fi
-    if [ -z "${VCPKGPATH}" ] || [ ! -d "${VCPKGPATH}/vcpkg/installed" ]; then
+    if [ -z "${VCPKGPATH}" ]; then
         echo "Please set VCPKGPATH env variable to a directory containing a valid vcpkg installation!"
         exit 1;
     fi
@@ -158,11 +158,11 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
             CMAKE_EXTRA="-DCMAKE_OSX_ARCHITECTURES=${target_arch}"
         fi
 
-        cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DMega3rdPartyDir=${VCPKGPATH} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DCMAKE_BUILD_TYPE=RelWithDebInfo ${CMAKE_EXTRA} -S ../contrib/cmake
+        cmake -DVCPKG_ROOT=${VCPKGPATH} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DCMAKE_BUILD_TYPE=RelWithDebInfo ${CMAKE_EXTRA} -S ../
         cmake --build ./ --target MEGAsync -j`sysctl -n hw.ncpu`
         cmake --build ./ --target MEGAupdater -j`sysctl -n hw.ncpu`
-        MSYNC_PREFIX=""
-        MUPDATER_PREFIX=""
+        MSYNC_PREFIX="src/MEGASync/"
+        MUPDATER_PREFIX="src/MEGAUpdater/"
     else
         # crosscompilation detection should be managed detecting the qmake taget and host arch in the project files.
         cp ../src/MEGASync/mega/contrib/official_build_configs/macos/config.h ../src/MEGASync/mega/include/mega/config.h
@@ -218,11 +218,14 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
         mv $MSYNC_PREFIX/$APP_NAME.app ./
     fi
 
-    otool -L MEGAsync.app/Contents/MacOS/MEGAsync
+    pushd .
+    cd ${MSYNC_PREFIX}MEGAsync.app
+    otool -L Contents/MacOS/MEGAsync
+    popd
 
     #Attach shell extension
     xcodebuild clean build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO -jobs "$(sysctl -n hw.ncpu)" -configuration Release -target MEGAShellExtFinder -project ../src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/
-    cp -a ../src/MEGAShellExtFinder/build/Release/MEGAShellExtFinder.appex $APP_NAME.app/Contents/Plugins/
+    cp -a ../src/MEGAShellExtFinder/build/Release/MEGAShellExtFinder.appex ${MSYNC_PREFIX}$APP_NAME.app/Contents/Plugins/
     cd ..
 
     build_time=`expr $(date +%s) - $build_time_start`
@@ -247,12 +250,12 @@ if [ "$createdmg" = "1" ]; then
 	echo "DMG CREATION PROCESS..."
 	echo "Creating temporary Disk Image (1/7)"
 	#Create a temporary Disk Image
-	/usr/bin/hdiutil create -srcfolder $APP_NAME.app/ -volname $VOLUME_NAME -ov $APP_NAME-tmp.dmg -fs HFS+ -format UDRW >/dev/null
+	/usr/bin/hdiutil create -srcfolder ${MSYNC_PREFIX}$APP_NAME.app/ -volname $VOLUME_NAME -ov ${MSYNC_PREFIX}$APP_NAME-tmp.dmg -fs HFS+ -format UDRW >/dev/null
 
 	echo "Attaching the temporary image (2/7)"
 	#Attach the temporary image
 	mkdir $MOUNTDIR
-	/usr/bin/hdiutil attach $APP_NAME-tmp.dmg -mountroot $MOUNTDIR >/dev/null
+	/usr/bin/hdiutil attach ${MSYNC_PREFIX}$APP_NAME-tmp.dmg -mountroot $MOUNTDIR >/dev/null
 
 	echo "Copying resources (3/7)"
 	#Copy the background, the volume icon and DS_Store files
@@ -273,11 +276,11 @@ if [ "$createdmg" = "1" ]; then
 
 	echo "Compressing Image (6/7)"
 	#Compress it to a new image
-	/usr/bin/hdiutil convert $APP_NAME-tmp.dmg -format UDZO -o $APP_NAME.dmg >/dev/null
+	/usr/bin/hdiutil convert ${MSYNC_PREFIX}$APP_NAME-tmp.dmg -format UDZO -o ${MSYNC_PREFIX}$APP_NAME.dmg >/dev/null
 
 	echo "Deleting temporary image (7/7)"
 	#Delete the temporary image
-	rm $APP_NAME-tmp.dmg
+	rm ${MSYNC_PREFIX}$APP_NAME-tmp.dmg
 	rmdir $MOUNTDIR
 	cd ..
     dmg_time=`expr $(date +%s) - $dmg_time_start`
