@@ -56,7 +56,6 @@ elseif (APPLE)
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info_MEGA.plist
         RESOURCE "${RESOURCE_FILES}"
     )
-else()
 endif()
 
 target_sources(MEGAsync
