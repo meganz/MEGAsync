@@ -101,22 +101,19 @@ target_compile_definitions(MEGAsync
 if (WIN32)
     find_package(Qt5 REQUIRED COMPONENTS WinExtras)
 elseif (APPLE)
-    find_package(Qt5 REQUIRED COMPONENTS MacExtras)
+    find_package(Qt5 REQUIRED COMPONENTS MacExtras Svg)
 else()
     find_package(Qt5 REQUIRED COMPONENTS Svg)
-    target_link_libraries(MEGAsync
-        PUBLIC
-        Qt5::Svg
-    )
 endif()
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick Svg)
 message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5_DIR}")
 
 target_link_libraries(MEGAsync
     PUBLIC
     $<$<BOOL:${WIN32}>:Qt5::WinExtras>
     $<$<BOOL:${APPLE}>:Qt5::MacExtras>
+    $<$<BOOL:${UNIX}>:Qt5::Svg>
     Qt5::Widgets
     Qt5::Core
     Qt5::Gui
