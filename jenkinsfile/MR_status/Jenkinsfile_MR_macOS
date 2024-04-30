@@ -180,14 +180,14 @@ pipeline {
                         timeout(time: 120, unit: 'MINUTES')
                     }
                     environment{
-                        VCPKGPATH = "/users/macstudio3/jenkins/3rdparty"
+                        VCPKGPATH = "/users/macstudio3/jenkins/vcpkg"
                         QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.13/5.15.13"
                     }
                     steps {
                         dir(macos_sources_workspace){
                             sh "sed -i'' -e 's/sysctl -n hw.ncpu/echo 2/g'  installer_mac.sh"
                             script {
-                                def commonArgs = "--build --create-dmg"
+                                def commonArgs = "--build-cmake --create-dmg"
 
                                 if (env.ARCHITECTURE == "arm64") {
                                     env.MEGAQTPATH = "${QT_BASE_PATH}/arm64"
