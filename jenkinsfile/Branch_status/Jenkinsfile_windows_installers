@@ -67,7 +67,7 @@ pipeline {
         }
         stage ('Build Windows installers'){
             environment{
-                MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
+                MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
                 //QT path is automatically changed to x86 with nsis when needed
                 MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
             }

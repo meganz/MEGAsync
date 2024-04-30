@@ -32,7 +32,7 @@ IF NOT "%1" == "" (
 	)
 ) ELSE (
 	IF [%MEGA_VCPKGPATH%]==[] (
-		SET MEGA_VCPKGPATH=C:\Users\build\MEGA\build-MEGASync\3rdParty_MSVC2019_20221029\3rdParty_desktop
+		SET MEGA_VCPKGPATH=C:\Users\build\MEGA\build-MEGASync\3rdParty\vcpkg
 	)
 )
 

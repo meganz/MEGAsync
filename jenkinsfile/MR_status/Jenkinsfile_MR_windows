@@ -176,7 +176,7 @@ pipeline {
                         timeout(time: 120, unit: 'MINUTES')
                     }
                     environment{
-                        MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
+                        MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
                         MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
                     }
                     steps {

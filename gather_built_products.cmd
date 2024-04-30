@@ -1,8 +1,3 @@
-
-IF [%MEGA_VCPKGPATH%]==[] (
-	SET MEGA_VCPKGPATH=C:\Users\build\MEGA\build-MEGASync\3rdParty_MSVC2019_20230710\3rdParty_desktop
-)
-
 mkdir built64
 
 copy build-x64-windows-mega\src\MEGAUpdater\RelWithDebInfo\*.dll built64
