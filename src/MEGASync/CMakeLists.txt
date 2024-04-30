@@ -106,7 +106,7 @@ else()
     find_package(Qt5 REQUIRED COMPONENTS Svg)
 endif()
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick Svg)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick)
 message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5_DIR}")
 
 target_link_libraries(MEGAsync
