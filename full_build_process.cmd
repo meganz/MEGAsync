@@ -17,7 +17,7 @@ IF NOT "%1" == "" (
 	SET MEGA_VERSION_SUFFIX=%3
 	
 	IF [%MEGA_VCPKGPATH%]==[] (
-		echo "Error: VCPKGPATH environment variable is not set. Please set it."
+		echo "Error: MEGA_VCPKGPATH environment variable is not set. Please set it."
 		goto Usage
 	)
 	
@@ -88,12 +88,6 @@ IF EXIST build-x64-windows-mega (
 IF EXIST build-x86-windows-mega (
     rmdir /s /q build-x86-windows-mega
 )
-
-REM Update the vcpkg repo
-SET MEGA_WD=%cd%
-cd %MEGA_VCPKGPATH%\vcpkg
-git pull
-cd %MEGA_WD%
 
 REM Build installers
 call production_build.cmd  || exit 1 /b

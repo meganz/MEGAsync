@@ -21,7 +21,6 @@ mkdir %MEGA_QT_DEPLOY_DIR%
  --dir %MEGA_QT_DEPLOY_DIR% ^
  --qmldir src\MEGASync\gui\qml\ ^
  build-x64-windows-mega\src\MEGASync\RelWithDebInfo\MEGAsync.exe
-
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\bearer
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\scenegraph
 
