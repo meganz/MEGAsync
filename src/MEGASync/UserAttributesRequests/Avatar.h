@@ -56,6 +56,8 @@ private:
     void fillLetterInfo();
     void getLetterColor();
 
+    bool isFileValid(const QString& filePath);
+
     mutable QMap<int,QPixmap> mIcon;
     QString mIconPath;
     LetterInfo mLetterAvatarInfo;

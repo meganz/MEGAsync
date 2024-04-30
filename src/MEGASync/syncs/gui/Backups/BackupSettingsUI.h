@@ -34,6 +34,7 @@ protected:
     QString getErrorRemovingTitle() const override;
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
 
+    void setBackupsTitle();
     void changeEvent(QEvent* event);
 
 protected slots:

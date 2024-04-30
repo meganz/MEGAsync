@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Digite um nome de arquivo ou um caminho completo válido.</translation>
+        <translation>Digite um nome de arquivo ou um caminho completo válido</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -975,7 +975,7 @@
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Por favor, espere que o envio atual seja finalizado.</translation>
+        <translation>Espere até o envio atual ser finalizado.</translation>
     </message>
 </context>
 <context>
@@ -1115,7 +1115,7 @@
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>Você digitou a sua senha atual. Por favor, digite uma senha nova.</translation>
+        <translation>Você digitou a sua senha atual - digite uma senha nova.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -1333,7 +1333,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Esperando terminar de escanear para comprovar se o arquivo foi movido ou deletado.</translation>
     </message>
 </context>
 <context>
@@ -1509,7 +1509,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Por favor, solucione o problema de pagamento o mais breve possível para evitar que a sua conta Business seja bloqueada</translation>
+        <translation>Solucione o problema de pagamento o mais breve possível para evitar que a sua conta Business seja bloqueada</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2657,12 +2657,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Manter a pasta [B]%1[/B] já armazenada no MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Manter o item [B]%1[/B] já armazenado no MEGA?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2682,12 +2682,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Esta ação vai selecionar o item local.</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Esta ação vai selecionar o item já armazenado no MEGA.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2894,17 +2894,17 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>Por favor, verifique o seu email e clique no link para confirmar sua conta.</translation>
+        <translation>Acesse o seu email e clique no link para confirmar sua conta.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>Você tentou fazer o login muitas vezes.[BR]Por favor, espere até às %1 para tentar novamente.</translation>
+        <translation>Você tentou fazer o login muitas vezes.[BR]Espere até às %1 para tentar novamente.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
-        <translation>Endereço de email ou senha inválidos. Por favor, tente novamente.</translation>
+        <translation>Email ou senha inválidos - tente novamente.</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
@@ -3064,7 +3064,7 @@ Please wait for the upload to complete.</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Não foi possível instalar a atualização. Por favor, tente novamente mais tarde ou faça o download da última versão aqui: https://mega.nz/sync</translation>
+        <translation>Não foi possível instalar a atualização. Tente novamente mais tarde ou faça o download da última versão acessando https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3526,7 +3526,7 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Cota de armazenamento excedida. Por favor, faça um upgrade.</translation>
+        <translation>Cota de armazenamento excedida - faça um upgrade.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -4038,22 +4038,22 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Substituir o arquivo [B]%1[/B] já armazenado no MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Substituir a pasta [B]%1[/B] já armazenada no MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Substituir o arquivo local [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Substituir a pasta local [B]%1[/B]?</translation>
     </message>
 </context>
 <context>
@@ -4522,7 +4522,7 @@ Digite um nome diferente.
     <message>
         <source>Change your email address</source>
         <translatorcomment>Change email window title CON-466</translatorcomment>
-        <translation>Alterar o seu endereço de e-mail</translation>
+        <translation>Alterar email</translation>
     </message>
     <message>
         <source>Device name</source>
@@ -4912,7 +4912,7 @@ Digite um nome diferente.
     <message>
         <source>It’s better to have:</source>
         <translatorcomment>Title of the popup indicating suggestions to have a stronger password CON-466</translatorcomment>
-        <translation>É melhor ter:</translation>
+        <translation>Deveria incluir:</translation>
     </message>
     <message>
         <source>Upper and lower case letters</source>
@@ -5731,9 +5731,8 @@ Digite um nome diferente.
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-A pasta não foi encontrada.
- Verifique se o nome da pasta é correto.</translation>
+        <translation>A pasta %1 não foi encontrada.
+Verifique se o nome da pasta é correto.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5747,9 +5746,8 @@ Você quer substituí-lo?</translation>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-Arquivo não encontrado.
-Verifique se o nome do arquivo foi indicado corretamente.</translation>
+        <translation>O arquivo %1 não foi encontrado.
+Verifique se o nome do arquivo é correto.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6115,12 +6113,12 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Os backups das versões anteriores dos arquivos sincronizados no seu computador serão excluídos permanentemente. Por favor, verifique as suas pastas de backup para ver se você precisa recuperar algo antes de continuar:</translation>
+        <translation>Os backups das versões anteriores dos seus arquivos sincronizados serão permanentemente deletados do seu computador. Verifique as suas pastas de backup para ver se você precisa recuperar algo antes de continuar.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Os backups das versões anteriores de arquivos que tiverem sido sincronizados no MEGA serão excluídos permanentemente. Por favor, verifique a pasta [A], na Lixeira da sua conta do MEGA, para checar se você precisa recuperar algo antes de continuar.</translation>
+        <translation>Os backups das versões anteriores dos seus arquivos sincronizados serão permanentemente deletados do MEGA. Verifique a pasta [A], na Lixeira da sua conta do MEGA, para checar se você precisa recuperar algo antes de continuar.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6887,7 +6885,35 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Solved</source>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Solucionado</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation><numerusform>Solucionado: %n</numerusform><numerusform>Solucionados: %n</numerusform><numerusform>Solucionados: %n</numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation>Todos os problemas: %1</translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation><numerusform>Conflitos de nome: %n</numerusform><numerusform>Conflitos de nome: %n</numerusform><numerusform>Conflitos de nome: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation><numerusform>Conflitos de tipo de item: %n</numerusform><numerusform>Conflitos de tipo de item: %n</numerusform><numerusform>Conflitos de tipo de item: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation><numerusform>Outros: %n</numerusform><numerusform>Outros: %n</numerusform><numerusform>Outros: %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8605,7 +8631,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Por favor, faça o upgrade a um plano Pro para continuar imediatamente, ou espere %1 para continuar de forma gratuita</translation>
+        <translation>Por favor, faça o upgrade da sua conta para continuar imediatamente, ou aguarde %1 para continuar de forma gratuita.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8886,7 +8912,8 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>A sua conta foi temporariamente bloqueada para a sua segurança. Acesse a caixa de entrada do seu email e siga os passos indicados para desbloquear a sua conta.</translation>
+        <translation>A sua conta foi bloqueada para a sua segurança após um login mal intencionado ter sido detectado, e por isso é necessário que você resete sua senha. 
+Acesse o seu email para saber como desbloquear a sua conta e receber dicas sobre como evitar este problema no futuro.</translation>
     </message>
     <message>
         <source>Resend email</source>

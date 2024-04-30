@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>有効なファイル名または絶対パスを入力してください。</translation>
+        <translation>有効なファイル名または絶対パスを入力してください</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -1330,7 +1330,7 @@
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation>ファイルが移動または削除されたかどうかを確認するために、スキャンが完了するのを待っています。</translation>
+        <translation>ファイルが移動または削除されたかどうかを判断するために、スキャンが完了するのを待っています。</translation>
     </message>
 </context>
 <context>
@@ -2656,12 +2656,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>リモートフォルダ[B]%1[/B]を保持しますか？</translation>
+        <translation>すでにMEGAに保管されているフォルダ[B]%1[/B]を保管したままにしておきますか？</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>リモート項目[B]%1[/B]を保持しますか？</translation>
+        <translation>すでにMEGAに保管されている項目[B]%1[/B]を保管したままにしておきますか？</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2681,12 +2681,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>この操作により、ローカルの項目が選択されます。</translation>
+        <translation>この操作により、ローカル項目が選択されます。</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>この操作により、MEGAにすでに保管されている項目が選択されます。</translation>
+        <translation>この操作により、すでにMEGAに保管されている項目が選択されます。</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2895,7 +2895,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>メールを確認し、メール内にあるリンクをクリックすると、あなたのアカウントにアクセスできます。</translation>
+        <translation>メールの受信箱を確認し、メール内にあるリンクをクリックすると、あなたのアカウントにアクセスできます。</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3065,7 +3065,7 @@ Please wait for the upload to complete.</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>アップデートのインストール中に問題が発生しました。後でもう一度お試しいただくか、以下から最新バージョンをダウンロードしてください：https://mega.nz/sync</translation>
+        <translation>アップデートのインストール中に問題が発生しました。後でもう一度お試しいただくか、以下から最新バージョンをダウンロードしてください：https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -4039,22 +4039,22 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>リモートファイル[B]%1[/B]を削除しますか？</translation>
+        <translation>すでにMEGAに保管されているファイル[B]%1[/B]を置き換えますか</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>リモートフォルダ[B]%1[/B]を削除しますか？</translation>
+        <translation>すでにMEGAに保管されているフォルダ[B]%1[/B]を置き換えますか</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>ローカルファイル[B]%1[/B]を削除しますか？</translation>
+        <translation>ローカルファイル[B]%1[/B]を置き換えますか？</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>ローカルフォルダ[B]%1[/B]を削除しますか？</translation>
+        <translation>ローカルフォルダ[B]%1[/B]を置き換えますか？</translation>
     </message>
 </context>
 <context>
@@ -5735,8 +5735,7 @@ Enter a different name</source>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-フォルダが見つかりません。
+        <translation>フォルダが%1見つかりません。
 正しいフォルダ名が指定されていることをご確認ください。</translation>
     </message>
     <message>
@@ -5751,9 +5750,8 @@ Do you want to replace it?</source>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-ファイルが見つかりません。
-正しいファイル名が指定されていることを確認してください。</translation>
+        <translation>ファイルが%1見つかりません。
+正しいファイル名が指定されていることをご確認ください。</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6119,12 +6117,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>あなたのコンピューター内の同期されたファイルの以前のバージョンのバックアップは完全に削除されます。続行する前に何かを救済する必要があるかどうかを確認するために、バックアップフォルダを確認してください：</translation>
+        <translation>同期されたファイルの以前のバージョンのバックアップはお使いのコンピューターから完全に削除されます。続行する前に、バックアップフォルダをチェックして、何か救出する必要があるかご確認ください。</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>MEGA内の同期されたファイルの以前のバージョンのバックアップは完全に削除されます。続行する前に何かを救済する必要があるかどうかを確認するために、あなたのMEGAアカウントのごみ箱にある[A]フォルダを確認してください：</translation>
+        <translation>同期されたファイルの以前のバージョンのバックアップはMEGAから完全に削除されます。続行する前に、MEGAアカウントのごみ箱にある[A]フォルダをチェックして、何か救出する必要があるかご確認ください。</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -8614,7 +8612,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Proにアップグレードして直ちに続行するか、%1待ってから無料で続行してください</translation>
+        <translation>アカウントをアップグレードしていただくとすぐに続行できます。無料で続行する場合は、%1分お待ちください。</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8895,7 +8893,8 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>あなたのアカウントは一時的に安全を確保するためにロックされました。メールを確認し、その手順に従ってアカウントのロックを解除してください。</translation>
+        <translation>悪意のあるログインが検出されたため、あなたのアカウントは保護のためにロックされました。そのため、パスワードをリセットする必要があります。
+メール受信箱をチェックして、アカウントのロックを解除する手順と、この問題が再発しないようにするためのヒントを確認してください。</translation>
     </message>
     <message>
         <source>Resend email</source>

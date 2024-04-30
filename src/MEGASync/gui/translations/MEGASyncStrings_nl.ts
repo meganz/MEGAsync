@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Voer een geldige bestandsnaam in of een absoluut pad.</translation>
+        <translation>Voer een geldige bestandsnaam of absoluut pad in</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -890,7 +890,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>Omschrijf het probleem duidelijk dat u bent tegengekomen. Hoe meer details u verstrekt, hoe gemakkelijker het voor ons zal zijn om het op te lossen. Uw inzending wordt beoordeeld door ons ontwikkelteam.</translation>
+        <translation>Beschrijf duidelijk het probleem dat u tegenkwam. Hoe meer informatie u verstrekt, hoe makkelijker het voor ons zal zijn om dit op te lossen. Uw inzending wordt beoordeeld door ons ontwikkelteam.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -975,7 +975,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Wacht tot de huidige upload is voltooid.</translation>
+        <translation>Wacht tot het huidige uploaden is voltooid.</translation>
     </message>
 </context>
 <context>
@@ -1278,7 +1278,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>U kunt ons helpen de MEGA Applicatie te verbeteren door dit foutrapport te verzenden. Het bevat geen persoonlijke informatie. Als u ons meer details wilt geven, schrijf ze dan hieronder:</translation>
+        <translation>U kunt ons helpen de MEGA-applicatie te verbeteren door dit foutenrapport te sturen. Het bevat geen persoonlijke informatie. Als u ons meer informatie wilt geven, schrijf het dan hieronder:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1333,7 +1333,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation>Wachten tot de scan is voltooid om te zien of het bestand is verplaatst of verwijderd.</translation>
+        <translation>Wacht tot de scan is voltooid om te bepalen of het bestand is verplaatst of verwijderd.</translation>
     </message>
 </context>
 <context>
@@ -1509,7 +1509,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Los uw betalingsprobleem zo snel mogelijk op om opschorting van uw Zakelijke account te voorkomen</translation>
+        <translation>Los uw betalingsprobleem zo snel mogelijk op om een opschorting van uw Zakelijke account te voorkomen</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2324,7 +2324,7 @@ of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translati
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Uw account upgraden.</translation>
+        <translation>Upgrade uw account.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2660,12 +2660,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Wilt u de externe map [B]%1[/B] behouden?</translation>
+        <translation>Houd de map [B]%1[/B] al opgeslagen in MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Wilt u het externe bestand [B]%1[/B]bewaren?</translation>
+        <translation>Houd de items [B]%1[/B] al opgeslagen in MEGA?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2685,12 +2685,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Deze actie kiest het lokale item.</translation>
+        <translation>Met deze actie worden de lokale items gekozen.</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Met deze actie wordt het item gekozen dat al in MEGA is opgeslagen.</translation>
+        <translation>Met deze actie worden de items geselecteerd die al in MEGA zijn opgeslagen.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2748,7 +2748,7 @@ Vernieuw de lijst.</translation>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>De [B]lokale[/B] bestanden worden geüpload naar MEGA en als versie toegevoegd aan de externe bestanden.
+        <translation>De [B]lokale bestanden worden geüpload naar MEGA en als versie toegevoegd aan de bestanden die zich al in MEGA bevinden.
 Wacht tot het uploaden is voltooid.</translation>
     </message>
     <message>
@@ -2866,7 +2866,7 @@ Wacht tot het uploaden is voltooid.</translation>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Voer de code in die is gegenereerd door uw authenticatie-applicatie</translation>
+        <translation>Voer de code in die is gegenereerd door uw authenticatie applicatie</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2899,22 +2899,22 @@ Wacht tot het uploaden is voltooid.</translation>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>Check uw email en klik op de link in het bericht om uw account te bevestigen.</translation>
+        <translation>Controleer uw e-mailinbox en klik op de link om uw account te bevestigen.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>U heeft te vaak geprobeerd om in te loggen.[BR] Wacht alstublieft tot %1 en probeer het opnieuw.</translation>
+        <translation>U heeft te vaak geprobeerd in te loggen.[BR]Wacht tot %1 en probeer nogmaals.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
-        <translation>Ongeldig e-mail adres of wachtwoord. Probeer het opnieuw.</translation>
+        <translation>Ongeldig e-mailadres of wachtwoord. Probeer het nogmaals.</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>De app kan geen verbinding maken. Controleer uw internetverbinding en lokale firewallconfiguratie. Houd er rekening mee dat de meeste antivirussoftware een firewall bevat.</translation>
+        <translation>De applicatie kan geen verbinding maken. Controleer uw internetverbinding en lokale firewallconfiguratie. Hou er rekening mee dat de meeste antivirussoftware een firewall bevat.</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -3069,7 +3069,7 @@ Wacht tot het uploaden is voltooid.</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Er ontstond een probleem met het installeren van de update. Probeer later nogmaals of download de laatste versie van: https://mega.nz/sync</translation>
+        <translation>Er is een probleem opgetreden bij het updaten. Probeer het later opnieuw of download de laatste versie van: https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3530,7 +3530,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Opslag tegoed overschreden. Nu upgraden.</translation>
+        <translation>Opslagtegoed overschreden. Nu upgraden.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3540,9 +3540,9 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Uw MEGA-account is opgeschort vanwege herhaalde beschuldigingen van inbreuk op het auteursrecht. Dit betekent dat u geen toegang heeft tot uw account of de gegevens daarin.
+        <translation>Uw MEGA-account is opgeschort vanwege herhaalde beschuldigingen van inbreuken op het auteursrecht. Dit betekent dat u geen toegang hebt tot uw account of de gegevens die erin staan.
 
- Controleer uw e-mail voor meer informatie over hoe u een tegenvordering kunt indienen.</translation>
+Kijk in uw e-mailinbox voor meer informatie over hoe u een tegenmelding kunt indienen.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -4044,22 +4044,22 @@ ververs de weergave.</translation>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>Wilt u het externe bestand [B]%1[/B] verwijderen?</translation>
+        <translation>Vervang het bestand [B]%1[/B] al opgeslagen in MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>Wilt u de externe map [B]%1[/B] verwijderen?</translation>
+        <translation>Vervang de map [B]%1[/B] al opgeslagen in MEGA?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>Wilt u het lokale bestand [B]%1[/B] verwijderen?</translation>
+        <translation>Vervang het lokale bestand [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>Wilt u de lokale map [B]%1[/B] verwijderen?</translation>
+        <translation>Vervang de lokale map [B]%1[/B]?</translation>
     </message>
 </context>
 <context>
@@ -4957,7 +4957,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation>Synchroniseer uw bestanden tussen uw computers met MEGA; elke verandering aan de ene kant zal van toepassing zijn op de andere kant.</translation>
+        <translation>Synchroniseer uw bestanden tussen uw computers met MEGA; elke wijziging van de ene kant is van toepassing op de andere kant.</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
@@ -5216,7 +5216,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>Bestanden en mappen hebben een eigenaar en behoren tot een groep gebruikers. Met behulp van dit dialoogvenster kunt u verschillende toegangsrechten verlenen voor nieuwe bestanden en mappen die door de desktop applicatie zijn gemaakt aan gebruikers die tot dezelfde groep behoren en aan de rest van de gebruikers op de computer. Als u ze niet hoeft te wijzigen, laat ze dan om veiligheidsredenen op de standaardinstellingen.</translation>
+        <translation>Bestanden en mappen hebben een eigenaar en behoren tot een groep gebruikers. Met dit dialoogvenster kunt u verschillende toegangsrechten verlenen voor nieuwe bestanden en mappen die door de desktopapplicatie zijn gemaakt, aan gebruikers die tot dezelfde groep behoren en aan de rest van de gebruikers op de computer. Als u ze niet hoeft te wijzigen, laat ze dan om veiligheidsredenen op de standaardinstellingen staan.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5741,8 +5741,7 @@ Voer een andere naam in.</translation>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Map niet gevonden
+        <translation>Folder %1 niet gevonden.
 Controleer of de juiste mapnaam is opgegeven.</translation>
     </message>
     <message>
@@ -5757,8 +5756,7 @@ Wilt u het vervangen?</translation>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-Bestand niet gevonden.
+        <translation>Dossier %1 niet gevonden.
 Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
@@ -6125,12 +6123,12 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Back-ups van de vorige versies van uw gesynchroniseerde bestanden op uw computer worden permanent verwijderd. Controleer uw back-up mappen om te zien of u iets moet redden voordat u doorgaat:</translation>
+        <translation>Back-ups van de vorige versies van uw gesynchroniseerde bestanden worden permanent van uw computer verwijderd. Controleer uw backup-mappen om te zien of u iets moet redden voordat u verder gaat.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Back-ups van de vorige versies van uw gesynchroniseerde bestanden in MEGA worden permanent verwijderd. Controleer uw map [A] in de Prullenbak van uw MEGA-account om te zien of u iets moet redden voordat u doorgaat.</translation>
+        <translation>Back-ups van de vorige versies van uw gesynchroniseerde bestanden worden permanent verwijderd uit MEGA. Controleer uw [A] map in de Prullenbak van uw MEGA-account om te zien of u iets moet redden voordat u verder gaat.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6235,7 +6233,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>Laat het ons weten als u problemen ondervindt. Help ons door zoveel mogelijk details te verstrekken.</translation>
+        <translation>Laat het ons weten als u problemen ondervindt. Help ons door zoveel mogelijk details te geven.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6898,6 +6896,34 @@ Wilt u deze toch verwijderen?</translation>
         <source>Solved</source>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
         <translation>Opgelost</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation><numerusform>Opgelost: %n</numerusform><numerusform>Opgelost: %n</numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation>Alle problemen: %1</translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation><numerusform>Naamconflicten: %n</numerusform><numerusform>Naamconflicten: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation><numerusform>Conflicten met het itemtype: %n</numerusform><numerusform>Conflicten met het itemtype: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation><numerusform>Andere: %n</numerusform><numerusform>Andere: %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8620,7 +8646,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Upgrade naar Pro om direct verder te gaan, of wacht %1 om gratis verder te gaan</translation>
+        <translation>Upgrade uw account om direct verder te gaan, of wacht %1 om gratis verder te gaan</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8653,7 +8679,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Upgrade uw account om te genieten van meer opslag ruimte (uw uploads worden automatisch hervat).</translation>
+        <translation>Upgrade uw account om meer opslagruimte te krijgen (uw uploads worden automatisch hervat).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8901,7 +8927,8 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Uw account is voor uw veiligheid tijdelijk vergrendeld. Controleer uw e-mail en volg de stappen om uw account te ontgrendelen.</translation>
+        <translation>Uw account is voor uw veiligheid vergrendeld nadat een kwaadwillende aanmelding is gedetecteerd, dus we vragen u uw wachtwoord opnieuw in te stellen. 
+Kijk in uw e-mailinbox voor instructies over het ontgrendelen van uw account en tips om te voorkomen dat dit opnieuw gebeurt.</translation>
     </message>
     <message>
         <source>Resend email</source>

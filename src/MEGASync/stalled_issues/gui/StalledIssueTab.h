@@ -40,6 +40,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void enterEvent(QEvent*) override;
     void leaveEvent(QEvent*) override;
+    void changeEvent(QEvent *) override;
 
 private slots:
     void onUpdateCounter();

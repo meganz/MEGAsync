@@ -16,7 +16,7 @@ public:
 
     void initialize(int argc, char *argv[]) override;
     void notifyItemChange(const QString& path, int newState) override;
-    void notifySyncFileChange(std::string *localPath, int newState, bool) override;
+    void notifySyncFileChange(std::string *localPath, int newState) override;
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
     bool isTilingWindowManager() override;

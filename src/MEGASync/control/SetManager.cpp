@@ -3,13 +3,13 @@
 
 using namespace mega;
 
-SetManager::SetManager(MegaApi* megaApi, MegaApi* megaApiFolders) :
-    AsyncHandler(),
-    mMegaApi(megaApi),
-    mMegaApiFolders(megaApiFolders),
-    mDelegateListener(std::make_shared<QTMegaRequestListener>(megaApi, this)),
-    mDelegateTransferListener(std::make_shared<QTMegaTransferListener>(megaApi, this)),
-    mSetManagerState(SetManagerState::INIT)
+SetManager::SetManager(MegaApi* megaApi, MegaApi* megaApiFolders)
+    : AsyncHandler()
+    , mMegaApi(megaApi)
+    , mMegaApiFolders(megaApiFolders)
+    , mDelegateListener(std::make_shared<QTMegaRequestListener>(megaApi, this))
+    , mDelegateTransferListener(std::make_shared<QTMegaTransferListener>(megaApi, this))
+    , mSetManagerState(SetManagerState::INIT)
 {
 }
 
@@ -27,10 +27,11 @@ SetManager::~SetManager()
 //! \and handled asynchronously.
 void SetManager::requestFetchSetFromLink(const QString& link)
 {
-    struct CallbackAction action;
-    action.type = CallbackType::REQUEST_FETCH_SET_FROM_LINK;
+    ActionParams action;
+    action.type = ActionType::REQUEST_FETCH_SET_FROM_LINK;
     action.link = link;
-    triggerHandlerThread(action);
+    mRequestQueue.push(action);
+    triggerHandlerThread(true);
 }
 
 //!
@@ -49,12 +50,13 @@ void SetManager::requestDownloadSetFromLink(const QString& link,
                                             const QString& downloadPath,
                                             const QList<mega::MegaHandle>& elementHandleList)
 {
-    struct CallbackAction action;
-    action.type = CallbackType::REQUEST_DOWNLOAD_SET_FROM_LINK;
+    ActionParams action;
+    action.type = ActionType::REQUEST_DOWNLOAD_SET_FROM_LINK;
     action.link = link;
     action.elementHandleList = elementHandleList;
     action.downloadPath = downloadPath;
-    triggerHandlerThread(action);
+    mRequestQueue.push(action);
+    triggerHandlerThread(true);
 }
 
 //!
@@ -73,23 +75,333 @@ void SetManager::requestDownloadSet(const AlbumCollection& set,
                                     const QString& downloadPath,
                                     const QList<mega::MegaHandle>& elementHandleList)
 {
-    struct CallbackAction action;
-    action.type = CallbackType::REQUEST_DOWNLOAD_SET;
+    ActionParams action;
+    action.type = ActionType::REQUEST_DOWNLOAD_SET;
     action.set = set;
     action.elementHandleList = elementHandleList;
     action.downloadPath = downloadPath;
-    triggerHandlerThread(action);
+    mRequestQueue.push(action);
+    triggerHandlerThread(true);
 }
 
-void SetManager::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
+//!
+//! \brief SetManager::requestImportSet
+//! \param set: the AlbumCollection to Download
+//! \param sip: contains the import parent destination folder on Cloud Drive
+//! \param elementIDList: list of IDs to Set Elements. If not empty, then only
+//! \the Elements from this list will be imported. If empty, then all Set
+//! \Elements will be imported.
+//! \Adds a request to import the elements from @elementIDList, which belong
+//! \to @set.
+//! \This function returns immediately: the request is added to a queue
+//! \and handled asynchronously.
+void SetManager::requestImportSet(const AlbumCollection& set,
+                                  const SetImportParams& sip,
+                                  const QList<mega::MegaHandle>& elementHandleList)
 {
-    if (error->getErrorCode() != MegaError::API_OK)
+    ActionParams action;
+    action.type = ActionType::REQUEST_IMPORT_SET;
+    action.set = set;
+    action.elementHandleList = elementHandleList;
+    action.importParentNode = sip.importParentNode;
+    mRequestQueue.push(action);
+    triggerHandlerThread(true);
+}
+
+// Callback from AsyncHandler
+void SetManager::handleTriggerAction(bool&)
+{
+    // This function gets called in case of a user request
+    // => only process user requests in INIT state, as otherwise
+    // there is another request already in progress
+    if (mSetManagerState == SetManagerState::INIT)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "A Request Finished Unsuccessfully");
-        reset();
+        handleStates();
+    }
+}
+
+// ----------------------------------------------------------------------------
+//
+// STATE MACHINE
+//
+// ----------------------------------------------------------------------------
+void SetManager::handleStates()
+{
+    auto processInternalQueue = [&](ActionParams& action) -> bool {
+        // Check if there is an internal action to handle
+        if (mInternalActionQueue.empty())
+        {
+            // Return to INIT state and check if there is a Request to handle
+            resetAndHandleStates();
+            return false;
+        }
+
+        // Get the first action in the queue
+        mInternalActionQueue.pop(action);
+        return true;
+    };
+
+    ActionParams action = {};
+    switch (mSetManagerState)
+    {
+    case SetManagerState::INIT:
+    {
+        // Check if there is a User Request to handle
+        if (mRequestQueue.empty()) { return; }
+
+        // Get the first action in the queue
+        mRequestQueue.pop(action);
+        handleStateINIT(action);
+        break;
+    }
+
+    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_GET_DATA:
+    {
+        if (processInternalQueue(action))
+        {
+            handleStateWAIT_FOR_PREVIEW_SET_TO_GET_DATA(action);
+        }
+        break;
+    }
+
+    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK:
+    {
+        if (processInternalQueue(action))
+        {
+            handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK(action);
+        }
+        break;
+    }
+
+    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION:
+    {
+        if (processInternalQueue(action))
+        {
+            handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION(action);
+        }
+        break;
+    }
+
+    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION:
+    {
+        if (processInternalQueue(action))
+        {
+            handleStateWAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION(action);
+        }
+        break;
+    }
+
+    default:
+        break;
+    }
+}
+
+//!
+//! \brief SetManager::handleStateINIT
+//! \param action: Set of action parameters to handle INIT state
+//!
+void SetManager::handleStateINIT(const ActionParams& action)
+{
+    if (mSetManagerState != SetManagerState::INIT) { return; }
+
+    auto handleTransferRequest = [action, this]() -> bool {
+        mCurrentDownloadPath = action.downloadPath;
+        mCurrentImportParentNode = action.importParentNode;
+
+        // If elementHandleList is empty, ALL Set Elements will be downloaded
+        mCurrentElementHandleList = action.elementHandleList;
+        mCurrentSet = filterSet(action.set, mCurrentElementHandleList);
+
+        if (!mCurrentSet.link.isEmpty() && mCurrentSet.isComplete())
+        {
+            mMegaApi->fetchPublicSet(mCurrentSet.link.toUtf8().constData(), mDelegateListener.get());
+            return true;
+        }
+
+        return false;
+    };
+
+    switch (action.type)
+    {
+    case ActionType::REQUEST_FETCH_SET_FROM_LINK:
+    {
+        // Request to put a new Set in preview; reset current values
+        mCurrentSet.reset();
+        mCurrentSet.link = action.link;
+
+        if (!mCurrentSet.link.isEmpty())
+        {
+            mSetManagerState = SetManagerState::WAIT_FOR_PREVIEW_SET_TO_GET_DATA;
+            mMegaApi->fetchPublicSet(mCurrentSet.link.toUtf8().constData(), mDelegateListener.get());
+        }
+    }
+    break;
+
+    case ActionType::REQUEST_DOWNLOAD_SET_FROM_LINK:
+    {
+        if (action.downloadPath.isEmpty()) { return; }
+
+        // If elementHandleList is empty, ALL Set Elements will be downloaded
+        mCurrentElementHandleList = action.elementHandleList;
+        mCurrentDownloadPath = action.downloadPath;
+
+        // Request to put a new Set in preview; reset current values
+        mCurrentSet.reset();
+        mCurrentSet.link = action.link;
+
+        if (!mCurrentSet.link.isEmpty())
+        {
+            mSetManagerState = SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK;
+            mMegaApi->fetchPublicSet(mCurrentSet.link.toUtf8().constData(), mDelegateListener.get());
+        }
+    }
+    break;
+
+    case ActionType::REQUEST_DOWNLOAD_SET:
+    {
+        if (action.downloadPath.isEmpty()) { return; }
+
+        if (handleTransferRequest())
+        {
+            mSetManagerState = SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION;
+        }
+    }
+    break;
+
+    case ActionType::REQUEST_IMPORT_SET:
+    {
+        if (!action.importParentNode) { return; }
+
+        if (handleTransferRequest())
+        {
+            mSetManagerState = SetManagerState::WAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION;
+        }
+    }
+    break;
+
+    default:
+        break;
+    }
+}
+
+//!
+//! \brief SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_GET_DATA
+//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_GET_DATA state
+//!
+void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_GET_DATA(const ActionParams& action)
+{
+    if (mSetManagerState != SetManagerState::WAIT_FOR_PREVIEW_SET_TO_GET_DATA)
+    {
+        resetAndHandleStates();
         return;
     }
 
+    switch (action.type)
+    {
+    case ActionType::HANDLE_SET_IN_PREVIEW_MODE:
+        if (!handleFetchPublicSetResponseToGetData())
+        {
+            resetAndHandleStates();
+        }
+        break;
+
+    case ActionType::HANDLE_ELEMENT_IN_PREVIEW_MODE:
+        if (mCurrentSet.isComplete())
+        {
+            // Notify observers
+            emit onFetchSetFromLink(mCurrentSet);
+
+            // End preview
+            mMegaApi->stopPublicSetPreview();
+
+            // Return to INIT state
+            resetAndHandleStates();
+        }
+        break;
+
+    default:
+        break;
+    }
+}
+
+//!
+//! \brief SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK
+//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK state
+//!
+void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK(const ActionParams& action)
+{
+    if (mSetManagerState != SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK)
+    {
+        resetAndHandleStates();
+        return;
+    }
+
+    switch (action.type)
+    {
+    case ActionType::HANDLE_SET_IN_PREVIEW_MODE:
+        if (!handleFetchPublicSetResponseToDownloadFromLink())
+        {
+            resetAndHandleStates();
+        }
+        break;
+
+    case ActionType::HANDLE_ELEMENT_IN_PREVIEW_MODE:
+        // A new Set Element node has been fetched
+        if (!mCurrentSet.nodeList.isEmpty())
+        {
+            startDownload(mCurrentSet.nodeList.last().get(), mCurrentDownloadPath);
+        }
+        break;
+
+    default:
+        break;
+    }
+}
+
+//!
+//! \brief SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION
+//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION state
+//!
+void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION(const ActionParams& action)
+{
+    if (mSetManagerState != SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION)
+    {
+        resetAndHandleStates();
+        return;
+    }
+
+    if ((action.type != ActionType::HANDLE_SET_IN_PREVIEW_MODE) ||
+        (!handleFetchPublicSetResponseToDownloadCollection()))
+    {
+        resetAndHandleStates();
+    }
+}
+
+//!
+//! \brief SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION
+//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION state
+//!
+void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION(const ActionParams& action)
+{
+    if (mSetManagerState != SetManagerState::WAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION)
+    {
+        resetAndHandleStates();
+        return;
+    }
+
+    if ((action.type != ActionType::HANDLE_SET_IN_PREVIEW_MODE) ||
+        (!handleFetchPublicSetResponseToImportCollection()))
+    {
+        resetAndHandleStates();
+    }
+}
+
+//!
+//! \brief SetManager::onRequestFinish
+//! \Callback from SDK: response to a request
+//!
+void SetManager::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
+{
     switch (request->getType())
     {
     // Response to MegaApi::fetchPublicSet() request
@@ -102,14 +414,24 @@ void SetManager::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
         handleGetPreviewElementNodeResponse(request, error);
         break;
 
+    // Response to MegaApi::createFolder() request
+    case MegaRequest::TYPE_CREATE_FOLDER:
+        handleCreateFolderResponse(request, error);
+        break;
+
+    // Response to MegaApi::copyNode() request
+    case MegaRequest::TYPE_COPY:
+        handleCopyNodeResponse(request, error);
+        break;
+
     default:
         break;
     }
 }
 
 //!
-//! \brief LinkProcessor::onTransferFinish
-//! \Callback after downloading a folder, file or set element
+//! \brief SetManager::onTransferFinish
+//! \Callback from SDK after downloading a folder, file or set element
 //!
 void SetManager::onTransferFinish(MegaApi* api, MegaTransfer* transfer, MegaError* error)
 {
@@ -125,10 +447,9 @@ void SetManager::onTransferFinish(MegaApi* api, MegaTransfer* transfer, MegaErro
         mFailedDownloadedElements.push_back(QString::fromUtf8(transfer->getFileName()));
     }
 
-    // Successful download
+    // Check if we are waiting for more Elements to download, or if we are done
     int nrElementsToDownload = mCurrentSet.elementHandleList.size();
     int nrDownloadedElements = mSucceededDownloadedElements.size() + mFailedDownloadedElements.size();
-
 
     if (nrDownloadedElements == nrElementsToDownload)
     {
@@ -142,72 +463,7 @@ void SetManager::onTransferFinish(MegaApi* api, MegaTransfer* transfer, MegaErro
         mMegaApi->stopPublicSetPreview();
 
         // Return to INIT state
-        reset();
-    }
-}
-
-void SetManager::handleTriggerAction(struct CallbackAction& action)
-{
-    QMutexLocker locker(&mSetManagerStateMutex);
-    if (mSetManagerState == SetManagerState::INIT)
-    {
-        switch (action.type)
-        {
-        case CallbackType::REQUEST_FETCH_SET_FROM_LINK:
-        {
-            // Request to put a new Set in preview; reset current values
-            mCurrentSet.reset();
-            mCurrentSet.link = action.link;
-
-            if (!mCurrentSet.link.isEmpty())
-            {
-                mMegaApi->fetchPublicSet(mCurrentSet.link.toUtf8().constData(), mDelegateListener.get());
-                mSetManagerState = SetManagerState::WAIT_FOR_PREVIEW_SET_TO_GET_DATA;
-            }
-        }
-            break;
-
-        case CallbackType::REQUEST_DOWNLOAD_SET_FROM_LINK:
-        {
-            if (action.downloadPath.isEmpty()) { return; }
-
-            // If elementHandleList is empty, ALL Set Elements will be downloaded
-            mCurrentElementHandleList = action.elementHandleList;
-            mCurrentDownloadPath = action.downloadPath;
-
-            // Request to put a new Set in preview; reset current values
-            mCurrentSet.reset();
-            mCurrentSet.link = action.link;
-
-            if (!mCurrentSet.link.isEmpty())
-            {
-                mMegaApi->fetchPublicSet(mCurrentSet.link.toUtf8().constData(), mDelegateListener.get());
-                mSetManagerState = SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK;
-            }
-        }
-        break;
-
-        case CallbackType::REQUEST_DOWNLOAD_SET:
-        {
-            if (action.downloadPath.isEmpty()) { return; }
-
-            mCurrentSet = action.set;
-
-            // If elementHandleList is empty, ALL Set Elements will be downloaded
-            mCurrentElementHandleList = action.elementHandleList;
-            mCurrentDownloadPath = action.downloadPath;
-
-            if (!mCurrentSet.link.isEmpty())
-            {
-                mMegaApi->fetchPublicSet(mCurrentSet.link.toUtf8().constData(), mDelegateListener.get());
-                mSetManagerState = SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION;
-            }
-        }
-        break;
-
-        default:
-            break;
-        }
+        resetAndHandleStates();
     }
 }
 
@@ -225,6 +481,7 @@ bool SetManager::handleFetchPublicSetResponseToDownloadFromLink()
     // Set is now in Preview: Get Set and its Elements
     if (!getPreviewSetData()) { return false; }
 
+    // All Elements will be downloaded in a folder with the name of the Set
     mCurrentDownloadPath = mCurrentDownloadPath + QDir::separator() + mCurrentSet.name;
     createDirectory(mCurrentDownloadPath);
 
@@ -234,13 +491,8 @@ bool SetManager::handleFetchPublicSetResponseToDownloadFromLink()
 
 bool SetManager::handleFetchPublicSetResponseToDownloadCollection()
 {
-    // Set is now in Preview: check if all Elements require downloading or only a subset
-    mCurrentSet = filterSet(mCurrentSet, mCurrentElementHandleList);
-
-    if (!mCurrentSet.isComplete()) { return false; }
-
+    // Set is now in Preview
     // All Elements will be downloaded in a folder with the name of the Set
-    mCurrentDownloadPath = mCurrentDownloadPath + QDir::separator() + mCurrentSet.name;
     if (!createDirectory(mCurrentDownloadPath)) { return false; }
 
     // The requested Set has been put in preview, so download of (selected) Elements can start
@@ -252,6 +504,14 @@ bool SetManager::handleFetchPublicSetResponseToDownloadCollection()
     return true;
 }
 
+bool SetManager::handleFetchPublicSetResponseToImportCollection()
+{
+    // Set is now in Preview, create import folder in the Cloud Drive
+    mMegaApi->createFolder(mCurrentSet.name.toUtf8().constData(),
+                           mCurrentImportParentNode.get(), mDelegateListener.get());
+    return true;
+}
+
 // Response to MegaApi::fetchPublicSet() request
 void SetManager::handleFetchPublicSetResponse(MegaRequest* request, MegaError* error)
 {
@@ -260,36 +520,15 @@ void SetManager::handleFetchPublicSetResponse(MegaRequest* request, MegaError* e
         (request->getType() != MegaRequest::TYPE_FETCH_SET) ||
         (error->getErrorCode() != MegaError::API_OK))
     {
-        reset();
+        resetAndHandleStates();
         return;
     }
 
-    switch (mSetManagerState)
-    {
-    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_GET_DATA:
-        if (!handleFetchPublicSetResponseToGetData())
-        {
-            reset();
-        }
-        break;
-
-    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK:
-        if (!handleFetchPublicSetResponseToDownloadFromLink())
-        {
-            reset();
-        }
-        break;
-
-    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION:
-        if (!handleFetchPublicSetResponseToDownloadCollection())
-        {
-            reset();
-        }
-        break;
-
-    default:
-        break;
-    }
+    // Delegate to State Machine
+    ActionParams action;
+    action.type = ActionType::HANDLE_SET_IN_PREVIEW_MODE;
+    mInternalActionQueue.push(action);
+    handleStates();
 }
 
 void SetManager::handleGetPreviewElementNodeResponse(MegaRequest* request, MegaError* error)
@@ -299,7 +538,7 @@ void SetManager::handleGetPreviewElementNodeResponse(MegaRequest* request, MegaE
         (request->getType() != MegaRequest::TYPE_GET_EXPORTED_SET_ELEMENT) ||
         (error->getErrorCode() != MegaError::API_OK))
     {
-        reset();
+        resetAndHandleStates();
         return;
     }
 
@@ -307,29 +546,104 @@ void SetManager::handleGetPreviewElementNodeResponse(MegaRequest* request, MegaE
     MegaNodeSPtr nodeSPtr(request->getPublicMegaNode());
     mCurrentSet.nodeList.push_back(nodeSPtr);
 
-    switch (mSetManagerState)
+    // Delegate to State Machine
+    ActionParams action;
+    action.type = ActionType::HANDLE_ELEMENT_IN_PREVIEW_MODE;
+    mInternalActionQueue.push(action);
+    handleStates();
+}
+
+void SetManager::handleCreateFolderResponse(MegaRequest* request, MegaError* error)
+{
+    // Verify Precondition
+    if (!request || !error || (request->getType() != MegaRequest::TYPE_CREATE_FOLDER))
     {
-    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_GET_DATA:
-        if (mCurrentSet.isComplete())
+        resetAndHandleStates();
+        return;
+    }
+
+    // Folder creation was successfull, if status code OK was returned OR if the folder
+    // already exists at the target destination
+    int errorCode = error->getErrorCode();
+    if (errorCode != MegaError::API_OK &&
+        !((request->getType() == MegaRequest::TYPE_CREATE_FOLDER) && (errorCode == MegaError::API_EEXIST)))
+    {
+        resetAndHandleStates();
+        return;
+    }
+
+    MegaNodeSPtr createdNode (mMegaApi->getNodeByHandle(request->getNodeHandle()));
+    if (!createdNode)
+    {
+        resetAndHandleStates();
+        return;
+    }
+
+    // Copy (import) all Elements to the Cloud Drive
+    for (const auto& node : mCurrentSet.nodeList)
+    {
+        if (!copyNode(node, createdNode))
         {
-            // Notify observers
-            emit onFetchSetFromLink(mCurrentSet);
-
-            // End preview
-            mMegaApi->stopPublicSetPreview();
-
-            // Return to INIT state
-            mSetManagerState = SetManagerState::INIT;
+            // The Element node already exists in the target destination
+            mAlreadyExistingImportElements.push_back(QString::fromUtf8(node->getName()));
         }
-        break;
+    }
 
-    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK:
-        startDownload(mCurrentSet.nodeList.last().get(), mCurrentDownloadPath);
-        break;
+    // It could be, that all Elements already exist in the target destination
+    // In that case, import has been completed
+    checkandHandleFinishedImport();
+}
 
-    case SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION:
-    default:
-        break;
+void SetManager::handleCopyNodeResponse(MegaRequest* request, MegaError* error)
+{
+    // Verify Precondition
+    if (!request || !error || (request->getType() != MegaRequest::TYPE_COPY))
+    {
+        resetAndHandleStates();
+        return;
+    }
+
+    // Do not expose the raw pointer in a variable, to prevent 'double-free' vulnerability
+    MegaNodeSPtr nodeSPtr(request->getPublicMegaNode());
+    QString elementNodeName = QString::fromUtf8(nodeSPtr->getName());
+
+    if (error->getErrorCode() == MegaError::API_OK)
+    {
+        mSucceededImportElements.push_back(elementNodeName);
+    }
+    else
+    {
+        mFailedImportElements.push_back(elementNodeName);
+    }
+
+    checkandHandleFinishedImport();
+}
+
+//!
+//! \brief SetManager::checkandHandleFinishedImport
+//! \Checks if all Set Elements have been imported (whether successfull, failed or already existing)
+//! \If import of teh current Set has been completed, then observers are notified, the Set preview
+//! \will stop and all variables will be reset
+void SetManager::checkandHandleFinishedImport()
+{
+    // Check if we are waiting for more Elements to import, or if we are done
+    int nrElementsToImport = mCurrentSet.elementHandleList.size();
+    int nrImportedElements = mSucceededImportElements.size() + mFailedImportElements.size() + mAlreadyExistingImportElements.size();
+
+    if (nrImportedElements == nrElementsToImport)
+    {
+        // Notify observers about the successful import
+        emit onSetImportFinished(mCurrentSet.name,
+                                 mSucceededImportElements,
+                                 mFailedImportElements,
+                                 mAlreadyExistingImportElements,
+                                 {mCurrentImportParentNode});
+
+        // End preview
+        mMegaApi->stopPublicSetPreview();
+
+        // Return to INIT state
+        resetAndHandleStates();
     }
 }
 
@@ -438,8 +752,18 @@ void SetManager::reset()
     mCurrentSet.reset();
     mCurrentElementHandleList.clear();
     mCurrentDownloadPath = QString::fromUtf8("");
+    mCurrentImportParentNode = nullptr;
     mFailedDownloadedElements.clear();
     mSucceededDownloadedElements.clear();
+    mSucceededImportElements.clear();
+    mFailedImportElements.clear();
+    mAlreadyExistingImportElements.clear();
+}
+
+void SetManager::resetAndHandleStates()
+{
+    reset();
+    handleStates();
 }
 
 void SetManager::startDownload(MegaNode* linkNode, const QString& localPath)
@@ -457,4 +781,45 @@ void SetManager::startDownload(MegaNode* linkNode, const QString& localPath)
                             MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
                             undelete,
                             mDelegateTransferListener.get());
+}
+
+//!
+//! \brief SetManager::copyNode
+//! \param linkNode: the source node to copy
+//! \param importParentNode: import parent destination folder on Cloud Drive
+//! \Copies @linkNode to @importParentNode, if a node with the same name and
+//! \size doesn't already exist at the destination.
+//! \Returns true if a copy/import request was made to SDK, false otherwise
+//!
+bool SetManager::copyNode(MegaNodeSPtr linkNode, MegaNodeSPtr importParentNode)
+{
+    if (!linkNode || !importParentNode) { return false; }
+
+    // Returns true if a similar node to @node, with the same name and size,
+    // already exists in import folder @importNode. Returns false otherwise.
+    auto alreadyExists = [&](MegaNodeSPtr node, MegaNodeSPtr importNode) -> bool {
+        std::unique_ptr<MegaNodeList> children(mMegaApi->getChildren(importNode.get()));
+        const char* srcName = node->getName();
+        const long long srcSize = node->getSize();
+        const int nrChildren = children->size();
+
+        for (int i = 0; i < nrChildren; i++)
+        {
+            MegaNode* child = children->get(i);
+            if (!strcmp(srcName, child->getName()) && (srcSize == child->getSize()))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    if (!alreadyExists(linkNode, importParentNode))
+    {
+        mMegaApi->copyNode(linkNode.get(), importParentNode.get(), mDelegateListener.get());
+        return true;
+    }
+
+    return false;
 }
