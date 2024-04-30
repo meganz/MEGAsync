@@ -32,6 +32,8 @@ public:
     static QIcon getRemoteFileIcon(mega::MegaNode* node, const QFileInfo &fileInfo, bool hasProblem);
     static QIcon getIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
 
+    static void openLink(bool isCloud, const QString& path);
+
 signals:
     void actionFinished();
 

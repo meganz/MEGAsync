@@ -113,7 +113,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
                 //Using appDataId == 0 means that there will be no notification for this upload
                 mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
 
-                mChosenSide = ChosenSide::Local;
+                mChosenSide = ChosenSide::LOCAL;
                 setIsSolved(false);
             }
         }
@@ -126,7 +126,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseRemoteSide()
     auto syncId = syncIds().isEmpty() ? mega::INVALID_HANDLE : syncIds().first();
     utilities.removeLocalFile(consultLocalData()->getNativeFilePath(), syncId);
 
-    mChosenSide = ChosenSide::Remote;
+    mChosenSide = ChosenSide::REMOTE;
     setIsSolved(false);
 }
 
@@ -153,7 +153,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* names
             eventLoop.exec();
             if (result)
             {
-                mChosenSide = ChosenSide::Both;
+                mChosenSide = ChosenSide::BOTH;
                 setIsSolved(false);
             }
         }
@@ -165,10 +165,10 @@ LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseS
     if(isFile())
     {
         return consultLocalData()->getAttributes()->modifiedTime() > consultCloudData()->getAttributes()->modifiedTime()
-                   ? ChosenSide::Local : ChosenSide::Remote;
+                   ? ChosenSide::LOCAL : ChosenSide::REMOTE;
     }
 
-    return ChosenSide::None;
+    return ChosenSide::NONE;
 }
 
 LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseStalledIssue::getChosenSide() const

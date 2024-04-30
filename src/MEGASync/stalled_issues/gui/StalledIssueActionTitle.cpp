@@ -12,6 +12,7 @@
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QSpacerItem>
+#include <QGraphicsOpacityEffect>
 
 const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";
@@ -22,13 +23,13 @@ const char* MESSAGE_TEXT = "message_text";
 const char* EXTRAINFO_INFO = "extrainfo_info";
 const char* EXTRAINFO_SIZE = "extrainfo_size";
 
-#include <QGraphicsOpacityEffect>
-
 StalledIssueActionTitle::StalledIssueActionTitle(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::StalledIssueActionTitle),
     mIsCloud(false),
-    mIsFile(false)
+    mIsFile(false),
+    mTitleDisableEffect(nullptr),
+    mExtraInfoDisableEffect(nullptr)
 {
     ui->setupUi(this);
 
@@ -38,9 +39,10 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget* parent) :
     ui->extraInfoContainer->hide();
     ui->generalContainer->installEventFilter(this);
     ui->titleLabel->installEventFilter(this);
+    ui->hoverIcon->hide();
 
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
-    setSolved(false);
+    ui->backgroundWidget->setProperty(DISCARDED,false);
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
@@ -80,6 +82,13 @@ void StalledIssueActionTitle::setTitle(const QString& title, const QPixmap& icon
 QString StalledIssueActionTitle::title() const
 {
     return ui->titleLabel->toPlainText();
+}
+
+void StalledIssueActionTitle::setHyperLinkMode()
+{
+    ui->titleContainer->setCursor(Qt::PointingHandCursor);
+    ui->titleContainer->installEventFilter(this);
+    ui->titleContainer->setMouseTracking(true);
 }
 
 void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& text, int id, bool mainButton)
@@ -217,6 +226,17 @@ void StalledIssueActionTitle::setSolved(bool state)
 {
     ui->backgroundWidget->setProperty(DISCARDED,state);
     setStyleSheet(styleSheet());
+
+    if(!ui->titleContainer->graphicsEffect() && !ui->extraInfoContainer->graphicsEffect())
+    {
+        mTitleDisableEffect = new QGraphicsOpacityEffect(this);
+        mTitleDisableEffect->setOpacity(0.3);
+        ui->titleContainer->setGraphicsEffect(mTitleDisableEffect);
+
+        mExtraInfoDisableEffect = new QGraphicsOpacityEffect(this);
+        mExtraInfoDisableEffect->setOpacity(0.3);
+        ui->extraInfoContainer->setGraphicsEffect(mExtraInfoDisableEffect);
+    }
 }
 
 bool StalledIssueActionTitle::isSolved() const
@@ -243,6 +263,21 @@ bool StalledIssueActionTitle::eventFilter(QObject* watched, QEvent* event)
 
             auto elidedText = ui->messageLabel->fontMetrics().elidedText(ui->messageLabel->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, width);
             ui->messageLabel->setText(elidedText);
+        }
+    }
+    else if(watched == ui->titleContainer)
+    {
+        if(event->type() == QEvent::MouseButtonRelease)
+        {
+            StalledIssuesUtilities::openLink(mIsCloud, mPath);
+        }
+        else if(event->type() == QEvent::Enter)
+        {
+            ui->hoverIcon->show();
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->hoverIcon->hide();
         }
     }
 

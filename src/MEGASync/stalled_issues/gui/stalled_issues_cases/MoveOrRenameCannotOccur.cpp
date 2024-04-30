@@ -3,6 +3,16 @@
 
 #include <StalledIssueHeader.h>
 #include <MoveOrRenameCannotOccurIssue.h>
+#include <MegaApplication.h>
+#include <StalledIssuesModel.h>
+
+#include <TextDecorator.h>
+
+namespace
+{
+Text::Bold boldTextDecorator;
+const Text::Decorator textDecorator(&boldTextDecorator);
+}
 
 MoveOrRenameCannotOccur::MoveOrRenameCannotOccur(QWidget* parent)
     : StalledIssueBaseDelegateWidget(parent)
@@ -10,8 +20,8 @@ MoveOrRenameCannotOccur::MoveOrRenameCannotOccur(QWidget* parent)
 {
     ui->setupUi(this);
 
-    //connect(ui->chooseLocalCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &MoveOrRenameCannotOccur::onLocalButtonClicked);
-    //connect(ui->chooseRemoteCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &MoveOrRenameCannotOccur::onRemoteButtonClicked);
+    connect(ui->chooseLocalCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &MoveOrRenameCannotOccur::onLocalButtonClicked);
+    connect(ui->chooseRemoteCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &MoveOrRenameCannotOccur::onRemoteButtonClicked);
 
     auto margins = ui->chooseLayout->contentsMargins();
     margins.setLeft(StalledIssueHeader::GROUPBOX_INDENT);
@@ -28,26 +38,19 @@ MoveOrRenameCannotOccur::~MoveOrRenameCannotOccur()
 void MoveOrRenameCannotOccur::refreshUi()
 {
     auto issue = getData().convert<MoveOrRenameCannotOccurIssue>();
+    ui->chooseLocalCopy->updateUi(issue);
+    ui->chooseLocalCopy->show();
 
-    if(issue->consultLocalData())
-    {
-        //ui->chooseLocalCopy->updateUi(issue->consultLocalData(), issue->getChosenSide());
+    ui->chooseRemoteCopy->updateUi(issue);
+    ui->chooseRemoteCopy->show();
+}
 
-        ui->chooseLocalCopy->show();
-    }
-    else
-    {
-        ui->chooseLocalCopy->hide();
-    }
+void MoveOrRenameCannotOccur::onLocalButtonClicked()
+{
+    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(getCurrentIndex(), MoveOrRenameCannotOccurIssue::ChosenSide::LOCAL);
+}
 
-    if(issue->consultCloudData())
-    {
-        //ui->chooseRemoteCopy->updateUi(issue->consultCloudData(), issue->getChosenSide());
-
-        ui->chooseRemoteCopy->show();
-    }
-    else
-    {
-        ui->chooseRemoteCopy->hide();
-    }
+void MoveOrRenameCannotOccur::onRemoteButtonClicked()
+{
+    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(getCurrentIndex(), MoveOrRenameCannotOccurIssue::ChosenSide::REMOTE);
 }

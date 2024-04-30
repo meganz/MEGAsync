@@ -17,11 +17,10 @@ class StalledIssueChooseWidget : public QFrame
     Q_OBJECT
 
 public:
+    static const int BUTTON_ID;
+
     explicit StalledIssueChooseWidget(QWidget *parent = nullptr);
     virtual ~StalledIssueChooseWidget();
-
-    void updateUi(StalledIssueDataPtr data, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
-    const StalledIssueDataPtr& data();
 
     void hideActionButton();
 
@@ -32,60 +31,15 @@ protected slots:
     virtual void onRawInfoToggled(){}
 
 protected:
+    virtual void setChosen(bool state);
     virtual QString solvedString() const = 0;
-    bool eventFilter(QObject *watched, QEvent *event) override;
     Ui::StalledIssueChooseWidget *ui;
-    StalledIssueDataPtr mData;
 
 private slots:
     void onActionClicked(int button_id);
 
 private:
-    void setSolved();
-
-    QPointer<QGraphicsOpacityEffect> mDisableEffect;
-};
-
-class LocalStalledIssueChooseWidget : public StalledIssueChooseWidget
-{
-    Q_OBJECT
-
-public:
-    explicit LocalStalledIssueChooseWidget(QWidget *parent = nullptr)
-        : StalledIssueChooseWidget(parent)
-    {}
-
-    ~LocalStalledIssueChooseWidget() = default;
-
-    QString solvedString() const override;
-    void updateUi(LocalStalledIssueDataPtr localData, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
-
-protected slots:
-    void onRawInfoToggled() override;
-
-private:
-    void updateExtraInfo(LocalStalledIssueDataPtr data);
-};
-
-class CloudStalledIssueChooseWidget : public StalledIssueChooseWidget
-{
-    Q_OBJECT
-
-public:
-    explicit CloudStalledIssueChooseWidget(QWidget *parent = nullptr)
-        : StalledIssueChooseWidget(parent)
-    {}
-
-    ~CloudStalledIssueChooseWidget() = default;
-
-    QString solvedString() const override;
-    void updateUi(CloudStalledIssueDataPtr cloudData, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
-
-protected slots:
-    void onRawInfoToggled() override;
-
-private:
-    void updateExtraInfo(CloudStalledIssueDataPtr data);
+    QPointer<QGraphicsOpacityEffect> mPathDisableEffect;
 };
 
 class GenericChooseWidget : public StalledIssueChooseWidget
@@ -99,7 +53,7 @@ public:
 
     QString solvedString() const override;
 
-    void setChosen(bool state);
+    void setChosen(bool state) override;
 
     struct GenericInfo
     {

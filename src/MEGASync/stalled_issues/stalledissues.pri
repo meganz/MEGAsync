@@ -13,12 +13,14 @@ SOURCES +=  \
     $$PWD/gui/StalledIssueDelegate.cpp \
     $$PWD/gui/StalledIssueFilePath.cpp \
     $$PWD/gui/StalledIssuesView.cpp \
+    $$PWD/gui/stalled_issues_cases/LocalAndRemoteChooseWidget.cpp \
     $$PWD/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.cpp \
     $$PWD/gui/StalledIssuesDelegateWidgetsCache.cpp \
     $$PWD/gui/StalledIssuesDialog.cpp \
     $$PWD/gui/StalledIssueHeader.cpp \
     $$PWD/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp \
     $$PWD/gui/stalled_issues_cases/MoveOrRenameCannotOccur.cpp \
+    $$PWD/gui/stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.cpp \
     $$PWD/gui/stalled_issues_cases/NameConflict.cpp \
     $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp \
@@ -45,9 +47,11 @@ HEADERS  +=   \
     $$PWD/gui/StalledIssuesDelegateWidgetsCache.h \
     $$PWD/gui/StalledIssuesDialog.h \
     $$PWD/gui/StalledIssueHeader.h \
+    $$PWD/gui/stalled_issues_cases/LocalAndRemoteChooseWidget.h \
     $$PWD/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.h \
     $$PWD/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.h \
     $$PWD/gui/stalled_issues_cases/MoveOrRenameCannotOccur.h \
+    $$PWD/gui/stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.h \
     $$PWD/gui/stalled_issues_cases/NameConflict.h \
     $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h \

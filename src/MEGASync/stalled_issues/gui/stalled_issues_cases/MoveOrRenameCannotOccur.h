@@ -2,6 +2,8 @@
 #define MOVEORRENAMECANNOTOCCUR_H
 
 #include <StalledIssueBaseDelegateWidget.h>
+#include <StalledIssueChooseWidget.h>
+#include <MoveOrRenameCannotOccurIssue.h>
 
 #include <QWidget>
 
@@ -19,6 +21,10 @@ public:
     ~MoveOrRenameCannotOccur();
 
     void refreshUi() override;
+
+private slots:
+    void onLocalButtonClicked();
+    void onRemoteButtonClicked();
 
 private:
     Ui::MoveOrRenameCannotOccur* ui;

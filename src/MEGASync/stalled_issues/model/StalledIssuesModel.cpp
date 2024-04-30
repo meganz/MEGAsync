@@ -1147,9 +1147,9 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index)
+void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, MoveOrRenameCannotOccurIssue::ChosenSide side)
 {
-    auto resolveIssue = [this](int row) -> bool
+    auto resolveIssue = [this, side](int row) -> bool
     {
         auto issue(mStalledIssues.at(row));
         if(auto moveOrRemoveIssue = std::dynamic_pointer_cast<MoveOrRenameCannotOccurIssue>(issue.getData()))
@@ -1160,7 +1160,7 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index)
 
                 finishSolvingIssues(isSolved ? 1 : 0, true, solveMessage);
             });
-            moveOrRemoveIssue->solveIssue(MoveOrRenameCannotOccurIssue::SideChosen::REMOTE);
+            moveOrRemoveIssue->solveIssue(side);
         }
         return true;
     };

@@ -28,10 +28,10 @@ public:
 
     enum class ChosenSide
     {
-        None = 0,
-        Remote,
-        Local,
-        Both
+        NONE = 0,
+        REMOTE,
+        LOCAL,
+        BOTH
     };
 
     ChosenSide getChosenSide() const;
@@ -39,7 +39,7 @@ public:
 
 private:
     MegaUploader* mUploader;
-    ChosenSide mChosenSide = ChosenSide::None;
+    ChosenSide mChosenSide = ChosenSide::NONE;
     QString mNewName;
 };
 

@@ -367,47 +367,7 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QLabel *actionWidg
     }
     else if(type == QEvent::MouseButtonRelease)
     {
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-        if(mData->isCloud())
-        {
-            mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
-            if (node)
-            {
-                const char* handle = node->getBase64Handle();
-                QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-                QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                delete [] handle;
-                delete node;
-            }
-            else
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                msgInfo.title = QMegaMessageBox::warningTitle();
-                msgInfo.text = QString::fromUtf8("Node %1 does not exist.").arg(path);
-                QMegaMessageBox::warning(msgInfo);
-            }
-        }
-        else
-        {
-            QFile file(path);
-            if(file.exists())
-            {
-                QtConcurrent::run([=]
-                {
-                    Platform::getInstance()->showInFolder(path);
-                });
-            }
-            else
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                msgInfo.title = QMegaMessageBox::warningTitle();
-                msgInfo.text =  QString::fromUtf8("Path %1 does not exist.").arg(path);
-                QMegaMessageBox::warning(msgInfo);
-            }
-        }
+        StalledIssuesUtilities::openLink(mData->isCloud(), path);
     }
 }
 

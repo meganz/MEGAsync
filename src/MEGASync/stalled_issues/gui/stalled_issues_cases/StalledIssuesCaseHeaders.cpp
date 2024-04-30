@@ -298,35 +298,16 @@ MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(StalledIssueHeader*
 
 void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    QString headerText = tr("Cannot move or rename [B]%1[/B]");
+    QString headerText = tr("Can’t move or rename some items on in [B]%1[/B]");
     textDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
-    if (header->getData().consultData()->mDetectedMEGASide)
+    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(header->getData().consultData()->syncIds().first()));
+    if(sync)
     {
-        header->setTitleDescriptionText(tr("A move or rename was detected in MEGA, but could not be replicated in the local filesystem."));
-    }
-    else
-    {
-        header->setTitleDescriptionText(tr("A move or rename was detected in the local filesystem, but could not be replicated in MEGA."));
-    }
-}
-
-void MoveOrRenameCannotOccurHeader::refreshCaseActions(StalledIssueHeader *header)
-{
-    if(header->getData().consultData()->isSolvable())
-    {
-        header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
-    }
-}
-
-void MoveOrRenameCannotOccurHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int)
-{    
-    if(HeaderCaseIssueChecker::checkIssue(header, true))
-    {
-        return;
+        header->setText(headerText.arg(QString::fromUtf8(sync->getName())));
     }
 
-    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(header->getCurrentIndex());
+    header->setTitleDescriptionText(
+        tr("The local and remote locations have changed at the same time"));
 }
 
 //Delete or Move Waiting onScanning

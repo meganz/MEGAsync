@@ -2,6 +2,8 @@
 #define LOCALANDREMOTEDIFFERENTWIDGET_H
 
 #include "StalledIssueBaseDelegateWidget.h"
+#include "StalledIssueChooseWidget.h"
+
 #include "QMegaMessageBox.h"
 
 #include <QWidget>

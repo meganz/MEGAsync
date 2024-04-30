@@ -86,7 +86,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
     GenericChooseWidget::GenericInfo lastModifiedInfo;
     lastModifiedInfo.buttonText = tr("Choose");
     QString lastModifiedInfoTitle;
-    if (issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
+    if (issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
     {
         lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (local)");
     }
@@ -94,27 +94,22 @@ void LocalAndRemoteDifferentWidget::refreshUi()
     {
         lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
     }
-        textDecorator.process(lastModifiedInfoTitle);
-        lastModifiedInfo.title = lastModifiedInfoTitle;
-        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
-        lastModifiedInfo.solvedText = tr("Chosen");
-        ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
 
-        if (issue->isSolved()) {
-        ui->keepBothOption->setChosen(false);
+    textDecorator.process(lastModifiedInfoTitle);
+    lastModifiedInfo.title = lastModifiedInfoTitle;
+    lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
+    lastModifiedInfo.solvedText = tr("Chosen");
+    ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
+
+    if (issue->isSolved())
+    {
+        ui->keepBothOption->setChosen(issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH);
         ui->keepLastModifiedOption->hide();
 
-        if(issue->isPotentiallySolved())
+        if (issue->isPotentiallySolved())
         {
             ui->chooseLocalCopy->hideActionButton();
             ui->chooseRemoteCopy->hideActionButton();
-        }
-        else
-        {
-            if(issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Both)
-            {
-                ui->keepBothOption->setChosen(true);
-            }
         }
 
         updateSizeHint();
@@ -337,7 +332,7 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
     std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
     if(parentNode)
     {
-        auto newName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, QStringList());
+        //auto newName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, QStringList());
 
         if(node->isFile())
         {
@@ -379,7 +374,7 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
     }
 
     info.msgInfo.text = tr("Are you sure you want to choose the latest modified side?");
-    if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
+    if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
     {
         info.msgInfo.informativeText = tr("This action will choose the local side");
     }

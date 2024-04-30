@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QLabel>
 #include <QPointer>
+#include <QGraphicsOpacityEffect>
 
 #include <megaapi.h>
 
@@ -25,8 +26,10 @@ public:
     void removeBackgroundColor();
 
     void setHTML(const QString& title, const QPixmap& icon = QPixmap());
-    void setTitle(const QString& title, const QPixmap &icon = QPixmap());
+    void setTitle(const QString& title, const QPixmap& icon = QPixmap());
     QString title() const;
+
+    void setHyperLinkMode();
 
     void addActionButton(const QIcon& icon, const QString& text, int id, bool mainButton);
     void hideActionButton(int id);
@@ -45,8 +48,8 @@ public:
     void setInfo(const QString& newPath, mega::MegaHandle handle);
     void setHandle(mega::MegaHandle handle);
 
-    void updateLastTimeModified(const QDateTime &time);
-    void updateCreatedTime(const QDateTime &time);
+    void updateLastTimeModified(const QDateTime& time);
+    void updateCreatedTime(const QDateTime& time);
     bool updateUser(const QString& user, bool show);
     bool updateVersionsCount(int versions);
     void updateSize(int64_t size);
@@ -86,6 +89,8 @@ private:
     void showAttribute(AttributeType type);
     void updateLabel(QLabel* label, const QString& text);
     QMap<AttributeType, QPointer<QLabel>> mUpdateLabels;
+    QPointer<QGraphicsOpacityEffect> mTitleDisableEffect;
+    QPointer<QGraphicsOpacityEffect> mExtraInfoDisableEffect;
 };
 
 #endif // STALLEDISSUEACTIONTITLE_H

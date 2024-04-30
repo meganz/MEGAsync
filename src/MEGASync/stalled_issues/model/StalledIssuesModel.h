@@ -6,6 +6,7 @@
 #include "StalledIssue.h"
 #include "StalledIssuesUtilities.h"
 #include "ViewLoadingScene.h"
+#include <MoveOrRenameCannotOccurIssue.h>
 #include "QMegaMessageBox.h"
 
 #include <QObject>
@@ -13,6 +14,7 @@
 #include <QAbstractItemModel>
 #include <QTimer>
 #include <QPointer>
+
 class LoadingSceneMessageHandler;
 class NameConflictedStalledIssue;
 
@@ -118,7 +120,7 @@ public:
     void fixFingerprint(const QModelIndexList& list);
 
     //MoveOrRename issue
-    void fixMoveOrRenameCannotOccur(const QModelIndex& index);
+    void fixMoveOrRenameCannotOccur(const QModelIndex& index, MoveOrRenameCannotOccurIssue::ChosenSide side);
 
     bool issuesRequested() const;
 

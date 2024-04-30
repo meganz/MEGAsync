@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="layout">
    <property name="spacing">
-    <number>0</number>
+    <number>7</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -24,10 +24,10 @@
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>11</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>11</number>
    </property>
    <item>
     <widget class="QLabel" name="selectLabel">
@@ -90,10 +90,10 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="CloudStalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+       <widget class="RemoteMoveOrRenameCannotOccurChooseWidget" name="chooseRemoteCopy" native="true"/>
       </item>
       <item>
-       <widget class="LocalStalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
+       <widget class="LocalMoveOrRenameCannotOccurChooseWidget" name="chooseLocalCopy" native="true"/>
       </item>
      </layout>
     </widget>
@@ -102,15 +102,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CloudStalledIssueChooseWidget</class>
+   <class>LocalMoveOrRenameCannotOccurChooseWidget</class>
    <extends>QWidget</extends>
-   <header>StalledIssueChooseWidget.h</header>
+   <header>stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>LocalStalledIssueChooseWidget</class>
+   <class>RemoteMoveOrRenameCannotOccurChooseWidget</class>
    <extends>QWidget</extends>
-   <header>StalledIssueChooseWidget.h</header>
+   <header>stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -41,7 +41,7 @@ MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncS
     , StalledIssue(stall)
     , mSolvingStarted(false)
     , mSyncController(new SyncController())
-    , mSideChosen(SideChosen::NONE)
+    , mChosenSide(ChosenSide::NONE)
 {
     connect(SyncInfo::instance(), &SyncInfo::syncStateChanged,
             this, &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
@@ -84,9 +84,9 @@ bool MoveOrRenameCannotOccurIssue::refreshListAfterSolving() const
     return true;
 }
 
-void MoveOrRenameCannotOccurIssue::solveIssue(SideChosen side)
+void MoveOrRenameCannotOccurIssue::solveIssue(ChosenSide side)
 {
-    mSideChosen = /*side*/SideChosen::LOCAL;
+    mChosenSide = side;
 
     if(!syncIds().isEmpty())
     {
@@ -138,7 +138,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
         bool created(false);
 
         //We perform the undo in the opposite side
-        if(mSideChosen == SideChosen::REMOTE)
+        if(mChosenSide == ChosenSide::REMOTE)
         {
             QFileInfo previousPath(consultLocalData()->getFilePath());
             QFileInfo previousDirectory(previousPath.absolutePath());
@@ -185,6 +185,11 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
     }
 
     mSolvingStarted = false;
+}
+
+MoveOrRenameCannotOccurIssue::ChosenSide MoveOrRenameCannotOccurIssue::getChosenSide() const
+{
+    return mChosenSide;
 }
 
 void MoveOrRenameCannotOccurIssue::fillCloudSide(const mega::MegaSyncStall* stall)

@@ -25,7 +25,7 @@ class MoveOrRenameCannotOccurIssue : public QObject, public StalledIssue
     Q_OBJECT
 
 public:
-    enum class SideChosen
+    enum class ChosenSide
     {
         NONE,
         LOCAL,
@@ -40,9 +40,11 @@ public:
 
     bool isSolvable() const override;
     bool refreshListAfterSolving() const override;
-    void solveIssue(SideChosen side);
+    void solveIssue(ChosenSide side);
 
     bool checkForExternalChanges() override;
+
+    ChosenSide getChosenSide() const;
 
 signals:
     void issueSolved(bool isSolved);
@@ -53,7 +55,7 @@ private slots:
 private:
     bool mSolvingStarted;
     std::shared_ptr<SyncController> mSyncController;
-    SideChosen mSideChosen;
+    ChosenSide mChosenSide;
 };
 
 #endif // MOVEORRENAMECANNOTOCCURISSUE_H
