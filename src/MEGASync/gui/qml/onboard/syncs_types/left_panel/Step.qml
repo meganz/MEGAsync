@@ -50,7 +50,7 @@ Item {
         Layout.preferredWidth: width
         Layout.preferredHeight: height
         radius: 16
-        color: ColorTheme.iconButtonPressedBackground
+        color: ColorTheme.surface2
 
         state: stateDisabled
         states: [
@@ -61,27 +61,27 @@ Item {
                     target: stepCircle;
                     color: "transparent";
                     border.width: 2;
-                    border.color: ColorTheme.iconButtonDisabled;
+                    border.color: ColorTheme.ButtonDisabled;
                 }
                 PropertyChanges { target: stepCircleImage; visible: false; }
-                PropertyChanges { target: stepCircleText; color: ColorTheme.iconButtonDisabled; }
-                PropertyChanges { target: stepText; color: ColorTheme.iconButtonDisabled; }
+                PropertyChanges { target: stepCircleText; color: ColorTheme.ButtonDisabled; }
+                PropertyChanges { target: stepText; color: ColorTheme.ButtonDisabled; }
             },
             State {
                 name: stepContent.stateCurrent
-                PropertyChanges { target: stepContent; color: ColorTheme.iconButtonPressedBackground; }
-                PropertyChanges { target: stepCircle; color: ColorTheme.iconButton;  border.width: 0; }
+                PropertyChanges { target: stepContent; color: ColorTheme.surface2; }
+                PropertyChanges { target: stepCircle; color: ColorTheme.buttonPrimary;  border.width: 0; }
                 PropertyChanges { target: stepCircleImage; visible: false; }
                 PropertyChanges { target: stepCircleText; color: ColorTheme.textInverseAccent; }
-                PropertyChanges { target: stepText; color: ColorTheme.iconButton; }
+                PropertyChanges { target: stepText; color: ColorTheme.buttonPrimary; }
             },
             State {
                 name: stepContent.stateCurrentSubstep
                 PropertyChanges { target: stepContent; color: "transparent"; }
-                PropertyChanges { target: stepCircle; color: ColorTheme.iconButton; border.width: 0; }
+                PropertyChanges { target: stepCircle; color: ColorTheme.buttonPrimary; border.width: 0; }
                 PropertyChanges { target: stepCircleImage; visible: false; }
                 PropertyChanges { target: stepCircleText; color: ColorTheme.textInverseAccent; }
-                PropertyChanges { target: stepText; color: ColorTheme.iconButton; }
+                PropertyChanges { target: stepText; color: ColorTheme.buttonPrimary; }
             },
             State {
                 name: stepContent.stateDone
@@ -89,7 +89,7 @@ Item {
                 PropertyChanges { target: stepCircle; color: ColorTheme.supportSuccess; border.width: 0; }
                 PropertyChanges { target: stepCircleImage; visible: true; }
                 PropertyChanges { target: stepCircleText; color: ColorTheme.textInverseAccent; visible: false; }
-                PropertyChanges { target: stepText; color: ColorTheme.iconButton; }
+                PropertyChanges { target: stepText; color: ColorTheme.buttonPrimary; }
             }
         ]
 
@@ -113,7 +113,7 @@ Item {
                 radius: width / 2
                 width: 22
                 height: width
-                color: ColorTheme.iconButton
+                color: ColorTheme.buttonPrimary
 
                 Texts.Text {
                     id: stepCircleText
@@ -140,7 +140,7 @@ Item {
             Texts.Text {
                 id: stepText
 
-                color: ColorTheme.iconButton
+                color: ColorTheme.buttonPrimary
                 font.weight: Font.DemiBold
             }
 

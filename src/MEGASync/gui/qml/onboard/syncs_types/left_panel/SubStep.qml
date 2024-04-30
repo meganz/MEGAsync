@@ -56,21 +56,21 @@ Item {
                 }
                 PropertyChanges {
                     target: stepCircleSmall;
-                    border.color: ColorTheme.iconButtonDisabled;
+                    border.color: ColorTheme.ButtonDisabled;
                     color: "transparent";
                     visible: true;
                 }
                 PropertyChanges { target: outlinedCircle; visible: false; }
-                PropertyChanges { target: stepText; color: ColorTheme.iconButtonDisabled; }
+                PropertyChanges { target: stepText; color: ColorTheme.ButtonDisabled; }
             },
             State {
                 name: substepContent.stateCurrent
-                PropertyChanges { target: background; color: ColorTheme.iconButtonPressedBackground; }
+                PropertyChanges { target: background; color: ColorTheme.surface2; }
                 PropertyChanges { target: content; spacing: 12; }
                 PropertyChanges { target: stepCircleSmall; visible: false; }
-                PropertyChanges { target: stepCircleBig; color: ColorTheme.iconButton; }
+                PropertyChanges { target: stepCircleBig; color: ColorTheme.buttonPrimary; }
                 PropertyChanges { target: outlinedCircle; visible: true; }
-                PropertyChanges { target: stepText; color: ColorTheme.iconButton; }
+                PropertyChanges { target: stepText; color: ColorTheme.buttonPrimary; }
             },
             State {
                 name: substepContent.stateDone
@@ -87,7 +87,7 @@ Item {
                     visible: true;
                 }
                 PropertyChanges { target: outlinedCircle; visible: false; }
-                PropertyChanges { target: stepText; color: ColorTheme.iconButton; }
+                PropertyChanges { target: stepText; color: ColorTheme.buttonPrimary; }
             },
             State {
                 name: substepContent.stateWarning
@@ -116,7 +116,7 @@ Item {
             id: background
 
             radius: 12
-            color: ColorTheme.iconButtonPressedBackground
+            color: ColorTheme.surface2
             anchors.left: parent.left
             width: stepText.contentWidth + 40
             height: content.height + 10
@@ -144,7 +144,7 @@ Item {
 
                 border {
                     width: 2
-                    color: ColorTheme.iconButtonDisabled
+                    color: ColorTheme.ButtonDisabled
                 }
 
                 anchors.verticalCenter: parent.verticalCenter
@@ -162,7 +162,7 @@ Item {
 
                     anchors.fill: parent
                     radius: 8
-                    color: ColorTheme.iconButton
+                    color: ColorTheme.buttonPrimary
                     opacity: 0.4
                 }
 
@@ -181,7 +181,7 @@ Item {
                 id: stepText
 
                 width: stepText.implicitWidth > (substepContent.width - 40) ? (substepContent.width - 40) : stepText.implicitWidth
-                color: ColorTheme.iconButton
+                color: ColorTheme.buttonPrimary
                 font {
                     pixelSize: Texts.Text.Size.SMALL
                     weight: Font.DemiBold
