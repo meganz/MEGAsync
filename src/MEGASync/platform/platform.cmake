@@ -100,7 +100,17 @@ if (WIN32)
         PUBLIC
         _UNICODE
     )
-elseif (UNIX AND NOT APPLE)
+
+    target_link_libraries(MEGAsync
+        PRIVATE
+        Shell32 Shlwapi Powrprof taskschd
+    )
+elseif (APPLE)
+    target_link_libraries(MEGAsync
+        PRIVATE
+        "-framework IOKit"
+    )
+else ()
     find_package(Qt5 REQUIRED COMPONENTS X11Extras)
     target_link_libraries(MEGAsync
         PRIVATE
@@ -108,12 +118,6 @@ elseif (UNIX AND NOT APPLE)
         xcb
     )
 endif()
-
-target_link_libraries(MEGAsync
-    PRIVATE
-    $<$<BOOL:${WIN32}>:Shell32 Shlwapi Powrprof taskschd>
-    "$<$<BOOL:${APPLE}>:-framework IOKit>"
-)
 
 target_sources(MEGAsync
     PRIVATE
