@@ -334,6 +334,8 @@ public:
     void setOneTimeActionDone(int action, bool done);
     void setSystemTrayPromptSuppressed(bool suppressed);
     bool isSystemTrayPromptSuppressed();
+    void setAskOnExclusionRemove(bool value);
+    bool isAskOnExclusionRemove();
     void setSystemTrayLastPromptTimestamp(long long timestamp);
     long long getSystemTrayLastPromptTimestamp();
 
@@ -725,6 +727,7 @@ protected:
     static const QString systemTrayPromptSuppressed;
     static const QString systemTrayLastPromptTimestamp;
     static const QString lastDailyStatTimeKey;
+    static const QString askOnExclusionRemove;
 
     //Sleep mode
     static const QString awakeIfActiveKey;
@@ -778,6 +781,7 @@ protected:
     static const bool defaultImportMegaLinksEnabled;
     static const bool defaultDownloadMegaLinksEnabled;
     static const bool defaultSystemTrayPromptSuppressed;
+    static const bool defaultAskOnExclusionRemove;
 
 private:
     void updateFullName();
