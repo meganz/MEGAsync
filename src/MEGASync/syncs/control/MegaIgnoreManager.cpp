@@ -13,21 +13,17 @@
 #include <QTemporaryFile>
 #include <QFileInfo>
 
+constexpr char MEGA_IGNORE_FILE_NAME[] = ".megaignore";
+constexpr char MEGA_IGNORE_DEFAULT_FILE_NAME[] = ".megaignore.default";
+
 MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder, bool createDefaultIfNotExist)
 {
-    const auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
-    mOutputMegaIgnoreFile = ignorePath;
-    mMegaIgnoreFile = ignorePath;
-    if (createDefaultIfNotExist && !QFile::exists(ignorePath))
-    {
-        mMegaIgnoreFile = Preferences::instance()->getDataPath() + QDir::separator() + QString::fromUtf8(".megaignore.default");
-    }
-    parseIgnoresFile();
+    setInputDirPath(syncLocalFolder, createDefaultIfNotExist);
 }
 
 bool MegaIgnoreManager::isValid(const QString& syncLocalFolder)
 {
-    const auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(".megaignore"));
+    const auto ignorePath(syncLocalFolder + QDir::separator() + QString::fromUtf8(MEGA_IGNORE_FILE_NAME));
     QFileInfo ignoreInfo(ignorePath);
     if (ignoreInfo.exists())
     {
@@ -162,6 +158,31 @@ QList<std::shared_ptr<MegaIgnoreRule>> MegaIgnoreManager::getAllRules() const
     return mRules;
 }
 
+std::shared_ptr<MegaIgnoreRule> MegaIgnoreManager::getNameRule(int index) const
+{
+    if(index>= mNameRules.size())
+    {
+        return nullptr;
+    }
+    return mNameRules.at(index);
+}
+
+void MegaIgnoreManager::enableAllNameRules(bool enable)
+{
+    for(auto rule : mNameRules)
+    {
+        rule->setCommented(!enable);
+    }
+}
+
+int MegaIgnoreManager::enabledRulesCount()
+{
+    return static_cast<int>(
+        std::count_if(std::begin(mNameRules),
+                      std::end(mNameRules),
+                      [](std::shared_ptr<MegaIgnoreRule> rule) { return !rule->isCommented(); }));
+}
+
 std::shared_ptr<MegaIgnoreRule> MegaIgnoreManager::findRule(const QString& ruleToCompare)
 {
     auto finder = [&ruleToCompare](const std::shared_ptr<MegaIgnoreRule>& rule)
@@ -182,14 +203,14 @@ MegaIgnoreRule::RuleType MegaIgnoreManager::getRuleType(const QString& line)
     const QString leftSide = lineSplitted[0].trimmed();
     const QString rightSide = lineSplitted.mid(1).join(QLatin1String(":")).trimmed();
 
-    // Check size rule 
+    // Check size rule
     static const QRegularExpression sizeRuleLeftSide(QLatin1String(MegaIgnoreRule::SIZE_RULE_LEFT_SIDE_REG_EX), QRegularExpression::CaseInsensitiveOption);
     static const QRegularExpression sizeRuleRightSide(QLatin1String(MegaIgnoreRule::SIZE_RULE_RIGHT_SIDE_REG_EX), QRegularExpression::CaseInsensitiveOption);
     if (sizeRuleLeftSide.match(leftSide).hasMatch() && sizeRuleRightSide.match(rightSide).hasMatch())
     {
         return MegaIgnoreRule::RuleType::SIZERULE;
     }
-    // Check if valid left side 
+    // Check if valid left side
     const static  QRegularExpression nonSizeRuleRegularExpression{ QLatin1String(MegaIgnoreRule::NON_SIZE_LEFT_SIDE_REG_EX) };
     if (!nonSizeRuleRegularExpression.match(leftSide).hasMatch())
     {
@@ -317,9 +338,17 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinkRule(cons
     return rule;
 }
 
-std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern, MegaIgnoreNameRule::Target targetType)
+std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern, MegaIgnoreNameRule::Target targetType, MegaIgnoreNameRule::WildCardType wildCard)
 {
     auto rule = std::make_shared<MegaIgnoreNameRule>(pattern, classType, targetType);
+    rule->setWildCardType(wildCard);
+    addRule(rule);
+    return rule;
+}
+
+std::shared_ptr<MegaIgnoreExtensionRule> MegaIgnoreManager::addExtensionRule(MegaIgnoreNameRule::Class classType, const QString& pattern)
+{
+    auto rule = std::make_shared<MegaIgnoreExtensionRule>(classType, pattern);
     addRule(rule);
     return rule;
 }
@@ -329,9 +358,61 @@ void MegaIgnoreManager::setOutputIgnorePath(const QString& outputPath)
     mOutputMegaIgnoreFile = outputPath;
 }
 
+void MegaIgnoreManager::setInputDirPath(const QString& inputDirPath, bool createDefaultIfNotExist)
+{
+    const auto ignorePath(inputDirPath + QDir::separator() + QString::fromUtf8(MEGA_IGNORE_FILE_NAME));
+    mOutputMegaIgnoreFile = ignorePath;
+    mMegaIgnoreFile = ignorePath;
+    if (createDefaultIfNotExist && !QFile::exists(ignorePath))
+    {
+        mMegaIgnoreFile = Preferences::instance()->getDataPath() + QDir::separator() + QString::fromUtf8(MEGA_IGNORE_DEFAULT_FILE_NAME);
+    }
+    parseIgnoresFile();
+}
+
 bool MegaIgnoreManager::hasChanged() const
 {
     std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
     auto IgnoreCRC = QString::fromUtf8(crc.get());
     return mIgnoreCRC.compare(IgnoreCRC) != 0;
+}
+
+int MegaIgnoreManager::getNameRulesCount() const
+{
+    return mNameRules.size();
+}
+
+void MegaIgnoreManager::removeRule(std::shared_ptr<MegaIgnoreRule> rule)
+{
+
+    if (auto extenstionRule = std::dynamic_pointer_cast<MegaIgnoreExtensionRule>(rule))
+    {
+
+        mExtensionRules.remove(extenstionRule->extension());
+    }
+    if(rule->ruleType() == MegaIgnoreNameRule::NAMERULE || rule->ruleType() == MegaIgnoreNameRule::EXTENSIONRULE)
+    {
+        auto it = std::find_if(mNameRules.begin(),
+                               mNameRules.end(),
+                               [&](const std::shared_ptr<MegaIgnoreRule> &listRule) {
+                                   return listRule.get() == rule.get(); // Compare memory addresses
+                               });
+
+        if (it != mNameRules.end()) {
+            // Remove the shared_ptr from the list
+            mNameRules.erase(it);
+        }
+    }
+    rule->setDeleted(true);
+}
+
+void MegaIgnoreManager::restreDefaults()
+{
+    const auto defaultFilePath = Preferences::instance()->getDataPath() + QDir::separator()
+        + QString::fromUtf8(MEGA_IGNORE_DEFAULT_FILE_NAME);
+    if (QFile::exists(mOutputMegaIgnoreFile))
+    {
+        QFile::remove(mOutputMegaIgnoreFile);
+    }
+    QFile::copy(defaultFilePath, mOutputMegaIgnoreFile);
 }

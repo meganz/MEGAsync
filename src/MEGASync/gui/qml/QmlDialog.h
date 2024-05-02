@@ -15,7 +15,8 @@ public:
 signals:
     void finished();
     void languageChanged();
-
+    void accepted();
+    void rejected();
 protected:
     bool event(QEvent* ) override;
 };
