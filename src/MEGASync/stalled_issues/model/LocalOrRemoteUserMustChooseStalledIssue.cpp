@@ -111,8 +111,9 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
             std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(info->parentHandle));
             if(parentNode)
             {
+                bool versionsDisabled(Preferences::instance()->fileVersioningDisabled());
                 StalledIssuesUtilities utilities;
-                if (utilities.removeRemoteFile(node.get()))
+                if (!versionsDisabled || utilities.removeRemoteFile(node.get()))
                 {
                     //Using appDataId == 0 means that there will be no notification for this upload
                     mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
