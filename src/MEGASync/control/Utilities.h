@@ -371,6 +371,7 @@ public:
     static bool isIncommingShare(mega::MegaNode* node);
 
     static bool dayHasChangedSince(qint64 msecs);
+    static bool monthHasChangedSince(qint64 msecs);
 
 private:
     Utilities() {}
