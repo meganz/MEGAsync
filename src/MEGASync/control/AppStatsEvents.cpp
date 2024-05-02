@@ -45,7 +45,29 @@ QHash<AppStatsEvents::EventTypes, const char*> AppStatsEvents::statsMap = {
     { AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE, "Advanced mode selected" },
     { AppStatsEvents::EVENT_SI_FINGERPRINT_MISSING_SOLVED_MANUALLY, "Cloud fingerprint missing solved manually" },
     { AppStatsEvents::EVENT_DAILY_ACTIVE_USER, "Daily Active Users (DAU) - acctype: %1" },
-    { AppStatsEvents::EVENT_MONTHLY_ACTIVE_USER, "Monthly Active Users (MAU) - acctype: %1" }
+    { AppStatsEvents::EVENT_MONTHLY_ACTIVE_USER, "Monthly Active Users (MAU) - acctype: %1" },
+    { AppStatsEvents::EVENT_LOGIN_CLICKED, "Log in clicked" },
+    { AppStatsEvents::EVENT_LOGOUT_CLICKED, "Log out clicked" },
+    { AppStatsEvents::EVENT_TRANSFER_TAB_CLICKED, "Transfer tab clicked" },
+    { AppStatsEvents::EVENT_NOTIFICATION_TAB_CLICKED, "Notification tab clicked" },
+    { AppStatsEvents::EVENT_NOTIFICATION_SETTINGS_CLICKED, "Show notification settings clicked" },
+    { AppStatsEvents::EVENT_UPGRADE_ACCOUNT_CLICKED, "Upgrade account clicked" },
+    { AppStatsEvents::EVENT_OPEN_TRANSFER_MANAGER_CLICKED, "Open transfer manager clicked" },
+    { AppStatsEvents::EVENT_ADD_SYNC_CLICKED, "Add sync clicked" },
+    { AppStatsEvents::EVENT_ADD_BACKUP_CLICKED, "Add backup clicked" },
+    { AppStatsEvents::EVENT_UPLOAD_CLICKED, "Upload clicked" },
+    { AppStatsEvents::EVENT_AVATAR_CLICKED, "Settings clicked (avatar)" },
+    { AppStatsEvents::EVENT_MENU_CLICKED, "Show options clicked" },
+    { AppStatsEvents::EVENT_MENU_ABOUT_CLICKED, "About clicked (menu)" },
+    { AppStatsEvents::EVENT_MENU_CLOUD_DRIVE_CLICKED, "Cloud drive clicked (menu)" },
+    { AppStatsEvents::EVENT_MENU_ADD_SYNC_CLICKED, "Add sync clicked (menu)" },
+    { AppStatsEvents::EVENT_MENU_ADD_BACKUP_CLICKED, "Add backup clicked (menu)" },
+    { AppStatsEvents::EVENT_MENU_OPEN_LINKS_CLICKED, "Open links clicked (menu)" },
+    { AppStatsEvents::EVENT_MENU_UPLOAD_CLICKED, "Upload clicked (menu)" },
+    { AppStatsEvents::EVENT_MENU_DOWNLOAD_CLICKED, "Download clicked (menu)" },
+    { AppStatsEvents::EVENT_MENU_STREAM_CLICKED, "Stream clicked (menu)" },
+    { AppStatsEvents::EVENT_MENU_SETTINGS_CLICKED, "Settings clicked (menu)" },
+    { AppStatsEvents::EVENT_MENU_EXIT_CLICKED, "Exit clicked (menu)" }
 };
 
 const char* AppStatsEvents::getEventMessage(EventTypes event)

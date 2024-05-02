@@ -1788,6 +1788,9 @@ void MegaApplication::tryExitApplication(bool force)
         return;
     }
 
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EVENT_MENU_EXIT_CLICKED,
+                                         sender(), exitAction, true);
+
     if (dontAskForExitConfirmation(force))
     {
         exitApplication();
@@ -2295,6 +2298,8 @@ void MegaApplication::onAboutClicked()
         return;
     }
 
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EVENT_MENU_ABOUT_CLICKED,
+                                         sender(), aboutAction, true);
     showChangeLog();
 }
 
@@ -3982,6 +3987,9 @@ void MegaApplication::goToMyCloud()
     const QString rootID(QString::fromUtf8(rootBase64Handle.get()));
     const QString url(QString::fromUtf8("fm/%1").arg(rootID));
     megaApi->getSessionTransferURL(url.toUtf8().constData());
+
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EVENT_MENU_CLOUD_DRIVE_CLICKED,
+                                         sender(), myCloudAction, true);
 }
 
 void MegaApplication::importLinks()
@@ -3990,6 +3998,9 @@ void MegaApplication::importLinks()
     {
         return;
     }
+
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EVENT_MENU_OPEN_LINKS_CLICKED,
+                                         sender(), importLinksAction, true);
 
     mTransferQuota->checkImportLinksAlertDismissed([this](int result){
         if(result == QDialog::Rejected)
@@ -4089,6 +4100,9 @@ void MegaApplication::uploadActionClicked()
         return;
     }
 
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EVENT_MENU_UPLOAD_CLICKED,
+                                         sender(), uploadAction, true);
+
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
     if(storageIsOverQuota)
     {
@@ -4172,6 +4186,9 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EVENT_MENU_DOWNLOAD_CLICKED,
+                                         sender(), downloadAction, true);
+
     mTransferQuota->checkDownloadAlertDismissed([this](int result)
     {
         if(result == QDialog::Rejected)
@@ -4206,6 +4223,9 @@ void MegaApplication::streamActionClicked()
     {
         return;
     }
+
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EVENT_MENU_STREAM_CLICKED,
+                                         sender(), streamAction, true);
 
     mTransferQuota->checkStreamingAlertDismissed([this](int result){
         if(result == QDialog::Rejected)
@@ -5131,6 +5151,9 @@ void MegaApplication::openSettings(int tab)
     {
         return;
     }
+
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EVENT_MENU_SETTINGS_CLICKED,
+                                         sender(), settingsAction, true);
 
     bool proxyOnly = true;
 

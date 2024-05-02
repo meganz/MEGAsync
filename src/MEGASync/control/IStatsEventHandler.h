@@ -17,9 +17,10 @@ public:
         : QObject(parent)
         , mMegaApi(megaApi)
         , mViewID(nullptr)
-        , mInfoDialogVisible(false)
         , mCurrentView(nullptr)
-        , updateViewID(true)
+        , mInfoDialogVisible(false)
+        , mUpdateViewID(true)
+        , mLastInfoDialogEventSent(true)
     {}
 
     virtual ~IStatsEventHandler() = default;
@@ -27,14 +28,22 @@ public:
     Q_INVOKABLE virtual void sendEvent(AppStatsEvents::EventTypes type,
                                        const QStringList& args = QStringList(),
                                        bool encode = false) = 0;
-    Q_INVOKABLE virtual void sendTrackedEvent(int type) = 0;
+
+    Q_INVOKABLE virtual void sendTrackedEvent(int type,
+                                              bool fromInfoDialog = false) = 0;
+
+    virtual void sendTrackedEvent(int type,
+                                  const QObject* senderObj,
+                                  const QObject* expectedObj,
+                                  bool fromInfoDialog = false) = 0;
 
 protected:
     mega::MegaApi* mMegaApi;
     const char* mViewID;
-    bool mInfoDialogVisible;
     QObject* mCurrentView;
-    bool updateViewID;
+    bool mInfoDialogVisible;
+    bool mUpdateViewID;
+    bool mLastInfoDialogEventSent;
 
     virtual void sendEvent(AppStatsEvents::EventTypes type,
                            const char* message,
@@ -49,8 +58,10 @@ protected:
             if(!MegaSyncApp->isInfoDialogVisible())
             {
                 mInfoDialogVisible = false;
-                mCurrentView = nullptr;
-                updateViewID = true;
+                mLastInfoDialogEventSent = false;
+                mUpdateViewID = true;
+                QString msg(QString::fromUtf8("Fertest : dialog hide"));
+                mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING, msg.toUtf8().constData());
             }
         }
         else
@@ -58,14 +69,17 @@ protected:
             if(!mInfoDialogVisible && MegaSyncApp->isInfoDialogVisible())
             {
                 mInfoDialogVisible = true;
-                updateViewID = true;
+                mUpdateViewID = true;
+                mLastInfoDialogEventSent = true;
+                QString msg(QString::fromUtf8("Fertest : dialog show"));
+                mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING, msg.toUtf8().constData());
             }
             else if(event->type() == QEvent::WindowActivate || event->type() == QEvent::FocusIn)
             {
                 if(mCurrentView != obj)
                 {
                     mCurrentView = obj;
-                    updateViewID = true;
+                    mUpdateViewID = true;
                 }
             }
         }

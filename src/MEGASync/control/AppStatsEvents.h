@@ -81,7 +81,29 @@ public:
         // (Stalled issues reserved)                       = 99564,
         // (Stalled issues reserved)                       = 99565,
         EVENT_DAILY_ACTIVE_USER                         = 99566,
-        EVENT_MONTHLY_ACTIVE_USER                       = 99567
+        EVENT_MONTHLY_ACTIVE_USER                       = 99567,
+        EVENT_LOGIN_CLICKED                             = 99568,
+        EVENT_LOGOUT_CLICKED                            = 99569,
+        EVENT_TRANSFER_TAB_CLICKED                      = 99570,
+        EVENT_NOTIFICATION_TAB_CLICKED                  = 99571,
+        EVENT_NOTIFICATION_SETTINGS_CLICKED             = 99572,
+        EVENT_UPGRADE_ACCOUNT_CLICKED                   = 99573,
+        EVENT_OPEN_TRANSFER_MANAGER_CLICKED             = 99574,
+        EVENT_ADD_SYNC_CLICKED                          = 99575,
+        EVENT_ADD_BACKUP_CLICKED                        = 99576,
+        EVENT_UPLOAD_CLICKED                            = 99577,
+        EVENT_AVATAR_CLICKED                            = 99578,
+        EVENT_MENU_CLICKED                              = 99579,
+        EVENT_MENU_ABOUT_CLICKED                        = 99580,
+        EVENT_MENU_CLOUD_DRIVE_CLICKED                  = 99581,
+        EVENT_MENU_ADD_SYNC_CLICKED                     = 99582,
+        EVENT_MENU_ADD_BACKUP_CLICKED                   = 99583,
+        EVENT_MENU_OPEN_LINKS_CLICKED                   = 99584,
+        EVENT_MENU_UPLOAD_CLICKED                       = 99585,
+        EVENT_MENU_DOWNLOAD_CLICKED                     = 99586,
+        EVENT_MENU_STREAM_CLICKED                       = 99587,
+        EVENT_MENU_SETTINGS_CLICKED                     = 99588,
+        EVENT_MENU_EXIT_CLICKED                         = 99589
     };
     Q_ENUM(EventTypes)
 

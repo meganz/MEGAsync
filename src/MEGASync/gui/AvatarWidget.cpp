@@ -2,6 +2,7 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 #include "UserAttributesRequests/Avatar.h"
+#include "IStatsEventHandler.h"
 
 #include <QLinearGradient>
 #include <QPainter>
@@ -67,6 +68,7 @@ void AvatarWidget::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
         MegaSyncApp->openSettings(SettingsDialog::ACCOUNT_TAB);
+        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_AVATAR_CLICKED, true);
     }
 }
 

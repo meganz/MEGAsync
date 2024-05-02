@@ -18,15 +18,41 @@ void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
     sendEvent(type, encode ? encodeMessage(message).constData() : message.toUtf8().constData());
 }
 
-void ProxyStatsEventHandler::sendTrackedEvent(int type)
+void ProxyStatsEventHandler::sendTrackedEvent(int type, bool fromInfoDialog)
 {
-    if(updateViewID)
+    if(mUpdateViewID)
     {
-        mViewID = mMegaApi->generateViewId();
-        updateViewID = false;
+        if(!fromInfoDialog || (fromInfoDialog && mLastInfoDialogEventSent))
+        {
+            mViewID = mMegaApi->generateViewId();
+            mUpdateViewID = false;
+            mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING, "Fertest : updateViewID required");
+        }
+        else if(fromInfoDialog && !mLastInfoDialogEventSent)
+        {
+            mLastInfoDialogEventSent = true;
+            QString msg(QString::fromUtf8("Fertest : sendTrackedEvent : mLastInfoDialogEventSent = true"));
+            mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING, msg.toUtf8().constData());
+        }
     }
 
-    sendEvent(type, AppStatsEvents::getEventMessage(type), true, mViewID);
+    QString msg(QString::fromUtf8("Fertest : updateViewID : "));
+    msg = msg + QString::fromUtf8(mViewID);
+    msg = msg + QString::fromUtf8(" - event type:  ");
+    msg = msg + QString::number(type);
+    mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING, msg.toUtf8().constData());
+    //sendEvent(type, AppStatsEvents::getEventMessage(type), true, mViewID);
+}
+
+void ProxyStatsEventHandler::sendTrackedEvent(int type,
+                                              const QObject* senderObj,
+                                              const QObject* expectedObj,
+                                              bool fromInfoDialog)
+{
+    if (senderObj != nullptr && senderObj == expectedObj)
+    {
+        sendTrackedEvent(type, fromInfoDialog);
+    }
 }
 
 void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,

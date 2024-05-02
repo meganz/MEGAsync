@@ -19,6 +19,7 @@
 #include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
+#include "IStatsEventHandler.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -1276,6 +1277,7 @@ void SettingsDialog::on_bStorageDetails_clicked()
 
 void SettingsDialog::on_bLogout_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_LOGOUT_CLICKED);
     QString text;
     bool haveSyncs (false);
     bool haveBackups (false);

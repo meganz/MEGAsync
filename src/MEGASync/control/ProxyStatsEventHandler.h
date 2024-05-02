@@ -13,7 +13,14 @@ public:
     Q_INVOKABLE void sendEvent(AppStatsEvents::EventTypes type,
                                const QStringList& args = QStringList(),
                                bool encode = false) override;
-    Q_INVOKABLE void sendTrackedEvent(int type) override;
+
+    Q_INVOKABLE void sendTrackedEvent(int type,
+                                      bool fromInfoDialog = false) override;
+
+    void sendTrackedEvent(int type,
+                          const QObject* senderObj,
+                          const QObject* expectedObj,
+                          bool fromInfoDialog = false) override;
 
 protected:
     void sendEvent(AppStatsEvents::EventTypes type,
