@@ -37,7 +37,7 @@ Rectangle {
         State {
             name: step1DeviceName
             PropertyChanges { target: step1_deviceName; toState: Step.ToStates.CURRENT; }
-            PropertyChanges { target: step2_line; color: ColorTheme.ButtonDisabled; }
+            PropertyChanges { target: step2_line; color: ColorTheme.buttonDisabled; }
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.DISABLED; }
             PropertyChanges { target: step3_line; visible: false; }
             PropertyChanges { target: step3_content; visible: false; }
@@ -61,7 +61,7 @@ Rectangle {
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
             PropertyChanges { target: step3_line; color: ColorTheme.buttonPrimary; visible: true; }
             PropertyChanges { target: step3_content; toState: SubStep.ToStates.CURRENT; visible: true; }
-            PropertyChanges { target: step4_line; color: ColorTheme.ButtonDisabled; visible: true; }
+            PropertyChanges { target: step4_line; color: ColorTheme.buttonDisabled; visible: true; }
             PropertyChanges { target: step4_content; toState: SubStep.ToStates.DISABLED; visible: true; }
         },
         State {

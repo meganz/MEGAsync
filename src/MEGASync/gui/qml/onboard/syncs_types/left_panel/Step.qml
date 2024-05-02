@@ -61,11 +61,11 @@ Item {
                     target: stepCircle;
                     color: "transparent";
                     border.width: 2;
-                    border.color: ColorTheme.ButtonDisabled;
+                    border.color: ColorTheme.buttonDisabled;
                 }
                 PropertyChanges { target: stepCircleImage; visible: false; }
-                PropertyChanges { target: stepCircleText; color: ColorTheme.ButtonDisabled; }
-                PropertyChanges { target: stepText; color: ColorTheme.ButtonDisabled; }
+                PropertyChanges { target: stepCircleText; color: ColorTheme.buttonDisabled; }
+                PropertyChanges { target: stepText; color: ColorTheme.buttonDisabled; }
             },
             State {
                 name: stepContent.stateCurrent

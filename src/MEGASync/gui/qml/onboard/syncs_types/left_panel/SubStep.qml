@@ -56,12 +56,12 @@ Item {
                 }
                 PropertyChanges {
                     target: stepCircleSmall;
-                    border.color: ColorTheme.ButtonDisabled;
+                    border.color: ColorTheme.buttonDisabled;
                     color: "transparent";
                     visible: true;
                 }
                 PropertyChanges { target: outlinedCircle; visible: false; }
-                PropertyChanges { target: stepText; color: ColorTheme.ButtonDisabled; }
+                PropertyChanges { target: stepText; color: ColorTheme.buttonDisabled; }
             },
             State {
                 name: substepContent.stateCurrent
@@ -144,7 +144,7 @@ Item {
 
                 border {
                     width: 2
-                    color: ColorTheme.ButtonDisabled
+                    color: ColorTheme.buttonDisabled
                 }
 
                 anchors.verticalCenter: parent.verticalCenter

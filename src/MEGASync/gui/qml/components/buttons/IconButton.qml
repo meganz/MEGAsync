@@ -7,9 +7,9 @@ Button {
 
     icons {
         colorEnabled: ColorTheme.buttonPrimary
-        colorDisabled: ColorTheme.ButtonDisabled
-        colorHovered: ColorTheme.ButtonHover
-        colorPressed: ColorTheme.ButtonPressed
+        colorDisabled: ColorTheme.buttonDisabled
+        colorHovered: ColorTheme.buttonHover
+        colorPressed: ColorTheme.buttonPressed
     }
 
     colors {

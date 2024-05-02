@@ -283,7 +283,7 @@ Qml.ScrollBar {
                 }
                 source: Images.arrowRight
                 sourceSize: Qt.size(iconSize, iconSize)
-                color: enabled ? ColorTheme.buttonPrimary : ColorTheme.ButtonDisabled
+                color: enabled ? ColorTheme.buttonPrimary : ColorTheme.buttonDisabled
                 rotation: buttonRotation
             }
         }
