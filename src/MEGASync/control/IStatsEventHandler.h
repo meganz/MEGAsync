@@ -24,10 +24,10 @@ public:
 
     virtual ~IStatsEventHandler() = default;
 
-    virtual void sendEvent(AppStatsEvents::EventTypes type,
-                           const QStringList& args = QStringList(),
-                           bool encode = false) = 0;
-    virtual void sendTrackEvent(AppStatsEvents::EventTypes type) = 0;
+    Q_INVOKABLE virtual void sendEvent(AppStatsEvents::EventTypes type,
+                                       const QStringList& args = QStringList(),
+                                       bool encode = false) = 0;
+    Q_INVOKABLE virtual void sendTrackedEvent(int type) = 0;
 
 protected:
     mega::MegaApi* mMegaApi;

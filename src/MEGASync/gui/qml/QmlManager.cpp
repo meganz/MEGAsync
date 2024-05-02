@@ -3,6 +3,7 @@
 #include "ApiEnums.h"
 #include "ColorTheme.h"
 #include "QmlClipboard.h"
+#include "AppStatsEvents.h"
 
 #include "LoginController.h"
 
@@ -46,6 +47,8 @@ void QmlManager::registerCommonQmlElements()
                                      QString::fromUtf8("Cannot create ApiEnums in QML"));
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController",
                                                 QString::fromUtf8("Cannot create WarningLevel in QML"));
+    qmlRegisterUncreatableType<AppStatsEvents>("AppStatsEvents", 1, 0, "EventTypes",
+                                               QString::fromUtf8("Cannot create WarningLevel in QML"));
 
     setRootContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, mEngine));
 }

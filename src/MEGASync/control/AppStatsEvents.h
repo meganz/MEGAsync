@@ -1,10 +1,13 @@
 #ifndef APPSTATSEVENTS_H
 #define APPSTATSEVENTS_H
 
+#include <QObject>
 #include <QHash>
 
-class AppStatsEvents
+class AppStatsEvents : public QObject
 {
+    Q_OBJECT
+
 public:
 
     // Event IDs sent to servers for statistics purpose.
@@ -80,6 +83,7 @@ public:
         EVENT_DAILY_ACTIVE_USER                         = 99566,
         EVENT_MONTHLY_ACTIVE_USER                       = 99567
     };
+    Q_ENUM(EventTypes)
 
     static const char* getEventMessage(EventTypes event);
 

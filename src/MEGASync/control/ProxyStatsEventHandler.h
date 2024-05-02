@@ -10,10 +10,10 @@ class ProxyStatsEventHandler : public IStatsEventHandler
 public:
     using IStatsEventHandler::IStatsEventHandler;
 
-    void sendEvent(AppStatsEvents::EventTypes type,
-                   const QStringList& args = QStringList(),
-                   bool encode = false) override;
-    void sendTrackedEvent(int type) override;
+    Q_INVOKABLE void sendEvent(AppStatsEvents::EventTypes type,
+                               const QStringList& args = QStringList(),
+                               bool encode = false) override;
+    Q_INVOKABLE void sendTrackedEvent(int type) override;
 
 protected:
     void sendEvent(AppStatsEvents::EventTypes type,

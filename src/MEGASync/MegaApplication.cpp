@@ -703,6 +703,7 @@ void MegaApplication::initialize()
     QmlManager::instance()->setRootContextProperty(mLogoutController);
 
     mStatsEventHandler = new ProxyStatsEventHandler(megaApi);
+    QmlManager::instance()->setRootContextProperty(mStatsEventHandler);
 
     //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
     //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
