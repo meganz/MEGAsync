@@ -61,7 +61,8 @@ void NameDuplicatedContainer::paintEvent(QPaintEvent*)
 //NAME CONFLICT
 NameConflict::NameConflict(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::NameConflict)
+    ui(new Ui::NameConflict),
+    mSolvedStatusAppliedToUi(false)
 {
     ui->setupUi(this);
 
@@ -165,47 +166,46 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         title->setIsFile(info->mIsFile);
         title->showIcon();
 
-        if(info->isSolved() != title->isSolved())
+        if(info->isSolved() && !mSolvedStatusAppliedToUi)
         {
-            bool isSolved(info->isSolved());
-            title->setSolved(isSolved);
-            if(isSolved)
+            title->setDisable(true);
+            title->hideActionButton(RENAME_ID);
+            title->hideActionButton(REMOVE_ID);
+
+            QIcon icon;
+            QString titleText;
+
+            if (info->mSolved == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE)
             {
-                title->hideActionButton(RENAME_ID);
-                title->hideActionButton(REMOVE_ID);
-
-                QIcon icon;
-                QString titleText;
-
-                if(info->mSolved ==  NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE)
-                {
-                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                    titleText = tr("Removed");
-                }
-                else if(info->mSolved ==  NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME)
-                {
-                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                    titleText = tr("Renamed to \"%1\"").arg(info->mRenameTo);
-                }
-                else if(info->mSolved ==  NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::MERGED)
-                {
-                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                    titleText = tr("Merged");
-                }
-                else if(info->mSolved ==  NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::CHANGED_EXTERNALLY)
-                {
-                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                    titleText = tr("Modified externally");
-                }
-                else
-                {
-                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                    titleText = tr("No action needed");
-                }
-
-                titleLayout->activate();
-                title->setMessage(titleText, icon.pixmap(24,24));
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
+                titleText = tr("Removed");
             }
+            else if (info->mSolved ==
+                     NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME)
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                titleText = tr("Renamed to \"%1\"").arg(info->mRenameTo);
+            }
+            else if (info->mSolved ==
+                     NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::MERGED)
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                titleText = tr("Merged");
+            }
+            else if (info->mSolved ==
+                     NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::CHANGED_EXTERNALLY)
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                titleText = tr("Modified externally");
+            }
+            else
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                titleText = tr("No action needed");
+            }
+
+            titleLayout->activate();
+            title->setMessage(titleText, icon.pixmap(16, 16));
         }
 
         allSolved &= info->isSolved();
@@ -229,7 +229,8 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
 
     if(allSolved)
     {
-        setDisabled();
+        mSolvedStatusAppliedToUi = true;
+        //setDisabled();
     }
 
     ui->nameConflicts->layout()->activate();
@@ -247,7 +248,7 @@ void NameConflict::initTitle(StalledIssueActionTitle* title, int index, const QS
 {
     title->setProperty(TITLE_FILENAME, conflictedName);
     title->setProperty(TITLE_INDEX, index);
-    title->setSolved(false);
+    title->setDisable(false);
 }
 
 void NameConflict::initActionButtons(StalledIssueActionTitle* title)
@@ -351,10 +352,6 @@ void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDeleg
 QString NameConflict::getConflictedName(std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info) const
 {
     return info->getConflictedName();
-}
-
-void NameConflict::setDisabled()
-{
 }
 
 void NameConflict::onActionClicked(int actionId)

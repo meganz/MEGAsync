@@ -43,8 +43,8 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
     ui->path->show();
     ui->path->updateUi(data);
 
-    if((side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE) !=
-        ui->chooseTitle->isSolved())
+    if(!isSolved() &&
+        side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
     {
         ui->chooseTitle->hideActionButton(StalledIssueChooseWidget::BUTTON_ID);
 
@@ -54,12 +54,12 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
             if(data->isCloud())
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->setMessage(tr("Chosen"), icon.pixmap(24,24));
+                ui->chooseTitle->setMessage(tr("Chosen"), icon.pixmap(16,16));
             }
             else
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(24,24));
+                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(16,16));
             }
         }
         else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
@@ -67,7 +67,7 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
             if(data->isCloud())
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(24,24));
+                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(16,16));
             }
             else
             {
@@ -85,7 +85,7 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
                 auto node(cloudData->getNode(true));
                 if(node)
                 {
-                    ui->chooseTitle->setMessage(tr("Renamed to %1").arg(QString::fromUtf8(node->getName())), icon.pixmap(24,24));
+                    ui->chooseTitle->setMessage(tr("Renamed to %1").arg(QString::fromUtf8(node->getName())), icon.pixmap(16,16));
                 }
             }
             else
@@ -118,9 +118,9 @@ void LocalStalledIssueChooseWidget::updateUi(LocalStalledIssueDataPtr localData,
 
     LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(localData,side);
 
-    if(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
+    if(!isSolved() && side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
     {
-        setChosen(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL);
+        setSolved(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL);
     }
 }
 
@@ -173,9 +173,9 @@ void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData,
 
     LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(cloudData, side);
 
-    if(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
+    if(!isSolved() && side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
     {
-        setChosen(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE);
+        setSolved(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE);
     }
 }
 

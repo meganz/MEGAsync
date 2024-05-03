@@ -40,7 +40,7 @@ public:
 
     QLabel* addExtraInfo(const QString& title, const QString& info, int level);
 
-    void setSolved(bool state);
+    void setDisable(bool state);
     bool isSolved() const;
 
     void setIsCloud(bool state);

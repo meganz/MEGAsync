@@ -231,7 +231,7 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
     {
         QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
         QString defaultSolveMessage(tr("Solved"));
-        showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(24,24));
+        showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16,16));
     }
     ui->multipleActionButton->hide();
 }

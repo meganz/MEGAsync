@@ -222,20 +222,31 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString& title, const QStrin
     return infoLabel;
 }
 
-void StalledIssueActionTitle::setSolved(bool state)
+void StalledIssueActionTitle::setDisable(bool state)
 {
     ui->backgroundWidget->setProperty(DISCARDED,state);
     setStyleSheet(styleSheet());
 
-    if(!ui->titleContainer->graphicsEffect() && !ui->extraInfoContainer->graphicsEffect())
+    if(state)
     {
-        mTitleDisableEffect = new QGraphicsOpacityEffect(this);
-        mTitleDisableEffect->setOpacity(0.3);
-        ui->titleContainer->setGraphicsEffect(mTitleDisableEffect);
+        if(!ui->titleContainer->graphicsEffect())
+        {
+            mTitleDisableEffect = new QGraphicsOpacityEffect(this);
+            mTitleDisableEffect->setOpacity(0.3);
+            ui->titleContainer->setGraphicsEffect(mTitleDisableEffect);
+        }
 
-        mExtraInfoDisableEffect = new QGraphicsOpacityEffect(this);
-        mExtraInfoDisableEffect->setOpacity(0.3);
-        ui->extraInfoContainer->setGraphicsEffect(mExtraInfoDisableEffect);
+        if(ui->extraInfoContainer->isVisible() && !ui->extraInfoContainer->graphicsEffect())
+        {
+            mExtraInfoDisableEffect = new QGraphicsOpacityEffect(this);
+            mExtraInfoDisableEffect->setOpacity(0.3);
+            ui->extraInfoContainer->setGraphicsEffect(mExtraInfoDisableEffect);
+        }
+    }
+    else
+    {
+        ui->titleContainer->setGraphicsEffect(nullptr);
+        ui->extraInfoContainer->setGraphicsEffect(nullptr);
     }
 }
 

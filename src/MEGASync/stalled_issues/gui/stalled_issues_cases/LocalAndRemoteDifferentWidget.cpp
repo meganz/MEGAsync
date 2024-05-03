@@ -103,7 +103,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
     if (issue->isSolved())
     {
-        ui->keepBothOption->setChosen(issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH);
+        ui->keepBothOption->setSolved(issue->getChosenSide() != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH);
         ui->keepLastModifiedOption->hide();
 
         if (issue->isPotentiallySolved())
