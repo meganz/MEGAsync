@@ -20,7 +20,7 @@ void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
 
 void ProxyStatsEventHandler::sendTrackedEvent(int type, bool fromInfoDialog)
 {
-    if(!megaApi)
+    if(!mMegaApi)
     {
         return;
     }
@@ -65,7 +65,7 @@ void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
                                        bool addJourneyId,
                                        const char* viewId)
 {
-    if(!megaApi || canSend())
+    if(!mMegaApi || !canSend())
     {
         return;
     }

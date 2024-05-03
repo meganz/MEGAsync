@@ -66,6 +66,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/Preferences/EncryptedSettings.cpp
     control/Preferences/EphemeralCredentials.cpp
     control/Preferences/Preferences.cpp
+    control/IStatsEventHandler.cpp
 )
 
 target_sources(MEGAsync
