@@ -402,6 +402,7 @@ public:
     void clearTempTransfersPath();
     void clearTemporalBandwidth();
     void clearAll();
+    void sync();
 
     enum {
         PROXY_TYPE_NONE = 0,
