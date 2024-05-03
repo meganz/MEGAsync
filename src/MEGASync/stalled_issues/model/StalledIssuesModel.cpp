@@ -1232,7 +1232,6 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
     SolveListInfo info(list, resolveIssue);
     info.finishFunc = finishIssue;
     solveListOfIssues(info);
-    solveListOfIssues(info);
 }
 
 void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index)
