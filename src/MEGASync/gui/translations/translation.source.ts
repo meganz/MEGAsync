@@ -3870,24 +3870,19 @@ You will not be able to regain access to your stored data or be authorised to re
         <translation type="unfinished">Problem syncing or backing up this folder because of changes to the MEGA folder. Stop the sync or backup and try setting it up again in Settings, or contact Support.</translation>
     </message>
     <message>
-        <source>Unable to move cloud nodes.</source>
-        <translatorcomment>SDK error to inform the user that the system couldn´t move the cloud nodes. CON-537</translatorcomment>
-        <translation type="unfinished">Renaming failed.</translation>
-    </message>
-    <message>
         <source>Unable to create initial ignore file.</source>
         <translatorcomment>SDK error to inform the user that the ignore file couldn´t be created. CON-537</translatorcomment>
-        <translation type="unfinished">Couldn't create a .megaignore file for this sync or backup.</translation>
+        <translation type="unfinished">Couldn&apos;t create a .megaignore file for this sync or backup.</translation>
     </message>
     <message>
         <source>Unable to read sync configs from disk.</source>
         <translatorcomment>SDK error to inform the user that megasync wasn´t able to read sync configuration files. CON-537</translatorcomment>
-        <translation type="unfinished">Couldn't read sync or backup configuration. Try again later or check folder permissions.</translation>
+        <translation type="unfinished">Couldn&apos;t read sync or backup configuration. Try again later or check folder permissions.</translation>
     </message>
     <message>
         <source>Unable to write sync configs to disk.</source>
         <translatorcomment>SDK error to inform the user that megasync wasn´t able to write sync configuration files. CON-537</translatorcomment>
-        <translation type="unfinished">Couldn't update sync or backup configuration. Try again later or check folder permissions.</translation>
+        <translation type="unfinished">Couldn&apos;t update sync or backup configuration. Try again later or check folder permissions.</translation>
     </message>
     <message>
         <source>Invalid scan interval specified.</source>
@@ -3897,7 +3892,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Filesystem notification subsystem unavailable.</source>
         <translatorcomment>SDK error indicating that the filesystem notification subsystem is not available. CON-537</translatorcomment>
-        <translation type="unfinished">Couldn't communicate with the folder location. Check the location is accessible and permissions for the folder location are granted.</translation>
+        <translation type="unfinished">Couldn&apos;t communicate with the folder location. Check the location is accessible and permissions for the folder location are granted.</translation>
     </message>
     <message>
         <source>Unable to add filesystem watch.</source>
@@ -3907,7 +3902,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Unable to retrieve sync root FSID.</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the sync root filesystem id. CON-537</translatorcomment>
-        <translation type="unfinished">Couldn't read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+        <translation type="unfinished">Couldn&apos;t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
     </message>
     <message>
         <source>Unable to open state cache database.</source>
@@ -3922,17 +3917,27 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Failure accessing to persistent storage</source>
         <translatorcomment>SDK error indicating that the access to persistent storage failed. CON-537</translatorcomment>
-        <translation type="unfinished">Couldn't read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+        <translation type="unfinished">Couldn&apos;t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
     </message>
     <message>
         <source>Unable to retrieve the ID of current device</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
-        <translation type="unfinished">Unable to create backup as the device you're backing up from doesn't have a name. Give your device a name and then try again. If issue continues, contact Support.</translation>
+        <translation type="unfinished">Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact Support.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
         <translatorcomment>SDK error indicating that it can´t retrieve filesystem id. CON-537</translatorcomment>
-        <translation type="unfinished">Couldn't read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+        <translation type="unfinished">Couldn&apos;t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+    </message>
+    <message>
+        <source>Unable to write sync config to disk.</source>
+        <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Backup source path not below drive path.</source>
+        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
