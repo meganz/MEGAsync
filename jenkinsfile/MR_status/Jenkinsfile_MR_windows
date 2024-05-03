@@ -176,9 +176,8 @@ pipeline {
                         timeout(time: 120, unit: 'MINUTES')
                     }
                     environment{
-                        MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
+                        MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
                         MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
-                        MEGA_THIRD_PARTY_DLL_DIR = "bin"
                     }
                     steps {
                         dir(windows_sources_workspace){
@@ -188,7 +187,7 @@ pipeline {
                                 set TMP=${Workspace}\\tmp
                                 set TEMP=${Workspace}\\tmp
                                 set TMPDIR=${Workspace}\\tmp   
-                                full_build_process.cmd ${env.ARCHITECTURE} nosign 2                     
+                                full_build_process.cmd ${env.ARCHITECTURE} 2
                             """
                         }
                     }
@@ -208,10 +207,9 @@ pipeline {
                                         ${JF_PATH}\\jf rt upload MEGAsyncSetup${arch}.exe ${ART_UPLOAD_PATH}
                                         cd ${buildDir}
                                         ${JF_PATH}\\jf rt upload MEGAsync.pdb ${ART_UPLOAD_PATH}
-                                        ${JF_PATH}\\jf rt upload Mega.pdb ${ART_UPLOAD_PATH}
+                                        ${JF_PATH}\\jf rt upload SDKlib.pdb ${ART_UPLOAD_PATH}
                                         ${JF_PATH}\\jf rt upload MEGAShellExt.pdb ${ART_UPLOAD_PATH}
                                         ${JF_PATH}\\jf rt upload MEGAupdater.pdb ${ART_UPLOAD_PATH}
-                                        ${JF_PATH}\\jf rt upload legacy.pdb ${ART_UPLOAD_PATH}
                                     """
                                 }
                                 if (env.ARCHITECTURE == "64") {
