@@ -21,7 +21,12 @@ public:
         , mInfoDialogVisible(false)
         , mUpdateViewID(true)
         , mLastInfoDialogEventSent(true)
-    {}
+    {
+        if(megaApi)
+        {
+            mViewID = mMegaApi->generateViewId();
+        }
+    }
 
     virtual ~IStatsEventHandler() = default;
 

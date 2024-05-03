@@ -20,6 +20,11 @@ void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
 
 void ProxyStatsEventHandler::sendTrackedEvent(int type, bool fromInfoDialog)
 {
+    if(!megaApi)
+    {
+        return;
+    }
+
     if(mUpdateViewID)
     {
         if(!fromInfoDialog || (fromInfoDialog && mLastInfoDialogEventSent))
@@ -60,17 +65,19 @@ void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
                                        bool addJourneyId,
                                        const char* viewId)
 {
-    if(canSend() && mMegaApi)
+    if(!megaApi || canSend())
     {
-        if(QString::fromUtf8(message).isEmpty())
-        {
-            mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING,
-                          "Trying to send an event with not valid message");
-        }
-        else
-        {
-            mMegaApi->sendEvent(type, message, addJourneyId, viewId);
-        }
+        return;
+    }
+
+    if(QString::fromUtf8(message).isEmpty())
+    {
+        mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING,
+                      "Trying to send an event with not valid message");
+    }
+    else
+    {
+        mMegaApi->sendEvent(type, message, addJourneyId, viewId);
     }
 }
 
