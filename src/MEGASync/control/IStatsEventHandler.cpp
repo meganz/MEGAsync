@@ -34,7 +34,9 @@ bool IStatsEventHandler::eventFilter(QObject *obj, QEvent *event)
             mUpdateViewID = true;
             mLastInfoDialogEventSent = true;
         }
-        else if(event->type() == QEvent::WindowActivate || event->type() == QEvent::FocusIn)
+        else if(event->type() == QEvent::WindowActivate
+                   || event->type() == QEvent::FocusIn
+                   || event->type() == QEvent::FocusOut)
         {
             if(mCurrentView != obj)
             {
