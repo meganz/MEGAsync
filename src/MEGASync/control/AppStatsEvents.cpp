@@ -67,7 +67,18 @@ QHash<AppStatsEvents::EventTypes, const char*> AppStatsEvents::statsMap = {
     { AppStatsEvents::EVENT_MENU_DOWNLOAD_CLICKED, "Download clicked (menu)" },
     { AppStatsEvents::EVENT_MENU_STREAM_CLICKED, "Stream clicked (menu)" },
     { AppStatsEvents::EVENT_MENU_SETTINGS_CLICKED, "Settings clicked (menu)" },
-    { AppStatsEvents::EVENT_MENU_EXIT_CLICKED, "Exit clicked (menu)" }
+    { AppStatsEvents::EVENT_MENU_EXIT_CLICKED, "Exit clicked (menu)" },
+    { AppStatsEvents::EVENT_SETTINGS_GENERAL_TAB_CLICKED, "Settings general tab clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_ACCOUNT_TAB_CLICKED, "Settings account tab clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_SYNC_TAB_CLICKED, "Settings sync tab clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_BACKUP_TAB_CLICKED, "Settings backup tab clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_SECURITY_TAB_CLICKED, "Settings security tab clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_FOLDERS_TAB_CLICKED, "Settings folders tab clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_NETWORK_TAB_CLICKED, "Settings network tab clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_NOTIFICATIONS_TAB_CLICKED, "Settings notifications tab clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_EXPORT_KEY_CLICKED, "Settings export key clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_CHANGE_PASSWORD_CLICKED, "Settings change password clicked" },
+    { AppStatsEvents::EVENT_SETTINGS_REPORT_ISSUE_CLICKED, "Settings report issue clicked" }
 };
 
 const char* AppStatsEvents::getEventMessage(EventTypes event)

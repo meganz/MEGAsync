@@ -11,6 +11,9 @@ class AppStatsEvents : public QObject
 public:
 
     // Event IDs sent to servers for statistics purpose.
+    // MEGA Desktop App ranges:
+    //   [99500, 99599]
+    //   [600000, 699999]
     enum EventTypes
     {
         NONE                                            = 0,
@@ -103,7 +106,18 @@ public:
         EVENT_MENU_DOWNLOAD_CLICKED                     = 99586,
         EVENT_MENU_STREAM_CLICKED                       = 99587,
         EVENT_MENU_SETTINGS_CLICKED                     = 99588,
-        EVENT_MENU_EXIT_CLICKED                         = 99589
+        EVENT_MENU_EXIT_CLICKED                         = 99589,
+        EVENT_SETTINGS_GENERAL_TAB_CLICKED              = 99590,
+        EVENT_SETTINGS_ACCOUNT_TAB_CLICKED              = 99591,
+        EVENT_SETTINGS_SYNC_TAB_CLICKED                 = 99592,
+        EVENT_SETTINGS_BACKUP_TAB_CLICKED               = 99593,
+        EVENT_SETTINGS_SECURITY_TAB_CLICKED             = 99594,
+        EVENT_SETTINGS_FOLDERS_TAB_CLICKED              = 99595,
+        EVENT_SETTINGS_NETWORK_TAB_CLICKED              = 99596,
+        EVENT_SETTINGS_NOTIFICATIONS_TAB_CLICKED        = 99597,
+        EVENT_SETTINGS_EXPORT_KEY_CLICKED               = 99598,
+        EVENT_SETTINGS_CHANGE_PASSWORD_CLICKED          = 99599,
+        EVENT_SETTINGS_REPORT_ISSUE_CLICKED             = 600000
     };
     Q_ENUM(EventTypes)
 
