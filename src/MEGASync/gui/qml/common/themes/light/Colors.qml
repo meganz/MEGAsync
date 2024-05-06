@@ -2,7 +2,7 @@ import QtQuick 2.15
 
 QtObject {
 
-	readonly property color backgroundBlur: "#00000033"
+	readonly property color backgroundBlur: "#33000000"
 	readonly property color backgroundInverse: "#494A4D"
 	readonly property color borderDisabled: "#D8D9DB"
 	readonly property color borderInteractive: "#DD1405"
@@ -13,12 +13,12 @@ QtObject {
 	readonly property color buttonBrand: "#DD1405"
 	readonly property color buttonBrandHover: "#B61714"
 	readonly property color buttonBrandPressed: "#931715"
-	readonly property color buttonDisabled: "#0000001A"
+	readonly property color buttonDisabled: "#1A000000"
 	readonly property color buttonError: "#E31B57"
 	readonly property color buttonErrorHover: "#C0104A"
 	readonly property color buttonErrorPressed: "#A11045"
 	readonly property color buttonOutline: "#04101E"
-	readonly property color buttonOutlineBackgroundHover: "#0000000D"
+	readonly property color buttonOutlineBackgroundHover: "#0D000000"
 	readonly property color buttonOutlineHover: "#39424E"
 	readonly property color buttonOutlinePressed: "#535B65"
 	readonly property color buttonPrimary: "#04101E"

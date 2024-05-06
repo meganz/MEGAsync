@@ -8,8 +8,8 @@ Button {
     icons {
         colorEnabled: ColorTheme.buttonPrimary
         colorDisabled: ColorTheme.buttonDisabled
-        colorHovered: ColorTheme.buttonHover
-        colorPressed: ColorTheme.buttonPressed
+        colorHovered: ColorTheme.buttonPrimaryHover
+        colorPressed: ColorTheme.buttonPrimaryPressed
     }
 
     colors {

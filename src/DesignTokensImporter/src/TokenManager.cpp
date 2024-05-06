@@ -76,7 +76,17 @@ void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, 
 
             if (type == "color")
             {
-                coreData.insert(category, jValue.toString().remove(QChar('#')));
+                /*
+                 * Core color hex value format is #RRGGBBAA,
+                 * but we need to convert it to AARRGGBB.
+                */
+                QString coreColorHex = jValue.toString().remove(QChar('#'));
+                if (coreColorHex.length() == 8)
+                {
+                    coreColorHex = coreColorHex.right(2) + coreColorHex.left(6);
+                }
+
+                coreData.insert(category, coreColorHex);
             }
         }
     }
