@@ -780,8 +780,8 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Too many changes in account, local state invalid");
     QT_TRANSLATE_NOOP("MegaSyncError", "Session closed");
     QT_TRANSLATE_NOOP("MegaSyncError", "Undefined error");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Backup source path not below drive path);
-    QT_TRANSLATE_NOOP("MegaSyncError", "Unable to write sync config to disk);
+    QT_TRANSLATE_NOOP("MegaSyncError", "Backup source path not below drive path");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Unable to write sync config to disk");
     QT_TRANSLATE_NOOP("MegaSyncError", "Active sync same path");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unknown drive path.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Local filesystem mismatch");
@@ -797,7 +797,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Insufficient disk space.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Failure accessing to persistent storage");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to retrieve the ID of current device");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Mismatch on sync root FSID.);
+    QT_TRANSLATE_NOOP("MegaSyncError", "Mismatch on sync root FSID.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS");
     QT_TRANSLATE_NOOP("MegaSyncError", "Could not get the filesystem's ID.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to write sync config to disk.");
