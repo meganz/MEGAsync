@@ -399,6 +399,9 @@
         <file>images/tray_sync.ico</file>
         <file>images/upload_to_mega.png</file>
         <file>images/upload_to_mega@2x.png</file>
+        <file>images/help_ico.png</file>
+        <file>images/help_ico@2x.png</file>
+        <file>images/help_ico@3x.png</file>
         <file>translations/MEGASyncStrings_ar.qm</file>
         <file>translations/MEGASyncStrings_de.qm</file>
         <file>translations/MEGASyncStrings_en.qm</file>

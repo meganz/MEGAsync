@@ -83,7 +83,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/qml/ColorTheme.cpp \
     $$PWD/qml/QmlClipboard.cpp \
     $$PWD/qml/QmlDialog.cpp \
+    $$PWD/qml/QmlDialogManager.cpp \
     $$PWD/qml/QmlDialogWrapper.cpp \
+    $$PWD/qml/QmlManager.cpp \
     $$PWD/qml/StandardIconProvider.cpp \
     $$PWD/onboarding/ChooseFolder.cpp \
     $$PWD/onboarding/Onboarding.cpp \
@@ -177,8 +179,10 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/qml/ColorTheme.h \
     $$PWD/qml/QmlClipboard.h \
     $$PWD/qml/QmlDialog.h \
+    $$PWD/qml/QmlDialogManager.h \
     $$PWD/qml/QmlDialogWrapper.h \
     $$PWD/qml/ApiEnums.h \
+    $$PWD/qml/QmlManager.h \
     $$PWD/qml/StandardIconProvider.h \
     $$PWD/onboarding/ChooseFolder.h \
     $$PWD/onboarding/Onboarding.h \
@@ -218,7 +222,7 @@ win32 {
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
-                $$PWD/win/RemoteItemUI.ui \
+                $$PWD/win/RemoteItemUi.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
@@ -266,7 +270,7 @@ macx {
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/PSAwidget.ui \
-                $$PWD/macx/RemoteItemUI.ui\
+                $$PWD/macx/RemoteItemUi.ui\
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \

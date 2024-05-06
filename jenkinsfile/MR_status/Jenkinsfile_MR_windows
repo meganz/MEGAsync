@@ -127,18 +127,18 @@ pipeline {
                 timeout(time: 120, unit: 'MINUTES')
             }
             environment {
-                VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
-                MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64"
+                VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
+                MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
             }
             steps{
                 sh "echo ${params.SDK_BRANCH}"
                 sh "echo ${env.BUILD_OPTIONS}"
                 dir(windows_sources_workspace){
-                    sh "mkdir contrib\\\\cmake\\\\build_dir\\\\"
-                    sh "cmake ${env.BUILD_OPTIONS} -DCMAKE_GENERATOR_PLATFORM=x64 -DCMAKE_PREFIX_PATH='${MEGAQTPATH}' -DUSE_PREBUILT_3RDPARTY=0 -DUSE_THIRDPARTY_FROM_VCPKG=1 -DMega3rdPartyDir='${VCPKGPATH}' -S '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\ -B '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\build_dir\\\\"
-                    sh "cmake --build '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\build_dir\\\\ --config Debug --target MEGASync -j 1"
-                    sh "cmake --build '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\build_dir\\\\ --config Debug --target MEGAupdater -j 1"
-                    sh "cmake --build '${windows_sources_workspace}'\\\\contrib\\\\cmake\\\\build_dir\\\\ --config Debug --target MEGAShellExt -j 1"            
+                    sh "mkdir build_dir"
+                    sh "cmake ${env.BUILD_OPTIONS} -DCMAKE_GENERATOR_PLATFORM=x64 -DCMAKE_PREFIX_PATH='${MEGAQTPATH}' -DVCPKG_ROOT='${VCPKGPATH}' -S '${windows_sources_workspace}' -B '${windows_sources_workspace}'\\\\build_dir\\\\"
+                    sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAsync -j 1"
+                    sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAupdater -j 1"
+                    sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAShellExt -j 1"            
                 }
             }
             post{
@@ -177,12 +177,19 @@ pipeline {
                     }
                     environment{
                         MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
-                        MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
+                        MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
                         MEGA_THIRD_PARTY_DLL_DIR = "bin"
                     }
                     steps {
                         dir(windows_sources_workspace){
-                            bat "full_build_process.cmd ${env.ARCHITECTURE} nosign 2" //architecture can be 64 or 32/64
+                            bat """
+                                mkdir tmp
+                                set _MSPDBSRV_ENDPOINT_= ${BUILD_TAG}
+                                set TMP=${Workspace}\\tmp
+                                set TEMP=${Workspace}\\tmp
+                                set TMPDIR=${Workspace}\\tmp   
+                                full_build_process.cmd ${env.ARCHITECTURE} nosign 2                     
+                            """
                         }
                     }
                 }

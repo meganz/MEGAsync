@@ -14,7 +14,6 @@
 #include <QFutureWatcher>
 
 #include <memory>
-#include <QQmlEngine>
 
 #include "gui/TransferManager.h"
 #include "gui/InfoDialog.h"
@@ -34,6 +33,7 @@
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
 #include "control/Utilities.h"
+#include "control/SetManager.h"
 #include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
 #include "megaapi.h"
@@ -45,6 +45,9 @@
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
+#include "IStatsEventHandler.h"
+#include "qml/QmlManager.h"
+#include "qml/QmlDialogManager.h"
 
 class TransfersModel;
 class StalledIssuesModel;
@@ -118,7 +121,6 @@ public:
     void onReloadNeeded(mega::MegaApi* api) override;
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
-    virtual void onCheckDeferredPreferencesSync(bool timeout);
     void onGlobalSyncStateChangedImpl(mega::MegaApi* api, bool timeout);
 
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
@@ -131,7 +133,6 @@ public:
     void migrateSyncConfToSdk(QString email = QString());
 
     mega::MegaApi *getMegaApi() { return megaApi; }
-    QQmlEngine *qmlEngine() { return mEngine;}
     mega::MegaApi *getMegaApiFolders() { return megaApiFolders; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
@@ -174,6 +175,8 @@ public:
     void onLoginFinished();
     void onLogout();
 
+    IStatsEventHandler* getStatsEventHandler() const;
+
     MegaSyncLogger& getLogger() const;
     void pushToThreadPool(std::function<void()> functor);
 
@@ -203,13 +206,11 @@ public:
     void reloadSyncsInSettings();
 
     void raiseInfoDialog();
-    bool raiseGuestDialog();
-    void raiseOnboardingDialog();
-    void raiseOrHideInfoGuestDialog();
     bool isShellNotificationProcessingOngoing();
 
     QSystemTrayIcon* getTrayIcon();
     LoginController* getLoginController();
+    AccountStatusController* getAccountStatusController();
 
 signals:
     void startUpdaterThread();
@@ -235,8 +236,6 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
-    void openGuestDialog();
-    void openOnboardingDialog();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -249,6 +248,7 @@ public slots:
     void transferManagerActionClicked(int tab = 0);
     void logoutActionClicked();
     void processDownloads();
+    void processSetDownload(const QString& publicLink, const QList<mega::MegaHandle>& elementHandleList);
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
@@ -302,13 +302,17 @@ public slots:
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
+    void setDownloadFinished(const QString& setName,
+                             const QStringList& succeededDownloadedElements,
+                             const QStringList& failedDownloadedElements,
+                             const QString& destinationPath);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
     void onGlobalSyncStateChangedTimeout();
-    void onCheckDeferredPreferencesSyncTimeout();
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
+    void requestFetchSetFromLink(const QString& link);
 
 private slots:
     void openFolderPath(QString path);
@@ -326,6 +330,7 @@ protected slots:
     void onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog);
     void onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog>);
     void onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog> dialog);
+    void onDownloadSetFolderDialogFinished(QPointer<DownloadFromMegaDialog> dialog);
 
 protected:
     void createTrayIcon();
@@ -393,7 +398,6 @@ protected:
 #endif
 
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
-    std::unique_ptr<QTimer> onDeferredPreferencesSyncTimer;
     QTimer proExpirityTimer;
     int scanningAnimationIndex;
     QPointer<SettingsDialog> mSettingsDialog;
@@ -505,6 +509,11 @@ protected:
 
     bool mDisableGfx;
     StalledIssuesModel* mStalledIssuesModel;
+    IStatsEventHandler* mStatsEventHandler;
+
+    SetManager* mSetManager;
+    QString mLinkToPublicSet;
+    QList<mega::MegaHandle> mElementHandleList;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
@@ -597,12 +606,13 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
-    QQmlEngine* mEngine;
-
     void processUpgradeSecurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;
 
-    void registerCommonQMLElements();
+    bool hasDefaultDownloadFolder() const;
+    void showInfoDialogIfHTTPServerSender();
+
+    void sendPeriodicStats() const;
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
@@ -610,27 +620,7 @@ private slots:
 
 private:
     QFutureWatcher<NodeCount> mWatcher;
-};
 
-class DeferPreferencesSyncForScope
-{
-    // This class is provided as an easy way to avoid updating the preferences file so often that it becomes a performance issue
-    // eg. when 1000 transfers all have a temporary error callback at once.
-    // It causes sync() to set a flag instead of actually rewriting the file, and the app will start a timer
-    // to do the actual sync() in 100ms instead.   Any other sync() calls (that are also protected by this class) in the meantime are effectively skipped.
-    MegaApplication* app;
-
-public:
-    DeferPreferencesSyncForScope(MegaApplication* a) : app(a)
-    {
-        app->preferences->deferSyncs(true);
-    }
-
-    ~DeferPreferencesSyncForScope()
-    {
-        app->preferences->deferSyncs(false);
-        app->onCheckDeferredPreferencesSync(false);
-    }
 };
 
 #endif // MEGAAPPLICATION_H

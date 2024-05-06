@@ -50,6 +50,47 @@ FinishedTransferNotificationInfo TransferNotificationBuilder::buildNotification(
     return info;
 }
 
+QString TransferNotificationBuilder::getDownloadFailedTitle()
+{
+    return tr("Could not download");
+}
+
+QString TransferNotificationBuilder::getDownloadSomeFailedTitle()
+{
+    return tr("Download incomplete");
+}
+
+QString TransferNotificationBuilder::getDownloadSuccessTitle()
+{
+    return tr("Download complete");
+}
+
+QString TransferNotificationBuilder::getDownloadFailedText(int num, const QString& destPath)
+{
+    return tr("%n item couldn’t be downloaded to %1.", "", num).arg(destPath);
+}
+
+QString TransferNotificationBuilder::getSomeDownloadFailedText(int completed, int failed)
+{
+    QString successItems = tr("%n item downloaded", "", completed);
+    return tr("%1, but %n item couldn’t be downloaded.", "", failed).arg(successItems);
+}
+
+QString TransferNotificationBuilder::getDownloadSuccessText(int num, const QString& destPath)
+{
+    return tr("%n item downloaded to %1.", "", num).arg(destPath);
+}
+
+QString TransferNotificationBuilder::getSingleDownloadFailed(const QString& fileName, const QString& destPath)
+{
+    return QCoreApplication::translate("TransferNotificationBuilder_File", "%1 couldn’t be downloaded to %2.").arg(fileName, destPath);
+}
+
+QString TransferNotificationBuilder::getShowInFolderText()
+{
+    return tr("Show in folder");
+}
+
 QString TransferNotificationBuilder::buildUploadTitle()
 {
     if (data->allHaveFailed())
@@ -70,15 +111,15 @@ QString TransferNotificationBuilder::buildDownloadTitle()
 {
     if (data->allHaveFailed())
     {
-        return tr("Could not download");
+        return getDownloadFailedTitle();
     }
     else if (data->someHaveFailed())
     {
-        return tr("Download incomplete");
+        return getDownloadSomeFailedTitle();
     }
     else
     {
-        return tr("Download complete");
+        return getDownloadSuccessTitle();
     }
 }
 
@@ -172,7 +213,7 @@ QString TransferNotificationBuilder::buildSingleDownloadMessage(const QString &d
             }
             else
             {
-                return QCoreApplication::translate("TransferNotificationBuilder_File", "%1 couldn’t be downloaded to %2.").arg(id.name, destinationPath);
+                return getSingleDownloadFailed(id.name, destinationPath);
             }
         }
     }
@@ -203,7 +244,7 @@ QStringList TransferNotificationBuilder::buildSingleDownloadActions(const QStrin
     }
     else
     {
-        actions << tr("Show in folder") << tr("Open");
+        actions << getShowInFolderText() << tr("Open");
     }
 
     return actions;
@@ -287,7 +328,7 @@ QString TransferNotificationBuilder::buildMultipleDownloadMessage(const QString 
         }
         else
         {
-            message = tr("%n item couldn’t be downloaded to %1.", "", data->getTotalFiles() + data->getTotalEmptyFolders()).arg(destinationPath);
+            message = getDownloadFailedText(data->getTotalFiles() + data->getTotalEmptyFolders(), destinationPath);
         }
     }
     else
@@ -296,13 +337,11 @@ QString TransferNotificationBuilder::buildMultipleDownloadMessage(const QString 
         {
             auto completedItems = data->getFileTransfersOK() + data->getEmptyFolderTransfersOK();
             auto failedItems = data->getEmptyFolderTransfersFailed() + data->getFileTransfersFailed();
-
-            QString successItems = tr("%n item downloaded", "", completedItems);
-            message = tr("%1, but %n item couldn’t be downloaded.", "", failedItems).arg(successItems);
+            message = getSomeDownloadFailedText(completedItems, failedItems);
         }
         else
         {
-            message = tr("%n item downloaded to %1.", "", data->getFileTransfersOK() + data->getEmptyFolderTransfersOK()).arg(destinationPath);
+            message = getDownloadSuccessText(data->getFileTransfersOK() + data->getEmptyFolderTransfersOK(), destinationPath);
         }
     }
 
@@ -327,7 +366,7 @@ QStringList TransferNotificationBuilder::buildMultipleDownloadActions(const QStr
     }
     else if(data->someHaveFailed())
     {
-        actions << tr("Show in folder");
+        actions << getShowInFolderText();
 
         if(!data->isNonExistData() && MegaSyncApp->getMegaApi()->isLoggedIn())
         {
@@ -337,7 +376,7 @@ QStringList TransferNotificationBuilder::buildMultipleDownloadActions(const QStr
     }
     else
     {
-        actions << tr("Show in folder");
+        actions << getShowInFolderText();
     }
 
     return actions;

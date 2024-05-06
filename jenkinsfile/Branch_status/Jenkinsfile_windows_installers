@@ -4,6 +4,8 @@ pipeline {
     options { 
         buildDiscarder(logRotator(numToKeepStr: '25', daysToKeepStr: '30'))
         gitLabConnection('GitLabConnectionJenkins')
+        copyArtifactPermission('*');
+
     }
     parameters {
         booleanParam(name: 'IS_RELEASE_CANDIDATE', defaultValue: false, description: 'Is it a Release Candidate?')
@@ -67,7 +69,7 @@ pipeline {
             environment{
                 MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
                 //QT path is automatically changed to x86 with nsis when needed
-                MEGAQTPATH = "C:\\Qt\\Qt5.15.11\\5.15.11\\x64" 
+                MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
                 MEGA_THIRD_PARTY_DLL_DIR = "bin"
 
             }
@@ -117,6 +119,7 @@ pipeline {
                             script: "sed -nE 's/^#define VER_PRODUCTVERSION_STR\\s+\\\"([0-9]+\\.[0-9]+\\.[0-9]+).*/\\1/p' src\\MEGASync\\control\\Version.h",
                             returnStdout: true
                         ).trim()
+                        sh "echo $MEGASYNC_VERSION > version.txt"
                         if (params.ARCHITECTURE == "64") {
                             windows_artifactory_upload("MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/windows/", "built64", "64")
                         } else if (params.ARCHITECTURE == "32/64") {
@@ -124,6 +127,7 @@ pipeline {
                             windows_artifactory_upload("MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/windows/built32/", "built32", "32")
                         }
                     }
+                    archiveArtifacts artifacts: 'version.txt', onlyIfSuccessful: true
                 }
             }
             post {

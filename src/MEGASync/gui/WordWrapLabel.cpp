@@ -10,6 +10,8 @@
 
 #include <Utilities.h>
 
+const int MINIMUM_DOC_HEIGHT = 3;
+
 /**
  * THIS COMPONENT IS ONLY VALID WHEN THE LABEL HAS EXPANDING SIZE POLICY
  */
@@ -73,15 +75,20 @@ void WordWrapLabel::resetSizeLimits()
 
 void WordWrapLabel::setText(const QString& text)
 {
-    mText = text;
+    if (mText != text)
+    {
+        mText = text;
 
-    if (mFormat == Qt::PlainText)
-    {
-        QTextBrowser::setPlainText(mText);
-    }
-    else
-    {
-        QTextBrowser::setText(mText);
+        if (mFormat == Qt::PlainText)
+        {
+            QTextBrowser::setPlainText(mText);
+        }
+        else
+        {
+            QTextBrowser::setText(mText);
+        }
+
+        onAdaptHeight();
     }
 }
 
@@ -97,83 +104,102 @@ void WordWrapLabel::onAdaptHeight(bool parentConstrained)
         return;
     }
 
-    QTextLayout* textLayout = document()->firstBlock().layout();
-    if (!textLayout)
+    //Don´t do line counts if we don´t want it to be limited by height or number of lines
+    //This saves time as we don´t need the number of lines
+    if(mMaxLines < 0 && mMaxHeight < 0)
     {
-        return;
-    }
-
-    textLayout->beginLayout();
-
-    int processedStringLength(0);
-    int lineCounter(0);
-    int fontHeight = fontMetrics().lineSpacing();
-
-    //This while is break when a new line is invalid
-    //or we need to elide the last line
-    while (true)
-    {
-        //Check if this is the last line
-        if ((mMaxHeight > 0 && ((lineCounter + 1) * fontHeight) >= mMaxHeight) ||
-            (mMaxLines > 0 && (lineCounter + 1 == mMaxLines)) ||
-            (parentConstrained && ((lineCounter + 2) * fontHeight) * devicePixelRatio() >= visibleRegion().boundingRect().height()))
+        setLineWrapColumnOrWidth(lineWrapColumnOrWidth());
+        QSize docSize = document()->size().toSize();
+        if(docSize.isValid() && docSize.height() > MINIMUM_DOC_HEIGHT)
         {
-            auto modifiedText(mText);
-            auto textNotToElide(modifiedText.left(processedStringLength));
-            auto textToElide(modifiedText.remove(0, processedStringLength));
-            if (!textToElide.isEmpty())
+            if((docSize.height() + MINIMUM_DOC_HEIGHT) != (height()))
             {
-                auto elidedText(fontMetrics().elidedText(textToElide, Qt::ElideMiddle, width()));
-
-                //Elide line height
-                auto elideLine = textLayout->createLine();
-                if (!elideLine.isValid())
-                {
-                    break;
-                }
-                elideLine.setLineWidth(width());
-                lineCounter++;
-
-                elidedText.prepend(textNotToElide);
-
-                //QTextEdit::setText removes the textLayout so its important to not remove these lines
-                textLayout->endLayout();
-                textLayout = nullptr;
-
-                QTextBrowser::setText(elidedText);
-
-                if(elidedText != mText)
-                {
-                    setToolTip(stripHtmlTags(mText));
-                }
-
-                break;
+                setFixedHeight(docSize.height() + MINIMUM_DOC_HEIGHT);
+                qApp->postEvent(this, new QEvent(HeightAdapted));
             }
         }
-
-        auto line = textLayout->createLine();
-        if (!line.isValid())
+    }
+    //TODO check for names with \n
+    else
+    {
+        QTextLayout* textLayout = document()->firstBlock().layout();
+        if (!textLayout)
         {
-            break;
+            return;
         }
-        line.setLineWidth(width());
-        lineCounter++;
-        processedStringLength += line.textLength();
-    }
 
-    if (textLayout)
-    {
-        textLayout->endLayout();
-    }
+        textLayout->beginLayout();
 
-    setLineWrapColumnOrWidth(lineWrapColumnOrWidth());
+        int processedStringLength(0);
+        int lineCounter(0);
+        int fontHeight = fontMetrics().lineSpacing();
 
-    QSize docSize = document()->size().toSize();
-    int textHeight = lineCounter * fontHeight;
-    if (textHeight  != 0 && docSize.height() != height())
-    {
-        setFixedHeight(textHeight);
-        qApp->postEvent(this, new QEvent(HeightAdapted));
+        //This while is break when a new line is invalid
+        //or we need to elide the last line
+        while (true)
+        {
+            //Check if this is the last line
+            if ((mMaxHeight > 0 && ((lineCounter + 1) * fontHeight) >= mMaxHeight) ||
+                (mMaxLines > 0 && (lineCounter + 1 == mMaxLines)) ||
+                (parentConstrained && ((lineCounter + 2) * fontHeight) * devicePixelRatio() >= visibleRegion().boundingRect().height()))
+            {
+                auto modifiedText(mText);
+                auto textNotToElide(modifiedText.left(processedStringLength));
+                auto textToElide(modifiedText.remove(0, processedStringLength));
+                if (!textToElide.isEmpty())
+                {
+                    auto elidedText(fontMetrics().elidedText(textToElide, Qt::ElideMiddle, width()));
+
+                    //Elide line height
+                    auto elideLine = textLayout->createLine();
+                    if (!elideLine.isValid())
+                    {
+                        break;
+                    }
+                    elideLine.setLineWidth(width());
+                    lineCounter++;
+
+                    elidedText.prepend(textNotToElide);
+
+                    //QTextEdit::setText removes the textLayout so its important to not remove these lines
+                    textLayout->endLayout();
+                    textLayout = nullptr;
+
+                    QTextBrowser::setText(elidedText);
+
+                    if(elidedText != mText)
+                    {
+                        setToolTip(stripHtmlTags(mText));
+                    }
+
+                    break;
+                }
+            }
+
+            auto line = textLayout->createLine();
+            if (!line.isValid())
+            {
+                break;
+            }
+            line.setLineWidth(width());
+            lineCounter++;
+            processedStringLength += line.textLength();
+        }
+
+        if (textLayout)
+        {
+            textLayout->endLayout();
+        }
+
+        setLineWrapColumnOrWidth(lineWrapColumnOrWidth());
+
+        QSize docSize = document()->size().toSize();
+        int textHeight = lineCounter * fontHeight;
+        if (textHeight  != 0 && docSize.height() != height())
+        {
+            setFixedHeight(textHeight);
+            qApp->postEvent(this, new QEvent(HeightAdapted));
+        }
     }
 }
 
@@ -187,7 +213,10 @@ void WordWrapLabel::resizeEvent(QResizeEvent* event)
     updateGeometry();
 
     //Here we dont use the timer as we want to do it right now, and not in the following event loop
-    onAdaptHeight();
+    if(!mText.isEmpty())
+    {
+        onAdaptHeight();
+    }
 
 
     QTextBrowser::resizeEvent(event);

@@ -1,4 +1,5 @@
 #include "AccountInfoData.h"
+
 #include "MegaApplication.h"
 
 using namespace mega;
@@ -19,10 +20,10 @@ AccountInfoData::AccountInfoData(QObject *parent)
     mMegaApi->addGlobalListener(mGlobalListener.get());
 }
 
-AccountInfoData* AccountInfoData::instance(QQmlEngine* qmlEngine, QJSEngine*)
+AccountInfoData* AccountInfoData::instance(QQmlEngine* qmlEngine, QJSEngine* jsEngine)
 {
+    Q_UNUSED(jsEngine)
     AccountInfoData* accountInfoData = new AccountInfoData(qmlEngine);
-
     return accountInfoData;
 }
 

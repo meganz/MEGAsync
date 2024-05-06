@@ -3,8 +3,8 @@
 
 #include <QDialog>
 #include <QStringList>
+#include <QVector>
 #include "megaapi.h"
-#include "control/LinkProcessor.h"
 #include "control/Preferences/Preferences.h"
 
 namespace Ui {
@@ -18,13 +18,17 @@ class ImportMegaLinksDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportMegaLinksDialog(LinkProcessor* linkProcessor, QWidget *parent = 0);
+    explicit ImportMegaLinksDialog(const QStringList& linkList, QWidget *parent = 0);
     ~ImportMegaLinksDialog();
 
     bool shouldImport();
     bool shouldDownload();
     QString getImportPath();
     QString getDownloadPath();
+
+signals:
+    void linkSelected(int linkId, bool selected);
+    void onChangeEvent();
 
 private slots:
     void on_cDownload_clicked();
@@ -34,9 +38,13 @@ private slots:
     void on_bOk_clicked();
 
 public slots:
-    void onLinkInfoAvailable(int id);
     void onLinkInfoRequestFinish();
-    void onLinkStateChanged(int id, int state);
+    void onLinkStateChanged(int index, int state);
+    void onLinkInfoAvailable(int index,
+                             const QString& name,
+                             int status,
+                             long long size,
+                             bool isFolder);
 
 protected:
     void changeEvent(QEvent * event) override;
@@ -45,13 +53,13 @@ private:
     Ui::ImportMegaLinksDialog *ui;
     mega::MegaApi *mMegaApi;
     std::shared_ptr<Preferences> mPreferences;
-    LinkProcessor* mLinkProcessor;
     bool mFinished;
 
     bool mDownloadPathChangedByUser;
 
     bool mUseDefaultImportPath;
     bool mImportPathChangedByUser;
+    QVector<bool> mSelectedItems;
 
     void initUiAsLogged();
     void initUiAsUnlogged();
@@ -67,6 +75,8 @@ private:
 
     void updateDownloadPath();
     void updateImportPath(const QString& path = QString());
+
+    void setSelectedItem(int index, bool selected);
 };
 
 #endif // IMPORTMEGALINKSDIALOG_H

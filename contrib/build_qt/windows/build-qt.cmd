@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 
 SET MEGA_QT_MAJ_VER=5
 SET MEGA_QT_MIN_VER=15
-SET MEGA_QT_DOT_VER=11
+SET MEGA_QT_DOT_VER=13
 SET MEGA_QT_VER=%MEGA_QT_MAJ_VER%.%MEGA_QT_MIN_VER%.%MEGA_QT_DOT_VER%
 
 SET MEGA_PATCHES_DIR=%CD%\..\patches
@@ -12,7 +12,7 @@ SET MEGA_WORK_DIR=C:\Qt-build\%MEGA_QT_VER%
 mkdir %MEGA_WORK_DIR%
 cd %MEGA_WORK_DIR%
 
-git clone git://code.qt.io/qt/qt5.git Src
+git clone https://code.qt.io/qt/qt5.git Src
 cd Src
 git checkout v%MEGA_QT_VER%-lts-lgpl
 perl init-repository --module-subset=essential,qtwinextras,qtimageformats,qtquickcontrols,qtsvg,qtgraphicaleffects,qtdeclarative,qtquickcontrols2

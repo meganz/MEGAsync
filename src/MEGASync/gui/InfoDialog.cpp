@@ -105,11 +105,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     setUnseenNotifications(0);
 
-#if QT_VERSION > 0x050200
     QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
-#endif
+
     ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
 
@@ -438,14 +437,16 @@ void InfoDialog::setUsage()
                                      DEFAULT_MIN_PERCENTAGE)
                           : 0);
             ui->wCircularStorage->setValue(parts);
-            usedStorageString = QString::fromUtf8("%1 /%2")
-                    .arg(QString::fromUtf8("<span style='color:%1;"
-                                           "font-family: Lato;"
-                                           "text-decoration:none;'>%2</span>")
-                         .arg(usageColorS, Utilities::getSizeString(usedStorage)))
-                    .arg(QString::fromUtf8("<span style=' font-family: Lato;"
-                                           "text-decoration:none;'>&nbsp;%1</span>")
-                         .arg(Utilities::getSizeString(totalStorage)));
+
+            QString sepTemplate = Utilities::getTranslatedSeparatorTemplate();
+
+            QString usedStorageFormatted = QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
+                                               .arg(usageColorS, Utilities::getSizeString(usedStorage));
+
+            QString totalStorageFormatted = QString::fromUtf8("<span style='font-family: Lato; text-decoration:none;'>%1</span>")
+                                                .arg(Utilities::getSizeString(totalStorage));
+
+            usedStorageString = sepTemplate.arg(usedStorageFormatted, totalStorageFormatted);
         }
     }
 
@@ -522,15 +523,16 @@ void InfoDialog::setUsage()
                               : 0);
 
                 ui->wCircularQuota->setValue(parts);
-                usedTransferString = QString::fromUtf8("%1 /%2")
-                                     .arg(QString::fromUtf8("<span style='color:%1;"
-                                                            "font-family: Lato;"
-                                                            "text-decoration:none;'>%2</span>")
-                                          .arg(usageColor, Utilities::getSizeString(usedTransfer)),
-                                          QString::fromUtf8("<span style='font-family: Lato;"
-                                                            "text-decoration:none;"
-                                                            "'>&nbsp;%1</span>")
-                                          .arg(Utilities::getSizeString(totalTransfer)));
+
+                QString sepTemplate = Utilities::getTranslatedSeparatorTemplate();
+
+                QString usedTransferFormatted = QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
+                                                    .arg(usageColor, Utilities::getSizeString(usedTransfer));
+
+                QString totalTransferFormatted = QString::fromUtf8("<span style='font-family: Lato; text-decoration:none;'>%1</span>")
+                                                     .arg(Utilities::getSizeString(totalTransfer));
+
+                usedTransferString = sepTemplate.arg(usedTransferFormatted, totalTransferFormatted);
             }
         }
     }

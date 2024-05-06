@@ -277,7 +277,7 @@ int main(int argc, char *argv[])
                 base64stats.resize(base64stats.size() - 1);
             }
 
-            megaApi->sendEvent(AppStatsEvents::EVENT_INSTALL_STATS, base64stats.constData(), false, nullptr);
+            megaApi->sendEvent(AppStatsEvents::EVENT_UNINSTALL_STATS, base64stats.constData(), false, nullptr);
             Sleep(5000);
         }
 #endif
@@ -383,8 +383,7 @@ int main(int argc, char *argv[])
     }
 #endif
 
-#if defined(Q_OS_LINUX) && QT_VERSION >= 0x050C00
-    // Linux && Qt >= 5.12.0
+#if defined(Q_OS_LINUX)
     if (!(getenv("DO_NOT_UNSET_XDG_SESSION_TYPE")))
     {
         if ( getenv("XDG_SESSION_TYPE") && !strcmp(getenv("XDG_SESSION_TYPE"),"wayland") )
@@ -415,7 +414,6 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_LINUX)
-#if QT_VERSION >= 0x050000
     if (!(getenv("DO_NOT_UNSET_QT_QPA_PLATFORMTHEME")) && getenv("QT_QPA_PLATFORMTHEME"))
     {
         if (!unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
@@ -430,7 +428,6 @@ int main(int argc, char *argv[])
             //std::cerr <<  "Error unsetting SHLVL vble" << std::endl; //Fedora fails to unset this env var ... too verbose error
         }
     }
-#endif
     if (!(getenv("DO_NOT_SET_DESKTOP_SETTINGS_UNAWARE")))
     {
         QApplication::setDesktopSettingsAware(false);
@@ -471,7 +468,7 @@ int main(int argc, char *argv[])
     }
 #endif
 
-#if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
+#if defined(Q_OS_LINUX)
     for (const auto& screen : app.screens())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, ("Device pixel ratio on '" +
