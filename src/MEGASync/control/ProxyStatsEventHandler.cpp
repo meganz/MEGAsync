@@ -5,17 +5,18 @@
 
 #include <QProcessEnvironment>
 
-void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
+void ProxyStatsEventHandler::sendEvent(int type,
                                        const QStringList& args,
                                        bool encode)
 {
-    QString message(QString::fromUtf8(AppStatsEvents::getEventMessage(type)));
+    auto eventID = static_cast<AppStatsEvents::EventTypes>(type);
+    QString message(QString::fromUtf8(AppStatsEvents::getEventMessage(eventID)));
     for (const QString& arg : args)
     {
         message = message.arg(arg);
     }
 
-    sendEvent(type, encode ? encodeMessage(message).constData() : message.toUtf8().constData());
+    sendEvent(eventID, encode ? encodeMessage(message).constData() : message.toUtf8().constData());
 }
 
 void ProxyStatsEventHandler::sendTrackedEvent(int type, bool fromInfoDialog)
@@ -31,22 +32,15 @@ void ProxyStatsEventHandler::sendTrackedEvent(int type, bool fromInfoDialog)
         {
             mViewID = mMegaApi->generateViewId();
             mUpdateViewID = false;
-            mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING, "Fertest : updateViewID required");
         }
         else if(fromInfoDialog && !mLastInfoDialogEventSent)
         {
             mLastInfoDialogEventSent = true;
-            QString msg(QString::fromUtf8("Fertest : sendTrackedEvent : mLastInfoDialogEventSent = true"));
-            mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING, msg.toUtf8().constData());
         }
     }
 
-    QString msg(QString::fromUtf8("Fertest : updateViewID : "));
-    msg = msg + QString::fromUtf8(mViewID);
-    msg = msg + QString::fromUtf8(" - event type:  ");
-    msg = msg + QString::number(type);
-    mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING, msg.toUtf8().constData());
-    //sendEvent(type, AppStatsEvents::getEventMessage(type), true, mViewID);
+    auto eventID = static_cast<AppStatsEvents::EventTypes>(type);
+    sendEvent(eventID, AppStatsEvents::getEventMessage(eventID), true, mViewID);
 }
 
 void ProxyStatsEventHandler::sendTrackedEvent(int type,

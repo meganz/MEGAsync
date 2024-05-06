@@ -10,7 +10,7 @@ class ProxyStatsEventHandler : public IStatsEventHandler
 public:
     using IStatsEventHandler::IStatsEventHandler;
 
-    Q_INVOKABLE void sendEvent(AppStatsEvents::EventTypes type,
+    Q_INVOKABLE void sendEvent(int type,
                                const QStringList& args = QStringList(),
                                bool encode = false) override;
 

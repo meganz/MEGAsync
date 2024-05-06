@@ -1,6 +1,6 @@
 #include "IStatsEventHandler.h"
 
-IStatsEventHandler::IStatsEventHandler(mega::MegaApi *megaApi, QObject *parent)
+IStatsEventHandler::IStatsEventHandler(mega::MegaApi* megaApi, QObject* parent)
     : QObject(parent)
     , mMegaApi(megaApi)
     , mViewID(nullptr)
@@ -15,7 +15,7 @@ IStatsEventHandler::IStatsEventHandler(mega::MegaApi *megaApi, QObject *parent)
     }
 }
 
-bool IStatsEventHandler::eventFilter(QObject *obj, QEvent *event)
+bool IStatsEventHandler::eventFilter(QObject* obj, QEvent* event)
 {
     if(mInfoDialogVisible)
     {

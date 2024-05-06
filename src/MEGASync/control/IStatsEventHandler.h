@@ -17,7 +17,7 @@ public:
 
     virtual ~IStatsEventHandler() = default;
 
-    Q_INVOKABLE virtual void sendEvent(AppStatsEvents::EventTypes type,
+    Q_INVOKABLE virtual void sendEvent(int type,
                                        const QStringList& args = QStringList(),
                                        bool encode = false) = 0;
 
