@@ -1,22 +1,17 @@
 #!/bin/zsh -e
 
 Usage () {
-    echo "Usage: installer_mac.sh [[--arch [arm64|x86_64]] [--build | --build-cmake] | [--sign] | [--create-dmg] | [--notarize] | [--full-pkg | --full-pkg-cmake]]"
+    echo "Usage: installer_mac.sh [[--arch [arm64|x86_64]] [--build-cmake] | [--sign] | [--create-dmg] | [--notarize] | [--full-pkg-cmake]]"
     echo "    --arch [arm64|x86_64]  : Arch target. It will build for the host arch if not defined."
-    echo "    --build                : Builds the app and creates the bundle using qmake."
     echo "    --build-cmake          : Idem but using cmake"
     echo "    --sign                 : Sign the app"
     echo "    --create-dmg           : Create the dmg package"
     echo "    --notarize             : Notarize package against Apple systems."
-    echo "    --full-pkg             : Implies and overrides all the above using qmake"
     echo "    --full-pkg-cmake       : Idem but using cmake"
     echo ""
     echo "Environment variables needed to build:"
     echo "    MEGAQTPATH : Point it to a valid Qt installation path"
     echo "    VCPKGPATH : Point it to a directory containing a valid vcpkg installation"
-    echo ""
-    echo "Note: --build and --build-cmake are mutually exclusive."
-    echo "      --full-pkg and --full-pkg-cmake are mutually exclusive."
     echo ""
 }
 
@@ -30,14 +25,12 @@ VOLUME_NAME="Install MEGA"
 ID_BUNDLE=mega.mac
 MOUNTDIR=tmp
 RESOURCES=installer/macOS/resourcesDMG
-MSYNC_PREFIX=MEGASync/
-MUPDATER_PREFIX=MEGAUpdater/
+MSYNC_PREFIX="src/MEGASync/"
+MUPDATER_PREFIX="src/MEGAUpdater/"
 
 host_arch=`uname -m`
 target_arch=${host_arch}
-full_pkg=0
 full_pkg_cmake=0
-build=0
 build_cmake=0
 sign=0
 createdmg=0
@@ -57,13 +50,8 @@ while [ "$1" != "" ]; do
             target_arch="${1}"
             if [ "${target_arch}" != "arm64" ] && [ "${target_arch}" != "x86_64" ]; then Usage; echo "Error: Invalid arch value."; exit 1; fi
             ;;
-        --build )
-            build=1
-            if [ ${build_cmake} -eq 1 ]; then Usage; echo "Error: --build and --build-cmake are mutually exclusive."; exit 1; fi
-            ;;
         --build-cmake )
             build_cmake=1
-            if [ ${build} -eq 1 ]; then Usage; echo "Error: --build and --build-cmake are mutually exclusive."; exit 1; fi
             ;;
         --sign )
             sign=1
@@ -74,12 +62,7 @@ while [ "$1" != "" ]; do
         --notarize )
             notarize=1
             ;;
-        --full-pkg )
-            if [ ${full_pkg_cmake} -eq 1 ]; then Usage; echo "Error: --full-pkg and --full-pkg-cmake are mutually exclusive."; exit 1; fi
-            full_pkg=1
-            ;;
         --full-pkg-cmake )
-            if [ ${full_pkg} -eq 1 ]; then Usage; echo "Error: --full-pkg and --full-pkg-cmake are mutually exclusive."; exit 1; fi
             full_pkg_cmake=1
             ;;
         -h | --help )
@@ -94,29 +77,20 @@ while [ "$1" != "" ]; do
     shift
 done
 
-if [ ${full_pkg} -eq 1 ]; then
-    build=1
-    build_cmake=0
-    sign=1
-    createdmg=1
-    notarize=1
-fi
-
 if [ ${full_pkg_cmake} -eq 1 ]; then
-    build=0
     build_cmake=1
     sign=1
     createdmg=1
     notarize=1
 fi
 
-if [ ${build} -ne 1 -a ${build_cmake} -ne 1 -a ${sign} -ne 1 -a ${createdmg} -ne 1 -a ${notarize} -ne 1 ]; then
+if [ ${build_cmake} -ne 1 -a ${sign} -ne 1 -a ${createdmg} -ne 1 -a ${notarize} -ne 1 ]; then
    Usage
    echo "Error: No action selected. Nothing to do."
    exit 1
 fi
 
-if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
+if [ ${build_cmake} -eq 1 ]; then
     build_time_start=`date +%s`
 
     if [ -z "${MEGAQTPATH}" ] || [ ! -d "${MEGAQTPATH}/bin" ]; then
@@ -138,38 +112,21 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
         exit 1
     fi
 
-    if [ ${build_cmake} -ne 1 ]; then
-        CARES_VERSION=libcares.2.dylib
-        CURL_VERSION=libcurl.4.dylib
-
-        CARES_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CARES_VERSION
-        CURL_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CURL_VERSION
-    fi
-
     # Clean previous build
     rm -rf Release_${target_arch}
     mkdir Release_${target_arch}
     cd Release_${target_arch}
 
     # Build binaries
-    if [ ${build_cmake} -eq 1 ]; then
-        # Detect crosscompilation and set CMAKE_OSX_ARCHITECTURES.
-        if  [ "${target_arch}" != "${host_arch}" ]; then
-            CMAKE_EXTRA="-DCMAKE_OSX_ARCHITECTURES=${target_arch}"
-        fi
 
-        cmake -DVCPKG_ROOT=${VCPKGPATH} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DCMAKE_BUILD_TYPE=RelWithDebInfo ${CMAKE_EXTRA} -S ../
-        cmake --build ./ --target MEGAsync -j`sysctl -n hw.ncpu`
-        cmake --build ./ --target MEGAupdater -j`sysctl -n hw.ncpu`
-        MSYNC_PREFIX="src/MEGASync/"
-        MUPDATER_PREFIX="src/MEGAUpdater/"
-    else
-        # crosscompilation detection should be managed detecting the qmake taget and host arch in the project files.
-        cp ../src/MEGASync/mega/contrib/official_build_configs/macos/config.h ../src/MEGASync/mega/include/mega/config.h
-        ${MEGAQTPATH}/bin/lrelease ../src/MEGASync/MEGASync.pro
-        ${MEGAQTPATH}/bin/qmake "CONFIG += FULLREQUIREMENTS" "THIRDPARTY_VCPKG_BASE_PATH=${VCPKGPATH}" -r ../src -spec macx-clang CONFIG+=release -nocache
-        make -j`sysctl -n hw.ncpu`
+    # Detect crosscompilation and set CMAKE_OSX_ARCHITECTURES.
+    if  [ "${target_arch}" != "${host_arch}" ]; then
+        CMAKE_EXTRA="-DCMAKE_OSX_ARCHITECTURES=${target_arch}"
     fi
+
+    cmake -DVCPKG_ROOT=${VCPKGPATH} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DCMAKE_BUILD_TYPE=RelWithDebInfo ${CMAKE_EXTRA} -S ../
+    cmake --build ./ --target MEGAsync -j`sysctl -n hw.ncpu`
+    cmake --build ./ --target MEGAupdater -j`sysctl -n hw.ncpu`
 
     # Prepare bundle
     cp -R ${MSYNC_PREFIX}MEGAsync.app ${MSYNC_PREFIX}MEGAsync_orig.app
@@ -196,27 +153,9 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     cd ${MSYNC_PREFIX}MEGAsync.app
     find . -type l -exec bash -c 'echo $(readlink "$0") ; echo "$0";' {} \; >> ./Contents/Resources/mega.links
     popd
-
-    if [ ${build_cmake} -ne 1 ]; then
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ] && cp -L $CARES_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CURL_VERSION ] && cp -L $CURL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-
-        if [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ]  \
-            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CURL_VERSION ];
-        then
-            echo "Error copying libs to app bundle."
-            exit 1
-        fi
-    fi
-
-    
+ 
     MEGASYNC_VERSION=`grep -o -E '#define VER_PRODUCTVERSION_STR\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+\.\d+\.\d+'`
     /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "${MSYNC_PREFIX}$APP_NAME.app/Contents/Info.plist"
-
-    if [ ${build_cmake} -ne 1 ]; then
-        rm -r $APP_NAME.app || :
-        mv $MSYNC_PREFIX/$APP_NAME.app ./
-    fi
 
     pushd .
     cd ${MSYNC_PREFIX}MEGAsync.app
@@ -318,7 +257,7 @@ if [ "$notarize" = "1" ]; then
 fi
 
 echo ""
-if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then echo "Build:        ${build_time} s"; fi
+if [ ${build_cmake} -eq 1 ]; then echo "Build:        ${build_time} s"; fi
 if [ ${sign} -eq 1 ]; then echo "Sign:         ${sign_time} s"; fi
 if [ ${createdmg} -eq 1 ]; then echo "dmg:          ${dmg_time} s"; fi
 if [ ${notarize} -eq 1 ]; then echo "Notarization: ${notarize_time} s"; fi
