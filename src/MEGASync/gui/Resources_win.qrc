@@ -1518,5 +1518,7 @@
         <file>images/copy.png</file>
         <file>images/copy@2x.png</file>
         <file>images/copy@3x.png</file>
+        <file>themes/win/dark/SettingsDialog.css</file>
+        <file>themes/win/light/SettingsDialog.css</file>
     </qresource>
 </RCC>

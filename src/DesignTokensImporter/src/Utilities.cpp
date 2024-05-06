@@ -15,7 +15,7 @@
 
 namespace DTI
 {
-static const QString COLOUR_TOKEN_START = QString::fromLatin1("--color-");
+static const QString COLOUR_TOKEN_START = QString::fromLatin1("color-");
 static const qint64 FILE_READ_BUFFER_SIZE = 8192;
 
 //!
@@ -153,8 +153,12 @@ QMap<QString, QString> Utilities::parseColorTheme(const QJsonObject& jsonThemeOb
                         //QString color = "#" + alphaString + coreColor;
                         QString color = "#" + coreColor;
 
-                        // Strip "--color-" from beginning of token
-                        colourMap.insert(token.mid(COLOUR_TOKEN_START.size()), color);
+                        // Strip "--color-" or "-color-" from beginning of token
+                        int indexPrefix = token.indexOf(COLOUR_TOKEN_START);
+                        if (indexPrefix != -1)
+                        {
+                            colourMap.insert(token.mid(indexPrefix + COLOUR_TOKEN_START.size()), color);
+                        }
                     }
                     else
                     {

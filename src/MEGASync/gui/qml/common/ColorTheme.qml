@@ -35,27 +35,15 @@ Item {
 	readonly property color buttonSecondary: loader.item.buttonSecondary
 	readonly property color buttonSecondaryHover: loader.item.buttonSecondaryHover
 	readonly property color buttonSecondaryPressed: loader.item.buttonSecondaryPressed
-	readonly property color divider: loader.item.divider
-	readonly property color extInverse: loader.item.extInverse
 	readonly property color focusColor: loader.item.focusColor
 	readonly property color iconAccent: loader.item.iconAccent
-	readonly property color iconButton: loader.item.iconButton
-	readonly property color iconButtonDisabled: loader.item.iconButtonDisabled
-	readonly property color iconButtonHover: loader.item.iconButtonHover
-	readonly property color iconButtonPressed: loader.item.iconButtonPressed
-	readonly property color iconButtonPressedBackground: loader.item.iconButtonPressedBackground
 	readonly property color iconDisabled: loader.item.iconDisabled
 	readonly property color iconInverse: loader.item.iconInverse
 	readonly property color iconInverseAccent: loader.item.iconInverseAccent
-	readonly property color iconInverseAccentHover: loader.item.iconInverseAccentHover
-	readonly property color iconInverseAccentPlaceholder: loader.item.iconInverseAccentPlaceholder
-	readonly property color iconInverseAccentPress: loader.item.iconInverseAccentPress
 	readonly property color iconOnColor: loader.item.iconOnColor
 	readonly property color iconOnColorDisabled: loader.item.iconOnColorDisabled
-	readonly property color iconPlaceholder: loader.item.iconPlaceholder
 	readonly property color iconPrimary: loader.item.iconPrimary
 	readonly property color iconSecondary: loader.item.iconSecondary
-	readonly property color indicatorBackground: loader.item.indicatorBackground
 	readonly property color indicatorBlue: loader.item.indicatorBlue
 	readonly property color indicatorGreen: loader.item.indicatorGreen
 	readonly property color indicatorIndigo: loader.item.indicatorIndigo
@@ -86,9 +74,6 @@ Item {
 	readonly property color textInfo: loader.item.textInfo
 	readonly property color textInverse: loader.item.textInverse
 	readonly property color textInverseAccent: loader.item.textInverseAccent
-	readonly property color textInverseAccentHover: loader.item.textInverseAccentHover
-	readonly property color textInverseAccentPlaceholder: loader.item.textInverseAccentPlaceholder
-	readonly property color textInverseAccentPress: loader.item.textInverseAccentPress
 	readonly property color textOnColor: loader.item.textOnColor
 	readonly property color textOnColorDisabled: loader.item.textOnColorDisabled
 	readonly property color textPlaceholder: loader.item.textPlaceholder

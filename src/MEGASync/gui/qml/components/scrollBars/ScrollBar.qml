@@ -221,7 +221,7 @@ Qml.ScrollBar {
             height: direction === ScrollBar.Direction.VERTICAL ? backgroundContentHeight : 2
             width: direction === ScrollBar.Direction.VERTICAL ? 2 : backgroundContentWidth
             radius: scrollBarRadius
-            color: ColorTheme.iconButton
+            color: ColorTheme.buttonPrimary
             opacity: scrollBarBackgroundOpacity
         }
 
@@ -283,7 +283,7 @@ Qml.ScrollBar {
                 }
                 source: Images.arrowRight
                 sourceSize: Qt.size(iconSize, iconSize)
-                color: enabled ? ColorTheme.iconButton : ColorTheme.iconButtonDisabled
+                color: enabled ? ColorTheme.buttonPrimary : ColorTheme.buttonDisabled
                 rotation: buttonRotation
             }
         }
