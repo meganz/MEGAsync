@@ -725,11 +725,13 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
     {
         case mega::MegaSync::TYPE_TWOWAY:
         {
+            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_MENU_ADD_SYNC_CLICKED, true);
             addSync(INVALID_HANDLE);
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
         {
+            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_MENU_ADD_BACKUP_CLICKED, true);
             addBackup();
             break;
         }
