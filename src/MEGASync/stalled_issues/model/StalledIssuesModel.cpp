@@ -10,8 +10,8 @@
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
+#include <AutoRefreshStalledIssuesByCondition.h>
 #include <syncs/control/MegaIgnoreManager.h>
-#include <StalledIssuesFactory.h>
 
 #include <QSortFilterProxyModel>
 
@@ -27,13 +27,13 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
         mStalledIssues.clear();
         IgnoredStalledIssue::clearIgnoredSyncs();
 
-        StalledIssuesCreator factory(mIsEventRequest);
-        connect(&factory, &StalledIssuesCreator::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
-        factory.createIssues(request->getMegaSyncStallList());
-        mStalledIssues = factory.issues();
+        connect(&mIssueCreator, &StalledIssuesCreator::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
+        connect(&mIssueCreator, &StalledIssuesCreator::moveOrRenameCannotOccurFound, this, &StalledIssuesReceiver::moveOrRenameCannotOccurFound);
 
-        StalledIssuesBySyncFilter filter;
-        filter.resetFilter();
+        mIssueCreator.createIssues(request->getMegaSyncStallList(), mAutoRefreshDetector);
+        mStalledIssues = mIssueCreator.issues();
+
+        StalledIssuesBySyncFilter::resetFilter();
 
         if(mIsEventRequest)
         {
@@ -43,36 +43,50 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
         {
             emit stalledIssuesReady(mStalledIssues);
         }
+
+        if (mAutoRefreshDetector)
+        {
+            if (mAutoRefreshDetector->needsAutoRefresh())
+            {
+                mAutoRefreshDetector->refresh();
+            }
+            else if (mAutoRefreshDetector->hasExpired())
+            {
+                mAutoRefreshDetector->remove();
+            }
+        }
     }
 }
 
 void StalledIssuesReceiver::onSetIsEventRequest()
 {
-    mIsEventRequest = true;
+    QMutexLocker lock(&mCacheMutex);
+    mIssueCreator.setIsEventRequest(mIsEventRequest);
 }
 
 const int StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE = Qt::UserRole;
 const int EVENT_REQUEST_DELAY = 600000; /*10 minutes*/
-const char* FILEWATCHER_ROW = "FILEWATCHER_ROW";
+const int MOVE_OR_RENAME_REQUEST_FREQUENCY = 5000; /*5 seconds*/
+const int MOVE_OR_RENAME_REQUEST_THRESHOLD = 15000; /*15 seconds*/
 
 StalledIssuesModel::StalledIssuesModel(QObject* parent)
-    : QAbstractItemModel(parent),
-    mMegaApi (MegaSyncApp->getMegaApi()),
-    mRawInfoVisible(false),
-    mIsStalled(false)
+    : QAbstractItemModel(parent)
+    , mMegaApi(MegaSyncApp->getMegaApi())
+    , mIsStalled(false)
+    , mRawInfoVisible(false)
 {
     mStalledIssuesThread = new QThread();
-    mStalledIssuedReceiver = new StalledIssuesReceiver();
+    mStalledIssuesReceiver = new StalledIssuesReceiver();
 
-    mRequestListener = new mega::QTMegaRequestListener(mMegaApi, mStalledIssuedReceiver);
-    mStalledIssuedReceiver->moveToThread(mStalledIssuesThread);
+    mRequestListener = new mega::QTMegaRequestListener(mMegaApi, mStalledIssuesReceiver);
+    mStalledIssuesReceiver->moveToThread(mStalledIssuesThread);
     mRequestListener->moveToThread(mStalledIssuesThread);
     mMegaApi->addRequestListener(mRequestListener);
 
     mGlobalListener = new mega::QTMegaGlobalListener(mMegaApi,this);
     mMegaApi->addGlobalListener(mGlobalListener);
 
-    connect(mStalledIssuedReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](int issueCounter, int totalIssues)
+    connect(mStalledIssuesReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](int issueCounter, int totalIssues)
     {
         auto info = std::make_shared<MessageInfo>();
         info->message = tr("Processing issues");
@@ -85,10 +99,10 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent)
     mStalledIssuesThread->start();
 
     connect(this, &StalledIssuesModel::setIsEventRequest,
-            mStalledIssuedReceiver, &StalledIssuesReceiver::onSetIsEventRequest,
+            mStalledIssuesReceiver, &StalledIssuesReceiver::onSetIsEventRequest,
             Qt::QueuedConnection);
 
-    connect(mStalledIssuedReceiver, &StalledIssuesReceiver::stalledIssuesReady,
+    connect(mStalledIssuesReceiver, &StalledIssuesReceiver::stalledIssuesReady,
             this, &StalledIssuesModel::onProcessStalledIssues,
             Qt::QueuedConnection);
 
@@ -123,7 +137,7 @@ StalledIssuesModel::~StalledIssuesModel()
     mThreadFinished = true;
 
     mStalledIssuesThread->quit();
-    mStalledIssuedReceiver->deleteLater();
+    mStalledIssuesReceiver->deleteLater();
 }
 
 void StalledIssuesModel::onProcessStalledIssues(StalledIssuesVariantList issuesReceived)
@@ -133,7 +147,7 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesVariantList issuesR
         mEventTimer.start(EVENT_REQUEST_DELAY);
     }
 
-    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, issuesReceived]()
+    Utilities::queueFunctionInObjectThread(mStalledIssuesReceiver, [this, issuesReceived]()
     {
         reset();
         mModelMutex.lockForWrite();
@@ -251,7 +265,7 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
     if(nodes)
     {
         mega::MegaNodeList* copiedNodes(nodes->copy());
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, copiedNodes]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuesReceiver, [this, copiedNodes]()
         {
             for (int i = 0; i < copiedNodes->size(); i++)
             {
@@ -675,7 +689,7 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
 void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 {
     startSolvingIssues();
-    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, info]()
+    Utilities::queueFunctionInObjectThread(mStalledIssuesReceiver, [this, info]()
     {
        if(info.startFunc)
        {
@@ -795,7 +809,7 @@ void StalledIssuesModel::solveAllIssues()
     auto resolveIssue = [this](int row) -> bool
     {
         auto item = mStalledIssues.at(row);
-        if(item.consultData()->isSolvable())
+        if(item.consultData()->isAutoSolvable())
         {
             return item.getData()->autoSolveIssue();
         }
@@ -1147,11 +1161,16 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, MoveOrRenameCannotOccurIssue::ChosenSide side)
+void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, MoveOrRenameIssueChosenSide side)
 {
     auto resolveIssue = [this, side](int row) -> bool
     {
         auto issue(mStalledIssues.at(row));
+        if(issue.consultData()->syncIds().isEmpty())
+        {
+            return false;
+        }
+
         if(auto moveOrRemoveIssue = std::dynamic_pointer_cast<MoveOrRenameCannotOccurIssue>(issue.getData()))
         {
             connect(moveOrRemoveIssue.get(), &MoveOrRenameCannotOccurIssue::issueSolved, this, [this, moveOrRemoveIssue](bool isSolved)
@@ -1161,6 +1180,7 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, Mo
                 finishSolvingIssues(isSolved ? 1 : 0, true, solveMessage);
             });
             moveOrRemoveIssue->solveIssue(side);
+
         }
         return true;
     };
@@ -1168,6 +1188,9 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, Mo
     SolveListInfo info(QModelIndexList() << index, resolveIssue);
     info.async = true;
     solveListOfIssues(info);
+    AutoRefreshByCondition<MoveOrRenameCannotOccurIssue>* autoRefreshDetecter
+        (new AutoRefreshByCondition<MoveOrRenameCannotOccurIssue>(MOVE_OR_RENAME_REQUEST_FREQUENCY, MOVE_OR_RENAME_REQUEST_THRESHOLD));
+    mStalledIssuesReceiver->registerAutoRefreshDetector<MoveOrRenameCannotOccurIssue>(autoRefreshDetecter);
 }
 
 void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option)

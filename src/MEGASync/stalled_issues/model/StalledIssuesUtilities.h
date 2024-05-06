@@ -47,7 +47,7 @@ class StalledIssuesBySyncFilter
 public:
     StalledIssuesBySyncFilter(){}
 
-    void resetFilter(){mSyncIdCache.clear();}
+    static void resetFilter(){mSyncIdCache.clear();}
 
     mega::MegaHandle filterByPath(const QString& path, bool cloud);
 

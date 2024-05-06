@@ -451,6 +451,11 @@ void StalledIssue::setIsSolved(bool potentially)
     mNeedsUIUpdate = qMakePair(true, true);
 }
 
+bool StalledIssue::isAutoSolvable() const
+{
+    return Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart;
+}
+
 bool StalledIssue::isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const
 {
     auto result(false);

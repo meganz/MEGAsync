@@ -13,7 +13,7 @@ public:
     ~LocalOrRemoteUserMustChooseStalledIssue();
 
     bool autoSolveIssue() override;
-    bool isSolvable() const override;
+    bool isAutoSolvable() const override;
 
     void fillIssue(const mega::MegaSyncStall *stall) override;
     void endFillingIssue() override;
@@ -22,7 +22,6 @@ public:
     void chooseRemoteSide();
     void chooseLastMTimeSide();
     void chooseBothSides(QStringList *namesUsed);
-
 
     bool UIShowFileAttributes() const override;
 

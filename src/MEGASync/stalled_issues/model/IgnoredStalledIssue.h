@@ -11,7 +11,7 @@ public:
     ~IgnoredStalledIssue(){}
 
     bool autoSolveIssue() override;
-    bool isSolvable() const override;
+    bool isAutoSolvable() const override;
 
     bool isSymLink() const override;
     bool isSpecialLink() const;

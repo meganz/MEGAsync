@@ -29,6 +29,7 @@ set(DESKTOP_APP_STALLED_ISSUES_HEADERS
     stalled_issues/model/StalledIssue.h
     stalled_issues/model/StalledIssuesProxyModel.h
     stalled_issues/model/StalledIssuesFactory.h
+    stalled_issues/model/AutoRefreshStalledIssuesByCondition.h
 )
 
 set(DESKTOP_APP_STALLED_ISSUES_SOURCES

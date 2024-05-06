@@ -5,7 +5,7 @@
 
 //BASE CLASS
 MoveOrRenameCannotOccurChooseWidget::MoveOrRenameCannotOccurChooseWidget(QWidget *parent) :
-    mSide(MoveOrRenameCannotOccurIssue::ChosenSide::NONE),
+    mChosenSide(MoveOrRenameIssueChosenSide::NONE),
     StalledIssueChooseWidget(parent)
 {
 }
@@ -28,12 +28,12 @@ void MoveOrRenameCannotOccurChooseWidget::updateUi(
 
     auto side(issue->getChosenSide());
 
-    if(!isSolved() && side != MoveOrRenameCannotOccurIssue::ChosenSide::NONE)
+    if(!isSolved() && side != MoveOrRenameIssueChosenSide::NONE)
     {
         ui->chooseTitle->hideActionButton(StalledIssueChooseWidget::BUTTON_ID);
 
         QIcon icon;
-        if(side == mSide)
+        if(side == mChosenSide)
         {
             icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
             ui->chooseTitle->setMessage(tr("Chosen"), icon.pixmap(16, 16));
@@ -55,7 +55,7 @@ void MoveOrRenameCannotOccurChooseWidget::updateUi(
 LocalMoveOrRenameCannotOccurChooseWidget::LocalMoveOrRenameCannotOccurChooseWidget(QWidget *parent) :
     MoveOrRenameCannotOccurChooseWidget(parent)
 {
-    mSide = MoveOrRenameCannotOccurIssue::ChosenSide::LOCAL;
+    mChosenSide = MoveOrRenameIssueChosenSide::LOCAL;
 }
 
 LocalMoveOrRenameCannotOccurChooseWidget::~LocalMoveOrRenameCannotOccurChooseWidget() {}
@@ -69,7 +69,7 @@ void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
 
     if(issue->isSolved())
     {
-        setSolved(issue->getChosenSide() != MoveOrRenameCannotOccurIssue::ChosenSide::LOCAL);
+        setSolved(issue->getChosenSide() != MoveOrRenameIssueChosenSide::LOCAL);
     }
 
     std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(mData->syncIds().first()));
@@ -85,7 +85,7 @@ void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
 RemoteMoveOrRenameCannotOccurChooseWidget::RemoteMoveOrRenameCannotOccurChooseWidget(QWidget *parent) :
     MoveOrRenameCannotOccurChooseWidget(parent)
 {
-     mSide = MoveOrRenameCannotOccurIssue::ChosenSide::REMOTE;
+     mChosenSide = MoveOrRenameIssueChosenSide::REMOTE;
 }
 
 RemoteMoveOrRenameCannotOccurChooseWidget::~RemoteMoveOrRenameCannotOccurChooseWidget() {}
@@ -99,7 +99,7 @@ void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
 
     if(issue->isSolved())
     {
-        setSolved(issue->getChosenSide() != MoveOrRenameCannotOccurIssue::ChosenSide::REMOTE);
+        setSolved(issue->getChosenSide() != MoveOrRenameIssueChosenSide::REMOTE);
     }
 
     std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(mData->syncIds().first()));

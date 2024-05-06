@@ -153,13 +153,13 @@ QString StalledIssueTab::createTitle()
         case StalledIssueFilterCriterion::ALL_ISSUES:
             return tr("All issues: %1").arg(itemsCount);
         case StalledIssueFilterCriterion::NAME_CONFLICTS:
-            return tr("Name conflict: %n", "", itemsCount).arg(itemsCount);
+            return tr("Name conflict: %n", "", itemsCount);
         case StalledIssueFilterCriterion::ITEM_TYPE_CONFLICTS:
-            return tr("Item type conflict: %n", "", itemsCount).arg(itemsCount);
+            return tr("Item type conflict: %n", "", itemsCount);
         case StalledIssueFilterCriterion::OTHER_CONFLICTS:
-            return tr("Other: %n", "", itemsCount).arg(itemsCount);
+            return tr("Other: %n", "", itemsCount);
         case StalledIssueFilterCriterion::SOLVED_CONFLICTS:
-            return tr("Resolved: %n", "", itemsCount).arg(itemsCount);
+            return tr("Resolved: %n", "", itemsCount);
         default:
             return QString();
     }

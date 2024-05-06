@@ -20,7 +20,7 @@ void IgnoredStalledIssue::clearIgnoredSyncs()
     mSymLinksIgnoredInSyncs.clear();
 }
 
-bool IgnoredStalledIssue::isSolvable() const
+bool IgnoredStalledIssue::isAutoSolvable() const
 {
     return !isSolved() &&
            !syncIds().isEmpty() &&

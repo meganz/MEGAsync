@@ -19,7 +19,7 @@ LocalOrRemoteUserMustChooseStalledIssue::~LocalOrRemoteUserMustChooseStalledIssu
 
 bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
-    if(isSolvable())
+    if(isAutoSolvable())
     {
         chooseLastMTimeSide();
 
@@ -50,7 +50,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::UIShowFileAttributes() const
     return true;
 }
 
-bool LocalOrRemoteUserMustChooseStalledIssue::isSolvable() const
+bool LocalOrRemoteUserMustChooseStalledIssue::isAutoSolvable() const
 {
     //In case it is a backup, we cannot automatically solve it
     if(getSyncType() == mega::MegaSync::SyncType::TYPE_BACKUP)

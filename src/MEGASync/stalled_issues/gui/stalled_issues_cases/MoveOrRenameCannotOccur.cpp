@@ -47,10 +47,10 @@ void MoveOrRenameCannotOccur::refreshUi()
 
 void MoveOrRenameCannotOccur::onLocalButtonClicked()
 {
-    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(getCurrentIndex(), MoveOrRenameCannotOccurIssue::ChosenSide::LOCAL);
+    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(getCurrentIndex(), MoveOrRenameIssueChosenSide::LOCAL);
 }
 
 void MoveOrRenameCannotOccur::onRemoteButtonClicked()
 {
-    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(getCurrentIndex(), MoveOrRenameCannotOccurIssue::ChosenSide::REMOTE);
+    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(getCurrentIndex(), MoveOrRenameIssueChosenSide::REMOTE);
 }

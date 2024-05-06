@@ -7,6 +7,7 @@
 #include "StalledIssuesUtilities.h"
 #include "ViewLoadingScene.h"
 #include <MoveOrRenameCannotOccurIssue.h>
+#include <StalledIssuesFactory.h>
 #include "QMegaMessageBox.h"
 
 #include <QObject>
@@ -25,12 +26,24 @@ public:
     explicit StalledIssuesReceiver(QObject* parent = nullptr);
     ~StalledIssuesReceiver(){}
 
+    template <class ISSUE_TYPE>
+    void registerAutoRefreshDetector(QPointer<AutoRefreshByConditionBase> autoRefreshDetector)
+    {
+        if(mAutoRefreshDetector)
+        {
+            mAutoRefreshDetector->remove();
+        }
+        mAutoRefreshDetector = autoRefreshDetector;
+        mAutoRefreshDetector->refresh();
+    }
+
 public slots:
     void onSetIsEventRequest();
 
 signals:
     void stalledIssuesReady(StalledIssuesVariantList);
     void solvingIssues(int issueCount, int total);
+    void moveOrRenameCannotOccurFound();
 
 protected:
     void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest* request, ::mega::MegaError*);
@@ -39,6 +52,8 @@ private:
     QMutex mCacheMutex;
     StalledIssuesVariantList mStalledIssues;
     std::atomic_bool mIsEventRequest { false };
+    StalledIssuesCreator mIssueCreator;
+    QPointer<AutoRefreshByConditionBase> mAutoRefreshDetector;
 };
 
 class StalledIssuesModel : public QAbstractItemModel, public mega::MegaGlobalListener
@@ -120,7 +135,7 @@ public:
     void fixFingerprint(const QModelIndexList& list);
 
     //MoveOrRename issue
-    void fixMoveOrRenameCannotOccur(const QModelIndex& index, MoveOrRenameCannotOccurIssue::ChosenSide side);
+    void fixMoveOrRenameCannotOccur(const QModelIndex& index, MoveOrRenameIssueChosenSide side);
 
     bool issuesRequested() const;
 
@@ -188,7 +203,7 @@ private:
     void operator=(const StalledIssuesModel&) = delete;
     
     QThread* mStalledIssuesThread;
-    StalledIssuesReceiver* mStalledIssuedReceiver;
+    StalledIssuesReceiver* mStalledIssuesReceiver;
     std::atomic_bool mThreadFinished { false };
     mega::QTMegaRequestListener* mRequestListener;
     mega::QTMegaGlobalListener* mGlobalListener;

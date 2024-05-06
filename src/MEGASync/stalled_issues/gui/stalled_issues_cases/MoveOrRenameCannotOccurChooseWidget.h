@@ -16,7 +16,7 @@ public:
 
 protected:
     QString solvedString() const override { return QString(); }
-    MoveOrRenameCannotOccurIssue::ChosenSide mSide;
+    MoveOrRenameIssueChosenSide mChosenSide;
     std::shared_ptr<const MoveOrRenameCannotOccurIssue> mData;
 };
 

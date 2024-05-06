@@ -9,19 +9,13 @@
 
 #include <mega/types.h>
 
-bool StalledIssuesCreator::mIsEventRequest = false;
-
-StalledIssuesCreator::StalledIssuesCreator(bool isEventRequest) :
-    mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>())
-{
-    mIsEventRequest = isEventRequest;
-}
-
-StalledIssuesCreator::StalledIssuesCreator()
+StalledIssuesCreator::StalledIssuesCreator() :
+    mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>()),
+    mIsEventRequest(false)
 {
 }
 
-void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls)
+void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, QPointer<AutoRefreshByConditionBase> autoRefreshDetector)
 {
     clear();
 
@@ -39,10 +33,6 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls)
             if (stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
             {
                 variant = mMoveOrRenameCannotOccurFactory->createIssue(stall);
-                if(!variant.isValid())
-                {
-                    continue;
-                }
             }
             else
             {
@@ -75,6 +65,16 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls)
                 variant = StalledIssueVariant(d, stall);
             }
 
+            if(!variant.isValid())
+            {
+                continue;
+            }
+
+            if(autoRefreshDetector)
+            {
+                autoRefreshDetector->meetsConditionToRefresh(variant);
+            }
+
             if (variant.shouldBeIgnored())
             {
                 continue;
@@ -87,7 +87,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls)
 
                 if (mIsEventRequest)
                 {
-                    if (!variant.getData()->isSolvable())
+                    if (!variant.getData()->isAutoSolvable())
                     {
                         QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1")
                                                  .arg(QString::number(stall->reason())));
@@ -98,7 +98,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls)
                 }
                 else
                 {
-                    if (variant.getData()->isSolvable())
+                    if (variant.getData()->isAutoSolvable())
                     {
                         solvableIssues.append(variant);
                     }
@@ -114,13 +114,10 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls)
         auto counter(1);
         foreach(auto solvableIssue, solvableIssues)
         {
-            if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart)
-            {
-                emit solvingIssues(counter, solvableTotalIssues);
-                solvableIssue.getData()->autoSolveIssue();
-            }
+            emit solvingIssues(counter, solvableTotalIssues);
+            auto hasBeenSolved(solvableIssue.getData()->autoSolveIssue());
 
-            if(!solvableIssue.getData()->isSolved())
+            if(!hasBeenSolved)
             {
                 mIssues.append(solvableIssue);
             }
@@ -139,4 +136,14 @@ void StalledIssuesCreator::clear()
 {
     mIssues.clear();
     mMoveOrRenameCannotOccurFactory->clear();
+}
+
+void StalledIssuesCreator::setIsEventRequest(bool newIsEventRequest)
+{
+    mIsEventRequest = newIsEventRequest;
+}
+
+void StalledIssuesCreator::setMoveOrRenameSyncIdBeingFixed(const mega::MegaHandle& syncId, int chosenSide)
+{
+    mMoveOrRenameCannotOccurFactory->setSyncIdIssuesBeingSolved(syncId, static_cast<MoveOrRenameIssueChosenSide>(chosenSide));
 }
